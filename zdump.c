@@ -1,8 +1,4 @@
-#ifndef lint
-#ifndef NOID
 static char	elsieid[] = "%W%";
-#endif /* !defined NOID */
-#endif /* !defined lint */
 
 /*
 ** This code has been made independent of the rest of the time
@@ -162,6 +158,11 @@ char *	argv[];
 	(void) textdomain(TZ_DOMAIN);
 #endif /* HAVE_GETTEXT - 0 */
 	progname = argv[0];
+	for (i = 1; i < argc; ++i)
+		if (strcmp(argv[i], "--version") == 0) {
+			(void) printf("%s\n", elsieid);
+			(void) exit(EXIT_SUCCESS);
+		}
 	vflag = 0;
 	cutoff = NULL;
 	while ((c = getopt(argc, argv, "c:v")) == 'c' || c == 'v')

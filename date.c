@@ -509,7 +509,7 @@ const struct tm * const	tmp;
 	if (*format == '\0')
 		return;
 	size = INCR;
-	cp = malloc((alloc_size_t) size);
+	cp = malloc((alloc_size_T) size);
 	for ( ; ; ) {
 		if (cp == NULL) {
 			(void) fprintf(stderr,
@@ -521,7 +521,7 @@ const struct tm * const	tmp;
 		if (result != 0)
 			break;
 		size += INCR;
-		cp = realloc(cp, (alloc_size_t) size);
+		cp = realloc(cp, (alloc_size_T) size);
 	}
 	(void) fwrite(cp, 1, result, fp);
 	free(cp);

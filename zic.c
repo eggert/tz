@@ -397,6 +397,7 @@ char *	argv[];
 						progname);
 					exit(1);
 				}
+				break;
 			case 'v':
 				noise = TRUE;
 				break;

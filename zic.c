@@ -50,16 +50,16 @@ static long	tadd();
 static long	timecnt;
 static long	typecnt;
 
-#define SECS_PER_MIN	60L
-#define MINS_PER_HOUR	60L
-#define HOURS_PER_DAY	24L
-#define SECS_PER_HOUR	(SECS_PER_MIN * MINS_PER_HOUR)
-#define SECS_PER_DAY	(SECS_PER_HOUR * HOURS_PER_DAY)
+#define LSECS_PER_MIN	((long) SECS_PER_MIN)
+#define LMINS_PER_HOUR	((long) MINS_PER_HOUR)
+#define LHOURS_PER_DAY	((long) HOURS_PER_DAY)
+#define LSECS_PER_HOUR	(LSECS_PER_MIN * LMINS_PER_HOUR)
+#define LSECS_PER_DAY	(LSECS_PER_HOUR * LHOURS_PER_DAY)
 
-#define EPOCH_YEAR	1970L
+#define LEPOCH_YEAR	((long) EPOCH_YEAR)
 #define EPOCH_WDAY	TM_THURSDAY
-#define MIN_YEAR	1902L
-#define MAX_YEAR	2037L
+#define LMIN_YEAR	1902L
+#define LMAX_YEAR	2037L
 
 /*
 ** Values a la localtime(3)
@@ -264,15 +264,15 @@ static struct lookup	lasts[] = {
 };
 
 static struct lookup	begin_years[] = {
-	"minimum",		MIN_YEAR,
-	"maximum",		MAX_YEAR,
+	"minimum",		LMIN_YEAR,
+	"maximum",		LMAX_YEAR,
 	NULL,			0
 };
 
 static struct lookup	end_years[] = {
-	"minimum",		MIN_YEAR,
-	"maximum",		MAX_YEAR,
-#define ONLY	EPOCH_YEAR	/* surely neither MIN_YEAR nor MAX_YEAR */
+	"minimum",		LMIN_YEAR,
+	"maximum",		LMAX_YEAR,
+#define ONLY	LEPOCH_YEAR	/* surely neither LMIN_YEAR nor LMAX_YEAR */
 	"only",			ONLY,
 	NULL,			0
 };
@@ -638,13 +638,13 @@ char *	errstring;
 			error(errstring);
 			return 0;
 	}
-	if (hh < 0 || hh >= HOURS_PER_DAY ||
-		mm < 0 || mm >= MINS_PER_HOUR ||
-		ss < 0 || ss >= SECS_PER_MIN) {
+	if (hh < 0 || hh >= LHOURS_PER_DAY ||
+		mm < 0 || mm >= LMINS_PER_HOUR ||
+		ss < 0 || ss >= LSECS_PER_MIN) {
 			error(errstring);
 			return 0;
 	}
-	return (long) sign * (((hh * MINS_PER_HOUR) + mm) * SECS_PER_MIN + ss);
+	return (long) sign * (((hh * LMINS_PER_HOUR) + mm) * LSECS_PER_MIN + ss);
 }
 
 static
@@ -846,7 +846,7 @@ char *			timep;
 	if ((lp = byword(cp, begin_years)) != NULL)
 		rp->r_loyear = lp->l_value;
 	else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_loyear) != 1 ||
-		rp->r_loyear < MIN_YEAR || rp->r_loyear > MAX_YEAR) {
+		rp->r_loyear < LMIN_YEAR || rp->r_loyear > LMAX_YEAR) {
 			error("invalid starting year");
 			return;
 	}
@@ -855,7 +855,7 @@ char *			timep;
 		if ((rp->r_hiyear = lp->l_value) == ONLY)
 			rp->r_hiyear = rp->r_loyear;
 	} else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_hiyear) != 1 ||
-		rp->r_hiyear < MIN_YEAR || rp->r_hiyear > MAX_YEAR) {
+		rp->r_hiyear < LMIN_YEAR || rp->r_hiyear > LMAX_YEAR) {
 			error("invalid ending year");
 			return;
 	}
@@ -1017,7 +1017,7 @@ struct zone *	zpfirst;
 				addtt(starttime, type);
 			gmtoff = zp->z_gmtoff;
 			stdoff = zp->z_stdoff;
-		} else for (year = MIN_YEAR; year <= MAX_YEAR; ++year) {
+		} else for (year = LMIN_YEAR; year <= LMAX_YEAR; ++year) {
 			if (useuntil && year > zp->z_untilrule.r_hiyear)
 				break;
 			/*
@@ -1320,7 +1320,7 @@ register long		wantedy;
 
 	dayoff = 0;
 	m = TM_JANUARY;
-	y = EPOCH_YEAR;
+	y = LEPOCH_YEAR;
 	while (wantedy != y) {
 		if (wantedy > y) {
 			i = year_lengths[isleap(y)];
@@ -1376,11 +1376,11 @@ register long		wantedy;
 			exit(1);
 		}
 	}
-	t = dayoff * SECS_PER_DAY;
+	t = dayoff * LSECS_PER_DAY;
 	/*
 	** Cheap overflow check.
 	*/
-	if (t / SECS_PER_DAY != dayoff) {
+	if (t / LSECS_PER_DAY != dayoff) {
 		error("time overflow");
 		exit(1);
 	}

@@ -40,6 +40,9 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #endif /* HAVE_ADJTIME || HAVE_SETTIMEOFDAY */
 #include "locale.h"
 #include "utmp.h"	/* for OLD_TIME (or its absence) */
+#if HAVE_UTMPX_H
+#include "utmpx.h"
+#endif
 
 /*
 ** The two things date knows about time are. . .
@@ -56,7 +59,6 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 extern double		atof();
 extern char **		environ;
 extern char *		getlogin();
-extern int		logwtmp();
 extern time_t		mktime();
 extern char *		optarg;
 extern int		optind;
@@ -344,6 +346,12 @@ const int	nflag;
 		struct utmp	before;
 		struct utmp	after;
 	} s;
+#if HAVE_UTMPX_H
+	static struct {
+		struct utmpx	before;
+		struct utmpx	after;
+	} sx;
+#endif
 
 	/*
 	** Wouldn't it be great if stime returned the old time?
@@ -364,8 +372,33 @@ const int	nflag;
 		oops("date: error: log file write");
 	if (close(fid) != 0)
 		oops("date: error: log file close");
+#if !HAVE_UTMPX_H
 	pututline(&s.before);
 	pututline(&s.after);
+#endif /* !HAVE_UTMPX_H */
+#if HAVE_UTMPX_H
+	sx.before.ut_type = OLD_TIME;
+	sx.before.ut_tv.tv_sec = oldt;
+	(void) strcpy(sx.before.ut_line, OTIME_MSG);
+	sx.after.ut_type = NEW_TIME;
+	sx.after.ut_tv.tv_sec = newt;
+	(void) strcpy(sx.after.ut_line, NTIME_MSG);
+#if !SUPPRESS_WTMPX_FILE_UPDATE
+	/* In Solaris 2.5 (and presumably other systems),
+	   `date' does not update /var/adm/wtmpx.
+	   This must be a bug.  If you'd like to reproduce the bug,
+	   define SUPPRESS_WTMPX_FILE_UPDATE to be nonzero.  */
+	fid = open(WTMPX_FILE, O_WRONLY | O_APPEND);
+	if (fid < 0)
+		oops("date: error: log file open");
+	if (write(fid, (char *) &sx, sizeof sx) != sizeof sx)
+		oops("date: error: log file write");
+	if (close(fid) != 0)
+		oops("date: error: log file close");
+#endif /* !SUPPRESS_WTMPX_FILE_UPDATE */
+	pututxline(&sx.before);
+	pututxline(&sx.after);
+#endif /* HAVE_UTMPX_H */
 }
 
 #endif /* defined OLD_TIME */
@@ -396,6 +429,8 @@ const int	nflag;
 #include "netdb.h"
 #define TSPTYPES
 #include "protocols/timed.h"
+
+extern int		logwtmp();
 
 #if HAVE_SETTIMEOFDAY == 1
 #define settimeofday(t, tz) (settimeofday)(t)

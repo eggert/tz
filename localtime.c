@@ -1,4 +1,4 @@
-/*LINTLIBRARY*/
+#include "stdio.h"
 
 #ifndef lint
 #ifndef NOID
@@ -6,49 +6,42 @@ static char	elsieid[] = "%W%";
 #endif /* !defined NOID */
 #endif /* !defined lint */
 
+/*LINTLIBRARY*/
+
 #include "tzfile.h"
 #include "time.h"
 #include "string.h"
+
+#ifdef MODERN
+
+#include "stdlib.h"
+#include "time.h"
+
+#ifdef FILENAME_MAX
+#define MAXPATHLEN	FILENAME_MAX
+#endif /* defined FILENAME_MAX */
+
+#else /* !defined MODERN */
 
 /*
 ** sys/types.h is included to get time_t.
 */
 
-#ifndef __STDC__
 #include "sys/types.h"
-#endif /* !defined __STDC */
 
-/*
-** getenv. . .
-*/
+extern char *	getenv();
 
-#ifdef __STDC__
-#include "stdlib.h"
-#else /* !defined __STDC__ */
-extern char *		getenv();
-#endif /* !defined __STDC__ */
-
-/*
-** MAXPATHLEN. . .
-*/
-
-#ifdef __STDC__
-#ifdef FILENAME_MAX
-#define MAXPATHLEN	FILENAME_MAX
-#else /* !defined FILENAME_MAX */
-#define MAXPATHLEN	512
-#endif /* !defined FILENAME_MAX */
-#endif /* defined __STDC__ */
 #ifndef MAXPATHLEN
 #include "sys/param.h"
+#endif /* !defined MAXPATHLEN */
+
+#define const
+
+#endif /* !defined MODERN */
+
 #ifndef MAXPATHLEN
 #define MAXPATHLEN	1024
 #endif /* !defined MAXPATHLEN */
-#endif /* !defined MAXPATHLEN */
-
-#ifndef __STDC__
-#define const
-#endif /* !defined __STDC__ */
 
 #ifndef TRUE
 #define TRUE		1
@@ -118,6 +111,24 @@ char *	codep;
 	return result;
 }
 
+#ifdef __TURBOC__
+#include "fcntl.h"
+#endif /* defined __TURBOC__ */
+
+#ifdef unix
+#include "fcntl.h"
+#endif /* defined unix */
+
+#ifdef O_BINARY
+#ifdef O_RDONLY
+#define MODE	O_BINARY | O_RDONLY
+#endif /* defined O_RDONLY */
+#endif /* defined O_BINARY */
+
+#ifndef MODE
+#define MODE	0
+#endif /* !defined MODE */
+
 static
 tzload(name, sp)
 register char *		name;
@@ -152,7 +163,7 @@ register struct state *	sp;
 		}
 		if (doaccess && access(name, 4) != 0)
 			return -1;
-		if ((fid = open(name, 0)) == -1)
+		if ((fid = open(name, MODE)) == -1)
 			return -1;
 	}
 	{
@@ -250,7 +261,7 @@ register struct state *	sp;
 	return 0;
 }
 
-static
+static void
 tzsetgmt(sp)
 register struct state *	sp;
 {
@@ -475,3 +486,6 @@ time_t *	timep;
 }
 
 #endif /* defined BSD_COMPAT */
+/*
+** UNIX is a registered trademark of AT&T.
+*/

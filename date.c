@@ -428,7 +428,7 @@ usage()
 	(void) fprintf(stderr, "[-d dst] ");
 	(void) fprintf(stderr, "[-t min-west] ");
 	(void) fprintf(stderr, "[-a sss.fff] ");
-	(void) fprintf(stderr, "[[yyyy]mmddhhmm[yy][.ss]] ");
+	(void) fprintf(stderr, "[[yy]mmddhhmm[yyyy][.ss]] ");
 	(void) fprintf(stderr, "[+format]\n");
 	errensure();
 	(void) exit(retval);
@@ -564,10 +564,14 @@ time_t		t;
 	switch (dotp - cp) {
 		default:
 			wildinput("time", value, "main part is wrong length");
-		case 12: /* yyyymmddhhmm */
+		case 12: /* mmddhhmmyyyy */
+			month = ATOI2(cp);
+			day = ATOI2(cp);
+			hour = ATOI2(cp);
+			mins = ATOI2(cp);
 			cent = ATOI2(cp);
 			year_in_cent = ATOI2(cp);
-			/* fall through to. . . */
+			break;
 		case 8:	/* mmddhhmm */
 			month = ATOI2(cp);
 			/* fall through to. . . */
@@ -692,18 +696,20 @@ char *	reason;
 	/*
 	** Avoid running afoul of SCCS!
 	*/
-	timeout(stderr, "\tdate -u %Y", &tm);
+	timeout(stderr, "\tdate -u ", &tm);
 	timeout(stderr, "%m%d%H", &tm);
-	timeout(stderr, "%M.%S\n", &tm);
+	timeout(stderr, "%M", &tm);
+	timeout(stderr, "%Y.%S\n", &tm);
 	tm = *localtime(&thist);
 	timeout(stderr, "to get %c", &tm);
 	(void) fprintf(stderr, " (%s time)",
 		tm.tm_isdst ? "summer" : "standard");
 	(void) fprintf(stderr, ".  Use\n");
 	tm = *gmtime(&thatt);
-	timeout(stderr, "\tdate -u %Y", &tm);
+	timeout(stderr, "\tdate -u ", &tm);
 	timeout(stderr, "%m%d%H", &tm);
-	timeout(stderr, "%M.%S\n", &tm);
+	timeout(stderr, "%M", &tm);
+	timeout(stderr, "%Y.%S\n", &tm);
 	tm = *localtime(&thatt);
 	timeout(stderr, "to get %c", &tm);
 	(void) fprintf(stderr, " (%s time)",

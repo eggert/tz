@@ -12,12 +12,16 @@ static char	sccsid[] = "%W%";
 #define alloc_t	unsigned
 #endif
 
-extern char *	calloc();
-extern char *	newctime();
-extern int	optind;
-extern char *	sprintf();
-extern long	time();
-extern char *	tz_abbr;
+extern char *		asctime();
+extern char *		calloc();
+extern struct tm *	gmtime();
+extern char *		newctime();
+extern int		optind;
+extern char *		sprintf();
+extern long		time();
+extern char *		tz_abbr;
+
+static int	longest;
 
 main(argc, argv)
 int	argc;
@@ -40,6 +44,10 @@ char *	argv[];
 		exit(1);
 	}
 	(void) time(&now);
+	longest = 0;
+	for (i = optind; i < argc; ++i)
+		if (strlen(argv[i]) > longest)
+			longest = strlen(argv[i]);
 	for (i = optind; i < argc; ++i) {
 		if (settz(argv[i]) != 0) {
 			(void) fprintf(stderr,
@@ -95,19 +103,24 @@ char *	argv[];
 				argv[0], argv[i]);
 			exit(1);
 		}
-		for (j = 0; j < h.tzh_timecnt; ++j)
+		for (j = 0; j < h.tzh_timecnt; ++j) {
+			show(argv[i], tp[j] - 1);
 			show(argv[i], tp[j]);
+		}
 		free((char *) tp);
 	}
 	return 0;
 }
 
 static
-show(zone, t)
+show(zone, t, v)
 char *	zone;
 long	t;
 {
-	(void) printf("%s: %.24s", zone, newctime(&t));
+	(void) printf("%-*s  ", longest, zone);
+	if (v)
+		(void) printf("%.24s GMT = ", asctime(gmtime(&t)));
+	(void) printf("%.24s", newctime(&t));
 	if (*tz_abbr != '\0')
 		(void) printf(" %s", tz_abbr);
 	(void) printf("\n");

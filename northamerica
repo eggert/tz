@@ -848,18 +848,38 @@ Zone America/Whitehorse	-9:00:12 -	LMT	1900 Aug 20
 # a zone that's GMT-8 with DST; a zone that's always GMT-7;
 # a zone that's GMT-6 with DST; and a zone that's always GMT-6.
 
-# From Paul Eggert <eggert@twinsun.com> (November 18, 1993):
+# From Paul Eggert <eggert@twinsun.com> (1993-11-18):
 # Shanks also says there are four zones, but disagrees about the fourth.
 # Instead of GMT-6 with DST, he says there's GMT-8 without DST.
 
-# From Paul Eggert (1996-02-07):
-# Today in news:4f90v4$g6g@news.internet.com.mx, Kevin Pitts
-# <bravo2@internet.com.mx> wrote that Mexico will use Horario de Verano (DST)
-# starting this year with the same rules as the US, and gave FIDE as a source.
-# (FIDE is a private organization that promotes efficient electrical use.)
-# On 1996-02-02 Mario Camou wrote that the transition times are Apr Sun>=1
-# 0:00 and Nov 1 0:00 but also wrote ``The DST-out date looks a bit fishy''.
-# Go with Pitts after 1996, and with Shanks before that.
+# From Alan Perry <alan.perry@eng.sun.com> (1996-02-15):
+# A guy from our Mexico subsidiary finally found the Presidential Decree
+# outlining the timezone changes in Mexico.
+# 
+# ------------- Begin Forwarded Message -------------
+# 
+# I finally got my hands on the Official Presidential Decree that sets up the
+# rules for the DST changes. The rules are:
+# 
+# 1. The country is divided in 3 timezones:
+#    - Baja California Norte (the Mexico/BajaNorte TZ)
+#    - Baja California Sur, Nayarit, Sinaloa and Sonora (the Mexico/BajaSur TZ)
+#    - The rest of the country (the Mexico/General TZ)
+#    
+# 2. From the first Sunday in April at 2:00 AM to the last Sunday in October
+#    at 2:00 AM, the times in each zone are as follows:
+#    BajaNorte: GMT+7
+#    BajaSur:   GMT+6
+#    General:   GMT+5
+#    
+# 3. The rest of the year, the times are as follows:
+#    BajaNorte: GMT+8
+#    BajaSur:   GMT+7
+#    General:   GMT+6
+#    
+# The Decree was published in Mexico's Official Newspaper on January 4th.
+# 
+# -------------- End Forwarded Message --------------
 
 # From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S

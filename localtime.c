@@ -624,8 +624,6 @@ register struct state *	sp;
 					year_lengths[isleap(year)] * SECSPERDAY;
 			}
 		} else {
-			register int	i;
-
 			if (*name != '\0')
 				return -1;
 			if (tzload(TZDEFRULES, sp) != 0)

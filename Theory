@@ -12,7 +12,7 @@
 ----- Time and date functions -----
 
 These time and date functions are upwards compatible with POSIX.1,
-an international standard for Unix-like systems.
+an international standard for UNIX-like systems.
 As of this writing, the current edition of POSIX.1 is:
 
   Information technology --Portable Operating System Interface (POSIX (R))
@@ -144,7 +144,7 @@ Points of interest to folks with other systems:
 	since the format of zic's input changed slightly in late 1994,
 	and many vendors still do not support the new input format.
 
-*	The Unix Version 7 "timezone" function is not present in this package;
+*	The UNIX Version 7 "timezone" function is not present in this package;
 	it's impossible to reliably map timezone's arguments (a "minutes west
 	of GMT" value and a "daylight saving time in effect" flag) to a
 	time zone abbreviation, and we refuse to guess.

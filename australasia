@@ -4,12 +4,11 @@
 
 # Australian Data (for states with DST), standard rules
 # Includes shift in 1987 to follow Vic/NSW rules for ending DST,
-# and shift in 1986 to start DST earlier.  The "Sun>=14" is just a guess;
-# it starts Sunday, October 19 in 1986.
+# and shift in 1986 to start DST earlier.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Oz	1971	1985	-	Oct	lastSun	2:00	1:00	-
-Rule	Oz	1986	max	-	Oct	Sun>=14	2:00	1:00	-
+Rule	Oz	1986	max	-	Oct	Sun<=24	2:00	1:00	-
 Rule	Oz	1972	only	-	Feb	27	3:00	0	-
 Rule	Oz	1973	1986	-	Mar	Sun>=1	3:00	0	-
 Rule	Oz	1987	max	-	Mar	Sun<=21	3:00	0	-

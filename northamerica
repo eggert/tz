@@ -1,6 +1,6 @@
 # %W%
 
-# Despite the performance of existing (4.[12]BSD, Xenix) code,
+# Despite the performance of existing (4.[123]BSD, System V Release 2.0) code,
 # US Daylight Saving Time ended on the last Sunday of *October* in 1974.
 # See, for example, the front page of the Saturday, October 26, 1974
 # and Sunday, October 27, 1974 editions of the Washington Post.
@@ -19,26 +19,25 @@ Rule	USA	1918	1919	-	Mar	lastSun	2:00	1:00	D
 Rule	USA	1918	1919	-	Oct	lastSun	2:00	0	S
 Rule	USA	1942	only	-	Feb	9	2:00	1:00	W # War
 Rule	USA	1945	only	-	Sep	30	2:00	0	S
-Rule	USA	1967	2037	-	Oct	lastSun	2:00	0	S
+Rule	USA	1967	max	-	Oct	lastSun	2:00	0	S
 Rule	USA	1967	1973	-	Apr	lastSun	2:00	1:00	D
 Rule	USA	1974	only	-	Jan	6	2:00	1:00	D
 Rule	USA	1975	only	-	Feb	23	2:00	1:00	D
 Rule	USA	1976	1986	-	Apr	lastSun	2:00	1:00	D
-Rule	USA	1987	2037	-	Apr	Sun>=1	2:00	1:00	D
+Rule	USA	1987	max	-	Apr	Sun>=1	2:00	1:00	D
 
 ###############################################################################
 
 # New names
 
-# Zone	NAME			GMTOFF	RULES	FORMAT
-Zone	US/Eastern		-5:00	USA	E%sT
-Zone	US/Central		-6:00	USA	C%sT
-Zone	US/Mountain		-7:00	USA	M%sT
-Zone	US/Pacific		-8:00	USA	P%sT
-Zone	US/Yukon		-9:00	USA	Y%sT
+# Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	 [UNTIL]
+Zone	US/Eastern		-5:00	USA		E%sT
+Zone	US/Central		-6:00	USA		C%sT
+Zone	US/Mountain		-7:00	USA		M%sT
+Zone	US/Pacific		-8:00	USA		P%sT
+Zone	US/Yukon		-9:00	USA		Y%sT
 
-# Old names, for S5 compatibility
-# USA only, but then AT&T-IS never supported anybody else
+# Old names, for S5 users
 
 # Link	LINK-FROM	LINK-TO
 Link	US/Eastern	EST5EDT
@@ -46,21 +45,22 @@ Link	US/Central	CST6CDT
 Link	US/Mountain	MST7MDT
 Link	US/Pacific	PST8PDT
 
-# Mainland US areas that don't observe DST
+# Mainland US areas that are always Standard as of 1986.
 
-Zone	US/East-Indiana	-5:00	USA	E%sT	1945 Sep 30 1:00s
-			-5:00	-	EST			# Now always EST
-Zone	US/Arizona	-7:00	USA	M%sT	1945 Sep 30 1:00s
-			-7:00	-	MST			# Now always MST
+Zone	US/East-Indiana	-5:00	USA	E%sT	1945 Sep 30 2:00
+			-5:00	-	EST		# Always EST as of 1986
+Zone	US/Arizona	-7:00	USA	M%sT	1945 Sep 30 2:00
+			-7:00	-	MST		# Always EST as of 1986
 
 # And then there's Hawaii.
 # DST was observed for one day in 1933;
 # Standard time was change by half an hour in 1947;
-# Daylight time is not used.
+# It's always standard as of 1986.
 
-Zone	US/Hawaii	-10:30	USA	H%sT	1933 Apr 30 2:00s
-			-9:30	-	HDT	1933 May 1 1:00s
-			-10:30	USA	H%sT	1947 Jun 8 2:00s
+Zone	US/Hawaii	-10:30	USA	H%sT	1933 Apr 30 2:00
+			-10:30	1:00	HDT	1933 May 1 2:00
+			-10:30	-	HST	1942
+			-10:30	USA	H%sT	1947 Jun 8 2:00
 			-10:00	-	HST
 
 ################################################################################
@@ -70,17 +70,17 @@ Zone	US/Hawaii	-10:30	USA	H%sT	1933 Apr 30 2:00s
 # 4.3BSD claims that it's perfectly regular.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Canada	1967	2037	-	Apr	lastSun	2:00	1:00	D
-Rule	Canada	1967	2037	-	Oct	lastSun	2:00	0	S
+Rule	Canada	1967	max	-	Apr	lastSun	2:00	1:00	D
+Rule	Canada	1967	max	-	Oct	lastSun	2:00	0	S
 
-# Zone	NAME			GMTOFF	RULES	FORMAT
+# Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 # Bob Devine says that DST *is* observed in Newfoundland
-Zone	Canada/Newfoundland	-3:30	Canada	N%sT
-Zone	Canada/Atlantic		-4:00	Canada	A%sT
-Zone	Canada/Eastern		-5:00	Canada	E%sT
-Zone	Canada/Central		-6:00	Canada	C%sT
-Zone	Canada/Mountain		-7:00	Canada	M%sT
-Zone	Canada/Pacific		-8:00	Canada	P%sT
-Zone	Canada/Yukon		-9:00	Canada	Y%sT
+Zone	Canada/Newfoundland	-3:30	Canada		N%sT
+Zone	Canada/Atlantic		-4:00	Canada		A%sT
+Zone	Canada/Eastern		-5:00	Canada		E%sT
+Zone	Canada/Central		-6:00	Canada		C%sT
+Zone	Canada/Mountain		-7:00	Canada		M%sT
+Zone	Canada/Pacific		-8:00	Canada		P%sT
+Zone	Canada/Yukon		-9:00	Canada		Y%sT
 
 # ?Mexico?  !Quien sabe!

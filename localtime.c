@@ -3,16 +3,19 @@
 /*LINTLIBRARY*/
 
 /*
-** sys/params.h is included to get MAXPATHLEN;
-** sys/types.h is included to get time_t;
-** there are some systems where one doesn't "#include" the other,
-** so both must be included here.
+** sys/types.h is included to get time_t.
 */
 
-#include "sys/param.h"
 #include "sys/types.h"
 #include "tzfile.h"
 #include "time.h"
+
+#ifndef MAXPATHLEN
+#include "sys/param.h"
+#ifndef MAXPATHLEN
+#define MAXPATHLEN	1024
+#endif /* !MAXPATHLEN */
+#endif /* !MAXPATHLEN */
 
 #ifndef lint
 #ifndef NOID
@@ -24,10 +27,6 @@ static char	sccsid[] = "%W%";
 #define TRUE		1
 #define FALSE		0
 #endif /* !TRUE */
-
-#ifndef MAXPATHLEN
-#define MAXPATHLEN	1024
-#endif /* !MAXPATHLEN */
 
 extern char *		getenv();
 extern char *		strcpy();

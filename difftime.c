@@ -6,8 +6,7 @@ static char	elsieid[] = "%W%";
 
 /*LINTLIBRARY*/
 
-#include "time.h"
-#include "nonstd.h"
+#include "private.h"
 
 double
 difftime(time1, time0)

@@ -78,16 +78,25 @@ REDO=		posix_right
 
 YEARISTYPE=	./yearistype
 
+# Non-default libraries needed to link.
+# Add -lintl if you want to use `gettext' on Solaris.
+LDLIBS=
+
 # Add the following to the end of the "CFLAGS=" line as needed.
 #  -DHAVE_ADJTIME=0 if `adjtime' does not exist (SVR0?)
+#  -DHAVE_GETTEXT=1 if `gettext' works (GNU, Linux, Solaris); also see LDLIBS
 #  -DHAVE_LONG_DOUBLE=1 if your compiler supports the `long double' type
 #  -DHAVE_SETTIMEOFDAY=0 if settimeofday does not exist (SVR0?)
 #  -DHAVE_SETTIMEOFDAY=1 if settimeofday has just 1 arg (SVR4)
 #  -DHAVE_SETTIMEOFDAY=2 if settimeofday uses 2nd arg (4.3BSD)
 #  -DHAVE_SETTIMEOFDAY=3 if settimeofday ignores 2nd arg (4.4BSD)
+#  -DHAVE_STRERROR=0 if `strerror' does not work (4.2BSD)
 #  -DLOCALE_HOME=\"path\" if locales are in "path", not "/usr/lib/locale"
 #  -DHAVE_UNISTD_H=0 if your compiler lacks a "unistd.h" (Microsoft C++ 7?)
 #  -DHAVE_UTMPX_H=1 if your compiler has a "utmpx.h"
+#  -DTZ_DOMAIN=\"foo\" to use "foo" for gettext domain name; default is "tz"
+#  -TTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
+#	the default is system-supplied, typically "/usr/lib/locale"
 #  $(GCC_DEBUG_FLAGS) if you are using GCC and want lots of checking
 #
 GCC_DEBUG_FLAGS = -Dlint -g -O -fno-common \
@@ -251,10 +260,10 @@ INSTALL:	ALL install date.1
 		cp date.1 $(MANDIR)/man1/.
 
 zdump:		$(TZDOBJS)
-		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@
+		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) $(LDLIBS) -o $@
 
 zic:		$(TZCOBJS) yearistype
-		$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
+		$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) $(LDLIBS) -o $@
 
 yearistype:	yearistype.sh
 		cp yearistype.sh yearistype
@@ -288,7 +297,7 @@ date:		$(DATEOBJS)
 		if [ -x /usr/ucb/ranlib -o -x /usr/bin/ranlib ] ; \
 			then ranlib ,lib.a ; fi
 		$(CC) $(CFLAGS) date.o localtime.o asctime.o strftime.o \
-			-lc ,lib.a -o $@
+			$(LDLIBS) -lc ,lib.a -o $@
 		rm -f ,lib.a
 
 clean:

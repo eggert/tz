@@ -126,7 +126,8 @@ static int		tmcomp P((const struct tm * atmp,
 static time_t		transtime P((time_t janfirst, int year,
 				const struct rule * rulep, long offset));
 static int		tzload P((const char * name, struct state * sp));
-static int		tzparse P((const char * name, struct state * sp));
+static int		tzparse P((const char * name, struct state * sp,
+				int lastditch));
 
 #ifdef ALL_STATE
 static struct state *	lclptr;
@@ -611,9 +612,10 @@ const long				offset;
 */
 
 static int
-tzparse(name, sp)
+tzparse(name, sp, lastditch)
 const char *			name;
 register struct state * const	sp;
+const int			lastditch;
 {
 	const char *			stdname;
 	const char *			dstname;
@@ -627,8 +629,15 @@ register struct state * const	sp;
 	register int			load_result;
 
 	stdname = name;
-	name = getzname(name);
-	stdlen = name - stdname;	/* length of standard zone name */
+	if (lastditch) {
+		stdlen = strlen(name);	/* length of standard zone name */
+		name += stdlen;
+		if (stdlen >= sizeof sp->chars)
+			stdlen = (sizeof sp->chars) - 1;
+	} else {
+		name = getzname(name);
+		stdlen = name - stdname;
+	}
 	if (stdlen == 0)
 		return -1;
 	if (*name == '\0')
@@ -811,7 +820,7 @@ gmtload(sp)
 struct state * const	sp;
 {
 	if (tzload(GMT0, sp) != 0)
-		(void) tzparse(GMT0, sp);
+		(void) tzparse(GMT0, sp, FALSE);	/* or (GMT, sp, TRUE) */
 }
 
 void
@@ -819,6 +828,11 @@ tzset()
 {
 	register const char *	name;
 
+	name = getenv("TZ");
+	if (name == NULL) {
+		tzsetwall();
+		return;
+	}
 	lcl_is_set = TRUE;
 #ifdef ALL_STATE
 	if (lclptr == NULL) {
@@ -829,8 +843,7 @@ tzset()
 		}
 	}
 #endif /* defined ALL_STATE */
-	name = getenv("TZ");
-	if (name != NULL && *name == '\0') {
+	if (*name == '\0') {
 		/*
 		** User wants it fast rather than right.
 		*/
@@ -840,9 +853,8 @@ tzset()
 		lclptr->ttis[0].tt_abbrind = 0;
 		(void) strcpy(lclptr->chars, GMT);
 	} else if (tzload(name, lclptr) != 0)
-		if (name == NULL || name[0] == ':' ||
-			tzparse(name, lclptr) != 0)
-				gmtload(lclptr);
+		if (name[0] == ':' || tzparse(name, lclptr, FALSE) != 0)
+			tzparse(name, lclptr, TRUE);
 	settzname();
 }
 

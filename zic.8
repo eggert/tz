@@ -5,9 +5,13 @@ tzcomp \- time zone compiler
 .B tzcomp
 [
 .B \-d
-directory ] [
+.I directory
+] [
 .B \-l
-localtime ] [ filename ... ]
+.I localtime
+] [
+.I filename
+\&... ]
 .SH DESCRIPTION
 .I Tzcomp
 reads text from the file(s) named on the command line
@@ -15,7 +19,7 @@ and creates the time conversion information files specified in this input.
 If a
 .I filename
 is
-.BR ` - ',
+.BR \- ,
 the standard input is read.
 .PP
 These options are available:
@@ -24,9 +28,14 @@ These options are available:
 Create time conversion information files in the named directory rather than
 in the standard directory named below.
 .TP
-.BI "\-l " localtime
+.BI "\-l " timezone
 Use the given time zone as local time.
-.PP
+.I Tzcomp
+will act as if the file contained a link line of the form
+.sp
+.ti +.5i
+Link	\fItimzone\fP		localtime
+.sp
 Input lines are made up of fields.
 Fields are separated from one another by any number of white space characters.
 Leading and trailing white space on input lines is ignored.
@@ -34,7 +43,7 @@ An unquoted sharp character (#) in the input introduces a comment which extends
 to the end of the line the sharp character appears on.
 White space characters and sharp characters may be enclosed in double quotes
 (") if they're to be used as part of a field.
-Any line which is blank (after comment stripping) is ignored.
+Any line that is blank (after comment stripping) is ignored.
 Non-blank lines are expected to be of one of three
 types:  rule lines, zone lines, and link lines.
 .PP
@@ -42,18 +51,18 @@ A rule line has the form
 .nf
 .B
 .ti +.5i
-.ta \w'Rule 'u +\w'MostNA 'u +\w'FROM 'u +\w'1973 'u +\w'TYPE 'u +\w'Apr 'u +\w'lastSun 'u +\w'2:00 'u +\w'SAVE 'u
+.ta \w'Rule\0\0'u +\w'NAME\0\0'u +\w'FROM\0\0'u +\w'1973\0\0'u +\w'TYPE\0\0'u +\w'Apr\0\0'u +\w'lastSun\0\0'u +\w'2:00\0\0'u +\w'SAVE\0\0'u
 .sp
 Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 .sp
 For example:
 .ti +.5i
 .sp
-Rule	MostNA	1969	1973	-	Apr	lastSun	2:00	1:00	D
+Rule	USA	1969	1973	\-	Apr	lastSun	2:00	1:00	D
 .sp
 .fi
 The fields that make up a rule line are:
-.TP
+.TP "\w'LETTER/S'u"
 .B NAME
 Gives the (arbitrary) name of the set of rules this rule is part of.
 .TP
@@ -63,18 +72,16 @@ Gives the first year in which the rule applies.
 .B TO
 Gives the last year in which the rule applies.
 The word
-.RB ` only '
+.B only
 may be used to repeat the value of the
-.B
-FROM
+.B FROM
 field.
 .TP
 .B TYPE
 Gives the type of year in which the year applies.  If
 .B TYPE
 is
-.B
-"-"
+.B \-
 then the rule applies in all years between
 .B FROM
 and
@@ -82,12 +89,13 @@ and
 inclusive.
 If
 .B TYPE
-is something else, then the command
-.B
+is something else, then
+.I tzcomp
+executes the command
 .ti +.5i
-years from to type
+\fByears\fP \fIfrom\fP \fIto\fP \fItype\fP
 .br
-is executed with arguments
+with arguments
 .IR from ,
 .IR to ,
 and
@@ -96,7 +104,7 @@ taken from the rule line; the rule applies only in those years
 printed by the
 .I years
 command.
-
+.PP
 The distributed
 .I years
 command is a shell script that handles year types
@@ -117,7 +125,7 @@ Recognized forms include:
 .nf
 .in +.5i
 .sp
-.ta \w'lastSun  'u
+.ta \w'Sun<=25\0\0'u
 5	the fifth of the month
 lastSun	the last Sunday in the month
 lastMon	the last Monday in the month
@@ -145,40 +153,50 @@ Recognized forms include:
 .fi
 .in -.5i
 .sp
-Any of these forms may be followed by the letter 'w' if the given time is
-local "wall clock" time or 's' if the given time is local "standard" time;
-in the absence of 'w' or 's', wall clock time is assumed.
+Any of these forms may be followed by the letter
+.B w
+if the given time is local ``wall clock'' time or
+.B s
+if the given time is local ``standard'' time; in the absence of
+.B w
+or
+.BR s ,
+wall clock time is assumed.
 .TP
 .B SAVE
 Gives the amount of time to be added to local standard time when the rule is in
-effect (although, of course, the 'w' and 's' suffixes are not used).
+effect.
 This field has the same format as the
 .B AT
-field.
+field
+(although, of course, the
+.B w
+and
+.B s
+suffixes are not used).
 .TP
 .B LETTER/S
-Gives the "variable part" (for example, the 'S' or 'D' in "EST" or "EDT")
-of time zone abbreviations to be used when this rule is in effect.
+Gives the ``variable part'' (for example, the ``S'' or ``D'' in ``EST''
+or ``EDT'') of time zone abbreviations to be used when this rule is in effect.
 If this field is
-.B
-"-",
+.BR \- ,
 the variable part is null.
 .PP
 A zone line has the form
 .sp
 .nf
 .ti +.5i
-.ta \w'Zone 'u +\w'Eastern 'u +\w'GMTOFF 'u +\w'MostNA 'u
+.ta \w'Zone\0\0'u +\w'Eastern\-US\0\0'u +\w'GMTOFF\0\0'u +\w'RULES\0\0'u
 Zone	NAME	GMTOFF	RULES	FORMAT
 .sp
 For example:
 .sp
 .ti +.5i
-Zone	Eastern	-5:00	MostNA	E%sT
+Zone	Eastern\-US	\-5:00	USA	E%sT
 .sp
 .fi
 The fields that make up a zone line are:
-.TP
+.TP "\w'GMTOFF'u"
 .B NAME
 The name of the time zone.
 This is the name used in creating the time conversion information file for the
@@ -196,28 +214,27 @@ begin the field with a minus sign if time must be subtracted from GMT.
 .B RULES
 The name of the rule(s) that apply in the time zone.
 If this field is
-.B
-"-"
+.B \-
 then standard time always applies in the time zone.
 .TP
 .B FORMAT
 The format for time zone abbreviations in this time zone.
 The pair of characters
-.B
-"%s"
-is used to show where the "variable part" of the time zone abbreviation goes.
+.B %s
+is used to show where the ``variable part'' of the time zone abbreviation goes.
 .PP
 A link line has the form
 .sp
 .nf
 .ti +.5i
-.ta \w'Link 'u +\w'LINK-FROM 'u
+.if t .ta \w'Link\0\0'u +\w'LINK-FROM\0\0'u
+.if n .ta \w'Link\0\0'u +\w'Eastern-US\0\0'u
 Link	LINK-FROM	LINK-TO
 .sp
 For example:
 .sp
 .ti +.5i
-Link	Eastern		EST5EDT
+Link	Eastern-US		EST5EDT
 .sp
 .fi
 The
@@ -232,8 +249,9 @@ field is used as an alternate name for that zone.
 Lines may appear in any order in the input.
 .SH NOTE
 For areas with more than two types of local time,
-you may get to use local standard time in "AT" field of the earliest
-transition time's rule to ensure that
+you may need to use local standard time in the
+.B AT
+field of the earliest transition time's rule to ensure that
 the earliest transition time recorded in the compiled file is correct.
 .SH FILES
 /etc/tzdir	standard directory used for created files

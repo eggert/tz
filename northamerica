@@ -82,8 +82,8 @@ Zone	US/Hawaiian	-10:00	Hawaii	H%sT
 # I don't know what they did before then.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Canada	1966	2037	-	Apr	lastSun	2:00	1:00	D
-Rule	Canada	1966	2037	-	Oct	lastSun	2:00	0	S
+Rule	Canada	1967	2037	-	Apr	lastSun	2:00	1:00	D
+Rule	Canada	1967	2037	-	Oct	lastSun	2:00	0	S
 
 # Zone	NAME			GMTOFF	RULES	FORMAT
 Zone	Canada/Atlantic		-4:00	Canada	A%sT

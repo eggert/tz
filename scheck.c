@@ -17,8 +17,8 @@ extern void	ifree P((char * p));
 
 char *
 scheck(string, format)
-const char *	string;
-char *		format;
+const char * const	string;
+const char * const	format;
 {
 	register char *		fbuf;
 	register const char *	fp;
@@ -59,7 +59,7 @@ char *		format;
 	*tp++ = 'c';
 	*tp = '\0';
 	if (sscanf(string, fbuf, &dummy) != 1)
-		result = format;
+		result = (char *) format;
 	ifree(fbuf);
 	return result;
 }

@@ -789,12 +789,9 @@ const time_t *	timep;
 	timesub(&t, ttisp->tt_gmtoff, sp, &tm);
 	tm.tm_isdst = ttisp->tt_isdst;
 	tzname[tm.tm_isdst] = &sp->chars[ttisp->tt_abbrind];
-#ifdef KRE_COMPAT
-	tm.tm_zone = &sp->chars[ttisp->tt_abbrind];
-#endif /* defined KRE_COMPAT */
-#ifdef TZA_COMPAT
-	tz_abbr = &sp->chars[ttisp->tt_abbrind];
-#endif /* defined TZA_COMPAT */
+#ifdef TM_ZONE
+	tm.TM_ZONE = &sp->chars[ttisp->tt_abbrind];
+#endif /* defined TM_ZONE */
 	return &tm;
 }
 
@@ -810,9 +807,9 @@ const time_t *	clock;
 			tzsetgmt(&gmtstate);
 	}
 	timesub(clock, 0L, &gmtstate, &tm);
-#ifdef KRE_COMPAT
-	tm.tm_zone = "GMT";		/* UCT ? */
-#endif /* defined KRE_COMPAT */
+#ifdef TM_ZONE
+	tm.TM_ZONE = "GMT";		/* UCT ? */
+#endif /* defined TM_ZONE */
 	return &tm;
 }
 
@@ -919,10 +916,12 @@ register struct tm *		tmp;
 		days = days - (long) ip[tmp->tm_mon];
 	tmp->tm_mday = (int) (days + 1);
 	tmp->tm_isdst = 0;
-#ifdef KRE_COMPAT
-	tmp->tm_zone = "";
-	tmp->tm_gmtoff = offset;
-#endif /* defined KRE_COMPAT */
+#ifdef TM_ZONE
+	tmp->TM_ZONE = "";
+#endif /* defined TM_ZONE */
+#ifdef TM_GMTOFF
+	tmp->TM_GMTOFF = offset;
+#endif /* defined TM_GMTOFF */
 }
 
 #ifdef BSD_COMPAT

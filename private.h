@@ -173,6 +173,19 @@ extern int errno;
 #endif /* !defined errno */
 
 /*
+** Private function declarations.
+*/
+char *	icalloc P((int nelem, int elsize));
+char *	icatalloc P((char * old, const char * new));
+char *	icpyalloc P((const char * string));
+char *	imalloc P((int n));
+void *	irealloc P((void * pointer, int size));
+void	icfree P((char * pointer));
+void	ifree P((char * pointer));
+char *  scheck P((const char *string, char *format));
+
+
+/*
 ** Finally, some convenience items.
 */
 

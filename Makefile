@@ -106,7 +106,7 @@ TZLIB=		/usr/lib/libz.a
 
 CFLAGS=
 
-# LINTFLAGS is set for 4.[123]BSD systems.
+# LINTFLAGS is set for SunOS 4.0.
 # If you're using System V, you'll want to comment out the "LINTFLAGS=" line.
 
 LINT=		lint
@@ -200,6 +200,8 @@ sure:		$(SOURCES)
 		$(LINT) $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZCSRCS)
 		$(LINT) $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZDSRCS)
 		$(LINT) $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(LIBSRCS)
+
+# "/usr/5bin/lint -p" can dump core on SunOS 4.0, so no -p below. . .
 
 SURE:		sure $(ENCHILADA)
 		make sure LINT=/usr/5bin/lint LINTFLAGS=""

@@ -2,11 +2,22 @@
 
 /*LINTLIBRARY*/
 
+/*
+** Should there be any built-in rules other than GMT?
+** In particular, should zones such as "EST5" (abbreviation is always "EST",
+** GMT offset is always 5 hours) be built in?
+*/
+
 #include "tzfile.h"
 #include "time.h"
 
 #ifdef OBJECTID
 static char	sccsid[] = "%W%";
+#endif
+
+#ifndef TRUE
+#define TRUE	1
+#define FALSE	0
 #endif
 
 extern char *		asctime();
@@ -15,7 +26,12 @@ extern char *		strcpy();
 extern char *		strcat();
 extern char *		getenv();
 
-static struct tzinfo	tzinfo;
+static struct tzhead	h;
+static long		ats[TZ_MAX_TIMES];
+static unsigned char	types[TZ_MAX_TIMES];
+static struct ttinfo	ttis[TZ_MAX_TYPES];
+static char		chars[TZ_MAX_CHARS + 1];
+static char		isset;
 
 char *			tz_abbr;	/* set by localtime; available to all */
 
@@ -23,56 +39,75 @@ static
 tzload(tzname)
 register char *	tzname;
 {
-	register struct tzinfo *	tzp;
-	register struct dsinfo *	dsp;
-	register int			fid;
-	register int			i, j, ok;
-	char				buf[256];
+	register int	fid;
+	register int	i;
+	char		buf[256];
 
+	fid = -1;
 	if (tzname == 0)
 		tzname = TZDEFAULT;
-	tzp = &tzinfo;
 	if (tzname[0] != '/') {
+		if ((strlen(buf) + strlen(tzname) + 2) > sizeof buf)
+			goto oops;
 		(void) strcpy(buf, TZDIR);
 		(void) strcat(buf, "/");
-		if ((strlen(buf) + strlen(tzname) + 1) > sizeof buf)
-			goto oops;
 		(void) strcat(buf, tzname);
 		tzname = buf;
 	}
 	if ((fid = open(tzname, 0)) == -1)
 		goto oops;
-	ok = read(fid, (char *) tzp, sizeof *tzp) == sizeof *tzp;
-	if (close(fid) != 0 || !ok)
+	if (read(fid, (char *) &h, sizeof h) != sizeof h)
 		goto oops;
-	/*
-	** Check for errors that could cause core dumps.
-	** Note:  all tz_dsinfo elements are checked even if they aren't used.
-	** Note that a zero-length time zone abbreviation is *not* considered
-	** to be an error.
-	*/
-	if (tzp->tz_timecnt < 0 || tzp->tz_timecnt > TZ_MAX_TIMES)
-		goto oops;
-	for (i = 0; i < tzp->tz_timecnt; ++i)
-		if (tzp->tz_types[i] > TZ_MAX_TYPES)
+	if (h.tzh_timecnt > TZ_MAX_TIMES ||
+		h.tzh_typecnt == 0 || h.tzh_typecnt > TZ_MAX_TYPES ||
+		h.tzh_charcnt > TZ_MAX_CHARS)
 			goto oops;
-	for (i = 0; i < TZ_MAX_TYPES; ++i) {
-		dsp = tzp->tz_dsinfo + i;
-		j = 0;
-		while (dsp->ds_abbr[j] != '\0')
-			if (++j > TZ_ABBR_LEN)
-				goto oops;
-	}
+	i = h.tzh_timecnt * sizeof ats[0];
+	if (read(fid, (char *) ats, i) != i)
+		goto oops;
+	i = h.tzh_timecnt * sizeof types[0];
+	if (read(fid, (char *) types, i) != i)
+		goto oops;
+	i = h.tzh_typecnt * sizeof ttis[0];
+	if (read(fid, (char *) ttis, i) != i)
+		goto oops;
+	i = h.tzh_charcnt * sizeof chars[0];
+	if (read(fid, (char *) chars, i) != i)
+		goto oops;
+	chars[h.tzh_charcnt] = '\0';
+	i = close(fid);
+	fid = -1;
+	if (i != 0)
+		goto oops;
+	for (i = 0; i < h.tzh_timecnt; ++i)
+		if (types[i] > h.tzh_typecnt)
+			goto oops;
+	for (i = 0; i < h.tzh_typecnt; ++i)
+		if (ttis[i].tt_abbrind > h.tzh_charcnt)
+			goto oops;
 	return 0;
 oops:
+	if (fid >= 0)
+		(void) close(fid);
 	/*
-	** Clobber tzinfo (in case we're running set-user-id and have been
-	** used to read a protected file).
+	** Clobber read-in information in case we're running set-user-id
+	** and have been used to read a protected file.
 	*/
 	{
-		struct tzinfo	nonsense;
+		struct tzhead	xxxh;
 
-		*tzp = nonsense;
+		h = xxxh;
+		for (i = 0; i < TZ_MAX_TIMES; ++i) {
+			ats[i] = 0;
+			types[i] = 0;
+		}
+		for (i = 0; i < TZ_MAX_TYPES; ++i) {
+			struct ttinfo	xxxtt;
+
+			ttis[i] = xxxtt;
+		}
+		for (i = 0; i < TZ_MAX_CHARS; ++i)
+			chars[i] = '\0';
 	}
 	return -1;
 }
@@ -88,6 +123,7 @@ char *	tzname;
 {
 	register int	answer;
 
+	isset = TRUE;
 	if (tzname != 0 && *tzname == '\0')
 		answer = 0;			/* Use built-in GMT */
 	else {
@@ -100,38 +136,38 @@ char *	tzname;
 		*/
 		answer = -1;
 	}
-	tzinfo.tz_timecnt = 0;
-	tzinfo.tz_dsinfo[0].ds_gmtoff = 0;
-	(void) strcpy(tzinfo.tz_dsinfo[0].ds_abbr, "GMT");
+	h.tzh_timecnt = 0;
+	ttis[0].tt_gmtoff = 0;
+	ttis[0].tt_abbrind = 0;
+	(void) strcpy(chars, "GMT");
 	return answer;
 }
 
 struct tm *
 newlocaltime(timep)
-long *timep;
+long *	timep;
 {
-	register struct tzinfo *	tzp;
-	register struct dsinfo *	dsp;
+	register struct ttinfo *	ttip;
 	register struct tm *		ct;
 	register int			i;
 	long				t;
 
-	tzp = &tzinfo;
 	t = *timep;
-	if (tzp->tz_dsinfo[0].ds_abbr[0] == '\0')
+	if (!isset)
 		(void) settz(getenv("TZ"));
-	if (tzp->tz_timecnt == 0 || t < tzp->tz_times[0])
-		dsp = tzp->tz_dsinfo;
+	if (h.tzh_timecnt == 0 || t < ats[0])
+		i = 0;
 	else {
-		for (i = 0; i < tzp->tz_timecnt; ++i)
-			if (t < tzp->tz_times[i])
+		for (i = 1; i < h.tzh_timecnt; ++i)
+			if (t < ats[i])
 				break;
-		dsp = tzp->tz_dsinfo + tzp->tz_types[i - 1];
+		i = types[i - 1];
 	}
-	t += dsp->ds_gmtoff;
+	ttip = &ttis[i];
+	t += ttip->tt_gmtoff;
 	ct = gmtime(&t);
-	ct->tm_isdst = dsp->ds_isdst;
-	tz_abbr = dsp->ds_abbr;
+	ct->tm_isdst = ttip->tt_isdst;
+	tz_abbr = &chars[ttip->tt_abbrind];
 	return ct;
 }
 
@@ -139,17 +175,5 @@ char *
 newctime(timep)
 long *	timep;
 {
-	register char *	cp;
-	register char *	dp;
-	static char	buf[26 + TZ_ABBR_LEN + 1];
-
-	(void) strcpy(buf, asctime(newlocaltime(timep)));
-	dp = &buf[24];
-	*dp++ = ' ';
-	cp = tz_abbr;
-	while ((*dp = *cp++) != '\0')
-		++dp;
-	*dp++ = '\n';
-	*dp++ = '\0';
-	return buf;
+	return asctime(newlocaltime(timep));
 }

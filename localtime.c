@@ -862,7 +862,7 @@ tzset()
 		(void) strcpy(lclptr->chars, GMT);
 	} else if (tzload(name, lclptr) != 0)
 		if (name[0] == ':' || tzparse(name, lclptr, FALSE) != 0)
-			tzparse(name, lclptr, TRUE);
+			(void) tzparse(name, lclptr, TRUE);
 	settzname();
 }
 

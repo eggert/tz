@@ -58,7 +58,7 @@ TZLIB=		$(LIBDIR)/libz.a
 
 # If you always want time values interpreted as "seconds since the epoch
 # (not counting leap seconds)", use
-# 	REDO=		posix_only
+#	REDO=		posix_only
 # below.  If you always want right time values interpreted as "seconds since
 # the epoch" (counting leap seconds)", use
 #	REDO=		right_only
@@ -191,20 +191,16 @@ CFLAGS=
 cc=		cc
 CC=		$(cc) -DTZDIR=\"$(TZDIR)\"
 
-TZCSRCS= \
-	zic.c localtime.c asctime.c scheck.c ialloc.c getopt.c optind.c
-TZCOBJS= \
-	zic.o localtime.o asctime.o scheck.o ialloc.o getopt.o optind.o
-TZDSRCS=	zdump.c localtime.c asctime.c ialloc.c getopt.c optind.c
-TZDOBJS=	zdump.o localtime.o asctime.o ialloc.o getopt.o optind.o
-DATESRCS= \
-	date.c localtime.c getopt.c optind.c logwtmp.c strftime.c asctime.c
-DATEOBJS= \
-	date.o localtime.o getopt.o optind.o logwtmp.o strftime.o asctime.o
+TZCSRCS=	zic.c localtime.c asctime.c scheck.c ialloc.c
+TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o
+TZDSRCS=	zdump.c localtime.c asctime.c ialloc.c
+TZDOBJS=	zdump.o localtime.o asctime.o ialloc.o
+DATESRCS=	date.c localtime.c logwtmp.c strftime.c asctime.c
+DATEOBJS=	date.o localtime.o logwtmp.o strftime.o asctime.o
 LIBSRCS=	localtime.c asctime.c difftime.c
 LIBOBJS=	localtime.o asctime.o difftime.o
 HEADERS=	tzfile.h private.h
-NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c getopt.c optind.c
+NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c
 NEWUCBSRCS=	date.c logwtmp.c strftime.c
 SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS)
 MANS=		newctime.3 newtzset.3 time2posix.3 tzfile.5 zic.8 zdump.8
@@ -282,10 +278,10 @@ $(TZLIB):	$(LIBOBJS)
 		if [ -x /usr/ucb/ranlib -o -x /usr/bin/ranlib ] ; \
 			then ranlib $@ ; fi
 
-# We use the system's getopt and logwtmp in preference to ours if available.
+# We use the system's logwtmp in preference to ours if available.
 
 date:		$(DATEOBJS)
-		ar r ,lib.a getopt.o optind.o logwtmp.o
+		ar r ,lib.a logwtmp.o
 		if [ -x /usr/ucb/ranlib -o -x /usr/bin/ranlib ] ; \
 			then ranlib ,lib.a ; fi
 		$(CC) $(CFLAGS) date.o localtime.o asctime.o strftime.o \

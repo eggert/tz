@@ -198,7 +198,8 @@ in decreasing order of importance:
 		`-' and `_'.  Do not exceed 14 characters or start with `-'.
 		E.g. prefer `Brunei' to `Bandar_Seri_Begawan'.
 	Include at least one location per time zone rule set per country.
-		One such location is enough.
+		One such location is enough.  Use ISO 3166 (see the file
+		iso3166.tab) to help decide whether something is a country.
 	If all the clocks in a country's region have agreed since 1970,
 		don't bother to include more than one location
 		even if subregions' clocks disagreed before 1970.

@@ -1,6 +1,5 @@
 /*
-** TO DO:  ALLOCATION WORK
-**	   AVOID MKTIME CLOBBERING TM'S OF OTHER FUNCTIONS
+** TO DO:  HARRIS STD/DST TEMPLATE FIX?
 */
 
 #ifndef lint
@@ -93,11 +92,11 @@ struct state {
 };
 
 struct rule {
-	int	r_type;		/* type of rule--see below */
-	int	r_day;		/* day number of rule */
-	int	r_week;		/* week number of rule */
-	int	r_mon;		/* month number of rule */
-	long	r_time;		/* transition time of rule */
+	int		r_type;		/* type of rule--see below */
+	int		r_day;		/* day number of rule */
+	int		r_week;		/* week number of rule */
+	int		r_mon;		/* month number of rule */
+	long		r_time;		/* transition time of rule */
 };
 
 #define	JULIAN_DAY		0	/* Jn - Julian day */
@@ -136,8 +135,17 @@ time_t			timeoff P((struct tm * tmp, long offset));
 long			gtime P((struct tm * tmp));
 #endif /* defined CMUCS */
 
-static struct state	lclstate;
-static struct state	gmtstate;
+#ifdef ALL_STATE
+static struct state *	lclptr;
+static struct state *	gmtptr;
+#endif /* defined ALL_STATE */
+
+#ifndef ALL_STATE
+static struct state	lclmem;
+static struct state	gmtmem;
+#define lclptr		(&lclmem)
+#define gmtptr		(&gmtmem)
+#endif /* State Farm */
 
 static int		lcl_is_set;
 static int		gmt_is_set;
@@ -168,15 +176,21 @@ const char * const	codep;
 static void
 settzname()
 {
-	register const struct state * const	sp = &lclstate;
+	register const struct state * const	sp = lclptr;
 	register int				i;
 
 	tzname[0] = WILDABBR;
 	tzname[1] = WILDABBR;
 #ifdef USG_COMPAT
 	daylight = 0;
-	timezone = -sp->ttis[0].tt_gmtoff;
+	timezone = 0;
 #endif /* defined USG_COMPAT */
+#ifdef ALL_STATE
+	if (sp == NULL) {
+		tzname[0] = tzname[1] = "GMT";
+		return;
+	}
+#endif /* defined ALL_STATE */
 	for (i = 0; i < sp->typecnt; ++i) {
 		register const struct ttinfo * const	ttisp = &sp->ttis[i];
 
@@ -185,7 +199,8 @@ settzname()
 #ifdef USG_COMPAT
 		if (ttisp->tt_isdst)
 			daylight = 1;
-		else	timezone = -(ttisp->tt_gmtoff);
+		if (i == 0 || !ttisp->tt_isdst)
+			timezone = -(ttisp->tt_gmtoff);
 #endif /* defined USG_COMPAT */
 	}
 }
@@ -256,8 +271,11 @@ register struct state * const	sp;
 			sp->ats[i] = detzcode(p);
 			p += 4;
 		}
-		for (i = 0; i < sp->timecnt; ++i)
+		for (i = 0; i < sp->timecnt; ++i) {
 			sp->types[i] = (unsigned char) *p++;
+			if (sp->types[i] >= sp->typecnt)
+				return -1;
+		}
 		for (i = 0; i < sp->typecnt; ++i) {
 			register struct ttinfo *	ttisp;
 
@@ -265,7 +283,12 @@ register struct state * const	sp;
 			ttisp->tt_gmtoff = detzcode(p);
 			p += 4;
 			ttisp->tt_isdst = (unsigned char) *p++;
+			if (ttisp->tt_isdst != 0 && ttisp->tt_isdst != 1)
+				return -1;
 			ttisp->tt_abbrind = (unsigned char) *p++;
+			if (ttisp->tt_abbrind < 0 ||
+				ttisp->tt_abbrind > sp->charcnt)
+					return -1;
 		}
 		for (i = 0; i < sp->charcnt; ++i)
 			sp->chars[i] = *p++;
@@ -280,18 +303,6 @@ register struct state * const	sp;
 			p += 4;
 		}
 	}
-	/*
-	** Check that all the local time type indices are valid.
-	*/
-	for (i = 0; i < sp->timecnt; ++i)
-		if (sp->types[i] >= sp->typecnt)
-			return -1;
-	/*
-	** Check that all abbreviation indices are valid.
-	*/
-	for (i = 0; i < sp->typecnt; ++i)
-		if (sp->ttis[i].tt_abbrind >= sp->charcnt)
-			return -1;
 	return 0;
 }
 
@@ -609,8 +620,7 @@ register struct state * const	sp;
 			name = getoffset(name, &dstoffset);
 			if (name == NULL)
 				return -1;
-		} else
-			dstoffset = stdoffset - 1 * SECSPERHOUR;
+		} else	dstoffset = stdoffset - SECSPERHOUR;
 		if (*name == ',' || *name == ';') {
 			struct rule	start;
 			struct rule	end;
@@ -630,9 +640,9 @@ register struct state * const	sp;
 				return -1;
 			sp->typecnt = 2;	/* standard time and DST */
 			/*
-			** Two transitions per year, from EPOCH_YEAR to 2038.
+			** Two transitions per year, from EPOCH_YEAR to 2037.
 			*/
-			sp->timecnt = 2 * (2038 - EPOCH_YEAR + 1);
+			sp->timecnt = 2 * (2037 - EPOCH_YEAR + 1);
 			if (sp->timecnt > TZ_MAX_TIMES)
 				return -1;
 			sp->ttis[0].tt_gmtoff = -dstoffset;
@@ -644,7 +654,7 @@ register struct state * const	sp;
 			atp = sp->ats;
 			typep = sp->types;
 			janfirst = 0;
-			for (year = EPOCH_YEAR; year <= 2038; ++year) {
+			for (year = EPOCH_YEAR; year <= 2037; ++year) {
 				starttime = transtime(janfirst, year, &start,
 					stdoffset);
 				endtime = transtime(janfirst, year, &end,
@@ -774,9 +784,8 @@ static void
 gmtload(sp)
 struct state * const	sp;
 {
-	if (tzload("GMT", sp) == 0)
-		return;
-	gmtbuiltin(sp);
+	if (tzload("GMT", sp) != 0)
+		gmtbuiltin(sp);
 }
 
 void
@@ -785,13 +794,22 @@ tzset()
 	register const char *	name;
 
 	lcl_is_set = TRUE;
+#ifdef ALL_STATE
+	if (lclptr == NULL) {
+		lclptr = (struct state *) malloc(sizeof *lclptr);
+		if (lclptr == NULL) {
+			settzname();	/* all we can do */
+			return;
+		}
+	}
+#endif /* defined ALL_STATE */
 	name = getenv("TZ");
 	if (name != NULL && *name == '\0')
-		gmtbuiltin(&lclstate);	/* built-in GMT by request */
-	else if (tzload(name, &lclstate) != 0)
+		gmtbuiltin(lclptr);	/* built-in GMT by request */
+	else if (tzload(name, lclptr) != 0)
 		if (name == NULL || name[0] == ':' ||
-			tzparse(name, &lclstate) != 0)
-				gmtload(&lclstate);
+			tzparse(name, lclptr) != 0)
+				gmtload(lclptr);
 	settzname();
 }
 
@@ -799,8 +817,17 @@ void
 tzsetwall()
 {
 	lcl_is_set = TRUE;
-	if (tzload((char *) NULL, &lclstate) != 0)
-		gmtload(&lclstate);
+#ifdef ALL_STATE
+	if (lclptr == NULL) {
+		lclptr = (struct state *) malloc(sizeof *lclptr);
+		if (lclptr == NULL) {
+			settzname();	/* all we can do */
+			return;
+		}
+	}
+#endif /* defined ALL_STATE */
+	if (tzload((char *) NULL, lclptr) != 0)
+		gmtload(lclptr);
 	settzname();
 }
 
@@ -827,7 +854,7 @@ struct tm * const	tmp;
 
 	if (!lcl_is_set)
 		tzset();
-	sp = &lclstate;
+	sp = lclptr;
 #ifdef ALL_STATE
 	if (sp == NULL) {
 		gmtsub(timep, offset, tmp);
@@ -885,16 +912,31 @@ struct tm * const	tmp;
 {
 	if (!gmt_is_set) {
 		gmt_is_set = TRUE;
-		gmtload(&gmtstate);
+#ifdef ALL_STATE
+		gmtptr = (struct state *) malloc(sizeof *gmtptr);
+		if (gmtptr != NULL)
+#endif /* defined ALL_STATE */
+			gmtload(gmtptr);
 	}
-	timesub(timep, offset, &gmtstate, tmp);
+	timesub(timep, offset, gmtptr, tmp);
 #ifdef TM_ZONE
 	/*
 	** Could get fancy here and deliver something such as
 	** "GMT+xxxx" or "GMT-xxxx" if offset is non-zero,
 	** but this is no time for a treasure hunt.
 	*/
-	tmp->TM_ZONE = (offset == 0) ? gmtstate.chars : WILDABBR;
+	if (offset != 0)
+		tmp->TM_ZONE = WILDABBR;
+	else {
+#ifdef ALL_STATE
+		if (gmtptr == NULL)
+			tmp->TM_ZONE = "GMT";
+		else	tmp->TM_ZONE = gmtptr->chars;
+#endif /* defined ALL_STATE */
+#ifndef ALL_STATE
+		tmp->TM_ZONE = gmtptr->chars;
+#endif /* State Farm */
+	}
 #endif /* defined TM_ZONE */
 }
 
@@ -938,16 +980,22 @@ register struct tm * const		tmp;
 	register const int *		ip;
 	register long			corr;
 	register int			hit;
+	register int			i;
 
 	corr = 0;
 	hit = FALSE;
-	y = sp->leapcnt;
-	while (--y >= 0) {
-		lp = &sp->lsis[y];
+#ifdef ALL_STATE
+	i = (sp == NULL) ? 0 : sp->leapcnt;
+#endif /* defined ALL_STATE */
+#ifndef ALL_STATE
+	i = sp->leapcnt;
+#endif /* State Farm */
+	while (--i >= 0) {
+		lp = &sp->lsis[i];
 		if (*timep >= lp->ls_trans) {
 			if (*timep == lp->ls_trans)
-				hit = ((y == 0 && lp->ls_corr > 0) ||
-					lp->ls_corr > sp->lsis[y-1].ls_corr);
+				hit = ((i == 0 && lp->ls_corr > 0) ||
+					lp->ls_corr > sp->lsis[i - 1].ls_corr);
 			corr = lp->ls_corr;
 			break;
 		}
@@ -1036,16 +1084,6 @@ const time_t * const	timep;
 **	It does a binary search of the time_t space.  Since time_t's are
 **	just 32 bits, its a max of 32 iterations (even at 64 bits it
 **	would still be very reasonable).
-**
-** A warning applies if you try to use these functions with a version of
-** "localtime" that has overflow problems (such as System V Release 2.0
-** or 4.3 BSD localtime).
-** If you're not using GMT and feed a value to localtime
-** that's near the minimum (or maximum) possible time_t value, localtime
-** may return a struct that represents a time near the maximum (or minimum)
-** possible time_t value (because of overflow).  If such a returned struct tm
-** is fed to timelocal, it will not return the value originally feed to
-** localtime.
 */
 
 #ifndef WRONG
@@ -1067,7 +1105,6 @@ const int	base;
 		if (*unitsptr < 0) {
 			*tensptr -= 1 + (-*unitsptr) / base;
 			*unitsptr = base - (-*unitsptr) % base;
-
 		}
 	}
 }
@@ -1161,7 +1198,7 @@ int * const		okayp;
 		** gets checked.
 		*/
 		sp = (const struct state *)
-			((funcp == localsub) ? &lclstate : &gmtstate);
+			((funcp == localsub) ? lclptr : gmtptr);
 #ifdef ALL_STATE
 		if (sp == NULL)
 			return WRONG;
@@ -1212,13 +1249,12 @@ const long		offset;
 		return t;
 	}
 	/*
-	** We're supposed to assume that somebody took a time of one type,
+	** We're supposed to assume that somebody took a time of one type
 	** and did some math on it that yielded a "struct tm" that's bad.
 	** We try to divine the type they started from and adjust to the
 	** type they need.
 	*/
-	sp = (const struct state *) 
-		((funcp == localsub) ? &lclstate : &gmtstate);
+	sp = (const struct state *) ((funcp == localsub) ? lclptr : gmtptr);
 #ifdef ALL_STATE
 	if (sp == NULL)
 		return WRONG;

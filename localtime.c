@@ -30,14 +30,15 @@ extern char *		strcpy();
 extern char *		strcat();
 extern char *		getenv();
 
-static struct tzhead	h;
-static long		ats[TZ_MAX_TIMES];
-static unsigned char	types[TZ_MAX_TIMES];
-static struct ttinfo	ttis[TZ_MAX_TYPES];
-static char		chars[TZ_MAX_CHARS + 1];
+struct state {
+	struct tzhead	h;
+	long		ats[TZ_MAX_TIMES];
+	unsigned char	types[TZ_MAX_TIMES];
+	struct ttinfo	ttis[TZ_MAX_TYPES];
+	char		chars[TZ_MAX_CHARS + 1];
+};
 
-#define TZ_MAX_TOTAL	(sizeof h + sizeof ats + sizeof types + \
-				sizeof ttis + sizeof chars)
+static struct state	s;
 
 static char		isset;
 
@@ -60,71 +61,85 @@ char *	from;
 }
 
 static
-tzload(tzname)
-register char *	tzname;
+tzload(tzname, sp)
+register char *		tzname;
+register struct state *	sp;
 {
 	register char *	p;
 	register int	fid;
 	register int	i;
 	register int	doaccess;
-	char		buf[(TZ_MAX_TOTAL>MAXPATHLEN)?TZ_MAX_TOTAL:MAXPATHLEN];
 
 	if (tzname == 0 && (tzname = TZDEFAULT) == 0)
 		return -1;
 	doaccess = tzname[0] == '/';
-	if (!doaccess) {
-		if ((p = TZDIR) == 0)
+	{
+		char	fullname[MAXPATHLEN];
+
+		if (!doaccess) {
+			if ((p = TZDIR) == 0)
+				return -1;
+			if ((strlen(p) + strlen(tzname) + 1) >= sizeof fullname)
+				return -1;
+			(void) strcpy(fullname, p);
+			(void) strcat(fullname, "/");
+			(void) strcat(fullname, tzname);
+			/*
+			** Set doaccess if '.' (as in "../") shows up in name.
+			*/
+			while (*tzname != '\0')
+				if (*tzname++ == '.')
+					doaccess = TRUE;
+			tzname = fullname;
+		}
+		if (doaccess && access(tzname, 4) != 0)
 			return -1;
-		if ((strlen(p) + strlen(tzname) + 1) >= sizeof buf)
+		if ((fid = open(tzname, 0)) == -1)
 			return -1;
-		(void) strcpy(buf, p);
-		(void) strcat(buf, "/");
-		(void) strcat(buf, tzname);
-		/*
-		** Set doaccess if '.' (as in "../") shows up in name.
-		*/
-		while (*tzname != '\0')
-			if (*tzname++ == '.')
-				doaccess = TRUE;
-		tzname = buf;
 	}
-	if (doaccess && access(tzname, 4) != 0)
-		return -1;
-	if ((fid = open(tzname, 0)) == -1)
-		return -1;
-	p = buf;
-	i = read(fid, p, sizeof buf);
-	if (close(fid) != 0 || i < sizeof h)
-		return -1;
-	(void) memcpy((char *) &h, p, sizeof h);
-	if (h.tzh_timecnt > TZ_MAX_TIMES ||
-		h.tzh_typecnt == 0 || h.tzh_typecnt > TZ_MAX_TYPES ||
-		h.tzh_charcnt > TZ_MAX_CHARS)
+	{
+		char	buf[sizeof s];
+
+		p = buf;
+		i = read(fid, p, sizeof buf);
+		if (close(fid) != 0 || i < sizeof sp->h)
 			return -1;
-	if (i < sizeof h +
-		h.tzh_timecnt * (sizeof ats[0] + sizeof types[0]) +
-		h.tzh_typecnt * sizeof ttis[0] +
-		h.tzh_charcnt * sizeof chars[0])
-			return -1;
-	p += sizeof h;
-	if ((i = h.tzh_timecnt) > 0) {
-		(void) memcpy((char *) ats, p, i * sizeof ats[0]);
-		p += i * sizeof ats[0];
-		(void) memcpy((char *) types, p, i * sizeof types[0]);
-		p += i * sizeof types[0];
+		(void) memcpy((char *) &sp->h, p, sizeof sp->h);
+		if (sp->h.tzh_timecnt > TZ_MAX_TIMES ||
+			sp->h.tzh_typecnt == 0 ||
+			sp->h.tzh_typecnt > TZ_MAX_TYPES ||
+			sp->h.tzh_charcnt > TZ_MAX_CHARS)
+				return -1;
+		if (i < sizeof sp->h +
+			sp->h.tzh_timecnt *
+			(sizeof sp->ats[0] + sizeof sp->types[0]) +
+			sp->h.tzh_typecnt * sizeof sp->ttis[0] +
+			sp->h.tzh_charcnt * sizeof sp->chars[0])
+				return -1;
+		p += sizeof sp->h;
+		if ((i = sp->h.tzh_timecnt) > 0) {
+			(void) memcpy((char *) sp->ats, p,
+				i * sizeof sp->ats[0]);
+			p += i * sizeof sp->ats[0];
+			(void) memcpy((char *) sp->types, p,
+				i * sizeof sp->types[0]);
+			p += i * sizeof sp->types[0];
+		}
+		if ((i = sp->h.tzh_typecnt) > 0) {
+			(void) memcpy((char *) sp->ttis, p,
+				i * sizeof sp->ttis[0]);
+			p += i * sizeof sp->ttis[0];
+		}
+		if ((i = sp->h.tzh_charcnt) > 0)
+			(void) memcpy((char *) sp->chars, p,
+				i * sizeof sp->chars[0]);
 	}
-	if ((i = h.tzh_typecnt) > 0) {
-		(void) memcpy((char *) ttis, p, i * sizeof ttis[0]);
-		p += i * sizeof ttis[0];
-	}
-	if ((i = h.tzh_charcnt) > 0)
-		(void) memcpy((char *) chars, p, i * sizeof chars[0]);
-	chars[h.tzh_charcnt] = '\0';	/* ensure '\0'-termination */
-	for (i = 0; i < h.tzh_timecnt; ++i)
-		if (types[i] >= h.tzh_typecnt)
+	sp->chars[sp->h.tzh_charcnt] = '\0';	/* ensure '\0' at end */
+	for (i = 0; i < sp->h.tzh_timecnt; ++i)
+		if (sp->types[i] >= sp->h.tzh_typecnt)
 			return -1;
-	for (i = 0; i < h.tzh_typecnt; ++i)
-		if (ttis[i].tt_abbrind >= h.tzh_charcnt)
+	for (i = 0; i < sp->h.tzh_typecnt; ++i)
+		if (sp->ttis[i].tt_abbrind >= sp->h.tzh_charcnt)
 			return -1;
 	return 0;
 }
@@ -144,25 +159,26 @@ char *	tzname;
 	if (tzname != 0 && *tzname == '\0')
 		answer = 0;			/* Use built-in GMT */
 	else {
-		if (tzload(tzname) == 0)
+		if (tzload(tzname, &s) == 0)
 			return 0;
 		/*
 		** If we want to try for local time on errors. . .
-		if (tzload((char *) 0) == 0)
+		if (tzload((char *) 0, &s) == 0)
 			return -1;
 		*/
 		answer = -1;
 	}
-	h.tzh_timecnt = 0;
-	ttis[0].tt_gmtoff = 0;
-	ttis[0].tt_abbrind = 0;
-	(void) strcpy(chars, "GMT");
+	s.h.tzh_timecnt = 0;
+	s.ttis[0].tt_gmtoff = 0;
+	s.ttis[0].tt_abbrind = 0;
+	(void) strcpy(s.chars, "GMT");
 	return answer;
 }
 
-struct tm *
-newlocaltime(timep)
-long *	timep;
+static struct tm *
+newsub(timep, sp)
+register long *		timep;
+register struct state *	sp;
 {
 	register struct ttinfo *	ttip;
 	register struct tm *		tmp;
@@ -170,22 +186,39 @@ long *	timep;
 	long				t;
 
 	t = *timep;
-	if (!isset)
-		(void) settz(getenv("TZ"));
-	if (h.tzh_timecnt == 0 || t < ats[0])
+	if (sp->h.tzh_timecnt == 0 || t < sp->ats[0])
 		i = 0;
 	else {
-		for (i = 1; i < h.tzh_timecnt; ++i)
-			if (t < ats[i])
+		for (i = 1; i < sp->h.tzh_timecnt; ++i)
+			if (t < sp->ats[i])
 				break;
-		i = types[i - 1];
+		i = sp->types[i - 1];
 	}
-	ttip = &ttis[i];
+	ttip = &sp->ttis[i];
 	t += ttip->tt_gmtoff;
 	tmp = gmtime(&t);
 	tmp->tm_isdst = ttip->tt_isdst;
-	tz_abbr = &chars[ttip->tt_abbrind];
+	tz_abbr = &sp->chars[ttip->tt_abbrind];
 	return tmp;
+}
+
+struct tm *
+newlocaltime(timep)
+long *	timep;
+{
+	if (!isset)
+		(void) settz(getenv("TZ"));
+	return newsub(timep, &s);
+}
+
+struct tm *
+zonetime(timep, zone)
+long *	timep;
+char *	zone;
+{
+	struct state	st;
+
+	return (tzload(zone, &st) == 0) ? newsub(timep, &st) : 0;
 }
 
 char *

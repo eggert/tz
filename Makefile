@@ -92,6 +92,7 @@ LDLIBS=
 #  -DHAVE_SETTIMEOFDAY=3 if settimeofday ignores 2nd arg (4.4BSD)
 #  -DHAVE_STRERROR=1 if `strerror' works
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
+#  -DHAVE_SYS_WAIT_H=0 if your compiler lacks a "sys/wait.h"
 #  -DLOCALE_HOME=\"path\" if locales are in "path", not "/usr/lib/locale"
 #  -DHAVE_UNISTD_H=0 if your compiler lacks a "unistd.h" (Microsoft C++ 7?)
 #  -DHAVE_UTMPX_H=1 if your compiler has a "utmpx.h"

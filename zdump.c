@@ -60,33 +60,15 @@ static char	elsieid[] = "%W%";
 #define DAYSPERNYEAR	365
 #endif /* !defined DAYSPERNYEAR */
 
-#ifndef C99IPMOD
-/*
-** Given an integral argument (a) and a positive integral argument (b),
-** return a % b per C99.
-*/
-
-#define C99IPMOD(a, b)	((-1 % 2 < 0 || (a) >= 0) ? \
-				((a) % (b)) : ((a) % (b) - (b)))
-#endif /* !defined C99IPMOD */
-
 #ifndef isleap
 #define isleap(y) (((y) % 4) == 0 && (((y) % 100) != 0 || ((y) % 400) == 0))
 #endif /* !defined isleap */
 
 #ifndef isleap_sum
 /*
-** Since everything in isleap is modulo 400 (or a factor of 400), we know that
-**	isleap(y) == isleap(y % 400)
-** and so
-**	isleap(a + b) == isleap((a + b) % 400)
-** or
-**	isleap(a + b) == isleap(a % 400 + b % 400)
-** (at least under the C99 definition of %).
-** We use this to avoid addition overflow problems.
+** See tzfile.h for details on isleap_sum.
 */
-
-#define isleap_sum(a, b)	isleap(C99IPMOD((a), 400) + C99IPMOD((b), 400))
+#define isleap_sum(a, b)	isleap((a) % 400 + (b) % 400)
 #endif /* !defined isleap_sum */
 
 #if HAVE_GETTEXT

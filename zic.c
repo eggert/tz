@@ -1,28 +1,34 @@
-#
-
-#include "stdio.h"
-
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";
 #endif /* !NOID */
 #endif /* !lint */
 
+#include "stdio.h"
 #include "tzfile.h"
 #include "ctype.h"
+#include "time.h"
+#include "string.h"
+
+#ifdef unix
 #include "sys/types.h"
 #include "sys/stat.h"
-#include "time.h"
+#endif /* defined unix */
+
+#ifdef __TURBOC__
+#include "sys/stat.h"
+#endif /* !defined __TURBOC__ */
 
 #ifndef BUFSIZ
 #define BUFSIZ	1024
-#endif
+#endif /* !defined BUFSIZ */
 
 #ifndef TRUE
 #define TRUE	1
 #define FALSE	0
-#endif
+#endif /* !defined TRUE */
 
+extern char *	icatalloc();
 extern char *	icpyalloc();
 extern char *	imalloc();
 extern char *	irealloc();
@@ -30,12 +36,6 @@ extern char *	optarg;
 extern int	optind;
 extern FILE *	popen();
 extern char *	scheck();
-#ifndef USG
-extern char *	sprintf();
-#endif /* !USG */
-extern char *	strcat();
-extern char *	strchr();
-extern char *	strcpy();
 
 #ifndef EXIT_SUCCESS
 #define EXIT_SUCCESS	0
@@ -45,49 +45,49 @@ extern char *	strcpy();
 #define EXIT_FAILURE	1
 #endif/* !defined EXIT_FAILURE */
 
-static		addtt();
-static		addtype();
-static		addleap();
-static		associate();
+static void	addtt();
+static int	addtype();
+static void	addleap();
+static void	adjleap();
+static void	associate();
 static int	charcnt;
-static		ciequal();
+static int	ciequal();
 static long	eitol();
 static int	errors;
 static char *	filename;
 static char **	getfields();
 static long	gethms();
-static		infile();
-static		inleap();
-static		inlink();
-static		inrule();
-static		inzcont();
-static		inzone();
-static		inzsub();
+static void	infile();
+static void	inleap();
+static void	inlink();
+static void	inrule();
+static int	inzcont();
+static int	inzone();
+static int	inzsub();
+static int	leapcnt;
 static int	linenum;
-static		lowerit();
+static int	lowerit();
 static time_t	max_time;
 static int	max_year;
 static time_t	min_time;
 static int	min_year;
-static		mkdirs();
-static		newabbr();
+static int	mkdirs();
+static void	newabbr();
 static int	noise;
-static		nondunlink();
+static void	nondunlink();
 static long	oadd();
-static		outzone();
+static void	outzone();
 static char *	progname;
 static char *	rfilename;
 static int	rlinenum;
 static time_t	rpytime();
-static		rulesub();
-static		setboundaries();
-static		adjleap();
+static void	rulesub();
+static void	setboundaries();
 static time_t	tadd();
-static int	leapcnt;
 static int	timecnt;
 static int	tt_signed;
 static int	typecnt;
-static		yearistype();
+static int	yearistype();
 
 /*
 ** Line codes.
@@ -345,12 +345,13 @@ char *	ptr;
 #define emalloc(size)		memcheck(imalloc(size))
 #define erealloc(ptr, size)	memcheck(irealloc(ptr, size))
 #define ecpyalloc(ptr)		memcheck(icpyalloc(ptr))
+#define ecatalloc(oldp, newp)	memcheck(icatalloc(oldp, newp))
 
 /*
 ** Error handling.
 */
 
-static
+static void
 eats(name, num, rname, rnum)
 char *	name;
 char *	rname;
@@ -361,14 +362,14 @@ char *	rname;
 	rlinenum = rnum;
 }
 
-static
+static void
 eat(name, num)
 char *	name;
 {
 	eats(name, num, (char *) NULL, -1);
 }
 
-static
+static void
 error(string)
 char *	string;
 {
@@ -386,7 +387,7 @@ char *	string;
 	++errors;
 }
 
-static
+static void
 usage()
 {
 	(void) fprintf(stderr,
@@ -482,35 +483,34 @@ char *	argv[];
 		outzone(&zones[i], j - i);
 	}
 	/*
-	** We'll take the easy way out on this last part.
+	** Make links.
 	*/
-	if (chdir(directory) != 0) {
-		(void) fprintf(stderr, "%s: Can't chdir to ", progname);
-		perror(directory);
-		exit(EXIT_FAILURE);
-	}
-	for (i = 0; i < nlinks; ++i) {
-		nondunlink(links[i].l_to);
-		if (link(links[i].l_from, links[i].l_to) != 0) {
-			(void) fprintf(stderr, "%s: Can't link %s to ",
-				progname, links[i].l_from);
-			perror(links[i].l_to);
+	for (i = 0; i < nlinks + (lcltime != NULL); ++i) {
+		register char *	fromname;
+		register char *	toname;
+
+		fromname = ecpyalloc(directory);
+		fromname = ecatalloc(fromname, "/");
+		fromname = ecatalloc(fromname,
+			(i == nlinks) ? lcltime : links[i].l_from);
+		toname = ecpyalloc(directory);
+		toname = ecatalloc(toname, "/");
+		toname = ecatalloc(toname,
+			(i == nlinks) ? TZDEFAULT : links[i].l_to);
+		nondunlink(toname);
+		if (link(fromname, toname) != 0) {
+			(void) fprintf(stderr, "%s: Can't link from %s to ",
+				progname, fromname);
+			perror(toname);
 			exit(EXIT_FAILURE);
 		}
+		free(fromname);
+		free(toname);
 	}
-	if (lcltime != NULL) {
-		nondunlink(TZDEFAULT);
-		if (link(lcltime, TZDEFAULT) != 0) {
-			(void) fprintf(stderr, "%s: Can't link %s to ",
-				progname, lcltime);
-			perror(TZDEFAULT);
-			exit(EXIT_FAILURE);
-		}
-	}
-	exit((errors == 0) ? 0 : 1);
+	return (errors == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-static
+static void
 setboundaries()
 {
 	register time_t 	bit;
@@ -540,7 +540,7 @@ setboundaries()
 ** We get to be careful here since there's a fair chance of root running us.
 */
 
-static
+static void
 nondunlink(name)
 char *	name;
 {
@@ -570,7 +570,7 @@ char *	cp2;
 		((struct rule *) cp2)->r_name);
 }
 
-static
+static void
 associate()
 {
 	register struct zone *	zp;
@@ -578,8 +578,19 @@ associate()
 	register int		base, out;
 	register int		i;
 
-	if (nrules != 0)
-		(void) qsort((char *) rules, nrules, sizeof *rules, rcomp);
+	if (nrules != 0) {
+		/*
+		** This only *looks* like an optimization;
+		** it's actually a workaround for a buggy Turbo C 1.5 qsort.
+		*/
+		for (i = 1; i < nrules; ++i)
+			if (rcomp((char *) &rules[i - 1],
+				(char *) &rules[i]) > 0)
+					break;
+		if (i < nrules)
+			(void) qsort((char *) rules, nrules,
+				sizeof *rules, rcomp);
+	}
 	for (i = 0; i < nzones; ++i) {
 		zp = &zones[i];
 		zp->z_rules = NULL;
@@ -618,7 +629,7 @@ associate()
 		exit(EXIT_FAILURE);
 }
 
-static
+static void
 infile(name)
 char *	name;
 {
@@ -752,7 +763,7 @@ char *	errstring;
 		eitol(SECS_PER_MIN) + eitol(ss));
 }
 
-static
+static void
 inrule(fields, nfields)
 register char **	fields;
 {
@@ -825,12 +836,12 @@ static
 inzsub(fields, nfields, iscont)
 register char **	fields;
 {
-	register char *	cp;
+	register char *		cp;
 	static struct zone	z;
-	register int	i_gmtoff, i_rule, i_format;
-	register int	i_untilyear, i_untilmonth;
-	register int	i_untilday, i_untiltime;
-	register int	hasuntil;
+	register int		i_gmtoff, i_rule, i_format;
+	register int		i_untilyear, i_untilmonth;
+	register int		i_untilday, i_untiltime;
+	register int		hasuntil;
 
 	if (iscont) {
 		i_gmtoff = ZFC_GMTOFF;
@@ -891,7 +902,7 @@ error("Zone continuation line end time is not after end time of previous line");
 	return hasuntil;
 }
 
-static
+static void
 inleap(fields, nfields)
 register char **	fields;
 {
@@ -968,7 +979,7 @@ register char **	fields;
 	addleap(tadd(t, tod), *cp == '+', lp->l_value);
 }
 
-static
+static void
 inlink(fields, nfields)
 register char **	fields;
 {
@@ -995,7 +1006,7 @@ register char **	fields;
 	links[nlinks++] = l;
 }
 
-static
+static void
 rulesub(rp, loyearp, hiyearp, typep, monthp, dayp, timep)
 register struct rule *	rp;
 char *			loyearp;
@@ -1136,7 +1147,7 @@ char *			timep;
 	}
 }
 
-static
+static void
 puttzcode(val, fp)
 long	val;
 FILE *	fp;
@@ -1150,13 +1161,14 @@ FILE *	fp;
 	}
 }
 
-static
+static void
 writezone(name)
 char *	name;
 {
 	register FILE *		fp;
 	register int		i, j;
 	char			fullname[BUFSIZ];
+	struct tzhead		tzh;
 
 	if (strlen(directory) + 1 + strlen(name) >= sizeof fullname) {
 		(void) fprintf(stderr,
@@ -1165,16 +1177,19 @@ char *	name;
 		exit(EXIT_FAILURE);
 	}
 	(void) sprintf(fullname, "%s/%s", directory, name);
-	if ((fp = fopen(fullname, "w")) == NULL) {
+	if ((fp = fopen(fullname, "wb")) == NULL) {
 		if (mkdirs(fullname) != 0)
 			exit(EXIT_FAILURE);
-		if ((fp = fopen(fullname, "w")) == NULL) {
+		if ((fp = fopen(fullname, "wb")) == NULL) {
 			(void) fprintf(stderr, "%s: Can't create ", progname);
 			perror(fullname);
 			exit(EXIT_FAILURE);
 		}
 	}
-	(void) fseek(fp, (long) sizeof ((struct tzhead *) 0)->tzh_reserved, 0);
+#ifdef lint
+	tzh.tzh_reserved[0] = 0;
+#endif /* defined lint */
+	(void) fseek(fp, (long) sizeof tzh.tzh_reserved, 0);
 	puttzcode(eitol(leapcnt), fp);
 	puttzcode(eitol(timecnt), fp);
 	puttzcode(eitol(typecnt), fp);
@@ -1224,22 +1239,22 @@ char *	name;
 	}
 }
 
-static
+static void
 outzone(zpfirst, zonecount)
 struct zone *	zpfirst;
 {
-	register struct zone *		zp;
-	register struct rule *		rp;
-	register int			i, j;
-	register int			usestart, useuntil;
-	register time_t			starttime, untiltime;
-	register long			gmtoff;
-	register long			stdoff;
-	register int			year;
-	register long			startoff;
-	register int			startisdst;
-	register int			type;
-	char				startbuf[BUFSIZ];
+	register struct zone *	zp;
+	register struct rule *	rp;
+	register int		i, j;
+	register int		usestart, useuntil;
+	register time_t		starttime, untiltime;
+	register long		gmtoff;
+	register long		stdoff;
+	register int		year;
+	register long		startoff;
+	register int		startisdst;
+	register int		type;
+	char			startbuf[BUFSIZ];
 
 	/*
 	** Now. . .finally. . .generate some useful data!
@@ -1252,6 +1267,12 @@ struct zone *	zpfirst;
 	*/
 	gmtoff = zpfirst->z_gmtoff;
 	stdoff = 0;
+#ifdef lint
+	starttime = 0;
+#endif /* defined lint */
+#ifdef __TURBOC__
+	starttime = 0;
+#endif /* defined __TURBOC__ */
 	for (i = 0; i < zonecount; ++i) {
 		usestart = i > 0;
 		useuntil = i < (zonecount - 1);
@@ -1305,6 +1326,12 @@ struct zone *	zpfirst;
 				** that takes effect earliest in the year.
 				*/
 				k = -1;
+#ifdef lint
+				ktime = 0;
+#endif /* defined lint */
+#ifdef __TURBOC__
+				ktime = 0;
+#endif /* defined __TURBOC__ */
 				for (j = 0; j < zp->z_nrules; ++j) {
 					rp = &zp->z_rules[j];
 					if (!rp->r_todo)
@@ -1369,7 +1396,7 @@ addtt(starttime, addtype(startoff, startbuf, startisdst));
 	writezone(zpfirst->z_name);
 }
 
-static
+static void
 addtt(starttime, type)
 time_t	starttime;
 {
@@ -1421,7 +1448,7 @@ char *	abbr;
 	return i;
 }
 
-static
+static void
 addleap(t, positive, rolling)
 time_t	t;
 {
@@ -1450,7 +1477,7 @@ time_t	t;
 	++leapcnt;
 }
 
-static
+static void
 adjleap()
 {
 	register int	i;
@@ -1716,7 +1743,7 @@ register int		wantedy;
 	return tadd(t, rp->r_tod);
 }
 
-static
+static void
 newabbr(string)
 char *	string;
 {

@@ -4,6 +4,9 @@ Please send comments or information to
 	seismo!elsie!tz
 for forwarding to folks interested in time zone matters.
 
+Be sure to read the comments in "Makefile" and make any changes
+needed to make things right for your system.
+
 This version of the time zone software uses a new format
 (based on the work of Guy Harris, a.k.a guy@sun.UUCP)
 for the time zone information files.  They are now stored by default in a

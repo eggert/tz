@@ -37,7 +37,7 @@
 .\"     from: @(#)strftime.3	5.12 (Berkeley) 6/29/91
 .\"	$Id: strftime.3,v 1.4 1993/12/15 20:33:00 jtc Exp $
 .\"
-.TH STRFTIME 3
+.TH NEWSTRFTIME 3
 .SH NAME
 strftime \- format date and time
 .SH SYNOPSIS
@@ -202,4 +202,10 @@ is replaced by the time zone name.
 .TP
 %%
 is replaced by a single %.
+.SH SEE ALSO
+getenv(3),
+newctime(3),
+newtzset(3),
+time(2),
+tzfile(5)
 .\" %W%

@@ -6,9 +6,7 @@ static char	elsieid[] = "%W%";
 
 /*LINTLIBRARY*/
 
-#include "string.h"
-#include "stdlib.h"
-#include "nonstd.h"
+#include "private.h"
 
 #ifdef MAL
 #define NULLMAL(x)	((x) == NULL || (x) == MAL)

@@ -200,6 +200,11 @@ GCC_DEBUG_FLAGS = -Dlint -g -O -fno-common \
 
 CFLAGS=
 
+# If you want zic's -s option used when installing, uncomment the next line
+# ZFLAGS=	-s
+
+ZIC=		./zic $(ZFLAGS)
+
 # The name of a Posix-compliant `awk' on your system.
 AWK=		awk
 
@@ -245,7 +250,7 @@ all:		zic zdump $(LIBOBJS)
 ALL:		all date tzselect
 
 install:	all $(DATA) $(REDO) $(TZLIB) $(MANS) $(TABDATA)
-		./zic -y $(YEARISTYPE) \
+		$(ZIC) -y $(YEARISTYPE) \
 			-d $(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
 		-rm -f $(TZDIR)/iso3166.tab $(TZDIR)/zone.tab
 		cp iso3166.tab zone.tab $(TZDIR)/.
@@ -281,14 +286,14 @@ yearistype:	yearistype.sh
 		chmod +x yearistype
 
 posix_only:	zic $(TDATA)
-		./zic -y $(YEARISTYPE) -d $(TZDIR) -L /dev/null $(TDATA)
+		$(ZIC) -y $(YEARISTYPE) -d $(TZDIR) -L /dev/null $(TDATA)
 
 right_only:	zic leapseconds $(TDATA)
-		./zic -y $(YEARISTYPE) -d $(TZDIR) -L leapseconds $(TDATA)
+		$(ZIC) -y $(YEARISTYPE) -d $(TZDIR) -L leapseconds $(TDATA)
 
 other_two:	zic leapseconds $(TDATA)
-		./zic -y $(YEARISTYPE) -d $(TZDIR)/posix -L /dev/null $(TDATA)
-		./zic -y $(YEARISTYPE) \
+		$(ZIC) -y $(YEARISTYPE) -d $(TZDIR)/posix -L /dev/null $(TDATA)
+		$(ZIC) -y $(YEARISTYPE) \
 			-d $(TZDIR)/right -L leapseconds $(TDATA)
 
 posix_right:	posix_only other_two

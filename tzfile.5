@@ -6,7 +6,7 @@ tzfile \- time zone information
 #include <tzfile.h>
 .SH DESCRIPTION
 The time zone information files used by
-.IR settz (3)
+.IR tzset (3)
 begin with bytes reserved for future use,
 followed by three four-byte values of type
 .BR long ,
@@ -49,7 +49,7 @@ these structures are defined as follows:
 .in +.5i
 .sp
 .nf
-.ta .5i +\w'unsigned short  'u
+.ta .5i +\w'unsigned int\0\0'u
 struct ttinfo {	
 	long	tt_gmtoff;
 	int	tt_isdst;

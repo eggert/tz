@@ -8,42 +8,38 @@
 # it starts Sunday, October 19 in 1986.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Aus	1971	1985	-	Oct	lastSun	2:00	1:00	-
-Rule	Aus	1986	2037	-	Oct	Sun>=14	2:00	1:00	-
-Rule	Aus	1972	only	-	Feb	27	3:00	0	-
-Rule	Aus	1973	1986	-	Mar	Sun>=1	3:00	0	-
-Rule	Aus	1987	2037	-	Mar	Sun<=21	3:00	0	-
+Rule	Oz	1971	1985	-	Oct	lastSun	2:00	1:00	-
+Rule	Oz	1986	max	-	Oct	Sun>=14	2:00	1:00	-
+Rule	Oz	1972	only	-	Feb	27	3:00	0	-
+Rule	Oz	1973	1986	-	Mar	Sun>=1	3:00	0	-
+Rule	Oz	1987	max	-	Mar	Sun<=21	3:00	0	-
 
-# Australian Data, Vic (and NSW except for a variation in 83? that I[kre]
-# forget)
-# Includes shift in 1985 to end DST later, and shift in 1986 to start
-# DST earlier.
-
-Rule	Aus-Vic	1971	1985	-	Oct	lastSun	2:00	1:00	-
-Rule	Aus-Vic	1986	2037	-	Oct	Sun>=14	2:00	1:00	-
-Rule	Aus-Vic	1972	only	-	Feb	27	3:00	0	-
-Rule	Aus-Vic	1973	1985	-	Mar	Sun>=1	3:00	0	-
-Rule	Aus-Vic	1986	2037	-	Mar	Sun<=21	3:00	0	-
-
-# Australia - something of a turmoil here
-# NSW should have its own rules
 # Zone	NAME			GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Australia/Victoria	10:00	Aus-Vic	EST
-Zone	Australia/NSW		10:00	Aus-Vic	EST
-Zone	Australia/Tasmania	10:00	Aus	EST
+Zone	Australia/Tasmania	10:00	Oz	EST
 Zone	Australia/Queensland	10:00	-	EST
-Zone	Australia/South-east	9:30	Aus	CST	1987 Mar 15 2:00s
-				10:00	Aus	EST
-Zone	Australia/South-west	9:30	Aus	CST	1987 Mar 15 2:00s
+Zone	Australia/South-east	9:30	Oz	CST	1987 Mar Sun>=14 3:00
+				10:00	Oz	EST
+				# Plus information to be supplied later
+Zone	Australia/South-west	9:30	Oz	CST	1987 Mar Sun>=14 3:00
 				10:00	-	EST
+				# Plus information to be supplied later
 Zone	Australia/North		9:30	-	CST
 Zone	Australia/West		8:00	-	WST
+
+# Victoria and New South Wales made the jump to a later ending date for
+# DST in 1986 rather than 1987.
+
+Zone	Australia/Victoria	10:00	Oz	EST	1985 Oct Sun>=14 2:00
+				10:00	1:00	EST	1986 Mar Sun<=21 3:00
+				10:00	0	EST	1986 Oct Sun>=14 2:00
+				10:00	Oz	EST
+Link	Australia/Victoria	Australia/NSW
 
 # New Zealand, from Elz' asia 1.1
 # Elz says "no guarantees"
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	NZ	1974	2037	-	Oct	lastSun	2:00	1:00	D
-Rule	NZ	1975	2037	-	Mar	Sun>=1	3:00	0	S
+Rule	NZ	1974	max	-	Oct	lastSun	2:00	1:00	D
+Rule	NZ	1975	max	-	Mar	Sun>=1	3:00	0	S
 
-# Zone	NAME		GMTOFF	RULES	FORMAT
-Zone	NZ		12:00	NZ	NZ%sT	# New Zealand
+# Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	NZ			12:00	NZ		NZ%sT	# New Zealand

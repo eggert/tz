@@ -1,11 +1,13 @@
 .TH CTIME 3 
 .SH NAME
-ctime, localtime, gmtime, asctime, tzset \- convert date and time to ASCII
+ctime, localtime, gmtime, asctime, tzset, tzsetwall \- convert date and time to ASCII
 .SH SYNOPSIS
 .nf
 .B extern char *tzname[2];
 .PP
 .B void tzset()
+.PP
+.B void tzsetwall()
 .PP
 .B char *ctime(clock)
 .B long *clock;
@@ -53,6 +55,11 @@ begins with some other character,
 it is used as a pathname relative to a system time conversion information
 directory.
 \}
+.PP
+.I Tzsetwall
+sets things up so that
+.I localtime
+returns the best available approximation of local wall clock time.
 .PP
 .I Ctime\^
 converts a long integer, pointed to by

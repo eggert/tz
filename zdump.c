@@ -120,7 +120,7 @@ char *	argv[];
 			timecnt = 0;
 			leapcnt = 0;
 		} else {
-			char	code[4];
+			struct tzhead	tzh;
 
 			if (argv[i][0] == '/')
 				fp = fopen(argv[i], "rb");
@@ -141,30 +141,12 @@ char *	argv[];
 				perror(argv[i]);
 				exit(EXIT_FAILURE);
 			}
-			/*
-			** Contorted. . .
-			*/
-			{
-				struct tzhead	tzh;
-
-#ifdef lint
-				tzh.tzh_reserved[0] = 0;
-#endif /* defined lint */
-				(void) fseek(fp,
-					(long) sizeof tzh.tzh_reserved, 0);
-			}
-			if (fread((char *) code, sizeof code, 1, fp) != 1)
+			if (fread((char *) &tzh, sizeof tzh, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
-			leapcnt = tzdecode(code);
-			if (fread((char *) code, sizeof code, 1, fp) != 1)
-				readerr(fp, argv[0], argv[i]);
-			timecnt = tzdecode(code);
-			if (fread((char *) code, sizeof code, 1, fp) != 1)
-				readerr(fp, argv[0], argv[i]);
-			typecnt = tzdecode(code);
-			if (fread((char *) code, sizeof code, 1, fp) != 1)
-				readerr(fp, argv[0], argv[i]);
-			charcnt = tzdecode(code);
+			leapcnt = tzdecode(tzh.tzh_leapcnt);
+			timecnt = tzdecode(tzh.tzh_timecnt);
+			typecnt = tzdecode(tzh.tzh_typecnt);
+			charcnt = tzdecode(tzh.tzh_charcnt);
 		}
 		t = 0x80000000;
 		if (t > 0)		/* time_t is unsigned */

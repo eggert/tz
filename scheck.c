@@ -4,13 +4,12 @@
 
 #include "stdio.h"
 
-#ifndef lint
-#ifndef NOID
-static char	sccsid[] = "%W%";
-#endif /* !NOID */
-#endif /* !lint */
+#if !defined lint && !defined NOID
+static char	elsieid[] = "%W%";
+#endif /* !defined lint && !defined NOID */
 
 #include "ctype.h"
+#include "string.h"
 
 extern char *	imalloc();
 
@@ -59,6 +58,6 @@ char *	format;
 	*tp = '\0';
 	if (sscanf(string, fbuf, &dummy) != 1)
 		result = format;
-	free(fbuf);
+	ifree(fbuf);
 	return result;
 }

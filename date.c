@@ -431,7 +431,7 @@ const int	nflag;
 			logwtmp("{", TIME_NAME, "");	/* } */
 			syslog(LOG_AUTH | LOG_NOTICE, "date set by %s",
 				username);
-		} else 	oops("date: error: settimeofday");
+		} else	oops("date: error: settimeofday");
 	}
 }
 

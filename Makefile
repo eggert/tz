@@ -96,7 +96,7 @@ DOCS=		Patchlevel.h \
 		README Theory \
 		newctime.3 tzfile.5 zic.8 zdump.8 \
 		Makefile Makefile.tc
-SOURCES=	tzfile.h zic.c zdump.c \
+SOURCES=	tzfile.h nonstd.h zic.c zdump.c \
 		localtime.c asctime.c ctime.c dysize.c timemk.c \
 		scheck.c ialloc.c emkdir.c getopt.c link.c
 YDATA=		africa antarctica asia australasia \
@@ -109,10 +109,10 @@ ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 all:		REDID_BINARIES zdump $(TZLIB)
 
 REDID_BINARIES:	zic $(DATA)
-		zic -d $(TZDIR) -L $(LEAPSECONDS) $(YDATA)
-		zic -d $(TZDIR) -L $(LEAPSECONDS) $(SDATA)
-		zic -d $(TZDIR) -L /dev/null $(NDATA)
-		zic -d $(TZDIR) -l $(LOCALTIME)
+		./zic -d $(TZDIR) -L $(LEAPSECONDS) $(YDATA)
+		./zic -d $(TZDIR) -L $(LEAPSECONDS) $(SDATA)
+		./zic -d $(TZDIR) -L /dev/null $(NDATA)
+		./zic -d $(TZDIR) -l $(LOCALTIME)
 		touch $@
 
 zdump:		$(TZDOBJS)
@@ -158,3 +158,6 @@ names:
 		@echo $(ENCHILADA)
 
 asctime.o ctime.o localtime.o timemk.o zdump.o zic.o: tzfile.h
+
+asctime.o ctime.o emkdir.o ialloc.o \
+	link.o localtime.o scheck.o zdump.o zic.o: nonstd.h

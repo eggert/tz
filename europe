@@ -109,7 +109,9 @@ Rule	GB-Eire	1981	max	-	Mar	lastSun	1:00s	1:00	BST
 Rule	GB-Eire	1972	max	-	Oct	Sun>=23	1:00s	0	GMT
 
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
-Zone	GB-Eire		0:00	GB-Eire		%s
+Zone	GB-Eire		0:00	GB-Eire		%s	1968 Oct 27 1:00s
+			1:00	-		BST	1971 Oct 31 1:00s
+			0:00	GB-Eire		%s
 
 ###############################################################################
 

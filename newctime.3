@@ -400,20 +400,20 @@ is the offset (in seconds) of the time represented
 from UTC, with positive values indicating east
 of the Prime Meridian.
 .SH FILES
-.ta \w'/etc/zoneinfo/posixrules\0\0'u
-/etc/zoneinfo	time zone information directory
+.ta \w'/usr/local/etc/zoneinfo/posixrules\0\0'u
+/usr/local/etc/zoneinfo	time zone information directory
 .br
-/etc/zoneinfo/localtime	local time zone file
+/usr/local/etc/zoneinfo/localtime	local time zone file
 .br
-/etc/zoneinfo/posixrules	used in converting POSIX-style TZ's
+/usr/local/etc/zoneinfo/posixrules	used with POSIX-style TZ's
 .br
-/etc/zoneinfo/GMT	for UTC leap seconds
+/usr/local/etc/zoneinfo/GMT	for UTC leap seconds
 .sp
 If
-.B /etc/zoneinfo/GMT
+.B /usr/local/etc/zoneinfo/GMT
 is absent,
 UTC leap seconds are loaded from
-.BR /etc/zoneinfo/posixrules .
+.BR /usr/local/etc/zoneinfo/posixrules .
 .SH SEE ALSO
 tzfile(5),
 getenv(3),

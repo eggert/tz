@@ -11,7 +11,7 @@ static char	elsieid[] = "%W%";
 #include "string.h"
 #include "nonstd.h"
 
-#if defined __TURBOC__
+#ifdef __TURBOC__
 #include "io.h"			/* to pick up prototypes for open and such */
 #include "fcntl.h"		/* to pick up O_BINARY and O_RDONLY bits */
 #endif /* defined __TURBOC__ */

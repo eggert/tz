@@ -91,9 +91,9 @@ struct rule {
 	long		r_time;		/* transition time of rule */
 };
 
-#define	JULIAN_DAY		0	/* Jn - Julian day */
-#define	DAY_OF_YEAR		1	/* n - day of year */
-#define	MONTH_NTH_DAY_OF_WEEK	2	/* Mm.n.d - month, week, day of week */
+#define JULIAN_DAY		0	/* Jn - Julian day */
+#define DAY_OF_YEAR		1	/* n - day of year */
+#define MONTH_NTH_DAY_OF_WEEK	2	/* Mm.n.d - month, week, day of week */
 
 /*
 ** Prototypes for static functions.

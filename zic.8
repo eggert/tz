@@ -1,4 +1,4 @@
-.TH TZCOMP 8
+.TH ZIC 8
 .SH NAME
 zic \- time zone compiler
 .SH SYNOPSIS
@@ -148,7 +148,7 @@ Note that there must be no spaces within the
 field.
 .TP
 .B AT
-Gives the local wall-clock time of day at which the rule takes affect.
+Gives the time of day at which the rule takes affect.
 Recognized forms include:
 .nf
 .in +.5i
@@ -160,13 +160,28 @@ Recognized forms include:
 1:28:14	time in hours, minutes, and seconds
 .fi
 .in -.5i
+.sp
+Any of these forms may be followed by the letter
+.B w
+if the given time is local ``wall clock'' time or
+.B s
+if the given time is local ``standard'' time; in the absence of
+.B w
+or
+.BR s ,
+wall clock time is assumed.
 .TP
 .B SAVE
 Gives the amount of time to be added to local standard time when the rule is in
 effect.
 This field has the same format as the
 .B AT
-field.
+field
+(although, of course, the
+.B w
+and
+.B s
+suffixes are not used).
 .TP
 .B LETTER/S
 Gives the ``variable part'' (for example, the ``S'' or ``D'' in ``EST''
@@ -259,14 +274,15 @@ field is used as an alternate name for that zone.
 Except for continuation lines,
 lines may appear in any order in the input.
 .SH NOTES
-.I Zic
-makes an educated but potentially incorrect guess about the ``savings'' in
-effect before the first transition time for a zone;
-you may have to add an extra rule (or use an
+For areas with more than two types of local time,
+you may need to use local standard time in the
+.B AT
+field of the earliest transition time's rule to ensure that
+the earliest transition time recorded in the compiled file is correct.
+.sp
+Times in
 .B UNTIL
-specification with a zone) to get the first transition time right if
-.I zic
-guesses wrong.
+fields must be given in local standard (not local wall clock) time.
 .SH FILES
 /etc/zoneinfo	standard directory used for created files
 .SH "SEE ALSO"

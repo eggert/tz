@@ -10,13 +10,6 @@ static char	elsieid[] = "%W%";
 
 #define nonzero(n)	(((n) == 0) ? 1 : (n))
 
-char *	icalloc P((int nelem, int elsize));
-char *	icatalloc P((char * old, const char * new));
-char *	icpyalloc P((const char * string));
-char *	imalloc P((int n));
-void *	irealloc P((void * pointer, int size));
-void	ifree P((char * pointer));
-
 char *
 imalloc(n)
 const int	n;

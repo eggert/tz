@@ -52,18 +52,22 @@ register char *	tzname;
 	/*
 	** Check the information.
 	*/
-	dsp = tzp->tz_dsinfo;
-	if (dsp->ds_abbr[0] == '\0' || dsp->ds_abbr[TZ_ABBR_LEN] != '\0')
-		return -1;
-	for (i = 0; i < tzp->tz_timecnt; ++i) {
-		if (i > 0 && tzp->tz_times[i] <= tzp->tz_times[i - 1])
+	for (i = -1; i < tzp->tz_timecnt; ++i) {
+		dsp = tzp->tz_dsinfo;
+		if (i >= 0)
+			if (i > 0 && tzp->tz_times[i] <= tzp->tz_times[i - 1])
+				return -1;
+			else	dsp += tzp->tz_types[i];
+		if (dsp->ds_isdst != 0 && dsp->ds_isdst != 1)
 			return -1;
-		j = tzp->tz_types[i];
-		if (j < 0 || j >= TZ_MAX_TYPES)
+		j = 0;
+		while (dsp->ds_abbr[j] != '\0')
+			if (++j > TZ_ABBR_LEN)
+				return -1;
+		if (j == 0)
 			return -1;
-		dsp = tzp->tz_dsinfo +  j;
-		if (dsp->ds_abbr[0] == '\0' ||
-			dsp->ds_abbr[TZ_ABBR_LEN] != '\0')
+		while (++j <= TZ_ABBR_LEN)
+			if (dsp->ds_abbr[j] != '\0')
 				return -1;
 	}
 	return 0;
@@ -124,7 +128,7 @@ long *timep;
 	}
 	t += dsp->ds_gmtoff;
 	ct = gmtime(&t);
-	ct->tm_isdst = dsp->ds_isdst != 0;
+	ct->tm_isdst = dsp->ds_isdst;
 	tz_abbr = dsp->ds_abbr;
 	return ct;
 }

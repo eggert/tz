@@ -5,7 +5,7 @@
 #include "stdio.h"
 
 #if !defined lint && !defined NOID
-static char	sccsid[] = "%W%";
+static char	elsieid[] = "%W%";
 #endif /* !defined lint && !defined NOID */
 
 #if !defined alloc_t

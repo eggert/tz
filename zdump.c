@@ -19,7 +19,7 @@ extern struct tm *	gmtime();
 extern int		optind;
 extern char *		sprintf();
 extern long		time();
-extern char *		tz_abbr;
+extern char *		tzname[2];
 
 static int		longest;
 
@@ -139,8 +139,8 @@ long	t;
 		(void) printf("%.24s GMT = ", asctime(gmtime(&t)));
 	tmp = localtime(&t);
 	(void) printf("%.24s", asctime(tmp));
-	if (*tz_abbr != '\0')
-		(void) printf(" %s", tz_abbr);
+	if (*tzname[tmp->tm_isdst] != '\0')
+		(void) printf(" %s", tzname[tmp->tm_isdst]);
 	if (v)
 		(void) printf(" isdst=%d", tmp->tm_isdst);
 	(void) printf("\n");

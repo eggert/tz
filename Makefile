@@ -105,7 +105,7 @@ REDO=		posix_right
 # Both UCB and Sun have done the equivalent of defining TM_GMTOFF in
 # their recent releases.
 #
-# If your system has a "GMT offset" field in its "struct tm"s
+# If your system has a "zone abbreviation" field in its "struct tm"s
 # (or if you decide to add such a field in your system's "time.h" file),
 # add the name to a define such as
 #	-DTM_ZONE=tm_zone

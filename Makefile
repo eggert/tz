@@ -1,12 +1,11 @@
 # %W%
 
-# If you want something other than Eastern United States time used on your
-# system, change the line below (after finding the zone you want in the
-# time zone files, or adding it to a time zone file).
+# Change the line below for your time zone (after finding the zone you want in
+# the time zone files, or adding it to a time zone file).
 # Alternately, if you discover you've got the wrong time zone, you can just
 #	zic -l rightzone
 
-LOCALTIME=	US/Eastern
+LOCALTIME=	install
 
 # If you want something other than Eastern United States time as a template
 # for handling POSIX-style time zone environment variables,

@@ -15,7 +15,7 @@ static char	elsieid[] = "%W%";
 #include "tzfile.h"
 
 #if STRICTLY_STANDARD_ASCTIME
-#define ASCTIME_FMT	"%.3s %.3s%3d %.2d:%.2d:%.2d %d\n"
+#define ASCTIME_FMT	"%.3s %.3s%3d %.2d:%.2d:%.2d %ld\n"
 #define ASCTIME_FMT_B	ASCTIME_FMT
 #else /* !STRICTLY_STANDARD_ASCTIME */
 /*
@@ -95,7 +95,11 @@ char *				buf;
 		(void) strcpy(buf, result);
 		return buf;
 	} else {
+#ifdef EOVERFLOW
 		errno = EOVERFLOW;
+#else /* !defined EOVERFLOW */
+		errno = EINVAL;
+#endif /* !defined EOVERFLOW */
 		return NULL;
 	}
 }

@@ -21,11 +21,13 @@ Rule	Aus	1943	only	-	Oct	 3	2:00	1:00	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 # Northern Territory
+#Updated Zone Australia/Darwin 1997 Nov 19
 Zone Australia/Darwin	 8:43:20 -	LMT	1895 Feb
 			 9:00	-	CST	1899 May
 			 9:30	-	CST	1917 Jan 1 0:01
 			 9:30	Aus	CST
 # Western Australia
+#Updated Zone Australia/Perth 1997 Nov 19
 Zone Australia/Perth	 7:43:24 -	LMT	1895 Dec
 			 8:00	-	WST	1917 Jan 1 0:01
 			 8:00	Aus	WST	1974 Oct lastSun 2:00s
@@ -53,11 +55,13 @@ Rule	AQ	1989	1991	-	Oct	lastSun	2:00s	1:00	-
 Rule	AQ	1990	1992	-	Mar	Sun>=1	2:00s	0	-
 Rule	Holiday	1989	1993	-	Oct	lastSun	2:00s	1:00	-
 Rule	Holiday	1990	1994	-	Mar	Sun>=1	2:00s	0	-
+#Updated Zone Australia/Brisbane 1997 Nov 19
 Zone Australia/Brisbane	10:12:08 -	LMT	1895
 			10:00	-	EST	1917 Jan 1 0:01
 			10:00	Aus	EST	1971 Oct lastSun 2:00s
 			10:00	1:00	EST	1972 Feb lastSun 2:00s
 			10:00	AQ	EST
+#Updated Zone Australia/Lindeman 1997 Nov 19
 Zone Australia/Lindeman  9:55:56 -	LMT	1895
 			10:00	-	EST	1917 Jan 1 0:01
 			10:00	Aus	EST	1971 Oct lastSun 2:00s
@@ -76,6 +80,7 @@ Rule	AS	1990	1994	even	Mar	Sun>=18	2:00s	0	-
 Rule	AS	1990	1994	odd	Mar	Sun>=1	2:00s	0	-
 Rule	AS	1995	max	-	Mar	lastSun	2:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Australia/Adelaide 1997 Nov 19
 Zone Australia/Adelaide	9:14:20 -	LMT	1895 Feb
 			9:00	-	CST	1899 May
 			9:30	-	CST	1917 Jan 1 0:01
@@ -98,6 +103,7 @@ Rule	AT	1987	1990	-	Oct	lastSun	2:00s	1:00	-
 Rule	AT	1991	max	-	Oct	Sun>=1	2:00s	1:00	-
 Rule	AT	1991	max	-	Mar	lastSun	2:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Australia/Hobart 1997 Nov 19
 Zone Australia/Hobart	9:49:16	-	LMT	1895 Sep
 			10:00	-	EST	1917 Jan 1 0:01
 			10:00	Aus	EST	1967 Oct 1 2:00s
@@ -114,6 +120,7 @@ Rule	AV	1987	max	-	Oct	lastSun	2:00s	1:00	-
 Rule	AV	1991	1994	-	Mar	Sun>=1	2:00s	0	-
 Rule	AV	1995	max	-	Mar	lastSun	2:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Australia/Melbourne 1997 Nov 19
 Zone Australia/Melbourne 9:39:52 -	LMT	1895 Feb
 			10:00	-	EST	1917 Jan 1 0:01
 			10:00	Aus	EST	1971 Oct 31 2:00s
@@ -132,10 +139,12 @@ Rule	AN	1987	max	-	Oct	lastSun	2:00s	1:00	-
 Rule	AN	1990	1995	-	Mar	Sun>=1	2:00s	0	-
 Rule	AN	1996	max	-	Mar	lastSun	2:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Australia/Sydney 1997 Nov 19
 Zone Australia/Sydney	10:04:52 -	LMT	1895 Feb
 			10:00	-	EST	1917 Jan 1 0:01
 			10:00	Aus	EST	1971 Oct 31 2:00s
 			10:00	AN	EST
+#Updated Zone Australia/Broken_Hill 1997 Nov 19
 Zone Australia/Broken_Hill 9:25:48 -	LMT	1895 Feb
 			10:00	-	EST	1896 Aug 23
 			9:00	-	CST	1899 May
@@ -153,12 +162,14 @@ Rule	LH	1986	only	-	Oct	19	2:00s	0:30	-
 Rule	LH	1987	max	-	Oct	lastSun	2:00s	0:30	-
 Rule	LH	1990	1995	-	Mar	Sun>=1	2:00s	0	-
 Rule	LH	1996	max	-	Mar	lastSun	2:00s	0	-
+#Updated Zone Australia/Lord_Howe 1997 Nov 19
 Zone Australia/Lord_Howe 10:36:20 -	LMT	1895 Feb
 			10:00	-	EST	1981 Mar
 			10:30	LH	LHST
 
 # Australian miscellany
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Indian/Christmas 1997 Nov 19
 Zone Indian/Christmas	7:02:52 -	LMT	1895 Feb
 			7:00	-	CXT	# Christmas Island Time
 #
@@ -185,6 +196,7 @@ Rule	Cook	1978	only	-	Nov	12	0:00	0:30	HS
 Rule	Cook	1979	max	-	Mar	Sun>=1	0:00	0	-
 Rule	Cook	1979	max	-	Oct	lastSun	0:00	0:30	HS
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Rarotonga 1997 Nov 19
 Zone Pacific/Rarotonga	-10:39:04 -	LMT	1901		# Avarua
 			-10:30	-	CKT	1978 Nov 12	# Cook Is Time
 			-10:00	Cook	CK%sT
@@ -192,24 +204,30 @@ Zone Pacific/Rarotonga	-10:39:04 -	LMT	1901		# Avarua
 # Cocos
 # From USNO (1989):
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Indian/Cocos 1997 Nov 19
 Zone	Indian/Cocos	6:30	-	CCT	# Cocos Islands Time
 
 # Fiji
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Fiji 1997 Nov 19
 Zone	Pacific/Fiji	11:53:40 -	LMT	1915 Oct 26	# Suva
 			12:00	-	FJT	# Fiji Time
 
 # French Polynesia
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Gambier 1997 Nov 19
 Zone	Pacific/Gambier	 -8:59:48 -	LMT	1912 Oct	# Rikitea
 			 -9:00	-	GAMT	# Gambier Time
+#Updated Zone Pacific/Marquesas 1997 Nov 19
 Zone	Pacific/Marquesas -9:18:00 -	LMT	1912 Oct
 			 -9:30	-	MART	# Marquesas Time
+#Updated Zone Pacific/Tahiti 1997 Nov 19
 Zone	Pacific/Tahiti	 -9:58:16 -	LMT	1912 Oct	# Papeete
 			-10:00	-	TAHT	# Tahiti Time
 
 # Guam
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Guam 1997 Nov 19
 Zone	Pacific/Guam	 9:39:00 -	LMT	1901		# Agana
 			10:00	-	GST
 
@@ -223,6 +241,7 @@ Zone	Pacific/Guam	 9:39:00 -	LMT	1901		# Agana
 
 # Johnston
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Johnston 1997 Nov 19
 Zone Pacific/Johnston	-10:00	-	HST
 
 # Kingman
@@ -230,12 +249,15 @@ Zone Pacific/Johnston	-10:00	-	HST
 
 # Kiribati
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Tarawa 1997 Nov 19
 Zone Pacific/Tarawa	 11:32:04 -	LMT	1901		# Bairiki
 			 12:00	-	GILT		 # Gilbert Is Time
+#Updated Zone Pacific/Enderbury 1997 Nov 19
 Zone Pacific/Enderbury	-11:24:20 -	LMT	1901
 			-12:00	-	PHOT	1979 Oct # Phoenix Is Time
 			-11:00	-	PHOT	1995
 			 13:00	-	PHOT
+#Updated Zone Pacific/Kiritimati 1997 Nov 19
 Zone Pacific/Kiritimati	-10:29:20 -	LMT	1901
 			-10:40	-	LINT	1979 Oct # Line Is Time
 			-10:00	-	LINT	1995
@@ -243,15 +265,18 @@ Zone Pacific/Kiritimati	-10:29:20 -	LMT	1901
 
 # N Mariana Is
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Saipan 1997 Nov 19
 Zone Pacific/Saipan	 9:43:00 -	LMT	1901
 			 9:00	-	MPT	1969 Oct # N Mariana Is Time
 			10:00	-	MPT
 
 # Marshall Is
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Majuro 1997 Nov 19
 Zone Pacific/Majuro	11:24:48 -	LMT	1901
 			11:00	-	MHT	1969 Oct # Marshall Islands Time
 			12:00	-	MHT
+#Updated Zone Pacific/Kwajalein 1997 Nov 19
 Zone Pacific/Kwajalein	11:09:20 -	LMT	1901
 			11:00	-	MHT	1969 Oct
 			-12:00	-	KWAT	1993 Aug 20	# Kwajalein Time
@@ -259,19 +284,24 @@ Zone Pacific/Kwajalein	11:09:20 -	LMT	1901
 
 # Micronesia
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Yap 1997 Nov 19
 Zone Pacific/Yap	9:12:32	-	LMT	1901		# Colonia
 			9:00	-	YAPT	1969 Oct	# Yap Time
 			10:00	-	YAPT
+#Updated Zone Pacific/Truk 1997 Nov 19
 Zone Pacific/Truk	10:07:08 -	LMT	1901
 			10:00	-	TRUT			# Truk Time
+#Updated Zone Pacific/Ponape 1997 Nov 19
 Zone Pacific/Ponape	10:32:52 -	LMT	1901		# Kolonia
 			11:00	-	PONT			# Ponape Time
+#Updated Zone Pacific/Kosrae 1997 Nov 19
 Zone Pacific/Kosrae	10:51:56 -	LMT	1901
 			11:00	-	PONT	1969 Oct
 			12:00	-	KOST			# Kosrae Time
 
 # Nauru
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Nauru 1997 Nov 19
 Zone	Pacific/Nauru	11:07:40 -	LMT	1921 Jan 15	# Uaobe
 			11:30	-	NRT	1942 Mar 15	# Nauru Time
 			9:00	-	JST	1944 Aug 15
@@ -286,6 +316,7 @@ Rule	NC	1996	only	-	Dec	1	2:00s	1:00	S
 Rule	NC	1997	max	-	Mar	Sun>=1	2:00s	0	-
 Rule	NC	1997	max	-	Nov	lastSun	2:00s	1:00	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Noumea 1997 Nov 19
 Zone	Pacific/Noumea	11:05:48 -	LMT	1912 Jan 13
 			11:00	NC	NC%sT
 
@@ -317,9 +348,11 @@ Rule	NZ	1990	max	-	Mar	Sun>=15	2:00s	0	S
 Rule	Chatham	1990	max	-	Oct	Sun>=1	2:45s	1:00	D
 Rule	Chatham	1991	max	-	Mar	Sun>=15	2:45s	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Auckland 1997 Nov 19
 Zone Pacific/Auckland	11:39:04 -	LMT	1868
 			11:30	NZ	NZ%sT	1940 Sep 29 2:00
 			12:00	NZ	NZ%sT
+#Updated Zone Pacific/Chatham 1997 Nov 19
 Zone Pacific/Chatham	12:45	Chatham	CHA%sT
 
 
@@ -336,6 +369,7 @@ Zone Pacific/Chatham	12:45	Chatham	CHA%sT
 
 # Niue
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Niue 1997 Nov 19
 Zone	Pacific/Niue	-11:19:40 -	LMT	1901		# Alofi
 			-11:20	-	NUT	1951	# Niue Time
 			-11:30	-	NUT	1978 Oct 1
@@ -343,12 +377,14 @@ Zone	Pacific/Niue	-11:19:40 -	LMT	1901		# Alofi
 
 # Norfolk
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Norfolk 1997 Nov 19
 Zone	Pacific/Norfolk	11:11:52 -	LMT	1901		# Kingston
 			11:12	-	NMT	1951	# Norfolk Mean Time
 			11:30	-	NFT		# Norfolk Time
 
 # Palau
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Palau 1997 Nov 19
 Zone Pacific/Palau	8:57:56 -	LMT	1901		# Koror
 			9:00	-	PWT	# Palau Time
 
@@ -357,16 +393,19 @@ Zone Pacific/Palau	8:57:56 -	LMT	1901		# Koror
 
 # Papua New Guinea
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Port_Moresby 1997 Nov 19
 Zone Pacific/Port_Moresby 9:48:40 -	LMT	1880
 			9:48:40	-	PMMT	1895	# Port Moresby Mean Time
 			10:00	-	PGT		# Papua New Guinea Time
 
 # Pitcairn
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Pitcairn 1997 Nov 19
 Zone Pacific/Pitcairn	-8:40:20 -	LMT	1901		# Adamstown
 			-8:30	-	PNT	# Pitcairn Time
 
 # American Samoa
+#Updated Zone Pacific/Pago_Pago 1997 Nov 19
 Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1879 Jul  5
 			-11:22:48 -	LMT	1911
 			-11:30	-	SAMT	1950		# Samoa Time
@@ -375,6 +414,7 @@ Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1879 Jul  5
 			-11:00	-	SST			# S=Samoa
 
 # W Samoa
+#Updated Zone Pacific/Apia 1997 Nov 19
 Zone Pacific/Apia	 12:33:04 -	LMT	1879 Jul  5
 			-11:26:56 -	LMT	1911
 			-11:30	-	SAMT	1950		# Samoa Time
@@ -383,22 +423,26 @@ Zone Pacific/Apia	 12:33:04 -	LMT	1879 Jul  5
 # Solomon Is
 # excludes Bougainville, for which see Papua New Guinea
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Guadalcanal 1997 Nov 19
 Zone Pacific/Guadalcanal 10:39:48 -	LMT	1912 Oct	# Honiara
 			11:00	-	SBT	# Solomon Is Time
 
 # Tokelau Is
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Fakaofo 1997 Nov 19
 Zone	Pacific/Fakaofo	-11:24:56 -	LMT	1901
 			-10:00	-	TKT	# Tokelau Time
 
 # Tonga
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Tongatapu 1997 Nov 19
 Zone Pacific/Tongatapu	12:19:20 -	LMT	1901
 			12:20	-	TOT	1968 Oct # Tonga Time
 			13:00	-	TOT
 
 # Tuvalu
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Funafuti 1997 Nov 19
 Zone Pacific/Funafuti	11:56:52 -	LMT	1901
 			12:00	-	TVT	# Tuvalu Time
 
@@ -411,16 +455,19 @@ Rule	Vanuatu	1985	1991	-	Sep	Sun>=23	0:00	1:00	S
 Rule	Vanuatu	1992	1993	-	Jan	Sun>=23	0:00	0	-
 Rule	Vanuatu	1992	only	-	Oct	Sun>=23	0:00	1:00	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Efate 1997 Nov 19
 Zone	Pacific/Efate	11:13:16 -	LMT	1912 Jan 13		# Vila
 			11:00	Vanuatu	VU%sT	# Vanuatu Time
 
 # Wake
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Wake 1997 Nov 19
 Zone	Pacific/Wake	11:06:28 -	LMT	1901
 			12:00	-	WAKT	# Wake Time
 
 # Wallis and Futuna
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+#Updated Zone Pacific/Wallis 1997 Nov 19
 Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 			12:00	-	WFT	# Wallis & Futuna Time
 

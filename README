@@ -2,13 +2,16 @@
 
 TODO BEFORE comp.sources RELEASE:
 
-*	Incorporate any changes from UCB (possibly including their copyrights).
-*	Testing.
-*	Lint/spell/shar-unpacking check if there are any changes.
-*	Ensure that everything except usno data is copyrighted.
+*	Resolve SunOS 4.1/BSD 4.4 strftime differences
+*	Incorporate any other changes from the West Coast
+*	Check compilability on a System-V-based system
 *	Turn everything with a version number less than "5.1" into "5.1".
 
 ===============================================================================
+
+"What time is it?" -- Richard Deacon as The King
+"Any time you want it to be." -- Frank Baxter as The Scientist
+					(from the Bell System film on time)
 
 This 1989 update of the time zone package features
 

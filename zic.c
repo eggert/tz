@@ -525,12 +525,20 @@ const char * const	tofile;
 	register char *	fromname;
 	register char *	toname;
 
-	fromname = ecpyalloc(directory);
-	fromname = ecatalloc(fromname, "/");
-	fromname = ecatalloc(fromname, fromfile);
-	toname = ecpyalloc(directory);
-	toname = ecatalloc(toname, "/");
-	toname = ecatalloc(toname, tofile);
+	if (fromfile[0] == '/')
+		fromname = fromfile;
+	else {
+		fromname = ecpyalloc(directory);
+		fromname = ecatalloc(fromname, "/");
+		fromname = ecatalloc(fromname, fromfile);
+	}
+	if (tofile[0] == '/')
+		toname = tofile;
+	else {
+		toname = ecpyalloc(directory);
+		toname = ecatalloc(toname, "/");
+		toname = ecatalloc(toname, tofile);
+	}
 	/*
 	** We get to be careful here since
 	** there's a fair chance of root running us.
@@ -543,8 +551,10 @@ const char * const	tofile;
 		(void) perror(toname);
 		(void) exit(EXIT_FAILURE);
 	}
-	ifree(fromname);
-	ifree(toname);
+	if (fromname != fromfile)
+		ifree(fromname);
+	if (toname != tofile)
+		ifree(toname);
 }
 
 static void

@@ -832,10 +832,6 @@ const int			lastditch;
 			** between standard and summer time, but a different
 			** difference can be specified in TZ.
 			*/
-			/*
-			** XXX--STILL MUST MAKE USE OF GMT INFO
-			** SCHLEPPED ELSEWHERE.
-			*/
 			isdst = FALSE;	/* we start in standard time */
 			for (i = 0; i < sp->timecnt; ++i) {
 				register const struct ttinfo *	ttisp;
@@ -849,9 +845,10 @@ const int			lastditch;
 				** to the transition time.
 				*/
 				ttisp = &sp->ttis[sp->types[i]];
-				sp->ats[i] +=
-					(isdst && !ttisp->tt_ttisstd) ?
-						dstfix : stdfix;
+				if (!ttisp->tt_ttisgmt)
+					sp->ats[i] +=
+						(isdst && !ttisp->tt_ttisstd) ?
+							dstfix : stdfix;
 				isdst = ttisp->tt_isdst;
 			}
 		}

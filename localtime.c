@@ -252,7 +252,8 @@ char *	zone;
 {
 	/*
 	** This struct needs to be static since tzname[i] may end up pointing
-	** to it.
+	** to it.  Alternately, localtime might copy time zone abbreviations
+	** into small buffers.  We'll take the easy way out for now.
 	*/
 	static struct state	st;
 

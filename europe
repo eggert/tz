@@ -921,6 +921,10 @@ Zone	Europe/Helsinki	1:39:52 -	LMT	1878 May 31
 			2:00	Finland	EE%sT	1981 Mar 29 2:00
 			2:00	EU	EE%sT
 
+# Aaland Is
+Link	Europe/Helsinki	Europe/Mariehamn
+
+
 # France
 
 # From Ciro Discepolo (2000-12-20):

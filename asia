@@ -627,7 +627,7 @@ Rule	Zion	1993	only	-	Sep	 5	0:00	0	S
 # Ministry of Interior, Jerusalem, Israel.  The spokeswoman can be reached by
 # calling the office directly at 972-2-6701447 or 972-2-6701448.
 
-# Rule  NAME    FROM    TO      TYPE    IN      ON      AT      SAVE    LETTER/S
+# Rule	NAME    FROM    TO      TYPE    IN      ON      AT      SAVE    LETTER/S
 Rule	Zion	1994	only	-	Apr	 1	0:00	1:00	D
 Rule	Zion	1994	only	-	Aug	28	0:00	0	S
 Rule	Zion	1995	only	-	Mar	31	0:00	1:00	D
@@ -685,7 +685,7 @@ Rule	Zion	2004	only	-	Sep	22	1:00	0	S
 # From Paul Eggert (2000-07-25):
 # Here are guesses for rules after 2004.
 # They are probably wrong, but they are more likely than no DST at all.
-# Rule  NAME    FROM    TO      TYPE    IN      ON      AT      SAVE    LETTER/S
+# Rule	NAME    FROM    TO      TYPE    IN      ON      AT      SAVE    LETTER/S
 Rule	Zion	2005	max	-	Apr	 1	1:00	1:00	D
 Rule	Zion	2005	max	-	Oct	 1	1:00	0	S
 
@@ -761,26 +761,26 @@ Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
 # government's departments from six to seven hours.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule    Jordan	1973	only	-	Jun	6	0:00	1:00	S
-Rule    Jordan	1973	1975	-	Oct	1	0:00	0	-
-Rule    Jordan	1974	1977	-	May	1	0:00	1:00	S
-Rule    Jordan	1976	only	-	Nov	1	0:00	0	-
-Rule    Jordan	1977	only	-	Oct	1	0:00	0	-
-Rule    Jordan	1978	only	-	Apr	30	0:00	1:00	S
-Rule    Jordan	1978	only	-	Sep	30	0:00	0	-
-Rule    Jordan	1985	only	-	Apr	1	0:00	1:00	S
-Rule    Jordan	1985	only	-	Oct	1	0:00	0	-
-Rule    Jordan	1986	1988	-	Apr	Fri>=1	0:00	1:00	S
-Rule    Jordan	1986	1990	-	Oct	Fri>=1	0:00	0	-
-Rule    Jordan	1989	only	-	May	8	0:00	1:00	S
-Rule    Jordan	1990	only	-	Apr	27	0:00	1:00	S
-Rule    Jordan	1991	only	-	Apr	17	0:00	1:00	S
-Rule    Jordan	1991	only	-	Sep	27	0:00	0	-
-Rule    Jordan	1992	only	-	Apr	10	0:00	1:00	S
-Rule    Jordan	1992	1993	-	Oct	Fri>=1	0:00	0	-
-Rule    Jordan	1993	1998	-	Apr	Fri>=1	0:00	1:00	S
-Rule    Jordan	1994	only	-	Sep	Fri>=15	0:00	0	-
-Rule    Jordan	1995	1998	-	Sep	Fri>=15	0:00s	0	-
+Rule	Jordan	1973	only	-	Jun	6	0:00	1:00	S
+Rule	Jordan	1973	1975	-	Oct	1	0:00	0	-
+Rule	Jordan	1974	1977	-	May	1	0:00	1:00	S
+Rule	Jordan	1976	only	-	Nov	1	0:00	0	-
+Rule	Jordan	1977	only	-	Oct	1	0:00	0	-
+Rule	Jordan	1978	only	-	Apr	30	0:00	1:00	S
+Rule	Jordan	1978	only	-	Sep	30	0:00	0	-
+Rule	Jordan	1985	only	-	Apr	1	0:00	1:00	S
+Rule	Jordan	1985	only	-	Oct	1	0:00	0	-
+Rule	Jordan	1986	1988	-	Apr	Fri>=1	0:00	1:00	S
+Rule	Jordan	1986	1990	-	Oct	Fri>=1	0:00	0	-
+Rule	Jordan	1989	only	-	May	8	0:00	1:00	S
+Rule	Jordan	1990	only	-	Apr	27	0:00	1:00	S
+Rule	Jordan	1991	only	-	Apr	17	0:00	1:00	S
+Rule	Jordan	1991	only	-	Sep	27	0:00	0	-
+Rule	Jordan	1992	only	-	Apr	10	0:00	1:00	S
+Rule	Jordan	1992	1993	-	Oct	Fri>=1	0:00	0	-
+Rule	Jordan	1993	1998	-	Apr	Fri>=1	0:00	1:00	S
+Rule	Jordan	1994	only	-	Sep	Fri>=15	0:00	0	-
+Rule	Jordan	1995	1998	-	Sep	Fri>=15	0:00s	0	-
 Rule	Jordan	1999	only	-	Jul	 1	0:00s	1:00	S
 Rule	Jordan	1999	max	-	Sep	lastThu	0:00s	0	-
 Rule	Jordan	2000	max	-	Mar	lastThu	0:00s	1:00	S

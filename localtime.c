@@ -1,5 +1,9 @@
 /*
-** TO DO:  HARRIS STD/DST TEMPLATE FIX?
+** TO DO: 
+** 	1.  resolve XXX in tzparse
+**	2.  does POSIX allow TZ variables such as UTC and UCT,
+**	    or must they be UTC0 and UCT0?  If UTC is allowed,
+**	    get rid of gmtokay nonsense in tzparse.
 */
 
 #ifndef lint
@@ -121,7 +125,8 @@ static void		timesub P((const time_t * timep, long offset,
 static time_t		transtime P((time_t janfirst, int year,
 				const struct rule * rulep, long offset));
 static int		tzload P((const char * name, struct state * sp));
-static int		tzparse P((const char * name, struct state * sp));
+static int		tzparse P((const char * name, struct state * sp,
+				int gmtokay));
 void			tzsetwall P((void));
 
 #ifdef STD_INSPIRED
@@ -594,9 +599,10 @@ const long				offset;
 */
 
 static int
-tzparse(name, sp)
+tzparse(name, sp, gmtokay)
 const char *			name;
 register struct state * const	sp;
+const int			gmtokay;
 {
 	const char *			stdname;
 	const char *			dstname;
@@ -614,9 +620,13 @@ register struct state * const	sp;
 	stdlen = name - stdname;	/* length of standard zone name */
 	if (stdlen == 0)
 		return -1;
-	name = getoffset(name, &stdoffset);
-	if (name == NULL)
-		return -1;
+	if (gmtokay && *name == '\0')
+		stdoffset = 0;
+	else {
+		name = getoffset(name, &stdoffset);
+		if (name == NULL)
+			return -1;
+	}
 	load_result = tzload(TZDEFRULES, sp);
 	if (load_result != 0)
 		sp->leapcnt = 0;		/* so, we're off a little */
@@ -795,7 +805,7 @@ gmtload(sp)
 struct state * const	sp;
 {
 	if (tzload("GMT", sp) != 0)
-		if (tzparse("GMT", sp) != 0)
+		if (tzparse("GMT", sp, TRUE) != 0)
 			gmtbuiltin(sp);
 }
 
@@ -819,7 +829,7 @@ tzset()
 		gmtbuiltin(lclptr);	/* built-in GMT by request */
 	else if (tzload(name, lclptr) != 0)
 		if (name == NULL || name[0] == ':' ||
-			tzparse(name, lclptr) != 0)
+			tzparse(name, lclptr, FALSE) != 0)
 				gmtload(lclptr);
 	settzname();
 }

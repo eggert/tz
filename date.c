@@ -243,7 +243,7 @@ char *		argv[];
 #endif /* HAVE_ADJTIME */
 #if !HAVE_ADJTIME
 		reset((time_t) (now + adjust), nflag);
-#endif /* ! HAVE_ADJTIME */
+#endif /* !HAVE_ADJTIME */
 		/*
 		** Sun silently ignores everything else; we follow suit.
 		*/

@@ -583,7 +583,7 @@ _("%s: More than one -L option specified\n"),
 			for (j = 0; j < nlinks; ++j)
 				if (strcmp(links[i].l_to,
 					links[j].l_from) == 0)
-						warning("link to link");
+						warning(_("link to link"));
 	}
 	if (lcltime != NULL) {
 		eat("command line", 1);

@@ -208,6 +208,16 @@ settzname()
 			altzone = -(ttisp->tt_gmtoff);
 #endif /* defined ALTZONE */
 	}
+	/*
+	** And to get the latest zone names into tzname. . .
+	*/
+	for (i = 0; i < sp->typecnt; ++i) {
+		register const struct ttinfo * const	ttisp =
+							&sp->ttis[sp->types[i]];
+
+		tzname[ttisp->tt_isdst] =
+			(char *) &sp->chars[ttisp->tt_abbrind];
+	}
 }
 
 static int

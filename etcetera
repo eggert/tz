@@ -1,12 +1,10 @@
 # %W%
 
-Zone	GMT		0	-	GMT
-
-#
-# Names for zones that might exist, just so people can "zic -l" to a timezone
+# All of these are set up just so people can "zic -l" to a timezone
 # that's right for their area, even if it doesn't have a name or dst rules
 # (half hour zones are too much to bother with -- when someone asks!)
-#
+
+Zone	GMT		0	-	GMT
 
 Zone	GMT-12		-12	-	GMT-1200
 Zone	GMT-11		-11	-	GMT-1100
@@ -38,8 +36,9 @@ Link	GMT		UTC
 Link	GMT		UCT
 Link	GMT		Universal
 Link	GMT		Greenwich
-Ling	GMT		GMT-0
-Linkn	GMT		GMT+0
+Link	GMT		Zulu
+Link	GMT		GMT-0
+Link	GMT		GMT+0
 Link	GMT		GMT0
 Link	GMT+1		GMT1
 Link	GMT+2		GMT2

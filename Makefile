@@ -131,8 +131,8 @@ LIBSRCS=	localtime.c asctime.c difftime.c
 LIBOBJS=	localtime.o asctime.o difftime.o
 HEADERS=	tzfile.h nonstd.h stdio.h stdlib.h time.h
 NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c emkdir.c getopt.c link.c
-DATESRCS=	date.c logwtmp.c
-SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(DATESRCS)
+NEWUCBSRCS=	date.c logwtmp.c
+SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS)
 DOCS=		Patchlevel.h \
 		README Theory \
 		date.1 newctime.3 tzfile.5 zic.8 zdump.8 \
@@ -208,8 +208,8 @@ SHAR5.Z:	$(SDATA)
 SHAR6.Z:	$(USNO)
 		$(SHAR) $(USNO) | compress > $@
 
-SHAR7.Z:	$(DATESRCS)
-		$(SHAR) $(DATESRCS) | compress > $@
+SHAR7.Z:	$(NEWUCBSRCS)
+		$(SHAR) $(NEWUCBSRCS) | compress > $@
 
 sure:		$(SOURCES)
 		for i in "$(TZCSRCS)" "$(TZDSRCS)" "$(DATESRCS)" "$(LIBSRCS)"; \

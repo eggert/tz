@@ -1040,6 +1040,18 @@ const time_t * const	timep;
 }
 
 /*
+ * Re-entrant version of localtime
+ */
+struct tm *
+localtime_r(timep, tm)
+const time_t * const	timep;
+struct tm *		tm;
+{
+	localsub(timep, 0L, tm);
+	return tm;
+}
+
+/*
 ** gmtsub is to gmtime as localsub is to localtime.
 */
 
@@ -1085,6 +1097,18 @@ const time_t * const	timep;
 {
 	gmtsub(timep, 0L, &tm);
 	return &tm;
+}
+
+/*
+ * Re-entrant version of gmtime
+ */
+struct tm *
+gmtime_r(timep, tm)
+const time_t * const	timep;
+struct tm *		tm;
+{
+	gmtsub(timep, 0L, tm);
+	return tm;
 }
 
 #ifdef STD_INSPIRED

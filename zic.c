@@ -22,7 +22,6 @@ static char	sccsid[] = "%W%";
 #define FALSE	0
 #endif
 
-
 extern char *	icpyalloc();
 extern char *	imalloc();
 extern char *	irealloc();
@@ -300,6 +299,7 @@ static char		chars[TZ_MAX_CHARS];
 
 static char *
 memcheck(ptr)
+char *	ptr;
 {
 	if (ptr == NULL) {
 		perror(progname);

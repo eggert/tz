@@ -490,11 +490,10 @@ const char * const	format;
 
 	(void) time(&now);
 	tm = *localtime(&now);
-	if (format == NULL) {
-		timeout(stdout, "%a %b ", &tm);
-		(void) printf("%2d ", tm.tm_mday);
-		timeout(stdout, "%X %Z %Y", &tm);
-	} else	timeout(stdout, format, &tm);
+#if HAVE_SETLOCALE
+	setlocale(LC_TIME, "");
+#endif
+	timeout(stdout, format ? format : "%+", &tm);
 	(void) putchar('\n');
 	(void) fflush(stdout);
 	(void) fflush(stderr);

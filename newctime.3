@@ -1,13 +1,11 @@
 .TH NEWCTIME 3 
 .SH NAME
-asctime, ctime, difftime, gmtime, localtime, mktime, tzset, tzsetwall \- convert date and time to ASCII
+asctime, ctime, difftime, gmtime, localtime, mktime, tzset \- convert date and time to ASCII
 .SH SYNOPSIS
 .nf
 .B extern char *tzname[2];
 .PP
 .B void tzset()
-.PP
-.B void tzsetwall()
 .PP
 .B #include <sys/types.h>
 .PP
@@ -245,11 +243,6 @@ the value of the
 environment variable
 (or to the leading characters of its value if it is lengthy).
 .PP
-.I Tzsetwall
-sets things up so that
-.I localtime
-returns the best available approximation of local wall clock time.
-.PP
 .I Ctime\^
 converts a long integer, pointed to by
 .IR clock ,
@@ -428,9 +421,7 @@ field of a returned
 points to a static array of characters, which
 will also be overwritten at the next call
 (and by calls to
-.I tzset
-or
-.IR tzsetwall ).
+.IR tzset ).
 .PP
 Avoid using out-of-range values with
 .I mktime

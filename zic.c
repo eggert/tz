@@ -567,28 +567,47 @@ const char * const	tofile;
 	ifree(toname);
 }
 
+#define MAX_BITS_IN_FILE	32
+
 static void
 setboundaries P((void))
 {
 	register time_t	bit;
-	register int bii;
+	register int	nbits;
+	register int	bii;
 
+	nbits = 0;
 	for (bit = 1; bit > 0; bit <<= 1)
-		continue;
-	if (bit == 0) {		/* time_t is an unsigned type */
-		tt_signed = FALSE;
-		min_time = 0;
-		max_time = ~(time_t) 0;
-		if (sflag)
-			max_time >>= 1;
-	} else {
-		tt_signed = TRUE;
-		min_time = bit;
-		max_time = bit;
-		++max_time;
-		max_time = -max_time;
+		++nbits;
+	tt_signed = (bit != 0);
+	if (tt_signed)
+		++nbits;
+	if (tt_signed) {
+		if (nbits <= MAX_BITS_IN_FILE) {
+			min_time = bit;
+			max_time = bit;
+			++max_time;
+			max_time = -max_time;
+		} else {
+			max_time = 1;
+			max_time <<= (MAX_BITS_IN_FILE - 1);
+			--max_time;
+			min_time = max_time;
+			--min_time;
+		}
 		if (sflag)
 			min_time = 0;
+	} else {
+		min_time = 0;
+		if (nbits <= MAX_BITS_IN_FILE)
+			max_time = ~(time_t) 0;
+		else {
+			max_time = 1;
+			max_time <<= MAX_BITS_IN_FILE;
+			--max_time;
+		}
+		if (sflag)
+			max_time >>= 1;
 	}
 	min_year = TM_YEAR_BASE + gmtime(&min_time)->tm_year;
 	max_year = TM_YEAR_BASE + gmtime(&max_time)->tm_year;

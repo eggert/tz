@@ -218,6 +218,12 @@ ZIC=		$(zic) $(ZFLAGS)
 # The name of a Posix-compliant `awk' on your system.
 AWK=		nawk
 
+# The name and arguments of a program to validate your web pages.
+# See <http://www.jclark.com/sp/> for a validator, and
+# <http://validator.w3.org/source/> for a validation library.
+VALIDATE = nsgmls
+VALIDATEFLAGS = -s -B -wall -wno-unused-param
+
 ###############################################################################
 
 cc=		cc
@@ -246,8 +252,9 @@ SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
 TABDATA=	iso3166.tab zone.tab
 DATA=		$(YDATA) $(NDATA) $(SDATA) $(TABDATA) leapseconds yearistype.sh
+WEB_PAGES=	tz-art.htm tz-link.htm
 MISC=		usno1988 usno1989 usno1989a usno1995 usno1997 usno1998 \
-			tz-art.htm tz-link.htm checktab.awk
+			$(WEB_PAGES) checktab.awk
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(MISC)
 
 # And for the benefit of csh users on systems that assume the user
@@ -344,8 +351,13 @@ tzselect:	tzselect.ksh
 			<$? >$@
 		chmod +x $@
 
+check:		check_tables check_web
+
 check_tables:	checktab.awk $(PRIMARY_YDATA)
 		$(AWK) -f checktab.awk $(PRIMARY_YDATA)
+
+check_web:	$(WEB_PAGES)
+		$(VALIDATE) $(VALIDATEFLAGS) $(WEB_PAGES)
 
 clean:
 		rm -f core *.o *.out tzselect zdump zic yearistype date \

@@ -15,18 +15,18 @@ static char	sccsid[] = "%W%";
 #ifndef TRUE
 #define TRUE		1
 #define FALSE		0
-#endif
+#endif /* !TRUE */
 
 #ifndef MAXPATHLEN
 #define MAXPATHLEN	1024
-#endif
+#endif /* !MAXPATHLEN */
 
 extern char *		getenv();
 extern char *		strcpy();
 extern char *		strcat();
-#ifdef strchr
+#ifndef USG
 extern char *		sprintf();
-#endif
+#endif /* !USG */
 
 char *			asctime();
 struct tm *		gmtime();
@@ -51,15 +51,16 @@ static struct state	s;
 
 static int		tz_is_set;
 
-#ifndef strchr
+#ifdef USG_COMPAT
 long			timezone = 0;
 int			daylight = 0;
-#endif
+#endif /* USG_COMPAT */
+
 char *			tzname[2] = { "GMT", "GMT" };
 
-#ifdef TZ_ABBR
+#ifdef TZA_COMPAT
 char *			tz_abbr;	/* compatibility w/older versions */
-#endif
+#endif /* TZA_COMPAT */
 
 static long
 detzcode(codep)
@@ -167,24 +168,24 @@ register char *	name;
 	/*
 	** Set tzname elements to initial values.
 	*/
-#ifndef strchr
+#ifdef USG_COMPAT
 	timezone = s.ttis[0].tt_gmtoff;
 	daylight = 0;
-#endif
+#endif /* USG_COMPAT */
 	tzname[0] = tzname[1] = &s.chars[0];
 	for (i = 1; i < s.typecnt; ++i) {
 		register struct ttinfo *	ttisp;
 
 		ttisp = &s.ttis[i];
 		if (ttisp->tt_isdst) {
-#ifndef strchr
+#ifdef USG_COMPAT
 			daylight = 1;
-#endif
+#endif /* USG_COMPAT */
 			tzname[1] = &s.chars[ttisp->tt_abbrind];
 		} else {
-#ifndef strchr
+#ifdef USG_COMPAT
 			timezone = ttisp->tt_gmtoff;
-#endif
+#endif /* USG_COMPAT */
 			tzname[0] = &s.chars[ttisp->tt_abbrind];
 		}
 	}
@@ -195,13 +196,13 @@ static
 tzgmt()
 {
 	s.timecnt = 0;
-#ifndef strchr
+#ifdef USG_COMPAT
 	timezone = 0;
-#endif
+#endif /* USG_COMPAT */
 	s.ttis[0].tt_gmtoff = 0;
-#ifndef strchr
+#ifdef USG_COMPAT
 	daylight = 0;
-#endif
+#endif /* USG_COMPAT */
 	s.ttis[0].tt_abbrind = 0;
 	(void) strcpy(s.chars, "GMT");
 	tzname[0] = tzname[1] = s.chars;
@@ -257,9 +258,9 @@ long *	timep;
 	t += ttisp->tt_gmtoff;
 	tmp = gmtime(&t);
 	tmp->tm_isdst = ttisp->tt_isdst;
-#ifdef TZ_ABBR
+#ifdef TZA_COMPAT
 	tz_abbr =
-#endif
+#endif /* TZA_COMPAT */
 	tzname[tmp->tm_isdst] = &s.chars[ttisp->tt_abbrind];
 	return tmp;
 }
@@ -311,12 +312,12 @@ static int	year_lengths[2] = {
 
 #define isleap(y) (((y) % 4) == 0)
 
-#ifdef strchr
+#ifdef BSD_COMPAT
 dysize(y)
 {
 	return year_lengths[isleap(y)];
 }
-#endif
+#endif /* BSD_COMPAT */
 
 struct tm *
 gmtime(clock)

@@ -1,11 +1,5 @@
 # %W%
 
-#
-# A settz("") uses the code's built-in GMT without going to disk to get
-# the information.  Still, we want things to work if somebody does a
-# settz("GMT"), so. . .
-#
-
 Zone	GMT		0	-	GMT
 
 #
@@ -40,7 +34,7 @@ Zone	GMT+11		11	-	GMT+1100
 Zone	GMT+12		12	-	GMT+1200
 Zone	GMT+13		13	-	GMT+1300	# GMT+12 with DST
 
-Link	GMT		UTC		# one of these two is right, but which?
+Link	GMT		UTC
 Link	GMT		UCT
 Link	GMT		Universal
 Link	GMT		Greenwich

@@ -6,11 +6,8 @@
 # tz files cover almost all the inhabited world, so there's little
 # need now for the entries that are not on UTC.
 
-#Updated Zone Etc/GMT 1997 Nov 19
 Zone	Etc/GMT		0	-	GMT
-#Updated Zone Etc/UTC 1997 Nov 19
 Zone	Etc/UTC		0	-	UTC
-#Updated Zone Etc/UCT 1997 Nov 19
 Zone	Etc/UCT		0	-	UCT
 
 Link	Etc/UTC				Etc/Universal
@@ -34,55 +31,29 @@ Link	Etc/GMT				Etc/GMT0
 #		zic -l GMT-12
 # so we moved the names into the Etc subdirectory.
 
-#Updated Zone Etc/GMT-14 1997 Nov 19
 Zone	Etc/GMT-14	14	-	GMT-14	# 14 hours ahead of GMT
-#Updated Zone Etc/GMT-13 1997 Nov 19
 Zone	Etc/GMT-13	13	-	GMT-13
-#Updated Zone Etc/GMT-12 1997 Nov 19
 Zone	Etc/GMT-12	12	-	GMT-12
-#Updated Zone Etc/GMT-11 1997 Nov 19
 Zone	Etc/GMT-11	11	-	GMT-11
-#Updated Zone Etc/GMT-10 1997 Nov 19
 Zone	Etc/GMT-10	10	-	GMT-10
-#Updated Zone Etc/GMT-9 1997 Nov 19
 Zone	Etc/GMT-9	9	-	GMT-9
-#Updated Zone Etc/GMT-8 1997 Nov 19
 Zone	Etc/GMT-8	8	-	GMT-8
-#Updated Zone Etc/GMT-7 1997 Nov 19
 Zone	Etc/GMT-7	7	-	GMT-7
-#Updated Zone Etc/GMT-6 1997 Nov 19
 Zone	Etc/GMT-6	6	-	GMT-6
-#Updated Zone Etc/GMT-5 1997 Nov 19
 Zone	Etc/GMT-5	5	-	GMT-5
-#Updated Zone Etc/GMT-4 1997 Nov 19
 Zone	Etc/GMT-4	4	-	GMT-4
-#Updated Zone Etc/GMT-3 1997 Nov 19
 Zone	Etc/GMT-3	3	-	GMT-3
-#Updated Zone Etc/GMT-2 1997 Nov 19
 Zone	Etc/GMT-2	2	-	GMT-2
-#Updated Zone Etc/GMT-1 1997 Nov 19
 Zone	Etc/GMT-1	1	-	GMT-1
-#Updated Zone Etc/GMT+1 1997 Nov 19
 Zone	Etc/GMT+1	-1	-	GMT+1
-#Updated Zone Etc/GMT+2 1997 Nov 19
 Zone	Etc/GMT+2	-2	-	GMT+2
-#Updated Zone Etc/GMT+3 1997 Nov 19
 Zone	Etc/GMT+3	-3	-	GMT+3
-#Updated Zone Etc/GMT+4 1997 Nov 19
 Zone	Etc/GMT+4	-4	-	GMT+4
-#Updated Zone Etc/GMT+5 1997 Nov 19
 Zone	Etc/GMT+5	-5	-	GMT+5
-#Updated Zone Etc/GMT+6 1997 Nov 19
 Zone	Etc/GMT+6	-6	-	GMT+6
-#Updated Zone Etc/GMT+7 1997 Nov 19
 Zone	Etc/GMT+7	-7	-	GMT+7
-#Updated Zone Etc/GMT+8 1997 Nov 19
 Zone	Etc/GMT+8	-8	-	GMT+8
-#Updated Zone Etc/GMT+9 1997 Nov 19
 Zone	Etc/GMT+9	-9	-	GMT+9
-#Updated Zone Etc/GMT+10 1997 Nov 19
 Zone	Etc/GMT+10	-10	-	GMT+10
-#Updated Zone Etc/GMT+11 1997 Nov 19
 Zone	Etc/GMT+11	-11	-	GMT+11
-#Updated Zone Etc/GMT+12 1997 Nov 19
 Zone	Etc/GMT+12	-12	-	GMT+12

@@ -19,10 +19,10 @@ char *
 asctime(timeptr)
 register const struct tm *	timeptr;
 {
-	static char	wday_name[DAYS_PER_WEEK][3] = {
+	static const char	wday_name[DAYSPERWEEK][3] = {
 		"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
 	};
-	static char	mon_name[MONS_PER_YEAR][3] = {
+	static const char	mon_name[MONSPERYEAR][3] = {
 		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 	};

@@ -20,6 +20,8 @@ zic \- time zone compiler
 ] [
 .B \-s
 ] [
+.B \-y command
+] [
 .I filename
 \&... ]
 .SH DESCRIPTION
@@ -77,6 +79,13 @@ values.
 Limit time values stored in output files to values that are the same
 whether they're taken to be signed or unsigned.
 You can use this option to generate SVVS-compatible files.
+.TP
+.BI "\-y " command
+Use the given
+.I command
+rather than
+.B yearistype
+when checking year types (see below).
 .sp
 Input lines are made up of fields.
 Fields are separated from one another by any number of white space characters.

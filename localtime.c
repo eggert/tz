@@ -61,6 +61,10 @@ static char	elsieid[] = "%W%";
 #define FALSE		0
 #endif /* !defined TRUE */
 
+#ifndef GMT
+#define GMT		"GMT"
+#endif /* !defined GMT */
+
 struct ttinfo {				/* time type information */
 	long		tt_gmtoff;	/* GMT offset in seconds */
 	int		tt_isdst;	/* used to set tm_isdst */
@@ -81,7 +85,8 @@ struct state {
 	time_t		ats[TZ_MAX_TIMES];
 	unsigned char	types[TZ_MAX_TIMES];
 	struct ttinfo	ttis[TZ_MAX_TYPES];
-	char		chars[TZ_MAX_CHARS + 1];
+	char		chars[(TZ_MAX_CHARS + 1 > sizeof GMT) ?
+				TZ_MAX_CHARS + 1 : sizeof GMT];
 	struct lsinfo	lsis[TZ_MAX_LEAPS];
 };
 
@@ -188,7 +193,7 @@ settzname()
 #endif /* defined ALTZONE */
 #ifdef ALL_STATE
 	if (sp == NULL) {
-		tzname[0] = tzname[1] = "GMT";
+		tzname[0] = tzname[1] = GMT;
 		return;
 	}
 #endif /* defined ALL_STATE */
@@ -813,7 +818,7 @@ register struct state * const	sp;
 	sp->timecnt = 0;
 	sp->ttis[0].tt_gmtoff = 0;
 	sp->ttis[0].tt_abbrind = 0;
-	(void) strcpy(sp->chars, "GMT");
+	(void) strcpy(sp->chars, GMT);
 }
 
 static void
@@ -965,7 +970,7 @@ struct tm * const	tmp;
 	else {
 #ifdef ALL_STATE
 		if (gmtptr == NULL)
-			tmp->TM_ZONE = "GMT";
+			tmp->TM_ZONE = GMT;
 		else	tmp->TM_ZONE = gmtptr->chars;
 #endif /* defined ALL_STATE */
 #ifndef ALL_STATE

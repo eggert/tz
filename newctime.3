@@ -56,13 +56,6 @@ return pointers to ``tm'' structures, described below.
 .I Localtime\^
 corrects for the time zone and any time zone adjustments
 (such as Daylight Saving Time in the U.S.A.).
-Before doing so,
-.I localtime\^
-calls
-.I tzset\^
-(if
-.I tzset\^
-has not been called in the current process).
 After filling in the ``tm'' structure,
 .I localtime
 sets the

@@ -521,7 +521,15 @@ label:
 				** For now, punt and conform to the
 				** standard, even though it's incorrect.
 				*/
-				diff = -(t->tm_isdst ? altzone : timezone);
+				diff = 0;
+#ifdef USG_COMPAT
+				if (t->tm_isdst == 0)
+					diff = timezone;
+#endif /* defined USG_COMPAT */
+#ifdef ALTZONE
+				if (t->tm_isdst > 0)
+					diff = altzone;
+#endif /* defined ALTZONE */
 #endif /* !defined TM_GMTOFF */
 				if (diff < 0) {
 					sign = "-";

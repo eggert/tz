@@ -10,7 +10,9 @@ CFLAGS=		$(DEBUG) -O -DOBJECTID -DTZDIR=\"$(TZDIR)\"
 
 TZCSRCS=	tzcomp.c scheck.c strchr.c
 TZCOBJS=	tzcomp.o scheck.o strchr.o
-ENCHILADA=	Makefile timezone.h settz.c tzdump.c $(TZCSRCS) tzinfo years.sh
+TZDSRCS=	tzdump.c settz.c
+TZDOBJS=	tzdump.o settz.o
+ENCHILADA=	Makefile timezone.h $(TZCSRCS) $(TZDSRCS) tzinfo years.sh
 
 all:	REDID_BINARIES tzdump
 
@@ -18,8 +20,8 @@ REDID_BINARIES:	$(TZDIR) tzcomp tzinfo years
 	tzcomp -d $(TZDIR) tzinfo
 	cp /dev/null $@
 
-tzdump:	tzdump.o settz.o
-	$(CC) $(LFLAGS) tzdump.o settz.o $(LIBS) -o $@
+tzdump:	$(TZDOBJS)
+	$(CC) $(LFLAGS) $(TZDOBJS) $(LIBS) -o $@
 
 tzcomp:	$(TZCOBJS)
 	$(CC) $(LFLAGS) $(TZCOBJS) $(LIBS) -o $@
@@ -38,9 +40,9 @@ bundle:	$(ENCHILADA)
 $(ENCHILADA):
 	sccs get $(REL) $(REV) $@
 
-sure:	tzdump.c $(TZCSRCS)
-	lint $(LINTFLAGS) tzdump.c settz.c
+sure:	$(TZCSRCS) $(TZDSRCS)
 	lint $(LINTFLAGS) $(TZCSRCS)
+	lint $(LINTFLAGS) $(TZDSRCS)
 
 clean:
 	rm -f core *.o *.out REDID_BINARIES years tzdump tzcomp bundle \#*

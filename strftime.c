@@ -118,6 +118,8 @@ label:
 					"%02d", pt, ptlim);
 				continue;
 			case 'D':
+				pt = _fmt("%m/%d/%y", t, pt, ptlim);
+				continue;
 			case 'x':
 				/*
 				** Version 3.0 of strftime from Arnold Robbins
@@ -129,9 +131,12 @@ label:
 				** date format," anything goes.  Using just
 				** numbers (as here) makes Quakers happier.
 				** Word from Paul Eggert (eggert@twinsun.com)
-				** is that %Y-%m-%d "is the ISO standard date
-				** format."
-				** (ado, 5/29/93)
+				** is that %Y-%m-%d is the ISO standard date
+				** format, specified in ISO 2014 and later
+				** ISO 8601:1988 (with a summaray available in
+				** pub/doc/ISO/english/ISO8601.ps.Z on
+				** ftp.uni-erlangen.de.
+				** (ado, 5/30/93)
 				*/
 				pt = _fmt("%m/%d/%y", t, pt, ptlim);
 				continue;

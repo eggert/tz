@@ -71,13 +71,15 @@ struct state {
 	time_t		ats[TZ_MAX_TIMES];
 	unsigned char	types[TZ_MAX_TIMES];
 	struct ttinfo	ttis[TZ_MAX_TYPES];
+	char		chars[BIGGEST(BIGGEST(TZ_MAX_CHARS + 1, sizeof GMT),
+				(2 * (
 #ifdef TZNAME_MAX
-	char		chars[BIGGEST(2 * TZNAME_MAX + 1,
-				BIGGEST(TZ_MAX_CHARS + 1, sizeof GMT))];
+				TZNAME_MAX
 #endif /* defined TZNAME_MAX */
 #ifndef TZNAME_MAX
-	char		chars[BIGGEST(TZ_MAX_CHARS + 1, sizeof GMT)];
+				255
 #endif /* !defined TZNAME_MAX */
+				+ 1)))];
 	struct lsinfo	lsis[TZ_MAX_LEAPS];
 };
 

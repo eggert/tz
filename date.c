@@ -34,8 +34,11 @@ char copyright[] =
 static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #endif /* not lint */
 
+#ifndef USG
 #include "sys/time.h"	/* for DST_NONE */
+#endif /* !defined USG */
 #include "private.h"
+#include "utmp.h"	/* for OLD_TIME (or its absence) */
 
 /*
 ** The two things date knows about time are. . .

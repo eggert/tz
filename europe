@@ -251,8 +251,8 @@ Rule	GB-Eire	1921	only	-	Apr	 3	2:00s	1:00	BST
 Rule	GB-Eire	1921	only	-	Oct	 3	2:00s	0	GMT
 # S.R.&O. 1922, No. 264
 Rule	GB-Eire	1922	only	-	Mar	26	2:00s	1:00	BST
-# The Summer Time Act, 1922
 Rule	GB-Eire	1922	only	-	Oct	 8	2:00s	0	GMT
+# The Summer Time Act, 1922
 Rule	GB-Eire	1923	only	-	Apr	Sun>=16	2:00s	1:00	BST
 Rule	GB-Eire	1923	1924	-	Sep	Sun>=16	2:00s	0	GMT
 Rule	GB-Eire	1924	only	-	Apr	Sun>=9	2:00s	1:00	BST

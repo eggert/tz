@@ -101,7 +101,7 @@ static long	gethms P((const char * string, const char * errstrng,
 static void	infile P((const char * filename));
 static void	inleap P((char ** fields, int nfields));
 static void	inlink P((char ** fields, int nfields));
-static void	inrule P((char ** fields, int nfiekds));
+static void	inrule P((char ** fields, int nfields));
 static int	inzcont P((char ** fields, int nfields));
 static int	inzone P((char ** fields, int nfields));
 static int	inzsub P((char ** fields, int nfields, int iscont));

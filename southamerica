@@ -1,0 +1,38 @@
+# %W%
+
+# From Official Airline Guide - Worldwide Edition (1987).  Countries not
+# listed here do not observe DST, according to the OAG.  Time zone names
+# are pure inventions, and none are supplied for countries not observing
+# DST; updates from natives would be appreciated.  The times that DST
+# starts and ends are based on the assumption that they switch a 2AM just
+# as everybody else does.
+
+# Brazil
+# The OAG lists October 25, 1987 and February 12, 1988 as the starting and
+# ending dates, giving them as "estimated date(s) based on previous year".  We
+# infer a rule here from one example, always a dangerous practice....  Yes,
+# they really do switch on Saturday, according to the OAG.
+# "Brazil/Acre" is for the Territory of Acre; "Brazil/DeNoronha" is for
+# Fernando De Noronha.
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Brazil	1987	max	-	Feb	Sat<=14	2:00	0	S
+Rule	Brazil	1987	max	-	Oct	Sat<=28	2:00	1:00	D
+
+# Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	Brazil/East		-3:00	Brazil		E%sT
+Zone	Brazil/West		-4:00	Brazil		W%sT
+Zone	Brazil/Acre		-5:00	Brazil		A%sT
+Zone	Brazil/DeNoronha	-2:00	Brazil		F%sT
+
+# Chile
+# The OAG lists October 11, 1987 and March 12, 1988 as the starting and
+# ending dates, giving them as "estimated date(s) based on previous year."
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Chile	1987	max	-	Mar	Sun<=14	2:00	0	S
+Rule	Chile	1987	max	-	Oct	Sun<=14	2:00	1:00	D
+
+# Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	Chile/Continental	-4:00	Chile		C%sT
+Zone	Chile/EasterIsland	-6:00	Chile		E%sT

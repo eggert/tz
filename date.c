@@ -57,7 +57,6 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #include <stdio.h>
 #include <ctype.h>
 #include <strings.h>
-#include "tzfile.h"
 
 #ifndef TIME_USER
 #ifdef OTIME_MSG

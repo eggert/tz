@@ -44,11 +44,6 @@ REDO=		posix_right
 
 TZLIB=		/usr/lib/libz.a
 
-# If you're running on a System V-style system and don't want lint grief,
-# add
-#	-DUSG
-# to the end of the "CFLAGS=" line.
-#
 # If you're running on a system where "strchr" is known as "index",
 # (for example, a 4.[012]BSD system), add
 #	-Dstrchr=index
@@ -104,14 +99,6 @@ TZLIB=		/usr/lib/libz.a
 # to the end of the "CFLAGS=" line
 
 CFLAGS=
-
-# LINTFLAGS is set for SunOS 4.0.
-# If you're using System V, you'll want to comment out the "LINTFLAGS=" line.
-
-LINT=		lint
-LINTFLAGS=	-hbaxc
-
-SHAR=		shar
 
 ################################################################################
 
@@ -188,47 +175,8 @@ $(TZLIB):	$(LIBOBJS)
 zic:		$(TZCOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
 
-SHARS:		SHAR1.Z SHAR2.Z SHAR3.Z SHAR4.Z SHAR5.Z SHAR6.Z SHAR7.Z
-
-SHAR1.Z:	$(DOCS)
-		$(SHAR) $(DOCS) | compress > $@
-
-SHAR2.Z:	$(HEADERS) $(LIBSRCS)
-		$(SHAR) $(HEADERS) $(LIBSRCS) | compress > $@
-
-SHAR3.Z:	$(NONLIBSRCS)
-		$(SHAR) $(NONLIBSRCS) | compress > $@
-
-SHAR4.Z:	$(YDATA) $(NDATA) leapseconds
-		$(SHAR) $(YDATA) $(NDATA) leapseconds | compress > $@
-
-SHAR5.Z:	$(SDATA)
-		$(SHAR) $(SDATA) | compress > $@
-
-SHAR6.Z:	$(USNO)
-		$(SHAR) $(USNO) | compress > $@
-
-SHAR7.Z:	$(NEWUCBSRCS)
-		$(SHAR) $(NEWUCBSRCS) | compress > $@
-
-sure:		$(SOURCES)
-		for i in "$(TZCSRCS)" "$(TZDSRCS)" "$(DATESRCS)" "$(LIBSRCS)"; \
-		do $(LINT) $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $$i ; \
-		done
-
-# "/usr/5bin/lint -p" can dump core on SunOS 4.0, so no -p below. . .
-
-SURE:		sure $(ENCHILADA)
-		make sure LINT=/usr/5bin/lint LINTFLAGS=-DUSG
-		make sure LINT=gcc LINTFLAGS="-c -O -ansi -pedantic -Wall"
-		rm -f zic zdump *.o
-		spell $(ENCHILADA)
-
 clean:
-		rm -f core *.o *.out REDID_BINARIES zdump zic date SHAR* ,*
-
-CLEAN:		clean
-		sccs clean
+		rm -f core *.o *.out REDID_BINARIES zdump zic date ,*
 
 names:
 		@echo $(ENCHILADA)

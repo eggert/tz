@@ -12,15 +12,7 @@ static char	sccsid[] = "%W%";
 
 #include "ctype.h"
 
-#ifndef alloc_t
-#define alloc_t	unsigned
-#endif
-
-#ifndef MAL
-#define MAL	NULL
-#endif
-
-extern char *	malloc();
+extern char *	imalloc();
 
 char *
 scheck(string, format)

@@ -739,11 +739,16 @@ register struct state *	sp;
 		sp->ttis[0].tt_abbrind = 0;
 	}
 	sp->charcnt = stdlen + 1 + dstlen + 1;
-	if (sp->charcnt > sizeof sp->chars)
-		return -1;
-	(void) strcpy(sp->chars, stdname);
-	if (dstlen != 0)
-		(void) strcpy(sp->chars + stdlen + 1, dstname);
+  	if (sp->charcnt > sizeof sp->chars)
+  		return -1;
+	cp = sp->chars;
+	(void) strncpy(cp, stdname, stdlen);
+	cp += stdlen;
+	*cp++ = '\0';
+	if (dstlen > 0) {
+		(void) strncpy(cp, dstname, dstlen);
+		*(cp + dstlen) = '\0';
+	}
 	sp->leapcnt = 0;		/* so, we're off a little */
 	if (sp == &lclstate)
 		settzname(sp);

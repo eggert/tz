@@ -4,7 +4,7 @@
 # system, change the line below (after finding the zone you want in the
 # time zone files, or adding it to a time zone file).
 # Alternately, if you discover you've got the wrong time zone, you can just
-#	tzcomp -l rightzone
+#	zic -l rightzone
 
 LOCALTIME=	US/Eastern
 
@@ -24,28 +24,28 @@ LINTFLAGS=	-phbaaxc
 LFLAGS=
 CFLAGS=		-g -DOBJECTID -DTZDIR=\"$(TZDIR)\"
 
-TZCSRCS=	tzcomp.c scheck.c strchr.c mkdir.c
-TZCOBJS=	tzcomp.o scheck.o strchr.o mkdir.o
-TZDSRCS=	tzdump.c newctime.c
-TZDOBJS=	tzdump.o newctime.o
-DOCS=		README Makefile newctime.3 tzfile.5 tzcomp.8 tzdump.8
+TZCSRCS=	zic.c scheck.c strchr.c mkdir.c
+TZCOBJS=	zic.o scheck.o strchr.o mkdir.o
+TZDSRCS=	zdump.c newctime.c
+TZDOBJS=	zdump.o newctime.o
+DOCS=		README Makefile newctime.3 tzfile.5 zic.8 zdump.8
 SOURCES=	tzfile.h $(TZCSRCS) $(TZDSRCS) years.sh
 DATA=		asia australasia europe etcetera northamerica pacificnew systemv
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
-all:	REDID_BINARIES tzdump $(TZLIB)
+all:	REDID_BINARIES zdump $(TZLIB)
 
-REDID_BINARIES:	$(TZDIR) tzcomp years $(DATA)
-	PATH=.:$$PATH tzcomp -l $(LOCALTIME) -d $(TZDIR) $(DATA) && > $@
+REDID_BINARIES:	$(TZDIR) zic years $(DATA)
+	PATH=.:$$PATH zic -l $(LOCALTIME) -d $(TZDIR) $(DATA) && > $@
 
-tzdump:	$(TZDOBJS)
+zdump:	$(TZDOBJS)
 	$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@
 
 $(TZLIB):	newctime.o
 	ar ru $@ newctime.o
 	ranlib $@
 
-tzcomp:	$(TZCOBJS)
+zic:	$(TZCOBJS)
 	$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
 
 $(TZDIR):
@@ -73,9 +73,9 @@ sure:	$(TZCSRCS) $(TZDSRCS) tzfile.h
 	lint $(LINTFLAGS) $(TZDSRCS)
 
 clean:
-	rm -f core *.o *.out REDID_BINARIES years tzdump tzcomp BUNDLE \#*
+	rm -f core *.o *.out REDID_BINARIES years zdump zic BUNDLE \#*
 
 CLEAN:	clean
 	sccs clean
 
-tzdump.o tzcomp.o newctime.o:	tzfile.h
+zdump.o zic.o newctime.o:	tzfile.h

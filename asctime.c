@@ -10,16 +10,6 @@ static char	elsieid[] = "%W%";
 #include "time.h"
 #include "tzfile.h"
 
-#ifndef MODERN
-
-#define const
-
-#ifndef USG
-extern char *	sprintf();
-#endif /* !defined USG */
-
-#endif /* !defined MODERN */
-
 /*
 ** A la X3J11
 */

@@ -192,7 +192,7 @@ const char * const	codep;
 static void
 settzname P((void))
 {
-	register const struct state * const	sp = lclptr;
+	register struct state * const		sp = lclptr;
 	register int				i;
 
 	tzname[0] = wildabbr;
@@ -214,7 +214,7 @@ settzname P((void))
 		register const struct ttinfo * const	ttisp = &sp->ttis[i];
 
 		tzname[ttisp->tt_isdst] =
-			(char *) &sp->chars[ttisp->tt_abbrind];
+			&sp->chars[ttisp->tt_abbrind];
 #ifdef USG_COMPAT
 		if (ttisp->tt_isdst)
 			daylight = 1;
@@ -235,7 +235,7 @@ settzname P((void))
 								sp->types[i]];
 
 		tzname[ttisp->tt_isdst] =
-			(char *) &sp->chars[ttisp->tt_abbrind];
+			&sp->chars[ttisp->tt_abbrind];
 	}
 }
 
@@ -941,7 +941,7 @@ const time_t * const	timep;
 const long		offset;
 struct tm * const	tmp;
 {
-	register const struct state *	sp;
+	register struct state *		sp;
 	register const struct ttinfo *	ttisp;
 	register int			i;
 	const time_t			t = *timep;
@@ -975,7 +975,7 @@ struct tm * const	tmp;
 	*/
 	timesub(&t, ttisp->tt_gmtoff, sp, tmp);
 	tmp->tm_isdst = ttisp->tt_isdst;
-	tzname[tmp->tm_isdst] = (char *) &sp->chars[ttisp->tt_abbrind];
+	tzname[tmp->tm_isdst] = &sp->chars[ttisp->tt_abbrind];
 #ifdef TM_ZONE
 	tmp->TM_ZONE = &sp->chars[ttisp->tt_abbrind];
 #endif /* defined TM_ZONE */

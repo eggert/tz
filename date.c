@@ -291,7 +291,7 @@ char *		argv[];
 }
 
 static void
-dogmt()
+dogmt P((void))
 {
 	register char **	saveenv;
 	static char		tzgmt0[] = "TZ=GMT0";
@@ -427,7 +427,7 @@ const char * const	reason;
 }
 
 static void
-errensure()
+errensure P((void))
 {
 	if (retval == EXIT_SUCCESS)
 		retval = EXIT_FAILURE;
@@ -443,7 +443,7 @@ register const char *	cp;
 }
 
 static void
-usage()
+usage P((void))
 {
 	(void) fprintf(stderr, "date: usage is date ");
 	(void) fprintf(stderr, "[-u] ");

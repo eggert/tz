@@ -1,7 +1,7 @@
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";
-/* As received from UCB, plus OLD_TIME conditionalization */
+/* As received from UCB, with include file reordering and OLD_TIME condition. */
 #endif /* !defined NOID */
 #endif /* !defined lint */
 
@@ -28,13 +28,14 @@ static char sccsid[] = "@(#)logwtmp.c	5.2 (Berkeley) 9/20/88";
 #endif /* defined LIBC_SCCS */
 #endif /* !defined lint */
 
+#include <utmp.h>
+
+#ifndef OLD_TIME
+
 #include <sys/types.h>
 #include <sys/file.h>
 #include <sys/time.h>
 #include <sys/stat.h>
-#include <utmp.h>
-
-#ifndef OLD_TIME
 
 #define	WTMPFILE	"/usr/adm/wtmp"
 

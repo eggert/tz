@@ -195,7 +195,7 @@ SURE:		sure $(ENCHILADA)
 		make sure LINT=/usr/5bin/lint LINTFLAGS=""
 		spell $(ENCHILADA)
 		make clean
-		make sure LINT=gcc LINTFLAGS="-O -ansi -pedantic -Wall"
+		make sure LINT=gcc LINTFLAGS="-c -O -ansi -pedantic -Wall"
 		make clean
 
 clean:

@@ -89,8 +89,8 @@ DOCS=		Theory README Makefile newctime.3 tzfile.5 zic.8 zdump.8
 SOURCES=	tzfile.h zic.c zdump.c \
 		localtime.c asctime.c ctime.c dysize.c timemk.c \
 		scheck.c ialloc.c mkdir.c
-DATA=		asia australasia europe etcetera northamerica \
-		pacificnew southamerica systemv solar87 solar88 Patchlevel.h
+DATA=		Patchlevel.h asia australasia europe etcetera leapseconds \
+		northamerica pacificnew southamerica systemv solar87 solar88
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
 all:		REDID_BINARIES zdump $(TZLIB)

@@ -1155,10 +1155,14 @@ const int		nfields;
 		error(_("time before zero"));
 		return;
 	}
-	if (dayoff < min_time / SECSPERDAY)
-		return min_time;
-	if (dayoff > max_time / SECSPERDAY)
-		return max_time;
+	if (dayoff < min_time / SECSPERDAY) {
+		error(_("time too small"));
+		return;
+	}
+	if (dayoff > max_time / SECSPERDAY) {
+		error(_("time too large"));
+		return;
+	}
 	t = (time_t) dayoff * SECSPERDAY;
 	tod = gethms(fields[LP_TIME], _("invalid time of day"), FALSE);
 	cp = fields[LP_CORR];

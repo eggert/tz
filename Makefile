@@ -78,18 +78,29 @@ REDO=		posix_right
 
 YEARISTYPE=	./yearistype
 
-# If you're on an AT&T-based system (rather than a BSD-based system), add
-#	-DUSG
-# to the end of the "CFLAGS=" line.
+# Add the following to the end of the "CFLAGS=" line as needed.
+#  -DHAVE_ADJTIME=0 if `adjtime' does not exist (SVR0?)
+#  -DHAVE_LONG_DOUBLE=1 if your compiler supports the `long double' type
+#  -DHAVE_MKDIR=0 if the mkdir system call does not work (SVR0?)
+#  -DHAVE_SETLOCALE=0 if the setlocale function does not work (SVR3)
+#  -DHAVE_SETTIMEOFDAY=0 if settimeofday does not exist (SVR0?)
+#  -DHAVE_SETTIMEOFDAY=1 if settimeofday has just 1 arg (SVR4)
+#  -DHAVE_SETTIMEOFDAY=2 if settimeofday uses 2nd arg (4.3BSD)
+#  -DHAVE_SETTIMEOFDAY=3 if settimeofday ignores 2nd arg (4.4BSD)
+#  -DHAVE_STDLIB_H=0 if `#include <stdlib.h>' does not work
+#  -DHAVE_UMASK=0 if `umask(0)' does not work
+#  -DHAVE_UNISTD=0 if `#include <unistd.h>' does not work
+#  -DLOCALE_HOME=\"path\" if locales are in "path", not "/usr/lib/locale"
+#  -Dalloc_size_T=T if the malloc size argument is of type T, not size_t
+#  -Dfwrite_size_T=T if the fwrite size arguments are of type T, not size_t
+#  -Dqsort_size_T=T if the qsort size arguments are of type T, not size_t
+#  -Dstrchr=index if `strchr' is called `index'
+#  $(GCC_DEBUG_FLAGS) if you are using GCC and want lots of checking
 #
-# If you're running on a system where "strchr" is known as "index"
-# (for example, a 4.[012]BSD system), add
-#	-Dstrchr=index
-# to the end of the "CFLAGS=" line.
-#
-# If you're running on a system with a "mkdir" function, feel free to add
-#	-Demkdir=mkdir
-# to the end of the "CFLAGS=" line
+GCC_DEBUG_FLAGS = -Dlint -g -O -fno-common \
+	-Wall -Wcast-qual -Wconversion -Wmissing-prototypes \
+	-Wnested-externs -Wpointer-arith -Wshadow \
+	-Wtraditional # -Wstrict-prototypes -Wwrite-strings
 #
 # If you want to use System V compatibility code, add
 #	-DUSG_COMPAT
@@ -181,13 +192,6 @@ YEARISTYPE=	./yearistype
 # 53 as a week number (rather than 52 or 53) for those days in January that
 # before the first Monday in January when a "%V" format is used and January 1
 # falls on a Friday, Saturday, or Sunday.
-#
-# If your compiler supports the `long double' type, add
-#	-DHAVE_LONG_DOUBLE
-# to the end of the "CFLAGS=" line.
-#
-# XXX--note about LOCALE_HOME here
-# XXX--note about HAVE_SETLOCALE here
 
 CFLAGS=
 

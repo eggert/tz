@@ -157,10 +157,6 @@ Zone	US/Hawaii	-10:30	US	H%sT	1933 Apr 30 2:00
 			-10:30	US	H%sT	1947 Jun 8 2:00
 			-10:00	-	HST
 
-# POSIX "zone" used in handling POSIX-style specifications
-
-Zone	_ST0_DT		0	US	_%sT
-
 # Old names, for S5 users
 
 # Link	LINK-FROM	LINK-TO

@@ -75,9 +75,13 @@ main(argc, argv)
 	int ch, nflag;
 	char *username, *getlogin();
 	time_t time();
+	char *	format;
+	char *	value;
 
+	format = value = NULL;
 	nflag = 0;
 	tz.tz_dsttime = tz.tz_minuteswest = 0;
+	format = NULL;
 	while ((ch = getopt(argc, argv, "d:nut:")) != EOF)
 		switch((char)ch) {
 		case 'd':		/* daylight savings time */
@@ -102,17 +106,32 @@ main(argc, argv)
 		}
 	argc -= optind;
 	argv += optind;
-
-	if (argc > 1) {
-		usage();
-		exit(1);
+	switch (argc) {
+		default:
+			usage();
+		case 0:
+			display(format);
+		case 1:
+			if (*argv[0] == '+')
+				display(&argv[0][1]);
+			value = argv[0];
+			break;
+		case 2:
+			if ((*argv[0] == '+') == (*argv[1] == '+'))
+				usage();
+			if (*argv[0] == '+') {
+				format = &argv[0][1];
+				value = argv[1];
+			} else {
+				format = &argv[1][1];
+				value = argv[0];
+			}
 	}
-
 	if ((tz.tz_minuteswest || tz.tz_dsttime) &&
 	    settimeofday((struct timeval *)NULL, &tz)) {
 		perror("settimeofday");
 		retval = 1;
-		display();
+		display(format);
 	}
 
 	if (gettimeofday(&tv, &tz)) {
@@ -120,14 +139,11 @@ main(argc, argv)
 		exit(1);
 	}
 
-	if (!argc)
-		display();
-
-	tv.tv_sec = gtime(*argv, (time_t) tv.tv_sec, -1);
+	tv.tv_sec = gtime(value, (time_t) tv.tv_sec, -1);
 	if (tv.tv_sec == -1) {
 		usage();
 		retval = 1;
-		display();
+		display(format);
 	}
 
 	if (nflag || !netsettime(tv)) {
@@ -135,7 +151,7 @@ main(argc, argv)
 		if (settimeofday(&tv, (struct timezone *)NULL)) {
 			perror("settimeofday");
 			retval = 1;
-			display();
+			display(format);
 		}
 		logwtmp("{", "date", "");
 	}
@@ -161,10 +177,13 @@ main(argc, argv)
 	int argc;
 	char **argv;
 {
-	int ch;
-	time_t time();
-	time_t t;
+	int	ch;
+	time_t	time();
+	time_t	t;
+	char *	format;
+	char *	value;
 
+	format = value = NULL;
 	while ((ch = getopt(argc, argv, "u")) != EOF)
 		switch (ch) {
 		case 'u':
@@ -174,18 +193,34 @@ main(argc, argv)
 			usage();
 			exit(1);
 		}
-	if (argc == optind)
-		display();
-	else if ((argc - optind) != 1) {
-		usage();
-		exit(1);
+	argc -= optind;
+	argv += optind;
+	switch (argc) {
+		default:
+			usage();
+		case 0:
+			display(format);
+		case 1:
+			if (*argv[0] == '+')
+				display(&argv[0][1]);
+			value = argv[0];
+			break;
+		case 2:
+			if ((*argv[0] == '+') == (*argv[1] == '+'))
+				usage();
+			if (*argv[0] == '+') {
+				format = &argv[0][1];
+				value = argv[1];
+			} else {
+				formt = &argv[1][1];
+				value = argv[0];
+			}
 	}
 	(void) time(&t);
-	t = gtime(argv[optind], t, -1);
-	if (t == -1) {
+	t = gtime(value, t, -1);
+	if (t == -1)
 		usage();
-		retval = 1;
-	} else {
+	else {
 		logwtmp("|", "date", "");
 		if (stime(&t) == 0)
 			logwtmp("{", "date", "");
@@ -194,7 +229,7 @@ main(argc, argv)
 			retval = 1;
 		}
 	}
-	display();
+	display(format);
 }
 
 usage()
@@ -205,8 +240,11 @@ usage()
 
 #endif /* defined USG */
 
+static void	timeout();
+
 static void
-display()
+display(format)
+char *	format;
 {
 	register struct tm *	tp;
 	register char *		cp;
@@ -214,12 +252,110 @@ display()
 	extern char *		tzname[2];
 
 	(void) time(&t);
-	tp = localtime(&t);
-	cp = asctime(tp);
-	(void) printf("%.20s%s%s", cp, tzname[tp->tm_isdst], cp + 19);
+	if (format == NULL) {
+		tp = localtime(&t);
+		cp = asctime(tp);
+		(void) printf("%.20s%s%s", cp, tzname[tp->tm_isdst], cp + 19);
+	} else	timeout(format, t);
+	/*
+	** Should check stdout/stderr here.
+	*/
 	(void) exit(retval);
 	for ( ; ; )
 		;
+}
+
+static void
+timeout(format, arg)
+register char *	format;
+time_t		arg;
+{
+	register int	c;
+	struct tm	tm;
+	char *		cp;
+
+	tm = *localtime(&arg);
+	cp = asctime(&tm);
+	for ( ; ; ) {
+		c = *format++;
+		if (c == '\0') {
+			(void) putchar('\n');
+			return;
+		}
+		if (c != '%') {
+			(void) putchar(c);
+			continue;
+		}
+		switch (c = *format++) {
+			default:
+				(void) fprintf(stderr,
+					"date: bad format character - %c\n", c);
+				exit(1);
+			case '%':
+				(void) putchar(c);
+				break;
+			case 'n':
+				(void) putchar('\n');
+				break;
+			case 't':
+				(void) putchar('\t');
+				break;
+			case 'm':
+				(void) printf("%02.2d", tm.tm_mon + 1);
+				break;
+			case 'd':
+				(void) printf("%02.2d", tm.tm_mday);
+				break;
+			case 'y':
+				(void) printf("%02.2d", tm.tm_year % 100);
+				break;
+			case 'D':
+				(void) printf("%02.2d/%02.2d/%02.2d",
+					tm.tm_mon + 1,
+					tm.tm_mday,
+					tm.tm_year % 100);
+				break;
+			case 'H':
+				(void) printf("%02.2d", tm.tm_hour);
+				break;
+			case 'M':
+				(void) printf("%02.2d", tm.tm_min);
+				break;
+			case 'S':
+				(void) printf("%02.2d", tm.tm_sec);
+				break;
+			case 'T':
+				(void) printf("%02.2d:%02.2d:%02.2d",
+					tm.tm_hour, tm.tm_min, tm.tm_sec);
+				break;
+			case 'j':
+				(void) printf("%03.3d", tm.tm_yday + 1);
+				break;
+			case 'w':
+				(void) printf("%d", tm.tm_wday);
+				break;
+			case 'a':
+				(void) printf("%03.3s", cp);
+				break;
+			case 'h':
+				(void) printf("%03.3s", cp + 4);
+				break;
+			case 'r':
+				{
+					static int	ap, hour;
+
+					hour = tm.tm_hour;
+					if (hour >= 12) {
+						ap = 'P';
+						hour -= 12;
+					} else	ap = 'A';
+					(void) printf(
+						"%02.2d:%02.2d:%02.2d %cM",
+						hour, tm.tm_min, tm.tm_sec, ap);
+				}
+				break;
+		}
+	}
 }
 
 setgmt()

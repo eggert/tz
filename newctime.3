@@ -1,0 +1,86 @@
+.TH SETTZ 3 
+.SH NAME
+settz, newctime, newlocaltime \-  convert date and time to ASCII
+.SH SYNOPSIS
+.nf
+.B settz(zonename)
+.B char *zonename;
+.PP
+.B char *newctime(clock)
+.B long *clock;
+.PP
+.B
+#include "time.h"
+.PP
+.B struct tm *newlocaltime(clock)
+.B long *clock;
+.PP
+.B char *tz_abbr;
+.SH DESCRIPTION
+.I Settz
+sets time zone information used by
+.I newctime
+and
+.IR newlocaltime .
+If
+.I zonename
+begins with a slash,
+it is used as the absolute pathname of the
+.IR tzfile (5)-format
+file from which to read the time zone information;
+if
+.I zonename
+begins with some other character,
+it is used as a pathname relative to the standard time zone information
+directory.  A call of the form
+.ti +.5i
+.B
+settz("")
+.br
+causes built-in information about GMT to be used; a call of the form
+.ti +.5i
+.B
+settz((char *) 0)
+.br
+is treated as if it were a call of the form
+.ti +.5i
+.B
+settz("localtime")
+.PP
+.I Newlocaltime
+has the same argument and return value as
+.IR localtime .
+If
+.I newlocaltime
+is called before
+.I settz
+is called,
+.I newlocaltime
+calls
+.I settz
+with the value returned by
+.B
+getenv("TZ").
+.I Newlocaltime
+sets
+tz_abbr
+to a pointer to an 
+ASCII string that's the time zone abbreviation to be used with
+.IR newlocaltime 's
+return value.
+.PP
+.I Newctime
+returns a pointer to a string of the form
+.ti +.5i
+Sat Feb 15 15:45:51 1986 EST\\n\\0
+.br
+where the last (variable-width) field is the time zone abbreviation.
+.SH DIAGNOSTICS
+.I Settz
+returns zero if all seems well; it returns negative one otherwise
+(and sets things up so that its built-in information about GMT is used).
+.SH FILES
+/etc/tzdir	standard time zone information directory
+.SH "SEE ALSO"
+ctime(3), getenv(3)
+.. %W%

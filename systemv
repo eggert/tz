@@ -5,8 +5,8 @@
 #
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	SystemV	1901	1973	-	Apr	lastSun	2:00	1:00	D
-Rule	SystemV	1901	1973	-	Oct	lastSun	2:00	0	S
+Rule	SystemV	min	1973	-	Apr	lastSun	2:00	1:00	D
+Rule	SystemV	min	1973	-	Oct	lastSun	2:00	0	S
 Rule	SystemV	1974	only	-	Jan	6	2:00	1:00	D
 Rule	SystemV	1974	only	-	Nov	lastSun	2:00	0	S
 Rule	SystemV	1975	only	-	Feb	23	2:00	1:00	D

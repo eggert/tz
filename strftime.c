@@ -78,7 +78,8 @@ _fmt(format, t)
 	struct tm *t;
 {
 	for (; *format; ++format) {
-		if (*format == '%')
+		if (*format == '%') {
+label:
 			switch(*++format) {
 			case '\0':
 				--format;
@@ -108,15 +109,48 @@ _fmt(format, t)
 				_fmt("%D %X", t);
 				continue;
 			case 'C':
-				_fmt("%a %b %e %X %Y", t);
+				/*
+				** %C used to do a...
+				**	_fmt("%a %b %e %X %Y", t);
+				** ...whereas now POSIX 1003.2 calls for
+				** something completely different.
+				** (ado, 5/24/93)
+				*/
+				_conv((t->tm_year + TM_YEAR_BASE) / 100,
+					2, '0');
 				continue;
 			case 'D':
 			case 'x':
+				/*
+				** Version 3.0 of strftime from Arnold Robbins
+				** (arnold@skeeve.atl.ga.us) does the
+				** equivalent of...
+				**	_fmt("%a %b %e %Y");
+				** ...for %x; since the X3J11 C language
+				** standard calls for "date, using locale's
+				** date format," anything goes.  Using just
+				** numbers (as here) makes Quakers happier.
+				** (ado, 5/24/93)
+				*/
 				_fmt("%m/%d/%y", t);
 				continue;
 			case 'd':
 				_conv(t->tm_mday, 2, '0');
 				continue;
+			case 'E':
+			case 'O':
+				/*
+				** POSIX locale extensions, a la
+				** Arnold Robbins' strftime version 3.0.
+				** The sequences
+				**	%Ec %EC %Ex %Ey %EY
+				**	%Od %oe %OH %OI %Om %OM
+				**	%OS %Ou %OU %OV %Ow %OW %Oy
+				** are supposed to provide alternate
+				** representations.
+				** (ado, 5/24/93)
+				*/
+				goto label;
 			case 'e':
 				_conv(t->tm_mday, 2, ' ');
 				continue;
@@ -131,16 +165,38 @@ _fmt(format, t)
 				_conv(t->tm_yday + 1, 3, '0');
 				continue;
 			case 'k':
-				_conv(t->tm_hour % 12 ?
-				    t->tm_hour % 12 : 12, 2, ' ');
+				/*
+				** This used to be...
+				**	_conv(t->tm_hour % 12 ?
+				**		t->tm_hour % 12 : 12, 2, ' ');
+				** ...and has been changed to the below to
+				** match SunOS 4.1.1 and Arnold Robbins'
+				** strftime version 3.0.  That is, "%k" and
+				** "%l" have been swapped.
+				** (ado, 5/24/93)
+				*/
+				_conv(t->tm_hour, 2, ' ');
 				continue;
 #ifdef KITCHEN_SINK
 			case 'K':
+				/*
+				** After all this time, still unclaimed!
+				*/
 				_add("kitchen sink");
 				continue;
 #endif /* defined KITCHEN_SINK */
 			case 'l':
-				_conv(t->tm_hour, 2, ' ');
+				/*
+				** This used to be...
+				**	_conv(t->tm_hour, 2, ' ');
+				** ...and has been changed to the below to
+				** match SunOS 4.1.1 and Arnold Robbin's
+				** strftime version 3.0.  That is, "%k" and
+				** "%l" have been swapped.
+				** (ado, 5/24/93)
+				*/
+				_conv(t->tm_hour % 12 ?
+					t->tm_hour % 12 : 12, 2, ' ');
 				continue;
 			case 'M':
 				_conv(t->tm_min, 2, '0');
@@ -173,6 +229,56 @@ _fmt(format, t)
 			case 'U':
 				_conv((t->tm_yday + 7 - t->tm_wday) / 7,
 					2, '0');
+				continue;
+			case 'u':
+				/*
+				** From Arnold Robbins' strftime version 3.0:
+				** "ISO 8601: Weekday as a decimal number
+				** [1 (Monday) - 7]"
+				** (ado, 5/24/93)
+				*/
+				_conv(((t->tm_wday == 0) ? 7 : t->tm_wday),
+					1, '0');
+				continue;
+			case 'V':
+				/*
+				** From Arnold Robbins' strftime version 3.0:
+				** "the week number of the year (the first
+				** Monday as the first day of week 1) as a
+				** decimal number (01-53).  The method for
+				** determining the week number is as specified
+				** by ISO 8601 (to wit: if the week containing
+				** January 1 has four or more days in the new
+				** year, then it is week 1, otherwise it is
+				** week 53 of the previous year and the next
+				** week is week 1)."
+				** (ado, 5/24/93)
+				*/
+				/*
+				** XXX--If January 1 falls on a Friday,
+				** January 1-3 are part of week 53 of the
+				** previous year.  By analogy, if January
+				** 1 falls on a Thursday, are December 29-31
+				** of the PREVIOUS year part of week 1???
+				** (ado 5/24/93)
+				/*
+				** You are understood not to expect this.
+				*/
+				{
+					register int	i;
+
+					i = (t->tm_yday + 10 - (t->tm_wday ?
+						(t->tm_wday - 1) : 6)) / 7;
+					_conv((i == 0) ? 53 : i, 2, '0');
+				}
+				continue;
+			case 'v':
+				/*
+				** From Arnold Robbins' strftime version 3.0:
+				** "date as dd-bbb-YYYY"
+				** (ado, 5/24/93)
+				*/
+				_fmt("%e-%b-%Y");
 				continue;
 			case 'W':
 				_conv((t->tm_yday + 7 -
@@ -209,6 +315,7 @@ _fmt(format, t)
 			 */
 			default:
 				break;
+			}
 		}
 		if (gsize <= 0)
 			return;

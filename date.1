@@ -120,10 +120,7 @@ the current value is used.
 Any of the above forms may be followed by a period and two digits that give
 the seconds part of the new time; if no seconds are given, zero is assumed.
 .PP
-Some or all of these options are available
-(use the command
-.RB `` "date -=" ''
-to learn which are available on your system):
+These options are available:
 .TP
 .B \-u
 Use GMT when setting and showing the date and time.
@@ -141,10 +138,13 @@ command line.
 (The kernel-stored DST type is used mostly by ``old'' binaries.)
 .TP
 .BI "\-a " adjustment
-Slowly change the time forward (or backward) by the number of seconds
+Change the time forward (or backward) by the number of seconds
 (and fractions thereof) specified in the
 .I adjustment\^
 argument.
 Either the seconds part or the fractions part of the argument (but not both)
 may be omitted.
+On BSD-based systems,
+the adjustment is made by changing the rate at which time advances;
+on System-V-based systems, the adjustment is made by changing the time.
 .. %W%

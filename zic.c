@@ -335,8 +335,6 @@ static const int	len_years[2] = {
 	DAYSPERNYEAR, DAYSPERLYEAR
 };
 
-static time_t		ats[TZ_MAX_TIMES];
-static unsigned char	types[TZ_MAX_TIMES];
 static struct attype {
 	time_t		at;
 	unsigned char	type;
@@ -1339,6 +1337,8 @@ const char * const	name;
 	register int		i, j;
 	static char *		fullname;
 	static struct tzhead	tzh;
+	time_t			ats[TZ_MAX_TIMES];
+	unsigned char		types[TZ_MAX_TIMES];
 
 	if (timecnt > 1)
 		(void) qsort((void *) attypes, (size_t) timecnt,
@@ -1637,7 +1637,7 @@ addtt(starttime, type)
 const time_t	starttime;
 const int	type;
 {
-	if (timecnt != 0 && type == types[timecnt - 1])
+	if (timecnt != 0 && type == attypes[timecnt - 1].type)
 		return;	/* easy enough! */
 	if (timecnt == 0 && type == 0 && isdsts[0] == 0)
 		return; /* handled by default rule */

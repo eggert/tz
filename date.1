@@ -57,7 +57,7 @@ to be output in a particular way
 %A	Wednesday	Full weekday name
 %b	Mar	Abbreviated month name
 %B	March	Full month name
-%c	Wed Mar  8 14:54:40 EST 1989	See above
+%c	Wed Mar 08 14:54:40 EST 1989	Near-default (leading 0 on month day)
 %d	08	Day of month (always two digits)
 %D	03/08/89	Month/day/year (eight characters)*
 %h	Mar	Abbreviated month name*
@@ -76,7 +76,7 @@ to be output in a particular way
 %U	10	Sunday-based week number (two digits)
 %w	3	Day number (one digit, Sunday is 0)
 %W	10	Monday-based week number (two digits)
-%x	Wed Mar  8	Weekday Month Day
+%x	Wed Mar 08 1989	Weekday Month Day Year
 %X	14:54:40	Hour:minute:second
 %y	89	Last two digits of year
 %Y	1989	Year in full
@@ -86,7 +86,7 @@ to be output in a particular way
 .if n .in -2
 .fi
 Starred format specifications in the preceding table are available
-only on System V compatible systems.
+only on System-V-compatible systems.
 If a character other than one of those shown above appears after
 a percent sign in the format,
 .I date\^

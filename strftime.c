@@ -49,33 +49,33 @@ static char *Bfmt[] = {
 	"August", "September", "October", "November", "December",
 };
 
-static size_t gsize;
-static char *pt;
-
-static void _add();
-static void _conv();
-static void _fmt();
+static char *_add();
+static char *_conv();
+static char *_fmt();
 
 size_t
 strftime(s, maxsize, format, t)
 	char *s;
-	char *format;
 	size_t maxsize;
+	char *format;
 	struct tm *t;
 {
-	pt = s;
+	size_t gsize;
+
 	gsize = maxsize;
-	_fmt(format, t);
+	s = _fmt(format, t, &gsize, s);
 	if (gsize <= 0)
-		return(0);
-	*pt = '\0';
-	return(maxsize - gsize);
+		return 0;
+	*s = '\0';
+	return (maxsize - gsize);
 }
 
-static void
-_fmt(format, t)
-	register char *format;
+static char *
+_fmt(format, t, gsizep, pt)
+	char *format;
 	struct tm *t;
+	size_t *gsizep;
+	char *pt;
 {
 	for (; *format; ++format) {
 		if (*format == '%') {
@@ -85,28 +85,24 @@ label:
 				--format;
 				break;
 			case 'A':
-				if (t->tm_wday < 0 || t->tm_wday > 6)
-					_add("?");
-				else	_add(Afmt[t->tm_wday]);
+				pt = _add((t->tm_wday < 0 || t->tm_wday > 6)
+					? "?" : Afmt[t->tm_wday], gsizep, pt);
 				continue;
 			case 'a':
-				if (t->tm_wday < 0 || t->tm_wday > 6)
-					_add("?");
-				else	_add(afmt[t->tm_wday]);
+				pt = _add((t->tm_wday < 0 || t->tm_wday > 6)
+					? "?" : afmt[t->tm_wday], gsizep, pt);
 				continue;
 			case 'B':
-				if (t->tm_mon < 0 || t->tm_mon > 11)
-					_add("?");
-				else	_add(Bfmt[t->tm_mon]);
+				pt = _add((t->tm_mon < 0 || t->tm_mon > 11)
+					? "?" : Bfmt[t->tm_mon], gsizep, pt);
 				continue;
 			case 'b':
 			case 'h':
-				if (t->tm_mon < 0 || t->tm_mon > 11)
-					_add("?");
-				else	_add(bfmt[t->tm_mon]);
+				pt = _add((t->tm_mon < 0 || t->tm_mon > 11)
+					? "?" : bfmt[t->tm_mon], gsizep, pt);
 				continue;
 			case 'c':
-				_fmt("%D %X", t);
+				pt = _fmt("%D %X", t, gsizep, pt);
 				continue;
 			case 'C':
 				/*
@@ -116,8 +112,8 @@ label:
 				** something completely different.
 				** (ado, 5/24/93)
 				*/
-				_conv((t->tm_year + TM_YEAR_BASE) / 100,
-					2, '0');
+				pt = _conv((t->tm_year + TM_YEAR_BASE) / 100,
+					2, '0', gsizep, pt);
 				continue;
 			case 'D':
 			case 'x':
@@ -132,10 +128,10 @@ label:
 				** numbers (as here) makes Quakers happier.
 				** (ado, 5/24/93)
 				*/
-				_fmt("%m/%d/%y", t);
+				pt = _fmt("%m/%d/%y", t, gsizep, pt);
 				continue;
 			case 'd':
-				_conv(t->tm_mday, 2, '0');
+				pt = _conv(t->tm_mday, 2, '0', gsizep, pt);
 				continue;
 			case 'E':
 			case 'O':
@@ -152,17 +148,17 @@ label:
 				*/
 				goto label;
 			case 'e':
-				_conv(t->tm_mday, 2, ' ');
+				pt = _conv(t->tm_mday, 2, ' ', gsizep, pt);
 				continue;
 			case 'H':
-				_conv(t->tm_hour, 2, '0');
+				pt = _conv(t->tm_hour, 2, '0', gsizep, pt);
 				continue;
 			case 'I':
-				_conv(t->tm_hour % 12 ?
-				    t->tm_hour % 12 : 12, 2, '0');
+				pt = _conv(t->tm_hour % 12 ? t->tm_hour % 12
+						: 12, 2, '0', gsizep, pt);
 				continue;
 			case 'j':
-				_conv(t->tm_yday + 1, 3, '0');
+				pt = _conv(t->tm_yday + 1, 3, '0', gsizep, pt);
 				continue;
 			case 'k':
 				/*
@@ -175,14 +171,14 @@ label:
 				** "%l" have been swapped.
 				** (ado, 5/24/93)
 				*/
-				_conv(t->tm_hour, 2, ' ');
+				pt = _conv(t->tm_hour, 2, ' ', gsizep, pt);
 				continue;
 #ifdef KITCHEN_SINK
 			case 'K':
 				/*
 				** After all this time, still unclaimed!
 				*/
-				_add("kitchen sink");
+				pt = _add("kitchen sink", gsizep, pt);
 				continue;
 #endif /* defined KITCHEN_SINK */
 			case 'l':
@@ -195,40 +191,41 @@ label:
 				** "%l" have been swapped.
 				** (ado, 5/24/93)
 				*/
-				_conv(t->tm_hour % 12 ?
-					t->tm_hour % 12 : 12, 2, ' ');
+				pt = _conv(t->tm_hour % 12 ? t->tm_hour % 12
+						: 12, 2, ' ', gsizep, pt);
 				continue;
 			case 'M':
-				_conv(t->tm_min, 2, '0');
+				pt = _conv(t->tm_min, 2, '0', gsizep, pt);
 				continue;
 			case 'm':
-				_conv(t->tm_mon + 1, 2, '0');
+				pt = _conv(t->tm_mon + 1, 2, '0', gsizep, pt);
 				continue;
 			case 'n':
-				_add("\n");
+				pt = _add("\n", gsizep, pt);
 				continue;
 			case 'p':
-				_add(t->tm_hour >= 12 ? "PM" : "AM");
+				pt = _add(t->tm_hour >= 12 ? "PM" : "AM",
+						gsizep, pt);
 				continue;
 			case 'R':
-				_fmt("%H:%M", t);
+				pt = _fmt("%H:%M", t, gsizep, pt);
 				continue;
 			case 'r':
-				_fmt("%I:%M:%S %p", t);
+				pt = _fmt("%I:%M:%S %p", t, gsizep, pt);
 				continue;
 			case 'S':
-				_conv(t->tm_sec, 2, '0');
+				pt = _conv(t->tm_sec, 2, '0', gsizep, pt);
 				continue;
 			case 'T':
 			case 'X':
-				_fmt("%H:%M:%S", t);
+				pt = _fmt("%H:%M:%S", t, gsizep, pt);
 				continue;
 			case 't':
-				_add("\t");
+				pt = _add("\t", gsizep, pt);
 				continue;
 			case 'U':
-				_conv((t->tm_yday + 7 - t->tm_wday) / 7,
-					2, '0');
+				pt = _conv((t->tm_yday + 7 - t->tm_wday) / 7,
+					2, '0', gsizep, pt);
 				continue;
 			case 'u':
 				/*
@@ -237,8 +234,8 @@ label:
 				** [1 (Monday) - 7]"
 				** (ado, 5/24/93)
 				*/
-				_conv(((t->tm_wday == 0) ? 7 : t->tm_wday),
-					1, '0');
+				pt = _conv((t->tm_wday == 0) ? 7 : t->tm_wday,
+						1, '0', gsizep, pt);
 				continue;
 			case 'V':
 				/*
@@ -265,11 +262,12 @@ label:
 				** You are understood not to expect this.
 				*/
 				{
-					register int	i;
+					int i;
 
 					i = (t->tm_yday + 10 - (t->tm_wday ?
 						(t->tm_wday - 1) : 6)) / 7;
-					_conv((i == 0) ? 53 : i, 2, '0');
+					pt = _conv((i == 0) ? 53 : i, 2, '0',
+							gsizep, pt);
 				}
 				continue;
 			case 'v':
@@ -278,34 +276,35 @@ label:
 				** "date as dd-bbb-YYYY"
 				** (ado, 5/24/93)
 				*/
-				_fmt("%e-%b-%Y");
+				pt = _fmt("%e-%b-%Y", t, gsizep, pt);
 				continue;
 			case 'W':
-				_conv((t->tm_yday + 7 -
-				    (t->tm_wday ? (t->tm_wday - 1) : 6))
-				    / 7, 2, '0');
+				pt = _conv((t->tm_yday + 7 -
+					(t->tm_wday ? (t->tm_wday - 1) : 6))
+					/ 7, 2, '0', gsizep, pt);
 				continue;
 			case 'w':
-				_conv(t->tm_wday, 1, '0');
+				pt = _conv(t->tm_wday, 1, '0', gsizep, pt);
 				continue;
 			case 'y':
-				_conv((t->tm_year + TM_YEAR_BASE) % 100,
-					2, '0');
+				pt = _conv((t->tm_year + TM_YEAR_BASE) % 100,
+						2, '0', gsizep, pt);
 				continue;
 			case 'Y':
-				_conv(t->tm_year + TM_YEAR_BASE, 4, '0');
+				pt = _conv(t->tm_year + TM_YEAR_BASE, 4, '0',
+						gsizep, pt);
 				continue;
 			case 'Z':
 #ifdef TM_ZONE
 				if (t->TM_ZONE)
-					_add(t->TM_ZONE);
+					pt = _add(t->TM_ZONE, gsizep, pt);
 				else
 #endif /* defined TM_ZONE */
 				if (t->tm_isdst == 0 || t->tm_isdst == 1) {
 					extern char *	tzname[2];
 
-					_add(tzname[t->tm_isdst]);
-				} else	_add("?");
+					pt = _add(tzname[t->tm_isdst], gsizep, pt);
+				} else  pt = _add("?", gsizep, pt);
 				continue;
 			case '%':
 			/*
@@ -317,35 +316,41 @@ label:
 				break;
 			}
 		}
-		if (gsize <= 0)
-			return;
+		if (*gsizep <= 0)
+			return pt;
 		*pt++ = *format;
-		--gsize;
+		--*gsizep;
 	}
+	return pt;
 }
 
-static void
-_conv(n, digits, fill)
-	int n, digits, fill;
+static char *
+_conv(n, width, fill, gsizep, pt)
+	int n, width, fill;
+	size_t *gsizep;
+	char *pt;
 {
-	static char buf[10];
-	register char *p;
+	char *p, *q, buf[12];
+	static char digits[10+1] = "0123456789";
 
-	for (p = buf + sizeof(buf) - 2; n > 0 && p > buf; n /= 10, --digits)
-		*p-- = n % 10 + '0';
-	while (p > buf && digits-- > 0)
-		*p-- = fill;
-	_add(++p);
+	p = buf + sizeof buf;
+	q = (width >= sizeof buf) ? buf : (p - width - 1);
+	*--p = 0;
+	*--p = digits[n % 10];
+	while (p > buf && (n /= 10) != 0)
+		*--p = digits[n % 10];
+	while (p > q)
+		*--p = fill;
+	return _add(p, gsizep, pt);
 }
 
-static void
-_add(str)
-	register char *str;
+static char *
+_add(str, gsizep, pt)
+	char *str;
+	size_t *gsizep;
+	char *pt;
 {
-	for (;; ++pt, --gsize) {
-		if (gsize <= 0)
-			return;
-		if (!(*pt = *str++))
-			return;
-	}
+	while (*gsizep > 0 && (*pt = *str++) != 0)
+		++pt, --*gsizep;
+	return pt;
 }

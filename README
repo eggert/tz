@@ -9,8 +9,6 @@ TODO BEFORE comp.sources RELEASE:
 *	Gotta get "date.c" up to speed, and must conditionalize "logwtmp.c"
 	for the System V world.
 	Can't use with Suns since code to handle "-a" is missing.
-*	Need to update the newctime.3 to describe the treatment of TZ's such
-	as "Guy Mean Time", if it's decided that the treatment is reasonable.
 
 ===============================================================================
 

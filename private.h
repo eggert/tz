@@ -157,19 +157,14 @@ extern int	unlink P((const char * filename));
 #ifndef INT_STRLEN_MAXIMUM
 /*
 ** 302 / 1000 is log10(2.0) rounded up.
-** If type is signed:
-**	subtract one for the sign bit;
-**	add one for integer division truncation;
-**	add one more for a minus sign.
-** If type is unsigned:
-**	do not subtract one since there is no sign bit;
-**	add one for integer division truncation;
-**	do not add one more for a minus sign.
+** Subtract one for the sign bit if the type is signed;
+** add one for integer division truncation;
+** add one more for a minus sign if the type is signed.
 */
+#define TYPE_BIT(type) (sizeof (type) * CHAR_BIT)
+#define TYPE_SIGNED(type) (((type) -1) < 0)
 #define INT_STRLEN_MAXIMUM(type) \
-		((((type) -1) < 0) ? \
-			((sizeof(type) * CHAR_BIT - 1) * 302 / 1000 + 2) : \
-			((sizeof(type) * CHAR_BIT) * 302 / 1000 + 1))
+    ((TYPE_BIT(type) - TYPE_SIGNED(type)) * 302 / 100 + 1 + TYPE_SIGNED(type))
 #endif /* !defined INT_STRLEN_MAXIMUM */
 
 /*

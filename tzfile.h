@@ -6,7 +6,7 @@
 
 #define TZDIR		"/etc/tzdir"	/* Time zone object file directory */
 #define TZDEFAULT	"localtime"
-#define TZ_MAX_RULES	120		/* Maximum number of rules */
+#define TZ_MAX_RULES	170		/* Maximum number of rules */
 #define TZ_MAX_TYPES	10		/* Maximum number of Saving Times */
 #define TZ_ABBR_LEN	7		/* Maximum Time Zone abbr. length */
 

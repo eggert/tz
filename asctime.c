@@ -45,10 +45,11 @@ char *				buf;
 	/*
 	** The format used in the (2004) standard is
 	**	"%.3s %.3s%3d %.2d:%.2d:%.2d %d\n"
-	** Use "%02d", as it is a bit more portable than "%.2d".
+	** Some systems only handle "%.2d"; others only handle "%02d";
+	** "%02.2d" makes everybody happy.
 	*/
 	result = snprintf(buf, STANDARD_BUFFER_SIZE,
-		"%.3s %.3s%3d %02d:%02d:%02d %ld\n",
+		"%.3s %.3s%3d %02.2d:%02.2d:%02.2d %4ld\n",
 		wn, mn,
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec,

@@ -1,7 +1,7 @@
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";
-/* As received from UCB, with this header added */
+/* As received from UCB, plus OLD_TIME conditionalization */
 #endif /* !defined NOID */
 #endif /* !defined lint */
 
@@ -19,7 +19,7 @@ static char	elsieid[] = "%W%";
  * from this software without specific prior written permission.
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+ * WARRANTIES OF MERCHANT[A]BILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 #ifndef lint
@@ -33,6 +33,8 @@ static char sccsid[] = "@(#)logwtmp.c	5.2 (Berkeley) 9/20/88";
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <utmp.h>
+
+#ifndef OLD_TIME
 
 #define	WTMPFILE	"/usr/adm/wtmp"
 
@@ -58,3 +60,5 @@ logwtmp(line, name, host)
 	}
 	(void)close(fd);
 }
+
+#endif /* !defined OLD_TIME */

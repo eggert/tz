@@ -28,18 +28,12 @@ static char	privatehid[] = "%W%";
 #ifndef HAVE_ADJTIME
 #define HAVE_ADJTIME	1
 #endif /* !defined HAVE_ADJTIME */
-#ifndef HAVE_MKDIR
-#define HAVE_MKDIR	1
-#endif /* !defined HAVE_MKDIR */
 #ifndef HAVE_SETLOCALE
 #define HAVE_SETLOCALE	1
 #endif /* !defined HAVE_SETLOCALE */
 #ifndef HAVE_SETTIMEOFDAY
 #define HAVE_SETTIMEOFDAY	3
 #endif /* !defined HAVE_SETTIMEOFDAY */
-#ifndef HAVE_UNISTD_H
-#define HAVE_UNISTD_H	1
-#endif /* !defined HAVE_UNISTD_H */
 
 #ifndef LOCALE_HOME
 #define LOCALE_HOME	"/usr/lib/locale"
@@ -140,10 +134,7 @@ typedef char	generic_T;
 #endif /* !defined _TIME_ */
 
 #include "stdlib.h"
-
-#if HAVE_UNISTD_H
 #include "unistd.h"
-#endif /* HAVE_UNISTD_H */
 
 #ifndef remove
 extern int	unlink P((const char * filename));

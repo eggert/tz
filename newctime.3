@@ -10,7 +10,7 @@ asctime, ctime, difftime, gmtime, localtime, mktime \- convert date and time to 
 .B #include <sys/types.h>
 .PP
 .B char *ctime(clock)
-.B time_t *clock;
+.B const time_t *clock;
 .PP
 .B double difftime(time1, time0)
 .B time_t time1;
@@ -19,13 +19,13 @@ asctime, ctime, difftime, gmtime, localtime, mktime \- convert date and time to 
 .B #include <time.h>
 .PP
 .B char *asctime(tm)
-.B struct tm *tm;
+.B const struct tm *tm;
 .PP
 .B struct tm *localtime(clock)
-.B long *clock;
+.B const time_t *clock;
 .PP
 .B struct tm *gmtime(clock)
-.B long *clock;
+.B const time_t *clock;
 .PP
 .B time_t mktime(tm)
 .B struct tm *tm;

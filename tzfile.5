@@ -8,12 +8,15 @@ tzfile \- time zone information
 The time zone information files used by
 .IR tzset (3)
 begin with bytes reserved for future use,
-followed by four four-byte values of type
+followed by six four-byte values of type
 .BR long ,
 written in a ``standard'' byte order
 (the high-order byte of the value is written first).
 These values are,
 in order:
+.TP
+.I tzh_ttisgmtcnt
+The number of GMT/local indicators stored in the file.
 .TP
 .I tzh_ttisstdcnt
 The number of standard/wall indicators stored in the file.
@@ -99,11 +102,19 @@ the second gives the
 number of leap seconds to be applied after the given time.
 The pairs of values are sorted in ascending order by time.
 .PP
-Finally there are
+Then there are
 .I tzh_ttisstdcnt
 standard/wall indicators, each stored as a one-byte value;
 they tell whether the transition times associated with local time types
 were specified as standard time or wall clock time,
+and are used when a time zone file is used in handling POSIX-style
+time zone environment variables.
+.PP
+Finally there are
+.I tzh_ttisgmtcnt
+GMT/local indicators, each stored as a one-byte value;
+they tell whether the transition times associated with local time types
+were specified as GMT or local time,
 and are used when a time zone file is used in handling POSIX-style
 time zone environment variables.
 .PP

@@ -334,13 +334,6 @@ struct tm *	oldp;
 	return result;
 }
 
-static char *
-nonnull(s)
-const char * const	s;
-{
-	return (s == NULL) ? "NULL" : s;
-}
-
 static void
 show(zone, t, v)
 char *	zone;
@@ -351,9 +344,9 @@ int	v;
 
 	(void) printf("%-*s  ", (int) longest, zone);
 	if (v)
-		(void) printf("%.24s UTC = ", nonnull(asctime(gmtime(&t))));
+		(void) printf("%.24s UTC = ", asctime(gmtime(&t)));
 	tmp = localtime(&t);
-	(void) printf("%.24s", nonnull(asctime(tmp)));
+	(void) printf("%.24s", asctime(tmp));
 	if (*abbr(tmp) != '\0')
 		(void) printf(" %s", abbr(tmp));
 	if (v) {

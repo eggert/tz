@@ -537,7 +537,7 @@ char *	name;
 
 static long
 getoff(string)
-char *		string;
+char *	string;
 {
 	long	hh, mm, ss, sign;
 
@@ -884,7 +884,7 @@ register struct zone *	zp;
 	for (i = 0; i < zp->z_nrules; ++i) {
 		rp = &zp->z_rules[i];
 		(void) sprintf(buf, zp->z_format, rp->r_abbrvar);
-		gmtoff = zp->z_gmtoff + rp->r_stdoff;
+		gmtoff = tadd(zp->z_gmtoff, rp->r_stdoff);
 		for (j = 0; j < h.tzh_typecnt; ++j) {
 			if (gmtoff == ttis[j].tt_gmtoff &&
 				strcmp(buf, &chars[ttis[j].tt_abbrind]) == 0)
@@ -919,7 +919,7 @@ register struct zone *	zp;
 	for (i = 0; i < ntemps; ++i) {
 		rp = temps[i].t_rp;
 		types[i] = rp->r_type;
-		ats[i] = temps[i].t_time - zp->z_gmtoff;
+		ats[i] = tadd(temps[i].t_time, -zp->z_gmtoff);
 		if (!rp->r_todisstd) {
 			/*
 			** Credit to munnari!kre for pointing out the need for
@@ -933,8 +933,10 @@ register struct zone *	zp;
 				** Kludge--not guaranteed to work.
 				*/
 				if (ntemps > 1)
-					ats[0] -= temps[1].t_rp->r_stdoff;
-			} else	ats[i] -= temps[i - 1].t_rp->r_stdoff;
+					ats[0] = tadd(ats[0],
+						-temps[1].t_rp->r_stdoff);
+			} else	ats[i] = tadd(ats[i],
+				-temps[i - 1].t_rp->r_stdoff);
 		}
 	}
 	writezone(zp->z_name);
@@ -1074,8 +1076,10 @@ long	t2;
 	register long	t;
 
 	t = t1 + t2;
-	if (t1 > 0 && t2 > 0 && t <= 0 || t1 < 0 && t2 < 0 && t >= 0)
+	if (t1 > 0 && t2 > 0 && t <= 0 || t1 < 0 && t2 < 0 && t >= 0) {
+		error("time overflow");
 		wildexit("time overflow");
+	}
 	return t;
 }
 
@@ -1092,7 +1096,13 @@ register struct rule *	rp;
 register long		wantedy;
 {
 	register long	i, y, wday, dayoff, t, m;
+	register char *	savefile;
+	register int	saveline;
 
+	savefile = filename;
+	saveline = linenum;
+	filename = rp->r_filename;
+	linenum = rp->r_linenum;
 	t = 0;
 	dayoff = 0;
 	m = TM_JANUARY;
@@ -1120,7 +1130,17 @@ register long		wantedy;
 		t = tadd(t, (long) i * SECS_PER_DAY);
 		++m;
 	}
-	i = rp->r_dayofmonth - 1;
+	i = rp->r_dayofmonth;
+	if (m == TM_FEBRUARY && i == 29 && !isleap(y)) {
+		if (rp->r_dycode == DC_DOWLEQ)
+			--i;
+		else {
+			error("use of 2/29 in non leap-year");
+			for ( ; ; )
+				wildexit("data");
+		}
+	}
+	--i;
 	dayoff += i;
 	t = tadd(t, (long) i * SECS_PER_DAY);
 	if (rp->r_dycode == DC_DOWGEQ || rp->r_dycode == DC_DOWLEQ) {
@@ -1144,7 +1164,10 @@ register long		wantedy;
 			wday = (wday + i + 7) % 7;
 		}
 	}
-	return tadd(t, rp->r_tod);
+	t = tadd(t, rp->r_tod);
+	filename = savefile;
+	linenum = saveline;
+	return t;
 }
 
 static

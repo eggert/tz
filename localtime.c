@@ -1111,23 +1111,12 @@ register struct tm * const		tmp;
 #endif /* defined TM_GMTOFF */
 }
 
-#ifdef BSD_COMPAT
-
-/*
-** If ctime and localtime aren't in the same file on 4.3BSD systems,
-** you can run into compilation problems--take
-**	cc date.c -lz
-** (please).
-*/
-
 char *
 ctime(timep)
 const time_t * const	timep;
 {
 	return asctime(localtime(timep));
 }
-
-#endif /* defined BSD_COMPAT */
 
 /*
 ** Adapted from code provided by Robert Elz, who writes:

@@ -4,18 +4,19 @@
 
 #include "stdio.h"
 
-#ifndef lint
-#ifndef NOID
-static char	sccsid[] = "%W%";
-#endif /* !NOID */
-#endif /* !lint */
+#if !defined lint && !defined NOID
+static char	elsieid[] = "%W%"
+#endif /* !defined lint && !defined NOID */
 
 #include "time.h"
 #include "tzfile.h"
 
-#ifndef USG
+#if !defined __STDC__
+#define const
+#if !defined USG
 extern char *	sprintf();
-#endif /* !USG */
+#endif /* !defined USG */
+#endif /* !defined __STDC__ */
 
 /*
 ** A la X3J11
@@ -23,7 +24,7 @@ extern char *	sprintf();
 
 char *
 asctime(timeptr)
-register struct tm *	timeptr;
+register const struct tm *	timeptr;
 {
 	static char	wday_name[DAYS_PER_WEEK][3] = {
 		"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"

@@ -47,7 +47,7 @@ struct state {
 
 static struct state	s;
 
-static char		tz_is_set;
+static int		tz_is_set;
 
 #ifndef strchr
 long			timezone = 0;
@@ -189,22 +189,9 @@ register char *	name;
 	return 0;
 }
 
-void
-tzset()
+static
+tzgmt()
 {
-	register char *	name;
-
-	tz_is_set = TRUE;
-	name = getenv("TZ");
-	if (name == 0 || *name != '\0') {
-		if (tzload(name) == 0)
-			return;
-		/*
-		** If we want to try for local time on errors. . .
-		if (tzload((char *) 0) == 0)
-			return;
-		*/
-	}
 	s.timecnt = 0;
 #ifndef strchr
 	timezone = 0;
@@ -216,6 +203,27 @@ tzset()
 	s.ttis[0].tt_abbrind = 0;
 	(void) strcpy(s.chars, "GMT");
 	tzname[0] = tzname[1] = s.chars;
+}
+
+void
+tzset()
+{
+	register char *	name;
+
+	tz_is_set = TRUE;
+	name = getenv("TZ");
+	if (name != 0 && *name == '\0')
+		tzgmt();		/* GMT by request */
+	else if (tzload(name) != 0)
+		tzgmt();
+}
+
+void
+tzsetwall()
+{
+	tz_is_set = TRUE;
+	if (tzload((char *) 0) != 0)
+		tzgmt();
 }
 
 struct tm *

@@ -37,7 +37,7 @@ static char sccsid[] = "@(#)logwtmp.c	5.2 (Berkeley) 9/20/88";
 #include <sys/time.h>
 #include <sys/stat.h>
 
-#define	WTMPFILE	"/usr/adm/wtmp"
+#define WTMPFILE	"/usr/adm/wtmp"
 
 logwtmp(line, name, host)
 	char *line, *name, *host;

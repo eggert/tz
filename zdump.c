@@ -215,7 +215,7 @@ char *	argv[];
 	INITIALIZE(cutlotime);
 	INITIALIZE(cuthitime);
 #if HAVE_GETTEXT
-	(void) setlocale(LC_MESSAGES, "");
+	(void) setlocale(LC_ALL, "");
 #ifdef TZ_DOMAINDIR
 	(void) bindtextdomain(TZ_DOMAIN, TZ_DOMAINDIR);
 #endif /* defined TEXTDOMAINDIR */

@@ -619,8 +619,8 @@ rcomp(cp1, cp2)
 const generic_T *	cp1;
 const generic_T *	cp2;
 {
-	return strcmp(((struct rule *) cp1)->r_name,
-		((struct rule *) cp2)->r_name);
+	return strcmp(((const struct rule *) cp1)->r_name,
+		((const struct rule *) cp2)->r_name);
 }
 
 static void

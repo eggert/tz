@@ -12,6 +12,7 @@ static char	sccsid[] = "%W%";
 #include "ctype.h"
 #include "sys/types.h"
 #include "sys/stat.h"
+#include "time.h"
 
 #ifndef BUFSIZ
 #define BUFSIZ	1024
@@ -45,10 +46,17 @@ static int	linenum;
 static char *	progname;
 static char *	rfilename;
 static int	rlinenum;
-static long	rpytime();
-static long	tadd();
+static time_t	rpytime();
+static long	oadd();
+static time_t	tadd();
 static long	timecnt;
 static long	typecnt;
+static long	min_year;
+static long	max_year;
+static time_t	min_time;
+static time_t	max_time;
+static int	tt_signed;
+static int	noise;
 
 #define LSECS_PER_MIN	((long) SECS_PER_MIN)
 #define LMINS_PER_HOUR	((long) MINS_PER_HOUR)
@@ -58,8 +66,6 @@ static long	typecnt;
 
 #define LEPOCH_YEAR	((long) EPOCH_YEAR)
 #define EPOCH_WDAY	TM_THURSDAY
-#define LMIN_YEAR	1902L
-#define LMAX_YEAR	2037L
 
 /*
 ** Values a la localtime(3)
@@ -195,7 +201,7 @@ struct zone {
 	int		z_nrules;
 
 	struct rule	z_untilrule;
-	long		z_untiltime;
+	time_t		z_untiltime;
 };
 
 static struct zone *	zones;
@@ -263,30 +269,33 @@ static struct lookup	lasts[] = {
 	NULL,			0
 };
 
+#define YR_MINIMUM	0
+#define YR_MAXIMUM	1
+#define YR_ONLY		2
+
 static struct lookup	begin_years[] = {
-	"minimum",		LMIN_YEAR,
-	"maximum",		LMAX_YEAR,
+	"minimum",		YR_MINIMUM,
+	"maximum",		YR_MAXIMUM,
 	NULL,			0
 };
 
 static struct lookup	end_years[] = {
-	"minimum",		LMIN_YEAR,
-	"maximum",		LMAX_YEAR,
-#define ONLY	LEPOCH_YEAR	/* surely neither LMIN_YEAR nor LMAX_YEAR */
-	"only",			ONLY,
+	"minimum",		YR_MINIMUM,
+	"maximum",		YR_MAXIMUM,
+	"only",			YR_ONLY,
 	NULL,			0
 };
 
-static long	mon_lengths[2][MONS_PER_YEAR] = {
+static long	len_months[2][MONS_PER_YEAR] = {
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 };
 
-static long	year_lengths[2] = {
-	365, 366
+static long	len_years[2] = {
+	DAYS_PER_NYEAR, DAYS_PER_LYEAR
 };
 
-static long		ats[TZ_MAX_TIMES];
+static time_t		ats[TZ_MAX_TIMES];
 static unsigned char	types[TZ_MAX_TIMES];
 static long		gmtoffs[TZ_MAX_TYPES];
 static char		isdsts[TZ_MAX_TYPES];
@@ -350,12 +359,12 @@ static
 usage()
 {
 	(void) fprintf(stderr,
-"%s: usage is %s [ -l localtime ] [ -d directory ] [ filename ... ]\n",
+"%s: usage is %s [ -v ] [ -l localtime ] [ -d directory ] [ filename ... ]\n",
 		progname, progname);
 	exit(1);
 }
 
-static char *	localtime = NULL;
+static char *	lcltime = NULL;
 static char *	directory = NULL;
 
 main(argc, argv)
@@ -369,7 +378,7 @@ char *	argv[];
 	umask(umask(022) | 022);
 #endif
 	progname = argv[0];
-	while ((c = getopt(argc, argv, "d:l:")) != EOF)
+	while ((c = getopt(argc, argv, "d:l:v")) != EOF)
 		switch (c) {
 			default:
 				usage();
@@ -384,19 +393,25 @@ char *	argv[];
 				}
 				break;
 			case 'l':
-				if (localtime == NULL)
-					localtime = optarg;
+				if (lcltime == NULL)
+					lcltime = optarg;
 				else {
 					(void) fprintf(stderr,
 "%s: More than one -l option specified\n",
 						progname);
 					exit(1);
 				}
+			case 'v':
+				noise = TRUE;
+				break;
 		}
 	if (optind == argc - 1 && strcmp(argv[optind], "=") == 0)
 		usage();	/* usage message by request */
 	if (directory == NULL)
 		directory = TZDIR;
+
+	setboundaries();
+
 	zones = (struct zone *) emalloc(0);
 	rules = (struct rule *) emalloc(0);
 	links = (struct link *) emalloc(0);
@@ -430,16 +445,44 @@ char *	argv[];
 			exit(1);
 		}
 	}
-	if (localtime != NULL) {
+	if (lcltime != NULL) {
 		nondunlink(TZDEFAULT);
-		if (link(localtime, TZDEFAULT) != 0) {
+		if (link(lcltime, TZDEFAULT) != 0) {
 			(void) fprintf(stderr, "%s: Can't link %s to ",
-				progname, localtime);
+				progname, lcltime);
 			perror(TZDEFAULT);
 			exit(1);
 		}
 	}
 	exit((errors == 0) ? 0 : 1);
+}
+
+static
+setboundaries()
+{
+	register int		bits;
+	register time_t 	bit;
+	register struct tm *	tmp;
+
+	/*
+	** Count the bits in a time_t.
+	*/
+	for (bits = 0, bit = 1; bit > 0; ++bits, bit <<= 1)
+		;
+
+	if (bit < 0) {		/* time_t is a signed type */
+		tt_signed = TRUE;
+		min_time = (time_t) 1 << bits;
+		max_time = ((time_t) 1 << bits) - 1;
+	} else {
+		tt_signed = FALSE;
+		min_time = 0;
+		max_time = ~(time_t) 0;
+	}
+	tmp = gmtime(&min_time);
+	min_year = TM_YEAR_BASE + tmp->tm_year;
+	tmp = gmtime(&max_time);
+	max_year = TM_YEAR_BASE + tmp->tm_year;
 }
 
 /*
@@ -762,7 +805,8 @@ register char **	fields;
 			(nfields > i_untilday) ? fields[i_untilday] : "1",
 			(nfields > i_untiltime) ? fields[i_untiltime] : "0");
 		z.z_untiltime = rpytime(&z.z_untilrule, z.z_untilrule.r_loyear);
-		if (iscont && nzones > 0 &&
+		if (iscont && nzones > 0 && z.z_untiltime < max_time &&
+			z.z_untiltime > min_time &&
 			zones[nzones - 1].z_untiltime >= z.z_untiltime) {
 error("Zone continuation line end time is not after end time of previous line");
 			return FALSE;
@@ -843,22 +887,52 @@ char *			timep;
 	** Year work.
 	*/
 	cp = loyearp;
-	if ((lp = byword(cp, begin_years)) != NULL)
-		rp->r_loyear = lp->l_value;
-	else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_loyear) != 1 ||
-		rp->r_loyear < LMIN_YEAR || rp->r_loyear > LMAX_YEAR) {
+	if ((lp = byword(cp, begin_years)) != NULL) switch ((int) lp->l_value) {
+		case YR_MINIMUM:
+			rp->r_loyear = min_year;
+			break;
+		case YR_MAXIMUM:
+			rp->r_loyear = max_year;
+			break;
+		default:	/* "cannot happen" */
+			(void) fprintf(stderr,
+				"%s: panic: Invalid l_value %ld\n",
+				progname, lp->l_value);
+			exit(1);
+	} else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_loyear) != 1 ||
+		rp->r_loyear < min_year || rp->r_loyear > max_year) {
 			error("invalid starting year");
 			return;
 	}
 	cp = hiyearp;
-	if ((lp = byword(cp, end_years)) != NULL) {
-		if ((rp->r_hiyear = lp->l_value) == ONLY)
+	if ((lp = byword(cp, end_years)) != NULL) switch ((int) lp->l_value) {
+		case YR_MINIMUM:
+			rp->r_hiyear = min_year;
+			break;
+		case YR_MAXIMUM:
+			rp->r_hiyear = max_year;
+			break;
+		case YR_ONLY:
 			rp->r_hiyear = rp->r_loyear;
+			break;
+		default:	/* "cannot happen" */
+			(void) fprintf(stderr,
+				"%s: panic: Invalid l_value %ld\n",
+				progname, lp->l_value);
+			exit(1);
 	} else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_hiyear) != 1 ||
-		rp->r_hiyear < LMIN_YEAR || rp->r_hiyear > LMAX_YEAR) {
+		rp->r_hiyear < min_year || rp->r_hiyear > max_year) {
 			error("invalid ending year");
 			return;
 	}
+#ifndef ASWAS
+	if (rp->r_hiyear < min_year)
+ 		return;
+ 	if (rp->r_loyear < min_year)
+ 		rp->r_loyear = min_year;
+ 	if (rp->r_hiyear > max_year)
+ 		rp->r_hiyear = max_year;
+#endif /* !ASWAS */
 	if (rp->r_loyear > rp->r_hiyear) {
 		error("starting year greater than ending year");
 		return;
@@ -883,7 +957,7 @@ char *			timep;
 	if ((lp = byword(dayp, lasts)) != NULL) {
 		rp->r_dycode = DC_DOWLEQ;
 		rp->r_wday = lp->l_value;
-		rp->r_dayofmonth = mon_lengths[1][rp->r_month];
+		rp->r_dayofmonth = len_months[1][rp->r_month];
 	} else {
 		if ((cp = strchr(dayp, '<')) != 0)
 			rp->r_dycode = DC_DOWLEQ;
@@ -907,7 +981,7 @@ char *			timep;
 		}
 		if (sscanf(cp, scheck(cp, "%ld"), &rp->r_dayofmonth) != 1 ||
 			rp->r_dayofmonth <= 0 ||
-			(rp->r_dayofmonth > mon_lengths[1][rp->r_month])) {
+			(rp->r_dayofmonth > len_months[1][rp->r_month])) {
 				error("invalid day of month");
 				return;
 		}
@@ -983,7 +1057,7 @@ struct zone *	zpfirst;
 	register struct rule *		rp;
 	register int			i, j;
 	register int			usestart, useuntil;
-	register long			starttime, untiltime;
+	register time_t			starttime, untiltime;
 	register long			gmtoff;
 	register long			stdoff;
 	register long			year;
@@ -1010,13 +1084,13 @@ struct zone *	zpfirst;
 		eat(zp->z_filename, zp->z_linenum);
 		startisdst = -1;
 		if (zp->z_nrules == 0) {
-			type = addtype(tadd(zp->z_gmtoff, zp->z_stdoff),
+			type = addtype(oadd(zp->z_gmtoff, zp->z_stdoff),
 				zp->z_format, zp->z_stdoff != 0);
 			if (usestart)
 				addtt(starttime, type);
 			gmtoff = zp->z_gmtoff;
 			stdoff = zp->z_stdoff;
-		} else for (year = LMIN_YEAR; year <= LMAX_YEAR; ++year) {
+		} else for (year = min_year; year <= max_year; ++year) {
 			if (useuntil && year > zp->z_untilrule.r_hiyear)
 				break;
 			/*
@@ -1032,7 +1106,8 @@ struct zone *	zpfirst;
 			}
 			for ( ; ; ) {
 				register int	k;
-				register long	jtime, ktime, offset;
+				register time_t	jtime, ktime;
+				register long	offset;
 				char		buf[BUFSIZ];
 
 				if (useuntil) {
@@ -1043,7 +1118,7 @@ struct zone *	zpfirst;
 					*/
 					offset = gmtoff;
 					if (!zp->z_untilrule.r_todisstd)
-						offset = tadd(offset, stdoff);
+						offset = oadd(offset, stdoff);
 					untiltime = tadd(zp->z_untiltime,
 						-offset);
 				}
@@ -1060,9 +1135,17 @@ struct zone *	zpfirst;
 						rp->r_filename, rp->r_linenum);
 					offset = gmtoff;
 					if (!rp->r_todisstd)
-						offset = tadd(offset, stdoff);
+						offset = oadd(offset, stdoff);
+#ifdef ASWAS
 					jtime = tadd(rpytime(rp, year),
 						-offset);
+#else /* !ASWAS */
+					jtime = rpytime(rp, year);
+					if (jtime == min_time ||
+					    jtime == max_time)
+						continue;
+					jtime = tadd(jtime, -offset);
+#endif /* !ASWAS */
 					if (k < 0 || jtime < ktime) {
 						k = j;
 						ktime = jtime;
@@ -1077,7 +1160,7 @@ struct zone *	zpfirst;
 				if (usestart) {
 					if (ktime < starttime) {
 						stdoff = rp->r_stdoff;
-						startoff = tadd(zp->z_gmtoff,
+						startoff = oadd(zp->z_gmtoff,
 							rp->r_stdoff);
 						(void) sprintf(startbuf,
 							zp->z_format,
@@ -1095,7 +1178,7 @@ addtt(starttime, addtype(startoff, startbuf, startisdst));
 					rp->r_filename, rp->r_linenum);
 				(void) sprintf(buf, zp->z_format,
 					rp->r_abbrvar);
-				offset = tadd(zp->z_gmtoff, rp->r_stdoff);
+				offset = oadd(zp->z_gmtoff, rp->r_stdoff);
 				type = addtype(offset, buf, rp->r_stdoff != 0);
 				if (timecnt != 0 || rp->r_stdoff != 0)
 					addtt(ktime, type);
@@ -1115,7 +1198,7 @@ addtt(starttime, addtype(startoff, startbuf, startisdst));
 
 static
 addtt(starttime, type)
-long	starttime;
+time_t	starttime;
 {
 	if (timecnt != 0 && type == types[timecnt - 1])
 		return;	/* easy enough! */
@@ -1291,14 +1374,39 @@ register char *	cp;
 }
 
 static long
-tadd(t1, t2)
+oadd(t1, t2)
 long	t1;
 long	t2;
 {
 	register long	t;
 
 	t = t1 + t2;
+	if (t2 > 0 && t < t1 || t2 < 0 && t > t1) {
+		error("time overflow");
+		exit(1);
+	}
+	return t;
+}
+
+static time_t
+tadd(t1, t2)
+time_t	t1;
+long	t2;
+{
+	register time_t	t;
+
+#ifndef ASWAS
+	if (t1 == max_time && t2 > 0)
+		return max_time;
+	if (t1 == min_time && t2 < 0)
+		return min_time;
+#endif /* !ASWAS */
+	t = t1 + t2;
+#ifdef ASWAS
 	if (t1 > 0 && t2 > 0 && t <= 0 || t1 < 0 && t2 < 0 && t >= 0) {
+#else /* !ASWAS */
+	if (t2 > 0 && t < t1 || t2 < 0 && t > t1) {
+#endif /* !ASWAS */
 		error("time overflow");
 		exit(1);
 	}
@@ -1317,30 +1425,31 @@ long	y;
 ** 1970, 00:00 LOCAL time - in that year that the rule refers to.
 */
 
-static long
+static time_t
 rpytime(rp, wantedy)
 register struct rule *	rp;
 register long		wantedy;
 {
-	register long	i, y, wday, t, m;
+	register long	i, y, wday, m;
 	register long	dayoff;			/* with a nod to Margaret O. */
+	register time_t	t;
 
 	dayoff = 0;
 	m = TM_JANUARY;
 	y = LEPOCH_YEAR;
 	while (wantedy != y) {
 		if (wantedy > y) {
-			i = year_lengths[isleap(y)];
+			i = len_years[isleap(y)];
 			++y;
 		} else {
 			--y;
-			i = -year_lengths[isleap(y)];
+			i = -len_years[isleap(y)];
 		}
-		dayoff = tadd(dayoff, i);
+		dayoff = oadd(dayoff, i);
 	}
 	while (m != rp->r_month) {
-		i = mon_lengths[isleap(y)][m];
-		dayoff = tadd(dayoff, i);
+		i = len_months[isleap(y)][m];
+		dayoff = oadd(dayoff, i);
 		++m;
 	}
 	i = rp->r_dayofmonth;
@@ -1353,41 +1462,57 @@ register long		wantedy;
 		}
 	}
 	--i;
-	dayoff = tadd(dayoff, i);
+	dayoff = oadd(dayoff, i);
 	if (rp->r_dycode == DC_DOWGEQ || rp->r_dycode == DC_DOWLEQ) {
 		wday = EPOCH_WDAY;
 		/*
 		** Don't trust mod of negative numbers.
 		*/
 		if (dayoff >= 0)
-			wday = (wday + dayoff) % 7;
+			wday = (wday + dayoff) % DAYS_PER_WEEK;
 		else {
-			wday -= ((-dayoff) % 7);
+			wday -= ((-dayoff) % DAYS_PER_WEEK);
 			if (wday < 0)
-				wday += 7;
+				wday += DAYS_PER_WEEK;
 		}
 		while (wday != rp->r_wday) {
 			if (rp->r_dycode == DC_DOWGEQ) {
-				dayoff = tadd(dayoff, (long) 1);
+				dayoff = oadd(dayoff, (long) 1);
 				++wday;
 				++i;
 			} else {
-				dayoff = tadd(dayoff, (long) -1);
+				dayoff = oadd(dayoff, (long) -1);
 				--wday;
 				--i;
 			}
-			wday = (wday + 7) % 7;
+			wday = (wday + DAYS_PER_WEEK) % DAYS_PER_WEEK;
 		}
-		if (i < 0 || i >= mon_lengths[isleap(y)][m]) {
+		if (i < 0 || i >= len_months[isleap(y)][m]) {
 			error("no day in month matches rule");
 			exit(1);
 		}
 	}
+#ifdef ASWAS
 	t = dayoff * LSECS_PER_DAY;
+#else /* !ASWAS */
+	if (dayoff < 0 && !tt_signed) {
+		if (wantedy == rp->r_loyear)
+			return min_time;
+		error("time before zero");
+		exit(1);
+	}
+	t = (time_t) dayoff * LSECS_PER_DAY;
+#endif /* !ASWAS */
 	/*
 	** Cheap overflow check.
 	*/
 	if (t / LSECS_PER_DAY != dayoff) {
+#ifndef ASWAS
+		if (wantedy == rp->r_hiyear)
+			return max_time;
+		if (wantedy == rp->r_loyear)
+			return min_time;
+#endif /* !ASWAS */
 		error("time overflow");
 		exit(1);
 	}

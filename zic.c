@@ -72,7 +72,7 @@ extern char *	scheck P((const char * string, const char * format));
 
 static void	addtt P((time_t starttime, int type));
 static int	addtype P((long gmtoff, const char * abbr, int isdst,
-    int ttisstd));
+				int ttisstd));
 static void	leapadd P((time_t t, int positive, int rolling, int count));
 static void	adjleap P((void));
 static void	associate P((void));
@@ -846,7 +846,7 @@ const int		nfields;
 	if (strcmp(fields[ZF_NAME], TZDEFAULT) == 0 && lcltime != NULL) {
 		buf = erealloc(buf, 132 + strlen(TZDEFAULT));
 		(void) sprintf(buf,
-			"\"Zone %s\" line and -l option are mutually exclusive",
+"\"Zone %s\" line and -l option are mutually exclusive",
 			TZDEFAULT);
 		error(buf);
 		return FALSE;
@@ -854,7 +854,7 @@ const int		nfields;
 	if (strcmp(fields[ZF_NAME], TZDEFRULES) == 0 && psxrules != NULL) {
 		buf = erealloc(buf, 132 + strlen(TZDEFRULES));
 		(void) sprintf(buf,
-			"\"Zone %s\" line and -p option are mutually exclusive",
+"\"Zone %s\" line and -p option are mutually exclusive",
 			TZDEFRULES);
 		error(buf);
 		return FALSE;
@@ -939,10 +939,12 @@ const int		iscont;
 			fields[i_untilyear],
 			"only",
 			"",
-			(nfields > i_untilmonth) ? fields[i_untilmonth] : "Jan",
+			(nfields > i_untilmonth) ?
+			fields[i_untilmonth] : "Jan",
 			(nfields > i_untilday) ? fields[i_untilday] : "1",
 			(nfields > i_untiltime) ? fields[i_untiltime] : "0");
-		z.z_untiltime = rpytime(&z.z_untilrule, z.z_untilrule.r_loyear);
+		z.z_untiltime = rpytime(&z.z_untilrule,
+			z.z_untilrule.r_loyear);
 		if (iscont && nzones > 0 &&
 			z.z_untiltime > min_time &&
 			z.z_untiltime < max_time &&
@@ -950,7 +952,7 @@ const int		iscont;
 			zones[nzones - 1].z_untiltime < max_time &&
 			zones[nzones - 1].z_untiltime >= z.z_untiltime) {
 error("Zone continuation line end time is not after end time of previous line");
-			return FALSE;
+				return FALSE;
 		}
 	}
 	zones = (struct zone *) erealloc((char *) zones,
@@ -1905,7 +1907,8 @@ const int	i;
 
 	l = i;
 	if ((i < 0 && l >= 0) || (i == 0 && l != 0) || (i > 0 && l <= 0)) {
-		(void) fprintf(stderr, "%s: %d did not sign extend correctly\n",
+		(void) fprintf(stderr,
+			"%s: %d did not sign extend correctly\n",
 			progname, i);
 		(void) exit(EXIT_FAILURE);
 	}

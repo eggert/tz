@@ -100,8 +100,7 @@ static unsigned int week __P ((const struct tm *const, int, int));
 #ifdef _LIBC
 #define fmt(n, args)    add((n), if (sprintf args != (n)) return 0)
 #else
-#define fmt(n, args)    add((n), sprintf args; if (strlen (p) != (n)) return
-0)
+#define fmt(n, args)    add((n), sprintf args; if (strlen (p) != (n)) return 0)
 #endif
 
 

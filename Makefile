@@ -187,7 +187,7 @@ NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c emkdir.c getopt.c
 NEWUCBSRCS=	date.c logwtmp.c strftime.c
 SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS) yearistype.sh
 MANS=		newctime.3 newtzset.3 tzfile.5 zic.8 zdump.8
-DOCS=		Patchlevel.h README Theory $(MANS) date.1 Makefile
+DOCS=		README Theory $(MANS) date.1 Makefile
 YDATA=		africa antarctica asia australasia \
 		europe northamerica southamerica pacificnew etcetera factory
 NDATA=		systemv

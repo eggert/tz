@@ -32,9 +32,9 @@ Zone	Australia/Victoria	10:00	Aus-Vic	EST
 Zone	Australia/NSW		10:00	Aus-Vic	EST
 Zone	Australia/Tasmania	10:00	Aus	EST
 Zone	Australia/Queensland	10:00	-	EST
-Zone	Australia/South-east	9:30	Aus	CST	1987 Mar 15 2:00
+Zone	Australia/South-east	9:30	Aus	CST	1987 Mar 15 2:00s
 				10:00	Aus	EST
-Zone	Australia/South-west	9:30	Aus	CST	1987 Mar 15 2:00
+Zone	Australia/South-west	9:30	Aus	CST	1987 Mar 15 2:00s
 				10:00	-	EST
 Zone	Australia/North		9:30	-	CST
 Zone	Australia/West		8:00	-	WST

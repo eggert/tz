@@ -146,14 +146,16 @@ register struct state *	sp;
 	}
 	/*
 	** Check that all the local time type indices are valid.
-	** Also check that all abbreviation indices are valid.
 	*/
-	for (i = 0; i < sp->timecnt; ++i) {
+	for (i = 0; i < sp->timecnt; ++i)
 		if (sp->types[i] >= sp->typecnt)
 			return -1;
+	/*
+	** Check that all abbreviation indices are valid.
+	*/
+	for (i = 0; i < sp->typecnt; ++i)
 		if (sp->ttis[i].tt_abbrind >= sp->charcnt)
 			return -1;
-	}
 	/*
 	** Set tzname elements to initial values.
 	*/

@@ -7,41 +7,35 @@ static char	elsieid[] = "%W%";
 /*LINTLIBRARY*/
 
 #include "stdio.h"
+#include "string.h"
 
 #ifdef __STDC__
-#define HAVEHEADS
+#define P(s)	s
 #endif /* defined __STDC__ */
 
 #ifdef __TURBOC__
-#define HAVEHEADS
+#define P(s)	s
 #endif /* defined __TURBOC__ */
 
-#ifdef HAVEHEADS
+#ifdef P
 
 #include "stdlib.h"
-#include "string.h"
-
 #define alloc_t	size_t
 
-char *	icalloc(int nelem, int elsize);
-char *	icatalloc(char * old, char * new);
-char *	icpyalloc(char * string);
-char *	imalloc(int n);
-char *	irealloc(char * pointer, int size);
-void	ifree(char * pointer);
+#else /* !defined P */
 
-#else /* !defined HAVEHEADS */
+#define P(s)	()
+#define const
 
 extern char *	calloc();
 extern char *	malloc();
 extern char *	realloc();
-extern char *	strcpy();
+
+#endif /* !defined P */
 
 #ifndef alloc_t
 #define alloc_t	unsigned
 #endif /* !defined alloc_t */
-
-#endif /* !defined HAVEHEADS */
 
 #ifdef MAL
 #define NULLMAL(x)	((x) == NULL || (x) == MAL)
@@ -50,6 +44,13 @@ extern char *	strcpy();
 #endif /* !defined MAL */
 
 #define nonzero(n)	(((n) == 0) ? 1 : (n))
+
+char *	icalloc P((int nelem, int elsize));
+char *	icatalloc P((char * old, const char * new));
+char *	icpyalloc P((const char * string));
+char *	imalloc P((int n));
+char *	irealloc P((char * pointer, int size));
+void	ifree P((char * pointer));
 
 char *
 imalloc(n)
@@ -83,8 +84,8 @@ char *	pointer;
 
 char *
 icatalloc(old, new)
-char *	old;
-char *	new;
+char *		old;
+const char *	new;
 {
 	register char *	result;
 	register	oldsize, newsize;
@@ -103,7 +104,7 @@ char *	new;
 
 char *
 icpyalloc(string)
-char *	string;
+const char *	string;
 {
 	return icatalloc((char *) NULL, string);
 }

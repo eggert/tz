@@ -307,8 +307,7 @@ dogmt()
 
 		for (n = 0;  environ[n] != NULL;  ++n)
 			continue;
-		fakeenv = (char **) malloc((alloc_size_T) (n + 2) *
-			sizeof *fakeenv);
+		fakeenv = (char **) malloc((size_t) (n + 2) * sizeof *fakeenv);
 		if (fakeenv == NULL) {
 			(void) perror("Memory exhausted");
 			errensure();
@@ -533,7 +532,7 @@ const struct tm * const	tmp;
 	if (*format == '\0')
 		return;
 	size = INCR;
-	cp = malloc((alloc_size_T) size);
+	cp = malloc((size_t) size);
 	for ( ; ; ) {
 		if (cp == NULL) {
 			(void) fprintf(stderr,
@@ -545,7 +544,7 @@ const struct tm * const	tmp;
 		if (result != 0)
 			break;
 		size += INCR;
-		cp = realloc(cp, (alloc_size_T) size);
+		cp = realloc(cp, (size_t) size);
 	}
 	(void) fwrite(cp, 1, result, fp);
 	free(cp);

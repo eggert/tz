@@ -398,7 +398,7 @@ const int	nflag;
 
 #if HAVE_SETTIMEOFDAY == 1
 #define settimeofday(t, tz) (settimeofday)(t)
-#endif
+#endif /* HAVE_SETTIMEOFDAY == 1 */
 
 #ifndef TSP_SETDATE
 /*ARGSUSED*/

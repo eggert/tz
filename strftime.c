@@ -342,7 +342,7 @@ _conv(n, format, pt, ptlim)
 	char *pt;
 	const char *ptlim;
 {
-	char buf[INT_STRLEN_MAXIMUM + 1];
+	char buf[INT_STRLEN_MAXIMUM(int) + 1];
 
 	(void) sprintf(buf, format, n);
 	return _add(buf, pt, ptlim);

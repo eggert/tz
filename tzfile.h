@@ -77,15 +77,15 @@ struct tzhead {
 #define	TZ_MAX_LEAPS	50	/* Maximum number of leap second corrections */
 #endif /* !defined TZ_MAX_LEAPS */
 
-#define SECS_PER_MIN	60
-#define MINS_PER_HOUR	60
-#define HOURS_PER_DAY	24
-#define DAYS_PER_WEEK	7
-#define DAYS_PER_NYEAR	365
-#define DAYS_PER_LYEAR	366
-#define SECS_PER_HOUR	(SECS_PER_MIN * MINS_PER_HOUR)
-#define SECS_PER_DAY	((long) SECS_PER_HOUR * HOURS_PER_DAY)
-#define MONS_PER_YEAR	12
+#define SECSPERMIN	60
+#define MINSPERHOUR	60
+#define HOURSPERDAY	24
+#define DAYSPERWEEK	7
+#define DAYSPERNYEAR	365
+#define DAYSPERLYEAR	366
+#define SECSPERHOUR	(SECSPERMIN * MINSPERHOUR)
+#define SECSPERDAY	((long) SECSPERHOUR * HOURSPERDAY)
+#define MONSPERYEAR	12
 
 #define TM_SUNDAY	0
 #define TM_MONDAY	1

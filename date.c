@@ -3,8 +3,6 @@
 static char	elsieid[] = "%W%";
 /*
 ** UCB's date.c, plus BSD conditionalizing, pluse changes to use "mktime".
-** plus BSD conditionalizing,
-** plus changes to use "mktime".
 */
 #endif /* !defined NOID */
 #endif /* !defined lint */
@@ -50,11 +48,22 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #include <ctype.h>
 #include <strings.h>
 
-#define	ATOI2(ar)	(ar[0] - '0') * 10 + (ar[1] - '0'); ar += 2;
+/*
+** TO DO:  provide a way to disambiguate 1:30 a.m. on the day you "fall back"?
+** 	   also:  provide a way to disambiguate between multiple noons
+**	   in Riyadh, both of which are standard time.
+*/
+
+extern int	optind;
+
+#ifndef USG
 
 static struct timeval	tv;
 static int	retval;
 
+static void	display();
+
+int
 main(argc, argv)
 	int argc;
 	char **argv;
@@ -63,11 +72,11 @@ main(argc, argv)
 	extern char *optarg;
 	struct timezone tz;
 	char *ap, *tzn;
-	int ch, uflag, nflag;
+	int ch, nflag;
 	char *username, *getlogin();
 	time_t time();
 
-	nflag = uflag = 0;
+	nflag = 0;
 	tz.tz_dsttime = tz.tz_minuteswest = 0;
 	while ((ch = getopt(argc, argv, "d:nut:")) != EOF)
 		switch((char)ch) {
@@ -78,7 +87,7 @@ main(argc, argv)
 			nflag = 1;
 			break;
 		case 'u':		/* do it in GMT */
-			uflag = 1;
+			setgmt();
 			break;
 		case 't':		/* minutes west of GMT */
 					/* error check; we can't allow "PST" */
@@ -103,7 +112,7 @@ main(argc, argv)
 	    settimeofday((struct timeval *)NULL, &tz)) {
 		perror("settimeofday");
 		retval = 1;
-		goto display;
+		display();
 	}
 
 	if (gettimeofday(&tv, &tz)) {
@@ -112,34 +121,21 @@ main(argc, argv)
 	}
 
 	if (!argc)
-		goto display;
+		display();
 
-	if (uflag) {
-		/*
-		** Take measures to ensure that mktime uses GMT.
-		*/
-	}
-	if (gtime(*argv)) {
+	tv.tv_sec = gtime(*argv, (time_t) tv.tv_sec, -1);
+	if (tv.tv_sec == -1) {
 		usage();
 		retval = 1;
-		goto display;
-	}
-	if (uflag) {
-		/*
-		** Undo measures to ensure that mktime uses GMT.
-		*/
+		display();
 	}
 
-#ifdef BSD
 	if (nflag || !netsettime(tv)) {
-#else
-	{
-#endif /* !defined BSD */
 		logwtmp("|", "date", "");
 		if (settimeofday(&tv, (struct timezone *)NULL)) {
 			perror("settimeofday");
 			retval = 1;
-			goto display;
+			display();
 		}
 		logwtmp("{", "date", "");
 	}
@@ -149,91 +145,198 @@ main(argc, argv)
 		username = "root";
 	syslog(LOG_AUTH | LOG_NOTICE, "date set by %s", username);
 
-display:
-	if (gettimeofday(&tv, (struct timezone *)NULL)) {
-		perror("gettimeofday");
+	display();
+	for ( ; ; )
+		;
+}
+
+usage()
+{
+	fputs("usage: date [-nu] [-d dst] [-t minutes_west] [yymmddhhmm[.ss]]\n", stderr);
+}
+
+#else /* defined USG */
+int
+main(argc, argv)
+	int argc;
+	char **argv;
+{
+	int ch;
+	time_t time();
+	time_t t;
+
+	while ((ch = getopt(argc, argv, "u")) != EOF)
+		switch (ch) {
+		case 'u':
+			setgmt():
+			break;
+		default:
+			usage();
+			exit(1);
+		}
+	if (argc == optind)
+		display();
+	else if ((argc - optind) != 1) {
+		usage();
 		exit(1);
 	}
-	if (uflag) {
-		ap = asctime(gmtime((time_t *)&tv.tv_sec));
-		tzn = "GMT";
+	(void) time(&t);
+	t = gtime(argv[optind], t, -1);
+	if (t == -1) {
+		usage();
+		retval = 1;
+	} else {
+		logwtmp("|", "date", "");
+		if (stime(&t) == 0)
+			logwtmp("{", "date", "");
+		else {
+			perror("stime");
+			retval = 1;
+		}
 	}
-	else {
-		struct tm *	tp;
-		extern char *	tzname[2];
+	display();
+}
 
-		tp = localtime((time_t *)&tv.tv_sec);
-		ap = asctime(tp);
-		tzn = tzname[tp->tm_isdst];
-	}
-	printf("%.20s%s%s", ap, tzn, ap + 19);
-	exit(retval);
+usage()
+{
+	(void) fprintf(stderr, "date: usage is date [-u] yymmddhhmm[.ss]\n");
+	exit(1);
+}
+
+#endif /* defined USG */
+
+static void
+display()
+{
+	register struct tm *	tp;
+	register char *		cp;
+	time_t			t;
+	extern char *		tzname[2];
+
+	(void) time(&t);
+	tp = localtime(&t);
+	cp = asctime(tp);
+	(void) printf("%.20s%s%s", cp, tzname[tp->tm_isdst], cp + 19);
+	(void) exit(retval);
+	for ( ; ; )
+		;
+}
+
+setgmt()
+{
+	register char **	saveenv;
+	extern char **		environ;
+	char *			fakeenv[2];
+
+	fakeenv[0] = "TZ=GMT0";
+	fakeenv[1] = NULL;
+	saveenv = environ;
+	environ = fakeenv;
+	tzset();
+	environ = saveenv;
 }
 
 /*
  * gtime --
- *	convert user's time into number of seconds
- * STILL TO DO:  COPE WITH DST/STD.
+ *	convert user's input into a time_t.
+ * Track the BSD behavior of treating
+ * 	8903062415
+ * as March 7, 1989, 12:15 a.m. rather than
+ *    March 6, 1989, 12:15 a.m.
  */
-static
-gtime(ap)
-	register char *ap;
+
+#define PAIR(cp)	((*(cp) - '0') * 10 + *((cp) + 1) - '0')
+
+static time_t
+gtime(ap, t, isdst)
+register char *	ap;
+time_t		t;	/* time to use for filling in unspecified information */
+int		isdst;
 {
-	register char * C;
-	time_t		t;
-	struct tm	in, out;
+	register char *	cp;
+	struct tm	intm, outtm;
+	time_t		outt;
+	int		saw24;
+	int		okay;
 
-	in = *localtime((time_t *)&tv.tv_sec);
-	in.tm_sec = 0;
-	for (C = ap; *C; ++C) {
-		if (*C == '.') {		/* seconds provided */
-			if (strlen(C) != 3)
-				return(1);
-			if (!isdigit(C[1]) || !isdigit(C[2]))
-				return(1);
-			in.tm_sec = (C[1] - '0') * 10 + (C[2] - '0');
-			break;
-		}
-		if (!isdigit(*C))
-			return(-1);
+	if (isdst < 0) {
+		time_t	thist, thatt;
+
+		thist = gtime(ap, t, 0);
+		thatt = gtime(ap, t, 1);
+		if (thist == -1)
+			if (thatt == -1)
+				return -1;
+			else	return thatt;
+		else	if (thatt == -1)
+				return thist;
+			else {
+				(void) fprintf(stderr, "ambiguous time\n");
+				return -1;
+			}
 	}
-
-	switch ((int)(C - ap)) {		/* length */
+	for (cp = ap; *cp != '\0'; ++cp)
+		if (!isdigit(*cp) && *cp != '.')
+			return -1;
+	intm = *localtime(&t);
+	intm.tm_sec = 0;
+	saw24 = 0;
+	cp = ap;
+	switch (strlen(cp)) {
+		case 13:			/* yymmddhhmm.ss */
+			if (cp[10] != '.')
+				return -1;
+			intm.tm_sec = PAIR(&cp[11]);
 		case 10:			/* yymmddhhmm */
-			in.tm_year = ATOI2(ap);
-			if (in.tm_year < 70)	/* epoch year */
-				in.tm_year += 100;
+			intm.tm_year = PAIR(cp);
+			cp += 2;
 		case 8:				/* mmddhhmm */
-			in.tm_mon = ATOI2(ap);
-			--in.tm_mon;
+			intm.tm_mon = PAIR(cp);
+			cp += 2;
+			--intm.tm_mon;
 		case 6:				/* ddhhmm */
-			in.tm_mday = ATOI2(ap);
+			intm.tm_mday = PAIR(cp);
+			cp += 2;
 		case 4:				/* hhmm */
-			in.tm_hour = ATOI2(ap);
-			in.tm_min = ATOI2(ap);
+			intm.tm_hour = PAIR(cp);
+			cp += 2;
+			if (intm.tm_hour == 24) {
+				saw24 = 1;
+				intm.tm_hour = 0;
+				++intm.tm_mday;
+			}
+			intm.tm_min = PAIR(cp);
 			break;
 		default:
-			return(1);
+			return -1;
 	}
-
-	out = in;
-	tv.tv_sec = mktime(&out);
-	if (tv.tv_sec == -1 ||
-		out.tm_year != in.tm_year ||
-		out.tm_mon != in.tm_mon ||
-		out.tm_hour != in.tm_hour ||
-		out.tm_min != in.tm_min ||
-		out.tm_sec != in.tm_sec) {
-			/*
-			** Old code allows hour == 24;
-			** check for it here.
-			*/
-			return 1;
-	}
-	return 0;
+	intm.tm_isdst = isdst;
+	outtm = intm;
+	outt = mktime(&outtm);
+	if (outtm.tm_isdst != intm.tm_isdst ||
+		outtm.tm_sec != intm.tm_sec ||
+		outtm.tm_min != intm.tm_min ||
+		outtm.tm_hour != intm.tm_hour)
+			okay = 0;
+	else if (outtm.tm_mday == intm.tm_mday &&
+		outtm.tm_mon == intm.tm_mon &&
+		outtm.tm_year == intm.tm_year)
+			okay = 1;
+	else if (!saw24)
+			okay = 0;
+	else if (outtm.tm_mday == intm.tm_mday + 1)
+		okay = outtm.tm_mon == intm.tm_mon &&
+			outtm.tm_year == intm.tm_year;
+	else if (outtm.tm_mday != 1)
+			okay = 0;
+	else if (outtm.tm_mon == intm.tm_mon + 1)
+			okay = outtm.tm_year == intm.tm_year;
+	else if (outtm.tm_mon != 0)
+			okay = 0;
+	else		okay = outtm.tm_year == intm.tm_year + 1;
+	return okay ? outt : -1;
 }
 
-#ifdef BSD
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
@@ -255,6 +358,9 @@ extern	int errno;
 netsettime(ntv)
 	struct timeval ntv;
 {
+#ifndef TSP_SETDATE
+	return 0;
+#else /* defined TSP_SETDATE */
 	int s, length, port, timed_ack, found, err;
 	long waittime;
 	fd_set ready;
@@ -368,10 +474,5 @@ bad:
 	(void)close(s);
 	retval = 2;
 	return (0);
-}
-#endif /* defined BSD */
-
-usage()
-{
-	fputs("usage: date [-nu] [-d dst] [-t minutes_west] [yymmddhhmm[.ss]]\n", stderr);
+#endif /* defined TSP_SETDATE */
 }

@@ -107,12 +107,29 @@ Zone	Canada/Yukon		-9:00	Canada		Y%sT
 ###############################################################################
 
 # Mexico
+
+# From Guy Harris:
 # Rules are from the Official Airline Guide, Worldwide Edition, for 1987.
 # Rules prior to 1987 are unknown.
 # The comments in the OAG say "Only Ensenada, Mexicale, San Felipe and Tijuana
 # observe DST."  This is presumably Baja California Norte, above 28th parallel,
 # as listed there; Mexico/BajaSur is for "Baja California Sur and N. Pacific
 # Coast (States of Sinaloa and Sonora)."
+
+# From Bob Devine:
+# The Federal District (where Mexico City is) has observed [DST] several
+# times but not recently.
+# 
+# I don't where to drawn the line in the North Baja area.  28th latitude
+# sounds good -- but it may be higher (how far to radio stations from
+# San Diego affect culture?).
+# 
+# The dates of DST probably go back to 1981.  The rules are the same as
+# US's.  This is going to be a headache for US presidential electi[o]n years!
+
+# From Arthur David Olson:
+# Since the 1981 starting date is only "probable," we'll keep the 1987
+# starting date below.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Mexico	1987	max	-	Oct	lastSun	2:00	0	S
@@ -135,7 +152,7 @@ Link	US/Eastern	Jamaica
 # Cuba
 # From Bob Devine:  ". . .DST is from 2nd Sunday in May to 2nd Sunday in
 # October since 1981.  Change at midnight.  In 1979 & 1980, started at 3rd
-# Sunday in March (I think).
+# Sunday in March (I think)."
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Cuba	1979	1980	-	Mar	Sun>=15	0:00	1:00	D

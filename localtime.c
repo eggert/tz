@@ -272,9 +272,6 @@ time_t *	timep;
 	tzname[tmp->tm_isdst] = &s.chars[ttisp->tt_abbrind];
 #ifdef KRE_COMPAT
 	tmp->tm_zone = &s.chars[ttisp->tt_abbrind];
-#ifdef USG_COMPAT
-	tmp->tm_gmtoff = ttisp->tt_gmtoff;
-#endif /* USG_COMPAT */
 #endif /* KRE_COMPAT */
 #ifdef TZA_COMPAT
 	tz_abbr = &s.chars[ttisp->tt_abbrind];
@@ -368,3 +365,21 @@ long		offset;
 #endif /* KRE_COMPAT */
 	return tmp;
 }
+
+#ifdef BSD_COMPAT
+
+/*
+** If ctime and localtime aren't in the same file on 4.3BSD systems,
+** you can run into compilation problems--take
+**	cc date.c -lz
+** (please).
+*/
+
+char *
+ctime(timep)
+time_t *	timep;
+{
+	return asctime(localtime(timep));
+}
+
+#endif /* BSD_COMPAT */

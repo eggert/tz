@@ -1,18 +1,18 @@
 .TH SETTZ 3 
 .SH NAME
-settz, newctime, newlocaltime \- convert date and time to ASCII
+settz, ctime, localtime, zonetime \- convert date and time to ASCII
 .SH SYNOPSIS
 .nf
 .B settz(zonename)
 .B char *zonename;
 .PP
-.B char *newctime(clock)
+.B char *ctime(clock)
 .B long *clock;
 .PP
 .B
 #include "time.h"
 .PP
-.B struct tm *newlocaltime(clock)
+.B struct tm *localtime(clock)
 .B long *clock;
 .PP
 .B char *tz_abbr;
@@ -20,10 +20,12 @@ settz, newctime, newlocaltime \- convert date and time to ASCII
 .B struct tm * zonetime(timep, zone)
 .B long *clock;
 .B char *zone;
+.PP
+.B cc ... -ltz
 .SH DESCRIPTION
 .I Settz
 sets time conversion information used by
-.IR newlocaltime .
+.IR localtime .
 If
 .I zonename
 begins with a slash,
@@ -49,31 +51,32 @@ is treated as if it were a call of the form
 .B
 settz("localtime")
 .PP
-.I Newlocaltime
+.I Localtime
 has the same argument and return value as
-.IR localtime .
+the older version described in
+.IR ctime (3) .
 If
-.I newlocaltime
+.I localtime
 is called before
 .I settz
 is called,
-.I newlocaltime
+.I localtime
 calls
 .I settz
 with the value returned by
 .B
 getenv("TZ").
-.I Newlocaltime
+.I Localtime
 sets
 tz_abbr
 to a pointer to an 
 ASCII string that's the time zone abbreviation to be used with
-.IR newlocaltime 's
+.IR localtime 's
 return value.
 .PP
-.I Newctime
+.I Ctime
 returns
-.IR "asctime(newlocaltime(*clock))" .
+.IR "asctime(localtime(*clock))" .
 .PP
 .I Zonetime
 converts the argument time using the argument zone.
@@ -82,7 +85,7 @@ converts the argument time using the argument zone.
 returns zero if all seems well; it returns negative one otherwise
 (and sets things up so that its built-in information about GMT is used).
 .SH FILES
-/etc/timezones	standard time conversion information directory
+/etc/zoneinfo	standard time conversion information directory
 .SH "SEE ALSO"
 ctime(3), getenv(3), tzfile(5)
 .. %W%

@@ -113,7 +113,6 @@ Rule	Arg	1989	1992	-	Oct	Sun>=15	0:00	1:00	S
 #
 # Buenos Aires (BA), Distrito Federal (DF), Santa Cruz (SC),
 # Tierra del Fuego (TF) & Antartida e Islas
-#Updated Zone America/Buenos_Aires 1997 Nov 19
 Zone America/Buenos_Aires -3:53:48 -	LMT	1894 Nov
 			-4:16:44 -	CMT	1920 May    # Cordoba Mean Time
 			-4:00	-	ART	1930 Dec
@@ -122,7 +121,6 @@ Zone America/Buenos_Aires -3:53:48 -	LMT	1894 Nov
 #
 # Santa Fe (SF), Entre Rios (ER), Corrientes (CN), Misiones (MN), Chaco (CC),
 # Formosa (FM), La Pampa (LP), Chubut (CH)
-#Updated Zone America/Rosario 1997 Nov 19
 Zone America/Rosario	-4:02:40 -	LMT	1894 Nov
 			-4:16:44 -	CMT	1920 May
 			-4:00	-	ART	1930 Dec
@@ -132,7 +130,6 @@ Zone America/Rosario	-4:02:40 -	LMT	1894 Nov
 #
 # Cordoba (CB), Santiago del Estero (SE), Salta (SA), Tucuman (TM), La Rioja (LR), San Juan (SJ), San Luis (SL),
 # Neuquen (NQ), Rio Negro (RN)
-#Updated Zone America/Cordoba 1997 Nov 19
 Zone America/Cordoba	-4:16:44 -	LMT	1894 Nov
 			-4:16:44 -	CMT	1920 May
 			-4:00	-	ART	1930 Dec
@@ -141,7 +138,6 @@ Zone America/Cordoba	-4:16:44 -	LMT	1894 Nov
 			-3:00	-	ART
 #
 # Jujuy (JY)
-#Updated Zone America/Jujuy 1997 Nov 19
 Zone America/Jujuy	-4:21:12 -	LMT	1894 Nov
 			-4:16:44 -	CMT	1920 May
 			-4:00	-	ART	1930 Dec
@@ -153,7 +149,6 @@ Zone America/Jujuy	-4:21:12 -	LMT	1894 Nov
 			-3:00	-	ART
 #
 # Catamarca (CT)
-#Updated Zone America/Catamarca 1997 Nov 19
 Zone America/Catamarca	-4:23:08 -	LMT	1894 Nov
 			-4:16:44 -	CMT	1920 May
 			-4:00	-	ART	1930 Dec
@@ -164,7 +159,6 @@ Zone America/Catamarca	-4:23:08 -	LMT	1894 Nov
 			-3:00	-	ART
 #
 # Mendoza (MZ)
-#Updated Zone America/Mendoza 1997 Nov 19
 Zone America/Mendoza	-4:35:16 -	LMT	1894 Nov
 			-4:16:44 -	CMT	1920 May
 			-4:00	-	ART	1930 Dec
@@ -177,14 +171,12 @@ Zone America/Mendoza	-4:35:16 -	LMT	1894 Nov
 
 # Aruba
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/Aruba 1997 Nov 19
 Zone	America/Aruba	-4:40:24 -	LMT	1912 Feb 12	# Oranjestad
 			-4:30	-	ANT	1965 # Netherlands Antilles Time
 			-4:00	-	AST
 
 # Bolivia
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/La_Paz 1997 Nov 19
 Zone	America/La_Paz	-4:32:36 -	LMT	1890
 			-4:32:36 -	LPMT	1931 Oct 15 # La Paz Mean Time
 			-4:32:36 1:00	BOST	1932 Mar 21 # Bolivia ST
@@ -283,7 +275,6 @@ Rule	Brazil	1996	max	-	Oct	Sun>=1	 0:00	1:00	D
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 #
 # Fernando de Noronha
-#Updated Zone America/Noronha 1997 Nov 19
 Zone America/Noronha	-2:09:40 -	LMT	1914
 			-2:00	-	FST	1963 Dec 9
 			-2:00	Brazil	F%sT	1990 Jul
@@ -291,14 +282,12 @@ Zone America/Noronha	-2:09:40 -	LMT	1914
 #
 # Amapa, east Para, Maranhao, Piaui, Ceara, Rio Grande do Norte, Paraiba,
 # Pernambuco (except Fernando de Noronha)
-#Updated Zone America/Fortaleza 1997 Nov 19
 Zone America/Fortaleza	-2:34:00 -	LMT	1914
 			-3:00	-	EST	1963 Dec 9
 			-3:00	Brazil	E%sT	1990 Jul
 			-3:00	-	EST
 #
 # Alagoas, Sergipe, Tocantins
-#Updated Zone America/Maceio 1997 Nov 19
 Zone America/Maceio	-2:22:52 -	LMT	1914
 			-3:00	-	EST	1963 Dec 9
 			-3:00	Brazil	E%sT	1990 Jul
@@ -307,18 +296,15 @@ Zone America/Maceio	-2:22:52 -	LMT	1914
 #
 # Bahia, Goias, Distrito Federal, Minas Gerais, Espirito Santo, Rio de Janeiro,
 # Sao Paulo, Parana, Santa Catarina, Rio Grande do Sul
-#Updated Zone America/Sao_Paulo 1997 Nov 19
 Zone America/Sao_Paulo	-3:06:28 -	LMT	1914
 			-3:00	Brazil	E%sT
 #
 # Mato Grosso, Mato Grosso do Sul
-#Updated Zone America/Cuiaba 1997 Nov 19
 Zone America/Cuiaba	-3:44:20 -	LMT	1914
 			-4:00	-	WST	1963 Dec 9
 			-4:00	Brazil	W%sT
 #
 # Roraima, west Para, Amazonas, Rondonia
-#Updated Zone America/Manaus 1997 Nov 19
 Zone America/Manaus	-4:00:04 -	LMT	1914
 			-4:00	-	WST	1963 Dec 9
 			-4:00	Brazil	W%sT	1990 Jul
@@ -326,7 +312,6 @@ Zone America/Manaus	-4:00:04 -	LMT	1914
 #
 # Acre
 # Rio_Branco is too ambiguous, since there's a Rio Branco in Uruguay too.
-#Updated Zone America/Porto_Acre 1997 Nov 19
 Zone America/Porto_Acre	-4:31:12 -	LMT	1914
 			-5:00	-	AST	1963 Dec 9
 			-5:00	Brazil	A%sT	1988 Jul
@@ -351,12 +336,10 @@ Rule	Chile	1970	max	-	Mar	Sun>=9	0:00	0	-
 # IATA SSIM anomalies: (1990-09) says 1990-09-16; (1992-02) says 1992-03-14;
 # (1996-09) says 1998-03-08.  Ignore these for now.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/Santiago 1997 Nov 19
 Zone America/Santiago	-4:42:40 -	LMT	1890
 			-4:42:40 -	SMT	1910	    # Santiago Mean Time
 			-5:00	Chile	CL%sT	1932 Sep    # Chile Time
 			-4:00	Chile	CL%sT
-#Updated Zone Pacific/Easter 1997 Nov 19
 Zone Pacific/Easter	-7:17:28 -	LMT	1890	    # Mataveri
 			-7:17:28 -	MMT	1932 Sep    # Mataveri Mean Time
 			-7:00	Chile	EAS%sT	1982 Mar 14 # Easter I Time
@@ -372,7 +355,6 @@ Zone Pacific/Easter	-7:17:28 -	LMT	1890	    # Mataveri
 Rule	CO	1992	only	-	May	 2	0:00	1:00	S
 Rule	CO	1992	only	-	Dec	31	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/Bogota 1997 Nov 19
 Zone	America/Bogota	-4:56:20 -	LMT	1884 Mar 13
 			-4:56:20 -	BMT	1914 Nov 23 # Bogota Mean Time
 			-5:00	CO	CO%sT	# Colombia Time
@@ -381,18 +363,15 @@ Zone	America/Bogota	-4:56:20 -	LMT	1884 Mar 13
 
 # Curacao
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/Curacao 1997 Nov 19
 Zone	America/Curacao	-4:35:44 -	LMT	1912 Feb 12	# Willemstad
 			-4:30	-	ANT	1965 # Netherlands Antilles Time
 			-4:00	-	AST
 
 # Ecuador
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/Guayaquil 1997 Nov 19
 Zone America/Guayaquil	-5:19:20 -	LMT	1890
 			-5:14:00 -	QMT	1931 # Quito Mean Time
 			-5:00	-	ECT	     # Ecuador Time
-#Updated Zone Pacific/Galapagos 1997 Nov 19
 Zone Pacific/Galapagos	-5:58:24 -	LMT	1931 # Puerto Baquerizo Moreno
 			-5:00	-	ECT	1986
 			-6:00	-	GALT	     # Galapagos Time
@@ -411,7 +390,6 @@ Rule	Falk	1985	1995	-	Sep	Sun>=9	0:00	1:00	S
 Rule	Falk	1986	max	-	Apr	Sun>=16	0:00	0	-
 Rule	Falk	1996	max	-	Sep	Sun>=8	0:00	1:00	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone Atlantic/Stanley 1997 Nov 19
 Zone Atlantic/Stanley	-3:51:24 -	LMT	1890
 			-3:51:24 -	SMT	1912 Mar 12  # Stanley Mean Time
 			-4:00	Falk	FK%sT	1983 May     # Falkland Is Time
@@ -420,14 +398,12 @@ Zone Atlantic/Stanley	-3:51:24 -	LMT	1890
 
 # French Guiana
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/Cayenne 1997 Nov 19
 Zone America/Cayenne	-3:29:20 -	LMT	1911 Jul
 			-4:00	-	GFT	1967 Oct # French Guiana Time
 			-3:00	-	GFT
 
 # Guyana
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/Guyana 1997 Nov 19
 Zone	America/Guyana	-3:52:40 -	LMT	1915 Mar	# Georgetown
 			-3:45	-	GBGT	1966 May 26 # Br Guiana Time
 			-3:45	-	GYT	1975 Jul 31 # Guyana Time
@@ -464,7 +440,6 @@ Rule	Para	1996	max	-	Mar	 1	0:00	0	-
 Rule	Para	1996	only	-	Oct	 6	0:00	1:00	S
 Rule	Para	1997	max	-	Oct	 1	0:00	1:00	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/Asuncion 1997 Nov 19
 Zone America/Asuncion	-3:50:40 -	LMT	1890
 			-3:50:40 -	AMT	1931 Oct 10 # Asuncion Mean Time
 			-4:00	-	PYT	1972 Oct # Paraguay Time
@@ -484,14 +459,12 @@ Rule	Peru	1990	only	-	Apr	 1	0:00	0	-
 Rule	Peru	1993	only	-	Jan	 1	0:00	1:00	S
 Rule	Peru	1993	only	-	Apr	 1	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/Lima 1997 Nov 19
 Zone	America/Lima	-5:08:12 -	LMT	1890
 			-5:09	-	LMT	1908 Jul 28 # Lima Mean Time
 			-5:00	Peru	PE%sT	# Peru Time
 
 # South Georgia
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone Atlantic/South_Georgia 1997 Nov 19
 Zone Atlantic/South_Georgia -2:26:08 -	LMT	1890		# Grytviken
 			-2:00	-	GST	# South Georgia Time
 
@@ -500,7 +473,6 @@ Zone Atlantic/South_Georgia -2:26:08 -	LMT	1890		# Grytviken
 
 # Suriname
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/Paramaribo 1997 Nov 19
 Zone America/Paramaribo	-3:40:40 -	LMT	1911
 			-3:40:52 -	PMT	1935     # Paramaribo Mean Time
 			-3:40:36 -	PMT	1945 Oct # The capital moved?
@@ -510,7 +482,6 @@ Zone America/Paramaribo	-3:40:40 -	LMT	1911
 
 # Trinidad and Tobago
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/Port_of_Spain 1997 Nov 19
 Zone America/Port_of_Spain -4:06:04 -	LMT	1912 Mar 2
 			-4:00	-	AST
 
@@ -566,7 +537,6 @@ Rule	Uruguay	1990	1991	-	Oct	Sun>=21	 0:00	1:00	S
 Rule	Uruguay	1992	only	-	Oct	18	 0:00	1:00	S
 Rule	Uruguay	1993	only	-	Feb	28	 0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/Montevideo 1997 Nov 19
 Zone America/Montevideo	-3:44:44 -	LMT	1898 Jun 28
 			-3:44:44 -	MMT	1920 May  1	# Montevideo MT
 			-3:30	Uruguay	UY%sT	1942 Dec 14	# Uruguay Time
@@ -574,7 +544,6 @@ Zone America/Montevideo	-3:44:44 -	LMT	1898 Jun 28
 
 # Venezuela
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Updated Zone America/Caracas 1997 Nov 19
 Zone	America/Caracas	-4:27:44 -	LMT	1890
 			-4:27:44 -	CMT	1912 Feb 12  # Caracas Mean Time
 			-4:30	-	VET	1965	     # Venezuela Time

@@ -208,8 +208,7 @@ SURE:		sure $(ENCHILADA)
 		spell $(ENCHILADA)
 
 clean:
-		rm -f core *.o *.out REDID_BINARIES zdump zic \
-		SHAR* tz.shar.Z.uue ,*
+		rm -f core *.o *.out REDID_BINARIES zdump zic SHAR* ,*
 
 CLEAN:		clean
 		sccs clean

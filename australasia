@@ -16,10 +16,10 @@ Rule	Aus-Vic	1973	1985	-	Mar	Sun>=1	3:00	0	-
 Rule	Aus-Vic	1986	2037	-	Mar	Sun<=21	3:00	0	-
 
 # Australia - something of a turmoil here
-# Zone	NAME		GMTOFF	RULES	FORMAT
-Zone	EST		10:00	Aus-Vic	EST	# rule change, 1986
-Zone	Tasmania	10:00	Aus	EST	# still the standard rules?
-Zone	Queensland	10:00	-	EST	# Queensland - no DST
-Zone	CST		9:30	Aus	CST	# still the standard rules?
-Zone	North		9:30	-	CST	# Northern Territory - no DST
-Zone	WST		8:00	-	WST	# No DST ever, this is simple...
+# Zone	NAME			GMTOFF	RULES	FORMAT
+Zone	Australia/EST		10:00	Aus-Vic	EST # rule change, 1986
+Zone	Australia/Tasmania	10:00	Aus	EST # still the standard rules?
+Zone	Australia/Queensland	10:00	-	EST # Queensland - no DST
+Zone	Australia/CST		9:30	Aus	CST # still the standard rules?
+Zone	Australia/North		9:30	-	CST # Northern Territory--no DST
+Zone	Australia/WST		8:00	-	WST # No DST ever; simple...

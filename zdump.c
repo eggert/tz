@@ -343,16 +343,16 @@ _("%s: use of -v on system with floating time_t other than float or double\n"),
 		*/
 		register time_t	hibit;
 
-		for (hibit = 1; (hibit << 1) != 0; hibit <<= 1)
+		for (hibit = 1; (hibit * 2) != 0; hibit *= 2)
 			continue;
 		absolute_min_time = hibit;
-		absolute_max_time = ~hibit;
+		absolute_max_time = -(hibit + 1);
 	} else {
 		/*
 		** time_t is unsigned.
 		*/
 		absolute_min_time = 0;
-		absolute_max_time = ~0;
+		absolute_max_time = absolute_min_time - 1;
 	}
 }
 

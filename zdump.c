@@ -6,10 +6,16 @@
 static char	sccsid[] = "%W%";
 #endif
 
+#include "time.h"
 #include "tzfile.h"
 
 #ifndef alloc_t
 #define alloc_t	unsigned
+#endif
+
+#ifndef TRUE
+#define TRUE	1
+#define FALSE	0
 #endif
 
 extern char *		asctime();
@@ -55,7 +61,7 @@ char *	argv[];
 				argv[0], argv[i]);
 			exit(1);
 		}
-		show(argv[i], now);
+		show(argv[i], now, FALSE);
 		if (!vflag)
 			continue;
 		if (argv[i][0] == '/')
@@ -89,8 +95,8 @@ char *	argv[];
 				"%s: wild result from calloc\n", argv[0]);
 			exit(1);
 		}
-		if (h.tzh_timecnt > 0)
-			if (fread((char *) tp, sizeof *tp, h.tzh_timecnt,
+		if (h.tzh_timecnt != 0)
+			if (fread((char *) tp, sizeof *tp, (int) h.tzh_timecnt,
 				fp) != h.tzh_timecnt) {
 				(void) fprintf(stderr,
 					"%s: wild result reading %s file\n",
@@ -104,8 +110,8 @@ char *	argv[];
 			exit(1);
 		}
 		for (j = 0; j < h.tzh_timecnt; ++j) {
-			show(argv[i], tp[j] - 1);
-			show(argv[i], tp[j]);
+			show(argv[i], tp[j] - 1, TRUE);
+			show(argv[i], tp[j], TRUE);
 		}
 		free((char *) tp);
 	}

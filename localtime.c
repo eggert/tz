@@ -22,14 +22,9 @@ static char	sccsid[] = "%W%";
 #endif /* !MAXPATHLEN */
 
 extern char *		getenv();
+exter struct tm *	gmtime();
 extern char *		strcpy();
 extern char *		strcat();
-#ifndef USG
-extern char *		sprintf();
-#endif /* !USG */
-
-char *			asctime();
-struct tm *		gmtime();
 
 struct ttinfo {				/* time type information */
 	long		tt_gmtoff;	/* GMT offset in seconds */
@@ -268,13 +263,6 @@ long *	timep;
 	return tmp;
 }
 
-char *
-ctime(timep)
-long *	timep;
-{
-	return asctime(localtime(timep));
-}
-
 /*
 ********************************************************************************
 */
@@ -286,13 +274,7 @@ long *	timep;
 #define SECS_PER_HOUR	(SECS_PER_MIN * MINS_PER_HOUR)
 #define SECS_PER_DAY	((long) SECS_PER_HOUR * HOURS_PER_DAY)
 
-#define TM_SUNDAY	0
-#define TM_MONDAY	1
-#define TM_TUESDAY	2
-#define TM_WEDNESDAY	3
 #define TM_THURSDAY	4
-#define TM_FRIDAY	5
-#define TM_SATURDAY	6
 
 #define TM_YEAR_BASE	1900
 
@@ -314,90 +296,6 @@ static int	year_lengths[2] = {
 */
 
 #define isleap(y) (((y) % 4) == 0)
-
-#ifdef BSD_COMPAT
-dysize(y)
-{
-	return year_lengths[isleap(y)];
-}
-#endif /* BSD_COMPAT */
-
-struct tm *
-gmtime(clock)
-long *	clock;
-{
-	register struct tm *	tmp;
-	register long		days;
-	register long		rem;
-	register int		y;
-	register int		yleap;
-	register int *		ip;
-	static struct tm	tm;
-
-	tmp = &tm;
-	y = EPOCH_YEAR;
-	days = *clock / SECS_PER_DAY;
-	rem = *clock % SECS_PER_DAY;
-	if (rem < 0) {
-		rem = rem + SECS_PER_DAY;
-		--days;
-	}
-	tmp->tm_hour = (int) (rem / SECS_PER_HOUR);
-	rem = rem % SECS_PER_HOUR;
-	tmp->tm_min = (int) (rem / SECS_PER_MIN);
-	tmp->tm_sec = (int) (rem % SECS_PER_MIN);
-	tmp->tm_wday = (int) ((EPOCH_WDAY + days) % DAYS_PER_WEEK);
-	if (tmp->tm_wday < 0)
-		tmp->tm_wday += DAYS_PER_WEEK;
-	y = EPOCH_YEAR;
-	if (days >= 0)
-		for ( ; ; ) {
-			yleap = isleap(y);
-			if (days < (long) year_lengths[yleap])
-				break;
-			++y;
-			days = days - (long) year_lengths[yleap];
-		}
-	else do {
-		--y;
-		yleap = isleap(y);
-		days = days + (long) year_lengths[yleap];
-	} while (days < 0);
-	tmp->tm_year = y - TM_YEAR_BASE;
-	tmp->tm_yday = (int) days;
-	ip = mon_lengths[yleap];
-	for (tmp->tm_mon = 0; days >= (long) ip[tmp->tm_mon]; ++(tmp->tm_mon))
-		days = days - (long) ip[tmp->tm_mon];
-	tmp->tm_mday = (int) (days + 1);
-	tmp->tm_isdst = 0;
-	return tmp;
-}
-
-/*
-** A la X3J11
-*/
-
-char *
-asctime(timeptr)
-register struct tm *	timeptr;
-{
-	static char	wday_name[7][3] = {
-		"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
-	};
-	static char	mon_name[12][3] = {
-		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
-		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-	};
-	static char	result[26];
-
-	(void) sprintf(result, "%.3s %.3s%3d %.2d:%.2d:%.2d %d\n",
-		wday_name[timeptr->tm_wday],
-		mon_name[timeptr->tm_mon],
-		timeptr->tm_mday, timeptr->tm_hour,
-		timeptr->tm_min, timeptr->tm_sec,
-		TM_YEAR_BASE + timeptr->tm_year);
-	return result;
-}
 
 time_t
 mktime(timeptr)

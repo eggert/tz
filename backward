@@ -3,6 +3,7 @@
 # This file provides links between current names for time zones
 # and their old names.  Many names changed in late 1993.
 
+Link	America/St_Thomas	America/Virgin
 Link	Australia/Canberra	Australia/ACT
 Link	Australia/Lord_Howe	Australia/LHI
 Link	Australia/Sydney	Australia/NSW
@@ -51,6 +52,7 @@ Link	America/Mexico_City	Mexico/General
 Link	America/Shiprock	Navajo
 Link	Pacific/Auckland	NZ
 Link	Pacific/Chatham		NZ-CHAT
+Link	Pacific/Pago_Pago	Pacific/Samoa
 Link	Asia/Shanghai		PRC
 Link	Europe/Warsaw		Poland
 Link	Europe/Lisbon		Portugal
@@ -70,7 +72,7 @@ Link	America/Knox_IN		US/Indiana-Starke
 Link	America/Detroit		US/Michigan
 Link	America/Denver		US/Mountain
 Link	America/Los_Angeles	US/Pacific
-Link	Pacific/Samoa		US/Samoa
+Link	Pacific/Pago_Pago	US/Samoa
 Link	Etc/UTC			UTC
 Link	Etc/Universal		Universal
 Link	Europe/Moscow		W-SU

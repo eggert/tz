@@ -907,7 +907,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 
 # From Guy Harris:
 # Rules are from the Official Airline Guide, Worldwide Edition, for 1987.
-# Rules prior to 1987 are unknown.
+# Rules [before] 1987 are unknown.
 # The comments in the OAG say "Only Ensenada, Mexicale, San Felipe and Tijuana
 # observe DST."  This is presumably Baja California Norte, above 28th parallel,
 # as listed there; [there is also] "Baja California Sur and N. Pacific

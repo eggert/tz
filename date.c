@@ -160,10 +160,9 @@ extern int		logwtmp();
 extern time_t		mktime();
 extern char *		optarg;
 extern int		optind;
+extern char *		strchr();
 extern time_t		time();
 extern char *		tzname[2];
-
-static time_t		now;
 
 static int		retval = EXIT_SUCCESS;
 
@@ -197,6 +196,7 @@ char *	argv[];
 	register char *		username;
 	register int		ch;
 	register int		convtype;
+	time_t			now;
 	time_t			t;
 #ifdef DST_NONE
 	static struct timeval	tv;	/* static so tv_usec is 0 */
@@ -366,9 +366,8 @@ char *	argv[];
 #endif /* defined USG_INPUT */
 		if (t == -1) {
 			/*
-			** Better diagnosis needed here.
 			** Utterly nonsensical time,
-			** or time that falls in a DST transition hole?
+			** or time that falls in a DST transition hole.
 			*/
 			wildinput("time", value,
 				"can't be converted to time_t");
@@ -525,6 +524,7 @@ display(format)
 char *	format;
 {
 	struct tm	tm;
+	time_t		now;
 
 	(void) time(&now);
 	tm = *localtime(&now);
@@ -820,14 +820,7 @@ time_t	t;
 **	convert user's input into a time_t.
 */
 
-static int
-pair(cp)
-register char * cp;
-{
-	if (!isdigit(cp[0]) || !isdigit(cp[1]))
-		return -1;
-	return (cp[0] - '0') * 10 + cp[1] - '0';
-}
+#define	ATOI2(ar)	(ar[0] - '0') * 10 + (ar[1] - '0'); ar += 2;
 
 #ifndef USG_INPUT
 /*ARGSUSED*/
@@ -839,65 +832,59 @@ int		dousg;
 time_t		t;
 {
 	register char *	cp;
+	register char *	endp;
 	register int	i;
 	register int	year;
 	struct tm	tm, outtm;
 	time_t		outt;
-	int		pairs[6];
 
 	cp = format;
 	tm = *localtime(&t);
-	tm.tm_isdst = -1;
-	tm.tm_sec = 0;
-	for (i = 0; ; ++i) {
-		if (*cp == '\0')
-			break;
-		if (*cp == '.') {
-			++cp;
-			tm.tm_sec = pair(cp);
-			if (tm.tm_sec < 0)
-				return -1;
-			if (*(cp + 2) != '\0')
-				return -1;
-			break;
-		}
-		if (i >= (sizeof pairs / sizeof pairs[0]))
-			return -1;
-		pairs[i] = pair(cp);
-		if (pairs[i] < 0)
-			return -1;
-		cp += 2;
+	endp = strchr(format, '.');
+	if (endp == NULL) {
+		endp = strchr(format, '\0');
+		tm.tm_sec = 0;
+	} else {
+		cp = endp + 1;
+		if (strlen(cp) != 2)
+			wildinput("time", format,
+				"seconds part is not two characters");
+		if (!isdigit(cp[1]) || !isdigit(cp[2]))
+			wildinput("time", format,
+				"seconds part contains a nondigit");
+		tm.tm_sec = ATOI2(cp);
 	}
-	switch (i) {
+	for (cp = format; cp < endp; ++cp)
+		if (!isdigit(*cp))
+			wildinput("time", format,
+				"main part contains a nondigit");
+	cp = format;
+	switch (endp - cp) {
 		default:
-			return -1;
-		case 2:	/* hhmm */
-			tm.tm_hour = pairs[0];
-			tm.tm_min = pairs[1];
+			wildinput("time", format, "main part is wrong length");
+		case 8:	/* mmddhhmm */
+			tm.tm_mon = ATOI2(cp);
+			--tm.tm_mon;
+			/* fall through to. . . */
+		case 6:	/* ddhhmm */
+			tm.tm_mday = ATOI2(cp);
+			/* fall through to. . . */
+		case 4:	/* hhmm */
+			tm.tm_hour = ATOI2(cp);
+			tm.tm_min = ATOI2(cp);
 			break;
-		case 3:	/* ddhhmm */
-			tm.tm_mday = pairs[0];
-			tm.tm_hour = pairs[1];
-			tm.tm_min = pairs[2];
-			break;
-		case 4:	/* mmddhhmm */
-			tm.tm_mon = pairs[0] - 1;
-			tm.tm_mday = pairs[1];
-			tm.tm_hour = pairs[2];
-			tm.tm_min = pairs[3];
-			break;
-
-		case 5:	/* Ulp! yymmddhhmm or mmddhhmmyy */
+		case 10:	/* Ulp! yymmddhhmm or mmddhhmmyy */
 #ifdef USG_INPUT
 			if (dousg) {
-				tm.tm_mon = pairs[0] - 1;
-				tm.tm_mday = pairs[1];
-				tm.tm_hour = pairs[2];
-				tm.tm_min = pairs[3];
+				tm.tm_mon = ATOI2(cp);
+				--tm.tm_mon;
+				tm.tm_mday = ATOI2(cp);
+				tm.tm_hour = ATOI2(cp);
+				tm.tm_min = ATOI2(cp);
 
 				year = tm.tm_year + TM_YEAR_BASE;
 				year -= year % 100;
-				year = year + pairs[4];
+				year += ATOI2(cp);
 				tm.tm_year = year - TM_YEAR_BASE;
 
 				break;
@@ -905,24 +892,29 @@ time_t		t;
 #endif /* defined USG_INPUT */
 			year = tm.tm_year + TM_YEAR_BASE;
 			year -= year % 100;
-			year = year + pairs[0];
+			year += ATOI2(cp);
 			tm.tm_year = year - TM_YEAR_BASE;
 
-			tm.tm_mon = pairs[1] - 1;
-			tm.tm_mday = pairs[2];
-			tm.tm_hour = pairs[3];
-			tm.tm_min = pairs[4];
+			tm.tm_mon = ATOI2(cp);
+			--tm.tm_mon;
+			tm.tm_mday = ATOI2(cp);
+			tm.tm_hour = ATOI2(cp);
+			tm.tm_min = ATOI2(cp);
 
 			break;
-		case 6:	/* yyyymmddhhmm--BSD finally wins in the 21st century */
-			year = pairs[0] * 100 + pairs[1];
+		case 12:	/* yyyymmddhhmm--BSD wins in the 21st century */
+			year = ATOI2(cp);
+			year *= 100;
+			year += ATOI2(cp);
 			tm.tm_year = year - TM_YEAR_BASE;
-			tm.tm_mon = pairs[2] - 1;
-			tm.tm_mday = pairs[3];
-			tm.tm_hour = pairs[4];
-			tm.tm_min = pairs[5];
+			tm.tm_mon = ATOI2(cp);
+			--tm.tm_mon;
+			tm.tm_mday = ATOI2(cp);
+			tm.tm_hour = ATOI2(cp);
+			tm.tm_min = ATOI2(cp);
 			break;
 	}
+	tm.tm_isdst = -1;
 	outtm = tm;
 	outt = mktime(&outtm);
 	return (comptm(&tm, &outtm) == 0) ? outt : -1;

@@ -585,9 +585,6 @@ const char * const	tofile;
 #define INT_MIN	((int) ~(((unsigned)~0)>>1))
 #endif /* !defined INT_MIN */
 
-#define TIME_T_SIGNED (((time_t) -1) < 0)
-#define TIME_T_BIT (sizeof (time_t) * CHAR_BIT)
-
 /*
 ** The tz file format currently allows at most 32-bit quantities.
 ** This restriction should be removed before signed 32-bit values
@@ -596,13 +593,13 @@ const char * const	tofile;
 */
 
 #define MAX_BITS_IN_FILE	32
-#define TIME_T_BITS_IN_FILE	((TIME_T_BIT < MAX_BITS_IN_FILE) ? \
-					TIME_T_BIT : MAX_BITS_IN_FILE)
+#define TIME_T_BITS_IN_FILE	((TYPE_BIT(time_t) < MAX_BITS_IN_FILE) ? \
+					TYPE_BIT(time_t) : MAX_BITS_IN_FILE)
 
 static void
 setboundaries P((void))
 {
-	if (TIME_T_SIGNED) {
+	if (TYPE_SIGNED(time_t)) {
 		min_time = ~ (time_t) 0;
 		min_time <<= TIME_T_BITS_IN_FILE - 1;
 		max_time = ~ (time_t) 0 - min_time;
@@ -1050,7 +1047,7 @@ const int		nfields;
 			return;
 	}
 	dayoff = oadd(dayoff, eitol(day - 1));
-	if (dayoff < 0 && !TIME_T_SIGNED) {
+	if (dayoff < 0 && !TYPE_SIGNED(time_t)) {
 		error("time before zero");
 		return;
 	}
@@ -1926,7 +1923,7 @@ register const int			wantedy;
 			(void) exit(EXIT_FAILURE);
 		}
 	}
-	if (dayoff < 0 && !TIME_T_SIGNED)
+	if (dayoff < 0 && !TYPE_SIGNED(time_t))
 		return min_time;
 	t = (time_t) dayoff * SECSPERDAY;
 	/*

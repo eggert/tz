@@ -112,7 +112,6 @@ static const char *	getnum P((const char * strp, int * nump, int min,
 static const char *	getsecs P((const char * strp, long * secsp));
 static const char *	getoffset P((const char * strp, long * offsetp));
 static const char *	getrule P((const char * strp, struct rule * rulep));
-static void		gmtbuiltin P((struct state * sp));
 static void		gmtload P((struct state * sp));
 static void		gmtsub P((const time_t * timep, long offset,
 				struct tm * tmp));
@@ -812,17 +811,6 @@ register struct state * const	sp;
 }
 
 static void
-gmtbuiltin(sp)
-register struct state * const	sp;
-{
-	sp->leapcnt = 0;		/* so, we're off a little */
-	sp->timecnt = 0;
-	sp->ttis[0].tt_gmtoff = 0;
-	sp->ttis[0].tt_abbrind = 0;
-	(void) strcpy(sp->chars, GMT);
-}
-
-static void
 gmtload(sp)
 struct state * const	sp;
 {
@@ -846,9 +834,16 @@ tzset()
 	}
 #endif /* defined ALL_STATE */
 	name = getenv("TZ");
-	if (name != NULL && *name == '\0')
-		gmtbuiltin(lclptr);	/* built-in GMT by request */
-	else if (tzload(name, lclptr) != 0)
+	if (name != NULL && *name == '\0') {
+		/*
+		** User wants it fast rather than right.
+		*/
+		lclptr->leapcnt = 0;		/* so, we're off a little */
+		lclptr->timecnt = 0;
+		lclptr->ttis[0].tt_gmtoff = 0;
+		lclptr->ttis[0].tt_abbrind = 0;
+		(void) strcpy(lclptr->chars, GMT);
+	} else if (tzload(name, lclptr) != 0)
 		if (name == NULL || name[0] == ':' ||
 			tzparse(name, lclptr) != 0)
 				gmtload(lclptr);

@@ -51,9 +51,10 @@ the code is in the file <samp>tzcode<var>C</var>.tar.gz</samp>,
 where <samp><var>C</var></samp> is the code's version;
 similarly, the data are in <samp>tzdata<var>D</var>.tar.gz</samp>,
 where <samp><var>D</var></samp> is the data's version.
-The code lets you compile the text data into time zone files, one for
-each location.  It also lets you read a compiled time zone file and
-interpret time stamps for that location.</p>
+The code lets you compile the <samp>tz</samp> source files into
+machine-readable binary files, one for each location.  It also lets
+you read a <samp>tz</samp> binary file and interpret time stamps for that
+location.</p>
 <p>
 The data are by no means authoritative. If you find errors, please
 send changes to the <a href="mailto:tz@elsie.nci.nih.gov">time zone
@@ -92,17 +93,36 @@ holidays.</li>
 is a web interface to a time zone database derived from
 <samp>tz</samp>'s.</li>
 </ul>
-<h2>Other time zone file readers</h2>
+<h2>Other <samp>tz</samp> compilers</h2>
+<ul>
+<li><a href="http://www.karuna.freeserve.co.uk/vzic.tgz">Vzic</a>
+compiles <samp>tz</samp> source into VTIMEZONE text as specified by
+the <a href="ftp://ftp.isi.edu/in-notes/rfc2445.txt">iCalendar</a>
+specification published by the <a
+href="http://www.ietf.org/html.charters/calsch-charter.html">IETF
+Calendaring and Scheduling Working Group</a>. Vzic is freely
+available under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU
+General Public License (GPL)</a>.</li>
+<li>Possible XML schemata for the <samp>tz</samp> data include <a
+href="http://www.w3.org/2000/01/foo">one</a> sketched out by <a
+href="http://www.w3.org/People/Berners-Lee/">Tim Berners-Lee</a> and
+<a
+href="http://developer.iplanet.com/docs/wpapers/calendar/ietf.txt">another</a>
+used by the <a
+href="http://www.iplanet.com/products/iplanet_calendar/">iPlanet
+Calendar Server</a>.</li>
+</ul>
+<h2>Other <samp>tz</samp> binary file readers</h2>
 <ul>
 <li>The <a href="http://www.gnu.org/software/libc/">GNU C Library</a>
 has an independent, thread-safe implementation of
-a time zone file reader that is compatible with <samp>tz</samp>.
+a <samp>tz</samp> binary file reader.
 This library is freely available under the
 <a href="http://www.gnu.org/copyleft/lesser.html">
 GNU Lesser General Public License (LGPL)</a>,
 and is widely used in GNU/Linux systems.</li>
 <li><a href="http://www.bmsi.com/java/#TZ">ZoneInfo.java</a>
-is a time zone file reader written in Java.
+is a <samp>tz</samp> binary file reader written in Java.
 It is freely available under the GNU LGPL.</li>
 </ul>
 <h2>Other <samp>tz</samp>-based time zone conversion software</h2>
@@ -164,9 +184,7 @@ currently observes a different time.</li>
 <li>Manifold.net's <a
 href="http://www.manifold.net/download/freemaps.html">Free Maps and
 GIS Data</a> includes a Manifold-format map of world time zone
-boundaries distributed under the <a
-href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License
-(GPL)</a>. The GeoCommunity's <a
+boundaries distributed under the GPL. The GeoCommunity's <a
 href="http://software.geocomm.com/data/intl_timezones.html">International
 Time Zones</a> publishes the same data in other formats.</li>
 <li>The US Geological Survey's National Atlas of the United States
@@ -186,6 +204,9 @@ Time of Internet</a>
 contains good descriptions of Time Zones and daylight saving time,
 with diagrams.
 The time zone map is out of date, however.</li>
+<li><a href="http://www.phys.uu.nl/~vgent/idl/idl.htm">A History of
+the International Date Line</a> tells the story of the most important
+time zone boundary.</li>
 <li>A few countries have well-documented histories of legal time.
 <dl>
 <dt>Australia</dt>
@@ -211,6 +232,10 @@ hreflang="he">announcements (in Hebrew)</a>.</dd>
 Congress has published a <a
 href="http://www.cddhcu.gob.mx/bibliot/publica/inveyana/polisoc/horver/"
 hreflang="es">history of Mexican local time (in Spanish)</a>.</dd>
+<dt>Netherlands</dt>
+<dd><a href="http://www.phys.uu.nl/~vgent/wettijd/wettijd.htm"
+hreflang="nl">De wettelijke tijdregeling in Nederland (in Dutch)</a>
+covers the history of local time in the Netherlands from ancient times.</dd>
 <dt>United Kingdom</dt>
 <dd><a
 href="http://student.cusu.cam.ac.uk/~jsm28/british-time/">History of

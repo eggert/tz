@@ -63,6 +63,10 @@ static char	elsieid[] = "%W%";
 #define DAYSPERNYEAR	365
 #endif /* !defined DAYSPERNYEAR */
 
+#ifndef isleap
+#define isleap(y) ((((y) % 4) == 0 && ((y) % 100) != 0) || ((y) % 400) == 0)
+#endif /* !defined isleap */
+
 extern char **	environ;
 extern int	getopt();
 extern char *	optarg;
@@ -79,7 +83,6 @@ extern void	perror();
 static char *	abbr();
 static long	delta();
 static void	hunt();
-static int	leapyearsbeforeyear();
 static int	longest;
 static char *	progname;
 static void	show();
@@ -113,13 +116,15 @@ char *	argv[];
 			argv[0], argv[0]);
 		(void) exit(EXIT_FAILURE);
 	}
-	if (cutoff != NULL)
+	if (cutoff != NULL) {
+		int	y;
+
 		cutyear = atoi(cutoff);
-	/*
-	** VERY approximate.
-	*/
-	cuttime = (long) (cutyear - EPOCH_YEAR) *
-		SECSPERHOUR * HOURSPERDAY * DAYSPERNYEAR;
+		cuttime = 0;
+		for (y = EPOCH_YEAR; y < cutyear; ++y)
+			cuttime += DAYSPERNYEAR + isleap(y);
+		cuttime *= SECSPERHOUR * HOURSPERDAY;
+	}
 	(void) time(&now);
 	longest = 0;
 	for (i = optind; i < argc; ++i)
@@ -234,31 +239,19 @@ time_t	hit;
 	show(name, hit, TRUE);
 }
 
-/*
-** How many putative leap days before the start of year y?
-*/
-
-static int
-leapyearsbeforeyear(y)
-int	y;
-{
-	return (y - 1) / 4 - (y - 1) / 100 + (y - 1) / 400;
-}
-
-
 static long
 delta(newp, oldp)
 struct tm *	newp;
 struct tm *	oldp;
 {
 	long	result;
+	int	tmy;
 
-	result = newp->tm_year - oldp->tm_year;
-	if (result != 0) {
-		result *= DAYSPERNYEAR;
-		result += leapyearsbeforeyear(newp->tm_year + TM_YEAR_BASE) -
-			leapyearsbeforeyear(oldp->tm_year + TM_YEAR_BASE);
-	}
+	if (newp->tm_year < oldp->tm_year)
+		return -delta(oldp, newp);
+	result = 0;
+	for (tmy = oldp->tm_year; tmy < newp->tm_year; ++tmy)
+		result += DAYSPERNYEAR + isleap(tmy + TM_YEAR_BASE);
 	result += newp->tm_yday - oldp->tm_yday;
 	result *= HOURSPERDAY;
 	result += newp->tm_hour - oldp->tm_hour;

@@ -119,6 +119,39 @@ Zone	Iran		3:30	Iran		I%sT
 #    [**] actually Saturday night as the Jewish day commences at nightfall.
 #    [***] the Jewish Lunar New Year.
 
+# From Paul Eggert (June 16, 1993).  Ed Reingold and I converted the above
+# rules into the following Emacs lisp code.  It requires GNU Emacs 19.13
+# or later.  If you run the code, the Zion rules will be inserted into
+# your Emacs buffer.  Reference: ``Calendrical Calculations'' by Nachum
+# Dershowitz and Edward M. Reingold, Software--Practice and Experience,
+# Volume 20, Number 9 (September, 1990), pages 899-928.
+#
+# (calendar-for-loop
+#  year from 1989 to 2037 do
+#  (let ((dst-starts
+#	  (calendar-gregorian-from-absolute
+#	   (calendar-dayname-on-or-before
+#	    0
+#	    (calendar-absolute-from-hebrew
+#	     (list 1 28 (+ year 3760))))))
+#	 (dst-ends
+#	  (calendar-gregorian-from-absolute
+#	  (calendar-dayname-on-or-before
+#	   0
+#	   (- (calendar-absolute-from-hebrew (list 7 1 (+ year 3761))) 3)))))
+#    (insert (format "Rule\tZion\t%d\tonly\t-\t%3s\t%2d\t0:00\t1:00\tD\n"
+#		     year
+#		     (substring
+#		      (calendar-month-name (extract-calendar-month dst-starts))
+#		     0 3)
+#		     (extract-calendar-day dst-starts)))
+#    (insert (format "Rule\tZion\t%d\tonly\t-\t%3s\t%2d\t0:00\t0:00\tS\n"
+#		     year
+#		     (substring
+#		      (calendar-month-name (extract-calendar-month dst-ends))
+#		     0 3)
+#		     (extract-calendar-day dst-ends)))))
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Zion	1989	only	-	Apr	30	0:00	1:00	D
 Rule	Zion	1989	only	-	Sep	24	0:00	0:00	S
@@ -162,6 +195,62 @@ Rule	Zion	2008	only	-	Apr	27	0:00	1:00	D
 Rule	Zion	2008	only	-	Sep	21	0:00	0:00	S
 Rule	Zion	2009	only	-	Apr	19	0:00	1:00	D
 Rule	Zion	2009	only	-	Sep	13	0:00	0:00	S
+Rule	Zion	2010	only	-	Apr	11	0:00	1:00	D
+Rule	Zion	2010	only	-	Sep	 5	0:00	0:00	S
+Rule	Zion	2011	only	-	May	 1	0:00	1:00	D
+Rule	Zion	2011	only	-	Sep	25	0:00	0:00	S
+Rule	Zion	2012	only	-	Apr	15	0:00	1:00	D
+Rule	Zion	2012	only	-	Sep	 9	0:00	0:00	S
+Rule	Zion	2013	only	-	Apr	 7	0:00	1:00	D
+Rule	Zion	2013	only	-	Sep	 1	0:00	0:00	S
+Rule	Zion	2014	only	-	Apr	27	0:00	1:00	D
+Rule	Zion	2014	only	-	Sep	21	0:00	0:00	S
+Rule	Zion	2015	only	-	Apr	12	0:00	1:00	D
+Rule	Zion	2015	only	-	Sep	 6	0:00	0:00	S
+Rule	Zion	2016	only	-	May	 1	0:00	1:00	D
+Rule	Zion	2016	only	-	Sep	25	0:00	0:00	S
+Rule	Zion	2017	only	-	Apr	23	0:00	1:00	D
+Rule	Zion	2017	only	-	Sep	17	0:00	0:00	S
+Rule	Zion	2018	only	-	Apr	 8	0:00	1:00	D
+Rule	Zion	2018	only	-	Sep	 2	0:00	0:00	S
+Rule	Zion	2019	only	-	Apr	28	0:00	1:00	D
+Rule	Zion	2019	only	-	Sep	22	0:00	0:00	S
+Rule	Zion	2020	only	-	Apr	19	0:00	1:00	D
+Rule	Zion	2020	only	-	Sep	13	0:00	0:00	S
+Rule	Zion	2021	only	-	Apr	 4	0:00	1:00	D
+Rule	Zion	2021	only	-	Aug	29	0:00	0:00	S
+Rule	Zion	2022	only	-	Apr	24	0:00	1:00	D
+Rule	Zion	2022	only	-	Sep	18	0:00	0:00	S
+Rule	Zion	2023	only	-	Apr	16	0:00	1:00	D
+Rule	Zion	2023	only	-	Sep	10	0:00	0:00	S
+Rule	Zion	2024	only	-	May	 5	0:00	1:00	D
+Rule	Zion	2024	only	-	Sep	29	0:00	0:00	S
+Rule	Zion	2025	only	-	Apr	20	0:00	1:00	D
+Rule	Zion	2025	only	-	Sep	14	0:00	0:00	S
+Rule	Zion	2026	only	-	Apr	12	0:00	1:00	D
+Rule	Zion	2026	only	-	Sep	 6	0:00	0:00	S
+Rule	Zion	2027	only	-	May	 2	0:00	1:00	D
+Rule	Zion	2027	only	-	Sep	26	0:00	0:00	S
+Rule	Zion	2028	only	-	Apr	23	0:00	1:00	D
+Rule	Zion	2028	only	-	Sep	17	0:00	0:00	S
+Rule	Zion	2029	only	-	Apr	 8	0:00	1:00	D
+Rule	Zion	2029	only	-	Sep	 2	0:00	0:00	S
+Rule	Zion	2030	only	-	Apr	28	0:00	1:00	D
+Rule	Zion	2030	only	-	Sep	22	0:00	0:00	S
+Rule	Zion	2031	only	-	Apr	20	0:00	1:00	D
+Rule	Zion	2031	only	-	Sep	14	0:00	0:00	S
+Rule	Zion	2032	only	-	Apr	 4	0:00	1:00	D
+Rule	Zion	2032	only	-	Aug	29	0:00	0:00	S
+Rule	Zion	2033	only	-	Apr	24	0:00	1:00	D
+Rule	Zion	2033	only	-	Sep	18	0:00	0:00	S
+Rule	Zion	2034	only	-	Apr	16	0:00	1:00	D
+Rule	Zion	2034	only	-	Sep	10	0:00	0:00	S
+Rule	Zion	2035	only	-	May	 6	0:00	1:00	D
+Rule	Zion	2035	only	-	Sep	30	0:00	0:00	S
+Rule	Zion	2036	only	-	Apr	20	0:00	1:00	D
+Rule	Zion	2036	only	-	Sep	14	0:00	0:00	S
+Rule	Zion	2037	only	-	Apr	12	0:00	1:00	D
+Rule	Zion	2037	only	-	Sep	 6	0:00	0:00	S
 
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 Zone	Israel		2:00	Zion		I%sT

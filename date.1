@@ -16,7 +16,7 @@ dsttype
 .B \-t
 minutes-west
 ] [
-\fB\-a \fR[\fB+\fR|\fB-]\fIsss\fR[\fB.\fIfff\fR]
+\fB\-a \fR[\fB+\fR|\fB-]\fIsss\fB.\fIfff\fR
 ] [
 .BI + format
 ] [
@@ -141,7 +141,10 @@ command line.
 (The kernel-stored DST type is used mostly by ``old'' binaries.)
 .TP
 .BI "\-a " adjustment
-Slowly change the time forward (or backward) by the amount given with the
-.I adjustment
+Slowly change the time forward (or backward) by the number of seconds
+(and fractions thereof) specified in the
+.I adjustment\^
 argument.
+Either the seconds part or the fractions part of the argument (but not both)
+may be omitted.
 .. %W%

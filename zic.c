@@ -441,11 +441,8 @@ char *	argv[];
 		perror(directory);
 		exit(1);
 	}
-	/*
-	** Need some checking below to avoid accidentally unlinking directories.
-	*/
 	for (i = 0; i < nlinks; ++i) {
-		(void) unlink(links[i].l_to);
+		nondunlink(links[i].l_to);
 		if (link(links[i].l_from, links[i].l_to) != 0) {
 			(void) fprintf(stderr, "%s: Can't link %s to ",
 				progname, links[i].l_from);
@@ -454,7 +451,7 @@ char *	argv[];
 		}
 	}
 	if (localtime != NULL) {
-		(void) unlink(TZDEFAULT);
+		nondunlink(TZDEFAULT);
 		if (link(localtime, TZDEFAULT) != 0) {
 			(void) fprintf(stderr, "%s: Can't link %s to ",
 				progname, localtime);
@@ -463,6 +460,26 @@ char *	argv[];
 		}
 	}
 	exit((errors == 0) ? 0 : 1);
+}
+
+/*
+** We get to be careful here since there's a fair chance of root running us.
+*/
+
+#include "sys/types.h"
+#include "sys/stat.h"
+
+static
+nondunlink(name)
+char *	name;
+{
+	struct stat	s;
+
+	if (stat(name, &s) != 0)
+		return;
+	if ((s.st_mode & S_IFMT) == S_IFDIR)
+		return;
+	(void) unlink(name);
 }
 
 /*

@@ -10,7 +10,7 @@
 # If your host lacks the Korn shell,
 # you can use either of the following free programs instead:
 #
-#	<a href=ftp://ftp.gnu.ai.mit.edu/pub/gnu/>
+#	<a href=ftp://ftp.gnu.org/pub/gnu/>
 #	Bourne-Again shell (bash)
 #	</a>
 #
@@ -22,7 +22,7 @@
 # If your host lacks awk, or has an old awk that does not conform to Posix.2,
 # you can use either of the following free programs instead:
 #
-#	<a href=ftp://ftp.gnu.ai.mit.edu/pub/gnu/>
+#	<a href=ftp://ftp.gnu.org/pub/gnu/>
 #	GNU awk (gawk)
 #	</a>
 #

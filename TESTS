@@ -10,7 +10,7 @@ cd try
 
 make date right_only TZDIR=zoneinfo CFLAGS="-g -DEBUG $*"
 
-set -x
+set -v
 
 # US/Eastern tests
 
@@ -35,7 +35,7 @@ export TZ
 # Far future times
 ./date 200103022007.44
 ./date 210103022007.44
-# Far past time
+# Far past time--only legal as USG-style
 ./date 0103022007.44
 # Ambiguous, BSD vs. USG
 ./date 0203040506
@@ -67,8 +67,12 @@ export TZ
 # Right leap second
 ./date 198712311859.60
 # Mideast Madness
+# Should get an "ambiguous time" message
 TZ=Mideast/Riyadh89 ./date 198906011200
+# Should get a "spring forward" message
+TZ=Mideast/Riyadh89 ./date 198903011159.59
 # British Balminess
+# Should get an "ambiguous time" message
 TZ=GB-Eire ./date 197110310030
 # Wrong content
 ./date ""

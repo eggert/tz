@@ -111,6 +111,7 @@ _fmt(format, t)
 				_fmt("%a %b %e %X %Y\n", t);
 				continue;
 			case 'D':
+			case 'x':
 				_fmt("%m/%d/%y", t);
 				continue;
 			case 'd':
@@ -180,9 +181,6 @@ _fmt(format, t)
 				continue;
 			case 'w':
 				_conv(t->tm_wday, 1, '0');
-				continue;
-			case 'x':
-				_fmt("%D", t);
 				continue;
 			case 'y':
 				_conv((t->tm_year + TM_YEAR_BASE) % 100,

@@ -15,8 +15,8 @@ LOCALTIME=	Factory
 # for handling POSIX-style time zone environment variables,
 # change the line below (after finding the zone you want in the
 # time zone files, or adding it to a time zone file).
-# (When a POSIX-style environment variable is handled, the rules in the template
-# file are used to determine "spring forward" and "fall back" days and
+# (When a POSIX-style environment variable is handled, the rules in the
+# template file are used to determine "spring forward" and "fall back" days and
 # times; the environment variable itself specifies GMT offsets of standard and
 # summer time.)
 # Alternately, if you discover you've got the wrong time zone, you can just
@@ -86,7 +86,7 @@ YEARISTYPE=	./yearistype
 #  -DHAVE_SETTIMEOFDAY=2 if settimeofday uses 2nd arg (4.3BSD)
 #  -DHAVE_SETTIMEOFDAY=3 if settimeofday ignores 2nd arg (4.4BSD)
 #  -DLOCALE_HOME=\"path\" if locales are in "path", not "/usr/lib/locale"
-#  -DHAVE_UNISTD_H=0 if your compiler lacks a "unistd.h" file (Microsoft C++ 7?)
+#  -DHAVE_UNISTD_H=0 if your compiler lacks a "unistd.h" (Microsoft C++ 7?)
 #  $(GCC_DEBUG_FLAGS) if you are using GCC and want lots of checking
 #
 GCC_DEBUG_FLAGS = -Dlint -g -O -fno-common \
@@ -187,7 +187,7 @@ GCC_DEBUG_FLAGS = -Dlint -g -O -fno-common \
 
 CFLAGS=
 
-################################################################################
+###############################################################################
 
 cc=		cc
 CC=		$(cc) -DTZDIR=\"$(TZDIR)\"

@@ -44,38 +44,38 @@ static char		isset;
 
 char *			tz_abbr;	/* set by localtime; available to all */
 
-/*
-** Not available west of the Rockies. . .
-*/
+#define	GETSHORT(val, p) { \
+	register int shortval; \
+	shortval = *p++; \
+	shortval = (shortval << 8) | *p++; \
+	val = shortval; \
+	}
 
-static char *
-memcpy(to, from, n)
-char *	to;
-char *	from;
-{
-	register int	i;
-
-	for (i = 0; i < n; ++i)
-		to[i] = from[i];
-	return to;
-}
-
+#define GETLONG(val, p) { \
+	register long longval; \
+	longval = *p++; \
+	longval = (longval << 8) | *p++; \
+	longval = (longval << 8) | *p++; \
+	longval = (longval << 8) | *p++; \
+	val = longval; \
+	}
+	
 static
 tzload(tzname, sp)
 register char *		tzname;
 register struct state *	sp;
 {
-	register char *	p;
-	register int	fid;
 	register int	i;
-	register int	doaccess;
+	register int	fid;
 
 	if (tzname == 0 && (tzname = TZDEFAULT) == 0)
 		return -1;
-	doaccess = tzname[0] == '/';
 	{
-		char	fullname[MAXPATHLEN];
+		register char *	p;
+		register int	doaccess;
+		char		fullname[MAXPATHLEN];
 
+		doaccess = tzname[0] == '/';
 		if (!doaccess) {
 			if ((p = TZDIR) == 0)
 				return -1;
@@ -98,46 +98,50 @@ register struct state *	sp;
 			return -1;
 	}
 	{
-		char	buf[sizeof s];
+		register unsigned char *	p;
+		register struct ttinfo *	ttisp;
+		unsigned char			buf[sizeof s];
 
 		p = buf;
-		i = read(fid, p, sizeof buf);
+		i = read(fid, (char *) p, sizeof buf);
 		if (close(fid) != 0 || i < sizeof sp->h)
 			return -1;
-		(void) memcpy((char *) &sp->h, p, sizeof sp->h);
+		p += sizeof h.tzh_reserved;
+		GETSHORT(sp->h.tzh_timecnt, p);
+		GETSHORT(sp->h.tzh_typecnt, p);
+		GETSHORT(sp->h.tzh_charcnt, p);
 		if (sp->h.tzh_timecnt > TZ_MAX_TIMES ||
 			sp->h.tzh_typecnt == 0 ||
 			sp->h.tzh_typecnt > TZ_MAX_TYPES ||
 			sp->h.tzh_charcnt > TZ_MAX_CHARS)
 				return -1;
-		if (i < sizeof sp->h +
-			sp->h.tzh_timecnt *
-			(sizeof sp->ats[0] + sizeof sp->types[0]) +
-			sp->h.tzh_typecnt * sizeof sp->ttis[0] +
-			sp->h.tzh_charcnt * sizeof sp->chars[0])
+		if (i < sizeof h.tzh_reserved + 3 * sizeof (short) +
+			sp->h.tzh_timecnt * (sizeof (long) + sizeof (char)) +
+			sp->h.tzh_typecnt * (sizeof (long) + 2*sizeof (char)) +
+			sp->h.tzh_charcnt * sizeof (char))
 				return -1;
-		p += sizeof sp->h;
-		if ((i = sp->h.tzh_timecnt) > 0) {
-			(void) memcpy((char *) sp->ats, p,
-				i * sizeof sp->ats[0]);
-			p += i * sizeof sp->ats[0];
-			(void) memcpy((char *) sp->types, p,
-				i * sizeof sp->types[0]);
-			p += i * sizeof sp->types[0];
+		for (i = 0; i < sp->h.tzh_timecnt; ++i)
+			GETLONG(sp->ats[i], p);
+		for (i = 0; i < sp->h.tzh_timecnt; ++i)
+			sp->types[i] = *p++;
+		for (i = 0, ttisp = ttis; i < sp->h.tzh_typecnt; ++i, ++ttisp) {
+			GETLONG(ttisp->tt_gmtoff, p);
+			ttisp->tt_abbrind = *p++;
+			ttisp->tt_abbrind = *p++;
 		}
-		if ((i = sp->h.tzh_typecnt) > 0) {
-			(void) memcpy((char *) sp->ttis, p,
-				i * sizeof sp->ttis[0]);
-			p += i * sizeof sp->ttis[0];
-		}
-		if ((i = sp->h.tzh_charcnt) > 0)
-			(void) memcpy((char *) sp->chars, p,
-				i * sizeof sp->chars[0]);
+		for (i = 0; i < sp->h.tzh_charcnt; ++i)
+			sp->chars[i] = *p++;
+		sp->chars[sp->h.tzh_charcnt] = '\0';	/* ensure '\0' at end */
 	}
-	sp->chars[sp->h.tzh_charcnt] = '\0';	/* ensure '\0' at end */
+	/*
+	** Check that all the local time type indices are valid.
+	*/
 	for (i = 0; i < sp->h.tzh_timecnt; ++i)
 		if (sp->types[i] >= sp->h.tzh_typecnt)
 			return -1;
+	/*
+	** Check that all the abbreviation indices are valid.
+	*/
 	for (i = 0; i < sp->h.tzh_typecnt; ++i)
 		if (sp->ttis[i].tt_abbrind >= sp->h.tzh_charcnt)
 			return -1;
@@ -180,7 +184,7 @@ newsub(timep, sp)
 register long *		timep;
 register struct state *	sp;
 {
-	register struct ttinfo *	ttip;
+	register struct ttinfo *	ttisp;
 	register struct tm *		tmp;
 	register int			i;
 	long				t;
@@ -194,11 +198,11 @@ register struct state *	sp;
 				break;
 		i = sp->types[i - 1];
 	}
-	ttip = &sp->ttis[i];
-	t += ttip->tt_gmtoff;
+	ttisp = &sp->ttis[i];
+	t += ttisp->tt_gmtoff;
 	tmp = gmtime(&t);
-	tmp->tm_isdst = ttip->tt_isdst;
-	tz_abbr = &sp->chars[ttip->tt_abbrind];
+	tmp->tm_isdst = ttisp->tt_isdst;
+	tz_abbr = &sp->chars[ttisp->tt_abbrind];
 	return tmp;
 }
 

@@ -74,6 +74,10 @@ TZLIB=		$(LIBDIR)/libz.a
 
 REDO=		posix_right
 
+# Since "." may not be in PATH...
+
+YEARISTYPE=	./yearistype
+
 # If you're on an AT&T-based system (rather than a BSD-based system), add
 #	-DUSG
 # to the end of the "CFLAGS=" line.
@@ -203,7 +207,8 @@ all:		zic zdump $(LIBOBJS)
 ALL:		all date
 
 install:	all $(DATA) $(REDO) $(TZLIB) $(MANS)
-		./zic -d $(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
+		./zic -y $(YEARISTYPE) \
+			-d $(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
 		-mkdir $(TOPDIR) $(ETCDIR)
 		cp zic zdump $(ETCDIR)/.
 		-mkdir $(TOPDIR) $(MANDIR) \
@@ -235,14 +240,15 @@ yearistype:	yearistype.sh
 		chmod +x yearistype
 
 posix_only:	zic $(TDATA)
-		./zic -d $(TZDIR) -L /dev/null $(TDATA)
+		./zic -y $(YEARISTYPE) -d $(TZDIR) -L /dev/null $(TDATA)
 
 right_only:	zic leapseconds $(TDATA)
-		./zic -d $(TZDIR) -L leapseconds $(TDATA)
+		./zic -y $(YEARISTYPE) -d $(TZDIR) -L leapseconds $(TDATA)
 
 other_two:	zic leapseconds $(TDATA)
-		./zic -d $(TZDIR)/posix -L /dev/null $(TDATA)
-		./zic -d $(TZDIR)/right -L leapseconds $(TDATA)
+		./zic -y $(YEARISTYPE) -d $(TZDIR)/posix -L /dev/null $(TDATA)
+		./zic -y $(YEARISTYPE) \
+			-d $(TZDIR)/right -L leapseconds $(TDATA)
 
 posix_right:	posix_only other_two
 

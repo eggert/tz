@@ -4,8 +4,8 @@ Please send comments or information to seismo!elsie!ado (with, perhaps,
 carbon copes to cbosgd!mark, seismo!linus!encore!necis!geo, and
 seismo!munnari!kre, who are responsible for any good ideas that show up here).
 
-Historical local time information has been included here not because it should
-be part of the standard (or, indeed, anyone's product), but rather to:
+Historical local time information has been included here not because it
+is particularly useful, but rather to:
 
 *	give people an idea of the variety of local time rules that have
 	existed in the past and thus an idea of the variety that may be
@@ -13,3 +13,5 @@ be part of the standard (or, indeed, anyone's product), but rather to:
 
 *	provide a test of the generality of the local time rule description
 	system.
+
+The "ctime.c" source file does conversion of old-style calls to new-style calls.

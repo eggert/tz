@@ -63,13 +63,21 @@ TZLIB=		/usr/lib/libz.a
 #	-DBSD_COMPAT
 # to the end of the "CFLAGS=" line.
 #
-# If you'd like to use Robert Elz's additions to the "struct tm" structure,
-# add a
-#	-DKRE_COMPAT
-# to the end of the "CFLAGS=" line, and add the structure elements
-#	long	tm_gmtoff;
-#	char *	tm_zone;
-# to the END of the "struct tm" structure defined in "/usr/include/time.h".
+# If your system has a "GMT offset" field in its "struct tm"s
+# (or if you decide to add such a field in your system's "time.h" file),
+# add the name to a define such as
+#	-DTM_GMTOFF=tm_gmtoff
+# or
+#	-DTM_GMTOFF=_tm_gmtoff
+# to the end of the "CFLAGS=" line.
+#
+# If your system has a "GMT offset" field in its "struct tm"s
+# (or if you decide to add such a field in your system's "time.h" file),
+# add the name to a define such as
+#	-DTM_ZONE=tm_zone
+# or
+#	-DTM_ZONE=_tm_zone
+# to the end of the "CFLAGS=" line.
 #
 # If you want code inspired by certain emerging standards, add
 #	-DSTD_INSPIRED

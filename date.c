@@ -178,9 +178,15 @@ char *	argv[];
 			}
 	}
 	if (value != NULL) {
-		t = convert(value, (dousg = FALSE), now);
+		/*
+		** This order ensures that "reasonable" twelve-digit inputs
+		** (such as 120203042006) won't be misinterpreted
+		** even if time_t's range all the way back to the thirteenth
+		** century.  Do not change the order.
+		*/
+		t = convert(value, (dousg = TRUE), now);
 		if (t == -1)
-			t = convert(value, (dousg = TRUE), now);
+			t = convert(value, (dousg = FALSE), now);
 		if (t == -1) {
 			/*
 			** Out of range values,

@@ -63,3 +63,25 @@ struct tzhead {
 #ifndef TZ_MAX_CHARS
 #define TZ_MAX_CHARS	50	/* Maximum number of abbreviation characters */
 #endif /* !TZ_MAX_CHARS */
+
+#define SECS_PER_MIN	60
+#define MINS_PER_HOUR	60
+#define HOURS_PER_DAY	24
+#define DAYS_PER_WEEK	7
+#define DAYS_PER_NYEAR	365
+#define DAYS_PER_LYEAR	366
+#define SECS_PER_HOUR	(SECS_PER_MIN * MINS_PER_HOUR)
+#define SECS_PER_DAY	((long) SECS_PER_HOUR * HOURS_PER_DAY)
+
+#define TM_SUNDAY	0
+#define TM_MONDAY	1
+#define TM_TUESDAY	2
+#define TM_WEDNESDAY	3
+#define TM_THURSDAY	4
+#define TM_FRIDAY	5
+#define TM_SATURDAY	6
+
+#define TM_YEAR_BASE	1900
+
+#define EPOCH_YEAR	1970
+#define EPOCH_WDAY	TM_THURSDAY

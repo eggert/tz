@@ -1,30 +1,22 @@
 # %W%
 
-# Europe, updated from 4.3BSD and various contributors
 # International country codes are used to identify countries' rules and
 # zones
 #
 # This data is by no means authoritative; if you think you know better, go
 # ahead and edit the file (and please send any changes to
-# vax2.nlm.nih.gov!elsie!tz for general use in the future).
-#
-# The use of 1986 as starting years below is conservative.
-#
-# One source shows that Bulgaria, Cyprus, Finland, and Greece observe DST from
-# the last Sunday in March to the last Sunday in September in 1986.
-# The source shows Romania changing a day later than everybody else.
-#
-# According to Bernard Sieloff's source, Poland is in the MET time zone but
-# uses the WE DST rules.  The Western USSR uses EET+1 and ME DST rules.
-# Bernard Sieloff's source claims Romania switches on the same day, but at
-# 00:00 standard time (i.e., 01:00 DST).  It also claims that Turkey
-# switches on the same day, but switches on at 01:00 standard time
-# and off at 00:00 standard time (i.e., 01:00 DST)
+# ado@ncifcrf.gov for general use in the future).
+
 ###############################################################################
+
+# United Kingdom
+
+# From Arthur David Olson (January 19, 1989):
+#
 # The starting and ending dates below (from which the rules are derived)
 # are from Whitaker's Almanack for 1987, page 146.
 # 1960 is the earliest year for which dates are given;
-# the almanac notes that British Summer Time (and, in some years, Double Summer
+# Whitaker's notes that British Summer Time (and, in some years, Double Summer
 # Time) was observed in earlier years but does not give start and end dates.
 #
 # A source at the British Information Office in New York avers that it's
@@ -56,6 +48,51 @@
 #	1985	March 31	October 27
 #	1986	March 30	October 26
 #	1987	March 29	October 25
+
+# From an Anonymous U. K. Donor (January 4, 1989):
+#
+# It is NOT possible to predict when [British Summer Time] will change
+# in a future year.
+# 
+# (The admiralty calculate when they think it should be (no more that a couple
+# of years in advance) and advise the government who then decide whether or 
+# not they will take the admiralty's advice)
+# 
+# ...the Grenwich (sp?) observatory...were very helpful.
+# 
+# I was not able to track down the Admiralty formula (I tried hard but failed)
+
+# ...
+# Date: 4 Jan 89 08:57:25 GMT (Wed)
+# From: Jonathan Leffler <nih-csl!uunet!mcvax!sphinx.co.uk!john>
+# ...
+# [British Summer Time] is fixed annually by Act of Parliament.
+# If you can predict what Parliament will do, you should be in
+# politics making a fortune, not computing.
+#
+# Summer time ends on Sunday 29 October 1989.
+
+# ...
+# Date: 5 Jan 89 09:50:38 GMT (Thu)
+# From: Peter Kendell <nih-csl!uunet!mcvax!tcom.stc.co.uk!pete>
+# ...
+# 
+# From my Collins Diary for 1989 - 
+# 
+# "At the time of going to press the Home Office was unable to confirm
+# the 1989 starting and finishing dates for BST*, but expressed the 
+# view that 26 March and 29 October were the likeliest dates to be
+# adopted"
+# 
+# *British Summer Time.
+
+# From an Anonymous U. K. Donor (January 5, 1989):
+#
+# . . .our government is seriously considering applying Double Summer Time -
+# putting the clocks forwards and back TWO hours for daylight saving time.
+# This is advocated to standardise time in the EEC - we're all supposed to
+# keep the same time and to change the clocks on the same dates in the future.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 # Historic starting rules
 Rule	GB-Eire	1960	only	-	Apr	10	1:00s	1:00	BST
@@ -70,6 +107,15 @@ Rule	GB-Eire	1971	only	-	Oct	31	1:00s	0	GMT
 # Current rules
 Rule	GB-Eire	1981	max	-	Mar	lastSun	1:00s	1:00	BST
 Rule	GB-Eire	1972	max	-	Oct	Sun>=23	1:00s	0	GMT
+
+# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	GB-Eire		0:00	GB-Eire		%s
+
+###############################################################################
+
+# Continental Europe
+
+# The use of 1986 as starting years below is conservative.
 
 Rule	W-Eur	1986	max	-	Mar	lastSun	1:00s	1:00	" DST"
 Rule	W-Eur	1986	max	-	Sep	lastSun	1:00s	0	-
@@ -87,7 +133,6 @@ Rule	W-SU	1986	max	-	Mar	lastSun	2:00s	1:00	" DST"
 Rule	W-SU	1986	max	-	Sep	lastSun	2:00s	0	-
 
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
-Zone	GB-Eire		0:00	GB-Eire		%s
 Zone	WET		0:00	W-Eur		WET%s
 Zone	Iceland		0:00	-		WET
 Zone	MET		1:00	M-Eur		MET%s
@@ -101,6 +146,17 @@ Zone	W-SU		3:00	M-Eur		????
 Link	MET	CET
 
 ###############################################################################
+
+# One source shows that Bulgaria, Cyprus, Finland, and Greece observe DST from
+# the last Sunday in March to the last Sunday in September in 1986.
+# The source shows Romania changing a day later than everybody else.
+#
+# According to Bernard Sieloff's source, Poland is in the MET time zone but
+# uses the WE DST rules.  The Western USSR uses EET+1 and ME DST rules.
+# Bernard Sieloff's source claims Romania switches on the same day, but at
+# 00:00 standard time (i.e., 01:00 DST).  It also claims that Turkey
+# switches on the same day, but switches on at 01:00 standard time
+# and off at 00:00 standard time (i.e., 01:00 DST)
 
 # ...
 # Date: Wed, 28 Jan 87 16:56:27 -0100
@@ -126,8 +182,6 @@ Link	MET	CET
 # 4002 Basle, Switzerland
 # UUCP: ...!mcvax!cernvax!cgcha!wtho
 
-###############################################################################
-
 # ...
 # Date: Wed, 4 Feb 87 22:35:22 +0100
 # From: seismo!mcvax!cwi.nl!dik (Dik T. Winter)
@@ -144,9 +198,7 @@ Link	MET	CET
 # the starting day for both shifted to last Sunday in March.  And from 1982
 # the whole of Europe used DST, with switch dates April 1 and October 1 in
 # the Sovjet Union.  In 1985 the SU reverted to standard Europen switch
-# dates.  Note that currently in the UK the switch back date appears not
-# to be the last Sunday in October, but 4 weeks after the last Sunday in
-# September (withness 1982 and 1983 with terminating days October 24 and 23).
+# dates...
 # 
 # It should also be remembered that time-zones are not constants; e.g.
 # Portugal switched in 1976 from MET (or CET) to WET with DST, and the UK
@@ -163,67 +215,6 @@ Link	MET	CET
 # INTERNET   : dik@cwi.nl
 # BITNET/EARN: dik@mcvax
 
-###############################################################################
-
-# ...
-# Date: 4 Jan 89 08:57:25 GMT (Wed)
-# From: Jonathan Leffler <nih-csl!uunet!mcvax!sphinx.co.uk!john>
-# ...
-# [British Summer Time] is fixed annually by Act of Parliament.
-# If you can predict what Parliament will do, you should be in
-# politics making a fortune, not computing.
-#
-# Summer time ends on Sunday 29 October 1989.
-# 
-# Jonathan Leffler (john@sphinx.co.uk)
-
-###############################################################################
-
-# ...
-# Date: 5 Jan 89 09:50:38 GMT (Thu)
-# From: Peter Kendell <nih-csl!uunet!mcvax!tcom.stc.co.uk!pete>
-# ...
-# 
-# From my Collins Diary for 1989 - 
-# 
-# "At the time of going to press the Home Office was unable to confirm
-# the 1989 starting and finishing dates for BST*, but expressed the 
-# view that 26 March and 29 October were the likeliest dates to be
-# adopted"
-# 
-# *British Summer Time.
-# 
-# Now you know what the general rule is!!!
-# 
-# Cheers,
-# 	Peter
-
-###############################################################################
-
-# From an Anonymous U. K. Donor (January 5, 1989)
-#
-# . . .our government is seriously considering applying Double Summer Time -
-# putting the clocks forwards and back TWO hours for daylight saving time.
-# This is advocated to standardise time in the EEC - we're all supposed to
-# keep the same time and to change the clocks on the same dates in the future.
-
-###############################################################################
-
-# From an Anonymous U. K. Donor (January 4, 1989)
-
-# It is NOT possible to predict when [British Summer Time] will change
-# in a future year.
-# 
-# (The admiralty calculate when they think it should be (no more that a couple
-# of years in advance) and advise the government who then decide whether or 
-# not they will take the admiralty's advice)
-# 
-# I got the dates from the Grenwich (sp?) observatory who were very helpful.
-# 
-# I was not able to track down the Admiralty formula (I tried hard but failed)
-
-###############################################################################
-
 # From Bob Devine (January 28, 1988):
 # ...
 # Greece: Last Sunday in April to last Sunday in September (iffy on dates).
@@ -231,149 +222,3 @@ Link	MET	CET
 # ...
 # Monaco: has same DST as France.
 # ...
-
-###############################################################################
-
-# From U.S. Naval Observatory (February 13, 1988):
-# ANDORRA             1 H AHEAD OF UTC
-# BULGARIA            2 H AHEAD OF UTC WINTER 
-# BULGARIA            3 H AHEAD OF UTC SUMMER MAR31 - SEP 85, 0100 LOCAL
-# CYPRUS              2 H AHEAD UTC IN WINTER 
-# CYPRUS              3 H AHEAD UTC MAR 25 - SEP 30 
-# DENMARK             1 H AHEAD UTC IN WINTER 
-# DENMARK             2 H AHEAD UTC MAR 31 - SEP 30  , 0200 LOCAL 
-# DENMK. FAEROE IS    1 H AHEAD UTC MAR 31 - SEP 30  , 0200 LOCAL 
-# ENGLAND             ON UTC IN WINTER; WALES, SCOTLAND, N.I., CH.IS. 
-# ENGLAND             1 H AHEAD OF UTC; SUMMER TIL 28 OCT 0200 LOCAL
-# FINLAND             2 H AHEAD OF UTC IN WINTER
-# FINLAND             3 H AHEAD OF UTC MAR 25 - SEP 30  
-# FRANCE              1 H AHEAD OF UTC IN WINTER
-# FRANCE              2 H AHEAD OF UTC MAR 31 - SEP 30 , 0100 LOCAL 
-# GREECE              2 H AHEAD OF UTC IN WINTER
-# GREECE              3 H AHEAD OF UTC IN SUMMER EFF. 31MAR85 02/03 LOCAL 
-# GREECE              3 H AHEAD OF UTC MAR 25 - SEP 30
-# GREENLAND           4 H BEHIND UTC  IN THULE AIRBASE YEAR ROUND 
-# GREENLAND           3 H BEHIND UTC  IN WINTER AT SONDRESTROM
-# GREENLAND           2 H BEHIND UTC  30 MAR - 30 SEP 2200 LOCAL AT -"- 
-# GREENLAND           2 H BEHIND UTC  AROUND SCORESBY SUND
-# ICELAND             ON UTC
-# IRELAND             ON UTC IN WINTER
-# IRELAND             1 H AHEAD OF UTC MAR 31 - OCT 23  0200 LOCAL
-# ITALY               1 H AHEAD OF UTC IN WINTER
-# ITALY               2 H AHEAD OF UTC MAR 31 - SEP 30, 0030 LOCAL
-# MONACO              1 H AHEAD UTC IN WINTER 
-# MONACO              2 H AHEAD UTC MAR 25 - SEP30
-# POLAND              1 H AHEAD OF UTC IN WINTER
-# POLAND              2 H AHEAD OF UTC MAR 24 - SEP     0200 LOCAL
-# PORTUGAL            ON UTC IN WINTER
-# PORTUGAL            1 H AHEAD OF UTC IN SUMMER MAR 31 - SEP 29   0100 LOCAL 
-# PORTUGAL AZORES     1 H BEHIND UTC IN WINTER
-# PORTUGAL AZORES     ON UTC IN SUMMER MAR 31 - SEP 29
-# PORTUGAL MADEIRA    ON UTC ALL YEAR;
-# ROMANIA             2 H AHEAD OF UTC IN WINTER
-# ROMANIA             3 H AHEAD OF UTC APR 3 - SEP 24 
-# SCOTLAND            SEE ENGLAND 
-# SWITZERLAND         1 H AHEAD OF UTC IN WINTER
-# SWITZERLAND         2 H AHEAD OF UTC MAR 31 - SEP 30  0200 LOCAL
-# TURKEY              3 H AHEAD OF UTC
-# USSR WEST EUROP     3 H AHEAD OF UTC IN WINTER; LENINGRAD, MOSCOW 
-# USSR WEST EUROP     4 H AHEAD OF UTC APR 1 - SEP 30 
-# USSR CENTRAL EUR    4 H AHEAD OF UTC IN WINTER; ROSTOV, BAKU
-# USSR CENTRAL EUR    5 H AHEAD OF UTC APR 1 - SEP 30 
-# USSR EAST EUROP     5 H AHEAD OF UTC IN WINTER; SVERDLOVSK
-# USSR EAST EUROP     6 H AHEAD OF UTC APR 1 - SEP 30 
-# USSR WEST SIBERIAN  6 H AHEAD OF UTC IN WINTER; TASHKENT, ALMA ATA
-# USSR WEST SIBERIAN  7 H AHEAD OF UTC APR 1 - SEP 30 
-# USSR WEST-CENTRAL   7 H AHEAD OF UTC IN WINTER; NOVOSIBIRSK 
-# USSR WEST-CENTRAL   8 H AHEAD OF UTC APR 1 - SEP 30 
-# USSR WEST-CENTRAL   8 H AHEAD OF UTC IN WINTER; IRKUTSK 
-# USSR WEST-CENTRAL   9 H AHEAD OF UTC APR 1 - SEP 30 
-# USSR CENTRAL SIB    9 H AHEAD OF UTC IN WINTER; YAKUTSK 
-# USSR CENTRAL SIB   10 H AHEAD OF UTC APR 1 - SEP 30 
-# USSR CENTRAL SIB   10 H AHEAD OF UTC IN WINTER; VLADIVOSTOK 
-# USSR CENTRAL SIB   11 H AHEAD OF UTC APR 1 - SEP 30 
-# USSR EAST SIBERIA  11 H AHEAD OF UTC IN WINTER; MAGADAN 
-# USSR EAST SIBERIA  12 H AHEAD OF UTC APR 1 - SEP 30 
-# USSR EAST SIBERIA  12 H AHEAD OF UTC IN WINTER; PETROPAVLOVSK 
-# USSR EAST SIBERIA  13 H AHEAD OF UTC APR 1 - SEP 30 
-# USSR EAST SIBERIA  13 H AHEAD OF UTC IN WINTER; UELEN 
-# USSR EAST SIBERIA  14 H AHEAD OF UTC APR 1 - SEP 30 
-# WALES               SEE ENGLAND 
-
-###############################################################################
-
-# From U.S. Naval Observatory (January 16, 1989):
-
-# ANDORRA             1 H  AHEAD OF UTC
-# ANDORRA             2 H  AHEAD OF UTC  MAR 27 - SEP 24
-# ANDORRA                                (ESTIMATED)
-# ANGOLA              1 H  AHEAD OF UTC
-# BULGARIA            2 H  AHEAD OF UTC
-# BULGARIA            3 H  AHEAD OF UTC  MAR 27 - SEP 24
-# CYPRUS              2 H  AHEAD OF UTC
-# CYPRUS              3 H  AHEAD OF UTC  MAR 27 - SEP 24
-# DENMARK             1 H  AHEAD OF UTC
-# DENMARK             2 H  AHEAD OF UTC  MAR 27 - SEP 24
-# DENMK. FAEROE IS    1 H  AHEAD OF UTC  MAR 27 - SEP 24
-# ENGLAND             ON UTC             (WALES, SCOTLAND, N.I.,
-# ENGLAND                                CH. IS.)
-# ENGLAND             1 H  AHEAD OF UTC  MAR 27 - OCT 22
-# FINLAND             2 H  AHEAD OF UTC
-# FINLAND             3 H  AHEAD OF UTC  MAR 27 - SEP 24
-# FRANCE              1 H  AHEAD OF UTC
-# FRANCE              2 H  AHEAD OF UTC  MAR 27 - SEP 24
-# FRENCH GUIANA       3 H  BEHIND UTC
-# GREECE              2 H  AHEAD OF UTC
-# GREECE              3 H  AHEAD OF UTC  MAR 27 - SEP 24
-# GREENLAND           4 H  BEHIND UTC    THULE AIRBASE YEAR ROUND
-# GREENLAND           3 H  BEHIND UTC    ANGMAGSSALIK AND W. COAST
-# GREENLAND           2 H  BEHIND UTC    MAR 27 - SEP 24
-# GREENLAND           1 H  BEHIND UTC    SCORESBYSUND
-# GREENLAND           ON UTC             MAR 27 - SEP 24
-# ICELAND             ON UTC
-# IRELAND             ON UTC
-# IRELAND             1 H  AHEAD OF UTC  MAR 27 - OCT 22
-# ITALY               1 H  AHEAD OF UTC
-# ITALY               2 H  AHEAD OF UTC  MAR 27 - SEP 24
-# MONACO              1 H  AHEAD OF UTC
-# MONACO              2 H  AHEAD OF UTC  MAR 27 - SEP 24
-# POLAND              1 H  AHEAD OF UTC
-# POLAND              2 H  AHEAD OF UTC  MAR 27 - SEP 24
-# PORTUGAL MAINLAND   ON UTC
-# PORTUGAL MAINLAND   1 H  AHEAD OF UTC  MAR 27 - SEP 24
-# PORTUGAL AZORES     1 H  BEHIND UTC
-# PORTUGAL AZORES     ON UTC             MAR 27 - SEP 24
-# PORTUGAL MADEIRA    ON UTC
-# PORTUGAL MADEIRA    1 H  AHEAD OF UTC  MAR 27 - SEP 24
-# ROMANIA             2 H  AHEAD OF UTC
-# ROMANIA             3 H  AHEAD OF UTC  MAR 27 - SEP 24
-# SCOTLAND            SEE ENGLAND
-# SWEDEN              1 H  AHEAD OF UTC
-# SWEDEN              2 H  AHEAD OF UTC  MAR 27 - SEP 24
-# SWITZERLAND         1 H  AHEAD OF UTC
-# SWITZERLAND         2 H  AHEAD OF UTC  MAR 27 - SEP 24
-# TURKEY              2 H  AHEAD OF UTC
-# TURKEY              3 H  AHEAD OF UTC  MAR 27 - SEP 24
-# USSR WEST EUROP     3 H  AHEAD OF UTC  LENINGRAD, MOSCOW
-# USSR WEST EUROP     4 H  AHEAD OF UTC  APR 1 - SEP 30
-# USSR CENTRAL EUR    4 H  AHEAD OF UTC  ROSTOV, BAKU
-# USSR CENTRAL EUR    5 H  AHEAD OF UTC  APR 1 - SEP 30
-# USSR EAST EUROP     5 H  AHEAD OF UTC  SVERDLOVSK
-# USSR EAST EUROP     6 H  AHEAD OF UTC  APR 1 - SEP 30
-# USSR WEST SIBERIAN  6 H  AHEAD OF UTC  TASHKENT, ALMA ATA
-# USSR WEST SIBERIAN  7 H  AHEAD OF UTC  APR 1 - SEP 30
-# USSR WEST-CENTRAL   7 H  AHEAD OF UTC  NOVOSIBIRSK
-# USSR WEST-CENTRAL   8 H  AHEAD OF UTC  APR 1 - SEP 30
-# USSR WEST-CENTRAL   8 H  AHEAD OF UTC  IRKUTSK
-# USSR WEST-CENTRAL   9 H  AHEAD OF UTC  APR 1 - SEP 30
-# USSR CENTRAL SIB    9 H  AHEAD OF UTC  YAKUTSK
-# USSR CENTRAL SIB   10 H  AHEAD OF UTC  APR 1 - SEP 30
-# USSR CENTRAL SIB   10 H  AHEAD OF UTC  VLADIVOSTOK
-# USSR CENTRAL SIB   11 H  AHEAD OF UTC  APR 1 - SEP 30
-# USSR EAST SIBERIA  11 H  AHEAD OF UTC  MAGADAN
-# USSR EAST SIBERIA  12 H  AHEAD OF UTC  APR 1 - SEP 30
-# USSR EAST SIBERIA  12 H  AHEAD OF UTC  PETROPAVLOVSK
-# USSR EAST SIBERIA  13 H  AHEAD OF UTC  APR 1 - SEP 30
-# USSR EAST SIBERIA  13 H  AHEAD OF UTC  UELEN
-# USSR EAST SIBERIA  14 H  AHEAD OF UTC  APR 1 - SEP 30
-# WALES               SEE ENGLAND

@@ -45,8 +45,11 @@ static char	tzfilehid[] = "%W%";
 ** Each file begins with. . .
 */
 
+#define	TZ_MAGIC	"TZif"
+
 struct tzhead {
-	char	tzh_reserved[16];	/* reserved for future use */
+	char	tzh_magic[4];		/* TZ_MAGIC */
+	char	tzh_reserved[12];	/* reserved for future use */
 	char	tzh_stampcnt[4];	/* number of stamp bytes */
 	char	tzh_ttisgmtcnt[4];	/* coded number of trans. time flags */
 	char	tzh_ttisstdcnt[4];	/* coded number of trans. time flags */

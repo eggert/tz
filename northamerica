@@ -1109,7 +1109,7 @@ Zone America/Dawson_Creek -8:00:56 -	LMT	1884
 # From Paul Eggert (2000-10-02):
 # Matthews and Vincent (1998) say the following, but we lack histories
 # for these potential new Zones.
-# 
+#
 # The Canadian Forces station at Alert uses Eastern Time while the
 # handful of residents at the Eureka weather station [in the Central
 # zone] skip daylight savings.  Baffin Island, which is crossed by the

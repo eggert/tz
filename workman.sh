@@ -2,8 +2,14 @@
 
 # %W%
 
-echo ".hy 0
+# Tell groff not to emit SGR escape sequences (ANSI color escapes).
+GROFF_NO_SGR=1
+export GROFF_NO_SGR
+
+echo ".am TH
+.hy 0
 .na
+..
 .de }H
 ..
 .de }F

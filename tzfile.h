@@ -129,3 +129,25 @@ struct tzhead {
 */
 
 #define isleap(y) (((y) % 4) == 0 && ((y) % 100) != 0 || ((y) % 400) == 0)
+
+#ifndef USG
+
+/*
+** Use of the underscored variants may cause problems if you move your code to
+** certain System-V-based systems; for maximum portability, use the
+** underscore-free variants.  The underscored variants are provided for
+** backward compatibility only; they may disappear from future versions of
+** this file.
+*/
+
+#define SECS_PER_MIN	SECSPERMIN
+#define MINS_PER_HOUR	MINSPERHOUR
+#define HOURS_PER_DAY	HOURSPERDAY
+#define DAYS_PER_WEEK	DAYSPERWEEK
+#define DAYS_PER_NYEAR	DAYSPERNYEAR
+#define DAYS_PER_LYEAR	DAYSPERLYEAR
+#define SECS_PER_HOUR	SECSPERHOUR
+#define SECS_PER_DAY	SECSPERDAY
+#define MONS_PER_YEAR	MONSPERYEAR
+
+#endif /* !defined USG */

@@ -2,10 +2,16 @@
 #ifndef NOID
 static char	elsieid[] = "%W%";
 /*
-** UCB's date.c, plus BSD conditionalizing, pluse changes to use "mktime".
+** Modified from the UCB version whose sccsid appears below.
 */
 #endif /* !defined NOID */
 #endif /* !defined lint */
+
+#define EXIT_SUCCESS	0
+#define EXIT_FAILURE	1
+
+#define BEFORE		"|"
+#define AFTER		"{"
 
 /*
  * Copyright (c) 1985, 1987, 1988 The Regents of the University of California.
@@ -47,6 +53,7 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #include <stdio.h>
 #include <ctype.h>
 #include <strings.h>
+#include "tzfile.h"
 
 /*
 ** TO DO:  provide a way to disambiguate 1:30 a.m. on the day you "fall back"?
@@ -55,13 +62,13 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 */
 
 extern int	optind;
+static int	retval = EXIT_SUCCESS;
+
+static void	display();
 
 #ifndef USG
 
 static struct timeval	tv;
-static int	retval;
-
-static void	display();
 
 int
 main(argc, argv)
@@ -73,6 +80,8 @@ main(argc, argv)
 	struct timezone tz;
 	char *ap, *tzn;
 	int ch, nflag;
+	int	isdst, newdst;
+	char * cp;
 	char *username, *getlogin();
 	time_t time();
 	char *	format;
@@ -81,9 +90,17 @@ main(argc, argv)
 	format = value = NULL;
 	nflag = 0;
 	tz.tz_dsttime = tz.tz_minuteswest = 0;
+	isdst = -1;
 	format = NULL;
-	while ((ch = getopt(argc, argv, "d:nut:")) != EOF)
-		switch((char)ch) {
+	while ((ch = getopt(argc, argv, "d:nut:DS")) != EOF)
+		switch (ch) {
+		case 'D':
+		case 'S':
+			newdst = (ch == 'D') ? 1 : 0;
+			if (isdst >= 0 && newdst != isdst)
+				usage();
+			isdst = newdst;
+			break;
 		case 'd':		/* daylight savings time */
 			tz.tz_dsttime = atoi(optarg) ? 1 : 0;
 			break;
@@ -102,30 +119,16 @@ main(argc, argv)
 			/*FALLTHROUGH*/
 		default:
 			usage();
-			exit(1);
 		}
-	argc -= optind;
-	argv += optind;
-	switch (argc) {
-		default:
-			usage();
-		case 0:
-			display(format);
-		case 1:
-			if (*argv[0] == '+')
-				display(&argv[0][1]);
-			value = argv[0];
-			break;
-		case 2:
-			if ((*argv[0] == '+') == (*argv[1] == '+'))
-				usage();
-			if (*argv[0] == '+') {
-				format = &argv[0][1];
-				value = argv[1];
-			} else {
-				format = &argv[1][1];
-				value = argv[0];
-			}
+	while (optind < argc) {
+		cp = argv[optind++];
+		if (*cp == '+')
+			if (format == NULL)
+				format = cp + 1;
+			else	usage();
+		else	if (value == NULL)
+				value = cp;
+			else	usage();
 	}
 	if ((tz.tz_minuteswest || tz.tz_dsttime) &&
 	    settimeofday((struct timeval *)NULL, &tz)) {
@@ -133,13 +136,15 @@ main(argc, argv)
 		retval = 1;
 		display(format);
 	}
+	if (value == NULL)
+		display(format);
 
 	if (gettimeofday(&tv, &tz)) {
 		perror("gettimeofday");
-		exit(1);
+		(void) exit(EXIT_FAILURE);
 	}
 
-	tv.tv_sec = gtime(value, (time_t) tv.tv_sec, -1);
+	tv.tv_sec = gtime(value, (time_t) tv.tv_sec, isdst);
 	if (tv.tv_sec == -1) {
 		usage();
 		retval = 1;
@@ -147,13 +152,13 @@ main(argc, argv)
 	}
 
 	if (nflag || !netsettime(tv)) {
-		logwtmp("|", "date", "");
+		logwtmp(BEFORE, "date", "");
 		if (settimeofday(&tv, (struct timezone *)NULL)) {
 			perror("settimeofday");
 			retval = 1;
 			display(format);
 		}
-		logwtmp("{", "date", "");
+		logwtmp(AFTER, "date", "");
 	}
 
 	username = getlogin();
@@ -161,73 +166,71 @@ main(argc, argv)
 		username = "root";
 	syslog(LOG_AUTH | LOG_NOTICE, "date set by %s", username);
 
-	display();
+	display(format);
 	for ( ; ; )
 		;
 }
 
 usage()
 {
-	fputs("usage: date [-nu] [-d dst] [-t minutes_west] [yymmddhhmm[.ss]]\n", stderr);
+	fputs("usage: date [-nu] [-d dst] [-D] [-S] [-t minutes_west] [yymmddhhmm[.ss]]\n", stderr);
+	retval = EXIT_FAILURE;
 }
 
 #else /* defined USG */
+
 int
 main(argc, argv)
-	int argc;
-	char **argv;
+int	argc;
+char *	argv[];
 {
+	char *	cp;
 	int	ch;
 	time_t	time();
 	time_t	t;
+	int	isdst;
 	char *	format;
 	char *	value;
 
 	format = value = NULL;
-	while ((ch = getopt(argc, argv, "u")) != EOF)
+	isdst = -1;
+	while ((ch = getopt(argc, argv, "uDS")) != EOF)
 		switch (ch) {
-		case 'u':
-			setgmt():
-			break;
-		default:
-			usage();
-			exit(1);
-		}
-	argc -= optind;
-	argv += optind;
-	switch (argc) {
-		default:
-			usage();
-		case 0:
-			display(format);
-		case 1:
-			if (*argv[0] == '+')
-				display(&argv[0][1]);
-			value = argv[0];
-			break;
-		case 2:
-			if ((*argv[0] == '+') == (*argv[1] == '+'))
+			case 'D':
+			case 'S':
+				newdst = (ch == 'D') ? 1 : 0;
+				if (isdst >= 0 && newdst != isdst)
+					usage();
+				isdst = newdst;
+				break;
+			case 'u':
+				setgmt():
+				break;
+			default:
 				usage();
-			if (*argv[0] == '+') {
-				format = &argv[0][1];
-				value = argv[1];
-			} else {
-				formt = &argv[1][1];
-				value = argv[0];
-			}
+		}
+	while (optind < argc) {
+		cp = argv[optind++];
+		if (*cp == '+')
+			if (format == NULL)
+				format = cp + 1;
+			else	usage();
+		else	if (value == NULL)
+				value = cp;
+			else	usage();
 	}
+	if (value == NULL)
+		display(format);
 	(void) time(&t);
-	t = gtime(value, t, -1);
+	t = gtime(value, t, isdst);
 	if (t == -1)
 		usage();
+	logwtmp(BEFORE, "date", "");
+	if (stime(&t) == 0)
+		logwtmp(AFTER, "date", "");
 	else {
-		logwtmp("|", "date", "");
-		if (stime(&t) == 0)
-			logwtmp("{", "date", "");
-		else {
-			perror("stime");
-			retval = 1;
-		}
+		perror("stime");
+		retval = 1;
 	}
 	display(format);
 }
@@ -235,7 +238,8 @@ main(argc, argv)
 usage()
 {
 	(void) fprintf(stderr, "date: usage is date [-u] yymmddhhmm[.ss]\n");
-	exit(1);
+	retval = EXIT_FAILURE;
+	display(format);
 }
 
 #endif /* defined USG */
@@ -249,14 +253,13 @@ char *	format;
 	register struct tm *	tp;
 	register char *		cp;
 	time_t			t;
+	struct tm		tm;
 	extern char *		tzname[2];
 
 	(void) time(&t);
-	if (format == NULL) {
-		tp = localtime(&t);
-		cp = asctime(tp);
-		(void) printf("%.20s%s%s", cp, tzname[tp->tm_isdst], cp + 19);
-	} else	timeout(format, t);
+	tm = *localtime(&t);
+	timeout((format == NULL) ? "%c" : format, &tm);
+	(void) putchar('\n');
 	/*
 	** Should check stdout/stderr here.
 	*/
@@ -265,95 +268,132 @@ char *	format;
 		;
 }
 
+static char *	wday_names[] = {
+	"Sunday",	"Monday",	"Tuesday",	"Wednesday",
+	"Thursday",	"Friday",	"Saturday"
+};
+
+static char *	month_names[] = {
+	"January",	"February",	"March",	"April",
+	"May",		"June",		"July",		"August",
+	"September",	"October",	"November",	"December"
+};
+
 static void
-timeout(format, arg)
+timeout(format, tmp)
 register char *	format;
-time_t		arg;
+struct tm *	tmp;
 {
 	register int	c;
-	struct tm	tm;
-	char *		cp;
+	register int	wday;
 
-	tm = *localtime(&arg);
-	cp = asctime(&tm);
 	for ( ; ; ) {
 		c = *format++;
-		if (c == '\0') {
-			(void) putchar('\n');
+		if (c == '\0')
 			return;
-		}
 		if (c != '%') {
 			(void) putchar(c);
 			continue;
 		}
 		switch (c = *format++) {
-			default:
-				(void) fprintf(stderr,
-					"date: bad format character - %c\n", c);
-				exit(1);
-			case '%':
-				(void) putchar(c);
-				break;
-			case 'n':
-				(void) putchar('\n');
-				break;
-			case 't':
-				(void) putchar('\t');
-				break;
-			case 'm':
-				(void) printf("%02.2d", tm.tm_mon + 1);
-				break;
-			case 'd':
-				(void) printf("%02.2d", tm.tm_mday);
-				break;
-			case 'y':
-				(void) printf("%02.2d", tm.tm_year % 100);
-				break;
-			case 'D':
-				(void) printf("%02.2d/%02.2d/%02.2d",
-					tm.tm_mon + 1,
-					tm.tm_mday,
-					tm.tm_year % 100);
-				break;
-			case 'H':
-				(void) printf("%02.2d", tm.tm_hour);
-				break;
-			case 'M':
-				(void) printf("%02.2d", tm.tm_min);
-				break;
-			case 'S':
-				(void) printf("%02.2d", tm.tm_sec);
-				break;
-			case 'T':
-				(void) printf("%02.2d:%02.2d:%02.2d",
-					tm.tm_hour, tm.tm_min, tm.tm_sec);
-				break;
-			case 'j':
-				(void) printf("%03.3d", tm.tm_yday + 1);
-				break;
-			case 'w':
-				(void) printf("%d", tm.tm_wday);
-				break;
-			case 'a':
-				(void) printf("%03.3s", cp);
-				break;
-			case 'h':
-				(void) printf("%03.3s", cp + 4);
-				break;
-			case 'r':
-				{
-					static int	ap, hour;
-
-					hour = tm.tm_hour;
-					if (hour >= 12) {
-						ap = 'P';
-						hour -= 12;
-					} else	ap = 'A';
-					(void) printf(
-						"%02.2d:%02.2d:%02.2d %cM",
-						hour, tm.tm_min, tm.tm_sec, ap);
-				}
-				break;
+		default:
+			(void) fprintf(stderr,
+				"date: bad format character - %c\n", c);
+			(void) exit(EXIT_FAILURE);
+		case 'a':
+			(void) printf("%.3s", wday_names[tmp->tm_mon]);
+			break;
+		case 'A':
+			(void) printf("%s", wday_names[tmp->tm_mon]);
+			break;
+		case 'b':
+		case 'h':
+			(void) printf("%.3s", month_names[tmp->tm_mon]);
+			break;
+		case 'B':
+			(void) printf("%s", month_names[tmp->tm_mon]);
+			break;
+		case 'c':
+			timeout("%x %X %Z %Y", tmp);
+			break;
+		case 'd':
+			(void) printf("%02.2d", tmp->tm_mday);
+			break;
+		case 'D':
+			timeout("%m/%d/%y", tmp);
+			break;
+		case 'H':
+			(void) printf("%02.2d", tmp->tm_hour);
+			break;
+		case 'I':
+			(void) printf("%02.2d", ((tmp->tm_hour - 1) % 12) + 1);
+			break;
+		case 'j':
+			(void) printf("%03.3d", tmp->tm_yday + 1);
+			break;
+		case 'm':
+			(void) printf("%02.2d", tmp->tm_mon + 1);
+			break;
+		case 'M':
+			(void) printf("%02.2d", tmp->tm_min);
+			break;
+		case 'n':
+			(void) putchar('\n');
+			break;
+		case 'p':
+			(void) printf("%cM", (tmp->tm_hour >= 12) ? 'A' : 'P');
+			break;
+		case 'r':
+			timeout("%I:%M:%S %p", tmp);
+			break;
+		case 'S':
+			(void) printf("%02.2d", tmp->tm_sec);
+			break;
+		case 't':
+			(void) putchar('\t');
+			break;
+		case 'T':
+			timeout("%H:%M:%S", tmp);
+			break;
+		case 'U':
+			/* How many Sundays fall on or before this day? */
+			wday = tmp->tm_wday;
+			(void) printf("%02.2d",
+				(tmp->tm_yday + DAYSPERWEEK - wday) /
+				DAYSPERWEEK);
+			break;
+		case 'w':
+			(void) printf("%d", tmp->tm_wday);
+			break;
+		case 'W':
+			/* How many Mondays fall on or before this day? */
+			/* Transform it to the Sunday problem and solve that */
+			wday = tmp->tm_wday;
+			if (--wday < 0)
+				wday = DAYSPERWEEK - 1;
+			(void) printf("%02.2d",
+				(tmp->tm_yday + DAYSPERWEEK - wday) /
+				DAYSPERWEEK);
+			break;
+		case 'x':
+			timeout("%a %b %d", tmp);
+			break;
+		case 'X':
+			timeout("%H:%M:%S", tmp);
+			break;
+		case 'y':
+			(void) printf("%02.2d",
+				(tmp->tm_year + TM_YEAR_BASE) % 100);
+			break;
+		case 'Y':
+			(void) printf("%d", tmp->tm_year + TM_YEAR_BASE);
+			break;
+		case 'Z':
+			(void) printf("%s", tzname[tmp->tm_isdst]);
+			break;
+		case '%':
+			(void) putchar('%');
+			break;
 		}
 	}
 }
@@ -363,6 +403,7 @@ setgmt()
 	register char **	saveenv;
 	extern char **		environ;
 	char *			fakeenv[2];
+	int			wday;
 
 	fakeenv[0] = "TZ=GMT0";
 	fakeenv[1] = NULL;

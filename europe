@@ -165,7 +165,7 @@ Link	MET	CET
 # ...
 # 
 # ...the European time rules are...standardized since 1981, when
-# most European counrties started DST.  Before that year, only
+# most European coun[tr]ies started DST.  Before that year, only
 # a few countries (UK, France, Italy) had DST, each according
 # to own national rules.  In 1981, however, DST started on
 # 'Apr firstSun', and not on 'Mar lastSun' as in the following
@@ -196,7 +196,7 @@ Link	MET	CET
 # In 1981 UK joined Europe insofar that
 # the starting day for both shifted to last Sunday in March.  And from 1982
 # the whole of Europe used DST, with switch dates April 1 and October 1 in
-# the Sovjet Union.  In 1985 the SU reverted to standard Europen switch
+# the Sov[i]et Union.  In 1985 the SU reverted to standard Europe[a]n switch
 # dates...
 # 
 # It should also be remembered that time-zones are not constants; e.g.

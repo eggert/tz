@@ -12,9 +12,9 @@ make date right_only TZDIR=zoneinfo CFLAGS="-g -DEBUG $*"
 
 set -v
 
-# US/Eastern tests
+# America/New_York tests
 
-TZ=US/Eastern
+TZ=America/New_York
 export TZ
 
 # All the legal forms.

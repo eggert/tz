@@ -12,7 +12,7 @@ TZCSRCS=	tzcomp.c scheck.c strchr.c
 TZCOBJS=	tzcomp.o scheck.o strchr.o
 TZDSRCS=	tzdump.c settz.c
 TZDOBJS=	tzdump.o settz.o
-ENCHILADA=	Makefile timezone.h $(TZCSRCS) $(TZDSRCS) tzinfo years.sh
+ENCHILADA=	Makefile tzfile.h $(TZCSRCS) $(TZDSRCS) tzinfo years.sh
 
 all:	REDID_BINARIES tzdump
 
@@ -50,4 +50,4 @@ clean:
 CLEAN:	clean
 	sccs clean
 
-tzdump.o tzcomp.o settz.o:	timezone.h
+tzdump.o tzcomp.o settz.o:	tzfile.h

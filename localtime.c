@@ -327,19 +327,19 @@ long *	timep;
 {
 	int num;
 
-	strp = getnum(strp, &num, 0, 12);
+	strp = getnum(strp, &num, 0, HOURSPERDAY / 2);
 	if (strp == NULL)
 		return NULL;
 	*timep = num*SECSPERHOUR;
 	if (*strp == ':') {
 		strp++;
-		strp = getnum(strp, &num, 0, 59);
+		strp = getnum(strp, &num, 0, MINSPERHOUR - 1);
 		if (strp == NULL)
 			return NULL;
 		*timep += num*SECSPERMIN;
 		if (*strp == ':') {
 			strp++;
-			strp = getnum(strp, &num, 0, 59);
+			strp = getnum(strp, &num, 0, SECSPERMIN - 1);
 			if (strp == NULL)
 				return NULL;
 			*timep += num;

@@ -1197,7 +1197,7 @@ char *	name;
 		return;
 	while ((cp = strchr(cp + 1, '/')) != 0) {
 		*cp = '\0';
-		(void) mkdir(name);
+		(void) mkdir(name, 0755);
 		*cp = '/';
 	}
 }

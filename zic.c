@@ -7,6 +7,14 @@ static char	elsieid[] = "%W%";
 #include "private.h"
 #include "tzfile.h"
 
+#include "sys/stat.h"
+#ifndef S_IWGRP
+#define S_IWGRP 00020
+#endif
+#ifndef S_IWOTH
+#define S_IWOTH 00002
+#endif
+
 struct rule {
 	const char *	r_filename;
 	int		r_linenum;
@@ -415,7 +423,7 @@ char *	argv[];
 	register int	c;
 
 #ifdef unix
-	(void) umask(umask(022) | 022);
+	(void) umask(umask(S_IWGRP|S_IWOTH) | (S_IWGRP|S_IWOTH));
 #endif /* defined unix */
 	progname = argv[0];
 	while ((c = getopt(argc, argv, "d:l:p:L:vsy:")) != EOF)

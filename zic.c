@@ -11,14 +11,6 @@ static char	sccsid[] = "%W%";
 #include "sys/types.h"
 #include "sys/stat.h"
 
-#ifndef alloc_t
-#define alloc_t	unsigned
-#endif
-
-#ifndef MAL
-#define MAL	NULL
-#endif
-
 #ifndef BUFSIZ
 #define BUFSIZ	1024
 #endif
@@ -29,12 +21,12 @@ static char	sccsid[] = "%W%";
 #endif
 
 
-extern char *	calloc();
-extern char *	malloc();
+extern char *	icpyalloc();
+extern char *	imalloc();
+extern char *	irealloc();
 extern char *	optarg;
 extern int	optind;
 extern FILE *	popen();
-extern char *	realloc();
 extern char *	scheck();
 #ifdef strchr
 extern char *	sprintf();
@@ -305,42 +297,18 @@ static char		chars[TZ_MAX_CHARS];
 */
 
 static char *
-emalloc(size)
+memcheck(ptr)
 {
-	register char *	cp;
-
-	if ((cp = malloc((alloc_t) size)) == MAL || cp == NULL) {
+	if (ptr == NULL) {
 		perror(progname);
 		exit(1);
 	}
-	return cp;
+	return ptr;
 }
 
-static char *
-erealloc(ptr, size)
-char *	ptr;
-{
-	register char *	cp;
-
-	if ((cp = realloc(ptr, (alloc_t) size)) == NULL) {
-		perror(progname);
-		exit(1);
-	}
-	return cp;
-}
-
-static char *
-ecpyalloc(old)
-char *	old;
-{
-	register char *	new;
-
-	if (old == NULL)
-		old = "";
-	new = emalloc(strlen(old) + 1);
-	(void) strcpy(new, old);
-	return new;
-}
+#define emalloc(size)		memcheck(imalloc(size))
+#define erealloc(ptr, size)	memcheck(irealloc(ptr, size))
+#define ecpyalloc(ptr)		memcheck(icpyalloc(ptr))
 
 /*
 ** Error handling.

@@ -21,7 +21,7 @@
 #endif
 
 #ifndef TZ_ABBR_LEN
-#define TZ_ABBR_LEN	7		/* Maximum Time Zone abbr. length */
+#define TZ_ABBR_LEN	10		/* Maximum Time Zone abbr. length */
 #endif
 
 struct tzinfo {

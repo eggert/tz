@@ -361,15 +361,14 @@ char *	argv[];
 	** Entire command line has now been checked.
 	*/
 #ifdef A_OPTION
-	if (aflag && value != NULL) {
-		(void) fprintf(stderr,
-			"date: error: attempt to both set and adjust time\n");
-		errensure();
-		display((char *) NULL);
-	}
-	if (aflag)
+	if (aflag) {
 		if (adjtime(&atv, (struct timeval *) NULL) != 0)
 			oops("date: error: adjtime");
+		/*
+		** Sun silently ignores everything else; we follow suit.
+		*/
+		(void) exit(retval);
+	}
 #endif /* defined A_OPTION */
 #ifdef D_OR_T_OPTION
 	if (dflag || tflag) {

@@ -12,7 +12,7 @@ char *	old;
 char *	new;
 {
 	register char *	ret;
-	register	len;
+	register int	len;
 	extern char *	calloc();
 	extern char *	realloc();
 	extern char *	strcat();

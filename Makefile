@@ -29,6 +29,9 @@ LOCALTIME=	Factory
 
 POSIXRULES=	America/New_York
 
+# Also see TZDEFRULESTRING below, which takes effect only
+# if the time zone files cannot be accessed.
+
 # Everything gets put in subdirectories of. . .
 
 TOPDIR=		/usr/local
@@ -96,6 +99,8 @@ LDLIBS=
 #  -DLOCALE_HOME=\"path\" if locales are in "path", not "/usr/lib/locale"
 #  -DHAVE_UNISTD_H=0 if your compiler lacks a "unistd.h" (Microsoft C++ 7?)
 #  -DHAVE_UTMPX_H=1 if your compiler has a "utmpx.h"
+#  -DTZDEFRULESTRING=\",date/time,date/time\" to default to the specified
+#	DST transitions if the time zone files cannot be accessed
 #  -DTZ_DOMAIN=\"foo\" to use "foo" for gettext domain name; default is "tz"
 #  -TTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
 #	the default is system-supplied, typically "/usr/lib/locale"

@@ -99,6 +99,10 @@ TZLIB=		/usr/lib/libz.a
 # If you want an "altzone" variable (a la System V Release 3.1), add
 #	-DALTZONE
 # to the end of the "CFLAGS=" line.
+#
+# If you want a "gtime" function (a la MACH), add
+#	-DCMUCS
+# to the end of the "CFLAGS=" line
 
 CFLAGS=
 
@@ -199,10 +203,9 @@ sure:		$(SOURCES)
 
 SURE:		sure $(ENCHILADA)
 		make sure LINT=/usr/5bin/lint LINTFLAGS=""
-		spell $(ENCHILADA)
-		make clean
 		make sure LINT=gcc LINTFLAGS="-c -O -ansi -pedantic -Wall"
-		make clean
+		rm -f zic zdump *.o
+		spell $(ENCHILADA)
 
 clean:
 		rm -f core *.o *.out REDID_BINARIES zdump zic \

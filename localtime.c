@@ -1522,8 +1522,8 @@ const int		do_norm_secs;
 		hi = lo - 1;
 	} else if (!TYPE_INTEGRAL(time_t)) {
 		if (sizeof(time_t) > sizeof(float))
-			hi = (time_t) FLT_MAX;
-		else	hi = (time_t) DBL_MAX;
+			hi = (time_t) DBL_MAX;
+		else	hi = (time_t) FLT_MAX;
 		lo = -hi;
 	} else {
 		register int	i;

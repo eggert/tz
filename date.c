@@ -235,8 +235,7 @@ char *	argv[];
 	(void) time(&now);
 	format = value = NULL;
 	/*
-	** "-u" and are available everywhere.
-	** (It's easy to obey "-n" if there's no network!)
+	** "-u" is available everywhere.
 	*/
 	(void) strcpy(options, "u");
 	(void) strcpy(usemes, "[-u");

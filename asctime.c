@@ -31,7 +31,7 @@ register const struct tm *	timeptr;
 	** three explicit spaces, two explicit colons, a newline,
 	** and a trailing ASCII nul).
 	*/
-	static char		result[3 * 2 + 5 * INT_STRLEN_MAXIMUM +
+	static char		result[3 * 2 + 5 * INT_STRLEN_MAXIMUM(int) +
 					3 + 2 + 1 + 1];
 	register const char *	wn;
 	register const char *	mn;

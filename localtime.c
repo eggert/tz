@@ -279,6 +279,7 @@ static const int	year_lengths[2] = {
 ** a valid character in a zone name is found.  Return a pointer to that
 ** character.
 */
+
 static char *
 getzname(strp)
 register const char *	strp;
@@ -297,6 +298,7 @@ register const char *	strp;
 ** NULL.
 ** Otherwise, return a pointer to the first character not part of the number.
 */
+
 static char *
 getnum(strp, nump, min, max)
 register const char *	strp;
@@ -326,6 +328,7 @@ int			max;
 ** If any error occurs, return NULL.
 ** Otherwise, return a pointer to the first character not part of the time.
 */
+
 static char *
 gettime(strp, timep)
 register const char *	strp;
@@ -360,6 +363,7 @@ long *			timep;
 ** If any error occurs, return NULL.
 ** Otherwise, return a pointer to the first character not part of the time.
 */
+
 static char *
 getoffset(strp, offsetp)
 register const char *	strp;
@@ -387,6 +391,7 @@ long *			offsetp;
 ** If a valid rule is not found, return NULL.
 ** Otherwise, return a pointer to the first character not part of the rule.
 */
+
 static char *
 getrule(strp, rulep)
 const char *		strp;
@@ -442,6 +447,7 @@ register struct rule *	rulep;
 ** year, a rule, and the offset from GMT at the time that rule takes effect,
 ** calculate the Epoch-relative time that rule takes effect.
 */
+
 static time_t
 transtime(janfirst, year, rulep, offset)
 time_t				janfirst;
@@ -535,6 +541,7 @@ long				offset;
 ** Given a POSIX section 8-style TZ string, fill in the rule tables as
 ** appropriate.
 */
+
 static int
 tzparse(name, sp)
 const char *		name;
@@ -941,3 +948,270 @@ const time_t *	timep;
 }
 
 #endif /* defined BSD_COMPAT */
+
+/*
+** Adapted from code provided by Robert Elz, who writes:
+**	The "best" way to do mktime I think is based on an idea of Bob
+**	Kridle's (so its said...) from a long time ago. (mtxinu!kridle now).
+**	It does a binary search of the time_t space.  Since time_t's are
+**	just 32 bits, its a max of 32 iterations (even at 64 bits it
+**	would still be very reasonable).
+**
+** This code does handle "out of bounds" values in the way described
+** for "mktime" in the October, 1986 draft of the proposed ANSI C Standard;
+** though this is an accident of the implementation and *cannot* be made to
+** work correctly for the purposes there described.
+**
+** A warning applies if you try to use these functions with a version of
+** "localtime" that has overflow problems (such as System V Release 2.0
+** or 4.3 BSD localtime).
+** If you're not using GMT and feed a value to localtime
+** that's near the minimum (or maximum) possible time_t value, localtime
+** may return a struct that represents a time near the maximum (or minimum)
+** possible time_t value (because of overflow).  If such a returned struct tm
+** is fed to timelocal, it will not return the value originally feed to
+** localtime.
+*/
+
+#ifndef WRONG
+#define WRONG	(-1)
+#endif /* !defined WRONG */
+
+static void
+normalize(tensptr, unitsptr, base)
+int *	tensptr;
+int *	unitsptr;
+{
+	if (*unitsptr >= base) {
+		*tensptr += *unitsptr / base - 1;
+		*unitsptr %= base;
+	} else if (*unitsptr < 0) {
+		--*tensptr;
+		*unitsptr += base;
+		if (*unitsptr < 0) {
+			*tensptr -= 1 + (-*unitsptr) / base;
+			*unitsptr = base - (-*unitsptr) % base;
+
+		}
+	}
+}
+
+static int
+tmcomp(atmp, btmp)
+register const struct tm * atmp;
+register const struct tm * btmp;
+{
+	register int	result;
+
+	if ((result = (atmp->tm_year - btmp->tm_year)) == 0 &&
+		(result = (atmp->tm_mon - btmp->tm_mon)) == 0 &&
+		(result = (atmp->tm_mday - btmp->tm_mday)) == 0 &&
+		(result = (atmp->tm_hour - btmp->tm_hour)) == 0 &&
+		(result = (atmp->tm_min - btmp->tm_min)) == 0)
+			result = atmp->tm_sec - btmp->tm_sec;
+	return result;
+}
+
+#define BREAKDOWN(t)	(funcp == localtime || funcp == gmtime) ? \
+				*((*funcp)(&(t))) : *((*funcp)(&(t), offset));
+
+static time_t
+time2(timeptr, funcp, offset, okayp)
+struct tm *		timeptr;
+const struct tm * (*	funcp)();
+const long		offset;
+int *			okayp;
+{
+	register int	dir;
+	register int	bits;
+	register int	i;
+	register int	saved_seconds;
+	time_t		t;
+	struct tm	yourtm, mytm;
+
+	*okayp = FALSE;
+	yourtm = *timeptr;
+	normalize(&yourtm.tm_hour, &yourtm.tm_min, MINSPERHOUR);
+	normalize(&yourtm.tm_mday, &yourtm.tm_hour, HOURSPERDAY);
+	normalize(&yourtm.tm_year, &yourtm.tm_mon, MONSPERYEAR);
+	while (yourtm.tm_mday <= 0) {
+		--yourtm.tm_year;
+		yourtm.tm_mday +=
+			year_lengths[isleap(yourtm.tm_year + TM_YEAR_BASE)];
+	}
+	for ( ; ; ) {
+		i = mon_lengths[isleap(yourtm.tm_year +
+			TM_YEAR_BASE)][yourtm.tm_mon];
+		if (yourtm.tm_mday <= i)
+			break;
+		yourtm.tm_mday -= i;
+		if (++yourtm.tm_mon >= MONSPERYEAR) {
+			yourtm.tm_mon = 0;
+			++yourtm.tm_year;
+		}
+	}
+	saved_seconds = yourtm.tm_sec;
+	yourtm.tm_sec = 0;
+	/*
+	** Calculate the number of magnitude bits in a time_t
+	** (this works regardless of whether time_t is
+	** signed or unsigned, though lint complains if unsigned).
+	*/
+	for (bits = 0, t = 1; t > 0; ++bits, t <<= 1)
+		;
+	/*
+	** If time_t is signed, then 0 is the median value,
+	** if time_t is unsigned, then 1 << bits is median.
+	*/
+	t = (t < 0) ? 0 : ((time_t) 1 << bits);
+	for ( ; ; ) {
+		mytm = BREAKDOWN(t);
+		dir = tmcomp(&mytm, &yourtm);
+		if (dir != 0) {
+			if (bits-- < 0)
+				return WRONG;
+			if (bits < 0)
+				--t;
+			else if (dir > 0)
+				t -= (time_t) 1 << bits;
+			else	t += (time_t) 1 << bits;
+			continue;
+		}
+		if (yourtm.tm_isdst >= 0 && mytm.tm_isdst != yourtm.tm_isdst) {
+			/*
+			** Right time, wrong type.
+			** Hunt for right time, right type.
+			** It's okay to guess wrong since the guess
+			** gets checked.
+			*/
+			register struct state *	sp;
+			register int		i, j;
+			time_t			newt;
+
+			sp = (funcp == localtime) ? &lclstate : &gmtstate;
+			for (i = 0; i < sp->typecnt; ++i) {
+				for (j = 0; j < sp->typecnt; ++j) {
+					newt = t + sp->ttis[i].tt_gmtoff -
+						sp->ttis[j].tt_gmtoff;
+					mytm = BREAKDOWN(newt);
+					if (tmcomp(&mytm, &yourtm) != 0)
+						continue;
+					if (mytm.tm_isdst != yourtm.tm_isdst)
+						continue;
+					/*
+					** We have a match.
+					*/
+					t = newt;
+					goto label;
+				}
+			}
+			/*
+			** Failed to find a match.
+			*/
+			return WRONG;
+		}
+label:
+		t += saved_seconds;
+		*timeptr = BREAKDOWN(t);
+		*okayp = TRUE;
+		return t;
+	}
+}
+
+static time_t
+time1(timeptr, funcp, offset)
+struct tm *		timeptr;
+const struct tm * (*	funcp)();
+const long		offset;
+{
+	register time_t		t;
+	register struct state *	sp;
+	register int		samei, otheri;
+	int			okay;
+
+	if (timeptr->tm_isdst > 1)
+		return WRONG;
+	t = time2(timeptr, funcp, offset, &okay);
+	if (okay || timeptr->tm_isdst < 0)
+		return t;
+	/*
+	** We're supposed to assume that somebody took a time of one type,
+	** and did some math on it that yielded a "struct tm" that's bad.
+	** We try to divine the type they started from and adjust to the
+	** type they need.
+	*/
+	sp = (funcp == localtime) ? &lclstate : &gmtstate;
+	for (samei = 0; samei < sp->typecnt; ++samei) {
+		if (sp->ttis[samei].tt_isdst != timeptr->tm_isdst)
+			continue;
+		for (otheri = 0; otheri < sp->typecnt; ++otheri) {
+			if (sp->ttis[otheri].tt_isdst == timeptr->tm_isdst)
+				continue;
+			timeptr->tm_sec += sp->ttis[otheri].tt_gmtoff -
+					sp->ttis[samei].tt_gmtoff;
+			timeptr->tm_isdst = !timeptr->tm_isdst;
+			t = time2(timeptr, funcp, offset, &okay);
+			if (okay)
+				return t;
+			timeptr->tm_sec -= sp->ttis[otheri].tt_gmtoff -
+					sp->ttis[samei].tt_gmtoff;
+			timeptr->tm_isdst = !timeptr->tm_isdst;
+		}
+	}
+}
+
+time_t
+mktime(timeptr)
+struct tm *	timeptr;
+{
+	return time1(timeptr, localtime, 0L);
+}
+
+#ifdef STD_INSPIRED
+
+time_t
+timelocal(timeptr)
+struct tm *	timeptr;
+{
+	return mktime(timeptr);
+}
+
+time_t
+timegm(timeptr)
+struct tm *	timeptr;
+{
+	return time1(timeptr, gmtime, 0L);
+}
+
+extern struct tm *	offtime P((const time_t * clock, long offset));
+
+time_t
+timeoff(timeptr, offset)
+struct tm *	timeptr;
+const long	offset;
+{
+
+	return time1(timeptr, offtime, offset);
+}
+
+#endif /* defined STD_INSPIRED */
+
+#ifdef CMUCS
+
+/*
+** The following is supplied for compatibility with
+** previous versions of the CMUCS runtime library.
+*/
+
+long
+gtime(tm)
+struct tm *	tmp;
+{
+	time_t	t;
+
+	if ((t = timelocal(tmp)) == WRONG)
+		return -1L;
+	return (long) t;
+}
+
+#endif /* defined CMUCS */

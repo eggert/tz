@@ -443,8 +443,12 @@ Rule	Brazil	2001	max	-	Feb	Sun>=15	 0:00	0	-
 # Decree 4,399 (2002-10-01) repeals DST in AL, CE, MA, PB, PE, PI, RN, SE.
 # <a href="http://www.presidencia.gov.br/CCIVIL/decreto/2002/D4399.htm"></a>
 Rule	Brazil	2002	only	-	Nov	 3	 0:00	1:00	S
-# Press release <http://www.mme.gov.br/noticias/2003/setembro/18.09.2003.htm>
-# repeals DST in BA, MT, TO.
+# Decree 4,844 (2003-09-24) repeals DST in BA, MT, TO.
+# <a href="http://www.presidencia.gov.br/CCIVIL/decreto/2003/D4844.htm"></a>
+# From Paul Eggert (2003-09-25):
+# Decree 4,844 says that daylight savings ends on 2004-02-14 at 00:00.
+# For now we'll assume that is a typo, and that 2004-02-15 was meant.
+# 
 Rule	Brazil	2003	max	-	Oct	Sun>=15	 0:00	1:00	S
 # The latest ruleset listed above says that the following states observe DST:
 # DF, ES, GO, MG, MS, PR, RJ, RS, SC, SP.
@@ -493,7 +497,7 @@ Zone America/Recife	-2:19:36 -	LMT	1914
 Zone America/Araguaina	-3:12:48 -	LMT	1914
 			-3:00	Brazil	BR%sT	1990 Sep 17
 			-3:00	-	BRT	1995 Sep 14
-			-3:00	Brazil	BR%sT	2003 Sep 18
+			-3:00	Brazil	BR%sT	2003 Sep 24
 			-3:00	-	BRT
 #
 # Alagoas (AL), Sergipe (SE)
@@ -511,7 +515,7 @@ Zone America/Maceio	-2:22:52 -	LMT	1914
 # There are too many Salvadors elsewhere, so use America/Bahia instead
 # of America/Salvador.
 Zone America/Bahia	-2:34:04 -	LMT	1914
-			-3:00	Brazil	BR%sT	2003 Sep 18
+			-3:00	Brazil	BR%sT	2003 Sep 24
 			-3:00	-	BRT
 #
 # Goias (GO), Distrito Federal (DF), Minas Gerais (MG),
@@ -528,7 +532,7 @@ Zone America/Campo_Grande -3:38:28 -	LMT	1914
 #
 # Mato Grosso (MT)
 Zone America/Cuiaba	-3:44:20 -	LMT	1914
-			-4:00	Brazil	AM%sT	2003 Sep 18
+			-4:00	Brazil	AM%sT	2003 Sep 24
 			-4:00	-	AMT
 #
 # west Para (PA), Rondonia (RO)

@@ -38,10 +38,10 @@ Zone	US/Yukon	-9:00	US		Y%sT
 
 # Mainland US areas that are always Standard as of 1986.
 
-Zone	US/East-Indiana	-5:00	US	E%sT	1946
-			-5:00	-	EST		# Always EST as of 1986
-Zone	US/Arizona	-7:00	US	M%sT	1946
-			-7:00	-	MST		# Always MST as of 1986
+Zone	US/East-Indiana	-5:00	US		E%sT	1946
+			-5:00	-		EST	# Always EST as of 1986
+Zone	US/Arizona	-7:00	US		M%sT	1946
+			-7:00	-		MST	# Always MST as of 1986
 
 # However. . .a writer from the Inter Tribal Council of Arizona, Inc.,
 # notes in private correspondence dated 12/28/87 that "Presently, only the
@@ -49,6 +49,12 @@ Zone	US/Arizona	-7:00	US	M%sT	1946
 # large size and location in three states."
 
 Link	US/Mountain	Navajo
+
+# Bob Devine notes that "Michigan didn't observe DST from 1968 to 1973."
+
+Zone	US/Michigan	-5:00	US		E%sT	1968
+			-5:00	-		EST	1973
+			-5:00	US		E%sT
 
 # And then there's Hawaii.
 # DST was observed for one day in 1933;

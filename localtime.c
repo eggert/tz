@@ -48,7 +48,9 @@ static char	elsieid[] = "%W%";
 #define WILDABBR	"   "
 #endif /* !defined WILDABBR */
 
-static const char GMT[] = "GMT";
+static char		wildabbr[] = "WILDABBR";
+
+static const char	gmt[] = "GMT";
 
 struct ttinfo {				/* time type information */
 	long		tt_gmtoff;	/* GMT offset in seconds */
@@ -79,7 +81,7 @@ struct state {
 	time_t		ats[TZ_MAX_TIMES];
 	unsigned char	types[TZ_MAX_TIMES];
 	struct ttinfo	ttis[TZ_MAX_TYPES];
-	char		chars[BIGGEST(BIGGEST(TZ_MAX_CHARS + 1, sizeof GMT),
+	char		chars[BIGGEST(BIGGEST(TZ_MAX_CHARS + 1, sizeof gmt),
 				(2 * (MY_TZNAME_MAX + 1)))];
 	struct lsinfo	lsis[TZ_MAX_LEAPS];
 };
@@ -146,8 +148,8 @@ static int		lcl_is_set;
 static int		gmt_is_set;
 
 char *			tzname[2] = {
-	WILDABBR,
-	WILDABBR
+	wildabbr,
+	wildabbr
 };
 
 /*
@@ -188,8 +190,8 @@ settzname()
 	register const struct state * const	sp = lclptr;
 	register int				i;
 
-	tzname[0] = WILDABBR;
-	tzname[1] = WILDABBR;
+	tzname[0] = wildabbr;
+	tzname[1] = wildabbr;
 #ifdef USG_COMPAT
 	daylight = 0;
 	timezone = 0;
@@ -199,7 +201,7 @@ settzname()
 #endif /* defined ALTZONE */
 #ifdef ALL_STATE
 	if (sp == NULL) {
-		tzname[0] = tzname[1] = GMT;
+		tzname[0] = tzname[1] = gmt;
 		return;
 	}
 #endif /* defined ALL_STATE */
@@ -553,6 +555,7 @@ const long				offset;
 	register int	i;
 	int		d, m1, yy0, yy1, yy2, dow;
 
+	INITIALIZE(value);
 	leapyear = isleap(year);
 	switch (rulep->r_type) {
 
@@ -643,8 +646,8 @@ const int			lastditch;
 {
 	const char *			stdname;
 	const char *			dstname;
-	int				stdlen;
-	int				dstlen;
+	unsigned			stdlen;
+	unsigned			dstlen;
 	long				stdoffset;
 	long				dstoffset;
 	register time_t *		atp;
@@ -652,6 +655,7 @@ const int			lastditch;
 	register char *			cp;
 	register int			load_result;
 
+	INITIALIZE(dstname);
 	stdname = name;
 	if (lastditch) {
 		stdlen = strlen(name);	/* length of standard zone name */
@@ -843,8 +847,8 @@ static void
 gmtload(sp)
 struct state * const	sp;
 {
-	if (tzload(GMT, sp) != 0)
-		(void) tzparse(GMT, sp, TRUE);
+	if (tzload(gmt, sp) != 0)
+		(void) tzparse(gmt, sp, TRUE);
 }
 
 #ifndef STD_INSPIRED
@@ -896,7 +900,7 @@ tzset()
 		lclptr->timecnt = 0;
 		lclptr->ttis[0].tt_gmtoff = 0;
 		lclptr->ttis[0].tt_abbrind = 0;
-		(void) strcpy(lclptr->chars, GMT);
+		(void) strcpy(lclptr->chars, gmt);
 	} else if (tzload(name, lclptr) != 0)
 		if (name[0] == ':' || tzparse(name, lclptr, FALSE) != 0)
 			(void) gmtload(lclptr);
@@ -995,11 +999,11 @@ struct tm * const	tmp;
 	** but this is no time for a treasure hunt.
 	*/
 	if (offset != 0)
-		tmp->TM_ZONE = WILDABBR;
+		tmp->TM_ZONE = wildabbr;
 	else {
 #ifdef ALL_STATE
 		if (gmtptr == NULL)
-			tmp->TM_ZONE = GMT;
+			tmp->TM_ZONE = gmt;
 		else	tmp->TM_ZONE = gmtptr->chars;
 #endif /* defined ALL_STATE */
 #ifndef ALL_STATE

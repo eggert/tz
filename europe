@@ -642,7 +642,6 @@
 # Whitman says Dublin Mean Time was -0:25:21, which is more precise than Shanks.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	GB-Eire 1847	only	-	Sep	22	0:00	0	GMT
 # 1916 to 1925--irregular
 Rule	GB-Eire	1916	only	-	May	21	2:00s	1:00	BST
 Rule	GB-Eire	1916	only	-	Oct	 1	2:00s	0	GMT
@@ -751,7 +750,6 @@ Zone	Europe/Dublin	-0:25:21 -	LMT	1880 Aug  2
 # EC rules are for the European Community.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	EC	1800	only	-	Jan	 1	 0:00	0	-
 Rule	EC	1977	1980	-	Apr	Sun>=1	 1:00u	1:00	" DST"
 Rule	EC	1977	only	-	Sep	lastSun	 1:00u	0	-
 Rule	EC	1978	only	-	Oct	 1	 1:00u	0	-
@@ -760,7 +758,6 @@ Rule	EC	1981	max	-	Mar	lastSun	 1:00u	1:00	" DST"
 Rule	EC	1996	max	-	Oct	lastSun	 1:00u	0	-
 
 # W-Eur differs from EC only in that W-Eur uses standard time.
-Rule	W-Eur	1800	only	-	Jan	 1	 0:00	0	-
 Rule	W-Eur	1977	1980	-	Apr	Sun>=1	 1:00s	1:00	" DST"
 Rule	W-Eur	1977	only	-	Sep	lastSun	 1:00s	0	-
 Rule	W-Eur	1978	only	-	Oct	 1	 1:00s	0	-
@@ -770,7 +767,6 @@ Rule	W-Eur	1996	max	-	Oct	lastSun	 1:00s	0	-
 
 # Older M-Eur rules are for convenience in the tables.
 # From 1977 on, M-Eur differs from EC only in that M-Eur uses standard time.
-Rule	M-Eur	1800	only	-	Jan	 1	 0:00	0	-
 Rule	M-Eur	1916	only	-	Apr	30	23:00	1:00	" DST"
 Rule	M-Eur	1916	only	-	Oct	 1	 1:00	0	-
 Rule	M-Eur	1917	1918	-	Apr	Mon>=15	 2:00s	1:00	" DST"
@@ -795,7 +791,6 @@ Rule	M-Eur	1981	max	-	Mar	lastSun	 2:00s	1:00	" DST"
 Rule	M-Eur	1996	max	-	Oct	lastSun	 2:00s	0	-
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Russia	1880	only	-	Jan	 1	 0:00	0	-
 Rule	Russia	1917	only	-	Jul	 1	23:00	1:00	" DST"
 Rule	Russia	1917	only	-	Dec	28	 0:00	0	-
 Rule	Russia	1918	only	-	May	31	22:00	2:00	" DDST"
@@ -870,7 +865,6 @@ Zone	Europe/Andorra	0:06:04 -	LMT	1901
 
 # Austria
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Austria	1918	only	-	Jun	16	3:00	0	-
 Rule	Austria	1920	only	-	Apr	 5	2:00s	1:00	" DST"
 Rule	Austria	1920	only	-	Sep	13	2:00s	0	-
 Rule	Austria	1945	only	-	Apr	 2	2:00s	1:00	" DST"
@@ -987,7 +981,6 @@ Zone	Europe/Zagreb	1:03:52	-	LMT	1884
 
 # Czech Republic
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Czech	1944	only	-	Sep	17	2:00s	0	-
 Rule	Czech	1945	only	-	Apr	 8	2:00s	1:00	" DST"
 Rule	Czech	1945	only	-	Nov	18	2:00s	0	-
 Rule	Czech	1946	only	-	May	 6	2:00s	1:00	" DST"
@@ -1070,7 +1063,6 @@ Zone	Europe/Tallinn	1:39:00	-	LMT	1880
 # Go with Strang instead.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Finland	1921	only	-	May	1	0:00	0	-
 Rule	Finland	1942	only	-	Apr	3	0:00	1:00	" DST"
 Rule	Finland	1942	only	-	Oct	3	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1083,7 +1075,6 @@ Zone	Europe/Helsinki	1:39:52 -	LMT	1878 May 31
 # Shanks seems to use `24:00' ambiguously; we resolve it with Whitman.
 # From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	France	1911	only	-	Jan	 1	 0:00	0	-
 Rule	France	1916	only	-	Jun	14	23:00s	1:00	" DST"
 Rule	France	1916	1919	-	Oct	Sun>=1	 0:00	0	-
 Rule	France	1917	only	-	Mar	24	23:00s	1:00	" DST"
@@ -1173,7 +1164,6 @@ Zone Europe/Gibraltar	-0:21:24 -	LMT	1880 Aug  2
 # Part switched to the Gregorian calendar on 1916 Jul 28.
 # The rest switched on 1920 Mar 18.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Greece	1916	only	-	July	28	0:01	0	-
 # Whitman gives 1932 Jul 5 - Nov 1; go with Shanks.
 Rule	Greece	1932	only	-	Jul	 7	0:00	1:00	" DST"
 Rule	Greece	1932	only	-	Sep	 1	0:00	0	-
@@ -1209,7 +1199,6 @@ Zone	Europe/Athens	1:34:52 -	LMT	1895 Sep 14
 
 # Hungary
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Hungary	1918	only	-	Sep	29	 2:00s	0	-
 Rule	Hungary	1919	only	-	Apr	15	 3:00	1:00	" DST"
 Rule	Hungary	1919	only	-	Sep	15	 3:00	0	-
 Rule	Hungary	1920	only	-	Apr	 5	 3:00	1:00	" DST"
@@ -1272,7 +1261,6 @@ Zone	Europe/Budapest	1:16:20 -	LMT	1890 Oct
 # Reykavik was -1:28 from 1837 to 1908, local mean time before that.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Iceland	1908	only	-	Jan	 1	 0:00	0	S
 Rule	Iceland	1917	1918	-	Feb	19	23:00	1:00	D
 Rule	Iceland	1917	only	-	Oct	21	 1:00	0	S
 Rule	Iceland	1918	only	-	Nov	16	 1:00	0	S
@@ -1301,7 +1289,6 @@ Zone Atlantic/Reykjavik	-1:27:24 -	LMT	1837
 
 # Italy
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Italy	1893	only	-	Nov	 1	0:00s	0	S
 # Shanks gives transition times of 1916-1920 as 24:00; go with Whitman.
 Rule	Italy	1916	only	-	Jun	 3	0:00s	1:00	" DST"
 Rule	Italy	1916	only	-	Sep	30	0:00s	0	-
@@ -1391,7 +1378,6 @@ Zone	Europe/Vilnius	1:41:16	-	LMT	1880
 # Luxembourg
 # Whitman disagrees with most of these dates in minor ways; go with Shanks.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Lux	1904	only	-	Jun	 1	 0:00	0	-
 Rule	Lux	1916	only	-	May	14	23:00	1:00	" DST"
 Rule	Lux	1916	only	-	Oct	 1	 1:00	0	-
 Rule	Lux	1917	only	-	Apr	28	23:00	1:00	" DST"
@@ -1474,7 +1460,6 @@ Zone	Europe/Monaco	0:29:32 -	LMT	1891 Mar 15
 # Howse writes that the Netherlands' railways used GMT between 1892 and 1940,
 # but for other purposes the Netherlands used Amsterdam mean time.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Neth	1892	only	-	May	 1	0:00	0	AMT
 # Shanks gives 1916 May 1 0:00 and 1916 Oct 1 0:00; go with Whitman.
 Rule	Neth	1916	only	-	May	 1	2:00s	1:00	NST
 Rule	Neth	1916	only	-	Oct	 2	2:00s	0	AMT
@@ -1510,7 +1495,6 @@ Zone Europe/Amsterdam	0:19:28 -	LMT	1892 May
 
 # Norway
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Norway	1892	only	-	May	 1	0:00	0	-
 # Whitman gives 1916 May 21 - 1916 Oct 21; go with Shanks.
 Rule	Norway	1916	only	-	May	22	1:00	1:00	" DST"
 Rule	Norway	1916	only	-	Sep	30	0:00	0	-
@@ -1535,6 +1519,7 @@ Zone	Europe/Oslo	0:43:00 -	LMT	1895
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Atlantic/Jan_Mayen	-1:00	-	EGT
 
+# XXX--worry about 1918!!
 # Poland
 # Austrian and German Poland switched from the Julian to the Gregorian calendar
 # on 1582 Oct 15.  Russian Poland switched on 1918 Jan 14.
@@ -1573,7 +1558,6 @@ Zone	Europe/Warsaw	1:24:00 -	LMT	1880
 
 # Portugal
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Port	1911	only	-	May	24	 0:00	0	-
 Rule	Port	1916	only	-	Jun	17	23:00	1:00	" DST"
 # Whitman gives 1916 Oct 31; go with Shanks.
 Rule	Port	1916	only	-	Nov	 1	 1:00	0	-
@@ -1670,7 +1654,6 @@ Zone Atlantic/Madeira	-1:07:36 -	LMT	1884		# Funchal
 # Catholic Romania switched from the Julian to the Gregorian calendar on
 # on 1919 Mar 18.  Greek Orthodox Romania switched on 1920 Mar 18.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Romania	1931	only	-	Jul	24	 0:00	0	-
 Rule	Romania	1932	only	-	May	21	 0:00s	1:00	" DST"
 Rule	Romania	1932	1939	-	Oct	Sun>=1	 0:00s	0	-
 Rule	Romania	1933	1939	-	Apr	Sun>=2	 0:00s	1:00	" DST"
@@ -1800,7 +1783,6 @@ Zone Europe/Ljubljana	0:58:04	-	LMT	1884
 
 # Spain
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Spain	1901	only	-	Jan	 1	 0:00	0	-
 # For 1917-1919 Whitman gives Apr Sat>=1 - Oct Sat>=1; go with Shanks.
 Rule	Spain	1917	only	-	May	 5	23:00s	1:00	" DST"
 Rule	Spain	1917	1919	-	Oct	 6	23:00s	0	-
@@ -1864,7 +1846,6 @@ Zone Europe/Stockholm	1:12:12 -	LMT	1878 May 31
 # and their performance improved enormously.  Communities began to keep
 # mean time in preference to apparent time -- Geneva from 1780 ....
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Swiss	1894	only	-	Jun	1	0:00	0	-
 # From Whitman (who writes ``Midnight?''):
 Rule	Swiss	1940	only	-	Nov	 2	0:00	1:00	" DST"
 Rule	Swiss	1940	only	-	Dec	31	0:00	0	-
@@ -1881,7 +1862,6 @@ Zone	Europe/Zurich	0:34:08 -	LMT	1848 Sep 12
 # European Turkey switched to the Gregorian calendar in 1908.
 # Asian Turkey switched in 1914.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Turkey	1910	only	-	Oct	 1	0:00	0	-
 Rule	Turkey	1916	only	-	May	 1	0:00	1:00	" DST"
 Rule	Turkey	1916	only	-	Oct	 1	0:00	0	-
 Rule	Turkey	1920	only	-	Mar	28	0:00	1:00	" DST"

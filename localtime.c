@@ -1140,11 +1140,18 @@ const int	base;
 		*tensptr += *unitsptr / base;
 		*unitsptr %= base;
 	} else if (*unitsptr < 0) {
+		/*
+		** Ensure that *unitsptr is negatable.
+		*/
 		--*tensptr;
 		*unitsptr += base;
 		if (*unitsptr < 0) {
-			*tensptr -= 1 + (-*unitsptr) / base;
-			*unitsptr = base - (-*unitsptr) % base;
+			/*
+			** Thanks to Tom Karzes (Tom-Karzes@deshaw.com)
+			** for an off-by-one fix.  ado, 1/8/93
+			*/
+			*tensptr -= 1 + (-*unitsptr - 1) / base;
+			*unitsptr = base - 1 - (-*unitsptr - 1) % base;
 		}
 	}
 }

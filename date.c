@@ -60,11 +60,11 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 ** "-u" is provided unconditionally.
 */
 
-#ifndef N_OPTION
-#ifndef NO_N_OPTION
-#define N_OPTION
-#endif /* !defined NO_N_OPTION */
-#endif /* !defined N_OPTION */
+#ifndef A_OPTION
+#ifndef NO_A_OPTION
+#define A_OPTION
+#endif /* !defined NO_A_OPTION */
+#endif /* !defined A_OPTION */
 
 #ifndef D_OPTION
 #ifndef NO_D_OPTION
@@ -72,17 +72,17 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #endif /* !defined NO_D_OPTION */
 #endif /* !defined D_OPTION */
 
+#ifndef N_OPTION
+#ifndef NO_N_OPTION
+#define N_OPTION
+#endif /* !defined NO_N_OPTION */
+#endif /* !defined N_OPTION */
+
 #ifndef T_OPTION
 #ifndef NO_T_OPTION
 #define T_OPTION
 #endif /* !defined NO_T_OPTION */
 #endif /* !defined T_OPTION */
-
-#ifndef A_OPTION
-#ifndef NO_A_OPTION
-#define A_OPTION
-#endif /* !defined NO_A_OPTION */
-#endif /* !defined A_OPTION */
 
 /*
 ** Finally, a feature.
@@ -130,9 +130,11 @@ extern double		atof();
 extern char **		environ;
 extern char *		getlogin();
 extern int		logwtmp();
+extern char *		malloc();
 extern time_t		mktime();
 extern char *		optarg;
 extern int		optind;
+extern char *		realloc();
 extern char *		strchr();
 extern time_t		time();
 extern char *		tzname[2];
@@ -155,7 +157,6 @@ static void		reset();
 static void		timeout();
 static void		usage();
 static void		wildinput();
-static time_t		xtime();
 
 static char		usemes[132];
 
@@ -304,6 +305,20 @@ char *	argv[];
 			** Out of range values,
 			** or time that falls in a DST transition hole?
 			*/
+			if ((cp = strchr(value, '.')) != NULL) {
+				/*
+				** Ensure that the failure of
+				**	TZ=US/Eastern date 8712312359.60
+				** doesn't get misdiagnosed.  (It was
+				**	TZ=US/Eastern date 8712311859.60
+				** when the leap second was inserted.)
+				** The normal check won't work since
+				** the given time is valid in GMT.
+				*/
+				if (atoi(cp + 1) >= 60)
+					wildinput("time", value,
+						"out of range seconds given");
+			}
 			dogmt();
 			t = convert(value, FALSE, now);
 			if (t == -1)
@@ -359,7 +374,18 @@ char *	argv[];
 
 	checkfinal(value, dousg, t, now);
 
+#ifdef EBUG
+	{
+		struct tm	tm;
+
+		tm = *localtime(&t);
+		timeout(stdout, "%c\n", &tm);
+		(void) exit(retval);
+	}
+#endif /* defined EBUG */
+
 	display(format);
+
 	/* gcc -Wall pacifier */
 	for ( ; ; )
 		;
@@ -377,6 +403,9 @@ dogmt()
 	environ = saveenv;
 }
 
+#ifndef TSP_SETDATE
+/*ARGSUSED*/
+#endif /* !defined TSP_SETDATE */
 static void
 reset(t, nflag)
 time_t	t;
@@ -464,43 +493,6 @@ char *	string;
 }
 
 static void
-iffy(thist, thatt, value, reason)
-time_t	thist;
-time_t	thatt;
-char *	value;
-char *	reason;
-{
-	struct tm	tm;
-
-	(void) fprintf(stderr, "date: warning: ambiguous time \"%s\", %s.\n",
-		value, reason);
-	tm = *gmtime(&thist);
-	(void) fprintf(stderr, "Time was set as if you used\n");
-	/*
-	** Avoid running afoul of SCCS!
-	*/
-	timeout(stderr, "\tdate -u %Y", &tm);
-	timeout(stderr, "%m%d%H", &tm);
-	timeout(stderr, "%M.%S\n", &tm);
-	tm = *localtime(&thist);
-	timeout(stderr, "to get %c", &tm);
-	(void) fprintf(stderr, " (%s time)",
-		tm.tm_isdst ? "summer" : "standard");
-	(void) fprintf(stderr, ".  Use\n");
-	tm = *gmtime(&thatt);
-	timeout(stderr, "\tdate -u %Y", &tm);
-	timeout(stderr, "%m%d%H", &tm);
-	timeout(stderr, "%M.%S\n", &tm);
-	tm = *localtime(&thatt);
-	timeout(stderr, "to get %c", &tm);
-	(void) fprintf(stderr, " (%s time)",
-		tm.tm_isdst ? "summer" : "standard");
-	(void) fprintf(stderr, ".\n");
-	errensure();
-	(void) exit(retval);
-}
-
-static void
 display(format)
 char *	format;
 {
@@ -529,25 +521,36 @@ char *	format;
 
 extern size_t	strftime();
 
+#define INCR	1024
+
 static void
 timeout(fp, format, tmp)
 FILE *	fp;
 char *	format;
 tm *	tmp;
 {
-	char	buf[1024];
-	size_t	result;
+	char *	cp;
+	size_t	result, size;
 
 	if (*format == '\0')
 		return;
-	result = strftime(buf, sizeof buf, format, tmp);
-	if (result == 0) {
-		(void) fprintf(stderr,
-			"date: error: strftime: result is too long\n");
-		errensure();
-		(void) exit(retval);
+	size = INCR;
+	cp = malloc(size);
+	for ( ; ; ) {
+		if (cp == NULL) {
+			(void) fprintf(stderr,
+				"date: error: can't allocate memory\n");
+			errensure();
+			(void) exit(retval);
+		}
+		result = strftime(cp, size, format, tmp);
+		if (result != 0)
+			break;
+		size += INCR;
+		cp = realloc(cp, size);
 	}
-	(void) fwrite(buf, 1, result, fp);
+	(void) fwrite(cp, 1, size, fp);
+	free(cp);
 }
 
 #else /* !defined USE_STRFTIME */
@@ -729,73 +732,6 @@ register struct tm * btmp;
 }
 
 /*
-** Check for iffy input.
-*/
-
-static void
-checkfinal(value, didusg, t, oldnow)
-char *	value;
-int	didusg;
-time_t	t;
-time_t	oldnow;
-{
-	time_t		othert;
-	struct tm	tm;
-	struct tm	othertm;
-	register int	pass;
-	register long	offset;
-	
-	/*
-	** See if there's both a USG and a BSD interpretation.
-	*/
-	othert = convert(value, !didusg, oldnow);
-	if (othert != -1 && othert != t)
-		iffy(t, othert, value, "year could be at start or end");
-	/*
-	** See if there's both a DST and a STD version.
-	*/
-	tm = *localtime(&t);
-	othertm = tm;
-	othertm.tm_isdst = !tm.tm_isdst;
-	othert = mktime(&tm);
-	if (othert != -1 && comptm(&tm, &othertm))
-		iffy(t, othert, value,
-			"both standard and summer time versions exist");
-/*
-** Final check.
-**
-** If a jurisdiction shifts time *without* shifting whether time is
-** summer or standard (as Hawaii, the United Kingdom, and Saudi Arabia
-** have done), routine checks for iffy times may not work.
-** So we perform this final check, deferring it until after the time has
-** been set--it may take a while, and we don't want to introduce an unnecessary
-** lag between the time the user enters their command and the time that
-** stime/settimeofday is called.
-** 
-** We just check nearby times to see if any of them have the same representation
-** as the time that convert returned.  We work our way out from the center
-** for quick response in solar time situations.  We only handle common cases--
-** offsets of at most a minute, and offsets of exact numbers of minutes
-** and at most an hour.
-*/
-	for (offset = 1; offset <= 60; ++offset)
-		for (pass = 1; pass <= 4; ++pass) {
-			if (pass == 1)
-				othert = t + offset;
-			else if (pass == 2)
-				othert = t - offset;
-			else if (pass == 3)
-				othert = t + 60 * offset;
-			else	othert = t - 60 * offset;
-			othertm = *localtime(&othert);
-			if (comptm(&tm, &othertm) == 0)
-				iffy(t, othert, value,
-					"multiple same-type times exist");
-
-		}
-}
-
-/*
 ** convert --
 **	convert user's input into a time_t.
 */
@@ -809,8 +745,7 @@ int		dousg;
 time_t		t;
 {
 	register char *	cp;
-	register char *	endp;
-	register int	i;
+	register char *	dotp;
 	register int	cent, year_in_cent, month, hour, day, mins, secs;
 	struct tm	tm, outtm;
 	time_t		outt;
@@ -827,29 +762,25 @@ time_t		t;
 	day = tm.tm_mday;
 	hour = tm.tm_hour;
 	mins = tm.tm_min;
+	secs = 0;
 
-	endp = strchr(value, '.');
-	if (endp == NULL) {
-		endp = strchr(value, '\0');
-		secs = 0;
-	} else {
-		cp = endp + 1;
+	dotp = strchr(value, '.');
+	for (cp = value; *cp != '\0'; ++cp)
+		if (!isdigit(*cp) && cp != dotp)
+			wildinput("time", value, "contains a nondigit");
+
+	if (dotp == NULL)
+		dotp = strchr(value, '\0');
+	else {
+		cp = dotp + 1;
 		if (strlen(cp) != 2)
 			wildinput("time", value,
-				"seconds part is not two characters");
-		if (!isdigit(cp[1]) || !isdigit(cp[2]))
-			wildinput("time", value,
-				"seconds part contains a nondigit");
+				"seconds part is not two digits");
 		secs = ATOI2(cp);
 	}
 
-	for (cp = value; cp < endp; ++cp)
-		if (!isdigit(*cp))
-			wildinput("time", value,
-				"main part contains a nondigit");
-
 	cp = value;
-	switch (endp - cp) {
+	switch (dotp - cp) {
 		default:
 			wildinput("time", value, "main part is wrong length");
 		case 12: /* yyyymmddhhmm */
@@ -890,6 +821,115 @@ time_t		t;
 	outtm = tm;
 	outt = mktime(&outtm);
 	return (comptm(&tm, &outtm) == 0) ? outt : -1;
+}
+
+/*
+** Code from here on out is either as provided by UCB
+** or is only called just before the program exits.
+*/
+
+/*
+** Check for iffy input.
+*/
+
+static void
+checkfinal(value, didusg, t, oldnow)
+char *	value;
+int	didusg;
+time_t	t;
+time_t	oldnow;
+{
+	time_t		othert;
+	struct tm	tm;
+	struct tm	othertm;
+	register int	pass;
+	register long	offset;
+	
+	/*
+	** See if there's both a USG and a BSD interpretation.
+	*/
+	othert = convert(value, !didusg, oldnow);
+	if (othert != -1 && othert != t)
+		iffy(t, othert, value, "year could be at start or end");
+	/*
+	** See if there's both a DST and a STD version.
+	*/
+	tm = *localtime(&t);
+	othertm = tm;
+	othertm.tm_isdst = !tm.tm_isdst;
+	othert = mktime(&othertm);
+	if (othert != -1 && othertm.tm_isdst != tm.tm_isdst &&
+		comptm(&tm, &othertm) == 0)
+			iffy(t, othert, value,
+				"both standard and summer time versions exist");
+/*
+** Final check.
+**
+** If a jurisdiction shifts time *without* shifting whether time is
+** summer or standard (as Hawaii, the United Kingdom, and Saudi Arabia
+** have done), routine checks for iffy times may not work.
+** So we perform this final check, deferring it until after the time has
+** been set--it may take a while, and we don't want to introduce an unnecessary
+** lag between the time the user enters their command and the time that
+** stime/settimeofday is called.
+** 
+** We just check nearby times to see if any of them have the same representation
+** as the time that convert returned.  We work our way out from the center
+** for quick response in solar time situations.  We only handle common cases--
+** offsets of at most a minute, and offsets of exact numbers of minutes
+** and at most an hour.
+*/
+	for (offset = 1; offset <= 60; ++offset)
+		for (pass = 1; pass <= 4; ++pass) {
+			if (pass == 1)
+				othert = t + offset;
+			else if (pass == 2)
+				othert = t - offset;
+			else if (pass == 3)
+				othert = t + 60 * offset;
+			else	othert = t - 60 * offset;
+			othertm = *localtime(&othert);
+			if (comptm(&tm, &othertm) == 0)
+				iffy(t, othert, value,
+					"multiple matching times exist");
+		}
+}
+
+static void
+iffy(thist, thatt, value, reason)
+time_t	thist;
+time_t	thatt;
+char *	value;
+char *	reason;
+{
+	struct tm	tm;
+
+	(void) fprintf(stderr, "date: warning: ambiguous time \"%s\", %s.\n",
+		value, reason);
+	tm = *gmtime(&thist);
+	(void) fprintf(stderr, "Time was set as if you used\n");
+	/*
+	** Avoid running afoul of SCCS!
+	*/
+	timeout(stderr, "\tdate -u %Y", &tm);
+	timeout(stderr, "%m%d%H", &tm);
+	timeout(stderr, "%M.%S\n", &tm);
+	tm = *localtime(&thist);
+	timeout(stderr, "to get %c", &tm);
+	(void) fprintf(stderr, " (%s time)",
+		tm.tm_isdst ? "summer" : "standard");
+	(void) fprintf(stderr, ".  Use\n");
+	tm = *gmtime(&thatt);
+	timeout(stderr, "\tdate -u %Y", &tm);
+	timeout(stderr, "%m%d%H", &tm);
+	timeout(stderr, "%M.%S\n", &tm);
+	tm = *localtime(&thatt);
+	timeout(stderr, "to get %c", &tm);
+	(void) fprintf(stderr, " (%s time)",
+		tm.tm_isdst ? "summer" : "standard");
+	(void) fprintf(stderr, ".\n");
+	errensure();
+	(void) exit(retval);
 }
 
 #ifdef TSP_SETDATE

@@ -22,6 +22,10 @@ extern char *		sprintf();
 extern long		time();
 extern char *		tz_abbr;
 
+#ifdef lint
+int			optind;
+#endif
+
 static int		longest;
 
 #define	GETSHORT(val, p) { \
@@ -51,6 +55,9 @@ char *	argv[];
 	int		timecnt;
 	char		buf[BUFSIZ];
 
+#ifdef lint
+	(void) ftell(stdin);
+#endif
 	vflag = 0;
 	while ((c = getopt(argc, argv, "v")) == 'v')
 		vflag = 1;
@@ -95,24 +102,24 @@ char *	argv[];
 		}
 		{
 			register unsigned char *	p;
-			unsigned char			buf[2];
+			unsigned char			two[2];
 			struct tzhead			h;
 
 			(void) fseek(fp, (long) sizeof h.tzh_reserved, 0);
-			if (fread((char *) &buf, sizeof buf, 1, fp) != 1)
+			if (fread((char *) two, sizeof two, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
-			p = buf;
+			p = two;
 			GETSHORT(timecnt, p);
 			(void) fseek(fp, (long) (2 * sizeof (short)), 1);
 		}
 		for (j = 0; j < timecnt; ++j) {
 			register unsigned char *	p;
-			unsigned char			buf[4];
+			unsigned char			four[4];
 			long				t;
 
-			if (fread((char *) &buf, sizeof buf, 1, fp) != 1)
+			if (fread((char *) four, sizeof four, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
-			p = buf;
+			p = four;
 			GETLONG(t, p);
 			show(argv[i], t - 1, TRUE);
 			show(argv[i], t, TRUE);

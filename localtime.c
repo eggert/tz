@@ -1202,6 +1202,11 @@ int * const		okayp;
 		yourtm.tm_mday +=
 			year_lengths[isleap(yourtm.tm_year + TM_YEAR_BASE)];
 	}
+	while (yourtm.tm_mday > DAYSPERLYEAR) {
+		yourtm.tm_mday -=
+			year_lengths[isleap(yourtm.tm_year + TM_YEAR_BASE)];
+		++yourtm.tm_year;
+	}
 	for ( ; ; ) {
 		i = mon_lengths[isleap(yourtm.tm_year +
 			TM_YEAR_BASE)][yourtm.tm_mon];

@@ -71,10 +71,10 @@
 ###############################################################################
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Russia	1981	1984	-	Apr	1	0:00	1:00	D
-Rule	Russia	1981	1983	-	Oct	1	0:00	0	K
-Rule	Russia	1984	max	-	Sep	lastSun	2:00s	0	K
-Rule	Russia	1985	max	-	Mar	lastSun	2:00s	1:00	D
+Rule	Kabul	1981	1984	-	Apr	1	0:00	1:00	D
+Rule	Kabul	1981	1983	-	Oct	1	0:00	0	K
+Rule	Kabul	1984	max	-	Sep	lastSun	2:00s	0	K
+Rule	Kabul	1985	max	-	Mar	lastSun	2:00s	1:00	D
 
 # Afghanistan
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

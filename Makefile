@@ -161,7 +161,7 @@ GCC_DEBUG_FLAGS = -Dlint -g -O -fno-common \
 # "timeoff" is like "timegm" except that it accepts a second (long) argument
 # that gives an offset to use when converting to a time_t.
 # "posix2time" and "time2posix" are described in an included manual page.
-# None of these functions are described in X3J11's current work.
+# None of these functions are described in X3J11's work.
 # Sun has provided "tzsetwall", "timelocal", and "timegm" in SunOS 4.0.
 # These functions may well disappear in future releases of the time
 # conversion package.

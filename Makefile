@@ -396,15 +396,12 @@ public:		$(ENCHILADA) zic
 
 typecheck:	
 		make clean
-		make CFLAGS=-Wp,-D_TIME_T,-Dtime_t=long\\\ long
-		./zdump -v US/Eastern 
-		make clean
-		make CFLAGS=-Wp,-D_TIME_T,-Dtime_t=double
-		./zdump -v US/Eastern 
-		make clean
-		make CFLAGS=-Wp,-D_TIME_T,-Dtime_t=unsigned
-		./zdump -v US/Eastern 
-		make clean
+		for i in "long long" double unsigned; \
+		do \
+			make CFLAGS="-D_TIME_T \"-Dtime_t=$$i\"" ; \
+			./zdump -v US/Eastern ; \
+			make clean ; \
+		done
 
 zonenames:	$(TDATA)
 		@$(AWK) '/^Zone/ { print $$2 } /^Link/ { print $$3 }' $(TDATA)

@@ -714,6 +714,8 @@ register struct state *	sp;
 		** Two transitions per year, from 1970 to 2038.
 		*/
 		sp->timecnt = 2*(2038 - 1970 + 1);
+		if (sp->timecnt > TZ_MAX_TIMES)
+			return -1;
 		sp->ttis[0].tt_gmtoff = -dstoffset;
 		sp->ttis[0].tt_isdst = 1;
 		sp->ttis[0].tt_abbrind = stdlen + 1;
@@ -786,6 +788,8 @@ register struct state *	sp;
 		sp->ttis[0].tt_isdst = 0;
 		sp->ttis[0].tt_abbrind = 0;
 	}
+	if (sp->charcnt > sizeof sp->chars)
+		return -1;
 	cp = sp->chars;
 	(void) strncpy(cp, stdname, stdlen);
 	cp += stdlen;

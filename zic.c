@@ -10,14 +10,14 @@ static char	elsieid[] = "%W%";
 #include "sys/stat.h"
 #ifndef S_IWGRP
 #define S_IWGRP 00020
-#endif
+#endif /* !defined S_IWGRP */
 #ifndef S_IWOTH
 #define S_IWOTH 00002
-#endif
+#endif /* !defined S_IWOTH */
 
 #ifndef F_OK
 #define F_OK 0
-#endif
+#endif /* !defined F_OK */
 
 struct rule {
 	const char *	r_filename;

@@ -49,6 +49,19 @@
 # From U. S. Naval Observatory (January 19, 19889):
 # ARGENTINA           3 H BEHIND   UTC
 
+# From Hernan G. Otero <hernan@isoft.com.ar> (June 26, 1995):
+# I am sending modifications to the Argentinian time zone table...
+# please check comments below to find out the source used.
+# 
+# We did three modifications:
+# 
+# * The table was completed for the missing years 1989-1993.
+# * The name of the time zone was changed from
+#   America/Buenos_Aires to Argentina/Buenos_Aires
+# * The (short) names where changed from E%sT to AR%s (AR was
+#   chosen because they are the ISO letters that represent
+#   Argentina).
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Arg	1930	only	-	Dec	 1	0:00	1:00	D
 Rule	Arg	1931	only	-	Apr	 1	0:00	0	S
@@ -79,26 +92,34 @@ Rule	Arg	1986	1987	-	Oct	25	0:00	1:00	D
 Rule	Arg	1987	only	-	Feb	13	0:00	0	S
 Rule	Arg	1988	only	-	Feb	 7	0:00	0	S
 Rule	Arg	1988	only	-	Dec	 1	0:00	1:00	D
-Rule	Arg	1989	only	-	Mar	16	0:00	0	S
+#
+# From Hernan G. Otero <hernan@isoft.com.ar> (June 26, 1995):
+# These corrections were contributed by InterSoft Argentina S.A.,
+# obtaining the data from the:
+# Talleres de Hidrografia Naval Argentina
+# (Argentinian Naval Hidrography Institute)
+#
+Rule	Arg	1989	only	-	Mar	 5	0:00	0	S
 Rule	Arg	1989	only	-	Oct	15	0:00	1:00	D
 Rule	Arg	1990	only	-	Mar	 4	0:00	0	S
-# _The Economist_ (8 Jan 1994, p 42) reports that Argentina
-# had DST in 1991-2 and 1992-3, but not in 1990-1 or in 1993-4.
-# It has something to do with electricity companies meeting demand in summer.
-# We don't know the 1991-3 transition times, unfortunately.
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Buenos_Aires -3:53:48 -	LMT	1894 Nov
-			-4:17	-	CMT	1920 May    # Cordoba Mean Time
-			-4:00	-	AST	1930 Dec
-			-4:00	Arg	A%sT	1969 Oct 5
-			-3:00	Arg	E%sT
-
-# Bolivia
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/La_Paz	-4:32:36 -	LMT	1890
-			-4:33	-	LPMT	1931 Oct 15 # La Paz Mean Time
-			-4:33	1:00	LPDT	1932 Mar 21
-			-4:00	-	AST
+Rule	Arg	1990	only	-	Oct	21	0:00	1:00	D
+Rule	Arg	1991	only	-	Mar	 3	0:00	0	S
+Rule	Arg	1991	only	-	Oct	20	0:00	1:00	D
+Rule	Arg	1992	only	-	Mar	 1	0:00	0	S
+Rule	Arg	1992	only	-	Oct	18	0:00	1:00	D
+Rule	Arg	1993	only	-	Mar	 7	0:00	0	S
+#
+# From Hernan G. Otero <hernan@isoft.com.ar> (June 26, 1995):
+# From this moment on, the law that mandated the daylight saving
+# time corrections was derogated and no more modifications
+# to the time zones (for daylight saving) are now made.
+#
+# Zone	NAME				GMTOFF		RULES	FORMAT	[UNTIL]
+Zone Argentina/Buenos_Aires -3:53:48 -	LMT	1894 Nov
+							-4:17	-	CMT	1920 May    # Cordoba Mean Time
+							-4:00	-	AST	1930 Dec
+							-4:00	Arg	A%sT	1969 Oct 5
+							-3:00	Arg	AR%s
 
 # Brazil
 

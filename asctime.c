@@ -83,6 +83,13 @@ char *				buf;
 	if (timeptr->tm_mon < 0 || timeptr->tm_mon >= MONSPERYEAR)
 		mn = "???";
 	else	mn = mon_name[timeptr->tm_mon];
+#if STRICTLY_STANDARD_ASCTIME
+	/*
+	** Be strict, potential overflow problems included.
+	** In an ideal world, this code is never going to be used.
+	*/
+	(void) sprintf(year, "%d", timeptr->tm_year + TM_YEAR_BASE);
+#else /* !STRICTLY_STANDARD_ASCTIME */
 	/*
 	** Use strftime's %Y to generate the year, to avoid overflow problems
 	** when computing timeptr->tm_year + TM_YEAR_BASE.
@@ -90,6 +97,7 @@ char *				buf;
 	** (e.g., timeptr->tm_mday) when processing "%Y".
 	*/
 	(void) strftime(year, sizeof year, "%Y", timeptr);
+#endif /* !STRICTLY_STANDARD_ASCTIME */
 	/*
 	** We avoid using snprintf since it's not available on all systems.
 	*/

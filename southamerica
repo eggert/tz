@@ -1,5 +1,6 @@
 # %W%
 
+# From Guy Harris:
 # From Official Airline Guide - Worldwide Edition (1987).  Countries not
 # listed here do not observe DST, according to the OAG.  Time zone names
 # are pure inventions, and none are supplied for countries not observing
@@ -10,6 +11,8 @@
 ###############################################################################
 
 # Brazil
+
+# From Guy Harris:
 # The OAG lists October 25, 1987 and February 12, 1988 as the starting and
 # ending dates, giving them as "estimated date(s) based on previous year".  We
 # infer a rule here from one example, always a dangerous practice....  Yes,
@@ -17,20 +20,21 @@
 # "Brazil/Acre" is for the Territory of Acre; "Brazil/DeNoronha" is for
 # Fernando De Noronha.
 
-# From Bob Devine (January 28, 1988):  "The only information I found is that
-# there was no DST up to 1985.  But there was some before 1952!"
+# From Bob Devine (January 28, 1988):
+# The only information I found is that there was no DST up to 1985.
+# But there was some before 1952!
 
 # From U.S. Naval Observatory (February 10, 1988):
-#	BRASIL   WEST       5 H BEHIND UTC        (CRUZEIRO DO SUL) 
-#	BRASIL   CENTRAL    4 H BEHIND UTC              (MANAUS)
-#	BRASIL   EAST       3 H BEHIND UTC   COASTAL STATES, RIO, SP, BRASILIA
-#	BRASIL              2 H BEHIND UTC   ATLANTIC ISLANDS 
-#	BRAZIL              5 H BEHIND UTC   WEST (CRUZEIRO DO SUL) 
-#	BRAZIL              4 H BEHIND UTC   CENTRAL    (MANAUS)
-#	BRAZIL              3 H BEHIND UTC   COASTAL STATES, RIO, SP, BRASILIA
-#	BRAZIL              3 H BEHIND UTC   FOR MOST MAJOR AIRPORTS. 
-#	BRAZIL              2 H BEHIND UTC   ATLANTIC ISLANDS 
-# (Yes, they do have both Brasil and Brazil; no, they don't mention DST.)
+# BRASIL   WEST       5 H BEHIND UTC        (CRUZEIRO DO SUL) 
+# BRASIL   CENTRAL    4 H BEHIND UTC              (MANAUS)
+# BRASIL   EAST       3 H BEHIND UTC   COASTAL STATES, RIO, SP, BRASILIA
+# BRASIL              2 H BEHIND UTC   ATLANTIC ISLANDS 
+# BRAZIL              5 H BEHIND UTC   WEST (CRUZEIRO DO SUL) 
+# BRAZIL              4 H BEHIND UTC   CENTRAL    (MANAUS)
+# BRAZIL              3 H BEHIND UTC   COASTAL STATES, RIO, SP, BRASILIA
+# BRAZIL              3 H BEHIND UTC   FOR MOST MAJOR AIRPORTS. 
+# BRAZIL              2 H BEHIND UTC   ATLANTIC ISLANDS 
+# [Yes, they do have both Brasil and Brazil; no, they don't mention DST.--ado]
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Brazil	1987	max	-	Feb	Sat<=14	2:00	0	S
@@ -45,11 +49,14 @@ Zone	Brazil/DeNoronha	-2:00	Brazil		F%sT
 ###############################################################################
 
 # Chile
+
+# From Guy Harris:
 # The OAG lists October 11, 1987 and March 12, 1988 as the starting and
 # ending dates, giving them as "estimated date(s) based on previous year."
 
-# From Bob Devine (January 28, 1988):  "Chile has had 2nd Sunday in October to
-# 2nd Sunday in March DST since 1977.  Switch is at midnight. OAG is right."
+# From Bob Devine (January 28, 1988):
+# Chile has had 2nd Sunday in October to 2nd Sunday in March DST since 1977.
+# Switch is at midnight. OAG is right.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Chile	1977	max	-	Oct	Sun>=8	0:00	1:00	D
@@ -63,21 +70,27 @@ Zone	Chile/EasterIsland	-6:00	Chile		E%sT
 
 # Paraguay
 
-# From Bob Devine (January 28, 1988):  "Paraguay: First day in October to last
-# in March.  Midnight switch??  Since 1980."
+# From Bob Devine (January 28, 1988):
+# Paraguay: First day in October to last in March.  Midnight switch??
+# Since 1980.
 
 # From U.S. Naval Observatory (February 10, 1988):
-#	PARAGUAY            4 H BEHIND UTC IN WINTER
-#	PARAGUAY            3 H BEHIND UTC SEP 30 - MAR 30
+# PARAGUAY            4 H BEHIND UTC IN WINTER
+# PARAGUAY            3 H BEHIND UTC SEP 30 - MAR 30
+
+# From Arthur David Olson (February 13, 1988):
+# OAG, USNO, and Bob have different data.  Punt for now.
 
 ###############################################################################
 
 # Argentina
 
-# From Bob Devine (January 28, 1988):  "Argentina: first Sunday in October to
-# first Sunday in April since 1976.  Double Summer time from 1969 to 1974.
-# Switches at midnight.
+# From Bob Devine (January 28, 1988):
+# Argentina: first Sunday in October to first Sunday in April since 1976.
+# Double Summer time from 1969 to 1974.  Switches at midnight.
 
 # From U.S. Naval Observatory (February 10, 1988):
-#	ARGENTINA           3 H BEHIND   UTC
-# (No mention of DST).
+# ARGENTINA           3 H BEHIND   UTC
+
+# From Arthur David Olson (February 13, 1988):
+# OAG, USNO and Bob have different data.  Punt for now.

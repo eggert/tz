@@ -21,10 +21,6 @@ static char	elsieid[] = "%W%";
 #include "fcntl.h"	/* for O_RDONLY */
 #include "nonstd.h"
 
-#ifdef __TURBOC__
-#include "io.h"		/* for open et al. prototypes */
-#endif /* defined __TURBOC__ */
-
 #define ACCESS_MODE	O_RDONLY
 
 #ifdef O_BINARY

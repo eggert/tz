@@ -25,9 +25,10 @@ TZCSRCS=	tzcomp.c scheck.c strchr.c mkdir.c
 TZCOBJS=	tzcomp.o scheck.o strchr.o mkdir.o
 TZDSRCS=	tzdump.c settz.c
 TZDOBJS=	tzdump.o settz.o
+DOCS=		README Makefile settz.3 tzfile.5 tzcomp.8
+SOURCES=	tzfile.h $(TZCSRCS) $(TZDSRCS) years.sh
 DATA=		asia australasia europe etcetera northamerica pacificnew
-ENCHILADA=	README Makefile settz.3 tzfile.5 tzcomp.8 \
-			tzfile.h $(TZCSRCS) $(TZDSRCS) years.sh $(DATA)
+ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
 all:	REDID_BINARIES tzdump
 
@@ -49,8 +50,14 @@ years:	years.sh
 	cp $? $@
 	chmod 555 $@
 
-BUNDLE:	$(ENCHILADA)
-	bundle $(ENCHILADA) > BUNDLE
+BUNDLE1:	$(DOCS)
+	bundle $(DOCS) > BUNDLE1
+
+BUNDLE2:	$(SOURCES)
+	bundle $(SOURCES) > BUNDLE2
+
+BUNDLE3:	$(DATA)
+	bundle $(DATA) > BUNDLE3
 
 $(ENCHILADA):
 	sccs get $(REL) $(REV) $@

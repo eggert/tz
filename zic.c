@@ -336,11 +336,16 @@ static
 error(string)
 char *	string;
 {
-	(void) fprintf(stderr, "%s: file \"%s\", line %d: %s\n",
-		progname, filename, linenum, string);
+	/*
+	** Match the format of "cc" so zic's diagnostic output can be fed to
+	** error.
+	*/
+	(void) fprintf(stderr, "\"%s\", line %d: %s",
+		filename, linenum, string);
 	if (rfilename != NULL)
-		(void) fprintf(stderr, "%s: rule from file \"%s\", line %d\n",
-			progname, rfilename, rlinenum);
+		(void) fprintf(stderr, " (rule from \"%s\", line %d)",
+			rfilename, rlinenum);
+	(void) fprintf(stderr, "\n");
 	++errors;
 }
 

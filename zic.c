@@ -9,47 +9,39 @@ static char	elsieid[] = "%W%";
 #include "ctype.h"
 #include "time.h"
 #include "string.h"
+#include "stdlib.h"
 #include "nonstd.h"
 
-#ifdef __STDC__
-#include "stdlib.h"
-#else /* !defined __STDC__ */
-#include "sys/types.h"
-#include "sys/stat.h"
-#endif /* !defined __STDC__ */
-
-#ifndef unix
-extern FILE *	popen P((const char * command));
-#endif /* !defined unix */
+/*
+** stat definition.
+*/
 
 #ifdef __TURBOC__
 #include "sys/stat.h"
-#include "io.h"			/* to get access declaration */
-#else /* !defined __TURBOC__ */
-extern int	access P((const char * name, int way));
-#endif /* !defined __TURBOC__ */
+#endif /* defined __TURBOC__ */
 
-#ifndef BUFSIZ
-#define BUFSIZ	1024
-#endif /* !defined BUFSIZ */
+#ifdef unix
+#include "sys/stat.h"
+#endif /* defined unix */
+
+/*
+** access prototype.
+*/
+
+#ifdef __TURBOC__
+#include "io.h"
+#endif /* defined __TURBOC__ */
 
 #ifndef TRUE
 #define TRUE	1
 #define FALSE	0
 #endif /* !defined TRUE */
 
-#ifndef EXIT_SUCCESS
-#define EXIT_SUCCESS	0
-#endif /* !defined EXIT_SUCCESS */
-
-#ifndef EXIT_FAILURE
-#define EXIT_FAILURE	1
-#endif/* !defined EXIT_FAILURE */
-
 extern int	emkdir P((const char * name, int mode));
-extern int	getopt	P((int argc, char * argv[], const char * options));
+extern int	getopt P((int argc, char * argv[], const char * options));
 extern char *	icatalloc P((char * old, const char * new));
 extern char *	icpyalloc P((const char * string));
+extern void	ifree P((char * p));
 extern char *	imalloc P((int n));
 extern char *	irealloc P((char * old, int n));
 extern int	link P((const char * fromname, const char * toname));
@@ -63,13 +55,15 @@ static void	addleap P((time_t t, int positive, int rolling));
 static void	adjleap P((void));
 static void	associate P((void));
 static int	ciequal P((const char * ap, const char * bp));
+static void	convert P((long val, char * buf));
 static void	eat P((const char * name, int num));
 static void	eats P((const char * name, int num,
 			const char * rname, int rnum));
 static long	eitol P((int i));
 static void	error P((const char * message));
 static char **	getfields P((char * buf));
-static long	gethms P((char * string, char * errstrng, int signable));
+static long	gethms P((const char * string, const char * errstrng,
+			int signable));
 static void	infile P((const char * filename));
 static void	inleap P((char ** fields, int nfields));
 static void	inlink P((char ** fields, int nfields));
@@ -84,10 +78,10 @@ static int	mkdirs P((char * filename));
 static void	newabbr P((const char * abbr));
 static void	nondunlink P((char * filename));
 static long	oadd P((long t1, long t2));
-static void	outzone P((struct zone * zp, int ntzones));
+static void	outzone P((const struct zone * zp, int ntzones));
 static void	puttzcode P((long code, FILE * fp));
-static int	rcomp P((const char * leftp, const char * rightp));
-static time_t	rpytime P((struct rule * rp, int wantedy));
+static int	rcomp P((const genericptr_t leftp, const genericptr_t rightp));
+static time_t	rpytime P((const struct rule * rp, int wantedy));
 static void	rulesub P((struct rule * rp,
 			char * loyearp, char * hiyearp, char * typep,
 			char * monthp, char * dayp, char * timep));
@@ -131,10 +125,10 @@ static int		tt_signed;
 #define ZF_GMTOFF	2
 #define ZF_RULE		3
 #define ZF_FORMAT	4
-#define ZF_UNTILYEAR	5
-#define ZF_UNTILMONTH	6
-#define ZF_UNTILDAY	7
-#define ZF_UNTILTIME	8
+#define ZF_TILYEAR	5
+#define ZF_TILMONTH	6
+#define ZF_TILDAY	7
+#define ZF_TILTIME	8
 #define ZONE_MINFIELDS	5
 #define ZONE_MAXFIELDS	9
 
@@ -145,10 +139,10 @@ static int		tt_signed;
 #define ZFC_GMTOFF	0
 #define ZFC_RULE	1
 #define ZFC_FORMAT	2
-#define ZFC_UNTILYEAR	3
-#define ZFC_UNTILMONTH	4
-#define ZFC_UNTILDAY	5
-#define ZFC_UNTILTIME	6
+#define ZFC_TILYEAR	3
+#define ZFC_TILMONTH	4
+#define ZFC_TILDAY	5
+#define ZFC_TILTIME	6
 #define ZONEC_MINFIELDS	3
 #define ZONEC_MAXFIELDS	7
 
@@ -190,11 +184,11 @@ static int		tt_signed;
 struct rule {
 	const char *	r_filename;
 	int		r_linenum;
-	char *		r_name;
+	const char *	r_name;
 
 	int		r_loyear;	/* for example, 1986 */
 	int		r_hiyear;	/* for example, 1986 */
-	char *		r_yrtype;
+	const char *	r_yrtype;
 
 	int		r_month;	/* 0..11 */
 
@@ -206,15 +200,16 @@ struct rule {
 	int		r_todisstd;	/* above is standard time if TRUE */
 					/* or wall clock time if FALSE */
 	long		r_stdoff;	/* offset from standard time */
-	char *		r_abbrvar;	/* variable part of abbreviation */
+	const char *	r_abbrvar;	/* variable part of abbreviation */
 
-	int	r_todo;			/* a rule to do (used in outzone) */
-	time_t	r_temp;			/* used in outzone */
+	int		r_todo;		/* a rule to do (used in outzone) */
+	time_t		r_temp;		/* used in outzone */
 };
 
 /*
 **	r_dycode		r_dayofmonth	r_wday
 */
+
 #define DC_DOM		0	/* 1..31 */	/* unused */
 #define DC_DOWGEQ	1	/* 1..31 */	/* 0..6 (Sun..Sat) */
 #define DC_DOWLEQ	2	/* 1..31 */	/* 0..6 (Sun..Sat) */
@@ -234,10 +229,10 @@ struct zone {
 	const char *	z_filename;
 	int		z_linenum;
 
-	char *		z_name;
+	const char *	z_name;
 	long		z_gmtoff;
-	char *		z_rule;
-	char *		z_format;
+	const char *	z_rule;
+	const char *	z_format;
 
 	long		z_stdoff;
 
@@ -254,16 +249,16 @@ static int		nzones;	/* number of zones */
 struct link {
 	const char *	l_filename;
 	int		l_linenum;
-	char *		l_from;
-	char *		l_to;
+	const char *	l_from;
+	const char *	l_to;
 };
 
 static struct link *	links;
 static int		nlinks;
 
 struct lookup {
-	char *	l_word;
-	int	l_value;
+	const char *	l_word;
+	const int	l_value;
 };
 
 static struct lookup const *	byword P((const char * string,
@@ -334,13 +329,13 @@ static struct lookup const	leap_types[] = {
 	NULL,			0
 };
 
-static int const	len_months[2][MONS_PER_YEAR] = {
+static const int	len_months[2][MONSPERYEAR] = {
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 };
 
-static int const	len_years[2] = {
-	DAYS_PER_NYEAR, DAYS_PER_LYEAR
+static const int	len_years[2] = {
+	DAYSPERNYEAR, DAYSPERLYEAR
 };
 
 static time_t		ats[TZ_MAX_TIMES];
@@ -362,8 +357,8 @@ memcheck(ptr)
 char *	ptr;
 {
 	if (ptr == NULL) {
-		perror(progname);
-		exit(EXIT_FAILURE);
+		(void) perror(progname);
+		(void) exit(EXIT_FAILURE);
 	}
 	return ptr;
 }
@@ -420,13 +415,13 @@ usage()
 "%s: usage is %s [ -s ] [ -v ] [ -l localtime ] [ -d directory ]\n\
 \t[ -L leapseconds ] [ filename ... ]\n",
 		progname, progname);
-	exit(EXIT_FAILURE);
+	(void) exit(EXIT_FAILURE);
 }
 
-static char *	lcltime = NULL;
-static char *	directory = NULL;
-static char *	leapsec = NULL;
-static int	sflag = FALSE;
+static const char *	lcltime = NULL;
+static const char *	directory = NULL;
+static const char *	leapsec = NULL;
+static int		sflag = FALSE;
 
 main(argc, argv)
 int	argc;
@@ -436,7 +431,7 @@ char *	argv[];
 	register int	c;
 
 #ifdef unix
-	umask(umask(022) | 022);
+	(void) umask(umask(022) | 022);
 #endif /* defined unix */
 	progname = argv[0];
 	while ((c = getopt(argc, argv, "d:l:L:vs")) != EOF)
@@ -450,7 +445,7 @@ char *	argv[];
 					(void) fprintf(stderr,
 "%s: More than one -d option specified\n",
 						progname);
-					exit(EXIT_FAILURE);
+					(void) exit(EXIT_FAILURE);
 				}
 				break;
 			case 'l':
@@ -460,7 +455,7 @@ char *	argv[];
 					(void) fprintf(stderr,
 "%s: More than one -l option specified\n",
 						progname);
-					exit(EXIT_FAILURE);
+					(void) exit(EXIT_FAILURE);
 				}
 				break;
 			case 'L':
@@ -470,7 +465,7 @@ char *	argv[];
 					(void) fprintf(stderr,
 "%s: More than one -L option specified\n",
 						progname);
-					exit(EXIT_FAILURE);
+					(void) exit(EXIT_FAILURE);
 				}
 				break;
 			case 'v':
@@ -489,8 +484,10 @@ char *	argv[];
 
 	setboundaries();
 
-	infile(leapsec);
-	adjleap();
+	if (optind < argc) {
+		infile(leapsec);
+		adjleap();
+	}
 
 	zones = (struct zone *) emalloc(0);
 	rules = (struct rule *) emalloc(0);
@@ -498,7 +495,7 @@ char *	argv[];
 	for (i = optind; i < argc; ++i)
 		infile(argv[i]);
 	if (errors)
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 	associate();
 	for (i = 0; i < nzones; i = j) {
 		/*
@@ -527,11 +524,11 @@ char *	argv[];
 		if (link(fromname, toname) != 0) {
 			(void) fprintf(stderr, "%s: Can't link from %s to ",
 				progname, fromname);
-			perror(toname);
-			exit(EXIT_FAILURE);
+			(void) perror(toname);
+			(void) exit(EXIT_FAILURE);
 		}
-		free(fromname);
-		free(toname);
+		ifree(fromname);
+		ifree(toname);
 	}
 	return (errors == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
@@ -539,7 +536,7 @@ char *	argv[];
 static void
 setboundaries()
 {
-	register time_t 	bit;
+	register time_t	bit;
 
 	for (bit = 1; bit > 0; bit <<= 1)
 		;
@@ -589,8 +586,8 @@ char *	name;
 
 static
 rcomp(cp1, cp2)
-const char *	cp1;
-const char *	cp2;
+const genericptr_t	cp1;
+const genericptr_t	cp2;
 {
 	return strcmp(((struct rule *) cp1)->r_name,
 		((struct rule *) cp2)->r_name);
@@ -614,8 +611,9 @@ associate()
 				(char *) &rules[i]) > 0)
 					break;
 		if (i < nrules)
-			(void) qsort((void *) rules, (size_t) nrules,
-				(size_t) sizeof *rules, rcomp);
+			(void) qsort((genericptr_t) rules,
+				(qsort_size_t) nrules,
+				(qsort_size_t) sizeof *rules, rcomp);
 	}
 	for (i = 0; i < nzones; ++i) {
 		zp = &zones[i];
@@ -652,7 +650,7 @@ associate()
 		}
 	}
 	if (errors)
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 }
 
 static void
@@ -662,7 +660,7 @@ const char *	name;
 	register FILE *			fp;
 	register char **		fields;
 	register char *			cp;
-	register struct lookup const *	lp;
+	register const struct lookup *	lp;
 	register int			nfields;
 	register int			wantcont;
 	register int			num;
@@ -673,18 +671,18 @@ const char *	name;
 		fp = stdin;
 	} else if ((fp = fopen(name, "r")) == NULL) {
 		(void) fprintf(stderr, "%s: Can't open ", progname);
-		perror(name);
-		exit(EXIT_FAILURE);
+		(void) perror(name);
+		(void) exit(EXIT_FAILURE);
 	}
 	wantcont = FALSE;
 	for (num = 1; ; ++num) {
 		eat(name, num);
-		if (fgets(buf, sizeof buf, fp) != buf)
+		if (fgets(buf, (int) sizeof buf, fp) != buf)
 			break;
 		cp = strchr(buf, '\n');
 		if (cp == NULL) {
 			error("line too long");
-			exit(EXIT_FAILURE);
+			(void) exit(EXIT_FAILURE);
 		}
 		*cp = '\0';
 		fields = getfields(buf);
@@ -727,20 +725,20 @@ const char *	name;
 					(void) fprintf(stderr,
 "%s: panic: Invalid l_value %d\n",
 						progname, lp->l_value);
-					exit(EXIT_FAILURE);
+					(void) exit(EXIT_FAILURE);
 			}
 		}
-		free((char *) fields);
+		ifree((char *) fields);
 	}
 	if (ferror(fp)) {
 		(void) fprintf(stderr, "%s: Error reading ", progname);
-		perror(filename);
-		exit(EXIT_FAILURE);
+		(void) perror(filename);
+		(void) exit(EXIT_FAILURE);
 	}
 	if (fp != stdin && fclose(fp)) {
 		(void) fprintf(stderr, "%s: Error closing ", progname);
-		perror(filename);
-		exit(EXIT_FAILURE);
+		(void) perror(filename);
+		(void) exit(EXIT_FAILURE);
 	}
 	if (wantcont)
 		error("expected continuation line not found");
@@ -756,8 +754,8 @@ const char *	name;
 
 static long
 gethms(string, errstring, signable)
-char *	string;
-char *	errstring;
+const char *	string;
+const char *	errstring;
 {
 	int	hh, mm, ss, sign;
 
@@ -778,15 +776,15 @@ char *	errstring;
 			error(errstring);
 			return 0;
 	}
-	if (hh < 0 || hh >= HOURS_PER_DAY ||
-		mm < 0 || mm >= MINS_PER_HOUR ||
-		ss < 0 || ss > SECS_PER_MIN) {
+	if (hh < 0 || hh >= HOURSPERDAY ||
+		mm < 0 || mm >= MINSPERHOUR ||
+		ss < 0 || ss > SECSPERMIN) {
 			error(errstring);
 			return 0;
 	}
 	return eitol(sign) *
-		(eitol(hh * MINS_PER_HOUR + mm) *
-		eitol(SECS_PER_MIN) + eitol(ss));
+		(eitol(hh * MINSPERHOUR + mm) *
+		eitol(SECSPERMIN) + eitol(ss));
 }
 
 static void
@@ -811,7 +809,7 @@ register char **	fields;
 	r.r_name = ecpyalloc(fields[RF_NAME]);
 	r.r_abbrvar = ecpyalloc(fields[RF_ABBRVAR]);
 	rules = (struct rule *) erealloc((char *) rules,
-		(nrules + 1) * sizeof *rules);
+		(int) ((nrules + 1) * sizeof *rules));
 	rules[nrules++] = r;
 }
 
@@ -873,19 +871,19 @@ register char **	fields;
 		i_gmtoff = ZFC_GMTOFF;
 		i_rule = ZFC_RULE;
 		i_format = ZFC_FORMAT;
-		i_untilyear = ZFC_UNTILYEAR;
-		i_untilmonth = ZFC_UNTILMONTH;
-		i_untilday = ZFC_UNTILDAY;
-		i_untiltime = ZFC_UNTILTIME;
+		i_untilyear = ZFC_TILYEAR;
+		i_untilmonth = ZFC_TILMONTH;
+		i_untilday = ZFC_TILDAY;
+		i_untiltime = ZFC_TILTIME;
 		z.z_name = NULL;
 	} else {
 		i_gmtoff = ZF_GMTOFF;
 		i_rule = ZF_RULE;
 		i_format = ZF_FORMAT;
-		i_untilyear = ZF_UNTILYEAR;
-		i_untilmonth = ZF_UNTILMONTH;
-		i_untilday = ZF_UNTILDAY;
-		i_untiltime = ZF_UNTILTIME;
+		i_untilyear = ZF_TILYEAR;
+		i_untilmonth = ZF_TILMONTH;
+		i_untilday = ZF_TILDAY;
+		i_untiltime = ZF_TILTIME;
 		z.z_name = ecpyalloc(fields[ZF_NAME]);
 	}
 	z.z_filename = filename;
@@ -919,7 +917,7 @@ error("Zone continuation line end time is not after end time of previous line");
 		}
 	}
 	zones = (struct zone *) erealloc((char *) zones,
-		(nzones + 1) * sizeof *zones);
+		(int) ((nzones + 1) * sizeof *zones));
 	zones[nzones++] = z;
 	/*
 	** If there was an UNTIL field on this line,
@@ -933,7 +931,7 @@ inleap(fields, nfields)
 register char **	fields;
 {
 	register char *			cp;
-	register struct lookup const *	lp;
+	register const struct lookup *	lp;
 	register int			i, j;
 	int				year, month, day;
 	long				dayoff, tod;
@@ -983,11 +981,11 @@ register char **	fields;
 		error("time before zero");
 		return;
 	}
-	t = (time_t) dayoff * SECS_PER_DAY;
+	t = (time_t) dayoff * SECSPERDAY;
 	/*
 	** Cheap overflow check.
 	*/
-	if (t / SECS_PER_DAY != dayoff) {
+	if (t / SECSPERDAY != dayoff) {
 		error("time overflow");
 		return;
 	}
@@ -1028,7 +1026,7 @@ register char **	fields;
 	l.l_from = ecpyalloc(fields[LF_FROM]);
 	l.l_to = ecpyalloc(fields[LF_TO]);
 	links = (struct link *) erealloc((char *) links,
-		(nlinks + 1) * sizeof *links);
+		(int) ((nlinks + 1) * sizeof *links));
 	links[nlinks++] = l;
 }
 
@@ -1081,7 +1079,7 @@ char *			timep;
 			(void) fprintf(stderr,
 				"%s: panic: Invalid l_value %d\n",
 				progname, lp->l_value);
-			exit(EXIT_FAILURE);
+			(void) exit(EXIT_FAILURE);
 	} else if (sscanf(cp, scheck(cp, "%d"), &rp->r_loyear) != 1 ||
 		rp->r_loyear < min_year || rp->r_loyear > max_year) {
 			if (noise)
@@ -1104,7 +1102,7 @@ char *			timep;
 			(void) fprintf(stderr,
 				"%s: panic: Invalid l_value %d\n",
 				progname, lp->l_value);
-			exit(EXIT_FAILURE);
+			(void) exit(EXIT_FAILURE);
 	} else if (sscanf(cp, scheck(cp, "%d"), &rp->r_hiyear) != 1 ||
 		rp->r_hiyear < min_year || rp->r_hiyear > max_year) {
 			if (noise)
@@ -1174,17 +1172,28 @@ char *			timep;
 }
 
 static void
+convert(val, buf)
+long	val;
+char *	buf;
+{
+	register int	i;
+	register int	shift;
+
+	for (i = 0, shift = 24; i < 4; ++i, shift -= 8)
+		buf[i] = val >> shift;
+}
+
+static void
 puttzcode(val, fp)
 long	val;
 FILE *	fp;
 {
-	register int	c;
-	register int	shift;
+	char	buf[4];
 
-	for (shift = 24; shift >= 0; shift -= 8) {
-		c = val >> shift;
-		(void) putc(c, fp);
-	}
+	convert(val, buf);
+	(void) fwrite((genericptr_t) buf,
+		(fwrite_size_t) sizeof buf,
+		(fwrite_size_t) 1, fp);
 }
 
 static void
@@ -1200,23 +1209,25 @@ const char *	name;
 		(void) fprintf(stderr,
 			"%s: File name %s/%s too long\n", progname,
 			directory, name);
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 	}
 	(void) sprintf(fullname, "%s/%s", directory, name);
 	if ((fp = fopen(fullname, "wb")) == NULL) {
 		if (mkdirs(fullname) != 0)
-			exit(EXIT_FAILURE);
+			(void) exit(EXIT_FAILURE);
 		if ((fp = fopen(fullname, "wb")) == NULL) {
 			(void) fprintf(stderr, "%s: Can't create ", progname);
-			perror(fullname);
-			exit(EXIT_FAILURE);
+			(void) perror(fullname);
+			(void) exit(EXIT_FAILURE);
 		}
 	}
-	(void) fwrite((char *) &tzh, sizeof tzh.tzh_reserved, 1, fp);
-	puttzcode(eitol(leapcnt), fp);
-	puttzcode(eitol(timecnt), fp);
-	puttzcode(eitol(typecnt), fp);
-	puttzcode(eitol(charcnt), fp);
+	convert((long) leapcnt, tzh.tzh_leapcnt);
+	convert((long) timecnt, tzh.tzh_timecnt);
+	convert((long) typecnt, tzh.tzh_typecnt);
+	convert((long) charcnt, tzh.tzh_charcnt);
+	(void) fwrite((genericptr_t) &tzh,
+		(fwrite_size_t) sizeof tzh,
+		(fwrite_size_t) 1, fp);
 	for (i = 0; i < timecnt; ++i) {
 		j = leapcnt;
 		while (--j >= 0)
@@ -1227,15 +1238,18 @@ const char *	name;
 		puttzcode((long) ats[i], fp);
 	}
 	if (timecnt > 0)
-		(void) fwrite((char *) types, sizeof types[0],
-			(int) timecnt, fp);
+		(void) fwrite((genericptr_t) types,
+			(fwrite_size_t) sizeof types[0],
+			(fwrite_size_t) timecnt, fp);
 	for (i = 0; i < typecnt; ++i) {
 		puttzcode((long) gmtoffs[i], fp);
 		(void) putc(isdsts[i], fp);
 		(void) putc(abbrinds[i], fp);
 	}
 	if (charcnt != 0)
-		(void) fwrite(chars, sizeof chars[0], (int) charcnt, fp);
+		(void) fwrite((genericptr_t) chars,
+			(fwrite_size_t) sizeof chars[0],
+			(fwrite_size_t) charcnt, fp);
 	for (i = 0; i < leapcnt; ++i) {
 		if (roll[i]) {
 			if (timecnt == 0 || trans[i] < ats[0]) {
@@ -1257,27 +1271,27 @@ const char *	name;
 	}
 	if (ferror(fp) || fclose(fp)) {
 		(void) fprintf(stderr, "%s: Write error on ", progname);
-		perror(fullname);
-		exit(EXIT_FAILURE);
+		(void) perror(fullname);
+		(void) exit(EXIT_FAILURE);
 	}
 }
 
 static void
 outzone(zpfirst, zonecount)
-struct zone *	zpfirst;
+const struct zone *	zpfirst;
 {
-	register struct zone *	zp;
-	register struct rule *	rp;
-	register int		i, j;
-	register int		usestart, useuntil;
-	register time_t		starttime, untiltime;
-	register long		gmtoff;
-	register long		stdoff;
-	register int		year;
-	register long		startoff;
-	register int		startisdst;
-	register int		type;
-	char			startbuf[BUFSIZ];
+	register const struct zone *	zp;
+	register struct rule *		rp;
+	register int			i, j;
+	register int			usestart, useuntil;
+	register time_t			starttime, untiltime;
+	register long			gmtoff;
+	register long			stdoff;
+	register int			year;
+	register long			startoff;
+	register int			startisdst;
+	register int			type;
+	char				startbuf[BUFSIZ];
 
 	/*
 	** Now. . .finally. . .generate some useful data!
@@ -1427,7 +1441,7 @@ time_t	starttime;
 		return;	/* easy enough! */
 	if (timecnt >= TZ_MAX_TIMES) {
 		error("too many transitions?!");
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 	}
 	ats[timecnt] = starttime;
 	types[timecnt] = type;
@@ -1456,7 +1470,7 @@ const char *	abbr;
 	*/
 	if (typecnt >= TZ_MAX_TYPES) {
 		error("too many local time types");
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 	}
 	gmtoffs[i] = gmtoff;
 	isdsts[i] = isdst;
@@ -1479,13 +1493,13 @@ time_t	t;
 
 	if (leapcnt >= TZ_MAX_LEAPS) {
 		error("too many leap seconds");
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 	}
 	for (i = 0; i < leapcnt; ++i)
 		if (t <= trans[i]) {
 			if (t == trans[i]) {
 				error("repeated leap second moment");
-				exit(EXIT_FAILURE);
+				(void) exit(EXIT_FAILURE);
 			}
 			break;
 		}
@@ -1538,7 +1552,7 @@ const char *	type;
 	(void) fprintf(stderr, "%s: command was '%s', result was %d\n",
 		progname, buf, result);
 	for ( ; ; )
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 }
 
 static
@@ -1573,13 +1587,13 @@ register const char *	word;
 	return TRUE;
 }
 
-static struct lookup const *
+static const struct lookup *
 byword(word, table)
 register const char *		word;
 register const struct lookup *	table;
 {
-	register struct lookup const *	foundlp;
-	register struct lookup const *	lp;
+	register const struct lookup *	foundlp;
+	register const struct lookup *	lp;
 
 	if (word == NULL || table == NULL)
 		return NULL;
@@ -1611,7 +1625,7 @@ register char *	cp;
 
 	if (cp == NULL)
 		return NULL;
-	array = (char **) emalloc((strlen(cp) + 1) * sizeof *array);
+	array = (char **) emalloc((int) ((strlen(cp) + 1) * sizeof *array));
 	nsubs = 0;
 	for ( ; ; ) {
 		while (isascii(*cp) && isspace(*cp))
@@ -1646,7 +1660,7 @@ long	t2;
 	t = t1 + t2;
 	if (t2 > 0 && t <= t1 || t2 < 0 && t >= t1) {
 		error("time overflow");
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 	}
 	return t;
 }
@@ -1665,7 +1679,7 @@ long	t2;
 	t = t1 + t2;
 	if (t2 > 0 && t <= t1 || t2 < 0 && t >= t1) {
 		error("time overflow");
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 	}
 	return t;
 }
@@ -1677,8 +1691,8 @@ long	t2;
 
 static time_t
 rpytime(rp, wantedy)
-register struct rule *	rp;
-register int		wantedy;
+register const struct rule *	rp;
+register int			wantedy;
 {
 	register int	y, m, i;
 	register long	dayoff;			/* with a nod to Margaret O. */
@@ -1708,7 +1722,7 @@ register int		wantedy;
 			--i;
 		else {
 			error("use of 2/29 in non leap-year");
-			exit(EXIT_FAILURE);
+			(void) exit(EXIT_FAILURE);
 		}
 	}
 	--i;
@@ -1716,52 +1730,52 @@ register int		wantedy;
 	if (rp->r_dycode == DC_DOWGEQ || rp->r_dycode == DC_DOWLEQ) {
 		register long	wday;
 
-#define LDAYS_PER_WEEK	((long) DAYS_PER_WEEK)
+#define LDAYSPERWEEK	((long) DAYSPERWEEK)
 		wday = eitol(EPOCH_WDAY);
 		/*
 		** Don't trust mod of negative numbers.
 		*/
 		if (dayoff >= 0)
-			wday = (wday + dayoff) % LDAYS_PER_WEEK;
+			wday = (wday + dayoff) % LDAYSPERWEEK;
 		else {
-			wday -= ((-dayoff) % LDAYS_PER_WEEK);
+			wday -= ((-dayoff) % LDAYSPERWEEK);
 			if (wday < 0)
-				wday += LDAYS_PER_WEEK;
+				wday += LDAYSPERWEEK;
 		}
 		while (wday != eitol(rp->r_wday))
 			if (rp->r_dycode == DC_DOWGEQ) {
 				dayoff = oadd(dayoff, (long) 1);
-				if (++wday >= LDAYS_PER_WEEK)
+				if (++wday >= LDAYSPERWEEK)
 					wday = 0;
 				++i;
 			} else {
 				dayoff = oadd(dayoff, (long) -1);
 				if (--wday < 0)
-					wday = LDAYS_PER_WEEK;
+					wday = LDAYSPERWEEK;
 				--i;
 			}
 		if (i < 0 || i >= len_months[isleap(y)][m]) {
 			error("no day in month matches rule");
-			exit(EXIT_FAILURE);
+			(void) exit(EXIT_FAILURE);
 		}
 	}
 	if (dayoff < 0 && !tt_signed) {
 		if (wantedy == rp->r_loyear)
 			return min_time;
 		error("time before zero");
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 	}
-	t = (time_t) dayoff * SECS_PER_DAY;
+	t = (time_t) dayoff * SECSPERDAY;
 	/*
 	** Cheap overflow check.
 	*/
-	if (t / SECS_PER_DAY != dayoff) {
+	if (t / SECSPERDAY != dayoff) {
 		if (wantedy == rp->r_hiyear)
 			return max_time;
 		if (wantedy == rp->r_loyear)
 			return min_time;
 		error("time overflow");
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 	}
 	return tadd(t, rp->r_tod);
 }
@@ -1775,7 +1789,7 @@ const char *	string;
 	i = strlen(string) + 1;
 	if (charcnt + i >= TZ_MAX_CHARS) {
 		error("too many, or too long, time zone abbreviations");
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 	}
 	(void) strcpy(&chars[charcnt], string);
 	charcnt += eitol(i);
@@ -1791,6 +1805,16 @@ char *	name;
 		return 0;
 	while ((cp = strchr(cp + 1, '/')) != 0) {
 		*cp = '\0';
+#ifndef unix
+		/*
+		** MS-DOS drive specifier?
+		*/
+		if (strlen(name) == 2 && isascii(name[0]) &&
+			isascii(name[0]) && name[1] == ':') {
+				*cp = '/';
+				continue;
+		}
+#endif /* !defined unix */
 		if (access(name, 0) != 0) {
 			/*
 			 * It doesn't seem to exist, so we try to create it.
@@ -1799,7 +1823,7 @@ char *	name;
 				(void) fprintf(stderr,
 					"%s: Can't create directory ",
 					progname);
-				perror(name);
+				(void) perror(name);
 				return -1;
 			}
 		}
@@ -1817,7 +1841,7 @@ eitol(i)
 	if (i < 0 && l >= 0 || i == 0 && l != 0 || i > 0 && l <= 0) {
 		(void) fprintf(stderr, "%s: %d did not sign extend correctly\n",
 			progname, i);
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 	}
 	return l;
 }

@@ -154,6 +154,42 @@ static void	show P((char * zone, time_t t, int v));
 static const char *	tformat P((void));
 static time_t	yeartot P((long y));
 
+#ifndef TYPECHECK
+#define my_localtime	localtime
+#else /* !defined TYPECHECK */
+static struct tm *
+my_localtime(tp)
+time_t *	tp;
+{
+	register struct tm *	tmp;
+
+	tmp = localtime(tp);
+	if (tp != NULL && tmp != NULL) {
+		struct tm	tm;
+		register time_t	t;
+
+		tm = *tmp;
+		t = mktime(&tm);
+		if (t - *tp >= 1 || *tp - t >= 1) {
+			(void) fflush(stdout);
+			(void) fprintf(stderr, "\n%s: ", progname);
+			(void) fprintf(stderr, tformat(), *tp);
+			(void) fprintf(stderr, " ->");
+			(void) fprintf(stderr, " sec %d", tmp->tm_sec);
+			(void) fprintf(stderr, " min %d", tmp->tm_min);
+			(void) fprintf(stderr, " hour %d", tmp->tm_hour);
+			(void) fprintf(stderr, " mday %d", tmp->tm_mday);
+			(void) fprintf(stderr, " mon %d", tmp->tm_mon);
+			(void) fprintf(stderr, " year %d", tmp->tm_year);
+			(void) fprintf(stderr, " -> ");
+			(void) fprintf(stderr, tformat(), t);
+			(void) fprintf(stderr, "\n");
+		}
+	}
+	return tmp;
+}
+#endif /* !defined TYPECHECK */
+
 int
 main(argc, argv)
 int	argc;
@@ -266,7 +302,7 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 		show(argv[i], t, TRUE);
 		if (t < cutlotime)
 			t = cutlotime;
-		tmp = localtime(&t);
+		tmp = my_localtime(&t);
 		if (tmp != NULL) {
 			tm = *tmp;
 			(void) strncpy(buf, abbr(&tm), (sizeof buf) - 1);
@@ -399,7 +435,7 @@ time_t	hit;
 	register struct tm *	tmp;
 	char			loab[MAX_STRING_LENGTH];
 
-	lotmp = localtime(&lot);
+	lotmp = my_localtime(&lot);
 	if (lotmp != NULL) {
 		lotm = *lotmp;
 		(void) strncpy(loab, abbr(&lotm), (sizeof loab) - 1);
@@ -414,7 +450,7 @@ time_t	hit;
 			++t;
 		else if (t >= hit)
 			--t;
-		tmp = localtime(&t);
+		tmp = my_localtime(&t);
 		if (tmp != NULL)
 			tm = *tmp;
 		if ((lotmp == NULL || tmp == NULL) ? (lotmp == tmp) :
@@ -477,7 +513,7 @@ int	v;
 		}
 		(void) printf(" = ");
 	}
-	tmp = localtime(&t);
+	tmp = my_localtime(&t);
 	dumptime(tmp);
 	if (tmp != NULL) {
 		if (*abbr(tmp) != '\0')

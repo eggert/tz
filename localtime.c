@@ -45,14 +45,14 @@ static char		isset;
 char *			tz_abbr;	/* set by localtime; available to all */
 
 static
-getshort(p)
+shortget(p)
 unsigned char *	p;
 {
 	return (p[0] << 8) | p[1];
 }
 
 static long
-getlong(p)
+longget(p)
 register unsigned char *	p;
 {
 	return ((((((p[0] << 8) | p[1]) << 8) | p[2]) << 8) | p[3]);
@@ -104,9 +104,9 @@ register struct state *	sp;
 		if (close(fid) != 0 || i < sizeof sp->h)
 			return -1;
 		p += sizeof sp->h.tzh_reserved;
-		sp->h.tzh_timecnt = getshort(p += 2);
-		sp->h.tzh_typecnt = getshort(p += 2);
-		sp->h.tzh_charcnt = getshort(p += 2);
+		sp->h.tzh_timecnt = shortget(p += 2);
+		sp->h.tzh_typecnt = shortget(p += 2);
+		sp->h.tzh_charcnt = shortget(p += 2);
 		if (sp->h.tzh_timecnt > TZ_MAX_TIMES ||
 			sp->h.tzh_typecnt == 0 ||
 			sp->h.tzh_typecnt > TZ_MAX_TYPES ||
@@ -118,14 +118,14 @@ register struct state *	sp;
 			sp->h.tzh_charcnt * sizeof (char))
 				return -1;
 		for (i = 0; i < sp->h.tzh_timecnt; ++i)
-			sp->ats[i] = getlong(p += 4);
+			sp->ats[i] = longget(p += 4);
 		for (i = 0; i < sp->h.tzh_timecnt; ++i)
 			sp->types[i] = *p++;
 		for (i = 0; i < sp->h.tzh_typecnt; ++i) {
 			register struct ttinfo *	ttisp;
 
 			ttisp = &sp->ttis[i];
-			ttisp->tt_gmtoff = getlong(p += 4);
+			ttisp->tt_gmtoff = longget(p += 4);
 			ttisp->tt_isdst = *p++;
 			ttisp->tt_abbrind = *p++;
 		}

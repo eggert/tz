@@ -13,8 +13,16 @@ Rule	M-Eur	1969	1982	-	Sep	lastSun	2:00	0	-
 Rule	M-Eur	1983	only	-	Oct	23	2:00	0	-
 Rule	M-Eur	1984	2037	-	Sep	lastSun	2:00	0	-
 
-# does eastern Europe have DST ??
 # Zone	NAME		GMTOFF	RULES	FORMAT
 Zone	WET		0	W-Eur	WET%s
 Zone	MET		1 	M-Eur	MET%s
-Zone	EET		2	M-Eur	EET%s	# Middle?? What are the rules??
+
+# One source shows that Bulgaria, Cyprus, Finland, and Greece observe DST from
+# the last Sunday in March to the last Sunday in September in 1986.
+# Did any/all of them have Middle Europe's 1983 wobble?
+#
+# The source shows Romania changing a day later than everybody else;
+# since I don't think they're allowed to have UNIX(tm) systems, we'll skip
+# them for now.
+
+Zone	EET		2	M-Eur	EET%s

@@ -504,7 +504,7 @@ char *	argv[];
 		** Find the next non-continuation zone entry.
 		*/
 		for (j = i + 1; j < nzones && zones[j].z_name == NULL; ++j)
-			;
+			continue;
 		outzone(&zones[i], j - i);
 	}
 	/*
@@ -570,7 +570,7 @@ setboundaries()
 	register int bii;
 
 	for (bit = 1; bit > 0; bit <<= 1)
-		;
+		continue;
 	if (bit == 0) {		/* time_t is an unsigned type */
 		tt_signed = FALSE;
 		min_time = 0;
@@ -590,7 +590,7 @@ setboundaries()
 	max_year = TM_YEAR_BASE + gmtime(&max_time)->tm_year;
 
 	for (bii = 1; bii > 0; bii <<= 1)
-		;
+		continue;
 	min_int = bii;
 	max_int = -1 - bii;
 }

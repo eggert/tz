@@ -118,7 +118,7 @@ char *		argv[];
 	INITIALIZE(t);
 #ifdef LC_ALL
 	(void) setlocale(LC_ALL, "");
-#endif /* defined LC_ALL */
+#endif /* defined(LC_ALL) */
 #if HAVE_GETTEXT
 #ifdef TZ_DOMAINDIR
 	(void) bindtextdomain(TZ_DOMAIN, TZ_DOMAINDIR);
@@ -631,8 +631,15 @@ const time_t			t;
 	time_t		outt;
 
 	tm = *localtime(&t);
-	cent = (tm.tm_year + TM_YEAR_BASE) / 100;
-	year_in_cent = (tm.tm_year + TM_YEAR_BASE) - cent * 100;
+#define DIVISOR	100
+	year_in_cent = tm.tm_year % DIVISOR + TM_YEAR_BASE % DIVISOR;
+	cent = tm.tm_year / DIVISOR + TM_YEAR_BASE / DIVISOR +
+		year_in_cent / DIVISOR;
+	year_in_cent %= DIVISOR;
+	if (year_in_cent < 0) {
+		year_in_cent += DIVISOR;
+		--cent;
+	}
 	month = tm.tm_mon + 1;
 	day = tm.tm_mday;
 	hour = tm.tm_hour;

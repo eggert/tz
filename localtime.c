@@ -1113,7 +1113,7 @@ register struct tm * const		tmp;
 		days = -24855;
 		rem = -11648;
 	}
-#endif /* mc68k */
+#endif /* defined mc68k */
 	rem += (offset - corr);
 	while (rem < 0) {
 		rem += SECSPERDAY;

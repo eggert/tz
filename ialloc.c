@@ -56,7 +56,7 @@ const int	size;
 {
 	if (NULLMAL(pointer))
 		return imalloc(size);
-	return realloc((genericptr_T) pointer, (alloc_size_T) nonzero(size));
+	return realloc((generic_T *) pointer, (alloc_size_T) nonzero(size));
 }
 
 char *

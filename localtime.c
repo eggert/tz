@@ -817,6 +817,27 @@ struct state * const	sp;
 		(void) tzparse(GMT, sp, TRUE);
 }
 
+#ifndef STD_INSPIRED
+static
+#endif /* !defined STD_INSPIRED */
+void
+tzsetwall()
+{
+	lcl_is_set = TRUE;
+#ifdef ALL_STATE
+	if (lclptr == NULL) {
+		lclptr = (struct state *) malloc(sizeof *lclptr);
+		if (lclptr == NULL) {
+			settzname();	/* all we can do */
+			return;
+		}
+	}
+#endif /* defined ALL_STATE */
+	if (tzload((char *) NULL, lclptr) != 0)
+		gmtload(lclptr);
+	settzname();
+}
+
 void
 tzset()
 {
@@ -849,24 +870,6 @@ tzset()
 	} else if (tzload(name, lclptr) != 0)
 		if (name[0] == ':' || tzparse(name, lclptr, FALSE) != 0)
 			(void) tzparse(name, lclptr, TRUE);
-	settzname();
-}
-
-void
-tzsetwall()
-{
-	lcl_is_set = TRUE;
-#ifdef ALL_STATE
-	if (lclptr == NULL) {
-		lclptr = (struct state *) malloc(sizeof *lclptr);
-		if (lclptr == NULL) {
-			settzname();	/* all we can do */
-			return;
-		}
-	}
-#endif /* defined ALL_STATE */
-	if (tzload((char *) NULL, lclptr) != 0)
-		gmtload(lclptr);
 	settzname();
 }
 

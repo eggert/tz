@@ -53,6 +53,7 @@ struct lc_time_T {
 };
 
 #ifdef LOCALE_HOME
+#include "sys/stat.h"
 static struct lc_time_T		localebuf;
 static struct lc_time_T *	_loc P((void));
 #define Locale	_loc()

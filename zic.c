@@ -1118,6 +1118,8 @@ static
 addtt(starttime, type)
 long	starttime;
 {
+	if (timecnt != 0 && type == types[timecnt - 1])
+		return;	/* easy enough! */
 	if (timecnt >= TZ_MAX_TIMES) {
 		error("too many transitions?!");
 		exit(1);

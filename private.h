@@ -162,7 +162,14 @@ extern void		free P((char * buf));
 #endif /* !defined FALSE */
 
 #ifndef INT_STRLEN_MAXIMUM
-#define INT_STRLEN_MAXIMUM	(1 + (sizeof (int) * CHAR_BIT + 1) / 3)
+/*
+** 302 / 1000 is log10(2.0) rounded up.
+** Subtract one for the sign bit;
+** add one for integer division truncation;
+** add one more for a minus sign.
+*/
+#define INT_STRLEN_MAXIMUM(type) \
+	((sizeof(type) * CHAR_BIT - 1) * 302 / 1000 + 2)
 #endif /* !defined INT_STRLEN_MAXIMUM */
 
 /*

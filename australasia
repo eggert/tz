@@ -276,10 +276,7 @@ Zone	Australia/Victoria	10:00	AV	EST
 #	[I mean, of course, Australian EST, not any other kind] are in common
 #	use, _they have NO REAL MEANING_, as they are not defined in the
 #	legislation.  This is very important to understand.
-#	I have researched New South Wales time only; . . .I hope that perhaps a
-#	resident of each state could be found to do it for their own state.
-#	(And I can guarantee that Victoria and NSW are different, so the link
-#	between them in the current australasia file must be broken.)
+#	I have researched New South Wales time only...
 
 # From Dave Davey (March 3, 1990):
 # Rule	NSW	1988	only	-	Mar	Sun>=1	3:00	0	-
@@ -301,7 +298,7 @@ Zone	Australia/Victoria	10:00	AV	EST
 # file Robert forwarded
 
 # From Arthur David Olson (March 8, 1992):
-# Sources differ on whether DST ended the first March 6 or March 20 in 1988;
+# Sources differ on whether DST ended March 6 or March 20 in 1988;
 # March 20 (the "confirmed" date) is used below.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
@@ -316,7 +313,7 @@ Rule	NSW	1987	only	-	Mar	15	3:00	0	-
 Rule	NSW	1987	max	-	Oct	lastSun	2:00	1:00	-
 # Rule	NSW	1988	only	-	Mar	Sun>=1	3:00	0	-
 # Rule	NSW	1989	only	-	Mar	Sun<=21	3:00	0	-
-Rule	NSW	1988	1989	-	Mar	Sun<=21	3:00	0	-
+Rule	NSW	1988	1989	-	Mar	Sun<=21	3:00	0	- #
 Rule	NSW	1990	max	-	Mar	Sun>=1	3:00	0	-
 
 # Zone	NAME			GMTOFF	RULES	FORMAT	[UNTIL]

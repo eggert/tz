@@ -7,7 +7,7 @@ tzcomp \- time zone compiler
 .B \-d
 directory ] [
 .B \-l
-localtime ] filename ...
+localtime ] [ filename ... ]
 .SH DESCRIPTION
 .I Tzcomp
 reads text from the file(s) named on the command line
@@ -145,6 +145,9 @@ Recognized forms include:
 .fi
 .in -.5i
 .sp
+Any of these forms may be followed by the letter 'w' if the given time is
+local "wall clock" time or 's' if the given time is local "standard" time;
+in the absence of 'w' or 's', wall clock time is assumed.
 .TP
 .B SAVE
 Gives the amount of time to be added to local standard time when the rule is in
@@ -225,9 +228,10 @@ the
 field is used as an alternate name for that zone.
 .PP
 Lines may appear in any order in the input.
-.SH EXAMPLE
-[Since a sample time zone file appears in the shell archive,
-this section has been omitted.]
+.SH NOTE
+For areas with more than two types of local time (if indeed there are such),
+you may get to use local standard time in "AT" fields to ensure that
+the earliest transition time recorded in the compiled file is correct.
 .SH FILES
 /etc/tzdir	standard directory used for created files
 .SH "SEE ALSO"

@@ -605,12 +605,20 @@ const char * const	tofile;
 
 		if (mkdirs(toname) != 0)
 			(void) exit(EXIT_FAILURE);
+
 		result = link(fromname, toname);
 #if (HAVE_SYMLINK - 0) 
 		if (result != 0) {
-			result = symlink(fromname, toname);
+		        char *s = (char *) tofile;
+		        register char * symlinkcontents = NULL;
+		        while ((s = strchr(s+1, '/')) != NULL)
+			        symlinkcontents = ecatalloc(symlinkcontents, "../");
+			symlinkcontents = ecatalloc(symlinkcontents, fromfile);
+
+			result = symlink(symlinkcontents, toname);
 			if (result == 0)
 warning(_("hard link failed, symbolic link used"));
+			ifree(symlinkcontents);
 		}
 #endif
 		if (result != 0) {

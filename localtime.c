@@ -1130,30 +1130,23 @@ const time_t * const	timep;
 #define WRONG	(-1)
 #endif /* !defined WRONG */
 
+/*
+** Simplified normalize logic courtesy Paul Eggert (eggert@twinsun.com).
+*/
+
 static void
 normalize(tensptr, unitsptr, base)
 int * const	tensptr;
 int * const	unitsptr;
 const int	base;
 {
-	if (*unitsptr >= base) {
-		*tensptr += *unitsptr / base;
-		*unitsptr %= base;
-	} else if (*unitsptr < 0) {
-		/*
-		** Ensure that *unitsptr is negatable.
-		*/
-		--*tensptr;
-		*unitsptr += base;
-		if (*unitsptr < 0) {
-			/*
-			** Thanks to Tom Karzes (Tom-Karzes@deshaw.com)
-			** for an off-by-one fix.  ado, 1/8/93
-			*/
-			*tensptr -= 1 + (-*unitsptr - 1) / base;
-			*unitsptr = base - 1 - (-*unitsptr - 1) % base;
-		}
-	}
+	register int	tensdelta;
+	
+	tensdelta = (*unitsptr >= 0) ?
+		(*unitsptr / base) :
+		(-1 - (-1 - *unitsptr) / base);
+	*tensptr += tensdelta;
+	*unitsptr -= tensdelta * base;
 }
 
 static int

@@ -72,6 +72,7 @@ typedef char *		genericptr_t;
 #include "ctype.h"
 #include "errno.h"
 #include "string.h"
+#include "limits.h"	/* for CHAR_BIT */
 #ifndef _TIME_
 #include "time.h"
 #endif /* !defined _TIME_ */

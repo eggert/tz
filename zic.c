@@ -1133,7 +1133,7 @@ addtype(gmtoff, abbr, isdst)
 long	gmtoff;
 char *	abbr;
 {
-	register int	i;
+	register int	i, j;
 
 	/*
 	** See if there's already an entry for this zone type.
@@ -1154,8 +1154,16 @@ char *	abbr;
 	}
 	gmtoffs[i] = gmtoff;
 	isdsts[i] = isdst;
-	abbrinds[i] = charcnt;
-	newabbr(abbr);
+
+	for (j = 0; j < charcnt; ++j)
+		if (strcmp(&chars[j], abbr) == 0)
+			break;
+	if (j < charcnt)
+		abbrinds[i] = j;
+	else {
+		abbrinds[i] = charcnt;
+		newabbr(abbr);
+	}
 	++typecnt;
 	return i;
 }

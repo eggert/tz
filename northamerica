@@ -29,7 +29,7 @@
 # sure enough of this to add anything."
 
 # Before the Uniform Time Act of 1966 took effect in 1967, observance of
-# Daylight Saving Time was by local option, except during wartime.
+# Daylight Saving Time in the US was by local option, except during wartime.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	MostNA	1918	1919	-	Mar	lastSun	2:00	1:00	D
@@ -52,15 +52,13 @@ Rule	MostNA	1976	2037	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT
 Zone	Atlantic	-4:00	MostNA	A%sT
 Zone	Eastern		-5:00	MostNA	E%sT
-Zone	East-Indiana	-5:00	-	EST	#Always Standard near South Bend
 Zone	Central		-6:00	MostNA	C%sT
 Zone	Mountain	-7:00	MostNA	M%sT
-Zone	Arizona		-7:00	-	MST	#Always Standard in Arizona!
 Zone	Pacific		-8:00	MostNA	P%sT
 Zone	Yukon		-9:00	MostNA	Y%sT
 Zone	Aleutian	-10:00	MostNA	A%sT
-Zone	Hawaiian	-10:00	-	HST	#Always Standard in Hawaii!
-Zone	Newfoundland	-3:30	-	NST
+Zone	Newfoundland	-3:30	-	NST	# Is DST now observed here?
+						# If so, when did it start?
 
 # Old names
 
@@ -69,3 +67,34 @@ Link	Eastern		EST5EDT
 Link	Central		CST6CDT
 Link	Mountain	MST7MDT
 Link	Pacific		PST8PDT
+
+# Nonstandard mainland areas:
+
+Rule	SomeUS	1918	1919	-	Mar	lastSun	2:00	1:00	D
+Rule	SomeUS	1918	1919	-	Oct	lastSun	2:00	0	S
+Rule	SomeUS	1942	only	-	Feb	9	2:00	1:00	W # War
+Rule	SomeUS	1945	only	-	Sep	30	2:00	0	S
+
+Zone	East-Indiana	-5:00	SomeUS	E%sT # Usually standard near South Bend
+Zone	Arizona		-7:00	SomeUS	M%sT # Usually standard in Arizona
+
+# And then there's Hawaii.
+# DST was observed for one day in 1933.
+# Standard time was change by half an hour in 1947; this accounts for
+# the half-hour offsets before then, and the peculiar first rule.
+# (One alternative is to have "Zone Hawaiian -10:30..." with a
+# current standard offset of 0:30; this gives better results before 1902,
+# while it is a bit more obscure.)
+#
+# Things have been calm since 1947.
+
+Rule	Hawaii	1902	only	-	Jan	1	0:00	-0:30	S
+Rule	Hawaii	1918	1919	-	Mar	lastSun	2:00	0:30	D
+Rule	Hawaii	1918	1919	-	Oct	lastSun	2:00	-0:30	S
+Rule	Hawaii	1933	only	-	Apr	30	2:00	0:30	D
+Rule	Hawaii	1933	only	-	May	1	2:00	-0:30	S
+Rule	Hawaii	1942	only	-	Feb	9	2:00	0:30	W # War
+Rule	Hawaii	1945	only	-	Sep	30	2:00	-0:30	S
+Rule	Hawaii	1947	only	-	Jun	8	2:00	0	S
+
+Zone	Hawaiian	-10:00	Hawaii	H%sT

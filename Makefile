@@ -358,12 +358,12 @@ public:		$(ENCHILADA) zic
 		-mkdir /tmp/,tzpublic
 		for i in $(TDATA) ; do zic -d /tmp/,tzpublic $$i ; done
 		rm -f -r /tmp/,tzpublic
-		nawk -f checktab.awk $(PRIMARY_YDATA)
+		$(AWK) -f checktab.awk $(PRIMARY_YDATA)
 		tar cf - $(DOCS) $(SOURCES) $(MISC) | gzip -9 > tzcode.tar.gz
 		tar cf - $(DATA) | gzip -9 > tzdata.tar.gz
 
 zonenames:	$(TDATA)
-		@awk '/^Zone/ { print $$2 } /^Link/ { print $$3 }' $(TDATA)
+		@$(AWK) '/^Zone/ { print $$2 } /^Link/ { print $$3 }' $(TDATA)
 
 asctime.o:	private.h tzfile.h
 date.o:		private.h

@@ -60,9 +60,34 @@ static char	elsieid[] = "%W%";
 #define DAYSPERNYEAR	365
 #endif /* !defined DAYSPERNYEAR */
 
+#ifndef C99IPMOD
+/*
+** Given an integral argument (a) and a positive integral argument (b),
+** return a % b per C99.
+*/
+
+#define C99IPMOD(a, b)	((-1 % 2 < 0 || (a) >= 0) ? \
+				((a) % (b)) : ((a) % (b) - (b)))
+#endif /* !defined C99IPMOD */
+
 #ifndef isleap
-#define isleap(y) ((((y) % 4) == 0 && ((y) % 100) != 0) || ((y) % 400) == 0)
+#define isleap(y) (((y) % 4) == 0 && (((y) % 100) != 0 || ((y) % 400) == 0))
 #endif /* !defined isleap */
+
+#ifndef isleap_sum
+/*
+** Since everything in isleap is modulo 400 (or a factor of 400), we know that
+**	isleap(y) == isleap(y % 400)
+** and so
+**	isleap(a + b) == isleap((a + b) % 400)
+** or
+**	isleap(a + b) == isleap(a % 400 + b % 400)
+** (at least under the C99 definition of %).
+** We use this to avoid addition overflow problems.
+*/
+
+#define isleap_sum(a, b)	isleap(C99IPMOD((a), 400) + C99IPMOD((b), 400))
+#endif /* !defined isleap_sum */
 
 #if HAVE_GETTEXT
 #include "locale.h"	/* for setlocale */
@@ -321,7 +346,7 @@ struct tm *	oldp;
 		return -delta(oldp, newp);
 	result = 0;
 	for (tmy = oldp->tm_year; tmy < newp->tm_year; ++tmy)
-		result += DAYSPERNYEAR + isleap(tmy + (long) TM_YEAR_BASE);
+		result += DAYSPERNYEAR + isleap_sum(tmy, TM_YEAR_BASE);
 	result += newp->tm_yday - oldp->tm_yday;
 	result *= HOURSPERDAY;
 	result += newp->tm_hour - oldp->tm_hour;
@@ -398,9 +423,9 @@ register const struct tm *	timeptr;
 		(int) (sizeof mon_name / sizeof mon_name[0]))
 			mn = "???";
 	else		mn = mon_name[timeptr->tm_mon];
-	(void) printf("%.3s %.3s%3d %.2d:%.2d:%.2d %ld",
+	(void) printf("%.3s %.3s%3d %.2d:%.2d:%.2d %.0lf",
 		wn, mn,
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec,
-		timeptr->tm_year + (long) TM_YEAR_BASE);
+		(double) timeptr->tm_year + (double) TM_YEAR_BASE);
 }

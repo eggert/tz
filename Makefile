@@ -29,13 +29,13 @@ TZCOBJS=	zic.o scheck.o strchr.o mkdir.o
 TZDSRCS=	zdump.c newctime.c
 TZDOBJS=	zdump.o newctime.o
 DOCS=		README Makefile newctime.3 tzfile.5 zic.8 zdump.8
-SOURCES=	tzfile.h $(TZCSRCS) $(TZDSRCS) years.sh
+SOURCES=	tzfile.h $(TZCSRCS) $(TZDSRCS)
 DATA=		asia australasia europe etcetera northamerica pacificnew systemv
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
 all:	REDID_BINARIES zdump $(TZLIB)
 
-REDID_BINARIES:	$(TZDIR) zic years $(DATA)
+REDID_BINARIES:	$(TZDIR) zic $(DATA)
 	PATH=.:$$PATH zic -l $(LOCALTIME) -d $(TZDIR) $(DATA) && > $@
 
 zdump:	$(TZDOBJS)
@@ -50,11 +50,6 @@ zic:	$(TZCOBJS)
 
 $(TZDIR):
 	mkdir $@
-
-years:	years.sh
-	rm -f $@
-	cp $? $@
-	chmod 555 $@
 
 BUNDLE1:	$(DOCS)
 	bundle $(DOCS) > BUNDLE1
@@ -73,7 +68,7 @@ sure:	$(TZCSRCS) $(TZDSRCS) tzfile.h
 	lint $(LINTFLAGS) $(TZDSRCS)
 
 clean:
-	rm -f core *.o *.out REDID_BINARIES years zdump zic BUNDLE \#*
+	rm -f core *.o *.out REDID_BINARIES zdump zic BUNDLE \#*
 
 CLEAN:	clean
 	sccs clean

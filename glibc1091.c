@@ -22,7 +22,42 @@ not, write to the Free Software Foundation, Inc., 675 Mass Ave,
 Cambridge, MA 02139, USA.  */
 
 #include <ansidecl.h>
+#if 0
 #include <localeinfo.h>
+#else
+static struct fake_fake_fake {
+	char *	abbrev_wkday[7];
+	char *	full_wkday[7];
+	char *	abbrev_month[12];
+	char *	full_month[12];
+	char *	ampm[2];
+	char *	date_time;
+	char *	date;
+	char *	time;
+} fake_fake = {
+	{
+		"Sun", "Mon", "Tue", "Wed",
+		"Thu", "Fri", "Sat"
+	},
+	{
+		"Sunday", "Monday", "Tuesday", "Wednesday",
+		"Thursday", "Friday", "Saturday"
+	},
+	{
+		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+	},
+	{
+		"January", "February", "March", "April", "May", "June",
+		"July", "August", "September", "October", "November", "December"
+	},
+	{
+		"AM", "PM"
+	},
+	"%a %b %d %H:%M:%S %Y", "%m/%d/%y", "%H:%M:%S",
+};
+static struct fake_fake_fake *	_time_info = &fake_fake;
+#endif
 #include <ctype.h>
 #include <limits.h>
 #include <stddef.h>

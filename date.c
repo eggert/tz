@@ -106,6 +106,7 @@ char *	argv[];
 		default:
 			usage();
 		case 'u':		/* do it in GMT */
+		case 'c':
 			dogmt();
 			break;
 		case 'n':		/* don't set network */
@@ -435,6 +436,7 @@ usage()
 {
 	(void) fprintf(stderr, "date: usage is date ");
 	(void) fprintf(stderr, "[-u] ");
+	(void) fprintf(stderr, "[-c] ");
 	(void) fprintf(stderr, "[-n] ");
 	(void) fprintf(stderr, "[-d dst] ");
 	(void) fprintf(stderr, "[-t min-west] ");

@@ -391,6 +391,8 @@ register const struct tm *	timeptr;
 	};
 	register const char *	wn;
 	register const char *	mn;
+	int			lead;
+	int			trail;
 
 	/*
 	** The packaged versions of localtime and gmtime never put out-of-range
@@ -405,9 +407,22 @@ register const struct tm *	timeptr;
 		(int) (sizeof mon_name / sizeof mon_name[0]))
 			mn = "???";
 	else		mn = mon_name[timeptr->tm_mon];
-	(void) printf("%.3s %.3s%3d %.2d:%.2d:%.2d %.0lf",
+	(void) printf("%.3s %.3s%3d %.2d:%.2d:%.2d ",
 		wn, mn,
 		timeptr->tm_mday, timeptr->tm_hour,
-		timeptr->tm_min, timeptr->tm_sec,
-		(double) timeptr->tm_year + (double) TM_YEAR_BASE);
+		timeptr->tm_min, timeptr->tm_sec);
+#define DIVISOR	100
+	lead = timeptr->tm_year / DIVISOR + TM_YEAR_BASE / DIVISOR;
+	trail = timeptr->tm_year % DIVISOR + TM_YEAR_BASE % DIVISOR;
+	while (trail < 0) {
+		trail += DIVISOR;
+		--lead;
+	}
+	if (lead < 0 && trail != 0) {
+		trail -= DIVISOR;
+		++lead;
+	}
+	if (lead == 0)
+		(void) printf("%d", trail);
+	else	(void) printf("%d%d", lead, ((trail < 0) ? -trail : trail));
 }

@@ -1,31 +1,52 @@
 # %W%
 
-# Incorporates updates for Australia from Robert Elz' australia 1.1,
-# updates from the Australian consulate,
-# updates from daved@physiol.su.oz.au,
-# infromation from Geoge Shepherd of Sun Adelaide,
-# 1991 updates from Bradley White,
-# and 1992 updates from Bradley White.
-
 ###############################################################################
 
 # Australia
 
-# Australia observes, for example, "Central Standard Time" and
-# "Central Summer Time", meaning the time zone abbreviations are constant.
+# From John Mackin (March 6, 1991):
+# We in Australia have _never_ referred to DST as `daylight' time.
+# It is called `summer' time.  Now by a happy coincidence, `summer'
+# and `standard' happen to start with the same letter; hence, the
+# abbreviation does _not_ change...
+# The legislation does not actually define abbreviations, at least
+# in this State, but the abbreviation is just commonly taken to be the
+# initials of the phrase, and the legislation here uniformly uses
+# the phrase `summer time' and does not use the phrase `daylight
+# time'.
+# Announcers on the Commonwealth radio network, the ABC (for Australian
+# Broadcasting Commission), use the phrases `Eastern Standard Time'
+# or `Eastern Summer Time'.  (Note, though, that as I say in the
+# current australasia file, there is really no such thing.)  Announcers
+# on its overseas service, Radio Australia, use the same phrases
+# prefixed by the word `Australian' when referring to local times;
+# time announcements on that service, naturally enough, are made in UTC.
 
-#	The NORTHERN TERRITORY [ Courtesy N.T. Dept of the Chief Minister ]
-#						[ Nov 1990 ]
-#	N.T. have never utilised any DST due to sub-tropical/tropical location.
+# From George Shepherd via Simon Woodhead via Robert Elz (March 6, 1991):
+# # The NORTHERN TERRITORY..  [ Courtesy N.T. Dept of the Chief Minister ]
+# #					[ Nov 1990 ]
+# #	N.T. have never utilised any DST due to sub-tropical/tropical location.
+# ...
+# Zone	Australia/North		9:30	-	CST
+
 # Zone	NAME			GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Australia/North		9:30	-	CST
 
-#	The state of WESTERN AUSTRALIA [ Courtesy W.A. dept Premier+Cabinet ]
-#						[ Nov 1990 ]
-#	W.A. suffers from a great deal of public and political opposition to
-#	DST in principle. A bill is brought before parliament in most years,
-#	but usually defeated either in the upper house, or in party caucus
-#	before reaching parliament.
+# From George Shepherd via Simon Woodhead via Robert Elz (March 6, 1991):
+# #  The state of WESTERN AUSTRALIA..  [ Courtesy W.A. dept Premier+Cabinet ]
+# #						[ Nov 1990 ]
+# #	W.A. suffers from a great deal of public and political opposition to
+# #	DST in principle. A bill is brought before parliament in most years, but
+# #	usually defeated either in the upper house, or in party caucus
+# #	before reaching parliament.
+# ...
+# Zone	Australia/West		8:00	AW	%sST
+# ...
+# Rule	AW	1974	only	-	Oct	lastSun	2:00	1:00	D
+# Rule	AW	1975	only	-	Mar	Sun>=1	3:00	0	W
+# Rule	AW	1983	only	-	Oct	lastSun	2:00	1:00	D
+# Rule	AW	1984	only	-	Mar	Sun>=1	3:00	0	W
+
 # Zone	NAME			GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Australia/West		8:00	-	WST	1974 Oct lastSun 2:00
 				8:00	1:00	WST	1975 Mar Sun>=1 3:00
@@ -33,10 +54,32 @@ Zone	Australia/West		8:00	-	WST	1974 Oct lastSun 2:00
 				8:00	1:00	WST	1984 Mar Sun>=1 3:00
 				8:00	-	WST
 
-#	The state of QUEENSLAND [ Courtesy Qld. Dept Premier Econ&Trade Devel ]
-#						[ Dec 1990 ]
-#	Observed "experimental Daylight Saving" starting in fall
-#	of 1989; abandoned after a referendum in early 1992.
+# From George Shepherd via Simon Woodhead via Robert Elz (March 6, 1991):
+# #   The state of QUEENSLAND.. [ Courtesy Qld. Dept Premier Econ&Trade Devel ]
+# #						[ Dec 1990 ]
+# ...
+# Zone	Australia/Queensland	10:00	AQ	%sST
+# ...
+# Rule	AQ	1971	only	-	Oct	lastSun	2:00	1:00	D
+# Rule	AQ	1972	only	-	Feb	lastSun	3:00	0	E
+# Rule	AQ	1989	max	-	Oct	lastSun	2:00	1:00	D
+# Rule	AQ	1990	max	-	Mar	Sun>=1	3:00	0	E
+
+# From Bradley White (December 24, 1989):
+# "Australia/Queensland" now observes daylight time (i.e. from
+# October 1989).
+
+# From Bradley White (March 5, 1992):
+# ...there was recently a referendum in Queensland which resulted
+# in the experimental daylight saving system being abandoned. So, ...
+# ...
+# Rule	QLD	1989	1991	-	Oct	lastSun	2:00	1:00	D
+# Rule	QLD	1990	1992	-	Mar	Sun>=1	3:00	0	S
+# ...
+
+# From Arthur David Olson (March 5, 1992):
+# Here is the union of the 1971/1972 change and the 1989-1992 changes.
+
 # Zone	NAME			GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Australia/Queensland	10:00	-	EST	1971 Oct lastSun 2:00
 				10:00	1:00	EST	1972 Feb lastSun 3:00
@@ -48,36 +91,127 @@ Zone	Australia/Queensland	10:00	-	EST	1971 Oct lastSun 2:00
 				10:00	1:00	EST	1992 Mar Sun>=1 3:00
 				10:00	-	EST
 
-#	The state of SOUTH AUSTRALIA [ Courtesy of S.A. Dept of Labour ]
-#						[ Nov 1990 ]
+# From George Shepherd via Simon Woodhead via Robert Elz (March 6, 1991):
+# #   The state of SOUTH AUSTRALIA....[ Courtesy of S.A. Dept of Labour ]
+# #						[ Nov 1990 ]
+# ...
+# Zone	Australia/South		9:30	AS	%sST
+# ...
+# Rule	 AS	1971	max	-	Oct	lastSun	2:00	1:00	D
+# Rule	 AS	1972	1985	-	Mar	Sun>=1	3:00	0	C
+# Rule	 AS	1986	1990	-	Mar	Sun<=21	3:00	0	C
+# Rule	 AS	1991	max	-	Mar	Sun>=1	3:00	0	C
+
+# From Arthur David Olson (March 5, 1992):
+# The abbreviation used below may well be worng.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	AS	1971	max	-	Oct	lastSun	2:00	1:00	-
 Rule	AS	1972	1985	-	Mar	Sun>=1	3:00	0	-
 Rule	AS	1986	1990	-	Mar	Sun<=21	3:00	0	-
 Rule	AS	1991	max	-	Mar	Sun>=1	3:00	0	-
+
 # Zone	NAME		        GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Australia/South		9:30	AS	SST
 
+# From Arthur David Olson (March 5, 1992):
+# Old rules for Tasmania and Victoria follow.
+# There are lots of differences between these rules and
+# the Shepherd... rules; particularly troubling, though, are that
+#	the old rules claim that both Tasmania and Victori now do DST
+#	from the next-to-last Sunday in October to the first Sunday in March
+# while
+#	the new rules claim that Tasmania now does DST
+#	from the first Sunday in October to the last Sunday in March
+# and
+#	the new rules claim that Victoria now does DST
+#	from the last Sunday in October
+#	(agreeing with the old rules that it goes to the first Sunday in March)
+#
+# Rule	Oz	1971	1985	-	Oct	lastSun	2:00	1:00
+# Rule	Oz	1986	max	-	Oct	Sun<=24	2:00	1:00
+# Rule	Oz	1972	only	-	Feb	27	3:00	0
+# Rule	Oz	1973	1986	-	Mar	Sun>=1	3:00	0
+# Rule	Oz	1987	1990	-	Mar	Sun<=21	3:00	0
+# Rule	Oz	1991	max	-	Mar	Sun>=1	3:00	0
+# 
+# # Victoria jumped to a later ending date for DST in 1986 rather than 1987.
+# 
+# Zone	Australia/Victoria	10:00	Oz	EST	1985 Oct lastSun 2:00
+#				10:00	1:00	EST	1986 Mar Sun<=21 3:00
+#				10:00	Oz	EST
+# 
+# # Tasmania retained a later ending date for DST in 1991.
+# 
+# Zone	Australia/Tasmania	10:00	Oz	EST	1990 Oct Sun<=24 2:00
+# 				10:00	1:00	EST	1991 Mar Sun<=21 3:00
+# 				10:00	Oz	EST
+
+# From George Shepherd via Simon Woodhead via Robert Elz (March 6, 1991):
+# #  The state of TASMANIA.. [Courtesy Tasmanian Dept of Premier + Cabinet ]
+# #					[ Nov 1990 ]
+# ...
+# Zone	Australia/Tasmania	10:00	AT	%sST
+# ...
+# Rule	AT	1967	only	-	Oct	Sun>=1	2:00	1:00	D
+# Rule	AT	1968	only	-	Mar	lastSun	3:00	0	E
+# Rule	AT	1968	1985	-	Oct	lastSun	2:00	1:00	D
+# Rule	AT	1969	1971	-	Mar	Sun>=8	3:00	0	E
+# Rule	AT	1972	only	-	Feb	lastSun	3:00	0	E
+# Rule	AT	1973	1981	-	Mar	Sun>=1	3:00	0	E
+# Rule	AT	1982	1983	-	Mar	lastSun	3:00	0	E
+# Rule	AT	1984	1986	-	Mar	Sun>=1	3:00	0	E
+# Rule	AT	1986	only	-	Oct	Sun>=15	2:00	1:00	D
+# Rule	AT	1987	1990	-	Mar	Sun>=15	3:00	0	E
+# Rule	AT	1987	only	-	Oct	Sun>=22	2:00	1:00	D
+# Rule	AT	1988	1990	-	Oct	lastSun	2:00	1:00	D
+# Rule	AT	1991	max	-	Oct	Sun>=1	2:00	1:00	D
+# Rule	AT	1991	max	-	Mar	lastSun	3:00	0	E
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Oz	1971	1985	-	Oct	lastSun	2:00	1:00
-Rule	Oz	1986	max	-	Oct	Sun<=24	2:00	1:00
-Rule	Oz	1972	only	-	Feb	27	3:00	0
-Rule	Oz	1973	1986	-	Mar	Sun>=1	3:00	0
-Rule	Oz	1987	1990	-	Mar	Sun<=21	3:00	0
-Rule	Oz	1991	max	-	Mar	Sun>=1	3:00	0
+Rule	AT	1967	only	-	Oct	Sun>=1	2:00	1:00	-
+Rule	AT	1968	only	-	Mar	lastSun	3:00	0	-
+Rule	AT	1968	1985	-	Oct	lastSun	2:00	1:00	-
+Rule	AT	1969	1971	-	Mar	Sun>=8	3:00	0	-
+Rule	AT	1972	only	-	Feb	lastSun	3:00	0	-
+Rule	AT	1973	1981	-	Mar	Sun>=1	3:00	0	-
+Rule	AT	1982	1983	-	Mar	lastSun	3:00	0	-
+Rule	AT	1984	1986	-	Mar	Sun>=1	3:00	0	-
+Rule	AT	1986	only	-	Oct	Sun>=15	2:00	1:00	-
+Rule	AT	1987	1990	-	Mar	Sun>=15	3:00	0	-
+Rule	AT	1987	only	-	Oct	Sun>=22	2:00	1:00	-
+Rule	AT	1988	1990	-	Oct	lastSun	2:00	1:00	-
+Rule	AT	1991	max	-	Oct	Sun>=1	2:00	1:00	-
+Rule	AT	1991	max	-	Mar	lastSun	3:00	0	-
+# Zone	NAME		        GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	Australia/Tasmania	10:00	AT	EST
 
-# Victoria jumped to a later ending date for DST in 1986 rather than 1987.
+# From George Shepherd via Simon Woodhead via Robert Elz (March 6, 1991):
+# #   The state of VICTORIA.. [ Courtesy of Vic. Dept of Premier + Cabinet ]
+# #						[ Nov 1990 ]
+# ...
+# Zone	Australia/Victoria	10:00	AV	%sST
+# ...
+# Rule	AV	1971	1985	-	Oct	lastSun	2:00	1:00	D
+# Rule	AV	1972	only	-	Feb	lastSun	3:00	0	E
+# Rule	AV	1973	1985	-	Mar	Sun>=1	3:00	0	E
+# Rule	AV	1986	1990	-	Mar	Sun>=15	3:00	0	E
+# Rule	AV	1986	1987	-	Oct	Sun>=15	2:00	1:00	D
+# Rule	AV	1988	max	-	Oct	lastSun	2:00	1:00	D
+# Rule	AV	1991	max	-	Mar	Sun>=1	3:00	0	E
 
-Zone	Australia/Victoria	10:00	Oz	EST	1985 Oct lastSun 2:00
-				10:00	1:00	EST	1986 Mar Sun<=21 3:00
-				10:00	Oz	EST
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	AV	1971	1985	-	Oct	lastSun	2:00	1:00	-
+Rule	AV	1972	only	-	Feb	lastSun	3:00	0	-
+Rule	AV	1973	1985	-	Mar	Sun>=1	3:00	0	-
+Rule	AV	1986	1990	-	Mar	Sun>=15	3:00	0	-
+Rule	AV	1986	1987	-	Oct	Sun>=15	2:00	1:00	-
+Rule	AV	1988	max	-	Oct	lastSun	2:00	1:00	-
+Rule	AV	1991	max	-	Mar	Sun>=1	3:00	0	-
+# Zone	NAME		        GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	Australia/Victoria	10:00	AV	EST
 
-# Tasmania retained a later ending date for DST in 1991.
-
-Zone	Australia/Tasmania	10:00	Oz	EST	1990 Oct Sun<=24 2:00
-				10:00	1:00	EST	1991 Mar Sun<=21 3:00
-				10:00	Oz	EST
-
+# From Arthur David Olson:
 # New South Wales and subjurisdictions have their own ideas of a fun time.
 # Based on law library research by John Mackin (john@basser.cs.su.oz),
 # who notes:
@@ -91,6 +225,21 @@ Zone	Australia/Tasmania	10:00	Oz	EST	1990 Oct Sun<=24 2:00
 #	(And I can guarantee that Victoria and NSW are different, so the link
 #	between them in the current australasia file must be broken.)
 
+# From Dave Davey (March 3, 1990):
+# Rule	NSW	1988	only	-	Mar	Sun>=1	3:00	0	-
+# Rule	NSW	1989	only	-	Mar	Sun<=21	3:00	0	-
+
+# From George Shepherd via Simon Woodhead via Robert Elz (March 6, 1991):
+# # The state of NEW SOUTH WALES.. [confirmed by Attorney General's Dept N.S.W]
+# #					[ Dec 1990 ]
+# ...
+# Rule	 AN	1988	1989	-	Mar	Sun<=21	3:00	0	E
+# ...
+
+# From Arthur David Olson (March 5, 1992):
+# Sources differ on whether DST ended the first March 6 or March 20 in 1988;
+# March 6 is used below. 
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	NSW	1971	1985	-	Oct	lastSun	2:00	1:00	D
 Rule	NSW	1972	only	-	Feb	lastSun	3:00	0	S
@@ -101,13 +250,40 @@ Rule	NSW	1986	only	-	Mar	16	3:00	0	S
 Rule	NSW	1986	only	-	Oct	19	2:00	1:00	D
 Rule	NSW	1987	only	-	Mar	15	3:00	0	S
 Rule	NSW	1987	max	-	Oct	lastSun	2:00	1:00	D
-Rule	NSW	1988	1989	-	Mar	Sun<=21	3:00	0	S
+Rule	NSW	1988	only	-	Mar	Sun>=1	3:00	0	-
+Rule	NSW	1989	only	-	Mar	Sun<=21	3:00	0	-
 Rule	NSW	1990	max	-	Mar	Sun>=1	3:00	0	S
 
 # Zone	NAME			GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Australia/NSW		10:00	NSW	EST
-# `Broken Hill' means the County of Yancowinna. [john@basser.cs.su.oz.au,1/4/89]
+
+# From John Basser (January 4, 1989):
+# `Broken Hill' means the County of Yancowinna.
+
+# From George Shepherd via Simon Woodhead via Robert Elz (March 6, 1991):
+# # YANCOWINNA..  [ Confirmation courtesy of Broken Hill Postmaster ]
+# #					[ Dec 1990 ]
+# ...
+# # Yancowinna uses Central Standard Time, despite it's location on the
+# # New South Wales side of the S.A. border. Most business and social dealings
+# # are with CST zones, therefore CST is legislated by local government
+# # although the switch to Summer Time occurs in line with N.S.W. There have
+# # been years when this did not apply, but the historical data is not
+# # presently available.
+# Zone	Australia/Yancowinna	9:30	 AY	%sST
+# ...
+# Rule	 AY	1971	1985	-	Oct	lastSun	2:00	1:00	D
+# Rule	 AY	1972	only	-	Feb	lastSun	3:00	0	C
+# ...
+
 Zone	Australia/Yancowinna	9:30	NSW	???
+
+# From George Shepherd via Simon Woodhead via Robert Elz (March 6, 1991):
+# LHI...		[ Courtesy of Pauline Van Winsen.. pauline@Aus ]
+#					[ Dec 1990 ]
+# Lord Howe Island is located off the New South Wales coast, and is half an
+# hour ahead of NSW time.
+
 Zone	Australia/LHI		10:30	NSW	???
 
 ###############################################################################
@@ -117,11 +293,29 @@ Zone	Australia/LHI		10:30	NSW	???
 # New Zealand, from Elz' asia 1.1
 # Elz says "no guarantees"
 
+# From Mark Davies (October 3, 1990):
 # the 1989/90 year was a trial of an extended "daylight saving" period.
 # This trial was deemed successful and the extended period adopted for
 # subsequent years (with the addition of a further week at the start).
 # source -- phone call to Ministry of Internal Affairs Head Office.
-#	Mark Davies <mark@comp.vuw.ac.nz>, 3 Oct 1990.
+
+# From George Shepherd via Simon Woodhead via Robert Elz (March 6, 1991):
+# # The Country of New Zealand   (Australia's east island -) Gee they hate that!
+# #				   or is Australia the west island of N.Z.
+# #	[ courtesy of Geoff Tribble.. Geofft@Aus.. Auckland N.Z. ]
+# #				[ Nov 1990 ]
+# ...
+# Rule	NZ      1974    1988	-	Oct	lastSun	2:00	1:00	D
+# Rule	NZ	1989	max	-	Oct	Sun>=1	2:00	1:00	D
+# Rule	NZ      1975    1989	-	Mar	Sun>=1	3:00	0	S
+# Rule	NZ	1990	max	-	Mar	lastSun	3:00	0	S
+# ...
+# Zone	NZ			12:00	NZ		NZ%sT	# New Zealand
+# Zone	NZ-CHAT			12:45	-		NZ-CHAT # Chatham Island
+
+# From Arthur David Olson (March 5, 1992):
+# The below uses the Davies October 8 values for the start of DST in 1989
+# rather than the October 1 value.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	NZ	1974	1988	-	Oct	lastSun	2:00	1:00	D

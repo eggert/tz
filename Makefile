@@ -29,8 +29,8 @@ LINTFLAGS=	-phbaaxc
 
 LFLAGS=
 
-TZCSRCS=	zic.c scheck.c mkdir.c
-TZCOBJS=	zic.o scheck.o mkdir.o
+TZCSRCS=	zic.c scheck.c ialloc.c mkdir.c
+TZCOBJS=	zic.o scheck.o ialloc.o mkdir.o
 TZDSRCS=	zdump.c newctime.c
 TZDOBJS=	zdump.o newctime.o
 DOCS=		README Makefile newctime.3 tzfile.5 zic.8 zdump.8

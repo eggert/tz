@@ -398,7 +398,7 @@ public:		$(ENCHILADA)
 		tar cf - $(DOCS) $(SOURCES) $(MISC) *.[1-8].txt | gzip -9 > tzcode.tar.gz
 		tar cf - $(DATA) | gzip -9 > tzdata.tar.gz
 
-typecheck:	
+typecheck:
 		make clean
 		for i in "long long" unsigned double; \
 		do \

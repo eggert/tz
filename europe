@@ -1,0 +1,20 @@
+# %W%
+
+# European data is hearsay...
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	W-Eur	1969	2037	-	Mar	lastSun	2:00	1:00	" DST"
+Rule	W-Eur	1969	1982	-	Oct	lastSun	2:00	0	-
+Rule	W-Eur	1983	only	-	Oct	23	2:00	0	-
+Rule	W-Eur	1984	2037	-	Oct	lastSun	2:00	0	-
+
+Rule	M-Eur	1969	2037	-	Mar	lastSun	2:00	1:00	" DST"
+Rule	M-Eur	1969	1982	-	Sep	lastSun	2:00	0	-
+Rule	M-Eur	1983	only	-	Oct	23	2:00	0	-
+Rule	M-Eur	1984	2037	-	Sep	lastSun	2:00	0	-
+
+# does eastern Europe have DST ??
+# Zone	NAME		GMTOFF	RULES	FORMAT
+Zone	WET		0	W-Eur	WET%s
+Zone	MET		1 	M-Eur	MET%s
+Zone	EET		2	M-Eur	EET%s	# Middle?? What are the rules??

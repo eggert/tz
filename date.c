@@ -641,7 +641,7 @@ const time_t			t;
 }
 
 /*
-** Code from here on out is either as provided by UCB
+** Code from here on out is either based on code provided by UCB
 ** or is only called just before the program exits.
 */
 
@@ -755,7 +755,9 @@ const char * const	reason;
 #define WAITACK		2	/* seconds */
 #define WAITDATEACK	5	/* seconds */
 
+#ifndef errno
 extern	int errno;
+#endif /* !defined errno */
 /*
  * Set the date in the machines controlled by timedaemons
  * by communicating the new date to the local timedaemon.

@@ -14,7 +14,7 @@ ALL=		tzdump tzcomp uspres nonpres
 
 all:	$(ALL)
 
-data:	tzcomp
+data:	tzcomp tzinfo
 	tzcomp $(TZCFLAGS) tzinfo
 
 uspres nonpres:	types.sh

@@ -61,7 +61,11 @@ static char	privatehid[] = "%W%";
 ** genericptr_t
 */
 
+#ifdef __STDC__
 typedef void *		genericptr_t;
+#else /* !defined __STDC__ */
+typedef char *		genericptr_t;
+#endif /* !defined __STDC__ */
 
 #include "stdio.h"
 #include "ctype.h"
@@ -107,25 +111,43 @@ extern int	unlink P((const char * filename));
 #else /* !defined __STDC__ */
 
 #ifndef alloc_size_t
-typedef unsigned	alloc_size_t;
+#define alloc_size_t	unsigned
 #endif /* !defined alloc_size_t */
 
 #ifndef qsort_size_t
-#ifdef unix
-#include "sys/param.h"
-#endif /* defined unix */
-#ifdef BSD
-typedef int		qsort_size_t;
-#else /* !defined BSD */
-typedef unsigned	qsort_size_t;
-#endif /* !defined BSD */
+#ifdef USG
+#define qsort_size_t	unsigned
+#else /* !defined USG */
+#define qsort_size_t	int
+#endif /* !defined USG */
 #endif /* !defined qsort_size_t */
 
 #ifndef fwrite_size_t
-typedef int		fwrite_size_t;
+#define fwrite_size_t	int
 #endif /* !defined fwrite_size_t */
 
+#ifndef USG
+extern char *		sprintf P((char * buf, const char * format, ...));
+#endif /* !defined USG */
+
 #endif /* !defined __STDC__ */
+
+/*
+** Ensure that these are declared--redundantly declaring them shouldn't hurt.
+*/
+
+extern char *		getenv P((const char * name));
+extern genericptr_t	malloc P((alloc_size_t size));
+extern genericptr_t	calloc P((alloc_size_t nelem, alloc_size_t elsize));
+extern genericptr_t	realloc P((genericptr_t oldptr, alloc_size_t newsize));
+
+#ifdef USG
+extern void		exit P((int s));
+extern void		qsort P((genericptr_t base, qsort_size_t nelem,
+				qsort_size_t elsize, int (*comp)()));
+extern void		perror P((const char * string));
+extern void		free P((char * buf));
+#endif /* defined USG */
 
 /*
 ** UNIX is a registered trademark of AT&T.

@@ -226,7 +226,8 @@ YDATA=		$(PRIMARY_YDATA) pacificnew etcetera factory backward
 NDATA=		systemv
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
-DATA=		$(YDATA) $(NDATA) $(SDATA) leapseconds yearistype.sh
+TABDATA=	iso3166.tab zone.tab
+DATA=		$(YDATA) $(NDATA) $(SDATA) $(TABDATA) leapseconds yearistype.sh
 MISC=		usno1988 usno1989 usno1989a usno1995 Music WWW
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(MISC)
 
@@ -239,7 +240,7 @@ all:		zic zdump $(LIBOBJS)
 
 ALL:		all date tzselect
 
-install:	all $(DATA) $(REDO) $(TZLIB) $(MANS)
+install:	all $(DATA) $(REDO) $(TZLIB) $(MANS) $(TABDATA)
 		./zic -y $(YEARISTYPE) \
 			-d $(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
 		-rm -f $(TZDIR)/iso3166.tab $(TZDIR)/zone.tab

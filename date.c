@@ -459,7 +459,7 @@ static const char *
 nondigit(cp)
 register const char *	cp;
 {
-	while (isdigit(*cp))
+	while (is_digit(*cp))
 		++cp;
 	return cp;
 }
@@ -592,7 +592,7 @@ const time_t			t;
 
 	dotp = strchr(value, '.');
 	for (cp = value; *cp != '\0'; ++cp)
-		if (!isdigit(*cp) && cp != dotp)
+		if (!is_digit(*cp) && cp != dotp)
 			wildinput("time", value, "contains a nondigit");
 
 	if (dotp == NULL)

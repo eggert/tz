@@ -15,7 +15,7 @@ BEGIN {
 		iso_NR++
 		if ($0 ~ /^#/) continue
 		if (NF != 2) {
-			printf "%s:%d: wrong number of columns\n",
+			printf "%s:%d: wrong number of columns\n", \
 				iso_table, iso_NR >>"/dev/stderr"
 			status = 1
 		}
@@ -52,7 +52,7 @@ BEGIN {
 		zone_NR++
 		if ($0 ~ /^#/) continue
 		if (NF != 3 && NF != 4) {
-			printf "%s:%d: wrong number of columns\n",
+			printf "%s:%d: wrong number of columns\n", \
 				zone_table, zone_NR >>"/dev/stderr"
 			status = 1
 		}
@@ -144,7 +144,7 @@ END {
 		for (cc in cc2name) {
 			if (!cc_used[cc]) {
 				printf "%s:%d: warning:" \
-					"no Zone entries for %s (%s)\n",
+					"no Zone entries for %s (%s)\n", \
 					iso_table, cc2NR[cc], cc, cc2name[cc]
 			}
 		}

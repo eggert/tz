@@ -234,6 +234,17 @@ may be used to separate the
 .I rule
 from the rest of the specification.
 .PP
+If the
+.B TZ
+environment variable does not specify a
+.IR tzfile (5)-format
+and cannot be interpreted as a direct specification,
+UTC is used with the standard time abbreviation set to
+the value of the
+.B TZ
+environment variable
+(or to the leading characters of its value if it is lengthy).
+.PP
 .I Tzsetwall
 sets things up so that
 .I localtime

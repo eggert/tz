@@ -15,3 +15,14 @@ is particularly useful, but rather to:
 	system.
 
 The "ctime.c" source file does conversion of old-style calls to new-style calls.
+After having done a "make install" to create the "/etc/tzdir" files, you might
+want to
+	make ctime.o
+and then, for example,
+	ar r /lib/libtz.a ctime.o settz.o
+	if [ bsd ] ranlib /lib/libtz.a
+"Old" code can then be recompiled a la
+	cc ... -ltz
+to use the new functions.  If you're *really* adventuresome, you can put ctime.o
+and settz.o in the C library--conservative soul that I am, I'd recommend
+against it.

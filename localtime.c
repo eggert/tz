@@ -1341,15 +1341,14 @@ int * const		okayp;
 	}
 	/*
 	** Calculate the number of magnitude bits in a time_t
-	** (this works regardless of whether time_t is
-	** signed or unsigned).
+	** (this works whether time_t is signed or unsigned).
 	*/
 	bits = TYPE_BIT(time_t) - TYPE_SIGNED(time_t);
 	/*
 	** If time_t is signed, then 0 is the median value,
 	** if time_t is unsigned, then 1 << (bits - 1) is median.
 	*/
-	t = TYPE_SIGNED(time_t) ? 0 : ((time_t) 1 << (TYPE_BIT(time_t) - 1));
+	t = TYPE_SIGNED(time_t) ? 0 : (((time_t) 1) << (bits - 1));
 	for ( ; ; ) {
 		(*funcp)(&t, offset, &mytm);
 		dir = tmcomp(&mytm, &yourtm);
@@ -1359,8 +1358,8 @@ int * const		okayp;
 			if (bits < 0)
 				--t;
 			else if (dir > 0)
-				t -= (time_t) 1 << bits;
-			else	t += (time_t) 1 << bits;
+				t -= ((time_t) 1) << bits;
+			else	t += ((time_t) 1) << bits;
 			continue;
 		}
 		if (yourtm.tm_isdst < 0 || mytm.tm_isdst == yourtm.tm_isdst)

@@ -240,7 +240,7 @@ time_t	hit;
 }
 
 /*
-** Thanks to Paul Eggert (eggert@twinsun.com) for logic used below.
+** Thanks to Paul Eggert (eggert@twinsun.com) for logic used in delta.
 */
 
 static long

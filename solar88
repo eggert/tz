@@ -1,0 +1,24 @@
+# %W%
+
+# Apparent noon times below are for Riyadh; they're a bit off for other places.
+# Times were computed using formulas in the U.S. Naval Observatory's
+# Almanac for Computers 1988; the formulas "will give EqT to an accuracy of
+# [plus or minus] two seconds during the current year."
+#
+# Rounding to the nearest five seconds results in fewer than
+# 256 different "time types"--a limit that's faced because time types are
+# stored on disk as unsigned chars.
+
+#
+# Place holder until I get hold of the Almanac. . .
+#
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	sol88	1988	only	-	Jan	1	12:00:00s 0 -
+
+# Riyadh is at about 46 degrees 46 minutes East:  3 hrs, 7 mins, 4 secs
+# Before and after 1988, we'll operate on local mean solar time.
+
+# Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	Mideast/Riyadh		3:07:04	-		??	1988
+				3:07:04	sol88		??	1989
+				3:07:04	-		??

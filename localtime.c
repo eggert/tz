@@ -955,6 +955,15 @@ register struct tm *		tmp;
 	}
 	days = *clock / SECSPERDAY;
 	rem = *clock % SECSPERDAY;
+#ifdef mc68k
+	if (*clock == 0x80000000) {
+		/*
+		** A 3B1 muffs the division on the most negative number.
+		*/
+		days = -24855;
+		rem = -11648;
+	}
+#endif /* mc68k */
 	rem += (offset - corr);
 	while (rem < 0) {
 		rem += SECSPERDAY;

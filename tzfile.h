@@ -46,7 +46,8 @@ static char	tzfilehid[] = "%W%";
 */
 
 struct tzhead {
-	char	tzh_reserved[20];	/* reserved for future use */
+	char	tzh_reserved[16];	/* reserved for future use */
+	char	tzh_stampcnt[4];	/* number of stamp bytes */
 	char	tzh_ttisgmtcnt[4];	/* coded number of trans. time flags */
 	char	tzh_ttisstdcnt[4];	/* coded number of trans. time flags */
 	char	tzh_leapcnt[4];		/* coded number of leap seconds */
@@ -78,6 +79,10 @@ struct tzhead {
 **					transition time is local time
 **					if absent, transition times are
 **					assumed to be local time
+**	tzh_stampcnt (char)s		if present, string of form
+**					"yyyy-mm-dd hh:mm"
+**					indicating when information on which the
+**					file depends was last updated
 */
 
 /*

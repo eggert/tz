@@ -72,7 +72,6 @@ struct zone {
 	time_t		z_untiltime;
 };
 
-extern int	emkdir P((const char * name, int mode));
 extern int	getopt P((int argc, char * const argv[],
 			const char * options));
 extern char *	icatalloc P((char * old, const char * new));
@@ -1963,7 +1962,7 @@ char * const	argname;
 			/*
 			** It doesn't seem to exist, so we try to create it.
 			*/
-			if (emkdir(name, 0755) != 0) {
+			if (mkdir(name, 0755) != 0) {
 				(void) fprintf(stderr,
 					"%s: Can't create directory ",
 					progname);

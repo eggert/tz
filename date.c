@@ -207,9 +207,9 @@ char *		argv[];
 			if ((cp = strchr(value, '.')) != NULL) {
 				/*
 				** Ensure that the failure of
-				**	TZ=US/Eastern date 8712312359.60
+				**	TZ=America/New_York date 8712312359.60
 				** doesn't get misdiagnosed.  (It was
-				**	TZ=US/Eastern date 8712311859.60
+				**	TZ=America/New_York date 8712311859.60
 				** when the leap second was inserted.)
 				** The normal check won't work since
 				** the given time is valid in GMT.

@@ -5,7 +5,7 @@
 # Alternately, if you discover you've got the wrong time zone, you can just
 #	zic -l rightzone
 
-LOCALTIME=	Factory
+LOCALTIME=	factory
 
 # If you want something other than Eastern United States time as a template
 # for handling POSIX-style time zone environment variables,
@@ -138,7 +138,7 @@ DOCS=		Patchlevel.h \
 		date.1 newctime.3 tzfile.5 zic.8 zdump.8 \
 		Makefile
 YDATA=		africa antarctica asia australasia \
-		europe northamerica southamerica pacificnew etcetera factory
+		europe northamerica southamerica pacificnew
 NDATA=		systemv
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
@@ -223,7 +223,7 @@ SURE:		sure $(ENCHILADA)
 		spell $(ENCHILADA)
 
 clean:
-		rm -f core *.o *.out REDID_BINARIES zdump zic date SHAR* ,*
+		rm -f core *.o *.out REDID_BINARIES zdump zic SHAR* ,*
 
 CLEAN:		clean
 		sccs clean

@@ -1,7 +1,5 @@
 /*
-** TO DO: 
-** 	1.  resolve XXX in tzparse
-**	2.  does POSIX allow TZ variables such as UTC and UCT,
+** TO DO:   does POSIX allow TZ variables such as UTC and UCT,
 **	    or must they be UTC0 and UCT0?  If UTC is allowed,
 **	    get rid of gmtokay nonsense in tzparse.
 */
@@ -73,6 +71,7 @@ struct ttinfo {				/* time type information */
 	long		tt_gmtoff;	/* GMT offset in seconds */
 	int		tt_isdst;	/* used to set tm_isdst */
 	int		tt_abbrind;	/* abbreviation list index */
+	int		tt_ttisstd;	/* TRUE if transition is std time */
 };
 
 struct lsinfo {				/* leap second information */
@@ -259,11 +258,13 @@ register struct state * const	sp;
 	{
 		register const struct tzhead *	tzhp;
 		char				buf[sizeof *sp + sizeof *tzhp];
+		int				ttisstdcnt;
 
 		i = read(fid, buf, sizeof buf);
 		if (close(fid) != 0 || i < sizeof *tzhp)
 			return -1;
 		tzhp = (struct tzhead *) buf;
+		ttisstdcnt = (int) detzcode(tzhp->tzh_ttisstdcnt);
 		sp->leapcnt = (int) detzcode(tzhp->tzh_leapcnt);
 		sp->timecnt = (int) detzcode(tzhp->tzh_timecnt);
 		sp->typecnt = (int) detzcode(tzhp->tzh_typecnt);
@@ -271,13 +272,15 @@ register struct state * const	sp;
 		if (sp->leapcnt < 0 || sp->leapcnt > TZ_MAX_LEAPS ||
 			sp->typecnt <= 0 || sp->typecnt > TZ_MAX_TYPES ||
 			sp->timecnt < 0 || sp->timecnt > TZ_MAX_TIMES ||
-			sp->charcnt < 0 || sp->charcnt > TZ_MAX_CHARS)
+			sp->charcnt < 0 || sp->charcnt > TZ_MAX_CHARS ||
+			(ttisstdcnt != sp->typecnt && ttisstdcnt != 0))
 				return -1;
 		if (i < sizeof *tzhp +
 			sp->timecnt * (4 + sizeof (char)) +
 			sp->typecnt * (4 + 2 * sizeof (char)) +
 			sp->charcnt * sizeof (char) +
-			sp->leapcnt * 2 * 4)
+			sp->leapcnt * 2 * 4 +
+			ttisstdcnt * sizeof (char))
 				return -1;
 		p = buf + sizeof *tzhp;
 		for (i = 0; i < sp->timecnt; ++i) {
@@ -314,6 +317,19 @@ register struct state * const	sp;
 			p += 4;
 			lsisp->ls_corr = detzcode(p);
 			p += 4;
+		}
+		for (i = 0; i < sp->typecnt; ++i) {
+			register struct ttinfo *	ttisp;
+
+			ttisp = &sp->ttis[i];
+			if (ttisstdcnt == 0)
+				ttisp->tt_ttisstd = FALSE;
+			else {
+				ttisp->tt_ttisstd = *p++;
+				if (ttisp->tt_ttisstd != TRUE &&
+					ttisp->tt_ttisstd != FALSE)
+						return -1;
+			}
 		}
 	}
 	return 0;
@@ -755,15 +771,21 @@ const int			gmtokay;
 			*/
 			isdst = FALSE;	/* we start in standard time */
 			for (i = 0; i < sp->timecnt; ++i) {
+				register const struct ttinfo *	ttisp;
+
 				/*
-				** XXX - if the DST end time was specified
-				** as "standard" rather than "local" time,
-				** all transition times should be shifted
-				** by "stdfix".  Unfortunately, we don't
-				** know how they were specified....
+				** If summer time is in effect, and the
+				** transition time was not specified as
+				** standard time, add the summer time
+				** offset to the transition time;
+				** otherwise, add the standard time offset
+				** to the transition time.
 				*/
-				sp->ats[i] += isdst ? dstfix : stdfix;
-				isdst = sp->ttis[sp->types[i]].tt_isdst;
+				ttisp = &sp->ttis[sp->types[i]];
+				sp->ats[i] +=
+					(isdst && !ttisp->tt_ttisstd) ?
+						dstfix : stdfix;
+				isdst = ttisp->tt_isdst;
 			}
 		}
 	} else {

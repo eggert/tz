@@ -1,10 +1,5 @@
 %W%
 
-XXX--get to cope with attempts to make zones such as "Europe/Berlin" the
-XXX--POSIX template.  Either must make doing so work, or catch the attempt in
-XXX--zic.  Catching the attempt in zic is half-hearted at best, since
-XXX--someone could manually change the link later.
-
 "What time is it?" -- Richard Deacon as The King
 "Any time you want it to be." -- Frank Baxter as The Scientist
 					(from the Bell System film on time)

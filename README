@@ -2,10 +2,11 @@
 
 TODO BEFORE comp.sources RELEASE:
 
-*	Final lint/spell/shar-unpacking check
-*	Functionality checks
-*	Get everything except usno date copyrighted.
-*	Turn most everything into version "5.1"
+*	Incorporate any changes from UCB (possibly including their copyrights).
+*	Testing.
+*	Lint/spell/shar-unpacking check if there are any changes.
+*	Ensure that everything except usno data is copyrighted.
+*	Turn everything with a version number less than "5.1" into "5.1".
 
 ===============================================================================
 

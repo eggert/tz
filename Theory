@@ -10,7 +10,7 @@ the usefulness of the SVR2 functions:
 	Greenwich Mean Time in hours, followed by an optional three-letter
 	name for a daylight time zone;" when the optional daylight time zone is
 	present, "standard U.S.A. Daylight Savings Time conversion is applied."
-	This means that SVR2 can't deal with other (for example, Australian) 
+	This means that SVR2 can't deal with other (for example, Australian)
 	daylight savings time rules, or situations where more than two
 	time zone abbreviations are used in an area.
 
@@ -23,7 +23,7 @@ the usefulness of the SVR2 functions:
 	time_t values when doing conversions for places that don't use GMT.
 
 *	In SVR2, there's no tamper-proof way for a process to learn the
-	system's best idea of local wall clock.  (This is important for 
+	system's best idea of local wall clock.  (This is important for
 	applications that an administrator wants used only at certain times--
 	without regard to whether the user has fiddled the "TZ" environment
 	variable.  While an administrator can "do everything in GMT" to get
@@ -91,7 +91,7 @@ Points of interest to folks with Version 7 or BSD systems:
 *	The BSD "timezone" function is not present in this package;
 	it's impossible to reliably map timezone's arguments (a "minutes west
 	of GMT" value and a "daylight saving time in effect" flag) to a
-	time zone abbreviation, and we refuse to guess. 
+	time zone abbreviation, and we refuse to guess.
 	Programs that in the past used the timezone function may now examine
 	tzname[localtime(&clock)->tm_isdst] to learn the correct time
 	zone abbreviation to use.  Alternatively, use localtime(&clock)->tm_zone

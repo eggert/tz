@@ -12,6 +12,10 @@ LOCALTIME=	Eastern
 
 TZDIR=		/etc/tzdir
 
+# You may want to change this define if you're just testing the software.
+
+TZLIB=		/usr/lib/libtz.a
+
 # LINTFLAGS is set for 4.1bsd systems.  If you're using System V, you'll want
 # to comment out the "LINTFLAGS=" line.
 
@@ -31,7 +35,7 @@ DATA=		asia australasia europe etcetera \
 			newzealand northamerica pacificnew
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
-all:	REDID_BINARIES tzdump
+all:	REDID_BINARIES tzdump $(TZLIB)
 
 REDID_BINARIES:	$(TZDIR) tzcomp $(DATA) years
 	tzcomp -l $(LOCALTIME) -d $(TZDIR) $(DATA)
@@ -39,6 +43,10 @@ REDID_BINARIES:	$(TZDIR) tzcomp $(DATA) years
 
 tzdump:	$(TZDOBJS)
 	$(CC) $(LFLAGS) $(TZDOBJS) -o $@
+
+$(TZLIB):	ctime.o settz.o
+	ar ru $@ ctime.o settz.o
+	ranlib $@
 
 tzcomp:	$(TZCOBJS)
 	$(CC) $(LFLAGS) $(TZCOBJS) -o $@

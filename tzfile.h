@@ -40,7 +40,7 @@ struct tzhead {
 */
 
 /*
-** In the current implementation, "settz()" refuses to deal with files that
+** In the current implementation, "tzset()" refuses to deal with files that
 ** exceed any of the limits below.
 */
 

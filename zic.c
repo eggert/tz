@@ -383,7 +383,7 @@ const char * const	string;
 {
 	/*
 	** Match the format of "cc" to allow sh users to
-	** 	zic ... 2>&1 | error -t "*" -v
+	**	zic ... 2>&1 | error -t "*" -v
 	** on BSD systems.
 	*/
 	(void) fprintf(stderr, "\"%s\", line %d: %s",
@@ -773,7 +773,7 @@ const char *	name;
 
 /*
 ** Convert a string of one of the forms
-**	h	-h 	hh:mm	-hh:mm	hh:mm:ss	-hh:mm:ss
+**	h	-h	hh:mm	-hh:mm	hh:mm:ss	-hh:mm:ss
 ** into a number of seconds.
 ** A null string maps to zero.
 ** Call error with errstring and return zero on errors.

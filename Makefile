@@ -146,17 +146,14 @@ DATA=		$(YDATA) $(NDATA) $(SDATA) leapseconds
 USNO=		usno1988 usno1989
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(USNO)
 
-all:		REDID_BINARIES zdump $(TZLIB)
+all:		REDID_BINARIES zdump date $(TZLIB)
 
-#
-# We want to use system's logwtmp and getopt in preference to ours
-# if they are available.
-#
+# We want to use system's logwtmp in preference to ours if available.
 
 date:		$(DATEOBJS)
-		ar r ,lib.a logwtmp.o getopt.o
+		ar r ,lib.a logwtmp.o
 		-ranlib ,lib.a
-		$(CC) $(CFLAGS) date.o localtime.o -lc ,lib.a
+		$(CC) $(CFLAGS) date.o localtime.o getopt.o -lc ,lib.a -o $@
 		rm -f ,lib.a
 
 REDID_BINARIES:	zic $(DATA) $(REDO)

@@ -20,13 +20,19 @@ It is updated periodically to reflect changes made by political bodies
 to UTC offsets and daylight-saving rules.
 This database (often called <samp>zoneinfo</samp>)
 is used by several implementations,
-including BSD, DJGPP, GNU/Linux, Irix, Solaris, and Unixware.
+including BSD, DJGPP, GNU/Linux, HP-UX, IRIX, Solaris, and UnixWare.
 In the tz database's
 <A HREF="ftp://elsie.nci.nih.gov/pub/">FTP distribution</A>,
 the code is in the file <samp>tzcode<var>C</var>.tar.gz</samp>,
 where <samp><var>C</var></samp> is the code's version;
 similarly, the data are in <samp>tzdata<var>D</var>.tar.gz</samp>,
 where <samp><var>D</var></samp> is the data's version.
+<P>
+The <A HREF="ftp://ftp.gnu.org/pub/gnu/GETTING.GNU.SOFTWARE">
+GNU C Library</A> has an independent, thread-safe implementation of
+a time zone file reader.
+This library is freely available under the GNU Library General Public License,
+and is widely used in GNU/Linux systems.
 <P>
 The Web has several other sources for time zone and daylight saving time data.
 Here are some recent links that may be of interest.
@@ -62,7 +68,7 @@ contains good descriptions of Time Zones and daylight saving time,
 with diagrams.
 The time zone map is out of date, however.
 <LI><A HREF="http://community.bellcore.com/mbr/gmt-explained.html">A Few Facts
-Concerning RGO, GMT, and UT, by Richard B. Langley</A>
+Concerning GMT, UT, and the RGO</A>
 answers questions like ``What is the difference between GMT and UTC?''
 <LI><A HREF="http://www.energy.ca.gov/energy/daylightsaving.html">Daylight
 Saving Time -- Saving Time, Saving Energy</A>
@@ -79,7 +85,7 @@ International Earth Rotation Service, the committee that decides
 when leap seconds occur.
 </UL>
 -- <A HREF="mailto:eggert@twinsun.com">eggert@twinsun.com</A>
-(1997-07-16)
+(1997-12-26)
 </P>
 <H2>Arthur David Olson writes:</H2><P>
 A good source of information about ISO 8601 seems to be
@@ -89,21 +95,6 @@ maintained by Markus Kuhn.
 <P>
 -- <A HREF="mailto:arthur_david_olson@nih.gov">arthur_david_olson@nih.gov</A>
 (1996-01-04)
-</P>
-<H2>Manavendra Thakur writes:</H2><P>
-<A HREF="http://www.dhl.com/dhl/dhlinfo/1bb.html">DHL Information</A>
-is run by <A HREF="http://www.dhl.com/">DHL</A>
-(the courier company), and it presents a list of the
-countries served by that company....
-Here's an example of what you'll see for the
-<A HREF="http://www.dhl.com/dhlinfo/country/unitedki.html">United Kingdom</A>.
-I find this rather handy, and given that DHL covers 217 countries and
-territories, it's pretty comprehensive coverage.
-(I have no idea what system DHL is using to calculate the local time, but
-it's been accurate so far.)
-<P>
--- <A HREF="mailto:Manavendra_Thakur@NeXT.COM">Manavendra_Thakur@NeXT.COM</A>
-(1995-11-06)
 </P>
 </BODY>
 </HTML>

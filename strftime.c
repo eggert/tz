@@ -32,25 +32,25 @@ static const char sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
 #include "private.h"
 #include "tzfile.h"
 
-static const char * const afmt[] = {
+static const char afmt[][4] = {
 	"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
 };
-static const char * const Afmt[] = {
+static const char Afmt[][10] = {
 	"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
 	"Saturday"
 };
-static const char * const bfmt[] = {
+static const char bfmt[][4] = {
 	"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
 	"Oct", "Nov", "Dec"
 };
-static const char * const Bfmt[] = {
+static const char Bfmt[][10] = {
 	"January", "February", "March", "April", "May", "June", "July",
 	"August", "September", "October", "November", "December"
 };
 
-static char *_add P((const char *, size_t *, char *));
-static char *_conv P((int, const char *, size_t *, char *));
-static char *_fmt P((const char *, const struct tm *, size_t *, char *));
+static char *_add P((const char *, char *, const char *));
+static char *_conv P((int, const char *, char *, const char *));
+static char *_fmt P((const char *, const struct tm *, char *, const char *));
 
 size_t strftime P((char *, size_t, const char *, const struct tm *));
 
@@ -61,22 +61,21 @@ strftime(s, maxsize, format, t)
 	const char *format;
 	const struct tm *t;
 {
-	size_t gsize;
+	char *p;
 
-	gsize = maxsize;
-	s = _fmt(format, t, &gsize, s);
-	if (gsize <= 0)
+	p = _fmt(format, t, s, s + maxsize);
+	if (p == s + maxsize)
 		return 0;
-	*s = '\0';
-	return maxsize - gsize;
+	*p = '\0';
+	return p - s;
 }
 
 static char *
-_fmt(format, t, gsizep, pt)
+_fmt(format, t, pt, ptlim)
 	const char *format;
 	const struct tm *t;
-	size_t *gsizep;
 	char *pt;
+	const char *ptlim;
 {
 	for (; *format; ++format) {
 		if (*format == '%') {
@@ -87,23 +86,23 @@ label:
 				break;
 			case 'A':
 				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
-					"?" : Afmt[t->tm_wday], gsizep, pt);
+					"?" : Afmt[t->tm_wday], pt, ptlim);
 				continue;
 			case 'a':
 				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
-					"?" : afmt[t->tm_wday], gsizep, pt);
+					"?" : afmt[t->tm_wday], pt, ptlim);
 				continue;
 			case 'B':
 				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
-					"?" : Bfmt[t->tm_mon], gsizep, pt);
+					"?" : Bfmt[t->tm_mon], pt, ptlim);
 				continue;
 			case 'b':
 			case 'h':
 				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
-					"?" : bfmt[t->tm_mon], gsizep, pt);
+					"?" : bfmt[t->tm_mon], pt, ptlim);
 				continue;
 			case 'c':
-				pt = _fmt("%D %X", t, gsizep, pt);
+				pt = _fmt("%D %X", t, pt, ptlim);
 				continue;
 			case 'C':
 				/*
@@ -114,7 +113,7 @@ label:
 				** (ado, 5/24/93)
 				*/
 				pt = _conv((t->tm_year + TM_YEAR_BASE) / 100,
-					"%02d", gsizep, pt);
+					"%02d", pt, ptlim);
 				continue;
 			case 'D':
 			case 'x':
@@ -129,10 +128,10 @@ label:
 				** numbers (as here) makes Quakers happier.
 				** This is the ISO standard date format.
 				*/
-				pt = _fmt("%Y-%m-%d", t, gsizep, pt);
+				pt = _fmt("%Y-%m-%d", t, pt, ptlim);
 				continue;
 			case 'd':
-				pt = _conv(t->tm_mday, "%02d", gsizep, pt);
+				pt = _conv(t->tm_mday, "%02d", pt, ptlim);
 				continue;
 			case 'E':
 			case 'O':
@@ -149,18 +148,18 @@ label:
 				*/
 				goto label;
 			case 'e':
-				pt = _conv(t->tm_mday, "%2d", gsizep, pt);
+				pt = _conv(t->tm_mday, "%2d", pt, ptlim);
 				continue;
 			case 'H':
-				pt = _conv(t->tm_hour, "%02d", gsizep, pt);
+				pt = _conv(t->tm_hour, "%02d", pt, ptlim);
 				continue;
 			case 'I':
 				pt = _conv((t->tm_hour % 12) ?
 					(t->tm_hour % 12) : 12,
-					"%02d", gsizep, pt);
+					"%02d", pt, ptlim);
 				continue;
 			case 'j':
-				pt = _conv(t->tm_yday + 1, "%03d", gsizep, pt);
+				pt = _conv(t->tm_yday + 1, "%03d", pt, ptlim);
 				continue;
 			case 'k':
 				/*
@@ -173,14 +172,14 @@ label:
 				** "%l" have been swapped.
 				** (ado, 5/24/93)
 				*/
-				pt = _conv(t->tm_hour, "%2d", gsizep, pt);
+				pt = _conv(t->tm_hour, "%2d", pt, ptlim);
 				continue;
 #ifdef KITCHEN_SINK
 			case 'K':
 				/*
 				** After all this time, still unclaimed!
 				*/
-				pt = _add("kitchen sink", gsizep, pt);
+				pt = _add("kitchen sink", pt, ptlim);
 				continue;
 #endif /* defined KITCHEN_SINK */
 			case 'l':
@@ -195,40 +194,40 @@ label:
 				*/
 				pt = _conv((t->tm_hour % 12) ?
 					(t->tm_hour % 12) : 12,
-					"%2d", gsizep, pt);
+					"%2d", pt, ptlim);
 				continue;
 			case 'M':
-				pt = _conv(t->tm_min, "%02d", gsizep, pt);
+				pt = _conv(t->tm_min, "%02d", pt, ptlim);
 				continue;
 			case 'm':
-				pt = _conv(t->tm_mon + 1, "%02d", gsizep, pt);
+				pt = _conv(t->tm_mon + 1, "%02d", pt, ptlim);
 				continue;
 			case 'n':
-				pt = _add("\n", gsizep, pt);
+				pt = _add("\n", pt, ptlim);
 				continue;
 			case 'p':
 				pt = _add(t->tm_hour >= 12 ? "PM" : "AM",
-					gsizep, pt);
+					pt, ptlim);
 				continue;
 			case 'R':
-				pt = _fmt("%H:%M", t, gsizep, pt);
+				pt = _fmt("%H:%M", t, pt, ptlim);
 				continue;
 			case 'r':
-				pt = _fmt("%I:%M:%S %p", t, gsizep, pt);
+				pt = _fmt("%I:%M:%S %p", t, pt, ptlim);
 				continue;
 			case 'S':
-				pt = _conv(t->tm_sec, "%02d", gsizep, pt);
+				pt = _conv(t->tm_sec, "%02d", pt, ptlim);
 				continue;
 			case 'T':
 			case 'X':
-				pt = _fmt("%H:%M:%S", t, gsizep, pt);
+				pt = _fmt("%H:%M:%S", t, pt, ptlim);
 				continue;
 			case 't':
-				pt = _add("\t", gsizep, pt);
+				pt = _add("\t", pt, ptlim);
 				continue;
 			case 'U':
 				pt = _conv((t->tm_yday + 7 - t->tm_wday) / 7,
-					"%02d", gsizep, pt);
+					"%02d", pt, ptlim);
 				continue;
 			case 'u':
 				/*
@@ -238,7 +237,7 @@ label:
 				** (ado, 5/24/93)
 				*/
 				pt = _conv((t->tm_wday == 0) ? 7 : t->tm_wday,
-					"%d", gsizep, pt);
+					"%d", pt, ptlim);
 				continue;
 			case 'V':
 				/*
@@ -270,7 +269,7 @@ label:
 					i = (t->tm_yday + 10 - (t->tm_wday ?
 						(t->tm_wday - 1) : 6)) / 7;
 					pt = _conv((i == 0) ? 53 : i,
-						"%02d", gsizep, pt);
+						"%02d", pt, ptlim);
 				}
 				continue;
 			case 'v':
@@ -279,37 +278,37 @@ label:
 				** "date as dd-bbb-YYYY"
 				** (ado, 5/24/93)
 				*/
-				pt = _fmt("%e-%b-%Y", t, gsizep, pt);
+				pt = _fmt("%e-%b-%Y", t, pt, ptlim);
 				continue;
 			case 'W':
 				pt = _conv((t->tm_yday + 7 -
 					(t->tm_wday ?
 					(t->tm_wday - 1) : 6)) / 7,
-					"%02d", gsizep, pt);
+					"%02d", pt, ptlim);
 				continue;
 			case 'w':
-				pt = _conv(t->tm_wday, "%d", gsizep, pt);
+				pt = _conv(t->tm_wday, "%d", pt, ptlim);
 				continue;
 			case 'y':
 				pt = _conv((t->tm_year + TM_YEAR_BASE) % 100,
-					"%02d", gsizep, pt);
+					"%02d", pt, ptlim);
 				continue;
 			case 'Y':
 				pt = _conv(t->tm_year + TM_YEAR_BASE, "%04d",
-					gsizep, pt);
+					pt, ptlim);
 				continue;
 			case 'Z':
 #ifdef TM_ZONE
 				if (t->TM_ZONE)
-					pt = _add(t->TM_ZONE, gsizep, pt);
+					pt = _add(t->TM_ZONE, pt, ptlim);
 				else
 #endif /* defined TM_ZONE */
 				if (t->tm_isdst == 0 || t->tm_isdst == 1) {
 					extern char *	tzname[2];
 
 					pt = _add(tzname[t->tm_isdst],
-						gsizep, pt);
-				} else  pt = _add("?", gsizep, pt);
+						pt, ptlim);
+				} else  pt = _add("?", pt, ptlim);
 				continue;
 			case '%':
 			/*
@@ -321,36 +320,34 @@ label:
 				break;
 			}
 		}
-		if (*gsizep <= 0)
+		if (pt == ptlim)
 			return pt;
 		*pt++ = *format;
-		--*gsizep;
 	}
 	return pt;
 }
 
 static char *
-_conv(n, format, gsizep, pt)
+_conv(n, format, pt, ptlim)
 	int n;
 	const char *format;
-	size_t *gsizep;
 	char *pt;
+	const char *ptlim;
 {
 	char buf[21]; /* Room for - 2**63 ("-9223372036854775808") + null.  */
 
 	(void) sprintf(buf, format, n);
-	return _add(buf, gsizep, pt);
+	return _add(buf, pt, ptlim);
 }
 
 static char *
-_add(str, gsizep, pt)
+_add(str, pt, ptlim)
 	const char *str;
-	size_t *gsizep;
 	char *pt;
+	const char *ptlim;
 {
-	while (*gsizep > 0 && (*pt = *str++) != '\0') {
+	while (pt < ptlim && (*pt = *str++) != '\0') {
 		++pt;
-		--*gsizep;
 	}
 	return pt;
 }

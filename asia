@@ -83,13 +83,13 @@ Zone	Iran		3:30	Iran		I%sT
 # ISRAEL              2 H  AHEAD OF UTC
 # ISRAEL              3 H  AHEAD OF UTC  APR 10 - SEP 3
 
-# From ephraim%techunix.bitnet@icsa.rice.edu (Ephraim Silverberg) (May 3, 1889)
-# 
+# From Ephraim Silverberg (April 18, 1989):
+#
 # Prior to 1989, the rules concerning Daylight Savings Time changed every
 # year; as information, regarding exact times and dates during this period,
 # is not readily available at the present time, the rules commence starting
 # with the year 1989.
-# 
+#
 # From 1989 onwards the rules are as follows:
 #
 # 1. Daylight Savings Time commences midnight of the first Saturday night
@@ -119,52 +119,52 @@ Zone	Iran		3:30	Iran		I%sT
 #    [**] actually Saturday night as the Jewish day commences at nightfall.
 #    [***] the Jewish Lunar New Year.
 
-# Rule  NAME    FROM    TO      TYPE    IN      ON      AT      SAVE    LETTER/S
-Rule    Zion    1989    only    -       Apr     30      0:00    1:00    D
-Rule    Zion    1989    only    -       Sep     24      0:00    0:00    S
-Rule    Zion    1990    only    -       Apr     22      0:00    1:00    D
-Rule    Zion    1990    only    -       Sep     16      0:00    0:00    S
-Rule    Zion    1991    only    -       Apr      7      0:00    1:00    D
-Rule    Zion    1991    only    -       Sep      1      0:00    0:00    S
-Rule    Zion    1992    only    -       Apr     26      0:00    1:00    D
-Rule    Zion    1992    only    -       Sep     20      0:00    0:00    S
-Rule    Zion    1993    only    -       Apr     18      0:00    1:00    D
-Rule    Zion    1993    only    -       Sep     12      0:00    0:00    S
-Rule    Zion    1994    only    -       Apr      3      0:00    1:00    D
-Rule    Zion    1994    only    -       Aug     28      0:00    0:00    S
-Rule    Zion    1995    only    -       Apr     23      0:00    1:00    D
-Rule    Zion    1995    only    -       Sep     17      0:00    0:00    S
-Rule    Zion    1996    only    -       Apr     14      0:00    1:00    D
-Rule    Zion    1996    only    -       Sep      8      0:00    0:00    S
-Rule    Zion    1997    only    -       May      4      0:00    1:00    D
-Rule    Zion    1997    only    -       Sep     28      0:00    0:00    S
-Rule    Zion    1998    only    -       Apr     19      0:00    1:00    D
-Rule    Zion    1998    only    -       Sep     13      0:00    0:00    S
-Rule    Zion    1999    only    -       Apr     11      0:00    1:00    D
-Rule    Zion    1999    only    -       Sep      5      0:00    0:00    S
-Rule    Zion    2000    only    -       Apr     30      0:00    1:00    D
-Rule    Zion    2000    only    -       Sep     24      0:00    0:00    S
-Rule    Zion    2001    only    -       Apr     15      0:00    1:00    D
-Rule    Zion    2001    only    -       Sep      9      0:00    0:00    S
-Rule    Zion    2002    only    -       Apr      7      0:00    1:00    D
-Rule    Zion    2002    only    -       Sep      1      0:00    0:00    S
-Rule    Zion    2003    only    -       Apr     27      0:00    1:00    D
-Rule    Zion    2003    only    -       Sep     21      0:00    0:00    S
-Rule    Zion    2004    only    -       Apr     18      0:00    1:00    D
-Rule    Zion    2004    only    -       Sep     12      0:00    0:00    S
-Rule    Zion    2005    only    -       May      1      0:00    1:00    D
-Rule    Zion    2005    only    -       Sep     25      0:00    0:00    S
-Rule    Zion    2006    only    -       Apr     23      0:00    1:00    D
-Rule    Zion    2006    only    -       Sep     17      0:00    0:00    S
-Rule    Zion    2007    only    -       Apr     15      0:00    1:00    D
-Rule    Zion    2007    only    -       Sep      9      0:00    0:00    S
-Rule    Zion    2008    only    -       Apr     27      0:00    1:00    D
-Rule    Zion    2008    only    -       Sep     21      0:00    0:00    S
-Rule    Zion    2009    only    -       Apr     19      0:00    1:00    D
-Rule    Zion    2009    only    -       Sep     13      0:00    0:00    S
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Zion	1989	only	-	Apr	30	0:00	1:00	D
+Rule	Zion	1989	only	-	Sep	24	0:00	0:00	S
+Rule	Zion	1990	only	-	Apr	22	0:00	1:00	D
+Rule	Zion	1990	only	-	Sep	16	0:00	0:00	S
+Rule	Zion	1991	only	-	Apr	 7	0:00	1:00	D
+Rule	Zion	1991	only	-	Sep	 1	0:00	0:00	S
+Rule	Zion	1992	only	-	Apr	26	0:00	1:00	D
+Rule	Zion	1992	only	-	Sep	20	0:00	0:00	S
+Rule	Zion	1993	only	-	Apr	18	0:00	1:00	D
+Rule	Zion	1993	only	-	Sep	12	0:00	0:00	S
+Rule	Zion	1994	only	-	Apr	 3	0:00	1:00	D
+Rule	Zion	1994	only	-	Aug	28	0:00	0:00	S
+Rule	Zion	1995	only	-	Apr	23	0:00	1:00	D
+Rule	Zion	1995	only	-	Sep	17	0:00	0:00	S
+Rule	Zion	1996	only	-	Apr	14	0:00	1:00	D
+Rule	Zion	1996	only	-	Sep	 8	0:00	0:00	S
+Rule	Zion	1997	only	-	May	 4	0:00	1:00	D
+Rule	Zion	1997	only	-	Sep	28	0:00	0:00	S
+Rule	Zion	1998	only	-	Apr	19	0:00	1:00	D
+Rule	Zion	1998	only	-	Sep	13	0:00	0:00	S
+Rule	Zion	1999	only	-	Apr	11	0:00	1:00	D
+Rule	Zion	1999	only	-	Sep	 5	0:00	0:00	S
+Rule	Zion	2000	only	-	Apr	30	0:00	1:00	D
+Rule	Zion	2000	only	-	Sep	24	0:00	0:00	S
+Rule	Zion	2001	only	-	Apr	15	0:00	1:00	D
+Rule	Zion	2001	only	-	Sep	 9	0:00	0:00	S
+Rule	Zion	2002	only	-	Apr	 7	0:00	1:00	D
+Rule	Zion	2002	only	-	Sep	 1	0:00	0:00	S
+Rule	Zion	2003	only	-	Apr	27	0:00	1:00	D
+Rule	Zion	2003	only	-	Sep	21	0:00	0:00	S
+Rule	Zion	2004	only	-	Apr	18	0:00	1:00	D
+Rule	Zion	2004	only	-	Sep	12	0:00	0:00	S
+Rule	Zion	2005	only	-	May	 1	0:00	1:00	D
+Rule	Zion	2005	only	-	Sep	25	0:00	0:00	S
+Rule	Zion	2006	only	-	Apr	23	0:00	1:00	D
+Rule	Zion	2006	only	-	Sep	17	0:00	0:00	S
+Rule	Zion	2007	only	-	Apr	15	0:00	1:00	D
+Rule	Zion	2007	only	-	Sep	 9	0:00	0:00	S
+Rule	Zion	2008	only	-	Apr	27	0:00	1:00	D
+Rule	Zion	2008	only	-	Sep	21	0:00	0:00	S
+Rule	Zion	2009	only	-	Apr	19	0:00	1:00	D
+Rule	Zion	2009	only	-	Sep	13	0:00	0:00	S
 
-# Zone  NAME                    GMTOFF  RULES   FORMAT  [UNTIL]
-Zone    Israel                  2:00    Zion    I%sT
+# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	Israel		2:00	Zion		I%sT
 
 # The following is a chart of the day of the week and Gregorian date of
 # the first day of Pesach and the first day of Rosh Hashanah for the years
@@ -172,55 +172,55 @@ Zone    Israel                  2:00    Zion    I%sT
 #
 # First Day of Passover
 # ---------------------
-# Gregorian Year        Day of Week     Month           Day
-# --------------        -----------     -----           ---
-#       1989            Thursday        April           20
-#       1990            Tuesday         April           10
-#       1991            Saturday        March           30
-#       1992            Saturday        April           18
-#       1993            Tuesday         April            6
-#       1994            Sunday          March           27
-#       1995            Saturday        April           15
-#       1996            Thursday        April            4
-#       1997            Tuesday         April           22
-#       1998            Saturday        April           11
-#       1999            Thursday        April            1
-#       2000            Thursday        April           20
-#       2001            Sunday          April            8
-#       2002            Thursday        March           28
-#       2003            Thursday        April           17
-#       2004            Tuesday         April            6
-#       2005            Sunday          April           24
-#       2006            Thursday        April           13
-#       2007            Tuesday         April            3
-#       2008            Sunday          April           20
-#       2009            Thursday        April            9
+# Gregorian Year	Day of Week	Month		Day
+# --------------	-----------	-----		---
+#	1989		Thursday	April		20
+#	1990		Tuesday		April		10
+#	1991		Saturday	March		30
+#	1992		Saturday	April		18
+#	1993		Tuesday		April		 6
+#	1994		Sunday		March		27
+#	1995		Saturday	April		15
+#	1996		Thursday	April		 4
+#	1997		Tuesday		April		22
+#	1998		Saturday	April		11
+#	1999		Thursday	April		 1
+#	2000		Thursday	April		20
+#	2001		Sunday		April		 8
+#	2002		Thursday	March		28
+#	2003		Thursday	April		17
+#	2004		Tuesday		April		 6
+#	2005		Sunday		April		24
+#	2006		Thursday	April		13
+#	2007		Tuesday		April		 3
+#	2008		Sunday		April		20
+#	2009		Thursday	April		 9
 #
 # First Day of Rosh Hashanah
 # --------------------------
-# Gregorian Year        Day of Week     Month           Day
-# --------------        -----------     -----           ---
-#       1989            Saturday        September       30
-#       1990            Thursday        September       20
-#       1991            Monday          September        9
-#       1992            Monday          September       28
-#       1993            Thursday        September       16
-#       1994            Tuesday         September        6
-#       1995            Monday          September       25
-#       1996            Saturday        September       14
-#       1997            Thursday        October          2
-#       1998            Monday          September       21
-#       1999            Saturday        September       11
-#       2000            Saturday        September       30
-#       2001            Tuesday         September       18
-#       2002            Saturday        September        7
-#       2003            Saturday        September       27
-#       2004            Thursday        September       16
-#       2005            Tuesday         October          4
-#       2006            Saturday        September       23
-#       2007            Thursday        September       13
-#       2008            Tuesday         September       30
-#       2009            Saturday        September       19
+# Gregorian Year	Day of Week	Month		Day
+# --------------	-----------	-----		---
+#	1989		Saturday	September	30
+#	1990		Thursday	September	20
+#	1991		Monday		September	 9
+#	1992		Monday		September	28
+#	1993		Thursday	September	16
+#	1994		Tuesday		September	 6
+#	1995		Monday		September	25
+#	1996		Saturday	September	14
+#	1997		Thursday	October		 2
+#	1998		Monday		September	21
+#	1999		Saturday	September	11
+#	2000		Saturday	September	30
+#	2001		Tuesday		September	18
+#	2002		Saturday	September	 7
+#	2003		Saturday	September	27
+#	2004		Thursday	September	16
+#	2005		Tuesday		October		 4
+#	2006		Saturday	September	23
+#	2007		Thursday	September	13
+#	2008		Tuesday		September	30
+#	2009		Saturday	September	19
 
 ###############################################################################
 

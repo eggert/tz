@@ -1,19 +1,6 @@
 %W%
 
-The shell archive of which this file is a part contains man pages for functions
-and a file format designed to deal with Daylight Savings Time variations.
-
-The basic idea is to have a system-wide directory that contains binary files
-describing time zone rules; functions such as "localtime" could read such
-files before doing time conversions.
-
-A manual page for a "time zone compiler" that turns text-file descriptions of
-time zone rules into binary files is also included, as is a sample input file
-for the compiler.  These would, of course, not be part of the standard;
-they are included here only to show that the binary files that would be used
-under this scheme can be readily created.
-
-Source code for these functions and for the time zone compiler are available
-from seismo!elsie!ado, the person to whom to direct comments (with, perhaps,
+Please direct any comments or information to seismo!elsie!ado (with, perhaps,
 carbon copes to cbosgd!mark and seismo!philabs!linus!encore!necis!geo,
-who are responsible for any good ideas that show up here).
+and seismo!munnari!kre, who are responsible for any good ideas that show up
+here).

@@ -428,7 +428,7 @@ usage()
 	(void) fprintf(stderr, "[-d dst] ");
 	(void) fprintf(stderr, "[-t min-west] ");
 	(void) fprintf(stderr, "[-a sss.fff] ");
-	(void) fprintf(stderr, "[[yy]mmddhhmm[yyyy][.ss]] ");
+	(void) fprintf(stderr, "[[yyyy]mmddhhmm[yyyy][.ss]] ");
 	(void) fprintf(stderr, "[+format]\n");
 	errensure();
 	(void) exit(retval);
@@ -564,13 +564,19 @@ time_t		t;
 	switch (dotp - cp) {
 		default:
 			wildinput("time", value, "main part is wrong length");
-		case 12: /* mmddhhmmyyyy */
+		case 12:
+			if (!dousg) {
+				cent = ATOI2(cp);
+				year_in_cent = ATOI2(cp);
+			}
 			month = ATOI2(cp);
 			day = ATOI2(cp);
 			hour = ATOI2(cp);
 			mins = ATOI2(cp);
-			cent = ATOI2(cp);
-			year_in_cent = ATOI2(cp);
+			if (dousg) {
+				cent = ATOI2(cp);
+				year_in_cent = ATOI2(cp);
+			}
 			break;
 		case 8:	/* mmddhhmm */
 			month = ATOI2(cp);

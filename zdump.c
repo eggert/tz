@@ -9,17 +9,12 @@ static char	sccsid[] = "%W%";
 #include "time.h"
 #include "tzfile.h"
 
-#ifndef alloc_t
-#define alloc_t		unsigned
-#endif
-
 #ifndef TRUE
 #define TRUE		1
 #define FALSE		0
 #endif
 
 extern char *		asctime();
-extern char *		calloc();
 extern struct tm *	gmtime();
 extern char *		newctime();
 extern int		optind;
@@ -29,16 +24,31 @@ extern char *		tz_abbr;
 
 static int		longest;
 
+#define	GETSHORT(val, p) { \
+	register int shortval; \
+	shortval = *p++; \
+	shortval = (shortval << 8) | *p++; \
+	val = shortval; \
+	}
+
+#define GETLONG(val, p) { \
+	register long longval; \
+	longval = *p++; \
+	longval = (longval << 8) | *p++; \
+	longval = (longval << 8) | *p++; \
+	longval = (longval << 8) | *p++; \
+	val = longval; \
+	}
+	
 main(argc, argv)
 int	argc;
 char *	argv[];
 {
 	register FILE *	fp;
-	register long *	tp;
 	register int	i, j, c;
 	register int	vflag;
 	long		now;
-	struct tzhead	h;
+	int		timecnt;
 	char		buf[BUFSIZ];
 
 	vflag = 0;
@@ -83,31 +93,39 @@ char *	argv[];
 			perror(argv[i]);
 			exit(1);
 		}
-		if (fread((char *) &h, sizeof h, 1, fp) != 1)
-			readerr(fp, argv[0], argv[i]);
-		tp = (long *) calloc((alloc_t) h.tzh_timecnt, sizeof *tp);
-		if (tp == NULL) {
-			perror(argv[0]);
-			exit(1);
-		}
-		if (h.tzh_timecnt != 0)
-			if (fread((char *) tp, sizeof *tp, (int) h.tzh_timecnt,
-				fp) != h.tzh_timecnt)
+		{
+			register unsigned char *	p;
+			unsigned char			buf[2];
+			struct tzhead			h;
+
+			(void) fseek(fp, (long) sizeof h.tzh_reserved, 0);
+			if (fread((char *) &buf, sizeof buf, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
+			p = buf;
+			GETSHORT(timecnt, p);
+			(void) fseek(fp, (long) (2 * sizeof (short)), 1);
+		}
+		for (j = 0; j < timecnt; ++j) {
+			register unsigned char *	p;
+			unsigned char			buf[4];
+			long				t;
+
+			if (fread((char *) &buf, sizeof buf, 1, fp) != 1)
+				readerr(fp, argv[0], argv[i]);
+			p = buf;
+			GETLONG(t, p);
+			show(argv[i], t - 1, TRUE);
+			show(argv[i], t, TRUE);
+		}
 		if (fclose(fp)) {
 			(void) fprintf(stderr, "%s: Error closing ", argv[0]);
 			perror(argv[i]);
 			exit(1);
 		}
-		for (j = 0; j < h.tzh_timecnt; ++j) {
-			show(argv[i], tp[j] - 1, TRUE);
-			show(argv[i], tp[j], TRUE);
-		}
-		free((char *) tp);
 	}
 	if (fflush(stdout) || ferror(stdout)) {
 		(void) fprintf(stderr, "%s: Error writing standard output ",
-			progname);
+			argv[0]);
 		perror("standard output");
 		exit(1);
 	}
@@ -119,14 +137,18 @@ show(zone, t, v)
 char *	zone;
 long	t;
 {
+	struct tm *		tmp;
+	extern struct tm *	newlocaltime();
+
 	(void) printf("%-*s  ", longest, zone);
 	if (v)
 		(void) printf("%.24s GMT = ", asctime(gmtime(&t)));
-	(void) printf("%.24s", newctime(&t));
+	tmp = newlocaltime(&t);
+	(void) printf("%.24s", asctime(tmp));
 	if (*tz_abbr != '\0')
 		(void) printf(" %s", tz_abbr);
 	if (v)
-		(void) printf(" isdst=%d\n", tmp->tm_isdst);
+		(void) printf(" isdst=%d", tmp->tm_isdst);
 	(void) printf("\n");
 }
 

@@ -13,6 +13,10 @@ LOCALTIME=	US/Eastern
 TZDIR=		/etc/zoneinfo
 
 # You may want to change this define if you're just testing the software.
+# Alternatively, you can put these functions in /lib/libc.a, removing
+# the old "ctime.o" (and "timezone.o" on a BSD system).  This is the
+# ideal solution if you are able.  Build libz.a, extract the files, and
+# then add them to libc.a.
 
 TZLIB=		/usr/lib/libz.a
 
@@ -25,7 +29,7 @@ TZLIB=		/usr/lib/libz.a
 # If you're running on a system where "strchr" is known as "index",
 # (for example, a 4.[012]BSD system), add
 #	-Dstrchr=index
-# to the end of the  "CFLAGS=" line.
+# to the end of the "CFLAGS=" line.
 #
 # If you want to use System V compatibility code, add
 #	-DUSG_COMPAT
@@ -36,7 +40,7 @@ TZLIB=		/usr/lib/libz.a
 # to the end of the "CFLAGS=" line.
 #
 # If you've used older versions of this software and want "tz_abbr"
-# compatibility  code, add
+# compatibility code, add
 #	-DTZA_COMPAT
 # to the end of the "CFLAGS=" line.
 #
@@ -59,7 +63,7 @@ TZLIB=		/usr/lib/libz.a
 # If you'll never want to handle solar-time-based time zones, add
 #	-DNOSOLAR
 # to the end of the "CFLAGS=" line
-# (and remove solar87 from the SOURCES= line below).
+# (and remove solar87 from the DATA= line below).
 #
 
 CFLAGS=
@@ -69,17 +73,21 @@ CFLAGS=
 
 LINTFLAGS=	-phbaaxc
 
+# BUNDLE was set to "bundle" in the original, "shar" is more universal
+
+BUNDLE=		shar
+
 ################################################################################
 
 CC=		cc -DTZDIR=\"$(TZDIR)\"
 
-TZCSRCS=	zic.c localtime.c scheck.c ialloc.c mkdir.c
-TZCOBJS=	zic.o localtime.o scheck.o ialloc.o mkdir.o
-TZDSRCS=	zdump.c localtime.c asctime.c ctime.c ialloc.c
-TZDOBJS=	zdump.o localtime.o asctime.o ctime.o ialloc.o
+TZCSRCS=	zic.c localtime.c asctime.c scheck.c ialloc.c mkdir.c
+TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o mkdir.o
+TZDSRCS=	zdump.c localtime.c asctime.c ialloc.c
+TZDOBJS=	zdump.o localtime.o asctime.o ialloc.o
 LIBSRCS=	localtime.c asctime.c ctime.c dysize.c timemk.c
 LIBOBJS=	localtime.o asctime.o ctime.o dysize.o timemk.o
-DOCS=		README Makefile Theory newctime.3 tzfile.5 zic.8 zdump.8
+DOCS=		Theory README Makefile newctime.3 tzfile.5 zic.8 zdump.8
 SOURCES=	tzfile.h zic.c zdump.c \
 		localtime.c asctime.c ctime.c dysize.c timemk.c \
 		scheck.c ialloc.c mkdir.c
@@ -105,13 +113,13 @@ zic:		$(TZCOBJS)
 BUNDLES:	BUNDLE1 BUNDLE2 BUNDLE3
 
 BUNDLE1:	$(DOCS)
-		bundle $(DOCS) > $@
+		$(BUNDLE) $(DOCS) > $@
 
 BUNDLE2:	$(SOURCES)
-		bundle $(SOURCES) > $@
+		$(BUNDLE) $(SOURCES) > $@
 
 BUNDLE3:	$(DATA)
-		bundle $(DATA) > $@
+		$(BUNDLE) $(DATA) > $@
 
 $(ENCHILADA):
 		sccs get $(REL) $(REV) $@

@@ -1,6 +1,6 @@
 #ifndef lint
 #ifndef NOID
-static char	elsieid[] = "%W%";
+static char	elsieid[] = "@(#)zic.c	7.83";
 #endif /* !defined NOID */
 #endif /* !defined lint */
 
@@ -1283,6 +1283,8 @@ const char * const		timep;
 		}
 		rp->r_yrtype = ecpyalloc(typep);
 	}
+	if (rp->r_loyear < min_year && rp->r_loyear > 0)
+		min_year = rp->r_loyear;
 	/*
 	** Day work.
 	** Accept things such as:
@@ -1391,8 +1393,10 @@ const char * const	name;
 
 		toi = 0;
 		fromi = 0;
+		while (fromi < timecnt && attypes[fromi].at < min_time)
+			++fromi;
 		if (isdsts[0] == 0)
-			while (attypes[fromi].type == 0)
+			while (fromi < timecnt && attypes[fromi].type == 0)
 				++fromi;	/* handled by default rule */
 		for ( ; fromi < timecnt; ++fromi) {
 			if (toi != 0
@@ -1717,8 +1721,22 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 static void
 addtt(starttime, type)
 const time_t	starttime;
-const int	type;
+int		type;
 {
+	if (starttime <= min_time ||
+		(timecnt == 1 && attypes[0].at < min_time)) {
+		gmtoffs[0] = gmtoffs[type];
+		isdsts[0] = isdsts[type];
+		ttisstds[0] = ttisstds[type];
+		ttisgmts[0] = ttisgmts[type];
+		if (abbrinds[type] != 0)
+			(void) strcpy(chars, &chars[abbrinds[type]]);
+		abbrinds[0] = 0;
+		charcnt = strlen(chars) + 1;
+		typecnt = 1;
+		timecnt = 0;
+		type = 0;
+	}
 	if (timecnt >= TZ_MAX_TIMES) {
 		error(_("too many transitions?!"));
 		(void) exit(EXIT_FAILURE);

@@ -71,7 +71,7 @@ POSIX.1 has the following properties and limitations.
 	system's best idea of local wall clock.  (This is important for
 	applications that an administrator wants used only at certain times--
 	without regard to whether the user has fiddled the "TZ" environment
-	variable.  While an administrator can "do everything in GMT" to get
+	variable.  While an administrator can "do everything in UTC" to get
 	around the problem, doing so is inconvenient and precludes handling
 	daylight saving time shifts--as might be required to limit phone
 	calls to off-peak hours.)
@@ -157,7 +157,7 @@ Points of interest to folks with other systems:
 	but this functionality was removed in later versions of BSD.
 
 *	In SVR2, time conversion fails for near-minimum or near-maximum
-	time_t values when doing conversions for places that don't use GMT.
+	time_t values when doing conversions for places that don't use UTC.
 	This package takes care to do these conversions correctly.
 
 The functions that are conditionally compiled if STD_INSPIRED is defined
@@ -281,5 +281,5 @@ in decreasing order of importance:
 Application writers should note that these abbreviations are ambiguous
 in practice: e.g. `EST' has a different meaning in Australia than
 it does in the United States.  In new applications, it's often better
-to use numeric GMT offsets like `-0500' instead of time zone
+to use numeric UTC offsets like `-0500' instead of time zone
 abbreviations like `EST'; this avoids the ambiguity.

@@ -748,7 +748,7 @@ Zone	Asia/Jerusalem	2:20:56 -	LMT	1880
 # bill have until July 24 to pass.
 #
 # (2002-07-25):
-# Thanks go to Yitschak Goldberg from E&M for bringing this (Hebrew) article 
+# Thanks go to Yitschak Goldberg from E&M for bringing this (Hebrew) article
 # to my attention:
 #
 #	http://www.ynet.co.il/articles/0,7340,L-2019315,00.html
@@ -878,7 +878,7 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # - Kazakhstan did not observe DST in 1991.
 # - Qyzylorda switched from +5:00 to +6:00 on 1992-01-19 02:00.
 # - Oral switched from +5:00 to +4:00 in spring 1989.
-# 
+#
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 #
@@ -1154,9 +1154,13 @@ Zone	Asia/Muscat	3:54:20 -	LMT	1920
 # and Sunday of April" phrase, if taken literally, means that the
 # transition takes place at 00:00 on the first Sunday on or after 04-02.
 
+# From Paul Eggert (2003-02-09):
+# DAWN <http://www.dawn.com/2002/10/06/top13.htm> reported on 2002-10-05
+# that 2002 DST ended that day at midnight.  Go with McDow for now.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule Pakistan	2002	max	-	Apr	Sun>=2	0:00	1:00	S
-Rule Pakistan	2002	max	-	Oct	15	0:00	0	-
+Rule Pakistan	2002	max	-	Apr	Sun>=2	0:01	1:00	S
+Rule Pakistan	2002	max	-	Oct	Sun>=2	0:01	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Karachi	4:28:12 -	LMT	1907
 			5:30	-	IST	1942 Sep

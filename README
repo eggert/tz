@@ -5,18 +5,10 @@ TODO BEFORE comp.sources RELEASE:
 *	Final lint/spell/shar-unpacking check
 *	Get everything except usno date copyrighted.
 *	Turn most everything into version "5.1".
-*	Conditionalize date format handling (and manual page) on USG_COMPAT.
-*	Should /etc/zoneinfo/GMT0 change to /etc/zoneinfo/GMT, with the
-	necessary change to the newctime.3 manual page?  If it is changed,
-	all the GMT0's can disappear from localtime.c.
+*	Conditionalize date manual page on USG_COMPAT.
 *	Gotta get "date.c" up to speed, and must conditionalize "logwtmp.c"
 	for the System V world.
-	In particular, how to handle ambiguous 10-character arguments to date
-	such as
-		date 0102030405
-	where it's unclear whether the year is at the start (UCB style)
-	or the end (System V style)?  Also--toss in a "-a" (adjust time)
-	option for the Sun world?
+	Can't use with Suns since code to handle "-a" is missing.
 *	Need to update the newctime.3 to describe the treatment of TZ's such
 	as "Guy Mean Time", if it's decided that the treatment is reasonable.
 

@@ -135,7 +135,8 @@ sure:		$(TZCSRCS) $(TZDSRCS) tzfile.h
 		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(LIBSRCS)
 
 clean:
-		rm -f core *.o *.out REDID_BINARIES zdump zic SHAR* \#*
+		rm -f core *.o *.out REDID_BINARIES zdump zic \
+		SHAR* tz.shar.Z.uue ,*
 
 CLEAN:		clean
 		sccs clean

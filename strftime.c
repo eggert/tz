@@ -211,8 +211,9 @@ label:
 				** something completely different.
 				** (ado, 1993-05-24)
 				*/
-				pt = _conv((t->tm_year + TM_YEAR_BASE) / 100,
-					"%02d", pt, ptlim);
+				pt = _lconv((t->tm_year +
+					(long) TM_YEAR_BASE) / 100,
+					"%02ld", pt, ptlim);
 				continue;
 			case 'c':
 				{
@@ -380,12 +381,13 @@ label:
 ** (ado, 1996-01-02)
 */
 				{
-					int	year;
+					long	year;
 					int	yday;
 					int	wday;
 					int	w;
 
-					year = t->tm_year + TM_YEAR_BASE;
+					year = t->tm_year;
+					year += TM_YEAR_BASE;
 					yday = t->tm_yday;
 					wday = t->tm_wday;
 					for ( ; ; ) {
@@ -427,20 +429,20 @@ label:
 							DAYSPERNYEAR;
 					}
 #ifdef XPG4_1994_04_09
-					if ((w == 52
-					     && t->tm_mon == TM_JANUARY)
-					    || (w == 1
-						&& t->tm_mon == TM_DECEMBER))
-						w = 53;
+					if ((w == 52 &&
+						t->tm_mon == TM_JANUARY) ||
+						(w == 1 &&
+						t->tm_mon == TM_DECEMBER))
+							w = 53;
 #endif /* defined XPG4_1994_04_09 */
 					if (*format == 'V')
 						pt = _conv(w, "%02d",
 							pt, ptlim);
 					else if (*format == 'g') {
 						*warnp = IN_ALL;
-						pt = _conv(year % 100, "%02d",
-							pt, ptlim);
-					} else	pt = _conv(year, "%04d",
+						pt = _conv(int(year % 100),
+							"%02d", pt, ptlim);
+					} else	pt = _lconv(year, "%04ld",
 							pt, ptlim);
 				}
 				continue;
@@ -478,12 +480,14 @@ label:
 				continue;
 			case 'y':
 				*warnp = IN_ALL;
-				pt = _conv((t->tm_year + TM_YEAR_BASE) % 100,
+				pt = _conv(
+					(int) ((t->tm_year +
+					(long) TM_YEAR_BASE) % 100),
 					"%02d", pt, ptlim);
 				continue;
 			case 'Y':
-				pt = _conv(t->tm_year + TM_YEAR_BASE, "%04d",
-					pt, ptlim);
+				pt = _lconv(t->tm_year + (long) TM_YEAR_BASE,
+					"%04ld", pt, ptlim);
 				continue;
 			case 'Z':
 #ifdef TM_ZONE

@@ -121,17 +121,17 @@ register char *	tzname;
 		(void) memcpy((char *) chars, p, i * sizeof chars[0]);
 	chars[h.tzh_charcnt] = '\0';	/* ensure '\0'-termination */
 	for (i = 0; i < h.tzh_timecnt; ++i)
-		if (types[i] > h.tzh_typecnt)
+		if (types[i] >= h.tzh_typecnt)
 			return -1;
 	for (i = 0; i < h.tzh_typecnt; ++i)
-		if (ttis[i].tt_abbrind > h.tzh_charcnt)
+		if (ttis[i].tt_abbrind >= h.tzh_charcnt)
 			return -1;
 	return 0;
 }
 
 /*
 ** settz("")		Use built-in GMT.
-** settz(0)		Use TZDEFAULT.
+** settz((char *) 0)	Use TZDEFAULT.
 ** settz(otherwise)	Use otherwise.
 */
 
@@ -165,7 +165,7 @@ newlocaltime(timep)
 long *	timep;
 {
 	register struct ttinfo *	ttip;
-	register struct tm *		ct;
+	register struct tm *		tmp;
 	register int			i;
 	long				t;
 
@@ -182,10 +182,10 @@ long *	timep;
 	}
 	ttip = &ttis[i];
 	t += ttip->tt_gmtoff;
-	ct = gmtime(&t);
-	ct->tm_isdst = ttip->tt_isdst;
+	tmp = gmtime(&t);
+	tmp->tm_isdst = ttip->tt_isdst;
 	tz_abbr = &chars[ttip->tt_abbrind];
-	return ct;
+	return tmp;
 }
 
 char *

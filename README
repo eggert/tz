@@ -21,6 +21,10 @@ such functions have kept their old, underscore-free names in this update.)
 Support for the tz_abbr variable has been eliminated from this version
 (to forestall "kitchen sink" complaints from certain quarters :-).
 
+Since POSIX frowns on correct leap second handling, the default behavior of
+the "zic" command (in the absence of a "-L" option) has been changed to omit
+leap second information from its output files.
+
 Please send comments or information to ado@ncifcrf.gov.
 
 Be sure to read the comments in "Makefile" and make any changes

@@ -77,6 +77,18 @@ Link	US/East-Indiana	EST
 Link	US/Arizona	MST
 Link	US/Hawaii	HST
 
+# From Bob Devine (January 28, 1988):
+# ...Alaska (and Hawaii) had the timezone names changed in 1967.
+#    old                         new
+#    Pacific Standard Time(PST)  -same-
+#    Yukon Standard Time(YST)    -same-
+#    Central Alaska S.T. (CAT)   Alaska-Hawaii Stnadard Time (AHST)
+#    Nome Standard Time (NT)     Bering Standard Time (BST)
+# 
+# ...Alaska's timezone lines were redrawn in 1983 to give only 2 tz.
+#    The YST zone now covers nearly all of the state, AHST just part
+#    of the Aleutian islands.   No DST.
+
 ################################################################################
 
 # Canada is reportedly lots easier than the US--leastways since 1951.
@@ -87,6 +99,12 @@ Link	US/Hawaii	HST
 # "...Canada (well, Ontario and at least some of the other provinces) are
 # adopting the new daylight savings time rules...".  We assume all of
 # Canada is doing so.
+
+# From Bob Devine (January 28, 1988):  "All of Canada did have DST from your
+# first rule except Saskatchewan.  Which parts did not observe DST is hard
+# to pinpoint but most of the province follows the rules.
+# NOTE: those that didn't have DST for that rule, also
+# probably did not have it for several years previous.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Canada	1969	max	-	Oct	lastSun	2:00	0	S

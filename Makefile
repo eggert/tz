@@ -88,6 +88,8 @@ LDLIBS=
 # Add the following to the end of the "CFLAGS=" line as needed.
 #  -DHAVE_ADJTIME=0 if `adjtime' does not exist (SVR0?)
 #  -DHAVE_GETTEXT=1 if `gettext' works (GNU, Linux, Solaris); also see LDLIBS
+#  -DHAVE_INCOMPATIBLE_CTIME_R=1 if your system's time.h declares
+#	ctime_r and asctime_r incompatibly with the POSIX standard (Solaris 8).
 #  -DHAVE_LONG_DOUBLE=1 if your compiler supports the `long double' type
 #  -DHAVE_SETTIMEOFDAY=0 if settimeofday does not exist (SVR0?)
 #  -DHAVE_SETTIMEOFDAY=1 if settimeofday has just 1 arg (SVR4)

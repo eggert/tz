@@ -88,6 +88,14 @@ static char	elsieid[] = "%W%";
 #endif /* !defined GNUC_or_lint */
 #endif /* !defined INITIALIZE */
 
+/*
+** For the benefit of GNU folk...
+*/
+
+#ifndef _
+#define _(x) x
+#endif /* !defined _ */
+
 extern char **	environ;
 extern int	getopt();
 extern char *	optarg;

@@ -44,6 +44,11 @@ extern char *	strcat();
 extern char *	strchr();
 extern char *	strcpy();
 
+#ifdef lint
+char *		optarg;
+int		optind;
+#endif
+
 static int	errors;
 static char *	filename;
 static char **	getfields();
@@ -312,6 +317,9 @@ char *	argv[];
 	register int	i;
 	register int	c;
 
+#ifdef lint
+	(void) ftell(stdin);
+#endif
 	progname = argv[0];
 	while ((c = getopt(argc, argv, "d:l:")) != EOF)
 		switch (c) {
@@ -508,7 +516,7 @@ char *	name;
 		if (nfields > 0)	/* non-blank line */
 			if ((lp = byword(fields[0], line_codes)) == NULL)
 				error("input line of unknown type");
-			else switch (lp->l_value) {
+			else switch ((int) (lp->l_value)) {
 				case LC_RULE:
 					inrule(fields, nfields);
 					break;
@@ -833,7 +841,6 @@ char *	name;
 	}
 	if ((i = h.tzh_typecnt) != 0) {
 		register struct ttinfo *ttisp;
-		register unsigned char c;
 
 		ttisp = &ttis[0];
 		for ( ; i > 0; --i) {
@@ -1045,7 +1052,7 @@ register struct rule *	rp;
 		}
 		if (y < rp->r_loyear || y > rp->r_hiyear) {
 			(void) fprintf(stderr,
-"%s: Year %d read from command \"%s\" is not valid\n",
+"%s: Year %ld read from command \"%s\" is not valid\n",
 				progname, y, command);
 			exit(1);
 		}

@@ -785,7 +785,8 @@ gmtload(sp)
 struct state * const	sp;
 {
 	if (tzload("GMT", sp) != 0)
-		gmtbuiltin(sp);
+		if (tzparse("GMT", sp) != 0)
+			gmtbuiltin(sp);
 }
 
 void

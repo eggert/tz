@@ -1165,6 +1165,20 @@ Zone	Europe/Brussels	0:17:30 -	LMT	1880
 # see Yugoslavia
 
 # Bulgaria
+
+# From Steffen Thorsen [straen@thorsen.priv.no] (1999-09-09):
+# Sofia should probably use rule "EU" after 1997:
+# 
+# Plamen Simenov <P.Simeonov@cnsys.bg> reports that DST transitions 
+# are not at midnight, but a few hours later:
+# 
+# A document of Government of Bulgaria (No.94/1997) says:
+# EET --> EETDST is in 03:00 Local time in last Sunday of March
+# (new=local+1h)
+# EETDST --> EET is in 04:00 Local time in last Sunday of October
+# (new=local-1h)
+# (EETDST = EEST)
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Bulg	1979	only	-	Mar	31	23:00	1:00	S
 Rule	Bulg	1979	only	-	Oct	 1	 1:00	0	-
@@ -1179,7 +1193,8 @@ Zone	Europe/Sofia	1:33:16 -	LMT	1880
 			2:00	-	EET	1979 Mar 31 23:00
 			2:00	Bulg	EE%sT	1982 Sep 26  2:00
 			2:00	C-Eur	EE%sT	1991
-			2:00	E-Eur	EE%sT
+			2:00	E-Eur	EE%sT	1997
+			2:00	EU	EET/EETDST
 
 # Croatia
 # see Yugosloavia

@@ -107,16 +107,19 @@ main(argc, argv)
 int	argc;
 char *	argv[];
 {
-	register int		i, c;
+	register int		i;
+	register int		c;
 	register int		vflag;
 	register char *		cutoff;
 	register int		cutyear;
 	register long		cuttime;
 	char **			fakeenv;
 	time_t			now;
-	time_t			t, newt;
+	time_t			t;
+	time_t			newt;
 	time_t			hibit;
-	struct tm		tm, newtm;
+	struct tm		tm;
+	struct tm		newtm;
 
 	INITIALIZE(cuttime);
 	progname = argv[0];
@@ -150,7 +153,8 @@ char *	argv[];
 	for (hibit = 1; (hibit << 1) != 0; hibit <<= 1)
 		continue;
 	{
-		register int	from, to;
+		register int	from;
+		register int	to;
 
 		for (i = 0;  environ[i] != NULL;  ++i)
 			continue;

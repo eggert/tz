@@ -18,6 +18,8 @@ static char	sccsid[] = "%W%";
 #define MAL	0
 #endif
 
+extern char *	malloc();
+
 char *	scheck(string, format)
 char *	string;
 char *	format;

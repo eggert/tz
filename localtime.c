@@ -16,7 +16,12 @@ static char	elsieid[] = "%W%";
 #include "tzfile.h"
 #include "fcntl.h"
 
-#define ACCESS_MODE	O_RDONLY
+#ifdef R_OK
+#define ACCESS_MODE R_OK
+#endif /* defined R_OK */
+#ifndef R_OK
+#define ACCESS_MODE 4
+#endif /* !defined R_OK */
 
 #ifdef O_BINARY
 #define OPEN_MODE	(O_RDONLY | O_BINARY)

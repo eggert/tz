@@ -27,38 +27,38 @@ static char	privatehid[] = "%W%";
 
 #ifndef HAVE_ADJTIME
 #define HAVE_ADJTIME	1
-#endif
+#endif /* !defined HAVE_ADJTIME */
 #ifndef HAVE_MKDIR
 #define HAVE_MKDIR	1
-#endif
+#endif /* !defined HAVE_MKDIR */
 #ifndef HAVE_SETLOCALE
 #define HAVE_SETLOCALE	1
-#endif
+#endif /* !defined HAVE_SETLOCALE */
 #ifndef HAVE_SETTIMEOFDAY
 #define HAVE_SETTIMEOFDAY	3
-#endif
+#endif /* !defined HAVE_SETTIMEOFDAY */
 #ifndef HAVE_STDLIB_H
 #define HAVE_STDLIB_H	1
-#endif
+#endif /* !defined HAVE_STDLIB_H */
 #ifndef HAVE_UNISTD_H
 #define HAVE_UNISTD_H	1
-#endif
+#endif /* !defined HAVE_UNISTD_H */
 
 #ifndef LOCALE_HOME
 #define LOCALE_HOME	"/usr/lib/locale"
-#endif
+#endif /* !defined LOCALE_HOME */
 
 #ifndef alloc_size_T
 #define alloc_size_T	size_t
-#endif
+#endif /* !defined alloc_size_T */
 
 #ifndef fwrite_size_T
 #define fwrite_size_T	size_t
-#endif
+#endif /* !defined fwrite_size_T */
 
 #ifndef qsort_size_T
 #define qsort_size_T	size_t
-#endif
+#endif /* !defined qsort_size_T */
 
 /*
 ** const
@@ -142,11 +142,11 @@ typedef char		generic_T;
 
 #if HAVE_STDLIB_H
 #include "stdlib.h"
-#endif
+#endif /* HAVE_STDLIB_H */
 
 #if HAVE_UNISTD_H
 #include "unistd.h"
-#endif
+#endif /* HAVE_UNISTD_H */
 
 #ifndef remove
 extern int	unlink P((const char * filename));
@@ -216,7 +216,7 @@ extern void		free P((generic_T * buf));
 
 #if HAVE_MKDIR
 #define emkdir(name, mode) mkdir(name, mode)
-#endif
+#endif /* HAVE_MKDIR */
 
 #ifndef LOCALE_HOME
 #define LOCALE_HOME	"/usr/lib/locale"

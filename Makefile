@@ -112,13 +112,13 @@ TZDSRCS=	zdump.c localtime.c asctime.c \
 		ialloc.c getopt.c link.c
 TZDOBJS=	zdump.o localtime.o asctime.o \
 		ialloc.o getopt.o link.o
-DATESRCS=	date.c localtime.c getopt.c logwtmp.c
-DATEOBJS=	date.o localtime.o getopt.o logwtmp.o
+DATESRCS=	date.c localtime.c getopt.c logwtmp.c strftime.c
+DATEOBJS=	date.o localtime.o getopt.o logwtmp.o strftime.o
 LIBSRCS=	localtime.c asctime.c difftime.c
 LIBOBJS=	localtime.o asctime.o difftime.o
 HEADERS=	tzfile.h nonstd.h stdio.h stdlib.h time.h
 NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c emkdir.c getopt.c link.c
-NEWUCBSRCS=	date.c logwtmp.c
+NEWUCBSRCS=	date.c logwtmp.c strftime.c
 SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS)
 DOCS=		Patchlevel.h \
 		README Theory \
@@ -138,7 +138,7 @@ all:		REDID_BINARIES zdump date $(TZLIB)
 # We want to use system's logwtmp in preference to ours if available.
 
 date:		$(DATEOBJS)
-		ar r ,lib.a logwtmp.o
+		ar r ,lib.a logwtmp.o strftime.o
 		-ranlib ,lib.a
 		$(CC) $(CFLAGS) date.o localtime.o getopt.o -lc ,lib.a -o $@
 		rm -f ,lib.a

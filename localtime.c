@@ -549,6 +549,7 @@ register struct state *	sp;
 	register time_t *		atp;
 	register unsigned char *	typep;
 	register char *			cp;
+	register int			load_result;
 
 	stdname = name;
 	name = getzname(name);
@@ -558,6 +559,9 @@ register struct state *	sp;
 	name = getoffset(name, &stdoffset);
 	if (name == NULL)
 		return -1;
+	load_result = tzload(TZDEFRULES, sp);
+	if (load_result != 0)
+		sp->leapcnt = 0;		/* so, we're off a little */
 	if (*name != '\0') {
 		dstname = name;
 		name = getzname(name);
@@ -587,11 +591,6 @@ register struct state *	sp;
 				return -1;
 			if (*name != '\0')
 				return -1;
-			/*
-			** Try to get leap seconds.
-			*/
-			if (tzload(TZDEFRULES, sp) != 0)
-				sp->leapcnt = 0;
 			sp->typecnt = 2;	/* standard time and DST */
 			/*
 			** Two transitions per year, from 1970 to 2038.
@@ -637,7 +636,7 @@ register struct state *	sp;
 
 			if (*name != '\0')
 				return -1;
-			if (tzload(TZDEFRULES, sp) != 0)
+			if (load_result != 0)
 				return -1;
 			/*
 			** Compute the difference between the real and
@@ -692,11 +691,6 @@ register struct state *	sp;
 			}
 		}
 	} else {
-		/*
-		** Try to get leap seconds.
-		*/
-		if (tzload(TZDEFRULES, sp) != 0)
-			sp->leapcnt = 0;
 		dstlen = 0;
 		sp->typecnt = 1;		/* only standard time */
 		sp->timecnt = 0;

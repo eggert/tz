@@ -531,7 +531,7 @@ label:
 				if (t->tm_isdst == 0)
 #ifdef USG_COMPAT
 					diff = -timezone;
-#else /* defined USG_COMPAT */
+#else /* !defined USG_COMPAT */
 					continue;
 #endif /* !defined USG_COMPAT */
 				else
@@ -640,8 +640,8 @@ _loc P((void))
 	** Slurp the locale file into the cache.
 	*/
 	namesize = strlen(name) + 1;
-	if (sizeof(filename) <
-		sizeof(locale_home) + namesize + sizeof(lc_time))
+	if (sizeof filename  <
+		((sizeof locale_home) + namesize + (sizeof lc_time)))
 			goto no_locale;
 	oldsun = 0;
 	(void) sprintf(filename, "%s/%s/%s", locale_home, name, lc_time);

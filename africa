@@ -37,7 +37,7 @@ Rule	Libya	1982	max	-	Sep	30	2:00	0	-
 # Zone	NAME	GMTOFF	RULES/SAVE	FORMAT	 [UNTIL]
 
 Zone	Egypt	2:00	Egypt		EET%s	1981
-		2:00	-		EET%s	1983
+		2:00	-		EET	1983
 		2:00	Egypt		EET%s
 
 Zone	Libya	2:00	Libya		EET%s

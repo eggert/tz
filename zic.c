@@ -239,6 +239,12 @@ static long	mon_lengths[] = {	/* ". . .knuckles are 31. . ." */
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 };
 
+static struct tzhead	h;
+static long		ats[TZ_MAX_TIMES];
+static unsigned char	types[TZ_MAX_TIMES];
+static struct ttinfo	ttis[TZ_MAX_TYPES];
+static char		chars[TZ_MAX_CHARS];
+
 /*
 ** Exits.
 */
@@ -749,11 +755,10 @@ char **	fields;
 }
 
 static
-writezone(name, data)
-register char *	name;
-struct tzinfo *	data;
+writezone(name)
 {
 	register FILE *	fp;
+	register int	i;
 	char		fullname[BUFSIZ];
 
 	if (strlen(directory) + 1 + strlen(name) + 1 > BUFSIZ)
@@ -761,10 +766,25 @@ struct tzinfo *	data;
 	(void) sprintf(fullname, "%s/%s", directory, name);
 	if ((fp = fopen(fullname, "w")) == NULL)
 		wild2exit("result creating", fullname);
-	if (fwrite((char *) data, sizeof *data, 1, fp) != 1)
-		wild2exit("result writing", fullname);
+	if (fwrite((char *) &h, sizeof h, 1, fp) != 1)
+		goto wreck;
+	if ((i = h.tzh_timecnt) != 0) {
+		if (fwrite((char *) ats, sizeof ats[0], i, fp) != i)
+			goto wreck;
+		if (fwrite((char *) types, sizeof types[0], i, fp) != i)
+			goto wreck;
+	}
+	if ((i = h.tzh_typecnt) != 0)
+		if (fwrite((char *) ttis, sizeof ttis[0], i, fp) != i)
+			goto wreck;
+	if ((i = h.tzh_charcnt) != 0)
+		if (fwrite(chars, sizeof chars[0], i, fp) != i)
+			goto wreck;
 	if (fclose(fp))
 		wild2exit("result closing", fullname);
+	return;
+wreck:
+	wild2exit("result writing", fullname);
 }
 
 struct temp {
@@ -782,6 +802,7 @@ char *	cp2;
 {
 	register struct temp *	tp1;
 	register struct temp *	tp2;
+	register char *		cp;
 	register long		diff;
 
 	tp1 = (struct temp *) cp1;
@@ -798,10 +819,15 @@ char *	cp2;
 	** Oops!
 	*/
 	if (tp1->t_rp->r_type == tp2->t_rp->r_type)
-		error("duplicate rule?!");
-	else	error("inconsistent rules?!");
-	wildexit("input data");
-	/*NOTREACHED*/
+		cp = "duplicate rule?!";
+	else	cp = "inconsistent rules?!";
+	filename = tp1->t_rp->r_filename;
+	linenum = tp1->t_rp->r_linenum;
+	error(cp);
+	filename = tp2->t_rp->r_filename;
+	linenum = tp2->t_rp->r_linenum;
+	error(cp);
+	wildexit(cp);
 }
 
 static
@@ -826,53 +852,51 @@ register struct zone *	zp;
 {
 	register struct rule *		rp;
 	register struct dsinfo *	dsp;
-	register int			ndstypes;
 	register int			i, j;
 	register long			y;
+	register long			gmtoff;
 	char				buf[BUFSIZ];
-	struct tzinfo			t;
-	struct dsinfo			d;
-	static struct tzinfo		tzero;
-	static struct dsinfo		dzero;
+	static struct ttinfo		i0;
+	struct ttinfo			t;
 
 	filename = zp->z_filename;
 	linenum = zp->z_linenum;
-	t = tzero;
+	h.tzh_timecnt = 0;
+	h.tzh_typecnt = 0;
+	h.tzh_charcnt = 0;
 	if (zp->z_nrules == 0) {	/* Piece of cake! */
-		t.tz_timecnt = 0;
-		t.tz_dsinfo[0].ds_gmtoff = zp->z_gmtoff;
-		t.tz_dsinfo[0].ds_isdst = 0;
-		lencheck(zp->z_format);
-		(void) strcpy(t.tz_dsinfo[0].ds_abbr, zp->z_format);
-		writezone(zp->z_name, &t);
+		h.tzh_timecnt = 0;
+		h.tzh_typecnt = 1;
+		ttis[0].tt_gmtoff = zp->z_gmtoff;
+		ttis[0].tt_isdst = 0;
+		ttis[0].tt_abbrind = 0;
+		newabbr(zp->z_format);
+		writezone(zp->z_name);
 		return;
 	}
-	t.tz_timecnt = 0;
 	/*
-	** See what the different Saving Time types are.
+	** See what the different local time types are.
 	** Plug the indices into the rules.
 	*/
-	ndstypes = 0;
 	for (i = 0; i < zp->z_nrules; ++i) {
 		rp = &zp->z_rules[i];
 		(void) sprintf(buf, zp->z_format, rp->r_abbrvar);
-		lencheck(buf);
-		d = dzero;
-		(void) strcpy(d.ds_abbr, buf);
-		d.ds_gmtoff = zp->z_gmtoff + rp->r_stdoff;
-		d.ds_isdst = rp->r_stdoff != 0;
-		for (j = 0; j < ndstypes; ++j) {
-			dsp = &t.tz_dsinfo[j];
-			if (d.ds_gmtoff == dsp->ds_gmtoff &&
-				strcmp(d.ds_abbr, dsp->ds_abbr) == 0)
+		gmtoff = zp->z_gmtoff + rp->r_stdoff;
+		for (j = 0; j < h.tzh_typecnt; ++j) {
+			if (gmtoff == ttis[j].tt_gmtoff &&
+				strcmp(buf, &chars[ttis[j].tt_abbrind]) == 0)
 					break;
 		}
-		if (j >= ndstypes) {
-			if (ndstypes >= TZ_MAX_TYPES) {
-				error("large number of Saving Time types");
+		if (j >= h.tzh_typecnt) {
+			if (h.tzh_typecnt >= TZ_MAX_TYPES) {
+				error("large number of local time types");
 				wildexit("input data");
 			}
-			t.tz_dsinfo[ndstypes++] = d;
+			ttis[j].tt_gmtoff = gmtoff;
+			ttis[j].tt_isdst = rp->r_stdoff != 0;
+			ttis[j].tt_abbrind = h.tzh_charcnt;
+			newabbr(buf);
+			++h.tzh_typecnt;
 		}
 		rp->r_type = j;
 	}
@@ -887,12 +911,12 @@ register struct zone *	zp;
 		else for (y = rp->r_loyear; y <= rp->r_hiyear; ++y)
 			addrule(rp, y);
 	}
-	t.tz_timecnt = ntemps;
+	h.tzh_timecnt = ntemps;
 	(void) qsort((char *) temps, ntemps, sizeof *temps, tcomp);
 	for (i = 0; i < ntemps; ++i) {
 		rp = temps[i].t_rp;
-		t.tz_types[i] = rp->r_type;
-		t.tz_times[i] = temps[i].t_time - zp->z_gmtoff;
+		types[i] = rp->r_type;
+		ats[i] = temps[i].t_time - zp->z_gmtoff;
 		if (!rp->r_todisstd) {
 			/*
 			** Credit to munnari!kre for pointing out the need for
@@ -906,11 +930,11 @@ register struct zone *	zp;
 				** Kludge--not guaranteed to work.
 				*/
 				if (ntemps > 1)
-					t.tz_times[0] -= rp->r_stdoff;
-			} else	t.tz_times[i] -= temps[i - 1].t_rp->r_stdoff;
+					ats[0] -= temps[1].t_rp->r_stdoff;
+			} else	ats[i] -= temps[i - 1].t_rp->r_stdoff;
 		}
 	}
-	writezone(zp->z_name, &t);
+	writezone(zp->z_name);
 	return;
 }
 
@@ -1121,10 +1145,13 @@ register long		wantedy;
 }
 
 static
-lencheck(string)
+newabbr(string)
 {
-	if (strlen(string) > TZ_ABBR_LEN) {
-		error("long time zone abbreviation");
-		wild2exit("long time zone abbreviation", string);
-	}
+	register int	i;
+
+	i = strlen(string);
+	if (h.tzh_charcnt + i > TZ_MAX_CHARS)
+		error("long time zone abbreviations");
+	(void) strcpy(&chars[h.tzh_charcnt], string);
+	h.tzh_charcnt += i + 1;
 }

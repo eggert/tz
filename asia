@@ -4,7 +4,28 @@
 # Technical Support (including a page from the Official Airline Guide -
 # Worldwide Edition).  The names for time zones are guesses.
 
+# From Guy Harris:
 # People's Republic of China.  Yes, they really have only one time zone.
+
+# From Bob Devine:
+# No they don't.  See TIME mag, February 17, 1986 p.52.  Even though
+# China is across 4 physical time zones, before Feb 1, 1986 only the
+# Peking (Bejing) time zone was recognized.  Since that date, China
+# has two of 'em -- Peking's and Urumqi (named after the capital of
+# the Xinjiang Uighur Autonomous Region).  I don't know about DST for it.
+# 
+# Ooops. I just deleted the DST table and this editor makes it too
+# painful to suck in another copy..  So, here is what I have for 
+# DST start/end dates for Peking's time zone (info from AP):
+# 
+#     1986 May 4 - Sept 14
+#     1987 mid-April - ?? 
+
+# From the U.S. Naval Observatory (as of 2/10/88):
+# 	CHINA               8 H AHEAD OF UTC; ALL OF CHINA, INCL TAIWAN 
+
+# From Arthur David Olson:
+# While further research gets done, we'll stick with one time zone. . .
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	PRC	1970	max	-	Apr	Sun<=14	2:00	1:00	D

@@ -7,33 +7,8 @@ static char	elsieid[] = "%W%";
 /*LINTLIBRARY*/
 
 #include "string.h"
-#include "nonstd.h"
-
-#ifdef __STDC__
-
-#include "stddef.h"
-
-/*
-** Should be "memory.h", but Turbo C 1.5 doesn't have it. . .
-*/
-
 #include "stdlib.h"
-
-#define alloc_t	size_t
-
-#else /* !defined __STDC__ */
-
-#include "stdio.h"		/* to pick up NULL */
-
-extern char *	calloc();
-extern char *	malloc();
-extern char *	realloc();
-
-#ifndef alloc_t
-#define alloc_t	unsigned
-#endif /* !defined alloc_t */
-
-#endif /* !defined __STDC__ */
+#include "nonstd.h"
 
 #ifdef MAL
 #define NULLMAL(x)	((x) == NULL || (x) == MAL)
@@ -56,10 +31,10 @@ imalloc(n)
 #ifdef MAL
 	register char *	result;
 
-	result = malloc((alloc_t) nonzero(n));
+	result = malloc((alloc_size_t) nonzero(n));
 	return NULLMAL(result) ? NULL : result;
 #else /* !defined MAL */
-	return malloc((alloc_t) nonzero(n));
+	return malloc((alloc_size_t) nonzero(n));
 #endif /* !defined MAL */
 }
 
@@ -68,7 +43,7 @@ icalloc(nelem, elsize)
 {
 	if (nelem == 0 || elsize == 0)
 		nelem = elsize = 1;
-	return calloc((alloc_t) nelem, (alloc_t) elsize);
+	return calloc((alloc_size_t) nelem, (alloc_size_t) elsize);
 }
 
 char *
@@ -77,7 +52,7 @@ char *	pointer;
 {
 	if (NULLMAL(pointer))
 		return imalloc(size);
-	return realloc(pointer, (alloc_t) nonzero(size));
+	return realloc((genericptr_t) pointer, (alloc_size_t) nonzero(size));
 }
 
 char *
@@ -112,7 +87,7 @@ ifree(p)
 char *	p;
 {
 	if (!NULLMAL(p))
-		free(p);
+		(void) free(p);
 }
 
 void
@@ -120,5 +95,5 @@ icfree(p)
 char *	p;
 {
 	if (!NULLMAL(p))
-		free(p);
+		(void) free(p);
 }

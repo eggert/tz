@@ -1229,8 +1229,12 @@ int * const		okayp;
 		** It's okay to guess wrong since the guess
 		** gets checked.
 		*/
+		/*
+		** The (void *) casts are the benefit of SunOS 3.3 on Sun 2's.
+		*/
 		sp = (const struct state *)
-			((funcp == localsub) ? lclptr : gmtptr);
+			(((void *) funcp == (void *) localsub) ?
+			lclptr : gmtptr);
 #ifdef ALL_STATE
 		if (sp == NULL)
 			return WRONG;
@@ -1286,7 +1290,11 @@ const long		offset;
 	** We try to divine the type they started from and adjust to the
 	** type they need.
 	*/
-	sp = (const struct state *) ((funcp == localsub) ? lclptr : gmtptr);
+	/*
+	** The (void *) casts are the benefit of SunOS 3.3 on Sun 2's.
+	*/
+	sp = (const struct state *) (((void *) funcp == (void *) localsub) ?
+		lclptr : gmtptr);
 #ifdef ALL_STATE
 	if (sp == NULL)
 		return WRONG;

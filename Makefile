@@ -120,9 +120,9 @@ $(ENCHILADA):
 		sccs get $(REL) $(REV) $@
 
 sure:		$(TZCSRCS) $(TZDSRCS) tzfile.h
-		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)" $(TZCSRCS)
-		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)" $(TZDSRCS)
-		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)" $(LIBSRCS)
+		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZCSRCS)
+		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZDSRCS)
+		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(LIBSRCS)
 
 clean:
 		rm -f core *.o *.out REDID_BINARIES zdump zic BUNDLE* \#*

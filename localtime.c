@@ -128,7 +128,7 @@ register struct state *	sp;
 
 			ttisp = &sp->ttis[i];
 			GETLONG(ttisp->tt_gmtoff, p);
-			ttisp->tt_abbrind = *p++;
+			ttisp->tt_isdst = *p++;
 			ttisp->tt_abbrind = *p++;
 		}
 		for (i = 0; i < sp->h.tzh_charcnt; ++i)

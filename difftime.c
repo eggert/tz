@@ -19,15 +19,18 @@ difftime(time1, time0)
 const time_t	time1;
 const time_t	time0;
 {
+	/*
+	** If (sizeof (double) > sizeof (time_t)) simply convert and subtract
+	** (assuming that the larger type has more precision).
+	** This is the common real-world case circa 2004.
+	*/
+	if (sizeof (double) > sizeof (time_t))
+		return (double) time1 - (double) time0;
 	if (!TYPE_INTEGRAL(time_t)) {
 		/*
 		** time_t is floating.
-		** Do the math in whichever of time_t or double is wider
-		** (assuming that the wider type has more precision).
 		*/
-		if (sizeof (time_t) >= sizeof (double))
-			return time1 - time0;
-		else	return (double) time1 - (double) time0;
+		return time1 - time0;
 	}
 	if (!TYPE_SIGNED(time_t)) {
 		/*

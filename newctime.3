@@ -53,7 +53,7 @@ the best available approximation to local wall clock time is used by
 If
 .B TZ
 appears in the environment but its value is a null string,
-Greenwich Mean Time is used;
+Greenwich Mean Time is used (without leap second correction);
 if
 .B TZ
 appears and
@@ -94,7 +94,7 @@ and
 return pointers to ``tm'' structures, described below.
 .I Localtime\^
 corrects for the time zone and any time zone adjustments
-(such as Daylight Savings time in the U.S.A.).
+(such as Daylight Saving Time in the U.S.A.).
 .if \nX Whether, before doing so,
 .if !\nX Before doing so,
 .I localtime\^
@@ -139,7 +139,7 @@ includes the following fields:
 .PP
 .nf
 .ta .5i +\w'long tm_gmtoff;\0\0'u
-	int tm_sec;	/\(** seconds (0 - 59) \(**/
+	int tm_sec;	/\(** seconds (0 - 60) \(**/
 	int tm_min;	/\(** minutes (0 - 59) \(**/
 	int tm_hour;	/\(** hours (0 - 23) \(**/
 	int tm_mday;	/\(** day of month (1 - 31) \(**/
@@ -165,7 +165,7 @@ in this form in future releases of this code.
 .PP
 .I Tm_isdst\^
 is non-zero if a 
-time zone adjustment such as Daylight Savings time
+time zone adjustment such as Daylight Saving Time
 is in effect.
 .PP
 .I Tm_gmtoff
@@ -179,6 +179,8 @@ of Greenwich.
 .br
 /etc/zoneinfo/localtime	local time zone file
 \}
+.br
+/etc/zoneinfo/GMT	GMT file (needed for leap seconds)
 .SH SEE ALSO
 .if !\nX tzfile(5),
 getenv(3),

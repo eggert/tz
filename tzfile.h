@@ -19,6 +19,10 @@ static char	tzfilehid[] = "%W%";
 #define TZDEFAULT	"localtime"
 #endif /* !defined TZDEFAULT */
 
+#ifndef TZDEFRULES
+#define TZDEFRULES	"_ST0_DT"	/* rules for EST5EDT-style TZ */
+#endif /* !defined TZDEFRULES */
+
 /*
 ** Each file begins with. . .
 */

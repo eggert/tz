@@ -369,10 +369,8 @@ struct tm *	tmp;
 			continue;
 		}
 /*
-** Format characters below come from:
-** December 7, 1988 version of X3J11's description of the strftime function;
-** the System V Release 2.0 description of the date command;
-** and the System V Release 3.1 description of the ascftime function.
+** Format characters below come from
+** December 7, 1988 version of X3J11's description of the strftime function.
 */
 		switch (c = *format++) {
 		default:
@@ -392,7 +390,6 @@ struct tm *	tmp;
 			(void) fprintf(fp, "%s", wday_names[tmp->tm_wday]);
 			break;
 		case 'b':
-		case 'h':
 			(void) fprintf(fp, "%.3s", mon_names[tmp->tm_mon]);
 			break;
 		case 'B':
@@ -403,9 +400,6 @@ struct tm *	tmp;
 			break;
 		case 'd':
 			(void) fprintf(fp, "%02.2d", tmp->tm_mday);
-			break;
-		case 'D':
-			timeout(fp, "%m/%d/%y", tmp);
 			break;
 		case 'H':
 			(void) fprintf(fp, "%02.2d", tmp->tm_hour);
@@ -418,34 +412,23 @@ struct tm *	tmp;
 		case 'j':
 			(void) fprintf(fp, "%03.3d", tmp->tm_yday + 1);
 			break;
+#ifdef KITCHEN_SINK
+		case 'k':
+			(void) fprintf(fp, "kitchen sink");
+			break;
+#endif /* defined KITCHEN_SINK */
 		case 'm':
 			(void) fprintf(fp, "%02.2d", tmp->tm_mon + 1);
 			break;
 		case 'M':
 			(void) fprintf(fp, "%02.2d", tmp->tm_min);
 			break;
-		case 'n':
-			(void) putc('\n', fp);
-			break;
 		case 'p':
 			(void) fprintf(fp, "%cM",
 				(tmp->tm_hour >= 12) ? 'P' : 'A');
 			break;
-		case 'r':
-			timeout(fp, "%I:%M:%S %p", tmp);
-			break;
-		case 'R':
-			timeout(fp, "%H:%M", tmp);
-			break;
 		case 'S':
 			(void) fprintf(fp, "%02.2d", tmp->tm_sec);
-			break;
-		case 't':
-			(void) putc('\t', fp);
-			break;
-		case 'T':
-		case 'X':
-			timeout(fp, "%H:%M:%S", tmp);
 			break;
 		case 'U':
 			/* How many Sundays fall on or before this day? */
@@ -469,6 +452,9 @@ struct tm *	tmp;
 			timeout(fp, "%a %b ", tmp);
 			(void) fprintf(fp, "%2d", tmp->tm_mday);
 			break;
+		case 'X':
+			timeout(fp, "%H:%M:%S", tmp);
+			break;
 		case 'y':
 			(void) fprintf(fp, "%02.2d",
 				(tmp->tm_year + TM_YEAR_BASE) % 100);
@@ -482,6 +468,34 @@ struct tm *	tmp;
 		case '%':
 			(void) putc('%', fp);
 			break;
+#ifdef USG_COMPAT
+/*
+** Format characters below from:
+** the System V Release 2.0 description of the date command;
+** and the System V Release 3.1 description of the ascftime function.
+*/
+		case 'D':
+			timeout(fp, "%m/%d/%y", tmp);
+			break;
+		case 'h':
+			timeout(fp, "%b", tmp);
+			break;
+		case 'n':
+			(void) putc('\n', fp);
+			break;
+		case 'r':
+			timeout(fp, "%I:%M:%S %p", tmp);
+			break;
+		case 'R':
+			timeout(fp, "%H:%M", tmp);
+			break;
+		case 't':
+			(void) putc('\t', fp);
+			break;
+		case 'T':
+			timeout(fp, "%X", tmp);
+			break;
+#endif /* defined USG_COMPAT */
 		}
 	}
 }
@@ -645,8 +659,7 @@ int		isdst;
 		
 #ifndef USG_COMPAT
 			return thist;
-#endif /* !defined USG_COMPAT */
-
+#else /* defined USG_COMPAT */
 			tm.tm_mon = pairs[0] - 1;
 			tm.tm_mday = pairs[1];
 			tm.tm_hour = pairs[2];
@@ -666,6 +679,7 @@ int		isdst;
 			else	if (thatt == -1)
 					return thist;
 				else	ambiguous(thist, thatt, 0);
+#endif /* defined USG_COMPAT */
 
 		case 6:	/* yyyymmddhhmm--BSD finally wins in the 21st century */
 			year = pairs[0] * 100 + pairs[1];

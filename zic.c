@@ -10,6 +10,10 @@ static char	elsieid[] = "%W%";
 #include "time.h"
 #include "string.h"
 
+#ifndef const
+#include "stdlib.h"
+#endif /* !defined const */
+
 #ifdef unix
 #include "sys/types.h"
 #include "sys/stat.h"
@@ -17,6 +21,9 @@ static char	elsieid[] = "%W%";
 
 #ifdef __TURBOC__
 #include "sys/stat.h"
+#include "io.h"			/* to get access declaration */
+#else /* !defined __TURBOC__ */
+extern int	access P((const char * name, int way));
 #endif /* !defined __TURBOC__ */
 
 #ifndef BUFSIZ
@@ -28,15 +35,6 @@ static char	elsieid[] = "%W%";
 #define FALSE	0
 #endif /* !defined TRUE */
 
-extern char *	icatalloc();
-extern char *	icpyalloc();
-extern char *	imalloc();
-extern char *	irealloc();
-extern char *	optarg;
-extern int	optind;
-extern FILE *	popen();
-extern char *	scheck();
-
 #ifndef EXIT_SUCCESS
 #define EXIT_SUCCESS	0
 #endif /* !defined EXIT_SUCCESS */
@@ -45,49 +43,75 @@ extern char *	scheck();
 #define EXIT_FAILURE	1
 #endif/* !defined EXIT_FAILURE */
 
-static void	addtt();
-static int	addtype();
-static void	addleap();
-static void	adjleap();
-static void	associate();
-static int	charcnt;
-static int	ciequal();
-static long	eitol();
-static int	errors;
-static char *	filename;
-static char **	getfields();
-static long	gethms();
-static void	infile();
-static void	inleap();
-static void	inlink();
-static void	inrule();
-static int	inzcont();
-static int	inzone();
-static int	inzsub();
-static int	leapcnt;
-static int	linenum;
-static int	lowerit();
-static time_t	max_time;
-static int	max_year;
-static time_t	min_time;
-static int	min_year;
-static int	mkdirs();
-static void	newabbr();
-static int	noise;
-static void	nondunlink();
-static long	oadd();
-static void	outzone();
-static char *	progname;
-static char *	rfilename;
-static int	rlinenum;
-static time_t	rpytime();
-static void	rulesub();
-static void	setboundaries();
-static time_t	tadd();
-static int	timecnt;
-static int	tt_signed;
-static int	typecnt;
-static int	yearistype();
+extern char *	optarg;
+extern int	optind;
+
+extern int	emkdir P((const char * name, int mode));
+extern int	getopt	P((int argc, char * argv[], const char * options));
+extern char *	icatalloc P((char * old, const char * new));
+extern char *	icpyalloc P((const char * string));
+extern char *	imalloc P((int n));
+extern char *	irealloc P((char * old, int n));
+extern int	link P((const char * fromname, const char * toname));
+extern FILE *	popen P((const char * command));
+extern char *	scheck P((const char * string, const char * format));
+
+static void	addtt P((time_t starttime, int type));
+static int	addtype P((long gmtoff, const char * abbr, int isdst));
+static void	addleap P((time_t t, int positive, int rolling));
+static void	adjleap P((void));
+static void	associate P((void));
+static int	ciequal P((const char * ap, const char * bp));
+static void	eat P((const char * name, int num));
+static void	eats P((const char * name, int num,
+			const char * rname, int rnum));
+static long	eitol P((int i));
+static void	error P((const char * message));
+static char **	getfields P((char * buf));
+static long	gethms P((char * string, char * errstrng, int signable));
+static void	infile P((const char * filename));
+static void	inleap P((char ** fields, int nfields));
+static void	inlink P((char ** fields, int nfields));
+static void	inrule P((char ** fields, int nfiekds));
+static int	inzcont P((char ** fields, int nfields));
+static int	inzone P((char ** fields, int nfields));
+static int	inzsub P((char ** fields, int nfields, int iscont));
+static int	isabbr P((const char * abbr, const char * word));
+static int	lowerit P((int c));
+static char *	memcheck P((char * tocheck));
+static int	mkdirs P((char * filename));
+static void	newabbr P((const char * abbr));
+static void	nondunlink P((char * filename));
+static long	oadd P((long t1, long t2));
+static void	outzone P((struct zone * zp, int ntzones));
+static void	puttzcode P((long code, FILE * fp));
+static int	rcomp P((const char * leftp, const char * rightp));
+static time_t	rpytime P((struct rule * rp, int wantedy));
+static void	rulesub P((struct rule * rp,
+			char * loyearp, char * hiyearp, char * typep,
+			char * monthp, char * dayp, char * timep));
+static void	setboundaries P((void));
+static time_t	tadd P((time_t t1, long t2));
+static void	usage P((void));
+static void	writezone P((const char * name));
+static int	yearistype P((int year, const char * type));
+
+static int		charcnt;
+static int		errors;
+static const char *	filename;
+static int		leapcnt;
+static int		linenum;
+static time_t		max_time;
+static int		max_year;
+static time_t		min_time;
+static int		min_year;
+static int		noise;
+static const char *	rfilename;
+static int		rlinenum;
+static const char *	progname;
+static int		timecnt;
+static int		typecnt;
+static int		tt_signed;
 
 /*
 ** Line codes.
@@ -163,28 +187,28 @@ static int	yearistype();
 #define LEAP_FIELDS	7
 
 struct rule {
-	char *	r_filename;
-	int	r_linenum;
-	char *	r_name;
+	const char *	r_filename;
+	int		r_linenum;
+	char *		r_name;
 
-	int	r_loyear;	/* for example, 1986 */
-	int	r_hiyear;	/* for example, 1986 */
-	char *	r_yrtype;
+	int		r_loyear;	/* for example, 1986 */
+	int		r_hiyear;	/* for example, 1986 */
+	char *		r_yrtype;
 
-	int	r_month;	/* 0..11 */
+	int		r_month;	/* 0..11 */
 
-	int	r_dycode;	/* see below */
-	int	r_dayofmonth;
-	int	r_wday;
+	int		r_dycode;	/* see below */
+	int		r_dayofmonth;
+	int		r_wday;
 
-	long	r_tod;		/* time from midnight */
-	int	r_todisstd;	/* above is standard time if TRUE */
-				/* above is wall clock time if FALSE */
-	long	r_stdoff;	/* offset from standard time */
-	char *	r_abbrvar;	/* variable part of time zone abbreviation */
+	long		r_tod;		/* time from midnight */
+	int		r_todisstd;	/* above is standard time if TRUE */
+					/* or wall clock time if FALSE */
+	long		r_stdoff;	/* offset from standard time */
+	char *		r_abbrvar;	/* variable part of abbreviation */
 
-	int	r_todo;		/* a rule to do (used in outzone) */
-	time_t	r_temp;		/* used in outzone */
+	int	r_todo;			/* a rule to do (used in outzone) */
+	time_t	r_temp;			/* used in outzone */
 };
 
 /*
@@ -206,7 +230,7 @@ static struct rule *	rules;
 static int		nrules;	/* number of rules */
 
 struct zone {
-	char *		z_filename;
+	const char *	z_filename;
 	int		z_linenum;
 
 	char *		z_name;
@@ -227,7 +251,7 @@ static struct zone *	zones;
 static int		nzones;	/* number of zones */
 
 struct link {
-	char *		l_filename;
+	const char *	l_filename;
 	int		l_linenum;
 	char *		l_from;
 	char *		l_to;
@@ -237,13 +261,14 @@ static struct link *	links;
 static int		nlinks;
 
 struct lookup {
-	char *		l_word;
-	int		l_value;
+	char *	l_word;
+	int	l_value;
 };
 
-static struct lookup *	byword();
+static struct lookup const *	byword P((const char * string,
+					const struct lookup * lp));
 
-static struct lookup	line_codes[] = {
+static struct lookup const	line_codes[] = {
 	"Rule",		LC_RULE,
 	"Zone",		LC_ZONE,
 	"Link",		LC_LINK,
@@ -251,7 +276,7 @@ static struct lookup	line_codes[] = {
 	NULL,		0
 };
 
-static struct lookup	mon_names[] = {
+static struct lookup const	mon_names[] = {
 	"January",	TM_JANUARY,
 	"February",	TM_FEBRUARY,
 	"March",	TM_MARCH,
@@ -267,7 +292,7 @@ static struct lookup	mon_names[] = {
 	NULL,		0
 };
 
-static struct lookup	wday_names[] = {
+static struct lookup const	wday_names[] = {
 	"Sunday",	TM_SUNDAY,
 	"Monday",	TM_MONDAY,
 	"Tuesday",	TM_TUESDAY,
@@ -278,7 +303,7 @@ static struct lookup	wday_names[] = {
 	NULL,		0
 };
 
-static struct lookup	lasts[] = {
+static struct lookup const	lasts[] = {
 	"last-Sunday",		TM_SUNDAY,
 	"last-Monday",		TM_MONDAY,
 	"last-Tuesday",		TM_TUESDAY,
@@ -289,31 +314,31 @@ static struct lookup	lasts[] = {
 	NULL,			0
 };
 
-static struct lookup	begin_years[] = {
+static struct lookup const	begin_years[] = {
 	"minimum",		YR_MINIMUM,
 	"maximum",		YR_MAXIMUM,
 	NULL,			0
 };
 
-static struct lookup	end_years[] = {
+static struct lookup const	end_years[] = {
 	"minimum",		YR_MINIMUM,
 	"maximum",		YR_MAXIMUM,
 	"only",			YR_ONLY,
 	NULL,			0
 };
 
-static struct lookup	leap_types[] = {
-	"Rolling",		1,
-	"Stationary",		0,
+static struct lookup const	leap_types[] = {
+	"Rolling",		TRUE,
+	"Stationary",		FALSE,
 	NULL,			0
 };
 
-static int	len_months[2][MONS_PER_YEAR] = {
+static int const	len_months[2][MONS_PER_YEAR] = {
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 };
 
-static int	len_years[2] = {
+static int const	len_years[2] = {
 	DAYS_PER_NYEAR, DAYS_PER_LYEAR
 };
 
@@ -353,8 +378,8 @@ char *	ptr;
 
 static void
 eats(name, num, rname, rnum)
-char *	name;
-char *	rname;
+const char *	name;
+const char *	rname;
 {
 	filename = name;
 	linenum = num;
@@ -364,14 +389,14 @@ char *	rname;
 
 static void
 eat(name, num)
-char *	name;
+const char *	name;
 {
 	eats(name, num, (char *) NULL, -1);
 }
 
 static void
 error(string)
-char *	string;
+const char *	string;
 {
 	/*
 	** Match the format of "cc" to allow sh users to
@@ -563,8 +588,8 @@ char *	name;
 
 static
 rcomp(cp1, cp2)
-char *	cp1;
-char *	cp2;
+const char *	cp1;
+const char *	cp2;
 {
 	return strcmp(((struct rule *) cp1)->r_name,
 		((struct rule *) cp2)->r_name);
@@ -588,8 +613,8 @@ associate()
 				(char *) &rules[i]) > 0)
 					break;
 		if (i < nrules)
-			(void) qsort((char *) rules, nrules,
-				sizeof *rules, rcomp);
+			(void) qsort((void *) rules, (size_t) nrules,
+				(size_t) sizeof *rules, rcomp);
 	}
 	for (i = 0; i < nzones; ++i) {
 		zp = &zones[i];
@@ -631,12 +656,12 @@ associate()
 
 static void
 infile(name)
-char *	name;
+const char *	name;
 {
 	register FILE *			fp;
 	register char **		fields;
 	register char *			cp;
-	register struct lookup *	lp;
+	register struct lookup const *	lp;
 	register int			nfields;
 	register int			wantcont;
 	register int			num;
@@ -907,7 +932,7 @@ inleap(fields, nfields)
 register char **	fields;
 {
 	register char *			cp;
-	register struct lookup *	lp;
+	register struct lookup const *	lp;
 	register int			i, j;
 	int				year, month, day;
 	long				dayoff, tod;
@@ -1016,7 +1041,7 @@ char *			monthp;
 char *			dayp;
 char *			timep;
 {
-	register struct lookup *	lp;
+	register struct lookup const *	lp;
 	register char *			cp;
 
 	if ((lp = byword(monthp, mon_names)) == NULL) {
@@ -1163,7 +1188,7 @@ FILE *	fp;
 
 static void
 writezone(name)
-char *	name;
+const char *	name;
 {
 	register FILE *		fp;
 	register int		i, j;
@@ -1413,8 +1438,8 @@ time_t	starttime;
 
 static
 addtype(gmtoff, abbr, isdst)
-long	gmtoff;
-char *	abbr;
+long		gmtoff;
+const char *	abbr;
 {
 	register int	i, j;
 
@@ -1494,7 +1519,7 @@ adjleap()
 
 static
 yearistype(year, type)
-char *	type;
+const char *	type;
 {
 	char	buf[BUFSIZ];
 	int	result;
@@ -1509,7 +1534,7 @@ char *	type;
 	result = system(buf);
 	if (result == 0)
 		return TRUE;
-	if (result == 1 << 8)
+	if (result == (1 << 8))
 		return FALSE;
 	error("Wild result from command execution");
 	(void) fprintf(stderr, "%s: command was '%s', result was %d\n",
@@ -1526,8 +1551,8 @@ lowerit(a)
 
 static
 ciequal(ap, bp)		/* case-insensitive equality */
-register char *	ap;
-register char *	bp;
+register const char *	ap;
+register const char *	bp;
 {
 	while (lowerit(*ap) == lowerit(*bp++))
 		if (*ap++ == '\0')
@@ -1535,10 +1560,10 @@ register char *	bp;
 	return FALSE;
 }
 
-static
+static int
 isabbr(abbr, word)
-register char *	abbr;
-register char *	word;
+register const char *	abbr;
+register const char *	word;
 {
 	if (lowerit(*abbr) != lowerit(*word))
 		return FALSE;
@@ -1550,13 +1575,13 @@ register char *	word;
 	return TRUE;
 }
 
-static struct lookup *
+static struct lookup const *
 byword(word, table)
-register char *			word;
-register struct lookup *	table;
+register const char *		word;
+register const struct lookup *	table;
 {
-	register struct lookup *	foundlp;
-	register struct lookup *	lp;
+	register struct lookup const *	foundlp;
+	register struct lookup const *	lp;
 
 	if (word == NULL || table == NULL)
 		return NULL;
@@ -1745,7 +1770,7 @@ register int		wantedy;
 
 static void
 newabbr(string)
-char *	string;
+const char *	string;
 {
 	register int	i;
 

@@ -1,4 +1,4 @@
-# %W%
+# @(#)europe	7.17
 
 # This data is by no means authoritative; if you think you know better,
 # go ahead and edit the file (and please send any changes to
@@ -52,6 +52,28 @@
 
 # From Andrew A. Chernov <ache@astral.msk.su> (November 12, 1993):
 # LST is Local Star Time (``mestnoe zvezdnoe vremya'').
+
+# From Peter Ilieve <peter@memex.co.uk> (December 4, 1994),
+# The original six [EU members]: Belguim, France, (West) Germany, Italy,
+# Luxembourg, the Netherlands.
+# Plus, from 1 Jan 73: Denmark, Ireland, United Kingdom.
+# Plus, from 1 Jan 81: Greece.
+# Plus, from 1 Jan 86: Spain, Portugal.
+# Plus, from 1 Jan 95: Austria, Finland, Sweden. (Norway negotiated terms for
+# entry but in a referendum on 28 Nov 94 the people voted No by 52.2% to 47.8%
+# on a turnout of 88.6%. This was almost the same result as Norway's previous
+# referendum in 1972, they are the only country to have said No twice.
+# Referendums in the other three countries voted Yes.)
+# ...
+# The only [current nonmember using EU rules] I can speak for is Estonia,
+# which uses EU dates but not at 01:00 GMT, they use midnight GMT. I don't
+# think they know yet what they will do from 1996 onwards.
+# ...
+# There shouldn't be any [current members who are not using EU rules].
+# A Directive has the force of law, member states are obliged to enact
+# national law to implement it. The only contentious issue was the
+# different end date for the UK and Ireland, and this was always allowed
+# in the Directive.
 
 ###############################################################################
 

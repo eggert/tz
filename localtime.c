@@ -190,7 +190,7 @@ const char * const	codep;
 	register long	result;
 	register int	i;
 
- 	result = (codep[0] & 0x80) ? ~0L : 0L;
+	result = (codep[0] & 0x80) ? ~0L : 0L;
 	for (i = 0; i < 4; ++i)
 		result = (result << 8) | (codep[i] & 0xff);
 	return result;
@@ -199,8 +199,8 @@ const char * const	codep;
 static void
 settzname P((void))
 {
-	register struct state * const		sp = lclptr;
-	register int				i;
+	register struct state * const	sp = lclptr;
+	register int			i;
 
 	tzname[0] = wildabbr;
 	tzname[1] = wildabbr;
@@ -801,7 +801,8 @@ const int			lastditch;
 			for (i = 0; i < sp->timecnt; ++i) {
 				j = sp->types[i];
 				if (!sp->ttis[j].tt_isdst) {
-					theirstdoffset = -sp->ttis[j].tt_gmtoff;
+					theirstdoffset =
+						-sp->ttis[j].tt_gmtoff;
 					break;
 				}
 			}
@@ -809,7 +810,8 @@ const int			lastditch;
 			for (i = 0; i < sp->timecnt; ++i) {
 				j = sp->types[i];
 				if (sp->ttis[j].tt_isdst) {
-					theirdstoffset = -sp->ttis[j].tt_gmtoff;
+					theirdstoffset =
+						-sp->ttis[j].tt_gmtoff;
 					break;
 				}
 			}
@@ -1175,7 +1177,7 @@ register struct tm * const		tmp;
 #define LEAPS_THRU_END_OF(y)	((y) / 4 - (y) / 100 + (y) / 400)
 	while (days < 0 || days >= (long) year_lengths[yleap = isleap(y)]) {
 		register int	newy;
-		
+
 		newy = y + days / DAYSPERNYEAR;
 		if (days < 0)
 			--newy;
@@ -1382,10 +1384,10 @@ int * const		okayp;
 		if (sp == NULL)
 			return WRONG;
 #endif /* defined ALL_STATE */
-		for (i = 0; i < sp->typecnt; ++i) {
+		for (i = sp->typecnt - 1; i >= 0; --i) {
 			if (sp->ttis[i].tt_isdst != yourtm.tm_isdst)
 				continue;
-			for (j = 0; j < sp->typecnt; ++j) {
+			for (j = sp->typecnt - 1; j >= 0; --j) {
 				if (sp->ttis[j].tt_isdst == yourtm.tm_isdst)
 					continue;
 				newt = t + sp->ttis[j].tt_gmtoff -
@@ -1417,7 +1419,7 @@ label:
 static time_t
 time1(tmp, funcp, offset)
 struct tm * const	tmp;
-void (* const		funcp) P((const time_t*, long, struct tm*));
+void (* const		funcp) P((const time_t *, long, struct tm *));
 const long		offset;
 {
 	register time_t			t;

@@ -461,8 +461,6 @@ Link	Pacific/Honolulu	HST
 #
 # See the `africa' file for Zone naming conventions.
 
-
-
 # Canada
 
 # Canada is reportedly lots easier than the US--leastways since 1951.
@@ -569,11 +567,8 @@ Link	Pacific/Honolulu	HST
 # From Paul Eggert <eggert@twinsun.com> (1994-11-22):
 # Alas, this sort of thing must be handled by localization software.
 
-
-
 # From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	StJohns	1884	only	-	Jan	 1	0:00	0	S
 Rule	StJohns	1917	1918	-	Apr	Sun>=8	2:00	1:00	D
 Rule	StJohns	1917	only	-	Sep	17	2:00	0	S
 Rule	StJohns	1918	only	-	Oct	31	2:00	0	S
@@ -612,7 +607,6 @@ Zone America/St_Johns	-3:30:52 -	LMT	1884
 			-3:30	StJohns	N%sT
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule Halifax	1902	only	-	Jun	15	0:00	0	S
 Rule Halifax	1916	only	-	Apr	 1	0:00	1:00	D
 Rule Halifax	1916	only	-	Oct	 1	0:00	0	S
 Rule Halifax	1918	only	-	Apr	14	2:00	1:00	D
@@ -658,7 +652,6 @@ Zone America/Halifax	-4:14:24 -	LMT	1902 Jun 15
 			-4:00	Halifax	A%sT
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Mont	1884	only	-	Jan	 1	0:00	0	S
 Rule	Mont	1917	only	-	Mar	25	2:00	1:00	D
 Rule	Mont	1917	only	-	Apr	24	0:00	0	S
 Rule	Mont	1918	only	-	Apr	14	2:00	1:00	D
@@ -692,7 +685,6 @@ Zone America/Montreal	-4:54:16 -	LMT	1884
 			-5:00	Mont	E%sT
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Winn	1887	only	-	Jul	16	0:00	0	S
 Rule	Winn	1916	only	-	Apr	23	0:00	1:00	D
 Rule	Winn	1916	only	-	Sep	17	0:00	0	S
 Rule	Winn	1918	only	-	Apr	14	2:00	1:00	D
@@ -721,7 +713,6 @@ Zone America/Winnipeg	-6:28:36 -	LMT	1887 Jul 16
 			-6:00	Winn	C%sT
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Regina	1905	only	-	Sep	 1	0:00	0	S
 Rule	Regina	1918	only	-	Apr	14	2:00	1:00	D
 Rule	Regina	1918	only	-	Oct	31	2:00	0	S
 Rule	Regina	1930	1934	-	May	Sun>=1	0:00	1:00	D
@@ -742,7 +733,6 @@ Zone	America/Regina	-6:58:36 -	LMT	1905 Sep
 			-6:00	-	CST
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Edm	1906	only	-	Sep	 1	0:00	0	S
 Rule	Edm	1918	1919	-	Apr	Sun>=8	2:00	1:00	D
 Rule	Edm	1918	only	-	Oct	31	2:00	0	S
 Rule	Edm	1919	only	-	May	27	2:00	0	S
@@ -765,7 +755,6 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 			-7:00	Edm	M%sT
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Vanc	1884	only	-	Jan	 1	0:00	0	S
 Rule	Vanc	1918	only	-	Apr	14	2:00	1:00	D
 Rule	Vanc	1918	only	-	Oct	31	2:00	0	S
 Rule	Vanc	1942	only	-	Feb	 9	2:00	1:00	D
@@ -780,7 +769,6 @@ Zone America/Vancouver	-8:12:28 -	LMT	1884
 			-8:00	Vanc	P%sT
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Yukon	1900	only	-	Jan	 1	0:00	0	S
 Rule	Yukon	1918	only	-	Apr	14	2:00	1:00	D
 Rule	Yukon	1918	only	-	Oct	27	2:00	0	S
 Rule	Yukon	1919	only	-	May	25	2:00	1:00	D
@@ -883,7 +871,6 @@ Zone America/Whitehorse	-9:00:12 -	LMT	1900 Aug 20
 
 # From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Mexico	1922	only	-	Jan	1	0:00	0	S
 Rule	Mexico	1939	only	-	Feb	5	0:00	1:00	D
 Rule	Mexico	1939	only	-	Jun	25	0:00	0	S
 Rule	Mexico	1940	only	-	Dec	9	0:00	1:00	D
@@ -950,7 +937,6 @@ Zone	America/Antigua	-4:07:12 -	LMT	1912 Mar 2
 
 # Bahamas
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Bahamas	1912	only	-	Mar	2	0:00	0	S
 Rule	Bahamas	1964	max	-	Oct	lastSun	2:00	0	S
 Rule	Bahamas	1964	1986	-	Apr	lastSun	2:00	1:00	D
 Rule	Bahamas	1987	max	-	Apr	Sun>=1	2:00	1:00	D
@@ -960,7 +946,6 @@ Zone	America/Nassau	-5:09:24 -	LMT	1912 Mar 2
 
 # Barbados
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Barb	1932	only	-	Jan	1	0:00	0	S
 Rule	Barb	1977	only	-	Jun	12	2:00	1:00	D
 Rule	Barb	1977	1978	-	Oct	Sun>=1	2:00	0	S
 Rule	Barb	1978	1980	-	Apr	Sun>=15	2:00	1:00	D
@@ -974,7 +959,6 @@ Zone America/Barbados	-3:58:28 -	LMT	1924		# Bridgetown
 # Belize
 # Whitman entirely disagrees with Shanks; go with Shanks.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Belize	1912	only	-	Apr	 1	0:00	0	S
 Rule	Belize	1918	1942	-	Oct	Sun>=2	0:00	0:30	HD
 Rule	Belize	1919	1943	-	Feb	Sun>=9	0:00	0	S
 Rule	Belize	1973	only	-	Dec	 5	0:00	1:00	D
@@ -1004,7 +988,6 @@ Zone	America/Cayman	-5:25:32 -	LMT	1890		# Georgetown
 # Shanks gives some very odd dates for 1991, and stops there.
 # For now, we won't guess further.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	CR	1921	only	-	Jan	15	0:00	0	S
 Rule	CR	1979	1980	-	Feb	lastSun	0:00	1:00	D
 Rule	CR	1979	1980	-	Jun	Sun>=1	0:00	0	S
 Rule	CR	1991	only	-	Jan	19	0:00	1:00	D
@@ -1030,7 +1013,6 @@ Zone America/Costa_Rica	-5:36:20 -	LMT	1890		# San Jose
 
 # From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Cuba	1925	only	-	Jul	19	12:00	0	S
 Rule	Cuba	1928	only	-	Jun	10	0:00	1:00	D
 Rule	Cuba	1928	only	-	Oct	10	0:00	0	S
 Rule	Cuba	1940	1942	-	Jun	Sun>=1	0:00	1:00	D
@@ -1069,7 +1051,6 @@ Zone America/Dominica	-4:05:36 -	LMT	1911 Jul 1 0:01		# Roseau
 
 # Dominican Republic
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	DR	1933	only	-	Apr	1	12:00	0	S
 Rule	DR	1966	only	-	Oct	30	0:00	1:00	D
 Rule	DR	1967	only	-	Feb	28	0:00	0	S
 Rule	DR	1969	1973	-	Oct	lastSun	0:00	0:30	HD
@@ -1084,7 +1065,6 @@ Zone America/Santo_Domingo -4:39:36 -	LMT	1890
 
 # El Salvador
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Salv	1921	only	-	Jan	1	0:00	0	S
 Rule	Salv	1987	1988	-	May	Sun>=1	0:00	1:00	D
 Rule	Salv	1987	1988	-	Sep	lastSun	0:00	0	S
 # There are too many San Salvadors elsewhere, so we'll use `El Salvador'.
@@ -1104,7 +1084,6 @@ Zone America/Guadeloupe	-4:06:08 -	LMT	1911 Jun 8	# Pointe a Pitre
 
 # Guatemala
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Guat	1918	only	-	Oct	5	0:00	0	S
 Rule	Guat	1973	only	-	Nov	25	0:00	1:00	D
 Rule	Guat	1974	only	-	Feb	24	0:00	0	S
 Rule	Guat	1983	only	-	May	21	0:00	1:00	D
@@ -1115,7 +1094,6 @@ Zone America/Guatemala	-6:02:04 -	LMT	1918 Oct 5
 
 # Haiti
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Haiti	1917	only	-	Jan	24	12:00	0	S
 Rule	Haiti	1983	only	-	May	8	0:00	1:00	D
 Rule	Haiti	1984	1987	-	Apr	lastSun	0:00	1:00	D
 Rule	Haiti	1983	1987	-	Oct	lastSun	0:00	0	S
@@ -1162,7 +1140,6 @@ Zone America/Montserrat	-4:08:52 -	LMT	1911 Jul 1 0:01   # Plymouth
 
 # Nicaragua
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Nic	1975	only	-	Feb	16	0:00	0	S
 Rule	Nic	1979	1980	-	Mar	Sun>=16	0:00	1:00	D
 Rule	Nic	1979	1980	-	Jun	Mon>=23	0:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

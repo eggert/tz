@@ -87,9 +87,6 @@ YEARISTYPE=	./yearistype
 #  -DHAVE_SETTIMEOFDAY=2 if settimeofday uses 2nd arg (4.3BSD)
 #  -DHAVE_SETTIMEOFDAY=3 if settimeofday ignores 2nd arg (4.4BSD)
 #  -DLOCALE_HOME=\"path\" if locales are in "path", not "/usr/lib/locale"
-#  -Dalloc_size_T=T if the malloc size argument is of type T, not size_t
-#  -Dfwrite_size_T=T if the fwrite size arguments are of type T, not size_t
-#  -Dqsort_size_T=T if the qsort size arguments are of type T, not size_t
 #  -Dstrchr=index if `strchr' is called `index'
 #  $(GCC_DEBUG_FLAGS) if you are using GCC and want lots of checking
 #

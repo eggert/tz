@@ -238,7 +238,7 @@ SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
 TABDATA=	iso3166.tab zone.tab
 DATA=		$(YDATA) $(NDATA) $(SDATA) $(TABDATA) leapseconds yearistype.sh
-MISC=		usno1988 usno1989 usno1989a usno1995 usno1997 \
+MISC=		usno1988 usno1989 usno1989a usno1995 usno1997 usno1998 \
 			Arts.htm WWW.htm gccdiffs checktab.awk
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(MISC)
 
@@ -305,7 +305,7 @@ right_only:	zic leapseconds $(TDATA)
 other_two:	zic leapseconds $(TDATA)
 		$(ZIC) -y $(YEARISTYPE) -d $(TZDIR)-posix -L /dev/null $(TDATA)
 		$(ZIC) -y $(YEARISTYPE) \
-			-d $(TZDIR)-right -L leapseconds $(TDATA)
+			-d $(TZDIR)-leaps -L leapseconds $(TDATA)
 
 posix_right:	posix_only other_two
 

@@ -1040,13 +1040,7 @@ Zone	Europe/Brussels	0:17:30 -	LMT	1880
 			1:00	EU	CE%sT
 
 # Bosnia and Herzegovina
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Sarajevo	1:13:40	-	LMT	1884
-			1:00	-	CET	1941 Apr 18 23:00
-			1:00	C-Eur	CE%sT	1945 May  8  2:00s
-			1:00	1:00	CEST	1945 Sep 16  2:00s
-			1:00	-	CET	1982 Nov 27
-			1:00	EU	CE%sT
+# see Yugoslavia
 
 # Bulgaria
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
@@ -1066,13 +1060,7 @@ Zone	Europe/Sofia	1:33:16 -	LMT	1880
 			2:00	E-Eur	EE%sT
 
 # Croatia
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Zagreb	1:03:52	-	LMT	1884
-			1:00	-	CET	1941 Apr 18 23:00
-			1:00	C-Eur	CE%sT	1945 May  8  2:00s
-			1:00	1:00	CEST	1945 Sep 16  2:00s
-			1:00	-	CET	1982 Nov 27
-			1:00	EU	CE%sT
+# see Yugosloavia
 
 # Czech Republic
 # Gregorian calendar adopted 1584-01-17.
@@ -1192,13 +1180,14 @@ Zone	Europe/Helsinki	1:39:52 -	LMT	1878 May 31
 
 # France
 # Gregorian calendar adopted 1582-12-20.
-# French Revolutionary calendar used 1792-09-22 - 1805-12-31.
+# French Revolutionary calendar used 1793-11-24 through 1805-12-31,
+# and (in Paris only) 1871-05-06 through 1871-05-23.
 #
 # Shanks seems to use `24:00' ambiguously; we resolve it with Whitman.
 # From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	France	1916	only	-	Jun	14	23:00s	1:00	S
-Rule	France	1916	1919	-	Oct	Sun>=1	 0:00	0	-
+Rule	France	1916	1919	-	Oct	Sun>=1	23:00s	0	-
 Rule	France	1917	only	-	Mar	24	23:00s	1:00	S
 Rule	France	1918	only	-	Mar	 9	23:00s	1:00	S
 Rule	France	1919	only	-	Mar	 1	23:00s	1:00	S
@@ -1230,27 +1219,34 @@ Rule	France	1940	only	-	Feb	25	 2:00	1:00	S
 # The French rules for 1941-1944 were not used in Paris,
 # but were used in other places (e.g. Monaco).
 Rule	France	1941	only	-	May	 5	 0:00	2:00	DS
-Rule	France	1941	only	-	Oct	 6	 1:00	1:00	S
-Rule	France	1942	only	-	Mar	 8	 0:00	2:00	DS
+# Shanks says this transition occurred at Oct 6 1:00,
+# but go with Denis.Excoffier@ens.fr (1997-12-12),
+# who quotes the Ephemerides Astronomiques for 1998 from Bureau des Longitudes
+# as saying 5/10/41 22hUT.
+Rule	France	1941	only	-	Oct	 6	 0:00	1:00	S
+Rule	France	1942	only	-	Mar	 9	 0:00	2:00	DS
 Rule	France	1942	only	-	Nov	 2	 3:00	1:00	S
 Rule	France	1943	only	-	Mar	29	 2:00	2:00	DS
-Rule	France	1943	only	-	Nov	 4	 3:00	1:00	S
+Rule	France	1943	only	-	Oct	 4	 3:00	1:00	S
 Rule	France	1944	only	-	Apr	 3	 2:00	2:00	DS
 Rule	France	1944	only	-	Oct	 8	 1:00	1:00	S
 Rule	France	1945	only	-	Apr	 2	 2:00	2:00	DS
 Rule	France	1945	only	-	Sep	16	 3:00	0	-
-Rule	France	1976	only	-	Mar	28	 2:00s	1:00	S
-Rule	France	1976	only	-	Sep	lastSun	 2:00s	0	-
+# Shanks gives Mar 28 2:00 and Sep 26 3:00;
+# go with Excoffier's 28/3/76 0hUT and 25/9/76 23hUT.
+Rule	France	1976	only	-	Mar	28	 1:00	1:00	S
+Rule	France	1976	only	-	Sep	26	 1:00	0	-
 # Shanks gives 0:09 for Paris Mean Time, and Whitman gives 0:09:05,
 # but Howse quotes the actual French legislation as saying 0:09:21.
 # Go with Howse.  Howse writes that the time in France was officially based
 # on PMT-0:09:21 until 1978-08-09, when the time base finally switched to UTC.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Paris	0:09:21 -	LMT	1891 Mar 15 0:01
+Zone	Europe/Paris	0:09:21 -	LMT	1891 Mar 15  0:01
 			0:09:21	-	PMT	1911 Mar 11    # Paris Mean Time
-			0:00	France	WE%sT	1940 Jun 14
+# Shanks gives 1940 Jun 14 0:00; go with Excoffier's 14/6/40 22hUT.
+			0:00	France	WE%sT	1940 Jun 14 23:00
 			1:00	C-Eur	CE%sT	1944 Aug 25
-			0:00	France	WE%sT	1945 Sep 16 3:00
+			0:00	France	WE%sT	1945 Sep 16  3:00
 			1:00	France	CE%sT	1977
 			1:00	EU	CE%sT
 
@@ -1565,13 +1561,7 @@ Zone Europe/Luxembourg	0:24:36 -	LMT	1904 Jun
 			1:00	EU	CE%sT
 
 # Macedonia
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Skopje	1:25:44	-	LMT	1884
-			1:00	-	CET	1941 Apr 18 23:00
-			1:00	C-Eur	CE%sT	1945 May  8  2:00s
-			1:00	1:00	CEST	1945 Sep 16  2:00s
-			1:00	-	CET	1982 Nov 27
-			1:00	EU	CE%sT
+# see Yugoslavia
 
 # Malta
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
@@ -1961,13 +1951,7 @@ Zone Asia/Anadyr	11:49:56 -	LMT	1924 May  2
 Link Europe/Prague Europe/Bratislava
 
 # Slovenia
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Europe/Ljubljana	0:58:04	-	LMT	1884
-			1:00	-	CET	1941 Apr 18 23:00
-			1:00	C-Eur	CE%sT	1945 May  8  2:00s
-			1:00	1:00	CEST	1945 Sep 16  2:00s
-			1:00	-	CET	1982 Nov 27
-			1:00	EU	CE%sT
+# see Yugoslavia
 
 # Spain
 # Gregorian calendar adopted 1582-10-15.
@@ -2072,6 +2056,8 @@ Zone Europe/Stockholm	1:12:12 -	LMT	1878 May 31
 			1:00	EU	CE%sT
 
 # Switzerland
+# The Gregorian calendar was introduced gradually in Switzerland,
+# by omitting leap years during 1583-1812.
 # From Howse (1988), p 82:
 # By the end of the 18th century clocks and watches became commonplace
 # and their performance improved enormously.  Communities began to keep
@@ -2211,6 +2197,10 @@ Zone	Europe/Belgrade	1:22:00	-	LMT	1884
 # Shanks doesn't give as much detail, so go with Kozelj.
 			1:00	-	CET	1982 Nov 27
 			1:00	EU	CE%sT
+Link Europe/Belgrade Europe/Ljubljana	# Slovenia
+Link Europe/Belgrade Europe/Sarajevo	# Bosnia and Herzegovina
+Link Europe/Belgrade Europe/Skopje	# Macedonia
+Link Europe/Belgrade Europe/Zagreb	# Croatia
 
 ###############################################################################
 

@@ -125,8 +125,8 @@ YEARISTYPE=	./yearistype
 # add
 #	-DSTD_INSPIRED
 # to the end of the "CFLAGS=" line.  This arranges for the functions
-# "tzsetwall", "offtime", "timelocal", "timegm", and "timeoff"
-# to be added to the time conversion library.
+# "tzsetwall", "offtime", "timelocal", "timegm", "timeoff",
+# "posix2time", and "time2posix" to be added to the time conversion library.
 # "tzsetwall" is like "tzset" except that it arranges for local wall clock
 # time (rather than the time specified in the TZ environment variable)
 # to be used.
@@ -137,12 +137,11 @@ YEARISTYPE=	./yearistype
 # a time_t using GMT (rather than local time as "timelocal" does).
 # "timeoff" is like "timegm" except that it accepts a second (long) argument
 # that gives an offset to use when converting to a time_t.
+# "posix2time" and "time2posix" are described in an included manual page.
 # None of these functions are described in X3J11's current work.
 # Sun has provided "tzsetwall", "timelocal", and "timegm" in SunOS 4.0.
 # These functions may well disappear in future releases of the time
 # conversion package.
-#
-# XXX--NEED WORDS ON CONDITIONAL COMPILATION OF POSIX2TIME AND TIME2POSIX HERE!
 #
 # If you want Source Code Control System ID's left out of object modules, add
 #	-DNOID

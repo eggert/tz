@@ -3,7 +3,7 @@
 #define PRIVATE_H
 
 /*
-** This header is for use ONLY with the time zone code.
+** This header is for use ONLY with the time conversion code.
 ** There is no guarantee that it will remain unchanged,
 ** or that it will remain at all.
 ** Do NOT copy it to any system include directory.

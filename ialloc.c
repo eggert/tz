@@ -90,3 +90,10 @@ char *	p;
 	if (!NULLMAL(p))
 		free(p);
 }
+
+icfree(p)
+char *	p;
+{
+	if (!NULLMAL(p))
+		free(p);
+}

@@ -1,27 +1,24 @@
 # %W%
 
-FAKENAME=	Eastern
-FAKEOFF=	-18000
+FAKENAME=	EST5EDT
+FAKEOFF=	(-5*60*60)
 FAKEST=		"EST"
 FAKEDT=		"EDT"
 
 LINTFLAGS=	-phbaaxc
 
-CFLAGS=		-g -DFAKENAME=$(FAKENAME) -DFAKEOFF=$(FAKEOFF) \
+CFLAGS=		-g -DFAKENAME=$(FAKENAME) -DFAKEOFF='$(FAKEOFF)' \
 			-DFAKEST='$(FAKEST)' -DFAKEDT='$(FAKEDT)'
 
-ALL=		try tzdir/$(FAKENAME) fake
+ALL=		try $(FAKENAME) fake
 
 all:		$(ALL)
 
 try:		try.o ctime.o
 			$(CC) $(CFLAGS) try.o ctime.o $(LIBS) -o $@
 
-tzdir/Eastern:	tzdir fake
+$(FAKENAME):	fake
 		fake > $@
-
-tzdir:
-		mkdir tzdir
 
 fake:		fake.o
 			$(CC) $(CFLAGS) fake.o $(LIBS) -o $@

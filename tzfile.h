@@ -5,7 +5,7 @@
 */
 
 #ifndef TZDIR
-#define TZDIR		"/etc/tzdir"	/* Time zone object file directory */
+#define TZDIR		"/etc/timezones" /* Time zone object file directory */
 #endif
 
 #ifndef TZDEFAULT

@@ -18,18 +18,18 @@ settz, newctime, newlocaltime \- convert date and time to ASCII
 .B char *tz_abbr;
 .SH DESCRIPTION
 .I Settz
-sets time zone information used by
+sets time conversion information used by
 .IR newlocaltime .
 If
 .I zonename
 begins with a slash,
 it is used as the absolute pathname of the
 .IR tzfile (5)-format
-file from which to read the time zone information;
+file from which to read the time conversion information;
 if
 .I zonename
 begins with some other character,
-it is used as a pathname relative to the standard time zone information
+it is used as a pathname relative to the standard time conversion information
 directory.  A call of the form
 .ti +.5i
 .B
@@ -75,7 +75,7 @@ returns
 returns zero if all seems well; it returns negative one otherwise
 (and sets things up so that its built-in information about GMT is used).
 .SH FILES
-/etc/tzdir	standard time zone information directory
+/etc/tzdir	standard time conversion information directory
 .SH "SEE ALSO"
 ctime(3), getenv(3), tzfile(5)
 .. %W%

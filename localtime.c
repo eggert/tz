@@ -708,15 +708,14 @@ const int			lastditch;
 		name += stdlen;
 		if (stdlen >= sizeof sp->chars)
 			stdlen = (sizeof sp->chars) - 1;
+		stdoffset = 0;
 	} else {
 		name = getzname(name);
 		stdlen = name - stdname;
 		if (stdlen < 3)
 			return -1;
-	}
-	if (*name == '\0')
-		return -1;	/* was "stdoffset = 0;" */
-	else {
+		if (*name == '\0')
+			return -1;
 		name = getoffset(name, &stdoffset);
 		if (name == NULL)
 			return -1;
@@ -885,7 +884,7 @@ const int			lastditch;
 	sp->charcnt = stdlen + 1;
 	if (dstlen != 0)
 		sp->charcnt += dstlen + 1;
-	if (sp->charcnt > sizeof sp->chars)
+	if ((size_t) sp->charcnt > sizeof sp->chars)
 		return -1;
 	cp = sp->chars;
 	(void) strncpy(cp, stdname, stdlen);

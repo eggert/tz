@@ -124,10 +124,10 @@ static char	privatehid[] = "%W%";
 */
 
 #ifdef __STDC__
-typedef void		generic_T;
+#define generic_T	void
 #endif /* defined __STDC__ */
 #ifndef __STDC__
-typedef char		generic_T;
+#define generic_T	char
 #endif /* !defined __STDC__ */
 
 #include "sys/types.h"	/* for time_t */

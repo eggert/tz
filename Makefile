@@ -6,7 +6,7 @@
 # Alternately, if you discover you've got the wrong time zone, you can just
 #	tzcomp -l rightzone
 
-LOCALTIME=	Eastern
+LOCALTIME=	US/Eastern
 
 # Use an absolute path name for TZDIR unless you're just testing the software.
 

@@ -4,6 +4,11 @@
 # 
 # Here's time zone information from the United States Naval Observatory;
 # no corrections have been made, and there are some obvious challenges.
+# The USNO warns:
+#	DUE TO FREQUENT CHANGES IN THE LOCAL LAWS GOVERNING DAYLIGHT
+#	SAVING TIME, WE CANNOT GUARANTEE THE ACCURACY OF THIS
+#	INFORMATION.  PLEASE ALERT US TO ANY DISCREPANCY YOU MAY
+#	DISCOVER.
 #
 AFGHANISTAN         4.5H AHEAD OF UTC
 ALBANIA             1 H  AHEAD OF UTC

@@ -299,14 +299,11 @@ label:
 /*
 ** From Arnold Robbins' strftime version 3.0:  "the week number of the
 ** year (the first Monday as the first day of week 1) as a decimal number
-** (01-53).  The method for determining the week number is as specified by
-** ISO 8601 (to wit: if the week containing January 1 has four or more
-** days in the new year, then it is week 1, otherwise it is week 53 of the
-** previous year and the next week is week 1)."
+** (01-53)."
 ** (ado, 1993-05-24)
 **
 ** From "http://www.ft.uni-erlangen.de/~mskuhn/iso-time.html" by Markus Kuhn:
-** Week 01 of a year is per definition the first week which has the
+** "Week 01 of a year is per definition the first week which has the
 ** Thursday in this year, which is equivalent to the week which contains
 ** the fourth day of January. In other words, the first week of a new year
 ** is the week which has the majority of its days in the new year. Week 01
@@ -314,7 +311,7 @@ label:
 ** 01 of a year is the last week (52 or 53) of the previous year even if
 ** it contains days from the new year. A week starts with Monday (day 1)
 ** and ends with Sunday (day 7).  For example, the first week of the year
-** 1997 lasts from 1996-12-30 to 1997-01-05...
+** 1997 lasts from 1996-12-30 to 1997-01-05..."
 ** (ado, 1996-01-02)
 */
 				{

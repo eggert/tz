@@ -53,10 +53,14 @@ TZDEF=		-DTZDIR=\"$(TZDIR)\"
 
 TZCSRCS=	zic.c scheck.c ialloc.c mkdir.c
 TZCOBJS=	zic.o scheck.o ialloc.o mkdir.o
-TZDSRCS=	zdump.c newctime.c ialloc.c
-TZDOBJS=	zdump.o newctime.o ialloc.o
+TZDSRCS=	zdump.c localtime.c gmtime.c asctime.c ctime.c ialloc.c
+TZDOBJS=	zdump.o localtime.o gmtime.o asctime.o ctime.o ialloc.o
+LIBSRCS=	localtime.c gmtime.c asctime.c ctime.c dysize.c
+LIBOBJS=	localtime.o gmtime.o asctime.o ctime.o dysize.o
 DOCS=		README Makefile newctime.3 tzfile.5 zic.8 zdump.8
-SOURCES=	tzfile.h zic.c zdump.c newctime.c scheck.c ialloc.c mkdir.c
+SOURCES=	tzfile.h zic.c zdump.c \
+		localtime.c gmtime.c asctime.c ctime.c dysize.c \
+		scheck.c ialloc.c mkdir.c
 DATA=		asia australasia europe etcetera northamerica pacificnew systemv
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
@@ -68,9 +72,9 @@ REDID_BINARIES:	$(TZDIR) zic $(DATA)
 zdump:		$(TZDOBJS)
 		$(CC) $(TZDEF) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@
 
-$(TZLIB):	newctime.o
-		ar ru $@ newctime.o
-		ranlib $@
+$(TZLIB):	$(LIBOBJS)
+		ar ru $@ $(LIBOBJS)
+		test -f /usr/bin/ranlib && ranlib $@
 
 zic:		$(TZCOBJS)
 		$(CC) $(TZDEF) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
@@ -95,6 +99,7 @@ $(ENCHILADA):
 sure:		$(TZCSRCS) $(TZDSRCS) tzfile.h
 		lint $(LINTFLAGS) $(CFLAGS) $(TZCSRCS)
 		lint $(LINTFLAGS) $(CFLAGS) $(TZDSRCS)
+		lint $(LINTFLAGS) $(CFLAGS) $(LIBSRCS)
 
 clean:
 		rm -f core *.o *.out REDID_BINARIES zdump zic BUNDLE* \#*

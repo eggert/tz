@@ -1605,16 +1605,16 @@ const int			zonecount;
 	typecnt = 0;
 	charcnt = 0;
 	/*
-	** A guess that may well be corrected later.
-	*/
-	stdoff = 0;
-	/*
 	** Thanks to Earl Chew (earl@dnd.icp.nec.com.au)
 	** for noting the need to unconditionally initialize startttisstd.
 	*/
 	startttisstd = FALSE;
 	startttisgmt = FALSE;
 	for (i = 0; i < zonecount; ++i) {
+		/*
+		** A guess that may well be corrected later.
+		*/
+		stdoff = 0;
 		zp = &zpfirst[i];
 		usestart = i > 0 && (zp - 1)->z_untiltime > min_time;
 		useuntil = i < (zonecount - 1);

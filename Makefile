@@ -22,7 +22,7 @@ TZLIB=		/usr/lib/libz.a
 LINTFLAGS=	-phbaaxc
 
 LFLAGS=
-CFLAGS=		-g -DOBJECTID -DTZDIR=\"$(TZDIR)\"
+CFLAGS=		-DOBJECTID -DTZDIR=\"$(TZDIR)\"
 
 TZCSRCS=	zic.c scheck.c strchr.c mkdir.c
 TZCOBJS=	zic.o scheck.o strchr.o mkdir.o

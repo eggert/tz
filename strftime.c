@@ -337,7 +337,7 @@ _conv(n, format, pt, ptlim)
 	char *pt;
 	const char *ptlim;
 {
-	char buf[21]; /* Room for - 2**63 ("-9223372036854775808") + null.  */
+	char buf[INT_STRLEN_MAXIMUM + 1];
 
 	(void) sprintf(buf, format, n);
 	return _add(buf, pt, ptlim);

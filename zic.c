@@ -64,7 +64,7 @@ extern char *	icatalloc P((char * old, const char * new));
 extern char *	icpyalloc P((const char * string));
 extern void	ifree P((char * p));
 extern char *	imalloc P((int n));
-extern char *	irealloc P((char * old, int n));
+extern void *	irealloc P((void * old, int n));
 extern int	link P((const char * fromname, const char * toname));
 extern char *	optarg;
 extern int	optind;
@@ -340,9 +340,9 @@ char * const	ptr;
 }
 
 #define emalloc(size)		memcheck(imalloc(size))
-#define erealloc(ptr, size)	memcheck(irealloc(ptr, size))
+#define erealloc(ptr, size)	memcheck(irealloc((ptr), (size)))
 #define ecpyalloc(ptr)		memcheck(icpyalloc(ptr))
-#define ecatalloc(oldp, newp)	memcheck(icatalloc(oldp, newp))
+#define ecatalloc(oldp, newp)	memcheck(icatalloc((oldp), (newp)))
 
 /*
 ** Error handling.
@@ -388,7 +388,7 @@ const char * const	string;
 }
 
 static void
-usage()
+usage P((void))
 {
 	(void) fprintf(stderr,
 "%s: usage is %s [ -s ] [ -v ] [ -l localtime ] [ -p posixrules ] [ -d directory ] \n\
@@ -491,9 +491,6 @@ char *	argv[];
 		adjleap();
 	}
 
-	zones = (struct zone *) emalloc(0);
-	rules = (struct rule *) emalloc(0);
-	links = (struct link *) emalloc(0);
 	for (i = optind; i < argc; ++i)
 		infile(argv[i]);
 	if (errors)
@@ -562,7 +559,7 @@ const char * const	tofile;
 }
 
 static void
-setboundaries()
+setboundaries P((void))
 {
 	register time_t	bit;
 	register int bii;
@@ -625,7 +622,7 @@ const genericptr_t	cp2;
 }
 
 static void
-associate()
+associate P((void))
 {
 	register struct zone *	zp;
 	register struct rule *	rp;
@@ -832,7 +829,7 @@ const int		nfields;
 		fields[RF_MONTH], fields[RF_DAY], fields[RF_TOD]);
 	r.r_name = ecpyalloc(fields[RF_NAME]);
 	r.r_abbrvar = ecpyalloc(fields[RF_ABBRVAR]);
-	rules = (struct rule *) erealloc((char *) rules,
+	rules = (struct rule *) (void *) erealloc((char *) rules,
 		(int) ((nrules + 1) * sizeof *rules));
 	rules[nrules++] = r;
 }
@@ -961,7 +958,7 @@ error("Zone continuation line end time is not after end time of previous line");
 				return FALSE;
 		}
 	}
-	zones = (struct zone *) erealloc((char *) zones,
+	zones = (struct zone *) (void *) erealloc((char *) zones,
 		(int) ((nzones + 1) * sizeof *zones));
 	zones[nzones++] = z;
 	/*
@@ -1090,7 +1087,7 @@ const int		nfields;
 	l.l_linenum = linenum;
 	l.l_from = ecpyalloc(fields[LF_FROM]);
 	l.l_to = ecpyalloc(fields[LF_TO]);
-	links = (struct link *) erealloc((char *) links,
+	links = (struct link *) (void *) erealloc((char *) links,
 		(int) ((nlinks + 1) * sizeof *links));
 	links[nlinks++] = l;
 }
@@ -1610,7 +1607,7 @@ int		count;
 }
 
 static void
-adjleap()
+adjleap P((void))
 {
 	register int	i;
 	register long	last = 0;
@@ -1723,7 +1720,8 @@ register char *	cp;
 
 	if (cp == NULL)
 		return NULL;
-	array = (char **) emalloc((int) ((strlen(cp) + 1) * sizeof *array));
+	array = (char **) (void *)
+		emalloc((int) ((strlen(cp) + 1) * sizeof *array));
 	nsubs = 0;
 	for ( ; ; ) {
 		while (isascii(*cp) && isspace(*cp))

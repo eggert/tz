@@ -73,9 +73,7 @@ CFLAGS=
 
 LINTFLAGS=	-phbaaxc
 
-# BUNDLE was set to "bundle" in the original, "shar" is more universal
-
-BUNDLE=		shar
+SHAR=		shar
 
 ################################################################################
 
@@ -98,7 +96,10 @@ ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 all:		REDID_BINARIES zdump $(TZLIB)
 
 REDID_BINARIES:	zic $(DATA)
-		PATH=.:$$PATH zic -l $(LOCALTIME) -d $(TZDIR) $(DATA) && > $@
+		PATH=.:$$PATH zic -d $(TZDIR) $(DATA) && \ 
+		PATH=.:$$PATH zic -L /dev/null -d $(TZDIR) systemv && \
+		PATH=.:$$PATH zic -l $(LOCALTIME) && \
+		> $@
 
 zdump:		$(TZDOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@
@@ -110,16 +111,16 @@ $(TZLIB):	$(LIBOBJS)
 zic:		$(TZCOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
 
-BUNDLES:	BUNDLE1 BUNDLE2 BUNDLE3
+SHARS:		SHAR1 SHAR2 SHAR3
 
-BUNDLE1:	$(DOCS)
-		$(BUNDLE) $(DOCS) > $@
+SHAR1:		$(DOCS)
+		$(SHAR) $(DOCS) > $@
 
-BUNDLE2:	$(SOURCES)
-		$(BUNDLE) $(SOURCES) > $@
+SHAR2:		$(SOURCES)
+		$(SHAR) $(SOURCES) > $@
 
-BUNDLE3:	$(DATA)
-		$(BUNDLE) $(DATA) > $@
+SHAR3:		$(DATA)
+		$(SHAR) $(DATA) > $@
 
 $(ENCHILADA):
 		sccs get $(REL) $(REV) $@
@@ -130,7 +131,7 @@ sure:		$(TZCSRCS) $(TZDSRCS) tzfile.h
 		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(LIBSRCS)
 
 clean:
-		rm -f core *.o *.out REDID_BINARIES zdump zic BUNDLE* \#*
+		rm -f core *.o *.out REDID_BINARIES zdump zic SHAR* \#*
 
 CLEAN:		clean
 		sccs clean

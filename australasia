@@ -8,7 +8,6 @@
 # Australia
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Aus	1895	only	-	Jan	 1	0:00	0	-
 # Shanks gives 1917 Jan 1 0:01; go with Whitman (and guess 2:00).
 Rule	Aus	1916	only	-	Oct	 1	2:00	1:00	-
 Rule	Aus	1917	only	-	Mar	25	2:00	0	-
@@ -259,7 +258,6 @@ Zone	Pacific/Nauru	11:07:40 -	LMT	1921 Jan 15	# Uaobe
 
 # New Caledonia
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	NC	1912	only	-	Jan	13	0:00	0	S
 Rule	NC	1977	1978	-	Dec	Sun>=1	0:00	1:00	D
 Rule	NC	1978	1979	-	Feb	27	0:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -272,7 +270,6 @@ Zone	Pacific/Noumea	11:05:48 -	LMT	1912 Jan 13
 # New Zealand
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	NZ	1868	only	-	Jan	1	0:00	0	S
 # Shanks gives 1927 Nov 6 - 1928 Mar 4, 1928 Oct 14 - 1929 Mar 17,
 # 1929 Oct 13 - 1930 Mar 16; go with Whitman.
 Rule	NZ	1927	only	-	Nov	26	2:00	0:30	HD
@@ -375,7 +372,6 @@ Zone Pacific/Funafuti	11:56:52 -	LMT	1901
 
 # Vanuatu
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Vanuatu	1912	only	-	Jan	13	0:00	0	S
 Rule	Vanuatu	1983	only	-	Sep	25	0:00	1:00	D
 Rule	Vanuatu	1984	1991	-	Mar	Sun>=23	0:00	0	S
 Rule	Vanuatu	1984	only	-	Oct	23	0:00	1:00	D

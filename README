@@ -3,6 +3,7 @@
 TODO BEFORE comp.sources RELEASE:
 
 *	Resolve SunOS 4.1/BSD 4.4 strftime differences
+*	Update date.1
 *	Incorporate any other changes from the West Coast
 *	Check compilability on a System-V-based system
 *	Turn everything with a version number less than "5.1" into "5.1".

@@ -443,12 +443,8 @@ Rule	Brazil	2001	max	-	Feb	Sun>=15	 0:00	0	-
 # Decree 4,399 (2002-10-01) repeals DST in AL, CE, MA, PB, PE, PI, RN, SE.
 # <a href="http://www.presidencia.gov.br/CCIVIL/decreto/2002/D4399.htm"></a>
 Rule	Brazil	2002	only	-	Nov	 3	 0:00	1:00	S
-# Decree 4,844 (2003-09-24) repeals DST in BA, MT, TO.
+# Decree 4,844 (2003-09-24; corrected 2003-09-26) repeals DST in BA, MT, TO.
 # <a href="http://www.presidencia.gov.br/CCIVIL/decreto/2003/D4844.htm"></a>
-# From Paul Eggert (2003-09-25):
-# Decree 4,844 says that daylight savings ends on 2004-02-14 at 00:00.
-# For now we'll assume that is a typo, and that 2004-02-15 was meant.
-# 
 Rule	Brazil	2003	max	-	Oct	Sun>=15	 0:00	1:00	S
 # The latest ruleset listed above says that the following states observe DST:
 # DF, ES, GO, MG, MS, PR, RJ, RS, SC, SP.

@@ -25,9 +25,11 @@ static char	elsieid[] = "%W%";
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#if defined(LIBC_SCCS) && !defined(lint)
+#ifndef LIBC_SCCS
+#ifndef lint
 static const char sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
-#endif /* LIBC_SCCS and not lint */
+#endif /* !defined lint */
+#endif /* !defined LIBC_SCCS */
 
 #include "private.h"
 #include "tzfile.h"

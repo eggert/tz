@@ -62,10 +62,6 @@ TZLIB=		/usr/lib/libz.a
 #	-DUSG_COMPAT
 # to the end of the "CFLAGS=" line.
 #
-# If you want BSD compatibility code, add
-#	-DBSD_COMPAT
-# to the end of the "CFLAGS=" line.
-#
 # If your system has a "GMT offset" field in its "struct tm"s
 # (or if you decide to add such a field in your system's "time.h" file),
 # add the name to a define such as
@@ -129,15 +125,17 @@ TZDSRCS=	zdump.c localtime.c asctime.c \
 		ialloc.c getopt.c link.c
 TZDOBJS=	zdump.o localtime.o asctime.o \
 		ialloc.o getopt.o link.o
-LIBSRCS=	localtime.c asctime.c ctime.c dysize.c timemk.c difftime.c
-LIBOBJS=	localtime.o asctime.o ctime.o dysize.o timemk.o difftime.o
+DATESRCS=	date.c localtime.c getopt.c logwtmp.c
+DATEOBJS=	date.o localtime.o getopt.o logwtmp.o
+LIBSRCS=	localtime.c asctime.c difftime.c
+LIBOBJS=	localtime.o asctime.o difftime.o
 HEADERS=	tzfile.h nonstd.h stdio.h stdlib.h time.h
-NONLIBSRCS=	zic.c zdump.c \
-		scheck.c ialloc.c emkdir.c getopt.c link.c
+NONLIBSRCS=	zic.c zdump.c date.c \
+		scheck.c ialloc.c emkdir.c getopt.c link.c logwtmp.c
 SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS)
 DOCS=		Patchlevel.h \
 		README Theory \
-		newctime.3 tzfile.5 zic.8 zdump.8 \
+		date.1 newctime.3 tzfile.5 zic.8 zdump.8 \
 		Makefile
 YDATA=		africa antarctica asia australasia \
 		europe northamerica southamerica pacificnew
@@ -149,6 +147,17 @@ USNO=		usno1988 usno1989
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(USNO)
 
 all:		REDID_BINARIES zdump $(TZLIB)
+
+#
+# We want to use system's logwtmp and getopt in preference to ours
+# if they are available.
+#
+
+date:		$(DATEOBJS)
+		ar r ,lib.a logwtmp.o getopt.o
+		-ranlib ,lib.a
+		$(CC) $(CFLAGS) date.o localtime.o -lc ,lib.a
+		rm -f ,lib.a
 
 REDID_BINARIES:	zic $(DATA) $(REDO)
 		./zic -d $(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
@@ -171,8 +180,12 @@ right_posix:	right_only other_two
 zdump:		$(TZDOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@
 
+# The "ar d" command below ensures that obsolete object files are eliminated
+# from the library.
+
 $(TZLIB):	$(LIBOBJS)
 		ar ru $@ $(LIBOBJS)
+		-ar d $@ timemk.o dysize.o ctime.o
 		-ranlib $@
 
 zic:		$(TZCOBJS)
@@ -222,14 +235,12 @@ names:
 		@echo $(ENCHILADA)
 
 asctime.o:	nonstd.h stdio.h time.h tzfile.h
-ctime.o:	nonstd.h time.h
-dysize.o:	tzfile.h
-emkdir.o:	nonstd.h stdlib.h
+difftime.o:	nonstd.h time.h
+emkdir.o:	nonstd.h stdio.h stdlib.h
 ialloc.o:	nonstd.h stdlib.h
 link.o:		nonstd.h stdio.h
 localtime.o:	nonstd.h stdio.h stdlib.h time.h tzfile.h
 scheck.o:	nonstd.h stdio.h stdlib.h
-zdump.o:	nonstd.h stdio.h stdlib.h time.h tzfile.h
 zic.o:		nonstd.h stdio.h stdlib.h time.h tzfile.h
 
 .KEEP_STATE:

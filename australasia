@@ -303,7 +303,7 @@ Rule	NZ	1928	only	-	Nov	 4	2:00	0:30	HD
 Rule	NZ	1929	only	-	Oct	30	2:00	0:30	HD
 Rule	NZ	1930	1933	-	Mar	Sun>=15	2:00	0	S
 Rule	NZ	1930	1933	-	Oct	Sun>=8	2:00	0:30	HD
-# Whitman says DST went on and off during war years, and the base GMT offset
+# Whitman says DST went on and off during war years, and the base UT offset
 # didn't change until 1945 Apr 30; go with Shanks.
 Rule	NZ	1934	1940	-	Apr	lastSun	2:00	0	S
 Rule	NZ	1934	1939	-	Sep	lastSun	2:00	0:30	HD

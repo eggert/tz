@@ -27,7 +27,7 @@ the usefulness of the SVR2 functions:
 	applications that an administrator wants used only at certain times--
 	without regard to whether the user has fiddled the "TZ" environment
 	variable.  While an administrator can "do everything in GMT" to get
-	around the problem,  doing so is inconvenient and precludes handling
+	around the problem, doing so is inconvenient and precludes handling
 	daylight savings time shifts--as might be required to limit phone
 	calls to off-peak hours.)
 
@@ -75,7 +75,7 @@ These are the changes that have been made to the SVR2 functions:
 	best approximation to local wall clock time to be delivered by
 	subsequent calls to "localtime."  Source code for portable
 	applications that "must" run on local wall clock time should call
-	"tzsetwall;" if such code is moved to "old" systems that don't provide
+	"tzsetwall();" if such code is moved to "old" systems that don't provide
 	tzsetwall, you won't be able to generate an executable program.
 	(These time zone functions also arrange for local wall clock time to be
 	used if tzset is called--directly or indirectly--and there's no "TZ"
@@ -89,8 +89,9 @@ Points of interest to folks with Version 7 or BSD systems:
 	of GMT" value and a "daylight saving time in effect" flag) to a
 	time zone abbreviation, and we refuse to guess. 
 	Programs that in the past used the timezone function may now examine
-	tzname[(*localtime(&clock))->tm_isdst] to learn the correct time
-	zone abbreviation to use.
+	tzname[localtime(&clock)->tm_isdst] to learn the correct time
+	zone abbreviation to use.  Alternatively, use localtime(&clock)->tm_zone
+	if this has been enabled.
 
 *	The BSD gettimeofday function is not used in this package;
 	this lets users control the time zone used in doing time conversions.

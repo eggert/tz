@@ -21,6 +21,22 @@ POSIXRULES=	US/Eastern
 
 TZDIR=		/etc/zoneinfo
 
+# If you always want time values interpreted as "seconds since the epoch
+# (not counting leap seconds)", use
+# 	REDO=		posix_only
+# below.  If you alwyas want right time values interpreted as "seconds since
+# the epoch" (counting leap seconds)", use
+#	REDO=		right_only
+# below.  If you want both sets of data available, with leap seconds not
+# counted normally, use
+#	REDO=		posix_right
+# below.  If you wnat both sets of data availabel, with leap seconds counted
+# normally, use
+#	REDO=		right_posix
+# below.
+
+REDO=		posix_right
+
 # You may want to change this define if you're just testing the software.
 # Alternatively, you can put these functions in /lib/libc.a, removing
 # the old "ctime.o".  This is the
@@ -28,11 +44,6 @@ TZDIR=		/etc/zoneinfo
 # then add them to libc.a.
 
 TZLIB=		/usr/lib/libz.a
-
-# If you want leap second correction done, change "/dev/null" to
-# "leapseconds" below.
-
-LEAPSECONDS=	/dev/null
 
 # If you're running on a System V-style system and don't want lint grief,
 # add
@@ -108,17 +119,29 @@ YDATA=		africa antarctica asia australasia \
 		europe northamerica southamerica pacificnew
 NDATA=		systemv
 SDATA=		solar87 solar88 solar89
+TDATA=		$(YDATA) $(NDATA) $(SDATA)
 DATA=		$(YDATA) $(NDATA) $(SDATA) leapseconds
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
 all:		REDID_BINARIES zdump $(TZLIB)
 
-REDID_BINARIES:	zic $(DATA)
-		./zic -d $(TZDIR) -L $(LEAPSECONDS) $(YDATA)
-		./zic -d $(TZDIR) -L $(LEAPSECONDS) $(SDATA)
-		./zic -d $(TZDIR) -L /dev/null $(NDATA)
+REDID_BINARIES:	zic $(DATA) $(REDO)
 		./zic -d $(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
 		touch $@
+
+posix_only:
+		./zic -d $(TZDIR) -L /dev/null $(TDATA)
+
+right_only:
+		./zic -d $(TZDIR) -L leapseconds $(TDATA)
+
+other_two:
+		./zic -d $(TZDIR)/posix -L /dev/null $(TDATA)
+		./zic -d $(TZDIR)/right -L leapseconds $(TDATA)
+
+posix_right:	posix_only other_two
+
+right_posix:	right_only other_two
 
 zdump:		$(TZDOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@

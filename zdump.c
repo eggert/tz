@@ -389,11 +389,11 @@ register const struct tm *	timeptr;
 	register const char *	mn;
 
 	if (timeptr->tm_wday < 0 ||
-		timeptr->tm_wday >= sizeof wday_name / sizeof wday_name[0])
+		timeptr->tm_wday >= (int) (sizeof wday_name / sizeof wday_name[0]))
 			wn = "???";
 	else		wn = wday_name[timeptr->tm_wday];
 	if (timeptr->tm_mon < 0 ||
-		timeptr->tm_mon >= sizeof mon_name / sizeof mon_name[0])
+		timeptr->tm_mon >= (int) (sizeof mon_name / sizeof mon_name[0]))
 			mn = "???";
 	else		mn = mon_name[timeptr->tm_mon];
 	(void) printf("%.3s %.3s%3d %.2d:%.2d:%.2d %ld",

@@ -14,14 +14,7 @@ static char	elsieid[] = "%W%";
 #include "string.h"	/* for strcpy */
 #include "sys/types.h"	/* for time_t */
 #include "time.h"	/* for struct tm */
-
-#ifndef HAVE_STDLIB_H
-#define HAVE_STDLIB_H 1
-#endif /* !defined HAVE_STDLIB_H */
-
-#if HAVE_STDLIB_H
 #include "stdlib.h"	/* for exit, malloc, atoi */
-#endif /* defined HAVE_STDLIB_H */
 
 #ifndef alloc_size_T
 #define alloc_size_T	size_t

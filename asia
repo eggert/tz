@@ -59,3 +59,19 @@ Rule	Israel	1987	max	-	Aug	Sat<=28	2:00	0	S
 
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 Zone	Israel		3:00	Israel		I%sT
+
+# From Bob Devine:  "Iran: Last Sunday in March to third (?) Sunday in
+# September.  Since the revolution, the official calendar is Monarchic
+# calendar; I have no idea what the correspondence between dates are.
+
+# From U.S. Naval Observatory:
+# 	IRAN                3.5H AHEAD OF UTC 
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Iran	1988	max	-	Mar	lastSun	2:00	1:00	D
+Rule	Iran	1988	max	-	Sep	Sun>=15	2:00	0	S
+
+# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	Iran		3:30	Iran		I%sT
+
+# From Bob Devine:  "Lebanon: They do have DST but I don't know the dates."

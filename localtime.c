@@ -1,10 +1,8 @@
-#
-
 /*LINTLIBRARY*/
 
 #ifndef lint
 #ifndef NOID
-static char	elsieid[] = "%W%"
+static char	elsieid[] = "%W%";
 #endif /* !defined NOID */
 #endif /* !defined lint */
 

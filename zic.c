@@ -1120,15 +1120,21 @@ register struct lookup *	table;
 
 	if (word == NULL || table == NULL)
 		return NULL;
+	/*
+	** First check for exact match.
+	*/
+	for (lp = table; lp->l_word != NULL; ++lp)
+		if (ciequal(word, lp->l_word))
+			return lp;
+	/*
+	** Now check for unique inexact match.
+	*/
 	foundlp = NULL;
 	for (lp = table; lp->l_word != NULL; ++lp)
-		if (ciequal(word, lp->l_word))		/* "exact" match */
-			return lp;
-		else if (!isabbr(word, lp->l_word))
-			continue;
-		else if (foundlp == NULL)
-			foundlp = lp;
-		else	return NULL;		/* two inexact matches */
+		if (isabbr(word, lp->l_word))
+			if (foundlp == NULL)
+				foundlp = lp;
+			else	return NULL;	/* two inexact matches */
 	return foundlp;
 }
 

@@ -1206,8 +1206,8 @@ Zone	Europe/Athens	1:34:52 -	LMT	1895 Sep 14
 			2:00	Greece	EET%s	1941 Apr 30
 			1:00	Greece	MET%s	1944 Apr  4
 			2:00	Greece	EET%s	1981 Mar 29 2:00
-#			Greece must change by 1996 for EC compatibility.
-			2:00	M-Eur	EET%s	1996 # Guess the last minute.
+			# Shanks says they switched to M-Eur in 1981,
+			# but the EC required E-Eur so this must be a typo.
 			2:00	E-Eur	EET%s
 
 # Hungary

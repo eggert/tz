@@ -3,9 +3,13 @@
 static char	elsieid[] = "%W%";
 /*
 ** Based on the UCB version with the ID appearing below.
-** This is ANSIish only when time is treated identically in all locales and
-** when "multibyte character == plain character".
+** This is ANSIish only when "multibyte character == plain character".
 */
+#ifndef EGGERT
+/*
+** This is ANSIish only when time is treated identically in all locales.
+*/
+#endif /* !defined EGGERT */
 #endif /* !defined NOID */
 #endif /* !defined lint */
 
@@ -35,6 +39,12 @@ static const char sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
 #endif /* !defined LIBC_SCCS */
 
 #include "tzfile.h"
+#ifdef EGGERT
+#include "fcntl.h"
+#if HAVE_SETLOCALE - 0
+#include "locale.h"
+#endif /* HAVE_SETLOCALE - 0 */
+#endif /* defined EGGERT */
 
 struct lc_time_T {
 	const char *	mon[12];
@@ -117,7 +127,7 @@ const struct tm *	t;
 {
 	char *			p;
 	struct lc_time_T	localebuf;
-  
+
 	localebuf.mon[0] = 0;
 	p = _fmt(((format == NULL) ? "%c" : format),
 		t, s, s + maxsize, &localebuf);
@@ -448,5 +458,107 @@ static const struct lc_time_T *
 _loc(ptloc)
 struct lc_time_T *	ptloc;
 {
+#ifndef EGGERT
 	return &C_time_locale;
+#endif /* !defined EGGERT */
+#ifdef EGGERT
+	static const char	locale_home[] = LOCALE_HOME;
+	static const char	lc_time[] = "LC_TIME";
+	static char *		locale_buf;
+	static char		locale_buf_C[] = "C";
+
+	int			fd;
+	char *			lbuf;
+	char *			name;
+	char *			p;
+	const char **		ap;
+	const char *		plim;
+	char			filename[FILENAME_MAX];
+	struct stat		st;
+	size_t			namesize;
+	size_t			bufsize;
+
+	/*
+	** Use ptloc->mon[0] to signal whether locale is already set up.
+	*/
+	if (ptloc->mon[0])
+		return ptloc;
+#if HAVE_SETLOCALE - 0
+	name = setlocale(LC_TIME, (char *) NULL);
+#endif /* HAVE_SETLOCALE */
+#if !HAVE_SETLOCALE - 0
+	if ((name = getenv("LC_ALL")) == NULL || *name == '\0')
+		if ((name = getenv(lc_time)) == NULL || *name == '\0')
+			name = getenv("LANG");
+#endif /* !HAVE_SETLOCALE - 0 */
+	if (name == NULL || *name == '\0')
+		goto no_locale;
+	/*
+	** If the locale name is the same as our cache, use the cache.
+	*/
+	lbuf = locale_buf;
+	if (lbuf  &&  strcmp(name, lbuf) == 0) {
+		p = lbuf;
+		for (ap=(const char **)ptloc; ap<(const char **)(ptloc + 1); ap++)
+			*ap = p += strlen(p) + 1;
+		return ptloc;
+	}
+	/*
+	** Slurp the locale file into the cache.
+	*/
+	namesize = strlen(name) + 1;
+	if (sizeof(filename) <
+		sizeof(locale_home) + namesize + sizeof(lc_time))
+			goto no_locale;
+	(void) sprintf(filename, "%s/%s/%s", locale_home, name, lc_time);
+	fd = open(filename, O_RDONLY, 0);
+	if (fd < 0)
+		goto no_locale;
+	if (fstat(fd, &st) != 0)
+		goto bad_locale;
+	if (st.st_size <= 0)
+		goto bad_locale;
+	bufsize = namesize + st.st_size;
+	locale_buf = 0;
+	lbuf =
+		(lbuf == NULL || lbuf == locale_buf_C) ?
+		malloc(bufsize) : realloc(lbuf, bufsize);
+	if (lbuf == NULL)
+		goto bad_locale;
+	(void) strcpy(lbuf, name);
+	p = lbuf + namesize;
+	plim = p + st.st_size;
+	if (read(fd, p, (size_t) st.st_size) != st.st_size)
+		goto bad_lbuf;
+	if (close(fd) != 0)
+		goto bad_lbuf;
+	/*
+	** Parse the locale file into *ptloc.
+	*/
+	if (plim[-1] != '\n')
+		goto bad_lbuf;
+	for (ap=(const char **)ptloc; ap<(const char **)(ptloc + 1); ap++) {
+		if (p == plim)
+			goto bad_lbuf;
+		*ap = p;
+		while (*p != '\n')
+			p++;
+		*p++ = 0;
+	}
+	/*
+	** Record the successful parse in the cache.
+	*/
+	locale_buf = lbuf;
+
+	return ptloc;
+
+bad_lbuf:
+	free(lbuf);
+bad_locale:
+	(void) close(fd);
+no_locale:
+	*ptloc = C_time_locale;
+	locale_buf = locale_buf_C;
+	return ptloc;
+#endif /* defined EGGERT */
 }

@@ -734,6 +734,12 @@ const int			lastditch;
 			if (name == NULL)
 				return -1;
 		} else	dstoffset = stdoffset - SECSPERHOUR;
+		if (*name == '\0' && load_result != 0)
+			/*
+			** Default to current US rules if TZ has no rules
+			** and we can't load the default rules,
+			*/
+			name = ",M4.1.0,M10.5.0";
 		if (*name == ',' || *name == ';') {
 			struct rule	start;
 			struct rule	end;
@@ -795,8 +801,6 @@ const int			lastditch;
 			register int	j;
 
 			if (*name != '\0')
-				return -1;
-			if (load_result != 0)
 				return -1;
 			/*
 			** Initial values of theirstdoffset and theirdstoffset.

@@ -118,6 +118,9 @@ Zone	Africa/Luanda	0:52:56	-	LMT	1892
 			0:52	-	LMT	1911 May 26 # Luanda Mean Time
 			1:00	-	CAT
 
+# Bassas da India
+# uninhabited
+
 # Benin
 # Whitman says they switched to 1:00 in 1946, not 1934; go with Shanks.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -248,6 +251,9 @@ Zone Africa/Addis_Ababa	2:34:48 -	LMT	1870
 			2:35	-	AAMT	1936 May 5    # Addis Ababa MT
 			3:00	-	EAT
 
+# Europa
+# uninhabited
+
 # Gabon
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Africa/Libreville	0:37:48 -	LMT	1912
@@ -273,6 +279,9 @@ Rule	Ghana	1936	1942	-	Dec	31	0:00	0	WAT
 Zone	Africa/Accra	-0:00:52 -	LMT	1918
 			 0:00	Ghana	%s
 
+# Glorioso Is
+# uninhabited
+
 # Guinea
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Conakry	-0:54:52 -	LMT	1912
@@ -285,6 +294,9 @@ Zone	Africa/Conakry	-0:54:52 -	LMT	1912
 Zone	Africa/Bissau	-1:02:20 -	LMT	1911 May 26
 			 1:00	-	CAT	1975
 			 0:00	-	WAT
+
+# Juan de Nova
+# uninhabited
 
 # Kenya
 # From Paul Eggert <eggert@twinsun.com> (November 18, 1993):
@@ -396,7 +408,7 @@ Zone Indian/Mauritius	3:50:00 -	LMT	1907		# Port Louis
 
 # Mayotte
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Indian/Mayotte	3:01:08 -	LMT	1911 Jul	# Dzaoudzi
+Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 			3:00	-	EAT
 
 # Morocco
@@ -452,7 +464,7 @@ Zone	Africa/Lagos	0:13:36 -	LMT	1919 Sep
 
 # Reunion
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Indian/Reunion	3:41:52 -	LMT	1911 Jun	# St Denis
+Zone	Indian/Reunion	3:41:52 -	LMT	1911 Jun	# Saint-Denis
 			4:00	-	SMT
 
 # Rwanda
@@ -550,6 +562,9 @@ Zone Africa/Dar_es_Salaam 2:37:08 -	LMT	1931
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Lome	0:04:52 -	LMT	1893
 			0:00	-	WAT
+
+# Tromelin
+# uninhabited
 
 # Tunisia
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S

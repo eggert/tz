@@ -110,7 +110,7 @@ char *	argv[];
 		char *			tzequals;
 		char *			fakeenv[2];
 
-		tzequals = malloc(strlen(argv[i]) + 4);
+		tzequals = malloc((unsigned) (strlen(argv[i]) + 4));
 		if (tzequals == NULL) {
 			(void) fprintf(stderr, "%s: can't allocate memory\n",
 				argv[0]);

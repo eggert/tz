@@ -6,48 +6,28 @@ OBJECTID("%W%")
 #include <stdio.h>
 #include "alloc.h"
 
-extern char *	malloc();
-extern char *	realloc();
-extern char *	strcpy();
-extern char *	strcat();
-
-char *		allocpy(string)
-register char *	string;
+char *	allocat(old, new)
+char *	old;
+char *	new;
 {
-	register char *		copy;
-	register arg4alloc	n;
+	register char *	ret;
+	register	len;
+	extern char *	calloc();
+	extern char *	realloc();
+	extern char *	strcat();
 
-	n = (string == NULL) ? 0 : strlen(string);
-	copy = malloc(n + 1);
-	if (copy == MAL || copy == NULL)
-		return NULL;
-	if (string == NULL)
-		*copy = '\0';
-	else	(void) strcpy(copy, string);
-	return copy;
+	if (new == NULL)
+		new = "";
+	len = strlen(new) + 1;
+	ret = (old == NULL) ? calloc((arg4alloc) len, sizeof *ret) :
+		realloc(old, (arg4alloc) ((len + strlen(old)) * sizeof *ret));
+	if (ret != NULL)
+		(void) strcat(ret, new);
+	return ret;
 }
 
-char *		allocat(old, new)
-register char *	old;
-char *		new;
+char *	allocpy(string)
+char *	string;
 {
-	register arg4alloc	n;
-
-	n = (old == NULL) ? 0 : strlen(old);
-	if (new != NULL)
-		n += strlen(new);
-	++n;
-	if (old == MAL || old == NULL) {
-		old = malloc(n);
-		if (old == NULL)
-			return NULL;
-		*old = '\0';
-	} else {
-		old = realloc(old, n);
-		if (old == NULL)
-			return NULL;
-	}
-	if (new != NULL)
-		(void) strcat(old, new);
-	return old;
+	return allocat((char *) NULL, string);
 }

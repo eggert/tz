@@ -79,7 +79,7 @@ TZDSRCS=	zdump.c localtime.c asctime.c ctime.c ialloc.c
 TZDOBJS=	zdump.o localtime.o asctime.o ctime.o ialloc.o
 LIBSRCS=	localtime.c asctime.c ctime.c dysize.c timemk.c
 LIBOBJS=	localtime.o asctime.o ctime.o dysize.o timemk.o
-DOCS=		README Makefile newctime.3 tzfile.5 zic.8 zdump.8
+DOCS=		README Makefile Theory newctime.3 tzfile.5 zic.8 zdump.8
 SOURCES=	tzfile.h zic.c zdump.c \
 		localtime.c asctime.c ctime.c dysize.c timemk.c \
 		scheck.c ialloc.c mkdir.c

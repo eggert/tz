@@ -1,4 +1,8 @@
-/* %W% */
+#ifndef lint
+#ifndef NOID
+static char	tzfilehid[] = "%W%";
+#endif /* !NOID */
+#endif /* !lint */
 
 /*
 ** Information about time zone files.
@@ -6,11 +10,11 @@
 
 #ifndef TZDIR
 #define TZDIR		"/etc/zoneinfo"	/* Time zone object file directory */
-#endif
+#endif /* !TZDIR */
 
 #ifndef TZDEFAULT
 #define TZDEFAULT	"localtime"
-#endif
+#endif /* !TZDEFAULT */
 
 /*
 ** Each file begins with. . .
@@ -41,24 +45,21 @@ struct tzhead {
 */
 
 #ifndef TZ_MAX_TIMES
-#ifndef SAUDI
-#define TZ_MAX_TIMES	300	/* Maximum number of transition times */
-#endif
 #ifdef SAUDI
 #define TZ_MAX_TIMES	370	/* A bit more than a year's worth */
-#endif
+#else /* !SAUDI */
 #define TZ_MAX_TIMES	300	/* Maximum number of transition times */
-#endif
+#endif /* !SAUDI */
+#endif /* !TZ_MAX_TIMES */
 
 #ifndef TZ_MAX_TYPES
-#ifndef SAUDI
-#define TZ_MAX_TYPES	10	/* Maximum number of local time types */
-#endif
 #ifdef SAUDI
 #define TZ_MAX_TYPES	370	/* A bit more than a year's worth */
-#endif
-#endif
+#else /* !SAUDI */
+#define TZ_MAX_TYPES	10	/* Maximum number of local time types */
+#endif /* !SAUDI */
+#endif /* !TZ_MAX_TYPES */
 
 #ifndef TZ_MAX_CHARS
 #define TZ_MAX_CHARS	50	/* Maximum number of abbreviation characters */
-#endif
+#endif /* !TZ_MAX_CHARS */

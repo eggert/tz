@@ -51,6 +51,8 @@ zic:	$(TZCOBJS)
 $(TZDIR):
 	mkdir $@
 
+BUNDLES:	BUNDLE1 BUNDLE2 BUNDLE3
+
 BUNDLE1:	$(DOCS)
 	bundle $(DOCS) > BUNDLE1
 
@@ -68,7 +70,7 @@ sure:	$(TZCSRCS) $(TZDSRCS) tzfile.h
 	lint $(LINTFLAGS) $(TZDSRCS)
 
 clean:
-	rm -f core *.o *.out REDID_BINARIES zdump zic BUNDLE \#*
+	rm -f core *.o *.out REDID_BINARIES zdump zic BUNDLE* \#*
 
 CLEAN:	clean
 	sccs clean

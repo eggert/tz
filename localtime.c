@@ -12,14 +12,9 @@ static char	elsieid[] = "%W%";
 
 /*LINTLIBRARY*/
 
+#include "private.h"
 #include "tzfile.h"
-#include "time.h"
-#include "string.h"
-#include "ctype.h"
-#include "stdlib.h"
-#include "stdio.h"	/* for FILENAME_MAX */
-#include "fcntl.h"	/* for O_RDONLY */
-#include "nonstd.h"
+#include "fcntl.h"
 
 #define ACCESS_MODE	O_RDONLY
 

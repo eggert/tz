@@ -175,7 +175,7 @@ TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o emkdir.o getopt.o
 TZDSRCS=	zdump.c localtime.c asctime.c ialloc.c getopt.c
 TZDOBJS=	zdump.o localtime.o asctime.o ialloc.o getopt.o
 DATESRCS=	date.c localtime.c getopt.c logwtmp.c strftime.c
-DATEOBJS=	date.o localtime.o getopt.o logwtmp.o strftime.o
+DATEOBJS=	date.o localtime.o getopt.o logwtmp.o strftime.o asctime.o
 LIBSRCS=	localtime.c asctime.c difftime.c
 LIBOBJS=	localtime.o asctime.o difftime.o
 HEADERS=	tzfile.h private.h
@@ -255,7 +255,8 @@ date:		$(DATEOBJS)
 		ar r ,lib.a logwtmp.o strftime.o
 		if [ -x /usr/ucb/ranlib -o -x /usr/bin/ranlib ] ; \
 			then ranlib ,lib.a ; fi
-		$(CC) $(CFLAGS) date.o localtime.o getopt.o -lc ,lib.a -o $@
+		$(CC) $(CFLAGS) date.o localtime.o asctime.o getopt.o \
+			-lc ,lib.a -o $@
 		rm -f ,lib.a
 
 clean:

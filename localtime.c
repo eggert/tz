@@ -46,7 +46,7 @@ static struct state	s;
 
 static char		isset;
 
-char *			tzname[2];	/* set by localtime; available to all */
+char *			tzname[2] = { "GMT", "GMT" };
 
 #ifdef TZ_ABBR
 char *			tz_abbr;	/* compatibility w/older versions */
@@ -66,40 +66,40 @@ char *	codep;
 }
 
 static
-tzload(tzname, sp)
-register char *		tzname;
+tzload(name, sp)
+register char *		name;
 register struct state *	sp;
 {
 	register int	i;
 	register int	fid;
 
-	if (tzname == 0 && (tzname = TZDEFAULT) == 0)
+	if (name == 0 && (name = TZDEFAULT) == 0)
 		return -1;
 	{
 		register char *	p;
 		register int	doaccess;
 		char		fullname[MAXPATHLEN];
 
-		doaccess = tzname[0] == '/';
+		doaccess = name[0] == '/';
 		if (!doaccess) {
 			if ((p = TZDIR) == 0)
 				return -1;
-			if ((strlen(p) + strlen(tzname) + 1) >= sizeof fullname)
+			if ((strlen(p) + strlen(name) + 1) >= sizeof fullname)
 				return -1;
 			(void) strcpy(fullname, p);
 			(void) strcat(fullname, "/");
-			(void) strcat(fullname, tzname);
+			(void) strcat(fullname, name);
 			/*
 			** Set doaccess if '.' (as in "../") shows up in name.
 			*/
-			while (*tzname != '\0')
-				if (*tzname++ == '.')
+			while (*name != '\0')
+				if (*name++ == '.')
 					doaccess = TRUE;
-			tzname = fullname;
+			name = fullname;
 		}
-		if (doaccess && access(tzname, 4) != 0)
+		if (doaccess && access(name, 4) != 0)
 			return -1;
-		if ((fid = open(tzname, 0)) == -1)
+		if ((fid = open(name, 0)) == -1)
 			return -1;
 	}
 	{
@@ -146,16 +146,24 @@ register struct state *	sp;
 	}
 	/*
 	** Check that all the local time type indices are valid.
+	** Also check that all abbreviation indices are valid.
 	*/
-	for (i = 0; i < sp->timecnt; ++i)
+	for (i = 0; i < sp->timecnt; ++i) {
 		if (sp->types[i] >= sp->typecnt)
 			return -1;
-	/*
-	** Check that all the abbreviation indices are valid.
-	*/
-	for (i = 0; i < sp->typecnt; ++i)
 		if (sp->ttis[i].tt_abbrind >= sp->charcnt)
 			return -1;
+	}
+	/*
+	** Set tzname elements to initial values.
+	*/
+	tzname[0] = tzname[1] = &sp->chars[0];
+	for (i = 1; i < sp->typecnt; ++i) {
+		register struct ttinfo *	ttisp;
+
+		ttisp = &sp->ttis[i];
+		tzname[ttisp->tt_isdst != 0] = &sp->chars[ttisp->tt_abbrind];
+	}
 	return 0;
 }
 
@@ -187,6 +195,7 @@ char *	name;
 	s.ttis[0].tt_gmtoff = 0;
 	s.ttis[0].tt_abbrind = 0;
 	(void) strcpy(s.chars, "GMT");
+	tzname[0] = tzname[1] = s.chars;
 	return result;
 }
 
@@ -234,7 +243,11 @@ zonetime(timep, zone)
 long *	timep;
 char *	zone;
 {
-	struct state	st;
+	/*
+	** This struct needs to be static since tzname[i] may end up pointing
+	** to it.
+	*/
+	static struct state	st;
 
 	return (tzload(zone, &st) == 0) ? timesub(timep, &st) : 0;
 }

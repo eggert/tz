@@ -124,10 +124,12 @@ static int		normalize_overflow P((int * tensptr, int * unitsptr,
 				int base));
 static void		settzname P((void));
 static time_t		time1 P((struct tm * tmp,
-				void(*funcp) P((const time_t*,long,struct tm*)),
+				void(*funcp) P((const time_t *,
+				long, struct tm *)),
 				long offset));
 static time_t		time2 P((struct tm *tmp,
-				void(*funcp) P((const time_t*,long,struct tm*)),
+				void(*funcp) P((const time_t *,
+				long, struct tm*)),
 				long offset, int * okayp));
 static void		timesub P((const time_t * timep, long offset,
 				const struct state * sp, struct tm * tmp));

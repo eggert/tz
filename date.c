@@ -102,9 +102,9 @@ static void		usage();
 static time_t		xtime();
 
 #ifdef DST_NONE
-#define OPTIONS	"uDSnd:t:"
+#define OPTIONS	"und:t:"
 #else /* !defined DST_NONE */
-#define OPTIONS	"uDSn"
+#define OPTIONS	"un"
 #endif /* !defined DST_NONE */
 
 int

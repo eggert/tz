@@ -52,7 +52,9 @@ struct lc_time_T {
 	const char *	date_fmt;
 };
 
+#ifdef LOCALE_HOME
 static struct lc_time_T		localebuf;
+#endif /* defined LOCALE_HOME */
 
 static const struct lc_time_T	C_time_locale = {
 	{
@@ -115,9 +117,11 @@ const size_t		maxsize;
 const char * const	format;
 const struct tm *	t;
 {
-	char *			p;
+	char *	p;
 
+#ifdef LOCALE_HOME
 	localebuf.mon[0] = 0;
+#endif /* defined LOCALE_HOME */
 	p = _fmt(((format == NULL) ? "%c" : format), t, s, s + maxsize);
 	if (p == s + maxsize)
 		return 0;

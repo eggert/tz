@@ -1173,32 +1173,18 @@ register struct tm * const		tmp;
 	if (tmp->tm_wday < 0)
 		tmp->tm_wday += DAYSPERWEEK;
 	y = EPOCH_YEAR;
-/* Any consecutive CYCLE_DAYS days make up exactly CYCLE_YEARS years */
-#define CYCLE_YEARS	2800L
-#define CYCLE_LEAPS	(CYCLE_YEARS/4 - CYCLE_YEARS/100 + CYCLE_YEARS/400)
-#define CYCLE_DAYS	(CYCLE_YEARS * DAYS_PER_NYEAR + CYCLE_LEAPS)
-	if (days >= CYCLE_DAYS || days <= -CYCLE_DAYS) {
-		register int	cycles;
-
-		cycles = (days >= 0) ?
-			(days / CYCLE_DAYS) :
-			(-1 - (-1 - days) / CYCLE_DAYS);
-		days -= cycles * CYCLE_DAYS;
-		y += cycles * CYCLE_YEARS;
+#define LEAPS_THRU_END_OF(y)	((y) / 4 - (y) / 100 + (y) / 400)
+	while (days < 0 || days >= (long) year_lengths[yleap = isleap(y)]) {
+		register int	newy;
+		
+		newy = y + days / DAYSPERNYEAR;
+		if (days < 0)
+			--newy;
+		days -= (newy - y) * DAYSPERNYEAR +
+			LEAPS_THRU_END_OF(newy - 1) -
+			LEAPS_THRU_END_OF(y - 1);
+		y = newy;
 	}
-	if (days >= 0)
-		for ( ; ; ) {
-			yleap = isleap(y);
-			if (days < (long) year_lengths[yleap])
-				break;
-			++y;
-			days = days - (long) year_lengths[yleap];
-		}
-	else do {
-		--y;
-		yleap = isleap(y);
-		days = days + (long) year_lengths[yleap];
-	} while (days < 0);
 	tmp->tm_year = y - TM_YEAR_BASE;
 	tmp->tm_yday = (int) days;
 	ip = mon_lengths[yleap];

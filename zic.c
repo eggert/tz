@@ -670,16 +670,20 @@ warning(_("hard link failed, symbolic link used"));
 static void
 setboundaries P((void))
 {
+	register int	i;
+
 	if (TYPE_SIGNED(time_t)) {
-		min_time = ~ (time_t) 0;
-		min_time <<= TIME_T_BITS_IN_FILE - 1;
-		max_time = ~ (time_t) 0 - min_time;
+		min_time = -1;
+		for (i = 0; i < TIME_T_BITS_IN_FILE - 1; ++i)
+			min_time *= 2;
+		max_time = -(min_time + 1);
 		if (sflag)
 			min_time = 0;
 	} else {
 		min_time = 0;
 		max_time = 2 - sflag;
-		max_time <<= TIME_T_BITS_IN_FILE - 1;
+		for (i = 0; i < TIME_T_BITS_IN_FILE - 1; ++i)
+			max_time *= 2;
 		--max_time;
 	}
 	min_year = TM_YEAR_BASE + gmtime(&min_time)->tm_year;

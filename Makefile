@@ -98,6 +98,9 @@ LDLIBS=
 #  -TTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
 #	the default is system-supplied, typically "/usr/lib/locale"
 #  $(GCC_DEBUG_FLAGS) if you are using GCC and want lots of checking
+#  -DNO_RUN_TIME_WARNINGS_ABOUT_YEAR_2000_PROBLEMS_THANK_YOU=1
+#	if you do not want run time warnings about formats that may cause
+#	year 2000 grief
 #
 GCC_DEBUG_FLAGS = -Dlint -g -O -fno-common \
 	-Wall -Wcast-qual -Wconversion -Wmissing-prototypes \

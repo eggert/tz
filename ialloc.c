@@ -23,6 +23,13 @@ static char	elsieid[] = "%W%";
 
 #define alloc_t	size_t
 
+char *	icalloc(int nelem, int elsize);
+char *	icatalloc(char * old, char * new);
+char *	icpyalloc(char * string);
+char *	imalloc(int n);
+char *	irealloc(char * pointer, int size);
+void	ifree(char * pointer);
+
 #else /* !defined HAVEHEADS */
 
 extern char *	calloc();

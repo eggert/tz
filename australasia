@@ -143,7 +143,12 @@ Zone Indian/Christmas	7:02:52 -	LMT	1895 Feb
 			7:00	-	JVT
 #
 # Ashmore Is, Cartier
+# no indigenous inhabitants; only seasonal caretakers
 # no information; probably like Australia/Perth
+#
+# Coral Sea Is
+# no indigenous inhabitants; only meteorologists
+# no information
 #
 # Macquarie, Manihiki, Penrhyn, Rakehanga
 # no information
@@ -184,13 +189,18 @@ Zone	Pacific/Guam	 9:39:00 -	LMT	1901		# Agana
 			10:00	-	GST
 
 # Howland, Baker
-# no information; probably like Pacific/Samoa
+# uninhabited since World War II
+# no information; was probably like Pacific/Pago_Pago
 
 # Jarvis
-# no information; probably like Pacific/Kiritimati
+# uninhabited since 1958
+# no information; was probably like Pacific/Kiritimati
 
 # Johnston
 # no information; probably like Pacific/Honolulu
+
+# Kingman
+# uninhabited
 
 # Kiribati
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -202,6 +212,36 @@ Zone Pacific/Enderbury	-11:24:20 -	LMT	1901
 Zone Pacific/Kiritimati	-10:29:20 -	LMT	1901
 			-10:40	-	LIT	1979 Oct	# Line Is Time
 			-10:00	-	THT
+
+# N Mariana Is
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone Pacific/Saipan	 9:43:00 -	LMT	1901
+			 9:00	-	PLT	1969 Oct
+			10:00	-	GST
+
+# Marshall Is
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone Pacific/Majuro	11:24:48 -	LMT	1901
+			11:00	-	NCST	1969 Oct
+			12:00	-	NZST
+Zone Pacific/Kwajalein	11:09:20 -	LMT	1901
+			11:00	-	NCST	1969 Oct
+			-12:00	-	KJT	1993 Aug 20
+			12:00	-	NZST
+
+# Micronesia
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone Pacific/Yap	9:12:32	-	LMT	1901		# Colonia
+			9:00	-	PLT	1969 Oct
+			10:00	-	GST
+Zone Pacific/Truk	10:07:08 -	LMT	1901
+			10:00	-	GST	1978 Oct
+			11:00	-	NCST
+Zone Pacific/Ponape	10:32:52 -	LMT	1901		# Kolonia
+			11:00	-	NCST
+Zone Pacific/Kosrae	10:51:56 -	LMT	1901
+			11:00	-	NCST	1969 Oct
+			12:00	-	NZST
 
 # Nauru
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -273,31 +313,13 @@ Zone	Pacific/Norfolk	11:11:52 -	LMT	1901		# Kingston
 			11:12	-	NMT	1951
 			11:30	-	NRFT
 
-# Pacific Islands Trust Territories
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Pacific/Majuro	11:24:48 -	LMT	1901
-			11:00	-	NCST	1969 Oct
-			12:00	-	NZST
-Zone Pacific/Kwajalein	11:09:20 -	LMT	1901
-			11:00	-	NCST	1969 Oct
-			-12:00	-	KJT	1993 Aug 20
-			12:00	-	NZST
-Zone Pacific/Truk	10:07:08 -	LMT	1901
-			10:00	-	GST	1978 Oct
-			11:00	-	NCST
-Zone Pacific/Ponape	10:33:00 -	LMT	1901
-			11:00	-	NCST
-Zone Pacific/Yap	9:12:24	-	LMT	1901
-			9:00	-	PLT	1969 Oct
-			10:00	-	GST
-
 # Palau
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Pacific/Palau	8:57:56 -	LMT	1901		# Koror
 			9:00	-	PLT
 
 # Palmyra
-# no information; probably like Pacific/Kiritmati
+# uninhabited since World War II; was probably like Pacific/Kiritmati
 
 # Papua New Guinea
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -309,6 +331,20 @@ Zone Pacific/Port_Moresby 9:48:40 -	LMT	1880
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Pacific/Pitcairn	-8:40:20 -	LMT	1901		# Adamstown
 			-8:30	-	PIT
+
+# American Samoa
+Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1879 Jul  5
+			-11:22:48 -	LMT	1911
+			-11:30	-	SST	1950
+			-11:00	-	NST	1967 Apr	# N=Nome
+			-11:00	-	BST	1983 Nov 30	# B=Bering
+			-11:00	-	SST			# S=Samoa
+
+# W Samoa
+Zone Pacific/Apia	 12:33:04 -	LMT	1879 Jul  5
+			-11:26:56 -	LMT	1911
+			-11:30	-	SST	1950
+			-11:00	-	SST
 
 # Solomon Is
 # excludes Bougainville, for which see Papua New Guinea
@@ -352,9 +388,6 @@ Zone	Pacific/Wake	11:06:28 -	LMT	1901
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 			12:00	-	NZST
-
-# Western Samoa
-# See Pacific/Samoa in the `northamerica' file, of all places.
 
 ###############################################################################
 
@@ -405,7 +438,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 #	- 9:00	GBT	Gambier*
 #	- 8:30	PIT	Pitcairn*
 #
-# See the `northamerica' file for Hawaii and Samoa.
+# See the `northamerica' file for Hawaii.
 # See the `southamerica' file for Easter I and the Galapagos Is.
 #
 # See the `africa' file for Zone naming conventions.
@@ -780,9 +813,16 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # respect to the International Date Line, to rejoin its fellow islands,
 # going from 11:59 p.m. Thursday to 12:00 m. Saturday in a blink.
 
-# Pacific Islands Trust Territories
+# N Mariana Is, Guam
 
 # Howse writes (p 162) ``The Spaniards, on the other hand, reached the
 # Philippines and the Ladrones from America,'' and implies that the Ladrones
 # (now called the Marianas) kept American date for quite some time.
 # Ignore this for now, as we have no hard data.  See also Asia/Manila.
+
+# Samoa
+
+# Howse writes that in 1879 the King of Samoa decided to change
+# ``the date in his kingdom from the Antipodean to the American system,
+# ordaining -- by a masterpiece of diplomatic flattery -- that
+# the Fourth of July should be celebrated twice in that year.''

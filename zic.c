@@ -595,8 +595,8 @@ const char * const	tofile;
 */
 
 #define MAX_BITS_IN_FILE	32
-#define TIME_T_BITS_IN_FILE (TIME_T_BIT < MAX_BITS_IN_FILE \
-			     ? TIME_T_BIT : MAX_BITS_IN_FILE)
+#define TIME_T_BITS_IN_FILE	((TIME_T_BIT < MAX_BITS_IN_FILE) ? \
+					TIME_T_BIT : MAX_BITS_IN_FILE)
 
 static void
 setboundaries P((void))
@@ -1967,8 +1967,8 @@ char * const	argname;
 		/*
 		** DOS drive specifier?
 		*/
-		if (isalpha((unsigned char) name[0])
-		    && name[1] == ':' && !name[2]) {
+		if (isalpha((unsigned char) name[0]) &&
+			name[1] == ':' && name[2] != '\0') {
 				*cp = '/';
 				continue;
 		}

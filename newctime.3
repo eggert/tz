@@ -19,8 +19,6 @@ settz, newctime, newlocaltime \-  convert date and time to ASCII
 .SH DESCRIPTION
 .I Settz
 sets time zone information used by
-.I newctime
-and
 .IR newlocaltime .
 If
 .I zonename
@@ -71,7 +69,7 @@ return value.
 .PP
 .I Newctime
 returns
-.IR "asctime(newlocaltime(*clock))".
+.IR "asctime(newlocaltime(*clock))" .
 .SH DIAGNOSTICS
 .I Settz
 returns zero if all seems well; it returns negative one otherwise

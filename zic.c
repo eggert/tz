@@ -103,7 +103,7 @@ static void	newabbr P((const char * abbr));
 static long	oadd P((long t1, long t2));
 static void	outzone P((const struct zone * zp, int ntzones));
 static void	puttzcode P((long code, FILE * fp));
-static int	rcomp P((const genericptr_t leftp, const genericptr_t rightp));
+static int	rcomp P((const genericptr_T leftp, const genericptr_T rightp));
 static time_t	rpytime P((const struct rule * rp, int wantedy));
 static void	rulesub P((struct rule * rp,
 			const char * loyearp, const char * hiyearp,
@@ -614,8 +614,8 @@ const char * const	name;
 
 static int
 rcomp(cp1, cp2)
-const genericptr_t	cp1;
-const genericptr_t	cp2;
+const genericptr_T	cp1;
+const genericptr_T	cp2;
 {
 	return strcmp(((struct rule *) cp1)->r_name,
 		((struct rule *) cp2)->r_name);
@@ -630,9 +630,9 @@ associate P((void))
 	register int		i;
 
 	if (nrules != 0)
-		(void) qsort((genericptr_t) rules,
-			(qsort_size_t) nrules,
-			(qsort_size_t) sizeof *rules, rcomp);
+		(void) qsort((genericptr_T) rules,
+			(qsort_size_T) nrules,
+			(qsort_size_T) sizeof *rules, rcomp);
 	for (i = 0; i < nzones; ++i) {
 		zp = &zones[i];
 		zp->z_rules = NULL;
@@ -1249,9 +1249,9 @@ FILE * const	fp;
 	char	buf[4];
 
 	convert(val, buf);
-	(void) fwrite((genericptr_t) buf,
-		(fwrite_size_t) sizeof buf,
-		(fwrite_size_t) 1, fp);
+	(void) fwrite((genericptr_T) buf,
+		(fwrite_size_T) sizeof buf,
+		(fwrite_size_T) 1, fp);
 }
 
 static void
@@ -1280,9 +1280,9 @@ const char * const	name;
 	convert(eitol(timecnt), tzh.tzh_timecnt);
 	convert(eitol(typecnt), tzh.tzh_typecnt);
 	convert(eitol(charcnt), tzh.tzh_charcnt);
-	(void) fwrite((genericptr_t) &tzh,
-		(fwrite_size_t) sizeof tzh,
-		(fwrite_size_t) 1, fp);
+	(void) fwrite((genericptr_T) &tzh,
+		(fwrite_size_T) sizeof tzh,
+		(fwrite_size_T) 1, fp);
 	for (i = 0; i < timecnt; ++i) {
 		j = leapcnt;
 		while (--j >= 0)
@@ -1293,18 +1293,18 @@ const char * const	name;
 		puttzcode((long) ats[i], fp);
 	}
 	if (timecnt > 0)
-		(void) fwrite((genericptr_t) types,
-			(fwrite_size_t) sizeof types[0],
-			(fwrite_size_t) timecnt, fp);
+		(void) fwrite((genericptr_T) types,
+			(fwrite_size_T) sizeof types[0],
+			(fwrite_size_T) timecnt, fp);
 	for (i = 0; i < typecnt; ++i) {
 		puttzcode((long) gmtoffs[i], fp);
 		(void) putc(isdsts[i], fp);
 		(void) putc(abbrinds[i], fp);
 	}
 	if (charcnt != 0)
-		(void) fwrite((genericptr_t) chars,
-			(fwrite_size_t) sizeof chars[0],
-			(fwrite_size_t) charcnt, fp);
+		(void) fwrite((genericptr_T) chars,
+			(fwrite_size_T) sizeof chars[0],
+			(fwrite_size_T) charcnt, fp);
 	for (i = 0; i < leapcnt; ++i) {
 		if (roll[i]) {
 			if (timecnt == 0 || trans[i] < ats[0]) {

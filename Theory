@@ -1,10 +1,12 @@
+%W%
+
 These time and date functions are much like the System V Release 2.0 (SVR2)
 time and date functions; there are a few additions and changes to extend
 the usefulness of the SVR2 functions:
 
 *	In SVR2, time display in a process is controlled by the environment
 	variable TZ, which "must be a three-letter time zone name, followed
-	by a munber representing the difference between local time and
+	by a number representing the difference between local time and
 	Greenwich Mean Time in hours, followed by an optional three-letter
 	name for a daylight time zone;" when the optional daylight time zone is
 	present, "standard U.S.A. Daylight Savings Time conversion is applied."
@@ -24,7 +26,10 @@ the usefulness of the SVR2 functions:
 	system's best idea of local wall clock.  (This is important for 
 	applications that an administrator wants used only at certain times--
 	without regard to whether the user has fiddled the "TZ" environment
-	variable.
+	variable.  While an administrator can "do everything in GMT" to get
+	around the problem,  doing so is inconvenient and precludes handling
+	daylight savings time shifts--as might be required to limit phone
+	calls to off-peak hours.)
 
 These are the changes that have been made to the SVR2 functions:
 
@@ -63,9 +68,8 @@ These are the changes that have been made to the SVR2 functions:
 	values will not be used by "localtime.")
 
 *	The "localtime" function has been set up to deliver correct results
-	for near-minimum or near-maximum time_t values.  (You can use a
-	compile-time option to make localtime behave--incorrectly--in the
-	same way SVR2's localtime does.)
+	for near-minimum or near-maximum time_t values.  (A comment in the
+	source code tells how to get compatibly wrong results).
 
 *	A function "tzsetwall" has been added to arrange for the system's
 	best approximation to local wall clock time to be delivered by
@@ -77,3 +81,32 @@ These are the changes that have been made to the SVR2 functions:
 	used if tzset is called--directly or indirectly--and there's no "TZ"
 	environment variable; portable applications should not, however, rely
 	on this behavior since it's not the way SVR2 systems behave.)
+
+	system's best idea of local wall clock.  (This is important for 
+	applications that an administrator wants used only at certain times--
+	without regard to whether the user has fiddled the "TZ" environment
+	variable.
+
+Points of interest to folks with Version 7 or BSD systems:
+
+*	The BSD "timezone" function is not present in this package;
+	it's impossible to reliably map timezone's arguments (a "minutes west
+	of GMT" value and a "daylight saving time in effect" flag) to a
+	time zone abbreviation, and we refuse to guess. 
+	Programs that in the past used the timezone function may now examine
+	tzname[(*localtime(&clock))->tm_isdst] to learn the correct time
+	zone abbreviation to use.
+
+*	The BSD gettimeofday function is not used in this package;
+	this lets users control the time zone used in doing time conversions.
+	Users who don't try to control things (that is, users who do not set
+	the environment variable TZ) get the time conversion specified in the
+	file "/etc/zoneinfo/localtime"; see the time zone compiler writeup for
+	information on how to initialize this file.
+
+*	The BSD "dysize" function is only included if the preprocessor symbol
+	BSD_COMPAT is defined.  For a year y, the BSD code returns the value
+	   ((y % 4) == 0) : 366 : 365
+	while this code returns the value
+	   (((y) % 4) == 0 && ((y) % 100) != 0 || ((y) % 400) == 0) ? 366 : 365
+	There's a comment in the code telling how to get the BSD value.

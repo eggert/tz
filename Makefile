@@ -85,14 +85,18 @@ TZDSRCS=	zdump.c localtime.c asctime.c ialloc.c
 TZDOBJS=	zdump.o localtime.o asctime.o ialloc.o
 LIBSRCS=	localtime.c asctime.c ctime.c dysize.c timemk.c
 LIBOBJS=	localtime.o asctime.o ctime.o dysize.o timemk.o
-DOCS=		Patchlevel.h Theory README Makefile \
-		newctime.3 tzfile.5 zic.8 zdump.8
+DOCS=		Patchlevel.h \
+		README Theory \
+		newctime.3 tzfile.5 zic.8 zdump.8 \
+		Makefile
 SOURCES=	tzfile.h zic.c zdump.c \
 		localtime.c asctime.c ctime.c dysize.c timemk.c \
 		scheck.c ialloc.c mkdir.c
-DATA=		africa asia australasia europe etcetera \
-		northamerica pacificnew southamerica systemv solar87 solar88
-ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) leapseconds
+DATA=		africa antarctica asia australasia \
+		europe northamerica southamerica \
+		pacificnew systemv solar87 solar88
+XDATA=		leapseconds
+ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(XDATA)
 
 all:		REDID_BINARIES zdump $(TZLIB)
 
@@ -120,8 +124,8 @@ SHAR1:		$(DOCS)
 SHAR2:		$(SOURCES)
 		$(SHAR) $(SOURCES) > $@
 
-SHAR3:		$(DATA) leapseconds Patchlevel.h
-		$(SHAR) $(DATA) > $@
+SHAR3:		$(DATA) $(XDATA)
+		$(SHAR) $(DATA) $(XDATA) > $@
 
 tz.shar.Z.uue:	$(ENCHILADA)
 		$(SHAR) $(ENCHILADA) | compress | uuencode tz.shar.Z > $@
@@ -141,7 +145,7 @@ clean:
 CLEAN:		clean
 		sccs clean
 
-listing:	$(ENCHILADA)
-		pr $(ENCHILADA) | lpr
+names:
+		@echo $(ENCHILADA)
 
 zdump.o zic.o newctime.o:	tzfile.h

@@ -655,8 +655,10 @@ Zone America/Glace_Bay	-3:59:48 -	LMT	1902 Jun 15
 # msb@sq.com writes that an article in the 1997-10-14 Toronto Star
 # says that Atikokan, Ontario currently does not observe DST,
 # but will vote on 11-10 whether to use EST/EDT.
-# He also writes that the Ontario Time Act (1990, Chapter T.9)
-# <URL:http://www.gov.on.ca/MBS/english/publications/statregs/conttext.html>
+# He also writes that the
+# <a href=http://www.gov.on.ca/MBS/english/publications/statregs/conttext.html>
+# Ontario Time Act (1990, Chapter T.9)
+# </a>
 # says that Ontario east of 90W uses EST/EDT, and west of 90W uses CST/CDT.
 # Officially Atikokan is therefore on CST/CDT, and most likely this report
 # concerns a non-official time observed as a matter of local practice.
@@ -983,9 +985,10 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # 
 # -------------- End Forwarded Message --------------
 # From Paul Eggert (1996-06-12):
-# For an English translation of the decree,
-# see ``Diario Oficial: Time Zone Changeover'',
-# <URL:http://mexico-travel.com/extra/timezone_eng.html> (1996-01-04).
+# For an English translation of the decree, see
+# <a href=http://mexico-travel.com/extra/timezone_eng.html>
+# ``Diario Oficial: Time Zone Changeover'' (1996-01-04).
+# </a>
 
 # From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S

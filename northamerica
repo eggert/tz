@@ -148,6 +148,10 @@ Zone America/Phoenix	-7:00	US	M%sT	1946
 # large size and location in three states."  (The "only" means that other
 # tribal nations don't use DST.)
 
+# XXX--should learn name of relevant city in Navajo Nation (call it X),
+# XXX--change the "Link America/Denver Navajo" line to "Link America/Denver X",
+# XXX--and add a "Link America/X Navajo" line to the "backward" file.
+
 Link America/Denver Navajo
 
 # From Bob Devine (January 28, 1988):

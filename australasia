@@ -509,6 +509,26 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # and perhaps the newspaper's `2:00' is referring to standard time.
 # For now we'll continue to assume 2:00s for changes since 1960.
 
+# From Eric Ulevik <eau@zip.com.au> (1998-01-05):
+# 
+# Here are some URLs to Australian time legislation. These URLs are stable,
+# and should probably be included in the data file. There are probably more
+# relevant entries in this database.
+# 
+# NSW (including LHI and Broken Hill):
+# <a href="http://www.austlii.edu.au/au/legis/nsw/consol_act/sta1987137/index.html">
+# http://www.austlii.edu.au/au/legis/nsw/consol_act/sta1987137/index.html
+# </a>
+# ACT
+# <a href="http://www.austlii.edu.au/au/legis/act/consol_act/consol_act/stasta1972279/i">
+# http://www.austlii.edu.au/au/legis/act/consol_act/consol_act/stasta1972279/i
+# </a>
+# ndex.html
+# SA
+# <a href="http://www.austlii.edu.au/au/legis/sa/consol_act/sta1898137/index.html">
+# http://www.austlii.edu.au/au/legis/sa/consol_act/sta1898137/index.html
+# </a>
+
 # Northern Territory
 
 # From George Shepherd via Simon Woodhead via Robert Elz (1991-03-06):

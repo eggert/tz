@@ -12,8 +12,9 @@ and
 begin with bytes reserved for future use,
 followed by three four-byte values of type
 .BR long ,
-written in a ``standard'' byte order (the uppermost byte of the
-value is written first, followed by the lowermost byte).  These values are,
+written in a ``standard'' byte order
+(the high-order byte of the value is written first).
+These values are,
 in order:
 .TP
 .I tzh_timecnt
@@ -33,8 +34,7 @@ The above header is followed by
 four-byte values of type
 .BR long ,
 sorted in ascending order.
-These values are written in a ``standard'' byte order (the uppermost byte of
-the value is written first, followed by the next lower byte, and so forth).
+These values are written in ``standard'' byte order.
 Each is used as a transition time (as returned by
 .IR time (2))
 at which the rules for computing local time change.
@@ -42,8 +42,8 @@ Next come
 .I tzh_timecnt
 one-byte values of type
 .BR "unsigned char" ;
-each one tells which of the different types of ``local time'' described in the
-file is associated with the same-indexed transition time.
+each one tells which of the different types of ``local time'' types
+described in the file is associated with the same-indexed transition time.
 These values serve as indices into an array of
 .I ttinfo
 structures that appears next in the file; 
@@ -97,5 +97,5 @@ is zero or
 argument is less than
 the first transition time recorded in the file.
 .SH SEE ALSO
-settz(3)
+newctime(3)
 .. %W%

@@ -39,9 +39,9 @@ Zone	US/Yukon	-9:00	US		Y%sT
 
 # Mainland US areas that are always Standard as of 1986.
 
-Zone	US/East-Indiana	-5:00	US	E%sT	1945 Sep 30 2:00
+Zone	US/East-Indiana	-5:00	US	E%sT	1946
 			-5:00	-	EST		# Always EST as of 1986
-Zone	US/Arizona	-7:00	US	M%sT	1945 Sep 30 2:00
+Zone	US/Arizona	-7:00	US	M%sT	1946
 			-7:00	-	MST		# Always MST as of 1986
 
 # And then there's Hawaii.

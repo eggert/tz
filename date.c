@@ -81,6 +81,7 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 
 extern char **		environ;
 extern char *		getlogin();
+extern time_t		mktime();
 extern char *		optarg;
 extern int		optind;
 extern time_t		time();
@@ -91,8 +92,10 @@ static time_t		now;
 static int		retval = EXIT_SUCCESS;
 
 static void		display();
+static time_t		gettime();
 static void		timeout();
 static void		usage();
+static time_t		xtime();
 
 #ifdef DST_NONE
 #define OPTIONS	"uDSnd:t:"
@@ -211,7 +214,7 @@ char *	argv[];
 			}
 	}
 	if (value != NULL) {
-		t = gtime(value, isdst);
+		t = gettime(value, isdst);
 		if (t == -1)
 			usage();
 	}
@@ -281,9 +284,7 @@ static void
 display(format)
 char *	format;
 {
-	register struct tm *	tp;
-	time_t			t;
-	struct tm		tm;
+	struct tm	tm;
 
 	tm = *localtime(&now);
 	timeout((format == NULL) ? "%c" : format, &tm);
@@ -428,7 +429,7 @@ struct tm *	tmp;
 }
 
 /*
- * gtime --
+ * gettime --
  *	convert user's input into a time_t.
  * Track the UCB behavior of treating
  * 	2415
@@ -489,7 +490,7 @@ register struct tm * intmp;
 #define YEAR_THIS_WAS_WRITTEN	1989
 
 static time_t
-gtime(cp, isdst)
+gettime(cp, isdst)
 register char *	cp;
 int		isdst;
 {
@@ -500,8 +501,8 @@ int		isdst;
 	time_t		thatt;
 
 	if (isdst < 0) {
-		thist = gtime(cp, 0);
-		thatt = gtime(cp, 1);
+		thist = gettime(cp, 0);
+		thatt = gettime(cp, 1);
 		if (thist == -1)
 			if (thatt == -1)
 				return -1;
@@ -539,7 +540,7 @@ int		isdst;
 	}
 	switch (i) {
 		default:
-			return -1;
+			break;
 		case 2:	/* hhmm */
 			tm.tm_hour = pairs[0];
 			tm.tm_min = pairs[1];
@@ -549,7 +550,6 @@ int		isdst;
 			tm.tm_hour = pairs[1];
 			tm.tm_min = pairs[2];
 			return xtime(&tm);
-			break;
 		case 4:	/* mmddhhmm */
 			tm.tm_mon = pairs[0] - 1;
 			tm.tm_mday = pairs[1] - 1;
@@ -581,7 +581,7 @@ int		isdst;
 			thatt = xtime(&tm);
 			if (thist == -1)
 				if (thatt == -1)
-					return -1;
+					break;
 				else	return thatt;
 			else	if (thatt == -1)
 					return thist;
@@ -591,6 +591,7 @@ int		isdst;
 					display((char *) NULL);
 				}
 	}
+	return -1;
 }
 
 #ifdef DST_NONE
@@ -714,7 +715,7 @@ loop:
 			return (1);
 
 		default:
-			fprintf(stderr,
+			(void) fprintf(stderr,
 			    "date: Wrong ack received from timed: %s\n", 
 			    tsptype[msg.tsp_type]);
 			timed_ack = -1;

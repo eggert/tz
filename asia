@@ -92,7 +92,7 @@ Zone	Asia/Yerevan	2:58:00 -	LMT	1924 May  2
 			3:00	1:00	YERST	1991 Sep 23 # independence
 			3:00 RussiaAsia	AM%sT	1995 Sep 24 2:00s
 			4:00	-	AMT	1997
-			4:00 RussiaAsia	AM%sT			
+			4:00 RussiaAsia	AM%sT
 
 # Azerbaijan
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S

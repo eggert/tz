@@ -27,7 +27,8 @@ TZDSRCS=	tzdump.c settz.c
 TZDOBJS=	tzdump.o settz.o
 DOCS=		README Makefile settz.3 tzfile.5 tzcomp.8
 SOURCES=	tzfile.h $(TZCSRCS) $(TZDSRCS) years.sh
-DATA=		asia australasia europe etcetera northamerica pacificnew
+DATA=		asia australasia europe etcetera \
+			newzealand northamerica pacificnew
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
 all:	REDID_BINARIES tzdump

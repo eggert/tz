@@ -4,14 +4,8 @@ static char	elsieid[] = "%W%";
 #endif /* !defined NOID */
 #endif /* !defined lint */
 
-#include "stdio.h"
+#include "private.h"
 #include "tzfile.h"
-#include "ctype.h"
-#include "time.h"
-#include "string.h"
-#include "stdlib.h"
-#include "sys/stat.h"
-#include "nonstd.h"
 
 #ifndef TRUE
 #define TRUE	1
@@ -79,7 +73,6 @@ extern char *	irealloc P((char * old, int n));
 extern int	link P((const char * fromname, const char * toname));
 extern char *	optarg;
 extern int	optind;
-extern void	perror P((const char * string));
 extern char *	scheck P((const char * string, const char * format));
 
 static void	addtt P((time_t starttime, int type));
@@ -296,22 +289,22 @@ static struct lookup const	lasts[] = {
 };
 
 static struct lookup const	begin_years[] = {
-	"minimum",		YR_MINIMUM,
-	"maximum",		YR_MAXIMUM,
-	NULL,			0
+	"minimum",	YR_MINIMUM,
+	"maximum",	YR_MAXIMUM,
+	NULL,		0
 };
 
 static struct lookup const	end_years[] = {
-	"minimum",		YR_MINIMUM,
-	"maximum",		YR_MAXIMUM,
-	"only",			YR_ONLY,
-	NULL,			0
+	"minimum",	YR_MINIMUM,
+	"maximum",	YR_MAXIMUM,
+	"only",		YR_ONLY,
+	NULL,		0
 };
 
 static struct lookup const	leap_types[] = {
-	"Rolling",		TRUE,
-	"Stationary",		FALSE,
-	NULL,			0
+	"Rolling",	TRUE,
+	"Stationary",	FALSE,
+	NULL,		0
 };
 
 static const int	len_months[2][MONSPERYEAR] = {
@@ -407,10 +400,10 @@ usage()
 	(void) exit(EXIT_FAILURE);
 }
 
-static const char *	psxrules = NULL;
-static const char *	lcltime = NULL;
-static const char *	directory = NULL;
-static const char *	leapsec = NULL;
+static const char *	psxrules;
+static const char *	lcltime;
+static const char *	directory;
+static const char *	leapsec;
 static int		sflag = FALSE;
 
 int
@@ -576,9 +569,14 @@ static int
 itsdir(name)
 const char * const	name;
 {
-	struct stat	s;
+	register char *	myname;
+	register int	accres;
 
-	return stat(name, &s) == 0 && (s.st_mode & S_IFMT) == S_IFDIR;
+	myname = ecpyalloc(name);
+	myname = ecatalloc(myname, "/.");
+	accres = access(myname, 0);
+	ifree(myname);
+	return accres == 0;
 }
 
 /*

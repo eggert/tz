@@ -157,20 +157,6 @@ Zone America/Detroit	-5:00	US	E%sT	1968
 			-5:00	-	EST	1973
 			-5:00	US	E%sT
 
-# Samoa just changes names.  No DST, per Naval Observatory.
-#
-# Howse writes that in 1879 the King of Samoa decided to change
-# ``the date in his kingdom from the Antipodean to the American system,
-# ordaining -- by a masterpiece of diplomatic flattery -- that
-# the Fourth of July should be celebrated twice in that year.''
-
-Zone Pacific/Samoa	 12:37:12 -	LMT	1879 Jul  5
-			-11:22:48 -	LMT	1911
-			-11:30	-	SST	1950
-			-11:00	-	NST	1967 Apr	# N=Nome
-			-11:00	-	BST	1983 Nov 30	# B=Bering
-			-11:00	-	SST			# S=Samoa
-
 Zone Pacific/Midway	-11:49:28 -	LMT	1901
 			-11:00	-	NST	1967 Apr	# N=Nome
 			-11:00	-	BST	1983 Nov 30	# B=Bering
@@ -193,7 +179,7 @@ Zone Pacific/Honolulu	-10:30	US	H%sT	1933 Apr 30 2:00
 			-10:00	-	HST
 
 # Navassa
-# no information; probably like America/New_York
+# uninhabited
 
 
 # Old names, for S5 users
@@ -730,7 +716,7 @@ Zone	America/Cayman	-5:25:32 -	LMT	1890		# Georgetown
 			-5:00	-	EST
 
 # Clipperton
-# no information
+# uninhabited
 
 # Costa Rica
 # Shanks gives some very odd dates for 1991, and stops there.
@@ -949,7 +935,12 @@ Zone America/Grand_Turk	-4:44:32 -	LMT	1890
 			-5:00	-	EST	1979 Apr 29 2:00
 			-5:00	US	E%sT
 
-# Virgin Is (British and US)
+# British Virgin Is
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Virgin	-4:19:44 -	LMT	1911 Jul    # Charlotte Amalie
+Zone America/Tortola	-4:18:28 -	LMT	1911 Jul    # Road Town
+			-4:00	-	AST
+
+# Virgin Is
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone America/St_Thomas	-4:19:44 -	LMT	1911 Jul    # Charlotte Amalie
 			-4:00	-	AST

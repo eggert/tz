@@ -28,8 +28,8 @@ register char *	tzname;
 	register int			i, j, ok;
 	char				buf[256];
 
-	if (tzname == 0 || *tzname == '\0')
-		return -1;
+	if (tzname == 0)
+		tzname = TZDEFAULT;
 	tzp = &tzinfo;
 	if (tzname[0] != '/') {
 		(void) strcpy(buf, TZDIR);
@@ -84,18 +84,16 @@ char *	tzname;
 {
 	register int	answer;
 
-	if (tzname == 0)
-		tzname = TZDEFAULT;
-	if (*tzname == '\0')
+	if (tzname != 0 && *tzname == '\0')
 		answer = 0;			/* Use built-in GMT */
 	else {
 		if (tzload(tzname) == 0)
 			return 0;
 		/*
-		** Do the next two lines of code really belong here?
-		*/
-		if (tzload(TZDEFAULT) == 0)
+		** If we want to try for local time on errors. . .
+		if (tzload((char *) 0) == 0)
 			return -1;
+		*/
 		answer = -1;
 	}
 	tzinfo.tz_timecnt = 0;

@@ -34,3 +34,4 @@ case $#-$2 in
 esac
 
 echo "$0: usage is $0 year even|odd|uspres|nonpres|nonuspres" >&2
+exit 1

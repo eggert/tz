@@ -2,40 +2,66 @@
 
 /*LINTLIBRARY*/
 
+#ifndef lint
+#ifndef NOID
+static char	elsieid[] = "%W%"
+#endif /* !defined NOID */
+#endif /* !defined lint */
+
+#include "tzfile.h"
+#include "time.h"
+#include "string.h"
+
 /*
 ** sys/types.h is included to get time_t.
 */
 
+#ifndef __STDC__
 #include "sys/types.h"
-#include "tzfile.h"
-#include "time.h"
+#endif /* !defined __STDC */
 
+/*
+** getenv. . .
+*/
+
+#ifdef __STDC__
+#include "stdlib.h"
+#else /* !defined __STDC__ */
+extern char *		getenv();
+#endif /* !defined __STDC__ */
+
+/*
+** MAXPATHLEN. . .
+*/
+
+#ifdef __STDC__
+#ifdef FILENAME_MAX
+#define MAXPATHLEN	FILENAME_MAX
+#else /* !defined FILENAME_MAX */
+#define MAXPATHLEN	512
+#endif /* !defined FILENAME_MAX */
+#endif /* defined __STDC__ */
 #ifndef MAXPATHLEN
 #include "sys/param.h"
 #ifndef MAXPATHLEN
 #define MAXPATHLEN	1024
-#endif /* !MAXPATHLEN */
-#endif /* !MAXPATHLEN */
+#endif /* !defined MAXPATHLEN */
+#endif /* !defined MAXPATHLEN */
 
-#ifndef lint
-#ifndef NOID
-static char	sccsid[] = "%W%";
-#endif /* !NOID */
-#endif /* !lint */
+#ifndef __STDC__
+#define const
+#endif /* !defined __STDC__ */
 
 #ifndef TRUE
 #define TRUE		1
 #define FALSE		0
-#endif /* !TRUE */
+#endif /* !defined TRUE */
 
-extern char *		getenv();
-extern char *		strcpy();
-extern char *		strcat();
 #ifdef STD_INSPIRED
 struct tm *		offtime();
-#else /* !STD_INSPIRED */
+#else /* !defined STD_INSPIRED */
 static struct tm *	offtime();
-#endif /* !STD_INSPIRED */
+#endif /* !defined STD_INSPIRED */
 static struct tm *	timesub();
 
 struct ttinfo {				/* time type information */
@@ -75,11 +101,11 @@ char *			tzname[2] = {
 #ifdef USG_COMPAT
 time_t			timezone = 0;
 int			daylight = 0;
-#endif /* USG_COMPAT */
+#endif /* defined USG_COMPAT */
 
 #ifdef TZA_COMPAT
 char *			tz_abbr;	/* compatibility w/older versions */
-#endif /* TZA_COMPAT */
+#endif /* defined TZA_COMPAT */
 
 static long
 detzcode(codep)
@@ -205,7 +231,7 @@ register struct state *	sp;
 #ifdef USG_COMPAT
 		timezone = -sp->ttis[0].tt_gmtoff;
 		daylight = 0;
-#endif /* USG_COMPAT */
+#endif /* defined USG_COMPAT */
 		for (i = 1; i < sp->typecnt; ++i) {
 			register struct ttinfo *	ttisp;
 
@@ -214,12 +240,12 @@ register struct state *	sp;
 				tzname[1] = &sp->chars[ttisp->tt_abbrind];
 #ifdef USG_COMPAT
 				daylight = 1;
-#endif /* USG_COMPAT */ 
+#endif /* defined USG_COMPAT */ 
 			} else {
 				tzname[0] = &sp->chars[ttisp->tt_abbrind];
 #ifdef USG_COMPAT
 				timezone = -ttisp->tt_gmtoff;
-#endif /* USG_COMPAT */ 
+#endif /* defined USG_COMPAT */ 
 			}
 		}
 	}
@@ -240,7 +266,7 @@ register struct state *	sp;
 #ifdef USG_COMPAT
 		timezone = 0;
 		daylight = 0;
-#endif /* USG_COMPAT */
+#endif /* defined USG_COMPAT */
 	}
 }
 
@@ -267,7 +293,7 @@ tzsetwall()
 
 struct tm *
 localtime(timep)
-time_t *	timep;
+const time_t *	timep;
 {
 	register struct state *		sp;
 	register struct ttinfo *	ttisp;
@@ -304,16 +330,16 @@ time_t *	timep;
 	tzname[tmp->tm_isdst] = &sp->chars[ttisp->tt_abbrind];
 #ifdef KRE_COMPAT
 	tmp->tm_zone = &sp->chars[ttisp->tt_abbrind];
-#endif /* KRE_COMPAT */
+#endif /* defined KRE_COMPAT */
 #ifdef TZA_COMPAT
 	tz_abbr = &sp->chars[ttisp->tt_abbrind];
-#endif /* TZA_COMPAT */
+#endif /* defined TZA_COMPAT */
 	return tmp;
 }
 
 struct tm *
 gmtime(clock)
-time_t *	clock;
+const time_t *	clock;
 {
 	register struct tm *	tmp;
 
@@ -321,15 +347,15 @@ time_t *	clock;
 	tzname[0] = "GMT";
 #ifdef KRE_COMPAT
 	tmp->tm_zone = "GMT";		/* UCT ? */
-#endif /* KRE_COMPAT */
+#endif /* defined KRE_COMPAT */
 	return tmp;
 }
 
 #ifdef STD_INSPIRED
 struct tm *
-#else /* !STD_INSPIRED */
+#else /* !defined STD_INSPIRED */
 static struct tm *
-#endif /* !STD_INSPIRED */
+#endif /* !defined STD_INSPIRED */
 offtime(clock, offset)
 time_t *	clock;
 long		offset;
@@ -430,7 +456,7 @@ register struct state *	sp;
 #ifdef KRE_COMPAT
 	tmp->tm_zone = "";
 	tmp->tm_gmtoff = offset;
-#endif /* KRE_COMPAT */
+#endif /* defined KRE_COMPAT */
 	return tmp;
 }
 
@@ -450,4 +476,4 @@ time_t *	timep;
 	return asctime(localtime(timep));
 }
 
-#endif /* BSD_COMPAT */
+#endif /* defined BSD_COMPAT */

@@ -46,35 +46,22 @@ Link	US/Central	CST6CDT
 Link	US/Mountain	MST7MDT
 Link	US/Pacific	PST8PDT
 
-# Nonstandard US mainland areas:
+# Mainland US areas that don't observe DST
 
-Rule	SomeUS	1918	1919	-	Mar	lastSun	2:00	1:00	D
-Rule	SomeUS	1918	1919	-	Oct	lastSun	2:00	0	S
-Rule	SomeUS	1942	only	-	Feb	9	2:00	1:00	W # War
-Rule	SomeUS	1945	only	-	Sep	30	2:00	0	S
-
-Zone	US/East-Indiana	-5:00	SomeUS	E%sT # Usually standard near South Bend
-Zone	US/Arizona	-7:00	SomeUS	M%sT # Usually standard in Arizona
+Zone	US/East-Indiana	-5:00	USA	E%sT	1945 Sep 30 1:00s
+			-5:00	-	EST			# Now always EST
+Zone	US/Arizona	-7:00	USA	M%sT	1945 Sep 30 1:00s
+			-7:00	-	MST			# Now always MST
 
 # And then there's Hawaii.
-# DST was observed for one day in 1933.
-# Standard time was change by half an hour in 1947; this accounts for
-# the half-hour offsets before then, and the peculiar first rule.
-# (An alternative is to have "Zone Hawaiian -10:30..." with a
-# current standard offset of 0:30; this seems a bit more obscure.)
-#
-# Things have been calm since 1947.
+# DST was observed for one day in 1933;
+# Standard time was change by half an hour in 1947;
+# Daylight time is not used.
 
-Rule	Hawaii	1901	only	-	Dec	14	0:00	-0:30	S
-Rule	Hawaii	1918	1919	-	Mar	lastSun	2:00	0:30	D
-Rule	Hawaii	1918	1919	-	Oct	lastSun	2:00	-0:30	S
-Rule	Hawaii	1933	only	-	Apr	30	2:00	0:30	D
-Rule	Hawaii	1933	only	-	May	1	2:00	-0:30	S
-Rule	Hawaii	1942	only	-	Feb	9	2:00	0:30	W # War
-Rule	Hawaii	1945	only	-	Sep	30	2:00	-0:30	S
-Rule	Hawaii	1947	only	-	Jun	8	2:00	0	S
-
-Zone	US/Hawaiian	-10:00	Hawaii	H%sT
+Zone	US/Hawaii	-10:30	USA	H%sT	1933 Apr 30 2:00s
+			-9:30	-	HDT	1933 May 1 1:00s
+			-10:30	USA	H%sT	1947 Jun 8 2:00s
+			-10:00	-	HST
 
 ################################################################################
 

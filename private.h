@@ -38,7 +38,7 @@ static char	privatehid[] = "%W%";
 #endif /* !defined HAVE_UNISTD_H */
 
 #ifndef HAVE_UTMPX_H
-#define HAVE_UTMPX_H		1
+#define HAVE_UTMPX_H		0
 #endif /* !defined HAVE_UTMPX_H */
 
 #ifndef LOCALE_HOME

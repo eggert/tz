@@ -856,7 +856,7 @@ char **	fields;
 				return FALSE;
 		}
 		if (nfields <= i_untilmonth)
-			r.r_month = 1;	/* default to January */
+			r.r_month = TM_JANUARY;	/* default to January */
 		else {
 			if ((lp = byword(fields[i_untilmonth],
 				mon_names)) == NULL) {

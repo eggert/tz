@@ -50,13 +50,13 @@ each one tells which of the different types of ``local time'' types
 described in the file is associated with the same-indexed transition time.
 These values serve as indices into an array of
 .I ttinfo
-structures that appears next in the file; 
+structures that appears next in the file;
 these structures are defined as follows:
 .in +.5i
 .sp
 .nf
 .ta .5i +\w'unsigned int\0\0'u
-struct ttinfo {	
+struct ttinfo {
 	long	tt_gmtoff;
 	int	tt_isdst;
 	unsigned int	tt_abbrind;
@@ -91,7 +91,7 @@ Then there are
 .I tzh_leapcnt
 pairs of four-byte values, written in standard byte order;
 the first value of each pair gives the time
-(as returned by 
+(as returned by
 .IR time(2))
 at which a leap second occurs;
 the second gives the

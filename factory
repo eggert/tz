@@ -5,4 +5,5 @@
 # Also useful for the "comp.sources" version.
 
 # Zone	NAME	GMTOFF	RULES	FORMAT
+#Updated Zone Factory 1997 Nov 19
 Zone	Factory	0	- "Local time zone must be set--see zic manual page"

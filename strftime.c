@@ -108,7 +108,7 @@ _fmt(format, t)
 				_fmt("%D %X", t);
 				continue;
 			case 'C':
-				_fmt("%a %b %e %X %Y\n", t);
+				_fmt("%a %b %e %X %Y", t);
 				continue;
 			case 'D':
 			case 'x':

@@ -570,7 +570,7 @@ const int			dousg;
 const time_t			t;
 {
 	register const char *	cp;
-	register char *	dotp;
+	register const char *	dotp;
 	register int	cent, year_in_cent, month, hour, day, mins, secs;
 	struct tm	tm, outtm;
 	time_t		outt;

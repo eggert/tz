@@ -976,6 +976,8 @@ tzset P((void))
 		*/
 		lclptr->leapcnt = 0;		/* so, we're off a little */
 		lclptr->timecnt = 0;
+		lclptr->typecnt = 0;
+		lclptr->ttis[0].tt_isdst = 0;
 		lclptr->ttis[0].tt_gmtoff = 0;
 		lclptr->ttis[0].tt_abbrind = 0;
 		(void) strcpy(lclptr->chars, gmt);

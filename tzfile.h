@@ -86,8 +86,9 @@ struct tzhead {
 
 #ifndef TZ_MAX_TYPES
 #ifndef NOSOLAR
-#define TZ_MAX_TYPES	256	/* Limited by what (unsigned char)'s can hold */
-#else /* !defined NOSOLAR */
+#define TZ_MAX_TYPES	256 /* Limited by what (unsigned char)'s can hold */
+#endif /* !defined NOSOLAR */
+#ifdef NOSOLAR
 #define TZ_MAX_TYPES	10	/* Maximum number of local time types */
 #endif /* !defined NOSOLAR */
 #endif /* !defined TZ_MAX_TYPES */

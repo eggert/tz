@@ -355,7 +355,7 @@ static
 usage()
 {
 	(void) fprintf(stderr,
-"%s: usage is %s [ -v ] [ -l localtime ] [ -d directory ] [ filename ... ]\n",
+"%s: usage is %s [ -s ] [ -v ] [ -l localtime ] [ -d directory ] [ filename ... ]\n",
 		progname, progname);
 	exit(1);
 }
@@ -695,7 +695,7 @@ static
 inrule(fields, nfields)
 register char **	fields;
 {
-	struct rule	r;
+	static struct rule	r;
 
 	if (nfields != RULE_FIELDS) {
 		error("wrong number of fields on Rule line");
@@ -765,7 +765,7 @@ inzsub(fields, nfields, iscont)
 register char **	fields;
 {
 	register char *	cp;
-	struct zone	z;
+	static struct zone	z;
 	register int	i_gmtoff, i_rule, i_format;
 	register int	i_untilyear, i_untilmonth;
 	register int	i_untilday, i_untiltime;

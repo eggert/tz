@@ -159,6 +159,7 @@ struct rule {
 	char *	r_abbrvar;	/* variable part of time zone abbreviation */
 
 	int	r_todo;		/* a rule to do (used in outzone) */
+	time_t	r_temp;		/* used in outzone */
 };
 
 /*
@@ -1095,6 +1096,7 @@ struct zone *	zpfirst;
 				break;
 			/*
 			** Mark which rules to do in the current year.
+			** For those to do, calculate rpytime(rp, year);
 			*/
 			for (j = 0; j < zp->z_nrules; ++j) {
 				rp = &zp->z_rules[j];
@@ -1103,6 +1105,8 @@ struct zone *	zpfirst;
 				rp->r_todo = year >= rp->r_loyear &&
 						year <= rp->r_hiyear &&
 						yearistype(year, rp->r_yrtype);
+				if (rp->r_todo)
+					rp->r_temp = rpytime(rp, year);
 			}
 			for ( ; ; ) {
 				register int	k;
@@ -1136,10 +1140,10 @@ struct zone *	zpfirst;
 					offset = gmtoff;
 					if (!rp->r_todisstd)
 						offset = oadd(offset, stdoff);
-					jtime = rpytime(rp, year);
+					jtime = rp->r_temp;
 					if (jtime == min_time ||
-					    jtime == max_time)
-						continue;
+						jtime == max_time)
+							continue;
 					jtime = tadd(jtime, -offset);
 					if (k < 0 || jtime < ktime) {
 						k = j;

@@ -1308,8 +1308,19 @@ const long		offset;
 	if (tmp->tm_isdst > 1)
 		tmp->tm_isdst = 1;
 	t = time2(tmp, funcp, offset, &okay);
+#ifdef PCTS
+	/*
+	** PCTS code courtesy Grant Sullivan (grant@osf.org).
+	*/
+	if (okay)
+		return t;
+	if (tmp->tm_isdst < 0)
+		tmp->tm_isdst = 0;	/* reset to std and try again */
+#endif /* defined PCTS */
+#ifndef PCTS
 	if (okay || tmp->tm_isdst < 0)
 		return t;
+#endif /* !defined PCTS */
 	/*
 	** We're supposed to assume that somebody took a time of one type
 	** and did some math on it that yielded a "struct tm" that's bad.

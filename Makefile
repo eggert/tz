@@ -42,7 +42,7 @@ TOPDIR=		/usr/local
 
 TZDIR=		$(TOPDIR)/etc/zoneinfo
 
-# The "zic" and "zdump" commands get installed in. . .
+# The "tzselect", "zic", and "zdump" commands get installed in. . .
 
 ETCDIR=		$(TOPDIR)/etc
 
@@ -275,9 +275,9 @@ ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(MISC)
 
 SHELL=		/bin/sh
 
-all:		zic zdump $(LIBOBJS)
+all:		tzselect zic zdump $(LIBOBJS)
 
-ALL:		all date tzselect
+ALL:		all date
 
 install:	all $(DATA) $(REDO) $(TZLIB) $(MANS) $(TABDATA)
 		$(ZIC) -y $(YEARISTYPE) \
@@ -285,7 +285,7 @@ install:	all $(DATA) $(REDO) $(TZLIB) $(MANS) $(TABDATA)
 		-rm -f $(TZDIR)/iso3166.tab $(TZDIR)/zone.tab
 		cp iso3166.tab zone.tab $(TZDIR)/.
 		-mkdir $(TOPDIR) $(ETCDIR)
-		cp zic zdump $(ETCDIR)/.
+		cp tzselect zic zdump $(ETCDIR)/.
 		-mkdir $(TOPDIR) $(MANDIR) \
 			$(MANDIR)/man3 $(MANDIR)/man5 $(MANDIR)/man8
 		-rm -f $(MANDIR)/man3/newctime.3 \

@@ -37,6 +37,7 @@ static void	adjleap P((void));
 static void	associate P((void));
 static int	ciequal P((const char * ap, const char * bp));
 static void	convert P((long val, char * buf));
+static void	dolink P((const char * fromfile, const char * tofile));
 static void	eat P((const char * name, int num));
 static void	eats P((const char * name, int num,
 			const char * rname, int rnum));
@@ -393,12 +394,13 @@ static void
 usage()
 {
 	(void) fprintf(stderr,
-"%s: usage is %s [ -s ] [ -v ] [ -l localtime ] [ -d directory ]\n\
+"%s: usage is %s [ -s ] [ -v ] [ -l localtime ] [ -p posixrules ] [ -d directory ]\n\
 \t[ -L leapseconds ] [ filename ... ]\n",
 		progname, progname);
 	(void) exit(EXIT_FAILURE);
 }
 
+static const char *	psxrules = NULL;
 static const char *	lcltime = NULL;
 static const char *	directory = NULL;
 static const char *	leapsec = NULL;
@@ -415,7 +417,7 @@ char *	argv[];
 	(void) umask(umask(022) | 022);
 #endif /* defined unix */
 	progname = argv[0];
-	while ((c = getopt(argc, argv, "d:l:L:vs")) != EOF)
+	while ((c = getopt(argc, argv, "d:l:p:L:vs")) != EOF)
 		switch (c) {
 			default:
 				usage();
@@ -435,6 +437,16 @@ char *	argv[];
 				else {
 					(void) fprintf(stderr,
 "%s: More than one -l option specified\n",
+						progname);
+					(void) exit(EXIT_FAILURE);
+				}
+				break;
+			case 'p':
+				if (psxrules == NULL)
+					psxrules = optarg;
+				else {
+					(void) fprintf(stderr,
+"%s: More than one -p option specified\n",
 						progname);
 					(void) exit(EXIT_FAILURE);
 				}
@@ -489,34 +501,43 @@ char *	argv[];
 	/*
 	** Make links.
 	*/
-	for (i = 0; i < nlinks + (lcltime != NULL); ++i) {
-		register char *	fromname;
-		register char *	toname;
-
-		fromname = ecpyalloc(directory);
-		fromname = ecatalloc(fromname, "/");
-		fromname = ecatalloc(fromname,
-			(i == nlinks) ? lcltime : links[i].l_from);
-		toname = ecpyalloc(directory);
-		toname = ecatalloc(toname, "/");
-		toname = ecatalloc(toname,
-			(i == nlinks) ? TZDEFAULT : links[i].l_to);
-		/*
-		** We get to be careful here since
-		** there's a fair chance of root running us.
-		*/
-		if (!itsdir(toname))
-			(void) remove(toname);
-		if (link(fromname, toname) != 0) {
-			(void) fprintf(stderr, "%s: Can't link from %s to ",
-				progname, fromname);
-			(void) perror(toname);
-			(void) exit(EXIT_FAILURE);
-		}
-		ifree(fromname);
-		ifree(toname);
-	}
+	for (i = 0; i < nlinks; ++i)
+		dolink(links[i].l_from, links[i].l_to);
+	if (lcltime != NULL)
+		dolink(lcltime, TZDEFAULT);
+	if (psxrules != NULL)
+		dolink(psxrules, TZDEFRULES);
 	return (errors == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+
+static void
+dolink(fromfile, tofile)
+const char *	fromfile;
+const char *	tofile;
+{
+	register char *	fromname;
+	register char *	toname;
+
+	fromname = ecpyalloc(directory);
+	fromname = ecatalloc(fromname, "/");
+	fromname = ecatalloc(fromname, fromfile);
+	toname = ecpyalloc(directory);
+	toname = ecatalloc(toname, "/");
+	toname = ecatalloc(toname, tofile);
+	/*
+	** We get to be careful here since
+	** there's a fair chance of root running us.
+	*/
+	if (!itsdir(toname))
+		(void) remove(toname);
+	if (link(fromname, toname) != 0) {
+		(void) fprintf(stderr, "%s: Can't link from %s to ",
+			progname, fromname);
+		(void) perror(toname);
+		(void) exit(EXIT_FAILURE);
+	}
+	ifree(fromname);
+	ifree(toname);
 }
 
 static void
@@ -806,6 +827,13 @@ register char **	fields;
 		(void) sprintf(buf,
 			"\"Zone %s\" line and -l option are mutually exclusive",
 			TZDEFAULT);
+		error(buf);
+		return FALSE;
+	}
+	if (strcmp(fields[ZF_NAME], TZDEFRULES) == 0 && psxrules != NULL) {
+		(void) sprintf(buf,
+			"\"Zone %s\" line and -p option are mutually exclusive",
+			TZDEFRULES);
 		error(buf);
 		return FALSE;
 	}

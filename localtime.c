@@ -211,7 +211,7 @@ settzname()
 	/*
 	** And to get the latest zone names into tzname. . .
 	*/
-	for (i = 0; i < sp->typecnt; ++i) {
+	for (i = 0; i < sp->timecnt; ++i) {
 		register const struct ttinfo * const	ttisp =
 							&sp->ttis[sp->types[i]];
 

@@ -482,7 +482,7 @@ struct lc_time_T *	ptloc;
 	** If the locale name is the same as our cache, use the cache.
 	*/
 	lbuf = locale_buf;
-	if (lbuf  &&  strcmp(name, lbuf) == 0) {
+	if (lbuf && strcmp(name, lbuf) == 0) {
 		p = lbuf;
 		for (ap=(const char **)ptloc; ap<(const char **)(ptloc + 1); ap++)
 			*ap = p += strlen(p) + 1;
@@ -513,8 +513,7 @@ struct lc_time_T *	ptloc;
 		goto bad_locale;
 	bufsize = namesize + st.st_size;
 	locale_buf = 0;
-	lbuf =
-		(lbuf == NULL || lbuf == locale_buf_C) ?
+	lbuf = (lbuf == NULL || lbuf == locale_buf_C) ?
 		malloc(bufsize) : realloc(lbuf, bufsize);
 	if (lbuf == NULL)
 		goto bad_locale;

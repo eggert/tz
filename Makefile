@@ -384,8 +384,8 @@ names:
 public:		$(ENCHILADA) zic
 		-mkdir /tmp/,tzpublic
 		for i in $(TDATA) ; do zic -d /tmp/,tzpublic $$i ; done
-		for i in *.[1-8] ; do sh workman.sh $$i > $$i.txt; done
 		rm -f -r /tmp/,tzpublic
+		for i in *.[1-8] ; do sh workman.sh $$i > $$i.txt; done
 		$(AWK) -f checktab.awk $(PRIMARY_YDATA)
 		tar cf - $(DOCS) $(SOURCES) $(MISC) *.[1-8].txt | gzip -9 > tzcode.tar.gz
 		tar cf - $(DATA) | gzip -9 > tzdata.tar.gz

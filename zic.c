@@ -1247,11 +1247,11 @@ char *	type;
 	result = system(buf);
 	if (result == 0)
 		return TRUE;
-	if (result == 1)
+	if (result == 1 << 8)
 		return FALSE;
 	error("Wild result from command execution");
 	(void) fprintf(stderr, "%s: command was '%s', result was %d\n",
-		buf, result);
+		progname, buf, result);
 	exit(1);
 }
 

@@ -1298,7 +1298,16 @@ const char * const	name;
 	convert(eitol(timecnt), tzh.tzh_timecnt);
 	convert(eitol(typecnt), tzh.tzh_typecnt);
 	convert(eitol(charcnt), tzh.tzh_charcnt);
-	(void) fwrite((void *) &tzh, (size_t) sizeof tzh, (size_t) 1, fp);
+#define DO(field)	(void) fwrite((void *) tzh.field, \
+		(size_t) sizeof tzh.field, (size_t) 1, fp)
+	DO(tzh_reserved);
+	DO(tzh_ttisgmtcnt);
+	DO(tzh_ttisstdcnt);
+	DO(tzh_leapcnt);
+	DO(tzh_timecnt);
+	DO(tzh_typecnt);
+	DO(tzh_charcnt);
+#undef DO
 	for (i = 0; i < timecnt; ++i) {
 		j = leapcnt;
 		while (--j >= 0)

@@ -239,6 +239,10 @@ time_t	hit;
 	show(name, hit, TRUE);
 }
 
+/*
+** Thanks to Paul Eggert (eggert@twinsun.com) for logic used below.
+*/
+
 static long
 delta(newp, oldp)
 struct tm *	newp;

@@ -35,7 +35,7 @@ Support for Turbo C compilation has also been eliminated; it was present to
 allow checking in an ANSI-style environment, and such checking is now done with
 gcc.
 
-And the "dyzise" function has disappeared; it was present to allow compilation
+And the "dysize" function has disappeared; it was present to allow compilation
 of the "date" command on old BSD systems, and a version of "date" is now
 provided in the package.  The "date" command is not created when you "make all"
 since it may lack options provided by the version distributed with your

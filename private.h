@@ -54,7 +54,27 @@ static char	privatehid[] = "%W%";
 #endif /* !defined qsort_size_T */
 
 /*
-** const.  Absent from SunOS 4.1.1 cc.
+** Workarounds for compilers/systems.
+*/
+
+/*
+** SunOS 4.1.1 headers lack EXIT_SUCCESS.
+*/
+
+#ifndef EXIT_SUCCESS
+#define EXIT_SUCCESS	0
+#endif /* !defined EXIT_SUCCESS */
+
+/*
+** SunOS 4.1.1 headers lack EXIT_FAILURE.
+*/
+
+#ifndef EXIT_FAILURE
+#define EXIT_FAILURE	1
+#endif /* !defined EXIT_FAILURE */
+
+/*
+** SunOS 4.1.1 cc lacks const.
 */
 
 #ifndef const
@@ -64,31 +84,7 @@ static char	privatehid[] = "%W%";
 #endif /* !defined const */
 
 /*
-** INITIALIZE
-*/
-
-#ifndef GNUC_or_lint
-#ifdef lint
-#define GNUC_or_lint
-#endif /* defined lint */
-#ifndef lint
-#ifdef __GNUC__
-#define GNUC_or_lint
-#endif /* defined __GNUC__ */
-#endif /* !defined lint */
-#endif /* !defined GNUC_or_lint */
-
-#ifndef INITIALIZE
-#ifdef GNUC_or_lint
-#define INITIALIZE(x)	((x) = 0)
-#endif /* defined GNUC_or_lint */
-#ifndef GNUC_or_lint
-#define INITIALIZE(x)
-#endif /* !defined GNUC_or_lint */
-#endif /* !defined INITIALIZE */
-
-/*
-** P((args)).  Prototypes absent from SunOS 4.1.1 cc
+** SunOS 4.1.1 cc lacks prototypes.
 */
 
 #ifndef P
@@ -146,13 +142,9 @@ extern int	unlink P((const char * filename));
 
 #endif /* !defined FILENAME_MAX */
 
-#ifndef EXIT_SUCCESS
-#define EXIT_SUCCESS	0		/* Absent from SunOS 4.1.1 headers */
-#endif /* !defined EXIT_SUCCESS */
-
-#ifndef EXIT_FAILURE
-#define EXIT_FAILURE	1		/* Absent from SunOS 4.1.1 headers */
-#endif /* !defined EXIT_FAILURE */
+/*
+** Finally, some convenience items.
+*/
 
 #ifndef TRUE
 #define TRUE	1
@@ -172,6 +164,30 @@ extern int	unlink P((const char * filename));
 #define INT_STRLEN_MAXIMUM(type) \
 	((sizeof(type) * CHAR_BIT - 1) * 302 / 1000 + 2)
 #endif /* !defined INT_STRLEN_MAXIMUM */
+
+/*
+** INITIALIZE(x)
+*/
+
+#ifndef GNUC_or_lint
+#ifdef lint
+#define GNUC_or_lint
+#endif /* defined lint */
+#ifndef lint
+#ifdef __GNUC__
+#define GNUC_or_lint
+#endif /* defined __GNUC__ */
+#endif /* !defined lint */
+#endif /* !defined GNUC_or_lint */
+
+#ifndef INITIALIZE
+#ifdef GNUC_or_lint
+#define INITIALIZE(x)	((x) = 0)
+#endif /* defined GNUC_or_lint */
+#ifndef GNUC_or_lint
+#define INITIALIZE(x)
+#endif /* !defined GNUC_or_lint */
+#endif /* !defined INITIALIZE */
 
 /*
 ** UNIX was a registered trademark of UNIX System Laboratories in 1993.

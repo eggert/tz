@@ -618,24 +618,21 @@ const char * const	ptlim;
 	register int	trail;
 
 #define DIVISOR	100
-	lead = a / DIVISOR + b / DIVISOR;
 	trail = a % DIVISOR + b % DIVISOR;
-	if (trail > DIVISOR) {
-		trail -= DIVISOR;
-		++lead;
-	}
-	while (trail < 0) {
+	lead = a / DIVISOR + b / DIVISOR + trail / DIVISOR;
+	trail %= DIVISOR;
+	if (trail < 0 && lead > 0) {
 		trail += DIVISOR;
 		--lead;
-	}
-	if (lead < 0 && trail != 0) {
+	} else if (lead < 0 && trail > 0) {
 		trail -= DIVISOR;
 		++lead;
 	}
-	if (convert_top)
+	if (convert_top) {
 		if (lead == 0 && trail < 0)
 			pt = _add("-0", pt, ptlim);
 		else	pt = _conv(lead, "%02d", pt, ptlim);
+	}
 	if (convert_yy)
 		pt = _conv(((trail < 0) ? -trail : trail), "%02d", pt, ptlim);
 }

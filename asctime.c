@@ -15,7 +15,7 @@ static char	elsieid[] = "%W%";
 #include "tzfile.h"
 
 /*
-** A la ISO/IEC 9945-1, ANSI/IEEE Std 1003.1, Second Edition, 1996-07-12.
+** A la ISO/IEC 9945-1, ANSI/IEEE Std 1003.1, 2004 Edition.
 */
 
 char *
@@ -40,11 +40,12 @@ char *				buf;
 		mn = "???";
 	else	mn = mon_name[timeptr->tm_mon];
 	/*
-	** The X3J11-suggested format is
+	** The format used in the (2004) standard is
 	**	"%.3s %.3s%3d %.2d:%.2d:%.2d %d\n"
 	** Use "%02d", as it is a bit more portable than "%.2d".
+	** Drop each .3 since they're superfluous given how we set wn and mn.
 	*/
-	(void) sprintf(buf, "%.3s %.3s%3d %02d:%02d:%02d %ld\n",
+	(void) sprintf(buf, "%s %s%3d %02d:%02d:%02d %ld\n",
 		wn, mn,
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec,
@@ -53,7 +54,8 @@ char *				buf;
 }
 
 /*
-** A la X3J11, with core dump avoidance.
+** A la ISO/IEC 9945-1, ANSI/IEEE Std 1003.1, 2004 Edition,
+** with core dump avoidance.
 */
 
 char *

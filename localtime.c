@@ -137,7 +137,7 @@ const char *	codep;
 
 static int
 tzload(name, sp)
-register const char *		name;
+register const char *	name;
 register struct state *	sp;
 {
 	register int	i;

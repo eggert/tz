@@ -21,7 +21,7 @@ static char	elsieid[] = "%W%";
  * from this software without specific prior written permission.
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+ * WARRANTIES OF MERCHANT[A]BILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 #ifndef lint
@@ -34,11 +34,22 @@ char copyright[] =
 static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #endif /* not lint */
 
-#include "syslog.h"
-#include "sys/time.h"
+#include "sys/time.h"	/* for DST_NONE */
 #include "private.h"
-#include "tzfile.h"
 
+/*
+** The two things date knows about time are. . .
+*/
+
+#ifndef TM_YEAR_BASE
+#define TM_YEAR_BASE	1900
+#endif /* !defined TM_YEAR_BASE */
+
+#ifndef SECSPERMIN
+#define SECSPERMIN	60
+#endif /* !defined SECSPERMIN */
+
+#include "syslog.h"
 #ifndef NO_SOCKETS
 #include "sys/socket.h"
 #include "netinet/in.h"
@@ -67,22 +78,6 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #ifndef NTIME_MSG
 #define NTIME_MSG	"{"
 #endif /* !defined NTIME_MSG */
-
-#ifndef EXIT_SUCCESS
-#define EXIT_SUCCESS	0
-#endif /* !defined EXIT_SUCCESS */
-
-#ifndef EXIT_FAILURE
-#define EXIT_FAILURE	1
-#endif /* !defined EXIT_FAILURE */
-
-#ifndef TRUE
-#define TRUE		1
-#endif /* !defined TRUE */
-
-#ifndef FALSE
-#define FALSE		0
-#endif /* !defined FALSE */
 
 extern double		atof();
 extern char **		environ;
@@ -234,7 +229,7 @@ char *	argv[];
 				** The normal check won't work since
 				** the given time is valid in GMT.
 				*/
-				if (atoi(cp + 1) >= 60)
+				if (atoi(cp + 1) >= SECSPERMIN)
 					wildinput("time", value,
 						"out of range seconds given");
 			}
@@ -462,7 +457,7 @@ struct tm *	tmp;
 	for ( ; ; ) {
 		if (cp == NULL) {
 			(void) fprintf(stderr,
-				"date: error: can't allocate memory\n");
+				"date: error: can't get memory\n");
 			errensure();
 			(void) exit(retval);
 		}

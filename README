@@ -58,7 +58,7 @@ is particularly useful, but rather to:
 The information in the time zone data files is by no means authoritative;
 if you know that the rules are different from those in a file, by all means
 feel free to change file (and please send the changed version to
-ado@ncifcrf.gov for use in the future).  Europeans take note!
+tz@elsie.nci.nih.gov for use in the future).  Europeans take note!
 
 Thanks to these Timezone Caballeros who've made major contributions to the
 time conversion package:  Keith Bostic; Bob Devine; Robert Elz; Guy Harris;

@@ -4,9 +4,11 @@
 
 #include "stdio.h"
 
-#ifdef OBJECTID
+#ifndef lint
+#ifndef NOID
 static char	sccsid[] = "%W%";
-#endif
+#endif /* !NOID */
+#endif /* !lint */
 
 #include "ctype.h"
 

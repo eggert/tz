@@ -1,5 +1,5 @@
 /*
-** XXX--handle systems where asctime/localtime return NULL
+** XXX--fix hunt strategy to avoid problems on systems where time_t is floating.
 */
 
 static char	elsieid[] = "%W%";
@@ -176,6 +176,8 @@ char *	argv[];
 	time_t			newt;
 	struct tm		tm;
 	struct tm		newtm;
+	register struct tm *	tmp;
+	register struct tm *	newtmp;
 
 	INITIALIZE(cutlotime);
 	INITIALIZE(cuthitime);
@@ -267,8 +269,11 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 		show(argv[i], t, TRUE);
 		if (t < cutlotime)
 			t = cutlotime;
-		tm = *localtime(&t);
-		(void) strncpy(buf, abbr(&tm), (sizeof buf) - 1);
+		tmp = localtime(&t);
+		if (tmp != NULL) {
+			tm = *tmp;
+			(void) strncpy(buf, abbr(&tm), (sizeof buf) - 1);
+		}
 		for ( ; ; ) {
 			if (t >= cuthitime)
 				break;
@@ -277,17 +282,25 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 				break;
 			if (newt <= t)
 				break;
-			newtm = *localtime(&newt);
-			if (delta(&newtm, &tm) != (newt - t) ||
+			newtmp = localtime(&newt);
+			if (newtmp != NULL)
+				newtm = *newtmp;
+			if ((tmp == NULL || newtmp == NULL) ?  (tmp != newtmp) :
+				(delta(&newtm, &tm) != (newt - t) ||
 				newtm.tm_isdst != tm.tm_isdst ||
-				strcmp(abbr(&newtm), buf) != 0) {
+				strcmp(abbr(&newtm), buf) != 0)) {
 					newt = hunt(argv[i], t, newt);
-					newtm = *localtime(&newt);
-					(void) strncpy(buf, abbr(&newtm),
-						(sizeof buf) - 1);
+					newtmp = localtime(&newt);
+					if (newtmp != NULL) {
+						newtm = *newtmp;
+						(void) strncpy(buf,
+							abbr(&newtm),
+							(sizeof buf) - 1);
+					}
 			}
 			t = newt;
 			tm = newtm;
+			tmp = newtmp;
 		}
 		t = absolute_max_time;
 		t -= SECSPERHOUR * HOURSPERDAY;
@@ -442,18 +455,26 @@ int	v;
 
 	(void) printf("%-*s  ", (int) longest, zone);
 	if (v) {
-		dumptime(gmtime(&t));
-		(void) printf(" UTC = ");
+		tmp = gmtime(&t);
+		if (tmp == NULL) {
+			(void) printf("%g", (double) t);
+		} else {
+			dumptime(tmp);
+			(void) printf(" UTC");
+		}
+		(void) printf(" = ");
 	}
 	tmp = localtime(&t);
 	dumptime(tmp);
-	if (*abbr(tmp) != '\0')
-		(void) printf(" %s", abbr(tmp));
-	if (v) {
-		(void) printf(" isdst=%d", tmp->tm_isdst);
+	if (tmp != NULL) {
+		if (*abbr(tmp) != '\0')
+			(void) printf(" %s", abbr(tmp));
+		if (v) {
+			(void) printf(" isdst=%d", tmp->tm_isdst);
 #ifdef TM_GMTOFF
-		(void) printf(" gmtoff=%ld", tmp->TM_GMTOFF);
+			(void) printf(" gmtoff=%ld", tmp->TM_GMTOFF);
 #endif /* defined TM_GMTOFF */
+		}
 	}
 	(void) printf("\n");
 }
@@ -487,6 +508,10 @@ register const struct tm *	timeptr;
 	register int		lead;
 	register int		trail;
 
+	if (timeptr == NULL) {
+		(void) printf("NULL");
+		return;
+	}
 	/*
 	** The packaged versions of localtime and gmtime never put out-of-range
 	** values in tm_wday or tm_mon, but since this code might be compiled

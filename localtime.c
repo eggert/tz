@@ -61,7 +61,7 @@ static const char	gmt[] = "GMT";
 
 /*
 ** The DST rules to use if TZ has no rules and we can't load TZDEFRULES.
-** We default to the current US rules (as of 1999-08-17).
+** We default to US rules as of 1999-08-17.
 ** POSIX 1003.1 section 8.1.1 says that the default DST rules are
 ** implementation dependent; for historical reasons, US rules are a
 ** common default.

@@ -1,8 +1,8 @@
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";
-#endif /* !NOID */
-#endif /* !lint */
+#endif /* !defined NOID */
+#endif /* !defined lint */
 
 #include "stdio.h"
 #include "tzfile.h"
@@ -437,7 +437,7 @@ char *	argv[];
 
 #ifdef unix
 	umask(umask(022) | 022);
-#endif
+#endif /* defined unix */
 	progname = argv[0];
 	while ((c = getopt(argc, argv, "d:l:L:vs")) != EOF)
 		switch (c) {

@@ -8,21 +8,8 @@ static char	elsieid[] = "%W%";
 #include "time.h"
 #include "tzfile.h"
 #include "string.h"
-#include "nonstd.h"
-
-#ifdef __STDC__
 #include "stdlib.h"
-#else /* !defined __STDC__ */
-#include "sys/types.h"
-#endif /* !defined __STDC__ */
-
-#ifndef EXIT_SUCCESS
-#define EXIT_SUCCESS	0
-#endif /* !defined EXIT_SUCCESS */
-
-#ifndef EXIT_FAILURE
-#define EXIT_FAILURE	1
-#endif /* !defined EXIT_FAILURE */
+#include "nonstd.h"
 
 #ifndef TRUE
 #define TRUE		1
@@ -30,6 +17,7 @@ static char	elsieid[] = "%W%";
 #endif /* !defined TRUE */
 
 extern char **	environ;
+extern void	ifree P((char * p));
 extern char *	imalloc P((int n));
 extern int	getopt P((int argc, char * argv[], char * options));
 extern char *	optarg;
@@ -38,8 +26,9 @@ extern char *	tzname[2];
 extern void	tzset P((void));
 
 static int	longest;
-static void     readerr P((FILE * fp, char * progname, char * filename));
-static void	show P((char * zone, time_t t, int v));
+static void     readerr P((FILE * fp,
+			const char * progname, const char * filename));
+static void	show P((const char * zone, time_t t, int v));
 static long	tzdecode P((const char * buffer));
 
 static long
@@ -59,17 +48,17 @@ main(argc, argv)
 int	argc;
 char *	argv[];
 {
-	register FILE *	fp;
-	register int	i, j, c;
-	register int	vflag;
-	register char *	cutoff;
-	register int	cutyear;
-	register long	cuttime, k;
-	time_t		now;
-	time_t		t;
-	long		leapcnt, timecnt;
-	long		typecnt, charcnt;
-	char		buf[BUFSIZ];
+	register FILE *		fp;
+	register int		i, j, c;
+	register int		vflag;
+	register const char *	cutoff;
+	register int		cutyear;
+	register long		cuttime, k;
+	time_t			now;
+	time_t			t;
+	long			leapcnt, timecnt;
+	long			typecnt, charcnt;
+	char			buf[BUFSIZ];
 
 	vflag = 0;
 	cutoff = NULL;
@@ -80,7 +69,7 @@ char *	argv[];
 	if (c != EOF || optind == argc - 1 && strcmp(argv[optind], "=") == 0) {
 		(void) fprintf(stderr, "%s: usage is %s [ -v ] zonename ...\n",
 			argv[0], argv[0]);
-		exit(EXIT_FAILURE);
+		(void) exit(EXIT_FAILURE);
 	}
 	if (cutoff != NULL)
 		cutyear = atoi(cutoff);
@@ -88,7 +77,7 @@ char *	argv[];
 	** VERY approximate.
 	*/
 	cuttime = (long) (cutyear - EPOCH_YEAR) *
-		SECS_PER_HOUR * HOURS_PER_DAY * DAYS_PER_NYEAR;
+		SECSPERHOUR * HOURSPERDAY * DAYSPERNYEAR;
 	(void) time(&now);
 	longest = 0;
 	for (i = optind; i < argc; ++i)
@@ -103,7 +92,7 @@ char *	argv[];
 		if (tzequals == NULL) {
 			(void) fprintf(stderr, "%s: can't allocate memory\n",
 				argv[0]);
-			exit(EXIT_FAILURE);
+			(void) exit(EXIT_FAILURE);
 		}
 		(void) sprintf(tzequals, "TZ=%s", argv[i]);
 		fakeenv[0] = tzequals;
@@ -130,7 +119,7 @@ char *	argv[];
 					(void) fprintf(stderr,
 "%s: timezone name %s/%s is too long\n",
 						argv[0], TZDIR, argv[i]);
-					exit(EXIT_FAILURE);
+					(void) exit(EXIT_FAILURE);
 				}
 				(void) sprintf(buf, "%s/%s", TZDIR, argv[i]);
 				fp = fopen(buf, "rb");
@@ -138,11 +127,13 @@ char *	argv[];
 			if (fp == NULL) {
 				(void) fprintf(stderr, "%s: Can't open ",
 					argv[0]);
-				perror(argv[i]);
-				exit(EXIT_FAILURE);
+				(void) perror(argv[i]);
+				(void) exit(EXIT_FAILURE);
 			}
-			if (fread((char *) &tzh, sizeof tzh, 1, fp) != 1)
-				readerr(fp, argv[0], argv[i]);
+			if (fread((genericptr_t) &tzh,
+				(fread_size_t) sizeof tzh,
+				(fread_size_t) 1, fp) != 1)
+					readerr(fp, argv[0], argv[i]);
 			leapcnt = tzdecode(tzh.tzh_leapcnt);
 			timecnt = tzdecode(tzh.tzh_timecnt);
 			typecnt = tzdecode(tzh.tzh_typecnt);
@@ -152,13 +143,15 @@ char *	argv[];
 		if (t > 0)		/* time_t is unsigned */
 			t = 0;
 		show(argv[i], t, TRUE);
-		t += SECS_PER_HOUR * HOURS_PER_DAY;
+		t += SECSPERHOUR * HOURSPERDAY;
 		show(argv[i], t, TRUE);
 		for (k = timecnt; k > 0; --k) {
 			char	code[4];
 
-			if (fread((char *) code, sizeof code, 1, fp) != 1)
-				readerr(fp, argv[0], argv[i]);
+			if (fread((genericptr_t) code,
+				(fread_size_t) sizeof code,
+				(fread_size_t) 1, fp) != 1)
+					readerr(fp, argv[0], argv[i]);
 			t = tzdecode(code);
 			if (cutoff != NULL && t > cuttime)
 				break;
@@ -171,8 +164,10 @@ char *	argv[];
 		for (k = leapcnt; k > 0; --k) {
 			char	code[4];
 
-			if (fread((char *) code, sizeof code, 1, fp) != 1)
-				readerr(fp, argv[0], argv[i]);
+			if (fread((genericptr_t) code,
+				(fread_size_t) sizeof code,
+				(fread_size_t) 1, fp) != 1)
+					readerr(fp, argv[0], argv[i]);
 			(void) fseek(fp, (long) sizeof code, 1);
 			t = tzdecode(code);
 			if (cutoff != NULL && t > cuttime)
@@ -183,33 +178,33 @@ char *	argv[];
 		}
 		if (fp != NULL && fclose(fp)) {
 			(void) fprintf(stderr, "%s: Error closing ", argv[0]);
-			perror(argv[i]);
-			exit(EXIT_FAILURE);
+			(void) perror(argv[i]);
+			(void) exit(EXIT_FAILURE);
 		}
 		t = 0xffffffff;
 		if (t < 0)		/* time_t is signed */
 			t = 0x7fffffff ;
-		t -= SECS_PER_HOUR * HOURS_PER_DAY;
+		t -= SECSPERHOUR * HOURSPERDAY;
 		show(argv[i], t, TRUE);
-		t += SECS_PER_HOUR * HOURS_PER_DAY;
+		t += SECSPERHOUR * HOURSPERDAY;
 		show(argv[i], t, TRUE);
-		free(tzequals);
+		ifree(tzequals);
 	}
 	if (fflush(stdout) || ferror(stdout)) {
 		(void) fprintf(stderr, "%s: Error writing standard output ",
 			argv[0]);
-		perror("standard output");
-		exit(EXIT_FAILURE);
+		(void) perror("standard output");
+		(void) exit(EXIT_FAILURE);
 	}
 	return 0;
 }
 
 static void
 show(zone, t, v)
-char *	zone;
-time_t	t;
+const char *	zone;
+time_t		t;
 {
-	struct tm *		tmp;
+	const struct tm *	tmp;
 	extern struct tm *	localtime();
 
 	(void) printf("%-*s  ", longest, zone);
@@ -231,12 +226,12 @@ time_t	t;
 static void
 readerr(fp, progname, filename)
 FILE *	fp;
-char *	progname;
-char *	filename;
+const char *	progname;
+const char *	filename;
 {
 	(void) fprintf(stderr, "%s: Error reading ", progname);
 	if (ferror(fp))
-		perror(filename);
+		(void) perror(filename);
 	else	(void) fprintf(stderr, "%s: Premature EOF\n", filename);
-	exit(EXIT_FAILURE);
+	(void) exit(EXIT_FAILURE);
 }

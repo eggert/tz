@@ -1,3 +1,8 @@
+/*
+** XXX--handle systems where time_t is floating
+** XXX--handle systems where asctime/localtime return NULL
+*/
+
 static char	elsieid[] = "%W%";
 
 /*
@@ -11,6 +16,14 @@ static char	elsieid[] = "%W%";
 #include "sys/types.h"	/* for time_t */
 #include "time.h"	/* for struct tm */
 #include "stdlib.h"	/* for exit, malloc, atoi */
+
+#ifndef ZDUMP_LO_YEAR
+#define ZDUMP_LO_YEAR	(-1000)
+#endif /* !defined ZDUMP_LO_YEAR */
+
+#ifndef ZDUMP_HI_YEAR
+#define ZDUMP_HI_YEAR	5000
+#endif /* !defined ZDUMP_HI_YEAR */
 
 #ifndef MAX_STRING_LENGTH
 #define MAX_STRING_LENGTH	1024
@@ -71,6 +84,10 @@ static char	elsieid[] = "%W%";
 #define isleap_sum(a, b)	isleap((a) % 400 + (b) % 400)
 #endif /* !defined isleap_sum */
 
+#define SECSPERDAY	((long) SECSPERHOUR * HOURSPERDAY)
+#define SECSPERNYEAR	(SECSPERDAY * DAYSPERNYEAR)
+#define SECSPERLYEAR	(SECSPERNYEAR + SECSPERDAY)
+
 #if HAVE_GETTEXT
 #include "locale.h"	/* for setlocale */
 #include "libintl.h"
@@ -127,13 +144,17 @@ extern char *	optarg;
 extern int	optind;
 extern char *	tzname[2];
 
-static char *	abbr P((struct tm * tmp));
-static long	delta P((struct tm * newp, struct tm * oldp));
-static time_t	hunt P((char * name, time_t lot, time_t	hit));
+static time_t	absolute_min_time;
+static time_t	absolute_max_time;
 static size_t	longest;
 static char *	progname;
-static void	show P((char * zone, time_t t, int v));
+
+static char *	abbr P((struct tm * tmp));
+static long	delta P((struct tm * newp, struct tm * oldp));
 static void	dumptime P((const struct tm * tmp));
+static time_t	hunt P((char * name, time_t lot, time_t	hit));
+static void	setabsolutes();
+static void	show P((char * zone, time_t t, int v));
 static time_t	yeartot P((long y));
 
 int
@@ -145,20 +166,17 @@ char *	argv[];
 	register int		c;
 	register int		vflag;
 	register char *		cutarg;
-	register int		havecutloyear;
-	long			cutloyear;
-	long			cuthiyear;
+	register long		cutloyear = ZDUMP_LO_YEAR;
+	register long		cuthiyear = ZDUMP_HI_YEAR;
 	register time_t		cutlotime;
 	register time_t		cuthitime;
 	char **			fakeenv;
 	time_t			now;
 	time_t			t;
 	time_t			newt;
-	time_t			hibit;
 	struct tm		tm;
 	struct tm		newtm;
 
-	havecutloyear = FALSE;
 	INITIALIZE(cutlotime);
 	INITIALIZE(cuthitime);
 #if HAVE_GETTEXT
@@ -184,38 +202,36 @@ char *	argv[];
 		(optind == argc - 1 && strcmp(argv[optind], "=") == 0)) {
 			(void) fprintf(stderr,
 _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
-				argv[0], argv[0]);
+				progname, progname);
 			(void) exit(EXIT_FAILURE);
 	}
-	if (cutarg != NULL) {
-		int	y;
-		char	dummy;
+	if (vflag) {
+		if (cutarg != NULL) {
+			long	lo;
+			long	hi;
+			char	c;
 
-		if (sscanf(cutarg, "%ld%c", &cuthiyear, &dummy) == 1) {
-			cuthitime = yeartot(cuthiyear);
-		} else if (sscanf(cutarg, "%ld,%ld%c",
-			&cutloyear, &cuthiyear, &dummy) == 2) {
-				havecutloyear = TRUE;
-				if (cutloyear >= cuthiyear) {
-(void) fprintf(stderr, _("%s: cutloyear >= cuthiyear in -c argument %s\n"),
-						argv[0], cutarg);
-					(void) exit(EXIT_FAILURE);
-				}
-			cutlotime = yeartot(cutloyear);
-			cuthitime = yeartot(cuthiyear);
-		} else {
+			if (sscanf(cutarg, "%ld%c", &hi, &c) == 1) {
+				cuthiyear = hi;
+			} else if (sscanf(cutarg, "%ld,%ld%c",
+				&lo, &hi, &c) == 2) {
+					cutloyear = lo;
+					cuthiyear = hi;
+			} else {
 (void) fprintf(stderr, _("%s: wild -c argument %s\n"),
-				argv[0], cutarg);
-			(void) exit(EXIT_FAILURE);
+					progname, cutarg);
+				(void) exit(EXIT_FAILURE);
+			}
 		}
+		setabsolutes();
+		cutlotime = yeartot(cutloyear);
+		cuthitime = yeartot(cuthiyear);
 	}
 	(void) time(&now);
 	longest = 0;
 	for (i = optind; i < argc; ++i)
 		if (strlen(argv[i]) > longest)
 			longest = strlen(argv[i]);
-	for (hibit = 1; (hibit << 1) != 0; hibit <<= 1)
-		continue;
 	{
 		register int	from;
 		register int	to;
@@ -245,24 +261,18 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 			show(argv[i], now, FALSE);
 			continue;
 		}
-		/*
-		** Get lowest value of t.
-		*/
-		t = hibit;
-		if (t > 0)		/* time_t is unsigned */
-			t = 0;
+		t = absolute_min_time;
 		show(argv[i], t, TRUE);
 		t += SECSPERHOUR * HOURSPERDAY;
 		show(argv[i], t, TRUE);
-		if (cutarg != NULL)
-			t = cutlotime;
+		t = cutlotime;
 		tm = *localtime(&t);
 		(void) strncpy(buf, abbr(&tm), (sizeof buf) - 1);
 		for ( ; ; ) {
-			if (cutarg != NULL && t >= cuthitime)
+			if (t >= cuthitime)
 				break;
 			newt = t + SECSPERHOUR * 12;
-			if (cutarg != NULL && newt >= cuthitime)
+			if (newt >= cuthitime)
 				break;
 			if (newt <= t)
 				break;
@@ -278,19 +288,14 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 			t = newt;
 			tm = newtm;
 		}
-		/*
-		** Get highest value of t.
-		*/
-		t = ~((time_t) 0);
-		if (t < 0)		/* time_t is signed */
-			t &= ~hibit;
+		t = absolute_max_time;
 		t -= SECSPERHOUR * HOURSPERDAY;
 		show(argv[i], t, TRUE);
 		t += SECSPERHOUR * HOURSPERDAY;
 		show(argv[i], t, TRUE);
 	}
 	if (fflush(stdout) || ferror(stdout)) {
-		(void) fprintf(stderr, "%s: ", argv[0]);
+		(void) fprintf(stderr, "%s: ", progname);
 		(void) perror(_("Error writing standard output"));
 		(void) exit(EXIT_FAILURE);
 	}
@@ -301,25 +306,60 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 		continue;
 }
 
+static void
+setabsolutes()
+{
+	if (0.5 == (time_t) 0.5) {
+		/*
+		** time_t is floating.
+		*/
+(void) fprintf(stderr, _("%s: cannot use -v on system with floating time_t\n"),
+			progname);
+		(void) exit(EXIT_FAILURE);
+	} else if (0 > (time_t) -1) {
+		/*
+		** time_t is signed.
+		*/
+		register time_t	hibit;
+
+		for (hibit = 1; (hibit << 1) != 0; hibit <<= 1)
+			continue;
+		absolute_min_time = hibit;
+		absolute_max_time = ~hibit;
+	} else {
+		/*
+		** time_t is unsigned.
+		*/
+		absolute_min_time = 0;
+		absolute_max_time = ~0;
+	}
+}
+
 static time_t
 yeartot(y)
 const long	y;
 {
-	register time_t	t;
 	register long	myy;
+	register long	seconds;
+	register time_t	t;
 
-	t = 0;
 	myy = EPOCH_YEAR;
+	t = 0;
 	while (myy != y) {
 		if (myy < y) {
-			t += DAYSPERNYEAR + isleap(myy);
+			seconds = isleap(myy) ? SECSPERLYEAR : SECSPERNYEAR;
 			++myy;
+			if (absolute_max_time - t < seconds)
+				return absolute_max_time;
+			t += seconds;
 		} else {
 			--myy;
-			t -= DAYSPERNYEAR + isleap(myy);
+			seconds = isleap(myy) ? SECSPERLYEAR : SECSPERNYEAR;
+			if (t - absolute_min_time < seconds)
+				return absolute_min_time;
+			t -= seconds;
 		}
 	}
-	t *= (long) SECSPERHOUR * (long) HOURSPERDAY;
 	return t;
 }
 

@@ -615,65 +615,6 @@ long				offset;
 }
 
 /*
-** The U.S. tables, including the latest hack.
-*/
-
-/*
-** Define MONTH_NTH_DAY_OF_WEEK rule for U.S. federal tables.
-*/
-#define	MD_RULE(week, month) \
-	{ MONTH_NTH_DAY_OF_WEEK, 0, week, month, 2 * SECS_PER_HOUR }
-
-/*
-** Define DAY_OF_YEAR rule for U.S. federal tables.
-*/
-#define	DOY_RULE(day)		{ DAY_OF_YEAR, day, 0, 0, 2 * SECSPERHOUR }
-
-static struct rule usdaytab[] = {
-		/* 1970: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1971: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1972: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1973: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1974: Jan 6 - last Sun. in Oct */
-	DOY_RULE(5),   MD_RULE(5, 10),
-		/* 1975: last Sun. in Feb - last Sun. in Oct */
-	MD_RULE(5, 2), MD_RULE(5, 10),
-		/* 1976: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1977: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1978: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1979: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1980: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1981: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1982: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1983: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1984: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1985: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1986: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-};
-
-#define	N_US_RULES	(sizeof usdaytab / sizeof usdaytab[0])
-
-static struct rule repeating[] = {
-		/* 1987 on: first Sun. in Apr - last Sun. in Oct */
-	MD_RULE(0, 4), MD_RULE(5, 10)
-};
-
-/*
 ** Given a POSIX section 8-style TZ string, fill in the rule tables as
 ** appropriate.
 */
@@ -719,20 +660,8 @@ register struct state *	sp;
 				return -1;
 		} else
 			dstoffset = stdoffset - 1 * SECSPERHOUR;
-		sp->typecnt = 2;	/* standard time and DST */
-		sp->charcnt = stdlen + 1 + dstlen + 1;
-		/*
-		** Two transitions per year, from 1970 to 2038.
-		*/
-		sp->timecnt = 2 * (2038 - 1970 + 1);
-		if (sp->timecnt > TZ_MAX_TIMES)
+		if (stdlen + 1 + dstlen + 1 > sizeof sp->chars)
 			return -1;
-		sp->ttis[0].tt_gmtoff = -dstoffset;
-		sp->ttis[0].tt_isdst = 1;
-		sp->ttis[0].tt_abbrind = stdlen + 1;
-		sp->ttis[1].tt_gmtoff = -stdoffset;
-		sp->ttis[1].tt_isdst = 0;
-		sp->ttis[1].tt_abbrind = 0;
 		if (*name == ',' || *name == ';') {
 			++name;
 			if ((name = getrule(name, &start)) == NULL)
@@ -743,6 +672,19 @@ register struct state *	sp;
 				return -1;
 			if (*name != '\0')
 				return -1;
+			sp->typecnt = 2;	/* standard time and DST */
+			/*
+			** Two transitions per year, from 1970 to 2038.
+			*/
+			sp->timecnt = 2 * (2038 - 1970 + 1);
+			if (sp->timecnt > TZ_MAX_TIMES)
+				return -1;
+			sp->ttis[0].tt_gmtoff = -dstoffset;
+			sp->ttis[0].tt_isdst = 1;
+			sp->ttis[0].tt_abbrind = stdlen + 1;
+			sp->ttis[1].tt_gmtoff = -stdoffset;
+			sp->ttis[1].tt_isdst = 0;
+			sp->ttis[1].tt_abbrind = 0;
 			atp = sp->ats;
 			typep = sp->types;
 			for (year = 1970, janfirst = 0; year <= 2038; year++) {
@@ -765,50 +707,43 @@ register struct state *	sp;
 					year_lengths[isleap(year)] * SECSPERDAY;
 			}
 		} else {
+			register int	i;
+
 			if (*name != '\0')
 				return -1;
-			atp = sp->ats;
-			typep = sp->types;
-			for (year = 1970, janfirst = 0, i = 0; i < N_US_RULES;
-			    ++year, i += 2) {
-				*atp++ = transtime(janfirst, year,
-					&usdaytab[i], stdoffset);
-				*typep++ = 0;	/* DST begins */
-				*atp++ = transtime(janfirst, year,
-					&usdaytab[i + 1], dstoffset);
-				*typep++ = 1;	/* DST ends */
-				janfirst +=
-					year_lengths[isleap(year)] * SECSPERDAY;
-			}
-			for ( ; year <= 2038; year++) {
-				*atp++ = transtime(janfirst, year,
-					&repeating[0], stdoffset);
-				*typep++ = 0;	/* DST begins */
-				*atp++ = transtime(janfirst, year,
-					&repeating[1], dstoffset);
-				*typep++ = 1;	/* DST ends */
-				janfirst +=
-					year_lengths[isleap(year)] * SECSPERDAY;
-			}
+			if (tzload("_ST0_DT", sp) != 0)
+				return -1;
+			/*
+			** Adjust the types.
+			*/
+			for (i = 0; i < sp->typecnt; ++i)
+				if (sp->ttis[i].tt_isdst) {
+					sp->ttis[i].tt_gmtoff = -dstoffset;
+					sp->ttis[i].tt_abbrind = stdlen + 1;
+				} else {
+					sp->ttis[i].tt_gmtoff = -stdoffset;
+					sp->ttis[i].tt_abbrind = 0;
+				}
+			/*
+			** Adjust the times.
+			*/
+			for (i = 0; i < sp->timecnt; ++i)
+				sp->ats[i] += stdoffset;	/* -= stdoff? */
 		}
 	} else {
+		dstlen = 0;
 		sp->typecnt = 1;		/* only standard time */
 		sp->timecnt = 0;
-		sp->charcnt = stdlen + 1;
 		sp->ttis[0].tt_gmtoff = -stdoffset;
 		sp->ttis[0].tt_isdst = 0;
 		sp->ttis[0].tt_abbrind = 0;
 	}
+	sp->charcnt = stdlen + 1 + dstlen + 1;
 	if (sp->charcnt > sizeof sp->chars)
 		return -1;
-	cp = sp->chars;
-	(void) strncpy(cp, stdname, stdlen);
-	cp += stdlen;
-	*cp++ = '\0';
-	if (sp->typecnt == 2) {
-		(void) strncpy(cp, dstname, dstlen);
-		*(cp + dstlen) = '\0';
-	}
+	(void) strcpy(sp->chars, stdname);
+	if (dstlen != 0)
+		(void) strcpy(sp->chars + stdlen + 1, dstname);
 	sp->leapcnt = 0;		/* so, we're off a little */
 	if (sp == &lclstate)
 		settzname(sp);

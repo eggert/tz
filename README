@@ -5,10 +5,9 @@ TODO BEFORE comp.sources RELEASE:
 *	Final lint/spell/shar-unpacking check
 *	Get everything except usno date copyrighted.
 *	Turn most everything into version "5.1".
-*	Conditionalize date manual page on USG_COMPAT.
-*	Gotta get "date.c" up to speed, and must conditionalize "logwtmp.c"
-	for the System V world.
-	Can't use with Suns since code to handle "-a" is missing.
+*	Update date.1
+*	Handle Saudi glitch
+*	Conditionalize logwtmp.c
 
 ===============================================================================
 

@@ -38,6 +38,10 @@ static char	privatehid[] = "%W%";
 #define HAVE_GETTEXT		0
 #endif /* !defined HAVE_GETTEXT */
 
+#ifndef HAVE_INCOMPATIBLE_CTIME_R
+#define HAVE_INCOMPATIBLE_CTIME_R	0
+#endif /* !defined INCOMPATIBLE_CTIME_R */
+
 #ifndef HAVE_SETTIMEOFDAY
 #define HAVE_SETTIMEOFDAY	3
 #endif /* !defined HAVE_SETTIMEOFDAY */
@@ -65,6 +69,11 @@ static char	privatehid[] = "%W%";
 #ifndef LOCALE_HOME
 #define LOCALE_HOME		"/usr/lib/locale"
 #endif /* !defined LOCALE_HOME */
+
+#if HAVE_INCOMPATIBLE_CTIME_R
+#define asctime_r _incompatible_asctime_r
+#define ctime_r _incompatible_ctime_r
+#endif /* HAVE_INCOMPATIBLE_CTIME_R */
 
 /*
 ** Nested includes
@@ -276,6 +285,13 @@ char *	scheck P((const char *string, const char *format));
 #ifndef TZ_DOMAIN
 #define TZ_DOMAIN "tz"
 #endif /* !defined TZ_DOMAIN */
+
+#if HAVE_INCOMPATIBLE_CTIME_R
+#undef asctime_r
+#undef ctime_r
+char *asctime_r P((struct tm const *, char *));
+char *ctime_r P((time_t const *, char *));
+#endif /* HAVE_INCOMPATIBLE_CTIME_R */
 
 /*
 ** UNIX was a registered trademark of UNIX System Laboratories in 1993.

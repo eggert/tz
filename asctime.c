@@ -28,6 +28,8 @@ static char	elsieid[] = "%W%";
 ** leading zeroes to get the newline in the traditional place.
 ** The -4 ensures that we get four characters of output even if
 ** we call a strftime variant that produces fewer characters for some years.
+** The ISO C 1999 and POSIX 1003.1-2004 standards prohibit padding the year,
+** but many implementations pad anyway; most likely the standards are buggy.
 */
 #define ASCTIME_FMT	"%.3s %.3s%3d %02.2d:%02.2d:%02.2d %-4s\n"
 /*

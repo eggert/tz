@@ -66,6 +66,7 @@ $(ENCHILADA):
 sure:	$(TZCSRCS) $(TZDSRCS)
 	lint $(LINTFLAGS) $(TZCSRCS)
 	lint $(LINTFLAGS) $(TZDSRCS)
+	lint $(LINTFLAGS) ctime.c
 
 clean:
 	rm -f core *.o *.out REDID_BINARIES years tzdump tzcomp BUNDLE \#*

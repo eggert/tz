@@ -19,13 +19,14 @@ static struct tzinfo	tzinfo;
 
 char *			tz_abbr;	/* set by localtime; available to all */
 
-static int	tzload(tzname)
+static
+tzload(tzname)
 register char *	tzname;
 {
 	register struct tzinfo *	tzp;
 	register struct dsinfo *	dsp;
 	register int			fid;
-	register int			i, j, ok;
+	register int			i, hitype, ok;
 	char				buf[256];
 
 	if (tzname == 0)
@@ -35,48 +36,50 @@ register char *	tzname;
 		(void) strcpy(buf, TZDIR);
 		(void) strcat(buf, "/");
 		if ((strlen(buf) + strlen(tzname) + 1) > sizeof buf)
-			return -1;
+			goto oops;
 		(void) strcat(buf, tzname);
 		tzname = buf;
 	}
-	/*
-	** We might be running set-user-ID, so. . .
-	*/
-	if (access(tzname, 4) != 0)
-		return -1;
 	if ((fid = open(tzname, 0)) == -1)
-		return -1;
+		goto oops;
 	ok = read(fid, (char *) tzp, sizeof *tzp) == sizeof *tzp;
 	if (close(fid) != 0 || !ok)
-		return -1;
+		goto oops;
 	/*
 	** Check the information.
 	*/
-	for (i = -1; i < tzp->tz_timecnt; ++i) {
-		dsp = tzp->tz_dsinfo;
-		if (i >= 0)
-			if (i > 0 && tzp->tz_times[i] <= tzp->tz_times[i - 1])
-				return -1;
-			else	dsp += tzp->tz_types[i];
-		if (dsp->ds_isdst != 0 && dsp->ds_isdst != 1)
-			return -1;
-		j = 0;
-		while (dsp->ds_abbr[j] != '\0')
-			if (++j > TZ_ABBR_LEN)
-				return -1;
-		if (j == 0)
-			return -1;
-		while (++j <= TZ_ABBR_LEN)
-			if (dsp->ds_abbr[j] != '\0')
-				return -1;
+	hitype = 0;
+	for (i = 0; i < tzp->tz_timecnt; ++i) {
+		if (i > 0 && tzp->tz_times[i] <= tzp->tz_times[i - 1])
+			goto oops;
+		if (tzp->tz_types[i] > hitype)
+			hitype = tzp->tz_types[i];
+	}
+	if (hitype > TZ_MAX_TYPES)
+		goto oops;
+	for (i = 0; i <= hitype; ++i) {
+		dsp = tzp->tz_dsinfo + i;
+		if (dsp->ds_abbr[TZ_ABBR_LEN] != '\0')
+			goto oops;
 	}
 	return 0;
+oops:
+	/*
+	** Clobber tzinfo (in case we're running set-user-id and have been
+	** used to read a protected file).
+	*/
+	{
+		struct tzinfo	nonsense;
+
+		*tzp = nonsense;
+	}
+	return -1;
 }
 
 /*
-** settz("")			Use built-in GMT.
-** settz(0)			Use TZDEFAULT.
-** settz(otherwise)		Use otherwise.
+** settz("")		Use built-in GMT.
+** settz(0)		Use TZDEFAULT.
+** settz(otherwise)	Use otherwise.
 */
 
 settz(tzname)
@@ -133,11 +136,11 @@ long *timep;
 
 char *
 newctime(timep)
-long *timep;
+long *	timep;
 {
-	register char *			cp;
-	register char *			dp;
-	static char			buf[26 + TZ_ABBR_LEN + 1];
+	register char *	cp;
+	register char *	dp;
+	static char	buf[26 + TZ_ABBR_LEN + 1];
 
 	(void) strcpy(buf, asctime(newlocaltime(timep)));
 	dp = &buf[24];

@@ -1,9 +1,3 @@
-/*
-** TO DO:   does POSIX allow TZ variables such as UTC and UCT,
-**	    or must they be UTC0 and UCT0?  If UTC is allowed,
-**	    get rid of gmtokay nonsense in tzparse.
-*/
-
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";
@@ -133,8 +127,7 @@ static int		tmcomp P((const struct tm * atmp,
 static time_t		transtime P((time_t janfirst, int year,
 				const struct rule * rulep, long offset));
 static int		tzload P((const char * name, struct state * sp));
-static int		tzparse P((const char * name, struct state * sp,
-				int gmtokay));
+static int		tzparse P((const char * name, struct state * sp));
 
 #ifdef ALL_STATE
 static struct state *	lclptr;
@@ -617,10 +610,9 @@ const long				offset;
 */
 
 static int
-tzparse(name, sp, gmtokay)
+tzparse(name, sp)
 const char *			name;
 register struct state * const	sp;
-const int			gmtokay;
 {
 	const char *			stdname;
 	const char *			dstname;
@@ -638,7 +630,7 @@ const int			gmtokay;
 	stdlen = name - stdname;	/* length of standard zone name */
 	if (stdlen == 0)
 		return -1;
-	if (gmtokay && *name == '\0')
+	if (*name == '\0')
 		stdoffset = 0;
 	else {
 		name = getoffset(name, &stdoffset);
@@ -828,9 +820,8 @@ static void
 gmtload(sp)
 struct state * const	sp;
 {
-	if (tzload("GMT", sp) != 0)
-		if (tzparse("GMT", sp, TRUE) != 0)
-			gmtbuiltin(sp);
+	if (tzload("GMT0", sp) != 0)
+		(void) tzparse("GMT0", sp);
 }
 
 void
@@ -853,7 +844,7 @@ tzset()
 		gmtbuiltin(lclptr);	/* built-in GMT by request */
 	else if (tzload(name, lclptr) != 0)
 		if (name == NULL || name[0] == ':' ||
-			tzparse(name, lclptr, FALSE) != 0)
+			tzparse(name, lclptr) != 0)
 				gmtload(lclptr);
 	settzname();
 }

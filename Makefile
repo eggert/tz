@@ -191,7 +191,7 @@ GCC_DEBUG_FLAGS = -Dlint -g -O -fno-common \
 #	-DPCTS
 # to the end of the "CFLAGS=" line.
 #
-# If you want strict compliance with XPG4 as of April 9, 1994, add
+# If you want strict compliance with XPG4 as of 1994-04-09, add
 #	-DXPG4_1994_04_09
 # to the end of the "CFLAGS=" line.  This causes "strftime" to always return
 # 53 as a week number (rather than 52 or 53) for those days in January that

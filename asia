@@ -29,11 +29,12 @@
 #	4:00	BSK BSD	Baku*
 #	4:00	GST GDT	Gulf*
 #	4:30	AFT	Afghanistan*
-#	5:00	TSK TSD	Tashkent*
+#	5:00	ASK ASD	Ashkhabad*
 #	5:00	PKT	Pakistan*
 #	5:30	IST IST	India
 #	5:45	NPT	Nepal*
 #	6:00	BGT	Bengal, Bangladesh*
+#	6:00	TSK TSD	Tashkent*
 #	6:30	BMT	Burma*
 #	7:00	ICT	Indochina*
 #	7:00	JVT	Java*
@@ -60,13 +61,14 @@
 
 ###############################################################################
 
+# From Paul Eggert <eggert@twinsun.com> (May 28, 1994):
+# We don't know what happened to the clocks in the Caucausus and the ex-Soviet
+# Central Asia after 1990.  Until we get more info, stick with the pre-1991 rules.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Russia	1981	1984	-	Apr	1	0:00	1:00	D
 Rule	Russia	1981	1983	-	Oct	1	0:00	0	K
-Rule	Russia	1984	1990	-	Sep	lastSun	3:00	0	K
-Rule	Russia	1985	1990	-	Mar	lastSun	2:00	1:00	D
-Rule	Russia	1992	max	-	Sep	lastSun	2:00s	0	K
-Rule	Russia	1992	max	-	Mar	lastSun	2:00s	1:00	D
+Rule	Russia	1984	max	-	Sep	lastSun	3:00	0	K
+Rule	Russia	1985	max	-	Mar	lastSun	2:00	1:00	D
 
 # Afghanistan
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -78,15 +80,13 @@ Zone	Asia/Kabul	4:36:48 -	LMT	1890
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Yerevan	2:58:00 -	LMT	1924 May  2
 			3:00	-	MSK	1957 Mar
-			4:00	Russia	BS%s	1991 Sep 29 3:00
-			3:00	Russia	MS%s
+			4:00	Russia	BS%s
 
 # Azerbaijan
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Baku	3:19:24 -	LMT	1924 May  2
 			3:00	-	MSK	1957 Mar
-			4:00	Russia	BS%s	1991 Sep 29 3:00
-			3:00	Russia	MS%s
+			4:00	Russia	BS%s
 
 # Bahrain
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -277,8 +277,7 @@ Zone	Asia/Nicosia	2:13:28 -	LMT	1921 Nov 14
 Zone	Asia/Tbilisi	2:59:16 -	LMT	1880
 			2:59	-	LST	1924 May  2
 			3:00	-	MSK	1957 Mar
-			4:00	Russia	BS%s	1991 Sep 29 3:00
-			3:00	Russia	MS%s
+			4:00	Russia	BS%s
 
 # India
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -516,8 +515,7 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Almaty	5:07:48 -	LMT	1924 May  2
 			5:00	-	TSK	1957 Mar
-			6:00	Russia	TS%s	1991 Sep 29 3:00
-			5:00	Russia	TS%s
+			6:00	Russia	TS%s
 
 
 ###############################################################################
@@ -565,8 +563,7 @@ Zone	Asia/Kuwait	3:11:56 -	LMT	1950
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Frunze	4:58:24 -	LMT	1924 May  2
 			5:00	-	TSK	1957 Mar
-			6:00	Russia	TS%s	1991 Sep 29 3:00
-			5:00	Russia	TS%s
+			6:00	Russia	TS%s
 
 # Laos
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -755,8 +752,7 @@ Zone	Asia/Damascus	2:25:12 -	LMT	1920
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Dushanbe	4:35:12 -	LMT	1924 May  2
 			5:00	-	TSK	1957 Mar
-			6:00	Russia	TS%s	1991 Sep 29 3:00
-			5:00	Russia	TS%s
+			6:00	Russia	TS%s
 
 # Thailand
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -767,9 +763,8 @@ Zone	Asia/Bangkok	6:42:04	-	LMT	1880
 # Turkmenistan
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Ashkhabad	3:53:32 -	LMT	1924 May  2
-			4:00	-	BSK	1957 Mar
-			5:00	Russia	SS%s	1991 Sep 29 3:00
-			4:00	Russia	BS%s
+			4:00	-	ASK	1957 Mar
+			5:00	Russia	AS%s
 
 # United Arab Emirates
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -780,8 +775,7 @@ Zone	Asia/Dubai	3:41:12 -	LMT	1920
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Tashkent	4:37:12 -	LMT	1924 May  2
 			5:00	-	TSK	1957 Mar
-			6:00	Russia	TS%s	1991 Sep 29 3:00
-			5:00	Russia	TS%s
+			6:00	Russia	TS%s
 
 # Vietnam
 # From Paul Eggert <eggert@twinsun.com> (November 18, 1993):

@@ -54,7 +54,7 @@ MANDIR=		$(TOPDIR)/man
 # Library functions are put in an archive in LIBDIR.
 
 LIBDIR=		$(TOPDIR)/lib
-TZLIB=		$(LIBDIR)/libz.a
+TZLIB=		$(LIBDIR)/libtz.a
 
 # If you always want time values interpreted as "seconds since the epoch
 # (not counting leap seconds)", use

@@ -269,15 +269,15 @@ static struct lookup	begin_years[] = {
 	"minimum",		MIN_YEAR,
 	"maximum",		MAX_YEAR,
 	NULL,			0
-}
+};
 
 static struct lookup	end_years[] = {
 	"minimum",		MIN_YEAR,
 	"maximum",		MAX_YEAR,
 #define ONLY	EPOCH_YEAR	/* surely neither MIN_YEAR nor MAX_YEAR */
-	"only",			ONLY_YEAR,
+	"only",			ONLY,
 	NULL,			0
-}
+};
 
 static long	mon_lengths[2][12] = {	/* ". . .knuckles are 31. . ." */
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,

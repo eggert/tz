@@ -80,24 +80,21 @@ static const struct lc_time_T	C_time_locale = {
 
 	/*
 	** x_fmt
-	** Since the C language standard calls for
-	** "date, using locale's date format," anything goes.
+	** C99 requires this format.
 	** Using just numbers (as here) makes Quakers happier;
 	** it's also compatible with SVR4.
-	**
-	** XXX--might it be better to use the year-2000 friendly
-	**	%Y-%m-%d
-	** here?
 	*/
 	"%m/%d/%y",
 
 	/*
 	** c_fmt
+	** C99 requires this format.
+	** Previously this code used "%D %X", but we now conform to C99.
 	** Note that
-	**	"%a %b %d %H:%M:%S %Y"
+	**      "%a %b %d %H:%M:%S %Y"
 	** is used by Solaris 2.3.
 	*/
-	"%D %X",	/* %m/%d/%y %H:%M:%S */
+	"%a %b %e %T %Y",
 
 	/* am */
 	"AM",

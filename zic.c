@@ -741,7 +741,7 @@ struct temp {
 	struct rule *	t_rp;
 };
 
-static struct temp	temps[TZ_MAX_RULES];
+static struct temp	temps[TZ_MAX_TIMES];
 static int		ntemps;
 
 static
@@ -773,7 +773,7 @@ static
 addrule(rp, y)
 register struct rule *	rp;
 {
-	if (ntemps >= TZ_MAX_RULES) {
+	if (ntemps >= TZ_MAX_TIMES) {
 		filename = rp->r_filename;
 		linenum = rp->r_linenum;
 		error("too many transitions?!");
@@ -803,14 +803,14 @@ register struct zone *	zp;
 	linenum = zp->z_linenum;
 	t = tzero;
 	if (zp->z_nrules == 0) {	/* Piece of cake! */
-		t.tz_rulecnt = 0;
+		t.tz_timecnt = 0;
 		t.tz_dsinfo[0].ds_gmtoff = zp->z_gmtoff;
 		t.tz_dsinfo[0].ds_isdst = 0;
 		(void) strcpy(t.tz_dsinfo[0].ds_abbr, zp->z_format);
 		writezone(zp->z_name, &t);
 		return;
 	}
-	t.tz_rulecnt = 0;
+	t.tz_timecnt = 0;
 	/*
 	** See what the different Saving Time types are.
 	** Plug the indices into the rules.
@@ -854,7 +854,7 @@ register struct zone *	zp;
 		else for (y = rp->r_loyear; y <= rp->r_hiyear; ++y)
 			addrule(rp, y);
 	}
-	t.tz_rulecnt = ntemps;
+	t.tz_timecnt = ntemps;
 	(void) qsort((char *) temps, ntemps, sizeof *temps, tcomp);
 	for (i = 0; i < ntemps; ++i) {
 		t.tz_times[i] = temps[i].t_time - zp->z_gmtoff;

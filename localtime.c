@@ -134,6 +134,10 @@ static time_t		time2 P((struct tm *tmp,
 				void(*funcp) P((const time_t *,
 				long, struct tm*)),
 				long offset, int * okayp));
+static time_t		time2sub P((struct tm *tmp,
+				void(*funcp) P((const time_t *,
+				long, struct tm*)),
+				long offset, int * okayp, int do_norm_secs));
 static void		timesub P((const time_t * timep, long offset,
 				const struct state * sp, struct tm * tmp));
 static int		tmcomp P((const struct tm * atmp,
@@ -1276,11 +1280,12 @@ register const struct tm * const btmp;
 }
 
 static time_t
-time2(tmp, funcp, offset, okayp)
+time2sub(tmp, funcp, offset, okayp, do_norm_secs)
 struct tm * const	tmp;
 void (* const		funcp) P((const time_t*, long, struct tm*));
 const long		offset;
 int * const		okayp;
+const int		do_norm_secs;
 {
 	register const struct state *	sp;
 	register int			dir;
@@ -1293,6 +1298,11 @@ int * const		okayp;
 
 	*okayp = FALSE;
 	yourtm = *tmp;
+	if (do_norm_secs) {
+		if (normalize_overflow(&yourtm.tm_min, &yourtm.tm_sec,
+			SECSPERMIN))
+				return WRONG;
+	}
 	if (normalize_overflow(&yourtm.tm_hour, &yourtm.tm_min, MINSPERHOUR))
 		return WRONG;
 	if (normalize_overflow(&yourtm.tm_mday, &yourtm.tm_hour, HOURSPERDAY))
@@ -1419,6 +1429,24 @@ label:
 	(*funcp)(&t, offset, tmp);
 	*okayp = TRUE;
 	return t;
+}
+
+static time_t
+time2(tmp, funcp, offset, okayp)
+struct tm * const	tmp;
+void (* const		funcp) P((const time_t*, long, struct tm*));
+const long		offset;
+int * const		okayp;
+{
+	time_t	t;
+
+	/*
+	** First try without normalization of seconds
+	** (in case tm_sec contains a value associated with a leap second).
+	** If that fails, try with normalization of seconds.
+	*/
+	t = time2sub(tmp, funcp, offset, okayp, FALSE);
+	return *okayp ? t : time2sub(tmp, funcp, offset, okayp, TRUE);
 }
 
 static time_t

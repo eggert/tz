@@ -5,14 +5,12 @@ static char	elsieid[] = "%W%";
 #endif /* !defined lint */
 
 /*
-** This code has been made entirely independent of the rest of the time
+** This code has been made fairly independent of the rest of the time
 ** conversion package to increase confidence in the verification it provides.
 ** You can use this code to help in verifying other implementations.
 */
 
-#include <stdio.h>
-#include <time.h>
-#include <sys/types.h>
+#include "private.h"
 
 #ifndef TRUE
 #define TRUE		1
@@ -21,14 +19,6 @@ static char	elsieid[] = "%W%";
 #ifndef FALSE
 #define FALSE		0
 #endif /* !defined TRUE */
-
-#ifndef EXIT_SUCCESS
-#define EXIT_SUCCESS	0
-#endif /* !defined EXIT_SUCCESS */
-
-#ifndef EXIT_FAILURE
-#define EXIT_FAILURE	1
-#endif /* !defined EXIT_FAILURE */
 
 #ifndef SECSPERMIN
 #define SECSPERMIN	60
@@ -52,9 +42,9 @@ static char	elsieid[] = "%W%";
 
 extern char **	environ;
 extern int	getopt();
-extern char *	malloc();
 extern char *	optarg;
 extern int	optind;
+extern time_t	time();
 extern void	tzset();
 
 char *		tzname[2];
@@ -265,7 +255,7 @@ char *	string;
 	register int	length;
 
 	length = strlen(string);
-	result = malloc(length + 1);
+	result = malloc((alloc_size_t) (length + 1));
 	if (result == 0) {
 		(void) fprintf(stderr, "%s: can't allocate memory\n", progname);
 		(void) exit(EXIT_FAILURE);

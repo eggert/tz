@@ -601,9 +601,19 @@ const char * const	tofile;
 	if (!itsdir(toname))
 		(void) remove(toname);
 	if (link(fromname, toname) != 0) {
+		int	result;
+
 		if (mkdirs(toname) != 0)
 			(void) exit(EXIT_FAILURE);
-		if (link(fromname, toname) != 0) {
+		result = link(fromname, toname);
+#if (HAVE_SYMLINK - 0) 
+		if (result != 0) {
+			result = symlink(fromname, toname);
+			if (result == 0)
+warning(_("hard link failed, symbolic link used"));
+		}
+#endif
+		if (result != 0) {
 			const char *e = strerror(errno);
 
 			(void) fprintf(stderr,

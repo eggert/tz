@@ -603,7 +603,6 @@ _loc P((void))
 	static const char	locale_home[] = LOCALE_HOME;
 	static const char	lc_time[] = "LC_TIME";
 	static char *		locale_buf;
-	static char		locale_buf_C[] = "C";
 
 	int			fd;
 	int			oldsun;	/* "...ain't got nothin' to do..." */
@@ -664,8 +663,7 @@ _loc P((void))
 		goto bad_locale;
 	bufsize = namesize + st.st_size;
 	locale_buf = NULL;
-	lbuf = (lbuf == NULL || lbuf == locale_buf_C) ?
-		malloc(bufsize) : realloc(lbuf, bufsize);
+	lbuf = (lbuf == NULL) ?  malloc(bufsize) : realloc(lbuf, bufsize);
 	if (lbuf == NULL)
 		goto bad_locale;
 	(void) strcpy(lbuf, name);
@@ -714,7 +712,7 @@ bad_locale:
 	(void) close(fd);
 no_locale:
 	localebuf = C_time_locale;
-	locale_buf = locale_buf_C;
+	locale_buf = NULL;
 	return &localebuf;
 }
 #endif /* defined LOCALE_HOME */

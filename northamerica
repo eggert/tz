@@ -139,7 +139,7 @@ Zone	US/Michigan	-5:00	US		E%sT	1968
 
 Zone	US/Samoa	-11:00	-		NST	1967 Apr 1  # N=Nome
 			-11:00	-		BST	1983 Nov 30 # B=Bering
-			-11:00	-		SST
+			-11:00	-		SST		    # S=Samoa
 
 # Aleutian has a name change.  DST, per Naval Observatory.
 
@@ -251,11 +251,8 @@ Zone	Canada/Yukon		-9:00	Canada		Y%sT
 # From Arthur David Olson (February 13, 1988)
 # Since the 1981 starting date is only "probable," we'll keep the 1987
 # starting date below.
-#
-# I lived in San Diego for nine years; I always listened to KKGO (nee KBCA),
-# a Los Angeles radio station.  Perhaps San Diego radio doesn't affect culture.
 
-# From U.S. Naval Observatory (January 19, 1989):
+# From U. S. Naval Observatory (January 19, 1989):
 # MEXICO BAJA CAL N   7 H  BEHIND UTC    BAJA CALIFORNIA SUR AND
 # MEXICO BAJA CAL N                      N. PACIFIC COAST (STATES
 # MEXICO BAJA CAL N                      OF SINALOA AND SONORA)
@@ -276,7 +273,7 @@ Zone	Canada/Yukon		-9:00	Canada		Y%sT
 # From Arthur David Olson (January 21, 1989):
 # April 3 fell on a Sunday in 1988; October 29 fell on a Sunday in 1989.  Ahem.
 # USNO claims there should be four Mexican zones rather than three:
-# a zone that's GMT-8 with DST; a zone that's GMT-7;
+# a zone that's GMT-8 with DST; a zone that's always GMT-7;
 # a zone that's GMT-6 with DST; and a zone that's always GMT-6.
 # Wait for more authoritative information before changing.
 
@@ -296,7 +293,7 @@ Zone	Mexico/General		-6:00	-		CST
 # From Bob Devine (January 28, 1988):
 # Follows US rules.
 
-# From U.S. Naval Observatory (January 19, 1989):
+# From U. S. Naval Observatory (January 19, 1989):
 # JAMAICA             5 H  BEHIND UTC
 
 Link	US/Eastern	Jamaica
@@ -310,7 +307,7 @@ Link	US/Eastern	Jamaica
 # Change at midnight.  In 1979 & 1980, started at 3rd Sunday in March
 # (I think).
 
-# From U.S. Naval Observatory (January 19, 1989):
+# From U. S. Naval Observatory (January 19, 1989):
 # CUBA                5 H  BEHIND UTC
 # CUBA                4 H  BEHIND UTC    MAR 20 - OCT 8
 

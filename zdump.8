@@ -10,7 +10,7 @@ zdump \- time zone dumper
 .B \-v
 ] [
 .B \-c
-cutoffyear ] [ zonename ... ]
+[loyear,]hiyear ] [ zonename ... ]
 .SH DESCRIPTION
 .I Zdump
 prints the current time in each
@@ -38,8 +38,8 @@ if the given time is Daylight Saving Time or
 .B isdst=0
 otherwise.
 .TP
-.BI "\-c " cutoffyear
-Cut off the verbose output near the start of the given year.
+.BI "\-c " [loyear,]hiyear
+Cut off the verbose output near the start of the given year(s).
 .SH "SEE ALSO"
 newctime(3), tzfile(5), zic(8)
 .\" %W%

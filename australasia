@@ -85,6 +85,8 @@ Zone	Australia/NSW		10:00	AN	EST
 Zone	Australia/Yancowinna	9:30	AN	CST
 Zone	Australia/LHI		10:30	AN	???
 
+Link	Australia/NSW	Australia/ACT	# Australian Capital Territory
+
 ###############################################################################
 
 # New Zealand

@@ -168,7 +168,6 @@ char *	filename;
 	(void) fprintf(stderr, "%s: Error reading ", progname);
 	if (ferror(fp))
 		perror(filename);
-	else
-		(void) fprintf(stderr, "%s: Premature EOF\n", filename);
+	else	(void) fprintf(stderr, "%s: Premature EOF\n", filename);
 	exit(1);
 }

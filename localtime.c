@@ -571,8 +571,6 @@ register struct state *	sp;
 				return -1;
 		} else
 			dstoffset = stdoffset - 1 * SECSPERHOUR;
-		if (stdlen + 1 + dstlen + 1 > sizeof sp->chars)
-			return -1;
 		if (*name == ',' || *name == ';') {
 			struct rule			start;
 			struct rule			end;
@@ -625,26 +623,69 @@ register struct state *	sp;
 					year_lengths[isleap(year)] * SECSPERDAY;
 			}
 		} else {
+			int				sawstd;
+			int				sawdst;
+			long				stdfix;
+			long				dstfix;
+			long				oldfix;
+			int				isdst;
+			register int			i;
+
 			if (*name != '\0')
 				return -1;
 			if (tzload(TZDEFRULES, sp) != 0)
 				return -1;
 			/*
-			** Adjust the types.
+			** Compute the difference between the real and
+			** prototype standard and summer time offsets
+			** from GMT, and put the real standard and summer
+			** time offsets into the rules in place of the
+			** prototype offsets.
 			*/
-			for (i = 0; i < sp->typecnt; ++i)
+			sawstd = FALSE;
+			sawdst = FALSE;
+			stdfix = 0;
+			dstfix = 0;
+			for (i = 0; i < sp->typecnt; ++i) {
 				if (sp->ttis[i].tt_isdst) {
+					oldfix = dstfix;
+					dstfix =
+					    sp->ttis[i].tt_gmtoff + dstoffset;
+					if (sawdst && (oldfix != dstfix))
+						return -1;
 					sp->ttis[i].tt_gmtoff = -dstoffset;
 					sp->ttis[i].tt_abbrind = stdlen + 1;
+					sawdst = TRUE;
 				} else {
+					oldfix = stdfix;
+					stdfix =
+					    sp->ttis[i].tt_gmtoff + stdoffset;
+					if (sawstd && (oldfix != stdfix))
+						return -1;
 					sp->ttis[i].tt_gmtoff = -stdoffset;
 					sp->ttis[i].tt_abbrind = 0;
+					sawstd = TRUE;
 				}
+			}
 			/*
-			** Adjust the times.
+			** Make sure we have both standard and summer time.
 			*/
-			for (i = 0; i < sp->timecnt; ++i)
-				sp->ats[i] += stdoffset;	/* -= stdoff? */
+			if (!sawdst || !sawstd)
+				return -1;
+			/*
+			** Now correct the transition times by shifting
+			** them by the difference between the real and
+			** prototype offsets.  Note that this difference
+			** can be different in standard and summer time;
+			** the prototype probably has a 1-hour difference
+			** between standard and summer time, but a different
+			** difference can be specified in TZ.
+			*/
+			isdst = FALSE;	/* we start in standard time */
+			for (i = 0; i < sp->timecnt; ++i) {
+				sp->ats[i] += isdst ? dstfix : stdfix;
+				isdst = sp->ttis[sp->types[i]].tt_isdst;
+			}
 		}
 	} else {
 		dstlen = 0;
@@ -655,15 +696,15 @@ register struct state *	sp;
 		sp->ttis[0].tt_abbrind = 0;
 	}
 	sp->charcnt = stdlen + 1;
-	if (dstlen > 0)
+	if (dstlen != 0)
 		sp->charcnt += dstlen + 1;
-  	if (sp->charcnt > sizeof sp->chars)
-  		return -1;
+	if (sp->charcnt > sizeof sp->chars)
+		return -1;
 	cp = sp->chars;
 	(void) strncpy(cp, stdname, stdlen);
 	cp += stdlen;
 	*cp++ = '\0';
-	if (dstlen > 0) {
+	if (dstlen != 0) {
 		(void) strncpy(cp, dstname, dstlen);
 		*(cp + dstlen) = '\0';
 	}

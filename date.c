@@ -459,13 +459,13 @@ register struct tm * intmp;
 
 	outtm = *intmp;
 	outt = mktime(&outtm);
-	return (outtm.tm_isdst == intm.tm_isdst &&
-		outtm.tm_sec == intm.tm_sec &&
-		outtm.tm_min == intm.tm_min &&
-		outtm.tm_hour == intm.tm_hour &&
-		outtm.tm_mday == intm.tm_mday &&
-		outtm.tm_mon == intm.tm_mon &&
-		outtm.tm_year == intm.tm_year) ?
+	return (outtm.tm_isdst == intmp->tm_isdst &&
+		outtm.tm_sec == intmp->tm_sec &&
+		outtm.tm_min == intmp->tm_min &&
+		outtm.tm_hour == intmp->tm_hour &&
+		outtm.tm_mday == intmp->tm_mday &&
+		outtm.tm_mon == intmp->tm_mon &&
+		outtm.tm_year == intmp->tm_year) ?
 			outt : -1;
 }
 

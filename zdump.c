@@ -29,6 +29,14 @@ extern long		time();
 extern char *		tzname[2];
 extern void		tzset();
 
+/*
+** For the benefit of cyntax...
+*/
+
+static long		tzdecode();
+static			readerr();
+static			show();
+
 static int		longest;
 
 static long

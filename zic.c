@@ -939,8 +939,11 @@ const int		iscont;
 			(nfields > i_untilday) ? fields[i_untilday] : "1",
 			(nfields > i_untiltime) ? fields[i_untiltime] : "0");
 		z.z_untiltime = rpytime(&z.z_untilrule, z.z_untilrule.r_loyear);
-		if (iscont && nzones > 0 && z.z_untiltime < max_time &&
+		if (iscont && nzones > 0 &&
 			z.z_untiltime > min_time &&
+			z.z_untiltime < max_time &&
+			zones[nzones - 1].z_untiltime > min_time &&
+			zones[nzones - 1].z_untiltime < max_time &&
 			zones[nzones - 1].z_untiltime >= z.z_untiltime) {
 error("Zone continuation line end time is not after end time of previous line");
 			return FALSE;
@@ -974,8 +977,7 @@ const int		nfields;
 	}
 	dayoff = 0;
 	cp = fields[LP_YEAR];
-	if (sscanf(cp, scheck(cp, "%d"), &year) != 1 ||
-		year < min_year || year > max_year) {
+	if (sscanf(cp, scheck(cp, "%d"), &year) != 1) {
 			/*
 			 * Leapin' Lizards!
 			 */
@@ -1131,12 +1133,9 @@ char * const			timep;
 				"%s: panic: Invalid l_value %d\n",
 				progname, lp->l_value);
 			(void) exit(EXIT_FAILURE);
-	} else if (sscanf(cp, scheck(cp, "%d"), &rp->r_loyear) != 1 ||
-		rp->r_loyear < min_year || rp->r_loyear > max_year) {
-			if (noise)
-				error("invalid starting year");
-			if (rp->r_loyear > max_year)
-				return;
+	} else if (sscanf(cp, scheck(cp, "%d"), &rp->r_loyear) != 1) {
+		error("invalid starting year");
+		return;
 	}
 	cp = hiyearp;
 	if ((lp = byword(cp, end_years)) != NULL) switch ((int) lp->l_value) {
@@ -1154,19 +1153,10 @@ char * const			timep;
 				"%s: panic: Invalid l_value %d\n",
 				progname, lp->l_value);
 			(void) exit(EXIT_FAILURE);
-	} else if (sscanf(cp, scheck(cp, "%d"), &rp->r_hiyear) != 1 ||
-		rp->r_hiyear < min_year || rp->r_hiyear > max_year) {
-			if (noise)
-				error("invalid ending year");
-			if (rp->r_hiyear < min_year)
-				return;
+	} else if (sscanf(cp, scheck(cp, "%d"), &rp->r_hiyear) != 1) {
+		error("invalid ending year");
+		return;
 	}
-	if (rp->r_hiyear < min_year)
- 		return;
- 	if (rp->r_loyear < min_year)
- 		rp->r_loyear = min_year;
- 	if (rp->r_hiyear > max_year)
- 		rp->r_hiyear = max_year;
 	if (rp->r_loyear > rp->r_hiyear) {
 		error("starting year greater than ending year");
 		return;
@@ -1840,24 +1830,14 @@ register const int			wantedy;
 			(void) exit(EXIT_FAILURE);
 		}
 	}
-	if (dayoff < 0 && !tt_signed) {
-		if (wantedy == rp->r_loyear)
-			return min_time;
-		error("time before zero");
-		(void) exit(EXIT_FAILURE);
-	}
+	if (dayoff < 0 && !tt_signed)
+		return min_time;
 	t = (time_t) dayoff * SECSPERDAY;
 	/*
 	** Cheap overflow check.
 	*/
-	if (t / SECSPERDAY != dayoff) {
-		if (wantedy == rp->r_hiyear)
-			return max_time;
-		if (wantedy == rp->r_loyear)
-			return min_time;
-		error("time overflow");
-		(void) exit(EXIT_FAILURE);
-	}
+	if (t / SECSPERDAY != dayoff)
+		return (dayoff > 0) ? max_time : min_time;
 	return tadd(t, rp->r_tod);
 }
 

@@ -188,29 +188,28 @@ $(TZLIB):	$(LIBOBJS)
 zic:		$(TZCOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
 
-SHARS:		SHAR1.Z.uue SHAR2.Z.uue SHAR3.Z.uue \
-		SHAR4.Z.uue SHAR5.Z.uue SHAR6.Z.uue SHAR7.Z.uue
+SHARS:		SHAR1.Z SHAR2.Z SHAR3.Z SHAR4.Z SHAR5.Z SHAR6.Z SHAR7.Z
 
-SHAR1.Z.uue:	$(DOCS)
-		$(SHAR) $(DOCS) | compress | uuencode SHAR1.Z > $@
+SHAR1.Z:	$(DOCS)
+		$(SHAR) $(DOCS) | compress > $@
 
-SHAR2.Z.uue:	$(HEADERS) $(LIBSRCS)
-		$(SHAR) $(HEADERS) $(LIBSRCS) | compress | uuencode SHAR2.Z > $@
+SHAR2.Z:	$(HEADERS) $(LIBSRCS)
+		$(SHAR) $(HEADERS) $(LIBSRCS) | compress > $@
 
-SHAR3.Z.uue:	$(NONLIBSRCS)
-		$(SHAR) $(NONLIBSRCS) | compress | uuencode SHAR3.Z > $@
+SHAR3.Z:	$(NONLIBSRCS)
+		$(SHAR) $(NONLIBSRCS) | compress > $@
 
-SHAR4.Z.uue:	$(YDATA) $(NDATA) leapseconds
-	$(SHAR) $(YDATA) $(NDATA) leapseconds | compress | uuencode SHAR4.Z > $@
+SHAR4.Z:	$(YDATA) $(NDATA) leapseconds
+		$(SHAR) $(YDATA) $(NDATA) leapseconds | compress > $@
 
-SHAR5.Z.uue:	$(SDATA)
-		$(SHAR) $(SDATA) | compress | uuencode SHAR5.Z > $@
+SHAR5.Z:	$(SDATA)
+		$(SHAR) $(SDATA) | compress > $@
 
-SHAR6.Z.uue:	$(USNO)
-		$(SHAR) $(USNO) | compress | uuencode SHAR6.Z > $@
+SHAR6.Z:	$(USNO)
+		$(SHAR) $(USNO) | compress > $@
 
-SHAR7.Z.uue:	$(DATESRCS)
-		$(SHAR) $(DATESRCS) | compress | uuencode SHAR7.Z > $@
+SHAR7.Z:	$(DATESRCS)
+		$(SHAR) $(DATESRCS) | compress > $@
 
 sure:		$(SOURCES)
 		for i in "$(TZCSRCS)" "$(TZDSRCS)" "$(DATESRCS)" "$(LIBSRCS)"; \

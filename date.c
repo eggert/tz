@@ -94,7 +94,7 @@ static int		retval = EXIT_SUCCESS;
 static void		ambiguous();
 static void		display();
 static void		finalcheck();
-static time_t		gettime();
+static time_t		parse();
 int			netsettime();
 static void		oops();
 static void		timeout();
@@ -207,7 +207,7 @@ char *	argv[];
 			}
 	}
 	if (value != NULL) {
-		t = gettime(value, -1);
+		t = parse(value, -1);
 		if (t == -1)
 			usage();
 	}
@@ -510,7 +510,7 @@ struct tm *	tmp;
 ** stime/settimeofday is called.
 ** 
 ** We just check nearby times to see if any of them have the same representation
-** as the time that gettime returned.  We work our way out from the center
+** as the time that parse returned.  We work our way out from the center
 ** for quick response in solar time situations.  We only handle common cases--
 ** offsets of at most a minute, and offsets of exact numbers of minutes
 ** and at most an hour.
@@ -548,7 +548,7 @@ time_t	t;
 }
 
 /*
-** gettime --
+** parse --
 **	convert user's input into a time_t.
 */
 
@@ -581,7 +581,7 @@ register struct tm * intmp;
 }
 
 static time_t
-gettime(cp, isdst)
+parse(cp, isdst)
 register char *	cp;
 int		isdst;
 {
@@ -593,8 +593,8 @@ int		isdst;
 	time_t		thatt;
 
 	if (isdst < 0) {
-		thist = gettime(cp, 0);
-		thatt = gettime(cp, 1);
+		thist = parse(cp, 0);
+		thatt = parse(cp, 1);
 		if (thist == -1)
 			if (thatt == -1)
 				return -1;

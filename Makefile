@@ -74,11 +74,11 @@ TZCSRCS=	zic.c scheck.c ialloc.c mkdir.c
 TZCOBJS=	zic.o scheck.o ialloc.o mkdir.o
 TZDSRCS=	zdump.c localtime.c gmtime.c asctime.c ctime.c ialloc.c
 TZDOBJS=	zdump.o localtime.o gmtime.o asctime.o ctime.o ialloc.o
-LIBSRCS=	localtime.c gmtime.c asctime.c ctime.c dysize.c mktime.c
-LIBOBJS=	localtime.o gmtime.o asctime.o ctime.o dysize.o mktime.o
+LIBSRCS=	localtime.c gmtime.c asctime.c ctime.c dysize.c timemk.c
+LIBOBJS=	localtime.o gmtime.o asctime.o ctime.o dysize.o timemk.o
 DOCS=		README Makefile newctime.3 tzfile.5 zic.8 zdump.8
 SOURCES=	tzfile.h zic.c zdump.c \
-		localtime.c gmtime.c asctime.c ctime.c dysize.c mktime.c \
+		localtime.c gmtime.c asctime.c ctime.c dysize.c timemk.c \
 		scheck.c ialloc.c mkdir.c
 DATA=		asia australasia europe etcetera northamerica \
 		pacificnew systemv solar87

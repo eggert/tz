@@ -158,9 +158,6 @@ Zone Australia/Lord_Howe 10:36:20 -	LMT	1895 Feb
 			10:30	LH	LHST
 
 # Australian miscellany
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Indian/Christmas	7:02:52 -	LMT	1895 Feb
-			7:00	-	CXT	# Christmas Island Time
 #
 # Ashmore Is, Cartier
 # no indigenous inhabitants; only seasonal caretakers
@@ -178,6 +175,10 @@ Zone Indian/Christmas	7:02:52 -	LMT	1895 Feb
 # Manihiki, Penrhyn, Rakehanga
 # no information
 
+# Christmas
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone Indian/Christmas	7:02:52 -	LMT	1895 Feb
+			7:00	-	CXT	# Christmas Island Time
 
 # Cook Is
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S

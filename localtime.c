@@ -20,6 +20,7 @@ static char	elsieid[] = "%W%";
 #include "private.h"
 #include "tzfile.h"
 #include "fcntl.h"
+#include "float.h"	/* for FLT_MAX and DBL_MAX */
 
 /*
 ** SunOS 4.1.1 headers lack O_BINARY.

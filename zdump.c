@@ -1,7 +1,3 @@
-/*
-** XXX--fix hunt strategy to avoid problems on systems where time_t is floating.
-*/
-
 static char	elsieid[] = "%W%";
 
 /*
@@ -15,7 +11,7 @@ static char	elsieid[] = "%W%";
 #include "sys/types.h"	/* for time_t */
 #include "time.h"	/* for struct tm */
 #include "stdlib.h"	/* for exit, malloc, atoi */
-#include "float.h"	/* for FLT_MIN, FLT_MAX, et al. */
+#include "float.h"	/* for FLT_MAX and DBL_MAX */
 
 #ifndef ZDUMP_LO_YEAR
 #define ZDUMP_LO_YEAR	(-500)
@@ -326,10 +322,10 @@ setabsolutes()
 		** time_t is floating.
 		*/
 		if (sizeof (time_t) == sizeof (float)) {
-			absolute_min_time = (time_t) FLT_MIN;
+			absolute_min_time = (time_t) -FLT_MAX;
 			absolute_max_time = (time_t) FLT_MAX;
 		} else if (sizeof (time_t) == sizeof (double)) {
-			absolute_min_time = (time_t) DBL_MIN;
+			absolute_min_time = (time_t) -DBL_MAX;
 			absolute_max_time = (time_t) DBL_MAX;
 		} else {
 			(void) fprintf(stderr,
@@ -394,25 +390,39 @@ char *	name;
 time_t	lot;
 time_t	hit;
 {
-	time_t		t;
-	struct tm	lotm;
-	struct tm	tm;
-	static char	loab[MAX_STRING_LENGTH];
+	time_t			t;
+	long			diff;
+	struct tm		lotm;
+	register struct tm *	lotmp;
+	struct tm		tm;
+	register struct tm *	tmp;
+	char			loab[MAX_STRING_LENGTH];
 
-	lotm = *localtime(&lot);
-	(void) strncpy(loab, abbr(&lotm), (sizeof loab) - 1);
-	while ((hit - lot) >= 2) {
-		t = lot / 2 + hit / 2;
+	lotmp = localtime(&lot);
+	if (lotmp != NULL) {
+		lotm = *lotmp;
+		(void) strncpy(loab, abbr(&lotm), (sizeof loab) - 1);
+	}
+	for ( ; ; ) {
+		diff = (long) (hit - lot);
+		if (diff < 2)
+			break;
+		t = lot;
+		t += diff / 2;
 		if (t <= lot)
 			++t;
 		else if (t >= hit)
 			--t;
-		tm = *localtime(&t);
-		if (delta(&tm, &lotm) == (t - lot) &&
+		tmp = localtime(&t);
+		if (tmp != NULL)
+			tm = *tmp;
+		if ((lotmp == NULL || tmp == NULL) ? (lotmp == tmp) :
+			(delta(&tm, &lotm) == (t - lot) &&
 			tm.tm_isdst == lotm.tm_isdst &&
-			strcmp(abbr(&tm), loab) == 0) {
+			strcmp(abbr(&tm), loab) == 0)) {
 				lot = t;
 				lotm = tm;
+				lotmp = tmp;
 		} else	hit = t;
 	}
 	show(name, lot, TRUE);

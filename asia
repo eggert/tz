@@ -463,7 +463,7 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # here in Iran, IRST for regular time and IRDT for daylight saving time.
 
 # From Paul Eggert (2003-03-15)
-# Go with Shanks before September 1991, and with Pourander thereafter.
+# Go with Shanks before September 1991, and with Pournader thereafter.
 # I used Ed Reingold's cal-persia in GNU Emacs 21.2 to check Persian dates.
 # The Persian calendar is based on the sun, and dates after around 2050
 # are approximate; stop after 2037 when 32-bit time_t's overflow.
@@ -1167,9 +1167,22 @@ Zone	Asia/Muscat	3:54:20 -	LMT	1920
 # DAWN <http://www.dawn.com/2002/10/06/top13.htm> reported on 2002-10-05
 # that 2002 DST ended that day at midnight.  Go with McDow for now.
 
+# From Steffen Thorsen (2003-03-14):
+# According to http://www.dawn.com/2003/03/07/top15.htm
+# there will be no DST in Pakistan this year:
+#
+# ISLAMABAD, March 6: Information and Media Development Minister Sheikh
+# Rashid Ahmed on Thursday said the cabinet had reversed a previous
+# decision to advance clocks by one hour in summer and put them back by
+# one hour in winter with the aim of saving light hours and energy.
+#
+# The minister told a news conference that the experiment had rather
+# shown 8 per cent higher consumption of electricity.
+
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule Pakistan	2002	max	-	Apr	Sun>=2	0:01	1:00	S
-Rule Pakistan	2002	max	-	Oct	Sun>=2	0:01	0	-
+Rule Pakistan	2002	only	-	Apr	Sun>=2	0:01	1:00	S
+Rule Pakistan	2002	only	-	Oct	Sun>=2	0:01	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Karachi	4:28:12 -	LMT	1907
 			5:30	-	IST	1942 Sep

@@ -134,6 +134,25 @@
 # Eire changed the clock twice on 1 Oct 1916.  I invented `IST' and `IDT' as
 # abbreviations for Eire's standard and daylight time before 1 Oct 1916.
 
+# From Peter Ilieve (peter@memex.co.uk) (October 18, 1993)
+# 
+# I made a transcription error in my table for 1924. The government Green
+# Paper I was copying from actually says 20 April, which I mangled into
+# 30 April.
+# 
+# This still differs from the 13 April printed in Shanks' book.  I would
+# side with Shanks here. Software that purports to calculate the date of
+# Easter says that 20 April 1924 was Easter. The Summer Time Act 1922,
+# which was the relevent law at the time, says that Summer Time starts
+# after the 3rd Saturday in April, unless that is Easter, when it is the
+# 2nd Saturday.  I asked the Home Office about this discrepency but they
+# weren't interested in helping at all.
+# 
+# If you continue to include my email with the table of dates in it in
+# your europe file I would appreciate it saying the 20 April for 1924, as
+# that is what the document I was quoting from said. Add a note somewhere
+# to say that the date is almost certainly bogus.
+
 # From Arthur David Olson (January 19, 1989):
 #
 # A source at the British Information Office in New York avers that it's
@@ -198,6 +217,34 @@
 # paper. I have a few other avenues to explore on this and will let you know
 # the outcome.
 
+# From Peter Ilieve (peter@memex.co.uk) (October 18, 1993)
+# 
+# My contact in the Ministry of Defence Public Relations department
+# accepted the challenge of looking into this and produced the following,
+# from Hansard (the official record of the UK Parliament), Oral Answers,
+# 1 March 1945, cols 1559--60:
+# 
+# `58. Major Sir Goronwy Owen asked the Secretary of State for the Home
+# Department if he is now able to state the Government's proposals
+# regarding double summer time.
+# 
+# [two other similar questions omitted]
+# 
+# Mr. H. Morrison: The Government, in reviewing the matter, have
+# considered, [...] the conclusion has been reached that the adoption of
+# double summer time from the beginning of April is essential to the
+# maintenance of the war effort. [...] As 1st April is Easter Sunday,
+# when very early services are held in many churches, it is proposed that
+# double summer time shall start not in the night preceeding Easter
+# Sunday, but in the night of Sunday- Monday so that it will operate from
+# Monday, 2nd April.'
+# 
+# So it was all down to Easter again. As an aside, we have an Easter Act
+# 1928 which fixes the date of Easter on a date that I can't remember. It
+# is fixed from the year when a commencement order under the Act is
+# made.  No such order has ever been made, which makes the whole thing
+# rather pointless.
+
 # From Peter Ilieve (peter@memex.co.uk) (September 3, 1993)
 #
 # > # Current rules
@@ -256,7 +303,7 @@ Rule	GB-Eire	1943	only	-	Apr	4	2:00s	2:00	DST
 Rule	GB-Eire	1943	only	-	Aug	15	2:00s	1:00	BST
 Rule	GB-Eire	1944	only	-	Apr	2	2:00s	2:00	DST
 Rule	GB-Eire	1944	only	-	Sep	17	2:00s	1:00	BST
-# Double daylight starts on a Monday in 1945?
+# Double daylight starts on a Monday in 1945--see above.
 Rule	GB-Eire	1945	only	-	Apr	2	2:00s	2:00	DST
 Rule	GB-Eire	1945	only	-	Jul	15	2:00s	1:00	BST
 Rule	GB-Eire	1945	only	-	Oct	7	2:00s	0	GMT

@@ -872,6 +872,7 @@ const int			lastditch;
 			sp->ttis[1].tt_gmtoff = -dstoffset;
 			sp->ttis[1].tt_isdst = TRUE;
 			sp->ttis[1].tt_abbrind = stdlen + 1;
+			sp->typecnt = 2;
 		}
 	} else {
 		dstlen = 0;

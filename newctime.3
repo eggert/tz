@@ -39,15 +39,21 @@ converts a long integer, pointed to by
 representing the time in seconds since
 00:00:00 UTC, 1970-01-01,
 and returns a pointer to a
-26-character string
-of the form
+string of the form
 .br
 .ce
 .eo
 Thu Nov 24 18:22:48 1986\n\0
+.br
+.ce
+.ec
+For years longer than four characters, the string is of the form
+.br
+.ce
+.eo
+Thu Nov 24 18:22:48     81986\n\0
 .ec
 .br
-All the fields have constant width.
 .PP
 .IR Localtime\^
 and
@@ -72,10 +78,9 @@ converts to Coordinated Universal Time.
 .PP
 .I Asctime\^
 converts a time value contained in a
-``tm'' structure to a 26-character string,
+``tm'' structure to a string,
 as shown in the above example,
-and returns a pointer
-to the string.
+and returns a pointer to the string.
 .PP
 .I Mktime\^
 converts the broken-down time,

@@ -31,6 +31,9 @@ the usefulness of the SVR2 functions:
 	daylight savings time shifts--as might be required to limit phone
 	calls to off-peak hours.)
 
+*	These functions can account for leap seconds, thanks to Bradley White
+	(bww@k.cs.cmu.edu).
+
 These are the changes that have been made to the SVR2 functions:
 
 *	The "TZ" environment variable is used in generating the name of a file

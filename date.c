@@ -345,7 +345,7 @@ char *	argv[];
 				optarg = nondigit(optarg);
 				if (*optarg == '.')
 					++optarg;
-				if (nondigit(optarg) != '\0')
+				if (*nondigit(optarg) != '\0')
 					usage();
 				atv.tv_sec = (int) f;
 				atv.tv_usec =

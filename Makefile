@@ -238,7 +238,7 @@ TDATA=		$(YDATA) $(NDATA) $(SDATA)
 TABDATA=	iso3166.tab zone.tab
 DATA=		$(YDATA) $(NDATA) $(SDATA) $(TABDATA) leapseconds yearistype.sh
 MISC=		usno1988 usno1989 usno1989a usno1995 usno1997 \
-			Music.htm WWW.htm gccdiffs checktab.awk
+			Arts.htm WWW.htm gccdiffs checktab.awk
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(MISC)
 
 # And for the benefit of csh users on systems that assume the user

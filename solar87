@@ -4,7 +4,7 @@
 # Apparent noon times below are for Riyadh; your mileage will vary.
 # Times were computed using formulas in the U.S. Naval Observatory's
 # Almanac for Computers 1987; the formulas "will give EqT to an accuracy of
-# [plus or minus] two seconds during the current year."
+# [plus or minus two] seconds during the current year."
 #
 # Rounding to the nearest five seconds results in fewer than
 # 256 different "time types"--a limit that's faced because time types are

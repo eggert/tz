@@ -37,7 +37,7 @@ struct tzhead {
 **		one (char [4])		coded GMT offset in seconds
 **		one (unsigned char)	used to set tm_isdt
 **		one (unsigned char)	that's an abbreviation list index
-**	tzh_charcnt (char)s		'\0'-terminated zone abbreviaton strings
+**	tzh_charcnt (char)s		'\0'-terminated zone abbreviations
 **	tzh_leapcnt repetitions of
 **		one (char [4])		coded leap second transition times
 **		one (char [4])		total correction after above

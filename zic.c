@@ -1254,11 +1254,12 @@ const char * const		timep;
 	} else if (sscanf(cp, scheck(cp, "%d"), &rp->r_loyear) != 1) {
 		error(_("invalid starting year"));
 		return;
-	} else if (noise)
+	} else if (noise) {
 		if (rp->r_loyear < min_year_representable)
 			warning(_("starting year too low to be represented"));
 		else if (rp->r_loyear > max_year_representable)
 			warning(_("starting year too high to be represented"));
+	}
 	cp = hiyearp;
 	if ((lp = byword(cp, end_years)) != NULL) switch ((int) lp->l_value) {
 		case YR_MINIMUM:
@@ -1278,11 +1279,12 @@ const char * const		timep;
 	} else if (sscanf(cp, scheck(cp, "%d"), &rp->r_hiyear) != 1) {
 		error(_("invalid ending year"));
 		return;
-	} else if (noise)
+	} else if (noise) {
 		if (rp->r_loyear < min_year_representable)
 			warning(_("starting year too low to be represented"));
 		else if (rp->r_loyear > max_year_representable)
 			warning(_("starting year too high to be represented"));
+	}
 	if (rp->r_loyear > rp->r_hiyear) {
 		error(_("starting year greater than ending year"));
 		return;
@@ -1946,10 +1948,11 @@ register const struct lookup * const	table;
 	*/
 	foundlp = NULL;
 	for (lp = table; lp->l_word != NULL; ++lp)
-		if (itsabbr(word, lp->l_word))
+		if (itsabbr(word, lp->l_word)) {
 			if (foundlp == NULL)
 				foundlp = lp;
 			else	return NULL;	/* multiple inexact matches */
+		}
 	return foundlp;
 }
 

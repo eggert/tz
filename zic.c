@@ -574,10 +574,13 @@ const char * const	tofile;
 #define TIME_T_SIGNED ((time_t) -1 < 0)
 #define TIME_T_BIT (sizeof (time_t) * CHAR_BIT)
 
-/* The tz file format currently allows at most 32-bit quantities.
-   This restriction should be removed before signed 32-bit values
-   wrap around in 2038, but unfortunately this will require a
-   change to the tz file format.  */
+/*
+** The tz file format currently allows at most 32-bit quantities.
+** This restriction should be removed before signed 32-bit values
+** wrap around in 2038, but unfortunately this will require a
+** change to the tz file format.
+*/
+
 #define MAX_BITS_IN_FILE	32
 #define TIME_T_BITS_IN_FILE (TIME_T_BIT < MAX_BITS_IN_FILE \
 			     ? TIME_T_BIT : MAX_BITS_IN_FILE)
@@ -1033,7 +1036,7 @@ const int		nfields;
 			return;
 	}
 	dayoff = oadd(dayoff, eitol(day - 1));
-	if (!TIME_T_SIGNED && dayoff < 0) {
+	if (dayoff < 0 && !TIME_T_SIGNED) {
 		error("time before zero");
 		return;
 	}
@@ -1907,7 +1910,7 @@ register const int			wantedy;
 			(void) exit(EXIT_FAILURE);
 		}
 	}
-	if (!TIME_T_SIGNED && dayoff < 0)
+	if (dayoff < 0 && !TIME_T_SIGNED)
 		return min_time;
 	t = (time_t) dayoff * SECSPERDAY;
 	/*

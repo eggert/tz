@@ -24,16 +24,13 @@
 #define TZ_ABBR_LEN	7		/* Maximum Time Zone abbr. length */
 #endif
 
-struct dsinfo {
-	long	ds_gmtoff;		/* Offset from GMT in seconds */
-	char	ds_abbr[TZ_ABBR_LEN+1];	/* Time Zone abbreviation */
-	char	ds_isdst;		/* Used to fill tm_isdst */
-};
-
 struct tzinfo {
 	int	tz_timecnt;		/* Number of entries used */
 	long	tz_times[TZ_MAX_TIMES];	/* Saving Time transition times */
 	char	tz_types[TZ_MAX_TIMES];	/* Saving Time types for the above */
-	struct dsinfo	tz_dsinfo[TZ_MAX_TYPES];
-					/* See above */
+	struct dsinfo {
+		long	ds_gmtoff;	/* Offset from GMT in seconds */
+		char	ds_abbr[TZ_ABBR_LEN+1];	/* Time Zone abbreviation */
+		char	ds_isdst;	/* Used to fill tm_isdst */
+	}	tz_dsinfo[TZ_MAX_TYPES];
 };

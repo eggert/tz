@@ -225,12 +225,9 @@ char *	argv[];
 	if (username == NULL || *username == '\0') /* single-user or no tty */
 		username = "root";
 	/*
-	** XXX--shouldn't put the "before" entry into wtmp until we've
-	** determined that the time-setting call has succeeded--but to
-	** do that, we'd need to add a new parameter to logwtmp.
-	**
-	** Partial workaround would be to do a uid check before the first
-	** write to wtmp.
+	** You could argue that we shouldn't put the "before" entry into wtmp
+	** until we've determined that the time-setting call has succeeded.
+	** We'll continue to put the entry in unconditionally for compatibility.
 	*/
 #ifdef DST_NONE
 	tv.tv_sec = t;

@@ -104,30 +104,44 @@ _fmt(format, t)
 					_add("?");
 				else	_add(bfmt[t->tm_mon]);
 				continue;
+				/* XXX - use "%m/%d/%y %H:%M:%S" == "%D %X"? */
 			case 'c':
 				_fmt("%a %b %d %X %Z %Y", t);
+				continue;
+			case 'C':
+				_fmt("%a %b %e %X %Y\n", t);
 				continue;
 			case 'D':
 				_fmt("%m/%d/%y", t);
 				continue;
 			case 'd':
-				_conv(t->tm_mday, 2);
+				_conv(t->tm_mday, 2, '0');
+				continue;
+			case 'e':
+				_conv(t->tm_mday, 2, ' ');
 				continue;
 			case 'H':
-				_conv(t->tm_hour, 2);
+				_conv(t->tm_hour, 2, '0');
 				continue;
 			case 'I':
 				_conv(t->tm_hour % 12 ?
-				    t->tm_hour % 12 : 12, 2);
+				    t->tm_hour % 12 : 12, 2, '0');
 				continue;
 			case 'j':
-				_conv(t->tm_yday + 1, 3);
+				_conv(t->tm_yday + 1, 3, '0');
+				continue;
+			case 'k':
+				_conv(t->tm_hour % 12 ?
+				    t->tm_hour % 12 : 12, 2, ' ');
+				continue;
+			case 'l':
+				_conv(t->tm_hour, 2, ' ');
 				continue;
 			case 'M':
-				_conv(t->tm_min, 2);
+				_conv(t->tm_min, 2, '0');
 				continue;
 			case 'm':
-				_conv(t->tm_mon + 1, 2);
+				_conv(t->tm_mon + 1, 2, '0');
 				continue;
 			case 'n':
 				_add("\n");
@@ -142,7 +156,7 @@ _fmt(format, t)
 				_fmt("%I:%M:%S %p", t);
 				continue;
 			case 'S':
-				_conv(t->tm_sec, 2);
+				_conv(t->tm_sec, 2, '0');
 				continue;
 			case 'T':
 			case 'X':
@@ -152,24 +166,27 @@ _fmt(format, t)
 				_add("\t");
 				continue;
 			case 'U':
-				_conv((t->tm_yday + 7 - t->tm_wday) / 7, 2);
+				_conv((t->tm_yday + 7 - t->tm_wday) / 7,
+					2, '0');
 				continue;
 			case 'W':
 				_conv((t->tm_yday + 7 -
 				    (t->tm_wday ? (t->tm_wday - 1) : 6))
-				    / 7, 2);
+				    / 7, 2, '0');
 				continue;
 			case 'w':
-				_conv(t->tm_wday, 1);
+				_conv(t->tm_wday, 1, '0');
 				continue;
+				/* XXX - use "%m/%d/%y" == "%D"? */
 			case 'x':
 				_fmt("%a %b %d %Y", t);
 				continue;
 			case 'y':
-				_conv((t->tm_year + TM_YEAR_BASE) % 100, 2);
+				_conv((t->tm_year + TM_YEAR_BASE) % 100,
+					2, '0');
 				continue;
 			case 'Y':
-				_conv(t->tm_year + TM_YEAR_BASE, 4);
+				_conv(t->tm_year + TM_YEAR_BASE, 4, '0');
 				continue;
 			case 'Z':
 #ifdef TM_ZONE
@@ -200,8 +217,8 @@ _fmt(format, t)
 }
 
 static void
-_conv(n, digits)
-	int n, digits;
+_conv(n, digits, fill)
+	int n, digits, fill;
 {
 	static char buf[10];
 	register char *p;
@@ -209,7 +226,7 @@ _conv(n, digits)
 	for (p = buf + sizeof(buf) - 2; n > 0 && p > buf; n /= 10, --digits)
 		*p-- = n % 10 + '0';
 	while (p > buf && digits-- > 0)
-		*p-- = '0';
+		*p-- = fill;
 	_add(++p);
 }
 

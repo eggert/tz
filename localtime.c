@@ -4,8 +4,6 @@
 
 #include "timezone.h"
 #include "time.h"
-#include "sys/types.h"
-#include "sys/timeb.h"
 
 #ifdef OBJECTID
 static char	sccsid[] = "%W%";
@@ -21,55 +19,60 @@ settz(tzname)
 char *	tzname;
 {
 	register struct tzinfo *	tzp;
-	register struct rule *		rp;
+	register struct dsinfo *	dsp;
 	register int			fid;
+	register int			i, j;
 	char				buf[256];
 
 	tzp = &tzinfo;
 	fid = -1;
-	if (tzname == 0 && (tzname = getenv("TZNAME")) == 0)
-		tzname = "";
-	if (tzname[0] == '\0')
-		goto oops;
-	(void) strcpy(buf, TZDIR);
-	(void) strcat(buf, "/");
+	if (tzname == 0 && tzname[0] == '\0')
+		goto gmt;
+	if (tzname[0] == '/')
+		buf[0] = '\0';
+	else {
+		(void) strcpy(buf, TZDIR);
+		(void) strcat(buf, "/");
+	}
 	if ((strlen(buf) + strlen(tzname) + 1) > sizeof buf)
-		goto oops;
+		goto gmt;
 	(void) strcat(buf, tzname);
 	/*
-	** Since program might be setuid and buf might now contain
-	** something like "/etc/tzdir/../../whatever":
+	** We might be running set-user-ID, so. . .
 	*/
 	if (access(buf, 0) != 0)
-		goto oops;
+		goto gmt;
 	if ((fid = open(buf, 0)) == -1)
-		goto oops;
+		goto gmt;
 	if (read(fid, (char *) tzp, sizeof *tzp) != sizeof *tzp)
-		goto oops;
+		goto gmt;
 	if (close(fid) != 0)
-		goto oops;
+		goto gmt;
 	fid = -1;
 	/*
 	** Check the information.
 	*/
-	if (tzp->tz_abbrs[0] == '\0')
-		goto oops;
-	if (tzp->tz_abbrs[TZ_ABBR_TOT - 1] != '\0')
-		goto oops;
-	if (tzp->tz_rulecnt < 0 || tzp->tz_rulecnt > TZ_MAX_RULES)
-		goto oops;
-	for (rp = tzp->tz_rules; rp < &tzp->tz_rules[tzp->tz_rulecnt]; ++rp) {
-		if (rp > tzp->tz_rules && rp->r_start <= (rp - 1)->r_start)
-			goto oops;
-		if (rp->r_abbrind < 0 || rp->r_abbrind >= TZ_ABBR_TOT)
-			goto oops;
+	dsp = tzp->tz_dsinfo;
+	if (dsp->ds_abbr[0] == '\0' || dsp->ds_abbr[TZ_ABBR_LEN] != '\0')
+		goto gmt;
+	for (i = 0; i < tzp->tz_rulecnt; ++i) {
+		if (i > 0 && tzp->tz_times[i] <= tzp->tz_times[i - 1])
+			goto gmt;
+		j = tzp->tz_types[i];
+		if (j < 0 || j >= TZ_MAX_TYPES)
+			goto gmt;
+		dsp = tzp->tz_dsinfo +  j;
+		if (dsp->ds_abbr[0] == '\0' ||
+			dsp->ds_abbr[TZ_ABBR_LEN] != '\0')
+				goto gmt;
 	}
 	return 0;
-oops:
+gmt:
 	(void) close(fid);
-	tzp->tz_gmtoff = 0;
-	(void) strcpy(tzp->tz_abbrs, "GMT");
 	tzp->tz_rulecnt = 0;
+	dsp = tzp->tz_dsinfo;
+	dsp->ds_gmtoff = 0;
+	(void) strcpy(dsp->ds_abbr, "GMT");
 	return (tzname[0] == 0) ? 0 : -1;
 }
 
@@ -99,7 +102,7 @@ oops:
  *
  */
 
-static	char	cbuf[26 + TZ_ABBR_TOT + 1];
+static	char	cbuf[26 + TZ_ABBR_LEN + 1];
 static	int	dmsize[12] =
 {
 	31,
@@ -130,42 +133,38 @@ long *t;
 	return(asctime(localtime(t)));
 }
 
-static struct rule *	getrule(t)
-long			t;
+static struct dsinfo *	getdsp(t)
+register long		t;
 {
 	register struct tzinfo *	tzp;
-	register struct rule *		rp;
+	register int			i;
 
 	tzp = &tzinfo;
-	if (tzp->tz_abbrs[0] == '\0')
-		(void) settz((char *) 0);
-	if (tzp->tz_rulecnt == 0 || t < tzp->tz_rules[0].r_start)
-		return 0;
-	for (rp = &tzp->tz_rules[1]; rp < &tzp->tz_rules[tzp->tz_rulecnt]; ++rp)
-		if (t < rp->r_start)
+	if (tzp->tz_dsinfo[0].ds_abbr[0] == '\0')
+		(void) settz(getenv("TZ"));
+	if (tzp->tz_rulecnt == 0 || t < tzp->tz_times[0])
+		return tzp->tz_dsinfo;
+	for (i = 0; i < tzp->tz_rulecnt; ++i)
+		if (t < tzp->tz_times[i])
 			break;
-	return rp - 1;
+	return tzp->tz_dsinfo + tzp->tz_types[i - 1];
 }
 
 char *
 newctime(tim)
 long *tim;
 {
-	register struct tzinfo *	tzp;
-	register struct rule *		rp;
+	register struct dsinfo *	dsp;
 	register char *			cp;
 	register char *			dp;
 	long				copyt;
 
-	tzp = &tzinfo;
-	rp = getrule(*tim);
-	copyt = *tim + tzp->tz_gmtoff;
-	if (rp != 0)
-		copyt += rp->r_stdoff;
+	dsp = getdsp(*tim);
+	copyt = *tim + dsp->ds_gmtoff;
 	(void) asctime(gmtime(&copyt));
 	dp = &cbuf[24];
 	*dp++ = ' ';
-	cp = &tzp->tz_abbrs[(rp == 0) ? 0 : rp->r_abbrind];
+	cp = dsp->ds_abbr;
 	while ((*dp = *cp++) != '\0')
 		++dp;
 	*dp++ = '\n';
@@ -177,19 +176,14 @@ struct tm *
 localtime(tim)
 long *tim;
 {
-	register struct tzinfo *	tzp;
-	register struct rule *		rp;
+	register struct dsinfo *	dsp;
 	long				copyt;
 	register struct tm *		ct;
 
-	tzp = &tzinfo;
-	rp = getrule(*tim);
-	copyt = *tim + tzp->tz_gmtoff;
-	if (rp == 0)
-		return gmtime(&copyt);
-	copyt += rp->r_stdoff;
+	dsp = getdsp(*tim);
+	copyt = *tim + dsp->ds_gmtoff;
 	ct = gmtime(&copyt);
-	ct->tm_isdst = rp->r_stdoff != 0;
+	ct->tm_isdst = dsp->ds_isdst != 0;
 	return ct;
 }
 

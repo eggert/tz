@@ -223,7 +223,7 @@ SURE:		sure $(ENCHILADA)
 		spell $(ENCHILADA)
 
 clean:
-		rm -f core *.o *.out REDID_BINARIES zdump zic SHAR* ,*
+		rm -f core *.o *.out REDID_BINARIES zdump zic date SHAR* ,*
 
 CLEAN:		clean
 		sccs clean

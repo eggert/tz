@@ -43,9 +43,8 @@ char *				buf;
 	** The format used in the (2004) standard is
 	**	"%.3s %.3s%3d %.2d:%.2d:%.2d %d\n"
 	** Use "%02d", as it is a bit more portable than "%.2d".
-	** Drop each .3 since they're superfluous given how we set wn and mn.
 	*/
-	(void) sprintf(buf, "%s %s%3d %02d:%02d:%02d %ld\n",
+	(void) sprintf(buf, "%.3s %.3s%3d %02d:%02d:%02d %ld\n",
 		wn, mn,
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec,

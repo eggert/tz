@@ -1880,8 +1880,8 @@ Zone	Europe/Warsaw	1:24:00 -	LMT	1880
 			1:00	Poland	CE%sT	1977 Apr  3 1:00
 			1:00	W-Eur	CE%sT	1999
 # IATA SSIM (1991/1996) gives EU rules, but the _The Warsaw Voice_
-# <a href="http://www.contact.waw.pl/voice/v361/NewsInBrief.shtml">
-# http://www.contact.waw.pl/voice/v361/NewsInBrief.shtml (1995-09-24)
+# <a href="http://www.warsawvoice.com.pl/v361/NewsInBrief.shtml">
+# http://www.warsawvoice.com/pl/v361/NewsInBrief.shtml (1995-09-24)
 # </a>
 # says the autumn 1995 switch was at 02:00.
 # Stick with W-Eur for now.

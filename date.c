@@ -252,7 +252,7 @@ char *	argv[];
 	(void) strcat(usemes, " [[yyyy]mmddhhmm[.ss]]");
 #endif /* !defined USG_INPUT */
 	/*
-	** "+format" is avaialble everywhere.
+	** "+format" is available everywhere.
 	*/
 	(void) strcat(usemes, " [+format]");
 	while ((ch = getopt(argc, argv, options)) != EOF) {

@@ -423,12 +423,13 @@ main(argc, argv)
 int	argc;
 char *	argv[];
 {
-	register int	i, j;
+	register int	i;
+	register int	j;
 	register int	c;
 
 #ifdef unix
-	(void) umask((mode_t) (umask((mode_t) (S_IWGRP | S_IWOTH)) |
-		(S_IWGRP | S_IWOTH)));
+	(void) umask((unsigned short) (umask((unsigned short) (S_IWGRP |
+		S_IWOTH)) | (S_IWGRP | S_IWOTH)));
 #endif /* defined unix */
 	progname = argv[0];
 	while ((c = getopt(argc, argv, "d:l:p:L:vsy:")) != EOF)

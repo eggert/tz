@@ -72,6 +72,7 @@ struct tzhead {
 #define DAYS_PER_LYEAR	366
 #define SECS_PER_HOUR	(SECS_PER_MIN * MINS_PER_HOUR)
 #define SECS_PER_DAY	((long) SECS_PER_HOUR * HOURS_PER_DAY)
+#define MONS_PER_YEAR	12
 
 #define TM_SUNDAY	0
 #define TM_MONDAY	1

@@ -628,7 +628,7 @@ register struct state *	sp;
 
 			if (*name != '\0')
 				return -1;
-			if (tzload("_ST0_DT", sp) != 0)
+			if (tzload(TZDEFRULES, sp) != 0)
 				return -1;
 			/*
 			** Adjust the types.

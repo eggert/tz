@@ -385,6 +385,11 @@ register const struct tm *	timeptr;
 	register const char *	wn;
 	register const char *	mn;
 
+	/*
+	** The packaged versions of localtime and gmtime never put out-of-range
+	** values in tm_wday or tm_mon, but since this code might be compiled
+	** with other (perhaps experimental) versions, paranoia is in order.
+	*/
 	if (timeptr->tm_wday < 0 || timeptr->tm_wday >=
 		(int) (sizeof wday_name / sizeof wday_name[0]))
 			wn = "???";

@@ -2,6 +2,7 @@
 
 /*LINTLIBRARY*/
 
+#include "sys/param.h"
 #include "tzfile.h"
 #include "time.h"
 
@@ -21,7 +22,9 @@ static char	sccsid[] = "%W%";
 extern char *		getenv();
 extern char *		strcpy();
 extern char *		strcat();
+#ifdef strchr
 extern char *		sprintf();
+#endif
 
 char *			asctime();
 struct tm *		gmtime();
@@ -46,6 +49,10 @@ static struct state	s;
 
 static char		tz_is_set;
 
+#ifndef strchr
+long			timezone = 0;
+int			daylight = 0;
+#endif
 char *			tzname[2] = { "GMT", "GMT" };
 
 #ifdef TZ_ABBR
@@ -159,12 +166,26 @@ register struct state *	sp;
 	/*
 	** Set tzname elements to initial values.
 	*/
+#ifndef strchr
+	timezone = sp->ttis[0].tt_gmtoff;
+	daylight = 0;
+#endif
 	tzname[0] = tzname[1] = &sp->chars[0];
 	for (i = 1; i < sp->typecnt; ++i) {
 		register struct ttinfo *	ttisp;
 
 		ttisp = &sp->ttis[i];
-		tzname[ttisp->tt_isdst != 0] = &sp->chars[ttisp->tt_abbrind];
+		if (ttisp->tt_isdst) {
+#ifndef strchr
+			daylight = 1;
+#endif
+			tzname[1] = &sp->chars[ttisp->tt_abbrind];
+		} else {
+#ifndef strchr
+			timezone = ttisp->tt_gmtoff;
+#endif
+			tzname[0] = &sp->chars[ttisp->tt_abbrind];
+		}
 	}
 	return 0;
 }
@@ -194,7 +215,13 @@ char *	name;
 		result = -1;
 	}
 	s.timecnt = 0;
+#ifndef strchr
+	timezone = 0;
+#endif
 	s.ttis[0].tt_gmtoff = 0;
+#ifndef strchr
+	daylight = 0;
+#endif
 	s.ttis[0].tt_abbrind = 0;
 	(void) strcpy(s.chars, "GMT");
 	tzname[0] = tzname[1] = s.chars;
@@ -307,6 +334,13 @@ static int	year_lengths[2] = {
 
 #define isleap(y) (((y) % 4) == 0)
 
+#ifdef strchr
+dysize(y)
+{
+	return year_lengths[isleap(y)];
+}
+#endif
+
 struct tm *
 gmtime(clock)
 long *	clock;
@@ -384,12 +418,95 @@ register struct tm *	timeptr;
 	return result;
 }
 
+time_t
+mktime(timeptr)
+register struct tm *	timeptr;
+{
+	register int			i, year, month;
+	register time_t			loctimevalue;
+	time_t				gmtimevalue;
+	register struct ttinfo *	ttisp;
+
+	if (!tz_is_set)
+		(void) settz(getenv("TZ"));
+
+	/*
+	** First, check that the time structure passed to us contains
+	** a valid time.
+	** SPECIFICATION ERROR: what if it isn't?  Do we bitch, or do
+	** we correct it somehow - if we correct it, how do we do so?
+	** The only thing I [guy@sun] can think of is that it calls "gmtime"
+	** when it's got a time value, and stuffs the returned structure
+	** back into "*timeptr".  Let's try that.
+	*/
+	month = timeptr->tm_mon;
+	if (month < 0 || month > 11)
+		return -1;
+	if (timeptr->tm_mday < 1 || timeptr->tm_mday > 31)
+		return -1;
+	if (timeptr->tm_min < 0 || timeptr->tm_min > 59)
+		return -1;
+	if (timeptr->tm_hour < 0 || timeptr->tm_hour > 23)
+		return -1;
+
+	loctimevalue = 0;
+	year = timeptr->tm_year + TM_YEAR_BASE;
+	if (year < EPOCH_YEAR) {
+		for (i = year; i < EPOCH_YEAR; i++)
+			loctimevalue -= year_lengths[isleap(i)];
+	} else {
+		for (i = EPOCH_YEAR; i < year; i++)
+			loctimevalue += year_lengths[isleap(i)];
+	}
+	while (month--)
+		loctimevalue += mon_lengths[isleap(year)][month];
+	loctimevalue += timeptr->tm_mday - 1;
+	loctimevalue = HOURS_PER_DAY * loctimevalue + timeptr->tm_hour;
+	loctimevalue = MINS_PER_HOUR * loctimevalue + timeptr->tm_min;
+	loctimevalue = SECS_PER_MIN * loctimevalue + timeptr->tm_sec;
+
+	/*
+	** "timevalue" is now the number of seconds since January 1, 1970,
+	** 00:00 local time.  Convert it to GMT.
+	** SPECIFICATION ERROR: should it always use the value of tm_isdst,
+	** or should it compute it?  We could use it only to handle local
+	** times that can map to two GMT times, and recompute it when the
+	** smoke clears.  The nasty part of that is figuring out what those
+	** times are.
+	*/
+
+	if (s.timecnt == 0 || gmtimevalue < s.ats[0]) {
+		i = 0;
+		while (s.ttis[i].tt_isdst)
+			if (++i >= s.timecnt) {
+				i = 0;
+				break;
+			}
+		ttisp = &s.ttis[i];
+		gmtimevalue = loctimevalue - ttisp->tt_gmtoff;
+	} else {
+		for (i = 1; i < s.timecnt; ++i) {
+			ttisp = &s.ttis[s.types[i - 1]];
+			gmtimevalue = loctimevalue - ttisp->tt_gmtoff;
+			if (gmtimevalue < s.ats[i])
+				break;
+		}
+	}
+
+	/*
+	** Fill in the rest of the structure.
+	*/
+
+	*timeptr = *localtime(&gmtimevalue);
+	return gmtimevalue;
+}
+
 /*
-** System V compatability.
+** System V compatibility.
 */
 
 void
 tzset()
 {
-	(void) settz((char *) 0);
+	(void) settz(getenv("TZ"));
 }

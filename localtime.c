@@ -1163,13 +1163,11 @@ register struct tm * const		tmp;
 	tmp->tm_hour = (int) (rem / SECSPERHOUR);
 	rem = rem % SECSPERHOUR;
 	tmp->tm_min = (int) (rem / SECSPERMIN);
-	tmp->tm_sec = (int) (rem % SECSPERMIN);
-	if (hit)
-		/*
-		** A positive leap second requires a special
-		** representation.  This uses "... ??:59:60" et seq.
-		*/
-		tmp->tm_sec += hit;
+	/*
+	** A positive leap second requires a special
+	** representation.  This uses "... ??:59:60" et seq.
+	*/
+	tmp->tm_sec = (int) (rem % SECSPERMIN) + hit;
 	tmp->tm_wday = (int) ((EPOCH_WDAY + days) % DAYSPERWEEK);
 	if (tmp->tm_wday < 0)
 		tmp->tm_wday += DAYSPERWEEK;
@@ -1344,15 +1342,14 @@ int * const		okayp;
 	/*
 	** Calculate the number of magnitude bits in a time_t
 	** (this works regardless of whether time_t is
-	** signed or unsigned, though lint complains if unsigned).
+	** signed or unsigned).
 	*/
-	for (bits = 0, t = 1; t > 0; ++bits, t <<= 1)
-		continue;
+	bits = TYPE_BIT(time_t) - TYPE_SIGNED(time_t);
 	/*
 	** If time_t is signed, then 0 is the median value,
-	** if time_t is unsigned, then 1 << bits is median.
+	** if time_t is unsigned, then 1 << (bits - 1) is median.
 	*/
-	t = (t < 0) ? 0 : ((time_t) 1 << bits);
+	t = TYPE_SIGNED(time_t) ? 0 : ((time_t) 1 << (TYPE_BIT(time_t) - 1));
 	for ( ; ; ) {
 		(*funcp)(&t, offset, &mytm);
 		dir = tmcomp(&mytm, &yourtm);

@@ -1280,7 +1280,7 @@ const long		offset;
 	int				okay;
 
 	if (tmp->tm_isdst > 1)
-		return WRONG;
+		tmp->tm_isdst = 1;
 	t = time2(tmp, funcp, offset, &okay);
 	if (okay || tmp->tm_isdst < 0)
 		return t;
@@ -1332,6 +1332,7 @@ time_t
 timelocal(tmp)
 struct tm * const	tmp;
 {
+	tmp->tm_isdst = -1;	/* in case it wasn't initialized */
 	return mktime(tmp);
 }
 

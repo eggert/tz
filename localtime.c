@@ -27,7 +27,7 @@ extern char *		strcpy();
 extern char *		strcat();
 
 struct ttinfo {				/* time type information */
-	long		tt_gmtoff;	/* GMT offset in seconds */
+	time_t		tt_gmtoff;	/* GMT offset in seconds */
 	int		tt_isdst;	/* used to set tm_isdst */
 	int		tt_abbrind;	/* abbreviation list index */
 };
@@ -36,7 +36,7 @@ struct state {
 	int		timecnt;
 	int		typecnt;
 	int		charcnt;
-	long		ats[TZ_MAX_TIMES];
+	time_t		ats[TZ_MAX_TIMES];
 	unsigned char	types[TZ_MAX_TIMES];
 	struct ttinfo	ttis[TZ_MAX_TYPES];
 	char		chars[TZ_MAX_CHARS + 1];
@@ -46,15 +46,15 @@ static struct state	s;
 
 static int		tz_is_set;
 
-#ifdef USG_COMPAT
-long			timezone = 0;
-int			daylight = 0;
-#endif /* USG_COMPAT */
-
 char *			tzname[2] = {
 	"GMT",
 	"GMT"
 };
+
+#ifdef USG_COMPAT
+time_t			timezone = 0;
+int			daylight = 0;
+#endif /* USG_COMPAT */
 
 #ifdef TZA_COMPAT
 char *			tz_abbr;	/* compatibility w/older versions */
@@ -166,25 +166,25 @@ register char *	name;
 	/*
 	** Set tzname elements to initial values.
 	*/
+	tzname[0] = tzname[1] = &s.chars[0];
 #ifdef USG_COMPAT
 	timezone = s.ttis[0].tt_gmtoff;
 	daylight = 0;
 #endif /* USG_COMPAT */
-	tzname[0] = tzname[1] = &s.chars[0];
 	for (i = 1; i < s.typecnt; ++i) {
 		register struct ttinfo *	ttisp;
 
 		ttisp = &s.ttis[i];
 		if (ttisp->tt_isdst) {
+			tzname[1] = &s.chars[ttisp->tt_abbrind];
 #ifdef USG_COMPAT
 			daylight = 1;
 #endif /* USG_COMPAT */
-			tzname[1] = &s.chars[ttisp->tt_abbrind];
 		} else {
+			tzname[0] = &s.chars[ttisp->tt_abbrind];
 #ifdef USG_COMPAT
 			timezone = ttisp->tt_gmtoff;
 #endif /* USG_COMPAT */
-			tzname[0] = &s.chars[ttisp->tt_abbrind];
 		}
 	}
 	return 0;
@@ -227,12 +227,12 @@ tzsetwall()
 
 struct tm *
 localtime(timep)
-long *	timep;
+time_t *	timep;
 {
 	register struct ttinfo *	ttisp;
 	register struct tm *		tmp;
 	register int			i;
-	long				t;
+	time_t				t;
 
 	if (!tz_is_set)
 		(void) tzset();
@@ -259,107 +259,4 @@ long *	timep;
 #endif /* TZA_COMPAT */
 	tzname[tmp->tm_isdst] = &s.chars[ttisp->tt_abbrind];
 	return tmp;
-}
-
-/*
-********************************************************************************
-*/
-
-static int	mon_lengths[2][12] = {	/* ". . .knuckles are 31. . ." */
-	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
-	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
-};
-
-static int	year_lengths[2] = {
-	DAYS_PER_NYEAR, DAYS_PER_LYEAR
-};
-
-/*
-** Since the times representable in a 32-bit signed integer
-** run from 1901 to 2037, the define below works--2000 IS a leap year.
-*/
-
-#define isleap(y) (((y) % 4) == 0)
-
-time_t
-mktime(timeptr)
-register struct tm *	timeptr;
-{
-	register int			i, year, month;
-	register time_t			loctimevalue;
-	time_t				gmtimevalue;
-	register struct ttinfo *	ttisp;
-
-	if (!tz_is_set)
-		(void) tzset();
-
-	/*
-	** First, check that the time structure passed to us contains
-	** a valid time.
-	** SPECIFICATION ERROR: what if it isn't?  Do we bitch, or do
-	** we correct it somehow - if we correct it, how do we do so?
-	** The only thing I [guy@sun] can think of is that it calls "gmtime"
-	** when it's got a time value, and stuffs the returned structure
-	** back into "*timeptr".  Let's try that.
-	*/
-	month = timeptr->tm_mon;
-	if (month < 0 || month > 11)
-		return -1;
-	if (timeptr->tm_mday < 1 || timeptr->tm_mday > 31)
-		return -1;
-	if (timeptr->tm_min < 0 || timeptr->tm_min > 59)
-		return -1;
-	if (timeptr->tm_hour < 0 || timeptr->tm_hour > 23)
-		return -1;
-
-	loctimevalue = 0;
-	year = timeptr->tm_year + TM_YEAR_BASE;
-	if (year < EPOCH_YEAR) {
-		for (i = year; i < EPOCH_YEAR; i++)
-			loctimevalue -= year_lengths[isleap(i)];
-	} else {
-		for (i = EPOCH_YEAR; i < year; i++)
-			loctimevalue += year_lengths[isleap(i)];
-	}
-	while (month--)
-		loctimevalue += mon_lengths[isleap(year)][month];
-	loctimevalue += timeptr->tm_mday - 1;
-	loctimevalue = HOURS_PER_DAY * loctimevalue + timeptr->tm_hour;
-	loctimevalue = MINS_PER_HOUR * loctimevalue + timeptr->tm_min;
-	loctimevalue = SECS_PER_MIN * loctimevalue + timeptr->tm_sec;
-
-	/*
-	** "timevalue" is now the number of seconds since January 1, 1970,
-	** 00:00 local time.  Convert it to GMT.
-	** SPECIFICATION ERROR: should it always use the value of tm_isdst,
-	** or should it compute it?  We could use it only to handle local
-	** times that can map to two GMT times, and recompute it when the
-	** smoke clears.  The nasty part of that is figuring out what those
-	** times are.
-	*/
-
-	if (s.timecnt == 0 || loctimevalue < s.ats[0]) {
-		i = 0;
-		while (s.ttis[i].tt_isdst)
-			if (++i >= s.timecnt) {
-				i = 0;
-				break;
-			}
-		ttisp = &s.ttis[i];
-		gmtimevalue = loctimevalue - ttisp->tt_gmtoff;
-	} else {
-		for (i = 1; i < s.timecnt; ++i) {
-			ttisp = &s.ttis[s.types[i - 1]];
-			gmtimevalue = loctimevalue - ttisp->tt_gmtoff;
-			if (gmtimevalue < s.ats[i])
-				break;
-		}
-	}
-
-	/*
-	** Fill in the rest of the structure.
-	*/
-
-	*timeptr = *localtime(&gmtimevalue);
-	return gmtimevalue;
 }

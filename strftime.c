@@ -363,6 +363,10 @@ label:
 							DAYSPERLYEAR :
 							DAYSPERNYEAR;
 					}
+#ifdef XPG4_1994_04_09
+					if (w == 52 && t->tm_mon == TM_JANUARY)
+						w = 53;
+#endif /* defined XPG4_1994_04_09 */
 					if (*format == 'V')
 						pt = _conv(w, "%02d",
 							pt, ptlim);

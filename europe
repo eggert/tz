@@ -718,6 +718,10 @@ Rule	GB-Eire	1981	max	-	Mar	lastSun	1:00s	1:00	BST
 Rule	GB-Eire 1981	1989	-	Oct	Sun>=23	1:00s	0	GMT
 Rule	GB-Eire 1990	1995	-	Oct	Sun>=22	1:00s	0	GMT
 Rule	GB-Eire 1996	max	-	Oct	lastSun	1:00s	0	GMT
+#Rule	GB-Eire	1981	max	-	Mar	lastSun	1:00u	1:00	BST
+#Rule	GB-Eire 1981	1989	-	Oct	Sun>=23	1:00u	0	GMT
+#Rule	GB-Eire 1990	1995	-	Oct	Sun>=22	1:00u	0	GMT
+#Rule	GB-Eire 1996	max	-	Oct	lastSun	1:00u	0	GMT
 # Also see W-Eur, which (starting 1996) differs only in LETTER/S.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

@@ -1533,7 +1533,7 @@ eitol(i)
 	long	l;
 
 	l = i;
-	if (l != i) {
+	if (i < 0 && l >= 0 || i == 0 && l != 0 || i > 0 && l <= 0) {
 		(void) fprintf(stderr, "%s: %d did not sign extend correctly\n",
 			progname, i);
 		exit(1);

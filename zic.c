@@ -760,6 +760,7 @@ static long
 gethms(string, errstring, signable)
 const char *		string;
 const char * const	errstring;
+const int		signable;
 {
 	int	hh, mm, ss, sign;
 
@@ -794,6 +795,7 @@ const char * const	errstring;
 static void
 inrule(fields, nfields)
 register char ** const	fields;
+const int		nfields;
 {
 	static struct rule	r;
 
@@ -820,6 +822,7 @@ register char ** const	fields;
 static int
 inzone(fields, nfields)
 register char ** const	fields;
+const int		nfields;
 {
 	register int	i;
 	char		buf[132];
@@ -859,6 +862,7 @@ register char ** const	fields;
 static int
 inzcont(fields, nfields)
 register char ** const	fields;
+const int		nfields;
 {
 	if (nfields < ZONEC_MINFIELDS || nfields > ZONEC_MAXFIELDS) {
 		error("wrong number of fields on Zone continuation line");
@@ -870,6 +874,8 @@ register char ** const	fields;
 static int
 inzsub(fields, nfields, iscont)
 register char ** const	fields;
+const int		nfields;
+const int		iscont;
 {
 	register char *		cp;
 	static struct zone	z;
@@ -940,6 +946,7 @@ error("Zone continuation line end time is not after end time of previous line");
 static void
 inleap(fields, nfields)
 register char ** const	fields;
+const int		nfields;
 {
 	register const char *		cp;
 	register const struct lookup *	lp;
@@ -1017,6 +1024,7 @@ register char ** const	fields;
 static void
 inlink(fields, nfields)
 register char ** const	fields;
+const int		nfields;
 {
 	struct link	l;
 
@@ -1290,6 +1298,7 @@ const char * const	name;
 static void
 outzone(zpfirst, zonecount)
 const struct zone * const	zpfirst;
+const int			zonecount;
 {
 	register const struct zone *	zp;
 	register struct rule *		rp;
@@ -1447,6 +1456,7 @@ addtt(starttime, addtype(startoff, startbuf, startisdst));
 static void
 addtt(starttime, type)
 const time_t	starttime;
+const int	type;
 {
 	if (timecnt != 0 && type == types[timecnt - 1])
 		return;	/* easy enough! */
@@ -1463,6 +1473,7 @@ static int
 addtype(gmtoff, abbr, isdst)
 const long		gmtoff;
 const char * const	abbr;
+const int		isdst;
 {
 	register int	i, j;
 
@@ -1499,6 +1510,8 @@ const char * const	abbr;
 static void
 addleap(t, positive, rolling)
 const time_t	t;
+const int	positive;
+const int	rolling;
 {
 	register int	i, j;
 
@@ -1542,6 +1555,7 @@ adjleap()
 
 static int
 yearistype(year, type)
+const int		year;
 const char * const	type;
 {
 	char	buf[BUFSIZ];

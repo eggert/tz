@@ -14,7 +14,7 @@ TZDIR=		/etc/zoneinfo
 
 # You may want to change this define if you're just testing the software.
 
-TZLIB=		/usr/lib/libtz.a
+TZLIB=		/usr/lib/libz.a
 
 # LINTFLAGS is set for 4.1bsd systems.  If you're using System V, you'll want
 # to comment out the "LINTFLAGS=" line.

@@ -25,6 +25,7 @@ LOCALTIME=	Factory
 # Use the command
 #	make zonenames
 # to get a list of the values you can use for POSIXRULES.
+# If you want POSIX compatibility, use "US/Eastern".
 
 POSIXRULES=	US/Eastern
 
@@ -73,7 +74,11 @@ TZLIB=		$(LIBDIR)/libz.a
 
 REDO=		posix_right
 
-# If you're running on a system where "strchr" is known as "index",
+# If you're on an AT&T-based system (rather than a BSD-based system), add
+#	-DUSG
+# to the end of the "CFLAGS=" line.
+#
+# If you're running on a system where "strchr" is known as "index"
 # (for example, a 4.[012]BSD system), add
 #	-Dstrchr=index
 # to the end of the "CFLAGS=" line.
@@ -233,19 +238,23 @@ posix_right:	posix_only other_two
 
 right_posix:	right_only other_two
 
-# The "ar d" command below ensures that obsolete object files are eliminated
-# from the library.
+# The "ar d"s below ensure that obsolete object modules
+# (based on source provided with earlier versions of the time conversion stuff)
+# are removed from the library.
 
 $(TZLIB):	$(LIBOBJS)
 		ar ru $@ $(LIBOBJS)
-		-ar d $@ timemk.o ctime.o
-		-ranlib $@
+		if ar t $@ timemk.o 2>/dev/null ; then ar d $@ timemk.o ; fi
+		if ar t $@ ctime.o 2>/dev/null ; then ar d $@ ctime.o ; fi
+		if [ -x /usr/ucb/ranlib -o -x /usr/bin/ranlib ] ; \
+			then ranlib $@ ; fi
 
 # We use the system's logwtmp and strftime in preference to ours if available.
 
 date:		$(DATEOBJS)
 		ar r ,lib.a logwtmp.o strftime.o
-		-ranlib ,lib.a
+		if [ -x /usr/ucb/ranlib -o -x /usr/bin/ranlib ] ; \
+			then ranlib ,lib.a ; fi
 		$(CC) $(CFLAGS) date.o localtime.o getopt.o -lc ,lib.a -o $@
 		rm -f ,lib.a
 

@@ -93,6 +93,7 @@ static int		retval = EXIT_SUCCESS;
 
 static void		display();
 static time_t		gettime();
+int			netsettime();
 static void		timeout();
 static void		usage();
 static time_t		xtime();
@@ -234,12 +235,18 @@ char *	argv[];
 	username = getlogin();
 	if (username == NULL || *username == '\0') /* single-user or no tty */
 		username = "root";
+	/*
+	** XXX--shouldn't put the "before" entry into wtmp until we've
+	** determined that the time-setting call has succeeded--but to
+	** do that, we'd need to add a new parameter to logwtmp.
+	**
+	** Partial workaround would be to do a uid check before the first
+	** write to wtmp.
+	*/
 #ifdef DST_NONE
-	if (!nflag) {
-		tv.tv_sec = t;
-		if (netsettime(tv) != 1)
-			exit(EXIT_FAILURE);
-	}
+	tv.tv_sec = t;
+	if (!nflag && netsettime(tv) != 1)
+		exit(EXIT_FAILURE);
 	logwtmp(OTIME_MSG, TIME_USER, "");
 	if (settimeofday(&tv, (struct timezone *) NULL) == 0) {
 		logwtmp(NTIME_MSG, TIME_USER, "");
@@ -258,6 +265,7 @@ char *	argv[];
 	}
 #endif /* !defined DST_NONE */
 
+	(void) time(&now);
 	display(format);
 	for ( ; ; )
 		;
@@ -327,6 +335,12 @@ struct tm *	tmp;
 			(void) putchar(c);
 			continue;
 		}
+/*
+** Format characters below come from:
+** December 7, 1988 version of X3J11's description of the strftime function;
+** the System V Release 2.0 description of the date command;
+** and the System V Release 3.1 description of the ascftime function.
+*/
 		switch (c = *format++) {
 		default:
 			(void) fprintf(stderr,
@@ -379,6 +393,9 @@ struct tm *	tmp;
 		case 'r':
 			timeout("%I:%M:%S %p", tmp);
 			break;
+		case 'R':
+			timeout("%H:%M", tmp):
+			break;
 		case 'S':
 			(void) printf("%02.2d", tmp->tm_sec);
 			break;
@@ -429,12 +446,9 @@ struct tm *	tmp;
 }
 
 /*
- * gettime --
- *	convert user's input into a time_t.
- * Track the UCB behavior of treating
- * 	2415
- * as 12:15 AM tomorrow rather than 12:15 AM today.
- */
+** gettime --
+**	convert user's input into a time_t.
+*/
 
 static int
 pair(cp)
@@ -449,42 +463,19 @@ static time_t
 xtime(intmp)
 register struct tm * intmp;
 {
-	struct tm	intm;
 	struct tm	outtm;
 	time_t		outt;
-	int		saw24;
-	int		okay;
 
-	intm = *intmp;
-	saw24 = intm.tm_hour == 24;
-	if (saw24) {
-		intm.tm_hour = 0;
-		++intm.tm_mday;
-	}
-	outtm = intm;
+	outtm = *intmp;
 	outt = mktime(&outtm);
-	if (outtm.tm_isdst != intm.tm_isdst ||
-		outtm.tm_sec != intm.tm_sec ||
-		outtm.tm_min != intm.tm_min ||
-		outtm.tm_hour != intm.tm_hour)
-			okay = 0;
-	else if (outtm.tm_mday == intm.tm_mday &&
-		outtm.tm_mon == intm.tm_mon &&
-		outtm.tm_year == intm.tm_year)
-			okay = 1;
-	else if (!saw24)
-			okay = 0;
-	else if (outtm.tm_mday == intm.tm_mday + 1)
-		okay = outtm.tm_mon == intm.tm_mon &&
-			outtm.tm_year == intm.tm_year;
-	else if (outtm.tm_mday != 1)
-			okay = 0;
-	else if (outtm.tm_mon == intm.tm_mon + 1)
-			okay = outtm.tm_year == intm.tm_year;
-	else if (outtm.tm_mon != 0)
-			okay = 0;
-	else		okay = outtm.tm_year == intm.tm_year + 1;
-	return okay ? outt : -1;
+	return (outtm.tm_isdst == intmp->tm_isdst &&
+		outtm.tm_sec == intmp->tm_sec &&
+		outtm.tm_min == intmp->tm_min &&
+		outtm.tm_hour == intmp->tm_hour &&
+		outtm.tm_mday == intmp->tm_mday &&
+		outtm.tm_mon == intmp->tm_mon &&
+		outtm.tm_year == intmp->tm_year) ?
+			outt : -1;
 }
 
 #define YEAR_THIS_WAS_WRITTEN	1989

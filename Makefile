@@ -35,13 +35,18 @@ TZLIB=		/usr/lib/libz.a
 #	-DBSD_COMPAT
 # to the end of the "CFLAGS=" line.
 #
-# If you want POSIX compatibility code, add
-#	-DPOX_COMPAT
-# to the end of the "CFLAGS=" line.
-#
 # If you've used older versions of this software and want "tz_abbr"
 # compatibility  code, add
 #	-DTZA_COMPAT
+# to the end of the "CFLAGS=" line.
+#
+# If you'd like to use Robert Elz's additions to the "struct tm" structure,
+# add a
+#	-DKRE_COMPAT
+# to the end of the "CFLAGS=" line.
+#
+# If you want code inspired by certain emerging standards, add
+#	-DSTD_INSPIRED
 # to the end of the "CFLAGS=" line.
 #
 # If you want Source Code Control System ID's left out of object modules, add
@@ -50,7 +55,8 @@ TZLIB=		/usr/lib/libz.a
 #
 # If you'll never want to handle solar-time-based time zones, add
 #	-DNOSOLAR
-# to the end of the "CFLAGS=" line.
+# to the end of the "CFLAGS=" line
+# (and remove solar87 from the SOURCES= line below).
 #
 
 CFLAGS=
@@ -74,7 +80,8 @@ DOCS=		README Makefile newctime.3 tzfile.5 zic.8 zdump.8
 SOURCES=	tzfile.h zic.c zdump.c \
 		localtime.c gmtime.c asctime.c ctime.c dysize.c mktime.c \
 		scheck.c ialloc.c mkdir.c
-DATA=		asia australasia europe etcetera northamerica pacificnew systemv
+DATA=		asia australasia europe etcetera northamerica \
+		pacificnew systemv solar87
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
 all:		REDID_BINARIES zdump $(TZLIB)

@@ -71,7 +71,7 @@ BUNDLE3:	$(DATA)
 $(ENCHILADA):
 	sccs get $(REL) $(REV) $@
 
-sure:	$(TZCSRCS) $(TZDSRCS)
+sure:	$(TZCSRCS) $(TZDSRCS) tzfile.h ctime.c
 	lint $(LINTFLAGS) $(TZCSRCS)
 	lint $(LINTFLAGS) $(TZDSRCS)
 	lint $(LINTFLAGS) ctime.c

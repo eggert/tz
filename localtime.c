@@ -515,8 +515,6 @@ register struct rule * const	rulep;
 		*/
 		++strp;
 		strp = getsecs(strp, &rulep->r_time);
-		if (strp == NULL)
-			return NULL;
 	} else	rulep->r_time = 2 * SECSPERHOUR;	/* default = 2:00:00 */
 	return strp;
 }

@@ -10,10 +10,18 @@ static char	elsieid[] = "%W%";
 ** You can use this code to help in verifying other implementations.
 */
 
-#include "stdio.h"	/* for stdout, stderr */
+#include "stdio.h"	/* for stdout, stderr, perror */
 #include "string.h"	/* for strcpy */
 #include "sys/types.h"	/* for time_t */
 #include "time.h"	/* for struct tm */
+
+#ifndef HAVE_STDLIB_H
+#define HAVE_STDLIB_H 1
+#endif
+
+#if HAVE_STDLIB_H
+#include "stdlib.h"   /* for exit, malloc, atoi */
+#endif
 
 #ifndef MAX_STRING_LENGTH
 #define MAX_STRING_LENGTH	1024
@@ -91,11 +99,6 @@ extern char *	optarg;
 extern int	optind;
 extern time_t	time();
 extern char *	tzname[2];
-
-#ifdef USG
-extern void	exit();
-extern void	perror();
-#endif /* defined USG */
 
 static char *	abbr();
 static long	delta();

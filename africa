@@ -53,6 +53,10 @@
 #	Omit `.' from abbreviations in names, e.g. prefer `St_Helena'
 #		to `St._Helena'.
 #
+# We typically use traditional English time zone abbreviations,
+# and assume that applications translate them to other languages
+# as part of the normal localization process.
+#
 # I made up the following time zone abbreviations; corrections are welcome!
 #		LMT	Local Mean Time
 #	-2:00	CVT	Cape Verde Time (no longer used)

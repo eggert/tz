@@ -1470,8 +1470,9 @@ addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd));
 				offset = oadd(zp->z_gmtoff, rp->r_stdoff);
 				type = addtype(offset, buf, rp->r_stdoff != 0,
 					rp->r_todisstd);
-				if (timecnt != 0 || rp->r_stdoff != 0)
-					addtt(ktime, type);
+				if (timecnt != 0 || rp->r_stdoff != 0 ||
+					typecnt > 1)
+						addtt(ktime, type);
 				gmtoff = zp->z_gmtoff;
 				stdoff = rp->r_stdoff;
 			}

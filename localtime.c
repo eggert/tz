@@ -12,7 +12,42 @@ static char	elsieid[] = "%W%";
 #include "time.h"
 #include "string.h"
 
-#ifdef MODERN
+#if defined __TURBOC__
+#include "io.h"			/* to pick up prototypes for open and such */
+#include "fcntl.h"		/* to pick up O_BINARY and O_RDONLY bits */
+#endif /* defined __TURBOC__ */
+
+#ifdef unix
+#include "fcntl.h"
+#endif /* defined unix */
+
+#ifdef O_BINARY
+#ifdef O_RDONLY
+#define OPEN_MODE	O_BINARY | O_RDONLY
+#endif /* defined O_RDONLY */
+#endif /* defined O_BINARY */
+
+#ifndef OPEN_MODE
+#define OPEN_MODE	0
+#endif /* !defined OPEN_MODE */
+
+#ifdef O_RDONLY
+#define ACCESS_MODE	O_RDONLY
+#else /* !defined O_RDONLY */
+#define ACCESS_MODE	4
+#endif /* !defined O_RDONLY */
+
+#ifdef const
+
+#include "sys/types.h"		/* to get time_t */
+
+extern char *	getenv();
+
+#ifndef MAXPATHLEN
+#include "sys/param.h"
+#endif /* !defined MAXPATHLEN */
+
+#else /* !defined const */
 
 #include "stdlib.h"
 #include "time.h"
@@ -21,23 +56,7 @@ static char	elsieid[] = "%W%";
 #define MAXPATHLEN	FILENAME_MAX
 #endif /* defined FILENAME_MAX */
 
-#else /* !defined MODERN */
-
-/*
-** sys/types.h is included to get time_t.
-*/
-
-#include "sys/types.h"
-
-extern char *	getenv();
-
-#ifndef MAXPATHLEN
-#include "sys/param.h"
-#endif /* !defined MAXPATHLEN */
-
-#define const
-
-#endif /* !defined MODERN */
+#endif /* !defined const */
 
 #ifndef MAXPATHLEN
 #define MAXPATHLEN	1024
@@ -48,12 +67,17 @@ extern char *	getenv();
 #define FALSE		0
 #endif /* !defined TRUE */
 
+static long		detzcode P((const char * codep));
 #ifdef STD_INSPIRED
-struct tm *		offtime();
+struct tm *     	offtime P((const time_t * clockp, long offset));
 #else /* !defined STD_INSPIRED */
-static struct tm *	offtime();
+static struct tm *      offtime P((const time_t * clockp, long offset));
 #endif /* !defined STD_INSPIRED */
-static struct tm *	timesub();
+static struct tm *	timesub P((const time_t * clockp, long offset,
+				struct state * sp));
+static int		tzload P((const char * name, struct state * sp));
+static void		tzsetgmt P((struct state * sp));
+void			tzsetwall P((void));
 
 struct ttinfo {				/* time type information */
 	long		tt_gmtoff;	/* GMT offset in seconds */
@@ -100,7 +124,7 @@ char *			tz_abbr;	/* compatibility w/older versions */
 
 static long
 detzcode(codep)
-char *	codep;
+const char *	codep;
 {
 	register long	result;
 	register int	i;
@@ -111,27 +135,9 @@ char *	codep;
 	return result;
 }
 
-#ifdef __TURBOC__
-#include "fcntl.h"
-#endif /* defined __TURBOC__ */
-
-#ifdef unix
-#include "fcntl.h"
-#endif /* defined unix */
-
-#ifdef O_BINARY
-#ifdef O_RDONLY
-#define MODE	O_BINARY | O_RDONLY
-#endif /* defined O_RDONLY */
-#endif /* defined O_BINARY */
-
-#ifndef MODE
-#define MODE	0
-#endif /* !defined MODE */
-
-static
+static int
 tzload(name, sp)
-register char *		name;
+register const char *		name;
 register struct state *	sp;
 {
 	register int	i;
@@ -161,9 +167,9 @@ register struct state *	sp;
 					doaccess = TRUE;
 			name = fullname;
 		}
-		if (doaccess && access(name, 4) != 0)
+		if (doaccess && access(name, ACCESS_MODE) != 0)
 			return -1;
-		if ((fid = open(name, MODE)) == -1)
+		if ((fid = open(name, OPEN_MODE)) == -1)
 			return -1;
 	}
 	{
@@ -249,12 +255,12 @@ register struct state *	sp;
 				tzname[1] = &sp->chars[ttisp->tt_abbrind];
 #ifdef USG_COMPAT
 				daylight = 1;
-#endif /* defined USG_COMPAT */ 
+#endif /* defined USG_COMPAT */
 			} else {
 				tzname[0] = &sp->chars[ttisp->tt_abbrind];
 #ifdef USG_COMPAT
 				timezone = -ttisp->tt_gmtoff;
-#endif /* defined USG_COMPAT */ 
+#endif /* defined USG_COMPAT */
 			}
 		}
 	}
@@ -366,7 +372,7 @@ struct tm *
 static struct tm *
 #endif /* !defined STD_INSPIRED */
 offtime(clock, offset)
-time_t *	clock;
+const time_t *	clock;
 long		offset;
 {
 	if (!gmt_is_set) {
@@ -388,7 +394,7 @@ static int	year_lengths[2] = {
 
 static struct tm *
 timesub(clock, offset, sp)
-time_t *		clock;
+const time_t *		clock;
 long			offset;
 register struct state *	sp;
 {
@@ -486,6 +492,7 @@ time_t *	timep;
 }
 
 #endif /* defined BSD_COMPAT */
+
 /*
 ** UNIX is a registered trademark of AT&T.
 */

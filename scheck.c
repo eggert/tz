@@ -32,11 +32,12 @@ char *	format;
 	register char *	result;
 	char		dummy;
 
+	result = "";
 	if (string == NULL || format == NULL)
-		return "";
+		return result;
 	fbuf = malloc((alloc_t) (2 * strlen(format) + 4));
 	if (fbuf == MAL)
-		return "";
+		return result;
 	fp = format;
 	tp = fbuf;
 	while ((*tp++ = c = *fp++) != '\0') {
@@ -51,7 +52,7 @@ char *	format;
 			++fp;
 		while (isascii(*fp) && isdigit(*fp))
 			*tp++ = *fp++;
-		if (*fp == 'l')
+		if (*fp == 'l' || *fp == 'h')
 			*tp++ = *fp++;
 		else if (*fp == '[')
 			do *tp++ = *fp++;
@@ -59,16 +60,11 @@ char *	format;
 		if ((*tp++ = *fp++) == '\0')
 			break;
 	}
-	if (c != '\0')
-		result = "";
-	else {
-		*(tp - 1) = '%';
-		*tp++ = 'c';
-		*tp++ = '\0';
-		if (sscanf(string, fbuf, &dummy) == 1)
-			result = "";
-		else	result = format;
-	}
+	*(tp - 1) = '%';
+	*tp++ = 'c';
+	*tp++ = '\0';
+	if (sscanf(string, fbuf, &dummy) != 1)
+		result = format;
 	free(fbuf);
 	return result;
 }

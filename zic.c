@@ -1064,7 +1064,6 @@ int			zonecount;
 	register int			usestart, useuntil;
 	register long			starttime;
 	register int (*			funcp)();
-	static int			easy(), hard();
 
 	/*
 	** Now. . .finally. . .generate some useful data!
@@ -1089,10 +1088,7 @@ int			zonecount;
 			rp = &zp->z_rules[j];
 			eats(zp->z_filename, zp->z_linenum,
 				rp->r_filename, rp->r_linenum);
-			if (rp->r_yrtype == NULL || *rp->r_yrtype == '\0')
-				funcp = easy;
-			else	funcp = hard;
-			(*funcp)(rp, zp,
+			outsub(rp, zp,
 				usestart, starttime, useuntil, zp->z_untiltime);
 		}
 		if (!useuntil)
@@ -1218,7 +1214,7 @@ long			untiltime;
 }
 
 static
-easy(rp, zp, usestart, starttime, useuntil, untiltime)
+outsub(rp, zp, usestart, starttime, useuntil, untiltime)
 register struct rule *	rp;
 register struct zone *	zp;
 long			starttime;
@@ -1227,75 +1223,36 @@ long			untiltime;
 	long	y;
 
 	for (y = rp->r_loyear; y <= rp->r_hiyear; ++y)
-		if (!addrule(rp, y, zp,
-			usestart, starttime, useuntil, untiltime))
-				break;
+		if (yearistype(y, rp->r_yrtype))
+			if (!addrule(rp, y, zp,
+				usestart, starttime, useuntil, untiltime))
+					break;
 }
 
 static
-hard(rp, zp, usestart, starttime, useuntil, untiltime)
-register struct rule *	rp;
-register struct zone *	zp;
-long			starttime;
-long			untiltime;
+yearistype(year, type)
+long	year;
+char *	type;
 {
-	register FILE *	fp;
-	register int	n;
-	long		y;
-	char		buf[BUFSIZ];
-	char		command[BUFSIZ];
+	char	buf[BUFSIZ];
+	int	result;
 
-	(void) sprintf(command, "years %ld %ld %s",
-		rp->r_loyear, rp->r_hiyear, rp->r_yrtype);
-	if ((fp = popen(command, "r")) == NULL) {
-		(void) fprintf(stderr, "%s: Can't run command \"%s\"\n",
-			progname, command);
-		exit(1);
-	}
-	for (n = 0; fgets(buf, sizeof buf, fp) == buf; ++n) {
-		if (strchr(buf, '\n') == 0) {
-			(void) fprintf(stderr,
-"%s: Line read from command \"%s\" is too long\n",
-				progname, command);
-			(void) fprintf(stderr, "Line began with \"%s\"\n", buf);
-			exit(1);
-		}
-		*strchr(buf, '\n') = '\0';
-		if (sscanf(buf, scheck(buf, "%ld"), &y) != 1) {
-			(void) fprintf(stderr,
-"%s: Line read from command \"%s\" is not a number\n",
-				progname, command);
-			(void) fprintf(stderr, "Line was \"%s\"\n", buf);
-			exit(1);
-		}
-		if (y < rp->r_loyear || y > rp->r_hiyear) {
-			(void) fprintf(stderr,
-"%s: Year %ld read from command \"%s\" is not valid\n",
-				progname, y, command);
-			exit(1);
-		}
-		if (!addrule(rp, y, zp,
-			usestart, starttime, useuntil, untiltime))
-				break;
-	}
-	if (ferror(fp)) {
-		(void) fprintf(stderr,
-			"%s: Error reading from command \"%s\": ",
-			progname, command);
-		perror("");
-		exit(1);
-	}
-	if (pclose(fp)) {
-		(void) fprintf(stderr,
-			"%s: Error closing pipe to command \"%s\": ",
-			progname, command);
-		perror("");
-		exit(1);
-	}
-	if (n == 0) {
-		error("no year in range matches type");
-		exit(1);
-	}
+	if (type == NULL || *type == '\0')
+		return TRUE;
+	if (strcmp(type, "uspres") == 0)
+		return (year % 4) == 0;
+	if (strcmp(type, "nonpres") == 0)
+		return (year % 4) != 0;
+	(void) sprintf(buf, "yearistype %ld %s", year, type);
+	result = system(buf);
+	if (result == 0)
+		return TRUE;
+	if (result == 1)
+		return FALSE;
+	error("Wild result from command execution");
+	(void) fprintf(stderr, "%s: command was '%s', result was %d\n",
+		buf, result);
+	exit(1);
 }
 
 static

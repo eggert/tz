@@ -321,7 +321,7 @@ label:
 			}
 		}
 		if (pt == ptlim)
-			return pt;
+			break;
 		*pt++ = *format;
 	}
 	return pt;

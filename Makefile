@@ -14,7 +14,7 @@ TZDIR=		/etc/zoneinfo
 
 # You may want to change this define if you're just testing the software.
 # Alternatively, you can put these functions in /lib/libc.a, removing
-# the old "ctime.o" (and "timezone.o" on a BSD system).  This is the
+# the old "ctime.o".  This is the
 # ideal solution if you are able.  Build libz.a, extract the files, and
 # then add them to libc.a.
 

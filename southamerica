@@ -82,6 +82,10 @@ Rule	Arg	1988	only	-	Dec	 1	0:00	1:00	D
 Rule	Arg	1989	only	-	Mar	16	0:00	0	S
 Rule	Arg	1989	only	-	Oct	15	0:00	1:00	D
 Rule	Arg	1990	only	-	Mar	 4	0:00	0	S
+# _The Economist_ (8 Jan 1994, p 42) reports that Argentina
+# had DST in 1991-2 and 1992-3, but not in 1990-1 or in 1993-4.
+# It has something to do with electricity companies meeting demand in summer.
+# We don't know the 1991-3 transition times, unfortunately.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Buenos_Aires -3:53:48 -	LMT	1894 Nov
 			-4:17	-	CMT	1920 May    # Cordoba Mean Time
@@ -206,7 +210,8 @@ Zone Pacific/Easter	-7:17:28 -	LMT	1890	    # Mataveri
 			-7:00	Chile	M%sT	1982 Mar 14
 			-6:00	Chile	C%sT
 #
-# Juan Fernandez Is, San Ambrosio, San Felix
+# Whitman says Juan Fernandez Is are like America/Santiago.
+# San Ambrosio, San Felix
 # no information; probably like America/Santiago
 
 
@@ -336,43 +341,48 @@ Zone America/Port_of_Spain -4:06:04 -	LMT	1912 Mar 2
 # Your guess is as good as mine for what happened after 1989.
 # From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Uruguay	1920	only	-	May	 1	0:00	0	S
-Rule	Uruguay	1923	only	-	Oct	 2	0:00	0:30	HD
-Rule	Uruguay	1924	1926	-	Apr	 1	0:00	0	S
-Rule	Uruguay	1924	1925	-	Oct	 1	0:00	0:30	HD
-Rule	Uruguay	1933	1935	-	Oct	lastSun	0:00	0:30	HD
-Rule	Uruguay	1934	1935	-	Apr	 1	0:00	0	S
-Rule	Uruguay	1936	1941	-	Mar	lastSun	0:00	0	S
-Rule	Uruguay	1936	only	-	Nov	 1	0:00	0:30	HD
-Rule	Uruguay	1937	1940	-	Oct	lastSun	0:00	0:30	HD
-Rule	Uruguay	1941	only	-	Aug	 1	0:00	0	S
-Rule	Uruguay	1942	only	-	Jan	 1	0:00	0:30	HD
-Rule	Uruguay	1942	only	-	Dec	14	0:00	1:00	D
-Rule	Uruguay	1943	only	-	Mar	14	0:00	0	S
-Rule	Uruguay	1959	only	-	May	24	0:00	1:00	D
-Rule	Uruguay	1959	only	-	Nov	15	0:00	0	S
-Rule	Uruguay	1960	only	-	Jan	17	0:00	1:00	D
-Rule	Uruguay	1960	only	-	Mar	 6	0:00	0	S
-Rule	Uruguay	1965	1967	-	Apr	Sun>=1	0:00	1:00	D
-Rule	Uruguay	1965	only	-	Sep	26	0:00	0	S
-Rule	Uruguay	1966	1967	-	Oct	31	0:00	0	S
-Rule	Uruguay	1968	1970	-	May	27	0:00	0:30	HD
-Rule	Uruguay	1968	1970	-	Dec	 2	0:00	0	S
-Rule	Uruguay	1972	only	-	Apr	24	0:00	1:00	D
-Rule	Uruguay	1972	only	-	Aug	15	0:00	0	S
-Rule	Uruguay	1974	only	-	Mar	10	0:00	0:30	HD
-Rule	Uruguay	1974	only	-	Dec	22	0:00	1:00	D
-Rule	Uruguay	1976	only	-	Oct	 1	0:00	0	S
-Rule	Uruguay	1977	only	-	Dec	 4	0:00	1:00	D
-Rule	Uruguay	1978	only	-	Apr	 1	0:00	0	S
-Rule	Uruguay	1979	only	-	Oct	 1	0:00	1:00	D
-Rule	Uruguay	1980	only	-	May	 1	0:00	0	S
-Rule	Uruguay	1987	only	-	Dec	14	0:00	1:00	D
-Rule	Uruguay	1988	only	-	Mar	14	0:00	0	S
-Rule	Uruguay	1988	only	-	Dec	11	0:00	1:00	D
-Rule	Uruguay	1989	only	-	Mar	12	0:00	0	S
-Rule	Uruguay	1989	only	-	Oct	29	0:00	1:00	D
-Rule	Uruguay	1990	only	-	Mar	 4	0:00	0	S
+Rule	Uruguay	1920	only	-	May	 1	 0:00	0	S
+# Whitman gives 1923 Oct 1; go with Shanks.
+Rule	Uruguay	1923	only	-	Oct	 2	 0:00	0:30	HD
+Rule	Uruguay	1924	1926	-	Apr	 1	 0:00	0	S
+Rule	Uruguay	1924	1925	-	Oct	 1	 0:00	0:30	HD
+Rule	Uruguay	1933	1935	-	Oct	lastSun	 0:00	0:30	HD
+# Shanks gives 1935 Apr 1 0:00 and 1936 Mar 30 0:00; go with Whitman.
+Rule	Uruguay	1934	1936	-	Mar	Sat>=25	23:30s	0	S
+Rule	Uruguay	1936	only	-	Nov	 1	 0:00	0:30	HD
+Rule	Uruguay	1937	1941	-	Mar	lastSun	 0:00	0	S
+# Whitman gives 1937 Oct 3; go with Shanks.
+Rule	Uruguay	1937	1940	-	Oct	lastSun	 0:00	0:30	HD
+# Whitman gives 1941 Oct 24 - 1942 Mar 27, 1942 Dec 14 - 1943 Apr 13,
+# and 1943 Apr 13 ``to present time''; go with Shanks.
+Rule	Uruguay	1941	only	-	Aug	 1	 0:00	0	S
+Rule	Uruguay	1942	only	-	Jan	 1	 0:00	0:30	HD
+Rule	Uruguay	1942	only	-	Dec	14	 0:00	1:00	D
+Rule	Uruguay	1943	only	-	Mar	14	 0:00	0	S
+Rule	Uruguay	1959	only	-	May	24	 0:00	1:00	D
+Rule	Uruguay	1959	only	-	Nov	15	 0:00	0	S
+Rule	Uruguay	1960	only	-	Jan	17	 0:00	1:00	D
+Rule	Uruguay	1960	only	-	Mar	 6	 0:00	0	S
+Rule	Uruguay	1965	1967	-	Apr	Sun>=1	 0:00	1:00	D
+Rule	Uruguay	1965	only	-	Sep	26	 0:00	0	S
+Rule	Uruguay	1966	1967	-	Oct	31	 0:00	0	S
+Rule	Uruguay	1968	1970	-	May	27	 0:00	0:30	HD
+Rule	Uruguay	1968	1970	-	Dec	 2	 0:00	0	S
+Rule	Uruguay	1972	only	-	Apr	24	 0:00	1:00	D
+Rule	Uruguay	1972	only	-	Aug	15	 0:00	0	S
+Rule	Uruguay	1974	only	-	Mar	10	 0:00	0:30	HD
+Rule	Uruguay	1974	only	-	Dec	22	 0:00	1:00	D
+Rule	Uruguay	1976	only	-	Oct	 1	 0:00	0	S
+Rule	Uruguay	1977	only	-	Dec	 4	 0:00	1:00	D
+Rule	Uruguay	1978	only	-	Apr	 1	 0:00	0	S
+Rule	Uruguay	1979	only	-	Oct	 1	 0:00	1:00	D
+Rule	Uruguay	1980	only	-	May	 1	 0:00	0	S
+Rule	Uruguay	1987	only	-	Dec	14	 0:00	1:00	D
+Rule	Uruguay	1988	only	-	Mar	14	 0:00	0	S
+Rule	Uruguay	1988	only	-	Dec	11	 0:00	1:00	D
+Rule	Uruguay	1989	only	-	Mar	12	 0:00	0	S
+Rule	Uruguay	1989	only	-	Oct	29	 0:00	1:00	D
+Rule	Uruguay	1990	only	-	Mar	 4	 0:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Montevideo	-3:44:44 -	LMT	1898 Jun 28
 			-3:45	-	MMT	1920 May  1	# Montevideo MT

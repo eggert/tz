@@ -1,24 +1,24 @@
-#
+#ifndef lint
+#ifndef NOID
+static char	elsieid[] = "%W%";
+#endif /* !defined NOID */
+#endif /* !defined lint */
 
 /*LINTLIBRARY*/
 
 #include "stdio.h"
-
-#ifndef lint
-#ifndef NOID
-static char	elsieid[] = "%W%"
-#endif /* !defined NOID */
-#endif /* !defined lint */
-
 #include "time.h"
 #include "tzfile.h"
 
-#ifndef __STDC__
+#ifndef MODERN
+
 #define const
+
 #ifndef USG
 extern char *	sprintf();
 #endif /* !defined USG */
-#endif /* !defined __STDC__ */
+
+#endif /* !defined MODERN */
 
 /*
 ** A la X3J11

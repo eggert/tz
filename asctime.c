@@ -34,7 +34,7 @@ register struct tm *	timeptr;
 	};
 	static char	result[26];
 
-	(void) sprintf(result, "%.3s %.3s%3d %.2d:%.2d:%.2d %d\n",
+	(void) sprintf(result, "%.3s %.3s%3d %02.2d:%02.2d:%02.2d %d\n",
 		wday_name[timeptr->tm_wday],
 		mon_name[timeptr->tm_mon],
 		timeptr->tm_mday, timeptr->tm_hour,

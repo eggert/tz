@@ -82,11 +82,6 @@ These are the changes that have been made to the SVR2 functions:
 	environment variable; portable applications should not, however, rely
 	on this behavior since it's not the way SVR2 systems behave.)
 
-	system's best idea of local wall clock.  (This is important for 
-	applications that an administrator wants used only at certain times--
-	without regard to whether the user has fiddled the "TZ" environment
-	variable.
-
 Points of interest to folks with Version 7 or BSD systems:
 
 *	The BSD "timezone" function is not present in this package;

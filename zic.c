@@ -518,8 +518,8 @@ char *	name;
 	register char *			cp;
 	register struct lookup *	lp;
 	register int			nfields;
+	register int			wantcont;
 	char				buf[BUFSIZ];
-	int				continuation;
 
 	if (strcmp(name, "-") == 0) {
 		name = "standard input";
@@ -531,7 +531,7 @@ char *	name;
 	}
 	filename = ecpyalloc(name);
 	rfilename = NULL;
-	continuation = 0;
+	wantcont = FALSE;
 	for (linenum = 1; ; ++linenum) {
 		if (fgets(buf, sizeof buf, fp) != buf)
 			break;
@@ -542,53 +542,37 @@ char *	name;
 		}
 		*cp = '\0';
 		fields = getfields(buf);
-			/* can't return NULL, since "buf" is not NULL */
 		nfields = 0;
 		while (fields[nfields] != NULL) {
 			if (ciequal(fields[nfields], "-"))
 				fields[nfields] = "";
 			++nfields;
 		}
-		if (nfields > 0) {	/* non-blank line */
-			if (continuation != 0) {
-				switch (continuation) {
+		if (nfields == 0) {
+			/* nothing to do */
+		} else if (wantcont) {
+			wantcont = inzcont(fields, nfields);
+		} else {
+			lp = byword(fields[0], line_codes);
+			if (lp == NULL)
+				error("input line of unknown type");
+			else switch ((int) (lp->l_value)) {
+				case LC_RULE:
+					inrule(fields, nfields);
+					wantcont = FALSE;
+					break;
 				case LC_ZONE:
-					if (inzcont(fields, nfields))
-						continuation = LC_ZONE;
-					else	continuation = 0;
+					wantcont = inzone(fields, nfields);
+					break;
+				case LC_LINK:
+					inlink(fields, nfields);
+					wantcont = FALSE;
 					break;
 				default:	/* "cannot happen" */
 					(void) fprintf(stderr,
-"%s: panic: Invalid continuation type %d\n",
-						progname, continuation);
-					exit(1);
-				}
-			} else {
-				lp = byword(fields[0], line_codes);
-				if (lp == NULL)
-					error("input line of unknown type");
-				else {
-					switch ((int) (lp->l_value)) {
-					case LC_RULE:
-						inrule(fields, nfields);
-						continuation = 0;
-						break;
-					case LC_ZONE:
-						if (inzone(fields, nfields))
-							continuation = LC_ZONE;
-						else	continuation = 0;
-						break;
-					case LC_LINK:
-						inlink(fields, nfields);
-						continuation = 0;
-						break;
-					default:	/* "cannot happen" */
-						(void) fprintf(stderr,
 "%s: panic: Invalid l_value %ld\n",
-							progname, lp->l_value);
-						exit(1);
-					}
-				}
+						progname, lp->l_value);
+					exit(1);
 			}
 		}
 		free((char *) fields);
@@ -933,36 +917,33 @@ char **	fields;
 	links[nlinks++] = l;
 }
 
-#define PUTSHORT(val, fp) { \
-	register int shortval; \
-	register unsigned char c; \
-	shortval = val; \
-	c = shortval >> 8; \
-	if (putc(c, fp) == EOF) \
-		goto wreck; \
-	c = shortval; \
-	if (putc(c, fp) == EOF) \
-		goto wreck; \
-	}
+static
+putshort(val, fp)
+FILE *	fp;
+{
+	register char	c;
+	register int	shift;
 
-#define PUTLONG(val, fp) { \
-	register long longval; \
-	register unsigned char c; \
-	longval = val; \
-	c = longval >> 24; \
-	if (putc(c, fp) == EOF) \
-		goto wreck; \
-	c = longval >> 16; \
-	if (putc(c, fp) == EOF) \
-		goto wreck; \
-	c = longval >> 8; \
-	if (putc(c, fp) == EOF) \
-		goto wreck; \
-	c = longval; \
-	if (putc(c, fp) == EOF) \
-		goto wreck; \
+	for (shift = 8; shift >= 0; shift -= 8) {
+		c = val >> 8;
+		putc(c, fp);
 	}
-	
+}
+
+static
+putlong(val, fp)
+long	val;
+FILE *	fp;
+{
+	register char	c;
+	register int	shift;
+
+	for (shift = 24; shift >= 0; shift -= 8) {
+		c = val >> 8;
+		putc(c, fp);
+	}
+}
+
 static
 writezone(name)
 char *	name;
@@ -987,44 +968,37 @@ char *	name;
 			exit(1);
 		}
 	}
-	if (fwrite((char *) h.tzh_reserved, sizeof h.tzh_reserved, 1, fp) != 1)
-		goto wreck;
-	PUTSHORT(h.tzh_timecnt, fp);
-	PUTSHORT(h.tzh_typecnt, fp);
-	PUTSHORT(h.tzh_charcnt, fp);
+	(void) fwrite((char *) h.tzh_reserved, sizeof h.tzh_reserved, 1, fp);
+	putshort(h.tzh_timecnt, fp);
+	putshort(h.tzh_typecnt, fp);
+	putshort(h.tzh_charcnt, fp);
 	if ((i = h.tzh_timecnt) != 0) {
 		register long *atsp;
 		register int j;
 
 		atsp = &ats[0];
 		for (j = i; j > 0; --j)
-			PUTLONG(*atsp++, fp);
-		if (fwrite((char *) types, sizeof types[0], i, fp) != i)
-			goto wreck;
+			putlong(*atsp++, fp);
+		(void) fwrite((char *) types, sizeof types[0], i, fp);
 	}
 	if ((i = h.tzh_typecnt) != 0) {
 		register struct ttinfo *ttisp;
 
 		ttisp = &ttis[0];
 		for ( ; i > 0; --i) {
-			PUTLONG(ttisp->tt_gmtoff, fp);
-			if (putc(ttisp->tt_isdst, fp) == EOF)
-				goto wreck;
-			if (putc(ttisp->tt_abbrind, fp) == EOF)
-				goto wreck;
+			putlong(ttisp->tt_gmtoff, fp);
+			putc(ttisp->tt_isdst, fp);
+			putc(ttisp->tt_abbrind, fp);
 			ttisp++;
 		}
 	}
 	if ((i = h.tzh_charcnt) != 0)
-		if (fwrite(chars, sizeof chars[0], i, fp) != i)
-			goto wreck;
-	if (fclose(fp))
-		goto wreck;
-	return;
-wreck:
-	(void) fprintf(stderr, "%s: Write error on ", progname);
-	perror(fullname);
-	exit(1);
+		(void) fwrite(chars, sizeof chars[0], i, fp);
+	if (ferror(fp) || fclose(fp)) {
+		(void) fprintf(stderr, "%s: Write error on ", progname);
+		perror(fullname);
+		exit(1);
+	}
 }
 
 /*

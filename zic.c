@@ -1352,9 +1352,8 @@ const int			zonecount;
 	typecnt = 0;
 	charcnt = 0;
 	/*
-	** Two guesses. . .the second may well be corrected later.
+	** A guess that may well be corrected later.
 	*/
-	gmtoff = zpfirst->z_gmtoff;
 	stdoff = 0;
 	/*
 	** Thanks to Earl Chew (earl@dnd.icp.nec.com.au)
@@ -1368,6 +1367,7 @@ const int			zonecount;
 		usestart = i > 0;
 		useuntil = i < (zonecount - 1);
 		zp = &zpfirst[i];
+		gmtoff = zp->z_gmtoff;
 		eat(zp->z_filename, zp->z_linenum);
 		startisdst = -1;
 		if (zp->z_nrules == 0) {
@@ -1376,7 +1376,6 @@ const int			zonecount;
 				startttisstd);
 			if (usestart)
 				addtt(starttime, type);
-			gmtoff = zp->z_gmtoff;
 			stdoff = zp->z_stdoff;
 		} else for (year = min_year; year <= max_year; ++year) {
 			if (useuntil && year > zp->z_untilrule.r_hiyear)
@@ -1473,7 +1472,6 @@ addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd));
 				if (timecnt != 0 || rp->r_stdoff != 0 ||
 					typecnt > 1)
 						addtt(ktime, type);
-				gmtoff = zp->z_gmtoff;
 				stdoff = rp->r_stdoff;
 			}
 		}
@@ -1485,7 +1483,6 @@ addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd));
 			startttisstd = zp->z_untilrule.r_todisstd;
 			if (!startttisstd)
 				starttime = tadd(starttime, -stdoff);
-			gmtoff = (zp + 1)->z_gmtoff;
 		}
 	}
 	writezone(zpfirst->z_name);

@@ -383,7 +383,7 @@ names:
 
 public:		$(ENCHILADA) zic
 		-mkdir /tmp/,tzpublic
-		for i in $(TDATA) ; do zic -d /tmp/,tzpublic $$i ; done
+		for i in $(TDATA) ; do zic -v -d /tmp/,tzpublic $$i 2>&1 | grep -v "starting year" ; done
 		rm -f -r /tmp/,tzpublic
 		for i in *.[1-8] ; do sh workman.sh $$i > $$i.txt; done
 		$(AWK) -f checktab.awk $(PRIMARY_YDATA)

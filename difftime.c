@@ -11,8 +11,7 @@ static char	elsieid[] = "%W%";
 
 /*LINTLIBRARY*/
 
-#include "sys/types.h"	/* for time_t */
-#include "private.h"	/* for TYPE_INTEGRAL and TYPE_SIGNED */
+#include "private.h"	/* for time_t, TYPE_INTEGRAL, and TYPE_SIGNED */
 
 double
 difftime(time1, time0)

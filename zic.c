@@ -1361,6 +1361,25 @@ const char * const	name;
 }
 
 static void
+doabbr(abbr, format, letters, isdst)
+char * const		abbr;
+const char * const	format;
+const char * const	letters;
+int			isdst;
+{
+	if (strchr(format, '/') == NULL) {
+		if (letters == NULL)
+			(void) strcpy(abbr, format);
+		else	(void) sprintf(abbr, format, letters);
+	} else if (isdst)
+		(void) strcpy(abbr, strchr(format, '/') + 1);
+	else {
+		(void) strcpy(abbr, format);
+		*strchr(abbr, '/') = '\0';
+	}
+}
+
+static void
 outzone(zpfirst, zonecount)
 const struct zone * const	zpfirst;
 const int			zonecount;
@@ -1408,7 +1427,8 @@ const int			zonecount;
 		startisdst = -1;
 		if (zp->z_nrules == 0) {
 			stdoff = zp->z_stdoff;
-			(void) strcpy(startbuf, zp->z_format);
+			doabbr(startbuf, zp->z_format,
+				(char *) NULL, stdoff != 0);
 			type = addtype(oadd(zp->z_gmtoff, stdoff),
 				startbuf, stdoff != 0, startttisstd);
 			if (usestart)
@@ -1488,8 +1508,9 @@ const int			zonecount;
 					stdoff = rp->r_stdoff;
 					startoff = oadd(zp->z_gmtoff,
 						rp->r_stdoff);
-					(void) sprintf(startbuf, zp->z_format,
-						rp->r_abbrvar);
+					doabbr(startbuf, zp->z_format,
+						rp->r_abbrvar,
+						rp->r_stdoff != 0);
 					startisdst = rp->r_stdoff != 0;
 					continue;
 				    }
@@ -1514,8 +1535,8 @@ addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd));
 				}
 				eats(zp->z_filename, zp->z_linenum,
 					rp->r_filename, rp->r_linenum);
-				(void) sprintf(buf, zp->z_format,
-					rp->r_abbrvar);
+				doabbr(buf, zp->z_format, rp->r_abbrvar,
+					rp->r_stdoff != 0);
 				offset = oadd(zp->z_gmtoff, rp->r_stdoff);
 				type = addtype(offset, buf, rp->r_stdoff != 0,
 					rp->r_todisstd);

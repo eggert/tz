@@ -89,9 +89,6 @@ Link	MET	CET
 # ...
 # Date: Wed, 4 Feb 87 22:35:22 +0100
 # From: seismo!mcvax!cwi.nl!dik (Dik T. Winter)
-# Message-Id: <8702042135.AA23919@zuring.cwi.nl>
-# ...
-# Subject: timezones
 # ...
 # 
 # The information from Tom Hofmann is (as far as I know) not entirely correct.
@@ -123,3 +120,33 @@ Link	MET	CET
 # dik t. winter, cwi, amsterdam, nederland
 # INTERNET   : dik@cwi.nl
 # BITNET/EARN: dik@mcvax
+#
+###############################################################################
+#
+# ...
+# Date: Thu, 28 Jan 88 20:25:39 PST
+# ...
+# From: ncifcrf!decwrl.dec.com!devine%cookie.DEC (Bob Devine)
+# ...
+# Greece: Last Sunday in April to last Sunday in September (iffy on dates).
+# Since 1978.  Change at midnight.
+# ...
+# Monaco: has same DST as France.
+# ...
+#
+###############################################################################
+#
+# From Arthur David Olson (February 10, 1988):
+# The U.S. Naval Observatory says of Greece (as of February 10, 1988):
+#
+#	GREECE              2 H AHEAD OF UTC IN WINTER
+#	GREECE              3 H AHEAD OF UTC IN SUMMER EFF. 31MAR85 02/03 LOCAL 
+#	GREECE              3 H AHEAD OF UTC MAR 25 - SEP 30
+#
+# I'll hold off on making an entry unless I can firm up the switch dates.
+#
+# Since Monaco runs on standard rules, MET (Monaco European Time?)
+# should work for it; shouldn't be a need for a separate entry.
+#
+###############################################################################
+#

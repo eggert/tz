@@ -6,9 +6,11 @@
 #include "tzfile.h"
 #include "time.h"
 
-#ifdef OBJECTID
+#ifndef lint
+#ifndef NOID
 static char	sccsid[] = "%W%";
-#endif
+#endif /* !NOID */
+#endif /* !lint */
 
 #ifndef TRUE
 #define TRUE		1

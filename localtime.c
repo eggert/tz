@@ -1383,9 +1383,7 @@ const int		do_norm_secs;
 	}
 	if (increment_overflow(&yourtm.tm_year, -TM_YEAR_BASE))
 		return WRONG;
-	if (yourtm.tm_sec >= 0 && yourtm.tm_sec < SECSPERMIN)
-		saved_seconds = 0;
-	else if (yourtm.tm_year + TM_YEAR_BASE < EPOCH_YEAR) {
+	if (yourtm.tm_year + TM_YEAR_BASE < EPOCH_YEAR) {
 		/*
 		** We can't set tm_sec to 0, because that might push the
 		** time below the minimum representable time.

@@ -156,10 +156,6 @@ extern int	unlink P((const char * filename));
 #define fwrite_size_T	int
 #endif /* !defined fwrite_size_T */
 
-#ifndef USG
-extern char *		sprintf P((char * buf, const char * format, ...));
-#endif /* !defined USG */
-
 #endif /* !defined __STDC__ */
 
 /*
@@ -178,7 +174,7 @@ extern void		qsort P((generic_T * base, qsort_size_T nelem,
 				int (*comp) P((const generic_T *,
 					const generic_T *))));
 extern void		perror P((const char * string));
-extern void		free P((char * buf));
+extern void		free P((generic_T * buf));
 #endif /* defined USG */
 
 #ifndef TRUE

@@ -1,6 +1,6 @@
 .TH NEWCTIME 3 
 .SH NAME
-ctime, localtime, gmtime, asctime, tzset, tzsetwall \- convert date and time to ASCII
+ctime, localtime, gmtime, asctime, tzset, tzsetwall, difftime \- convert date and time to ASCII
 .SH SYNOPSIS
 .nf
 .B extern char *tzname[2];
@@ -22,6 +22,10 @@ ctime, localtime, gmtime, asctime, tzset, tzsetwall \- convert date and time to 
 .PP
 .B struct tm *gmtime(clock)
 .B long *clock;
+.PP
+.B double difftime(time1, time0)
+.B time_t time1;
+.B time_t time0;
 .if !\nX \{\
 .PP
 cc ... -lz
@@ -130,6 +134,13 @@ as shown in the above example,
 and returns a pointer
 to the string.
 .PP
+.I Difftime\^
+returns the difference between two calendar times,
+.I time1
+-
+.IR time0,
+expressed in seconds.
+.PP
 Declarations of all the functions and externals, and the ``tm'' structure,
 are in the
 .B <time.h>\^
@@ -180,9 +191,11 @@ of Greenwich.
 /etc/zoneinfo	time zone information directory
 .br
 /etc/zoneinfo/localtime	local time zone file
-\}
+.br
+/etc/zoneinfo/posixrules	used in converting POSIX-style TZ's
 .br
 /etc/zoneinfo/GMT	GMT file (needed for leap seconds)
+\}
 .SH SEE ALSO
 .if !\nX tzfile(5),
 getenv(3),

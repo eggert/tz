@@ -304,8 +304,7 @@ label:
 ** days in the new year, then it is week 1, otherwise it is week 53 of the
 ** previous year and the next week is week 1)."
 ** (ado, 1993-05-24)
-*/
-/*
+**
 ** From "http://www.ft.uni-erlangen.de/~mskuhn/iso-time.html" by Markus Kuhn:
 ** Week 01 of a year is per definition the first week which has the
 ** Thursday in this year, which is equivalent to the week which contains
@@ -316,47 +315,55 @@ label:
 ** it contains days from the new year. A week starts with Monday (day 1)
 ** and ends with Sunday (day 7).  For example, the first week of the year
 ** 1997 lasts from 1996-12-30 to 1997-01-05...
-** (ado, 1993-05-24)
-*/
-/*
-** You are understood not to expect this.
+** (ado, 1996-01-02)
 */
 				{
-					int	i;
+					int	year;
+					int	yday;
+					int	wday;
+					int	w;
 
-					i = (t->tm_yday + 10 - (t->tm_wday ?
-						(t->tm_wday - 1) : 6)) / 7;
-					if (i == 0) {
+					year = t->tm_year + TM_YEAR_BASE;
+					yday = t->tm_yday;
+					wday = t->tm_wday;
+					for ( ; ; ) {
+						int	len;
+						int	bot;
+						int	top;
+
+						len = isleap(year) ?
+							DAYSPERLYEAR :
+							DAYSPERNYEAR;
 						/*
-						** What day of the week does
-						** January 1 fall on?
+						** What yday (-3 ... 3) does
+						** the ISO year begin on?
 						*/
-						i = t->tm_wday -
-							(t->tm_yday - 1);
+						bot = ((yday + 11 - wday) %
+							DAYSPERWEEK) - 3;
 						/*
-						** Fri Jan 1: 53
-						** Sun Jan 1: 52
-						** Sat Jan 1: 53 if previous
-						**		 year a leap
-						**		 year, else 52
+						** What yday does the NEXT
+						** ISO year begin on?
 						*/
-						if (i == TM_FRIDAY)
-							i = 53;
-						else if (i == TM_SUNDAY)
-							i = 52;
-						else	i = isleap(t->tm_year +
-								TM_YEAR_BASE) ?
-								53 : 52;
-#ifdef XPG4_1994_04_09
-						/*
-						** As of 1994-04-09, though,
-						** XPG4 calls for 53
-						** unconditionally.
-						*/
-						i = 53;
-#endif /* defined XPG4_1994_04_09 */
+						top = bot -
+							(len % DAYSPERWEEK);
+						if (top < -3)
+							top += DAYSPERWEEK;
+						top += len;
+						if (yday >= top) {
+							w = 1;
+							break;
+						}
+						if (yday >= bot) {
+							w = 1 + ((yday - bot) /
+								DAYSPERWEEK);
+							break;
+						}
+						--year;
+						yday += isleap(year) ?
+							DAYSPERLYEAR :
+							DAYSPERNYEAR;
 					}
-					pt = _conv(i, "%02d", pt, ptlim);
+					pt = _conv(w, "%02d", pt, ptlim);
 				}
 				continue;
 			case 'v':

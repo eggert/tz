@@ -16,10 +16,6 @@ static char	elsieid[] = "%W%";
 #include "time.h"	/* for struct tm */
 #include "stdlib.h"	/* for exit, malloc, atoi */
 
-#ifndef alloc_size_T
-#define alloc_size_T	size_t
-#endif /* !defined alloc_size_T */
-
 #ifndef MAX_STRING_LENGTH
 #define MAX_STRING_LENGTH	1024
 #endif /* !defined MAX_STRING_LENGTH */
@@ -156,10 +152,10 @@ char *	argv[];
 
 		for (i = 0;  environ[i] != NULL;  ++i)
 			continue;
-		fakeenv = (char **) malloc((alloc_size_T) ((i + 2) *
+		fakeenv = (char **) malloc((size_t) ((i + 2) *
 			sizeof *fakeenv));
 		if (fakeenv == NULL ||
-			(fakeenv[0] = (char *) malloc((alloc_size_T) (longest +
+			(fakeenv[0] = (char *) malloc((size_t) (longest +
 				4))) == NULL) {
 					(void) perror(progname);
 					(void) exit(EXIT_FAILURE);

@@ -78,12 +78,10 @@ register char *	tzname;
 settz(tzname)
 char *	tzname;
 {
-	register char *	defname;
 	register int	answer;
 
-	defname = TZDEFAULT;
 	if (tzname == 0)
-		tzname = defname;
+		tzname = TZDEFAULT;
 	if (*tzname == '\0')
 		answer = 0;			/* Use built-in GMT */
 	else {
@@ -92,7 +90,7 @@ char *	tzname;
 		/*
 		** Do the next two lines of code really belong here?
 		*/
-		if (tzload(defname) == 0)
+		if (tzload(TZDEFAULT) == 0)
 			return -1;
 		answer = -1;
 	}

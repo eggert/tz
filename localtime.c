@@ -118,9 +118,9 @@ register char *	name;
 		if (close(fid) != 0 || i < sizeof *tzhp)
 			return -1;
 		tzhp = (struct tzhead *) buf;
-		s.timecnt = detzcode(tzhp->tzh_timecnt);
-		s.typecnt = detzcode(tzhp->tzh_typecnt);
-		s.charcnt = detzcode(tzhp->tzh_charcnt);
+		s.timecnt = (int) detzcode(tzhp->tzh_timecnt);
+		s.typecnt = (int) detzcode(tzhp->tzh_typecnt);
+		s.charcnt = (int) detzcode(tzhp->tzh_charcnt);
 		if (s.timecnt > TZ_MAX_TIMES ||
 			s.typecnt == 0 ||
 			s.typecnt > TZ_MAX_TYPES ||

@@ -22,11 +22,12 @@ extern struct tm *	gmtime();
 extern char *		imalloc();
 extern char *		optarg;
 extern int		optind;
-#ifdef strchr
+#ifndef USG
 extern char *		sprintf();
-#endif
+#endif /* !USG */
 extern long		time();
 extern char *		tzname[2];
+extern void		tzset();
 
 static int		longest;
 

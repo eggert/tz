@@ -151,6 +151,7 @@ static void	dumptime P((const struct tm * tmp));
 static time_t	hunt P((char * name, time_t lot, time_t	hit));
 static void	setabsolutes();
 static void	show P((char * zone, time_t t, int v));
+static char *	tformat P((void));
 static time_t	yeartot P((long y));
 
 int
@@ -469,7 +470,7 @@ int	v;
 	if (v) {
 		tmp = gmtime(&t);
 		if (tmp == NULL) {
-			(void) printf("%g", (double) t);
+			(void) printf(tformat(), t);
 		} else {
 			dumptime(tmp);
 			(void) printf(" UTC");
@@ -502,6 +503,25 @@ struct tm *	tmp;
 		return &nada;
 	result = tzname[tmp->tm_isdst];
 	return (result == NULL) ? &nada : result;
+}
+
+static char *
+tformat()
+{
+	if (0.5 == (time_t) 0.5)	/* floating */
+		return "%g";
+	if (0 > (time_t) -1) {		/* signed */
+		if (sizeof (time_t) > sizeof (long))
+			return "%lld";
+		if (sizeof (time_t) == sizeof (long))
+			return "%ld";
+		return "%d";
+	}
+	if (sizeof (time_t) > sizeof (unsigned long))
+		return "%llu";
+	if (sizeof (time_t) == sizeof (unsigned long))
+		return "%lu";
+	return "%u";
 }
 
 static void

@@ -9,7 +9,6 @@ static char	elsieid[] = "%W%";
 #include "tzfile.h"
 #include "time.h"
 #include "string.h"
-#include "ctype.h"
 #include "stdlib.h"
 #include "stdio.h"	/* for FILENAME_MAX */
 #include "fcntl.h"	/* for O_RDONLY */
@@ -33,16 +32,6 @@ static char	elsieid[] = "%W%";
 #endif /* !defined TRUE */
 
 static long		detzcode P((const char * codep));
-static void		settzname P((const struct state *sp));
-static char *		getzname P((const char *strp));
-static char *		getnum P((const char *strp, int *nump, int min,
-				int max));
-static char *		gettime P((const char *strp, long *timep));
-static char *		getoffset P((const char *strp, long *offsetp));
-static char *		getrule P((const char *strp, struct rule *rulep));
-static time_t		transtime P((time_t janfirst, int year,
-				const struct rule *rulep, long offset));
-static int		tzparse P((const char *name, struct state *sp));
 #ifdef STD_INSPIRED
 struct tm *     	offtime P((const time_t * clockp, long offset));
 #endif /* !defined STD_INSPIRED */
@@ -107,35 +96,6 @@ const char *	codep;
 	return result;
 }
 
-static void
-settzname(sp)
-register const struct state *sp;
-{
-	register int	i;
-
-	tzname[0] = tzname[1] = &sp->chars[0];
-#ifdef USG_COMPAT
-	timezone = -sp->ttis[0].tt_gmtoff;
-	daylight = 0;
-#endif /* defined USG_COMPAT */
-	for (i = 1; i < sp->typecnt; ++i) {
-		register const struct ttinfo *	ttisp;
-
-		ttisp = &sp->ttis[i];
-		if (ttisp->tt_isdst) {
-			tzname[1] = &sp->chars[ttisp->tt_abbrind];
-#ifdef USG_COMPAT
-			daylight = 1;
-#endif /* defined USG_COMPAT */
-		} else {
-			tzname[0] = &sp->chars[ttisp->tt_abbrind];
-#ifdef USG_COMPAT
-			timezone = -ttisp->tt_gmtoff;
-#endif /* defined USG_COMPAT */
-		}
-	}
-}
-
 static int
 tzload(name, sp)
 register const char *	name;
@@ -151,8 +111,6 @@ register struct state *	sp;
 		register int 	doaccess;
 		char		fullname[FILENAME_MAX + 1];
 
-		if (name[0] == ':')
-			name++;
 		doaccess = name[0] == '/';
 		if (!doaccess) {
 			if ((p = TZDIR) == NULL)
@@ -242,565 +200,29 @@ register struct state *	sp;
 	/*
 	** Set tzname elements to initial values.
 	*/
-	if (sp == &lclstate)
-		settzname(sp);
-	return 0;
-}
+	if (sp == &lclstate) {
+		tzname[0] = tzname[1] = &sp->chars[0];
+#ifdef USG_COMPAT
+		timezone = -sp->ttis[0].tt_gmtoff;
+		daylight = 0;
+#endif /* defined USG_COMPAT */
+		for (i = 1; i < sp->typecnt; ++i) {
+			register const struct ttinfo *	ttisp;
 
-struct rule {
-	int	r_type;		/* type of rule */
-	int	r_day;		/* day number of rule */
-	int	r_week;		/* week number of rule */
-	int	r_mon;		/* month number of rule */
-	long	r_time;		/* transition time of rule */
-};
-
-#define	JULIAN_DAY	0	/* Jn - Julian day */
-#define	DAY_OF_YEAR	1	/* n - day of year */
-#define	MONTH_DAY	2	/* Mm.n.d - month, week, day */
-
-static const int	mon_lengths[2][MONSPERYEAR] = {
-	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
-	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
-};
-
-static const int	year_lengths[2] = {
-	DAYSPERNYEAR, DAYSPERLYEAR
-};
-
-/*
-** Given a pointer into a time zone string, scan until a character that is not
-** a valid character in a zone name is found.  Return a pointer to that
-** character.
-*/
-static char *
-getzname(strp)
-register const char *	strp;
-{
-	register char	c;
-
-	while ((c = *strp) != '\0' && !isdigit(c) && c != ',' && c != '-'
-	    && c != '+')
-		strp++;
-	return strp;
-}
-
-/*
-** Given a pointer into a time zone string, extract a number from that string.
-** Check that the number is within a specified range; if it is not, return
-** NULL.
-** Otherwise, return a pointer to the first character not part of the number.
-*/
-static char *
-getnum(strp, nump, min, max)
-register const char *	strp;
-int *	nump;
-int	min;
-int	max;
-{
-	register char	c;
-	register int	num;
-
-	num = 0;
-	while ((c = *strp) != '\0' && isdigit(c)) {
-		num = num*10 + (c - '0');
-		if (num > max)
-			return NULL;	/* illegal value */
-		strp++;
-	}
-	if (num < min)
-		return NULL;		/* illegal value */
-	*nump = num;
-	return strp;
-}
-
-/*
-** Given a pointer into a time zone string, extract a time, in hh[:mm[:ss]]
-** form, from the string.
-** If any error occurs, return NULL.
-** Otherwise, return a pointer to the first character not part of the time.
-*/
-static char *
-gettime(strp, timep)
-register const char *	strp;
-long *	timep;
-{
-	int num;
-
-	strp = getnum(strp, &num, 0, HOURSPERDAY / 2);
-	if (strp == NULL)
-		return NULL;
-	*timep = num*SECSPERHOUR;
-	if (*strp == ':') {
-		strp++;
-		strp = getnum(strp, &num, 0, MINSPERHOUR - 1);
-		if (strp == NULL)
-			return NULL;
-		*timep += num*SECSPERMIN;
-		if (*strp == ':') {
-			strp++;
-			strp = getnum(strp, &num, 0, SECSPERMIN - 1);
-			if (strp == NULL)
-				return NULL;
-			*timep += num;
-		}
-	}
-	return strp;
-}
-
-/*
-** Given a pointer into a time zone string, extract an offset, in
-** [+-]hh[:mm[:ss]] form, from the string.
-** If any error occurs, return NULL.
-** Otherwise, return a pointer to the first character not part of the time.
-*/
-static char *
-getoffset(strp, offsetp)
-register const char *	strp;
-long *	offsetp;
-{
-	register int neg;
-
-	if (*strp == '-') {
-		neg = 1;
-		strp++;
-	} else if (*strp == '+' || isdigit(*strp))
-		neg = 0;
-	else
-		return NULL;		/* illegal offset */
-	strp = gettime(strp, offsetp);
-	if (strp == NULL)
-		return NULL;		/* illegal time */
-	if (neg)
-		*offsetp = -*offsetp;
-	return strp;
-}
-
-/*
-** Given a pointer into a time zone string, extract a rule in the form
-** date[/time].  See POSIX section 8 for the format of "date" and "time".
-** If a valid rule is not found, return NULL.
-** Otherwise, return a pointer to the first character not part of the rule.
-*/
-static char *
-getrule(strp, rulep)
-const char *	strp;
-register struct rule *	rulep;
-{
-	if (*strp == 'J') {
-		/*
-		** Julian day.
-		*/
-		rulep->r_type = JULIAN_DAY;
-		strp++;
-		strp = getnum(strp, &rulep->r_day, 1, 365);
-	} else if (*strp == 'M') {
-		/*
-		** Month, week, day.
-		*/
-		rulep->r_type = MONTH_DAY;
-		strp++;
-		strp = getnum(strp, &rulep->r_mon, 1, 12);
-		if (strp == NULL)
-			return NULL;
-		if (*strp++ != '.')
-			return NULL;
-		strp = getnum(strp, &rulep->r_week, 1, 5);
-		if (strp == NULL)
-			return NULL;
-		if (*strp++ != '.')
-			return NULL;
-		strp = getnum(strp, &rulep->r_day, 0, 6);
-	} else if (isdigit(*strp)) {
-		/*
-		** Day of year.
-		*/
-		rulep->r_type = DAY_OF_YEAR;
-		strp = getnum(strp, &rulep->r_day, 0, 365);
-	} else
-		return NULL;		/* invalid format */
-	if (strp == NULL)
-		return NULL;
-	if (*strp == '/') {
-		/*
-		** Time specified.
-		*/
-		strp++;
-		strp = gettime(strp, &rulep->r_time);
-		if (strp == NULL)
-			return NULL;
-	} else
-		rulep->r_time = 2*SECSPERHOUR;	/* default = 2:00:00 */
-	return strp;
-}
-
-/*
-** Given the Epoch-relative time of January 1, 00:00:00 GMT, in a year, the
-** year, a rule, and the offset from GMT at the time that rule takes effect,
-** calculate the Epoch-relative time that rule takes effect.
-*/
-static time_t
-transtime(janfirst, year, rulep, offset)
-time_t	janfirst;
-int	year;
-register const struct rule *	rulep;
-long	offset;
-{
-	register int	leapyear;
-	register time_t	value;
-	register int	i;
-	int	d, m1, yy0, yy1, yy2, dow;
-
-	leapyear = isleap(year);
-	switch (rulep->r_type) {
-
-	case JULIAN_DAY:
-		/*
-		** Jn - Julian day, 1 == January 1, 60 == March 1 even in leap
-		** years.
-		** In non-leap years, or if the day number is 59 or less, just
-		** add SECSPERDAY times the day number-1 to the time of
-		** January 1, midnight, to get the day.
-		*/
-		value = janfirst + (rulep->r_day - 1)*SECSPERDAY;
-		if (leapyear && rulep->r_day >= 60)
-			value += SECSPERDAY;
-		break;
-
-	case DAY_OF_YEAR:
-		/*
-		** n - day of year.
-		** Just add SECSPERDAY times the day number to the time of
-		** January 1, midnight, to get the day.
-		*/
-		value = janfirst + rulep->r_day*SECSPERDAY;
-		break;
-
-	case MONTH_DAY:
-#ifdef BROKEN
-		/*
-		** Mm.n.d - dth day of week n of month m.
-		*/
-		value = janfirst;
-		for (i = 0; i < rulep->r_mon - 1; i++)
-			value += mon_lengths[leapyear][i]*SECSPERDAY;
-
-		if (rulep->r_week == 5) {
-			/*
-			** Get day number of last day of month.
-			*/
-			d = mon_lengths[leapyear][rulep->r_mon - 1];
-		} else {
-			/*
-			** Get day number of first day of month.
-			*/
-			d = 1;
-		}
-
-		/*
-		** Use Zeller's Congruence to get day-of-week of that
-		** day.
-		*/
-		m1 = (rulep->r_mon + 9)%12 + 1;
-		yy0 = (rulep->r_mon <= 2) ? (year - 1) : year;
-		yy1 = yy0 / 100;
-		yy2 = yy0 % 100;
-		dow = ((26*m1 - 2)/10 + d + yy2 + yy2/4 + yy1/4
-		    - 2*yy1)%7;
-		if (dow < 0)
-			dow += DAYSPERWEEK;
-
-		if (rulep->r_week == 5) {
-			/*
-			** "d" is the day-of-month of the last "dow" day of
-			** the month.  Step backwards through the month
-			** (decrementing "d", and decrementing "dow" modulo 7)
-			** until we have the day-of-week that we want.
-			*/
-			while (dow != rulep->r_day) {
-				d--;
-				dow--;
-				if (dow < 0)
-					dow += DAYSPERWEEK;
-			}
-		} else {
-			/*
-			** "d" is the day-of-month of the first "dow" day of
-			** the month.  Get the "day-of-month" (probably
-			** negative, meaning Sunday of that week was last
-			** month) of the Sunday of the first week of the month.
-			*/
-			d -= dow;
-
-			/*
-			** Now get the "day-of-month" of the Sunday beginning
-			** the week we're interested in.
-			*/
-			d += (rulep->r_week - 1)*DAYSPERWEEK;
-
-			/*
-			** Now get the "day-of-month" of the day of week we're
-			** interested in.
-			*/
-			d += rulep->r_day;
-		}
-
-		/*
-		** "d" is the day-of-month of the day we want.
-		*/
-		value += (d - 1)*SECSPERDAY;
-#else
-		/*
-		** Mm.n.d - nth "dth day" of month m.
-		*/
-		value = janfirst;
-		for (i = 0; i < rulep->r_mon - 1; i++)
-			value += mon_lengths[leapyear][i]*SECSPERDAY;
-
-		/*
-		** Use Zeller's Congruence to get day-of-week of first day of
-		** month.
-		*/
-		m1 = (rulep->r_mon + 9)%12 + 1;
-		yy0 = (rulep->r_mon <= 2) ? (year - 1) : year;
-		yy1 = yy0 / 100;
-		yy2 = yy0 % 100;
-		dow = ((26*m1 - 2)/10 + 1 + yy2 + yy2/4 + yy1/4 - 2*yy1)%7;
-		if (dow < 0)
-			dow += DAYSPERWEEK;
-
-		/*
-		** "dow" is the day-of-week of the first day of the month.  Get
-		** the day-of-month (zero-origin) of the first "dow" day of the
-		** month.
-		*/
-		d = rulep->r_day - dow;
-		if (d < 0)
-			d += DAYSPERWEEK;
-		for (i = 1; i < rulep->r_week; i++) {
-			if (d + DAYSPERWEEK >= mon_lengths[leapyear][rulep->r_mon - 1])
-				break;
-			d += DAYSPERWEEK;
-		}
-
-		/*
-		** "d" is the day-of-month (zero-origin) of the day we want.
-		*/
-		value += d*SECSPERDAY;
-#endif
-		break;
-	}
-
-	/*
-	** "value" is the Epoch-relative time of 00:00:00 GMT on the day in
-	** question.  To get the Epoch-relative time of the specified local
-	** time on that day, add the transition time and the current offset
-	** from GMT.
-	*/
-	return (value + rulep->r_time + offset);
-}
-
-/*
-** The U.S. tables, including the latest hack.
-*/
-
-/*
-** Define MONTH_DAY rule for U.S. federal tables.
-*/
-#define	MD_RULE(week, month)	{ MONTH_DAY, 0, week, month, 2*SECSPERHOUR }
-
-/*
-** Define DAY_OF_YEAR rule for U.S. federal tables.
-*/
-#define	DOY_RULE(day)		{ DAY_OF_YEAR, day, 0, 0, 2*SECSPERHOUR }
-
-static struct rule usdaytab[] = {
-		/* 1970: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1971: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1972: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1973: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1974: Jan 6 - last Sun. in Oct */
-	DOY_RULE(5),   MD_RULE(5, 10),
-		/* 1975: last Sun. in Feb - last Sun. in Oct */
-	MD_RULE(5, 2), MD_RULE(5, 10),
-		/* 1976: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1977: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1978: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1979: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1980: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1981: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1982: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1983: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1984: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1985: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-		/* 1986: last Sun. in Apr - last Sun. in Oct */
-	MD_RULE(5, 4), MD_RULE(5, 10),
-};
-
-#define	N_US_RULES	(sizeof usdaytab / sizeof usdaytab[0])
-
-/*
-** XXX - "Mm.0.d" doesn't ask for first "d" day of month "m", so this doesn't
-** work right (then again, neither does "Mm.0.d"!).
-*/
-static struct rule repeating[] = {
-		/* 1987 on: first Sun. in Apr - last Sun. in Oct */
-	MD_RULE(0, 4), MD_RULE(5, 10)
-};
-
-/*
-** Given a POSIX section 8-style TZ string, fill in the rule tables as
-** appropriate.
-*/
-static int
-tzparse(name, sp)
-const char *	name;
-register struct state *	sp;
-{
-	char *	stdname;
-	char *	dstname;
-	int	stdlen;
-	int	dstlen;
-	long	stdoffset;
-	long	dstoffset;
-	struct rule	start;
-	struct rule	end;
-	register int	year;
-	register time_t	janfirst;
-	register time_t *	atp;
-	register unsigned char *	typep;
-	register char *	cp;
-	register int	i;
-	time_t	starttime;
-	time_t	endtime;
-
-	stdname = name;
-	name = getzname(name);
-	stdlen = name - stdname;	/* length of standard zone name */
-	if (stdlen == 0)
-		return -1;
-	name = getoffset(name, &stdoffset);
-	if (name == NULL)
-		return -1;
-	if (*name != '\0') {
-		dstname = name;
-		name = getzname(name);
-		dstlen = name - dstname;	/* length of DST zone name */
-		if (dstlen == 0)
-			return -1;
-		if (*name != '\0' && *name != ',' && *name != ';') {
-			name = getoffset(name, &dstoffset);
-			if (name == NULL)
-				return -1;
-		} else
-			dstoffset = stdoffset - 1*SECSPERHOUR;
-		sp->typecnt = 2;	/* standard time and DST */
-		sp->charcnt = stdlen + 1 + dstlen + 1;
-		/*
-		** Two transitions per year, from 1970 to 2038.
-		*/
-		sp->timecnt = 2*(2038 - 1970 + 1);
-		if (sp->timecnt > TZ_MAX_TIMES)
-			return -1;
-		sp->ttis[0].tt_gmtoff = -dstoffset;
-		sp->ttis[0].tt_isdst = 1;
-		sp->ttis[0].tt_abbrind = stdlen + 1;
-		sp->ttis[1].tt_gmtoff = -stdoffset;
-		sp->ttis[1].tt_isdst = 0;
-		sp->ttis[1].tt_abbrind = 0;
-		if (*name == ',' || *name == ';') {
-			name++;
-			if ((name = getrule(name, &start)) == NULL)
-				return -1;
-			if (*name++ != ',')
-				return -1;
-			if ((name = getrule(name, &end)) == NULL)
-				return -1;
-			if (*name != '\0')
-				return -1;
-			atp = sp->ats;
-			typep = sp->types;
-			for (year = 1970, janfirst = 0; year <= 2038; year++) {
-				starttime = transtime(janfirst, year, &start,
-				    stdoffset);
-				endtime = transtime(janfirst, year, &end,
-				    dstoffset);
-				if (starttime > endtime) {
-					*atp++ = endtime;
-					*typep++ = 1;	/* DST ends */
-					*atp++ = starttime;
-					*typep++ = 0;	/* DST begins */
-				} else {
-					*atp++ = starttime;
-					*typep++ = 0;	/* DST begins */
-					*atp++ = endtime;
-					*typep++ = 1;	/* DST ends */
-				}
-				janfirst +=
-				    year_lengths[isleap(year)]*SECSPERDAY;
-			}
-		} else {
-			if (*name != '\0')
-				return -1;
-			atp = sp->ats;
-			typep = sp->types;
-			for (year = 1970, janfirst = 0, i = 0; i < N_US_RULES;
-			    year++, i += 2) {
-				*atp++ = transtime(janfirst, year,
-				    &usdaytab[i], stdoffset);
-				*typep++ = 0;	/* DST begins */
-				*atp++ = transtime(janfirst, year,
-				    &usdaytab[i + 1], dstoffset);
-				*typep++ = 1;	/* DST ends */
-				janfirst +=
-				    year_lengths[isleap(year)]*SECSPERDAY;
-			}
-			for (; year <= 2038; year++) {
-				*atp++ = transtime(janfirst, year,
-				    &repeating[0], stdoffset);
-				*typep++ = 0;	/* DST begins */
-				*atp++ = transtime(janfirst, year,
-				    &repeating[1], dstoffset);
-				*typep++ = 1;	/* DST ends */
-				janfirst +=
-				    year_lengths[isleap(year)]*SECSPERDAY;
+			ttisp = &sp->ttis[i];
+			if (ttisp->tt_isdst) {
+				tzname[1] = &sp->chars[ttisp->tt_abbrind];
+#ifdef USG_COMPAT
+				daylight = 1;
+#endif /* defined USG_COMPAT */
+			} else {
+				tzname[0] = &sp->chars[ttisp->tt_abbrind];
+#ifdef USG_COMPAT
+				timezone = -ttisp->tt_gmtoff;
+#endif /* defined USG_COMPAT */
 			}
 		}
-	} else {
-		sp->typecnt = 1;		/* only standard time */
-		sp->timecnt = 0;
-		sp->charcnt = stdlen + 1;
-		sp->ttis[0].tt_gmtoff = -stdoffset;
-		sp->ttis[0].tt_isdst = 0;
-		sp->ttis[0].tt_abbrind = 0;
 	}
-	if (sp->charcnt > sizeof sp->chars)
-		return -1;
-	cp = sp->chars;
-	(void) strncpy(cp, stdname, stdlen);
-	cp += stdlen;
-	*cp++ = '\0';
-	if (sp->typecnt == 2) {
-		(void) strncpy(cp, dstname, dstlen);
-		*(cp + dstlen) = '\0';
-	}
-	sp->leapcnt = 0;		/* so, we're off a little */
-	if (sp == &lclstate)
-		settzname(sp);
 	return 0;
 }
 
@@ -813,8 +235,13 @@ register struct state *	sp;
 	sp->ttis[0].tt_gmtoff = 0;
 	sp->ttis[0].tt_abbrind = 0;
 	(void) strcpy(sp->chars, "GMT");
-	if (sp == &lclstate)
-		settzname(sp);
+	if (sp == &lclstate) {
+		tzname[0] = tzname[1] = sp->chars;
+#ifdef USG_COMPAT
+		timezone = 0;
+		daylight = 0;
+#endif /* defined USG_COMPAT */
+	}
 }
 
 void
@@ -826,10 +253,8 @@ tzset()
 	name = getenv("TZ");
 	if (name != 0 && *name == '\0')
 		tzsetgmt(&lclstate);		/* GMT by request */
-	else if (tzload(name, &lclstate) != 0) {
-		if (name[0] == ':' || tzparse(name, &lclstate) != 0)
-			tzsetgmt(&lclstate);
-	}
+	else if (tzload(name, &lclstate) != 0)
+		tzsetgmt(&lclstate);
 }
 
 void
@@ -923,6 +348,15 @@ long		offset;
 }
 
 #endif /* defined STD_INSPIRED */
+
+static const int	mon_lengths[2][MONSPERYEAR] = {
+	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
+	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+};
+
+static const int	year_lengths[2] = {
+	DAYSPERNYEAR, DAYSPERLYEAR
+};
 
 static void
 timesub(clock, offset, sp, tmp)

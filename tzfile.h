@@ -48,9 +48,8 @@ static char	tzfilehid[] = "%W%";
 #define	TZ_MAGIC	"TZif"
 
 struct tzhead {
-	char	tzh_magic[4];		/* TZ_MAGIC */
-	char	tzh_reserved[12];	/* reserved for future use */
-	char	tzh_stampcnt[4];	/* number of stamp bytes */
+ 	char	tzh_magic[4];		/* TZ_MAGIC */
+	char	tzh_reserved[16];	/* reserved for future use */
 	char	tzh_ttisgmtcnt[4];	/* coded number of trans. time flags */
 	char	tzh_ttisstdcnt[4];	/* coded number of trans. time flags */
 	char	tzh_leapcnt[4];		/* coded number of leap seconds */
@@ -82,10 +81,6 @@ struct tzhead {
 **					transition time is local time
 **					if absent, transition times are
 **					assumed to be local time
-**	tzh_stampcnt (char)s		if present, string of form
-**					"yyyy-mm-dd hh:mm:ss"
-**					indicating when information on which the
-**					file depends was last updated
 */
 
 /*

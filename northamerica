@@ -82,13 +82,12 @@ Zone	Arizona		-7:00	SomeUS	M%sT # Usually standard in Arizona
 # DST was observed for one day in 1933.
 # Standard time was change by half an hour in 1947; this accounts for
 # the half-hour offsets before then, and the peculiar first rule.
-# (One alternative is to have "Zone Hawaiian -10:30..." with a
-# current standard offset of 0:30; this gives better results before 1902,
-# while it is a bit more obscure.)
+# (An alternative is to have "Zone Hawaiian -10:30..." with a
+# current standard offset of 0:30; this seems a bit more obscure.)
 #
 # Things have been calm since 1947.
 
-Rule	Hawaii	1902	only	-	Jan	1	0:00	-0:30	S
+Rule	Hawaii	1901	only	-	Dec	14	0:00	-0:30	S
 Rule	Hawaii	1918	1919	-	Mar	lastSun	2:00	0:30	D
 Rule	Hawaii	1918	1919	-	Oct	lastSun	2:00	-0:30	S
 Rule	Hawaii	1933	only	-	Apr	30	2:00	0:30	D

@@ -8,7 +8,7 @@ make `make names`
 cp `make names` try
 cd try
 
-make date right_only TZDIR=zoneinfo CFLAGS='-g -DEBUG'
+make date right_only TZDIR=zoneinfo CFLAGS="-g -DEBUG $*"
 
 set -x
 

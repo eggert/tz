@@ -27,9 +27,14 @@ BEGIN {
 			status = 1
 		}
 		if (cc <= cc0) {
+			if (cc == cc0) {
+				s = "duplicate";
+			} else {
+				s = "out of order";
+			}
+
 			printf "%s:%d: country code `%s' is %s\n", \
-				iso_table, iso_NR, cc, \
-				cc==cc0 ? "duplicate"  : "out of order" \
+				iso_table, iso_NR, cc, s \
 				>>"/dev/stderr"
 			status = 1
 		}

@@ -5,36 +5,33 @@
 */
 
 #ifndef TZDIR
-#define TZDIR		"/etc/timezones" /* Time zone object file directory */
+#define TZDIR		"/etc/zoneinfo"	/* Time zone object file directory */
 #endif
 
 #ifndef TZDEFAULT
 #define TZDEFAULT	"localtime"
 #endif
 
-struct ttinfo {				/* time type information */
-	long		tt_gmtoff;	/* GMT offset in seconds */
-	int		tt_isdst;	/* used to set tm_isdst */
-	unsigned int	tt_abbrind;	/* abbreviation list index */
-};
-
 /*
 ** Each file begins with. . .
 */
 
 struct tzhead {
-	char		tzh_reserved[14];	/* reserved for future use */
-	unsigned short	tzh_timecnt;		/* number of transition times */
-	unsigned short	tzh_typecnt;		/* number of local time types */
-	unsigned short	tzh_charcnt;		/* number of abbr. chars */
+	char	tzh_reserved[32];	/* reserved for future use */
+	char	tzh_timecnt[4];		/* coded number of transition times */
+	char	tzh_typecnt[4];		/* coded number of local time types */
+	char	tzh_charcnt[4];		/* coded number of abbr. chars */
 };
 
 /*
 ** . . .followed by. . .
 **
-**	tzh_timecnt (long)s		transition times as returned by time(2)
+**	tzh_timecnt (char [4])s		coded transition times a la time(2)
 **	tzh_timecnt (unsigned char)s	types of local time starting at above
-**	tzh_typecnt (struct ttinfo)s	information for each time type
+**	tzh_typecnt repetitions of
+**		one (char [4])		coded GMT offset in seconds
+**		one (unsigned char)	used to set tm_isdt
+**		one (unsigned char)	that's an abbreviation list index
 **	tzh_charcnt (char)s		'\0'-terminated zone abbreviaton strings
 */
 
@@ -44,7 +41,7 @@ struct tzhead {
 */
 
 #ifndef TZ_MAX_TIMES
-#define TZ_MAX_TIMES	170	/* Maximum number of transition times */
+#define TZ_MAX_TIMES	300	/* Maximum number of transition times */
 #endif
 
 #ifndef TZ_MAX_TYPES

@@ -109,6 +109,14 @@ char *		argv[];
 	INITIALIZE(dsttime);
 	INITIALIZE(adjust);
 	INITIALIZE(t);
+#if HAVE_GETTEXT - 0
+	(void) setlocale(LC_MESSAGES, "");
+#ifdef TZ_DOMAINDIR
+	(void) bindtextdomain(TZ_DOMAIN, TZ_DOMAINDIR);
+#endif /* defined(TEXTDOMAINDIR) */
+	(void) textdomain(TZ_DOMAIN);
+#endif /* HAVE_GETTEXT - 0 */
+	(void) setlocale(LC_TIME, "");
 	(void) time(&now);
 	format = value = NULL;
 	while ((ch = getopt(argc, argv, "ucnd:t:a:")) != EOF) {
@@ -125,20 +133,20 @@ char *		argv[];
 		case 'd':		/* daylight savings time */
 			if (dflag) {
 				(void) fprintf(stderr,
-					"date: error: multiple -d's used");
+					_("date: error: multiple -d's used"));
 				usage();
 			}
 			dflag = 1;
 			cp = optarg;
 			dsttime = atoi(cp);
 			if (*cp == '\0' || *nondigit(cp) != '\0')
-				wildinput("-t value", optarg,
-					"must be a non-negative number");
+				wildinput(_("-t value"), optarg,
+					_("must be a non-negative number"));
 			break;
 		case 't':		/* minutes west of GMT */
 			if (tflag) {
 				(void) fprintf(stderr,
-					"date: error: multiple -t's used");
+					_("date: error: multiple -t's used"));
 				usage();
 			}
 			tflag = 1;
@@ -147,13 +155,13 @@ char *		argv[];
 			if (*cp == '+' || *cp == '-')
 				++cp;
 			if (*cp == '\0' || *nondigit(cp) != '\0')
-				wildinput("-d value", optarg,
-					"must be a number");
+				wildinput(_("-d value"), optarg,
+					_("must be a number"));
 			break;
 		case 'a':		/* adjustment */
 			if (aflag) {
 				(void) fprintf(stderr,
-					"date: error: multiple -a's used");
+					_("date: error: multiple -a's used"));
 				usage();
 			}
 			aflag = 1;
@@ -162,14 +170,14 @@ char *		argv[];
 			if (*cp == '+' || *cp == '-')
 				++cp;
 			if (*cp == '\0' || strcmp(cp, ".") == 0)
-				wildinput("-a value", optarg,
-					"must be a number");
+				wildinput(_("-a value"), optarg,
+					_("must be a number"));
 			cp = nondigit(cp);
 			if (*cp == '.')
 				++cp;
 			if (*nondigit(cp) != '\0')
-				wildinput("-a value", optarg,
-					"must be a number");
+				wildinput(_("-a value"), optarg,
+					_("must be a number"));
 			break;
 		}
 	}
@@ -180,14 +188,14 @@ char *		argv[];
 				format = cp + 1;
 			else {
 				(void) fprintf(stderr,
-"date: error: multiple formats in command line\n");
+_("date: error: multiple formats in command line\n"));
 				usage();
 			}
 		else	if (value == NULL)
 				value = cp;
 			else {
 				(void) fprintf(stderr,
-"date: error: multiple values in command line\n");
+_("date: error: multiple values in command line\n"));
 				usage();
 			}
 	}
@@ -217,17 +225,17 @@ char *		argv[];
 				** the given time is valid in GMT.
 				*/
 				if (atoi(cp + 1) >= SECSPERMIN)
-					wildinput("time", value,
-						"out of range seconds given");
+					wildinput(_("time"), value,
+					    _("out of range seconds given"));
 			}
 			dogmt();
 			t = convert(value, FALSE, now);
 			if (t == -1)
 				t = convert(value, TRUE, now);
-			wildinput("time", value,
+			wildinput(_("time"), value,
 				(t == -1) ?
-				"out of range value given" :
-				"time skipped when clock springs forward");
+				_("out of range value given") :
+				_("time skipped when clock springs forward"));
 		}
 	}
 	/*
@@ -240,7 +248,7 @@ char *		argv[];
 		tv.tv_sec = (int) adjust;
 		tv.tv_usec = (int) ((adjust - tv.tv_sec) * 1000000);
 		if (adjtime(&tv, (struct timeval *) NULL) != 0)
-			oops("date: error: adjtime");
+			oops("adjtime");
 #endif /* HAVE_ADJTIME */
 #if !HAVE_ADJTIME
 		reset((time_t) (now + adjust), nflag);
@@ -256,17 +264,17 @@ char *		argv[];
 
 		if (!dflag || !tflag)
 			if (gettimeofday((struct timeval *) NULL, &tz) != 0)
-				oops("date: error: gettimeofday");
+				oops("gettimeofday");
 		if (dflag)
 			tz.tz_dsttime = dsttime;
 		if (tflag)
 			tz.tz_minuteswest = minuteswest;
 		if (settimeofday((struct timeval *) NULL, &tz) != 0)
-			oops("date: error: settimeofday");
+			oops("settimeofday");
 #endif /* HAVE_SETTIMEOFDAY == 2 */
 #if HAVE_SETTIMEOFDAY != 2
 		(void) fprintf(stderr,
-"date: warning: kernel doesn't keep -d/-t information, option ignored\n");
+_("date: warning: kernel doesn't keep -d/-t information, option ignored\n"));
 #endif /* HAVE_SETTIMEOFDAY != 2 */
 	}
 
@@ -309,7 +317,7 @@ dogmt()
 			continue;
 		fakeenv = (char **) malloc((size_t) (n + 2) * sizeof *fakeenv);
 		if (fakeenv == NULL) {
-			(void) perror("Memory exhausted");
+			(void) perror(_("Memory exhausted"));
 			errensure();
 			(void) exit(retval);
 		}
@@ -358,7 +366,7 @@ const int	nflag;
 	*/
 	(void) time(&oldt);
 	if (stime(&newt) != 0)
-		oops("date: error: stime");
+		oops("stime");
 	s.before.ut_type = OLD_TIME;
 	s.before.ut_time = oldt;
 	(void) strcpy(s.before.ut_line, OTIME_MSG);
@@ -367,11 +375,11 @@ const int	nflag;
 	(void) strcpy(s.after.ut_line, NTIME_MSG);
 	fid = open(WTMP_FILE, O_WRONLY | O_APPEND);
 	if (fid < 0)
-		oops("date: error: log file open");
+		oops(_("log file open"));
 	if (write(fid, (char *) &s, sizeof s) != sizeof s)
-		oops("date: error: log file write");
+		oops(_("log file write"));
 	if (close(fid) != 0)
-		oops("date: error: log file close");
+		oops(_("log file close"));
 #if !HAVE_UTMPX_H
 	pututline(&s.before);
 	pututline(&s.after);
@@ -390,11 +398,11 @@ const int	nflag;
 	   define SUPPRESS_WTMPX_FILE_UPDATE to be nonzero.  */
 	fid = open(WTMPX_FILE, O_WRONLY | O_APPEND);
 	if (fid < 0)
-		oops("date: error: log file open");
+		oops(_("log file open"));
 	if (write(fid, (char *) &sx, sizeof sx) != sizeof sx)
-		oops("date: error: log file write");
+		oops(_("log file write"));
 	if (close(fid) != 0)
-		oops("date: error: log file close");
+		oops(_("log file close"));
 #endif /* !SUPPRESS_WTMPX_FILE_UPDATE */
 	pututxline(&sx.before);
 	pututxline(&sx.after);
@@ -464,9 +472,9 @@ const int	nflag;
 		logwtmp("|", TIME_NAME, "");
 		if (settimeofday(&tv, (struct timezone *) NULL) == 0) {
 			logwtmp("{", TIME_NAME, "");	/* } */
-			syslog(LOG_AUTH | LOG_NOTICE, "date set by %s",
+			syslog(LOG_AUTH | LOG_NOTICE, _("date set by %s"),
 				username);
-		} else	oops("date: error: settimeofday");
+		} else	oops("settimeofday");
 	}
 }
 
@@ -478,7 +486,8 @@ const char * const	item;
 const char * const	value;
 const char * const	reason;
 {
-	(void) fprintf(stderr, "date: error: bad command line %s \"%s\", %s\n",
+	(void) fprintf(stderr,
+		_("date: error: bad command line %s \"%s\", %s\n"),
 		item, value, reason);
 	usage();
 }
@@ -502,15 +511,8 @@ register const char *	cp;
 static void
 usage P((void))
 {
-	(void) fprintf(stderr, "date: usage is date ");
-	(void) fprintf(stderr, "[-u] ");
-	(void) fprintf(stderr, "[-c] ");
-	(void) fprintf(stderr, "[-n] ");
-	(void) fprintf(stderr, "[-d dst] ");
-	(void) fprintf(stderr, "[-t min-west] ");
-	(void) fprintf(stderr, "[-a sss.fff] ");
-	(void) fprintf(stderr, "[[yyyy]mmddhhmm[yyyy][.ss]] ");
-	(void) fprintf(stderr, "[+format]\n");
+	(void) fprintf(stderr, _("date: usage is date [-u] [-c] [-n] [-d dst] \
+[-t min-west] [-a sss.fff] [[yyyy]mmddhhmm[yyyy][.ss]] [+format]\n"));
 	errensure();
 	(void) exit(retval);
 }
@@ -519,6 +521,10 @@ static void
 oops(string)
 const char * const	string;
 {
+	int		e = errno;
+
+	(void) fprintf(stderr, _("date: error: "));
+	errno = e;
 	(void) perror(string);
 	errensure();
 	display((char *) NULL);
@@ -533,14 +539,13 @@ const char * const	format;
 
 	(void) time(&now);
 	tm = *localtime(&now);
-	setlocale(LC_TIME, "");
 	timeout(stdout, format ? format : "%+", &tm);
 	(void) putchar('\n');
 	(void) fflush(stdout);
 	(void) fflush(stderr);
 	if (ferror(stdout) || ferror(stderr)) {
 		(void) fprintf(stderr,
-			"date: error: couldn't write results\n");
+			_("date: error: couldn't write results\n"));
 		errensure();
 	}
 	(void) exit(retval);
@@ -567,7 +572,7 @@ const struct tm * const	tmp;
 	for ( ; ; ) {
 		if (cp == NULL) {
 			(void) fprintf(stderr,
-				"date: error: can't get memory\n");
+				_("date: error: can't get memory\n"));
 			errensure();
 			(void) exit(retval);
 		}
@@ -628,22 +633,22 @@ const time_t			t;
 	dotp = strchr(value, '.');
 	for (cp = value; *cp != '\0'; ++cp)
 		if (!is_digit(*cp) && cp != dotp)
-			wildinput("time", value, "contains a nondigit");
+			wildinput(_("time"), value, _("contains a nondigit"));
 
 	if (dotp == NULL)
 		dotp = strchr(value, '\0');
 	else {
 		cp = dotp + 1;
 		if (strlen(cp) != 2)
-			wildinput("time", value,
-				"seconds part is not two digits");
+			wildinput(_("time"), value,
+				_("seconds part is not two digits"));
 		secs = ATOI2(cp);
 	}
 
 	cp = value;
 	switch (dotp - cp) {
 		default:
-			wildinput("time", value, "main part is wrong length");
+			wildinput(_("time"), value, _("main part is wrong length"));
 		case 12:
 			if (!dousg) {
 				cent = ATOI2(cp);
@@ -721,7 +726,7 @@ const time_t		oldnow;
 	*/
 	othert = convert(value, !didusg, oldnow);
 	if (othert != -1 && othert != t)
-		iffy(t, othert, value, "year could be at start or end");
+		iffy(t, othert, value, _("year could be at start or end"));
 	/*
 	** See if there's both a DST and a STD version.
 	*/
@@ -732,7 +737,7 @@ const time_t		oldnow;
 	if (othert != -1 && othertm.tm_isdst != tm.tm_isdst &&
 		comptm(&tm, &othertm) == 0)
 			iffy(t, othert, value,
-			    "both standard and summer time versions exist");
+			    _("both standard and summer time versions exist"));
 /*
 ** Final check.
 **
@@ -762,7 +767,7 @@ const time_t		oldnow;
 			othertm = *localtime(&othert);
 			if (comptm(&tm, &othertm) == 0)
 				iffy(t, othert, value,
-					"multiple matching times exist");
+					_("multiple matching times exist"));
 		}
 }
 
@@ -775,32 +780,27 @@ const char * const	reason;
 {
 	struct tm	tm;
 
-	(void) fprintf(stderr, "date: warning: ambiguous time \"%s\", %s.\n",
+	(void) fprintf(stderr, _("date: warning: ambiguous time \"%s\", %s.\n"),
 		value, reason);
 	tm = *gmtime(&thist);
-	(void) fprintf(stderr, "Time was set as if you used\n");
 	/*
 	** Avoid running afoul of SCCS!
 	*/
-	timeout(stderr, "\tdate -u ", &tm);
-	timeout(stderr, "%m%d%H", &tm);
-	timeout(stderr, "%M", &tm);
-	timeout(stderr, "%Y.%S\n", &tm);
+	timeout(stderr, _("Time was set as if you used\n\tdate -u %m%d%H\
+%M\
+%Y.%S\n"), &tm);
 	tm = *localtime(&thist);
-	timeout(stderr, "to get %c", &tm);
-	(void) fprintf(stderr, " (%s time)",
-		tm.tm_isdst ? "summer" : "standard");
-	(void) fprintf(stderr, ".  Use\n");
+	timeout(stderr, _("to get %c"), &tm);
+	(void) fprintf(stderr, _(" (%s).  Use\n"),
+		tm.tm_isdst ? _("summer time") : _("standard time"));
 	tm = *gmtime(&thatt);
-	timeout(stderr, "\tdate -u ", &tm);
-	timeout(stderr, "%m%d%H", &tm);
-	timeout(stderr, "%M", &tm);
-	timeout(stderr, "%Y.%S\n", &tm);
+	timeout(stderr, _("\tdate -u %m%d%H\
+%M\
+%Y.%S\n"), &tm);
 	tm = *localtime(&thatt);
-	timeout(stderr, "to get %c", &tm);
-	(void) fprintf(stderr, " (%s time)",
-		tm.tm_isdst ? "summer" : "standard");
-	(void) fprintf(stderr, ".\n");
+	timeout(stderr, _("to get %c"), &tm);
+	(void) fprintf(stderr, _(" (%s).\n"),
+		tm.tm_isdst ? _("summer time") : _("standard time"));
 	errensure();
 	(void) exit(retval);
 }
@@ -809,9 +809,6 @@ const char * const	reason;
 #define WAITACK		2	/* seconds */
 #define WAITDATEACK	5	/* seconds */
 
-#ifndef errno
-extern	int errno;
-#endif /* !defined errno */
 /*
  * Set the date in the machines controlled by timedaemons
  * by communicating the new date to the local timedaemon.
@@ -834,7 +831,7 @@ netsettime(ntv)
 
 	sp = getservbyname("timed", "udp");
 	if (sp == 0) {
-		fputs("udp/timed: unknown service\n", stderr);
+		fputs(_("udp/timed: unknown service\n"), stderr);
 		retval = 2;
 		return (0);
 	}
@@ -860,7 +857,7 @@ netsettime(ntv)
 		}
 	}
 	if (port == IPPORT_RESERVED / 2) {
-		fputs("date: All ports in use\n", stderr);
+		fputs(_("date: All ports in use\n"), stderr);
 		goto bad;
 	}
 	msg.tsp_type = TSP_SETDATE;
@@ -896,7 +893,7 @@ loop:
 	    && err) {
 		errno = err;
 		if (errno != ECONNREFUSED)
-			perror("date: send (delayed error)");
+			perror(_("date: send (delayed error)"));
 		goto bad;
 	}
 	if (found > 0 && FD_ISSET(s, &ready)) {
@@ -923,14 +920,14 @@ loop:
 
 		default:
 			fprintf(stderr,
-				"date: Wrong ack received from timed: %s\n",
+				_("date: Wrong ack received from timed: %s\n"),
 				tsptype[msg.tsp_type]);
 			timed_ack = -1;
 			break;
 		}
 	}
 	if (timed_ack == -1)
-		fputs("date: Can't reach time daemon, time set locally.\n",
+		fputs(_("date: Can't reach time daemon, time set locally.\n"),
 			stderr);
 bad:
 	(void)close(s);

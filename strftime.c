@@ -8,6 +8,9 @@ static char	elsieid[] = "%W%";
 */
 #endif /* !defined NOID */
 #endif /* !defined lint */
+
+#include "private.h"
+
 /*
  * Copyright (c) 1989 The Regents of the University of California.
  * All rights reserved.
@@ -31,7 +34,6 @@ static const char sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
 #endif /* !defined lint */
 #endif /* !defined LIBC_SCCS */
 
-#include "private.h"
 #include "tzfile.h"
 
 static const char afmt[][4] = {

@@ -1,13 +1,12 @@
-#include "stdio.h"
-
-/*LINTLIBRARY*/
-
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";
 #endif /* !defined lint */
 #endif /* !defined NOID */
 
+/*LINTLIBRARY*/
+
+#include "stdio.h"
 #include "ctype.h"
 #include "string.h"
 

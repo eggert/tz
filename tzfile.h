@@ -12,7 +12,7 @@
 #define TZDEFAULT	"localtime"
 #endif
 
-struct ttinfo {			/* time type information */
+struct ttinfo {				/* time type information */
 	long		tt_gmtoff;	/* GMT offset in seconds */
 	int		tt_isdst;	/* used to set tm_isdst */
 	unsigned int	tt_abbrind;	/* abbreviation list index */
@@ -32,7 +32,7 @@ struct tzhead {
 /*
 ** . . .followed by. . .
 **
-**	tzh_timecnt (long)s		transition times as returned by time(3)
+**	tzh_timecnt (long)s		transition times as returned by time(2)
 **	tzh_timecnt (unsigned char)s	types of local time starting at above
 **	tzh_typecnt (struct ttinfo)s	information for each time type
 **	tzh_charcnt (char)s		'\0'-terminated zone abbreviaton strings

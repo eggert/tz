@@ -214,7 +214,7 @@ zic=		./zic
 ZIC=		$(zic) $(ZFLAGS)
 
 # The name of a Posix-compliant `awk' on your system.
-AWK=		awk
+AWK=		nawk
 
 ###############################################################################
 

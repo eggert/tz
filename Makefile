@@ -85,20 +85,21 @@ TZDSRCS=	zdump.c localtime.c asctime.c ialloc.c
 TZDOBJS=	zdump.o localtime.o asctime.o ialloc.o
 LIBSRCS=	localtime.c asctime.c ctime.c dysize.c timemk.c
 LIBOBJS=	localtime.o asctime.o ctime.o dysize.o timemk.o
-DOCS=		Theory README Makefile newctime.3 tzfile.5 zic.8 zdump.8
+DOCS=		Patchlevel.h Theory README Makefile \
+		newctime.3 tzfile.5 zic.8 zdump.8
 SOURCES=	tzfile.h zic.c zdump.c \
 		localtime.c asctime.c ctime.c dysize.c timemk.c \
 		scheck.c ialloc.c mkdir.c
-DATA=		Patchlevel.h asia australasia europe etcetera leapseconds \
-		northamerica pacificnew southamerica systemv solar87 solar88
-ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
+DATA=		asia australasia europe etcetera northamerica pacificnew \
+		southamerica systemv solar87 solar88
+ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) leapseconds
 
 all:		REDID_BINARIES zdump $(TZLIB)
 
 REDID_BINARIES:	zic $(DATA)
-		PATH=.:$$PATH zic -d $(TZDIR) $(DATA) && \ 
-		PATH=.:$$PATH zic -L /dev/null -d $(TZDIR) systemv && \
-		PATH=.:$$PATH zic -l $(LOCALTIME) && \
+		PATH=.:$$PATH zic -d $(TZDIR) $(DATA) && \
+		PATH=.:$$PATH zic -d $(TZDIR) -L /dev/null systemv && \
+		PATH=.:$$PATH zic -d $(TZDIR) -l $(LOCALTIME) && \
 		> $@
 
 zdump:		$(TZDOBJS)
@@ -119,7 +120,7 @@ SHAR1:		$(DOCS)
 SHAR2:		$(SOURCES)
 		$(SHAR) $(SOURCES) > $@
 
-SHAR3:		$(DATA)
+SHAR3:		$(DATA) leapseconds Patchlevel.h
 		$(SHAR) $(DATA) > $@
 
 $(ENCHILADA):

@@ -26,33 +26,35 @@ static char	privatehid[] = "%W%";
 */
 
 #ifndef HAVE_ADJTIME
-#define HAVE_ADJTIME	1
+#define HAVE_ADJTIME		1
 #endif /* !defined HAVE_ADJTIME */
+
 #ifndef HAVE_SETLOCALE
-#define HAVE_SETLOCALE	1
+#define HAVE_SETLOCALE		1
 #endif /* !defined HAVE_SETLOCALE */
+
 #ifndef HAVE_SETTIMEOFDAY
 #define HAVE_SETTIMEOFDAY	3
 #endif /* !defined HAVE_SETTIMEOFDAY */
 
 #ifndef LOCALE_HOME
-#define LOCALE_HOME	"/usr/lib/locale"
+#define LOCALE_HOME		"/usr/lib/locale"
 #endif /* !defined LOCALE_HOME */
 
 #ifndef alloc_size_T
-#define alloc_size_T	size_t
+#define alloc_size_T		size_t
 #endif /* !defined alloc_size_T */
 
 #ifndef fwrite_size_T
-#define fwrite_size_T	size_t
+#define fwrite_size_T		size_t
 #endif /* !defined fwrite_size_T */
 
 #ifndef qsort_size_T
-#define qsort_size_T	size_t
+#define qsort_size_T		size_t
 #endif /* !defined qsort_size_T */
 
 /*
-** const
+** const.  Absent from SunOS 4.1.1 cc.
 */
 
 #ifndef const
@@ -60,20 +62,6 @@ static char	privatehid[] = "%W%";
 #define const
 #endif /* !defined __STDC__ */
 #endif /* !defined const */
-
-/*
-** void
-*/
-
-#ifndef void
-#ifndef __STDC__
-#ifndef vax
-#ifndef sun
-#define void	char
-#endif /* !defined sun */
-#endif /* !defined vax */
-#endif /* !defined __STDC__ */
-#endif /* !defined void */
 
 /*
 ** INITIALIZE
@@ -100,7 +88,7 @@ static char	privatehid[] = "%W%";
 #endif /* !defined INITIALIZE */
 
 /*
-** P((args))
+** P((args)).  Prototypes absent from SunOS 4.1.1 cc
 */
 
 #ifndef P
@@ -159,11 +147,11 @@ extern int	unlink P((const char * filename));
 #endif /* !defined FILENAME_MAX */
 
 #ifndef EXIT_SUCCESS
-#define EXIT_SUCCESS	0
+#define EXIT_SUCCESS	0		/* Absent from SunOS 4.1.1 headers */
 #endif /* !defined EXIT_SUCCESS */
 
 #ifndef EXIT_FAILURE
-#define EXIT_FAILURE	1
+#define EXIT_FAILURE	1		/* Absent from SunOS 4.1.1 headers */
 #endif /* !defined EXIT_FAILURE */
 
 #ifndef TRUE
@@ -184,10 +172,6 @@ extern int	unlink P((const char * filename));
 #define INT_STRLEN_MAXIMUM(type) \
 	((sizeof(type) * CHAR_BIT - 1) * 302 / 1000 + 2)
 #endif /* !defined INT_STRLEN_MAXIMUM */
-
-#ifndef LOCALE_HOME
-#define LOCALE_HOME	"/usr/lib/locale"
-#endif /* !defined LOCALE_HOME */
 
 /*
 ** UNIX was a registered trademark of UNIX System Laboratories in 1993.

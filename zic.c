@@ -106,9 +106,9 @@ static void	puttzcode P((long code, FILE * fp));
 static int	rcomp P((const genericptr_t leftp, const genericptr_t rightp));
 static time_t	rpytime P((const struct rule * rp, int wantedy));
 static void	rulesub P((struct rule * rp,
-			char * loyearp, char * hiyearp,
-			char * typep, char * monthp,
-			char * dayp, char * timep));
+			const char * loyearp, const char * hiyearp,
+			const char * typep, const char * monthp,
+			const char * dayp, const char * timep));
 static void	setboundaries P((void));
 static time_t	tadd P((time_t t1, long t2));
 static void	usage P((void));
@@ -528,14 +528,14 @@ const char * const	tofile;
 	register char *	toname;
 
 	if (fromfile[0] == '/')
-		fromname = fromfile;
+		fromname = ecpyalloc(fromfile);
 	else {
 		fromname = ecpyalloc(directory);
 		fromname = ecatalloc(fromname, "/");
 		fromname = ecatalloc(fromname, fromfile);
 	}
 	if (tofile[0] == '/')
-		toname = tofile;
+		toname = ecpyalloc(tofile);
 	else {
 		toname = ecpyalloc(directory);
 		toname = ecatalloc(toname, "/");
@@ -557,10 +557,8 @@ const char * const	tofile;
 			(void) exit(EXIT_FAILURE);
 		}
 	}
-	if (fromname != fromfile)
-		ifree(fromname);
-	if (toname != tofile)
-		ifree(toname);
+	ifree(fromname);
+	ifree(toname);
 }
 
 static void
@@ -711,10 +709,10 @@ const char *	name;
 		fields = getfields(buf);
 		nfields = 0;
 		while (fields[nfields] != NULL) {
-			static char	nada[1];
+			static char	nada;
 
 			if (ciequal(fields[nfields], "-"))
-				fields[nfields] = nada;
+				fields[nfields] = &nada;
 			++nfields;
 		}
 		if (nfields == 0) {
@@ -852,7 +850,7 @@ const int		nfields;
 		return FALSE;
 	}
 	if (strcmp(fields[ZF_NAME], TZDEFAULT) == 0 && lcltime != NULL) {
-		buf = erealloc(buf, 132 + strlen(TZDEFAULT));
+		buf = erealloc(buf, (int) (132 + strlen(TZDEFAULT)));
 		(void) sprintf(buf,
 "\"Zone %s\" line and -l option are mutually exclusive",
 			TZDEFAULT);
@@ -860,7 +858,7 @@ const int		nfields;
 		return FALSE;
 	}
 	if (strcmp(fields[ZF_NAME], TZDEFRULES) == 0 && psxrules != NULL) {
-		buf = erealloc(buf, 132 + strlen(TZDEFRULES));
+		buf = erealloc(buf, (int) (132 + strlen(TZDEFRULES)));
 		(void) sprintf(buf,
 "\"Zone %s\" line and -p option are mutually exclusive",
 			TZDEFRULES);
@@ -870,9 +868,9 @@ const int		nfields;
 	for (i = 0; i < nzones; ++i)
 		if (zones[i].z_name != NULL &&
 			strcmp(zones[i].z_name, fields[ZF_NAME]) == 0) {
-				buf = erealloc(buf, 132 +
+				buf = erealloc(buf, (int) (132 +
 					strlen(fields[ZF_NAME]) +
-					strlen(zones[i].z_filename));
+					strlen(zones[i].z_filename)));
 				(void) sprintf(buf,
 "duplicate zone name %s (file \"%s\", line %d)",
 					fields[ZF_NAME],
@@ -1100,15 +1098,17 @@ const int		nfields;
 static void
 rulesub(rp, loyearp, hiyearp, typep, monthp, dayp, timep)
 register struct rule * const	rp;
-char * const			loyearp;
-char * const			hiyearp;
-char * const			typep;
-char * const			monthp;
-char * const			dayp;
-char * const			timep;
+const char * const		loyearp;
+const char * const		hiyearp;
+const char * const		typep;
+const char * const		monthp;
+const char * const		dayp;
+const char * const		timep;
 {
-	register struct lookup const *	lp;
-	register char *			cp;
+	register const struct lookup *	lp;
+	register const char *		cp;
+	register char *			dp;
+	register char *			ep;
 
 	if ((lp = byword(monthp, mon_names)) == NULL) {
 		error("invalid month name");
@@ -1116,21 +1116,22 @@ char * const			timep;
 	}
 	rp->r_month = lp->l_value;
 	rp->r_todisstd = FALSE;
-	cp = timep;
-	if (*cp != '\0') {
-		cp += strlen(cp) - 1;
-		switch (lowerit(*cp)) {
+	dp = ecpyalloc(timep);
+	if (*dp != '\0') {
+		ep = dp + strlen(dp) - 1;
+		switch (lowerit(*ep)) {
 			case 's':
 				rp->r_todisstd = TRUE;
-				*cp = '\0';
+				*ep = '\0';
 				break;
 			case 'w':
 				rp->r_todisstd = FALSE;
-				*cp = '\0';
+				*ep = '\0';
 				break;
 		}
 	}
-	rp->r_tod = gethms(timep, "invalid time of day", FALSE);
+	rp->r_tod = gethms(dp, "invalid time of day", FALSE);
+	ifree(dp);
 	/*
 	** Year work.
 	*/
@@ -1192,38 +1193,43 @@ char * const			timep;
 	**	Sun<=20
 	**	Sun>=7
 	*/
-	if ((lp = byword(dayp, lasts)) != NULL) {
+	dp = ecpyalloc(dayp);
+	if ((lp = byword(dp, lasts)) != NULL) {
 		rp->r_dycode = DC_DOWLEQ;
 		rp->r_wday = lp->l_value;
 		rp->r_dayofmonth = len_months[1][rp->r_month];
 	} else {
-		if ((cp = strchr(dayp, '<')) != 0)
+		if ((ep = strchr(dp, '<')) != 0)
 			rp->r_dycode = DC_DOWLEQ;
-		else if ((cp = strchr(dayp, '>')) != 0)
+		else if ((ep = strchr(dp, '>')) != 0)
 			rp->r_dycode = DC_DOWGEQ;
 		else {
-			cp = dayp;
+			ep = dp;
 			rp->r_dycode = DC_DOM;
 		}
 		if (rp->r_dycode != DC_DOM) {
-			*cp++ = 0;
-			if (*cp++ != '=') {
+			*ep++ = 0;
+			if (*ep++ != '=') {
 				error("invalid day of month");
+				ifree(dp);
 				return;
 			}
-			if ((lp = byword(dayp, wday_names)) == NULL) {
+			if ((lp = byword(dp, wday_names)) == NULL) {
 				error("invalid weekday name");
+				ifree(dp);
 				return;
 			}
 			rp->r_wday = lp->l_value;
 		}
-		if (sscanf(cp, scheck(cp, "%d"), &rp->r_dayofmonth) != 1 ||
+		if (sscanf(ep, scheck(ep, "%d"), &rp->r_dayofmonth) != 1 ||
 			rp->r_dayofmonth <= 0 ||
 			(rp->r_dayofmonth > len_months[1][rp->r_month])) {
 				error("invalid day of month");
+				ifree(dp);
 				return;
 		}
 	}
+	ifree(dp);
 }
 
 static void
@@ -1261,7 +1267,7 @@ const char * const	name;
 	static struct tzhead	tzh;
 
 	fullname = erealloc(fullname,
-		strlen(directory) + 1 + strlen(name) + 1);
+		(int) (strlen(directory) + 1 + strlen(name) + 1));
 	(void) sprintf(fullname, "%s/%s", directory, name);
 	if ((fp = fopen(fullname, "wb")) == NULL) {
 		if (mkdirs(fullname) != 0)
@@ -1349,6 +1355,9 @@ const int			zonecount;
 	register int			type;
 	char				startbuf[BUFSIZ];
 
+	INITIALIZE(untiltime);
+	INITIALIZE(starttime);
+	INITIALIZE(startoff);
 	/*
 	** Now. . .finally. . .generate some useful data!
 	*/
@@ -1408,6 +1417,7 @@ const int			zonecount;
 				register long	offset;
 				char		buf[BUFSIZ];
 
+				INITIALIZE(ktime);
 				if (useuntil) {
 					/*
 					** Turn untiltime into GMT
@@ -1628,7 +1638,7 @@ const char * const	type;
 		return (year % 4) == 0;
 	if (strcmp(type, "nonpres") == 0)
 		return (year % 4) != 0;
-	buf = erealloc(buf, 132 + strlen(yitcommand) + strlen(type));
+	buf = erealloc(buf, (int) (132 + strlen(yitcommand) + strlen(type)));
 	(void) sprintf(buf, "%s %d %s", yitcommand, year, type);
 	result = system(buf);
 	if (result == 0)

@@ -8,7 +8,7 @@
 
 ###############################################################################
 
-# China
+# People's Republic of China
 
 # From Guy Harris:
 # People's Republic of China.  Yes, they really have only one time zone.
@@ -27,11 +27,9 @@
 #     1986 May 4 - Sept 14
 #     1987 mid-April - ?? 
 
-# From U.S. Naval Observatory (February 10, 1988):
-# CHINA               8 H AHEAD OF UTC; ALL OF CHINA, INCL TAIWAN 
-
-# From Arthur David Olson (February 10, 1988):
-# At least for now, we'll stick with one time zone. . .
+# From U. S. Naval Observatory (January 19, 1989):
+# CHINA               8 H  AHEAD OF UTC  ALL OF CHINA, INCL TAIWAN
+# CHINA               9 H  AHEAD OF UTC  APR 17 - SEP 10
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	PRC	1970	max	-	Apr	Sun<=14	2:00	1:00	D
@@ -39,6 +37,71 @@ Rule	PRC	1970	max	-	Sep	Sun<=14	3:00	0	S
 
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 Zone	PRC		8:00	PRC		C%sT
+
+###############################################################################
+
+# Republic of China
+
+# From Guy Harris
+
+# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	ROC		8:00	-		CST	# Republic of China
+
+###############################################################################
+
+# Hongkong
+
+# From Guy Harris
+
+# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	Hongkong	8:00	-		HKT
+
+###############################################################################
+
+# Iran
+
+# From Bob Devine (January 28, 1988):
+# Iran: Last Sunday in March to third (?) Sunday in
+# September.  Since the revolution, the official calendar is Monarchic
+# calendar; I have no idea what the correspondence between dates are.
+
+# From U. S. Naval Observatory (January 19, 1989):
+# IRAN                3.5H AHEAD OF UTC
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Iran	1988	max	-	Mar	lastSun	2:00	1:00	D
+Rule	Iran	1988	max	-	Sep	Sun>=15	2:00	0	S
+
+# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	Iran		3:30	Iran		I%sT
+
+###############################################################################
+
+# Israel
+
+# From U. S. Naval Observatory (January 19, 1989):
+# ISRAEL              2 H  AHEAD OF UTC
+# ISRAEL              3 H  AHEAD OF UTC  APR 10 - SEP 3
+
+# From Arthur David Olson (January 21, 1989):
+# Stick with rules below (which were provided by Guy Harris and which were
+# posted in 1988) for now.
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Israel	1987	max	-	Apr	Sun<=21	2:00	1:00	D
+Rule	Israel	1987	max	-	Aug	Sat<=28	2:00	0	S
+
+# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	Israel		3:00	Israel		I%sT
+
+###############################################################################
+
+# Japan
+
+# From Guy Harris
+
+# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	Japan		9:00	-		JST
 
 ###############################################################################
 
@@ -58,38 +121,6 @@ Zone	ROK		9:00	ROK		K%sT
 
 ###############################################################################
 
-# Israel
-
-# From Guy Harris
-
-# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Israel	1987	max	-	Apr	Sun<=21	2:00	1:00	D
-Rule	Israel	1987	max	-	Aug	Sat<=28	2:00	0	S
-
-# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
-Zone	Israel		3:00	Israel		I%sT
-
-###############################################################################
-
-# Iran
-
-# From Bob Devine (January 28, 1988):
-# Iran: Last Sunday in March to third (?) Sunday in
-# September.  Since the revolution, the official calendar is Monarchic
-# calendar; I have no idea what the correspondence between dates are.
-
-# From U.S. Naval Observatory (February 10, 1988):
-# IRAN                3.5H AHEAD OF UTC 
-
-# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Iran	1988	max	-	Mar	lastSun	2:00	1:00	D
-Rule	Iran	1988	max	-	Sep	Sun>=15	2:00	0	S
-
-# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
-Zone	Iran		3:30	Iran		I%sT
-
-###############################################################################
-
 # Lebanon
 
 # From Bob Devine (January 28, 1988):
@@ -97,10 +128,7 @@ Zone	Iran		3:30	Iran		I%sT
 
 ###############################################################################
 
-# From Guy Harris
+# Singapore
 
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
-Zone	Japan		9:00	-		JST
 Zone	Singapore	8:00	-		SST
-Zone	Hongkong	8:00	-		HKT
-Zone	ROC		8:00	-		CST	# Republic of China

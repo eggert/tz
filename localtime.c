@@ -1458,10 +1458,10 @@ const long		offset;
 	if (sp == NULL)
 		return WRONG;
 #endif /* defined ALL_STATE */
-	for (samei = 0; samei < sp->typecnt; ++samei) {
+	for (samei = sp->typecnt - 1; samei >= 0; --samei) {
 		if (sp->ttis[samei].tt_isdst != tmp->tm_isdst)
 			continue;
-		for (otheri = 0; otheri < sp->typecnt; ++otheri) {
+		for (otheri = sp->typecnt - 1; otheri >= 0; --otheri) {
 			if (sp->ttis[otheri].tt_isdst == tmp->tm_isdst)
 				continue;
 			tmp->tm_sec += sp->ttis[otheri].tt_gmtoff -

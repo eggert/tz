@@ -16,9 +16,9 @@ Rule	Oz	1987	max	-	Mar	Sun<=21	3:00	0	-
 # Zone	NAME			GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Australia/Tasmania	10:00	Oz	EST
 Zone	Australia/Queensland	10:00	-	EST
-Zone	Australia/South-east	9:30	Oz	CST	1987 Mar Sun<=21 3:00
+Zone	Australia/East-SA	9:30	Oz	CST	1987 Mar Sun<=21 3:00
 				10:00	Oz	EST
-Zone	Australia/South-west	9:30	Oz	CST	1987 Mar Sun<=21 3:00
+Zone	Australia/West-SA	9:30	Oz	CST	1987 Mar Sun<=21 3:00
 				10:00	-	EST
 Zone	Australia/North		9:30	-	CST
 Zone	Australia/West		8:00	-	WST

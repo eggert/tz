@@ -187,7 +187,9 @@ extern generic_T *	malloc P((alloc_size_T size));
 extern generic_T *	calloc P((alloc_size_T nelem, alloc_size_T elsize));
 extern generic_T *	realloc P((generic_T * oldptr, alloc_size_T newsize));
 
+#if !HAVE_STDLIB_H
 extern void		exit P((int s));
+#endif /* !HAVE_STDLIB_H */
 /*
 ** "int" return matches SunOS 4.1.1's "stdlib.h"
 */
@@ -196,7 +198,9 @@ extern int		qsort P((generic_T * base, qsort_size_T nelem,
 				int (*comp) P((const generic_T *,
 					const generic_T *))));
 extern void		perror P((const char * string));
+#if !HAVE_STDLIB_H
 extern void		free P((generic_T * buf));
+#endif /* !HAVE_STDLIB_H */
 
 #ifndef TRUE
 #define TRUE	1

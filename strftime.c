@@ -295,7 +295,9 @@ label:
 				pt = _conv((t->tm_wday == 0) ? 7 : t->tm_wday,
 					"%d", pt, ptlim);
 				continue;
-			case 'V':
+			case 'V':	/* ISO 8601 week number */
+			case 'G':	/* ISO 8601 year (four digits) */
+			case 'g':	/* ISO 8601 year (two digits) */
 /*
 ** From Arnold Robbins' strftime version 3.0:  "the week number of the
 ** year (the first Monday as the first day of week 1) as a decimal number
@@ -347,6 +349,7 @@ label:
 							top += DAYSPERWEEK;
 						top += len;
 						if (yday >= top) {
+							++year;
 							w = 1;
 							break;
 						}
@@ -360,7 +363,14 @@ label:
 							DAYSPERLYEAR :
 							DAYSPERNYEAR;
 					}
-					pt = _conv(w, "%02d", pt, ptlim);
+					if (*format == 'V')
+						pt = _conv(w, "%02d",
+							pt, ptlim);
+					else if (*format == 'G')
+						pt = _conv(year, "%02d",
+							pt, ptlim);
+					else	pt = _conv(year, "%04d",
+							pt, ptlim);
 				}
 				continue;
 			case 'v':

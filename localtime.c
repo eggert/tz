@@ -194,16 +194,14 @@ static
 tzgmt()
 {
 	s.timecnt = 0;
-#ifdef USG_COMPAT
-	timezone = 0;
-#endif /* USG_COMPAT */
 	s.ttis[0].tt_gmtoff = 0;
-#ifdef USG_COMPAT
-	daylight = 0;
-#endif /* USG_COMPAT */
 	s.ttis[0].tt_abbrind = 0;
 	(void) strcpy(s.chars, "GMT");
 	tzname[0] = tzname[1] = s.chars;
+#ifdef USG_COMPAT
+	timezone = 0;
+	daylight = 0;
+#endif /* USG_COMPAT */
 }
 
 void

@@ -28,6 +28,9 @@
 # the DST variations in 74/75 that the US did, but I am not nearly
 # sure enough of this to add anything."
 
+# If Canada or Mexico decide not to follow the US change in DST that takes
+# effect in 1987, additions had best be made below.
+
 # Before the Uniform Time Act of 1966 took effect in 1967, observance of
 # Daylight Saving Time in the US was by local option, except during wartime.
 
@@ -42,8 +45,10 @@ Rule	MostNA	1974	only	-	Jan	6	2:00	1:00	D
 Rule	MostNA	1974	only	-	Nov	24	2:00	0	S
 Rule	MostNA	1975	only	-	Feb	23	2:00	1:00	D
 Rule	MostNA	1975	only	-	Oct	26	2:00	0	S
-Rule	MostNA	1976	2037	-	Apr	lastSun	2:00	1:00	D
-Rule	MostNA	1976	2037	-	Oct	lastSun	2:00	0	S
+Rule	MostNA	1976	1986	-	Apr	lastSun	2:00	1:00	D
+Rule	MostNA	1976	1986	-	Oct	lastSun	2:00	0	S
+Rule	MostNA	1987	2037	-	Apr	Sun>=1	2:00	1:00	D
+Rule	MostNA	1987	2037	-	Oct	lastSun	2:00	0	S
 
 ###############################################################################
 

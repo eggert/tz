@@ -12,39 +12,40 @@ TZCSRCS=	tzcomp.c scheck.c strchr.c
 TZCOBJS=	tzcomp.o scheck.o strchr.o
 ENCHILADA=	Makefile timezone.h settz.c tzdump.c $(TZCSRCS) tzinfo years.sh
 
-all:	data tzdump
+all:	REDID_BINARIES tzdump
 
-data:	$(TZDIR) tzcomp tzinfo years
-		tzcomp -d $(TZDIR) tzinfo
+REDID_BINARIES:	$(TZDIR) tzcomp tzinfo years
+	tzcomp -d $(TZDIR) tzinfo
+	cp /dev/null $@
 
 tzdump:	tzdump.o settz.o
-		$(CC) $(LFLAGS) tzdump.o settz.o $(LIBS) -o $@
+	$(CC) $(LFLAGS) tzdump.o settz.o $(LIBS) -o $@
 
 tzcomp:	$(TZCOBJS)
-		$(CC) $(LFLAGS) $(TZCOBJS) $(LIBS) -o $@
+	$(CC) $(LFLAGS) $(TZCOBJS) $(LIBS) -o $@
 
 $(TZDIR):
-		mkdir $@
+	mkdir $@
 
 years:	years.sh
-		rm -f $@
-		cp $? $@
-		chmod 555 $@
+	rm -f $@
+	cp $? $@
+	chmod 555 $@
 
 bundle:	$(ENCHILADA)
-		bundle $(ENCHILADA) > bundle
+	bundle $(ENCHILADA) > bundle
 
 $(ENCHILADA):
-		sccs get $(REL) $(REV) $@
+	sccs get $(REL) $(REV) $@
 
 sure:	tzdump.c $(TZCSRCS)
-		lint $(LINTFLAGS) tzdump.c settz.c
-		lint $(LINTFLAGS) $(TZCSRCS)
+	lint $(LINTFLAGS) tzdump.c settz.c
+	lint $(LINTFLAGS) $(TZCSRCS)
 
 clean:
-		rm -f core *.o *.out years tzdump tzcomp bundle \#*
+	rm -f core *.o *.out REDID_BINARIES years tzdump tzcomp bundle \#*
 
 CLEAN:	clean
-		sccs clean
+	sccs clean
 
 tzdump.o tzcomp.o settz.o:	timezone.h

@@ -1,25 +1,19 @@
 %W%
 
-Please send comments or information to seismo!elsie!ado (with, perhaps,
-carbon copes to
-	cbosgd!mark
-	seismo!linus!encore!necis!geo
-	seismo!munnari!kre
-    and	seismo!sun!guy
-who are responsible for any good ideas that show up here).
+Please send comments or information to
+	seismo!elsie!tz
+for forwarding to folks interested in time zone matters.
 
-If you're *really* adventurous, you can put ctime.o in /lib/libc.a--
-conservative soul that I am, I'd recommend against it.
-
-This version of the time zone software uses a new format (provided by sun!guy)
+This version of the time zone software uses a new format
+(based on the work of Guy Harris, a.k.a guy@sun.UUCP)
 for the time zone information files.  They are now stored by default in a
-directory named "/etc/zoneinfo" rather than "/etc/tzdir" or "/etc/timezones".
+directory named "/etc/zoneinfo" rather than "/etc/tzdir" or "/etc/timezones"
 as before.  If you've already compiled programs with older time zone software,
 just leave the "/etc/tzdir" and/or "/etc/timezones" files around until you
 have a chance to recompile.
 
 For better compatability with other versions of time conversion functions,
-the time zone abbreviation to be used with localtime's return vale is now
+the time zone abbreviation to be used with localtime's return value is now
 pointed to be one of the two elements of the (char *) array tzname, rather
 than by the (char *) tz_abbr.  If you have code that uses tz_abbr, add a
 	-DTZ_ABBR

@@ -4,6 +4,11 @@
 # International country codes are used to identify countries' rules and
 # zones
 #
+# This data is by no means authoritative; if you think you know better, go
+# ahead and edit the file (and please send any changes to seismo!elsie!tz
+# for general use in the future).  The use of 1986 as starting years below
+# is conservative.
+#
 # One source shows that Bulgaria, Cyprus, Finland, and Greece observe DST from
 # the last Sunday in March to the last Sunday in September in 1986.
 # The source shows Romania changing a day later than everybody else.
@@ -16,23 +21,23 @@
 # and off at 00:00 standard time (i.e., 01:00 DST)
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	GB-Eire	1969	max	-	Mar	lastSun	1:00s	1:00	BST
-Rule	GB-Eire	1969	max	-	Oct	lastSun	1:00s	0	GMT
+Rule	GB-Eire	1986	max	-	Mar	lastSun	1:00s	1:00	BST
+Rule	GB-Eire	1986	max	-	Oct	lastSun	1:00s	0	GMT
 
-Rule	W-Eur	1969	max	-	Mar	lastSun	1:00s	1:00	" DST"
-Rule	W-Eur	1969	max	-	Sep	lastSun	1:00s	0	-
+Rule	W-Eur	1986	max	-	Mar	lastSun	1:00s	1:00	" DST"
+Rule	W-Eur	1986	max	-	Sep	lastSun	1:00s	0	-
 
-Rule	M-Eur	1969	max	-	Mar	lastSun	2:00s	1:00	" DST"
-Rule	M-Eur	1969	max	-	Sep	lastSun	2:00s	0	-
+Rule	M-Eur	1986	max	-	Mar	lastSun	2:00s	1:00	" DST"
+Rule	M-Eur	1986	max	-	Sep	lastSun	2:00s	0	-
 
-Rule	E-Eur	1969	max	-	Mar	lastSun	3:00s	1:00	" DST"
-Rule	E-Eur	1969	max	-	Sep	lastSun	3:00s	0	-
+Rule	E-Eur	1986	max	-	Mar	lastSun	3:00s	1:00	" DST"
+Rule	E-Eur	1986	max	-	Sep	lastSun	3:00s	0	-
 
-Rule	Turkey	1969	max	-	Mar	lastSun	1:00	1:00	" DST"
-Rule	Turkey	1969	max	-	Sep	lastSun	1:00	0	-
+Rule	Turkey	1986	max	-	Mar	lastSun	1:00	1:00	" DST"
+Rule	Turkey	1986	max	-	Sep	lastSun	1:00	0	-
 
-Rule	W-SU	1969	max	-	Mar	lastSun	2:00s	1:00	" DST"
-Rule	W-SU	1969	max	-	Sep	lastSun	2:00s	0	-
+Rule	W-SU	1986	max	-	Mar	lastSun	2:00s	1:00	" DST"
+Rule	W-SU	1986	max	-	Sep	lastSun	2:00s	0	-
 
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 Zone	GB-Eire		0:00	GB-Eire		%s

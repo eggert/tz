@@ -171,14 +171,15 @@ static void		ambiguous();
 static void		display();
 static void		errensure();
 static void		finalcheck();
-static time_t		parse();
 #ifdef TSP_SETDATE
 int			netsettime();
 #endif /* defined TSP_SETDATE */
 static char *		nondigit();
 static void		oops();
+static time_t		parse();
 static void		timeout();
 static void		usage();
+static void		wildinput();
 static time_t		xtime();
 
 static char	options[132];
@@ -280,11 +281,11 @@ char *	argv[];
 				usage();
 			}
 			dflag = 1;
-			tz.tz_dsttime = atoi(optarg);
-			if (*optarg == '\0')
-				usage();
-			if (*nondigit(optarg) != '\0')
-				usage();
+			cp = optarg;
+			tz.tz_dsttime = atoi(cp);
+			if (*optarg == '\0' || *nondigit(cp) != '\0')
+				wildinput("-t value", optarg,
+					"must be a non-negative number");
 			break;
 #endif /* defined D_OPTION */
 #ifdef T_OPTION
@@ -295,13 +296,13 @@ char *	argv[];
 				usage();
 			}
 			tflag = 1;
-			tz.tz_minuteswest = atoi(optarg);
-			if (*optarg == '+' || *optarg == '-')
-				++optarg;
-			if (*optarg == '\0')
-				usage();
-			if (*nondigit(optarg) != '\0')
-				usage();
+			cp = optarg;
+			tz.tz_minuteswest = atoi(cp);
+			if (*cp == '+' || *cp == '-')
+				++cp;
+			if (*cp == '\0' || *nondigit(cp) != '\0')
+				wildinput("-d value", optarg,
+					"must be a number");
 			break;
 #endif /* defined T_OPTION */
 #ifdef A_OPTION
@@ -312,20 +313,23 @@ char *	argv[];
 				usage();
 			}
 			aflag = 1;
+			cp = optarg;
 			{
 				float		f;
 				extern double	atof();
 
-				f = atof(optarg);
-				if (*optarg == '+' || *optarg == '-')
-					++optarg;
-				if (*optarg == '\0' || strcmp(optarg, ".") == 0)
-					usage();
-				optarg = nondigit(optarg);
-				if (*optarg == '.')
-					++optarg;
-				if (*nondigit(optarg) != '\0')
-					usage();
+				f = atof(cp);
+				if (*cp == '+' || *cp == '-')
+					++cp;
+				if (*cp == '\0' || strcmp(cp, ".") == 0)
+					wildinput("-a value", optarg,
+						"must be a number");
+				cp = nondigit(cp);
+				if (*cp == '.')
+					++cp;
+				if (*nondigit(cp) != '\0')
+					wildinput("-a value", optarg,
+						"must be a number");
 				atv.tv_sec = (int) f;
 				atv.tv_usec =
 					(int) ((f - atv.tv_sec) * 1000000);
@@ -423,6 +427,17 @@ char *	argv[];
 }
 
 static void
+wildinput(item, value, reason)
+char *	item;
+char *	value;
+char *	reason;
+{
+	(void) fprintf(stderr, "date: error: bad command line %s \"%s\", %s\n",
+		item, value, reason);
+	usage();
+}
+
+static void
 errensure()
 {
 	if (retval == EXIT_SUCCESS)
@@ -516,7 +531,8 @@ char *	format;
 #ifdef USE_STRFTIME
 
 /*
-** ...then you don't get System V compatibility (or at least not from me).
+** . . .then you don't get System V compatibility (unless your version of
+** strftime provides it).
 */
 
 extern size_t	strftime();

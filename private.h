@@ -174,7 +174,9 @@ extern generic_T *	realloc P((generic_T * oldptr, alloc_size_T newsize));
 #ifdef USG
 extern void		exit P((int s));
 extern void		qsort P((generic_T * base, qsort_size_T nelem,
-				qsort_size_T elsize, int (*comp)()));
+				qsort_size_T elsize,
+				int (*comp) P((const generic_T *,
+					const generic_T *))));
 extern void		perror P((const char * string));
 extern void		free P((char * buf));
 #endif /* defined USG */

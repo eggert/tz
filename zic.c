@@ -337,8 +337,8 @@ error(string)
 char *	string;
 {
 	/*
-	** Match the format of "cc" to allow folks to
-	** 	zic ... | error -t "*" -v
+	** Match the format of "cc" to allow sh users to
+	** 	zic ... 2>&1 | error -t "*" -v
 	** on BSD systems.
 	*/
 	(void) fprintf(stderr, "\"%s\", line %d: %s",

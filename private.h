@@ -202,6 +202,14 @@ extern int	unlink P((const char * filename));
 #endif /* !defined INITIALIZE */
 
 /*
+** For the benefit of GNU folk...
+*/
+
+#ifndef _
+#define _(x) x
+#endif /* !defined _ */
+
+/*
 ** UNIX was a registered trademark of UNIX System Laboratories in 1993.
 */
 

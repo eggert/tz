@@ -535,7 +535,7 @@ register struct tm * btmp;
 **	convert user's input into a time_t.
 */
 
-#define	ATOI2(ar)	(ar[0] - '0') * 10 + (ar[1] - '0'); ar += 2;
+#define ATOI2(ar)	(ar[0] - '0') * 10 + (ar[1] - '0'); ar += 2;
 
 static time_t
 convert(value, dousg, t)
@@ -739,8 +739,8 @@ char *	reason;
 }
 
 #ifdef TSP_SETDATE
-#define	WAITACK		2	/* seconds */
-#define	WAITDATEACK	5	/* seconds */
+#define WAITACK		2	/* seconds */
+#define WAITDATEACK	5	/* seconds */
 
 extern	int errno;
 /*

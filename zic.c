@@ -1736,7 +1736,7 @@ char *	name;
 			/*
 			 * It doesn't seem to exist, so we try to create it.
 			 */
-			if (mkdir(name, 0755) != 0) {
+			if (emkdir(name, 0755) != 0) {
 				(void) fprintf(stderr,
 					"%s: Can't create directory ",
 					progname);

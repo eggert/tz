@@ -1939,5 +1939,5 @@ const int	i;
 }
 
 /*
-** UNIX is a registered trademark of AT&T.
+** UNIX was a registered trademark of UNIX System Laboratories in 1993.
 */

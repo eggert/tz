@@ -32,7 +32,7 @@ Zone	Australia/Queensland	10:00	-	EST	1971 Oct lastSun 2:00
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	AS	1971	max	-	Oct	lastSun	2:00	1:00	-
 Rule	AS	1972	1985	-	Mar	Sun>=1	3:00	0	-
-Rule	AS	1986	1989	-	Mar	Sun<=21	3:00	0	-
+Rule	AS	1986	1989	-	Mar	Sun>=15	3:00	0	-
 Rule	AS	1990	max	even	Mar	Sun>=22	3:00	0	-
 Rule	AS	1990	max	odd	Mar	Sun>=1	3:00	0	-
 # Zone	NAME		        GMTOFF	RULES	FORMAT	[UNTIL]
@@ -78,8 +78,8 @@ Rule	AN	1986	only	-	Oct	19	2:00	1:00	-
 Rule	AN	1987	only	-	Mar	15	3:00	0	-
 Rule	AN	1987	max	-	Oct	lastSun	2:00	1:00	-
 # Rule	AN	1988	only	-	Mar	Sun>=1	3:00	0	-
-# Rule	AN	1989	only	-	Mar	Sun<=21	3:00	0	-
-Rule	AN	1988	1989	-	Mar	Sun<=21	3:00	0	- #
+# Rule	AN	1989	only	-	Mar	Sun>=15	3:00	0	-
+Rule	AN	1988	1989	-	Mar	Sun>=15	3:00	0	- #
 Rule	AN	1990	max	-	Mar	Sun>=1	3:00	0	-
 # Zone	NAME			GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Australia/NSW		10:00	AN	EST

@@ -1,3 +1,9 @@
+/*
+** XXX To do: figure out correct (as distinct from standard-mandated)
+** output for "two digits of year" and "century" formats when
+** the year is negative or less than 100. --ado, 2004-09-09
+*/
+
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";
@@ -211,9 +217,9 @@ label:
 				** something completely different.
 				** (ado, 1993-05-24)
 				*/
-				pt = _lconv((t->tm_year +
-					(long) TM_YEAR_BASE) / 100,
-					"%02ld", pt, ptlim);
+				pt = _conv((int) ((t->tm_year +
+					(long) TM_YEAR_BASE) / 100),
+					"%02d", pt, ptlim);
 				continue;
 			case 'c':
 				{
@@ -480,8 +486,7 @@ label:
 				continue;
 			case 'y':
 				*warnp = IN_ALL;
-				pt = _conv(
-					(int) ((t->tm_year +
+				pt = _conv((int) ((t->tm_year +
 					(long) TM_YEAR_BASE) % 100),
 					"%02d", pt, ptlim);
 				continue;

@@ -1,28 +1,16 @@
 %W%
 
-Please send comments or information to
-	vax2.nlm.nih.gov!elsie!tz
-for forwarding to folks interested in time zone matters.
+This 1989 update of the time zone package features POSIXization (including
+interpretation of POSIX-style TZ environment variables, provided by Guy
+Harris), ANSIfication (including a version of "mktime"), corrections to some
+time zone data (including corrections to the rules for Great Britain and
+New Zealand), reference data from the United States Naval Observatory for
+folks who want to do additional time zones, and the 1989 data for Saudi Arabia.
+
+Please send comments or information to ado@ncifcrf.gov.
 
 Be sure to read the comments in "Makefile" and make any changes
 needed to make things right for your system.
-
-This version of the time zone software uses a new format
-(based on the work of Guy Harris, a.k.a guy@sun.UUCP)
-for the time zone information files.  They are now stored by default in a
-directory named "/etc/zoneinfo" rather than "/etc/tzdir" or "/etc/timezones"
-as before.  If you've already compiled programs with older time zone software,
-just leave the "/etc/tzdir" and/or "/etc/timezones" files around until you
-have a chance to recompile.
-
-For better compatability with other versions of time conversion functions,
-the time zone abbreviation to be used with localtime's return value is now
-pointed to by one of the two elements of the (char *) array tzname, rather
-than by the (char *) tz_abbr.  If you have code that uses tz_abbr, add a
-	-DTZA_COMPAT
-to the end of the
-	CFLAGS=
-line in "Makefile".
 
 To use the new functions, use a "-lz" option when compiling or linking.
 
@@ -39,4 +27,8 @@ is particularly useful, but rather to:
 The information in the time zone data files is by no means authoritative;
 if you know that the rules are different from those in a file, by all means
 feel free to change file (and please send the changed version to
-vax2.nlm.nih.gov!elsie!tz for use in the future).  Europeans take note!
+ado@ncifcrf.gov for use in the future).  Europeans take note!
+
+Folks who've made major contributions to the time zone package include
+Keith Bostic, Bob Devine, Robert Elz, Guy Harris, John Mackin, Mark Horton,
+and Bradley White.  None of them are responsible for the remaining errors.

@@ -21,7 +21,21 @@ static char	privatehid[] = "%W%";
 #endif /* !defined lint */
 
 /*
-** Here are defaults for various preprocessor symbols.
+** Nested includes
+*/
+
+#include "sys/types.h"	/* for time_t */
+#include "stdio.h"
+#include "ctype.h"
+#include "errno.h"
+#include "string.h"
+#include "limits.h"	/* for CHAR_BIT */
+#include "time.h"
+#include "stdlib.h"
+#include "unistd.h"
+
+/*
+** Defaults for various preprocessor symbols.
 ** You can override these in your C compiler options, e.g. `-DHAVE_ADJTIME=0'.
 */
 
@@ -58,22 +72,6 @@ static char	privatehid[] = "%W%";
 */
 
 /*
-** SunOS 4.1.1 headers lack EXIT_SUCCESS.
-*/
-
-#ifndef EXIT_SUCCESS
-#define EXIT_SUCCESS	0
-#endif /* !defined EXIT_SUCCESS */
-
-/*
-** SunOS 4.1.1 headers lack EXIT_FAILURE.
-*/
-
-#ifndef EXIT_FAILURE
-#define EXIT_FAILURE	1
-#endif /* !defined EXIT_FAILURE */
-
-/*
 ** SunOS 4.1.1 cc lacks const.
 */
 
@@ -96,23 +94,25 @@ static char	privatehid[] = "%W%";
 #endif /* !defined __STDC__ */
 #endif /* !defined P */
 
-#include "sys/types.h"	/* for time_t */
-#include "stdio.h"
-#include "ctype.h"
-#include "errno.h"
-#include "string.h"
-#include "limits.h"	/* for CHAR_BIT */
-#ifndef _TIME_
-#include "time.h"
-#endif /* !defined _TIME_ */
+/*
+** SunOS 4.1.1 headers lack EXIT_SUCCESS.
+*/
 
-#include "stdlib.h"
-#include "unistd.h"
+#ifndef EXIT_SUCCESS
+#define EXIT_SUCCESS	0
+#endif /* !defined EXIT_SUCCESS */
 
-#ifndef remove
-extern int	unlink P((const char * filename));
-#define remove	unlink
-#endif /* !defined remove */
+/*
+** SunOS 4.1.1 headers lack EXIT_FAILURE.
+*/
+
+#ifndef EXIT_FAILURE
+#define EXIT_FAILURE	1
+#endif /* !defined EXIT_FAILURE */
+
+/*
+** SunOS 4.1.1 headers lack FILENAME_MAX.
+*/
 
 #ifndef FILENAME_MAX
 
@@ -130,6 +130,15 @@ extern int	unlink P((const char * filename));
 #endif /* !defined MAXPATHLEN */
 
 #endif /* !defined FILENAME_MAX */
+
+/*
+** SunOS 4.1.1 libraries lack remove.
+*/
+
+#ifndef remove
+extern int	unlink P((const char * filename));
+#define remove	unlink
+#endif /* !defined remove */
 
 /*
 ** Finally, some convenience items.

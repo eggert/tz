@@ -21,7 +21,7 @@ TZCSRCS=	tzcomp.c scheck.c strchr.c
 TZCOBJS=	tzcomp.o scheck.o strchr.o
 TZDSRCS=	tzdump.c settz.c
 TZDOBJS=	tzdump.o settz.o
-DATA=		asia australia europe etcetera newpacific northamerica
+DATA=		asia australia europe etcetera northamerica pacificnew
 ENCHILADA=	Makefile tzfile.h $(TZCSRCS) $(TZDSRCS) $(DATA) years.sh \
 			README settz.3 tzfile.5 tzcomp.8
 

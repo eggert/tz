@@ -269,8 +269,6 @@ MISC=		usno1988 usno1989 usno1989a usno1995 usno1997 usno1998 \
 			itca.jpg $(WEB_PAGES) checktab.awk workman.sh
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(MISC)
 
-TMPDIR=		/tmp/,tzpublic
-
 # And for the benefit of csh users on systems that assume the user
 # shell should be used to handle commands in Makefiles. . .
 
@@ -307,7 +305,7 @@ INSTALL:	ALL install date.1
 		cp date.1 $(MANDIR)/man1/.
 
 zdump:		$(TZDOBJS)
-		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) $(LDLIBS) -lm -o $@
+		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) $(LDLIBS) -o $@
 
 zic:		$(TZCOBJS) yearistype
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) $(LDLIBS) -o $@
@@ -387,24 +385,24 @@ names:
 # The zics below ensure that each data file can stand on its own.
 
 public:		$(ENCHILADA) zic
-		-mkdir $(TMPDIR)
-		-for i in $(TDATA) ; do zic -v -d $(TMPDIR) $$i 2>&1 | grep -v "starting year" ; done
-		for i in $(TDATA) ; do zic -d $(TMPDIR) $$i || exit; done
-		rm -f -r $(TMPDIR)
+		-mkdir /tmp/,tzpublic
+		-for i in $(TDATA) ; do zic -v -d /tmp/,tzpublic $$i 2>&1 | grep -v "starting year" ; done
+		for i in $(TDATA) ; do zic -d /tmp/,tzpublic $$i || exit; done
+		rm -f -r /tmp/,tzpublic
 		for i in *.[1-8] ; do sh workman.sh $$i > $$i.txt || exit; done
 		$(AWK) -f checktab.awk $(PRIMARY_YDATA)
 		tar cf - $(DOCS) $(SOURCES) $(MISC) *.[1-8].txt | gzip -9 > tzcode.tar.gz
 		tar cf - $(DATA) | gzip -9 > tzdata.tar.gz
 
-
-# XXX--should do plain make rather than "make zdump" below
-
 typecheck:	
 		make clean
-		make zdump CFLAGS=-Wp,-D_TIME_T,-Dtime_t=double
+		make CFLAGS=-Wp,-D_TIME_T,-Dtime_t=long\\\ long
 		./zdump -v US/Eastern 
 		make clean
-		make zdump CFLAGS=-Wp,-D_TIME_T,-Dtime_t=long\\\ long
+		make CFLAGS=-Wp,-D_TIME_T,-Dtime_t=double
+		./zdump -v US/Eastern 
+		make clean
+		make CFLAGS=-Wp,-D_TIME_T,-Dtime_t=unsigned
 		./zdump -v US/Eastern 
 		make clean
 

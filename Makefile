@@ -169,7 +169,9 @@ YEARISTYPE=	./yearistype
 # to the end of the "CFLAGS=" line
 # This function is not described in X3J11's work.
 #
-# If you want to pass PCTS, add
+# NIST-PCTS:151-2, Version 1.4, (1993-12-03) is a test suite put
+# out by the National Institute of Standards and Technology
+# which claims to test C and Posix conformance.  If you want to pass PCTS, add
 #	-DPCTS
 # to the end of the "CFLAGS=" line.
 

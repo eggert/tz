@@ -12,6 +12,17 @@ static char	elsieid[] = "%W%";
 #endif /* defined unix */
 
 /*
+** XXX--on Updated and Zone lines, in addition to allowing
+**	1997 Nov 19
+** allow
+**	1997 11 19
+** and
+**	1997-Nov-19
+** and
+**	1997-11-19
+*/
+
+/*
 ** On some ancient hosts, predicates like `isspace(C)' are defined
 ** only if isascii(C) || C == EOF.  Modern hosts obey the C Standard,
 ** which says they are defined only if C == ((unsigned char) C) || C == EOF.
@@ -77,6 +88,14 @@ struct zone {
 	time_t		z_untiltime;
 };
 
+struct update {
+	const char *	u_filename;
+	int		u_linenum;
+	int		u_isforrule;
+	const char *	u_itemname;
+	struct rule	u_stamprule;
+};
+
 extern int	getopt P((int argc, char * const argv[],
 			const char * options));
 extern int	link P((const char * fromname, const char * toname));
@@ -106,6 +125,7 @@ static void	infile P((const char * filename));
 static void	inleap P((char ** fields, int nfields));
 static void	inlink P((char ** fields, int nfields));
 static void	inrule P((char ** fields, int nfields));
+static void	inupdated P((char ** fields, int nfields));
 static int	inzcont P((char ** fields, int nfields));
 static int	inzone P((char ** fields, int nfields));
 static int	inzsub P((char ** fields, int nfields, int iscont));
@@ -120,6 +140,7 @@ static void	outzone P((const struct zone * zp, int ntzones));
 static void	puttzcode P((long code, FILE * fp));
 static int	rcomp P((const void * leftp, const void * rightp));
 static time_t	rpytime P((const struct rule * rp, int wantedy));
+static int	rulecmp P((const struct rule * arp, const struct rule * brp));
 static void	rulesub P((struct rule * rp,
 			const char * loyearp, const char * hiyearp,
 			const char * typep, const char * monthp,
@@ -160,6 +181,7 @@ static int		typecnt;
 #define LC_ZONE		1
 #define LC_LINK		2
 #define LC_LEAP		3
+#define LC_UPDATED	4
 
 /*
 ** Which fields are which on a Zone line.
@@ -226,6 +248,19 @@ static int		typecnt;
 #define LEAP_FIELDS	7
 
 /*
+** Which fields are which on an Updated line.
+*/
+
+#define	UP_TYPE			1
+#define UP_NAME			2
+#define UP_YEAR			3
+#define UP_MONTH		4
+#define UP_DAY			5
+#define UP_TIME			6
+#define UPDATED_MINFIELDS	4
+#define UPDATED_MAXFIELDS	7
+
+/*
 ** Year synonyms.
 */
 
@@ -238,6 +273,9 @@ static int		nrules;	/* number of rules */
 
 static struct zone *	zones;
 static int		nzones;	/* number of zones */
+
+static struct update *	updates;
+static int		nupdates;	/* number of updates */
 
 struct link {
 	const char *	l_filename;
@@ -262,6 +300,7 @@ static struct lookup const	line_codes[] = {
 	{ "Zone",	LC_ZONE },
 	{ "Link",	LC_LINK },
 	{ "Leap",	LC_LEAP },
+	{ "Updated",	LC_UPDATED },
 	{ NULL,		0}
 };
 
@@ -344,6 +383,7 @@ static char		chars[TZ_MAX_CHARS];
 static time_t		trans[TZ_MAX_LEAPS];
 static long		corr[TZ_MAX_LEAPS];
 static char		roll[TZ_MAX_LEAPS];
+static char		stamp[20];	/* strlen("yyyy-mm-dd hh:mm:ss") + 1 */
 
 /*
 ** Memory allocation.
@@ -833,6 +873,10 @@ _("%s: Leap line in non leap seconds file %s\n"),
 					else	inleap(fields, nfields);
 					wantcont = FALSE;
 					break;
+				case LC_UPDATED:
+					inupdated(fields, nfields);
+					wantcont = FALSE;
+					break;
 				default:	/* "cannot happen" */
 					(void) fprintf(stderr,
 _("%s: panic: Invalid l_value %d\n"),
@@ -927,6 +971,71 @@ const int		nfields;
 	rules = (struct rule *) (void *) erealloc((char *) rules,
 		(int) ((nrules + 1) * sizeof *rules));
 	rules[nrules++] = r;
+}
+
+static void
+inupdated(fields, nfields)
+register char ** const	fields;
+const int		nfields;
+{
+	static struct update	u;
+	int			i;
+	static char *		buf;
+
+	if (nfields < UPDATED_MINFIELDS || nfields > UPDATED_MAXFIELDS) {
+		error(_("wrong number of fields on Updated line"));
+		return;
+	}
+	if (ciequal(fields[UP_TYPE], "rule"))
+		u.u_isforrule = TRUE;
+	else if (ciequal(fields[UP_TYPE], "zone"))
+		u.u_isforrule = FALSE;
+	else {
+		error(_("wild type on Update line (must be Zone or Rule)"));
+		return;
+	}
+	if (*fields[UP_NAME] == '\0') {
+		error(_("Updated line without name of what's update"));
+		return;
+	}
+	u.u_filename = filename;
+	u.u_linenum = linenum;
+	u.u_itemname = ecpyalloc(fields[UP_NAME]);
+	u.u_stamprule.r_filename = filename;
+	u.u_stamprule.r_linenum = linenum;
+	rulesub(&u.u_stamprule, fields[UP_YEAR], "only", "",
+		(nfields > UP_MONTH) ? fields[UP_MONTH] : "Jan",
+		(nfields > UP_DAY) ? fields[UP_DAY] : "1",
+		(nfields > UP_TIME) ? fields[UP_TIME] : "0");
+	for (i = 0; i < nupdates; ++i)
+		if (updates[i].u_isforrule == u.u_isforrule &&
+			updates[i].u_itemname != NULL &&
+			strcmp(updates[i].u_itemname, fields[UP_NAME]) == 0) {
+				int	isrepeat;
+
+				isrepeat = updates[i].u_stamprule.r_loyear ==
+					u.u_stamprule.r_loyear &&
+					updates[i].u_stamprule.r_month ==
+					u.u_stamprule.r_month &&
+					updates[i].u_stamprule.r_dayofmonth ==
+					u.u_stamprule.r_dayofmonth &&
+					updates[i].u_stamprule.r_tod ==
+					u.u_stamprule.r_tod;
+				buf = erealloc(buf, (int) (132 +
+					strlen(updates[i].u_filename)));
+				(void) sprintf(buf,
+_("%s another update line (file \"%s\", line %d)"),
+					(isrepeat ? "repeat of" : "clash with"),
+					updates[i].u_filename,
+					updates[i].u_linenum);
+				if (isrepeat)
+					warning(buf);
+				else	error(buf);
+				return;
+		}
+	updates = (struct update *) (void *) erealloc((char *) updates,
+		(int) ((nupdates + 1) * sizeof *updates));
+	updates[nupdates++] = u;
 }
 
 static int
@@ -1458,6 +1567,7 @@ const char * const	name;
 			(void) exit(EXIT_FAILURE);
 		}
 	}
+	convert(eitol(strlen(stamp)), tzh.tzh_stampcnt);
 	convert(eitol(typecnt), tzh.tzh_ttisgmtcnt);
 	convert(eitol(typecnt), tzh.tzh_ttisstdcnt);
 	convert(eitol(leapcnt), tzh.tzh_leapcnt);
@@ -1466,6 +1576,7 @@ const char * const	name;
 	convert(eitol(charcnt), tzh.tzh_charcnt);
 #define DO(field)	(void) fwrite((void *) tzh.field, (size_t) sizeof tzh.field, (size_t) 1, fp)
 	DO(tzh_reserved);
+	DO(tzh_stampcnt);
 	DO(tzh_ttisgmtcnt);
 	DO(tzh_ttisstdcnt);
 	DO(tzh_leapcnt);
@@ -1516,6 +1627,8 @@ const char * const	name;
 		(void) putc(ttisstds[i], fp);
 	for (i = 0; i < typecnt; ++i)
 		(void) putc(ttisgmts[i], fp);
+	for (i = 0; i < strlen(stamp); ++i)
+		(void) putc(stamp[i], fp);
 	if (ferror(fp) || fclose(fp)) {
 		(void) fprintf(stderr, _("%s: Error writing %s\n"),
 			progname, fullname);
@@ -1541,6 +1654,25 @@ const int		isdst;
 		*strchr(abbr, '/') = '\0';
 	}
 }
+
+static int
+rulecmp(arp, brp)
+const struct rule * const	arp;
+const struct rule * const	brp;
+{
+	long	diff;
+
+	if ((diff = arp->r_loyear - brp->r_loyear) == 0)
+		if ((diff = arp->r_month - brp->r_month) == 0)
+			if ((diff = arp->r_dayofmonth - brp->r_dayofmonth) == 0)
+				diff = arp->r_tod - brp->r_tod;
+	if (diff > 0)
+		return 1;
+	else if (diff < 0)
+		return -1;
+	else	return 0;
+}
+
 
 static void
 outzone(zpfirst, zonecount)
@@ -1728,6 +1860,38 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 				starttime = tadd(starttime, -gmtoff);
 		}
 	}
+	/*
+	** Generate stamp information.
+	*/
+	rp = NULL;
+	for (i = 0; i < nupdates; ++i) {
+		if (!updates[i].u_isforrule &&
+			strcmp(updates[i].u_itemname, zpfirst->z_name) == 0) {
+				rp = &updates[i].u_stamprule;
+				break;
+			}
+	}
+	for (i = 0; i < zp->z_nrules; ++i)
+		for (j = 0; j < nupdates; ++j) {
+			if (!updates[j].u_isforrule)
+				continue;
+			if (strcmp(zp->z_rules[i].r_name,
+				updates[j].u_itemname) != 0)
+					continue;
+			if (rp == NULL ||
+				rulecmp(rp, &updates[j].u_stamprule) < 0)
+					rp = &updates[j].u_stamprule;
+			break;
+		}
+	if (rp == NULL)
+		(void) strcpy(stamp, "");
+	else (void) sprintf(stamp, "%04d-%02d-%02d %02d:%02d:%02d",
+		rp->r_loyear,
+		rp->r_month + 1,
+		rp->r_dayofmonth,
+		rp->r_tod / SECSPERHOUR,
+		(rp->r_tod / SECSPERMIN) % MINSPERHOUR,
+		rp->r_tod % SECSPERMIN);
 	writezone(zpfirst->z_name);
 }
 
@@ -1961,6 +2125,27 @@ register char *	cp;
 
 	if (cp == NULL)
 		return NULL;
+	/*
+	** XXX--horrid special case: treat "#Updated" as if it were "Updated".
+	*/
+	{
+		int	n;
+		int	c;
+		int	horrid;
+
+		n = strlen("#updated");
+		if (strlen(cp) >= n) {
+			c = cp[n];
+			cp[n] = '\0';
+			horrid = ciequal(cp, "#updated");
+			cp[n] = c;
+			if (horrid)
+				++cp;
+		}
+	}
+	/*
+	** XXX--end horrid special case.
+	*/
 	array = (char **) (void *)
 		emalloc((int) ((strlen(cp) + 1) * sizeof *array));
 	nsubs = 0;

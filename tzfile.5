@@ -7,8 +7,6 @@ tzfile \- time zone information
 .SH DESCRIPTION
 The time zone information files used by
 .IR settz (3)
-and
-.IR newlocaltime (3)
 begin with bytes reserved for future use,
 followed by three four-byte values of type
 .BR long ,
@@ -75,7 +73,7 @@ gives the number of seconds to be added to GMT,
 tells whether
 .I tm_isdst
 should be set by
-.IR newlocaltime (3),
+.I localtime (3)
 and
 .I tt_abbrind
 serves as an index into the array of time zone abbreviation chaaracters
@@ -83,7 +81,7 @@ that follow the
 .I ttinfo
 structure(s) in the file.
 .PP
-.I Newlocaltime
+.I Localtime
 uses the first standard-time
 .I ttinfo
 structure in the file
@@ -92,10 +90,8 @@ structure in the file
 structure in the absence of a standard-time structure)
 if either
 .I tzh_timecnt
-is zero or
-.IR newlocaltime 's
-argument is less than
-the first transition time recorded in the file.
+is zero or the time argument is less than the first transition time recorded
+in the file.
 .SH SEE ALSO
 newctime(3)
 .. %W%

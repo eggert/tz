@@ -22,8 +22,9 @@ const char * const	format;
 	register int		c;
 	register char *		result;
 	char			dummy;
+	static char		nada[1];
 
-	result = "";
+	result = nada;
 	if (string == NULL || format == NULL)
 		return result;
 	fbuf = imalloc(2 * strlen(format) + 4);

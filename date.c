@@ -38,9 +38,7 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #if HAVE_ADJTIME || HAVE_SETTIMEOFDAY
 #include "sys/time.h"	/* for struct timeval, struct timezone */
 #endif /* HAVE_ADJTIME || HAVE_SETTIMEOFDAY */
-#if HAVE_SETLOCALE
 #include "locale.h"
-#endif /* HAVE_SETLOCALE */
 #include "utmp.h"	/* for OLD_TIME (or its absence) */
 
 /*
@@ -500,9 +498,7 @@ const char * const	format;
 
 	(void) time(&now);
 	tm = *localtime(&now);
-#if HAVE_SETLOCALE
 	setlocale(LC_TIME, "");
-#endif /* HAVE_SETLOCALE */
 	timeout(stdout, format ? format : "%+", &tm);
 	(void) putchar('\n');
 	(void) fflush(stdout);

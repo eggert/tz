@@ -723,6 +723,9 @@ Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct
 			2:00	Zion	I%sT
 # This will undoubtedly change soon.
 
+# Paracel Is
+# no information
+
 # Philippines
 # Howse writes (p 162) that until 1844 the Philippines kept American date.
 # The rest of this data is from Shanks.
@@ -762,6 +765,9 @@ Zone	Asia/Singapore	6:55:24 -	LMT	1880
 			7:20	-	SGT	1950
 			7:30	-	SGT	1982 May
 			8:00	-	SGT
+
+# Spratly Is
+# no information
 
 # Sri Lanka
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

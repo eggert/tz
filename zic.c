@@ -84,7 +84,7 @@ extern char *	scheck P((const char * string, const char * format));
 
 static void	addtt P((time_t starttime, int type));
 static int	addtype P((long gmtoff, const char * abbr, int isdst,
-    int todisstd));
+    int ttisstd));
 static void	addleap P((time_t t, int positive, int rolling));
 static void	adjleap P((void));
 static void	associate P((void));
@@ -328,7 +328,7 @@ static unsigned char	types[TZ_MAX_TIMES];
 static long		gmtoffs[TZ_MAX_TYPES];
 static char		isdsts[TZ_MAX_TYPES];
 static char		abbrinds[TZ_MAX_TYPES];
-static char		todisstds[TZ_MAX_TYPES];
+static char		ttisstds[TZ_MAX_TYPES];
 static char		chars[TZ_MAX_CHARS];
 static time_t		trans[TZ_MAX_LEAPS];
 static long		corr[TZ_MAX_LEAPS];
@@ -606,20 +606,10 @@ associate()
 	register int		base, out;
 	register int		i;
 
-	if (nrules != 0) {
-		/*
-		** This only *looks* like an optimization;
-		** it's actually a workaround for a buggy Turbo C 1.5 qsort.
-		*/
-		for (i = 1; i < nrules; ++i)
-			if (rcomp((char *) &rules[i - 1],
-				(char *) &rules[i]) > 0)
-					break;
-		if (i < nrules)
-			(void) qsort((genericptr_t) rules,
-				(qsort_size_t) nrules,
-				(qsort_size_t) sizeof *rules, rcomp);
-	}
+	if (nrules != 0)
+		(void) qsort((genericptr_t) rules,
+			(qsort_size_t) nrules,
+			(qsort_size_t) sizeof *rules, rcomp);
 	for (i = 0; i < nzones; ++i) {
 		zp = &zones[i];
 		zp->z_rules = NULL;
@@ -1293,7 +1283,7 @@ const char * const	name;
 		puttzcode((long) corr[i], fp);
 	}
 	for (i = 0; i < typecnt; ++i)
-		(void) putc(todisstds[i], fp);
+		(void) putc(ttisstds[i], fp);
 	if (ferror(fp) || fclose(fp)) {
 		(void) fprintf(stderr, "%s: Write error on ", progname);
 		(void) perror(fullname);
@@ -1316,7 +1306,7 @@ const int			zonecount;
 	register int			year;
 	register long			startoff;
 	register int			startisdst;
-	register int			starttodisstd;
+	register int			startttisstd;
 	register int			type;
 	char				startbuf[BUFSIZ];
 
@@ -1333,7 +1323,7 @@ const int			zonecount;
 	stdoff = 0;
 #ifdef lint
 	starttime = 0;
-	starttodisstd = FALSE;
+	startttisstd = FALSE;
 #endif /* defined lint */
 	for (i = 0; i < zonecount; ++i) {
 		usestart = i > 0;
@@ -1344,7 +1334,7 @@ const int			zonecount;
 		if (zp->z_nrules == 0) {
 			type = addtype(oadd(zp->z_gmtoff, zp->z_stdoff),
 				zp->z_format, zp->z_stdoff != 0,
-				starttodisstd);
+				startttisstd);
 			if (usestart)
 				addtt(starttime, type);
 			gmtoff = zp->z_gmtoff;
@@ -1431,7 +1421,7 @@ const int			zonecount;
 					}
 					if (ktime != starttime &&
 						startisdst >= 0)
-addtt(starttime, addtype(startoff, startbuf, startisdst, starttodisstd));
+addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd));
 					usestart = FALSE;
 				}
 				eats(zp->z_filename, zp->z_linenum,
@@ -1453,7 +1443,7 @@ addtt(starttime, addtype(startoff, startbuf, startisdst, starttodisstd));
 		if (useuntil) {
 			starttime = tadd(zp->z_untiltime,
 				-gmtoffs[types[timecnt - 1]]);
-			starttodisstd = zp->z_untilrule.r_todisstd;
+			startttisstd = zp->z_untilrule.r_todisstd;
 		}
 	}
 	writezone(zpfirst->z_name);
@@ -1476,11 +1466,11 @@ const int	type;
 }
 
 static int
-addtype(gmtoff, abbr, isdst, todisstd)
+addtype(gmtoff, abbr, isdst, ttisstd)
 const long		gmtoff;
 const char * const	abbr;
 const int		isdst;
-const int		todisstd;
+const int		ttisstd;
 {
 	register int	i, j;
 
@@ -1491,7 +1481,7 @@ const int		todisstd;
 	for (i = 0; i < typecnt; ++i) {
 		if (gmtoff == gmtoffs[i] && isdst == isdsts[i] &&
 			strcmp(abbr, &chars[abbrinds[i]]) == 0 &&
-			todisstd == todisstds[i])
+			ttisstd == ttisstds[i])
 				return i;
 	}
 	/*
@@ -1504,7 +1494,7 @@ const int		todisstd;
 	}
 	gmtoffs[i] = gmtoff;
 	isdsts[i] = isdst;
-	todisstds[i] = todisstd;
+	ttisstds[i] = ttisstd;
 
 	for (j = 0; j < charcnt; ++j)
 		if (strcmp(&chars[j], abbr) == 0)

@@ -1,3 +1,7 @@
+/*
+** TO DO:  FIGURE OUT WHAT TO SET TZNAME AND TM_ZONE TO FOR OUTRE CASES.
+*/
+
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";
@@ -111,10 +115,6 @@ char *			tzname[2] = {
 time_t			timezone = 0;
 int			daylight = 0;
 #endif /* defined USG_COMPAT */
-
-#ifdef TZA_COMPAT
-char *			tz_abbr;	/* compatibility w/older versions */
-#endif /* defined TZA_COMPAT */
 
 static long
 detzcode(codep)
@@ -591,12 +591,12 @@ const int			dotzname;
 		} else
 			dstoffset = stdoffset - 1 * SECSPERHOUR;
 		if (*name == ',' || *name == ';') {
-			struct rule			start;
-			struct rule			end;
-			register int			year;
-			register time_t			janfirst;
-			time_t				starttime;
-			time_t				endtime;
+			struct rule	start;
+			struct rule	end;
+			register int	year;
+			register time_t	janfirst;
+			time_t		starttime;
+			time_t		endtime;
 
 			++name;
 			if ((name = getrule(name, &start)) == NULL)
@@ -642,13 +642,13 @@ const int			dotzname;
 					year_lengths[isleap(year)] * SECSPERDAY;
 			}
 		} else {
-			int				sawstd;
-			int				sawdst;
-			long				stdfix;
-			long				dstfix;
-			long				oldfix;
-			int				isdst;
-			register int			i;
+			int		sawstd;
+			int		sawdst;
+			long		stdfix;
+			long		dstfix;
+			long		oldfix;
+			int		isdst;
+			register int	i;
 
 			if (*name != '\0')
 				return -1;
@@ -832,7 +832,7 @@ const time_t * const	clock;
 	}
 	timesub(clock, 0L, &gmtstate, &tm);
 #ifdef TM_ZONE
-	tm.TM_ZONE = "GMT";		/* UCT ? */
+	tm.TM_ZONE = "GMT";
 #endif /* defined TM_ZONE */
 	return &tm;
 }

@@ -301,6 +301,8 @@ posix_right:	posix_only other_two
 
 right_posix:	right_only other_two
 
+zones:		$(REDO)
+
 $(TZLIB):	$(LIBOBJS)
 		-mkdir $(TOPDIR) $(LIBDIR)
 		ar ru $@ $(LIBOBJS)

@@ -139,7 +139,7 @@ static char	elsieid[] = "%W%";
 
 extern char **	environ;
 extern int	getopt P((int argc, char * const argv[],
-			  const char * options));
+			const char * options));
 extern char *	optarg;
 extern int	optind;
 extern char *	tzname[2];
@@ -236,7 +236,7 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 		register int	from;
 		register int	to;
 
-		for (i = 0;  environ[i] != NULL;  ++i)
+		for (i = 0; environ[i] != NULL; ++i)
 			continue;
 		fakeenv = (char **) malloc((size_t) ((i + 2) *
 			sizeof *fakeenv));

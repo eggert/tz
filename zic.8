@@ -1,8 +1,8 @@
 .TH TZCOMP 8
 .SH NAME
-tzcomp \- time zone compiler
+zic \- time zone compiler
 .SH SYNOPSIS
-.B tzcomp
+.B zic
 [
 .B \-d
 .I directory
@@ -13,7 +13,7 @@ tzcomp \- time zone compiler
 .I filename
 \&... ]
 .SH DESCRIPTION
-.I Tzcomp
+.I Zic
 reads text from the file(s) named on the command line
 and creates the time conversion information files specified in this input.
 If a
@@ -30,7 +30,7 @@ in the standard directory named below.
 .TP
 .BI "\-l " timezone
 Use the given time zone as local time.
-.I Tzcomp
+.I Zic
 will act as if the file contained a link line of the form
 .sp
 .ti +.5i
@@ -104,7 +104,7 @@ inclusive.
 If
 .B TYPE
 is something else, then
-.I tzcomp
+.I zic
 executes the command
 .ti +.5i
 \fByears\fP \fIfrom\fP \fIto\fP \fItype\fP
@@ -292,5 +292,5 @@ fields must be given in local standard (not local wall clock) time.
 .SH FILES
 /etc/zoneinfo	standard directory used for created files
 .SH "SEE ALSO"
-settz(3), tzfile(5), tzdump(8)
+settz(3), tzfile(5), zdump(8)
 .. %W%

@@ -11,43 +11,119 @@
 
 # United Kingdom
 
-# From Arthur David Olson (January 19, 1989):
+# From Peter Ilieve (peter@memex.co.uk) (July 4, 1989)
 #
-# The starting and ending dates below (from which the rules are derived)
-# are from Whitaker's Almanack for 1987, page 146.
-# 1960 is the earliest year for which dates are given;
-# Whitaker's notes that British Summer Time (and, in some years, Double Summer
-# Time) was observed in earlier years but does not give start and end dates.
+# From the UK Government paper "Summer Time: A Consultation Document"
+# (HMSO Cm722 June 1989), which is about the possibility of the UK moving
+# into the central European timezone and synchronising its summer time with
+# the rest of Europe (by moving the end date back a month to end Sep.,
+# the start dates are already the same).
+#
+# Summer time was not observed before 1916.
+# It was introduced in the First World War in response to its introduction
+# by Germany in March 1916.
+# During the Second World War normal summer time was used in Winter and double
+# summer time was used in Summer.
+# Between 1968 and 1971 GMT+1 was used all year as an experiment.
+# This caused voluble objections in Scotland and the experiment was judged
+# a failure.
+#
+# Although it does not say what happens in Europe, it does say that most
+# of Europe did not use summer time until 1979, presumably dropping it
+# after the 1st and/or 2nd war.
+#
+# Note that this is not necessarily accurate for Eire.
+#
+# The paper gives a complete record of dates from 1916, and dates up to 1992.
+# The intention is to have the new system, if any, start in 1993.
+# The dates are (copied exactly from the table in the paper):
+#
+# 	Summer Time			Double Summer Time
+# Year	Start		End		Start		End
+# 1916	21 May		1 October
+# 1917	8 April		17 September
+# 1918	24 March	30 September
+# 1919	30 March	29 September
+# 1920	28 March	25 October
+# 			(extended from
+# 			27 Sep. because
+# 			of coal strike)
+#
+# 1921	3 April		3 October
+# 1922	26 March	8 October
+# 1923	22 April	16 September
+# 1924	30 April	21 September
+# 1925 to	3rd Sunday	1st Sunday
+# 1938	in April	in October
+#
+# 1939	16 April	19 November
+# 1940	25 February	continued
+# 1941	continued	continued	4 May		10 August
+# 1942	continued	continued	5 April		9 August
+# 1943	continued	continued	4 April		15 August
+# 1944	continued	continued	2 April		17 September
+# 1945	continued	7 October	2 April		15 July
+#
+# 1946	14 April	6 October
+# 1947	16 March	2 November	13 April	10 August
+# 1948	14 March	31 October
+# 1949	3 April		30 October
+# 1950	16 April	22 October
+# 1951	15 April	21 October
+# 1952	20 April	26 October
+#
+# 1953	19 April	4 October
+# 1954	11 April	3 October
+# 1955	17 April	2 October
+# 1956	15 April	7 October
+# 1957	14 April	6 October
+# 1958	20 April	5 October
+# 1959	19 April	4 October
+# 1960	10 April	2 October
+#
+# 1961	26 March	29 October
+# 1962	25 March	28 October
+# 1963	31 March	27 October
+# 1964	22 March	25 October
+# 1965	21 March	24 October
+# 1966	20 March	23 October
+# 1967	19 March	29 October
+#
+# 1968	18 February	continued
+# 1969	continued	continued
+# 1970	continued	continued
+# 1971	continued	31 October
+# 1972	19 March	29 October
+# 1973	18 March	28 October
+# 1974	17 March	27 October
+#
+# 1975	16 March	26 October
+# 1976	21 March	24 October
+# 1977	20 March	23 October
+# 1978	19 March	29 October
+# 1979	18 March	28 October
+# 1980	16 March	26 October
+# 1981	29 March	25 October
+#
+# 1982	28 March	24 October
+# 1983	27 March	23 October
+# 1984	25 March	28 October
+# 1985	31 March	27 October
+# 1986	30 March	26 October
+# 1987	29 March	25 October
+# 1988	27 March	23 October
+#
+# 1989	26 March	29 October
+# 1990	25 March	28 October
+# 1991	31 March	27 October
+# 1992	29 March	25 October
+#
+# These dates agree with the ones from Whitaker's Almanac for 1960--87. . .
+
+# From Arthur David Olson (January 19, 1989):
 #
 # A source at the British Information Office in New York avers that it's
 # known as "British" Summer Time in all parts of the United Kingdom.
-#	1960	April 10	October 2 (yes, 2, according to the almanac)
-#	1961	March 26	October 29
-#	1962	March 25	October 28
-#	1963	March 31	October 27
-#	1964	March 22	October 25
-#	1965	March 21	October 24
-#	1966	March 20	October 23
-#	1967	March 19	October 29
-#	1968	February 18	October 27
-# "British Standard Time, also one hour ahead of G. M. T., was kept between
-# 1968 Oct. 27-1971 Oct. 31."
-#	1972	March 19	October 29
-#	1973	March 18	October 28
-#	1974	March 17	October 27
-#	1975	March 16	October 26
-#	1976	March 21	October 24
-#	1977	March 20	October 23
-#	1978	March 19	October 29
-#	1979	March 18	October 28
-#	1980	March 16	October 26
-#	1981	March 29	October 25
-#	1982	March 28	October 24
-#	1983	March 27	October 23
-#	1984	March 25	October 28
-#	1985	March 31	October 27
-#	1986	March 30	October 26
-#	1987	March 29	October 25
 
 # From an Anonymous U. K. Donor (January 4, 1989):
 #
@@ -69,39 +145,69 @@
 # [British Summer Time] is fixed annually by Act of Parliament.
 # If you can predict what Parliament will do, you should be in
 # politics making a fortune, not computing.
-#
-# Summer time ends on Sunday 29 October 1989.
-
-# ...
-# Date: 5 Jan 89 09:50:38 GMT (Thu)
-# From: Peter Kendell <nih-csl!uunet!mcvax!tcom.stc.co.uk!pete>
-# ...
-#
-# From my Collins Diary for 1989 -
-#
-# "At the time of going to press the Home Office was unable to confirm
-# the 1989 starting and finishing dates for BST*, but expressed the
-# view that 26 March and 29 October were the likeliest dates to be
-# adopted"
-#
-# *British Summer Time.
-
-# From an Anonymous U. K. Donor (January 5, 1989):
-#
-# . . .our government is seriously considering applying Double Summer Time -
-# putting the clocks forwards and back TWO hours for daylight saving time.
-# This is advocated to standardise time in the EEC - we're all supposed to
-# keep the same time and to change the clocks on the same dates in the future.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-# Historic starting rules
+# 1916 to 1925--irregular
+Rule	GB-Eire	1916	only	-	Mar	21	1:00s	1:00	BST
+Rule	GB-Eire	1916	only	-	Oct	1	1:00s	0	GMT
+Rule	GB-Eire	1917	only	-	Apr	8	1:00s	1:00	BST
+Rule	GB-Eire	1917	only	-	Sep	17	1:00s	0	GMT
+Rule	GB-Eire	1918	only	-	Mar	24	1:00s	1:00	BST
+Rule	GB-Eire	1918	only	-	Sep	30	1:00s	0	GMT
+Rule	GB-Eire	1919	only	-	Mar	30	1:00s	1:00	BST
+Rule	GB-Eire	1919	only	-	Sep	29	1:00s	0	GMT
+Rule	GB-Eire	1920	only	-	Mar	28	1:00s	1:00	BST
+Rule	GB-Eire	1920	only	-	Oct	25	1:00s	0	GMT
+Rule	GB-Eire	1921	only	-	Apr	3	1:00s	1:00	BST
+Rule	GB-Eire	1921	only	-	Oct	3	1:00s	0	GMT
+Rule	GB-Eire	1922	only	-	Mar	26	1:00s	1:00	BST
+Rule	GB-Eire	1922	only	-	Oct	8	1:00s	0	GMT
+Rule	GB-Eire	1923	only	-	Apr	22	1:00s	1:00	BST
+Rule	GB-Eire	1923	only	-	Oct	16	1:00s	0	GMT
+Rule	GB-Eire	1924	only	-	Apr	30	1:00s	1:00	BST
+Rule	GB-Eire	1924	only	-	Sep	21	1:00s	0	GMT
+# 1925 to 1939 start--regular
+Rule	GB-Eire	1925	1939	-	Apr	Sun>=15	1:00s	1:00	BST
+Rule	GB-Eire	1925	1938	-	Oct	Sun>=1	1:00s	0	GMT
+# 1939 end to 1947--irregular, and with double summer time
+Rule	GB-Eire	1939	only	-	Nov	19	1:00s	0	GMT
+Rule	GB-Eire	1940	only	-	Feb	25	1:00s	1:00	BST
+Rule	GB-Eire	1941	only	-	May	4	1:00s	2:00	DST
+Rule	GB-Eire	1941	only	-	Aug	10	1:00s	1:00	BST
+Rule	GB-Eire	1942	only	-	Apr	5	1:00s	2:00	DST
+Rule	GB-Eire	1942	only	-	Aug	9	1:00s	1:00	BST
+Rule	GB-Eire	1943	only	-	Apr	4	1:00s	2:00	DST
+Rule	GB-Eire	1943	only	-	Aug	15	1:00s	1:00	BST
+Rule	GB-Eire	1944	only	-	Apr	2	1:00s	2:00	DST
+Rule	GB-Eire	1944	only	-	Sep	17	1:00s	1:00	BST
+# Double daylight starts on a Monday in 1945?
+Rule	GB-Eire	1945	only	-	Apr	2	1:00s	2:00	DST
+Rule	GB-Eire	1945	only	-	Jul	15	1:00s	1:00	BST
+Rule	GB-Eire	1945	only	-	Oct	7	1:00s	0	GMT
+Rule	GB-Eire	1946	only	-	Apr	14	1:00s	1:00	BST
+Rule	GB-Eire	1946	only	-	Oct	6	1:00s	0	GMT
+Rule	GB-Eire	1947	only	-	Mar	16	1:00s	1:00	BST
+Rule	GB-Eire	1947	only	-	Apr	13	1:00s	2:00	DST
+Rule	GB-Eire	1947	only	-	Aug	10	1:00s	1:00	BST
+Rule	GB-Eire	1947	only	-	Nov	2	1:00s	0	GMT
+# So much for double saving time.  1948 and 1949, irregular.
+Rule	GB-Eire	1948	only	-	Mar	14	1:00s	1:00	BST
+Rule	GB-Eire	1948	only	-	Oct	31	1:00s	0	GMT
+Rule	GB-Eire	1949	only	-	Apr	3	1:00s	1:00	BST
+Rule	GB-Eire	1949	only	-	Oct	30	1:00s	0	GMT
+# 1950 through start of 1953, regular.
+Rule	GB-Eire	1950	1953	-	Apr	Sun>=14	1:00s	1:00	BST
+Rule	GB-Eire	1950	1952	-	Oct	Sun>=21	1:00s	0	GMT
+# 1954 to 1980, starting rules
+Rule	GB-Eire	1954	only	-	Apr	11	1:00s	1:00	BST
+Rule	GB-Eire	1955	1959	-	Apr	Sun>=14	1:00s	1:00	BST
 Rule	GB-Eire	1960	only	-	Apr	10	1:00s	1:00	BST
 Rule	GB-Eire	1961	1963	-	Mar	lastSun	1:00s	1:00	BST
 Rule	GB-Eire	1964	1967	-	Mar	Sun>=19	1:00s	1:00	BST
 Rule	GB-Eire	1968	only	-	Feb	18	1:00s	1:00	BST
 Rule	GB-Eire	1972	1980	-	Mar	Sun>=16	1:00s	1:00	BST
-# Historic ending rules
-Rule	GB-Eire	1960	only	-	Oct	2	1:00s	0	GMT
+# 1953 to 1971, ending rules
+Rule	GB-Eire	1953	1960	-	Oct	Sun>=1	1:00s	0	GMT
 Rule	GB-Eire	1961	1967	-	Oct	Sun>=23	1:00s	0	GMT
 Rule	GB-Eire	1971	only	-	Oct	31	1:00s	0	GMT
 # Current rules

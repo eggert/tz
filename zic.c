@@ -1883,8 +1883,11 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 					rp = &updates[j].u_stamprule;
 			break;
 		}
-	if (rp == NULL)
+	if (rp == NULL) {
+		eat(zpfirst->z_filename, zpfirst->z_linenum);
+		warning(_("no Updated information for this zone or any rule it uses"));
 		(void) strcpy(stamp, "");
+	}
 	else (void) sprintf(stamp, "%04d-%02d-%02d %02d:%02d:%02d",
 		rp->r_loyear,
 		rp->r_month + 1,

@@ -18,7 +18,7 @@ TODO BEFORE comp.sources RELEASE:
 	such as
 		date 0102030405
 	where it's unclear whether the year is at the start (UCB style)
-	or the end (System V style)?  Also--toss in a "-a" (adjust tieme)
+	or the end (System V style)?  Also--toss in a "-a" (adjust time)
 	option for the Sun world?
 *	Could use a date manual page.
 *	Need to update the newctime.3 to describe the treatment of TZ's such

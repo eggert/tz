@@ -1,6 +1,5 @@
 # %W%
 
-# Despite the performance of existing (4.[123]BSD, System V Release 2.0) code,
 # US Daylight Saving Time ended on the last Sunday of *October* in 1974.
 # See, for example, the front page of the Saturday, October 26, 1974
 # and Sunday, October 27, 1974 editions of the Washington Post.
@@ -43,6 +42,13 @@ Zone	US/East-Indiana	-5:00	US	E%sT	1946
 			-5:00	-	EST		# Always EST as of 1986
 Zone	US/Arizona	-7:00	US	M%sT	1946
 			-7:00	-	MST		# Always MST as of 1986
+
+# However. . .a writer from the Inter Tribal Council of Arizona, Inc.,
+# notes in private correspondence dated 12/28/87 that "Presently, only the
+# Navajo Nation participates in the Daylight Saving Time policy, due to its
+# large size and location in three states."
+
+Link	US/Mountain	Navajo
 
 # And then there's Hawaii.
 # DST was observed for one day in 1933;
@@ -94,4 +100,19 @@ Zone	Canada/Yukon		-9:00	Canada		Y%sT
 
 ################################################################################
 
-# ?Mexico?  !Quien sabe!
+# Mexico
+# Rules are from the Official Airline Guide, Worldwide Edition, for 1987.
+# Rules prior to 1987 are unknown.
+# The comments in the OAG say "Only Ensenada, Mexicale, San Felipe and Tijuana
+# observe DST."  This is presumably Baja California Norte, above 28th parallel,
+# as listed there; Mexico/BajaSur is for "Baja California Sur and N. Pacific
+# Coast (States of Sinaloa and Sonora)."
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Mexico	1987	max	-	Oct	lastSun	2:00	0	S
+Rule	Mexico	1987	max	-	Apr	Sun>=1	2:00	1:00	D
+
+# Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	Mexico/BajaNorte	-8:00	Mexico		P%sT
+Zone	Mexico/BajaSur		-7:00	-		MST
+Zone	Mexico/General		-6:00	-		CST

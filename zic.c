@@ -1694,11 +1694,13 @@ error(_("can't determine time zone abbrevation to use just after until time"));
 		** Now we may get to set starttime for the next zone line.
 		*/
 		if (useuntil) {
-			starttime = tadd(zp->z_untiltime, -gmtoff);
 			startttisstd = zp->z_untilrule.r_todisstd;
 			startttisgmt = zp->z_untilrule.r_todisgmt;
+			starttime = zp->z_untiltime;
 			if (!startttisstd)
 				starttime = tadd(starttime, -stdoff);
+			if (!startttisgmt)
+				starttime = tadd(starttime, -gmtoff);
 		}
 	}
 	writezone(zpfirst->z_name);

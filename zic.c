@@ -95,18 +95,18 @@ static void	eats P((const char * name, int num,
 			const char * rname, int rnum));
 static long	eitol P((int i));
 static void	error P((const char * message));
-static char **	getfields P((char * buf));
+static char **	getfields P((const char * buf));
 static long	gethms P((const char * string, const char * errstrng,
 			int signable));
 static void	infile P((const char * filename));
-static void	inleap P((char ** fields, int nfields));
-static void	inlink P((char ** fields, int nfields));
-static void	inrule P((char ** fields, int nfiekds));
-static int	inzcont P((char ** fields, int nfields));
-static int	inzone P((char ** fields, int nfields));
-static int	inzsub P((char ** fields, int nfields, int iscont));
+static void	inleap P((const char ** fields, int nfields));
+static void	inlink P((const char ** fields, int nfields));
+static void	inrule P((const char ** fields, int nfiekds));
+static int	inzcont P((const char ** fields, int nfields));
+static int	inzone P((const char ** fields, int nfields));
+static int	inzsub P((const char ** fields, int nfields, int iscont));
 static int	itsabbr P((const char * abbr, const char * word));
-static int	itsdir P((char * name));
+static int	itsdir P((const char * name));
 static int	lowerit P((int c));
 static char *	memcheck P((char * tocheck));
 static int	mkdirs P((char * filename));
@@ -117,8 +117,9 @@ static void	puttzcode P((long code, FILE * fp));
 static int	rcomp P((const genericptr_t leftp, const genericptr_t rightp));
 static time_t	rpytime P((const struct rule * rp, int wantedy));
 static void	rulesub P((struct rule * rp,
-			char * loyearp, char * hiyearp, char * typep,
-			char * monthp, char * dayp, char * timep));
+			char * loyearp, char * hiyearp,
+			char * typep, char * monthp,
+			char * dayp, char * timep));
 static void	setboundaries P((void));
 static time_t	tadd P((time_t t1, long t2));
 static void	usage P((void));
@@ -337,7 +338,7 @@ static char		roll[TZ_MAX_LEAPS];
 
 static char *
 memcheck(ptr)
-char *	ptr;
+char * const	ptr;
 {
 	if (ptr == NULL) {
 		(void) perror(progname);
@@ -357,8 +358,10 @@ char *	ptr;
 
 static void
 eats(name, num, rname, rnum)
-const char *	name;
-const char *	rname;
+const char * const	name;
+const int		num;
+const char * const	rname;
+const int		rnum;
 {
 	filename = name;
 	linenum = num;
@@ -368,14 +371,15 @@ const char *	rname;
 
 static void
 eat(name, num)
-const char *	name;
+const char * const	name;
+const int		num;
 {
 	eats(name, num, (char *) NULL, -1);
 }
 
 static void
 error(string)
-const char *	string;
+const char * const	string;
 {
 	/*
 	** Match the format of "cc" to allow sh users to
@@ -514,8 +518,8 @@ char *	argv[];
 
 static void
 dolink(fromfile, tofile)
-const char *	fromfile;
-const char *	tofile;
+const char * const	fromfile;
+const char * const	tofile;
 {
 	register char *	fromname;
 	register char *	toname;
@@ -570,7 +574,7 @@ setboundaries()
 
 static int
 itsdir(name)
-char *	name;
+const char * const	name;
 {
 	struct stat	s;
 
@@ -696,21 +700,22 @@ const char *	name;
 		if (nfields == 0) {
 			/* nothing to do */
 		} else if (wantcont) {
-			wantcont = inzcont(fields, nfields);
+			wantcont = inzcont((const char **) fields, nfields);
 		} else {
 			lp = byword(fields[0], line_codes);
 			if (lp == NULL)
 				error("input line of unknown type");
 			else switch ((int) (lp->l_value)) {
 				case LC_RULE:
-					inrule(fields, nfields);
+					inrule((const char **) fields, nfields);
 					wantcont = FALSE;
 					break;
 				case LC_ZONE:
-					wantcont = inzone(fields, nfields);
+					wantcont = inzone((const char **)
+						fields, nfields);
 					break;
 				case LC_LINK:
-					inlink(fields, nfields);
+					inlink((const char **) fields, nfields);
 					wantcont = FALSE;
 					break;
 				case LC_LEAP:
@@ -719,7 +724,8 @@ const char *	name;
 "%s: Leap line in non leap seconds file %s\n",
 						progname, name);
 					else
-						inleap(fields, nfields);
+						inleap((const char **) fields,
+							nfields);
 					wantcont = FALSE;
 					break;
 				default:	/* "cannot happen" */
@@ -755,8 +761,8 @@ const char *	name;
 
 static long
 gethms(string, errstring, signable)
-const char *	string;
-const char *	errstring;
+const char *		string;
+const char * const	errstring;
 {
 	int	hh, mm, ss, sign;
 
@@ -790,7 +796,7 @@ const char *	errstring;
 
 static void
 inrule(fields, nfields)
-register char **	fields;
+register char const ** const	fields;
 {
 	static struct rule	r;
 
@@ -816,7 +822,7 @@ register char **	fields;
 
 static int
 inzone(fields, nfields)
-register char **	fields;
+register const char ** const	fields;
 {
 	register int	i;
 	char		buf[132];
@@ -855,7 +861,7 @@ register char **	fields;
 
 static int
 inzcont(fields, nfields)
-register char **	fields;
+register const char ** const	fields;
 {
 	if (nfields < ZONEC_MINFIELDS || nfields > ZONEC_MAXFIELDS) {
 		error("wrong number of fields on Zone continuation line");
@@ -866,7 +872,7 @@ register char **	fields;
 
 static int
 inzsub(fields, nfields, iscont)
-register char **	fields;
+register const char ** const	fields;
 {
 	register char *		cp;
 	static struct zone	z;
@@ -936,9 +942,9 @@ error("Zone continuation line end time is not after end time of previous line");
 
 static void
 inleap(fields, nfields)
-register char **	fields;
+register const char ** const	fields;
 {
-	register char *			cp;
+	register const char *		cp;
 	register const struct lookup *	lp;
 	register int			i, j;
 	int				year, month, day;
@@ -1013,7 +1019,7 @@ register char **	fields;
 
 static void
 inlink(fields, nfields)
-register char **	fields;
+register const char ** const	fields;
 {
 	struct link	l;
 
@@ -1040,13 +1046,13 @@ register char **	fields;
 
 static void
 rulesub(rp, loyearp, hiyearp, typep, monthp, dayp, timep)
-register struct rule *	rp;
-char *			loyearp;
-char *			hiyearp;
-char *			typep;
-char *			monthp;
-char *			dayp;
-char *			timep;
+register struct rule * const	rp;
+char * const			loyearp;
+char * const			hiyearp;
+char * const			typep;
+char * const			monthp;
+char * const			dayp;
+char * const			timep;
 {
 	register struct lookup const *	lp;
 	register char *			cp;
@@ -1181,8 +1187,8 @@ char *			timep;
 
 static void
 convert(val, buf)
-long	val;
-char *	buf;
+const long	val;
+char * const	buf;
 {
 	register int	i;
 	register long	shift;
@@ -1193,8 +1199,8 @@ char *	buf;
 
 static void
 puttzcode(val, fp)
-long	val;
-FILE *	fp;
+const long	val;
+FILE * const	fp;
 {
 	char	buf[4];
 
@@ -1206,7 +1212,7 @@ FILE *	fp;
 
 static void
 writezone(name)
-const char *	name;
+const char * const	name;
 {
 	register FILE *		fp;
 	register int		i, j;
@@ -1286,7 +1292,7 @@ const char *	name;
 
 static void
 outzone(zpfirst, zonecount)
-const struct zone *	zpfirst;
+const struct zone * const	zpfirst;
 {
 	register const struct zone *	zp;
 	register struct rule *		rp;
@@ -1443,7 +1449,7 @@ addtt(starttime, addtype(startoff, startbuf, startisdst));
 
 static void
 addtt(starttime, type)
-time_t	starttime;
+const time_t	starttime;
 {
 	if (timecnt != 0 && type == types[timecnt - 1])
 		return;	/* easy enough! */
@@ -1458,8 +1464,8 @@ time_t	starttime;
 
 static int
 addtype(gmtoff, abbr, isdst)
-long		gmtoff;
-const char *	abbr;
+const long		gmtoff;
+const char * const	abbr;
 {
 	register int	i, j;
 
@@ -1495,7 +1501,7 @@ const char *	abbr;
 
 static void
 addleap(t, positive, rolling)
-time_t	t;
+const time_t	t;
 {
 	register int	i, j;
 
@@ -1539,7 +1545,7 @@ adjleap()
 
 static int
 yearistype(year, type)
-const char *	type;
+const char * const	type;
 {
 	char	buf[BUFSIZ];
 	int	result;
@@ -1565,6 +1571,7 @@ const char *	type;
 
 static int
 lowerit(a)
+const int	a;
 {
 	return (isascii(a) && isupper(a)) ? tolower(a) : a;
 }
@@ -1597,8 +1604,8 @@ register const char *	word;
 
 static const struct lookup *
 byword(word, table)
-register const char *		word;
-register const struct lookup *	table;
+register const char * const		word;
+register const struct lookup * const	table;
 {
 	register const struct lookup *	foundlp;
 	register const struct lookup *	lp;
@@ -1625,7 +1632,7 @@ register const struct lookup *	table;
 
 static char **
 getfields(cp)
-register char *	cp;
+register const char *	cp;
 {
 	register char *		dp;
 	register char **	array;
@@ -1660,8 +1667,8 @@ register char *	cp;
 
 static long
 oadd(t1, t2)
-long	t1;
-long	t2;
+const long	t1;
+const long	t2;
 {
 	register long	t;
 
@@ -1675,8 +1682,8 @@ long	t2;
 
 static time_t
 tadd(t1, t2)
-time_t	t1;
-long	t2;
+const time_t	t1;
+const long	t2;
 {
 	register time_t	t;
 
@@ -1699,8 +1706,8 @@ long	t2;
 
 static time_t
 rpytime(rp, wantedy)
-register const struct rule *	rp;
-register int			wantedy;
+register const struct rule * const	rp;
+register const int			wantedy;
 {
 	register int	y, m, i;
 	register long	dayoff;			/* with a nod to Margaret O. */
@@ -1790,7 +1797,7 @@ register int			wantedy;
 
 static void
 newabbr(string)
-const char *	string;
+const char * const	string;
 {
 	register int	i;
 
@@ -1805,7 +1812,7 @@ const char *	string;
 
 static int
 mkdirs(name)
-char *	name;
+char * const	name;
 {
 	register char *	cp;
 
@@ -1842,6 +1849,7 @@ char *	name;
 
 static long
 eitol(i)
+const int	i;
 {
 	long	l;
 

@@ -529,10 +529,12 @@ char *	format;
 tm *	tmp;
 {
 	char	buf[1024];
-	int	result;
+	size_t	result;
 
+	if (*format == '\0')
+		return;
 	result = strftime(buf, sizeof buf, format, tmp);
-	if (result == 0 && *format != '\0') {
+	if (result == 0) {
 		(void) fprintf(stderr,
 			"date: error: strftime: result is too long\n");
 		errensure();

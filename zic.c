@@ -10,27 +10,8 @@ static char	elsieid[] = "%W%";
 #include "time.h"
 #include "string.h"
 #include "stdlib.h"
+#include "sys/stat.h"
 #include "nonstd.h"
-
-/*
-** stat definition.
-*/
-
-#ifdef __TURBOC__
-#include "sys/stat.h"
-#endif /* defined __TURBOC__ */
-
-#ifdef unix
-#include "sys/stat.h"
-#endif /* defined unix */
-
-/*
-** access prototype.
-*/
-
-#ifdef __TURBOC__
-#include "io.h"
-#endif /* defined __TURBOC__ */
 
 #ifndef TRUE
 #define TRUE	1
@@ -71,12 +52,12 @@ static void	inrule P((char ** fields, int nfiekds));
 static int	inzcont P((char ** fields, int nfields));
 static int	inzone P((char ** fields, int nfields));
 static int	inzsub P((char ** fields, int nfields, int iscont));
-static int	isabbr P((const char * abbr, const char * word));
+static int	itsabbr P((const char * abbr, const char * word));
+static int	itsdir P((const char * name));
 static int	lowerit P((int c));
 static char *	memcheck P((char * tocheck));
 static int	mkdirs P((char * filename));
 static void	newabbr P((const char * abbr));
-static void	nondunlink P((char * filename));
 static long	oadd P((long t1, long t2));
 static void	outzone P((const struct zone * zp, int ntzones));
 static void	puttzcode P((long code, FILE * fp));
@@ -520,7 +501,12 @@ char *	argv[];
 		toname = ecatalloc(toname, "/");
 		toname = ecatalloc(toname,
 			(i == nlinks) ? TZDEFAULT : links[i].l_to);
-		nondunlink(toname);
+		/*
+		** We get to be careful here since
+		** there's a fair chance of root running us.
+		*/
+		if (!itsdir(toname))
+			(void) remove(toname);
 		if (link(fromname, toname) != 0) {
 			(void) fprintf(stderr, "%s: Can't link from %s to ",
 				progname, fromname);
@@ -559,21 +545,13 @@ setboundaries()
 	max_year = TM_YEAR_BASE + gmtime(&max_time)->tm_year;
 }
 
-/*
-** We get to be careful here since there's a fair chance of root running us.
-*/
-
-static void
-nondunlink(name)
-char *	name;
+static int
+itsdir(name)
+const char *	name;
 {
 	struct stat	s;
 
-	if (stat(name, &s) != 0)
-		return;
-	if ((s.st_mode & S_IFMT) == S_IFDIR)
-		return;
-	(void) unlink(name);
+	return stat(name, &s) == 0 && (s.st_mode & S_IFMT) == S_IFDIR;
 }
 
 /*
@@ -1177,7 +1155,7 @@ long	val;
 char *	buf;
 {
 	register int	i;
-	register int	shift;
+	register long	shift;
 
 	for (i = 0, shift = 24; i < 4; ++i, shift -= 8)
 		buf[i] = val >> shift;
@@ -1221,10 +1199,10 @@ const char *	name;
 			(void) exit(EXIT_FAILURE);
 		}
 	}
-	convert((long) leapcnt, tzh.tzh_leapcnt);
-	convert((long) timecnt, tzh.tzh_timecnt);
-	convert((long) typecnt, tzh.tzh_typecnt);
-	convert((long) charcnt, tzh.tzh_charcnt);
+	convert(eitol(leapcnt), tzh.tzh_leapcnt);
+	convert(eitol(timecnt), tzh.tzh_timecnt);
+	convert(eitol(typecnt), tzh.tzh_typecnt);
+	convert(eitol(charcnt), tzh.tzh_charcnt);
 	(void) fwrite((genericptr_t) &tzh,
 		(fwrite_size_t) sizeof tzh,
 		(fwrite_size_t) 1, fp);
@@ -1573,7 +1551,7 @@ register const char *	bp;
 }
 
 static int
-isabbr(abbr, word)
+itsabbr(abbr, word)
 register const char *	abbr;
 register const char *	word;
 {
@@ -1608,7 +1586,7 @@ register const struct lookup *	table;
 	*/
 	foundlp = NULL;
 	for (lp = table; lp->l_word != NULL; ++lp)
-		if (isabbr(word, lp->l_word))
+		if (itsabbr(word, lp->l_word))
 			if (foundlp == NULL)
 				foundlp = lp;
 			else	return NULL;	/* multiple inexact matches */
@@ -1810,12 +1788,12 @@ char *	name;
 		** MS-DOS drive specifier?
 		*/
 		if (strlen(name) == 2 && isascii(name[0]) &&
-			isascii(name[0]) && name[1] == ':') {
+			isalpha(name[0]) && name[1] == ':') {
 				*cp = '/';
 				continue;
 		}
 #endif /* !defined unix */
-		if (access(name, 0) != 0) {
+		if (!itsdir(name)) {
 			/*
 			 * It doesn't seem to exist, so we try to create it.
 			 */

@@ -91,7 +91,6 @@ extern char *	optarg;
 extern int	optind;
 extern time_t	time();
 extern char *	tzname[2];
-extern void	tzset();
 
 #ifdef USG
 extern void	exit();
@@ -110,15 +109,16 @@ main(argc, argv)
 int	argc;
 char *	argv[];
 {
-	register int	i, c;
-	register int	vflag;
-	register char *	cutoff;
-	register int	cutyear;
-	register long	cuttime;
-	time_t		now;
-	time_t		t, newt;
-	time_t		hibit;
-	struct tm	tm, newtm;
+	register int		i, c;
+	register int		vflag;
+	register char *		cutoff;
+	register int		cutyear;
+	register long		cuttime;
+	char **			fakeenv;
+	time_t			now;
+	time_t			t, newt;
+	time_t			hibit;
+	struct tm		tm, newtm;
 
 	INITIALIZE(cuttime);
 	progname = argv[0];
@@ -151,25 +151,29 @@ char *	argv[];
 			longest = strlen(argv[i]);
 	for (hibit = 1; (hibit << 1) != 0; hibit <<= 1)
 		continue;
-	for (i = optind; i < argc; ++i) {
-		register char **	saveenv;
-		static char		buf[MAX_STRING_LENGTH];
-		char *			fakeenv[2];
+	{
+		register int	from, to;
 
-		if (strlen(argv[i]) + 4 > sizeof buf) {
-			(void) fflush(stdout);
-			(void) fprintf(stderr, "%s: argument too long -- %s\n",
-				progname, argv[i]);
-			(void) exit(EXIT_FAILURE);
+		for (i = 0;  environ[i] != NULL;  ++i)
+			continue;
+		fakeenv = (char **) malloc((i + 2) * sizeof *fakeenv);
+		if (fakeenv == NULL ||
+			(fakeenv[0] = (char *) malloc(longest + 4)) == NULL) {
+				(void) perror(progname);
+				(void) exit(EXIT_FAILURE);
 		}
-		(void) strcpy(buf, "TZ=");
-		(void) strcat(buf, argv[i]);
-		fakeenv[0] = buf;
-		fakeenv[1] = NULL;
-		saveenv = environ;
+		to = 0;
+		(void) strcpy(fakeenv[to++], "TZ=");
+		for (from = 0; environ[from] != NULL; ++from)
+			if (strncmp(environ[from], "TZ=", 3) != 0)
+				fakeenv[to++] = environ[from];
+		fakeenv[to] = NULL;
 		environ = fakeenv;
-		(void) tzset();
-		environ = saveenv;
+	}
+	for (i = optind; i < argc; ++i) {
+		static char	buf[MAX_STRING_LENGTH];
+
+		(void) strcpy(&fakeenv[0][3], argv[i]);
 		show(argv[i], now, FALSE);
 		if (!vflag)
 			continue;

@@ -192,8 +192,10 @@ char *	argv[];
 	register char *		cp;
 	register char *		username;
 	register int		ch;
-	register int		nflag;
 	time_t			t;
+#ifdef N_OPTION
+	register int		nflag = 0;
+#endif /* defined N_OPTION */
 #ifdef D_OPTION
 	register int		dflag = 0;
 #endif  /* defined D_OPTION */ 
@@ -363,6 +365,10 @@ char *	argv[];
 	** Entire command line has now been checked.
 	*/
 #ifdef A_OPTION
+	/*
+	** Just what order *should* we do things in if the user asks
+	** for both adjustment and time setting?
+	*/
 	if (aflag)
 		if (adjtime(&atv, (struct timeval *) NULL) != 0)
 			oops("date: error: adjtime");

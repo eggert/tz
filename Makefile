@@ -190,7 +190,8 @@ SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS)
 MANS=		newctime.3 newtzset.3 time2posix.3 tzfile.5 zic.8 zdump.8
 DOCS=		README Theory $(MANS) date.1 Makefile
 YDATA=		africa antarctica asia australasia \
-		europe northamerica southamerica pacificnew etcetera factory
+		europe northamerica southamerica pacificnew etcetera factory \
+		backward
 NDATA=		systemv
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
@@ -261,6 +262,7 @@ right_posix:	right_only other_two
 
 $(TZLIB):	$(LIBOBJS)
 		-mkdir $(TOPDIR) $(LIBDIR)
+		sleep 3
 		ar ru $@ $(LIBOBJS)
 		if ar t $@ timemk.o 2>/dev/null ; then ar d $@ timemk.o ; fi
 		if ar t $@ ctime.o 2>/dev/null ; then ar d $@ ctime.o ; fi

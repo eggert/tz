@@ -174,6 +174,13 @@ YEARISTYPE=	./yearistype
 # which claims to test C and Posix conformance.  If you want to pass PCTS, add
 #	-DPCTS
 # to the end of the "CFLAGS=" line.
+#
+# If you want strict compliance with XPG4 as of April 9, 1994, add
+#	-DXPG4_1994_04_09
+# to the end of the "CFLAGS=" line.  This causes "strftime" to always return
+# 53 as a week number (rather than 52 or 53) for those days in January that
+# before the first Monday in January when a "%V" format is used and January 1
+# falls on a Friday, Saturday, or Sunday.
 
 CFLAGS=
 

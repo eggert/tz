@@ -796,8 +796,8 @@ const int			lastditch;
 			*/
 			sawstd = FALSE;
 			sawdst = FALSE;
-			stdfix = 0;
-			dstfix = 0;
+			INITIALIZE(stdfix);
+			INITIALIZE(dstfix);
 			for (i = 0; i < sp->typecnt; ++i) {
 				if (sp->ttis[i].tt_isdst) {
 					oldfix = dstfix;

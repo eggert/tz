@@ -200,6 +200,10 @@ Link	Pacific/Honolulu	HST
 # San Diego: ACS Publications, Inc. (1991).
 # Except where otherwise noted, it is the source for the data below.
 #
+# Another source occasionally used is Edward W. Whitman, World Time Differences,
+# Whitman Publishing Co, 2 Niagara Av, Ealing, London (undated), which
+# I found in the UCLA library.
+#
 # I invented the abbreviation SPST for St Pierre Standard Time; SPDT likewise.
 # Corrections are welcome!
 #
@@ -288,13 +292,26 @@ Rule	StJohns	1884	only	-	Jan	 1	0:00	0	S
 Rule	StJohns	1917	1918	-	Apr	Sun>=8	2:00	1:00	D
 Rule	StJohns	1917	only	-	Sep	17	2:00	0	S
 Rule	StJohns	1918	only	-	Oct	31	2:00	0	S
+# Whitman gives 1919 Apr 5 and 1920 Apr 5; go with Shanks.
 Rule	StJohns	1919	only	-	May	 5	23:00	1:00	D
 Rule	StJohns	1919	only	-	Aug	12	23:00	0	S
+# For 1931-1935 Whitman gives Apr same date; go with Shanks.
 Rule	StJohns	1920	1935	-	May	Sun>=1	23:00	1:00	D
 Rule	StJohns	1920	1935	-	Oct	lastSun	23:00	0	S
-Rule	StJohns	1936	1942	-	May	Mon>=9	0:00	1:00	D
-Rule	StJohns	1936	1941	-	Oct	Mon>=1	0:00	0	S
-Rule	StJohns	1945	only	-	Sep	30	2:00	0	S
+# For 1936-1941 Shanks gives May Mon>=9 and Oct Mon>=2; go with Whitman.
+Rule	StJohns	1936	1941	-	May	Sun>=8	0:00	1:00	D
+Rule	StJohns	1936	1941	-	Oct	Sun>=1	0:00	0	S
+# Shanks gives 1942 May 11 - 1945 Sep 30; go with Whitman.
+Rule	StJohns	1942	only	-	Mar	 1	0:00	1:00	D
+Rule	StJohns	1942	only	-	Dec	31	0:00	0	S
+Rule	StJohns	1943	only	-	May	30	0:00	1:00	D
+Rule	StJohns	1943	only	-	Sep	 5	0:00	0	S
+Rule	StJohns	1944	only	-	Jul	10	0:00	1:00	D
+Rule	StJohns	1944	only	-	Sep	 2	0:00	0	S
+Rule	StJohns	1945	only	-	Jan	 1	0:00	1:00	D
+Rule	StJohns	1945	only	-	Oct	 7	2:00	0	S
+# For 1946-9 Whitman gives May 5,4,9,1 - Oct 1,5,3,2, and for 1950 he gives
+# Apr 30 - Sep 24; go with Shanks.
 Rule	StJohns	1946	1950	-	May	Sun>=8	2:00	1:00	D
 Rule	StJohns	1946	1950	-	Oct	Sun>=2	2:00	0	S
 Rule	StJohns	1951	1986	-	Apr	lastSun	2:00	1:00	D
@@ -634,6 +651,7 @@ Zone America/Barbados	-3:58:28 -	LMT	1924		# Bridgetown
 			-4:00	Barb	A%sT
 
 # Belize
+# Whitman entirely disagrees with Shanks; go with Shanks.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Belize	1912	only	-	Apr	 1	0:00	0	S
 Rule	Belize	1918	1942	-	Oct	Sun>=2	0:00	0:30	HD
@@ -788,8 +806,9 @@ Zone America/Port-au-Prince -4:49:20 -	LMT	1890
 			-5:00	Haiti	E%sT
 
 # Honduras
+# Shanks says 1921 Jan 1; go with Whitman's more precise Apr 1.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Tegucigalpa -5:48:52 -	LMT	1921
+Zone America/Tegucigalpa -5:48:52 -	LMT	1921 Apr
 			-6:00	Salv	C%sT
 
 # Jamaica

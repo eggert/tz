@@ -89,9 +89,11 @@ static char	privatehid[] = "%W%";
 #ifdef lint
 #define GNUC_or_lint
 #endif /* defined lint */
+#ifndef lint
 #ifdef __GNUC__
 #define GNUC_or_lint
 #endif /* defined __GNUC__ */
+#endif /* !defined lint */
 #endif /* !defined GNUC_or_lint */
 
 #ifndef INITIALIZE

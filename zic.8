@@ -65,7 +65,7 @@ Link	\fItimezone\fP		posixrules
 .BI "\-L " leapsecondfilename
 Read leap second information from the file with the given name.
 If this option is not used,
-leap second information is read from a file named "leapseconds".
+no leap second information appears in output files.
 .TP
 .B \-v
 Complain if a year that appears in a data file is outside the range
@@ -381,10 +381,8 @@ you may need to use local standard time in the
 .B AT
 field of the earliest transition time's rule to ensure that
 the earliest transition time recorded in the compiled file is correct.
-.SH FILES
-.ta \w'/etc/zoneinfo\0\0'u
+.SH FILE
 /etc/zoneinfo	standard directory used for created files
-leapseconds	default leap second information file
 .SH "SEE ALSO"
 newctime(3), tzfile(5), zdump(8)
 .. %W%

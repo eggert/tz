@@ -19,7 +19,7 @@ For better compatability with other versions of time conversion functions,
 the time zone abbreviation to be used with localtime's return value is now
 pointed to be one of the two elements of the (char *) array tzname, rather
 than by the (char *) tz_abbr.  If you have code that uses tz_abbr, add a
-	-DTZ_ABBR
+	-DTZA_COMPAT
 to the end of the
 	CFLAGS=
 line in "Makefile".

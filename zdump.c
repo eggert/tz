@@ -8,6 +8,7 @@ static char	sccsid[] = "%W%";
 #endif /* !NOID */
 #endif /* !lint */
 
+#include "sys/types.h"
 #include "time.h"
 #include "tzfile.h"
 
@@ -62,8 +63,8 @@ char *	argv[];
 	register char *	cutoff;
 	register int	cutyear;
 	register long	cuttime;
-	long		now;
-	long		t;
+	time_t		now;
+	time_t		t;
 	long		timecnt;
 	char		buf[BUFSIZ];
 
@@ -139,8 +140,10 @@ char *	argv[];
 			(void) fseek(fp, (long) (2 * sizeof code), 1);
 		}
 		t = 0x80000000;
+		if (t > 0)		/* time_t is unsigned */
+			t = 0;
 		show(argv[i], t, TRUE);
-		t = 0x80000000 + SECS_PER_HOUR * HOURS_PER_DAY;
+		t += SECS_PER_HOUR * HOURS_PER_DAY;
 		show(argv[i], t, TRUE);
 		while (timecnt-- > 0) {
 			char	code[4];
@@ -158,9 +161,12 @@ char *	argv[];
 			perror(argv[i]);
 			exit(1);
 		}
-		t = 0x7fffffff - SECS_PER_HOUR * HOURS_PER_DAY;
+		t = 0xffffffff;
+		if (t < 0)		/* time_t is signed */
+			t = 0x7fffffff ;
+		t -= SECS_PER_HOUR * HOURS_PER_DAY;
 		show(argv[i], t, TRUE);
-		t = 0x7fffffff;
+		t += SECS_PER_HOUR * HOURS_PER_DAY;
 		show(argv[i], t, TRUE);
 		free(tzequals);
 	}
@@ -176,7 +182,7 @@ char *	argv[];
 static
 show(zone, t, v)
 char *	zone;
-long	t;
+time_t	t;
 {
 	struct tm *		tmp;
 	extern struct tm *	localtime();
@@ -188,8 +194,12 @@ long	t;
 	(void) printf("%.24s", asctime(tmp));
 	if (*tzname[tmp->tm_isdst] != '\0')
 		(void) printf(" %s", tzname[tmp->tm_isdst]);
-	if (v)
+	if (v) {
 		(void) printf(" isdst=%d", tmp->tm_isdst);
+#ifdef KRE_COMPAT
+		(void) printf(" gmtoff=%ld", tmp->tm_gmtoff);
+#endif /* KRE_COMPAT */
+	}
 	(void) printf("\n");
 }
 

@@ -151,6 +151,14 @@ extern void		perror P((const char * string));
 extern void		free P((char * buf));
 #endif /* defined USG */
 
+#ifndef TRUE
+#define TRUE	1
+#endif /* !defined TRUE */
+
+#ifndef FALSE
+#define FALSE	0
+#endif /* !defined FALSE */
+
 /*
 ** UNIX is a registered trademark of AT&T.
 ** VAX is a trademark of Digital Equipment Corporation.

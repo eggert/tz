@@ -386,6 +386,6 @@ Rule	sol89	1989	only	-	Dec	31	12:03:00s -0:03:00 -
 # Before and after 1989, we'll operate on local mean solar time.
 
 # Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
-Zone	Mideast/Riyadh		3:07:04	-		??	1989
+Zone	Mideast/Riyadh89	3:07:04	-		??	1989
 				3:07:04	sol89		??	1990
 				3:07:04	-		??

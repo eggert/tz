@@ -54,11 +54,11 @@ char *
 irealloc(pointer, size)
 char *	pointer;
 {
-	if (size == 0)
-		size = 1;
 	if (NULLMAL(pointer))
 		return imalloc(size);
-	else	return realloc(pointer, (alloc_t) size);
+	if (size == 0)
+		size = 1;
+	return realloc(pointer, (alloc_t) size);
 }
 
 char *

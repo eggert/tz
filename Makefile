@@ -30,6 +30,10 @@ TZLIB=		/usr/lib/libz.a
 #	-DBSD_COMPAT
 # to the end of the "CFLAGS=" line.
 #
+# If you want POSIX compatibility code, add
+#	-DPOX_COMPAT
+# to the end of the "CFLAGS=" line.
+#
 # If you've used older versions of this software and want "tz_abbr"
 # compatibility  code, add
 #	-DTZA_COMPAT
@@ -55,11 +59,11 @@ TZCSRCS=	zic.c scheck.c ialloc.c mkdir.c
 TZCOBJS=	zic.o scheck.o ialloc.o mkdir.o
 TZDSRCS=	zdump.c localtime.c gmtime.c asctime.c ctime.c ialloc.c
 TZDOBJS=	zdump.o localtime.o gmtime.o asctime.o ctime.o ialloc.o
-LIBSRCS=	localtime.c gmtime.c asctime.c ctime.c dysize.c
-LIBOBJS=	localtime.o gmtime.o asctime.o ctime.o dysize.o
+LIBSRCS=	localtime.c gmtime.c asctime.c ctime.c dysize.c mktime.c
+LIBOBJS=	localtime.o gmtime.o asctime.o ctime.o dysize.o mktime.o
 DOCS=		README Makefile newctime.3 tzfile.5 zic.8 zdump.8
 SOURCES=	tzfile.h zic.c zdump.c \
-		localtime.c gmtime.c asctime.c ctime.c dysize.c \
+		localtime.c gmtime.c asctime.c ctime.c dysize.c mktime.c \
 		scheck.c ialloc.c mkdir.c
 DATA=		asia australasia europe etcetera northamerica pacificnew systemv
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)

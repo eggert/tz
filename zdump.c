@@ -67,6 +67,24 @@ static char	elsieid[] = "%W%";
 #define isleap(y) ((((y) % 4) == 0 && ((y) % 100) != 0) || ((y) % 400) == 0)
 #endif /* !defined isleap */
 
+#ifndef GNUC_or_lint
+#ifdef lint
+#define GNUC_or_lint
+#endif /* defined lint */
+#ifdef __GNUC__
+#define GNUC_or_lint
+#endif /* defined __GNUC__ */
+#endif /* !defined GNUC_or_lint */
+
+#ifndef INITIALIZE
+#ifdef GNUC_or_lint
+#define INITIALIZE(x)	((x) = 0)
+#endif /* defined GNUC_or_lint */
+#ifndef GNUC_or_lint
+#define INITIALIZE(x)
+#endif /* !defined GNUC_or_lint */
+#endif /* !defined INITIALIZE */
+
 extern char **	environ;
 extern int	getopt();
 extern char *	optarg;
@@ -102,6 +120,7 @@ char *	argv[];
 	time_t		hibit;
 	struct tm	tm, newtm;
 
+	INITIALIZE(cuttime);
 	progname = argv[0];
 	vflag = 0;
 	cutoff = NULL;
@@ -268,14 +287,15 @@ struct tm *	oldp;
 	return result;
 }
 
+extern struct tm *	localtime();
+
 static void
 show(zone, t, v)
 char *	zone;
 time_t	t;
 int	v;
 {
-	struct tm *		tmp;
-	extern struct tm *	localtime();
+	struct tm *	tmp;
 
 	(void) printf("%-*s  ", longest, zone);
 	if (v)
@@ -298,10 +318,10 @@ abbr(tmp)
 struct tm *	tmp;
 {
 	register char *	result;
-	static char	nada[1];
+	static char	nada;
 
 	if (tmp->tm_isdst != 0 && tmp->tm_isdst != 1)
-		return nada;
+		return &nada;
 	result = tzname[tmp->tm_isdst];
-	return (result == NULL) ? nada : result;
+	return (result == NULL) ? &nada : result;
 }

@@ -384,7 +384,9 @@ names:
 
 # The zics below ensure that each data file can stand on its own.
 
-public:		$(ENCHILADA) zic
+public:
+		make maintainer-clean
+		make "CFLAGS=$(GCC_DEBUG_FLAGS)"
 		-mkdir /tmp/,tzpublic
 		-for i in $(TDATA) ; do zic -v -d /tmp/,tzpublic $$i 2>&1 | grep -v "starting year" ; done
 		for i in $(TDATA) ; do zic -d /tmp/,tzpublic $$i || exit; done

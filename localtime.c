@@ -1,8 +1,6 @@
 /*
-** XXX--do the right thing if time_t is double and
-** the value fed to gmtime or localtime is very very negative or
-** very very positive (which causes problems with the days-and-rem logic).
-** Also: do the right thing in mktime if time_t is double.
+** XXX--have mktime et al. do the right thing when time_t is exotic
+** (for example, double).
 */
 
 /*
@@ -141,6 +139,7 @@ static struct tm *	gmtsub P((const time_t * timep, long offset,
 static struct tm *	localsub P((const time_t * timep, long offset,
 				struct tm * tmp));
 static int		increment_overflow P((int * number, int delta));
+static int		leaps_thru_end_of P((int y));
 static int		long_increment_overflow P((long * number, int delta));
 static int		long_normalize_overflow P((long * tensptr,
 				int * unitsptr, int base));
@@ -1174,6 +1173,19 @@ const long		offset;
 
 #endif /* defined STD_INSPIRED */
 
+/*
+** Return the number of leap years through the end of the given year
+** where, to make the math easy, the answer for year zero is defined as zero.
+*/
+
+static int
+leaps_thru_end_of(y)
+register const int	y;
+{
+	return (y >= 0) ?  (y / 4 - y / 100 + y / 400) :
+		-(leaps_thru_end_of(-(y + 1)) + 1);
+}
+
 static struct tm *
 timesub(timep, offset, sp, tmp)
 const time_t * const			timep;
@@ -1182,10 +1194,10 @@ register const struct state * const	sp;
 register struct tm * const		tmp;
 {
 	register const struct lsinfo *	lp;
-	register long			days;
+	register time_t			tdays;
+	register int			idays;	/* unsigned would be so 2003 */
 	register long			rem;
-	register long			y;
-	register int			yleap;
+	int				y;
 	register const int *		ip;
 	register long			corr;
 	register int			hit;
@@ -1219,57 +1231,88 @@ register struct tm * const		tmp;
 			break;
 		}
 	}
-	days = *timep / SECSPERDAY;
-	rem = *timep - ((time_t) days) * SECSPERDAY;
-#ifdef mc68k
-	if (*timep == 0x80000000) {
-		/*
-		** A 3B1 muffs the division on the most negative number.
-		*/
-		days = -24855;
-		rem = -11648;
+	y = EPOCH_YEAR;
+	tdays = *timep / SECSPERDAY;
+	rem = *timep - tdays * SECSPERDAY;
+	while (tdays < 0 || tdays >= year_lengths[isleap(y)]) {
+		int		newy;
+		register time_t	tdelta;
+		register int	idelta;
+		register int	leapdays;
+
+		tdelta = tdays / DAYSPERLYEAR;
+		idelta = tdelta;
+		if (tdelta - idelta >= 1 || idelta - tdelta >= 1)
+			return NULL;
+		if (idelta == 0)
+			idelta = (tdays < 0) ? -1 : 1;
+		newy = y;
+		if (increment_overflow(&newy, idelta))
+			return NULL;
+		leapdays = leaps_thru_end_of(newy - 1) -
+			leaps_thru_end_of(y - 1);
+		tdays -= ((time_t) newy - y) * DAYSPERNYEAR;
+		tdays -= leapdays;
+		y = newy;
 	}
-#endif /* defined mc68k */
-	rem += (offset - corr);
+	{
+		register long	seconds;
+
+		seconds = tdays * SECSPERDAY + 0.5;
+		tdays = seconds / SECSPERDAY;
+		rem += seconds - tdays * SECSPERDAY;
+	}
+	/*
+	** Given the range, we can now fearlessly cast...
+	*/
+	idays = tdays;
+	rem += offset - corr;
 	while (rem < 0) {
 		rem += SECSPERDAY;
-		--days;
+		--idays;
 	}
 	while (rem >= SECSPERDAY) {
 		rem -= SECSPERDAY;
-		++days;
+		++idays;
 	}
+	while (idays < 0) {
+		if (increment_overflow(&y, -1))
+			return NULL;
+		idays += year_lengths[isleap(y)];
+	}
+	while (idays >= year_lengths[isleap(y)]) {
+		idays -= year_lengths[isleap(y)];
+		if (increment_overflow(&y, 1))
+			return NULL;
+	}
+	tmp->tm_year = y;
+	if (increment_overflow(&tmp->tm_year, -TM_YEAR_BASE))
+		return NULL;
+	tmp->tm_yday = idays;
+	/*
+	** The "extra" mods below avoid overflow problems.
+	*/
+	tmp->tm_wday = EPOCH_WDAY +
+		((y - EPOCH_YEAR) % DAYSPERWEEK) *
+		(DAYSPERNYEAR % DAYSPERWEEK) +
+		leaps_thru_end_of(y - 1) -
+		leaps_thru_end_of(EPOCH_YEAR - 1) +
+		idays;
+	tmp->tm_wday %= DAYSPERWEEK;
+	if (tmp->tm_wday < 0)
+		tmp->tm_wday += DAYSPERWEEK;
 	tmp->tm_hour = (int) (rem / SECSPERHOUR);
-	rem = rem % SECSPERHOUR;
+	rem %= SECSPERHOUR;
 	tmp->tm_min = (int) (rem / SECSPERMIN);
 	/*
 	** A positive leap second requires a special
 	** representation.  This uses "... ??:59:60" et seq.
 	*/
 	tmp->tm_sec = (int) (rem % SECSPERMIN) + hit;
-	tmp->tm_wday = (int) ((EPOCH_WDAY + days) % DAYSPERWEEK);
-	if (tmp->tm_wday < 0)
-		tmp->tm_wday += DAYSPERWEEK;
-	y = EPOCH_YEAR;
-#define IPQ(i, p)	((i) / (p) - (((i) % (p)) < 0))
-#define LEAPS_THRU_END_OF(y)	(IPQ((y), 4) - IPQ((y), 100) + IPQ((y), 400))
-	while (days < 0 || days >= (long) year_lengths[yleap = isleap(y)]) {
-		register long	newy;
-
-		newy = y + days / DAYSPERNYEAR;
-		if (days < 0)
-			--newy;
-		days -= (newy - y) * DAYSPERNYEAR +
-			LEAPS_THRU_END_OF(newy - 1) -
-			LEAPS_THRU_END_OF(y - 1);
-		y = newy;
-	}
-	tmp->tm_year = y - TM_YEAR_BASE;
-	tmp->tm_yday = (int) days;
-	ip = mon_lengths[yleap];
-	for (tmp->tm_mon = 0; days >= (long) ip[tmp->tm_mon]; ++(tmp->tm_mon))
-		days = days - (long) ip[tmp->tm_mon];
-	tmp->tm_mday = (int) (days + 1);
+	ip = mon_lengths[isleap(y)];
+	for (tmp->tm_mon = 0; idays >= ip[tmp->tm_mon]; ++(tmp->tm_mon))
+		idays -= ip[tmp->tm_mon];
+	tmp->tm_mday = (int) (idays + 1);
 	tmp->tm_isdst = 0;
 #ifdef TM_GMTOFF
 	tmp->TM_GMTOFF = offset;
@@ -1486,7 +1529,8 @@ const int		do_norm_secs;
 	*/
 	t = TYPE_SIGNED(time_t) ? 0 : (((unsigned long) 1) << bits);
 	for ( ; ; ) {
-		/* XXX */ (void) (*funcp)(&t, offset, &mytm);
+		if ((*funcp)(&t, offset, &mytm) == NULL)
+			return WRONG;	/* XXX probably wrong */
 		dir = tmcomp(&mytm, &yourtm);
 		if (dir != 0) {
 			if (bits-- < 0)
@@ -1524,7 +1568,8 @@ const int		do_norm_secs;
 					continue;
 				newt = t + sp->ttis[j].tt_gmtoff -
 					sp->ttis[i].tt_gmtoff;
-				/* XXX */ (void) (*funcp)(&newt, offset, &mytm);
+				if ((*funcp)(&newt, offset, &mytm) == NULL)
+					return WRONG;	/* XXX probably wrong */
 				if (tmcomp(&mytm, &yourtm) != 0)
 					continue;
 				if (mytm.tm_isdst != yourtm.tm_isdst)

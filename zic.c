@@ -73,7 +73,7 @@ extern char *	scheck P((const char * string, const char * format));
 static void	addtt P((time_t starttime, int type));
 static int	addtype P((long gmtoff, const char * abbr, int isdst,
     int ttisstd));
-static void	addleap P((time_t t, int positive, int rolling));
+static void	leapadd P((time_t t, int positive, int rolling, int count));
 static void	adjleap P((void));
 static void	associate P((void));
 static int	ciequal P((const char * ap, const char * bp));
@@ -995,16 +995,30 @@ const int		nfields;
 	}
 	tod = gethms(fields[LP_TIME], "invalid time of day", FALSE);
 	cp = fields[LP_CORR];
-	if (strcmp(cp, "+") != 0 && strcmp(cp, "") != 0) {
-		/* infile() turned "-" into "" */
-		error("illegal CORRECTION field on Leap line");
-		return;
+	{
+		register int	positive;
+		int		count;
+
+		positive = FALSE;
+		count = 1;
+		if (*cp == '-')
+			++cp;
+		else if (*cp == '+') {
+			++cp;
+			positive = TRUE;
+		}
+		if (*cp != '\0' &&
+			(sscanf(cp, scheck(cp, "%d"), &count) != 1 ||
+			count <= 0)) {
+				error("illegal CORRECTION field on Leap line");
+				return;
+		}
+		if ((lp = byword(fields[LP_ROLL], leap_types)) == NULL) {
+			error("illegal Rolling/Stationary field on Leap line");
+			return;
+		}
+		leapadd(tadd(t, tod), positive, lp->l_value, count);
 	}
-	if ((lp = byword(fields[LP_ROLL], leap_types)) == NULL) {
-		error("illegal Rolling/Stationary field on Leap line");
-		return;
-	}
-	addleap(tadd(t, tod), *cp == '+', lp->l_value);
 }
 
 static void
@@ -1500,14 +1514,15 @@ const int		ttisstd;
 }
 
 static void
-addleap(t, positive, rolling)
+leapadd(t, positive, rolling, count)
 const time_t	t;
 const int	positive;
 const int	rolling;
+int		count;
 {
 	register int	i, j;
 
-	if (leapcnt >= TZ_MAX_LEAPS) {
+	if (leapcnt + (positive ? count : 1) > TZ_MAX_LEAPS) {
 		error("too many leap seconds");
 		(void) exit(EXIT_FAILURE);
 	}
@@ -1519,15 +1534,17 @@ const int	rolling;
 			}
 			break;
 		}
-	for (j = leapcnt; j > i; --j) {
-		trans[j] = trans[j-1];
-		corr[j] = corr[j-1];
-		roll[j] = roll[j-1];
-	}
-	trans[i] = t;
-	corr[i] = (positive ? 1L : -1L);
-	roll[i] = rolling;
-	++leapcnt;
+	do {
+		for (j = leapcnt; j > i; --j) {
+			trans[j] = trans[j - 1];
+			corr[j] = corr[j - 1];
+			roll[j] = roll[j - 1];
+		}
+		trans[i] = t;
+		corr[i] = positive ? 1L : eitol(-count);
+		roll[i] = rolling;
+		++leapcnt;
+	} while (positive && --count != 0);
 }
 
 static void

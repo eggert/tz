@@ -9,6 +9,7 @@ static char	elsieid[] = "%W%";
 #include "stdio.h"
 #include "time.h"
 #include "tzfile.h"
+#include "nonstd.h"
 
 /*
 ** A la X3J11

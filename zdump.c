@@ -18,7 +18,12 @@ extern char *		asctime();
 extern struct tm *	gmtime();
 extern char *		optarg;
 extern int		optind;
+#ifdef strchr
 extern char *		sprintf();
+#endif
+#ifndef strchr
+extern int		sprintf();
+#endif
 extern long		time();
 extern char *		tzname[2];
 

@@ -54,7 +54,12 @@ struct lc_time_T {
 
 #ifdef LOCALE_HOME
 static struct lc_time_T		localebuf;
+static void			_loc P((void));
+#define Locale	(_loc(), localebuf)
 #endif /* defined LOCALE_HOME */
+#ifndef LOCALE_HOME
+#define Locale	C_time_locale
+#endif /* !defined LOCALE_HOME */
 
 static const struct lc_time_T	C_time_locale = {
 	{
@@ -83,13 +88,13 @@ static const struct lc_time_T	C_time_locale = {
 	*/
 	"%m/%d/%y",
 
-	/* c_fmt */
-#ifdef EGGERT
-	"%a %b %d %H:%M:%S %Y",
-#endif /* defined EGGERT */
-#ifndef EGGERT
+	/*
+	** c_fmt
+	** Note that
+	**	"%a %b %d %H:%M:%S %Y"
+	** is used by Solaris 2.3.
+	*/
 	"%D %X",	/* %m/%d/%y %H:%M:%S */
-#endif /* !defined EGGERT */
 
 	/* am */
 	"AM",
@@ -104,7 +109,6 @@ static const struct lc_time_T	C_time_locale = {
 static char *	_add P((const char *, char *, const char *));
 static char *	_conv P((int, const char *, char *, const char *));
 static char *_fmt P((const char *, const struct tm *, char *, const char *));
-static const struct lc_time_T *	_loc P((void));
 
 size_t strftime P((char *, size_t, const char *, const struct tm *));
 
@@ -119,6 +123,7 @@ const struct tm * const	t;
 {
 	char *	p;
 
+	tzset();
 #ifdef LOCALE_HOME
 	localebuf.mon[0] = 0;
 #endif /* defined LOCALE_HOME */
@@ -145,23 +150,23 @@ label:
 				break;
 			case 'A':
 				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
-					"?" : _loc()->weekday[t->tm_wday],
+					"?" : Locale.weekday[t->tm_wday],
 					pt, ptlim);
 				continue;
 			case 'a':
 				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
-					"?" : _loc()->wday[t->tm_wday],
+					"?" : Locale.wday[t->tm_wday],
 					pt, ptlim);
 				continue;
 			case 'B':
 				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
-					"?" : _loc()->month[t->tm_mon],
+					"?" : Locale.month[t->tm_mon],
 					pt, ptlim);
 				continue;
 			case 'b':
 			case 'h':
 				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
-					"?" : _loc()->mon[t->tm_mon],
+					"?" : Locale.mon[t->tm_mon],
 					pt, ptlim);
 				continue;
 			case 'C':
@@ -176,7 +181,7 @@ label:
 					"%02d", pt, ptlim);
 				continue;
 			case 'c':
-				pt = _fmt(_loc()->c_fmt, t, pt, ptlim);
+				pt = _fmt(Locale.c_fmt, t, pt, ptlim);
 				continue;
 			case 'D':
 				pt = _fmt("%m/%d/%y", t, pt, ptlim);
@@ -258,8 +263,8 @@ label:
 				continue;
 			case 'p':
 				pt = _add((t->tm_hour >= 12) ?
-					_loc()->pm :
-					_loc()->am,
+					Locale.pm :
+					Locale.am,
 					pt, ptlim);
 				continue;
 			case 'R':
@@ -312,11 +317,12 @@ label:
 				** 1 falls on a Thursday, are December 29-31
 				** of the PREVIOUS year part of week 1???
 				** (ado 5/24/93)
-				**
+				*/
+				/*
 				** You are understood not to expect this.
 				*/
 				{
-					int i;
+					int	i;
 
 					i = (t->tm_yday + 10 - (t->tm_wday ?
 						(t->tm_wday - 1) : 6)) / 7;
@@ -371,10 +377,10 @@ label:
 				pt = _conv(t->tm_wday, "%d", pt, ptlim);
 				continue;
 			case 'X':
-				pt = _fmt(_loc()->X_fmt, t, pt, ptlim);
+				pt = _fmt(Locale.X_fmt, t, pt, ptlim);
 				continue;
 			case 'x':
-				pt = _fmt(_loc()->x_fmt, t, pt, ptlim);
+				pt = _fmt(Locale.x_fmt, t, pt, ptlim);
 				continue;
 			case 'y':
 				pt = _conv((t->tm_year + TM_YEAR_BASE) % 100,
@@ -395,11 +401,9 @@ label:
 						pt, ptlim);
 				} else  pt = _add("?", pt, ptlim);
 				continue;
-#ifdef EGGERT
 			case '+':
-				pt = _fmt(_loc()->date_fmt, t, pt, ptlim);
+				pt = _fmt(Locale.date_fmt, t, pt, ptlim);
 				continue;
-#endif /* defined EGGERT */
 			case '%':
 			/*
 			 * X311J/88-090 (4.12.3.5): if conversion char is
@@ -424,7 +428,7 @@ const char * const	format;
 char * const		pt;
 const char * const	ptlim;
 {
-	char buf[INT_STRLEN_MAXIMUM(int) + 1];
+	char	buf[INT_STRLEN_MAXIMUM(int) + 1];
 
 	(void) sprintf(buf, format, n);
 	return _add(buf, pt, ptlim);
@@ -441,19 +445,17 @@ const char * const	ptlim;
 	return pt;
 }
 
-static const struct lc_time_T *
+#ifdef LOCALE_HOME
+static void
 _loc P((void))
 {
-#ifndef LOCALE_HOME
-	return &C_time_locale;
-#endif /* !defined LOCALE_HOME */
-#ifdef LOCALE_HOME
 	static const char	locale_home[] = LOCALE_HOME;
 	static const char	lc_time[] = "LC_TIME";
 	static char *		locale_buf;
 	static char		locale_buf_C[] = "C";
 
 	int			fd;
+	int			oldsun;	/* "...ain't got nothin' to do..." */
 	char *			lbuf;
 	char *			name;
 	char *			p;
@@ -468,15 +470,15 @@ _loc P((void))
 	** Use localebuf.mon[0] to signal whether locale is already set up.
 	*/
 	if (localebuf.mon[0])
-		return &localebuf;
+		return;
 #if HAVE_SETLOCALE - 0
 	name = setlocale(LC_TIME, (char *) NULL);
 #endif /* HAVE_SETLOCALE - 0 */
-#if !HAVE_SETLOCALE - 0
+#if !(HAVE_SETLOCALE - 0)
 	if ((name = getenv("LC_ALL")) == NULL || *name == '\0')
 		if ((name = getenv(lc_time)) == NULL || *name == '\0')
 			name = getenv("LANG");
-#endif /* !HAVE_SETLOCALE - 0 */
+#endif /* !(HAVE_SETLOCALE - 0) */
 	if (name == NULL || *name == '\0')
 		goto no_locale;
 	/*
@@ -489,7 +491,7 @@ _loc P((void))
 			ap < (const char **) (&localebuf + 1);
 				++ap)
 					*ap = p += strlen(p) + 1;
-		return &localebuf;
+		return;
 	}
 	/*
 	** Slurp the locale file into the cache.
@@ -498,12 +500,14 @@ _loc P((void))
 	if (sizeof(filename) <
 		sizeof(locale_home) + namesize + sizeof(lc_time))
 			goto no_locale;
+	oldsun = 0;
 	(void) sprintf(filename, "%s/%s/%s", locale_home, name, lc_time);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0) {
 		/*
-		** Old Sun systems have a different naming convention.
+		** Old Sun systems have a different naming and data convention.
 		*/
+		oldsun = 1;
 		(void) sprintf(filename, "%s/%s/%s", locale_home,
 			lc_time, name);
 		fd = open(filename, O_RDONLY);
@@ -540,14 +544,25 @@ _loc P((void))
 				*ap = p;
 				while (*p != '\n')
 					++p;
-				*p++ = 0;
+				*p++ = '\0';
+	}
+	if (oldsun) {
+		/*
+		** SunOS 4 used an obsolescent format; see localdtconv(3).
+		** c_fmt had the ``short format for dates and times together''
+		** (SunOS 4 date, "%a %b %e %T %Z %Y" in the C locale);
+		** date_fmt had the ``long format for dates''
+		** (SunOS 4 strftime %C, "%A, %B %e, %Y" in the C locale).
+		** Discard the latter in favor of the former.
+		*/
+		localebuf.date_fmt = localebuf.c_fmt;
 	}
 	/*
 	** Record the successful parse in the cache.
 	*/
 	locale_buf = lbuf;
 
-	return &localebuf;
+	return;
 
 bad_lbuf:
 	free(lbuf);
@@ -556,6 +571,5 @@ bad_locale:
 no_locale:
 	localebuf = C_time_locale;
 	locale_buf = locale_buf_C;
-	return &localebuf;
-#endif /* defined LOCALE_HOME */
 }
+#endif /* defined LOCALE_HOME */

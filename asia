@@ -1,13 +1,19 @@
 # %W%
+
+# From Guy Harris:
 # Incorporates data for Singapore from Robert Elz' asia 1.1, as well as
 # additional information from Tom Yap, Sun Microsystems Intercontinental
 # Technical Support (including a page from the Official Airline Guide -
 # Worldwide Edition).  The names for time zones are guesses.
 
+###############################################################################
+
+# China
+
 # From Guy Harris:
 # People's Republic of China.  Yes, they really have only one time zone.
 
-# From Bob Devine:
+# From Bob Devine (January 28, 1988):
 # No they don't.  See TIME mag, February 17, 1986 p.52.  Even though
 # China is across 4 physical time zones, before Feb 1, 1986 only the
 # Peking (Bejing) time zone was recognized.  Since that date, China
@@ -21,11 +27,11 @@
 #     1986 May 4 - Sept 14
 #     1987 mid-April - ?? 
 
-# From the U.S. Naval Observatory (as of 2/10/88):
-# 	CHINA               8 H AHEAD OF UTC; ALL OF CHINA, INCL TAIWAN 
+# From U.S. Naval Observatory (February 10, 1988):
+# CHINA               8 H AHEAD OF UTC; ALL OF CHINA, INCL TAIWAN 
 
-# From Arthur David Olson:
-# While further research gets done, we'll stick with one time zone. . .
+# From Arthur David Olson (February 10, 1988):
+# At least for now, we'll stick with one time zone. . .
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	PRC	1970	max	-	Apr	Sun<=14	2:00	1:00	D
@@ -34,7 +40,12 @@ Rule	PRC	1970	max	-	Sep	Sun<=14	3:00	0	S
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 Zone	PRC		8:00	PRC		C%sT
 
-# Republic of Korea.  According to someone at the Korean Times in San Francisco,
+###############################################################################
+
+# Republic of Korea
+
+# From Guy Harris:
+# According to someone at the Korean Times in San Francisco,
 # Daylight Savings Time was not observed until 1987.  He did not know
 # at what time of day DST starts or ends.
 
@@ -45,13 +56,11 @@ Rule	ROK	1987	max	-	Oct	Sun<=14	3:00	0	S
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 Zone	ROK		9:00	ROK		K%sT
 
-# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
-Zone	Japan		9:00	-		JST
-Zone	Singapore	8:00	-		SST
-Zone	Hongkong	8:00	-		HKT
-Zone	ROC		8:00	-		CST
+###############################################################################
 
 # Israel
+
+# From Guy Harris
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Israel	1987	max	-	Apr	Sun<=21	2:00	1:00	D
@@ -60,12 +69,17 @@ Rule	Israel	1987	max	-	Aug	Sat<=28	2:00	0	S
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 Zone	Israel		3:00	Israel		I%sT
 
-# From Bob Devine:  "Iran: Last Sunday in March to third (?) Sunday in
+###############################################################################
+
+# Iran
+
+# From Bob Devine (January 28, 1988):
+# Iran: Last Sunday in March to third (?) Sunday in
 # September.  Since the revolution, the official calendar is Monarchic
 # calendar; I have no idea what the correspondence between dates are.
 
-# From U.S. Naval Observatory:
-# 	IRAN                3.5H AHEAD OF UTC 
+# From U.S. Naval Observatory (February 10, 1988):
+# IRAN                3.5H AHEAD OF UTC 
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Iran	1988	max	-	Mar	lastSun	2:00	1:00	D
@@ -74,4 +88,19 @@ Rule	Iran	1988	max	-	Sep	Sun>=15	2:00	0	S
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 Zone	Iran		3:30	Iran		I%sT
 
-# From Bob Devine:  "Lebanon: They do have DST but I don't know the dates."
+###############################################################################
+
+# Lebanon
+
+# From Bob Devine (January 28, 1988):
+# Lebanon: They do have DST but I don't know the dates.
+
+###############################################################################
+
+# From Guy Harris
+
+# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	Japan		9:00	-		JST
+Zone	Singapore	8:00	-		SST
+Zone	Hongkong	8:00	-		HKT
+Zone	ROC		8:00	-		CST	# Republic of China

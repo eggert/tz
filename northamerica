@@ -1,0 +1,71 @@
+# %W%
+
+# Bob Devine has written that ". . .your table is wrong for MostNA in 1974.
+# The correct ending date is 10/27 not 11/24."  Yet on a 4.1bsd VAX/11-750
+# system, compiling and executing the program
+#
+#	#include "time.h"
+#
+#	long l = 152592000;
+#
+#	main() {
+#		struct tm *	tmp;
+#
+#		tmp = localtime(&l);
+#		printf("%s", asctime(tmp));
+#		printf("isdst: %d\n", tmp->tm_isdst);
+#	}
+#
+# results in the output
+#
+#	Fri Nov  1 22:40:00 1974
+#	isdst: 1
+#
+# For now we'll stay with 4.1bsd's version.
+#
+# Note also this from munnari!kre:
+# "I recall also being told by someone once that Canada didn't have
+# the DST variations in 74/75 that the US did, but I am not nearly
+# sure enough of this to add anything."
+
+# Before the Uniform Time Act of 1966 took effect in 1967, observance of
+# Daylight Saving Time was by local option, except during wartime.
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	MostNA	1918	1919	-	Mar	lastSun	2:00	1:00	D
+Rule	MostNA	1918	1919	-	Oct	lastSun	2:00	0	S
+Rule	MostNA	1942	only	-	Feb	9	2:00	1:00	W # War
+Rule	MostNA	1945	only	-	Sep	30	2:00	0	S
+Rule	MostNA	1967	1973	-	Apr	lastSun	2:00	1:00	D
+Rule	MostNA	1967	1973	-	Oct	lastSun	2:00	0	S
+Rule	MostNA	1974	only	-	Jan	6	2:00	1:00	D
+Rule	MostNA	1974	only	-	Nov	24	2:00	0	S
+Rule	MostNA	1975	only	-	Feb	23	2:00	1:00	D
+Rule	MostNA	1975	only	-	Oct	26	2:00	0	S
+Rule	MostNA	1976	2037	-	Apr	lastSun	2:00	1:00	D
+Rule	MostNA	1976	2037	-	Oct	lastSun	2:00	0	S
+
+###############################################################################
+
+# New names
+
+# Zone	NAME		GMTOFF	RULES	FORMAT
+Zone	Atlantic	-4:00	MostNA	A%sT
+Zone	Eastern		-5:00	MostNA	E%sT
+Zone	East-Indiana	-5:00	-	EST	#Always Standard near South Bend
+Zone	Central		-6:00	MostNA	C%sT
+Zone	Mountain	-7:00	MostNA	M%sT
+Zone	Arizona		-7:00	-	MST	#Always Standard in Arizona!
+Zone	Pacific		-8:00	MostNA	P%sT
+Zone	Yukon		-9:00	MostNA	Y%sT
+Zone	Aleutian	-10:00	MostNA	A%sT
+Zone	Hawaiian	-10:00	-	HST	#Always Standard in Hawaii!
+Zone	Newfoundland	-3:30	-	NST
+
+# Old names
+
+# Link	LINK-FROM	LINK-TO
+Link	Eastern		EST5EDT
+Link	Central		CST6CDT
+Link	Mountain	MST7MDT
+Link	Pacific		PST8PDT

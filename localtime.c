@@ -159,6 +159,9 @@ char *			tzname[2] = {
 time_t			timezone = 0;
 int			daylight = 0;
 #endif /* defined USG_COMPAT */
+#ifdef ALTZONE
+time_t			altzone = 0;
+#endif /* defined ALTZONE */
 
 static long
 detzcode(codep)
@@ -185,6 +188,9 @@ settzname()
 	daylight = 0;
 	timezone = 0;
 #endif /* defined USG_COMPAT */
+#ifdef ALTZONE
+	altzone = 0;
+#endif /* defined ALTZONE */
 #ifdef ALL_STATE
 	if (sp == NULL) {
 		tzname[0] = tzname[1] = "GMT";
@@ -202,6 +208,10 @@ settzname()
 		if (i == 0 || !ttisp->tt_isdst)
 			timezone = -(ttisp->tt_gmtoff);
 #endif /* defined USG_COMPAT */
+#ifdef ALTZONE
+		if (i == 0 || ttisp->tt_isdst)
+			altzone = -(ttisp->tt_gmtoff);
+#endif /* defined ALTZONE */
 	}
 }
 

@@ -22,9 +22,11 @@ ctime, localtime, gmtime, asctime, tzset, tzsetwall \- convert date and time to 
 .PP
 .B struct tm *gmtime(clock)
 .B long *clock;
+.if !\nX \{\
 .PP
 cc ... -lz
 .fi
+\}
 .SH DESCRIPTION
 .I Tzset
 uses the value of the environment variable

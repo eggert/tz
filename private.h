@@ -38,7 +38,7 @@ static char	privatehid[] = "%W%";
 #endif /* !defined HAVE_SETTIMEOFDAY */
 
 #ifndef HAVE_STRERROR
-#define HAVE_STRERROR		1
+#define HAVE_STRERROR		0
 #endif /* !defined HAVE_STRERROR */
 
 #ifndef HAVE_UNISTD_H

@@ -12,6 +12,8 @@ zic \- time zone compiler
 .B \-l
 .I localtime
 ] [
+.B \-s
+] [
 .I filename
 \&... ]
 .SH DESCRIPTION
@@ -43,6 +45,10 @@ Complain if a year that appears in a data file is outside the range
 of years representable by
 .IR time (2)
 values.
+.TP
+.B \-s
+Limit time values stored in output files to values that are the same
+whether they're taken to be signed or unsigned.
 .sp
 Input lines are made up of fields.
 Fields are separated from one another by any number of white space characters.

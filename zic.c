@@ -1184,8 +1184,8 @@ char *	type;
 	error("Wild result from command execution");
 	(void) fprintf(stderr, "%s: command was '%s', result was %d\n",
 		progname, buf, result);
-	exit(1);
-	/*NOTREACHED*/
+	for ( ; ; )
+		exit(1);
 }
 
 static

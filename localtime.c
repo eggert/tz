@@ -267,27 +267,13 @@ long *	timep;
 ********************************************************************************
 */
 
-#define SECS_PER_MIN	60
-#define MINS_PER_HOUR	60
-#define HOURS_PER_DAY	24
-#define DAYS_PER_WEEK	7
-#define SECS_PER_HOUR	(SECS_PER_MIN * MINS_PER_HOUR)
-#define SECS_PER_DAY	((long) SECS_PER_HOUR * HOURS_PER_DAY)
-
-#define TM_THURSDAY	4
-
-#define TM_YEAR_BASE	1900
-
-#define EPOCH_YEAR	1970
-#define EPOCH_WDAY	TM_THURSDAY
-
 static int	mon_lengths[2][12] = {	/* ". . .knuckles are 31. . ." */
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 };
 
 static int	year_lengths[2] = {
-	365, 366
+	DAYS_PER_NYEAR, DAYS_PER_LYEAR
 };
 
 /*

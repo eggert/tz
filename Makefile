@@ -193,7 +193,8 @@ CFLAGS=
 
 ################################################################################
 
-CC=		cc -DTZDIR=\"$(TZDIR)\"
+cc=		cc
+CC=		$(cc) -DTZDIR=\"$(TZDIR)\"
 
 TZCSRCS= \
 	zic.c localtime.c asctime.c scheck.c ialloc.c emkdir.c getopt.c optind.c

@@ -629,7 +629,7 @@ Zone	America/Antigua	-4:07:12 -	LMT	1912 Mar 2
 
 # Bahamas
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Bahamas	1912	max	-	Mar	2	0:00	0	S
+Rule	Bahamas	1912	only	-	Mar	2	0:00	0	S
 Rule	Bahamas	1964	max	-	Oct	lastSun	2:00	0	S
 Rule	Bahamas	1964	1986	-	Apr	lastSun	2:00	1:00	D
 Rule	Bahamas	1987	max	-	Apr	Sun>=1	2:00	1:00	D

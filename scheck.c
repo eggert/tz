@@ -8,9 +8,6 @@ static char	elsieid[] = "%W%";
 
 #include "private.h"
 
-extern char *	imalloc P((int n));
-extern void	ifree P((char * p));
-
 char *
 scheck(string, format)
 const char * const	string;

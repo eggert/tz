@@ -323,8 +323,8 @@ register struct state * const	sp;
 		i = read(fid, u.buf, sizeof u.buf);
 		if (close(fid) != 0)
 			return -1;
-		ttisstdcnt = (int) detzcode(u.tzhead.tzh_ttisgmtcnt);
-		ttisgmtcnt = (int) detzcode(u.tzhead.tzh_ttisstdcnt);
+		ttisstdcnt = (int) detzcode(u.tzhead.tzh_ttisstdcnt);
+		ttisgmtcnt = (int) detzcode(u.tzhead.tzh_ttisgmtcnt);
 		sp->leapcnt = (int) detzcode(u.tzhead.tzh_leapcnt);
 		sp->timecnt = (int) detzcode(u.tzhead.tzh_timecnt);
 		sp->typecnt = (int) detzcode(u.tzhead.tzh_typecnt);

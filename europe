@@ -1831,7 +1831,7 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 #
 # From Andrey A. Chernov <ache@nagual.ru> (1996-10-04):
 # `MSK' and `MSD' were born and used initially on Moscow computers with
-# Unix-like OSes by several developer groups (e.g. Demos group, Kiae group)....
+# UNIX-like OSes by several developer groups (e.g. Demos group, Kiae group)....
 # The next step was the UUCP network, the Relcom predecessor
 # (used mainly for mail), and MSK/MSD was actively used there.
 #

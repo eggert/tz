@@ -388,7 +388,7 @@ struct tm *	tmp;
 			(void) putchar('\n');
 			break;
 		case 'p':
-			(void) printf("%cM", (tmp->tm_hour >= 12) ? 'A' : 'P');
+			(void) printf("%cM", (tmp->tm_hour >= 12) ? 'P' : 'A');
 			break;
 		case 'r':
 			timeout("%I:%M:%S %p", tmp);

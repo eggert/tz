@@ -31,9 +31,9 @@ static char	elsieid[] = "%W%";
 /*
 ** Someone might make incorrect use of a time zone abbreviation:
 **	1.	They might reference tzname[0] before calling tzset (explicitly
-**	 	or implicitly).
+**		or implicitly).
 **	2.	They might reference tzname[1] before calling tzset (explicitly
-**	 	or implicitly).
+**		or implicitly).
 **	3.	They might reference tzname[1] after setting to a time zone
 **		in which Daylight Saving Time is never observed.
 **	4.	They might reference tzname[0] after setting to a time zone
@@ -258,7 +258,7 @@ register struct state * const	sp;
 	if (name == NULL && (name = TZDEFAULT) == NULL)
 		return -1;
 	{
-		register int 	doaccess;
+		register int	doaccess;
 		char		fullname[FILENAME_MAX + 1];
 
 		if (name[0] == ':')

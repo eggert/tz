@@ -1,12 +1,12 @@
-#include "stdio.h"
-
-/*LINTLIBRARY*/
-
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";
 #endif /* !defined NOID */
 #endif /* !defined lint */
+
+/*LINTLIBRARY*/
+
+#include "stdio.h"
 
 #ifdef __STDC__
 #define HAVEHEADS

@@ -1150,7 +1150,7 @@ int * const	unitsptr;
 const int	base;
 {
 	register int	tensdelta;
-	
+
 	tensdelta = (*unitsptr >= 0) ?
 		(*unitsptr / base) :
 		(-1 - (-1 - *unitsptr) / base);

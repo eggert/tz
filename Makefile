@@ -24,13 +24,13 @@ TZDIR=		/etc/zoneinfo
 # If you always want time values interpreted as "seconds since the epoch
 # (not counting leap seconds)", use
 # 	REDO=		posix_only
-# below.  If you alwyas want right time values interpreted as "seconds since
+# below.  If you always want right time values interpreted as "seconds since
 # the epoch" (counting leap seconds)", use
 #	REDO=		right_only
 # below.  If you want both sets of data available, with leap seconds not
 # counted normally, use
 #	REDO=		posix_right
-# below.  If you wnat both sets of data availabel, with leap seconds counted
+# below.  If you want both sets of data available, with leap seconds counted
 # normally, use
 #	REDO=		right_posix
 # below.
@@ -97,7 +97,8 @@ CFLAGS=
 # LINTFLAGS is set for 4.[123]BSD systems.
 # If you're using System V, you'll want to comment out the "LINTFLAGS=" line.
 
-LINTFLAGS=	-phbaaxc
+LINT=		lint
+LINTFLAGS=	-hbaxc
 
 SHAR=		shar
 
@@ -115,21 +116,22 @@ TZDOBJS=	zdump.o localtime.o asctime.o \
 		ialloc.o getopt.o link.o
 LIBSRCS=	localtime.c asctime.c ctime.c dysize.c timemk.c
 LIBOBJS=	localtime.o asctime.o ctime.o dysize.o timemk.o
+HEADERS=	tzfile.h nonstd.h stdio.h stdlib.h time.h
+NONLIBSRCS=	zic.c zdump.c \
+		scheck.c ialloc.c emkdir.c getopt.c link.c
+SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS)
 DOCS=		Patchlevel.h \
 		README Theory \
 		newctime.3 tzfile.5 zic.8 zdump.8 \
-		Makefile Makefile.tc
-SOURCES=	tzfile.h nonstd.h stdio.h stdlib.h time.h \
-		zic.c zdump.c \
-		localtime.c asctime.c ctime.c dysize.c timemk.c \
-		scheck.c ialloc.c emkdir.c getopt.c link.c
+		Makefile
 YDATA=		africa antarctica asia australasia \
 		europe northamerica southamerica pacificnew
 NDATA=		systemv
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
 DATA=		$(YDATA) $(NDATA) $(SDATA) leapseconds
-ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
+USNO=		usno1988 usno1989
+ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(USNO)
 
 all:		REDID_BINARIES zdump $(TZLIB)
 
@@ -156,43 +158,45 @@ zdump:		$(TZDOBJS)
 
 $(TZLIB):	$(LIBOBJS)
 		ar ru $@ $(LIBOBJS)
-		test -f /usr/bin/ranlib && ranlib $@
+		-ranlib $@
 
 zic:		$(TZCOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
 
-SHARS:		SHAR1 SHAR2 SHAR3
+SHARS:		SHAR1 SHAR2 SHAR3 SHAR4 SHAR5 SHAR6
 
 SHAR1:		$(DOCS)
 		$(SHAR) $(DOCS) > $@
 
-SHAR2:		$(SOURCES)
-		$(SHAR) $(SOURCES) > $@
+SHAR2:		$(HEADERS) $(LIBSRCS)
+		$(SHAR) $(HEADERS) $(LIBSRCS) > $@
 
-SHAR3:		$(DATA)
-		$(SHAR) $(DATA) > $@
+SHAR3:		$(NONLIBSRCS)
+		$(SHAR) $(NONLIBSRCS) > $@
+
+SHAR4:		$(YDATA) $(NDATA)
+		$(SHAR) $(YDATA) $(NDATA) > $@
+
+SHAR5:		$(SDATA)
+		$(SHAR) $(SDATA) > $@
+
+SHAR6:		$(USNO)
+		$(SHAR) $(USNO) > $@
 
 tz.shar.Z.uue:	$(ENCHILADA)
 		$(SHAR) $(ENCHILADA) | compress | uuencode tz.shar.Z > $@
 
-$(ENCHILADA):
-		sccs get $(REL) $(REV) $@
-
 sure:		$(SOURCES)
-		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZCSRCS)
-		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZDSRCS)
-		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(LIBSRCS)
+		$(LINT) $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZCSRCS)
+		$(LINT) $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZDSRCS)
+		$(LINT) $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(LIBSRCS)
 
-LINTUCB=	PATH=/usr/ucb:/bin:/usr/bin lint -phbaaxc
-LINT5BIN=	PATH=/usr/5bin lint -phbaax
-
-SURE:		sure
-		$(LINTUCB) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZCSRCS)
-		$(LINTUCB) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZDSRCS)
-		$(LINTUCB) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(LIBSRCS)
-		$(LINT5BIN) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZCSRCS)
-		$(LINT5BIN) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZDSRCS)
-		$(LINT5BIN) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(LIBSRCS)
+SURE:		sure $(ENCHILADA)
+		make sure LINT=/usr/5bin/lint LINTFLAGS=""
+		spell $(ENCHILADA)
+		make clean
+		make sure LINT=gcc LINTFLAGS="-O -ansi -pedantic -Wall"
+		make clean
 
 clean:
 		rm -f core *.o *.out REDID_BINARIES zdump zic \
@@ -212,6 +216,7 @@ ialloc.o:	nonstd.h stdlib.h
 link.o:		nonstd.h stdio.h
 localtime.o:	nonstd.h stdio.h stdlib.h time.h tzfile.h
 scheck.o:	nonstd.h stdio.h stdlib.h
-timemk.o:	nonstd.h time.h tzfile.h
 zdump.o:	nonstd.h stdio.h stdlib.h time.h tzfile.h
 zic.o:		nonstd.h stdio.h stdlib.h time.h tzfile.h
+
+.KEEP_STATE:

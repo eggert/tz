@@ -117,7 +117,7 @@ static void	newabbr P((const char * abbr));
 static long	oadd P((long t1, long t2));
 static void	outzone P((const struct zone * zp, int ntzones));
 static void	puttzcode P((long code, FILE * fp));
-static int	rcomp P((const generic_T * leftp, const generic_T * rightp));
+static int	rcomp P((const void * leftp, const void * rightp));
 static time_t	rpytime P((const struct rule * rp, int wantedy));
 static void	rulesub P((struct rule * rp,
 			const char * loyearp, const char * hiyearp,
@@ -630,8 +630,8 @@ const char * const	name;
 
 static int
 rcomp(cp1, cp2)
-const generic_T *	cp1;
-const generic_T *	cp2;
+const void *	cp1;
+const void *	cp2;
 {
 	return strcmp(((const struct rule *) cp1)->r_name,
 		((const struct rule *) cp2)->r_name);
@@ -646,7 +646,7 @@ associate P((void))
 	register int		i;
 
 	if (nrules != 0)
-		(void) qsort((generic_T *) rules,
+		(void) qsort((void *) rules,
 			(qsort_size_T) nrules,
 			(qsort_size_T) sizeof *rules, rcomp);
 	for (i = 0; i < nzones; ++i) {
@@ -1276,7 +1276,7 @@ FILE * const	fp;
 	char	buf[4];
 
 	convert(val, buf);
-	(void) fwrite((generic_T *) buf,
+	(void) fwrite((void *) buf,
 		(fwrite_size_T) sizeof buf,
 		(fwrite_size_T) 1, fp);
 }
@@ -1308,7 +1308,7 @@ const char * const	name;
 	convert(eitol(timecnt), tzh.tzh_timecnt);
 	convert(eitol(typecnt), tzh.tzh_typecnt);
 	convert(eitol(charcnt), tzh.tzh_charcnt);
-	(void) fwrite((generic_T *) &tzh,
+	(void) fwrite((void *) &tzh,
 		(fwrite_size_T) sizeof tzh,
 		(fwrite_size_T) 1, fp);
 	for (i = 0; i < timecnt; ++i) {
@@ -1321,7 +1321,7 @@ const char * const	name;
 		puttzcode((long) ats[i], fp);
 	}
 	if (timecnt > 0)
-		(void) fwrite((generic_T *) types,
+		(void) fwrite((void *) types,
 			(fwrite_size_T) sizeof types[0],
 			(fwrite_size_T) timecnt, fp);
 	for (i = 0; i < typecnt; ++i) {
@@ -1330,7 +1330,7 @@ const char * const	name;
 		(void) putc(abbrinds[i], fp);
 	}
 	if (charcnt != 0)
-		(void) fwrite((generic_T *) chars,
+		(void) fwrite((void *) chars,
 			(fwrite_size_T) sizeof chars[0],
 			(fwrite_size_T) charcnt, fp);
 	for (i = 0; i < leapcnt; ++i) {

@@ -165,7 +165,7 @@ char *	argv[];
 			if (format == NULL)
 				format = cp + 1;
 			else {
-				(void) fprintf(stderr, 
+				(void) fprintf(stderr,
 "date: error: multiple formats in command line\n");
 				usage();
 			}
@@ -625,7 +625,7 @@ time_t	oldnow;
 	struct tm	othertm;
 	register int	pass;
 	register long	offset;
-	
+
 	/*
 	** See if there's both a USG and a BSD interpretation.
 	*/
@@ -653,7 +653,7 @@ time_t	oldnow;
 ** been set--it may take a while, and we don't want to introduce an unnecessary
 ** lag between the time the user enters their command and the time that
 ** stime/settimeofday is called.
-** 
+**
 ** We just check nearby times to see if any of them have the same representation
 ** as the time that convert returned.  We work our way out from the center
 ** for quick response in solar time situations.  We only handle common cases--

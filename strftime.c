@@ -174,7 +174,7 @@ label:
 				**	_fmt("%a %b %e %X %Y", t);
 				** ...whereas now POSIX 1003.2 calls for
 				** something completely different.
-				** (ado, 1993-05-24)
+				** (ado, 5/24/93)
 				*/
 				pt = _conv((t->tm_year + TM_YEAR_BASE) / 100,
 					"%02d", pt, ptlim);
@@ -199,7 +199,7 @@ label:
 				**	%OS %Ou %OU %OV %Ow %OW %Oy
 				** are supposed to provide alternate
 				** representations.
-				** (ado, 1993-05-24)
+				** (ado, 5/24/93)
 				*/
 				goto label;
 			case 'e':
@@ -225,7 +225,7 @@ label:
 				** match SunOS 4.1.1 and Arnold Robbins'
 				** strftime version 3.0.  That is, "%k" and
 				** "%l" have been swapped.
-				** (ado, 1993-05-24)
+				** (ado, 5/24/93)
 				*/
 				pt = _conv(t->tm_hour, "%2d", pt, ptlim);
 				continue;
@@ -245,7 +245,7 @@ label:
 				** match SunOS 4.1.1 and Arnold Robbin's
 				** strftime version 3.0.  That is, "%k" and
 				** "%l" have been swapped.
-				** (ado, 1993-05-24)
+				** (ado, 5/24/93)
 				*/
 				pt = _conv((t->tm_hour % 12) ?
 					(t->tm_hour % 12) : 12,
@@ -290,7 +290,7 @@ label:
 				** From Arnold Robbins' strftime version 3.0:
 				** "ISO 8601: Weekday as a decimal number
 				** [1 (Monday) - 7]"
-				** (ado, 1993-05-24)
+				** (ado, 5/24/93)
 				*/
 				pt = _conv((t->tm_wday == 0) ? 7 : t->tm_wday,
 					"%d", pt, ptlim);
@@ -367,7 +367,7 @@ label:
 				/*
 				** From Arnold Robbins' strftime version 3.0:
 				** "date as dd-bbb-YYYY"
-				** (ado, 1993-05-24)
+				** (ado, 5/24/93)
 				*/
 				pt = _fmt("%e-%b-%Y", t, pt, ptlim);
 				continue;

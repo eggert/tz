@@ -37,9 +37,6 @@ static char	privatehid[] = "%W%";
 #ifndef HAVE_SETTIMEOFDAY
 #define HAVE_SETTIMEOFDAY	3
 #endif /* !defined HAVE_SETTIMEOFDAY */
-#ifndef HAVE_STDLIB_H
-#define HAVE_STDLIB_H	1
-#endif /* !defined HAVE_STDLIB_H */
 #ifndef HAVE_UNISTD_H
 #define HAVE_UNISTD_H	1
 #endif /* !defined HAVE_UNISTD_H */
@@ -140,9 +137,7 @@ typedef char	generic_T;
 #include "time.h"
 #endif /* !defined _TIME_ */
 
-#if HAVE_STDLIB_H
 #include "stdlib.h"
-#endif /* HAVE_STDLIB_H */
 
 #if HAVE_UNISTD_H
 #include "unistd.h"
@@ -177,24 +172,6 @@ extern int	unlink P((const char * filename));
 #ifndef EXIT_FAILURE
 #define EXIT_FAILURE	1
 #endif /* !defined EXIT_FAILURE */
-
-/*
-** Ensure that these are declared--redundantly declaring them shouldn't hurt.
-*/
-
-#if !HAVE_STDLIB_H
-extern char *		getenv P((const char * name));
-extern generic_T *	malloc P((alloc_size_T size));
-extern generic_T *	calloc P((alloc_size_T nelem, alloc_size_T elsize));
-extern generic_T *	realloc P((generic_T * oldptr, alloc_size_T newsize));
-extern void		exit P((int s));
-extern void		qsort P((generic_T * base, qsort_size_T nelem,
-				qsort_size_T elsize,
-				int (*comp) P((const generic_T *,
-					const generic_T *))));
-extern void		perror P((const char * string));
-extern void		free P((generic_T * buf));
-#endif /* !HAVE_STDLIB_H */
 
 #ifndef TRUE
 #define TRUE	1

@@ -874,7 +874,7 @@ char *			timep;
 	** Year work.
 	*/
 	cp = loyearp;
-	if ((lp = lookup(cp, begin_years)) != NULL)
+	if ((lp = byword(cp, begin_years)) != NULL)
 		rp->r_loyear = lp->l_value;
 	else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_loyear) != 1 ||
 		rp->r_loyear <= 0) {
@@ -882,7 +882,7 @@ char *			timep;
 			return;
 	}
 	cp = hiyearp;
-	if ((lp = lookup(cp, end_years)) != NULL) {
+	if ((lp = byword(cp, end_years)) != NULL) {
 		if ((rp->r_hiyear = lp->l_value) == ONLY)
 			rp->r_hiyear = rp->r_loyear;
 	} else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_hiyear) != 1 ||

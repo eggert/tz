@@ -181,11 +181,15 @@ Zone Pacific/Honolulu	-10:30	US	H%sT	1933 Apr 30 2:00
 
 
 # These links are for backward compatibility with the old naming convention.
+Link	America/Anchorage	US/Anchorage
 Link	America/Atka		US/Aleutian
+Link	America/Chicago		US/Central
 Link	America/Denver		US/Mountain
 Link	America/Detroit		US/Michigan
+Link	America/Fort_Wayne	US/East-Indiana
 Link	America/Knox_IN		US/Indiana-Starke
 Link	America/Los_Angeles	US/Pacific
+Link	America/New_York	US/Eastern
 Link	America/Phoenix		US/Arizona
 Link	Pacific/Honolulu	US/Hawaii
 Link	Pacific/Samoa		US/Samoa
@@ -193,13 +197,13 @@ Link	Pacific/Samoa		US/Samoa
 # Old names, for S5 users
 
 # Link	LINK-FROM	LINK-TO
-# Link	US/Eastern	EST5EDT
-# Link	US/Central	CST6CDT
-# Link	US/Mountain	MST7MDT
-# Link	US/Pacific	PST8PDT
-# Link	US/East-Indiana	EST
-# Link	US/Arizona	MST
-# Link	US/Hawaii	HST
+Link	US/Eastern	EST5EDT
+Link	US/Central	CST6CDT
+Link	US/Mountain	MST7MDT
+Link	US/Pacific	PST8PDT
+Link	US/East-Indiana	EST
+Link	US/Arizona	MST
+Link	US/Hawaii	HST
 
 ################################################################################
 

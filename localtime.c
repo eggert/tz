@@ -263,13 +263,11 @@ time_t *	timep;
 		i = s.types[i - 1];
 	}
 	ttisp = &s.ttis[i];
-#ifdef USG_COMPAT
 	/*
-	** Compatible, but yields wrong results if
-	** t + ttisp->tt_gmtoff overflows.
+	** To get (wrong) behavior that's compatible with System V Release 2.0
+	** you'd replace the statement below with
+	**	tmp = offtime((time_t) (t + ttisp->tt_gmtoff), 0L);
 	*/
-	tmp = offtime((time_t) (t + ttisp->tt_gmtoff), 0L);
-#else /* !USG_COMPAT */
 	tmp = offtime(&t, ttisp->tt_gmtoff);
 #endif /* !USG_COMPAT */
 	tmp->tm_isdst = ttisp->tt_isdst;

@@ -584,6 +584,8 @@ _("%s: More than one -L option specified\n"),
 	return (errors == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
+#define link(x,y) (-1)	/* XXX */
+
 static void
 dolink(fromfile, tofile)
 const char * const	fromfile;
@@ -620,19 +622,51 @@ const char * const	tofile;
 
 		result = link(fromname, toname);
 #if (HAVE_SYMLINK - 0)
+		/*
+		** If hard link fails but from file exists, try a symbolic link.
+		** We want as relative a link as possible to maximize chances
+		** of correct behavior when the link is part of an
+		** exported directory.
+		*/
 		if (result != 0 &&
 		    access(fromname, F_OK) == 0 &&
 		    !itsdir(fromname)) {
-		        const char *s = tofile;
-		        register char * symlinkcontents = NULL;
-		        while ((s = strchr(s+1, '/')) != NULL)
-			        symlinkcontents = ecatalloc(symlinkcontents, "../");
-			symlinkcontents = ecatalloc(symlinkcontents, fromfile);
+		    	register char *	t = toname;
+			register char *	f = fromname;
+			register char *	s;
+			register int	n;
 
-			result = symlink(symlinkcontents, toname);
-			if (result == 0)
+			while ((s = strchr(t, '/')) != NULL &&
+				strncmp(t, f, (n = (s - t) + 1)) == 0) {
+					t += n;
+					f += n;
+			}
+			/*
+			** f		t		desired symlink value
+			** /a/b/c	/d/e/f		eliminated just above
+			** a/b/c	d/e/f		../../a/b/c
+			** a/b		d/e/f		../../a/b
+			** a/b/c	d/e		../a/b/c
+			** /a/b/c	d/e/f		/a/b/c
+			** a/b/c	/d/e/f		hard to handle well
+			*/
+			if (*f == '/')
+				s = ecpyalloc(f);
+			else {
+				s = NULL;
+				if (*t != '/') {
+					while (*t != '\0')
+						if (*t++ == '/')
+							s = ecatalloc(s, "../");
+					s = ecatalloc(s, f);
+				}
+			}
+			if (s != NULL) {
+				result = symlink(s, toname);
+				ifree(s);
+				if (result == 0)
 warning(_("hard link failed, symbolic link used"));
-			ifree(symlinkcontents);
+			}
 		}
 #endif
 		if (result != 0) {

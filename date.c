@@ -34,15 +34,9 @@ char copyright[] =
 static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #endif /* not lint */
 
-#include "sys/param.h"
-#include "sys/time.h"
-#include "sys/file.h"
-#include "errno.h"
 #include "syslog.h"
-#include "utmp.h"
-#include "stdio.h"
-#include "ctype.h"
-#include "strings.h"
+#include "sys/time.h"
+#include "private.h"
 #include "tzfile.h"
 
 #ifndef NO_SOCKETS
@@ -94,11 +88,9 @@ extern double		atof();
 extern char **		environ;
 extern char *		getlogin();
 extern int		logwtmp();
-extern char *		malloc();
 extern time_t		mktime();
 extern char *		optarg;
 extern int		optind;
-extern char *		realloc();
 extern char *		strchr();
 extern time_t		time();
 extern char *		tzname[2];
@@ -466,7 +458,7 @@ struct tm *	tmp;
 	if (*format == '\0')
 		return;
 	size = INCR;
-	cp = malloc(size);
+	cp = malloc((alloc_size_t) size);
 	for ( ; ; ) {
 		if (cp == NULL) {
 			(void) fprintf(stderr,
@@ -478,7 +470,7 @@ struct tm *	tmp;
 		if (result != 0)
 			break;
 		size += INCR;
-		cp = realloc(cp, size);
+		cp = realloc(cp, (alloc_size_t) size);
 	}
 	(void) fwrite(cp, 1, result, fp);
 	free(cp);

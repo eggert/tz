@@ -113,14 +113,15 @@ size_t strftime P((char *, size_t, const char *, const struct tm *));
 
 extern char *	tzname[];
 
-/*
-** XXX--should break down year 2000 warning into:
-**	always a problem
-**	a problem in current locale
-**	a potential problem in other locales
-*/
-
+#ifndef YEAR_2000_NAME
 #define YEAR_2000_NAME	"CHECK_STRFTIME_FORMATS_FOR_TWO_DIGIT_YEARS"
+#endif /* !defined YEAR_2000_NAME */
+
+
+#define IN_NONE	0
+#define IN_SOME	1
+#define IN_THIS	2
+#define IN_ALL	3
 
 size_t
 strftime(s, maxsize, format, t)
@@ -136,15 +137,21 @@ const struct tm * const	t;
 #ifdef LOCALE_HOME
 	localebuf.mon[0] = 0;
 #endif /* defined LOCALE_HOME */
-	warn = 0;
+	warn = IN_NONE;
 	p = _fmt(((format == NULL) ? "%c" : format), t, s, s + maxsize, &warn);
-	if (warn && getenv(YEAR_2000_NAME) != NULL) {
+	if (warn != IN_NONE && getenv(YEAR_2000_NAME) != NULL) {
 		(void) fprintf(stderr, "\n");
 		if (format == NULL)
 			(void) fprintf(stderr, "NULL strftime format ");
 		else	(void) fprintf(stderr, "strftime format \"%s\" ",
 				format);
-		(void) fprintf(stderr, "yields only two digits of years\n");
+		(void) fprintf(stderr, "yields only two digits of years in ");
+		if (warn == IN_SOME)
+			(void) fprintf(stderr, "some locales");
+		else if (warn == IN_THIS)
+			(void) fprintf(stderr, "the current locale");
+		else	(void) fprintf(stderr, "all locales");
+		(void) fprintf(stderr, "\n");
 	}
 	if (p == s + maxsize)
 		return 0;
@@ -204,7 +211,15 @@ label:
 					"%02d", pt, ptlim);
 				continue;
 			case 'c':
+				{
+				int warn2 = IN_SOME;
+
 				pt = _fmt(Locale->c_fmt, t, pt, ptlim, warnp);
+				if (warn2 == IN_ALL)
+					warn2 = IN_THIS;
+				if (warn2 > *warnp)
+					*warnp = warn2;
+				}
 				continue;
 			case 'D':
 				pt = _fmt("%m/%d/%y", t, pt, ptlim, warnp);
@@ -417,7 +432,7 @@ label:
 						pt = _conv(w, "%02d",
 							pt, ptlim);
 					else if (*format == 'g') {
-						*warnp = 1;
+						*warnp = IN_ALL;
 						pt = _conv(year % 100, "%02d",
 							pt, ptlim);
 					} else	pt = _conv(year, "%04d",
@@ -446,10 +461,18 @@ label:
 				pt = _fmt(Locale->X_fmt, t, pt, ptlim, warnp);
 				continue;
 			case 'x':
-				pt = _fmt(Locale->x_fmt, t, pt, ptlim, warnp);
+				{
+				int	warn2 = IN_SOME;
+
+				pt = _fmt(Locale->x_fmt, t, pt, ptlim, &warn2);
+				if (warn2 == IN_ALL)
+					warn2 = IN_THIS;
+				if (warn2 > *warnp)
+					*warnp = warn2;
+				}
 				continue;
 			case 'y':
-				*warnp = 1;
+				*warnp = IN_ALL;
 				pt = _conv((t->tm_year + TM_YEAR_BASE) % 100,
 					"%02d", pt, ptlim);
 				continue;

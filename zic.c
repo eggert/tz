@@ -564,10 +564,6 @@ associate()
 			eat(zp->z_filename, zp->z_linenum);
 			zp->z_stdoff = getoff(zp->z_rule, "unruly zone");
 		}
-		/*
-		** I think this is worng. . .
-		*/
-		zp->z_untilrule.r_stdoff = zp->z_stdoff;
 	}
 	if (errors)
 		exit(1);
@@ -1101,6 +1097,10 @@ int			zonecount;
 		** Plug the indices into the rules.
 		*/
 		zp = &zpfirst[i];
+		/*
+		** I think this is worng. . .
+		*/
+		zp->z_untilrule.r_stdoff = zp->z_stdoff;
 		eat(zp->z_filename, zp->z_linenum);
 		if (zp->z_nrules == 0)
 			trivial(zp, usestart, starttime);

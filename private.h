@@ -55,18 +55,6 @@ static char	privatehid[] = "%W%";
 #define LOCALE_HOME		"/usr/lib/locale"
 #endif /* !defined LOCALE_HOME */
 
-#ifndef alloc_size_T
-#define alloc_size_T		size_t
-#endif /* !defined alloc_size_T */
-
-#ifndef fwrite_size_T
-#define fwrite_size_T		size_t
-#endif /* !defined fwrite_size_T */
-
-#ifndef qsort_size_T
-#define qsort_size_T		size_t
-#endif /* !defined qsort_size_T */
-
 /*
 ** Workarounds for compilers/systems.
 */

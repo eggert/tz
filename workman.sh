@@ -26,4 +26,4 @@ echo ".am TH
 		print "$_\n";
 		$didprint = 1;
 	}
-' 
+'

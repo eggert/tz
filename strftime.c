@@ -133,7 +133,7 @@ label:
 				** Word from Paul Eggert (eggert@twinsun.com)
 				** is that %Y-%m-%d is the ISO standard date
 				** format, specified in ISO 2014 and later
-				** ISO 8601:1988 (with a summaray available in
+				** ISO 8601:1988, with a summary available in
 				** pub/doc/ISO/english/ISO8601.ps.Z on
 				** ftp.uni-erlangen.de.
 				** (ado, 5/30/93)

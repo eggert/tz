@@ -127,8 +127,8 @@ Zone	America/La_Paz	-4:32:36 -	LMT	1890
 # ending dates, giving them as "estimated date(s) based on previous year".  We
 # infer a rule here from one example, always a dangerous practice....  Yes,
 # they really do switch on Saturday, according to the OAG.
-# "Brazil/Acre" is for the Territory of Acre; "Brazil/DeNoronha" is for
-# Fernando De Noronha.
+# "[America/Porto_Acre]" is for the Territory of Acre;
+# "[America/Noronha]" is for Fernando De Noronha.
 
 # From Bob Devine (January 28, 1988):
 # The only information I found is that there was no DST up to 1985.

@@ -23,7 +23,7 @@ TZLIB=		/usr/lib/libz.a
 # to the end of the "CFLAGS=" line.
 #
 # If you're running on a system where "strchr" is known as "index",
-# for example, a 4.[012]BSD system), add
+# (for example, a 4.[012]BSD system), add
 #	-Dstrchr=index
 # to the end of the  "CFLAGS=" line.
 #
@@ -43,7 +43,10 @@ TZLIB=		/usr/lib/libz.a
 # If you'd like to use Robert Elz's additions to the "struct tm" structure,
 # add a
 #	-DKRE_COMPAT
-# to the end of the "CFLAGS=" line.
+# to the end of the "CFLAGS=" line, and add the structure elements
+#	char *	tm_zone;
+#	long	tm_gmtoff;
+# to the END of the "struct tm" structure defined in "/usr/include/time.h".
 #
 # If you want code inspired by certain emerging standards, add
 #	-DSTD_INSPIRED
@@ -72,13 +75,13 @@ CC=		cc -DTZDIR=\"$(TZDIR)\"
 
 TZCSRCS=	zic.c scheck.c ialloc.c mkdir.c
 TZCOBJS=	zic.o scheck.o ialloc.o mkdir.o
-TZDSRCS=	zdump.c localtime.c gmtime.c asctime.c ctime.c ialloc.c
-TZDOBJS=	zdump.o localtime.o gmtime.o asctime.o ctime.o ialloc.o
-LIBSRCS=	localtime.c gmtime.c asctime.c ctime.c dysize.c timemk.c
-LIBOBJS=	localtime.o gmtime.o asctime.o ctime.o dysize.o timemk.o
+TZDSRCS=	zdump.c localtime.c asctime.c ctime.c ialloc.c
+TZDOBJS=	zdump.o localtime.o asctime.o ctime.o ialloc.o
+LIBSRCS=	localtime.c asctime.c ctime.c dysize.c timemk.c
+LIBOBJS=	localtime.o asctime.o ctime.o dysize.o timemk.o
 DOCS=		README Makefile newctime.3 tzfile.5 zic.8 zdump.8
 SOURCES=	tzfile.h zic.c zdump.c \
-		localtime.c gmtime.c asctime.c ctime.c dysize.c timemk.c \
+		localtime.c asctime.c ctime.c dysize.c timemk.c \
 		scheck.c ialloc.c mkdir.c
 DATA=		asia australasia europe etcetera northamerica \
 		pacificnew systemv solar87
@@ -117,9 +120,9 @@ $(ENCHILADA):
 		sccs get $(REL) $(REV) $@
 
 sure:		$(TZCSRCS) $(TZDSRCS) tzfile.h
-		lint $(LINTFLAGS) $(CFLAGS) $(TZCSRCS)
-		lint $(LINTFLAGS) $(CFLAGS) $(TZDSRCS)
-		lint $(LINTFLAGS) $(CFLAGS) $(LIBSRCS)
+		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)" $(TZCSRCS)
+		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)" $(TZDSRCS)
+		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)" $(LIBSRCS)
 
 clean:
 		rm -f core *.o *.out REDID_BINARIES zdump zic BUNDLE* \#*

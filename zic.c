@@ -428,8 +428,7 @@ char *	argv[];
 	register int	c;
 
 #ifdef unix
-	(void) umask((unsigned short) (umask((unsigned short) (S_IWGRP |
-		S_IWOTH)) | (S_IWGRP | S_IWOTH)));
+	(void) umask(umask(S_IWGRP | S_IWOTH) | (S_IWGRP | S_IWOTH));
 #endif /* defined unix */
 	progname = argv[0];
 	while ((c = getopt(argc, argv, "d:l:p:L:vsy:")) != EOF)

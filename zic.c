@@ -532,12 +532,13 @@ char *	name;
 ** Convert a string of one of the forms
 **	h	-h 	hh:mm	-hh:mm	hh:mm:ss	-hh:mm:ss
 ** into a number of seconds. 
-** Return -1 on errors.
+** Call error with errstring and return zero on errors.
 */
 
 static long
-getoff(string)
+getoff(string, errstring)
 char *	string;
+char *	errstring;
 {
 	long	hh, mm, ss, sign;
 
@@ -550,12 +551,16 @@ char *	string;
 	else if (sscanf(string, scheck(string, "%ld:%ld"), &hh, &mm) == 2)
 		ss = 0;
 	else if (sscanf(string, scheck(string, "%ld:%ld:%ld"),
-		&hh, &mm, &ss) != 3)
-			return -1;
+		&hh, &mm, &ss) != 3) {
+			error(errstring);
+			return 0;
+	}
 	if (hh < 0 || hh >= HOURS_PER_DAY ||
 		mm < 0 || mm >= MINS_PER_HOUR ||
-		ss < 0 || ss >= SECS_PER_MIN)
-			return -1;
+		ss < 0 || ss >= SECS_PER_MIN) {
+			error(errstring);
+			return 0;
+	}
 	return (long) sign * (((hh * MINS_PER_HOUR) + mm) * SECS_PER_MIN + ss);
 }
 
@@ -592,14 +597,8 @@ char **	fields;
 				break;
 		}
 	}
-	if ((r.r_tod = getoff(fields[RF_TOD])) < 0) {
-		error("time of day");
-		return;
-	}
-	if ((r.r_stdoff = getoff(fields[RF_STDOFF])) == -1) {
-		error("Standard Time offset");
-		return;
-	}
+	r.r_tod = getoff(fields[RF_TOD], "time of day");
+	r.r_stdoff = getoff(fields[RF_STDOFF], "Standard Time offset");
 	/*
 	** Year work.
 	*/
@@ -709,10 +708,7 @@ char **	fields;
 			error(buf);
 			return;
 		}
-	if ((z.z_gmtoff = getoff(fields[ZF_GMTOFF])) == -1) {
-		error("GMT offset");
-		return;
-	}
+	z.z_gmtoff = getoff(fields[ZF_GMTOFF], "GMT offset");
 	if ((cp = strchr(fields[ZF_FORMAT], '%')) != 0) {
 		if (*++cp != 's' || strchr(cp, '%') != 0) {
 			error("format");
@@ -756,6 +752,7 @@ char **	fields;
 
 static
 writezone(name)
+char *	name;
 {
 	register FILE *	fp;
 	register int	i;
@@ -831,6 +828,7 @@ char *	cp2;
 	linenum = tp2->t_rp->r_linenum;
 	error(cp);
 	wildexit(cp);
+	/*NOTREACHED*/
 }
 
 static
@@ -839,8 +837,6 @@ register struct rule *	rp;
 long			y;
 {
 	if (ntemps >= TZ_MAX_TIMES) {
-		filename = rp->r_filename;
-		linenum = rp->r_linenum;
 		error("too many transitions?!");
 		wildexit("large number of transitions");
 	}
@@ -854,16 +850,11 @@ outzone(zp)
 register struct zone *	zp;
 {
 	register struct rule *		rp;
-	register struct dsinfo *	dsp;
 	register int			i, j;
 	register long			y;
 	register long			gmtoff;
 	char				buf[BUFSIZ];
-	static struct ttinfo		i0;
-	struct ttinfo			t;
 
-	filename = zp->z_filename;
-	linenum = zp->z_linenum;
 	h.tzh_timecnt = 0;
 	h.tzh_typecnt = 0;
 	h.tzh_charcnt = 0;
@@ -892,6 +883,8 @@ register struct zone *	zp;
 		}
 		if (j >= h.tzh_typecnt) {
 			if (h.tzh_typecnt >= TZ_MAX_TYPES) {
+				filename = zp->z_filename;
+				linenum = zp->z_linenum;
 				error("large number of local time types");
 				wildexit("input data");
 			}
@@ -909,6 +902,8 @@ register struct zone *	zp;
 	ntemps = 0;
 	for (i = 0; i < zp->z_nrules; ++i) {
 		rp = &zp->z_rules[i];
+		filename = rp->r_filename;
+		linenum = rp->r_linenum;
 		if (rp->r_yrtype != NULL && *rp->r_yrtype != '\0')
 			hard(rp);
 		else for (y = rp->r_loyear; y <= rp->r_hiyear; ++y)
@@ -918,6 +913,8 @@ register struct zone *	zp;
 	(void) qsort((char *) temps, ntemps, sizeof *temps, tcomp);
 	for (i = 0; i < ntemps; ++i) {
 		rp = temps[i].t_rp;
+		filename = rp->r_filename;
+		linenum = rp->r_linenum;
 		types[i] = rp->r_type;
 		ats[i] = tadd(temps[i].t_time, -zp->z_gmtoff);
 		if (!rp->r_todisstd) {
@@ -972,8 +969,6 @@ register struct rule *	rp;
 	if (pclose(fp))
 		wild2exit("result closing pipe to", command);
 	if (n == 0) {
-		filename = rp->r_filename;
-		linenum = rp->r_linenum;
 		error("no year in range matches type");
 		wildexit("input data");
 	}
@@ -1096,13 +1091,7 @@ register struct rule *	rp;
 register long		wantedy;
 {
 	register long	i, y, wday, dayoff, t, m;
-	register char *	savefile;
-	register int	saveline;
 
-	savefile = filename;
-	saveline = linenum;
-	filename = rp->r_filename;
-	linenum = rp->r_linenum;
 	t = 0;
 	dayoff = 0;
 	m = TM_JANUARY;
@@ -1164,14 +1153,12 @@ register long		wantedy;
 			wday = (wday + i + 7) % 7;
 		}
 	}
-	t = tadd(t, rp->r_tod);
-	filename = savefile;
-	linenum = saveline;
-	return t;
+	return tadd(t, rp->r_tod);
 }
 
 static
 newabbr(string)
+char *	string;
 {
 	register int	i;
 

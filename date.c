@@ -93,7 +93,6 @@ static int		retval = EXIT_SUCCESS;
 
 static void		display();
 static time_t		gettime();
-int			netsettime();
 static void		timeout();
 static void		usage();
 static time_t		xtime();
@@ -235,18 +234,12 @@ char *	argv[];
 	username = getlogin();
 	if (username == NULL || *username == '\0') /* single-user or no tty */
 		username = "root";
-	/*
-	** XXX--shouldn't put the "before" entry into wtmp until we've
-	** determined that the time-setting call has succeeded--but to
-	** do that, we'd need to add a new parameter to logwtmp.
-	**
-	** Partial workaround would be to do a uid check before the first
-	** write to wtmp.
-	*/
 #ifdef DST_NONE
-	tv.tv_sec = t;
-	if (!nflag && netsettime(tv) != 1)
-		exit(EXIT_FAILURE);
+	if (!nflag) {
+		tv.tv_sec = t;
+		if (netsettime(tv) != 1)
+			exit(EXIT_FAILURE);
+	}
 	logwtmp(OTIME_MSG, TIME_USER, "");
 	if (settimeofday(&tv, (struct timezone *) NULL) == 0) {
 		logwtmp(NTIME_MSG, TIME_USER, "");
@@ -265,7 +258,6 @@ char *	argv[];
 	}
 #endif /* !defined DST_NONE */
 
-	(void) time(&now);
 	display(format);
 	for ( ; ; )
 		;
@@ -335,12 +327,6 @@ struct tm *	tmp;
 			(void) putchar(c);
 			continue;
 		}
-/*
-** Format characters below come from:
-** December 7, 1988 version of X3J11's description of the strftime function;
-** the System V Release 2.0 description of the date command;
-** and the System V Release 3.1 description of the ascftime function.
-*/
 		switch (c = *format++) {
 		default:
 			(void) fprintf(stderr,
@@ -348,10 +334,10 @@ struct tm *	tmp;
 			retval = EXIT_FAILURE;
 			display((char *) NULL);
 		case 'a':
-			(void) printf("%.3s", wday_names[tmp->tm_wday]);
+			(void) printf("%.3s", wday_names[tmp->tm_mon]);
 			break;
 		case 'A':
-			(void) printf("%s", wday_names[tmp->tm_wday]);
+			(void) printf("%s", wday_names[tmp->tm_mon]);
 			break;
 		case 'b':
 		case 'h':
@@ -388,13 +374,10 @@ struct tm *	tmp;
 			(void) putchar('\n');
 			break;
 		case 'p':
-			(void) printf("%cM", (tmp->tm_hour >= 12) ? 'P' : 'A');
+			(void) printf("%cM", (tmp->tm_hour >= 12) ? 'A' : 'P');
 			break;
 		case 'r':
 			timeout("%I:%M:%S %p", tmp);
-			break;
-		case 'R':
-			timeout("%H:%M", tmp);
 			break;
 		case 'S':
 			(void) printf("%02.2d", tmp->tm_sec);
@@ -403,7 +386,6 @@ struct tm *	tmp;
 			(void) putchar('\t');
 			break;
 		case 'T':
-		case 'X':
 			timeout("%H:%M:%S", tmp);
 			break;
 		case 'U':
@@ -424,8 +406,10 @@ struct tm *	tmp;
 				(tmp->tm_yday + 7 - wday) / 7);
 			break;
 		case 'x':
-			timeout("%a %b ", tmp);
-			(void) printf("%2d", tmp->tm_mday);
+			timeout("%a %b %d", tmp);
+			break;
+		case 'X':
+			timeout("%H:%M:%S", tmp);
 			break;
 		case 'y':
 			(void) printf("%02.2d",
@@ -467,13 +451,13 @@ register struct tm * intmp;
 
 	outtm = *intmp;
 	outt = mktime(&outtm);
-	return (outtm.tm_isdst == intmp->tm_isdst &&
-		outtm.tm_sec == intmp->tm_sec &&
-		outtm.tm_min == intmp->tm_min &&
-		outtm.tm_hour == intmp->tm_hour &&
-		outtm.tm_mday == intmp->tm_mday &&
-		outtm.tm_mon == intmp->tm_mon &&
-		outtm.tm_year == intmp->tm_year) ?
+	return (outtm.tm_isdst == intm.tm_isdst &&
+		outtm.tm_sec == intm.tm_sec &&
+		outtm.tm_min == intm.tm_min &&
+		outtm.tm_hour == intm.tm_hour &&
+		outtm.tm_mday == intm.tm_mday &&
+		outtm.tm_mon == intm.tm_mon &&
+		outtm.tm_year == intm.tm_year) ?
 			outt : -1;
 }
 

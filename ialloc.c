@@ -19,7 +19,7 @@ static char	elsieid[] = "%W%";
 #endif /* !defined MAL */
 
 #if defined __STDC__ || defined __TURBOC__
-#include "memory.h"
+#include "alloc.h"
 #include "string.h"
 #else /* !defined __STDC__ || defined __TURBOC__ */
 extern char *	calloc();

@@ -1,7 +1,7 @@
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";
-/* As received from UCB, with SCCSID reconditionalized. */
+/* As received from UCB, with this header added */
 #endif /* !defined NOID */
 #endif /* !defined lint */
 

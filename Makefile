@@ -182,7 +182,7 @@ HEADERS=	tzfile.h private.h
 NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c emkdir.c getopt.c
 NEWUCBSRCS=	date.c logwtmp.c strftime.c
 SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS)
-MANS=		newctime.3 tzfile.5 zic.8 zdump.8
+MANS=		newctime.3 tzset.3 tzfile.5 zic.8 zdump.8
 DOCS=		Patchlevel.h README Theory $(MANS) date.1 Makefile
 YDATA=		africa antarctica asia australasia \
 		europe northamerica southamerica pacificnew etcetera factory
@@ -209,10 +209,11 @@ install:	all $(DATA) $(REDO) $(TZLIB) $(MANS)
 		-mkdir $(TOPDIR) $(MANDIR) \
 			$(MANDIR)/man3 $(MANDIR)/man5 $(MANDIR)/man8
 		-rm -f $(MANDIR)/man3/newctime.3 \
+			$(MANDIR)/man3/newtzset.3 \
 			$(MANDIR)/man5/tzfile.5 \
 			$(MANDIR)/man8/zdump.8 \
 			$(MANDIR)/man8/zic.8
-		cp newctime.3 $(MANDIR)/man3/.
+		cp newctime.3 newtzset.3 $(MANDIR)/man3/.
 		cp tzfile.5 $(MANDIR)/man5/.
 		cp zdump.8 zic.8 $(MANDIR)/man8/.
 

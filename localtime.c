@@ -1053,8 +1053,9 @@ const time_t * const	timep;
 }
 
 /*
- * Re-entrant version of localtime
- */
+** Re-entrant version of localtime.
+*/
+
 struct tm *
 localtime_r(timep, tm)
 const time_t * const	timep;
@@ -1113,8 +1114,9 @@ const time_t * const	timep;
 }
 
 /*
- * Re-entrant version of gmtime
- */
+* Re-entrant version of gmtime.
+*/
+
 struct tm *
 gmtime_r(timep, tm)
 const time_t * const	timep;

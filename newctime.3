@@ -52,16 +52,20 @@ the best available approximation to local wall clock time is used by
 .IR localtime .
 If
 .B TZ
-does appear and
+appears in the environment but its value is a null string,
+Greenwich Mean Time is used;
+if
+.B TZ
+appears and
 begins with a slash,
 it is used as the absolute pathname of the
 .IR tzfile (5)-format
 file from which to read the time conversion information;
 if
 .B TZ
-does appear and
+appears and
 begins with a character other than a slash,
-it is used as a pathname relative to a system time conversion information
+it's used as a pathname relative to a system time conversion information
 directory.
 \}
 .PP
@@ -128,28 +132,46 @@ Declarations of all the functions and externals, and the ``tm'' structure,
 are in the
 .B <time.h>\^
 header file.
-The structure declaration is:
+The structure (of type)
+.B struct tm
+includes the following fields:
 .RS
 .PP
 .nf
-struct tm {
-        int tm_sec;	/\(** seconds (0 - 59) \(**/
-        int tm_min;	/\(** minutes (0 - 59) \(**/
-        int tm_hour;	/\(** hours (0 - 23) \(**/
-        int tm_mday;	/\(** day of month (1 - 31) \(**/
-        int tm_mon;	/\(** month of year (0 - 11) \(**/
-        int tm_year;	/\(** year \- 1900 \(**/
-        int tm_wday;	/\(** day of week (Sunday = 0) \(**/
-        int tm_yday;	/\(** day of year (0 - 365) \(**/
-        int tm_isdst;	/\(** is DST in effect? \(**/
-};
+.ta .5i +\w'long tm_gmtoff;\0\0'u
+	int tm_sec;	/\(** seconds (0 - 59) \(**/
+	int tm_min;	/\(** minutes (0 - 59) \(**/
+	int tm_hour;	/\(** hours (0 - 23) \(**/
+	int tm_mday;	/\(** day of month (1 - 31) \(**/
+	int tm_mon;	/\(** month of year (0 - 11) \(**/
+	int tm_year;	/\(** year \- 1900 \(**/
+	int tm_wday;	/\(** day of week (Sunday = 0) \(**/
+	int tm_yday;	/\(** day of year (0 - 365) \(**/
+	int tm_isdst;	/\(** is DST in effect? \(**/
+	char \(**tm_zone;	/\(** abbreviation of timezone name \(**/
+	long tm_gmtoff;	/\(** offset from GMT in seconds \(**/
 .fi
 .RE
+.PP
+The
+.I tm_zone
+and
+.I tm_gmtoff
+fields exist, and are filled in, only if arrangements to do
+so were made when the library containing these functions was
+created.
+There is no guarantee that these fields will continue to exist
+in this form in future releases of this code.
 .PP
 .I Tm_isdst\^
 is non-zero if a 
 time zone adjustment such as Daylight Savings time
 is in effect.
+.PP
+.I Tm_gmtoff
+is the offset (in seconds) of the time represented
+from GMT, with positive values indicating East
+of Greenwich.
 .if !\nX \{\
 .SH FILES
 .ta \w'/etc/zoneinfo/localtime\0\0'u
@@ -164,4 +186,14 @@ time(2)
 .SH NOTE
 The return values point to static data
 whose content is overwritten by each call.
+The
+.B tm_zone
+field of a returned
+.B "struct tm"
+points to a static array of characters, which
+will also be overwritten at the next call
+(and by calls to
+.I tzset
+or
+.IR tzsetwall ).
 .. %W%

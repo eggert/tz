@@ -20,10 +20,56 @@
 # 00:00 standard time (i.e., 01:00 DST).  It also claims that Turkey
 # switches on the same day, but switches on at 01:00 standard time
 # and off at 00:00 standard time (i.e., 01:00 DST)
-
+###############################################################################
+# The starting and ending dates below (from which the rules are derived)
+# are from Whitaker's Almanack for 1987, page 146.
+# 1960 is the earliest year for which dates are given;
+# the almanac notes that British Summer Time (and, in some years, Double Summer
+# Time) was observed in earlier years but does not give start and end dates.
+#
+# A source at the British Information Office in New York avers that it's
+# known as "British" Summer Time in all parts of the United Kingdom.
+#	1960	April 10	October 2 (yes, 2, according to the almanac)
+#	1961	March 26	October 29
+#	1962	March 25	October 28
+#	1963	March 31	October 27
+#	1964	March 22	October 25
+#	1965	March 21	October 24
+#	1966	March 20	October 23
+#	1967	March 19	October 29
+#	1968	February 18	October 27
+# "British Standard Time, also one hour ahead of G. M. T., was kept between
+# 1968 Oct. 27-1971 Oct. 31."
+#	1972	March 19	October 29
+#	1973	March 18	October 28
+#	1974	March 17	October 27
+#	1975	March 16	October 26
+#	1976	March 21	October 24
+#	1977	March 20	October 23
+#	1978	March 19	October 29
+#	1979	March 18	October 28
+#	1980	March 16	October 26
+#	1981	March 29	October 25
+#	1982	March 28	October 24
+#	1983	March 27	October 23
+#	1984	March 25	October 28
+#	1985	March 31	October 27
+#	1986	March 30	October 26
+#	1987	March 29	October 25
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	GB-Eire	1986	max	-	Mar	lastSun	1:00s	1:00	BST
-Rule	GB-Eire	1986	max	-	Oct	lastSun	1:00s	0	GMT
+# Historic starting rules
+Rule	GB-Eire	1960	only	-	Apr	10	1:00s	1:00	BST
+Rule	GB-Eire	1961	1963	-	Mar	lastSun	1:00s	1:00	BST
+Rule	GB-Eire	1964	1967	-	Mar	Sun>=19	1:00s	1:00	BST
+Rule	GB-Eire	1968	only	-	Feb	18	1:00s	1:00	BST
+Rule	GB-Eire	1972	1980	-	Mar	Sun>=16	1:00s	1:00	BST
+# Historic ending rules
+Rule	GB-Eire	1960	only	-	Oct	2	1:00s	0	GMT
+Rule	GB-Eire	1961	1967	-	Oct	Sun>=23	1:00s	0	GMT
+Rule	GB-Eire	1971	only	-	Oct	31	1:00s	0	GMT
+# Current rules
+Rule	GB-Eire	1981	max	-	Mar	lastSun	1:00s	1:00	BST
+Rule	GB-Eire	1972	max	-	Oct	Sun>=23	1:00s	0	GMT
 
 Rule	W-Eur	1986	max	-	Mar	lastSun	1:00s	1:00	" DST"
 Rule	W-Eur	1986	max	-	Sep	lastSun	1:00s	0	-

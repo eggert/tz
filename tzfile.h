@@ -54,7 +54,7 @@ struct tzhead {
 
 #ifndef TZ_MAX_TYPES
 #ifdef SAUDI
-#define TZ_MAX_TYPES	370	/* A bit more than a year's worth */
+#define TZ_MAX_TYPES	256	/* Limited by what (unsigned char)'s can hold */
 #else /* !SAUDI */
 #define TZ_MAX_TYPES	10	/* Maximum number of local time types */
 #endif /* !SAUDI */

@@ -349,8 +349,7 @@ _add(str, pt, ptlim)
 	char *pt;
 	const char *ptlim;
 {
-	while (pt < ptlim && (*pt = *str++) != '\0') {
+	while (pt < ptlim && (*pt = *str++) != '\0')
 		++pt;
-	}
 	return pt;
 }

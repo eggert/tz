@@ -198,6 +198,10 @@ extern void		free P((char * buf));
 	((sizeof(type) * CHAR_BIT - 1) * 302 / 1000 + 2)
 #endif /* !defined INT_STRLEN_MAXIMUM */
 
+#ifndef LOCALE_HOME
+#define LOCALE_HOME	"/usr/lib/locale"
+#endif /* !defined LOCALE_HOME */
+
 /*
 ** UNIX was a registered trademark of UNIX System Laboratories in 1993.
 ** VAX is a trademark of Digital Equipment Corporation.

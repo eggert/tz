@@ -84,9 +84,12 @@ that follow the
 structure(s) in the file.
 .PP
 .I Newlocaltime
-uses the first
+uses the first standard-time
 .I ttinfo
 structure in the file
+(or simply the first
+.I ttinfo
+structure in the absence of a standard-time structure)
 if either
 .I tzh_timecnt
 is zero or

@@ -5,9 +5,10 @@
 # zones
 #
 # This data is by no means authoritative; if you think you know better, go
-# ahead and edit the file (and please send any changes to seismo!elsie!tz
-# for general use in the future).  The use of 1986 as starting years below
-# is conservative.
+# ahead and edit the file (and please send any changes to
+# vax2.nlm.nih.gov!elsie!tz for general use in the future).
+#
+# The use of 1986 as starting years below is conservative.
 #
 # One source shows that Bulgaria, Cyprus, Finland, and Greece observe DST from
 # the last Sunday in March to the last Sunday in September in 1986.
@@ -53,17 +54,12 @@ Zone	W-SU		3:00	M-Eur		????
 
 Link	MET	CET
 
-#
-# And now, letters on the subject. . .
-#
 ###############################################################################
-#
+
 # ...
 # Date: Wed, 28 Jan 87 16:56:27 -0100
 # From: seismo!mcvax!cgcha!wtho (Tom Hofmann)
 # Message-Id: <8701281556.AA22174@cgcha.uucp>
-# ...
-# Subject: Time zone handling
 # ...
 # 
 # ...the European time rules are...standardized since 1981, when
@@ -83,9 +79,9 @@ Link	MET	CET
 # Tom Hofmann, Scientific Computer Center, CIBA-GEIGY AG,
 # 4002 Basle, Switzerland
 # UUCP: ...!mcvax!cernvax!cgcha!wtho
-#
+
 ###############################################################################
-# 
+
 # ...
 # Date: Wed, 4 Feb 87 22:35:22 +0100
 # From: seismo!mcvax!cwi.nl!dik (Dik T. Winter)
@@ -120,33 +116,81 @@ Link	MET	CET
 # dik t. winter, cwi, amsterdam, nederland
 # INTERNET   : dik@cwi.nl
 # BITNET/EARN: dik@mcvax
-#
+
 ###############################################################################
-#
-# ...
-# Date: Thu, 28 Jan 88 20:25:39 PST
-# ...
-# From: ncifcrf!decwrl.dec.com!devine%cookie.DEC (Bob Devine)
+
+# From Bob Devine (January 28, 1988):
 # ...
 # Greece: Last Sunday in April to last Sunday in September (iffy on dates).
 # Since 1978.  Change at midnight.
 # ...
 # Monaco: has same DST as France.
 # ...
-#
+
 ###############################################################################
-#
-# From Arthur David Olson (February 10, 1988):
-# The U.S. Naval Observatory says of Greece (as of February 10, 1988):
-#
-#	GREECE              2 H AHEAD OF UTC IN WINTER
-#	GREECE              3 H AHEAD OF UTC IN SUMMER EFF. 31MAR85 02/03 LOCAL 
-#	GREECE              3 H AHEAD OF UTC MAR 25 - SEP 30
-#
-# I'll hold off on making an entry unless I can firm up the switch dates.
-#
-# Since Monaco runs on standard rules, MET (Monaco European Time?)
-# should work for it; shouldn't be a need for a separate entry.
-#
-###############################################################################
-#
+
+# From U.S. Naval Observatory (February 13, 1988):
+# ANDORRA             1 H AHEAD OF UTC
+# BULGARIA            2 H AHEAD OF UTC WINTER 
+# BULGARIA            3 H AHEAD OF UTC SUMMER MAR31 - SEP 85, 0100 LOCAL
+# CYPRUS              2 H AHEAD UTC IN WINTER 
+# CYPRUS              3 H AHEAD UTC MAR 25 - SEP 30 
+# DENMARK             1 H AHEAD UTC IN WINTER 
+# DENMARK             2 H AHEAD UTC MAR 31 - SEP 30  , 0200 LOCAL 
+# DENMK. FAEROE IS    1 H AHEAD UTC MAR 31 - SEP 30  , 0200 LOCAL 
+# ENGLAND             ON UTC IN WINTER; WALES, SCOTLAND, N.I., CH.IS. 
+# ENGLAND             1 H AHEAD OF UTC; SUMMER TIL 28 OCT 0200 LOCAL
+# FINLAND             2 H AHEAD OF UTC IN WINTER
+# FINLAND             3 H AHEAD OF UTC MAR 25 - SEP 30  
+# FRANCE              1 H AHEAD OF UTC IN WINTER
+# FRANCE              2 H AHEAD OF UTC MAR 31 - SEP 30 , 0100 LOCAL 
+# GREECE              2 H AHEAD OF UTC IN WINTER
+# GREECE              3 H AHEAD OF UTC IN SUMMER EFF. 31MAR85 02/03 LOCAL 
+# GREECE              3 H AHEAD OF UTC MAR 25 - SEP 30
+# GREENLAND           4 H BEHIND UTC  IN THULE AIRBASE YEAR ROUND 
+# GREENLAND           3 H BEHIND UTC  IN WINTER AT SONDRESTROM
+# GREENLAND           2 H BEHIND UTC  30 MAR - 30 SEP 2200 LOCAL AT -"- 
+# GREENLAND           2 H BEHIND UTC  AROUND SCORESBY SUND
+# ICELAND             ON UTC
+# IRELAND             ON UTC IN WINTER
+# IRELAND             1 H AHEAD OF UTC MAR 31 - OCT 23  0200 LOCAL
+# ITALY               1 H AHEAD OF UTC IN WINTER
+# ITALY               2 H AHEAD OF UTC MAR 31 - SEP 30, 0030 LOCAL
+# MONACO              1 H AHEAD UTC IN WINTER 
+# MONACO              2 H AHEAD UTC MAR 25 - SEP30
+# POLAND              1 H AHEAD OF UTC IN WINTER
+# POLAND              2 H AHEAD OF UTC MAR 24 - SEP     0200 LOCAL
+# PORTUGAL            ON UTC IN WINTER
+# PORTUGAL            1 H AHEAD OF UTC IN SUMMER MAR 31 - SEP 29   0100 LOCAL 
+# PORTUGAL AZORES     1 H BEHIND UTC IN WINTER
+# PORTUGAL AZORES     ON UTC IN SUMMER MAR 31 - SEP 29
+# PORTUGAL MADEIRA    ON UTC ALL YEAR;
+# ROMANIA             2 H AHEAD OF UTC IN WINTER
+# ROMANIA             3 H AHEAD OF UTC APR 3 - SEP 24 
+# SCOTLAND            SEE ENGLAND 
+# SWITZERLAND         1 H AHEAD OF UTC IN WINTER
+# SWITZERLAND         2 H AHEAD OF UTC MAR 31 - SEP 30  0200 LOCAL
+# TURKEY              3 H AHEAD OF UTC
+# USSR WEST EUROP     3 H AHEAD OF UTC IN WINTER; LENINGRAD, MOSCOW 
+# USSR WEST EUROP     4 H AHEAD OF UTC APR 1 - SEP 30 
+# USSR CENTRAL EUR    4 H AHEAD OF UTC IN WINTER; ROSTOV, BAKU
+# USSR CENTRAL EUR    5 H AHEAD OF UTC APR 1 - SEP 30 
+# USSR EAST EUROP     5 H AHEAD OF UTC IN WINTER; SVERDLOVSK
+# USSR EAST EUROP     6 H AHEAD OF UTC APR 1 - SEP 30 
+# USSR WEST SIBERIAN  6 H AHEAD OF UTC IN WINTER; TASHKENT, ALMA ATA
+# USSR WEST SIBERIAN  7 H AHEAD OF UTC APR 1 - SEP 30 
+# USSR WEST-CENTRAL   7 H AHEAD OF UTC IN WINTER; NOVOSIBIRSK 
+# USSR WEST-CENTRAL   8 H AHEAD OF UTC APR 1 - SEP 30 
+# USSR WEST-CENTRAL   8 H AHEAD OF UTC IN WINTER; IRKUTSK 
+# USSR WEST-CENTRAL   9 H AHEAD OF UTC APR 1 - SEP 30 
+# USSR CENTRAL SIB    9 H AHEAD OF UTC IN WINTER; YAKUTSK 
+# USSR CENTRAL SIB   10 H AHEAD OF UTC APR 1 - SEP 30 
+# USSR CENTRAL SIB   10 H AHEAD OF UTC IN WINTER; VLADIVOSTOK 
+# USSR CENTRAL SIB   11 H AHEAD OF UTC APR 1 - SEP 30 
+# USSR EAST SIBERIA  11 H AHEAD OF UTC IN WINTER; MAGADAN 
+# USSR EAST SIBERIA  12 H AHEAD OF UTC APR 1 - SEP 30 
+# USSR EAST SIBERIA  12 H AHEAD OF UTC IN WINTER; PETROPAVLOVSK 
+# USSR EAST SIBERIA  13 H AHEAD OF UTC APR 1 - SEP 30 
+# USSR EAST SIBERIA  13 H AHEAD OF UTC IN WINTER; UELEN 
+# USSR EAST SIBERIA  14 H AHEAD OF UTC APR 1 - SEP 30 
+# WALES               SEE ENGLAND 

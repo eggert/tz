@@ -45,10 +45,8 @@ imalloc(n)
 char *
 icalloc(nelem, elsize)
 {
-	if (nelem == 0)
-		nelem = 1;
-	if (elsize == 0)
-		elsize = 1;
+	if (nelem == 0 || elsize == 0)
+		nelem = elsize = 1;
 	return calloc((alloc_t) nelem, (alloc_t) elsize);
 }
 

@@ -39,6 +39,7 @@ extern char *	strcpy();
 
 static		addtt();
 static		addtype();
+static		addleap();
 static		associate();
 static int	charcnt;
 static		ciequal();
@@ -48,6 +49,7 @@ static char *	filename;
 static char **	getfields();
 static long	gethms();
 static		infile();
+static		inleap();
 static		inlink();
 static		inrule();
 static		inzcont();
@@ -71,7 +73,9 @@ static int	rlinenum;
 static time_t	rpytime();
 static		rulesub();
 static		setboundaries();
+static		adjleap();
 static time_t	tadd();
+static int	leapcnt;
 static int	timecnt;
 static int	tt_signed;
 static int	typecnt;
@@ -84,6 +88,7 @@ static		yearistype();
 #define LC_RULE		0
 #define LC_ZONE		1
 #define LC_LINK		2
+#define LC_LEAP		3
 
 /*
 ** Which fields are which on a Zone line.
@@ -136,6 +141,18 @@ static		yearistype();
 #define LF_FROM		1
 #define LF_TO		2
 #define LINK_FIELDS	3
+
+/*
+** Which fields are which on a Leap line.
+*/
+
+#define LP_YEAR		1
+#define LP_MONTH	2
+#define LP_DAY		3
+#define LP_TIME		4
+#define LP_CORR		5
+#define LP_ROLL		6
+#define LEAP_FIELDS	7
 
 struct rule {
 	char *	r_filename;
@@ -222,6 +239,7 @@ static struct lookup	line_codes[] = {
 	"Rule",		LC_RULE,
 	"Zone",		LC_ZONE,
 	"Link",		LC_LINK,
+	"Leap",		LC_LEAP,
 	NULL,		0
 };
 
@@ -276,6 +294,12 @@ static struct lookup	end_years[] = {
 	NULL,			0
 };
 
+static struct lookup	leap_types[] = {
+	"Rolling",		1,
+	"Stationary",		0,
+	NULL,			0
+};
+
 static int	len_months[2][MONS_PER_YEAR] = {
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
@@ -291,6 +315,9 @@ static long		gmtoffs[TZ_MAX_TYPES];
 static char		isdsts[TZ_MAX_TYPES];
 static char		abbrinds[TZ_MAX_TYPES];
 static char		chars[TZ_MAX_CHARS];
+static time_t		trans[TZ_MAX_LEAPS];
+static long		corr[TZ_MAX_LEAPS];
+static char		roll[TZ_MAX_LEAPS];
 
 /*
 ** Memory allocation.
@@ -355,13 +382,14 @@ static
 usage()
 {
 	(void) fprintf(stderr,
-"%s: usage is %s [ -s ] [ -v ] [ -l localtime ] [ -d directory ] [ filename ... ]\n",
+"%s: usage is %s [ -s ] [ -v ] [ -l localtime ] [ -d directory ]\n\t[ -L leapseconds ] [ filename ... ]\n",
 		progname, progname);
 	exit(1);
 }
 
 static char *	lcltime = NULL;
 static char *	directory = NULL;
+static char *	leapsec = NULL;
 static int	sflag = FALSE;
 
 main(argc, argv)
@@ -375,7 +403,7 @@ char *	argv[];
 	umask(umask(022) | 022);
 #endif
 	progname = argv[0];
-	while ((c = getopt(argc, argv, "d:l:vs")) != EOF)
+	while ((c = getopt(argc, argv, "d:l:L:vs")) != EOF)
 		switch (c) {
 			default:
 				usage();
@@ -399,6 +427,16 @@ char *	argv[];
 					exit(1);
 				}
 				break;
+			case 'L':
+				if (leapsec == NULL)
+					leapsec = optarg;
+				else {
+					(void) fprintf(stderr,
+"%s: More than one -L option specified\n",
+						progname);
+					exit(1);
+				}
+				break;
 			case 'v':
 				noise = TRUE;
 				break;
@@ -410,8 +448,13 @@ char *	argv[];
 		usage();	/* usage message by request */
 	if (directory == NULL)
 		directory = TZDIR;
+	if (leapsec == NULL)
+		leapsec = "leapseconds";
 
 	setboundaries();
+
+	infile(leapsec);
+	adjleap();
 
 	zones = (struct zone *) emalloc(0);
 	rules = (struct rule *) emalloc(0);
@@ -625,6 +668,15 @@ char *	name;
 					inlink(fields, nfields);
 					wantcont = FALSE;
 					break;
+				case LC_LEAP:
+					if (name != leapsec)
+						(void) fprintf(stderr,
+"%s: Leap line in non leap seconds file %s\n",
+						progname, name);
+					else
+						inleap(fields, nfields);
+					wantcont = FALSE;
+					break;
 				default:	/* "cannot happen" */
 					(void) fprintf(stderr,
 "%s: panic: Invalid l_value %d\n",
@@ -682,7 +734,7 @@ char *	errstring;
 	}
 	if (hh < 0 || hh >= HOURS_PER_DAY ||
 		mm < 0 || mm >= MINS_PER_HOUR ||
-		ss < 0 || ss >= SECS_PER_MIN) {
+		ss < 0 || ss > SECS_PER_MIN) {
 			error(errstring);
 			return 0;
 	}
@@ -828,6 +880,83 @@ error("Zone continuation line end time is not after end time of previous line");
 	** there's more information about the zone on the next line.
 	*/
 	return hasuntil;
+}
+
+static
+inleap(fields, nfields)
+register char **	fields;
+{
+	register char *			cp;
+	register struct lookup *	lp;
+	register int			i, j;
+	int				year, month, day;
+	long				dayoff, tod;
+	time_t				t;
+
+	if (nfields != LEAP_FIELDS) {
+		error("wrong number of fields on Leap line");
+		return;
+	}
+	dayoff = 0;
+	cp = fields[LP_YEAR];
+	if (sscanf(cp, scheck(cp, "%d"), &year) != 1 ||
+		year < min_year || year > max_year) {
+			error("invalid leaping year");
+			return;
+	}
+	j = EPOCH_YEAR;
+	while (j != year) {
+		if (year > j) {
+			i = len_years[isleap(j)];
+			++j;
+		} else {
+			--j;
+			i = -len_years[isleap(j)];
+		}
+		dayoff = oadd(dayoff, eitol(i));
+	}
+	if ((lp = byword(fields[LP_MONTH], mon_names)) == NULL) {
+		error("invalid month name");
+		return;
+	}
+	month = lp->l_value;
+	j = TM_JANUARY;
+	while (j != month) {
+		i = len_months[isleap(year)][j];
+		dayoff = oadd(dayoff, eitol(i));
+		++j;
+	}
+	cp = fields[LP_DAY];
+	if (sscanf(cp, scheck(cp, "%d"), &day) != 1 ||
+		day <= 0 || day > len_months[isleap(year)][month]) {
+			error("invalid day of month");
+			return;
+	}
+	dayoff = oadd(dayoff, eitol(day - 1));
+	if (dayoff < 0 && !tt_signed) {
+		error("time before zero");
+		return;
+	}
+	t = (time_t) dayoff * SECS_PER_DAY;
+	/*
+	** Cheap overflow check.
+	*/
+	if (t / SECS_PER_DAY != dayoff) {
+		error("time overflow");
+		return;
+	}
+	tod = gethms(fields[LP_TIME], "invalid time of day", FALSE);
+	cp = fields[LP_CORR];
+	if (strcmp(cp, "+") && strcmp(cp, "")) {
+		/* infile() turned "-" into "" */
+		error("illegal CORRECTION field on Leap line");
+		return;
+	}
+	if ((lp = byword(fields[LP_ROLL], leap_types)) == NULL) {
+		error("illegal Rolling/Stationary field on Leap line");
+		return;
+	}
+	addleap(tadd(t, tod), *cp == '+', lp->l_value);
 }
 
 static
@@ -1017,7 +1146,7 @@ writezone(name)
 char *	name;
 {
 	register FILE *		fp;
-	register int		i;
+	register int		i, j;
 	char			fullname[BUFSIZ];
 
 	if (strlen(directory) + 1 + strlen(name) >= sizeof fullname) {
@@ -1037,11 +1166,19 @@ char *	name;
 		}
 	}
 	(void) fseek(fp, (long) sizeof ((struct tzhead *) 0)->tzh_reserved, 0);
+	puttzcode(eitol(leapcnt), fp);
 	puttzcode(eitol(timecnt), fp);
 	puttzcode(eitol(typecnt), fp);
 	puttzcode(eitol(charcnt), fp);
-	for (i = 0; i < timecnt; ++i)
+	for (i = 0; i < timecnt; ++i) {
+		j = leapcnt;
+		while (--j >= 0)
+			if (ats[i] >= trans[j]) {
+				ats[i] = tadd(ats[i], corr[j]);
+				break;
+			}
 		puttzcode((long) ats[i], fp);
+	}
 	if (timecnt > 0)
 		(void) fwrite((char *) types, sizeof types[0],
 			(int) timecnt, fp);
@@ -1052,6 +1189,25 @@ char *	name;
 	}
 	if (charcnt != 0)
 		(void) fwrite(chars, sizeof chars[0], (int) charcnt, fp);
+	for (i = 0; i < leapcnt; ++i) {
+		if (roll[i]) {
+			if (timecnt == 0 || trans[i] < ats[0]) {
+				j = 0;
+				while (isdsts[j])
+					if (++j >= typecnt) {
+						j = 0;
+						break;
+					}
+			} else {
+				j = 1;
+				while (j < timecnt && trans[i] >= ats[j])
+					++j;
+				j = types[j - 1];
+			}
+			puttzcode((long) tadd(trans[i], -gmtoffs[j]), fp);
+		} else	puttzcode((long) trans[i], fp);
+		puttzcode((long) corr[i], fp);
+	}
 	if (ferror(fp) || fclose(fp)) {
 		(void) fprintf(stderr, "%s: Write error on ", progname);
 		perror(fullname);
@@ -1254,6 +1410,50 @@ char *	abbr;
 	abbrinds[i] = j;
 	++typecnt;
 	return i;
+}
+
+static
+addleap(t, positive, rolling)
+time_t	t;
+{
+	register int	i, j;
+
+	if (leapcnt >= TZ_MAX_LEAPS) {
+		error("too many leap seconds");
+		exit(1);
+	}
+	for (i = 0; i < leapcnt; ++i)
+		if (t <= trans[i]) {
+			if (t == trans[i]) {
+				error("repeated leap second moment");
+				exit(1);
+			}
+			break;
+		}
+	for (j = leapcnt; j > i; --j) {
+		trans[j] = trans[j-1];
+		corr[j] = corr[j-1];
+		roll[j] = roll[j-1];
+	}
+	trans[i] = t;
+	corr[i] = (positive ? 1 : -1);
+	roll[i] = rolling;
+	++leapcnt;
+}
+
+static
+adjleap()
+{
+	register int	i;
+	register long	last = 0;
+
+	/*
+	** propagate leap seconds forward
+	*/
+	for (i = 0; i < leapcnt; ++i) {
+		trans[i] = tadd(trans[i], last);
+		last = corr[i] += last;
+	}
 }
 
 static

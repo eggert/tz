@@ -157,11 +157,27 @@ struct tzhead {
 #define EPOCH_WDAY	TM_THURSDAY
 
 /*
-** Accurate only for the past couple of centuries;
-** that will probably do.
+** Given an integral argument (a) and a positive integral argument (b),
+** return a % b per C99.
 */
 
+#define C99IPMOD(a, b)	((-1 % 2 < 0 || (a) >= 0) ? \
+				((a) % (b)) : ((a) % (b) - (b)))
+
 #define isleap(y) (((y) % 4) == 0 && (((y) % 100) != 0 || ((y) % 400) == 0))
+
+/*
+** Since everything in isleap is modulo 400 (or a factor of 400), we know that
+**	isleap(y) == isleap(y % 400)
+** and so
+**	isleap(a + b) == isleap((a + b) % 400)
+** or
+**	isleap(a + b) == isleap(a % 400 + b % 400)
+** (at least under the C99 definition of %).
+** We use this to avoid addition overflow problems.
+*/
+
+#define isleap_sum(a, b)	isleap(C99IPMOD((a), 400) + C99IPMOD((b), 400))
 
 #ifndef USG
 

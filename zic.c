@@ -695,7 +695,7 @@ static
 inrule(fields, nfields)
 register char **	fields;
 {
-	static struct rule	r;
+	struct rule	r;
 
 	if (nfields != RULE_FIELDS) {
 		error("wrong number of fields on Rule line");
@@ -765,7 +765,7 @@ inzsub(fields, nfields, iscont)
 register char **	fields;
 {
 	register char *	cp;
-	static struct zone	z;
+	struct zone	z;
 	register int	i_gmtoff, i_rule, i_format;
 	register int	i_untilyear, i_untilmonth;
 	register int	i_untilday, i_untiltime;
@@ -869,7 +869,9 @@ char *			timep;
 {
 	register struct lookup *	lp;
 	register char *			cp;
+	static struct rule		initr;
 
+	*rp = initr;
 	if ((lp = byword(monthp, mon_names)) == NULL) {
 		error("invalid month name");
 		return;

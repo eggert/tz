@@ -336,7 +336,7 @@ label:
 						** Fri Jan 1: 53
 						** Sun Jan 1: 52
 						** Sat Jan 1: 53 if previous
-						** 		 year a leap
+						**		 year a leap
 						**		 year, else 52
 						*/
 						if (i == TM_FRIDAY)

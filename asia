@@ -11,6 +11,10 @@
 # San Diego: ACS Publications, Inc. (1991).
 # Except where otherwise noted, it is the source for the data below.
 #
+# Another source occasionally used is Edward W. Whitman, World Time Differences,
+# Whitman Publishing Co, 2 Niagara Av, Ealing, London (undated), which
+# I found in the UCLA library.
+#
 # I invented the abbreviations marked `*' in the following table;
 # the rest are from earlier versions of this file, or from other sources.
 # Corrections are welcome!
@@ -36,7 +40,7 @@
 #	8:00	BNT	Borneo, Brunei*
 #	8:00	CST CDT	China
 #	8:00	HKT HKST Hong Kong
-#	8:00	PST PDT	Phillippines*
+#	8:00	PST PDT	Philippines*
 #	8:00	SGT	Singapore
 #	8:00	UST UDT	Ulan Bator*
 #	9:00	JST	Japan
@@ -105,8 +109,10 @@ Zone	Asia/Thimbu	5:58:36 -	LMT	1947 Aug 15
 			5:30	-	IST	1987 Oct
 			6:00	-	BGT
 
-# British Indian Ocean Territory (Chagos Archipelago, Diego Garcia)
-# no information
+# British Indian Ocean Territory
+# From Whitman:
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	Indian/Chagos	5:00	-	PKT
 
 # Brunei
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

@@ -81,7 +81,8 @@ static void		oops P((const char *));
 static void		reset P((time_t, int));
 static void		timeout P((FILE *, const char *, const struct tm *));
 static void		usage P((void));
-static void		wildinput P((const char *, const char *, const char *));
+static void		wildinput P((const char *, const char *,
+				const char *));
 
 int
 main(argc, argv)

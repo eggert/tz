@@ -82,8 +82,12 @@ char *	new;
 	register char *	result;
 	register	oldsize, newsize;
 
-	oldsize = NULLMAL(old) ? 0 : strlen(old);
 	newsize = NULLMAL(new) ? 0 : strlen(new);
+	if (NULLMAL(old))
+		oldsize = 0;
+	else if (newsize == 0)
+		return old;
+	else	oldsize = strlen(old);
 	if ((result = irealloc(old, oldsize + newsize + 1)) != NULL)
 		if (!NULLMAL(new))
 			(void) strcpy(result + oldsize, new);

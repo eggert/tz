@@ -96,7 +96,7 @@ char *		argv[];
 	register int		tflag = 0;
 	register int		minuteswest;
 	register int		dsttime;
-	register float		adjust;
+	register double		adjust;
 	time_t			now;
 	time_t			t;
 

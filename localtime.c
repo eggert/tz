@@ -83,13 +83,17 @@ static const char *	getoffset P((const char *strp, long *offsetp));
 static const char *	getrule P((const char *strp, struct rule *rulep));
 static time_t		transtime P((time_t janfirst, int year,
 				const struct rule *rulep, long offset));
-static int		tzparse P((const char *name, struct state *sp));
+static int		tzparse P((const char *name, struct state *sp,
+				const int dotzname));
 #ifdef STD_INSPIRED
 struct tm *		offtime P((const time_t * clockp, long offset));
 #endif /* !defined STD_INSPIRED */
 static void		timesub P((const time_t * clockp, long offset,
 				const struct state * sp, struct tm * tmp));
-static int		tzload P((const char * name, struct state * sp));
+static int		tzload P((const char * name, struct state * sp,
+				const int dotzname));
+static void		tzsetgmt P((struct state * const sp,
+				const int dotzname));
 void			tzsetwall P((void));
 
 static struct state	lclstate;
@@ -158,9 +162,10 @@ register const struct state * const	sp;
 }
 
 static int
-tzload(name, sp)
+tzload(name, sp, dotzname)
 register const char *		name;
 register struct state * const	sp;
+const int			dotzname;
 {
 	register const char *	p;
 	register int		i;
@@ -263,7 +268,7 @@ register struct state * const	sp;
 	/*
 	** Set tzname elements to initial values.
 	*/
-	if (sp == &lclstate)
+	if (dotzname)
 		settzname(sp);
 	return 0;
 }
@@ -546,9 +551,10 @@ const long				offset;
 */
 
 static int
-tzparse(name, sp)
+tzparse(name, sp, dotzname)
 const char *			name;
 register struct state * const	sp;
+const int			dotzname;
 {
 	const char *			stdname;
 	const char *			dstname;
@@ -569,7 +575,7 @@ register struct state * const	sp;
 	name = getoffset(name, &stdoffset);
 	if (name == NULL)
 		return -1;
-	load_result = tzload(TZDEFRULES, sp);
+	load_result = tzload(TZDEFRULES, sp, dotzname);
 	if (load_result != 0)
 		sp->leapcnt = 0;		/* so, we're off a little */
 	if (*name != '\0') {
@@ -728,21 +734,22 @@ register struct state * const	sp;
 		(void) strncpy(cp, dstname, dstlen);
 		*(cp + dstlen) = '\0';
 	}
-	if (sp == &lclstate)
+	if (dotzname)
 		settzname(sp);
 	return 0;
 }
 
 static void
-tzsetgmt(sp)
+tzsetgmt(sp, dotzname)
 register struct state * const	sp;
+const int			dotzname;
 {
 	sp->leapcnt = 0;		/* so, we're off a little */
 	sp->timecnt = 0;
 	sp->ttis[0].tt_gmtoff = 0;
 	sp->ttis[0].tt_abbrind = 0;
 	(void) strcpy(sp->chars, "GMT");
-	if (sp == &lclstate)
+	if (dotzname)
 		settzname(sp);
 }
 
@@ -754,10 +761,10 @@ tzset()
 	lcl_is_set = TRUE;
 	name = getenv("TZ");
 	if (name != 0 && *name == '\0')
-		tzsetgmt(&lclstate);		/* GMT by request */
-	else if (tzload(name, &lclstate) != 0) {
-		if (name[0] == ':' || tzparse(name, &lclstate) != 0)
-			tzsetgmt(&lclstate);
+		tzsetgmt(&lclstate, TRUE);		/* GMT by request */
+	else if (tzload(name, &lclstate, TRUE) != 0) {
+		if (name[0] == ':' || tzparse(name, &lclstate, TRUE) != 0)
+			tzsetgmt(&lclstate, TRUE);
 	}
 }
 
@@ -765,8 +772,8 @@ void
 tzsetwall()
 {
 	lcl_is_set = TRUE;
-	if (tzload((char *) 0, &lclstate) != 0)
-		tzsetgmt(&lclstate);
+	if (tzload((char *) 0, &lclstate, TRUE) != 0)
+		tzsetgmt(&lclstate, TRUE);
 }
 
 struct tm *
@@ -820,8 +827,8 @@ const time_t * const	clock;
 
 	if (!gmt_is_set) {
 		gmt_is_set = TRUE;
-		if (tzload("GMT", &gmtstate) != 0)
-			tzsetgmt(&gmtstate);
+		if (tzload("GMT", &gmtstate, FALSE) != 0)
+			tzsetgmt(&gmtstate, FALSE);
 	}
 	timesub(clock, 0L, &gmtstate, &tm);
 #ifdef TM_ZONE
@@ -841,8 +848,8 @@ const long		offset;
 
 	if (!gmt_is_set) {
 		gmt_is_set = TRUE;
-		if (tzload("GMT", &gmtstate) != 0)
-			tzsetgmt(&gmtstate);
+		if (tzload("GMT", &gmtstate, FALSE) != 0)
+			tzsetgmt(&gmtstate, FALSE);
 	}
 	timesub(clock, offset, &gmtstate, &tm);
 	return &tm;

@@ -561,7 +561,7 @@ Rule	Para	1993	1995	-	Oct	 1	0:00	1:00	S
 Rule	Para	1994	1995	-	Feb	lastSun	0:00	0	-
 Rule	Para	1996	1998	-	Mar	 1	0:00	0	-
 Rule	Para	1996	max	-	Oct	Sun>=1	0:00	1:00	S
-Rule	Para	1999	max	-	Feb	lastSun	0:00	0	-
+Rule	Para	1999	max	-	Feb	lastSat	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Asuncion	-3:50:40 -	LMT	1890
 			-3:50:40 -	AMT	1931 Oct 10 # Asuncion Mean Time

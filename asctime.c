@@ -29,7 +29,7 @@ static char	elsieid[] = "%W%";
 ** Vintage programs are coded for years that are always four digits long
 ** and may assume that the newline always lands in the same place.
 ** For years that are less than four digits, we pad the output with
-** spaces before the newline to get the newline in the traditional place.
+** leading zeroes to get the newline in the traditional place.
 */
 #define ASCTIME_FMT	"%.3s %.3s%3d %02.2d:%02.2d:%02.2d %-4s\n"
 /*
@@ -83,6 +83,12 @@ char *				buf;
 	if (timeptr->tm_mon < 0 || timeptr->tm_mon >= MONSPERYEAR)
 		mn = "???";
 	else	mn = mon_name[timeptr->tm_mon];
+	/*
+	** Use strftime's %Y to generate the year, to avoid overflow problems
+	** when computing timeptr->tm_year + TM_YEAR_BASE.
+	** Assume that strftime is unaffected by other out-of-range members
+	** (e.g., timeptr->tm_mday) when processing "%Y".
+	*/
 	(void) strftime(year, sizeof year, "%Y", timeptr);
 	/*
 	** We avoid using snprintf since it's not available on all systems.

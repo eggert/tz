@@ -475,7 +475,7 @@ register struct tm *	timeptr;
 	** times are.
 	*/
 
-	if (s.timecnt == 0 || gmtimevalue < s.ats[0]) {
+	if (s.timecnt == 0 || loctimevalue < s.ats[0]) {
 		i = 0;
 		while (s.ttis[i].tt_isdst)
 			if (++i >= s.timecnt) {

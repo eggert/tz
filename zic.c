@@ -464,10 +464,6 @@ setboundaries()
 		++max_time;
 		max_time = -max_time;
 	}
-	/*
-	** Ought to get rid of these gmtime calls to allow folks
-	** to switch time_t types.
-	*/
 	min_year = TM_YEAR_BASE + gmtime(&min_time)->tm_year;
 	max_year = TM_YEAR_BASE + gmtime(&max_time)->tm_year;
 }

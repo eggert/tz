@@ -18,7 +18,8 @@ TZLIB=		/usr/lib/libz.a
 
 CFLAGS=		-DOBJECTID -DTZDIR=\"$(TZDIR)\"
 
-# If you're running 4.[12]BSD, uncomment the next line.
+# If you're running 4.[12]BSD, be sure to uncomment the "CFLAGS=" line below.
+# If you're running 4.3BSD and want to make lint happy, uncomment it.
 # CFLAGS=		-DOBJECTID -DTZDIR=\"$(TZDIR)\" -Dstrchr=index
 
 # LINTFLAGS is set for 4.[123]BSD systems.

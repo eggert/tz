@@ -319,3 +319,11 @@ Rule	Cuba	1981	max	-	Oct	Sun>=8	0:00	0	S
 
 # Zone	NAME			GMTOFF	RULES/SAVE	FORMAT
 Zone	Cuba			-5:00	Cuba		C%sT
+
+###############################################################################
+
+# For companies who don't want to put time zone specification in
+# their installation procedures.  When users run date, they'll get the message.
+
+# Zone	NAME	GMTOFF	RULES	FORMAT
+Zone	factory	0	-	"Use 'man zic' to learn about time zone setting"

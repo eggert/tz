@@ -59,20 +59,20 @@ to be output in a particular way
 %B	March	Full month name
 %c	Wed Mar  8 14:54:40 EST 1989	See above
 %d	08	Day of month (always two digits)
-%D	03/08/89	Month/day/year (eight characters)
-%h	Mar	Abbreviated month name
+%D	03/08/89	Month/day/year (eight characters)*
+%h	Mar	Abbreviated month name*
 %H	14	24-hour-clock hour (two digits)
 %I	02	12-hour-clock hour (two digits)
 %j	067	Julian day number (three digits)
 %m	03	Month number (two digits)
 %M	54	Minute (two digits)
-%n		newline character
+%n		newline character*
 %p	PM	AM/PM designation
-%r	14:54:40 PM	Hour:minute:second AM/PM designation
-%R	14:54	Hour:minute
+%r	14:54:40 PM	Hour:minute:second AM/PM designation*
+%R	14:54	Hour:minute*
 %S	40	Second (two digits)
-%t		tab character
-%T	14:54:40	Hour:minute:second
+%t		tab character*
+%T	14:54:40	Hour:minute:second*
 %U	10	Sunday-based week number (two digits)
 %w	3	Day number (one digit, Sunday is 0)
 %W	10	Monday-based week number (two digits)
@@ -85,6 +85,8 @@ to be output in a particular way
 .if t .in -.5i
 .if n .in -2
 .fi
+Starred format specifications in the preceding table are available
+only on System V compatible systems.
 If a character other than one of those shown above appears after
 a percent sign in the format,
 .I date\^

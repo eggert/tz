@@ -31,10 +31,10 @@ LFLAGS=
 
 TZCSRCS=	zic.c scheck.c ialloc.c mkdir.c
 TZCOBJS=	zic.o scheck.o ialloc.o mkdir.o
-TZDSRCS=	zdump.c newctime.c
-TZDOBJS=	zdump.o newctime.o
+TZDSRCS=	zdump.c newctime.c ialloc.c
+TZDOBJS=	zdump.o newctime.o ialloc.o
 DOCS=		README Makefile newctime.3 tzfile.5 zic.8 zdump.8
-SOURCES=	tzfile.h $(TZCSRCS) $(TZDSRCS)
+SOURCES=	tzfile.h zic.c zdump.c newctime.c scheck.c ialloc.c mkdir.c
 DATA=		asia australasia europe etcetera northamerica pacificnew systemv
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 

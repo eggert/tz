@@ -20,12 +20,8 @@ TZDIR=		/etc/zoneinfo
 
 TZLIB=		/usr/lib/libz.a
 
-# /dev/null for BSD and such, nul for MS-DOS and such
-
-NULL=		/dev/null
-
 # If you don't want leap second correction done, change "leapseconds" to
-# "$(NULL)" below.
+# /dev/null below.
 
 LEAPSECONDS=	leapseconds
 
@@ -71,7 +67,7 @@ LEAPSECONDS=	leapseconds
 # If you'll never want to handle solar-time-based time zones, add
 #	-DNOSOLAR
 # to the end of the "CFLAGS=" line
-# (and remove solar87 and solar88 from the DATA= line below).
+# (and comment out the "SDATA=" line below).
 
 CFLAGS=
 
@@ -86,32 +82,38 @@ SHAR=		shar
 
 CC=		cc -DTZDIR=\"$(TZDIR)\"
 
-TZCSRCS=	zic.c localtime.c asctime.c scheck.c ialloc.c emkdir.c
-TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o emkdir.o
-TZDSRCS=	zdump.c localtime.c asctime.c ialloc.c
-TZDOBJS=	zdump.o localtime.o asctime.o ialloc.o
+TZCSRCS=	zic.c localtime.c asctime.c \
+		scheck.c ialloc.c emkdir.c getopt.c link.c
+TZCOBJS=	zic.o localtime.o asctime.o \
+		scheck.o ialloc.o emkdir.o getopt.o link.o
+TZDSRCS=	zdump.c localtime.c asctime.c \
+		ialloc.c getopt.c link.c
+TZDOBJS=	zdump.o localtime.o asctime.o \
+		ialloc.o getopt.o link.o
 LIBSRCS=	localtime.c asctime.c ctime.c dysize.c timemk.c
 LIBOBJS=	localtime.o asctime.o ctime.o dysize.o timemk.o
 DOCS=		Patchlevel.h \
 		README Theory \
 		newctime.3 tzfile.5 zic.8 zdump.8 \
-		Makefile
+		Makefile Makefile.tc
 SOURCES=	tzfile.h zic.c zdump.c \
 		localtime.c asctime.c ctime.c dysize.c timemk.c \
-		scheck.c ialloc.c emkdir.c
-DATA=		africa antarctica asia australasia \
-		europe northamerica southamerica \
-		pacificnew systemv solar87 solar88
-XDATA=		leapseconds
-ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(XDATA)
+		scheck.c ialloc.c emkdir.c getopt.c link.c
+YDATA=		africa antarctica asia australasia \
+		europe northamerica southamerica pacificnew
+NDATA=		systemv
+SDATA=		solar87 solar88
+DATA=		$(YDATA) $(NDATA) $(SDATA) leapseconds
+ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
 all:		REDID_BINARIES zdump $(TZLIB)
 
 REDID_BINARIES:	zic $(DATA)
-	PATH=.:$$PATH zic -d $(TZDIR) -L $(LEAPSECONDS) $(DATA) && \
-	PATH=.:$$PATH zic -d $(TZDIR) -L $(NULL) systemv && \
-	PATH=.:$$PATH zic -d $(TZDIR) -L $(LEAPSECONDS) -l $(LOCALTIME) && \
-	> $@
+		zic -d $(TZDIR) -L $(LEAPSECONDS) $(YDATA)
+		zic -d $(TZDIR) -L $(LEAPSECONDS) $(SDATA)
+		zic -d $(TZDIR) -L /dev/null $(NDATA)
+		zic -d $(TZDIR) -l $(LOCALTIME)
+		touch $@
 
 zdump:		$(TZDOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@
@@ -131,8 +133,8 @@ SHAR1:		$(DOCS)
 SHAR2:		$(SOURCES)
 		$(SHAR) $(SOURCES) > $@
 
-SHAR3:		$(DATA) $(XDATA)
-		$(SHAR) $(DATA) $(XDATA) > $@
+SHAR3:		$(DATA)
+		$(SHAR) $(DATA) > $@
 
 tz.shar.Z.uue:	$(ENCHILADA)
 		$(SHAR) $(ENCHILADA) | compress | uuencode tz.shar.Z > $@
@@ -155,4 +157,4 @@ CLEAN:		clean
 names:
 		@echo $(ENCHILADA)
 
-zdump.o zic.o newctime.o:	tzfile.h
+asctime.o ctime.o localtime.o timemk.o zdump.o zic.o: tzfile.h

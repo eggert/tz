@@ -46,6 +46,10 @@ static char	privatehid[] = "%W%";
 #define HAVE_STRERROR		0
 #endif /* !defined HAVE_STRERROR */
 
+#ifndef HAVE_SYMLINK
+#define HAVE_SYMLINK		1
+#endif /* !defined HAVE_SYMLINK */
+
 #ifndef HAVE_UNISTD_H
 #define HAVE_UNISTD_H		1
 #endif /* !defined HAVE_UNISTD_H */

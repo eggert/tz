@@ -90,8 +90,7 @@ oops:
 	if (fid >= 0)
 		(void) close(fid);
 	/*
-	** Clobber read-in information in case we're running set-user-id
-	** and have been used to read a protected file.
+	** Go back to go.
 	*/
 	{
 		struct tzhead	xxxh;

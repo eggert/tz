@@ -44,9 +44,9 @@ char *	format;
 			*tp++ = *fp++;
 			continue;
 		}
+		*tp++ = '*';
 		if (*fp == '*')
-			*tp++ = *fp++;
-		else	*tp++ = '*';
+			++fp;
 		while (*fp != '\0' && isascii(*fp) && isdigit(*fp))
 			*tp++ = *fp++;
 		if (*fp == 'l')

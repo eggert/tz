@@ -536,12 +536,18 @@ Zone Africa/Johannesburg 1:52:00 -	LMT	1892 Feb 8
 # no information
 
 # Sudan
+# From Michael Ross <mross@antigone.com> (November 15, 1995):
+# Sudan no longer observes any form of daylight time change.
+# I verified this today by telephone with the Sudan Mission to the  
+# United Nations: 212-573-6033
+# From Arthur David Olson <arthur_david_olson@nih.gov> (December 19, 1995):
+# I will (dangerously) assume the change went into effect in 1995.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Sudan	1931	only	-	Feb	 8	0:00	0	-
 Rule	Sudan	1970	only	-	May	 1	0:00	1:00	" DST"
-Rule	Sudan	1970	max	-	Oct	15	0:00	0	-
+Rule	Sudan	1970	1994	-	Oct	15	0:00	0	-
 Rule	Sudan	1971	only	-	Apr	30	0:00	1:00	" DST"
-Rule	Sudan	1972	max	-	Apr	lastSun	0:00	1:00	" DST"
+Rule	Sudan	1972	1994	-	Apr	lastSun	0:00	1:00	" DST"
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Khartoum	2:10:08 -	LMT	1931
 			2:00	Sudan	EET%s

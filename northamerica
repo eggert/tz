@@ -148,7 +148,7 @@ Zone America/Phoenix	-7:00	US	M%sT	1946
 # large size and location in three states."  (The "only" means that other
 # tribal nations don't use DST.)
 
-Link	America/Shiprock	America/Denver
+Link	America/Denver	America/Shiprock
 
 # From Bob Devine (January 28, 1988):
 # Michigan didn't observe DST from 1968 to 1973.

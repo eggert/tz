@@ -36,7 +36,9 @@ extern int	optind;
 extern FILE *	popen();
 extern char *	realloc();
 extern char *	scheck();
+#ifdef strchr
 extern char *	sprintf();
+#endif
 extern char *	strcat();
 extern char *	strchr();
 extern char *	strcpy();
@@ -1105,6 +1107,7 @@ struct zone *	zpfirst;
 					break;
 				if (usestart) {
 					if (ktime < starttime) {
+						stdoff = rp->r_stdoff;
 						startoff = tadd(zp->z_gmtoff,
 							rp->r_stdoff);
 						(void) sprintf(startbuf,

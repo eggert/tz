@@ -1229,7 +1229,7 @@ struct tm * const	tmp;
 {
 	time_t	t;
 
-	if ((t = timelocal(tmp)) == WRONG)
+	if ((t = mktime(tmp)) == WRONG)
 		return -1L;
 	return (long) t;
 }

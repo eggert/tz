@@ -43,10 +43,6 @@ static char	privatehid[] = "%W%";
 #define HAVE_ADJTIME		1
 #endif /* !defined HAVE_ADJTIME */
 
-#ifndef HAVE_SETLOCALE
-#define HAVE_SETLOCALE		1
-#endif /* !defined HAVE_SETLOCALE */
-
 #ifndef HAVE_SETTIMEOFDAY
 #define HAVE_SETTIMEOFDAY	3
 #endif /* !defined HAVE_SETTIMEOFDAY */

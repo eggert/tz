@@ -16,6 +16,7 @@ static char	sccsid[] = "%W%";
 
 extern char *		asctime();
 extern struct tm *	gmtime();
+extern char *		optarg;
 extern int		optind;
 extern char *		sprintf();
 extern long		time();
@@ -43,19 +44,31 @@ char *	argv[];
 	register FILE *	fp;
 	register int	i, j, c;
 	register int	vflag;
+	register char *	cutoff;
+	register int	cutyear;
+	register long	cuttime;
 	long		now;
 	long		t;
 	int		timecnt;
 	char		buf[BUFSIZ];
 
 	vflag = 0;
-	while ((c = getopt(argc, argv, "v")) == 'v')
-		vflag = 1;
+	cutoff = NULL;
+	while ((c = getopt(argc, argv, "c:v")) == 'c' || c == 'v')
+		if (c == 'v')
+			vflag = 1;
+		else	cutoff = optarg;
 	if (c != EOF || optind == argc - 1 && strcmp(argv[optind], "=") == 0) {
 		(void) fprintf(stderr, "%s: usage is %s [ -v ] zonename ...\n",
 			argv[0], argv[0]);
 		exit(1);
 	}
+	if (cutoff != NULL)
+		cutyear = atoi(cutoff);
+	/*
+	** VERY approximate.
+	*/
+	cuttime = (long) (cutyear - 1970) * 60 * 60 * 24 * 365;
 	(void) time(&now);
 	longest = 0;
 	for (i = optind; i < argc; ++i)
@@ -108,6 +121,8 @@ char *	argv[];
 			if (fread((char *) code, sizeof code, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
 			t = tzdecode(code);
+			if (t > cuttime)
+				break;
 			show(argv[i], t - 1, TRUE);
 			show(argv[i], t, TRUE);
 		}

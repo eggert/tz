@@ -62,6 +62,7 @@ static long	typecnt;
 
 #define EPOCH_YEAR	1970L
 #define EPOCH_WDAY	TM_THURSDAY
+#define MIN_YEAR	1902L
 #define MAX_YEAR	2037L
 
 /*
@@ -264,6 +265,20 @@ static struct lookup	lasts[] = {
 	NULL,			0
 };
 
+static struct lookup	begin_years[] = {
+	"minimum",		MIN_YEAR,
+	"maximum",		MAX_YEAR,
+	NULL,			0
+}
+
+static struct lookup	end_years[] = {
+	"minimum",		MIN_YEAR,
+	"maximum",		MAX_YEAR,
+#define ONLY	EPOCH_YEAR	/* surely neither MIN_YEAR nor MAX_YEAR */
+	"only",			ONLY_YEAR,
+	NULL,			0
+}
+
 static long	mon_lengths[2][12] = {	/* ". . .knuckles are 31. . ." */
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
@@ -452,7 +467,7 @@ char *	argv[];
 			exit(1);
 		}
 	}
-	exit(0);
+	exit((errors == 0) ? 0 : 1);
 }
 
 /*
@@ -859,19 +874,18 @@ char *			timep;
 	** Year work.
 	*/
 	cp = loyearp;
-	if (isabbr(cp, "maximum"))
-		rp->r_loyear = MAX_YEAR;
+	if ((lp = lookup(cp, begin_years)) != NULL)
+		rp->r_loyear = lp->l_value;
 	else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_loyear) != 1 ||
 		rp->r_loyear <= 0) {
 			error("invalid starting year");
 			return;
 	}
 	cp = hiyearp;
-	if (*cp == '\0' || ciequal(cp, "only"))
-		rp->r_hiyear = rp->r_loyear;
-	else if (isabbr(cp, "maximum"))
-		rp->r_hiyear = MAX_YEAR;
-	else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_hiyear) != 1 ||
+	if ((lp = lookup(cp, end_years)) != NULL) {
+		if ((rp->r_hiyear = lp->l_value) == ONLY)
+			rp->r_hiyear = rp->r_loyear;
+	} else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_hiyear) != 1 ||
 		rp->r_hiyear <= 0) {
 			error("invalid ending year");
 			return;
@@ -1472,8 +1486,10 @@ register long		wantedy;
 	/*
 	** Cheap overflow check.
 	*/
-	if (t / SECS_PER_DAY != dayoff)
+	if (t / SECS_PER_DAY != dayoff) {
 		error("time overflow");
+		exit(1);
+	}
 	return tadd(t, rp->r_tod);
 }
 

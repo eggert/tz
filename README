@@ -3,10 +3,9 @@
 TODO BEFORE comp.sources RELEASE:
 
 *	Final lint/spell/shar-unpacking check
+*	Functionality checks
 *	Get everything except usno date copyrighted.
 *	Turn most everything into version "5.1".
-*	Update date.1
-*	Handle Saudi glitch
 *	Conditionalize logwtmp.c
 
 ===============================================================================

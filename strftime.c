@@ -29,7 +29,7 @@ static char	elsieid[] = "%W%";
 
 #ifndef LIBC_SCCS
 #ifndef lint
-static const char sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
+static const char	sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
 #endif /* !defined lint */
 #endif /* !defined LIBC_SCCS */
 
@@ -135,7 +135,7 @@ const char *		ptlim;
 	for ( ; *format; ++format) {
 		if (*format == '%') {
 label:
-			switch(*++format) {
+			switch (*++format) {
 			case '\0':
 				--format;
 				break;
@@ -382,7 +382,7 @@ label:
 				continue;
 			case 'Z':
 #ifdef TM_ZONE
-				if (t->TM_ZONE)
+				if (t->TM_ZONE != NULL)
 					pt = _add(t->TM_ZONE, pt, ptlim);
 				else
 #endif /* defined TM_ZONE */
@@ -440,6 +440,10 @@ const char * const	ptlim;
 static const struct lc_time_T *
 _loc P((void))
 {
+#ifndef LOCALE_HOME
+	return &C_time_locale;
+#endif /* !defined LOCALE_HOME */
+#ifdef LOCALE_HOME
 	static const char	locale_home[] = LOCALE_HOME;
 	static const char	lc_time[] = "LC_TIME";
 	static char *		locale_buf;
@@ -463,7 +467,7 @@ _loc P((void))
 		return &localebuf;
 #if HAVE_SETLOCALE - 0
 	name = setlocale(LC_TIME, (char *) NULL);
-#endif /* HAVE_SETLOCALE */
+#endif /* HAVE_SETLOCALE - 0 */
 #if !HAVE_SETLOCALE - 0
 	if ((name = getenv("LC_ALL")) == NULL || *name == '\0')
 		if ((name = getenv(lc_time)) == NULL || *name == '\0')
@@ -475,10 +479,12 @@ _loc P((void))
 	** If the locale name is the same as our cache, use the cache.
 	*/
 	lbuf = locale_buf;
-	if (lbuf && strcmp(name, lbuf) == 0) {
+	if (lbuf != NULL && strcmp(name, lbuf) == 0) {
 		p = lbuf;
-		for (ap=(const char **)&localebuf; ap<(const char **)(&localebuf + 1); ap++)
-			*ap = p += strlen(p) + 1;
+		for (ap = (const char **) &localebuf;
+			ap < (const char **) (&localebuf + 1);
+				++ap)
+					*ap = p += strlen(p) + 1;
 		return &localebuf;
 	}
 	/*
@@ -505,7 +511,7 @@ _loc P((void))
 	if (st.st_size <= 0)
 		goto bad_locale;
 	bufsize = namesize + st.st_size;
-	locale_buf = 0;
+	locale_buf = NULL;
 	lbuf = (lbuf == NULL || lbuf == locale_buf_C) ?
 		malloc(bufsize) : realloc(lbuf, bufsize);
 	if (lbuf == NULL)
@@ -522,13 +528,15 @@ _loc P((void))
 	*/
 	if (plim[-1] != '\n')
 		goto bad_lbuf;
-	for (ap=(const char **)&localebuf; ap<(const char **)(&localebuf + 1); ap++) {
-		if (p == plim)
-			goto bad_lbuf;
-		*ap = p;
-		while (*p != '\n')
-			p++;
-		*p++ = 0;
+	for (ap = (const char **) &localebuf;
+		ap < (const char **) (&localebuf + 1);
+			++ap) {
+				if (p == plim)
+					goto bad_lbuf;
+				*ap = p;
+				while (*p != '\n')
+					++p;
+				*p++ = 0;
 	}
 	/*
 	** Record the successful parse in the cache.
@@ -545,4 +553,5 @@ no_locale:
 	localebuf = C_time_locale;
 	locale_buf = locale_buf_C;
 	return &localebuf;
+#endif /* defined LOCALE_HOME */
 }

@@ -314,8 +314,8 @@ register struct state * const	sp;
 	{
 		struct tzhead *	tzhp;
 		union {
-		  struct tzhead tzhead;
-		  char		buf[sizeof *sp + sizeof *tzhp];
+			struct tzhead	tzhead;
+			char		buf[sizeof *sp + sizeof *tzhp];
 		} u;
 		int		ttisstdcnt;
 		int		ttisgmtcnt;
@@ -955,9 +955,9 @@ tzset P((void))
 		return;
 	}
 
-	if (lcl_is_set > 0  &&  strcmp(lcl_TZname, name) == 0)
+	if (lcl_is_set > 0 && strcmp(lcl_TZname, name) == 0)
 		return;
-	lcl_is_set = (strlen(name) < sizeof(lcl_TZname));
+	lcl_is_set = strlen(name) < sizeof lcl_TZname;
 	if (lcl_is_set)
 		(void) strcpy(lcl_TZname, name);
 

@@ -415,8 +415,10 @@ const char * const	string;
 	**	zic ... 2>&1 | error -t "*" -v
 	** on BSD systems.
 	*/
-	(void) fprintf(stderr, _("\"%s\", line %d: %s"),
-		filename, linenum, string);
+	if (filename == NULL)
+		(void) fprintf(stderr, "%s", string);
+	else	(void) fprintf(stderr, _("\"%s\", line %d: %s"),
+			filename, linenum, string);
 	if (rfilename != NULL)
 		(void) fprintf(stderr, _(" (rule from \"%s\", line %d)"),
 			rfilename, rlinenum);
@@ -563,10 +565,14 @@ _("%s: More than one -L option specified\n"),
 	/*
 	** Make links.
 	*/
-	for (i = 0; i < nlinks; ++i)
+	for (i = 0; i < nlinks; ++i) {
+		eat(links[i].l_filename, links[i].l_linenum);
 		dolink(links[i].l_from, links[i].l_to);
-	if (lcltime != NULL)
+	}
+	if (lcltime != NULL) {
+		eat((const char *) NULL, 0);
 		dolink(lcltime, TZDEFAULT);
+	}
 	if (psxrules != NULL)
 		dolink(psxrules, TZDEFRULES);
 	return (errors == 0) ? EXIT_SUCCESS : EXIT_FAILURE;

@@ -35,9 +35,9 @@ static const char	sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
 
 #include "tzfile.h"
 #include "fcntl.h"
-#if HAVE_SETLOCALE - 0
+#if HAVE_SETLOCALE
 #include "locale.h"
-#endif /* HAVE_SETLOCALE - 0 */
+#endif /* HAVE_SETLOCALE */
 
 struct lc_time_T {
 	const char *	mon[12];
@@ -472,14 +472,14 @@ _loc P((void))
 	*/
 	if (localebuf.mon[0])
 		return &localebuf;
-#if HAVE_SETLOCALE - 0
+#if HAVE_SETLOCALE
 	name = setlocale(LC_TIME, (char *) NULL);
-#endif /* HAVE_SETLOCALE - 0 */
-#if !(HAVE_SETLOCALE - 0)
+#endif /* HAVE_SETLOCALE */
+#if !HAVE_SETLOCALE
 	if ((name = getenv("LC_ALL")) == NULL || *name == '\0')
 		if ((name = getenv(lc_time)) == NULL || *name == '\0')
 			name = getenv("LANG");
-#endif /* !(HAVE_SETLOCALE - 0) */
+#endif /* !HAVE_SETLOCALE */
 	if (name == NULL || *name == '\0')
 		goto no_locale;
 	/*

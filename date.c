@@ -98,9 +98,14 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #ifdef OTIME_MSG
 #define TIME_USER	username
 #else /* !defined OTIME_MSG */
+#include "sys/param.h"
+#ifdef BSD4_4
 #define TIME_USER	"date"
+#else /* !defined BSD4_4 */
+#define TIME_USER	""
+#endif /* !defined BSD4_4 */
 #endif /* !defined OTIME_MSG */
-#endif /* !defined OTIME_USER */
+#endif /* !defined TIME_USER */
 
 #ifndef OTIME_MSG
 #define OTIME_MSG	"|"
@@ -501,7 +506,11 @@ char *	format;
 
 	(void) time(&now);
 	tm = *localtime(&now);
-	timeout(stdout, (format == NULL) ? "%c" : format, &tm);
+	if (format == NULL) {
+		timeout(stdout, "%a %b ", &tm);
+		(void) printf("%2d ", tm.tm_mday);
+		timeout(stdout, "%X %Z %Y", &tm);
+	} else	timeout(stdout, format, &tm);
 	(void) putchar('\n');
 	(void) fflush(stdout);
 	(void) fflush(stderr);
@@ -611,7 +620,7 @@ struct tm *	tmp;
 			(void) fprintf(fp, "%s", mon_names[tmp->tm_mon]);
 			break;
 		case 'c':
-			timeout(fp, "%x %X %Z %Y", tmp);
+			timeout(fp, "%a %b %d %X %Z %Y", tmp);
 			break;
 		case 'd':
 			(void) fprintf(fp, "%02.2d", tmp->tm_mday);
@@ -664,8 +673,7 @@ struct tm *	tmp;
 				(tmp->tm_yday + 7 - wday) / 7);
 			break;
 		case 'x':
-			timeout(fp, "%a %b ", tmp);
-			(void) fprintf(fp, "%2d", tmp->tm_mday);
+			timeout(fp, "%a %b %d %Y", tmp);
 			break;
 		case 'X':
 			timeout(fp, "%H:%M:%S", tmp);

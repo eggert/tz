@@ -67,7 +67,7 @@ strftime(s, maxsize, format, t)
 	if (gsize <= 0)
 		return 0;
 	*s = '\0';
-	return (maxsize - gsize);
+	return maxsize - gsize;
 }
 
 static char *
@@ -85,21 +85,21 @@ label:
 				--format;
 				break;
 			case 'A':
-				pt = _add((t->tm_wday < 0 || t->tm_wday > 6)
-					? "?" : Afmt[t->tm_wday], gsizep, pt);
+				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
+					"?" : Afmt[t->tm_wday], gsizep, pt);
 				continue;
 			case 'a':
-				pt = _add((t->tm_wday < 0 || t->tm_wday > 6)
-					? "?" : afmt[t->tm_wday], gsizep, pt);
+				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
+					"?" : afmt[t->tm_wday], gsizep, pt);
 				continue;
 			case 'B':
-				pt = _add((t->tm_mon < 0 || t->tm_mon > 11)
-					? "?" : Bfmt[t->tm_mon], gsizep, pt);
+				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
+					"?" : Bfmt[t->tm_mon], gsizep, pt);
 				continue;
 			case 'b':
 			case 'h':
-				pt = _add((t->tm_mon < 0 || t->tm_mon > 11)
-					? "?" : bfmt[t->tm_mon], gsizep, pt);
+				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
+					"?" : bfmt[t->tm_mon], gsizep, pt);
 				continue;
 			case 'c':
 				pt = _fmt("%D %X", t, gsizep, pt);
@@ -154,8 +154,9 @@ label:
 				pt = _conv(t->tm_hour, 2, '0', gsizep, pt);
 				continue;
 			case 'I':
-				pt = _conv(t->tm_hour % 12 ? t->tm_hour % 12
-						: 12, 2, '0', gsizep, pt);
+				pt = _conv((t->tm_hour % 12) ?
+					(t->tm_hour % 12) : 12,
+					2, '0', gsizep, pt);
 				continue;
 			case 'j':
 				pt = _conv(t->tm_yday + 1, 3, '0', gsizep, pt);
@@ -191,8 +192,9 @@ label:
 				** "%l" have been swapped.
 				** (ado, 5/24/93)
 				*/
-				pt = _conv(t->tm_hour % 12 ? t->tm_hour % 12
-						: 12, 2, ' ', gsizep, pt);
+				pt = _conv((t->tm_hour % 12) ?
+					(t->tm_hour % 12) : 12,
+					2, ' ', gsizep, pt);
 				continue;
 			case 'M':
 				pt = _conv(t->tm_min, 2, '0', gsizep, pt);
@@ -205,7 +207,7 @@ label:
 				continue;
 			case 'p':
 				pt = _add(t->tm_hour >= 12 ? "PM" : "AM",
-						gsizep, pt);
+					gsizep, pt);
 				continue;
 			case 'R':
 				pt = _fmt("%H:%M", t, gsizep, pt);
@@ -235,7 +237,7 @@ label:
 				** (ado, 5/24/93)
 				*/
 				pt = _conv((t->tm_wday == 0) ? 7 : t->tm_wday,
-						1, '0', gsizep, pt);
+					1, '0', gsizep, pt);
 				continue;
 			case 'V':
 				/*
@@ -266,8 +268,8 @@ label:
 
 					i = (t->tm_yday + 10 - (t->tm_wday ?
 						(t->tm_wday - 1) : 6)) / 7;
-					pt = _conv((i == 0) ? 53 : i, 2, '0',
-							gsizep, pt);
+					pt = _conv((i == 0) ? 53 : i,
+						2, '0', gsizep, pt);
 				}
 				continue;
 			case 'v':
@@ -280,19 +282,20 @@ label:
 				continue;
 			case 'W':
 				pt = _conv((t->tm_yday + 7 -
-					(t->tm_wday ? (t->tm_wday - 1) : 6))
-					/ 7, 2, '0', gsizep, pt);
+					(t->tm_wday ?
+					(t->tm_wday - 1) : 6)) / 7,
+					2, '0', gsizep, pt);
 				continue;
 			case 'w':
 				pt = _conv(t->tm_wday, 1, '0', gsizep, pt);
 				continue;
 			case 'y':
 				pt = _conv((t->tm_year + TM_YEAR_BASE) % 100,
-						2, '0', gsizep, pt);
+					2, '0', gsizep, pt);
 				continue;
 			case 'Y':
 				pt = _conv(t->tm_year + TM_YEAR_BASE, 4, '0',
-						gsizep, pt);
+					gsizep, pt);
 				continue;
 			case 'Z':
 #ifdef TM_ZONE
@@ -303,7 +306,8 @@ label:
 				if (t->tm_isdst == 0 || t->tm_isdst == 1) {
 					extern char *	tzname[2];
 
-					pt = _add(tzname[t->tm_isdst], gsizep, pt);
+					pt = _add(tzname[t->tm_isdst],
+						gsizep, pt);
 				} else  pt = _add("?", gsizep, pt);
 				continue;
 			case '%':
@@ -331,11 +335,11 @@ _conv(n, width, fill, gsizep, pt)
 	char *pt;
 {
 	char *p, *q, buf[12];
-	static char digits[10+1] = "0123456789";
+	static char digits[] = "0123456789";
 
 	p = buf + sizeof buf;
 	q = (width >= sizeof buf) ? buf : (p - width - 1);
-	*--p = 0;
+	*--p = '\0';
 	*--p = digits[n % 10];
 	while (p > buf && (n /= 10) != 0)
 		*--p = digits[n % 10];
@@ -350,7 +354,9 @@ _add(str, gsizep, pt)
 	size_t *gsizep;
 	char *pt;
 {
-	while (*gsizep > 0 && (*pt = *str++) != 0)
-		++pt, --*gsizep;
+	while (*gsizep > 0 && (*pt = *str++) != '\0') {
+		++pt;
+		--*gsizep;
+	}
 	return pt;
 }

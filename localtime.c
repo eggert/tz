@@ -411,10 +411,7 @@ long * const		secsp;
 {
 	int	num;
 
-	/*
-	** The limit allows for GMT +/- 12 +/- DDST.
-	*/
-	strp = getnum(strp, &num, 0, HOURSPERDAY / 2 + 2);
+	strp = getnum(strp, &num, 0, HOURSPERDAY);
 	if (strp == NULL)
 		return NULL;
 	*secsp = num * SECSPERHOUR;

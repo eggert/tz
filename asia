@@ -34,6 +34,7 @@
 #	4:00	YSK YSD Yerevan (was 3:00)*
 #	4:00	GST GDT	Gulf*
 #	4:30	AFT	Afghanistan*
+#	5:00	ASK ASD	Aktau (was SHSK, SHSD)*
 #	5:00	ASK ASD	Ashkhabad (was 4:00)*
 #	5:00	BSK BSD Bishkek (was 6:00) (was FSK, FSD)*
 #	5:00	PKT	Pakistan*
@@ -82,12 +83,17 @@ Zone	Asia/Kabul	4:36:48 -	LMT	1890
 			4:30	-	AFT
 
 # Armenia
+# From Paul Eggert (1996-04-19):
+# Shanks has Yerevan switching to 3:00 (with Russian DST) in spring 1991,
+# but usno1995 has Armenia at 4:00 (with DST).  Assume Yerevan stayed in
+# sync with Moscow after 1990.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Yerevan	2:58:00 -	LMT	1924 May  2
 			3:00	-	YSK	1957 Mar
+			4:00	Russia	YS%s	1991 Mar 31 2:00s
+			3:00	1:00	YSD	1991 Sep 29 2:00s
+			3:00	-	YSK	1992 Jan 19 2:00s
 			4:00	Russia	YS%s
-# Shanks has Yerevan switching to 3:00 (with Russian DST) in spring 1991,
-# but usno1995 has Armenia at 4:00 (with DST).  Ignore the 1991 switch for now.
 
 # Azerbaijan
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -133,7 +139,7 @@ Zone	Asia/Brunei	7:39:40 -	LMT	1926 Mar   # Bandar Seri Begawan
 
 # Burma / Myanmar
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Rangoon	6:24:40 -	LMT	1880
+Zone	Asia/Rangoon	6:24:40 -	LMT	1880		# or Yangon
 			6:25	-	RMT	1920
 			6:30	-	BMT	1942 May
 			9:00	-	JST	1945 May 3
@@ -576,13 +582,23 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 			2:00	Jordan	EET%s
 
 # Kazakhstan
-# From Shanks (1991):
+# From Paul Eggert (1996-04-19):
+# Andrew Evtichov <evti@chevron.com> (1996-04-13) writes that Kazakhstan
+# stayed in sync with Moscow after 1990, and that Aktau is the biggest city
+# in western Kazakhstan.  Follow Shanks before 1991, Evtichov afterwards.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Alma-Ata	5:07:48 -	LMT	1924 May  2
+Zone	Asia/Alma-Ata	5:07:48 -	LMT	1924 May  2 # or Almaty
 			5:00	-	AASK	1957 Mar
+			6:00	Russia	AAS%s	1991 Mar 31 2:00s
+			5:00	1:00	AASD	1991 Sep 29 2:00s
+			5:00	-	AASK	1992 Jan 19 2:00s
 			6:00	Russia	AAS%s
-# Shanks has Alma-Ata switching to 5:00 in 1991,
-# but usno1995 has Kazakhstan at 6:00.  Ignore the 1991 switch for now.
+Zone	Asia/Aktau	3:21:04	-	LMT	1924 May  2 # or Aqtau
+			4:00	-	SHSK	1957 Mar # Fort Shevchenko
+			5:00	Russia	SHS%s	1991 Mar 31 2:00s
+			4:00	1:00	ASD	1991 Sep 29 2:00s
+			4:00	-	ASK	1992 Jan 19 2:00s
+			5:00	Russia	AS%s
 
 # Kirgizstan
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -685,6 +701,9 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880			# Male
 			5:00	-	PKT
 
 # Mongolia
+# Shanks says that Mongolia has three time zones,
+# but usno1995 and http://www.odci.gov/cia/publications/95fact/802389h.gif
+# both say that it has just one.
 # Let's comment out the western and eastern Mongolian time zones
 # till we know what their principal towns are.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
@@ -862,6 +881,8 @@ Zone	Asia/Tashkent	4:37:12 -	LMT	1924 May  2
 			5:00	-	TSK
 # Shanks has Tashkent using DST after 1991, but usno1995 says they don't.
 # Go with usno1995.
+# http://www.odci.gov/cia/publications/95fact/802389h.gif claims that
+# Uzbekistan has two time zones, but we lack data about this.
 
 # Vietnam
 # From Paul Eggert <eggert@twinsun.com> (November 18, 1993):

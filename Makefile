@@ -86,8 +86,8 @@ SHAR=		shar
 
 CC=		cc -DTZDIR=\"$(TZDIR)\"
 
-TZCSRCS=	zic.c localtime.c asctime.c scheck.c ialloc.c mkdir.c
-TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o mkdir.o
+TZCSRCS=	zic.c localtime.c asctime.c scheck.c ialloc.c emkdir.c
+TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o emkdir.o
 TZDSRCS=	zdump.c localtime.c asctime.c ialloc.c
 TZDOBJS=	zdump.o localtime.o asctime.o ialloc.o
 LIBSRCS=	localtime.c asctime.c ctime.c dysize.c timemk.c
@@ -98,7 +98,7 @@ DOCS=		Patchlevel.h \
 		Makefile
 SOURCES=	tzfile.h zic.c zdump.c \
 		localtime.c asctime.c ctime.c dysize.c timemk.c \
-		scheck.c ialloc.c mkdir.c
+		scheck.c ialloc.c emkdir.c
 DATA=		africa antarctica asia australasia \
 		europe northamerica southamerica \
 		pacificnew systemv solar87 solar88

@@ -9,15 +9,18 @@ static char	elsieid[] = "%W%";
 #include "ctype.h"
 #include "time.h"
 #include "string.h"
+#include "nonstd.h"
 
-#ifndef const
+#ifdef __STDC__
 #include "stdlib.h"
-#endif /* !defined const */
-
-#ifdef unix
+#else /* !defined __STDC__ */
 #include "sys/types.h"
 #include "sys/stat.h"
-#endif /* defined unix */
+#endif /* !defined __STDC__ */
+
+#if !defined unix
+extern FILE *	popen P((const char * command));
+#endif /* !defined unix */
 
 #ifdef __TURBOC__
 #include "sys/stat.h"
@@ -43,9 +46,6 @@ extern int	access P((const char * name, int way));
 #define EXIT_FAILURE	1
 #endif/* !defined EXIT_FAILURE */
 
-extern char *	optarg;
-extern int	optind;
-
 extern int	emkdir P((const char * name, int mode));
 extern int	getopt	P((int argc, char * argv[], const char * options));
 extern char *	icatalloc P((char * old, const char * new));
@@ -53,7 +53,8 @@ extern char *	icpyalloc P((const char * string));
 extern char *	imalloc P((int n));
 extern char *	irealloc P((char * old, int n));
 extern int	link P((const char * fromname, const char * toname));
-extern FILE *	popen P((const char * command));
+extern char *	optarg;
+extern int	optind;
 extern char *	scheck P((const char * string, const char * format));
 
 static void	addtt P((time_t starttime, int type));
@@ -1497,7 +1498,7 @@ time_t	t;
 		roll[j] = roll[j-1];
 	}
 	trans[i] = t;
-	corr[i] = (positive ? 1 : -1);
+	corr[i] = (positive ? 1L : -1L);
 	roll[i] = rolling;
 	++leapcnt;
 }

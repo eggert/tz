@@ -160,13 +160,15 @@ label:
 					pt, ptlim);
 				continue;
 			case 'B':
-				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
+				pt = _add((t->tm_mon < 0 ||
+					t->tm_mon >= MONSPERYEAR) ?
 					"?" : Locale->month[t->tm_mon],
 					pt, ptlim);
 				continue;
 			case 'b':
 			case 'h':
-				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
+				pt = _add((t->tm_mon < 0 ||
+					t->tm_mon >= MONSPERYEAR) ?
 					"?" : Locale->mon[t->tm_mon],
 					pt, ptlim);
 				continue;
@@ -263,7 +265,7 @@ label:
 				pt = _add("\n", pt, ptlim);
 				continue;
 			case 'p':
-				pt = _add((t->tm_hour >= 12) ?
+				pt = _add((t->tm_hour >= (HOURSPERDAY / 2)) ?
 					Locale->pm :
 					Locale->am,
 					pt, ptlim);

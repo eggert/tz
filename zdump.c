@@ -58,7 +58,7 @@ char *	argv[];
 	time_t			t;
 	long			leapcnt, timecnt;
 	long			typecnt, charcnt;
-	char			buf[BUFSIZ];
+	char			buf[FILENAME_MAX + 1];
 
 	vflag = 0;
 	cutoff = NULL;

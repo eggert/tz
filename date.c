@@ -302,6 +302,8 @@ dogmt()
 ** and don't have network notification to worry about.
 */
 
+#include "fcntl.h"	/* for O_WRONLY, O_APPEND */
+
 /*ARGSUSED*/
 static void
 reset(newt, nflag)

@@ -2,7 +2,7 @@
 #ifndef NOID
 static char	elsieid[] = "%W%";
 /*
-** Modified from the UCB version whose SCCS ID appears below.
+** Modified from the UCB version with the SCCS ID appearing below.
 */
 #endif /* !defined NOID */
 #endif /* !defined lint */

@@ -1,6 +1,6 @@
 /*
 ** This file is in the public domain, so clarified as of
-** June 5, 1996 by Arthur David Olson (arthur_david_olson@nih.gov).
+** 1996-06-05 by Arthur David Olson (arthur_david_olson@nih.gov).
 */
 
 #ifndef lint
@@ -40,22 +40,19 @@ const time_t	time0;
 	} else {
 		/*
 		** time_t is integral and signed.
-		** If a double is much wider than a time_t,
-		** simply convert and subtract.
+		** Handle cases where both time1 and time0 have the same sign
+		** (meaning that their difference cannot overflow).
+		** Handle the more common case (both non-negative) first.
 		*/
-		if (sizeof (double) >= 2 * sizeof (time_t))
-			return (double) time1 - (double) time0;
-		else {
-			/*
-			** As elsewhere in the time zone package,
-			** use modular arithmetic to avoid overflow.
-			*/
-			register time_t	lead;
-			register time_t	trail;
-
-			lead = time1 / 2 - time0 / 2;
-			trail = time1 % 2 - time0 % 2;
-			return 2.0 * lead + trail;
-		}
+		if (time1 >= 0 && time0 >= 0)
+			return time1 - time0;
+		if (time1 < 0 && time0 < 0)
+			return time1 - time0;
+		/*
+		** Punt everything else.
+		** Note that we can't use the % operator on time_t values;
+		** doing so is invalid on systems where time_t isn't integral.
+		*/
+		return (double) time1 - (double) time0;
 	}
 }

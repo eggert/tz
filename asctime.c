@@ -17,10 +17,10 @@ char *
 asctime(timeptr)
 register const struct tm *	timeptr;
 {
-	static const char	wday_name[DAYSPERWEEK][3] = {
+	static const char	wday_name[][3] = {
 		"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
 	};
-	static const char	mon_name[MONSPERYEAR][3] = {
+	static const char	mon_name[][3] = {
 		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 	};
@@ -45,10 +45,9 @@ register const struct tm *	timeptr;
 	/*
 	** The X3J11-suggested format is
 	**	"%.3s %.3s%3d %02.2d:%02.2d:%02.2d %d\n"
-	** but, given the way we've set wn and mn, the .3's are superfluous.
-	** Meanwhile, the .2 in 02.2d is ignored, so we drop it.
+	** Since the .2 in 02.2d is ignored, we drop it.
 	*/
-	(void) sprintf(result, "%s %s%3d %02d:%02d:%02d %d\n",
+	(void) sprintf(result, "%.3s %.3s%3d %02d:%02d:%02d %d\n",
 		wn, mn,
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec,

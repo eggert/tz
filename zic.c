@@ -1371,12 +1371,13 @@ const int			zonecount;
 		eat(zp->z_filename, zp->z_linenum);
 		startisdst = -1;
 		if (zp->z_nrules == 0) {
-			type = addtype(oadd(zp->z_gmtoff, zp->z_stdoff),
-				zp->z_format, zp->z_stdoff != 0,
-				startttisstd);
+			stdoff = zp->z_stdoff;
+			type = addtype(oadd(zp->z_gmtoff, stdoff),
+				zp->z_format, stdoff != 0, startttisstd);
 			if (usestart)
 				addtt(starttime, type);
-			stdoff = zp->z_stdoff;
+			else if (stdoff != 0)
+				addtt(min_time, type);
 		} else for (year = min_year; year <= max_year; ++year) {
 			if (useuntil && year > zp->z_untilrule.r_hiyear)
 				break;

@@ -27,7 +27,7 @@ extern void	tzset P((void));
 
 static int	longest;
 static void	show P((const char * zone, time_t t, int v));
-static void	hunt P((const char * name, time_t lot, time_t, hit));
+static void	hunt P((const char * name, time_t lot, time_t hit));
 static long	delta P((const struct tm * newp, const struct tm * oldp));
 
 int

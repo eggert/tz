@@ -1276,7 +1276,7 @@ register char *	cp;
 			(!isascii(*cp) || !isspace(*cp)));
 		if (isascii(*cp) && isspace(*cp))
 			++cp;
-		*dp++ = '\0';
+		*dp = '\0';
 	}
 	array[nsubs] = NULL;
 	return array;

@@ -129,6 +129,7 @@ static time_t	hunt P((char * name, time_t lot, time_t	hit));
 static size_t	longest;
 static char *	progname;
 static void	show P((char * zone, time_t t, int v));
+static void	dumptime P((const struct tm * tmp));
 
 int
 main(argc, argv)
@@ -343,10 +344,12 @@ int	v;
 	struct tm *	tmp;
 
 	(void) printf("%-*s  ", (int) longest, zone);
-	if (v)
-		(void) printf("%.24s UTC = ", asctime(gmtime(&t)));
+	if (v) {
+		dumptime(gmtime(&t));
+		(void) printf(" UTC = ");
+	}
 	tmp = localtime(&t);
-	(void) printf("%.24s", asctime(tmp));
+	dumptime(tmp);
 	if (*abbr(tmp) != '\0')
 		(void) printf(" %s", abbr(tmp));
 	if (v) {
@@ -369,4 +372,33 @@ struct tm *	tmp;
 		return &nada;
 	result = tzname[tmp->tm_isdst];
 	return (result == NULL) ? &nada : result;
+}
+
+static void
+dumptime(timeptr)
+register const struct tm *	timeptr;
+{
+	static const char	wday_name[][3] = {
+		"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
+	};
+	static const char	mon_name[][3] = {
+		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+	};
+	register const char *	wn;
+	register const char *	mn;
+
+	if (timeptr->tm_wday < 0 ||
+		timeptr->tm_wday >= sizeof wday_name / sizeof wday_name[0])
+			wn = "???";
+	else		wn = wday_name[timeptr->tm_wday];
+	if (timeptr->tm_mon < 0 ||
+		timeptr->tm_mon >= sizeof mon_name / sizeof mon_name[0])
+			mn = "???";
+	else		mn = mon_name[timeptr->tm_mon];
+	(void) printf("%.3s %.3s%3d %.2d:%.2d:%.2d %ld",
+		wn, mn,
+		timeptr->tm_mday, timeptr->tm_hour,
+		timeptr->tm_min, timeptr->tm_sec,
+		timeptr->tm_year + (long) TM_YEAR_BASE);
 }

@@ -20,7 +20,8 @@ static char	elsieid[] = "%W%";
 
 #ifdef O_BINARY
 #define OPEN_MODE	(O_RDONLY | O_BINARY)
-#else /* !defined O_BINARY */
+#endif /* defined O_BINARY */
+#ifndef O_BINARY
 #define OPEN_MODE	O_RDONLY
 #endif /* !defined O_BINARY */
 
@@ -211,7 +212,8 @@ settzname()
 	*/
 	for (i = 0; i < sp->timecnt; ++i) {
 		register const struct ttinfo * const	ttisp =
-							&sp->ttis[sp->types[i]];
+							&sp->ttis[
+								sp->types[i]];
 
 		tzname[ttisp->tt_isdst] =
 			(char *) &sp->chars[ttisp->tt_abbrind];
@@ -713,8 +715,8 @@ const int			lastditch;
 					*atp++ = endtime;
 					*typep++ = 1;	/* DST ends */
 				}
-				janfirst +=
-					year_lengths[isleap(year)] * SECSPERDAY;
+				janfirst += year_lengths[isleap(year)] *
+					SECSPERDAY;
 			}
 		} else {
 			int		sawstd;
@@ -743,8 +745,8 @@ const int			lastditch;
 			for (i = 0; i < sp->typecnt; ++i) {
 				if (sp->ttis[i].tt_isdst) {
 					oldfix = dstfix;
-					dstfix =
-					    sp->ttis[i].tt_gmtoff + dstoffset;
+					dstfix = sp->ttis[i].tt_gmtoff +
+						dstoffset;
 					if (sawdst && (oldfix != dstfix))
 						return -1;
 					sp->ttis[i].tt_gmtoff = -dstoffset;
@@ -752,8 +754,8 @@ const int			lastditch;
 					sawdst = TRUE;
 				} else {
 					oldfix = stdfix;
-					stdfix =
-					    sp->ttis[i].tt_gmtoff + stdoffset;
+					stdfix = sp->ttis[i].tt_gmtoff +
+						stdoffset;
 					if (sawstd && (oldfix != stdfix))
 						return -1;
 					sp->ttis[i].tt_gmtoff = -stdoffset;

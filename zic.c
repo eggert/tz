@@ -429,6 +429,19 @@ const char * const	string;
 }
 
 static void
+warning(string)
+const char * const	string;
+{
+	char *	cp;
+
+	cp = ecpyalloc("warning: ");
+	cp = ecatalloc(cp, string);
+	error(string);
+	ifree(cp);
+	--errors;
+}
+
+static void
 usage P((void))
 {
 	(void) fprintf(stderr, _("%s: usage is %s [ -s ] [ -v ] [ -l localtime ] [ -p posixrules ] [ -d directory ]\n\t[ -L leapseconds ] [ -y yearistype ] [ filename ... ]\n"),
@@ -680,11 +693,37 @@ associate P((void))
 	register struct zone *	zp;
 	register struct rule *	rp;
 	register int		base, out;
-	register int		i;
+	register int		i, j;
 
-	if (nrules != 0)
+	if (nrules != 0) {
 		(void) qsort((void *) rules, (size_t) nrules,
 			(size_t) sizeof *rules, rcomp);
+		for (i = 0; i < nrules - 1; ++i) {
+			if (strcmp(rules[i].r_name,
+				rules[i + 1].r_name) != 0)
+					continue;
+			if (strcmp(rules[i].r_filename,
+				rules[i + 1].r_filename) == 0)
+					continue;
+			eat(rules[i].r_filename, rules[i].r_linenum);
+			warning(_("same rule name in multiple files"));
+			eat(rules[i + 1].r_filename, rules[i + 1].r_linenum);
+			warning(_("same rule name in multiple files"));
+			for (j = i + 2; j < nrules; ++j) {
+				if (strcmp(rules[i].r_name,
+					rules[j].r_name) != 0)
+						break;
+				if (strcmp(rules[i].r_filename,
+					rules[j].r_filename) == 0)
+						continue;
+				if (strcmp(rules[i + 1].r_filename,
+					rules[j].r_filename) == 0)
+						continue;
+				break;
+			}
+			i = j - 1;
+		}
+	}
 	for (i = 0; i < nzones; ++i) {
 		zp = &zones[i];
 		zp->z_rules = NULL;

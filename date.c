@@ -529,8 +529,6 @@ char *	format;
 		errensure();
 	}
 	(void) exit(retval);
-	for ( ; ; )
-		;
 }
 
 static char *	wday_names[] = {

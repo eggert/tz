@@ -266,6 +266,8 @@ Zone America/Phoenix	-7:28:18 -	LMT	1883 Nov 18 12:00
 # large size and location in three states."  (The "only" means that other
 # tribal nations don't use DST.)
 
+Link America/Denver America/Shiprock
+
 # Southern Idaho and eastern Oregon switched four weeks late in 1974.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Boise	-7:44:49 -	LMT	1883 Nov 18 12:00

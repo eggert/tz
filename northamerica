@@ -262,11 +262,6 @@ Zone Pacific/Honolulu	-10:31:26 -	LMT	1900 Jan  1 12:00
 			-10:30	US	H%sT	1947 Jun  8 2:00
 			-10:00	-	HST
 
-Zone Pacific/Midway	-11:49:28 -	LMT	1901
-			-11:00	-	NST	1967 Apr	# N=Nome
-			-11:00	-	BST	1983 Nov 30	# B=Bering
-			-11:00	-	SST			# S=Samoa
-
 # Now we turn to US areas that have diverged from the consensus since 1970.
 
 # Arizona mostly uses MST.
@@ -1101,9 +1096,6 @@ Zone Atlantic/Bermuda	-4:19:04 -	LMT	1930 Jan  1 2:00    # Hamilton
 Zone	America/Cayman	-5:25:32 -	LMT	1890		# Georgetown
 			-5:07	-	KMT	1912 Feb    # Kingston Mean Time
 			-5:00	-	EST
-
-# Clipperton
-# uninhabited
 
 # Costa Rica
 # Shanks gives some very odd dates for 1991, and stops there.

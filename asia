@@ -352,8 +352,11 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 
 # Iran
 # From Paul Eggert (1996-12-17), following up a suggestion by Rich Wales:
-# Ahmad Alavi <URL:http://tehran.stanford.edu/Iran_Lib/Calendar/taghveem.txt>
-# (1993-08-04) writes ``Daylight saving time in Iran starts from the first day
+# Ahmea Alavi in
+# <a href=http://tehran.stanford.edu/Iran_Lib/Calendar/taghveem.txt>
+# http://tehran.stanford.edu/Iran_Lib/Calendar/taghveem.txt (1993-08-04)
+# </a>
+# writes ``Daylight saving time in Iran starts from the first day
 # of Farvardin and ends the first day of Mehr.''  This disagrees with the SSIM:
 #
 #		   DST start	   DST end
@@ -774,7 +777,9 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 
 # Mongolia
 # Shanks says that Mongolia has three time zones, but usno1995 and
-# <URL:http://www.odci.gov/cia/publications/95fact/802389h.gif> (1995)
+# <a href=http://www.odci.gov/cia/publications/95fact/802389h.gif>
+# http://www.odci.gov/cia/publications/95fact/802389h.gif (1995)
+# </a>
 # both say that it has just one.
 # Let's comment out the western and eastern Mongolian time zones
 # till we know what their principal towns are.
@@ -881,13 +886,18 @@ Zone	Asia/Singapore	6:55:24 -	LMT	1880
 
 # Sri Lanka
 # From Paul Eggert (1996-09-03):
-# <URL:http://www.virtual-pc.com/lankaweb/news/items/240596-2.html> (1996-05-24)
+# <a href=http://www.virtual-pc.com/lankaweb/news/items/240596-2.html>
+# http://www.virtual-pc.com/lankaweb/news/items/240596-2.html (1996-05-24)
+# </a>
 # reported ``the country's standard time will be put forward by one hour at
 # midnight Friday (1830 GMT) `in the light of the present power crisis'.''
 # Transitions before 1996 are from Shanks (1991).
 #
 # From Dharmasiri Senanayake, Sri Lanka Media Minister (1996-10-24), as quoted
-# in <URL:news:54rka5$m5h@mtinsc01-mgt.ops.worldnet.att.net> (1996-10-26):
+# in
+# <a href=news:54rka5$m5h@mtinsc01-mgt.ops.worldnet.att.net>
+# news:54rka5$m5h@mtinsc01-mgt.ops.worldnet.att.net (1996-10-26):
+# </a>
 # With effect from 12.30 a.m. on 26th October 1996
 # Sri Lanka will be six (06) hours ahead of GMT.
 
@@ -977,9 +987,13 @@ Zone	Asia/Tashkent	4:37:12 -	LMT	1924 May  2
 			5:00	-	UZT		    # Uzbekistan Time
 # Shanks has Tashkent using DST after 1991, but usno1995 says they don't.
 # Guess no DST after 1991.
-# <URL:http://www.odci.gov/cia/publications/95fact/802389h.gif> (1995)
+# <a href=http://www.odci.gov/cia/publications/95fact/802389h.gif>
+# http://www.odci.gov/cia/publications/95fact/802389h.gif (1995)
+# </a>
 # says that Uzbekistan has two time zones, but a cable
-# <URL:http://www.itaiep.doc.gov/bisnis/cables/960510uz.html> (1996-05-10)
+# <a href=http://www.itaiep.doc.gov/bisnis/cables/960510uz.html>
+# http://www.itaiep.doc.gov/bisnis/cables/960510uz.html (1996-05-10)
+# </a>
 # from the American Embassy in Tashkent implies that they have just one.
 
 # Vietnam

@@ -8,16 +8,6 @@ carbon copes to
     and	seismo!sun!guy
 who are responsible for any good ideas that show up here).
 
-Historical local time information has been included here not because it
-is particularly useful, but rather to:
-
-*	give people an idea of the variety of local time rules that have
-	existed in the past and thus an idea of the variety that may be
-	expected in the future;
-
-*	provide a test of the generality of the local time rule description
-	system.
-
 The "ctime.c" source file does conversion of old-style calls to new-style calls;
 when you do a
 	make
@@ -27,3 +17,19 @@ recompile old code a la
 to use the new functions.  If you're *really* adventuresome, you can put ctime.o
 and settz.o in the C library--conservative soul that I am, I'd recommend
 against it.
+
+This version of the time zone software uses a new format (provided by sun!guy)
+for the time zone information files.  They are now stored by default in a
+directory named "/etc/timezones" rather than being stored in "/etc/tzdir" as
+before.  If you've already compiled programs with the old time zone software,
+just leave the "/etc/tzdir" files around until you have a chance to recompile.
+
+Historical local time information has been included here not because it
+is particularly useful, but rather to:
+
+*	give people an idea of the variety of local time rules that have
+	existed in the past and thus an idea of the variety that may be
+	expected in the future;
+
+*	provide a test of the generality of the local time rule description
+	system.

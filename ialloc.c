@@ -21,8 +21,8 @@ static char	sccsid[] = "%W%";
 #define NULLMAL(x)	((x) == NULL)
 #endif
 
-extern char *	malloc();
 extern char *	calloc();
+extern char *	malloc();
 extern char *	realloc();
 extern char *	strcpy();
 
@@ -93,53 +93,4 @@ char *	p;
 {
 	if (!NULLMAL(p))
 		free(p);
-}
-
-static char *
-check(pointer)
-char *	pointer;
-{
-	if (pointer == NULL)
-		wildrexit("allocating memory");
-	return pointer;
-}
-
-char *
-emalloc(size)
-{
-	return check(imalloc(size));
-}
-
-char *
-ecalloc(nelem, elsize)
-{
-	return check(icalloc(nelem, elsize));
-}
-
-char *
-erealloc(ptr, size)
-char *	ptr;
-{
-	return check(irealloc(ptr, size));
-}
-
-char *
-ecatalloc(old, new)
-char *	old;
-char *	new;
-{
-	return check(icatalloc(old, new));
-}
-
-char *
-ecpyalloc(string)
-char *	string;
-{
-	return check(icpyalloc(string));
-}
-
-efree(p)
-char *	p;
-{
-	ifree(p);
 }

@@ -131,7 +131,7 @@ char *	argv[];
 		if (strlen(argv[i]) > longest)
 			longest = strlen(argv[i]);
 	for (hibit = 1; (hibit << 1) != 0; hibit <<= 1)
-		;
+		continue;
 	for (i = optind; i < argc; ++i) {
 		register char **	saveenv;
 		static char		buf[MAX_STRING_LENGTH];
@@ -206,7 +206,7 @@ char *	argv[];
 
 	/* gcc -Wall pacifier */
 	for ( ; ; )
-		;
+		continue;
 }
 
 static time_t

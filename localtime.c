@@ -44,7 +44,7 @@ struct state {
 
 static struct state	s;
 
-static char		isset;
+static char		tz_is_set;
 
 char *			tzname[2] = { "GMT", "GMT" };
 
@@ -180,7 +180,7 @@ char *	name;
 {
 	register int	result;
 
-	isset = TRUE;
+	tz_is_set = TRUE;
 	if (name != 0 && *name == '\0')
 		result = 0;			/* Use built-in GMT */
 	else {
@@ -240,7 +240,7 @@ struct tm *
 localtime(timep)
 long *	timep;
 {
-	if (!isset)
+	if (!tz_is_set)
 		(void) settz(getenv("TZ"));
 	return timesub(timep, &s);
 }

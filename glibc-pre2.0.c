@@ -82,30 +82,18 @@ Cambridge, MA 02139, USA.  */
 static unsigned int week __P ((const struct tm *const, int, int));
 
 
-#define add(n, f)                                                            
-\
-  do                                                                         
-\
-    {                                                                        
-\
-      i += (n);                                                              
-\
-      if (i >= maxsize)                                                      
-\
-        return 0;                                                            
-\
-      else                                                                   
-\
-        if (p)                                                               
-\
-          {                                                                  
-\
-            f;                                                               
-\
-            p += (n);                                                        
-\
-          }                                                                  
-\
+#define add(n, f)                                                            \
+  do                                                                         \
+    {                                                                        \
+      i += (n);                                                              \
+      if (i >= maxsize)                                                      \
+        return 0;                                                            \
+      else                                                                   \
+        if (p)                                                               \
+          {                                                                  \
+            f;                                                               \
+            p += (n);                                                        \
+          }                                                                  \
     } while (0)
 #define cpy(n, s)       add ((n), memcpy((PTR) p, (PTR) (s), (n)))
 

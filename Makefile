@@ -48,6 +48,10 @@ TZLIB=		/usr/lib/libz.a
 #	-DNOID
 # to the end of the "CFLAGS=" line.
 #
+# If you'll never want to handle solar-time-based time zones, add
+#	-DNOSOLAR
+# to the end of the "CFLAGS=" line.
+#
 
 CFLAGS=
 

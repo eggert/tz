@@ -116,14 +116,15 @@ char *		argv[];
 	INITIALIZE(dsttime);
 	INITIALIZE(adjust);
 	INITIALIZE(t);
-#if HAVE_GETTEXT - 0
-	(void) setlocale(LC_MESSAGES, "");
+#ifdef LC_ALL
+	(void) setlocale(LC_ALL, "");
+#endif /* defined LC_ALL */
+#if HAVE_GETTEXT
 #ifdef TZ_DOMAINDIR
 	(void) bindtextdomain(TZ_DOMAIN, TZ_DOMAINDIR);
 #endif /* defined(TEXTDOMAINDIR) */
 	(void) textdomain(TZ_DOMAIN);
-#endif /* HAVE_GETTEXT - 0 */
-	(void) setlocale(LC_TIME, "");
+#endif /* HAVE_GETTEXT */
 	(void) time(&now);
 	format = value = NULL;
 	while ((ch = getopt(argc, argv, "ucnd:t:a:")) != EOF && ch != -1) {

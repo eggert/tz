@@ -1521,7 +1521,6 @@ const int			zonecount;
 	register long			stdoff;
 	register int			year;
 	register long			startoff;
-	register int			startisdst;
 	register int			startttisstd;
 	register int			startttisgmt;
 	register int			type;
@@ -1529,7 +1528,6 @@ const int			zonecount;
 
 	INITIALIZE(untiltime);
 	INITIALIZE(starttime);
-	INITIALIZE(startoff);
 	/*
 	** Now. . .finally. . .generate some useful data!
 	*/
@@ -1554,8 +1552,8 @@ const int			zonecount;
 			continue;
 		gmtoff = zp->z_gmtoff;
 		eat(zp->z_filename, zp->z_linenum);
-		startisdst = -1;
 		*startbuf = '\0';
+		startoff = zp->z_gmtoff;
 		if (zp->z_nrules == 0) {
 			stdoff = zp->z_stdoff;
 			doabbr(startbuf, zp->z_format,
@@ -1637,24 +1635,25 @@ const int			zonecount;
 				rp->r_todo = FALSE;
 				if (useuntil && ktime >= untiltime)
 					break;
+				stdoff = rp->r_stdoff;
 				if (usestart && ktime == starttime)
 					usestart = FALSE;
-				stdoff = rp->r_stdoff;
 				if (usestart) {
-				    if (startisdst < 0 && ktime > starttime)
-					startisdst = FALSE;
-				    if (ktime < starttime ||
-					(*startbuf == '\0' &&
-					startisdst == (rp->r_stdoff != 0))) {
+					if (ktime < starttime) {
 						startoff = oadd(zp->z_gmtoff,
-							rp->r_stdoff);
+							stdoff);
 						doabbr(startbuf, zp->z_format,
 							rp->r_abbrvar,
 							rp->r_stdoff != 0);
-						startisdst = rp->r_stdoff != 0;
-				    }
-				    if (ktime < starttime)
-					continue;
+						continue;
+					}
+					if (*startbuf == '\0' &&
+					    startoff == oadd(zp->z_gmtoff,
+					    stdoff)) {
+						doabbr(startbuf, zp->z_format,
+							rp->r_abbrvar,
+							rp->r_stdoff != 0);
+					}
 				}
 				eats(zp->z_filename, zp->z_linenum,
 					rp->r_filename, rp->r_linenum);
@@ -1667,10 +1666,10 @@ const int			zonecount;
 			}
 		}
 		if (usestart) {
-			if (zp->z_format != NULL &&
+			if (*startbuf == '\0' &&
+				zp->z_format != NULL &&
 				strchr(zp->z_format, '%') == NULL &&
-				strchr(zp->z_format, '/') == NULL &&
-				*startbuf == '\0')
+				strchr(zp->z_format, '/') == NULL)
 					(void) strcpy(startbuf, zp->z_format);
 			eat(zp->z_filename, zp->z_linenum);
 			if (*startbuf == '\0')

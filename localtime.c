@@ -1207,11 +1207,21 @@ const time_t * const	timep;
 {
 /*
 ** Section 4.12.3.2 of X3.159-1989 requires that
-**	The ctime funciton converts the calendar time pointed to by timer
+**	The ctime function converts the calendar time pointed to by timer
 **	to local time in the form of a string.  It is equivalent to
 **		asctime(localtime(timer))
 */
 	return asctime(localtime(timep));
+}
+
+char *
+ctime_r(timep, buf)
+const time_t * const	timep;
+char *			buf;
+{
+	struct tm	tm;
+
+	return asctime_r(localtime_r(timep, &tm), buf);
 }
 
 /*

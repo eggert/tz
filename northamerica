@@ -37,7 +37,7 @@ Zone	US/Mountain		-7:00	USA	M%sT
 Zone	US/Pacific		-8:00	USA	P%sT
 Zone	US/Yukon		-9:00	USA	Y%sT
 
-# Old names, for S5 compatability
+# Old names, for S5 compatibility
 # USA only, but then AT&T-IS never supported anybody else
 
 # Link	LINK-FROM	LINK-TO

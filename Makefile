@@ -86,6 +86,7 @@ YEARISTYPE=	./yearistype
 LDLIBS=
 
 # Add the following to the end of the "CFLAGS=" line as needed.
+#  -Dconst= if `const' does not work (SunOS 4.x cc, OSF1 V5.0 cc)
 #  -DHAVE_ADJTIME=0 if `adjtime' does not exist (SVR0?)
 #  -DHAVE_GETTEXT=1 if `gettext' works (GNU, Linux, Solaris); also see LDLIBS
 #  -DHAVE_INCOMPATIBLE_CTIME_R=1 if your system's time.h declares
@@ -97,6 +98,7 @@ LDLIBS=
 #  -DHAVE_SETTIMEOFDAY=3 if settimeofday ignores 2nd arg (4.4BSD)
 #  -DHAVE_STRERROR=0 if your system lacks the strerror function
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
+#  -DHAVE_SYS_STAT_H=0 if your compiler lacks a "sys/stat.h"
 #  -DHAVE_SYS_WAIT_H=0 if your compiler lacks a "sys/wait.h"
 #  -DLOCALE_HOME=\"path\" if locales are in "path", not "/usr/lib/locale"
 #  -DHAVE_UNISTD_H=0 if your compiler lacks a "unistd.h" (Microsoft C++ 7?)

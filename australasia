@@ -9,13 +9,16 @@
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Aus	1895	only	-	Jan	 1	0:00	0	-
-Rule	Aus	1917	only	-	Jan	 1	0:01	1:00	-
+# Shanks gives 1917 Jan 1 0:01; go with Whitman (and guess 2:00).
+Rule	Aus	1916	only	-	Oct	 1	2:00	1:00	-
 Rule	Aus	1917	only	-	Mar	25	2:00	0	-
 Rule	Aus	1942	only	-	Jan	 1	2:00	1:00	-
-Rule	Aus	1942	only	-	Mar	20	2:00	0	-
+Rule	Aus	1942	only	-	Mar	29	2:00	0	-
 Rule	Aus	1942	only	-	Sep	27	2:00	1:00	-
 Rule	Aus	1943	1944	-	Mar	lastSun	2:00	0	-
 Rule	Aus	1943	only	-	Oct	 3	2:00	1:00	-
+# Whitman says W Australia didn't use DST in 1943/1944, and that
+# 1944/1945 was just like 1943/1944; go with Shanks.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Australia/Darwin	 8:43:20 -	LMT	1895 Feb
@@ -117,7 +120,7 @@ Zone Australia/Lord_Howe 10:36:20 -	LMT	1895 Feb
 			10:00	-	EST	1981 Mar
 			10:30	AN	LHST
 Zone Indian/Christmas	7:02:52 -	LMT	1895 Feb
-			7:00	-	JT
+			7:00	-	JVT
 
 #
 # Ashmore Is, Cartier
@@ -209,24 +212,32 @@ Zone	Pacific/Noumea	11:05:48 -	LMT	1912 Jan 13
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	NZ	1868	only	-	Jan	1	0:00	0	S
-Rule	NZ	1927	only	-	Nov	6	2:00	1:00	D
-Rule	NZ	1928	only	-	Mar	4	2:00	0	S
-Rule	NZ	1928	1933	-	Oct	Sun>=8	2:00	1:00	D
-Rule	NZ	1929	1933	-	Mar	Sun>=15	2:00	0	S
-Rule	NZ	1934	1940	-	Apr	lastSun	2:00	0	S
-Rule	NZ	1934	1939	-	Sep	lastSun	2:00	1:00	D
-Rule	NZ	1974	only	-	Nov	3	2:00	1:00	D
+# Shanks gives 1927 Nov 6 - 1928 Mar 4, 1928 Oct 14 - 1929 Mar 17,
+# 1929 Oct 13 - 1930 Mar 16; go with Whitman.
+Rule	NZ	1927	only	-	Nov	26	2:00	1:00	D
+Rule	NZ	1928	1929	-	Mar	Sun>=1	2:00	0	S
+Rule	NZ	1928	only	-	Nov	 4	2:00	1:00	D
+Rule	NZ	1929	only	-	Oct	30	2:00	1:00	D
+Rule	NZ	1930	1933	-	Mar	Sun>=15	2:00	0	S
+Rule	NZ	1930	1933	-	Oct	Sun>=8	2:00	1:00	D
+# Shanks says DST stopped 1940 Sep lastSun; go with Whitman for war years.
+Rule	NZ	1934	1944	-	Apr	lastSun	2:00	0	S
+Rule	NZ	1934	1944	-	Sep	lastSun	2:00	1:00	D
+Rule	NZ	1974	only	-	Nov	 3	2:00	1:00	D
 Rule	NZ	1975	1988	-	Oct	lastSun	2:00	1:00	D
-Rule	NZ	1989	only	-	Oct	8	2:00	1:00	D
+Rule	NZ	1989	only	-	Oct	 8	2:00	1:00	D
 Rule	NZ	1990	max	-	Oct	Sun>=1	2:00	1:00	D
 Rule	NZ	1975	only	-	Feb	23	3:00	0	S
 Rule	NZ	1976	1989	-	Mar	Sun>=1	3:00	0	S
 Rule	NZ	1990	max	-	Mar	Sun>=15	3:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Pacific/Auckland	11:39:04 -	LMT	1868
-			11:30	NZ	NZ%sT	1940 Sep 29 2:00
+						# Shanks gives 1940 Sep 29 2:00;
+						# go with Whitman.
+			11:30	NZ	NZ%sT	1945 Apr 29 2:00
 			12:00	NZ	NZ%sT
 Zone Pacific/Chatham	12:45	-	NZ-CHAT
+
 
 # Antipodes Is, Kermadec Is
 # no information; probably like Pacific/Auckland
@@ -356,6 +367,7 @@ Zone	Pacific/Wallis	11:44:40 -	LMT	1901
 #	 11:00	NCST NCDT New Caledonia*
 #	 11:30	NRT	Norfolk*
 #	 12:00	NZST NZDT New Zealand
+#	 12:45	NZ-CHAT	Chatham
 #	 13:00	TGT	Tongatapu*
 #	-12:00	KJT	Kwajalein (no longer used)*
 #	-11:00	SST	Samoa

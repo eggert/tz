@@ -1,5 +1,5 @@
 # %W%
 # Incorporates data for Singapore from Robert Elz' asia 1.1
-# Zone	NAME		GMTOFF	RULES	FORMAT
-Zone	Japan		9:00	-	JST
-Zone	Singapore	8:00	-	SST
+# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	Japan		9:00	-		JST
+Zone	Singapore	8:00	-		SST

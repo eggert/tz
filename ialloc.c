@@ -31,11 +31,11 @@ const int	n;
 #ifdef MAL
 	register char *	result;
 
-	result = malloc((alloc_size_T) nonzero(n));
+	result = malloc((size_t) nonzero(n));
 	return NULLMAL(result) ? NULL : result;
 #endif /* defined MAL */
 #ifndef MAL
-	return malloc((alloc_size_T) nonzero(n));
+	return malloc((size_t) nonzero(n));
 #endif /* !defined MAL */
 }
 
@@ -46,7 +46,7 @@ int	elsize;
 {
 	if (nelem == 0 || elsize == 0)
 		nelem = elsize = 1;
-	return calloc((alloc_size_T) nelem, (alloc_size_T) elsize);
+	return calloc((size_t) nelem, (size_t) elsize);
 }
 
 void *
@@ -56,7 +56,7 @@ const int	size;
 {
 	if (NULLMAL(pointer))
 		return imalloc(size);
-	return realloc((void *) pointer, (alloc_size_T) nonzero(size));
+	return realloc((void *) pointer, (size_t) nonzero(size));
 }
 
 char *

@@ -44,8 +44,8 @@ TZLIB=		/usr/lib/libz.a
 # add a
 #	-DKRE_COMPAT
 # to the end of the "CFLAGS=" line, and add the structure elements
-#	char *	tm_zone;
 #	long	tm_gmtoff;
+#	char *	tm_zone;
 # to the END of the "struct tm" structure defined in "/usr/include/time.h".
 #
 # If you want code inspired by certain emerging standards, add

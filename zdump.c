@@ -10,12 +10,12 @@ static char	sccsid[] = "%W%";
 #include "tzfile.h"
 
 #ifndef alloc_t
-#define alloc_t	unsigned
+#define alloc_t		unsigned
 #endif
 
 #ifndef TRUE
-#define TRUE	1
-#define FALSE	0
+#define TRUE		1
+#define FALSE		0
 #endif
 
 extern char *		asctime();
@@ -27,7 +27,7 @@ extern char *		sprintf();
 extern long		time();
 extern char *		tz_abbr;
 
-static int	longest;
+static int		longest;
 
 main(argc, argv)
 int	argc;
@@ -36,7 +36,7 @@ char *	argv[];
 	register FILE *	fp;
 	register long *	tp;
 	register int	i, j, c;
-	int		vflag;
+	register int	vflag;
 	long		now;
 	struct tzhead	h;
 	char		buf[BUFSIZ];
@@ -45,7 +45,7 @@ char *	argv[];
 	while ((c = getopt(argc, argv, "v")) == 'v')
 		vflag = 1;
 	if (c != EOF || optind == argc - 1 && strcmp(argv[optind], "=") == 0) {
-		(void) fprintf(stderr, "%s: usage is %s zonename ...\n",
+		(void) fprintf(stderr, "%s: usage is %s [ -v ] zonename ...\n",
 			argv[0], argv[0]);
 		exit(1);
 	}

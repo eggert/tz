@@ -62,10 +62,11 @@ char *	argv[];
 	register int	vflag;
 	register char *	cutoff;
 	register int	cutyear;
-	register long	cuttime;
+	register long	cuttime, k;
 	time_t		now;
 	time_t		t;
-	long		timecnt;
+	long		leapcnt, timecnt;
+	long		typecnt, charcnt;
 	char		buf[BUFSIZ];
 
 	vflag = 0;
@@ -136,8 +137,16 @@ char *	argv[];
 (void) fseek(fp, (long) sizeof ((struct tzhead *) 0)->tzh_reserved, 0);
 			if (fread((char *) code, sizeof code, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
+			leapcnt = tzdecode(code);
+			if (fread((char *) code, sizeof code, 1, fp) != 1)
+				readerr(fp, argv[0], argv[i]);
 			timecnt = tzdecode(code);
-			(void) fseek(fp, (long) (2 * sizeof code), 1);
+			if (fread((char *) code, sizeof code, 1, fp) != 1)
+				readerr(fp, argv[0], argv[i]);
+			typecnt = tzdecode(code);
+			if (fread((char *) code, sizeof code, 1, fp) != 1)
+				readerr(fp, argv[0], argv[i]);
+			charcnt = tzdecode(code);
 		}
 		t = 0x80000000;
 		if (t > 0)		/* time_t is unsigned */
@@ -145,7 +154,7 @@ char *	argv[];
 		show(argv[i], t, TRUE);
 		t += SECS_PER_HOUR * HOURS_PER_DAY;
 		show(argv[i], t, TRUE);
-		while (timecnt-- > 0) {
+		for (k = timecnt; k > 0; --k) {
 			char	code[4];
 
 			if (fread((char *) code, sizeof code, 1, fp) != 1)
@@ -155,6 +164,21 @@ char *	argv[];
 				break;
 			show(argv[i], t - 1, TRUE);
 			show(argv[i], t, TRUE);
+		}
+		(void) fseek(fp, (long) sizeof (struct tzhead) + timecnt * 5
+					+ typecnt * 6 + charcnt, 0);
+		for (k = leapcnt; k > 0; --k) {
+			char	code[4];
+
+			if (fread((char *) code, sizeof code, 1, fp) != 1)
+				readerr(fp, argv[0], argv[i]);
+			(void) fseek(fp, (long) sizeof code, 1);
+			t = tzdecode(code);
+			if (cutoff != NULL && t > cuttime)
+				break;
+			show(argv[i], t - 1, TRUE);
+			show(argv[i], t, TRUE);
+			show(argv[i], t + 1, TRUE);
 		}
 		if (fclose(fp)) {
 			(void) fprintf(stderr, "%s: Error closing ", argv[0]);

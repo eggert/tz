@@ -576,8 +576,9 @@ const struct tm * const	tmp;
 			errensure();
 			(void) exit(retval);
 		}
+		cp[0] = '\1';
 		result = strftime(cp, size, format, tmp);
-		if (result != 0)
+		if (result != 0 || cp[0] == '\0')
 			break;
 		size += INCR;
 		cp = realloc(cp, (size_t) size);

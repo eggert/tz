@@ -1503,8 +1503,10 @@ const int			zonecount;
 			type = addtype(oadd(zp->z_gmtoff, stdoff),
 				startbuf, stdoff != 0, startttisstd,
 				startttisgmt);
-			if (usestart)
+			if (usestart) {
 				addtt(starttime, type);
+				usestart = FALSE;
+			}
 			else if (stdoff != 0)
 				addtt(min_time, type);
 		} else for (year = min_year; year <= max_year; ++year) {
@@ -1604,16 +1606,17 @@ const int			zonecount;
 				stdoff = rp->r_stdoff;
 			}
 		}
-		if (usestart)
-			if (*startbuf != '\0')
-				addtt(starttime,
+		if (usestart) {
+			eat(zp->z_filename, zp->z_linenum);
+			if (*startbuf == '\0')
+error(_("can't determine time zone abbrevation to use just after until time"));
+			else if (startisdst < 0)
+error(_("can't determine whether to use DST just after until time"));
+			else	addtt(starttime,
 					addtype(startoff, startbuf,
 						startisdst, startttisstd,
 						startttisgmt));
-			else {
-				eat(zp->z_filename, zp->z_linenum);
-error(_("can't determine time zone abbrevation to use after until time"));
-			}
+		}
 		/*
 		** Now we may get to set starttime for the next zone line.
 		*/
@@ -1656,6 +1659,18 @@ const int		ttisgmt;
 {
 	register int	i, j;
 
+	if (isdst != TRUE && isdst != FALSE) {
+		error(_("internal error - addtype called with bad isdst"));
+		(void) exit(EXIT_FAILURE);
+	}
+	if (ttisstd != TRUE && ttisstd != FALSE) {
+		error(_("internal error - addtype called with bad ttisstd"));
+		(void) exit(EXIT_FAILURE);
+	}
+	if (ttisgmt != TRUE && ttisgmt != FALSE) {
+		error(_("internal error - addtype called with bad ttisgmt"));
+		(void) exit(EXIT_FAILURE);
+	}
 	/*
 	** See if there's already an entry for this zone type.
 	** If so, just return its index.

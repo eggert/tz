@@ -292,21 +292,28 @@ register struct state * const	sp;
 			return -1;
 	}
 	{
-		register const struct tzhead *	tzhp;
-		char				buf[sizeof *sp + sizeof *tzhp];
-		int				ttisstdcnt;
-		int				ttisgmtcnt;
+		struct tzhead *	tzhp;
+		char		buf[sizeof *sp + sizeof *tzhp];
+		int		ttisstdcnt;
+		int		ttisgmtcnt;
 
 		i = read(fid, buf, sizeof buf);
-		if (close(fid) != 0 || i < sizeof *tzhp)
+		if (close(fid) != 0)
 			return -1;
-		tzhp = (struct tzhead *) buf;
-		ttisstdcnt = (int) detzcode(tzhp->tzh_ttisstdcnt);
-		ttisgmtcnt = (int) detzcode(tzhp->tzh_ttisgmtcnt);
-		sp->leapcnt = (int) detzcode(tzhp->tzh_leapcnt);
-		sp->timecnt = (int) detzcode(tzhp->tzh_timecnt);
-		sp->typecnt = (int) detzcode(tzhp->tzh_typecnt);
-		sp->charcnt = (int) detzcode(tzhp->tzh_charcnt);
+		p = buf;
+		p += sizeof tzhp->tzh_reserved;
+		ttisstdcnt = (int) detzcode(p);
+		p += 4;
+		ttisgmtcnt = (int) detzcode(p);
+		p += 4;
+		sp->leapcnt = (int) detzcode(p);
+		p += 4;
+		sp->timecnt = (int) detzcode(p);
+		p += 4;
+		sp->typecnt = (int) detzcode(p);
+		p += 4;
+		sp->charcnt = (int) detzcode(p);
+		p += 4;
 		if (sp->leapcnt < 0 || sp->leapcnt > TZ_MAX_LEAPS ||
 			sp->typecnt <= 0 || sp->typecnt > TZ_MAX_TYPES ||
 			sp->timecnt < 0 || sp->timecnt > TZ_MAX_TIMES ||
@@ -314,15 +321,14 @@ register struct state * const	sp;
 			(ttisstdcnt != sp->typecnt && ttisstdcnt != 0) ||
 			(ttisgmtcnt != sp->typecnt && ttisgmtcnt != 0))
 				return -1;
-		if (i < sizeof *tzhp +
-			sp->timecnt * (4 + sizeof (char)) +
-			sp->typecnt * (4 + 2 * sizeof (char)) +
-			sp->charcnt * sizeof (char) +
-			sp->leapcnt * 2 * 4 +
-			ttisstdcnt * sizeof (char) +
-			ttisgmtcnt * sizeof (char))
+		if (i - (p - buf) < sp->timecnt * 4 +	/* ats */
+			sp->timecnt +			/* types */
+			sp->typecnt * (4 + 2) +		/* ttinfos */
+			sp->charcnt +			/* chars */
+			sp->leapcnt * (4 + 4) +		/* lsinfos */
+			ttisstdcnt +			/* ttisstds */
+			ttisgmtcnt)			/* ttisgmts */
 				return -1;
-		p = buf + sizeof *tzhp;
 		for (i = 0; i < sp->timecnt; ++i) {
 			sp->ats[i] = detzcode(p);
 			p += 4;

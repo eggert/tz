@@ -84,6 +84,10 @@ static const struct lc_time_T	C_time_locale = {
 	** "date, using locale's date format," anything goes.
 	** Using just numbers (as here) makes Quakers happier;
 	** it's also compatible with SVR4.
+	**
+	** XXX--might it be better to use the year-2000 friendly
+	**	%Y-%m-%d
+	** here?
 	*/
 	"%m/%d/%y",
 

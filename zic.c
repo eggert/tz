@@ -764,8 +764,11 @@ writezone(name)
 	if (strlen(directory) + 1 + strlen(name) + 1 > BUFSIZ)
 		wild2exit("long directory/file", filename);
 	(void) sprintf(fullname, "%s/%s", directory, name);
-	if ((fp = fopen(fullname, "w")) == NULL)
-		wild2exit("result creating", fullname);
+	if ((fp = fopen(fullname, "w")) == NULL) {
+		mkdirs(fullname);
+		if ((fp = fopen(fullname, "w")) == NULL)
+			wild2exit("result creating", fullname);
+	}
 	if (fwrite((char *) &h, sizeof h, 1, fp) != 1)
 		goto wreck;
 	if ((i = h.tzh_timecnt) != 0) {
@@ -1154,4 +1157,19 @@ newabbr(string)
 		error("long time zone abbreviations");
 	(void) strcpy(&chars[h.tzh_charcnt], string);
 	h.tzh_charcnt += i + 1;
+}
+
+static
+mkdirs(name)
+char *	name;
+{
+	register char *	cp;
+
+	if ((cp = name) == NULL || *cp == '\0')
+		return;
+	while ((cp = strchr(cp + 1, '/')) != 0) {
+		*cp = '\0';
+		(void) mkdir(name);
+		*cp = '/';
+	}
 }

@@ -430,7 +430,7 @@ const char * const	string;
 
 	cp = ecpyalloc("warning: ");
 	cp = ecatalloc(cp, string);
-	error(string);
+	error(cp);
 	ifree(cp);
 	--errors;
 }

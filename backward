@@ -32,6 +32,7 @@ Link	America/Havana		Cuba
 Link	Africa/Cairo		Egypt
 Link	Europe/Dublin		Eire
 Link	Europe/London		GB
+Link	Europe/Moscow		Moscow
 Link	Asia/Hong_Kong		Hongkong
 Link	Atlantic/Reykjavik	Iceland
 Link	Asia/Tehran		Iran
@@ -46,9 +47,12 @@ Link	America/Mexico_City	Mexico/General
 Link	Pacific/Auckland	NZ
 Link	Pacific/Chatham		NZ-CHAT
 Link	Asia/Shanghai		PRC
+Link	Europe/Warsaw		Poland
+Link	Europe/Lisbon		Portugal
 Link	Asia/Taipei		ROC
 Link	Asia/Seoul		ROK
 Link	Asia/Singapore		Singapore
+Link	Europe/Istanbul		Turkey
 Link	America/Anchorage	US/Alaska
 Link	America/Atka		US/Aleutian
 Link	America/Phoenix		US/Arizona

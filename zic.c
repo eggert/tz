@@ -1642,7 +1642,7 @@ const int			zonecount;
 				stdoff = rp->r_stdoff;
 				if (usestart) {
 				    if (startisdst < 0 && ktime > starttime)
-					startisdst = (rp->r_stdoff == 0);
+					startisdst = FALSE;
 				    if (ktime < starttime ||
 					(*startbuf == '\0' &&
 					startisdst == (rp->r_stdoff != 0))) {

@@ -2126,15 +2126,20 @@ char * const	argname;
 		if (!itsdir(name)) {
 			/*
 			** It doesn't seem to exist, so we try to create it.
+			** Creation may fail because of the directory being
+			** created by some other multiprocessor, so we get
+			** to do extra checking.
 			*/
 			if (mkdir(name, 0755) != 0) {
 				const char *e = strerror(errno);
 
-				(void) fprintf(stderr,
-				    _("%s: Can't create directory %s: %s\n"),
-				    progname, name, e);
-				ifree(name);
-				return -1;
+				if (errno != EEXIST || !itsdir(name)) {
+					(void) fprintf(stderr,
+_("%s: Can't create directory %s: %s\n"),
+						progname, name, e);
+					ifree(name);
+					return -1;
+				}
 			}
 		}
 		*cp = '/';

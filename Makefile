@@ -187,8 +187,8 @@ SHAR2.Z.uue:	$(HEADERS) $(LIBSRCS)
 SHAR3.Z.uue:	$(NONLIBSRCS)
 		$(SHAR) $(NONLIBSRCS) | compress | uuencode SHAR3.Z > $@
 
-SHAR4.Z.uue:	$(YDATA) $(NDATA)
-		$(SHAR) $(YDATA) $(NDATA) | compress | uuencode SHAR4.Z > $@
+SHAR4.Z.uue:	$(YDATA) $(NDATA) leapseconds
+	$(SHAR) $(YDATA) $(NDATA) leapseconds | compress | uuencode SHAR4.Z > $@
 
 SHAR5.Z.uue:	$(SDATA)
 		$(SHAR) $(SDATA) | compress | uuencode SHAR5.Z > $@

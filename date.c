@@ -3,19 +3,9 @@
 static char	elsieid[] = "%W%";
 /*
 ** Modified from the UCB version whose sccsid appears below.
-** Add -a option for benefit of Sun?
 */
 #endif /* !defined NOID */
 #endif /* !defined lint */
-
-/*
-** Is this next right????  There's a TSP_SETTIME but no TSP_SETDATE in
-** Sun's "protocols/timed.h".  Are the two synonymous?
-*/
-
-#ifdef sun
-#define TSP_SETDATE	TSP_SETTIME
-#endif /* defined sun */
 
 /*
  * Copyright (c) 1985, 1987, 1988 The Regents of the University of California.
@@ -54,6 +44,93 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #include "ctype.h"
 #include "strings.h"
 #include "tzfile.h"
+
+/*
+** What options should be provided?
+** We normally provide everything we can, and "#define X_OPTION"
+** for each option provided.  If "NO_X_OPTION" is defined for some case,
+** we leave the option out.
+**
+** "-u" is provided unconditionally.
+*/
+
+/*
+** Nothing special needed for BSD's "-n" option to not notify networked systems
+** of a time change--on non-networked systems, "date -n" == "date".
+*/
+
+#ifndef N_OPTION
+#ifndef NO_N_OPTION
+#define N_OPTION
+#endif /* !defined NO_N_OPTION */
+#endif /* !defined N_OPTION */
+
+/*
+** BSD's "-d dst" and "-t min-west" options, for setting the kernel's
+** notion of dst and offset, require the "settimeofday" system call;
+** its availability is deduced from "DST_NONE" being defined.
+*/
+
+#ifndef D_OPTION
+#ifndef NO_D_OPTION
+#ifdef DST_NONE
+#define D_OPTION
+#endif /* defined DST_NONE */
+#endif /* !defined NO_D_OPTION */
+#endif /* !defined D_OPTION */
+
+#ifndef T_OPTION
+#ifndef NO_T_OPTION
+#ifdef DST_NONE
+#define T_OPTION
+#endif /* defined DST_NONE */
+#endif /* !defined NO_T_OPTION */
+#endif /* !defined T_OPTION */
+
+/*
+** Sun's "-a sss.fff" option to slowly adjust the time requires the
+** "adjtime" system call.  We assume it's available if DST_NONE is defined.
+*/
+
+#ifndef A_OPTION
+#ifndef NO_A_OPTION
+#ifdef DST_NONE
+#define A_OPTION
+#endif /* defined DST_NONE */
+#endif /* !defined NO_A_OPTION */
+#endif /* !defined A_OPTION */
+
+/*
+** So much for options.  One "combination" setting makes life easier.
+*/
+
+#ifdef D_OPTION
+#define D_OR_T_OPTION
+#else /* !defined D_OPTION */
+#ifdef T_OPTION
+#define D_OR_T_OPTION
+#endif /* defined T_OPTION */
+#endif /* !defined D_OPTION */
+
+/*
+** Finally, features.
+*/
+
+#ifndef USG_INPUT
+#ifndef NO_USG_INPUT
+#define USG_INPUT
+#endif /* !defined NO_USG_INPUT */
+#endif /* !defined USG_INPUT */
+
+#ifndef USG_OUTPUT
+#ifndef NO_USG_OUTPUT
+#define USG_OUTPUT
+#endif /* !defined NO_USG_OUTPUT */
+#endif /* !defined USG_OUTPUT */
+
+/*
+** So much for features.
+*/
 
 #ifndef TIME_USER
 #ifdef OTIME_MSG
@@ -96,16 +173,14 @@ static void		display();
 static void		finalcheck();
 static time_t		parse();
 int			netsettime();
+static char *		nondigit();
 static void		oops();
 static void		timeout();
 static void		usage();
 static time_t		xtime();
 
-#ifdef DST_NONE
-#define OPTIONS	"und:t:"
-#else /* !defined DST_NONE */
-#define OPTIONS	"un"
-#endif /* !defined DST_NONE */
+static char *	options[132];
+static char *	usemes[132];
 
 int
 main(argc, argv)
@@ -119,21 +194,66 @@ char *	argv[];
 	register int		ch;
 	register int		nflag;
 	time_t			t;
-#ifdef DST_NONE
-	register int		tflag, dflag;
+#ifdef D_OPTION
+	register int		dflag = 0;
+#endif  /* defined D_OPTION */ 
+#ifdef T_OPTION
+	register int		tflag = 0;
+#endif  /* defined T_OPTION */ 
+#ifdef D_OR_T_OPTION */
 	struct timezone		tz;
 	static struct timeval	tv;	/* static so tv_usec is 0 */
+#endif /* defined D_OR_T_OPTION */
+#ifdef A_OPTION
+	register int		aflag = 0;
+	static struct timeval	atv;	/* static so tv_usec is 0 */
+#endif /* defined A_OPTION */
 
+#ifdef D_OR_T_OPTION
 	if (gettimeofday((struct timeval *) NULL, &tz) != 0) {
 		perror("date: error: gettimeofday");
 		(void) exit(EXIT_FAILURE);
 	}
-	tflag = dflag = 0;
-#endif /* defined DST_NONE */
+#endif /* defined D_OR_T_OPTION */
 	(void) time(&now);
 	format = value = NULL;
 	nflag = 0;
-	while ((ch = getopt(argc, argv, OPTIONS)) != EOF) {
+	/*
+	** "-u" and are available everywhere.
+	** (It's easy to obey "-n" if there's no network!)
+	*/
+	(void) strcpy(options, "u");
+	(void) strcpy(usemes, "[-u");
+#ifdef N_OPTION
+	(void) strcat(options, "n");
+	(void) strcat(usemes, "n");
+#endif /* defined N_OPTION */
+	(void) strcat(usemes, "]");
+#ifdef D_OPTION
+	(void) strcat(options, "d:");
+	(void) strcat(usemes, " [-d dst]");
+#endif /* defined D_OPTION */
+#ifdef T_OPTION
+	(void) strcat(options, "t:");
+	(void) strcat(usemes, " [-t min-west]");
+#endif /* defined T_OPTION */
+#ifdef A_OPTION
+	(void) strcat(options, "a:");
+	(void) strcat(usemes, " [-a sss.fff]");
+#endif /* defined A_OPTION */
+	/*
+	** Two time argument variants.
+	*/
+#ifdef USG_INPUT
+	(void) strcat(usemes, " [[yyyy]mmddhhmm[yy][.ss]]");
+#else /* !defined USG_INPUT */
+	(void) strcat(usemes, " [[yyyy]mmddhhmm[.ss]]");
+#endif /* !defined USG_INPUT */
+	/*
+	** "+format" is avaialble everywhere.
+	*/
+	(void) strcat(usemes, " [+format]");
+	while ((ch = getopt(argc, argv, options)) != EOF) {
 		switch (ch) {
 		default:
 			usage();
@@ -151,10 +271,12 @@ char *	argv[];
 				environ = saveenv;
 			}
 			break;
+#ifdef N_OPTION
 		case 'n':		/* don't set network */
 			nflag = 1;
 			break;
-#ifdef DST_NONE
+#endif /* defined N_OPTION */
+#ifdef D_OPTION
 		case 'd':		/* daylight savings time */
 			if (dflag) {
 				(void) fprintf(stderr,
@@ -165,10 +287,11 @@ char *	argv[];
 			tz.tz_dsttime = atoi(optarg);
 			if (*optarg == '\0')
 				usage();
-			while (*optarg != '\0')
-				if (!isdigit(*optarg))
-					usage();
+			if (*nondigit(optarg) != '\0')
+				usage();
 			break;
+#endif /* defined D_OPTION */
+#ifdef T_OPTION
 		case 't':		/* minutes west of GMT */
 			if (tflag) {
 				(void) fprintf(stderr,
@@ -181,11 +304,36 @@ char *	argv[];
 				++optarg;
 			if (*optarg == '\0')
 				usage();
-			while (*optarg != '\0')
-				if (!isdigit(*optarg))
-					usage();
+			if (*nondigit(optarg) != '\0')
+				usage();
 			break;
-#endif /* defined DST_NONE */
+#endif /* defined T_OPTION */
+#ifdef A_OPTION
+		case 'a':		/* adjustment */
+			if (aflag) {
+				(void) fprintf(stderr,
+					"date: error: multiple -a's used");
+				usage();
+			}
+			aflag = 1;
+			{
+				float		f;
+				extern double	atof();
+
+				f = atof(optarg);
+				if (*optarg == '+' || *optarg == '-')
+					++optarg;
+				if (*optarg == '\0' || strcmp(optarg, ".") == 0)
+					usage();
+				optarg = nondigit(optarg);
+				if (*optarg == '.')
+					++optarg;
+				if (nondigit(optarg) != '\0')
+					usage();
+				atv.tv_usec = 100000 * f;
+			}
+			break;
+#endif /* defined A_OPTION */
 		}
 	}
 	while (optind < argc) {
@@ -195,14 +343,14 @@ char *	argv[];
 				format = cp + 1;
 			else {
 				(void) fprintf(stderr, 
-					"date: error: multiple formats given\n");
+"date: error: multiple formats in command line\n");
 				usage();
 			}
 		else	if (value == NULL)
 				value = cp;
 			else {
 				(void) fprintf(stderr,
-					"date: error: multiple values given\n");
+"date: error: multiple values in command line\n");
 				usage();
 			}
 	}
@@ -214,11 +362,16 @@ char *	argv[];
 	/*
 	** Entire command line has now been checked.
 	*/
-#ifdef DST_NONE
+#ifdef A_OPTION
+	if (aflag)
+		if (adjtime(&atv, (struct timeval *) NULL) != 0)
+			oops("date: error: adjtime");
+#endif /* defined A_OPTION */
+#ifdef D_OR_T_OPTION
 	if ((tflag || dflag) &&
 		settimeofday((struct timeval *) NULL, &tz) != 0)
 			oops("date: error: settimeofday");
-#endif /* defined DST_NONE */
+#endif /* defined D_OR_T_OPTION */
 	if (value == NULL)
 		display(format);
 	username = getlogin();
@@ -230,9 +383,14 @@ char *	argv[];
 	** We'll continue to put the entry in unconditionally for compatibility.
 	*/
 #ifdef DST_NONE
+#ifdef TSP_SETDATE
 	tv.tv_sec = t;
-	if (!nflag && netsettime(tv) != 1)
-		retval = EXIT_FAILURE;
+#ifdef N_OPTION
+	if (!nflag)
+#endif /* defined N_OPTION */
+		if (netsettime(tv) != 1)
+			retval = EXIT_FAILURE;
+#endif /* defined TSP_SETDATE */
 	logwtmp(OTIME_MSG, TIME_USER, "");
 	if (settimeofday(&tv, (struct timezone *) NULL) == 0) {
 		logwtmp(NTIME_MSG, TIME_USER, "");
@@ -252,19 +410,19 @@ char *	argv[];
 		;
 }
 
-#ifdef DST_NONE
-static char	usemes[] = "\
-date: usage is date [-un][-d dst][-t mins_west] [[yyyy]mmddhhmm[yy][.ss]] [+fmt]\
-";
-#else /* !defined DST_NONE */
-static char	usemes[] = "\
-date: usage is date [-un] [[yyyy]mmddhhmm[yy][.ss]] [+format]";
-#endif /* !defined DST_NONE */
+static char *
+nondigit(cp)
+register char *	cp;
+{
+	while (isdigit(*cp))
+		++cp;
+	return cp;
+}
 
 static void
 usage()
 {
-	(void) fprintf(stderr, usemes);
+	(void) fprintf(stderr, "date: usage is date %s\n", usemes);
 	retval = EXIT_FAILURE;
 	display((char *) NULL);
 }
@@ -465,7 +623,7 @@ struct tm *	tmp;
 		case '%':
 			(void) putc('%', fp);
 			break;
-#ifdef USG_COMPAT
+#ifdef USG_OUTPUT
 /*
 ** Format characters below from:
 ** the System V Release 2.0 description of the date command;
@@ -492,7 +650,7 @@ struct tm *	tmp;
 		case 'T':
 			timeout(fp, "%X", tmp);
 			break;
-#endif /* defined USG_COMPAT */
+#endif /* defined USG_OUTPUT */
 		}
 	}
 }
@@ -654,9 +812,9 @@ int		isdst;
 
 			thist = xtime(&tm);
 		
-#ifndef USG_COMPAT
+#ifndef USG_INPUT
 			return thist;
-#else /* defined USG_COMPAT */
+#else /* defined USG_INPUT */
 			tm.tm_mon = pairs[0] - 1;
 			tm.tm_mday = pairs[1];
 			tm.tm_hour = pairs[2];
@@ -676,7 +834,7 @@ int		isdst;
 			else	if (thatt == -1)
 					return thist;
 				else	ambiguous(thist, thatt, 0);
-#endif /* defined USG_COMPAT */
+#endif /* defined USG_INPUT */
 
 		case 6:	/* yyyymmddhhmm--BSD finally wins in the 21st century */
 			year = pairs[0] * 100 + pairs[1];
@@ -690,7 +848,7 @@ int		isdst;
 	return -1;
 }
 
-#ifdef DST_NONE
+#ifdef TSP_SETDATE
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
@@ -826,4 +984,4 @@ bad:
 	retval = 2;
 	return (0);
 }
-#endif /* defined DST_NONE */
+#endif /* defined TSP_SETDATE */

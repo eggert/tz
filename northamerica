@@ -180,30 +180,16 @@ Zone Pacific/Honolulu	-10:30	US	H%sT	1933 Apr 30 2:00
 # no information; probably like US/Eastern
 
 
-# These links are for backward compatibility with the old naming convention.
-Link	America/Anchorage	US/Alaska
-Link	America/Atka		US/Aleutian
-Link	America/Chicago		US/Central
-Link	America/Denver		US/Mountain
-Link	America/Detroit		US/Michigan
-Link	America/Fort_Wayne	US/East-Indiana
-Link	America/Knox_IN		US/Indiana-Starke
-Link	America/Los_Angeles	US/Pacific
-Link	America/New_York	US/Eastern
-Link	America/Phoenix		US/Arizona
-Link	Pacific/Honolulu	US/Hawaii
-Link	Pacific/Samoa		US/Samoa
-
 # Old names, for S5 users
 
-# Link	LINK-FROM	LINK-TO
-Link	US/Eastern	EST5EDT
-Link	US/Central	CST6CDT
-Link	US/Mountain	MST7MDT
-Link	US/Pacific	PST8PDT
-Link	US/East-Indiana	EST
-Link	US/Arizona	MST
-Link	US/Hawaii	HST
+# Link	LINK-FROM		LINK-TO
+Link	America/New_York	EST5EDT
+Link	America/Chicago		CST6CDT
+Link	America/Denver		MST7MDT
+Link	America/Los_Angeles	PST8PDT
+Link	America/Fort_Wayne	EST
+Link	America/Phoenix		MST
+Link	Pacific/Honolulu	HST
 
 ################################################################################
 
@@ -507,17 +493,6 @@ Zone America/Whitehorse	-9:00:12 -	LMT	1900 Aug 20
 			-8:00	Yukon	P%sT
 # Parts of Yukon (e.g. Dawson) didn't switch to -8:00 until 1973 Oct 28.
 
-# These links are for backward compatibility with the old naming convention.
-Link America/St_Johns	Canada/Newfoundland
-Link America/Halifax	Canada/Atlantic
-Link America/Montreal	Canada/Eastern
-Link America/Winnipeg	Canada/Central
-Link America/Regina	Canada/Saskatchewan
-Link America/Regina	Canada/East-Saskatchewan # ?? name is too long for Posix
-Link America/Edmonton	Canada/Mountain
-Link America/Vancouver	Canada/Pacific
-Link America/Whitehorse	Canada/Yukon
-
 ###############################################################################
 
 # Mexico
@@ -618,10 +593,6 @@ Zone America/Ensenada	-7:46:28 -	LMT	1922 Jan  1  0:13:32
 			-8:00	-	PST	1942 Apr
 			-7:00	-	MST	1949 Jan 14
 			-8:00	-	PST
-# These links are for backward compatibility with the old naming convention.
-Link	America/Mexico_City	Mexico/General
-Link	America/Mazatlan	Mexico/BajaSur
-Link	America/Tijuana		Mexico/BajaNorte
 #
 # Revillagigedo Is
 # no information
@@ -752,9 +723,6 @@ Zone	America/Havana	-5:29:28 -	LMT	1890
 			-5:30	-	HMT	1925 Jul 19 12:00 # Havana MT
 			-5:00	Cuba	C%sT
 
-# This link is for backward compatibility with the old naming convention.
-Link America/Havana Cuba
-
 # Dominica
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Dominica	-4:05:36 -	LMT	1911 Jul 1 0:01		# Roseau
@@ -838,8 +806,6 @@ Zone	America/Jamaica	-5:07:12 -	LMT	1890		# Kingston
 			-5:07	-	KMT	1912 Feb    # Kingston Mean Time
 			-5:00	-	EST	1974 Jan 6 2:00
 			-5:00	US	E%sT
-# This link is for backward compatibility with the old naming convention.
-Link America/Jamaica Jamaica
 
 # Martinique
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

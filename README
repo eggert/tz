@@ -2,14 +2,15 @@
 
 This 1989 update of the time zone package features POSIXization (including
 interpretation of POSIX-style TZ environment variables, provided by Guy
-Harris), ANSIfication (including a version of "mktime"), corrections to some
-time zone data (including corrections to the rules for Great Britain and
-New Zealand), reference data from the United States Naval Observatory for
-folks who want to do additional time zones, and the 1989 data for Saudi Arabia.
+Harris), ANSIfication (including versions of "mktime" and "difftime"),
+corrections to some time zone data (including corrections to the rules for
+Great Britain and New Zealand), reference data from the United States Naval
+Observatory for folks who want to do additional time zones, and the 1989 data
+for Saudi Arabia.
 
 (Since this code will be treated as "part of the implementation" in some places
 and as "part of the application" in others, there's no good way to name
-functions, such as timegm, that are extensions to the proposed ANSI standard;
+functions, such as timegm, that are not part of the proposed ANSI C standard;
 such functions have kept their old, underscore-free names in this update.)
 
 Please send comments or information to ado@ncifcrf.gov.
@@ -36,5 +37,5 @@ ado@ncifcrf.gov for use in the future).  Europeans take note!
 
 Thanks to these Timezone Caballeros who've made major contributions to the
 time conversion package:  Keith Bostic; Bob Devine; Robert Elz; Guy Harris;
-John Mackin; Mark Horton; and Bradley White.  None of them are responsible for
+Mark Horton; John Mackin; and Bradley White.  None of them are responsible for
 remaining errors.

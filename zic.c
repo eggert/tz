@@ -577,14 +577,15 @@ const char * const	tofile;
 	ifree(toname);
 }
 
-#ifndef INT_MIN
-#define INT_MIN (~0 << (sizeof (int) * CHAR_BIT - 1))
-#endif
 #ifndef INT_MAX
-#define INT_MAX (~0 - INT_MIN)
-#endif
+#define INT_MAX	((int) (((unsigned)~0)>>1))
+#endif /* !defined INT_MAX */
 
-#define TIME_T_SIGNED ((time_t) -1 < 0)
+#ifndef INT_MIN
+#define INT_MIN	((int) ~(((unsigned)~0)>>1))
+#endif /* !defined INT_MIN */
+
+#define TIME_T_SIGNED (((time_t) -1) < 0)
 #define TIME_T_BIT (sizeof (time_t) * CHAR_BIT)
 
 /*

@@ -54,11 +54,11 @@ struct lc_time_T {
 
 #ifdef LOCALE_HOME
 static struct lc_time_T		localebuf;
-static void			_loc P((void));
-#define Locale	(_loc(), localebuf)
+static struct lc_time_T *	_loc P((void));
+#define Locale	_loc()
 #endif /* defined LOCALE_HOME */
 #ifndef LOCALE_HOME
-#define Locale	C_time_locale
+#define Locale	(&C_time_locale)
 #endif /* !defined LOCALE_HOME */
 
 static const struct lc_time_T	C_time_locale = {
@@ -150,23 +150,23 @@ label:
 				break;
 			case 'A':
 				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
-					"?" : Locale.weekday[t->tm_wday],
+					"?" : Locale->weekday[t->tm_wday],
 					pt, ptlim);
 				continue;
 			case 'a':
 				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
-					"?" : Locale.wday[t->tm_wday],
+					"?" : Locale->wday[t->tm_wday],
 					pt, ptlim);
 				continue;
 			case 'B':
 				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
-					"?" : Locale.month[t->tm_mon],
+					"?" : Locale->month[t->tm_mon],
 					pt, ptlim);
 				continue;
 			case 'b':
 			case 'h':
 				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
-					"?" : Locale.mon[t->tm_mon],
+					"?" : Locale->mon[t->tm_mon],
 					pt, ptlim);
 				continue;
 			case 'C':
@@ -181,7 +181,7 @@ label:
 					"%02d", pt, ptlim);
 				continue;
 			case 'c':
-				pt = _fmt(Locale.c_fmt, t, pt, ptlim);
+				pt = _fmt(Locale->c_fmt, t, pt, ptlim);
 				continue;
 			case 'D':
 				pt = _fmt("%m/%d/%y", t, pt, ptlim);
@@ -263,8 +263,8 @@ label:
 				continue;
 			case 'p':
 				pt = _add((t->tm_hour >= 12) ?
-					Locale.pm :
-					Locale.am,
+					Locale->pm :
+					Locale->am,
 					pt, ptlim);
 				continue;
 			case 'R':
@@ -377,10 +377,10 @@ label:
 				pt = _conv(t->tm_wday, "%d", pt, ptlim);
 				continue;
 			case 'X':
-				pt = _fmt(Locale.X_fmt, t, pt, ptlim);
+				pt = _fmt(Locale->X_fmt, t, pt, ptlim);
 				continue;
 			case 'x':
-				pt = _fmt(Locale.x_fmt, t, pt, ptlim);
+				pt = _fmt(Locale->x_fmt, t, pt, ptlim);
 				continue;
 			case 'y':
 				pt = _conv((t->tm_year + TM_YEAR_BASE) % 100,
@@ -402,7 +402,7 @@ label:
 				} else  pt = _add("?", pt, ptlim);
 				continue;
 			case '+':
-				pt = _fmt(Locale.date_fmt, t, pt, ptlim);
+				pt = _fmt(Locale->date_fmt, t, pt, ptlim);
 				continue;
 			case '%':
 			/*
@@ -446,7 +446,7 @@ const char * const	ptlim;
 }
 
 #ifdef LOCALE_HOME
-static void
+static struct lc_time_T *
 _loc P((void))
 {
 	static const char	locale_home[] = LOCALE_HOME;
@@ -470,7 +470,7 @@ _loc P((void))
 	** Use localebuf.mon[0] to signal whether locale is already set up.
 	*/
 	if (localebuf.mon[0])
-		return;
+		return &localebuf;
 #if HAVE_SETLOCALE - 0
 	name = setlocale(LC_TIME, (char *) NULL);
 #endif /* HAVE_SETLOCALE - 0 */
@@ -491,7 +491,7 @@ _loc P((void))
 			ap < (const char **) (&localebuf + 1);
 				++ap)
 					*ap = p += strlen(p) + 1;
-		return;
+		return &localebuf;
 	}
 	/*
 	** Slurp the locale file into the cache.
@@ -562,7 +562,7 @@ _loc P((void))
 	*/
 	locale_buf = lbuf;
 
-	return;
+	return &localebuf;
 
 bad_lbuf:
 	free(lbuf);
@@ -571,5 +571,6 @@ bad_locale:
 no_locale:
 	localebuf = C_time_locale;
 	locale_buf = locale_buf_C;
+	return &localebuf;
 }
 #endif /* defined LOCALE_HOME */

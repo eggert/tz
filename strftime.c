@@ -56,9 +56,7 @@ struct lc_time_T {
 	const char *	c_fmt;
 	const char *	am;
 	const char *	pm;
-#ifdef EGGERT
 	const char *	date_fmt;
-#endif /* defined EGGERT */
 };
 
 static const struct lc_time_T	C_time_locale = {
@@ -102,10 +100,8 @@ static const struct lc_time_T	C_time_locale = {
 	/* pm */
 	"PM",
 
-#ifdef EGGERT
 	/* date_fmt */
 	"%a %b %e %H:%M:%S %Z %Y"
-#endif /* defined EGGERT */
 };
 
 static char *	_add P((const char *, char *, const char *));
@@ -512,8 +508,16 @@ struct lc_time_T *	ptloc;
 			goto no_locale;
 	(void) sprintf(filename, "%s/%s/%s", locale_home, name, lc_time);
 	fd = open(filename, O_RDONLY, 0);
-	if (fd < 0)
-		goto no_locale;
+	if (fd < 0) {
+		/*
+		** Old Sun systems have a different naming convention.
+		*/
+		(void) sprintf(filename, "%s/%s/%s", locale_home,
+			lc_time, name);
+		fd = open(filename, O_RDONLY, 0);
+		if (fd < 0)
+			goto no_locale;
+	}
 	if (fstat(fd, &st) != 0)
 		goto bad_locale;
 	if (st.st_size <= 0)

@@ -1388,11 +1388,20 @@ register long		wantedy;
 				wday += 7;
 		}
 		while (wday != rp->r_wday) {
-			if (rp->r_dycode == DC_DOWGEQ)
-				i = 1;
-			else	i = -1;
-			dayoff = tadd(dayoff, i);
-			wday = (wday + i + 7) % 7;
+			if (rp->r_dycode == DC_DOWGEQ) {
+				dayoff = tadd(dayoff, (long) 1);
+				++wday;
+				++i;
+			} else {
+				dayoff = tadd(dayoff, (long) -1);
+				--wday;
+				--i;
+			}
+			wday = (wday + 7) % 7;
+		}
+		if (i < 0 || i >= mon_lengths[isleap(y)][m]) {
+			error("no day in month matches rule");
+			exit(1);
 		}
 	}
 	t = dayoff * SECS_PER_DAY;

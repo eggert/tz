@@ -403,7 +403,7 @@ typecheck:
 		for i in "long long" unsigned double; \
 		do \
 			make CFLAGS="-DTYPECHECK -D_TIME_T \"-Dtime_t=$$i\"" ; \
-			./zdump -v US/Eastern ; \
+			./zdump -v Europe/Rome ; \
 			make clean ; \
 		done
 

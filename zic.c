@@ -935,7 +935,6 @@ char *	name;
 	register FILE *		fp;
 	register int		i;
 	char			fullname[BUFSIZ];
-	struct tzhead *		tzhp;
 
 	if (strlen(directory) + 1 + strlen(name) >= sizeof fullname) {
 		(void) fprintf(stderr,
@@ -953,7 +952,7 @@ char *	name;
 			exit(1);
 		}
 	}
-	(void) fseek(fp, (long) sizeof tzhp->tzh_reserved, 0);
+	(void) fseek(fp, (long) sizeof ((struct tzhead *) 0)->tzh_reserved, 0);
 	puttzcode((long) timecnt, fp);
 	puttzcode((long) typecnt, fp);
 	puttzcode((long) charcnt, fp);

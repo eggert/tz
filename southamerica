@@ -24,7 +24,7 @@
 # The only information I found is that there was no DST up to 1985.
 # But there was some before 1952!
 
-# From U.S. Naval Observatory (January 16, 1989):
+# From U. S. Naval Observatory (January 16, 1989):
 # BRAZIL     WEST     5 H  BEHIND UTC    TERRITORY OF ACRE
 # BRAZIL     WEST     4 H  BEHIND UTC    ACRE OCT 23, '88-FEB 11,
 # BRAZIL                                 '89 (ESTIMATED)
@@ -81,11 +81,11 @@ Zone	Chile/EasterIsland	-6:00	Chile		E%sT
 # Paraguay: First day in October to last in March.  Midnight switch??
 # Since 1980.
 
-# From U.S. Naval Observatory (January 16, 1989):
+# From U. S. Naval Observatory (January 19, 1989):
 # PARAGUAY            4 H  BEHIND UTC
 # PARAGUAY            3 H  BEHIND UTC    OCT 1, '88-MAR 31, '89
 
-# From Arthur David Olson (January 16, 1989):
+# From Arthur David Olson (January 21, 1989):
 # Still don't know time of day when switch occurs.  Punt.
 
 ###############################################################################
@@ -96,8 +96,8 @@ Zone	Chile/EasterIsland	-6:00	Chile		E%sT
 # Argentina: first Sunday in October to first Sunday in April since 1976.
 # Double Summer time from 1969 to 1974.  Switches at midnight.
 
-# From U.S. Naval Observatory (January 16, 19889):
+# From U. S. Naval Observatory (January 19, 19889):
 # ARGENTINA           3 H BEHIND   UTC
 
-# From Arthur David Olson (January 16, 1989):
+# From Arthur David Olson (January 21, 1989):
 # OAG, USNO and Bob have different data.  Punt.

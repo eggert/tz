@@ -231,7 +231,8 @@ char *	argv[];
 		tv.tv_usec = (int) ((adjust - tv.tv_sec) * 1000000);
 		if (adjtime(&tv, (struct timeval *) NULL) != 0)
 			oops("date: error: adjtime");
-#else /* !defined DST_NONE */
+#endif /* defined DST_NONE */
+#ifndef DST_NONE
 		reset((time_t) (now + adjust), nflag);
 #endif /* !defined DST_NONE */
 		/*
@@ -252,7 +253,8 @@ char *	argv[];
 			tz.tz_minuteswest = minuteswest;
 		if (settimeofday((struct timeval *) NULL, &tz) != 0)
 			oops("date: error: settimeofday");
-#else /* !defined DST_NONE */
+#endif /* defined DST_NONE */
+#ifndef DST_NONE
 		(void) fprintf(stderr,
 "date: warning: kernel doesn't keep -d/-t information, option ignored\n");
 #endif /* !defined DST_NONE */
@@ -341,7 +343,8 @@ int	nflag;
 	pututline(&s.after);
 }
 
-#else /* !defined OLD_TIME */
+#endif /* defined OLD_TIME */
+#ifndef OLD_TIME
 
 /*
 ** We assume we're on a BSD-based system,
@@ -356,7 +359,8 @@ int	nflag;
 #include "sys/param.h"
 #ifdef BSD4_4
 #define TIME_NAME	"date"
-#else /* !defined BSD4_4 */
+#endif /* defined BSD4_4 */
+#ifndef BSD4_4
 #define TIME_NAME	""
 #endif /* !defined BSD4_4 */
 #endif /* !defined TIME_NAME */
@@ -474,7 +478,8 @@ char *	format;
 	(void) fflush(stdout);
 	(void) fflush(stderr);
 	if (ferror(stdout) || ferror(stderr)) {
-		(void) fprintf(stderr, "date: error: couldn't write results\n");
+		(void) fprintf(stderr,
+			"date: error: couldn't write results\n");
 		errensure();
 	}
 	(void) exit(retval);
@@ -665,7 +670,7 @@ time_t	oldnow;
 	if (othert != -1 && othertm.tm_isdst != tm.tm_isdst &&
 		comptm(&tm, &othertm) == 0)
 			iffy(t, othert, value,
-				"both standard and summer time versions exist");
+			    "both standard and summer time versions exist");
 /*
 ** Final check.
 **
@@ -677,7 +682,7 @@ time_t	oldnow;
 ** lag between the time the user enters their command and the time that
 ** stime/settimeofday is called.
 **
-** We just check nearby times to see if any of them have the same representation
+** We just check nearby times to see if any have the same representation
 ** as the time that convert returned.  We work our way out from the center
 ** for quick response in solar time situations.  We only handle common cases--
 ** offsets of at most a minute, and offsets of exact numbers of minutes
@@ -854,15 +859,15 @@ loop:
 
 		default:
 			fprintf(stderr,
-			    "date: Wrong ack received from timed: %s\n",
-			    tsptype[msg.tsp_type]);
+				"date: Wrong ack received from timed: %s\n",
+				tsptype[msg.tsp_type]);
 			timed_ack = -1;
 			break;
 		}
 	}
 	if (timed_ack == -1)
 		fputs("date: Can't reach time daemon, time set locally.\n",
-		    stderr);
+			stderr);
 bad:
 	(void)close(s);
 	retval = 2;

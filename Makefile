@@ -181,12 +181,16 @@ CFLAGS=
 
 CC=		cc -DTZDIR=\"$(TZDIR)\"
 
-TZCSRCS=	zic.c localtime.c asctime.c scheck.c ialloc.c emkdir.c getopt.c
-TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o emkdir.o getopt.o
-TZDSRCS=	zdump.c localtime.c asctime.c ialloc.c getopt.c
-TZDOBJS=	zdump.o localtime.o asctime.o ialloc.o getopt.o
-DATESRCS=	date.c localtime.c getopt.c logwtmp.c strftime.c
-DATEOBJS=	date.o localtime.o getopt.o logwtmp.o strftime.o asctime.o
+TZCSRCS= \
+	zic.c localtime.c asctime.c scheck.c ialloc.c emkdir.c getopt.c optind.c
+TZCOBJS= \
+	zic.o localtime.o asctime.o scheck.o ialloc.o emkdir.o getopt.o optind.o
+TZDSRCS=	zdump.c localtime.c asctime.c ialloc.c getopt.c optind.c
+TZDOBJS=	zdump.o localtime.o asctime.o ialloc.o getopt.o optind.o
+DATESRCS= \
+	date.c localtime.c getopt.c optind.c logwtmp.c strftime.c asctime.c
+DATEOBJS= \
+	date.o localtime.o getopt.o optind.o logwtmp.o strftime.o asctime.o
 LIBSRCS=	localtime.c asctime.c difftime.c
 LIBOBJS=	localtime.o asctime.o difftime.o
 HEADERS=	tzfile.h private.h
@@ -278,7 +282,7 @@ $(TZLIB):	$(LIBOBJS)
 # We use the system's getopt and logwtmp in preference to ours if available.
 
 date:		$(DATEOBJS)
-		ar r ,lib.a getopt.o logwtmp.o
+		ar r ,lib.a getopt.o optind.o logwtmp.o
 		if [ -x /usr/ucb/ranlib -o -x /usr/bin/ranlib ] ; \
 			then ranlib ,lib.a ; fi
 		$(CC) $(CFLAGS) date.o localtime.o asctime.o strftime.o \

@@ -1,6 +1,15 @@
 %W%
 
 Please direct any comments or information to seismo!elsie!ado (with, perhaps,
-carbon copes to cbosgd!mark and seismo!philabs!linus!encore!necis!geo,
-and seismo!munnari!kre, who are responsible for any good ideas that show up
-here).
+carbon copes to cbosgd!mark, seismo!linus!encore!necis!geo, and
+seismo!munnari!kre, who are responsible for any good ideas that show up here).
+
+Historical time zone information has been included here not because it should
+be part of the standard (or, indeed, anyone's product), but rather to:
+
+*	give people an idea of the variety of local time rules that have
+	existed in the past and thus an idea of the variety that may be
+	expected in the future;
+
+*	provide a test of the generality of the local time rule description
+	system.

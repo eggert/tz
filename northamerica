@@ -161,16 +161,26 @@ Zone	Mexico/General		-6:00	-		CST
 ###############################################################################
 
 # Jamaica
+
 # From Bob Devine (January 28, 1988):  "Follows US rules."
+
+# From U.S. Naval Observatory (February 10, 1988):
+#	JAMAICA             5 H BEHIND UTC IN WINTER
+#	JAMAICA             4 H BEHIND UTC APR 29 - OCT 29
 
 Link	US/Eastern	Jamaica
 
 ###############################################################################
 
 # Cuba
+
 # From Bob Devine (January 28, 1988):  ". . .DST is from 2nd Sunday in May to
 # 2nd Sunday in October since 1981.  Change at midnight.  In 1979 & 1980,
 # started at 3rd Sunday in March (I think)."
+
+# From U.S. Naval Observatory (February 10, 1988):
+#	CUBA                5 H BEHIND UTC IN WINTER
+#	CUBA                4 H BEHIND UTC MAY 8 - OCT 8
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Cuba	1979	1980	-	Mar	Sun>=15	0:00	1:00	D

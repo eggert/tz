@@ -94,6 +94,7 @@ struct tzhead {
 
 #ifndef TZ_MAX_CHARS
 #define TZ_MAX_CHARS	50	/* Maximum number of abbreviation characters */
+				/* (limited by what unsigned chars can hold) */
 #endif /* !defined TZ_MAX_CHARS */
 
 #ifndef TZ_MAX_LEAPS
@@ -141,7 +142,7 @@ struct tzhead {
 ** that will probably do.
 */
 
-#define isleap(y) (((y) % 4) == 0 && ((y) % 100) != 0 || ((y) % 400) == 0)
+#define isleap(y) ((((y) % 4) == 0 && ((y) % 100) != 0) || ((y) % 400) == 0)
 
 #ifndef USG
 

@@ -6,11 +6,7 @@ static char	elsieid[] = "%W%";
 
 /*LINTLIBRARY*/
 
-#include "stdio.h"
-#include "ctype.h"
-#include "string.h"
-#include "stdlib.h"
-#include "nonstd.h"
+#include "private.h"
 
 extern char *	imalloc P((int n));
 extern void	ifree P((char * p));

@@ -266,7 +266,7 @@ TDATA=		$(YDATA) $(NDATA) $(SDATA)
 TABDATA=	iso3166.tab zone.tab
 DATA=		$(YDATA) $(NDATA) $(SDATA) $(TABDATA) leapseconds yearistype.sh
 WEB_PAGES=	tz-art.htm tz-link.htm
-MISC=		usno1988 usno1989 usno1989a usno1995 usno1997 usno1998 usno2004 \
+MISC=		usno1988 usno1989 usno1989a usno1995 usno1997 usno1998 \
 			itca.jpg $(WEB_PAGES) checktab.awk workman.sh
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(MISC)
 

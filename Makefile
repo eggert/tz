@@ -133,7 +133,7 @@ DOCS=		Patchlevel.h \
 		newctime.3 tzfile.5 zic.8 zdump.8 \
 		Makefile
 YDATA=		africa antarctica asia australasia \
-		europe northamerica southamerica pacificnew etcetera
+		europe northamerica southamerica pacificnew
 NDATA=		systemv
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
@@ -171,28 +171,26 @@ $(TZLIB):	$(LIBOBJS)
 zic:		$(TZCOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
 
-SHARS:		SHAR1 SHAR2 SHAR3 SHAR4 SHAR5 SHAR6
+SHARS:		SHAR1.Z.uue SHAR2.Z.uue SHAR3.Z.uue \
+		SHAR4.Z.uue SHAR5.Z.uue SHAR6.Z.uue
 
-SHAR1:		$(DOCS)
-		$(SHAR) $(DOCS) > $@
+SHAR1.Z.uue:	$(DOCS)
+		$(SHAR) $(DOCS) | compress | uuencode SHAR1.Z > $@
 
-SHAR2:		$(HEADERS) $(LIBSRCS)
-		$(SHAR) $(HEADERS) $(LIBSRCS) > $@
+SHAR2.Z.uue:	$(HEADERS) $(LIBSRCS)
+		$(SHAR) $(HEADERS) $(LIBSRCS) | compress | uuencode SHAR2.Z > $@
 
-SHAR3:		$(NONLIBSRCS)
-		$(SHAR) $(NONLIBSRCS) > $@
+SHAR3.Z.uue:	$(NONLIBSRCS)
+		$(SHAR) $(NONLIBSRCS) | compress | uuencode SHAR3.Z > $@
 
-SHAR4:		$(YDATA) $(NDATA)
-		$(SHAR) $(YDATA) $(NDATA) > $@
+SHAR4.Z.uue:	$(YDATA) $(NDATA)
+		$(SHAR) $(YDATA) $(NDATA) | compress | uuencode SHAR4.Z > $@
 
-SHAR5:		$(SDATA)
-		$(SHAR) $(SDATA) > $@
+SHAR5.Z.uue:	$(SDATA)
+		$(SHAR) $(SDATA) | compress | uuencode SHAR5.Z > $@
 
-SHAR6:		$(USNO)
-		$(SHAR) $(USNO) > $@
-
-tz.shar.Z.uue:	$(ENCHILADA)
-		$(SHAR) $(ENCHILADA) | compress | uuencode tz.shar.Z > $@
+SHAR6.Z.uue:	$(USNO)
+		$(SHAR) $(USNO) | compress | uuencode SHAR6.Z > $@
 
 sure:		$(SOURCES)
 		$(LINT) $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZCSRCS)

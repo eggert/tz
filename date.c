@@ -34,10 +34,13 @@ char copyright[] =
 static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #endif /* not lint */
 
-#ifndef USG
-#include "sys/time.h"	/* for DST_NONE */
-#endif /* !defined USG */
 #include "private.h"
+#if HAVE_ADJTIME || HAVE_SETTIMEOFDAY
+#include "sys/time.h"	/* for struct timeval, struct timezone */
+#endif /* HAVE_ADJTIME || HAVE_SETTIMEOFDAY */
+#if HAVE_SETLOCALE
+#include "locale.h"
+#endif /* HAVE_SETLOCALE */
 #include "utmp.h"	/* for OLD_TIME (or its absence) */
 
 /*
@@ -230,24 +233,23 @@ char *		argv[];
 	** Entire command line has now been checked.
 	*/
 	if (aflag) {
-#ifdef DST_NONE
+#if HAVE_ADJTIME
 		struct timeval	tv;
 
 		tv.tv_sec = (int) adjust;
 		tv.tv_usec = (int) ((adjust - tv.tv_sec) * 1000000);
 		if (adjtime(&tv, (struct timeval *) NULL) != 0)
 			oops("date: error: adjtime");
-#endif /* defined DST_NONE */
-#ifndef DST_NONE
+#else /* ! HAVE_ADJTIME */
 		reset((time_t) (now + adjust), nflag);
-#endif /* !defined DST_NONE */
+#endif /* ! HAVE_ADJTIME */
 		/*
 		** Sun silently ignores everything else; we follow suit.
 		*/
 		(void) exit(retval);
 	}
 	if (dflag || tflag) {
-#ifdef DST_NONE
+#if HAVE_SETTIMEOFDAY == 2
 		struct timezone	tz;
 
 		if (!dflag || !tflag)
@@ -259,11 +261,10 @@ char *		argv[];
 			tz.tz_minuteswest = minuteswest;
 		if (settimeofday((struct timeval *) NULL, &tz) != 0)
 			oops("date: error: settimeofday");
-#endif /* defined DST_NONE */
-#ifndef DST_NONE
+#else /* HAVE_SETTIMEOFDAY != 2 */
 		(void) fprintf(stderr,
 "date: warning: kernel doesn't keep -d/-t information, option ignored\n");
-#endif /* !defined DST_NONE */
+#endif /* HAVE_SETTIMEOFDAY != 2 */
 	}
 
 	if (value == NULL)
@@ -392,6 +393,10 @@ const int	nflag;
 #include "netdb.h"
 #define TSPTYPES
 #include "protocols/timed.h"
+
+#if HAVE_SETTIMEOFDAY == 1
+#define settimeofday(t, tz) (settimeofday)(t)
+#endif
 
 #ifndef TSP_SETDATE
 /*ARGSUSED*/

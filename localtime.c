@@ -436,7 +436,6 @@ register struct tm *		tmp;
 	tmp->tm_zone = "";
 	tmp->tm_gmtoff = offset;
 #endif /* defined KRE_COMPAT */
-	return tmp;
 }
 
 #ifdef BSD_COMPAT

@@ -754,6 +754,11 @@ Zone Atlantic/Faeroe	-0:27:04 -	LMT	1908 Jan 11	# Torshavn
 			 0:00	-	WET	1981
 			 0:00	EU	WE%sT
 #
+# From Paul Eggert (2004-10-31):
+# During World War II, Germany maintained secret manned weather stations in
+# East Greenland and Franz Josef Land, but we don't know their time zones.
+# My source for this is Wilhelm Dege's book mentioned under Svalbard.
+#
 # From Paul Eggert (1996-11-22):
 # Greenland joined the EU as part of Denmark, obtained home rule on 1979-05-01,
 # and left the EU on 1985-02-01.  It therefore should have been using EU
@@ -1633,7 +1638,7 @@ Zone	Europe/Oslo	0:43:00 -	LMT	1895 Jan  1
 # <http://www.svalbard.com/SvalbardFAQ.html> says that the Germans were
 # expelled on 1942-05-14.  However, small parties of Germans did return,
 # and according to Wilhelm Dege's book "War North of 80" (1954)
-# <http://www.utpress.utoronto.ca/publishing/rights/dege_warnorthof80.htm>
+# <http://www.ucalgary.ca/UofC/departments/UP/1-55238/1-55238-110-2.html>
 # the German armed forces at the Svalbard weather station code-named
 # Haudegen did not surrender to the Allies until September 1945.
 #

@@ -41,11 +41,22 @@ struct tzhead {
 */
 
 #ifndef TZ_MAX_TIMES
+#ifndef SAUDI
+#define TZ_MAX_TIMES	300	/* Maximum number of transition times */
+#endif
+#ifdef SAUDI
+#define TZ_MAX_TIMES	370	/* A bit more than a year's worth */
+#endif
 #define TZ_MAX_TIMES	300	/* Maximum number of transition times */
 #endif
 
 #ifndef TZ_MAX_TYPES
+#ifndef SAUDI
 #define TZ_MAX_TYPES	10	/* Maximum number of local time types */
+#endif
+#ifdef SAUDI
+#define TZ_MAX_TYPES	370	/* A bit more than a year's worth */
+#endif
 #endif
 
 #ifndef TZ_MAX_CHARS

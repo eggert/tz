@@ -9,7 +9,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="US-ASCII"' />
 <meta name="DC.Creator" content="Eggert, Paul" />
 <meta name="DC.Contributor" content="Olson, Arthur David" />
-<meta name="DC.Date" content="2003-09-21" />
+<meta name="DC.Date" content="2004-05-24" />
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time" />
 <meta name="DC.Identifier" content="http://www.twinsun.com/tz/tz-link.htm" />
@@ -99,8 +99,8 @@ Here are some recent links that may be of interest.
 </p>
 <h2>Web pages using recent versions of the <code>tz</code> database</h2>
 <ul>
-<li><a href="http://www.bsdi.com/date/">Date and Time Gateway</a> is a
-text-based point-and-click interface to tables of current time
+<li><a href="http://twiki.org/cgi-bin/xtra/tzdate">Date and Time Gateway</a>
+is a text-based point-and-click interface to tables of current time
 throughout the world.</li>
 <li>Fancier web interfaces, roughly in ascending order of complexity, include:
 <ul>
@@ -157,6 +157,15 @@ href="http://www.perl.com/language/misc/Artistic.html">Artistic
 License</a>. DateTime::TimeZone also contains a script
 <code>tests_from_zdump</code> that generates test cases for each clock
 transition in the <code>tz</code> database.</li>
+<li><a href="http://oss.software.ibm.com/icu/">International Components for
+Unicode (ICU)</a> contains a C/C++ library for internationalization that
+has a compiler from <samp>tz</samp> source into an ICU-specific format.
+ICU is freely available under a BSD-style license.</li>
+<li><a href="http://joda-time.sourceforge.net/">Joda Time - Java date
+and time API</a> contains a class
+<code>org.joda.time.tz.ZoneInfoCompiler</code> that compiles
+<code>tz</code> source into a Joda-specific binary format. Joda Time
+is freely available under a BSD-style license.</li>
 </ul>
 <h2>Other <code>tz</code> binary file readers</h2>
 <ul>
@@ -177,6 +186,9 @@ under a BSD-style license.</li>
 </ul>
 <h2>Other <code>tz</code>-based time zone conversion software</h2>
 <ul>
+<li><a href="http://java.sun.com/">Sun Java</a> releases since 1.4
+contain a copy of a recent <samp>tz</samp> database in a Java-specific
+format.</li>
 <li><a
 href="http://www1.tip.nl/~t876506/AboutTimeZonesHC.html">HyperCard
 time zones calculator</a> is a HyperCard stack.</li>
@@ -330,7 +342,7 @@ is Singapore in the "Wrong" Time Zone?</a> details the
 history of legal time in Singapore and Malaysia.</dd>
 <dt>United Kingdom</dt>
 <dd><a
-href="http://student.cusu.cam.ac.uk/~jsm28/british-time/">History of
+href="http://www.srcf.ucam.org/~jsm28/british-time/">History of
 legal time in Britain</a> discusses in detail the country
 with perhaps the best-documented history of clock adjustments.
 The National Physical Laboratory also maintains an <a
@@ -361,6 +373,11 @@ among time scales like TAI, TDB, TT and UTC.</li>
 <li><a href="http://www.jpl.nasa.gov/basics/bsf2-3.htm">Basics of
 Space Flight - Reference Systems - Time Conventions</a>
 briefly explains interplanetary space flight timekeeping.</li>
+<li><a
+href="http://www.giss.nasa.gov/tools/mars24/help/notes.html">Technical
+Notes on Mars Solar Time as Adopted by the Mars24 Sunclock</a> briefly
+describes Mars Coordinated Time (MTC) and the diverse local time
+scales used by each landed mission on Mars.</li>
 <li><a
 href="http://hpiers.obspm.fr/eop-pc/products/bulletins/bulletins.html">Bulletins
 maintained by the IERS EOP (PC)</a> contains official publications of

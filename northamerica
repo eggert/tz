@@ -1,87 +1,60 @@
 # %W%
 
-# Bob Devine has written that ". . .your table is wrong for MostNA in 1974.
-# The correct ending date is 10/27 not 11/24."  Yet on a 4.1bsd VAX/11-750
-# system, compiling and executing the program
-#
-#	#include "time.h"
-#
-#	long l = 152592000;
-#
-#	main() {
-#		struct tm *	tmp;
-#
-#		tmp = localtime(&l);
-#		printf("%s", asctime(tmp));
-#		printf("isdst: %d\n", tmp->tm_isdst);
-#	}
-#
-# results in the output
-#
-#	Fri Nov  1 22:40:00 1974
-#	isdst: 1
-#
-# For now we'll stay with 4.1bsd's version.
-#
-# Note also this from munnari!kre:
+# Despite the performance of existing (4.[12]BSD, Xenix) code,
+# US Daylight Saving Time ended on the last Sunday of *October* in 1974.
+# See, for example, the front page of the Saturday, October 26, 1974
+# and Sunday, October 27, 1974 editions of the Washington Post.
+
+# Note also this from seismo!munnari!kre:
 # "I recall also being told by someone once that Canada didn't have
 # the DST variations in 74/75 that the US did, but I am not nearly
 # sure enough of this to add anything."
-
-# If Canada or Mexico decide not to follow the US change in DST that takes
-# effect in 1987, additions had best be made below.
+# The above has been confirmed by Bob Devine; we'll go with it here.
 
 # Before the Uniform Time Act of 1966 took effect in 1967, observance of
 # Daylight Saving Time in the US was by local option, except during wartime.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	MostNA	1918	1919	-	Mar	lastSun	2:00	1:00	D
-Rule	MostNA	1918	1919	-	Oct	lastSun	2:00	0	S
-Rule	MostNA	1942	only	-	Feb	9	2:00	1:00	W # War
-Rule	MostNA	1945	only	-	Sep	30	2:00	0	S
-Rule	MostNA	1967	1973	-	Apr	lastSun	2:00	1:00	D
-Rule	MostNA	1967	1973	-	Oct	lastSun	2:00	0	S
-Rule	MostNA	1974	only	-	Jan	6	2:00	1:00	D
-Rule	MostNA	1974	only	-	Nov	24	2:00	0	S
-Rule	MostNA	1975	only	-	Feb	23	2:00	1:00	D
-Rule	MostNA	1975	only	-	Oct	26	2:00	0	S
-Rule	MostNA	1976	1986	-	Apr	lastSun	2:00	1:00	D
-Rule	MostNA	1976	1986	-	Oct	lastSun	2:00	0	S
-Rule	MostNA	1987	2037	-	Apr	Sun>=1	2:00	1:00	D
-Rule	MostNA	1987	2037	-	Oct	lastSun	2:00	0	S
+Rule	MostUS	1918	1919	-	Mar	lastSun	2:00	1:00	D
+Rule	MostUS	1918	1919	-	Oct	lastSun	2:00	0	S
+Rule	MostUS	1942	only	-	Feb	9	2:00	1:00	W # War
+Rule	MostUS	1945	only	-	Sep	30	2:00	0	S
+Rule	MostUS	1967	2037	-	Oct	lastSun	2:00	0	S
+Rule	MostUS	1967	1973	-	Apr	lastSun	2:00	1:00	D
+Rule	MostUS	1974	only	-	Jan	6	2:00	1:00	D
+Rule	MostUS	1975	only	-	Feb	23	2:00	1:00	D
+Rule	MostUS	1976	1986	-	Apr	lastSun	2:00	1:00	D
+Rule	MostUS	1987	2037	-	Apr	Sun>=1	2:00	1:00	D
 
 ###############################################################################
 
 # New names
 
-# Zone	NAME		GMTOFF	RULES	FORMAT
-Zone	Atlantic	-4:00	MostNA	A%sT
-Zone	Eastern		-5:00	MostNA	E%sT
-Zone	Central		-6:00	MostNA	C%sT
-Zone	Mountain	-7:00	MostNA	M%sT
-Zone	Pacific		-8:00	MostNA	P%sT
-Zone	Yukon		-9:00	MostNA	Y%sT
-Zone	Aleutian	-10:00	MostNA	A%sT
-Zone	Newfoundland	-3:30	-	NST	# Is DST now observed here?
-						# If so, when did it start?
+# Zone	NAME			GMTOFF	RULES	FORMAT
+Zone	US/Eastern		-5:00	MostUS	E%sT
+Zone	US/Central		-6:00	MostUS	C%sT
+Zone	US/Mountain		-7:00	MostUS	M%sT
+Zone	US/Pacific		-8:00	MostUS	P%sT
+Zone	US/Aleutian		-10:00	MostUS	A%sT
+Link	US/Aleutian		US/Alaskan
 
 # Old names
 
 # Link	LINK-FROM	LINK-TO
-Link	Eastern		EST5EDT
-Link	Central		CST6CDT
-Link	Mountain	MST7MDT
-Link	Pacific		PST8PDT
+Link	US/Eastern	EST5EDT
+Link	US/Central	CST6CDT
+Link	US/Mountain	MST7MDT
+Link	US/Pacific	PST8PDT
 
-# Nonstandard mainland areas:
+# Nonstandard US mainland areas:
 
 Rule	SomeUS	1918	1919	-	Mar	lastSun	2:00	1:00	D
 Rule	SomeUS	1918	1919	-	Oct	lastSun	2:00	0	S
 Rule	SomeUS	1942	only	-	Feb	9	2:00	1:00	W # War
 Rule	SomeUS	1945	only	-	Sep	30	2:00	0	S
 
-Zone	East-Indiana	-5:00	SomeUS	E%sT # Usually standard near South Bend
-Zone	Arizona		-7:00	SomeUS	M%sT # Usually standard in Arizona
+Zone	US/East-Indiana	-5:00	SomeUS	E%sT # Usually standard near South Bend
+Zone	US/Arizona	-7:00	SomeUS	M%sT # Usually standard in Arizona
 
 # And then there's Hawaii.
 # DST was observed for one day in 1933.
@@ -101,4 +74,26 @@ Rule	Hawaii	1942	only	-	Feb	9	2:00	0:30	W # War
 Rule	Hawaii	1945	only	-	Sep	30	2:00	-0:30	S
 Rule	Hawaii	1947	only	-	Jun	8	2:00	0	S
 
-Zone	Hawaiian	-10:00	Hawaii	H%sT
+Zone	US/Hawaiian	-10:00	Hawaii	H%sT
+
+################################################################################
+
+# Canada is reportedly lots easier than the US--leastways since 1951.
+# I don't know what they did before then.
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Canada	1966	2037	-	Apr	lastSun	2:00	1:00	D
+Rule	Canada	1966	2037	-	Oct	lastSun	2:00	0	S
+
+# Zone	NAME			GMTOFF	RULES	FORMAT
+Zone	Canada/Atlantic		-4:00	Canada	A%sT
+Zone	Canada/Eastern		-5:00	Canada	E%sT
+Zone	Canada/Central		-6:00	Canada	C%sT
+Zone	Canada/Mountain		-7:00	Canada	M%sT
+Zone	Canada/Pacific		-8:00	Canada	P%sT
+Zone	Canada/Yukon		-9:00	Canada	Y%sT
+Zone	Canada/Aleutian		-10:00	Canada	A%sT
+# Bob Devine says that DST *is* observed in Newfoundland
+Zone	Canada/Newfoundland	-3:30	Canada	N%sT
+
+# ?Mexico?  !Quien sabe!

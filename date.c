@@ -889,7 +889,7 @@ loop:
 	FD_ZERO(&ready);
 	FD_SET(s, &ready);
 	found = select(FD_SETSIZE, &ready, (fd_set *)0, (fd_set *)0, &tout);
-	length = sizeof(err);
+	length = sizeof err;
 	if (getsockopt(s, SOL_SOCKET, SO_ERROR, (char *)&err, &length) == 0
 	    && err) {
 		errno = err;

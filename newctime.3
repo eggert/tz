@@ -58,9 +58,13 @@ is treated as if it were a call of the form
 .B
 settz("localtime")
 .PP
-.I Localtime
-has the same argument and return value as
-the older version described in
+.IR Ctime ,
+.IR localtime ,
+.IR gmtime ,
+and
+.I asctime
+have the same arguments and return values as
+the seasoned versions described in
 .IR ctime (3) .
 If
 .I localtime
@@ -74,19 +78,27 @@ with the value returned by
 .B
 getenv("TZ").
 .I Localtime
-sets the appropriate element of
+sets the
+.BR tm_isdst 'th
+element of
 .B tzname
 to a pointer to an 
 ASCII string that's the time zone abbreviation to be used with
 .IR localtime 's
 return value.
 .PP
-.I Ctime
-returns
-.IR "asctime(localtime(*clock))" .
-.PP
 .I Zonetime
-converts the argument time using the argument zone.
+converts the argument time using the argument zone,
+without affecting the zone used in future
+.I localtime
+calls.
+.PP
+.I Settz
+simply calls
+.I tzset
+with a
+.B NULL
+pointer.
 .SH DIAGNOSTICS
 .I Settz
 returns zero if all seems well; it returns negative one otherwise

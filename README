@@ -17,7 +17,7 @@ have a chance to recompile.
 
 For better compatability with other versions of time conversion functions,
 the time zone abbreviation to be used with localtime's return value is now
-pointed to be one of the two elements of the (char *) array tzname, rather
+pointed to by one of the two elements of the (char *) array tzname, rather
 than by the (char *) tz_abbr.  If you have code that uses tz_abbr, add a
 	-DTZA_COMPAT
 to the end of the

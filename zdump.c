@@ -146,8 +146,9 @@ char *	argv[];
 			if (newt <= t)
 				break;
 			newtm = *localtime(&newt);
-			if (delta(&newtm, &tm) != (newt - t))
-				hunt(argv[i], t, newt);
+			if (delta(&newtm, &tm) != (newt - t) ||
+				newtm.tm_isdst != tm.tm_isdst)
+					hunt(argv[i], t, newt);
 			t = newt;
 			tm = newtm;
 		}
@@ -191,9 +192,10 @@ time_t	hit;
 		else if (t >= hit)
 			--t;
 		tm = *localtime(&t);
-		if (delta(&tm, &lotm) == (t - lot)) {
-			lot = t;
-			lotm = tm;
+		if (delta(&tm, &lotm) == (t - lot) &&
+			tm.tm_isdst == lotm.tm_isdst) {
+				lot = t;
+				lotm = tm;
 		} else	hit = t;
 	}
 	show(name, lot, TRUE);

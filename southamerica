@@ -951,7 +951,7 @@ Rule	Para	2002	2003	-	Sep	Sun>=1	0:00	1:00	S
 # From Steffen Thorsen (2005-01-05):
 # Decree 1,867 (2004-03-05) <http://www.labor.com.py/noticias.asp?id=27>
 Rule	Para	2004	max	-	Oct	Sun>=15	0:00	1:00	S
-Rule	Para	2005	max	-	Mar	Sun>=15	0:00	0	-
+Rule	Para	2005	max	-	Mar	Sun>=8	0:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Asuncion	-3:50:40 -	LMT	1890

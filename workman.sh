@@ -10,10 +10,8 @@ echo ".am TH
 .hy 0
 .na
 ..
-.de }H
-..
-.de }F
-.." | nroff -man - ${1+"$@"} | perl -ne '
+.rm }H
+.rm }F" | nroff -man - ${1+"$@"} | perl -ne '
 	chomp;
 	s/.\010//g;
 	s/\s*$//;

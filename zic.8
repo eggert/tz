@@ -4,6 +4,8 @@ zic \- time zone compiler
 .SH SYNOPSIS
 .B zic
 [
+.B \-v
+] [
 .B \-d
 .I directory
 ] [
@@ -35,6 +37,12 @@ will act as if the file contained a link line of the form
 .sp
 .ti +.5i
 Link	\fItimezone\fP		localtime
+.TP
+.B \-v
+Complain if a year that appears in a data file is outside the range
+of years representable by
+.IR time (2)
+values.
 .sp
 Input lines are made up of fields.
 Fields are separated from one another by any number of white space characters.

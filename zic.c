@@ -95,16 +95,16 @@ static void	eats P((const char * name, int num,
 			const char * rname, int rnum));
 static long	eitol P((int i));
 static void	error P((const char * message));
-static char **	getfields P((const char * buf));
+static char **	getfields P((char * buf));
 static long	gethms P((const char * string, const char * errstrng,
 			int signable));
 static void	infile P((const char * filename));
-static void	inleap P((const char ** fields, int nfields));
-static void	inlink P((const char ** fields, int nfields));
-static void	inrule P((const char ** fields, int nfiekds));
-static int	inzcont P((const char ** fields, int nfields));
-static int	inzone P((const char ** fields, int nfields));
-static int	inzsub P((const char ** fields, int nfields, int iscont));
+static void	inleap P((char ** fields, int nfields));
+static void	inlink P((char ** fields, int nfields));
+static void	inrule P((char ** fields, int nfiekds));
+static int	inzcont P((char ** fields, int nfields));
+static int	inzone P((char ** fields, int nfields));
+static int	inzsub P((char ** fields, int nfields, int iscont));
 static int	itsabbr P((const char * abbr, const char * word));
 static int	itsdir P((const char * name));
 static int	lowerit P((int c));
@@ -700,32 +700,29 @@ const char *	name;
 		if (nfields == 0) {
 			/* nothing to do */
 		} else if (wantcont) {
-			wantcont = inzcont((const char **) fields, nfields);
+			wantcont = inzcont(fields, nfields);
 		} else {
 			lp = byword(fields[0], line_codes);
 			if (lp == NULL)
 				error("input line of unknown type");
 			else switch ((int) (lp->l_value)) {
 				case LC_RULE:
-					inrule((const char **) fields, nfields);
+					inrule(fields, nfields);
 					wantcont = FALSE;
 					break;
 				case LC_ZONE:
-					wantcont = inzone((const char **)
-						fields, nfields);
+					wantcont = inzone(fields, nfields);
 					break;
 				case LC_LINK:
-					inlink((const char **) fields, nfields);
+					inlink(fields, nfields);
 					wantcont = FALSE;
 					break;
 				case LC_LEAP:
 					if (name != leapsec)
 						(void) fprintf(stderr,
 "%s: Leap line in non leap seconds file %s\n",
-						progname, name);
-					else
-						inleap((const char **) fields,
-							nfields);
+							progname, name);
+					else	inleap(fields, nfields);
 					wantcont = FALSE;
 					break;
 				default:	/* "cannot happen" */
@@ -796,7 +793,7 @@ const char * const	errstring;
 
 static void
 inrule(fields, nfields)
-register char const ** const	fields;
+register char ** const	fields;
 {
 	static struct rule	r;
 
@@ -822,7 +819,7 @@ register char const ** const	fields;
 
 static int
 inzone(fields, nfields)
-register const char ** const	fields;
+register char ** const	fields;
 {
 	register int	i;
 	char		buf[132];
@@ -861,7 +858,7 @@ register const char ** const	fields;
 
 static int
 inzcont(fields, nfields)
-register const char ** const	fields;
+register char ** const	fields;
 {
 	if (nfields < ZONEC_MINFIELDS || nfields > ZONEC_MAXFIELDS) {
 		error("wrong number of fields on Zone continuation line");
@@ -872,7 +869,7 @@ register const char ** const	fields;
 
 static int
 inzsub(fields, nfields, iscont)
-register const char ** const	fields;
+register char ** const	fields;
 {
 	register char *		cp;
 	static struct zone	z;
@@ -942,7 +939,7 @@ error("Zone continuation line end time is not after end time of previous line");
 
 static void
 inleap(fields, nfields)
-register const char ** const	fields;
+register char ** const	fields;
 {
 	register const char *		cp;
 	register const struct lookup *	lp;
@@ -1019,7 +1016,7 @@ register const char ** const	fields;
 
 static void
 inlink(fields, nfields)
-register const char ** const	fields;
+register char ** const	fields;
 {
 	struct link	l;
 
@@ -1632,7 +1629,7 @@ register const struct lookup * const	table;
 
 static char **
 getfields(cp)
-register const char *	cp;
+register char *	cp;
 {
 	register char *		dp;
 	register char **	array;

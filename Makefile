@@ -27,8 +27,9 @@ $(TZDIR):
 		mkdir $@
 
 years:	years.sh
+		rm -f $@
 		cp $? $@
-		chmod +x $@
+		chmod 555 $@
 
 bundle:	$(ENCHILADA)
 		bundle $(ENCHILADA) > bundle

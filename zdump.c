@@ -39,8 +39,12 @@ static char	elsieid[] = "%W%";
 #define SECSPERMIN	60
 #endif /* !defined SECSPERMIN */
 
+#ifndef MINSPERHOUR
+#define MINSPERHOUR	60
+#endif /* !defined MINSPERHOUR */
+
 #ifndef SECSPERHOUR
-#define SECSPERHOUR	3600
+#define SECSPERHOUR	(SECSPERMIN * MINSPERHOUR)
 #endif /* !defined SECSPERHOUR */
 
 #ifndef HOURSPERDAY
@@ -50,6 +54,10 @@ static char	elsieid[] = "%W%";
 #ifndef EPOCH_YEAR
 #define EPOCH_YEAR	1970
 #endif /* !defined EPOCH_YEAR */
+
+#ifndef TM_YEAR_BASE
+#define TM_YEAR_BASE	1900
+#endif /* !defined TM_YEAR_BASE */
 
 #ifndef DAYSPERNYEAR
 #define DAYSPERNYEAR	365
@@ -71,6 +79,7 @@ extern void	perror();
 static char *	abbr();
 static long	delta();
 static void	hunt();
+static int	leapyearsbeforeyear();
 static int	longest;
 static char *	progname;
 static void	show();
@@ -225,6 +234,18 @@ time_t	hit;
 	show(name, hit, TRUE);
 }
 
+/*
+** How many putative leap days before the start of year y?
+*/
+
+static int
+leapyearsbeforeyear(y)
+int	y;
+{
+	return (y - 1) / 4 - (y - 1) / 100 + (y - 1) / 400;
+}
+
+
 static long
 delta(newp, oldp)
 struct tm *	newp;
@@ -232,12 +253,20 @@ struct tm *	oldp;
 {
 	long	result;
 
-	result = newp->tm_hour - oldp->tm_hour;
-	if (result < 0)
-		result += HOURSPERDAY;
-	result *= SECSPERHOUR;
-	result += (newp->tm_min - oldp->tm_min) * SECSPERMIN;
-	return result + newp->tm_sec - oldp->tm_sec;
+	result = newp->tm_year - oldp->tm_year;
+	if (result != 0) {
+		result *= DAYSPERNYEAR;
+		result += leapyearsbeforeyear(newp->tm_year + TM_YEAR_BASE) -
+			leapyearsbeforeyear(oldp->tm_year + TM_YEAR_BASE);
+	}
+	result += newp->tm_yday - oldp->tm_yday;
+	result *= HOURSPERDAY;
+	result += newp->tm_hour - oldp->tm_hour;
+	result *= MINSPERHOUR;
+	result += newp->tm_min - oldp->tm_min;
+	result *= SECSPERMIN;
+	result += newp->tm_sec - oldp->tm_sec;
+	return result;
 }
 
 static void

@@ -1262,7 +1262,6 @@ const time_t * const	timep;
 char *			buf;
 {
 	struct tm	tm;
-	extern char *	asctime_r();
 
 	return asctime_r(localtime_r(timep, &tm), buf);
 }
@@ -1386,10 +1385,6 @@ const int		do_norm_secs;
 	if (normalize_overflow(&yourtm.tm_mday, &yourtm.tm_hour, HOURSPERDAY))
 		return WRONG;
 	y = yourtm.tm_year;
-/*
-** Hands off tm_year for a while.
-*/
-#define tm_year	USE_Y_NOT_YOURTM_TM_YEAR
 	if (long_normalize_overflow(&y, &yourtm.tm_mon, MONSPERYEAR))
 		return WRONG;
 	/*
@@ -1423,10 +1418,6 @@ const int		do_norm_secs;
 	}
 	if (long_increment_overflow(&y, -TM_YEAR_BASE))
 		return WRONG;
-/*
-** Hands back on tm_year.
-*/
-#undef tm_year
 	yourtm.tm_year = y;
 	if (yourtm.tm_year != y)
  		return WRONG;

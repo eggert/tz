@@ -5,7 +5,8 @@ TODO BEFORE comp.sources RELEASE:
 *	Resolve SunOS 4.1/BSD 4.4 strftime differences
 *	Update date.1
 *	Incorporate any other changes from the West Coast
-*	Check compilability on a System-V-based system
+*	Incorporate changes from testers
+*	Credit testers
 *	Turn everything with a version number less than "5.1" into "5.1".
 
 ===============================================================================
@@ -74,5 +75,5 @@ ado@ncifcrf.gov for use in the future).  Europeans take note!
 
 Thanks to these Timezone Caballeros who've made major contributions to the
 time conversion package:  Keith Bostic; Bob Devine; Robert Elz; Guy Harris;
-Mark Horton; John Mackin; and Bradley White.  None of them are responsible for
-remaining errors.
+Mark Horton; John Mackin; and Bradley White.  Thanks also to Art Neilson
+for testing work.  None of them are responsible for remaining errors.

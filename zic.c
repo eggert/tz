@@ -29,9 +29,9 @@ extern char *	optarg;
 extern int	optind;
 extern FILE *	popen();
 extern char *	scheck();
-#ifdef strchr
+#ifndef USG
 extern char *	sprintf();
-#endif
+#endif /* !USG */
 extern char *	strcat();
 extern char *	strchr();
 extern char *	strcpy();
@@ -924,7 +924,7 @@ FILE *	fp;
 
 	for (shift = 24; shift >= 0; shift -= 8) {
 		c = val >> shift;
-		putc(c, fp);
+		(void) putc(c, fp);
 	}
 }
 
@@ -964,8 +964,8 @@ char *	name;
 			(int) timecnt, fp);
 	for (i = 0; i < typecnt; ++i) {
 		puttzcode((long) gmtoffs[i], fp);
-		putc(isdsts[i], fp);
-		putc(abbrinds[i], fp);
+		(void) putc(isdsts[i], fp);
+		(void) putc(abbrinds[i], fp);
 	}
 	if (charcnt != 0)
 		(void) fwrite(chars, sizeof chars[0], (int) charcnt, fp);

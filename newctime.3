@@ -1,4 +1,4 @@
-.TH CTIME 3 
+.TH NEWCTIME 3 
 .SH NAME
 ctime, localtime, gmtime, asctime, tzset, tzsetwall \- convert date and time to ASCII
 .SH SYNOPSIS
@@ -22,6 +22,8 @@ ctime, localtime, gmtime, asctime, tzset, tzsetwall \- convert date and time to 
 .PP
 .B struct tm *gmtime(clock)
 .B long *clock;
+.PP
+cc ... -lz
 .fi
 .SH DESCRIPTION
 .I Tzset
@@ -29,29 +31,36 @@ uses the value of the environment variable
 .B TZ
 to set time conversion information used by
 .IR localtime .
-If
+.if \nX \{\
+IF
 .B TZ
-does not appear in the environment,
-the best available approximation to local wall clock time is used by
-.IR localtime .
-.if !\nX \{\
+is absent from the environment,
+the behavior is implementation defined.
 If
 .B TZ
 does appear in the environment,
 .I localtime
 will only work correctly if
 its value is one of an
-implementation-defined set of values.\}
-.el \{\
-If the value of
+implementation-defined set of values.
+\}
+.if !\nX \{\
+If
 .B TZ
+does not appear in the environment,
+the best available approximation to local wall clock time is used by
+.IR localtime .
+If
+.B TZ
+does appear and
 begins with a slash,
 it is used as the absolute pathname of the
 .IR tzfile (5)-format
 file from which to read the time conversion information;
 if
-.I zonename
-begins with some other character,
+.B TZ
+does appear and
+begins with a character other than a slash,
 it is used as a pathname relative to a system time conversion information
 directory.
 \}
@@ -81,14 +90,18 @@ and
 return pointers to ``tm'' structures, described below.
 .I Localtime\^
 corrects for the time zone and any time zone adjustments
-(Daylight Savings time in the U.S.A.);
-before doing so,
+(such as Daylight Savings time in the U.S.A.).
+.if \nX Whether, before doing so,
+.if !\nX Before doing so,
 .I localtime\^
 calls
 .I tzset\^
-if
+(if
 .I tzset\^
-has not been called in the current process.
+has not been called in
+.if \nX the current process) is implementation defined.
+.if !\nX the current process).
+.if !\nX \{\
 After filling in the ``tm'' structure,
 .I localtime
 sets the
@@ -99,6 +112,7 @@ to a pointer to an
 ASCII string that's the time zone abbreviation to be used with
 .IR localtime 's
 return value.
+\}
 .PP
 .I Gmtime\^
 converts to Greenwich Mean Time (GMT).
@@ -136,11 +150,17 @@ struct tm {
 is non-zero if a 
 time zone adjustment such as Daylight Savings time
 is in effect.
+.if !\nX \{\
+.SH FILES
+.ta \w'/etc/zoneinfo/localtime  'u
+/etc/zoneinfo	time zone information directory
+/etc/zoneinfo/localtime	local time zone file
+\}
 .SH SEE ALSO
-.if \nX tzfile(5),
+.if !\nX tzfile(5),
 getenv(3),
 time(2)
-.SH BUGS
+.SH NOTE
 The return values point to static data
 whose content is overwritten by each call.
 .. %W%

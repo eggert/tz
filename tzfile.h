@@ -95,7 +95,11 @@ struct tzhead {
 #define TZ_MAX_TYPES	256 /* Limited by what (unsigned char)'s can hold */
 #endif /* !defined NOSOLAR */
 #ifdef NOSOLAR
-#define TZ_MAX_TYPES	10	/* Maximum number of local time types */
+/*
+** Must be at least 14 for Europe/Riga as of Jan 12 1995,
+** as noted by Earl Chew <earl@hpato.aus.hp.com>.
+*/
+#define TZ_MAX_TYPES	20	/* Maximum number of local time types */
 #endif /* !defined NOSOLAR */
 #endif /* !defined TZ_MAX_TYPES */
 

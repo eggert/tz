@@ -20,6 +20,10 @@ static char	sccsid[] = "%W%";
 #define FALSE	0
 #endif
 
+#ifndef MAXPATHLEN
+#define MAXPATHLEN	1024
+#endif
+
 extern char *		asctime();
 extern struct tm *	gmtime();
 extern char *		strcpy();
@@ -31,84 +35,95 @@ static long		ats[TZ_MAX_TIMES];
 static unsigned char	types[TZ_MAX_TIMES];
 static struct ttinfo	ttis[TZ_MAX_TYPES];
 static char		chars[TZ_MAX_CHARS + 1];
+
+#define TZ_MAX_TOTAL	(sizeof h + sizeof ats + sizeof types + \
+				sizeof ttis + sizeof chars)
+
 static char		isset;
 
 char *			tz_abbr;	/* set by localtime; available to all */
+
+/*
+** Not available west of the Rockies. . .
+*/
+
+static char *
+memcpy(to, from, n)
+char *	to;
+char *	from;
+{
+	register int	i;
+
+	for (i = 0; i < n; ++i)
+		to[i] = from[i];
+	return to;
+}
 
 static
 tzload(tzname)
 register char *	tzname;
 {
+	register char *	p;
 	register int	fid;
 	register int	i;
-	char		buf[256];
+	register int	doaccess;
+	char		buf[(TZ_MAX_TOTAL>MAXPATHLEN)?TZ_MAX_TOTAL:MAXPATHLEN];
 
-	fid = -1;
-	if (tzname == 0)
-		tzname = TZDEFAULT;
-	if (tzname[0] != '/') {
-		if ((strlen(buf) + strlen(tzname) + 2) > sizeof buf)
-			goto oops;
-		(void) strcpy(buf, TZDIR);
+	if (tzname == 0 && (tzname = TZDEFAULT) == 0)
+		return -1;
+	doaccess = tzname[0] == '/';
+	if (!doaccess) {
+		if ((p = TZDIR) == 0)
+			return -1;
+		if ((strlen(p) + strlen(tzname) + 1) >= sizeof buf)
+			return -1;
+		(void) strcpy(buf, p);
 		(void) strcat(buf, "/");
 		(void) strcat(buf, tzname);
+		while (*tzname != '\0')
+			if (*tzname++ == '.')
+				doaccess = TRUE;
 		tzname = buf;
 	}
+	if (doaccess && access(tzname, 4) != 0)
+		return -1;
 	if ((fid = open(tzname, 0)) == -1)
-		goto oops;
-	if (read(fid, (char *) &h, sizeof h) != sizeof h)
-		goto oops;
+		return -1;
+	p = buf;
+	i = read(fid, p, sizeof buf);
+	if (close(fid) != 0 || i < sizeof h)
+		return -1;
+	(void) memcpy((char *) &h, p, sizeof h);
 	if (h.tzh_timecnt > TZ_MAX_TIMES ||
 		h.tzh_typecnt == 0 || h.tzh_typecnt > TZ_MAX_TYPES ||
 		h.tzh_charcnt > TZ_MAX_CHARS)
-			goto oops;
-	i = h.tzh_timecnt * sizeof ats[0];
-	if (read(fid, (char *) ats, i) != i)
-		goto oops;
-	i = h.tzh_timecnt * sizeof types[0];
-	if (read(fid, (char *) types, i) != i)
-		goto oops;
-	i = h.tzh_typecnt * sizeof ttis[0];
-	if (read(fid, (char *) ttis, i) != i)
-		goto oops;
-	i = h.tzh_charcnt * sizeof chars[0];
-	if (read(fid, (char *) chars, i) != i)
-		goto oops;
-	chars[h.tzh_charcnt] = '\0';
-	i = close(fid);
-	fid = -1;
-	if (i != 0)
-		goto oops;
+			return -1;
+	if (i < sizeof h +
+		h.tzh_timecnt * (sizeof ats[0] + sizeof types[0]) +
+		h.tzh_typecnt * sizeof ttis[0] +
+		h.tzh_charcnt * sizeof chars[0])
+			return -1;
+	p += sizeof h;
+	if ((i = h.tzh_timecnt) > 0) {
+		(void) memcpy((char *) ats, p, i * sizeof ats[0]);
+		p += i * sizeof ats[0];
+		(void) memcpy((char *) types, p, i * sizeof types[0]);
+		p += i * sizeof types[0];
+	}
+	if ((i = h.tzh_typecnt) > 0) {
+		(void) memcpy((char *) ttis, p, i * sizeof ttis[0]);
+		p += i * sizeof ttis[0];
+	}
+	if ((i = h.tzh_charcnt) > 0)
+		(void) memcpy((char *) chars, p, i * sizeof chars[0]);
+	chars[h.tzh_charcnt] = '\0';	/* ensure '\0'-termination */
 	for (i = 0; i < h.tzh_timecnt; ++i)
 		if (types[i] > h.tzh_typecnt)
-			goto oops;
+			return -1;
 	for (i = 0; i < h.tzh_typecnt; ++i)
 		if (ttis[i].tt_abbrind > h.tzh_charcnt)
-			goto oops;
+			return -1;
 	return 0;
-oops:
-	if (fid >= 0)
-		(void) close(fid);
-	/*
-	** Go back to go.
-	*/
-	{
-		struct tzhead	xxxh;
-
-		h = xxxh;
-		for (i = 0; i < TZ_MAX_TIMES; ++i) {
-			ats[i] = 0;
-			types[i] = 0;
-		}
-		for (i = 0; i < TZ_MAX_TYPES; ++i) {
-			struct ttinfo	xxxtt;
-
-			ttis[i] = xxxtt;
-		}
-		for (i = 0; i < TZ_MAX_CHARS; ++i)
-			chars[i] = '\0';
-	}
-	return -1;
 }
 
 /*

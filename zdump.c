@@ -56,7 +56,7 @@ char *	argv[];
 	register long	cuttime;
 	long		now;
 	long		t;
-	int		timecnt;
+	long		timecnt;
 	char		buf[BUFSIZ];
 
 	vflag = 0;
@@ -75,7 +75,8 @@ char *	argv[];
 	/*
 	** VERY approximate.
 	*/
-	cuttime = (long) (cutyear - 1970) * 60 * 60 * 24 * 365;
+	cuttime = (long) (cutyear - EPOCH_YEAR) *
+		SECS_PER_HOUR * HOURS_PER_DAY * DAYS_PER_NYEAR;
 	(void) time(&now);
 	longest = 0;
 	for (i = optind; i < argc; ++i)
@@ -132,9 +133,9 @@ char *	argv[];
 		}
 		t = 0x80000000;
 		show(argv[i], t, TRUE);
-		t = 0x80000000 + 24 * 60 * 60;
+		t = 0x80000000 + SECS_PER_HOUR * HOURS_PER_DAY;
 		show(argv[i], t, TRUE);
-		for (j = 0; j < timecnt; ++j) {
+		while (timecnt-- > 0) {
 			char	code[4];
 
 			if (fread((char *) code, sizeof code, 1, fp) != 1)
@@ -150,7 +151,7 @@ char *	argv[];
 			perror(argv[i]);
 			exit(1);
 		}
-		t = 0x7fffffff - 24 * 60 * 60;
+		t = 0x7fffffff - SECS_PER_HOUR * HOURS_PER_DAY;
 		show(argv[i], t, TRUE);
 		t = 0x7fffffff;
 		show(argv[i], t, TRUE);

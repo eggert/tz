@@ -11,7 +11,7 @@ localtime ] [ filename ... ]
 .SH DESCRIPTION
 .I Tzcomp
 reads text from the file(s) named on the command line
-and creates the time zone information files specified in this input.
+and creates the time conversion information files specified in this input.
 If a
 .I filename
 is
@@ -21,7 +21,7 @@ the standard input is read.
 These options are available:
 .TP
 .BI "\-d " directory
-Create time zone information files in the named directory rather than
+Create time conversion information files in the named directory rather than
 in the standard directory named below.
 .TP
 .BI "\-l " localtime
@@ -91,7 +91,7 @@ is executed with arguments
 .IR from ,
 .IR to ,
 and
-.IR type
+.I type
 taken from the rule line; the rule applies only in those years
 printed by the
 .I years
@@ -181,7 +181,8 @@ The fields that make up a zone line are:
 .TP
 .B NAME
 The name of the time zone.
-This is the name used in creating the time zone information file for the zone.
+This is the name used in creating the time conversion information file for the
+zone.
 .TP
 .B GMTOFF
 The amount of time to add to GMT to get standard time in this zone.
@@ -194,7 +195,7 @@ begin the field with a minus sign if time must be subtracted from GMT.
 .TP
 .B RULES
 The name of the rule(s) that apply in the time zone.
-If this field contains
+If this field is
 .B
 "-"
 then standard time always applies in the time zone.
@@ -230,7 +231,7 @@ field is used as an alternate name for that zone.
 .PP
 Lines may appear in any order in the input.
 .SH NOTE
-For areas with more than two types of local time (if indeed there are such),
+For areas with more than two types of local time,
 you may get to use local standard time in "AT" field of the earliest
 transition time's rule to ensure that
 the earliest transition time recorded in the compiled file is correct.

@@ -51,6 +51,8 @@ register char *	tzname;
 	** Note that a zero-length time zone abbreviation is *not* considered
 	** to be an error.
 	*/
+	if (tzp->tz_timecnt < 0 || tzp->tz_timecnt > TZ_MAX_TIMES)
+		goto oops;
 	for (i = 0; i < tzp->tz_timecnt; ++i)
 		if (tzp->tz_types[i] > TZ_MAX_TYPES)
 			goto oops;

@@ -35,7 +35,7 @@ static char	privatehid[] = "%W%";
 #include "unistd.h"
 
 /*
-** Defaults for various preprocessor symbols.
+** Defaults for preprocessor symbols.
 ** You can override these in your C compiler options, e.g. `-DHAVE_ADJTIME=0'.
 */
 

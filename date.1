@@ -16,6 +16,8 @@ dsttype
 .B \-t
 minutes-west
 ] [
+\fB\-a \fR[\fB+\fR|\fB-]\fIsss\fR[\fB.\fIfff\fR]
+] [
 .BI + format
 ] [
 \fR[\fIyyyy\fR]\fImmddhhmm\fR[\fIyy\fR][\fB.\fIss\fR]
@@ -106,6 +108,7 @@ To set the date, use a command line argument with one of the following forms:
 03081454	Month (two digits, January is 01), month day, hours, minutes
 8903081454	Year, month, month day, hours, minutes
 0308145489	Month, month day, hours, minutes, year
+	(on System V-compatible systems)
 198903081454	Four-digit year, month, month day, hours minutes
 .if t .in -.5i
 .if n .in -2
@@ -115,7 +118,10 @@ the current value is used.
 Any of the above forms may be followed by a period and two digits that give
 the seconds part of the new time; if no seconds are given, zero is assumed.
 .PP
-These options are available:
+Some or all of these options are available
+(use the command
+.RB `` "date -=" ''
+to learn which are available on your system):
 .TP
 .B \-u
 Use GMT when setting and showing the date and time.
@@ -125,13 +131,15 @@ Do not notify other networked systems of the time change.
 .TP
 .BI "\-d " dsttype
 Set the kernel-stored Daylight Saving Time type to the given value.
-The kernel-stored DST type is used mostly by ``old'' binaries;
-this option
-(as well as the
-.B \-t
-option) is only available on systems that store such information.
+(The kernel-stored DST type is used mostly by ``old'' binaries.)
 .TP
 .BI "\-t " minutes-west
 Set the kernel-stored ``minutes west of GMT'' value to the one given on the
 command line.
+(The kernel-stored DST type is used mostly by ``old'' binaries.)
+.TP
+.BI "\-a " adjustment
+Slowly change the time forward (or backward) by the amount given with the
+.I adjustment
+argument.
 .. %W%

@@ -1,3 +1,10 @@
+#ifndef lint
+#ifndef NOID
+static char	elsieid[] = "%W%";
+/* As received from UCB, with SCCSID reconditionalized. */
+#endif /* !defined NOID */
+#endif /* !defined lint */
+
 /*
  * Copyright (c) 1988 The Regents of the University of California.
  * All rights reserved.
@@ -15,9 +22,11 @@
  * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#if defined(LIBC_SCCS) && !defined(lint)
+#ifndef lint
+#ifdef LIBC_SCCS
 static char sccsid[] = "@(#)logwtmp.c	5.2 (Berkeley) 9/20/88";
-#endif /* LIBC_SCCS and not lint */
+#endif /* defined LIBC_SCCS */
+#endif /* !defined lint */
 
 #include <sys/types.h>
 #include <sys/file.h>

@@ -87,7 +87,6 @@ YEARISTYPE=	./yearistype
 #  -DHAVE_SETTIMEOFDAY=1 if settimeofday has just 1 arg (SVR4)
 #  -DHAVE_SETTIMEOFDAY=2 if settimeofday uses 2nd arg (4.3BSD)
 #  -DHAVE_SETTIMEOFDAY=3 if settimeofday ignores 2nd arg (4.4BSD)
-#  -DHAVE_STDLIB_H=0 if `#include <stdlib.h>' does not work
 #  -DHAVE_UMASK=0 if `umask(0)' does not work
 #  -DHAVE_UNISTD=0 if `#include <unistd.h>' does not work
 #  -DLOCALE_HOME=\"path\" if locales are in "path", not "/usr/lib/locale"

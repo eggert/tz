@@ -168,6 +168,10 @@ YEARISTYPE=	./yearistype
 #	-DCMUCS
 # to the end of the "CFLAGS=" line
 # This function is not described in X3J11's work.
+#
+# If you want to pass PCTS, add
+#	-DPCTS
+# to the end of the "CFLAGS=" line.
 
 CFLAGS=
 

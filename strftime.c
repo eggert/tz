@@ -26,39 +26,40 @@ static char	elsieid[] = "%W%";
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
-static char sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
+static const char sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
 #endif /* LIBC_SCCS and not lint */
 
-#include "sys/types.h"
-#include "time.h"
+#include "private.h"
 #include "tzfile.h"
 
-static char *afmt[] = {
-	"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
+static const char * const afmt[] = {
+	"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
 };
-static char *Afmt[] = {
+static const char * const Afmt[] = {
 	"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
-	"Saturday",
+	"Saturday"
 };
-static char *bfmt[] = {
+static const char * const bfmt[] = {
 	"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
-	"Oct", "Nov", "Dec",
+	"Oct", "Nov", "Dec"
 };
-static char *Bfmt[] = {
+static const char * const Bfmt[] = {
 	"January", "February", "March", "April", "May", "June", "July",
-	"August", "September", "October", "November", "December",
+	"August", "September", "October", "November", "December"
 };
 
-static char *_add();
-static char *_conv();
-static char *_fmt();
+static char *_add P((const char *, size_t *, char *));
+static char *_conv P((int, const char *, size_t *, char *));
+static char *_fmt P((const char *, const struct tm *, size_t *, char *));
+
+size_t strftime P((char *, size_t, const char *, const struct tm *));
 
 size_t
 strftime(s, maxsize, format, t)
 	char *s;
 	size_t maxsize;
-	char *format;
-	struct tm *t;
+	const char *format;
+	const struct tm *t;
 {
 	size_t gsize;
 
@@ -72,8 +73,8 @@ strftime(s, maxsize, format, t)
 
 static char *
 _fmt(format, t, gsizep, pt)
-	char *format;
-	struct tm *t;
+	const char *format;
+	const struct tm *t;
 	size_t *gsizep;
 	char *pt;
 {
@@ -113,7 +114,7 @@ label:
 				** (ado, 5/24/93)
 				*/
 				pt = _conv((t->tm_year + TM_YEAR_BASE) / 100,
-					2, '0', gsizep, pt);
+					"%02d", gsizep, pt);
 				continue;
 			case 'D':
 			case 'x':
@@ -126,12 +127,12 @@ label:
 				** standard calls for "date, using locale's
 				** date format," anything goes.  Using just
 				** numbers (as here) makes Quakers happier.
-				** (ado, 5/24/93)
+				** This is the ISO standard date format.
 				*/
-				pt = _fmt("%m/%d/%y", t, gsizep, pt);
+				pt = _fmt("%Y-%m-%d", t, gsizep, pt);
 				continue;
 			case 'd':
-				pt = _conv(t->tm_mday, 2, '0', gsizep, pt);
+				pt = _conv(t->tm_mday, "%02d", gsizep, pt);
 				continue;
 			case 'E':
 			case 'O':
@@ -148,18 +149,18 @@ label:
 				*/
 				goto label;
 			case 'e':
-				pt = _conv(t->tm_mday, 2, ' ', gsizep, pt);
+				pt = _conv(t->tm_mday, "%2d", gsizep, pt);
 				continue;
 			case 'H':
-				pt = _conv(t->tm_hour, 2, '0', gsizep, pt);
+				pt = _conv(t->tm_hour, "%02d", gsizep, pt);
 				continue;
 			case 'I':
 				pt = _conv((t->tm_hour % 12) ?
 					(t->tm_hour % 12) : 12,
-					2, '0', gsizep, pt);
+					"%02d", gsizep, pt);
 				continue;
 			case 'j':
-				pt = _conv(t->tm_yday + 1, 3, '0', gsizep, pt);
+				pt = _conv(t->tm_yday + 1, "%03d", gsizep, pt);
 				continue;
 			case 'k':
 				/*
@@ -172,7 +173,7 @@ label:
 				** "%l" have been swapped.
 				** (ado, 5/24/93)
 				*/
-				pt = _conv(t->tm_hour, 2, ' ', gsizep, pt);
+				pt = _conv(t->tm_hour, "%2d", gsizep, pt);
 				continue;
 #ifdef KITCHEN_SINK
 			case 'K':
@@ -194,13 +195,13 @@ label:
 				*/
 				pt = _conv((t->tm_hour % 12) ?
 					(t->tm_hour % 12) : 12,
-					2, ' ', gsizep, pt);
+					"%2d", gsizep, pt);
 				continue;
 			case 'M':
-				pt = _conv(t->tm_min, 2, '0', gsizep, pt);
+				pt = _conv(t->tm_min, "%02d", gsizep, pt);
 				continue;
 			case 'm':
-				pt = _conv(t->tm_mon + 1, 2, '0', gsizep, pt);
+				pt = _conv(t->tm_mon + 1, "%02d", gsizep, pt);
 				continue;
 			case 'n':
 				pt = _add("\n", gsizep, pt);
@@ -216,7 +217,7 @@ label:
 				pt = _fmt("%I:%M:%S %p", t, gsizep, pt);
 				continue;
 			case 'S':
-				pt = _conv(t->tm_sec, 2, '0', gsizep, pt);
+				pt = _conv(t->tm_sec, "%02d", gsizep, pt);
 				continue;
 			case 'T':
 			case 'X':
@@ -227,7 +228,7 @@ label:
 				continue;
 			case 'U':
 				pt = _conv((t->tm_yday + 7 - t->tm_wday) / 7,
-					2, '0', gsizep, pt);
+					"%02d", gsizep, pt);
 				continue;
 			case 'u':
 				/*
@@ -237,7 +238,7 @@ label:
 				** (ado, 5/24/93)
 				*/
 				pt = _conv((t->tm_wday == 0) ? 7 : t->tm_wday,
-					1, '0', gsizep, pt);
+					"%d", gsizep, pt);
 				continue;
 			case 'V':
 				/*
@@ -260,7 +261,7 @@ label:
 				** 1 falls on a Thursday, are December 29-31
 				** of the PREVIOUS year part of week 1???
 				** (ado 5/24/93)
-				/*
+				**
 				** You are understood not to expect this.
 				*/
 				{
@@ -269,7 +270,7 @@ label:
 					i = (t->tm_yday + 10 - (t->tm_wday ?
 						(t->tm_wday - 1) : 6)) / 7;
 					pt = _conv((i == 0) ? 53 : i,
-						2, '0', gsizep, pt);
+						"%02d", gsizep, pt);
 				}
 				continue;
 			case 'v':
@@ -284,17 +285,17 @@ label:
 				pt = _conv((t->tm_yday + 7 -
 					(t->tm_wday ?
 					(t->tm_wday - 1) : 6)) / 7,
-					2, '0', gsizep, pt);
+					"%02d", gsizep, pt);
 				continue;
 			case 'w':
-				pt = _conv(t->tm_wday, 1, '0', gsizep, pt);
+				pt = _conv(t->tm_wday, "%d", gsizep, pt);
 				continue;
 			case 'y':
 				pt = _conv((t->tm_year + TM_YEAR_BASE) % 100,
-					2, '0', gsizep, pt);
+					"%02d", gsizep, pt);
 				continue;
 			case 'Y':
-				pt = _conv(t->tm_year + TM_YEAR_BASE, 4, '0',
+				pt = _conv(t->tm_year + TM_YEAR_BASE, "%04d",
 					gsizep, pt);
 				continue;
 			case 'Z':
@@ -329,28 +330,21 @@ label:
 }
 
 static char *
-_conv(n, width, fill, gsizep, pt)
-	int n, width, fill;
+_conv(n, format, gsizep, pt)
+	int n;
+	const char *format;
 	size_t *gsizep;
 	char *pt;
 {
-	char *p, *q, buf[12];
-	static char digits[] = "0123456789";
+	char buf[21]; /* Room for - 2**63 ("-9223372036854775808") + null.  */
 
-	p = buf + sizeof buf;
-	q = (width >= sizeof buf) ? buf : (p - width - 1);
-	*--p = '\0';
-	*--p = digits[n % 10];
-	while (p > buf && (n /= 10) != 0)
-		*--p = digits[n % 10];
-	while (p > q)
-		*--p = fill;
-	return _add(p, gsizep, pt);
+	(void) sprintf(buf, format, n);
+	return _add(buf, gsizep, pt);
 }
 
 static char *
 _add(str, gsizep, pt)
-	char *str;
+	const char *str;
 	size_t *gsizep;
 	char *pt;
 {

@@ -396,7 +396,8 @@ const int		max;
 ** Given a pointer into a time zone string, extract a number of seconds,
 ** in hh[:mm[:ss]] form, from the string.
 ** If any error occurs, return NULL.
-** Otherwise, return a pointer to the first character not part of the time.
+** Otherwise, return a pointer to the first character not part of the number
+** of seconds.
 */
 
 static const char *

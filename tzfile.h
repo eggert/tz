@@ -80,7 +80,7 @@ struct tzhead {
 **					if absent, transition times are
 **					assumed to be local time
 **	tzh_stampcnt (char)s		if present, string of form
-**					"yyyy-mm-dd hh:mm"
+**					"yyyy-mm-dd hh:mm:ss"
 **					indicating when information on which the
 **					file depends was last updated
 */

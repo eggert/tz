@@ -269,7 +269,6 @@ time_t *	timep;
 	**	tmp = offtime((time_t) (t + ttisp->tt_gmtoff), 0L);
 	*/
 	tmp = offtime(&t, ttisp->tt_gmtoff);
-#endif /* !USG_COMPAT */
 	tmp->tm_isdst = ttisp->tt_isdst;
 	tzname[tmp->tm_isdst] = &s.chars[ttisp->tt_abbrind];
 #ifdef KRE_COMPAT

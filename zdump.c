@@ -414,6 +414,10 @@ register const struct tm *	timeptr;
 #define DIVISOR	10
 	lead = timeptr->tm_year / DIVISOR + TM_YEAR_BASE / DIVISOR;
 	trail = timeptr->tm_year % DIVISOR + TM_YEAR_BASE % DIVISOR;
+	if (trail > DIVISOR) {
+		trail -= DIVISOR;
+		++lead;
+	}
 	while (trail < 0) {
 		trail += DIVISOR;
 		--lead;

@@ -480,12 +480,10 @@ char *	argv[];
 		usage();	/* usage message by request */
 	if (directory == NULL)
 		directory = TZDIR;
-	if (leapsec == NULL)
-		leapsec = "leapseconds";
 
 	setboundaries();
 
-	if (optind < argc) {
+	if (optind < argc && leapsec != NULL) {
 		infile(leapsec);
 		adjleap();
 	}

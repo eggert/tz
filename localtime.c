@@ -136,7 +136,7 @@ register const struct state * const	sp;
 	timezone = -sp->ttis[0].tt_gmtoff;
 	daylight = 0;
 #endif /* defined USG_COMPAT */
-	for (i = 1; i < sp->typecnt; ++i) {
+	for (i = 0; i < sp->typecnt; ++i) {
 		register const struct ttinfo *	ttisp;
 
 		ttisp = &sp->ttis[i];
@@ -693,6 +693,13 @@ register struct state * const	sp;
 			*/
 			isdst = FALSE;	/* we start in standard time */
 			for (i = 0; i < sp->timecnt; ++i) {
+				/*
+				** XXX - if the DST end time was specified
+				** as "standard" rather than "local" time,
+				** all transition times should be shifted
+				** by "stdfix".  Unfortunately, we don't
+				** know how they were specified....
+				*/
 				sp->ats[i] += isdst ? dstfix : stdfix;
 				isdst = sp->ttis[sp->types[i]].tt_isdst;
 			}

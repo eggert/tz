@@ -185,7 +185,6 @@ Zone	Asia/Phnom_Penh	6:59:40 -	LMT	1906 Jun  9
 
 # From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Shang	1928	only	-	Jan	 1	0:00	0	S
 Rule	Shang	1940	only	-	Jun	 3	0:00	1:00	D
 Rule	Shang	1940	1941	-	Oct	 1	0:00	0	S
 Rule	Shang	1941	only	-	Mar	16	0:00	1:00	D
@@ -219,7 +218,6 @@ Zone	Asia/Kashgar	5:03:56	-	LMT	1928
 # Republic of China
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Taiwan	1896	only	-	Jan	1	0:00	0	S
 Rule	Taiwan	1945	1951	-	May	1	0:00	1:00	D
 Rule	Taiwan	1945	1951	-	Oct	1	0:00	0	S
 Rule	Taiwan	1952	only	-	Mar	1	0:00	1:00	D
@@ -238,7 +236,6 @@ Zone	Asia/Taipei	8:06:00 -	LMT	1896
 ###############################################################################
 # Hong Kong
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	HK	1904	only	-	Oct	30	0:00	0	-
 Rule	HK	1946	only	-	Apr	20	3:30	1:00	S
 Rule	HK	1946	only	-	Dec	1	3:30	0	-
 Rule	HK	1947	only	-	Apr	13	3:30	1:00	S
@@ -260,7 +257,6 @@ Zone	Asia/Hong_Kong	7:36:36 -	LMT	1904 Oct 30
 
 # Macao
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Macao	1912	only	-	Jan	1	0:00	0	S
 Rule	Macao	1961	1962	-	Mar	Sun>=16	3:30	1:00	D
 Rule	Macao	1961	1964	-	Nov	Sun>=1	3:30	0	S
 Rule	Macao	1963	only	-	Mar	Sun>=16	0:00	1:00	D
@@ -284,7 +280,6 @@ Zone	Asia/Macao	7:34:20 -	LMT	1912
 
 # Cyprus
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Cyprus	1921	only	-	Nov	14	0:00	0	-
 Rule	Cyprus	1975	only	-	Apr	13	0:00	1:00	" DST"
 Rule	Cyprus	1975	only	-	Oct	12	0:00	0	-
 Rule	Cyprus	1976	only	-	May	15	0:00	1:00	" DST"
@@ -354,7 +349,6 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 
 # Iran
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Iran	1977	only	-	Nov	1	0:00	0	S
 Rule	Iran	1978	1980	-	Mar	21	0:00	1:00	D
 Rule	Iran	1978	only	-	Oct	21	0:00	0	S
 Rule	Iran	1979	only	-	Sep	19	0:00	0	S
@@ -396,7 +390,6 @@ Zone	Asia/Baghdad	2:57:40	-	LMT	1890
 
 # From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Zion	1918	only	-	Jan	 1	0:00	0	S
 Rule	Zion	1940	only	-	Jun	 1	0:00	1:00	D
 Rule	Zion	1942	1944	-	Nov	 1	0:00	0	S
 Rule	Zion	1943	only	-	Apr	 1	2:00	1:00	D
@@ -559,7 +552,6 @@ Zone	Asia/Tokyo	9:19:04	-	LMT	1896
 # Most likely Shanks is merely guessing dates from 1992 on.
 # From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule    Jordan	1931	only	-	Jan	1	0:00	0	-
 Rule    Jordan	1973	only	-	Jun	6	0:00	1:00	" DST"
 Rule    Jordan	1973	1975	-	Oct	1	0:00	0	-
 Rule    Jordan	1974	1977	-	May	1	0:00	1:00	" DST"
@@ -658,7 +650,6 @@ Zone	Asia/Vientiane	6:50:24 -	LMT	1906 Jun  9
 
 # Lebanon
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Lebanon	1880	only	-	Jan	1	0:00	0	-
 Rule	Lebanon	1920	only	-	Mar	28	0:00	1:00	" DST"
 Rule	Lebanon	1920	only	-	Oct	25	0:00	0	-
 Rule	Lebanon	1921	only	-	Apr	3	0:00	1:00	" DST"
@@ -707,7 +698,6 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880			# Male
 # Let's comment out the western and eastern Mongolian time zones
 # till we know what their principal towns are.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Mongol	1978	only	-	Jan	1	0:00	0	S
 Rule	Mongol	1981	1984	-	Apr	1	0:00	1:00	T
 Rule	Mongol	1981	1984	-	Oct	1	0:00	0	S
 Rule	Mongol	1985	max	-	Mar	lastSun	2:00	1:00	T
@@ -765,7 +755,6 @@ Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct
 # Howse writes (p 162) that until 1844 the Philippines kept American date.
 # The rest of this data is from Shanks.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Phil	1899	only	-	May	11	0:00	0	S
 Rule	Phil	1936	only	-	Nov	1	0:00	1:00	D
 Rule	Phil	1937	only	-	Feb	1	0:00	0	S
 Rule	Phil	1954	only	-	Apr	12	0:00	1:00	D
@@ -815,7 +804,6 @@ Zone	Asia/Colombo	5:19:24 -	LMT	1880
 
 # Syria
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Syria	1920	only	-	Jan	1	0:00	0	-
 Rule	Syria	1920	1923	-	Apr	Sun>=15	2:00	1:00	" DST"
 Rule	Syria	1920	1923	-	Oct	Sun>=1	2:00	0	-
 Rule	Syria	1962	only	-	Apr	29	2:00	1:00	" DST"

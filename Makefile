@@ -20,10 +20,10 @@ TZDIR=		/etc/zoneinfo
 
 TZLIB=		/usr/lib/libz.a
 
-# If you don't want leap second correction done, change "leapseconds" to
-# /dev/null below.
+# If you want leap second correction done, change "/dev/null" to
+# "leapseconds" below.
 
-LEAPSECONDS=	leapseconds
+LEAPSECONDS=	/dev/null
 
 # If you're running on a System V-style system and don't want lint grief,
 # add
@@ -41,11 +41,6 @@ LEAPSECONDS=	leapseconds
 #
 # If you want BSD compatibility code, add
 #	-DBSD_COMPAT
-# to the end of the "CFLAGS=" line.
-#
-# If you've used older versions of this software and want "tz_abbr"
-# compatibility code, add
-#	-DTZA_COMPAT
 # to the end of the "CFLAGS=" line.
 #
 # If you'd like to use Robert Elz's additions to the "struct tm" structure,
@@ -103,7 +98,7 @@ SOURCES=	tzfile.h nonstd.h stdio.h stdlib.h time.h \
 YDATA=		africa antarctica asia australasia \
 		europe northamerica southamerica pacificnew
 NDATA=		systemv
-SDATA=		solar87 solar88
+SDATA=		solar87 solar88 solar89
 DATA=		$(YDATA) $(NDATA) $(SDATA) leapseconds
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 

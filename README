@@ -40,7 +40,7 @@ Since POSIX frowns on correct leap second handling, the default behavior of
 the "zic" command (in the absence of a "-L" option) has been changed to omit
 leap second information from its output files.
 
-Please send comments or information to ado@ncifcrf.gov.
+Please send comments or information to ado@elsie.nci.nih.gov.
 
 Be sure to read the comments in "Makefile" and make any changes
 needed to make things right for your system.

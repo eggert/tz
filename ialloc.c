@@ -1,3 +1,7 @@
+#ifndef lint
+static char sccsid[] = "%A%";
+#endif
+
 /*LINTLIBRARY*/
 
 #include <stdio.h>

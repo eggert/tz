@@ -1,5 +1,10 @@
 %W%
 
+XXX--get to cope with attempts to make zones such as "Europe/Berlin" the
+XXX--POSIX template.  Either must make doing so work, or catch the attempt in
+XXX--zic.  Catching the attempt in zic is half-hearted at best, since
+XXX--someone could manually change the link later.
+
 "What time is it?" -- Richard Deacon as The King
 "Any time you want it to be." -- Frank Baxter as The Scientist
 					(from the Bell System film on time)
@@ -21,13 +26,6 @@ The 1989 update of the time zone package featured
 and as "part of the application" in others, there's no good way to name
 functions, such as timegm, that are not part of the proposed ANSI C standard;
 such functions have kept their old, underscore-free names in this update.)
-
-Support for the tz_abbr variable has been eliminated from this version
-(to forestall "kitchen sink" complaints from certain quarters :-).
-
-Support for Turbo C compilation has also been eliminated; it was present to
-allow checking in an ANSI-style environment, and such checking is now done with
-gcc.
 
 And the "dysize" function has disappeared; it was present to allow compilation
 of the "date" command on old BSD systems, and a version of "date" is now

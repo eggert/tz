@@ -52,6 +52,12 @@ Gives the first year in which the rule applies.
 .TP
 .B TO
 Gives the last year in which the rule applies.
+The word
+.RB ` only '
+may be used to repeat the value of the
+.B
+FROM
+field.
 .TP
 .B TYPE
 Gives the type of year in which the year applies.  If
@@ -191,8 +197,8 @@ A link line has the form
 .sp
 .nf
 .ti +.5i
-.ta \w'Link 'u +\w'Eastern 'u
-Link	FROM	TO
+.ta \w'Link 'u +\w'LINK-FROM 'u
+Link	LINK-FROM	LINK-TO
 .sp
 For example:
 .sp
@@ -201,12 +207,12 @@ Link	Eastern		EST5EDT
 .sp
 .fi
 The
-.B FROM
+.B LINK-FROM
 field should appear as the
 .B NAME
 field in some zone line;
 the
-.B TO
+.B LINK-TO
 field is used as an alternate name for that zone.
 .PP
 Lines may appear in any order in the input.

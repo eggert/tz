@@ -93,6 +93,7 @@ static int		retval = EXIT_SUCCESS;
 
 static void		ambiguous();
 static void		display();
+static void		finalcheck();
 static time_t		gettime();
 int			netsettime();
 static void		oops();
@@ -247,6 +248,8 @@ char *	argv[];
 	else	oops("date: error: stime");
 #endif /* !defined DST_NONE */
 
+	finalcheck(t);
+
 	display(format);
 	for ( ; ; )
 		;
@@ -279,27 +282,32 @@ char *	string;
 }
 
 static void
-ambiguous(thist, thatt)
+ambiguous(thist, thatt, was_set)
 time_t	thist;
 time_t	thatt;
 {
 	struct tm	tm;
 
-	(void) fprintf(stderr, "date: error: ambiguous time.\n");
+	(void) fprintf(stderr, "date: error: ambiguous time.  ");
 	tm = *gmtime(&thist);
+	if (was_set)
+		(void) fprintf(stderr, "Time was set as if you used\n");
+	else	(void) fprintf(stderr, "Use\n");
 	/*
 	** Avoid running afoul of SCCS!
 	*/
-	timeout(stderr, "Use\n\tdate -u %Y", &tm);
+	timeout(stderr, "\tdate -u %Y", &tm);
 	timeout(stderr, "%m%d%H", &tm);
 	timeout(stderr, "%M.%S\n", &tm);
 	tm = *localtime(&thist);
 	timeout(stderr, "to get %c");
 	(void) fprintf(stderr, " (%s time)",
 		tm.tm_isdst ? "summer" : "standard");
-	(void) fprintf(stderr, ", ");
+	if (was_set)
+		(void) fprintf(stderr, ".  Use\n");
+	else	(void) fprintf(stderr, ", or\n");
 	tm = *gmtime(&thatt);
-	timeout(stderr, "or\n\tdate -u %Y", &tm);
+	timeout(stderr, "\tdate -u %Y", &tm);
 	timeout(stderr, "%m%d%H", &tm);
 	timeout(stderr, "%M.%S\n", &tm);
 	tm = *localtime(&thatt);
@@ -479,6 +487,53 @@ struct tm *	tmp;
 }
 
 /*
+** If a jurisdiction shifts time *without* shifting whether time is
+** summer or standard (as Hawaii, the United Kingdom, and Saudi Arabia
+** have done), routine checks for ambiguous times may not work.
+** So we perform this final check, deferring it until after the time has
+** been set--it may take a while, and we don't want to introduce an unnecessary
+** lag between the time the user enters their command and the time that
+** stime/settimeofday is called.
+** 
+** We just check nearby times to see if any of them have the same representation
+** as the time that gettime returned.  We work our way out from the center
+** for quick response in solar time situations.  We only handle common cases--
+** offsets of at most a minute, and offsets of exact numbers of minutes
+** and at most an hour.
+*/
+
+static void
+finalcheck(t)
+time_t	t;
+{
+	struct tm	tm;
+	register int	pass;
+	register long	offset;
+	time_t		othert;
+	struct tm	othertm;
+	
+	tm = *localtime(&t);
+	for (offset = 1; offset <= 60; ++offset)
+		for (pass = 1; pass <= 4; ++pass) {
+			if (pass == 1)
+				othert = t + offset;
+			else if (pass == 2)
+				othert = t - offset;
+			else if (pass == 3)
+				othert = t + 60 * offset;
+			else	othert = t - 60 * offset;
+			othertm = *localtime(&othert);
+			if (tm.tm_year == othertm.tm_year &&
+				tm.tm_mon == othertm.tm_mon &&
+				tm.tm_hour == othertm.tm_hour &&
+				tm.tm_min == othertm.tm_min &&
+				tm.tm_sec == othertm.tm_sec &&
+				tm.tm_isdst == othertm.tm_isdst)
+					ambiguous(t, othert, 1);
+		}
+}
+
+/*
 ** gettime --
 **	convert user's input into a time_t.
 */
@@ -532,7 +587,7 @@ int		isdst;
 			else	return thatt;
 		else	if (thatt == -1)
 				return thist;
-			else	ambiguous(thist, thatt);
+			else	ambiguous(thist, thatt, 0);
 	}
 	tm = *localtime(&now);
 	tm.tm_isdst = isdst;
@@ -610,7 +665,7 @@ int		isdst;
 				else	return thatt;
 			else	if (thatt == -1)
 					return thist;
-				else	ambiguous(thist, thatt);
+				else	ambiguous(thist, thatt, 0);
 
 		case 6:	/* yyyymmddhhmm--BSD finally wins in the 21st century */
 			year = pairs[0] * 100 + pairs[1];

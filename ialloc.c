@@ -11,14 +11,14 @@ extern char *	realloc();
 extern char *	strcpy();
 extern char *	strcat();
 
-char *	allocpy(string)
-char *	string;
+char *		allocpy(string)
+register char *	string;
 {
-	register char *	copy;
-	arg4alloc	n;
+	register char *		copy;
+	register arg4alloc	n;
 
 	n = (string == NULL) ? 0 : strlen(string);
-	copy = malloc(++n);
+	copy = malloc(n + 1);
 	if (copy == MAL || copy == NULL)
 		return NULL;
 	if (string == NULL)
@@ -27,15 +27,15 @@ char *	string;
 	return copy;
 }
 
-char *	allocat(old, new)
-char *	old;
-char *	new;
+char *		allocat(old, new)
+register char *	old;
+char *		new;
 {
-	arg4alloc	n;
+	register arg4alloc	n;
 
 	n = (old == NULL) ? 0 : strlen(old);
 	if (new != NULL)
-		n = n + strlen(new);
+		n += strlen(new);
 	++n;
 	if (old == MAL || old == NULL) {
 		old = malloc(n);

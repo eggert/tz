@@ -208,9 +208,10 @@ _("%s: usage is %s [ -v ] [ -c cutoff ] zonename ...\n"),
 		static char	buf[MAX_STRING_LENGTH];
 
 		(void) strcpy(&fakeenv[0][3], argv[i]);
-		show(argv[i], now, FALSE);
-		if (!vflag)
+		if (!vflag) {
+			show(argv[i], now, FALSE);
 			continue;
+		}
 		/*
 		** Get lowest value of t.
 		*/

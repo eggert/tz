@@ -251,7 +251,7 @@ time_t *	timep;
 	if (s.timecnt == 0 || t < s.ats[0]) {
 		i = 0;
 		while (s.ttis[i].tt_isdst)
-			if (++i >= s.timecnt) {
+			if (++i >= s.typecnt) {
 				i = 0;
 				break;
 			}

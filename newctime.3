@@ -311,7 +311,7 @@ to their normal ranges.
 .B tm_isdst
 causes
 .I mktime
-to presume initally that summer time (for example, Daylight Saving Time 
+to presume initially that summer time (for example, Daylight Saving Time 
 in the U.S.A.)
 respectively,
 is or is not in effect for the specified time.
@@ -397,10 +397,10 @@ of the Prime Meridian.
 .br
 /etc/zoneinfo/posixrules	used in converting POSIX-style TZ's
 .br
-/etc/zoneinfo/GMT	for UTC leap seconds
+/etc/zoneinfo/GMT0	for UTC leap seconds
 .sp
 If
-.B /etc/zoneinfo/GMT
+.B /etc/zoneinfo/GMT0
 is absent,
 UTC leap seconds are loaded from
 .BR /etc/zoneinfo/posixrules .
@@ -421,4 +421,4 @@ will also be overwritten at the next call
 .I tzset
 or
 .IR tzsetwall ).
-.. @(#)newctime.3	4.3
+.. %W%

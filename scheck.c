@@ -29,8 +29,8 @@ char *	format;
 	result = "";
 	if (string == NULL || format == NULL)
 		return result;
-	fbuf = malloc((alloc_t) (2 * strlen(format) + 4));
-	if (fbuf == MAL || fbuf == NULL)
+	fbuf = imalloc(2 * strlen(format) + 4);
+	if (fbuf == NULL)
 		return result;
 	fp = format;
 	tp = fbuf;

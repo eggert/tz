@@ -44,19 +44,16 @@ char copyright[] =
 static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #endif /* not lint */
 
-/*
- * Date - print and set date
- */
-
-#include <sys/param.h>
-#include <sys/time.h>
-#include <sys/file.h>
-#include <errno.h>
-#include <syslog.h>
-#include <utmp.h>
-#include <stdio.h>
-#include <ctype.h>
-#include <strings.h>
+#include "sys/param.h"
+#include "sys/time.h"
+#include "sys/file.h"
+#include "errno.h"
+#include "syslog.h"
+#include "utmp.h"
+#include "stdio.h"
+#include "ctype.h"
+#include "strings.h"
+#include "tzfile.h"
 
 #ifndef TIME_USER
 #ifdef OTIME_MSG
@@ -393,9 +390,7 @@ struct tm *	tmp;
 		case 'U':
 			/* How many Sundays fall on or before this day? */
 			wday = tmp->tm_wday;
-			(void) printf("%02.2d",
-				(tmp->tm_yday + DAYSPERWEEK - wday) /
-				DAYSPERWEEK);
+			(void) printf("%02.2d", (tmp->tm_yday + 7 - wday) / 7);
 			break;
 		case 'w':
 			(void) printf("%d", tmp->tm_wday);
@@ -405,10 +400,9 @@ struct tm *	tmp;
 			/* Transform it to the Sunday problem and solve that */
 			wday = tmp->tm_wday;
 			if (--wday < 0)
-				wday = DAYSPERWEEK - 1;
+				wday = 6;
 			(void) printf("%02.2d",
-				(tmp->tm_yday + DAYSPERWEEK - wday) /
-				DAYSPERWEEK);
+				(tmp->tm_yday + 7 - wday) / 7);
 			break;
 		case 'x':
 			timeout("%a %b %d", tmp);

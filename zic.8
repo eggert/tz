@@ -253,13 +253,13 @@ A link line has the form
 .nf
 .ti +.5i
 .if t .ta \w'Link\0\0'u +\w'LINK-FROM\0\0'u
-.if n .ta \w'Link\0\0'u +\w'Eastern-US\0\0'u
+.if n .ta \w'Link\0\0'u +\w'US/EasternS\0\0'u
 Link	LINK-FROM	LINK-TO
 .sp
 For example:
 .sp
 .ti +.5i
-Link	Eastern-US		EST5EDT
+Link	US/EasternS		EST5EDT
 .sp
 .fi
 The
@@ -273,18 +273,14 @@ field is used as an alternate name for that zone.
 .PP
 Except for continuation lines,
 lines may appear in any order in the input.
-.SH NOTES
+.SH NOTE
 For areas with more than two types of local time,
 you may need to use local standard time in the
 .B AT
 field of the earliest transition time's rule to ensure that
 the earliest transition time recorded in the compiled file is correct.
-.sp
-Times in
-.B UNTIL
-fields must be given in local standard (not local wall clock) time.
 .SH FILES
 /etc/zoneinfo	standard directory used for created files
 .SH "SEE ALSO"
-settz(3), tzfile(5), zdump(8)
+newctime(3), tzfile(5), zdump(8)
 .. %W%

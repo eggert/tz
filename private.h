@@ -45,7 +45,7 @@ static char	privatehid[] = "%W%";
 #endif /* !defined void */
 
 /*
-** INITIALIZE and USE
+** INITIALIZE
 */
 
 #ifndef GNUC_or_lint
@@ -65,15 +65,6 @@ static char	privatehid[] = "%W%";
 #define INITIALIZE(x)
 #endif /* !defined GNUC_or_lint */
 #endif /* !defined INITIALIZE */
-
-#ifndef USE
-#ifdef GNUC_or_lint
-#define USE(x)	((x) = (x))
-#endif /* defined GNUC_or_lint */
-#ifndef GNUC_or_lint
-#define USE(x)
-#endif /* !defined GNUC_or_lint */
-#endif /* !defined USE */
 
 /*
 ** P((args))

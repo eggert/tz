@@ -49,7 +49,7 @@ char *	format;
 		*tp++ = '*';
 		if (*fp == '*')
 			++fp;
-		while (*fp != '\0' && isascii(*fp) && isdigit(*fp))
+		while (isascii(*fp) && isdigit(*fp))
 			*tp++ = *fp++;
 		if (*fp == 'l')
 			*tp++ = *fp++;

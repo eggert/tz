@@ -83,7 +83,8 @@ extern void	perror P((const char * string));
 extern char *	scheck P((const char * string, const char * format));
 
 static void	addtt P((time_t starttime, int type));
-static int	addtype P((long gmtoff, const char * abbr, int isdst));
+static int	addtype P((long gmtoff, const char * abbr, int isdst,
+    int todisstd));
 static void	addleap P((time_t t, int positive, int rolling));
 static void	adjleap P((void));
 static void	associate P((void));
@@ -327,6 +328,7 @@ static unsigned char	types[TZ_MAX_TIMES];
 static long		gmtoffs[TZ_MAX_TYPES];
 static char		isdsts[TZ_MAX_TYPES];
 static char		abbrinds[TZ_MAX_TYPES];
+static char		todisstds[TZ_MAX_TYPES];
 static char		chars[TZ_MAX_CHARS];
 static time_t		trans[TZ_MAX_LEAPS];
 static long		corr[TZ_MAX_LEAPS];
@@ -963,6 +965,9 @@ const int		nfields;
 	cp = fields[LP_YEAR];
 	if (sscanf(cp, scheck(cp, "%d"), &year) != 1 ||
 		year < min_year || year > max_year) {
+			/*
+			 * Leapin' Lizards!
+			 */
 			error("invalid leaping year");
 			return;
 	}
@@ -1240,6 +1245,7 @@ const char * const	name;
 			(void) exit(EXIT_FAILURE);
 		}
 	}
+	convert(eitol(typecnt), tzh.tzh_ttisstdcnt);
 	convert(eitol(leapcnt), tzh.tzh_leapcnt);
 	convert(eitol(timecnt), tzh.tzh_timecnt);
 	convert(eitol(typecnt), tzh.tzh_typecnt);
@@ -1288,6 +1294,8 @@ const char * const	name;
 		} else	puttzcode((long) trans[i], fp);
 		puttzcode((long) corr[i], fp);
 	}
+	for (i = 0; i < typecnt; ++i)
+		(void) putc(todisstds[i], fp);
 	if (ferror(fp) || fclose(fp)) {
 		(void) fprintf(stderr, "%s: Write error on ", progname);
 		(void) perror(fullname);
@@ -1310,6 +1318,7 @@ const int			zonecount;
 	register int			year;
 	register long			startoff;
 	register int			startisdst;
+	register int			starttodisstd;
 	register int			type;
 	char				startbuf[BUFSIZ];
 
@@ -1326,9 +1335,11 @@ const int			zonecount;
 	stdoff = 0;
 #ifdef lint
 	starttime = 0;
+	starttodisstd = FALSE;
 #endif /* defined lint */
 #ifdef __TURBOC__
 	starttime = 0;
+	starttodisstd = FALSE;
 #endif /* defined __TURBOC__ */
 	for (i = 0; i < zonecount; ++i) {
 		usestart = i > 0;
@@ -1338,7 +1349,8 @@ const int			zonecount;
 		startisdst = -1;
 		if (zp->z_nrules == 0) {
 			type = addtype(oadd(zp->z_gmtoff, zp->z_stdoff),
-				zp->z_format, zp->z_stdoff != 0);
+				zp->z_format, zp->z_stdoff != 0,
+				starttodisstd);
 			if (usestart)
 				addtt(starttime, type);
 			gmtoff = zp->z_gmtoff;
@@ -1428,7 +1440,7 @@ const int			zonecount;
 					}
 					if (ktime != starttime &&
 						startisdst >= 0)
-addtt(starttime, addtype(startoff, startbuf, startisdst));
+addtt(starttime, addtype(startoff, startbuf, startisdst, starttodisstd));
 					usestart = FALSE;
 				}
 				eats(zp->z_filename, zp->z_linenum,
@@ -1436,7 +1448,8 @@ addtt(starttime, addtype(startoff, startbuf, startisdst));
 				(void) sprintf(buf, zp->z_format,
 					rp->r_abbrvar);
 				offset = oadd(zp->z_gmtoff, rp->r_stdoff);
-				type = addtype(offset, buf, rp->r_stdoff != 0);
+				type = addtype(offset, buf, rp->r_stdoff != 0,
+					rp->r_todisstd);
 				if (timecnt != 0 || rp->r_stdoff != 0)
 					addtt(ktime, type);
 				gmtoff = zp->z_gmtoff;
@@ -1446,9 +1459,11 @@ addtt(starttime, addtype(startoff, startbuf, startisdst));
 		/*
 		** Now we may get to set starttime for the next zone line.
 		*/
-		if (useuntil)
+		if (useuntil) {
 			starttime = tadd(zp->z_untiltime,
 				-gmtoffs[types[timecnt - 1]]);
+			starttodisstd = zp->z_untilrule.r_todisstd;
+		}
 	}
 	writezone(zpfirst->z_name);
 }
@@ -1470,10 +1485,11 @@ const int	type;
 }
 
 static int
-addtype(gmtoff, abbr, isdst)
+addtype(gmtoff, abbr, isdst, todisstd)
 const long		gmtoff;
 const char * const	abbr;
 const int		isdst;
+const int		todisstd;
 {
 	register int	i, j;
 
@@ -1483,7 +1499,8 @@ const int		isdst;
 	*/
 	for (i = 0; i < typecnt; ++i) {
 		if (gmtoff == gmtoffs[i] && isdst == isdsts[i] &&
-			strcmp(abbr, &chars[abbrinds[i]]) == 0)
+			strcmp(abbr, &chars[abbrinds[i]]) == 0 &&
+			todisstd == todisstds[i])
 				return i;
 	}
 	/*
@@ -1496,6 +1513,7 @@ const int		isdst;
 	}
 	gmtoffs[i] = gmtoff;
 	isdsts[i] = isdst;
+	todisstds[i] = todisstd;
 
 	for (j = 0; j < charcnt; ++j)
 		if (strcmp(&chars[j], abbr) == 0)

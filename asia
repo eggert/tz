@@ -522,9 +522,25 @@ Zone	Asia/Baghdad	2:57:40	-	LMT	1890
 
 # Israel
 
-# From U. S. Naval Observatory (1989-01-19):
-# ISRAEL              2 H  AHEAD OF UTC
-# ISRAEL              3 H  AHEAD OF UTC  APR 10 - SEP 3
+# From Ephraim Silverberg (2001-01-11):
+#
+# I coined "IST/IDT" circa 1988.  Until then there were three
+# different abbreviations in use:
+#
+# JST  Jerusalem Standard Time [Danny Braniss, Hebrew University]
+# IZT  Israel Zonal (sic) Time [Prof. Haim Papo, Technion]
+# EEST Eastern Europe Standard Time [used by almost everyone else]
+#
+# Since timezones should be called by country and not capital cities,
+# I ruled out JST.  As Israel is in Asia Minor and not Eastern Europe,
+# EEST was equally unacceptable.  Since "zonal" was not compatible with
+# any other timezone abbreviation, I felt that 'IST' was the way to go
+# and, indeed, it has received almost universal acceptance in timezone
+# settings in Israeli computers.
+#
+# In any case, I am happy to share timezone abbreviations with India,
+# high on my favorite-country list (and not only because my wife's
+# family is from India).
 
 # From Shanks:
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S

@@ -60,9 +60,6 @@ static char	elsieid[] = "%W%";
 ** And another:  initialize tzname[0] to "ERA", with an explanation in the
 ** manual page of what this "time zone abbreviation" means (doing this so
 ** that tzname[0] has the "normal" length of three characters).
-** Yet another:  make WILDABBR something more distincitve, such as "!?!",
-** rather than the three blanks below (designed to match what some existing
-** systems do).
 */
 #define WILDABBR	"   "
 #endif /* !defined WILDABBR */
@@ -107,38 +104,38 @@ struct rule {
 #define	DAY_OF_YEAR		1	/* n - day of year */
 #define	MONTH_NTH_DAY_OF_WEEK	2	/* Mm.n.d - month, week, day of week */
 
+/*
+** Prototypes for static functions.
+*/
+
 static long		detzcode P((const char * codep));
 static const char *	getzname P((const char * strp));
 static const char *	getnum P((const char * strp, int * nump, int min,
 				int max));
-static const char *	gettime P((const char * strp, long * longp));
+static const char *	getsecs P((const char * strp, long * secsp));
 static const char *	getoffset P((const char * strp, long * offsetp));
 static const char *	getrule P((const char * strp, struct rule * rulep));
 static void		gmtbuiltin P((struct state * sp));
 static void		gmtload P((struct state * sp));
+static void		gmtsub P((const time_t * timep, long offset,
+				struct tm * tmp));
 static void		localsub P((const time_t * timep, long offset,
 				struct tm * tmp));
-time_t			mktime P((struct tm * tmp));
+static void		normalize P((int * tensptr, int * unitsptr, int base));
 static void		settzname P((void));
+static time_t		time1 P((struct tm * tmp, void (* funcp)(),
+				long offset));
+static time_t		time2 P((struct tm *tmp, void (* funcp)(),
+				long offset, int * okayp));
 static void		timesub P((const time_t * timep, long offset,
 				const struct state * sp, struct tm * tmp));
+static int		tmcomp P((const struct tm * atmp,
+				const struct tm * btmp));
 static time_t		transtime P((time_t janfirst, int year,
 				const struct rule * rulep, long offset));
 static int		tzload P((const char * name, struct state * sp));
 static int		tzparse P((const char * name, struct state * sp,
 				int gmtokay));
-void			tzsetwall P((void));
-
-#ifdef STD_INSPIRED
-struct tm *		offtime P((const time_t * timep, long offset));
-time_t			timelocal P((struct tm * tmp));
-time_t			timegm P((struct tm * tmp));
-time_t			timeoff P((struct tm * tmp, long offset));
-#endif /* !defined STD_INSPIRED */
-
-#ifdef CMUCS
-long			gtime P((struct tm * tmp));
-#endif /* defined CMUCS */
 
 #ifdef ALL_STATE
 static struct state *	lclptr;
@@ -164,6 +161,7 @@ char *			tzname[2] = {
 time_t			timezone = 0;
 int			daylight = 0;
 #endif /* defined USG_COMPAT */
+
 #ifdef ALTZONE
 time_t			altzone = 0;
 #endif /* defined ALTZONE */
@@ -260,7 +258,7 @@ register struct state * const	sp;
 	}
 	{
 		register const struct tzhead *	tzhp;
-		char				buf[sizeof *sp];
+		char				buf[sizeof *sp + sizeof *tzhp];
 
 		i = read(fid, buf, sizeof buf);
 		if (close(fid) != 0 || i < sizeof *tzhp)
@@ -379,35 +377,38 @@ const int		max;
 }
 
 /*
-** Given a pointer into a time zone string, extract a time, in hh[:mm[:ss]]
-** form, from the string.
+** Given a pointer into a time zone string, extract a number of seconds,
+** in hh[:mm[:ss]] form, from the string.
 ** If any error occurs, return NULL.
 ** Otherwise, return a pointer to the first character not part of the time.
 */
 
 static const char *
-gettime(strp, longp)
+getsecs(strp, secsp)
 register const char *	strp;
-long * const		longp;
+long * const		secsp;
 {
 	int	num;
 
-	strp = getnum(strp, &num, 0, HOURSPERDAY / 2);
+	/*
+	** The limit allows for GMT +/- 12 +/- DDST.
+	*/
+	strp = getnum(strp, &num, 0, HOURSPERDAY / 2 + 2);
 	if (strp == NULL)
 		return NULL;
-	*longp = num * SECSPERHOUR;
+	*secsp = num * SECSPERHOUR;
 	if (*strp == ':') {
 		++strp;
 		strp = getnum(strp, &num, 0, MINSPERHOUR - 1);
 		if (strp == NULL)
 			return NULL;
-		*longp += num * SECSPERMIN;
+		*secsp += num * SECSPERMIN;
 		if (*strp == ':') {
 			++strp;
 			strp = getnum(strp, &num, 0, SECSPERMIN - 1);
 			if (strp == NULL)
 				return NULL;
-			*longp += num;
+			*secsp += num;
 		}
 	}
 	return strp;
@@ -433,7 +434,7 @@ long * const		offsetp;
 	} else if (*strp == '+' || isdigit(*strp))
 		neg = 0;
 	else	return NULL;		/* illegal offset */
-	strp = gettime(strp, offsetp);
+	strp = getsecs(strp, offsetp);
 	if (strp == NULL)
 		return NULL;		/* illegal time */
 	if (neg)
@@ -491,7 +492,7 @@ register struct rule * const	rulep;
 		** Time specified.
 		*/
 		++strp;
-		strp = gettime(strp, &rulep->r_time);
+		strp = getsecs(strp, &rulep->r_time);
 		if (strp == NULL)
 			return NULL;
 	} else	rulep->r_time = 2 * SECSPERHOUR;	/* default = 2:00:00 */
@@ -871,7 +872,7 @@ struct tm * const	tmp;
 	register const struct state *	sp;
 	register const struct ttinfo *	ttisp;
 	register int			i;
-	time_t				t;
+	const time_t			t = *timep;
 
 	if (!lcl_is_set)
 		tzset();
@@ -882,7 +883,6 @@ struct tm * const	tmp;
 		return;
 	}
 #endif /* defined ALL_STATE */
-	t = *timep;
 	if (sp->timecnt == 0 || t < sp->ats[0]) {
 		i = 0;
 		while (sp->ttis[i].tt_isdst)
@@ -1259,16 +1259,12 @@ const long		offset;
 	register const struct state *	sp;
 	register int			samei, otheri;
 	int				okay;
-	struct tm			tm;
 
-	tm = *tmp;
-	if (tm.tm_isdst > 1)
+	if (tmp->tm_isdst > 1)
 		return WRONG;
-	t = time2(&tm, funcp, offset, &okay);
-	if (okay || tm.tm_isdst < 0) {
-		*tmp = tm;
+	t = time2(tmp, funcp, offset, &okay);
+	if (okay || tmp->tm_isdst < 0)
 		return t;
-	}
 	/*
 	** We're supposed to assume that somebody took a time of one type
 	** and did some math on it that yielded a "struct tm" that's bad.
@@ -1281,22 +1277,20 @@ const long		offset;
 		return WRONG;
 #endif /* defined ALL_STATE */
 	for (samei = 0; samei < sp->typecnt; ++samei) {
-		if (sp->ttis[samei].tt_isdst != tm.tm_isdst)
+		if (sp->ttis[samei].tt_isdst != tmp->tm_isdst)
 			continue;
 		for (otheri = 0; otheri < sp->typecnt; ++otheri) {
-			if (sp->ttis[otheri].tt_isdst == tm.tm_isdst)
+			if (sp->ttis[otheri].tt_isdst == tmp->tm_isdst)
 				continue;
-			tm.tm_sec += sp->ttis[otheri].tt_gmtoff -
+			tmp->tm_sec += sp->ttis[otheri].tt_gmtoff -
 					sp->ttis[samei].tt_gmtoff;
-			tm.tm_isdst = !tm.tm_isdst;
-			t = time2(&tm, funcp, offset, &okay);
-			if (okay) {
-				*tmp = tm;
+			tmp->tm_isdst = !tmp->tm_isdst;
+			t = time2(tmp, funcp, offset, &okay);
+			if (okay)
 				return t;
-			}
-			tm.tm_sec -= sp->ttis[otheri].tt_gmtoff -
+			tmp->tm_sec -= sp->ttis[otheri].tt_gmtoff -
 					sp->ttis[samei].tt_gmtoff;
-			tm.tm_isdst = !tm.tm_isdst;
+			tmp->tm_isdst = !tmp->tm_isdst;
 		}
 	}
 	return WRONG;
@@ -1347,11 +1341,11 @@ long
 gtime(tmp)
 struct tm * const	tmp;
 {
-	time_t	t;
+	const time_t	t = mktime(tmp);
 
-	if ((t = mktime(tmp)) == WRONG)
-		return -1L;
-	return (long) t;
+	if (t == WRONG)
+		return -1;
+	return t;
 }
 
 #endif /* defined CMUCS */

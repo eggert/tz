@@ -286,8 +286,8 @@ names:
 		@echo $(ENCHILADA)
 
 public:		$(ENCHILADA)
-		tar cf - $(DOCS) $(SOURCES) $(USNO) | gzip > tzcode.tar.gz
-		tar cf - $(DATA) | gzip > tzdata.tar.gz
+		tar cf - $(DOCS) $(SOURCES) $(USNO) | gzip -9 > tzcode.tar.gz
+		tar cf - $(DATA) | gzip -9 > tzdata.tar.gz
 
 zonenames:	$(TDATA)
 		@awk '/^Zone/ { print $$2 } /^Link/ { print $$3 }' $(TDATA)

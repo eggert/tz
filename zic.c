@@ -1669,21 +1669,16 @@ const int			zonecount;
 		if (usestart) {
 			if (zp->z_format != NULL &&
 				strchr(zp->z_format, '%') == NULL &&
-				strchr(zp->z_format, '/') == NULL) {
-					if (*startbuf == '\0')
-						(void) strcpy(startbuf,
-							zp->z_format);
-					if (startisdst < 0)
-						startisdst = zp->z_stdoff != 0;
-			}
+				strchr(zp->z_format, '/') == NULL &&
+				*startbuf == '\0')
+					(void) strcpy(startbuf, zp->z_format);
 			eat(zp->z_filename, zp->z_linenum);
 			if (*startbuf == '\0')
 error(_("can't determine time zone abbrevation to use just after until time"));
-			else if (startisdst < 0)
-error(_("can't determine whether to use DST just after until time"));
 			else	addtt(starttime,
 					addtype(startoff, startbuf,
-						startisdst, startttisstd,
+						startoff != zp->z_gmtoff,
+						startttisstd,
 						startttisgmt));
 		}
 		/*

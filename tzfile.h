@@ -12,8 +12,8 @@
 #define TZDEFAULT	"localtime"
 #endif
 
-#ifndef TZ_MAX_RULES
-#define TZ_MAX_RULES	170		/* Maximum number of rules */
+#ifndef TZ_MAX_TIMES
+#define TZ_MAX_TIMES	170		/* Maximum number of transition times */
 #endif
 
 #ifndef TZ_MAX_TYPES
@@ -31,9 +31,9 @@ struct dsinfo {
 };
 
 struct tzinfo {
-	int	tz_rulecnt;		/* Number of rules used */
-	long	tz_times[TZ_MAX_RULES];	/* Times when rules kick in */
-	char	tz_types[TZ_MAX_RULES];	/* Saving Time types for the above */
+	int	tz_timecnt;		/* Number of entries used */
+	long	tz_times[TZ_MAX_TIMES];	/* Saving Time transition times */
+	char	tz_types[TZ_MAX_TIMES];	/* Saving Time types for the above */
 	struct dsinfo	tz_dsinfo[TZ_MAX_TYPES];
 					/* See above */
 };

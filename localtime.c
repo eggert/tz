@@ -1340,15 +1340,16 @@ int * const		okayp;
 		yourtm.tm_sec = 0;
 	}
 	/*
-	** Calculate the number of magnitude bits in a time_t
+	** Divide the search space in half
 	** (this works whether time_t is signed or unsigned).
 	*/
-	bits = TYPE_BIT(time_t) - TYPE_SIGNED(time_t);
+	bits = TYPE_BIT(time_t) - 1;
 	/*
-	** If time_t is signed, then 0 is the median value,
-	** if time_t is unsigned, then 1 << (bits - 1) is median.
+	** If time_t is signed, then 0 is just above the median,
+	** assuming two's complement arithmetic.
+	** If time_t is unsigned, then (1 << bits) is just above the median.
 	*/
-	t = TYPE_SIGNED(time_t) ? 0 : (((time_t) 1) << (bits - 1));
+	t = TYPE_SIGNED(time_t) ? 0 : (((time_t) 1) << bits);
 	for ( ; ; ) {
 		(*funcp)(&t, offset, &mytm);
 		dir = tmcomp(&mytm, &yourtm);
@@ -1356,7 +1357,7 @@ int * const		okayp;
 			if (bits-- < 0)
 				return WRONG;
 			if (bits < 0)
-				--t;
+				--t; /* may be needed if new t is minimal */
 			else if (dir > 0)
 				t -= ((time_t) 1) << bits;
 			else	t += ((time_t) 1) << bits;

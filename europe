@@ -1496,8 +1496,8 @@ Rule	Neth	1933	1936	-	May	15	2:00s	1:00	NST
 Rule	Neth	1937	only	-	May	22	2:00s	1:00	NST
 # Whitman gives 1939 Apr 15 and 1940 Apr 19; go with Shanks.
 Rule	Neth	1938	1939	-	May	15	2:00s	1:00	NST
-Rule	Neth	1945	only	-	Apr	 2	2:00s	1:00	-
-Rule	Neth	1945	only	-	May	20	2:00s	0	" DST"
+Rule	Neth	1945	only	-	Apr	 2	2:00s	1:00	" DST"
+Rule	Neth	1945	only	-	May	20	2:00s	0	-
 # Before 1937, Shanks says just `0:20'; we use Whitman's more precise figure.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Europe/Amsterdam	0:19:28 -	LMT	1892 May
@@ -1871,10 +1871,10 @@ Zone Europe/Stockholm	1:12:12 -	LMT	1878 May 31
 Rule	Swiss	1894	only	-	Jun	1	0:00	0	-
 # From Whitman (who writes ``Midnight?''):
 Rule	Swiss	1940	only	-	Nov	 2	0:00	1:00	" DST"
-Rule	Swiss	1940	only	-	Dec	31	0:00	0	" DST"
+Rule	Swiss	1940	only	-	Dec	31	0:00	0	-
 # From Shanks (1991):
 Rule	Swiss	1941	1942	-	May	Sun>=1	2:00	1:00	" DST"
-Rule	Swiss	1941	1942	-	Oct	Sun>=1	0:00	0	" DST"
+Rule	Swiss	1941	1942	-	Oct	Sun>=1	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Zurich	0:34:08 -	LMT	1848 Sep 12
 			0:30	-	SST	1894 Jun   # Swiss Standard Time

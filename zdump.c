@@ -80,7 +80,7 @@ char *	argv[];
 	if (c != EOF || optind == argc - 1 && strcmp(argv[optind], "=") == 0) {
 		(void) fprintf(stderr, "%s: usage is %s [ -v ] zonename ...\n",
 			argv[0], argv[0]);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	if (cutoff != NULL)
 		cutyear = atoi(cutoff);
@@ -103,7 +103,7 @@ char *	argv[];
 		if (tzequals == NULL) {
 			(void) fprintf(stderr, "%s: can't allocate memory\n",
 				argv[0]);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		(void) sprintf(tzequals, "TZ=%s", argv[i]);
 		fakeenv[0] = tzequals;
@@ -130,7 +130,7 @@ char *	argv[];
 					(void) fprintf(stderr,
 "%s: timezone name %s/%s is too long\n",
 						argv[0], TZDIR, argv[i]);
-					exit(1);
+					exit(EXIT_FAILURE);
 				}
 				(void) sprintf(buf, "%s/%s", TZDIR, argv[i]);
 				fp = fopen(buf, "rb");
@@ -139,7 +139,7 @@ char *	argv[];
 				(void) fprintf(stderr, "%s: Can't open ",
 					argv[0]);
 				perror(argv[i]);
-				exit(1);
+				exit(EXIT_FAILURE);
 			}
 			/*
 			** Contorted. . .
@@ -202,7 +202,7 @@ char *	argv[];
 		if (fp != NULL && fclose(fp)) {
 			(void) fprintf(stderr, "%s: Error closing ", argv[0]);
 			perror(argv[i]);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		t = 0xffffffff;
 		if (t < 0)		/* time_t is signed */
@@ -217,7 +217,7 @@ char *	argv[];
 		(void) fprintf(stderr, "%s: Error writing standard output ",
 			argv[0]);
 		perror("standard output");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	return 0;
 }
@@ -256,5 +256,5 @@ char *	filename;
 	if (ferror(fp))
 		perror(filename);
 	else	(void) fprintf(stderr, "%s: Premature EOF\n", filename);
-	exit(1);
+	exit(EXIT_FAILURE);
 }

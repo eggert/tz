@@ -46,7 +46,7 @@ string of the form
 Thu Nov 24 18:22:48 1986\n\0
 .br
 .ec
-Years requiring fewer than four characters are padded with trailing spaces.
+Years requiring fewer than four characters are padded with leading zeroes.
 For years longer than four characters, the string is of the form
 .br
 .ce
@@ -55,7 +55,7 @@ Thu Nov 24 18:22:48     81986\n\0
 .ec
 .br
 with five spaces before the year.
-This unusual format is designed to make it less likely that older
+These unusual formats are designed to make it less likely that older
 software that expects exactly 26 bytes of output will mistakenly output
 misleading values for out-of-range years.
 .PP
@@ -65,7 +65,7 @@ and
 return pointers to ``tm'' structures, described below.
 .I Localtime\^
 corrects for the time zone and any time zone adjustments
-(such as Daylight Saving Time in the U.S.A.).
+(such as Daylight Saving Time in the United States).
 After filling in the ``tm'' structure,
 .I localtime
 sets the

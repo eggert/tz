@@ -167,16 +167,17 @@ static time_t		now;
 
 static int		retval = EXIT_SUCCESS;
 
-static void		ambiguous();
+static void		checkfinal();
+static int		comptm();
 static void		display();
 static void		errensure();
-static void		finalcheck();
+static void		iffy();
 #ifdef TSP_SETDATE
 int			netsettime();
 #endif /* defined TSP_SETDATE */
 static char *		nondigit();
 static void		oops();
-static time_t		parse();
+static time_t		convert();
 static void		timeout();
 static void		usage();
 static void		wildinput();
@@ -195,6 +196,7 @@ char *	argv[];
 	register char *		cp;
 	register char *		username;
 	register int		ch;
+	register int		convtype;
 	time_t			t;
 #ifdef DST_NONE
 	static struct timeval	tv;	/* static so tv_usec is 0 */
@@ -357,9 +359,20 @@ char *	argv[];
 			}
 	}
 	if (value != NULL) {
-		t = parse(value, -1);
+		t = convert(value, (convtype = 0), now);
+#ifdef USG_INPUT
 		if (t == -1)
-			usage();
+			t = convert(value, (convtype = 1), now);
+#endif /* defined USG_INPUT */
+		if (t == -1) {
+			/*
+			** Better diagnosis needed here.
+			** Utterly nonsensical time,
+			** or time that falls in a DST transition hole?
+			*/
+			wildinput("time", value,
+				"can't be converted to time_t");
+		}
 	}
 	/*
 	** Entire command line has now been checked.
@@ -405,12 +418,14 @@ char *	argv[];
 	if (nflag || !netsettime(tv))
 #endif /* defined TSP_SETDATE */
 	{
+#ifndef EBUG
 		logwtmp(OTIME_MSG, TIME_USER, "");
 		if (settimeofday(&tv, (struct timezone *) NULL) == 0) {
 			logwtmp(NTIME_MSG, TIME_USER, "");
 			syslog(LOG_AUTH | LOG_NOTICE, "date set by %s",
 				username);
 		} else 	oops("date: error: settimeofday");
+#endif /* !defined EBUG */
 	}
 #else /* !defined DST_NONE */
 	logwtmp(OTIME_MSG, TIME_USER, "");
@@ -419,9 +434,10 @@ char *	argv[];
 	else	oops("date: error: stime");
 #endif /* !defined DST_NONE */
 
-	finalcheck(t);
+	checkfinal(value, convtype, t);
 
 	display(format);
+	/* gcc -Wall pacifier */
 	for ( ; ; )
 		;
 }
@@ -471,18 +487,15 @@ char *	string;
 }
 
 static void
-ambiguous(thist, thatt, was_set)
+iffy(thist, thatt)
 time_t	thist;
 time_t	thatt;
-int	was_set;
 {
 	struct tm	tm;
 
 	(void) fprintf(stderr, "date: error: ambiguous time.  ");
 	tm = *gmtime(&thist);
-	if (was_set)
-		(void) fprintf(stderr, "Time was set as if you used\n");
-	else	(void) fprintf(stderr, "Use\n");
+	(void) fprintf(stderr, "Time was set as if you used\n");
 	/*
 	** Avoid running afoul of SCCS!
 	*/
@@ -493,9 +506,7 @@ int	was_set;
 	timeout(stderr, "to get %c", &tm);
 	(void) fprintf(stderr, " (%s time)",
 		tm.tm_isdst ? "summer" : "standard");
-	if (was_set)
-		(void) fprintf(stderr, ".  Use\n");
-	else	(void) fprintf(stderr, ", or\n");
+	(void) fprintf(stderr, ".  Use\n");
 	tm = *gmtime(&thatt);
 	timeout(stderr, "\tdate -u %Y", &tm);
 	timeout(stderr, "%m%d%H", &tm);
@@ -720,33 +731,75 @@ struct tm *	tmp;
 
 #endif /* !defined USE_STRFTIME */
 
+static int
+comptm(atmp, btmp)
+register struct tm * atmp;
+register struct tm * btmp;
+{
+	register int	result;
+
+	if ((result = (atmp->tm_year - btmp->tm_year)) == 0 &&
+		(result = (atmp->tm_mon - btmp->tm_mon)) == 0 &&
+		(result = (atmp->tm_mday - btmp->tm_mday)) == 0 &&
+		(result = (atmp->tm_hour - btmp->tm_hour)) == 0 &&
+		(result = (atmp->tm_min - btmp->tm_min)) == 0)
+			result = atmp->tm_sec - btmp->tm_sec;
+	return result;
+}
+
 /*
+** Check for iffy input.
+*/
+
+#ifndef USG_INPUT
+/*ARGSUSED*/
+#endif /* defined USG_INPUT */
+static void
+checkfinal(value, convtype, t)
+char *	value;
+int	convtype;
+time_t	t;
+{
+	time_t		othert;
+	struct tm	tm;
+	struct tm	othertm;
+	register int	pass;
+	register long	offset;
+	
+#ifdef USG_INPUT
+	/*
+	** If USG_INPUT is defined, check for USG/BSD ambiguity.
+	*/
+	othert = convert(value, !convtype, t);
+	if (othert != -1 && othert != t)
+		iffy(t, othert);
+#endif /* defined USG_INPUT */
+	/*
+	** See if there's both a DST and a STD version.
+	*/
+	tm = *localtime(&t);
+	othertm = tm;
+	othertm.tm_isdst = !tm.tm_isdst;
+	othert = mktime(&tm);
+	if (othert != -1 && comptm(&tm, &othertm))
+		iffy(t, othert);
+/*
+** Final check.
+**
 ** If a jurisdiction shifts time *without* shifting whether time is
 ** summer or standard (as Hawaii, the United Kingdom, and Saudi Arabia
-** have done), routine checks for ambiguous times may not work.
+** have done), routine checks for iffy times may not work.
 ** So we perform this final check, deferring it until after the time has
 ** been set--it may take a while, and we don't want to introduce an unnecessary
 ** lag between the time the user enters their command and the time that
 ** stime/settimeofday is called.
 ** 
 ** We just check nearby times to see if any of them have the same representation
-** as the time that parse returned.  We work our way out from the center
+** as the time that convert returned.  We work our way out from the center
 ** for quick response in solar time situations.  We only handle common cases--
 ** offsets of at most a minute, and offsets of exact numbers of minutes
 ** and at most an hour.
 */
-
-static void
-finalcheck(t)
-time_t	t;
-{
-	struct tm	tm;
-	register int	pass;
-	register long	offset;
-	time_t		othert;
-	struct tm	othertm;
-	
-	tm = *localtime(&t);
 	for (offset = 1; offset <= 60; ++offset)
 		for (pass = 1; pass <= 4; ++pass) {
 			if (pass == 1)
@@ -757,18 +810,13 @@ time_t	t;
 				othert = t + 60 * offset;
 			else	othert = t - 60 * offset;
 			othertm = *localtime(&othert);
-			if (tm.tm_year == othertm.tm_year &&
-				tm.tm_mon == othertm.tm_mon &&
-				tm.tm_hour == othertm.tm_hour &&
-				tm.tm_min == othertm.tm_min &&
-				tm.tm_sec == othertm.tm_sec &&
-				tm.tm_isdst == othertm.tm_isdst)
-					ambiguous(t, othert, 1);
+			if (comptm(&tm, &othertm) == 0)
+				iffy(t, othert);
 		}
 }
 
 /*
-** parse --
+** convert --
 **	convert user's input into a time_t.
 */
 
@@ -781,50 +829,25 @@ register char * cp;
 	return (cp[0] - '0') * 10 + cp[1] - '0';
 }
 
+#ifndef USG_INPUT
+/*ARGSUSED*/
+#endif /* !defined USG_INPUT */
 static time_t
-xtime(intmp)
-register struct tm * intmp;
+convert(format, dousg, t)
+register char *	format;
+int		dousg;
+time_t		t;
 {
-	struct tm	outtm;
-	time_t		outt;
-
-	outtm = *intmp;
-	outt = mktime(&outtm);
-	return (outtm.tm_isdst == intmp->tm_isdst &&
-		outtm.tm_sec == intmp->tm_sec &&
-		outtm.tm_min == intmp->tm_min &&
-		outtm.tm_hour == intmp->tm_hour &&
-		outtm.tm_mday == intmp->tm_mday &&
-		outtm.tm_mon == intmp->tm_mon &&
-		outtm.tm_year == intmp->tm_year) ?
-			outt : -1;
-}
-
-static time_t
-parse(cp, isdst)
-register char *	cp;
-int		isdst;
-{
+	register char *	cp;
 	register int	i;
 	register int	year;
-	struct tm	tm;
+	struct tm	tm, outtm;
+	time_t		outt;
 	int		pairs[6];
-	time_t		thist;
-	time_t		thatt;
 
-	if (isdst < 0) {
-		thist = parse(cp, 0);
-		thatt = parse(cp, 1);
-		if (thist == -1)
-			if (thatt == -1)
-				return -1;
-			else	return thatt;
-		else	if (thatt == -1)
-				return thist;
-			else	ambiguous(thist, thatt, 0);
-	}
-	tm = *localtime(&now);
-	tm.tm_isdst = isdst;
+	cp = format;
+	tm = *localtime(&t);
+	tm.tm_isdst = -1;
 	tm.tm_sec = 0;
 	for (i = 0; ; ++i) {
 		if (*cp == '\0')
@@ -847,24 +870,39 @@ int		isdst;
 	}
 	switch (i) {
 		default:
-			break;
+			return -1;
 		case 2:	/* hhmm */
 			tm.tm_hour = pairs[0];
 			tm.tm_min = pairs[1];
-			return xtime(&tm);
+			break;
 		case 3:	/* ddhhmm */
 			tm.tm_mday = pairs[0];
 			tm.tm_hour = pairs[1];
 			tm.tm_min = pairs[2];
-			return xtime(&tm);
+			break;
 		case 4:	/* mmddhhmm */
 			tm.tm_mon = pairs[0] - 1;
 			tm.tm_mday = pairs[1];
 			tm.tm_hour = pairs[2];
 			tm.tm_min = pairs[3];
-			return xtime(&tm);
+			break;
 
 		case 5:	/* Ulp! yymmddhhmm or mmddhhmmyy */
+#ifdef USG_INPUT
+			if (dousg) {
+				tm.tm_mon = pairs[0] - 1;
+				tm.tm_mday = pairs[1];
+				tm.tm_hour = pairs[2];
+				tm.tm_min = pairs[3];
+
+				year = tm.tm_year + TM_YEAR_BASE;
+				year -= year % 100;
+				year = year + pairs[4];
+				tm.tm_year = year - TM_YEAR_BASE;
+
+				break;
+			}
+#endif /* defined USG_INPUT */
 			year = tm.tm_year + TM_YEAR_BASE;
 			year -= year % 100;
 			year = year + pairs[0];
@@ -875,32 +913,7 @@ int		isdst;
 			tm.tm_hour = pairs[3];
 			tm.tm_min = pairs[4];
 
-			thist = xtime(&tm);
-		
-#ifndef USG_INPUT
-			return thist;
-#else /* defined USG_INPUT */
-			tm.tm_mon = pairs[0] - 1;
-			tm.tm_mday = pairs[1];
-			tm.tm_hour = pairs[2];
-			tm.tm_min = pairs[3];
-
-			year = tm.tm_year + TM_YEAR_BASE;
-			year -= year % 100;
-			year = year + pairs[4];
-			tm.tm_year = year - TM_YEAR_BASE;
-
-			thatt = xtime(&tm);
-
-			if (thist == -1)
-				if (thatt == -1)
-					break;
-				else	return thatt;
-			else	if (thatt == -1)
-					return thist;
-				else	ambiguous(thist, thatt, 0);
-#endif /* defined USG_INPUT */
-
+			break;
 		case 6:	/* yyyymmddhhmm--BSD finally wins in the 21st century */
 			year = pairs[0] * 100 + pairs[1];
 			tm.tm_year = year - TM_YEAR_BASE;
@@ -908,9 +921,11 @@ int		isdst;
 			tm.tm_mday = pairs[3];
 			tm.tm_hour = pairs[4];
 			tm.tm_min = pairs[5];
-			return xtime(&tm);
+			break;
 	}
-	return -1;
+	outtm = tm;
+	outt = mktime(&outtm);
+	return (comptm(&tm, &outtm) == 0) ? outt : -1;
 }
 
 #ifdef TSP_SETDATE

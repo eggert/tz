@@ -546,10 +546,14 @@ const char * const	tofile;
 	if (!itsdir(toname))
 		(void) remove(toname);
 	if (link(fromname, toname) != 0) {
-		(void) fprintf(stderr, "%s: Can't link from %s to ",
-			progname, fromname);
-		(void) perror(toname);
-		(void) exit(EXIT_FAILURE);
+		if (mkdirs(toname) != 0)
+			(void) exit(EXIT_FAILURE);
+		if (link(fromname, toname) != 0) {
+			(void) fprintf(stderr, "%s: Can't link from %s to ",
+				progname, fromname);
+			(void) perror(toname);
+			(void) exit(EXIT_FAILURE);
+		}
 	}
 	if (fromname != fromfile)
 		ifree(fromname);

@@ -73,8 +73,8 @@ LINTFLAGS=	-phbaaxc
 
 CC=		cc -DTZDIR=\"$(TZDIR)\"
 
-TZCSRCS=	zic.c gmtime.c scheck.c ialloc.c mkdir.c
-TZCOBJS=	zic.o gmtime.o scheck.o ialloc.o mkdir.o
+TZCSRCS=	zic.c localtime.c scheck.c ialloc.c mkdir.c
+TZCOBJS=	zic.o localtime.o scheck.o ialloc.o mkdir.o
 TZDSRCS=	zdump.c localtime.c asctime.c ctime.c ialloc.c
 TZDOBJS=	zdump.o localtime.o asctime.o ctime.o ialloc.o
 LIBSRCS=	localtime.c asctime.c ctime.c dysize.c timemk.c

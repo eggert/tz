@@ -15,6 +15,10 @@ static char	elsieid[] = "%W%";
 #define S_IWOTH 00002
 #endif
 
+#ifndef F_OK
+#define F_OK 0
+#endif
+
 struct rule {
 	const char *	r_filename;
 	int		r_linenum;
@@ -609,7 +613,7 @@ const char * const	name;
 
 	myname = ecpyalloc(name);
 	myname = ecatalloc(myname, "/.");
-	accres = access(myname, 0);
+	accres = access(myname, F_OK);
 	ifree(myname);
 	return accres == 0;
 }

@@ -73,8 +73,7 @@ char *	argv[];
 			longest = strlen(argv[i]);
 	for (i = optind; i < argc; ++i) {
 		if (settz(argv[i]) != 0) {
-			(void) fprintf(stderr,
-				"%s: settz(\"%s\") failed\n",
+			(void) fprintf(stderr, "%s: settz(\"%s\") failed\n",
 				argv[0], argv[i]);
 			exit(1);
 		}
@@ -95,8 +94,7 @@ char *	argv[];
 			fp = fopen(buf, "r");
 		}
 		if (fp == NULL) {
-			(void) fprintf(stderr,
-				"%s: Can't open ", argv[0]);
+			(void) fprintf(stderr, "%s: Can't open ", argv[0]);
 			perror(argv[i]);
 			exit(1);
 		}

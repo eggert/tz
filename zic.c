@@ -1344,9 +1344,9 @@ const int			zonecount;
 	*/
 	gmtoff = zpfirst->z_gmtoff;
 	stdoff = 0;
+	startttisstd = FALSE;
 #ifdef lint
 	starttime = 0;
-	startttisstd = FALSE;
 #endif /* defined lint */
 	for (i = 0; i < zonecount; ++i) {
 		usestart = i > 0;

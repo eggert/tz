@@ -10,8 +10,8 @@ static char	sccsid[] = "%W%";
 
 #include "ctype.h"
 
-#ifndef arg4alloc
-#define arg4alloc	unsigned
+#ifndef alloc_t
+#define alloc_t	unsigned
 #endif
 
 #ifndef MAL
@@ -32,7 +32,7 @@ char *	format;
 
 	if (string == NULL || format == NULL)
 		return "";
-	fbuf = malloc((arg4alloc) (2 * strlen(format) + 4));
+	fbuf = malloc((alloc_t) (2 * strlen(format) + 4));
 	if (fbuf == MAL)
 		return "";
 	fp = format;

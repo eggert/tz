@@ -81,7 +81,6 @@ YEARISTYPE=	./yearistype
 # Add the following to the end of the "CFLAGS=" line as needed.
 #  -DHAVE_ADJTIME=0 if `adjtime' does not exist (SVR0?)
 #  -DHAVE_LONG_DOUBLE=1 if your compiler supports the `long double' type
-#  -DHAVE_SETLOCALE=0 if the setlocale function does not work (SVR3)
 #  -DHAVE_SETTIMEOFDAY=0 if settimeofday does not exist (SVR0?)
 #  -DHAVE_SETTIMEOFDAY=1 if settimeofday has just 1 arg (SVR4)
 #  -DHAVE_SETTIMEOFDAY=2 if settimeofday uses 2nd arg (4.3BSD)

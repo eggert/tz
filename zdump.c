@@ -18,11 +18,11 @@ static char	elsieid[] = "%W%";
 #include "float.h"	/* for FLT_MIN, FLT_MAX, et al. */
 
 #ifndef ZDUMP_LO_YEAR
-#define ZDUMP_LO_YEAR	(-1000)
+#define ZDUMP_LO_YEAR	(-500)
 #endif /* !defined ZDUMP_LO_YEAR */
 
 #ifndef ZDUMP_HI_YEAR
-#define ZDUMP_HI_YEAR	5000
+#define ZDUMP_HI_YEAR	2500
 #endif /* !defined ZDUMP_HI_YEAR */
 
 #ifndef MAX_STRING_LENGTH
@@ -265,7 +265,8 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 		show(argv[i], t, TRUE);
 		t += SECSPERHOUR * HOURSPERDAY;
 		show(argv[i], t, TRUE);
-		t = cutlotime;
+		if (t < cutlotime)
+			t = cutlotime;
 		tm = *localtime(&t);
 		(void) strncpy(buf, abbr(&tm), (sizeof buf) - 1);
 		for ( ; ; ) {

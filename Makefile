@@ -78,6 +78,10 @@ REDO=		posix_right
 #	-DUSG
 # to the end of the "CFLAGS=" line.
 #
+# If you're on an AT&T-based system and use csh, add
+#	-DSHELL=/bin/sh
+# to the end of the "CFLAGS=" line.
+#
 # If you're running on a system where "strchr" is known as "index"
 # (for example, a 4.[012]BSD system), add
 #	-Dstrchr=index

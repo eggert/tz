@@ -321,12 +321,13 @@ static
 usage()
 {
 	(void) fprintf(stderr,
-		"%s: usage is %s [ -d directory ] filename ... \n",
-			progname, progname);
+	"%s: usage is %s [ -l localtime ] [ -d directory ] [ filename ... ]\n",
+		progname, progname);
 	exit(1);
 }
 
-static char *	directory = TZDIR;
+static char *	localtime = NULL;
+static char *	directory = NULL;
 
 main(argc, argv)
 int	argc;
@@ -336,14 +337,24 @@ char *	argv[];
 	register int	c;
 
 	progname = argv[0];
-	while ((c = getopt(argc, argv, "d:")) != EOF)
-		if (c != 'd')
-			usage();
-		else	directory = optarg;
+	while ((c = getopt(argc, argv, "d:l:")) != EOF)
+		switch (c) {
+			default:
+				usage();
+			case 'd':
+				if (directory == NULL)
+					directory = optarg;
+				else	wildexit("multiple command line -d's");
+				break;
+			case 'l':
+				if (localtime == NULL)
+					localtime = optarg;
+				else	wildexit("multiple command line l's");
+		}
+	if (directory == NULL)
+		directory = TZDIR;
 	if (optind == argc - 1 && strcmp(argv[optind], "=") == 0)
 		usage();	/* usage message by request */
-	if (optind == argc)
-		tameexit();	/* for "tzcomp `command-that-names-no-files`" */
 	zones = (struct zone *) emalloc(0);
 	rules = (struct rule *) emalloc(0);
 	links = (struct link *) emalloc(0);
@@ -363,6 +374,11 @@ char *	argv[];
 		(void) unlink(links[i].l_to);
 		if (link(links[i].l_from, links[i].l_to) != 0)
 			wild2exit("result creating", links[i].l_to);
+	}
+	if (localtime) {
+		(void) unlink(TZDEFAULT);
+		if (link(localtime, TZDEFAULT) != 0)
+			wild2exit("result creating", TZDEFAULT);
 	}
 	tameexit();
 }
@@ -472,11 +488,6 @@ char *	name;
 			wildexit("input data");
 		}
 		*cp = '\0';
-		/*
-		** Zap trailing comments.
-		*/
-		if ((cp = strchr(buf, '#')) != NULL)
-			*cp = '\0';
 		if ((fields = getfields(buf)) == NULL)
 			wildrexit("getfields");
 		nfields = 0;
@@ -958,6 +969,7 @@ static char **
 getfields(cp)
 register char *	cp;
 {
+	register char *		dp;
 	register char **	array;
 	register int		nsubs;
 
@@ -968,14 +980,21 @@ register char *	cp;
 	for ( ; ; ) {
 		while (isascii(*cp) && isspace(*cp))
 			++cp;
-		if (*cp == '\0')
+		if (*cp == '\0' || *cp == '#')
 			break;
-		array[nsubs++] = cp;
-		while (*cp != '\0' && (!isascii(*cp) || !isspace(*cp)))
+		array[nsubs++] = dp = cp;
+		do {
+			if ((*dp = *cp++) != '"')
+				++dp;
+			else while ((*dp = *cp++) != '"')
+				if (*dp != '\0')
+					++dp;
+				else	error("Odd number of quotation marks");
+		} while (*cp != '\0' && *cp != '#' &&
+			(!isascii(*cp) || !isspace(*cp)));
+		if (isascii(*cp) && isspace(*cp))
 			++cp;
-		if (*cp == '\0')
-			break;
-		*cp++ = '\0';
+		*dp++ = '\0';
 	}
 	array[nsubs] = NULL;
 	return array;

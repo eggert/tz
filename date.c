@@ -179,6 +179,7 @@ static int		retval = EXIT_SUCCESS;
 
 static void		ambiguous();
 static void		display();
+static void		errensure();
 static void		finalcheck();
 static time_t		parse();
 #ifdef TSP_SETDATE
@@ -229,7 +230,8 @@ char *	argv[];
 #ifdef D_OR_T_OPTION
 	if (gettimeofday((struct timeval *) NULL, &tz) != 0) {
 		perror("date: error: gettimeofday");
-		(void) exit(EXIT_FAILURE);
+		errensure();
+		(void) exit(retval);
 	}
 #endif /* defined D_OR_T_OPTION */
 	(void) time(&now);
@@ -385,8 +387,7 @@ char *	argv[];
 	if (aflag && value != NULL) {
 		(void) fprintf(stderr,
 			"date: error: attempt to both set and adjust time\n");
-		if (retval == EXIT_SUCCESS)
-			retval = EXIT_FAILURE;
+		errensure();
 		display((char *) NULL);
 	}
 	if (aflag)
@@ -439,6 +440,13 @@ char *	argv[];
 		;
 }
 
+static void
+errensure()
+{
+	if (retval == EXIT_SUCCESS)
+		retval = EXIT_FAILURE;
+}
+
 static char *
 nondigit(cp)
 register char *	cp;
@@ -452,7 +460,7 @@ static void
 usage()
 {
 	(void) fprintf(stderr, "date: usage is date %s\n", usemes);
-	retval = EXIT_FAILURE;
+	errensure();
 	display((char *) NULL);
 }
 
@@ -461,7 +469,7 @@ oops(string)
 char *	string;
 {
 	(void) perror(string);
-	retval = EXIT_FAILURE;
+	errensure();
 	display((char *) NULL);
 }
 
@@ -500,7 +508,8 @@ int	was_set;
 	(void) fprintf(stderr, " (%s time)",
 		tm.tm_isdst ? "summer" : "standard");
 	(void) fprintf(stderr, ".\n");
-	(void) exit(EXIT_FAILURE);
+	errensure();
+	(void) exit(retval);
 }
 
 static void
@@ -517,8 +526,7 @@ char *	format;
 	(void) fflush(stderr);
 	if (ferror(stdout) || ferror(stderr)) {
 		(void) fprintf(stderr, "date: error: couldn't write results\n");
-		if (retval == EXIT_SUCCESS)
-			retval = EXIT_FAILURE;
+		errensure();
 	}
 	(void) exit(retval);
 	for ( ; ; )
@@ -566,7 +574,7 @@ struct tm *	tmp;
 			(void) fflush(fp);
 			(void) fprintf(stderr,
 				"date: error: bad format character - %c\n", c);
-			retval = EXIT_FAILURE;
+			errensure();
 			display((char *) NULL);
 		case 'a':
 			(void) fprintf(fp, "%.3s", wday_names[tmp->tm_wday]);

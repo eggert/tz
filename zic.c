@@ -297,7 +297,7 @@ static
 usage()
 {
 	(void) fprintf(stderr,
-	"%s: usage is %s [ -l localtime ] [ -d directory ] [ filename ... ]\n",
+"%s: usage is %s [ -l localtime ] [ -d directory ] [ filename ... ]\n",
 		progname, progname);
 	exit(1);
 }
@@ -532,7 +532,7 @@ char *	name;
 		exit(1);
 	}
 	if (fclose(fp)) {
-		(void) fprintf("%s: Error closing ", progname);
+		(void) fprintf(stderr, "%s: Error closing ", progname);
 		perror(filename);
 		exit(1);
 	}
@@ -800,9 +800,10 @@ char *	name;
 	register int	i;
 	char		fullname[BUFSIZ];
 
-	if (strlen(directory) + 1 + strlen(name) >= sizeof filename) {
-		(void) fprintf("%s: File name %s/%s too long\n", progname,
-		    directory, name);
+	if (strlen(directory) + 1 + strlen(name) >= sizeof fullname) {
+		(void) fprintf(stderr,
+			"%s: File name %s/%s too long\n", progname,
+			directory, name);
 		exit(1);
 	}
 	(void) sprintf(fullname, "%s/%s", directory, name);
@@ -851,7 +852,7 @@ char *	name;
 		goto wreck;
 	return;
 wreck:
-	(void) fprintf("%s: Write error on ", progname);
+	(void) fprintf(stderr, "%s: Write error on ", progname);
 	perror(fullname);
 	exit(1);
 }

@@ -383,6 +383,7 @@ names:
 		@echo $(ENCHILADA)
 
 # The zics below ensure that each data file can stand on its own.
+# We also do an all-files run to catch links to links.
 
 public:
 		make maintainer-clean
@@ -390,6 +391,7 @@ public:
 		-mkdir /tmp/,tzpublic
 		-for i in $(TDATA) ; do zic -v -d /tmp/,tzpublic $$i 2>&1 | grep -v "starting year" ; done
 		for i in $(TDATA) ; do zic -d /tmp/,tzpublic $$i || exit; done
+		zic -v -d /tmp/,tzpublic $(TDATA) || exit
 		rm -f -r /tmp/,tzpublic
 		for i in *.[1-8] ; do sh workman.sh $$i > $$i.txt || exit; done
 		$(AWK) -f checktab.awk $(PRIMARY_YDATA)

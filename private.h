@@ -67,6 +67,7 @@ typedef void *		genericptr_t;
 typedef char *		genericptr_t;
 #endif /* !defined __STDC__ */
 
+#include "sys/types.h"
 #include "stdio.h"
 #include "ctype.h"
 #include "errno.h"

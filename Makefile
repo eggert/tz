@@ -51,10 +51,6 @@ BINDIR=		$(TOPDIR)/bin
 MANDIR=		$(TOPDIR)/man
 
 # Library functions are put in an archive in LIBDIR.
-# You can set TZLIB to "/lib/libc.a" to completely replace your "old" time
-# conversion software; before doing so, be sure to both test things and
-# ensure that everything provided by the software your vendor's original
-# software is provided by the new functions.
 
 LIBDIR=		$(TOPDIR)/lib
 TZLIB=		$(LIBDIR)/libz.a
@@ -119,9 +115,12 @@ REDO=		posix_right
 # If you want functions that were inspired by early versions of X3J11's work,
 # add
 #	-DSTD_INSPIRED
-# to the end of the "CFLAGS=" line.  This arranges for the functions "offtime",
-# "timelocal", "timegm", and "timeoff" to be added to the
-# time conversion library.
+# to the end of the "CFLAGS=" line.  This arranges for the functions
+# "tzsetwall", "offtime", "timelocal", "timegm", and "timeoff"
+# to be added to the time conversion library.
+# "tzsetwall" is like "tzset" except that it arranges for local wall clock
+# time (rather than the time specified in the TZ environment variable)
+# to be used.
 # "offtime" is like "gmtime" except that it accepts a second (long) argument
 # that gives an offset to add to the time_t when converting it.
 # "timelocal" is equivalent to "mktime".
@@ -130,7 +129,7 @@ REDO=		posix_right
 # "timeoff" is like "timegm" except that it accepts a second (long) argument
 # that gives an offset to use when converting to a time_t.
 # None of these functions are described in X3J11's current work.
-# Sun has provided "timelocal" and "timegm" in SunOS 4.0.
+# Sun has provided "tzsetwall", "timelocal", and "timegm" in SunOS 4.0.
 # These functions may well disappear in future releases of the time
 # conversion package.
 #
@@ -166,26 +165,20 @@ CFLAGS=
 
 CC=		cc -DTZDIR=\"$(TZDIR)\"
 
-TZCSRCS=	zic.c localtime.c asctime.c \
-		scheck.c ialloc.c emkdir.c getopt.c link.c
-TZCOBJS=	zic.o localtime.o asctime.o \
-		scheck.o ialloc.o emkdir.o getopt.o link.o
-TZDSRCS=	zdump.c localtime.c asctime.c \
-		ialloc.c getopt.c link.c
-TZDOBJS=	zdump.o localtime.o asctime.o \
-		ialloc.o getopt.o link.o
+TZCSRCS=	zic.c localtime.c asctime.c scheck.c ialloc.c emkdir.c getopt.c
+TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o emkdir.o getopt.o
+TZDSRCS=	zdump.c localtime.c asctime.c ialloc.c getopt.c
+TZDOBJS=	zdump.o localtime.o asctime.o ialloc.o getopt.o
 DATESRCS=	date.c localtime.c getopt.c logwtmp.c strftime.c
 DATEOBJS=	date.o localtime.o getopt.o logwtmp.o strftime.o
 LIBSRCS=	localtime.c asctime.c difftime.c
 LIBOBJS=	localtime.o asctime.o difftime.o
 HEADERS=	tzfile.h private.h
-NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c emkdir.c getopt.c link.c
+NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c emkdir.c getopt.c
 NEWUCBSRCS=	date.c logwtmp.c strftime.c
 SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS)
-DOCS=		Patchlevel.h \
-		README Theory \
-		date.1 newctime.3 tzfile.5 zic.8 zdump.8 \
-		Makefile
+MANS=		newctime.3 tzfile.5 zic.8 zdump.8
+DOCS=		Patchlevel.h README Theory $(MANS) date.1 Makefile
 YDATA=		africa antarctica asia australasia \
 		europe northamerica southamerica pacificnew etcetera factory
 NDATA=		systemv
@@ -199,20 +192,25 @@ all:		zic zdump $(LIBOBJS)
 
 ALL:		all date
 
-install:	all $(DATA) $(REDO) $(TZLIB)
+install:	all $(DATA) $(REDO) $(TZLIB) $(MANS)
 		./zic -d $(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
 		-mkdir $(TOPDIR) $(ETCDIR)
 		cp zic zdump $(ETCDIR)/.
 		-mkdir $(TOPDIR) $(MANDIR) \
 			$(MANDIR)/man3 $(MANDIR)/man5 $(MANDIR)/man8
+		-rm -f $(MANDIR)/man3/newctime.3 \
+			$(MANDIR)/man5/tzfile.5 \
+			$(MANDIR)/man8/zdump.8 \
+			$(MANDIR)/man8/zic.8
 		cp newctime.3 $(MANDIR)/man3/.
 		cp tzfile.5 $(MANDIR)/man5/.
 		cp zdump.8 zic.8 $(MANDIR)/man8/.
 
-INSTALL:	install date
+INSTALL:	ALL install date.1
 		-mkdir $(TOPDIR) $(BINDIR)
 		cp date $(BINDIR)/.
 		-mkdir $(TOPDIR) $(MANDIR) $(MANDIR)/man1
+		-rm -f $(MANDIR)/man1/date.1
 		cp date.1 $(MANDIR)/man1/.
 
 zdump:		$(TZDOBJS)
@@ -261,12 +259,13 @@ zonenames:	$(TDATA)
 		@awk '/^Zone/ { print $$2 } /^Link/ { print $$3 }' $(TDATA)
 
 asctime.o:	private.h tzfile.h
+date.o:		private.h
 difftime.o:	private.h
 emkdir.o:	private.h
 ialloc.o:	private.h
-link.o:		private.h
 localtime.o:	private.h tzfile.h
 scheck.o:	private.h
+strftime.o:	tzfile.h
 zic.o:		private.h tzfile.h
 
 .KEEP_STATE:

@@ -45,11 +45,13 @@ struct tzhead {
 */
 
 #ifndef TZ_MAX_TIMES
-#ifndef NOSOLAR
-#define TZ_MAX_TIMES	370	/* A bit more than a year's worth */
-#else /* !NOSOLAR */
-#define TZ_MAX_TIMES	300	/* Maximum number of transition times */
-#endif /* !NOSOLAR */
+/*
+** The TZ_MAX_TIMES value below is enough to handle a bit more than a
+** year's worth of solar time (corrected daily to the nearest second) or
+** 138 years of Pacific Presidential Election time
+** (where there are three time zone transitions every fourth year).
+*/
+#define TZ_MAX_TIMES	370
 #endif /* !TZ_MAX_TIMES */
 
 #ifndef TZ_MAX_TYPES

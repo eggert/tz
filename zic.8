@@ -100,34 +100,28 @@ then the rule applies in all years between
 .B FROM
 and
 .B TO
-inclusive.
+inclusive;
+if
+.B TYPE
+is
+.BR uspres ,
+the rule applies in U.S. Presidential election years;
+if
+.B TYPE
+is
+.BR nonpres ,
+the rule applies in years other than U.S. Presidential election years.
 If
 .B TYPE
 is something else, then
 .I zic
 executes the command
 .ti +.5i
-\fByears\fP \fIfrom\fP \fIto\fP \fItype\fP
+\fByearistype\fP \fIyear\fP \fItype\fP
 .br
-with arguments
-.IR from ,
-.IR to ,
-and
-.I type
-taken from the rule line; the rule applies only in those years
-printed by the
-.I years
-command.
-.PP
-The distributed
-.I years
-command is a shell script that handles year types
-.B uspres
-(United States presidential election years)
-and
-.B nonpres
-(all other years);
-other year types may be added by changing the script.
+to check the type of a year:
+an exit status of zero is taken to mean that the year is of the given type;
+an exit status of one is taken to mean that the year is not of the given type.
 .TP
 .B IN
 Names the month in which the rule takes effect.  Month names may be

@@ -2,7 +2,15 @@
 
 /*LINTLIBRARY*/
 
+/*
+** sys/params.h is included to get MAXPATHLEN;
+** sys/types.h is included to get time_t;
+** there are some systems where one doesn't "#include" the other,
+** so both must be included here.
+*/
+
 #include "sys/param.h"
+#include "sys/types.h"
 #include "tzfile.h"
 #include "time.h"
 
@@ -22,12 +30,16 @@ static char	sccsid[] = "%W%";
 #endif /* !MAXPATHLEN */
 
 extern char *		getenv();
-extern struct tm *	gmtime();
 extern char *		strcpy();
 extern char *		strcat();
+#ifdef STD_INSPIRED
+struct tm *		offtime();
+#else /* !STD_INSPIRED */
+static struct tm *	offtime();
+#endif /* !STD_INSPIRED */
 
 struct ttinfo {				/* time type information */
-	time_t		tt_gmtoff;	/* GMT offset in seconds */
+	long		tt_gmtoff;	/* GMT offset in seconds */
 	int		tt_isdst;	/* used to set tm_isdst */
 	int		tt_abbrind;	/* abbreviation list index */
 };
@@ -179,19 +191,19 @@ register char *	name;
 			tzname[1] = &s.chars[ttisp->tt_abbrind];
 #ifdef USG_COMPAT
 			daylight = 1;
-#endif /* USG_COMPAT */
+#endif /* USG_COMPAT */ 
 		} else {
 			tzname[0] = &s.chars[ttisp->tt_abbrind];
 #ifdef USG_COMPAT
 			timezone = ttisp->tt_gmtoff;
-#endif /* USG_COMPAT */
+#endif /* USG_COMPAT */ 
 		}
 	}
 	return 0;
 }
 
 static
-tzgmt()
+tzsetgmt()
 {
 	s.timecnt = 0;
 	s.ttis[0].tt_gmtoff = 0;
@@ -212,9 +224,9 @@ tzset()
 	tz_is_set = TRUE;
 	name = getenv("TZ");
 	if (name != 0 && *name == '\0')
-		tzgmt();		/* GMT by request */
+		tzsetgmt();		/* GMT by request */
 	else if (tzload(name) != 0)
-		tzgmt();
+		tzsetgmt();
 }
 
 void
@@ -222,7 +234,7 @@ tzsetwall()
 {
 	tz_is_set = TRUE;
 	if (tzload((char *) 0) != 0)
-		tzgmt();
+		tzsetgmt();
 }
 
 struct tm *
@@ -251,12 +263,119 @@ time_t *	timep;
 		i = s.types[i - 1];
 	}
 	ttisp = &s.ttis[i];
-	t += ttisp->tt_gmtoff;
-	tmp = gmtime(&t);
+#ifdef USG_COMPAT
+	/*
+	** Compatible, but yields wrong results if
+	** t + ttisp->tt_gmtoff overflows.
+	*/
+	tmp = offtime((time_t) (t + ttisp->tt_gmtoff), 0L);
+#else /* !USG_COMPAT */
+	tmp = offtime(t, ttisp->tt_gmtoff);
+#endif /* !USG_COMPAT */
 	tmp->tm_isdst = ttisp->tt_isdst;
-#ifdef TZA_COMPAT
-	tz_abbr =
-#endif /* TZA_COMPAT */
 	tzname[tmp->tm_isdst] = &s.chars[ttisp->tt_abbrind];
+#ifdef KRE_COMPAT
+	tmp->tm_zone = &s.chars[ttisp->tt_abbrind];
+#ifdef USG_COMPAT
+	tmp->tm_gmtoff = ttisp->tt_gmtoff;
+#endif /* USG_COMPAT */
+#endif /* KRE_COMPAT */
+#ifdef TZA_COMPAT
+	tz_abbr = &s.chars[ttisp->tt_abbrind];
+#endif /* TZA_COMPAT */
+	return tmp;
+}
+
+struct tm *
+gmtime(clock)
+time_t *	clock;
+{
+	register struct tm *	tmp;
+
+	tmp = offtime(clock, 0L);
+	tzname[0] = "GMT";
+#ifdef KRE_COMPAT
+	tmp->tm_zone = "GMT";		/* UCT ? */
+#endif /* KRE_COMPAT */
+	return tmp;
+}
+
+static int	mon_lengths[2][MONS_PER_YEAR] = {
+	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
+	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+};
+
+static int	year_lengths[2] = {
+	DAYS_PER_NYEAR, DAYS_PER_LYEAR
+};
+
+/*
+** Accurate only for the past couple of centuries;
+** that will probably do.
+*/
+
+#define isleap(y) (((y) % 4) == 0 && ((y) % 100) != 0 || ((y) % 400) == 0)
+
+#ifdef STD_INSPIRED
+struct tm *
+#else /* !STD_INSPIRED */
+static struct tm *
+#endif /* !STD_INSPIRED */
+offtime(clock, offset)
+time_t *	clock;
+long		offset;
+{
+	register struct tm *	tmp;
+	register long		days;
+	register long		rem;
+	register int		y;
+	register int		yleap;
+	register int *		ip;
+	static struct tm	tm;
+
+	tmp = &tm;
+	days = *clock / SECS_PER_DAY;
+	rem = *clock % SECS_PER_DAY;
+	rem += offset;
+	while (rem < 0) {
+		rem += SECS_PER_DAY;
+		--days;
+	}
+	while (rem >= SECS_PER_DAY) {
+		rem -= SECS_PER_DAY;
+		++days;
+	}
+	tmp->tm_hour = (int) (rem / SECS_PER_HOUR);
+	rem = rem % SECS_PER_HOUR;
+	tmp->tm_min = (int) (rem / SECS_PER_MIN);
+	tmp->tm_sec = (int) (rem % SECS_PER_MIN);
+	tmp->tm_wday = (int) ((EPOCH_WDAY + days) % DAYS_PER_WEEK);
+	if (tmp->tm_wday < 0)
+		tmp->tm_wday += DAYS_PER_WEEK;
+	y = EPOCH_YEAR;
+	if (days >= 0)
+		for ( ; ; ) {
+			yleap = isleap(y);
+			if (days < (long) year_lengths[yleap])
+				break;
+			++y;
+			days = days - (long) year_lengths[yleap];
+		}
+	else do {
+		--y;
+		yleap = isleap(y);
+		days = days + (long) year_lengths[yleap];
+	} while (days < 0);
+	tmp->tm_year = y - TM_YEAR_BASE;
+	tmp->tm_yday = (int) days;
+	ip = mon_lengths[yleap];
+	for (tmp->tm_mon = 0; days >= (long) ip[tmp->tm_mon]; ++(tmp->tm_mon))
+		days = days - (long) ip[tmp->tm_mon];
+	tmp->tm_mday = (int) (days + 1);
+	tmp->tm_isdst = 0;
+#ifdef KRE_COMPAT
+	tmp->tm_zone = "";
+	tmp->tm_gmtoff = offset;
+#endif /* KRE_COMPAT */
 	return tmp;
 }

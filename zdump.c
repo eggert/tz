@@ -44,6 +44,7 @@ char *	argv[];
 	register int	i, j, c;
 	register int	vflag;
 	long		now;
+	long		t;
 	int		timecnt;
 	char		buf[BUFSIZ];
 
@@ -97,11 +98,12 @@ char *	argv[];
 			timecnt = tzdecode(code);
 			(void) fseek(fp, (long) (2 * sizeof code), 1);
 		}
-		show(argv[i], 0x80000000, TRUE);
-		show(argv[i], 0x80000000 + 24 * 60 * 60, TRUE);
+		t = 0x80000000;
+		show(argv[i], t, TRUE);
+		t = 0x80000000 + 24 * 60 * 60;
+		show(argv[i], t, TRUE);
 		for (j = 0; j < timecnt; ++j) {
 			char	code[4];
-			long	t;
 
 			if (fread((char *) code, sizeof code, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
@@ -114,8 +116,10 @@ char *	argv[];
 			perror(argv[i]);
 			exit(1);
 		}
-		show(argv[i], 0x7fffffff - 24 * 60 * 60, TRUE);
-		show(argv[i], 0x7fffffff, TRUE);
+		t = 0x7fffffff - 24 * 60 * 60;
+		show(argv[i], t, TRUE);
+		t = 0x7fffffff;
+		show(argv[i], t, TRUE);
 	}
 	if (fflush(stdout) || ferror(stdout)) {
 		(void) fprintf(stderr, "%s: Error writing standard output ",

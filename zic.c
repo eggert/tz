@@ -969,9 +969,9 @@ char *	name;
 		}
 	}
 	(void) fwrite((char *) h.tzh_reserved, sizeof h.tzh_reserved, 1, fp);
-	putshort(h.tzh_timecnt, fp);
-	putshort(h.tzh_typecnt, fp);
-	putshort(h.tzh_charcnt, fp);
+	putshort((short) h.tzh_timecnt, fp);
+	putshort((short) h.tzh_typecnt, fp);
+	putshort((short) h.tzh_charcnt, fp);
 	if ((i = h.tzh_timecnt) != 0) {
 		register long *atsp;
 		register int j;

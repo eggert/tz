@@ -1,42 +1,41 @@
 # %W%
 
-FAKENAME=	EST5EDT
-FAKEOFF=	(-5*60*60)
-FAKEST=		"EST"
-FAKEDT=		"EDT"
-
 LINTFLAGS=	-phbaaxc
 
-CFLAGS=		-g -DFAKENAME=$(FAKENAME) -DFAKEOFF='$(FAKEOFF)' \
-			-DFAKEST='$(FAKEST)' -DFAKEDT='$(FAKEDT)'
+CFLAGS=		-g -DOBJECTID 
 
-ALL=		try $(FAKENAME) fake
+TZCSRCS=	tzcomp.c scheck.c strchr.c
+TZCOBJS=	tzcomp.o scheck.o strchr.o
 
-all:		$(ALL)
+WHOLE_ENCHILADA=	Makefile timezone.h settz.c try.c $(TZCSRCS) tzinfo
 
-try:		try.o ctime.o
-			$(CC) $(CFLAGS) try.o ctime.o $(LIBS) -o $@
+ALL=		try tzcomp
 
-$(FAKENAME):	fake
-		fake > $@
+all:	$(ALL)
 
-fake:		fake.o
-			$(CC) $(CFLAGS) fake.o $(LIBS) -o $@
+data:
+	tzcomp tzinfo
 
-bundle:		Makefile timezone.h ctime.c try.c fake.c
-			bundle Makefile timezone.h ctime.c try.c fake.c > bundle
+try:	try.o settz.o
+		$(CC) $(CFLAGS) try.o settz.o $(LIBS) -o $@
 
-Makefile timezone.h ctime.c try.c fake.c:
-			sccs get $(REL) $(REV) $@
+tzcomp:	$(TZCOBJS)
+		$(CC) $(CFLAGS) $(TZCOBJS) $(LIBS) -o $@
 
-sure:		try.c ctime.c fake.c
-			lint $(LINTFLAGS) try.c ctime.c
-			lint $(LINTFLAGS) fake.c
+bundle:	$(WHOLE_ENCHILADA)
+	bundle $(WHOLE_ENCHILADA) > bundle
+
+$(WHOLE_ENCHILADA):
+		sccs get $(REL) $(REV) $@
+
+sure:	try.c settz.c fake.c
+		lint $(LINTFLAGS) try.c settz.c
+		lint $(LINTFLAGS) $(TZCSRCS)
 
 clean:
-			rm -f core *.o *.out $(ALL) bundle \#*
+		rm -f core *.o *.out $(ALL) bundle \#*
 
-CLEAN:		clean
-			sccs clean
+CLEAN:	clean
+		sccs clean
 
-try.o fake.o ctime.o:	timezone.h
+try.o tzcomp.o settz.o:	timezone.h

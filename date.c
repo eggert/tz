@@ -480,7 +480,7 @@ usage()
 {
 	(void) fprintf(stderr, "date: usage is date %s\n", usemes);
 	errensure();
-	display((char *) NULL);
+	(void) exit(retval);
 }
 
 static void

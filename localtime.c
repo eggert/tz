@@ -857,6 +857,10 @@ struct state * const	sp;
 }
 
 #ifndef STD_INSPIRED
+/*
+** A non-static declaration of tzsetwall in a system header file
+** may cause a warning about this upcoming static declaration...
+*/
 static
 #endif /* !defined STD_INSPIRED */
 void

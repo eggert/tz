@@ -146,99 +146,138 @@
 # If you can predict what Parliament will do, you should be in
 # politics making a fortune, not computing.
 
+# ...
+# Date: Fri, 3 Sep 93 13:43:41 BST
+# From: Peter Ilieve <peter@memex.co.uk>
+# ...
+# I have some more up to date info.
+# 
+# Our Government...couldn't...make a decision after the 1989 consultation
+# exercise about the UK changing its timezone so it just let things drift
+# (different from deciding to keep the status quo).  According to the
+# Summer Time Order 1992 (SI 1992/1729) the dates of Summer Time for 1993
+# and 1994 are:
+# 		Start		End
+# 1993	28 March	24 October
+# 1994	27 March	23 October
+# All start and end times are at 01:00 GMT.
+# 
+# There [was] an error in your tables for the start and end times prior to 1981.
+# The UK always used to change at 02:00 GMT. In 1981 it changed to 01:00 GMT
+# as a part of EC harmonisation and has remained at that time since.
+# 
+# I have found the default algorithm for UK Summer Time, it is in the
+# Summer Time Act 1972. Section 1 states that in the absence of an Order
+# in Council Summer Time starts at 02:00 GMT on the morning of the day
+# after the third Saturday in March, unless that day is Easter Day, in
+# which case it is the morning of the day after the second Saturday.
+# It ends at 02:00 GMT on the morning of the day after the fourth Saturday
+# in October. (All the redundant `morning of the day ...' is in the Act.)
+# This is only of passing interest now as it will always be overridden by
+# an Order in Council (a Statutary Instrument, the SI thing mentioned above)
+# to specify the EC specified dates.
+# 
+# Your comment in the tables about UK starting double summer time on a Monday
+# in 1945 prompted me to ask the Home Office about this. They didn't really
+# know (there was a war on at the time and summer time was specified by
+# Defence Regulations, different department, long time ago, etc.), but it was
+# listed as 2 April in a previous consultation paper from 1970 so if it is
+# a typo it was in that paper or before and was just copied into the 1989
+# paper. I have a few other avenues to explore on this and will let you know
+# the outcome.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 # 1916 to 1925--irregular
-Rule	GB-Eire	1916	only	-	Mar	21	1:00s	1:00	BST
-Rule	GB-Eire	1916	only	-	Oct	1	1:00s	0	GMT
-Rule	GB-Eire	1917	only	-	Apr	8	1:00s	1:00	BST
-Rule	GB-Eire	1917	only	-	Sep	17	1:00s	0	GMT
-Rule	GB-Eire	1918	only	-	Mar	24	1:00s	1:00	BST
-Rule	GB-Eire	1918	only	-	Sep	30	1:00s	0	GMT
-Rule	GB-Eire	1919	only	-	Mar	30	1:00s	1:00	BST
-Rule	GB-Eire	1919	only	-	Sep	29	1:00s	0	GMT
-Rule	GB-Eire	1920	only	-	Mar	28	1:00s	1:00	BST
-Rule	GB-Eire	1920	only	-	Oct	25	1:00s	0	GMT
-Rule	GB-Eire	1921	only	-	Apr	3	1:00s	1:00	BST
-Rule	GB-Eire	1921	only	-	Oct	3	1:00s	0	GMT
-Rule	GB-Eire	1922	only	-	Mar	26	1:00s	1:00	BST
-Rule	GB-Eire	1922	only	-	Oct	8	1:00s	0	GMT
-Rule	GB-Eire	1923	only	-	Apr	22	1:00s	1:00	BST
-Rule	GB-Eire	1923	only	-	Oct	16	1:00s	0	GMT
-Rule	GB-Eire	1924	only	-	Apr	30	1:00s	1:00	BST
-Rule	GB-Eire	1924	only	-	Sep	21	1:00s	0	GMT
+Rule	GB-Eire	1916	only	-	Mar	21	2:00s	1:00	BST
+Rule	GB-Eire	1916	only	-	Oct	1	2:00s	0	GMT
+Rule	GB-Eire	1917	only	-	Apr	8	2:00s	1:00	BST
+Rule	GB-Eire	1917	only	-	Sep	17	2:00s	0	GMT
+Rule	GB-Eire	1918	only	-	Mar	24	2:00s	1:00	BST
+Rule	GB-Eire	1918	only	-	Sep	30	2:00s	0	GMT
+Rule	GB-Eire	1919	only	-	Mar	30	2:00s	1:00	BST
+Rule	GB-Eire	1919	only	-	Sep	29	2:00s	0	GMT
+Rule	GB-Eire	1920	only	-	Mar	28	2:00s	2:00	BST
+Rule	GB-Eire	1920	only	-	Oct	25	2:00s	0	GMT
+Rule	GB-Eire	1921	only	-	Apr	3	2:00s	1:00	BST
+Rule	GB-Eire	1921	only	-	Oct	3	2:00s	0	GMT
+Rule	GB-Eire	1922	only	-	Mar	26	2:00s	1:00	BST
+Rule	GB-Eire	1922	only	-	Oct	8	2:00s	0	GMT
+Rule	GB-Eire	1923	only	-	Apr	22	2:00s	1:00	BST
+Rule	GB-Eire	1923	only	-	Oct	16	2:00s	0	GMT
+Rule	GB-Eire	1924	only	-	Apr	30	2:00s	1:00	BST
+Rule	GB-Eire	1924	only	-	Sep	21	2:00s	0	GMT
 # 1925 to 1939 start--regular
-Rule	GB-Eire	1925	1939	-	Apr	Sun>=15	1:00s	1:00	BST
-Rule	GB-Eire	1925	1938	-	Oct	Sun>=1	1:00s	0	GMT
+Rule	GB-Eire	1925	1939	-	Apr	Sun>=15	2:00s	1:00	BST
+Rule	GB-Eire	1925	1938	-	Oct	Sun>=1	2:00s	0	GMT
 # 1939 end to 1947--irregular, and with double summer time
-Rule	GB-Eire	1939	only	-	Nov	19	1:00s	0	GMT
-Rule	GB-Eire	1940	only	-	Feb	25	1:00s	1:00	BST
-Rule	GB-Eire	1941	only	-	May	4	1:00s	2:00	DST
-Rule	GB-Eire	1941	only	-	Aug	10	1:00s	1:00	BST
-Rule	GB-Eire	1942	only	-	Apr	5	1:00s	2:00	DST
-Rule	GB-Eire	1942	only	-	Aug	9	1:00s	1:00	BST
-Rule	GB-Eire	1943	only	-	Apr	4	1:00s	2:00	DST
-Rule	GB-Eire	1943	only	-	Aug	15	1:00s	1:00	BST
-Rule	GB-Eire	1944	only	-	Apr	2	1:00s	2:00	DST
-Rule	GB-Eire	1944	only	-	Sep	17	1:00s	1:00	BST
+Rule	GB-Eire	1939	only	-	Nov	19	2:00s	0	GMT
+Rule	GB-Eire	1940	only	-	Feb	25	2:00s	1:00	BST
+Rule	GB-Eire	1941	only	-	May	4	2:00s	2:00	DST
+Rule	GB-Eire	1941	only	-	Aug	10	2:00s	1:00	BST
+Rule	GB-Eire	1942	only	-	Apr	5	2:00s	2:00	DST
+Rule	GB-Eire	1942	only	-	Aug	9	2:00s	1:00	BST
+Rule	GB-Eire	1943	only	-	Apr	4	2:00s	2:00	DST
+Rule	GB-Eire	1943	only	-	Aug	15	2:00s	1:00	BST
+Rule	GB-Eire	1944	only	-	Apr	2	2:00s	2:00	DST
+Rule	GB-Eire	1944	only	-	Sep	17	2:00s	1:00	BST
 # Double daylight starts on a Monday in 1945?
-Rule	GB-Eire	1945	only	-	Apr	2	1:00s	2:00	DST
-Rule	GB-Eire	1945	only	-	Jul	15	1:00s	1:00	BST
-Rule	GB-Eire	1945	only	-	Oct	7	1:00s	0	GMT
-Rule	GB-Eire	1946	only	-	Apr	14	1:00s	1:00	BST
-Rule	GB-Eire	1946	only	-	Oct	6	1:00s	0	GMT
-Rule	GB-Eire	1947	only	-	Mar	16	1:00s	1:00	BST
-Rule	GB-Eire	1947	only	-	Apr	13	1:00s	2:00	DST
-Rule	GB-Eire	1947	only	-	Aug	10	1:00s	1:00	BST
-Rule	GB-Eire	1947	only	-	Nov	2	1:00s	0	GMT
+Rule	GB-Eire	1945	only	-	Apr	2	2:00s	2:00	DST
+Rule	GB-Eire	1945	only	-	Jul	15	2:00s	1:00	BST
+Rule	GB-Eire	1945	only	-	Oct	7	2:00s	0	GMT
+Rule	GB-Eire	1946	only	-	Apr	14	2:00s	1:00	BST
+Rule	GB-Eire	1946	only	-	Oct	6	2:00s	0	GMT
+Rule	GB-Eire	1947	only	-	Mar	16	2:00s	1:00	BST
+Rule	GB-Eire	1947	only	-	Apr	13	2:00s	2:00	DST
+Rule	GB-Eire	1947	only	-	Aug	10	2:00s	1:00	BST
+Rule	GB-Eire	1947	only	-	Nov	2	2:00s	0	GMT
 # So much for double saving time.  1948 and 1949, irregular.
-Rule	GB-Eire	1948	only	-	Mar	14	1:00s	1:00	BST
-Rule	GB-Eire	1948	only	-	Oct	31	1:00s	0	GMT
-Rule	GB-Eire	1949	only	-	Apr	3	1:00s	1:00	BST
-Rule	GB-Eire	1949	only	-	Oct	30	1:00s	0	GMT
+Rule	GB-Eire	1948	only	-	Mar	14	2:00s	1:00	BST
+Rule	GB-Eire	1948	only	-	Oct	31	2:00s	0	GMT
+Rule	GB-Eire	1949	only	-	Apr	3	2:00s	1:00	BST
+Rule	GB-Eire	1949	only	-	Oct	30	2:00s	0	GMT
 # 1950 through start of 1953, regular.
-Rule	GB-Eire	1950	1953	-	Apr	Sun>=14	1:00s	1:00	BST
-Rule	GB-Eire	1950	1952	-	Oct	Sun>=21	1:00s	0	GMT
+Rule	GB-Eire	1950	1953	-	Apr	Sun>=14	2:00s	1:00	BST
+Rule	GB-Eire	1950	1952	-	Oct	Sun>=21	2:00s	0	GMT
 # 1954 to 1980, starting rules
-Rule	GB-Eire	1954	only	-	Apr	11	1:00s	1:00	BST
-Rule	GB-Eire	1955	1959	-	Apr	Sun>=14	1:00s	1:00	BST
-Rule	GB-Eire	1960	only	-	Apr	10	1:00s	1:00	BST
-Rule	GB-Eire	1961	1963	-	Mar	lastSun	1:00s	1:00	BST
-Rule	GB-Eire	1964	1967	-	Mar	Sun>=19	1:00s	1:00	BST
-Rule	GB-Eire	1968	only	-	Feb	18	1:00s	1:00	BST
-Rule	GB-Eire	1972	1980	-	Mar	Sun>=16	1:00s	1:00	BST
-# 1953 to 1971, ending rules
-Rule	GB-Eire	1953	1960	-	Oct	Sun>=1	1:00s	0	GMT
-Rule	GB-Eire	1961	1967	-	Oct	Sun>=23	1:00s	0	GMT
-Rule	GB-Eire	1971	only	-	Oct	31	1:00s	0	GMT
+Rule	GB-Eire	1954	only	-	Apr	11	2:00s	1:00	BST
+Rule	GB-Eire	1955	1959	-	Apr	Sun>=14	2:00s	1:00	BST
+Rule	GB-Eire	1960	only	-	Apr	10	2:00s	1:00	BST
+Rule	GB-Eire	1961	1963	-	Mar	lastSun	2:00s	1:00	BST
+Rule	GB-Eire	1964	1967	-	Mar	Sun>=19	2:00s	1:00	BST
+Rule	GB-Eire	1968	only	-	Feb	18	2:00s	1:00	BST
+Rule	GB-Eire	1972	1980	-	Mar	Sun>=16	2:00s	1:00	BST
+# 1953 to 1980, ending rules
+Rule	GB-Eire	1953	1960	-	Oct	Sun>=1	2:00s	0	GMT
+Rule	GB-Eire	1961	1967	-	Oct	Sun>=23	2:00s	0	GMT
+Rule	GB-Eire	1971	only	-	Oct	31	2:00s	0	GMT
+Rule	GB-Eire	1972	1980	-	Oct	Sun>=23	2:00s	0	GMT
 # Current rules
 Rule	GB-Eire	1981	max	-	Mar	lastSun	1:00s	1:00	BST
-Rule	GB-Eire	1972	max	-	Oct	Sun>=23	1:00s	0	GMT
+Rule	GB-Eire	1981	max	-	Oct	Sun>=23	1:00s	0	GMT
 
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
-Zone	GB-Eire		0:00	GB-Eire		%s	1968 Oct 27 1:00s
-			1:00	-		BST	1971 Oct 31 1:00s
+Zone	GB-Eire		0:00	GB-Eire		%s	1968 Oct 27 2:00s
+			1:00	-		BST	1971 Oct 31 2:00s
 			0:00	GB-Eire		%s
 
 ###############################################################################
 
 # Continental Europe
 
-# The use of 1986 as starting years below is conservative.
+Rule	W-Eur	1981	max	-	Mar	lastSun	1:00s	1:00	" DST"
+Rule	W-Eur	1981	max	-	Sep	lastSun	1:00s	0	-
 
-Rule	W-Eur	1986	max	-	Mar	lastSun	1:00s	1:00	" DST"
-Rule	W-Eur	1986	max	-	Sep	lastSun	1:00s	0	-
+Rule	M-Eur	1981	max	-	Mar	lastSun	2:00s	1:00	" DST"
+Rule	M-Eur	1981	max	-	Sep	lastSun	2:00s	0	-
 
-Rule	M-Eur	1986	max	-	Mar	lastSun	2:00s	1:00	" DST"
-Rule	M-Eur	1986	max	-	Sep	lastSun	2:00s	0	-
+Rule	E-Eur	1981	max	-	Mar	lastSun	3:00s	1:00	" DST"
+Rule	E-Eur	1981	max	-	Sep	lastSun	3:00s	0	-
 
-Rule	E-Eur	1986	max	-	Mar	lastSun	3:00s	1:00	" DST"
-Rule	E-Eur	1986	max	-	Sep	lastSun	3:00s	0	-
+Rule	Turkey	1981	max	-	Mar	lastSun	1:00	1:00	" DST"
+Rule	Turkey	1981	max	-	Sep	lastSun	1:00	0	-
 
-Rule	Turkey	1986	max	-	Mar	lastSun	1:00	1:00	" DST"
-Rule	Turkey	1986	max	-	Sep	lastSun	1:00	0	-
-
-Rule	W-SU	1986	max	-	Mar	lastSun	2:00s	1:00	" DST"
-Rule	W-SU	1986	max	-	Sep	lastSun	2:00s	0	-
+Rule	W-SU	1981	max	-	Mar	lastSun	2:00s	1:00	" DST"
+Rule	W-SU	1981	max	-	Sep	lastSun	2:00s	0	-
 
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 Zone	WET		0:00	W-Eur		WET%s
@@ -341,3 +380,21 @@ Link	MET	CET
 # Zone	Portugal	0:00	W-Eur		WET%s	1992 Sep 27 1:00s
 # 			1:00	M-Eur		MET%s
 # ... 
+
+# ...
+# Date: Fri, 3 Sep 93 13:43:41 BST
+# From: Peter Ilieve <peter@memex.co.uk>
+# ...
+# Turning to Europe, I now have a copy of the `Sixth Council Directive 92/20/EEC
+# of 26 March 1992 on summertime arrangements'. This only covers 1993 and
+# 1994, a seventh one is in the works but I doubt that the algorithm will
+# change. This says summertime starts at 01:00 GMT on the last Sunday in March
+# and ends at 01:00 GMT on the last Sunday in September, except for the UK
+# and Eire where it ends at 01:00 GMT on the fourth Sunday in October.
+# It says the arrangements for 1995 onwards will be decided by 1 January 1994,
+# but as the sixth directive was supposed to appear by 1 Jan 92 and didn't
+# arrive til March I wouldn't hold your breath.
+# 
+# The first summertime directive was adopted in 1980, although the UK didn't
+# seem to use it until 1981. I suspect it would be safe to move your start
+# dates for the -Eur rules back to 1981.

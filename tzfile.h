@@ -1,6 +1,9 @@
 #ifndef lint
 #ifndef NOID
+#ifndef TZFILE_H
+#define TZFILE_H
 static char	tzfilehid[] = "%W%";
+#endif /* !defined TZFILE_H */
 #endif /* !defined NOID */
 #endif /* !defined lint */
 
@@ -117,16 +120,3 @@ struct tzhead {
 */
 
 #define isleap(y) (((y) % 4) == 0 && ((y) % 100) != 0 || ((y) % 400) == 0)
-
-#ifdef __STDC__
-#define P(s)	s
-#endif /* defined __STDC__ */
-
-#ifdef __TURBOC__
-#define P(s)	s
-#endif /* defined __TURBOC__ */
-
-#ifndef P
-#define P(s)	()
-#define const
-#endif /* !defined P */

@@ -1,7 +1,7 @@
 # %W%
 
 # Apparent noon times below are for Riyadh; they're a bit off for other places.
-# Times were computed using a formula provided by the U.S. Naval Observatory:
+# Times were computed using a formula provided by the U. S. Naval Observatory:
 #	eqt = -105.8 * sin(l) + 596.2 * sin(2 * l) + 4.4 * sin(3 * l)
 #		-12.7 * sin(4 * l) - 429.0 * cos(l) - 2.1 * cos (2 * l)
 #		+ 19.3 * cos(3 * l);

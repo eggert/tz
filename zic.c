@@ -1936,7 +1936,7 @@ char * const	argname;
 		*cp = '\0';
 #ifndef unix
 		/*
-		** MS-DOS drive specifier?
+		** DOS drive specifier?
 		*/
 		if (strlen(name) == 2 && isascii(name[0]) &&
 			isalpha(name[0]) && name[1] == ':') {

@@ -2,7 +2,9 @@
 
 TODO BEFORE comp.sources RELEASE:
 
+*	Final lint/spell/shar-unpacking check
 *	Get everything except usno date copyrighted.
+*	Turn most everything into version "5.1".
 *	Conditionalize date format handling (and manual page) on USG_COMPAT.
 *	Should /etc/zoneinfo/GMT0 change to /etc/zoneinfo/GMT, with the
 	necessary change to the newctime.3 manual page?  If it is changed,
@@ -17,7 +19,6 @@ TODO BEFORE comp.sources RELEASE:
 	option for the Sun world?
 *	Need to update the newctime.3 to describe the treatment of TZ's such
 	as "Guy Mean Time", if it's decided that the treatment is reasonable.
-*	Turn most everything into version "5.1".
 
 ===============================================================================
 

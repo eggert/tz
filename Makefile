@@ -91,7 +91,6 @@ LDLIBS=
 #  -DHAVE_GETTEXT=1 if `gettext' works (GNU, Linux, Solaris); also see LDLIBS
 #  -DHAVE_INCOMPATIBLE_CTIME_R=1 if your system's time.h declares
 #	ctime_r and asctime_r incompatibly with the POSIX standard (Solaris 8).
-#  -DHAVE_LONG_DOUBLE=1 if your compiler supports the `long double' type
 #  -DHAVE_SETTIMEOFDAY=0 if settimeofday does not exist (SVR0?)
 #  -DHAVE_SETTIMEOFDAY=1 if settimeofday has just 1 arg (SVR4)
 #  -DHAVE_SETTIMEOFDAY=2 if settimeofday uses 2nd arg (4.3BSD)
@@ -308,7 +307,7 @@ INSTALL:	ALL install date.1
 		cp date.1 $(MANDIR)/man1/.
 
 zdump:		$(TZDOBJS)
-		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) $(LDLIBS) -o $@
+		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) $(LDLIBS) -lm -o $@
 
 zic:		$(TZCOBJS) yearistype
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) $(LDLIBS) -o $@
@@ -402,13 +401,10 @@ public:		$(ENCHILADA) zic
 
 typecheck:	
 		make clean
-		make zdump CFLAGS=-Wp,-D_TIME_T,-Dtime_t=float
+		make zdump CFLAGS=-Wp,-D_TIME_T,-Dtime_t=double
 		./zdump -v US/Eastern 
 		make clean
 		make zdump CFLAGS=-Wp,-D_TIME_T,-Dtime_t=long\\\ long
-		./zdump -v US/Eastern 
-		make clean
-		make zdump CFLAGS=-Wp,-D_TIME_T,-Dtime_t=unsigned
 		./zdump -v US/Eastern 
 		make clean
 

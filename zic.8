@@ -12,6 +12,9 @@ zic \- time zone compiler
 .B \-l
 .I localtime
 ] [
+.B \-p
+.I posixrules
+] [
 .B \-L
 .I leapsecondfilename
 ] [
@@ -45,10 +48,19 @@ in the standard directory named below.
 .BI "\-l " timezone
 Use the given time zone as local time.
 .I Zic
-will act as if the file contained a link line of the form
+will act as if the input contained a link line of the form
 .sp
 .ti +.5i
 Link	\fItimezone\fP		localtime
+.TP
+.BI "\-p " timezone
+Use the given time zone's rules when handling POSIX-format
+time zone environment variables.
+.I Zic
+will act as if the input contained a link line of the form
+.sp
+.ti +.5i
+Link	\fItimezone\fP		posixrules
 .TP
 .BI "\-L " leapsecondfilename
 Read leap second information from the file with the given name.

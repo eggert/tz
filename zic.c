@@ -821,6 +821,7 @@ register struct zone *	zp;
 		t.tz_timecnt = 0;
 		t.tz_dsinfo[0].ds_gmtoff = zp->z_gmtoff;
 		t.tz_dsinfo[0].ds_isdst = 0;
+		lencheck(zp->z_format);
 		(void) strcpy(t.tz_dsinfo[0].ds_abbr, zp->z_format);
 		writezone(zp->z_name, &t);
 		return;
@@ -834,11 +835,7 @@ register struct zone *	zp;
 	for (i = 0; i < zp->z_nrules; ++i) {
 		rp = &zp->z_rules[i];
 		(void) sprintf(buf, zp->z_format, rp->r_abbrvar);
-		if (strlen(buf) > TZ_ABBR_LEN) {
-			(void) strcat(buf, " is too long as a Time Zone abbr.");
-			error(buf);
-			wildexit("input data");
-		}
+		lencheck(buf);
 		d = dzero;
 		(void) strcpy(d.ds_abbr, buf);
 		d.ds_gmtoff = zp->z_gmtoff + rp->r_stdoff;
@@ -1092,4 +1089,13 @@ register long		wantedy;
 		}
 	}
 	return tadd(t, rp->r_tod);
+}
+
+static
+lencheck(string)
+{
+	if (strlen(string) > TZ_ABBR_LEN) {
+		error("long time zone abbreviation");
+		wild2exit("long time zone abbreviation", string);
+	}
 }

@@ -1,6 +1,5 @@
-#ifndef lint
-static char sccsid[] = "%A%";
-#endif
+#include "objectid.h"
+OBJECTID("%W%")
 
 /*LINTLIBRARY*/
 

@@ -37,6 +37,7 @@ replaced by the local time zone's abbreviation
 (or by the abbreviation for the time zone specified in the
 .B TZ
 environment variable if set).
+The exact output format depends on the locale.
 .PP
 If a command-line argument starts with a plus sign
 .RB (` + '),
@@ -51,20 +52,21 @@ but rather identify part of the date or time
 to be output in a particular way
 (or identify a special character to output):
 .nf
+.sp
 .if t .in +.5i
 .if n .in +2
-.ta \w'%M\0\0'u +\w'Wed Mar  8 14:54:40 1989\0\0'u
+.ta \w'%M\0\0'u +\w'Wed Mar  8 14:54:40 EST 1989\0\0'u
 	Sample output	Explanation
-%a	Wed	Abbreviated weekday name
-%A	Wednesday	Full weekday name
-%b	Mar	Abbreviated month name
-%B	March	Full month name
-%c	03/08/89 14:54:40	Month/day/year Hour:minute:second
-%C	Wed Mar  8 14:54:40 1989	a la \fIasctime\^\fP(3)
+%a	Wed	Abbreviated weekday name*
+%A	Wednesday	Full weekday name*
+%b	Mar	Abbreviated month name*
+%B	March	Full month name*
+%c	Wed Mar 08 14:54:40 1989	Date and time*
+%C	19	Century
 %d	08	Day of month (always two digits)
 %D	03/08/89	Month/day/year (eight characters)
 %e	 8	Day of month (leading zero blanked)
-%h	Mar	Abbreviated month name
+%h	Mar	Abbreviated month name*
 %H	14	24-hour-clock hour (two digits)
 %I	02	12-hour-clock hour (two digits)
 %j	067	Julian day number (three digits)
@@ -82,13 +84,16 @@ to be output in a particular way
 %U	10	Sunday-based week number (two digits)
 %w	3	Day number (one digit, Sunday is 0)
 %W	10	Monday-based week number (two digits)
-%x	03/08/89	Month/day/year (eight characters)
-%X	14:54:40	Hour:minute:second
+%x	03/08/89	Date*
+%X	14:54:40	Time*
 %y	89	Last two digits of year
 %Y	1989	Year in full
 %Z	EST	Time zone abbreviation
+%+	Wed Mar  8 14:54:40 EST 1989	Default output format*
 .if t .in -.5i
 .if n .in -2
+* The exact output depends on the locale.
+.sp
 .fi
 If a character other than one of those shown above appears after
 a percent sign in the format,
@@ -150,4 +155,21 @@ may be omitted.
 On BSD-based systems,
 the adjustment is made by changing the rate at which time advances;
 on System-V-based systems, the adjustment is made by changing the time.
+.SH FILES
+.ta \w'/usr/local/etc/zoneinfo/posixrules\0\0'u
+/usr/lib/locale/\f2L\fP/LC_TIME	description of time locale \f2L\fP
+.br
+/usr/local/etc/zoneinfo	time zone information directory
+.br
+/usr/local/etc/zoneinfo/localtime	local time zone file
+.br
+/usr/local/etc/zoneinfo/posixrules	used with POSIX-style TZ's
+.br
+/usr/local/etc/zoneinfo/GMT	for UTC leap seconds
+.sp
+If
+.B /usr/local/etc/zoneinfo/GMT
+is absent,
+UTC leap seconds are loaded from
+.BR /usr/local/etc/zoneinfo/posixrules .
 .\" %W%

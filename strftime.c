@@ -1,9 +1,3 @@
-/*
-** XXX To do: figure out correct (as distinct from standard-mandated)
-** output for "two digits of year" and "century" formats when
-** the year is negative or less than 100. --ado, 2004-09-09
-*/
-
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";
@@ -217,9 +211,20 @@ label:
 				** something completely different.
 				** (ado, 1993-05-24)
 				*/
-				pt = _conv((int) ((t->tm_year +
-					(long) TM_YEAR_BASE) / 100),
-					"%02d", pt, ptlim);
+				{
+					long	year;
+					int	top;
+
+					year = t->tm_year;
+					year += TM_YEAR_BASE;
+					top = year / 100;
+					if (top == 0 && year < 0) {
+						pt = _add("-0", pt, ptlim);
+					} else {
+						pt = _conv(top, "%02d",
+							pt, ptlim);
+					}
+				}
 				continue;
 			case 'c':
 				{
@@ -445,9 +450,15 @@ label:
 						pt = _conv(w, "%02d",
 							pt, ptlim);
 					else if (*format == 'g') {
+						int	i;
+
 						*warnp = IN_ALL;
-						pt = _conv((int) (year % 100),
-							"%02d", pt, ptlim);
+						i = year % 100;
+						if (i < 0) {
+							i = -i;
+						}
+						pt = _conv(i, "%02d",
+							pt, ptlim);
 					} else	pt = _lconv(year, "%04ld",
 							pt, ptlim);
 				}
@@ -486,9 +497,16 @@ label:
 				continue;
 			case 'y':
 				*warnp = IN_ALL;
-				pt = _conv((int) ((t->tm_year +
-					(long) TM_YEAR_BASE) % 100),
-					"%02d", pt, ptlim);
+				{
+					int	i;
+
+					i = (t->tm_year +
+						(long) TM_YEAR_BASE) % 100;
+					if (i < 0) {
+						i = -i;
+					}
+					pt = _conv(i, "%02d", pt, ptlim);
+				}
 				continue;
 			case 'Y':
 				pt = _lconv(t->tm_year + (long) TM_YEAR_BASE,
@@ -556,9 +574,10 @@ label:
 					diff = -diff;
 				} else	sign = "+";
 				pt = _add(sign, pt, ptlim);
-				diff /= 60;
-				pt = _conv((diff/60)*100 + diff%60,
-					"%04d", pt, ptlim);
+				diff /= SECSPERMIN;
+				diff = (diff / MINSPERHOUR) * 100 +
+					(diff % MINSPERHOUR);
+				pt = _conv(diff, "%04d", pt, ptlim);
 				}
 				continue;
 			case '+':

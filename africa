@@ -541,7 +541,7 @@ Zone Africa/Johannesburg 1:52:00 -	LMT	1892 Feb 8
 # Sudan
 # From Michael Ross <mross@antigone.com> (November 15, 1995):
 # Sudan no longer observes any form of daylight time change.
-# I verified this today by telephone with the Sudan Mission to the  
+# I verified this today by telephone with the Sudan Mission to the
 # United Nations: 212-573-6033
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Sudan	1931	only	-	Feb	 8	0:00	0	-

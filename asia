@@ -438,7 +438,7 @@ Rule	Zion	1988	only	-	Sep	 3	0:00	0	S
 #Rule	Zion	1991	only	-	Mar	10	0:00	1:00	D
 #Rule	Zion	1991	only	-	Sep	 1	0:00	0	S
 
-# From Ephraim Silverberg (September 20, 1995):
+# From Ephraim Silverberg (1996-01-02):
 #
 # According to the Office of the Secretary General of the Ministry of
 # Interior, there is NO set rule for Daylight-Savings/Standard time changes.
@@ -451,7 +451,9 @@ Rule	Zion	1988	only	-	Sep	 3	0:00	0	S
 # time annually.  Ever since 1993, the change to daylight savings time has
 # been from midnight Thursday night to 1 a.m. Friday morning and the change
 # back to standard time on Saturday night from midnight daylight savings time
-# to 11 p.m. standard time.
+# to 11 p.m. standard time.  1996 is an exception to this rule where the
+# change back to standard time takes place on Sunday night instead of Saturday
+# night to avoid conflicts with the Jewish New Year.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Zion	1989	only	-	Apr	30	0:00	1:00	D
@@ -481,19 +483,20 @@ Rule    Zion    1995    only    -       Sep      3      0:00    0:00    S
 #
 #   ftp://ftp.huji.ac.il/pub/misc/timezones/announcements/1996-1998.ps.gz
 #
-# Emptor Caveat: The fall of 1996 is an election year (the change to/from
-# daylight savings time affects the earliest possible time for morning prayers
-# making it is a sensitive issue among the religious sector of the electorate)
-# so political considerations may cause the outgoing government to make the
-# change back to standard time earlier in the fall of 1996 and the incoming
-# government may nullify the 1997/1998 times altogether depending on the
-# coalition formed after the elections.  Life isn't boring here in Israel.
+# Emptor Caveat: The dates for the years 1996-1998 were originally announced
+# on August 31, 1995, by the previous Minister of Interior.  The new Minister
+# of Interior changed the dates on January 1, 1996, to take into account the
+# desires of certain portions of Israeli society (the next election is in the
+# Fall of 1996).  After this (1996) year's Daylight Savings Time is over, the
+# new minister has announced that a study will be conducted as to the wishes of
+# the populace regarding the length of Daylight Savings Time and the Interior
+# Committee will meet to review the results of the study and make any necessary
+# changes to the 1997-1998 dates.  Never a dull moment in the State of Israel.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Zion	1996	1998	-	Mar	Fri>=14	0:00	1:00	D
-Rule	Zion	1996	only	-	Sep	22	0:00	0:00	S
-Rule	Zion	1997	only	-	Nov	 2	0:00	0:00	S
-Rule	Zion	1998	only	-	Oct	25	0:00	0:00	S
+Rule	Zion	1996	only	-	Sep	16	0:00	0:00	S
+Rule	Zion	1997	1998	-	Oct	Sun>=14	0:00	0:00	S
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Tel_Aviv	2:19:04 -	LMT	1880

@@ -114,8 +114,8 @@ TZDSRCS=	zdump.c localtime.c asctime.c \
 		ialloc.c getopt.c link.c
 TZDOBJS=	zdump.o localtime.o asctime.o \
 		ialloc.o getopt.o link.o
-LIBSRCS=	localtime.c asctime.c ctime.c dysize.c timemk.c
-LIBOBJS=	localtime.o asctime.o ctime.o dysize.o timemk.o
+LIBSRCS=	localtime.c asctime.c ctime.c dysize.c timemk.c difftime.c
+LIBOBJS=	localtime.o asctime.o ctime.o dysize.o timemk.o difftime.o
 HEADERS=	tzfile.h nonstd.h stdio.h stdlib.h time.h
 NONLIBSRCS=	zic.c zdump.c \
 		scheck.c ialloc.c emkdir.c getopt.c link.c

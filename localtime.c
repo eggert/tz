@@ -40,7 +40,7 @@ char *	tzname;
 	/*
 	** We might be running set-user-ID, so. . .
 	*/
-	if (access(buf, 0) != 0)
+	if (access(buf, 4) != 0)
 		goto gmt;
 	if ((fid = open(buf, 0)) == -1)
 		goto gmt;

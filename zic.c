@@ -127,10 +127,8 @@ static int		errors;
 static const char *	filename;
 static int		leapcnt;
 static int		linenum;
-static int		max_int;
 static time_t		max_time;
 static int		max_year;
-static int		min_int;
 static time_t		min_time;
 static int		min_year;
 static int		noise;
@@ -139,7 +137,6 @@ static int		rlinenum;
 static const char *	progname;
 static int		timecnt;
 static int		typecnt;
-static int		tt_signed;
 
 /*
 ** Line codes.
@@ -567,55 +564,41 @@ const char * const	tofile;
 	ifree(toname);
 }
 
+#ifndef INT_MIN
+#define INT_MIN (~0 << (sizeof (int) * CHAR_BIT - 1))
+#endif
+#ifndef INT_MAX
+#define INT_MAX (~0 - INT_MIN)
+#endif
+
+#define TIME_T_SIGNED ((time_t) -1 < 0)
+#define TIME_T_BIT (sizeof (time_t) * CHAR_BIT)
+
+/* The tz file format currently allows at most 32-bit quantities.
+   This restriction should be removed before signed 32-bit values
+   wrap around in 2038, but unfortunately this will require a
+   change to the tz file format.  */
 #define MAX_BITS_IN_FILE	32
+#define TIME_T_BITS_IN_FILE (TIME_T_BIT < MAX_BITS_IN_FILE \
+			     ? TIME_T_BIT : MAX_BITS_IN_FILE)
 
 static void
 setboundaries P((void))
 {
-	register time_t	bit;
-	register int	nbits;
-	register int	bii;
-
-	nbits = 0;
-	for (bit = 1; bit > 0; bit <<= 1)
-		++nbits;
-	tt_signed = (bit != 0);
-	if (tt_signed)
-		++nbits;
-	if (tt_signed) {
-		if (nbits <= MAX_BITS_IN_FILE) {
-			min_time = bit;
-			max_time = bit;
-			++max_time;
-			max_time = -max_time;
-		} else {
-			max_time = 1;
-			max_time <<= (MAX_BITS_IN_FILE - 1);
-			--max_time;
-			min_time = max_time;
-			--min_time;
-		}
+	if (TIME_T_SIGNED) {
+		min_time = ~ (time_t) 0;
+		min_time <<= TIME_T_BITS_IN_FILE - 1;
+		max_time = ~ (time_t) 0 - min_time;
 		if (sflag)
 			min_time = 0;
 	} else {
 		min_time = 0;
-		if (nbits <= MAX_BITS_IN_FILE)
-			max_time = ~(time_t) 0;
-		else {
-			max_time = 1;
-			max_time <<= MAX_BITS_IN_FILE;
-			--max_time;
-		}
-		if (sflag)
-			max_time >>= 1;
+		max_time = 2 - sflag;
+		max_time <<= TIME_T_BITS_IN_FILE - 1;
+		--max_time;
 	}
 	min_year = TM_YEAR_BASE + gmtime(&min_time)->tm_year;
 	max_year = TM_YEAR_BASE + gmtime(&max_time)->tm_year;
-
-	for (bii = 1; bii > 0; bii <<= 1)
-		continue;
-	min_int = bii;
-	max_int = -1 - bii;
 }
 
 static int
@@ -1050,7 +1033,7 @@ const int		nfields;
 			return;
 	}
 	dayoff = oadd(dayoff, eitol(day - 1));
-	if (dayoff < 0 && !tt_signed) {
+	if (!TIME_T_SIGNED && dayoff < 0) {
 		error("time before zero");
 		return;
 	}
@@ -1173,10 +1156,10 @@ const char * const		timep;
 	lp = byword(cp, begin_years);
 	if (lp != NULL) switch ((int) lp->l_value) {
 		case YR_MINIMUM:
-			rp->r_loyear = min_int;
+			rp->r_loyear = INT_MIN;
 			break;
 		case YR_MAXIMUM:
-			rp->r_loyear = max_int;
+			rp->r_loyear = INT_MAX;
 			break;
 		default:	/* "cannot happen" */
 			(void) fprintf(stderr,
@@ -1190,10 +1173,10 @@ const char * const		timep;
 	cp = hiyearp;
 	if ((lp = byword(cp, end_years)) != NULL) switch ((int) lp->l_value) {
 		case YR_MINIMUM:
-			rp->r_hiyear = min_int;
+			rp->r_hiyear = INT_MIN;
 			break;
 		case YR_MAXIMUM:
-			rp->r_hiyear = max_int;
+			rp->r_hiyear = INT_MAX;
 			break;
 		case YR_ONLY:
 			rp->r_hiyear = rp->r_loyear;
@@ -1859,9 +1842,9 @@ register const int			wantedy;
 	register long	dayoff;			/* with a nod to Margaret O. */
 	register time_t	t;
 
-	if (wantedy == min_int)
+	if (wantedy == INT_MIN)
 		return min_time;
-	if (wantedy == max_int)
+	if (wantedy == INT_MAX)
 		return max_time;
 	dayoff = 0;
 	m = TM_JANUARY;
@@ -1924,7 +1907,7 @@ register const int			wantedy;
 			(void) exit(EXIT_FAILURE);
 		}
 	}
-	if (dayoff < 0 && !tt_signed)
+	if (!TIME_T_SIGNED && dayoff < 0)
 		return min_time;
 	t = (time_t) dayoff * SECSPERDAY;
 	/*

@@ -8,6 +8,15 @@
 
 LOCALTIME=	US/Eastern
 
+# If you want something other than Eastern United States time as a template
+# for handling POSIX-style time zone environment variables,
+# change the line below (after finding the zone you want in the
+# time zone files, or adding it to a time zone file).
+# Alternately, if you discover you've got the wrong time zone, you can just
+#	zic -p rightzone
+
+POSIXRULES=	US/Eastern
+
 # Use an absolute path name for TZDIR unless you're just testing the software.
 
 TZDIR=		/etc/zoneinfo
@@ -108,7 +117,7 @@ REDID_BINARIES:	zic $(DATA)
 		./zic -d $(TZDIR) -L $(LEAPSECONDS) $(YDATA)
 		./zic -d $(TZDIR) -L $(LEAPSECONDS) $(SDATA)
 		./zic -d $(TZDIR) -L /dev/null $(NDATA)
-		./zic -d $(TZDIR) -l $(LOCALTIME)
+		./zic -d $(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
 		touch $@
 
 zdump:		$(TZDOBJS)

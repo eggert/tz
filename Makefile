@@ -377,7 +377,7 @@ check_web:	$(WEB_PAGES)
 
 clean:
 		rm -f core *.o *.out tzselect zdump zic yearistype date \
-			,* *.tar.gz
+			,* *.tar.gz $(TXTS) workman
 
 names:
 		@echo $(ENCHILADA)

@@ -16,8 +16,8 @@ static char	sccsid[] = "%W%";
 #endif
 
 #ifndef TRUE
-#define TRUE	1
-#define FALSE	0
+#define TRUE		1
+#define FALSE		0
 #endif
 
 #ifndef MAXPATHLEN
@@ -80,6 +80,9 @@ register char *	tzname;
 		(void) strcpy(buf, p);
 		(void) strcat(buf, "/");
 		(void) strcat(buf, tzname);
+		/*
+		** Set doaccess if '.' (as in "../") shows up in name.
+		*/
 		while (*tzname != '\0')
 			if (*tzname++ == '.')
 				doaccess = TRUE;

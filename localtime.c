@@ -1244,9 +1244,13 @@ int * const		okayp;
 			return WRONG;
 #endif /* defined ALL_STATE */
 		for (i = 0; i < sp->typecnt; ++i) {
+			if (sp->ttis[i].tt_isdst != yourtm.tm_isdst)
+				continue;
 			for (j = 0; j < sp->typecnt; ++j) {
-				newt = t + sp->ttis[i].tt_gmtoff -
-					sp->ttis[j].tt_gmtoff;
+				if (sp->ttis[j].tt_isdst == yourtm.tm_isdst)
+					continue;
+				newt = t + sp->ttis[j].tt_gmtoff -
+					sp->ttis[i].tt_gmtoff;
 				(*funcp)(&newt, offset, &mytm);
 				if (tmcomp(&mytm, &yourtm) != 0)
 					continue;

@@ -181,7 +181,7 @@ LIBOBJS=	localtime.o asctime.o difftime.o
 HEADERS=	tzfile.h private.h
 NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c emkdir.c getopt.c
 NEWUCBSRCS=	date.c logwtmp.c strftime.c
-SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS)
+SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS) yearistype.sh
 MANS=		newctime.3 newtzset.3 tzfile.5 zic.8 zdump.8
 DOCS=		Patchlevel.h README Theory $(MANS) date.1 Makefile
 YDATA=		africa antarctica asia australasia \
@@ -227,8 +227,12 @@ INSTALL:	ALL install date.1
 zdump:		$(TZDOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@
 
-zic:		$(TZCOBJS)
+zic:		$(TZCOBJS) yearistype
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
+
+yearistype:	yearistype.sh
+		cp yearistype.sh yearistype
+		chmod +x yearistype
 
 posix_only:	zic $(TDATA)
 		./zic -d $(TZDIR) -L /dev/null $(TDATA)

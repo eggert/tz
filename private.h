@@ -124,10 +124,10 @@ static char	privatehid[] = "%W%";
 */
 
 #ifdef __STDC__
-#define generic_T	void
+typedef void	generic_T;
 #endif /* defined __STDC__ */
 #ifndef __STDC__
-#define generic_T	char
+typedef char	generic_T;
 #endif /* !defined __STDC__ */
 
 #include "sys/types.h"	/* for time_t */
@@ -188,7 +188,10 @@ extern generic_T *	calloc P((alloc_size_T nelem, alloc_size_T elsize));
 extern generic_T *	realloc P((generic_T * oldptr, alloc_size_T newsize));
 
 extern void		exit P((int s));
-extern void		qsort P((generic_T * base, qsort_size_T nelem,
+/*
+** "int" return matches SunOS 4.1.1's "stdlib.h"
+*/
+extern int		qsort P((generic_T * base, qsort_size_T nelem,
 				qsort_size_T elsize,
 				int (*comp) P((const generic_T *,
 					const generic_T *))));

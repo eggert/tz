@@ -36,7 +36,7 @@ leap second information from its output files.
 Be sure to read the comments in "Makefile" and make any changes
 needed to make things right for your system.
 
-To use the new functions, use a "-lz" option when compiling or linking.
+To use the new functions, use a "-ltz" option when compiling or linking.
 
 Historical local time information has been included here not because it
 is particularly useful, but rather to:

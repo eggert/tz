@@ -16,30 +16,24 @@ static char	sccsid[] = "%W%";
 
 extern char *		asctime();
 extern struct tm *	gmtime();
-extern char *		newctime();
 extern int		optind;
 extern char *		sprintf();
 extern long		time();
 extern char *		tz_abbr;
 
-#ifdef lint
-int			optind;
-#endif
-
 static int		longest;
 
-static
-getshort(p)
-unsigned char *	p;
-{
-	return (p[0] << 8) | p[1];
-}
-
 static long
-getlong(p)
-register unsigned char *	p;
+tzdecode(codep)
+char *	codep;
 {
-	return ((((((p[0] << 8) | p[1]) << 8) | p[2]) << 8) | p[3]);
+	register int	i;
+	register long	result;
+
+	result = 0;
+	for (i = 0; i < 4; ++i)
+		result = (result << 8) | (codep[i] & 0xff);
+	return result;
 }
 
 main(argc, argv)
@@ -53,9 +47,6 @@ char *	argv[];
 	int		timecnt;
 	char		buf[BUFSIZ];
 
-#ifdef lint
-	(void) ftell(stdin);
-#endif
 	vflag = 0;
 	while ((c = getopt(argc, argv, "v")) == 'v')
 		vflag = 1;
@@ -97,22 +88,24 @@ char *	argv[];
 			exit(1);
 		}
 		{
-			unsigned char			two[2];
-			struct tzhead			h;
+			struct tzhead *	tzhp;
+			char		code[4];
 
-			(void) fseek(fp, (long) sizeof h.tzh_reserved, 0);
-			if (fread((char *) two, sizeof two, 1, fp) != 1)
+			(void) fseek(fp, (long) sizeof tzhp->tzh_reserved, 0);
+			if (fread((char *) code, sizeof code, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
-			timecnt = getshort(two);
-			(void) fseek(fp, (long) (2 * sizeof (short)), 1);
+			timecnt = tzdecode(code);
+			(void) fseek(fp, (long) (2 * sizeof code), 1);
 		}
+		show(argv[i], 0x80000000, TRUE);
+		show(argv[i], 0x80000000 + 24 * 60 * 60, TRUE);
 		for (j = 0; j < timecnt; ++j) {
-			unsigned char			four[4];
-			long				t;
+			char	code[4];
+			long	t;
 
-			if (fread((char *) four, sizeof four, 1, fp) != 1)
+			if (fread((char *) code, sizeof code, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
-			t = getlong(four);
+			t = tzdecode(code);
 			show(argv[i], t - 1, TRUE);
 			show(argv[i], t, TRUE);
 		}
@@ -121,6 +114,8 @@ char *	argv[];
 			perror(argv[i]);
 			exit(1);
 		}
+		show(argv[i], 0x7fffffff - 24 * 60 * 60, TRUE);
+		show(argv[i], 0x7fffffff, TRUE);
 	}
 	if (fflush(stdout) || ferror(stdout)) {
 		(void) fprintf(stderr, "%s: Error writing standard output ",
@@ -137,12 +132,12 @@ char *	zone;
 long	t;
 {
 	struct tm *		tmp;
-	extern struct tm *	newlocaltime();
+	extern struct tm *	localtime();
 
 	(void) printf("%-*s  ", longest, zone);
 	if (v)
 		(void) printf("%.24s GMT = ", asctime(gmtime(&t)));
-	tmp = newlocaltime(&t);
+	tmp = localtime(&t);
 	(void) printf("%.24s", asctime(tmp));
 	if (*tz_abbr != '\0')
 		(void) printf(" %s", tz_abbr);

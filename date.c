@@ -53,47 +53,6 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #include "protocols/timed.h"
 #endif /* !defined NO_SOCKETS */
 
-/*
-** What options should be provided?
-** If "NO_X_OPTION" is defined for some case, we leave the option out.
-**
-** "-u" is provided unconditionally.
-*/
-
-#ifndef A_OPTION
-#ifndef NO_A_OPTION
-#define A_OPTION
-#endif /* !defined NO_A_OPTION */
-#endif /* !defined A_OPTION */
-
-#ifndef D_OPTION
-#ifndef NO_D_OPTION
-#define D_OPTION
-#endif /* !defined NO_D_OPTION */
-#endif /* !defined D_OPTION */
-
-#ifndef N_OPTION
-#ifndef NO_N_OPTION
-#define N_OPTION
-#endif /* !defined NO_N_OPTION */
-#endif /* !defined N_OPTION */
-
-#ifndef T_OPTION
-#ifndef NO_T_OPTION
-#define T_OPTION
-#endif /* !defined NO_T_OPTION */
-#endif /* !defined T_OPTION */
-
-/*
-** Finally, a feature.
-*/
-
-#ifndef USG_INPUT
-#ifndef NO_USG_INPUT
-#define USG_INPUT
-#endif /* !defined NO_USG_INPUT */
-#endif /* !defined USG_INPUT */
-
 #ifndef TIME_USER
 #ifdef OTIME_MSG
 #define TIME_USER	username
@@ -163,8 +122,6 @@ static void		timeout();
 static void		usage();
 static void		wildinput();
 
-static char		usemes[132];
-
 int
 main(argc, argv)
 int	argc;
@@ -184,45 +141,10 @@ char *	argv[];
 	register float		adjust;
 	time_t			now;
 	time_t			t;
-	char			options[132];
 
 	(void) time(&now);
 	format = value = NULL;
-	/*
-	** "-u" is available everywhere.
-	*/
-	(void) strcpy(options, "u");
-	(void) strcpy(usemes, "[-u");
-#ifdef N_OPTION
-	(void) strcat(options, "n");
-	(void) strcat(usemes, "n");
-#endif /* defined N_OPTION */
-	(void) strcat(usemes, "]");
-#ifdef D_OPTION
-	(void) strcat(options, "d:");
-	(void) strcat(usemes, " [-d dst]");
-#endif /* defined D_OPTION */
-#ifdef T_OPTION
-	(void) strcat(options, "t:");
-	(void) strcat(usemes, " [-t min-west]");
-#endif /* defined T_OPTION */
-#ifdef A_OPTION
-	(void) strcat(options, "a:");
-	(void) strcat(usemes, " [-a sss.fff]");
-#endif /* defined A_OPTION */
-	/*
-	** Two time argument variants.
-	*/
-#ifdef USG_INPUT
-	(void) strcat(usemes, " [[yyyy]mmddhhmm[yy][.ss]]");
-#else /* !defined USG_INPUT */
-	(void) strcat(usemes, " [[yyyy]mmddhhmm[.ss]]");
-#endif /* !defined USG_INPUT */
-	/*
-	** "+format" is available everywhere.
-	*/
-	(void) strcat(usemes, " [+format]");
-	while ((ch = getopt(argc, argv, options)) != EOF) {
+	while ((ch = getopt(argc, argv, "und:t:a:")) != EOF) {
 		switch (ch) {
 		default:
 			usage();
@@ -483,7 +405,14 @@ register char *	cp;
 static void
 usage()
 {
-	(void) fprintf(stderr, "date: usage is date %s\n", usemes);
+	(void) fprintf(stderr, "date: usage is date ");
+	(void) fprintf(stderr, "[-u] ");
+	(void) fprintf(stderr, "[-n] ");
+	(void) fprintf(stderr, "[-d dst] ");
+	(void) fprintf(stderr, "[-t min-west] ");
+	(void) fprintf(stderr, "[-a sss.fff] ");
+	(void) fprintf(stderr, "[[yyyy]mmddhhmm[yy][.ss]] ");
+	(void) fprintf(stderr, "[+format]\n");
 	errensure();
 	(void) exit(retval);
 }
@@ -521,13 +450,6 @@ char *	format;
 	(void) exit(retval);
 }
 
-#ifdef USE_STRFTIME
-
-/*
-** . . .then you don't get System V compatibility (unless your version of
-** strftime provides it).
-*/
-
 extern size_t	strftime();
 
 #define INCR	1024
@@ -561,167 +483,6 @@ struct tm *	tmp;
 	(void) fwrite(cp, 1, result, fp);
 	free(cp);
 }
-
-#else /* !defined USE_STRFTIME */
-
-static char *	wday_names[] = {
-	"Sunday",	"Monday",	"Tuesday",	"Wednesday",
-	"Thursday",	"Friday",	"Saturday"
-};
-
-static char *	mon_names[] = {
-	"January",	"February",	"March",	"April",
-	"May",		"June",		"July",		"August",
-	"September",	"October",	"November",	"December"
-};
-
-static void
-timeout(fp, format, tmp)
-register FILE *	fp;
-register char *	format;
-struct tm *	tmp;
-{
-	register int	c;
-	register int	wday;
-
-	for ( ; ; ) {
-		c = *format++;
-		if (c == '\0')
-			return;
-		if (c != '%') {
-			(void) putc(c, fp);
-			continue;
-		}
-/*
-** Format characters below come from
-** December 7, 1988 version of X3J11's description of the strftime function.
-*/
-		switch (c = *format++) {
-		default:
-			/*
-			** Clear out possible partial output.
-			*/
-			(void) putc('\n', fp);
-			(void) fflush(fp);
-			(void) fprintf(stderr,
-				"date: error: bad format character - %c\n", c);
-			errensure();
-			display((char *) NULL);
-		case 'a':
-			(void) fprintf(fp, "%.3s", wday_names[tmp->tm_wday]);
-			break;
-		case 'A':
-			(void) fprintf(fp, "%s", wday_names[tmp->tm_wday]);
-			break;
-		case 'b':
-			(void) fprintf(fp, "%.3s", mon_names[tmp->tm_mon]);
-			break;
-		case 'B':
-			(void) fprintf(fp, "%s", mon_names[tmp->tm_mon]);
-			break;
-		case 'c':
-			timeout(fp, "%a %b %d %X %Z %Y", tmp);
-			break;
-		case 'd':
-			(void) fprintf(fp, "%02.2d", tmp->tm_mday);
-			break;
-		case 'H':
-			(void) fprintf(fp, "%02.2d", tmp->tm_hour);
-			break;
-		case 'I':
-			(void) fprintf(fp, "%02.2d",
-				((tmp->tm_hour % 12) == 0) ?
-				12 : (tmp->tm_hour % 12));
-			break;
-		case 'j':
-			(void) fprintf(fp, "%03.3d", tmp->tm_yday + 1);
-			break;
-#ifdef KITCHEN_SINK
-		case 'k':
-			(void) fprintf(fp, "kitchen sink");
-			break;
-#endif /* defined KITCHEN_SINK */
-		case 'm':
-			(void) fprintf(fp, "%02.2d", tmp->tm_mon + 1);
-			break;
-		case 'M':
-			(void) fprintf(fp, "%02.2d", tmp->tm_min);
-			break;
-		case 'p':
-			(void) fprintf(fp, "%cM",
-				(tmp->tm_hour >= 12) ? 'P' : 'A');
-			break;
-		case 'S':
-			(void) fprintf(fp, "%02.2d", tmp->tm_sec);
-			break;
-		case 'U':
-			/* How many Sundays fall on or before this day? */
-			wday = tmp->tm_wday;
-			(void) fprintf(fp, "%02.2d",
-				(tmp->tm_yday + 7 - wday) / 7);
-			break;
-		case 'w':
-			(void) fprintf(fp, "%d", tmp->tm_wday);
-			break;
-		case 'W':
-			/* How many Mondays fall on or before this day? */
-			/* Transform it to the Sunday problem and solve that */
-			wday = tmp->tm_wday;
-			if (--wday < 0)
-				wday = 6;
-			(void) fprintf(fp, "%02.2d",
-				(tmp->tm_yday + 7 - wday) / 7);
-			break;
-		case 'x':
-			timeout(fp, "%a %b %d %Y", tmp);
-			break;
-		case 'X':
-			timeout(fp, "%H:%M:%S", tmp);
-			break;
-		case 'y':
-			(void) fprintf(fp, "%02.2d",
-				(tmp->tm_year + TM_YEAR_BASE) % 100);
-			break;
-		case 'Y':
-			(void) fprintf(fp, "%d", tmp->tm_year + TM_YEAR_BASE);
-			break;
-		case 'Z':
-			(void) fprintf(fp, "%s", tzname[tmp->tm_isdst]);
-			break;
-		case '%':
-			(void) putc('%', fp);
-			break;
-/*
-** Format characters below from:
-** the System V Release 2.0 description of the date command;
-** and the System V Release 3.1 description of the ascftime function.
-*/
-		case 'D':
-			timeout(fp, "%m/%d/%y", tmp);
-			break;
-		case 'h':
-			timeout(fp, "%b", tmp);
-			break;
-		case 'n':
-			(void) putc('\n', fp);
-			break;
-		case 'r':
-			timeout(fp, "%I:%M:%S %p", tmp);
-			break;
-		case 'R':
-			timeout(fp, "%H:%M", tmp);
-			break;
-		case 't':
-			(void) putc('\t', fp);
-			break;
-		case 'T':
-			timeout(fp, "%X", tmp);
-			break;
-		}
-	}
-}
-
-#endif /* !defined USE_STRFTIME */
 
 static int
 comptm(atmp, btmp)
@@ -757,11 +518,6 @@ time_t		t;
 	register int	cent, year_in_cent, month, hour, day, mins, secs;
 	struct tm	tm, outtm;
 	time_t		outt;
-
-#ifndef USG_INPUT
-	if (dousg)
-		return -1;
-#endif /* !defined USG_INPUT */
 
 	tm = *localtime(&t);
 	cent = (tm.tm_year + TM_YEAR_BASE) / 100;

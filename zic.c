@@ -238,73 +238,73 @@ static struct lookup const *	byword P((const char * string,
 					const struct lookup * lp));
 
 static struct lookup const	line_codes[] = {
-	"Rule",		LC_RULE,
-	"Zone",		LC_ZONE,
-	"Link",		LC_LINK,
-	"Leap",		LC_LEAP,
-	NULL,		0
+	{ "Rule",	LC_RULE },
+	{ "Zone",	LC_ZONE },
+	{ "Link",	LC_LINK },
+	{ "Leap",	LC_LEAP },
+	{ NULL,		0}
 };
 
 static struct lookup const	mon_names[] = {
-	"January",	TM_JANUARY,
-	"February",	TM_FEBRUARY,
-	"March",	TM_MARCH,
-	"April",	TM_APRIL,
-	"May",		TM_MAY,
-	"June",		TM_JUNE,
-	"July",		TM_JULY,
-	"August",	TM_AUGUST,
-	"September",	TM_SEPTEMBER,
-	"October",	TM_OCTOBER,
-	"November",	TM_NOVEMBER,
-	"December",	TM_DECEMBER,
-	NULL,		0
+	{ "January",	TM_JANUARY },
+	{ "February",	TM_FEBRUARY },
+	{ "March",	TM_MARCH },
+	{ "April",	TM_APRIL },
+	{ "May",	TM_MAY },
+	{ "June",	TM_JUNE },
+	{ "July",	TM_JULY },
+	{ "August",	TM_AUGUST },
+	{ "September",	TM_SEPTEMBER },
+	{ "October",	TM_OCTOBER },
+	{ "November",	TM_NOVEMBER },
+	{ "December",	TM_DECEMBER },
+	{ NULL,		0 }
 };
 
 static struct lookup const	wday_names[] = {
-	"Sunday",	TM_SUNDAY,
-	"Monday",	TM_MONDAY,
-	"Tuesday",	TM_TUESDAY,
-	"Wednesday",	TM_WEDNESDAY,
-	"Thursday",	TM_THURSDAY,
-	"Friday",	TM_FRIDAY,
-	"Saturday",	TM_SATURDAY,
-	NULL,		0
+	{ "Sunday",	TM_SUNDAY },
+	{ "Monday",	TM_MONDAY },
+	{ "Tuesday",	TM_TUESDAY },
+	{ "Wednesday",	TM_WEDNESDAY },
+	{ "Thursday",	TM_THURSDAY },
+	{ "Friday",	TM_FRIDAY },
+	{ "Saturday",	TM_SATURDAY },
+	{ NULL,		0 }
 };
 
 static struct lookup const	lasts[] = {
-	"last-Sunday",		TM_SUNDAY,
-	"last-Monday",		TM_MONDAY,
-	"last-Tuesday",		TM_TUESDAY,
-	"last-Wednesday",	TM_WEDNESDAY,
-	"last-Thursday",	TM_THURSDAY,
-	"last-Friday",		TM_FRIDAY,
-	"last-Saturday",	TM_SATURDAY,
-	NULL,			0
+	{ "last-Sunday",	TM_SUNDAY },
+	{ "last-Monday",	TM_MONDAY },
+	{ "last-Tuesday",	TM_TUESDAY },
+	{ "last-Wednesday",	TM_WEDNESDAY },
+	{ "last-Thursday",	TM_THURSDAY },
+	{ "last-Friday",	TM_FRIDAY },
+	{ "last-Saturday",	TM_SATURDAY },
+	{ NULL,			0 }
 };
 
 static struct lookup const	begin_years[] = {
-	"minimum",	YR_MINIMUM,
-	"maximum",	YR_MAXIMUM,
-	NULL,		0
+	{ "minimum",	YR_MINIMUM },
+	{ "maximum",	YR_MAXIMUM },
+	{ NULL,		0 }
 };
 
 static struct lookup const	end_years[] = {
-	"minimum",	YR_MINIMUM,
-	"maximum",	YR_MAXIMUM,
-	"only",		YR_ONLY,
-	NULL,		0
+	{ "minimum",	YR_MINIMUM },
+	{ "maximum",	YR_MAXIMUM },
+	{ "only",	YR_ONLY },
+	{ NULL,		0 }
 };
 
 static struct lookup const	leap_types[] = {
-	"Rolling",	TRUE,
-	"Stationary",	FALSE,
-	NULL,		0
+	{ "Rolling",	TRUE },
+	{ "Stationary",	FALSE },
+	{ NULL,		0 }
 };
 
 static const int	len_months[2][MONSPERYEAR] = {
-	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
-	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+	{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
+	{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
 };
 
 static const int	len_years[2] = {
@@ -315,7 +315,7 @@ static time_t		ats[TZ_MAX_TIMES];
 static unsigned char	types[TZ_MAX_TIMES];
 static long		gmtoffs[TZ_MAX_TYPES];
 static char		isdsts[TZ_MAX_TYPES];
-static char		abbrinds[TZ_MAX_TYPES];
+static unsigned char	abbrinds[TZ_MAX_TYPES];
 static char		ttisstds[TZ_MAX_TYPES];
 static char		chars[TZ_MAX_CHARS];
 static time_t		trans[TZ_MAX_LEAPS];
@@ -689,8 +689,10 @@ const char *	name;
 		fields = getfields(buf);
 		nfields = 0;
 		while (fields[nfields] != NULL) {
+			static char	nada[1];
+
 			if (ciequal(fields[nfields], "-"))
-				fields[nfields] = "";
+				fields[nfields] = nada;
 			++nfields;
 		}
 		if (nfields == 0) {
@@ -1714,7 +1716,7 @@ const long	t2;
 	register long	t;
 
 	t = t1 + t2;
-	if (t2 > 0 && t <= t1 || t2 < 0 && t >= t1) {
+	if ((t2 > 0 && t <= t1) || (t2 < 0 && t >= t1)) {
 		error("time overflow");
 		(void) exit(EXIT_FAILURE);
 	}
@@ -1733,7 +1735,7 @@ const long	t2;
 	if (t1 == min_time && t2 < 0)
 		return min_time;
 	t = t1 + t2;
-	if (t2 > 0 && t <= t1 || t2 < 0 && t >= t1) {
+	if ((t2 > 0 && t <= t1) || (t2 < 0 && t >= t1)) {
 		error("time overflow");
 		(void) exit(EXIT_FAILURE);
 	}
@@ -1895,7 +1897,7 @@ const int	i;
 	long	l;
 
 	l = i;
-	if (i < 0 && l >= 0 || i == 0 && l != 0 || i > 0 && l <= 0) {
+	if ((i < 0 && l >= 0) || (i == 0 && l != 0) || (i > 0 && l <= 0)) {
 		(void) fprintf(stderr, "%s: %d did not sign extend correctly\n",
 			progname, i);
 		(void) exit(EXIT_FAILURE);

@@ -1340,6 +1340,7 @@ time_t
 timegm(tmp)
 struct tm * const	tmp;
 {
+	tmp->tm_isdst = 0;
 	return time1(tmp, gmtsub, 0L);
 }
 
@@ -1348,7 +1349,7 @@ timeoff(tmp, offset)
 struct tm * const	tmp;
 const long		offset;
 {
-
+	tmp->tm_isdst = 0;
 	return time1(tmp, gmtsub, offset);
 }
 

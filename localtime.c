@@ -1303,10 +1303,12 @@ int * const		okayp;
 	while (yourtm.tm_mday <= 0) {
 		if (increment_overflow(&yourtm.tm_year, -1))
 			return WRONG;
-		yourtm.tm_mday += year_lengths[isleap(yourtm.tm_year)];
+		i = yourtm.tm_year + (1 < yourtm.tm_mon);
+		yourtm.tm_mday += year_lengths[isleap(i)];
 	}
 	while (yourtm.tm_mday > DAYSPERLYEAR) {
-		yourtm.tm_mday -= year_lengths[isleap(yourtm.tm_year)];
+		i = yourtm.tm_year + (1 < yourtm.tm_mon);
+		yourtm.tm_mday -= year_lengths[isleap(i)];
 		if (increment_overflow(&yourtm.tm_year, 1))
 			return WRONG;
 	}

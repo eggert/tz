@@ -36,7 +36,7 @@ ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
 all:	REDID_BINARIES tzdump $(TZLIB)
 
-REDID_BINARIES:	$(TZDIR) tzcomp $(DATA) years
+REDID_BINARIES:	$(TZDIR) tzcomp years $(DATA)
 	./tzcomp -l $(LOCALTIME) -d $(TZDIR) $(DATA)
 	cp /dev/null $@
 

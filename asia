@@ -507,7 +507,7 @@ Rule	Zion	1988	only	-	Apr	 9	0:00	1:00	D
 Rule	Zion	1988	only	-	Sep	 3	0:00	0	S
 
 # From Ephraim Silverberg <ephraim@cs.huji.ac.il>
-# (1997-03-04 and 1997-12-31):
+# (1997-03-04 and 1998-03-16):
 
 # According to the Office of the Secretary General of the Ministry of
 # Interior, there is NO set rule for Daylight-Savings/Standard time changes.
@@ -557,9 +557,9 @@ Rule	Zion	1995	only	-	Sep	 3	0:00	0	S
 #
 #   ftp://ftp.huji.ac.il/pub/tz/announcements/1997.ps.gz
 #
-# According to the Office of the Spokeswoman for the Ministry of Interior,
-# the dates for 1998 are tentative and are still subject to final approval
-# (probably in late February/early March of 1998).
+# The official announcement for the year 1998 can be viewed at:
+#
+#   ftp://ftp.huji.ac.il/pub/tz/announcements/1998.ps.gz
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Zion	1996	only	-	Mar	15	0:00	1:00	D

@@ -1634,8 +1634,7 @@ const int			zonecount;
 			if (usestart) {
 				addtt(starttime, type);
 				usestart = FALSE;
-			}
-			else if (stdoff != 0)
+			} else if (stdoff != 0)
 				addtt(min_time, type);
 		} else for (year = min_year; year <= max_year; ++year) {
 			if (useuntil && year > zp->z_untilrule.r_hiyear)

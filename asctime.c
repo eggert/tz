@@ -41,14 +41,14 @@ char *				buf;
 	else	mn = mon_name[timeptr->tm_mon];
 	/*
 	** The X3J11-suggested format is
-	**	"%.3s %.3s%3d %02.2d:%02.2d:%02.2d %d\n"
-	** Since the .2 in 02.2d is ignored, we drop it.
+	**	"%.3s %.3s%3d %.2d:%.2d:%.2d %d\n"
+	** Use "%02d", as it is a bit more portable than "%.2d".
 	*/
-	(void) sprintf(buf, "%.3s %.3s%3d %02d:%02d:%02d %d\n",
+	(void) sprintf(buf, "%.3s %.3s%3d %02d:%02d:%02d %ld\n",
 		wn, mn,
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec,
-		TM_YEAR_BASE + timeptr->tm_year);
+		timeptr->tm_year + (long) TM_YEAR_BASE);
 	return buf;
 }
 

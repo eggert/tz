@@ -197,6 +197,9 @@ GCC_DEBUG_FLAGS = -Dlint -g -O -fno-common \
 
 CFLAGS=
 
+# The name of a Posix-compliant `awk' on your system.
+AWK=		awk
+
 ###############################################################################
 
 cc=		cc
@@ -215,11 +218,11 @@ NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c
 NEWUCBSRCS=	date.c logwtmp.c strftime.c
 SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS)
 MANS=		newctime.3 newstrftime.3 newtzset.3 time2posix.3 \
-			tzfile.5 zic.8 zdump.8
+			tzfile.5 tzselect.8 zic.8 zdump.8
 DOCS=		README Theory $(MANS) date.1 Makefile
-YDATA=		africa antarctica asia australasia \
-		europe northamerica southamerica pacificnew etcetera factory \
-		backward
+PRIMARY_YDATA=	africa antarctica asia australasia \
+		europe northamerica southamerica
+YDATA=		$(PRIMARY_YDATA) pacificnew etcetera factory backward
 NDATA=		systemv
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
@@ -234,11 +237,13 @@ SHELL=		/bin/sh
 
 all:		zic zdump $(LIBOBJS)
 
-ALL:		all date
+ALL:		all date tzselect
 
 install:	all $(DATA) $(REDO) $(TZLIB) $(MANS)
 		./zic -y $(YEARISTYPE) \
 			-d $(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
+		-rm -f $(TZDIR)/iso3166.tab $(TZDIR)/zone.tab
+		cp iso3166.tab zone.tab $(TZDIR)/.
 		-mkdir $(TOPDIR) $(ETCDIR)
 		cp zic zdump $(ETCDIR)/.
 		-mkdir $(TOPDIR) $(MANDIR) \
@@ -246,11 +251,12 @@ install:	all $(DATA) $(REDO) $(TZLIB) $(MANS)
 		-rm -f $(MANDIR)/man3/newctime.3 \
 			$(MANDIR)/man3/newtzset.3 \
 			$(MANDIR)/man5/tzfile.5 \
+			$(MANDIR)/man8/tzselect.8 \
 			$(MANDIR)/man8/zdump.8 \
 			$(MANDIR)/man8/zic.8
 		cp newctime.3 newtzset.3 $(MANDIR)/man3/.
 		cp tzfile.5 $(MANDIR)/man5/.
-		cp zdump.8 zic.8 $(MANDIR)/man8/.
+		cp tzselect.8 zdump.8 zic.8 $(MANDIR)/man8/.
 
 INSTALL:	ALL install date.1
 		-mkdir $(TOPDIR) $(BINDIR)
@@ -300,8 +306,19 @@ date:		$(DATEOBJS)
 			$(LDLIBS) -lc ,lib.a -o $@
 		rm -f ,lib.a
 
+tzselect:	tzselect.ksh
+		sed \
+			-e 's|AWK=[^}]*|AWK=$(AWK)|g' \
+			-e 's|TZDIR=[^}]*|TZDIR=$(TZDIR)|' \
+			<$? >$@
+		chmod +x $@
+
+check_tables:	checktab.awk $(PRIMARY_YDATA)
+		$(AWK) -f checktab.awk $(PRIMARY_YDATA)
+
 clean:
-		rm -f core *.o *.out zdump zic yearistype date ,* *.tar.gz
+		rm -f core *.o *.out tzselect zdump zic yearistype date \
+			,* *.tar.gz
 
 names:
 		@echo $(ENCHILADA)

@@ -18,6 +18,57 @@ static char	elsieid[] = "%W%";
 #define FALSE	0
 #endif /* !defined TRUE */
 
+struct rule {
+	const char *	r_filename;
+	int		r_linenum;
+	const char *	r_name;
+
+	int		r_loyear;	/* for example, 1986 */
+	int		r_hiyear;	/* for example, 1986 */
+	const char *	r_yrtype;
+
+	int		r_month;	/* 0..11 */
+
+	int		r_dycode;	/* see below */
+	int		r_dayofmonth;
+	int		r_wday;
+
+	long		r_tod;		/* time from midnight */
+	int		r_todisstd;	/* above is standard time if TRUE */
+					/* or wall clock time if FALSE */
+	long		r_stdoff;	/* offset from standard time */
+	const char *	r_abbrvar;	/* variable part of abbreviation */
+
+	int		r_todo;		/* a rule to do (used in outzone) */
+	time_t		r_temp;		/* used in outzone */
+};
+
+/*
+**	r_dycode		r_dayofmonth	r_wday
+*/
+
+#define DC_DOM		0	/* 1..31 */	/* unused */
+#define DC_DOWGEQ	1	/* 1..31 */	/* 0..6 (Sun..Sat) */
+#define DC_DOWLEQ	2	/* 1..31 */	/* 0..6 (Sun..Sat) */
+
+struct zone {
+	const char *	z_filename;
+	int		z_linenum;
+
+	const char *	z_name;
+	long		z_gmtoff;
+	const char *	z_rule;
+	const char *	z_format;
+
+	long		z_stdoff;
+
+	struct rule *	z_rules;
+	int		z_nrules;
+
+	struct rule	z_untilrule;
+	time_t		z_untiltime;
+};
+
 extern int	emkdir P((const char * name, int mode));
 extern int	getopt P((int argc, char * argv[], const char * options));
 extern char *	icatalloc P((char * old, const char * new));
@@ -164,39 +215,6 @@ static int		tt_signed;
 #define LP_ROLL		6
 #define LEAP_FIELDS	7
 
-struct rule {
-	const char *	r_filename;
-	int		r_linenum;
-	const char *	r_name;
-
-	int		r_loyear;	/* for example, 1986 */
-	int		r_hiyear;	/* for example, 1986 */
-	const char *	r_yrtype;
-
-	int		r_month;	/* 0..11 */
-
-	int		r_dycode;	/* see below */
-	int		r_dayofmonth;
-	int		r_wday;
-
-	long		r_tod;		/* time from midnight */
-	int		r_todisstd;	/* above is standard time if TRUE */
-					/* or wall clock time if FALSE */
-	long		r_stdoff;	/* offset from standard time */
-	const char *	r_abbrvar;	/* variable part of abbreviation */
-
-	int		r_todo;		/* a rule to do (used in outzone) */
-	time_t		r_temp;		/* used in outzone */
-};
-
-/*
-**	r_dycode		r_dayofmonth	r_wday
-*/
-
-#define DC_DOM		0	/* 1..31 */	/* unused */
-#define DC_DOWGEQ	1	/* 1..31 */	/* 0..6 (Sun..Sat) */
-#define DC_DOWLEQ	2	/* 1..31 */	/* 0..6 (Sun..Sat) */
-
 /*
 ** Year synonyms.
 */
@@ -207,24 +225,6 @@ struct rule {
 
 static struct rule *	rules;
 static int		nrules;	/* number of rules */
-
-struct zone {
-	const char *	z_filename;
-	int		z_linenum;
-
-	const char *	z_name;
-	long		z_gmtoff;
-	const char *	z_rule;
-	const char *	z_format;
-
-	long		z_stdoff;
-
-	struct rule *	z_rules;
-	int		z_nrules;
-
-	struct rule	z_untilrule;
-	time_t		z_untiltime;
-};
 
 static struct zone *	zones;
 static int		nzones;	/* number of zones */
@@ -494,8 +494,8 @@ char *	argv[];
 	associate();
 	for (i = 0; i < nzones; i = j) {
 		/*
-		 * Find the next non-continuation zone entry.
-		 */
+		** Find the next non-continuation zone entry.
+		*/
 		for (j = i + 1; j < nzones && zones[j].z_name == NULL; ++j)
 			;
 		outzone(&zones[i], j - i);
@@ -1825,8 +1825,8 @@ char *	name;
 #endif /* !defined unix */
 		if (!itsdir(name)) {
 			/*
-			 * It doesn't seem to exist, so we try to create it.
-			 */
+			** It doesn't seem to exist, so we try to create it.
+			*/
 			if (emkdir(name, 0755) != 0) {
 				(void) fprintf(stderr,
 					"%s: Can't create directory ",

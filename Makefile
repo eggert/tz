@@ -10,7 +10,7 @@ LOCALTIME=	US/Eastern
 
 # Use an absolute path name for TZDIR unless you're just testing the software.
 
-TZDIR=		/etc/timezones
+TZDIR=		/etc/zoneinfo
 
 # You may want to change this define if you're just testing the software.
 
@@ -21,34 +21,32 @@ TZLIB=		/usr/lib/libtz.a
 
 LINTFLAGS=	-phbaaxc
 
-DEBUG=
 LFLAGS=
-CFLAGS=		$(DEBUG) -O -DOBJECTID -DTZDIR=\"$(TZDIR)\"
+CFLAGS=		-g -DOBJECTID -DTZDIR=\"$(TZDIR)\"
 
 TZCSRCS=	tzcomp.c scheck.c strchr.c mkdir.c
 TZCOBJS=	tzcomp.o scheck.o strchr.o mkdir.o
-TZDSRCS=	tzdump.c settz.c
-TZDOBJS=	tzdump.o settz.o
-DOCS=		README Makefile settz.3 tzfile.5 tzcomp.8
-SOURCES=	tzfile.h $(TZCSRCS) $(TZDSRCS) years.sh ctime.c
-DATA=		asia australasia europe etcetera northamerica pacificnew
+TZDSRCS=	tzdump.c newctime.c
+TZDOBJS=	tzdump.o newctime.o
+DOCS=		README Makefile newctime.3 tzfile.5 tzcomp.8 tzdump.8
+SOURCES=	tzfile.h $(TZCSRCS) $(TZDSRCS) years.sh
+DATA=		asia australasia europe etcetera northamerica pacificnew systemv
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
 all:	REDID_BINARIES tzdump $(TZLIB)
 
 REDID_BINARIES:	$(TZDIR) tzcomp years $(DATA)
-	PATH=.:$$PATH tzcomp -l $(LOCALTIME) -d $(TZDIR) $(DATA)
-	cp /dev/null $@
+	PATH=.:$$PATH tzcomp -l $(LOCALTIME) -d $(TZDIR) $(DATA) && > $@
 
 tzdump:	$(TZDOBJS)
-	$(CC) $(LFLAGS) $(TZDOBJS) -o $@
+	$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@
 
-$(TZLIB):	ctime.o settz.o
-	ar ru $@ ctime.o settz.o
+$(TZLIB):	newctime.o
+	ar ru $@ newctime.o
 	ranlib $@
 
 tzcomp:	$(TZCOBJS)
-	$(CC) $(LFLAGS) $(TZCOBJS) -o $@
+	$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
 
 $(TZDIR):
 	mkdir $@
@@ -70,10 +68,9 @@ BUNDLE3:	$(DATA)
 $(ENCHILADA):
 	sccs get $(REL) $(REV) $@
 
-sure:	$(TZCSRCS) $(TZDSRCS) tzfile.h ctime.c
+sure:	$(TZCSRCS) $(TZDSRCS) tzfile.h
 	lint $(LINTFLAGS) $(TZCSRCS)
 	lint $(LINTFLAGS) $(TZDSRCS)
-	lint $(LINTFLAGS) ctime.c
 
 clean:
 	rm -f core *.o *.out REDID_BINARIES years tzdump tzcomp BUNDLE \#*
@@ -81,4 +78,4 @@ clean:
 CLEAN:	clean
 	sccs clean
 
-tzdump.o tzcomp.o settz.o:	tzfile.h
+tzdump.o tzcomp.o newctime.o:	tzfile.h

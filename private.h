@@ -91,13 +91,13 @@ static char	privatehid[] = "@(#)private.h	7.55";
 #include "time.h"
 #include "stdlib.h"
 
-#if HAVE_GETTEXT - 0
+#if HAVE_GETTEXT
 #include "libintl.h"
-#endif /* HAVE_GETTEXT - 0 */
+#endif /* HAVE_GETTEXT */
 
-#if HAVE_SYS_WAIT_H - 0
+#if HAVE_SYS_WAIT_H
 #include <sys/wait.h>	/* for WIFEXITED and WEXITSTATUS */
-#endif /* HAVE_SYS_WAIT_H - 0 */
+#endif /* HAVE_SYS_WAIT_H */
 
 #ifndef WIFEXITED
 #define WIFEXITED(status)	(((status) & 0xff) == 0)
@@ -106,20 +106,20 @@ static char	privatehid[] = "@(#)private.h	7.55";
 #define WEXITSTATUS(status)	(((status) >> 8) & 0xff)
 #endif /* !defined WEXITSTATUS */
 
-#if HAVE_UNISTD_H - 0
+#if HAVE_UNISTD_H
 #include "unistd.h"	/* for F_OK and R_OK */
-#endif /* HAVE_UNISTD_H - 0 */
+#endif /* HAVE_UNISTD_H */
 
-#if !(HAVE_UNISTD_H - 0)
+#if !HAVE_UNISTD_H
 #ifndef F_OK
 #define F_OK	0
 #endif /* !defined F_OK */
 #ifndef R_OK
 #define R_OK	4
 #endif /* !defined R_OK */
-#endif /* !(HAVE_UNISTD_H - 0) */
+#endif /* !HAVE_UNISTD_H */
 
-/* Unlike <ctype.h>'s isdigit, this also works if c < 0 | c > UCHAR_MAX.  */
+/* Unlike <ctype.h>'s isdigit, this also works if c < 0 | c > UCHAR_MAX. */
 #define is_digit(c) ((unsigned)(c) - '0' <= 9)
 
 /*
@@ -216,7 +216,7 @@ char *	imalloc P((int n));
 void *	irealloc P((void * pointer, int size));
 void	icfree P((char * pointer));
 void	ifree P((char * pointer));
-char *	scheck P((const char *string, const char *format));
+char *	scheck P((const char *string, char *format));
 
 /*
 ** Finally, some convenience items.
@@ -255,7 +255,8 @@ char *	scheck P((const char *string, const char *format));
 ** add one more for a minus sign if the type is signed.
 */
 #define INT_STRLEN_MAXIMUM(type) \
-    ((TYPE_BIT(type) - TYPE_SIGNED(type)) * 302 / 1000 + 1 + TYPE_SIGNED(type))
+	((TYPE_BIT(type) - TYPE_SIGNED(type)) * 302 / 1000 + \
+	1 + TYPE_SIGNED(type))
 #endif /* !defined INT_STRLEN_MAXIMUM */
 
 /*
@@ -289,11 +290,11 @@ char *	scheck P((const char *string, const char *format));
 */
 
 #ifndef _
-#if HAVE_GETTEXT - 0
+#if HAVE_GETTEXT
 #define _(msgid) gettext(msgid)
-#else /* !(HAVE_GETTEXT - 0) */
+#else /* !HAVE_GETTEXT */
 #define _(msgid) msgid
-#endif /* !(HAVE_GETTEXT - 0) */
+#endif /* !HAVE_GETTEXT */
 #endif /* !defined _ */
 
 #ifndef TZ_DOMAIN

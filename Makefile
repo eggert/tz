@@ -16,16 +16,21 @@ TZDIR=		/etc/zoneinfo
 
 TZLIB=		/usr/lib/libz.a
 
-# LINTFLAGS is set for 4.1bsd systems.  If you're using System V, you'll want
+CFLAGS=		-DOBJECTID -DTZDIR=\"$(TZDIR)\"
+
+# If you're running 4.[12]BSD, uncomment the next line.
+# CFLAGS=		-DOBJECTID -DTZDIR=\"$(TZDIR)\" -Dstrchr=index
+
+# LINTFLAGS is set for 4.[123]BSD systems.
+# If you're using System V, you'll want
 # to comment out the "LINTFLAGS=" line.
 
 LINTFLAGS=	-phbaaxc
 
 LFLAGS=
-CFLAGS=		-DOBJECTID -DTZDIR=\"$(TZDIR)\"
 
-TZCSRCS=	zic.c scheck.c strchr.c mkdir.c
-TZCOBJS=	zic.o scheck.o strchr.o mkdir.o
+TZCSRCS=	zic.c scheck.c mkdir.c
+TZCOBJS=	zic.o scheck.o mkdir.o
 TZDSRCS=	zdump.c newctime.c
 TZDOBJS=	zdump.o newctime.o
 DOCS=		README Makefile newctime.3 tzfile.5 zic.8 zdump.8

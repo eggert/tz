@@ -87,6 +87,7 @@ Zone	Canada/Newfoundland	-3:30	Canada		N%sT
 Zone	Canada/Atlantic		-4:00	Canada		A%sT
 Zone	Canada/Eastern		-5:00	Canada		E%sT
 Zone	Canada/Central		-6:00	Canada		C%sT
+Zone	Canada/East-Saskatchewan	-6:00	-	CST # No DST as of 1987
 Zone	Canada/Mountain		-7:00	Canada		M%sT
 Zone	Canada/Pacific		-8:00	Canada		P%sT
 Zone	Canada/Yukon		-9:00	Canada		Y%sT

@@ -185,6 +185,9 @@ YEARISTYPE=	./yearistype
 # If your compiler supports the `long double' type, add
 #	-DHAVE_LONG_DOUBLE
 # to the end of the "CFLAGS=" line.
+#
+# XXX--note about LOCALE_HOME here
+# XXX--note about HAVE_SETLOCALE here
 
 CFLAGS=
 

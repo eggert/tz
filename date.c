@@ -93,7 +93,7 @@ static int		retval = EXIT_SUCCESS;
 
 static void		display();
 static time_t		gettime();
-static int		netsettime();
+int			netsettime();
 static void		timeout();
 static void		usage();
 static time_t		xtime();
@@ -596,7 +596,6 @@ extern	int errno;
  * notifies the master that a correction is needed.
  * Returns 1 on success, 0 on failure.
  */
-static int
 netsettime(ntv)
 	struct timeval ntv;
 {

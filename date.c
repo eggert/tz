@@ -45,11 +45,13 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #include "strings.h"
 #include "tzfile.h"
 
+#ifndef NO_SOCKETS
 #include "sys/socket.h"
 #include "netinet/in.h"
 #include "netdb.h"
 #define TSPTYPES
 #include "protocols/timed.h"
+#endif /* !defined NO_SOCKETS */
 
 /*
 ** What options should be provided?
@@ -179,7 +181,9 @@ static void		ambiguous();
 static void		display();
 static void		finalcheck();
 static time_t		parse();
+#ifdef TSP_SETDATE
 int			netsettime();
+#endif /* defined TSP_SETDATE */
 static char *		nondigit();
 static void		oops();
 static void		timeout();

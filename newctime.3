@@ -45,8 +45,8 @@ string of the form
 .eo
 Thu Nov 24 18:22:48 1986\n\0
 .br
-.ce
 .ec
+Years requiring fewer than four characters are padded with trailing spaces.
 For years longer than four characters, the string is of the form
 .br
 .ce
@@ -54,8 +54,12 @@ For years longer than four characters, the string is of the form
 Thu Nov 24 18:22:48     81986\n\0
 .ec
 .br
+with five spaces before the year.
+This unusual format is designed to make it less likely that older
+software that expects exactly 26 bytes of output will mistakenly output
+misleading values for out-of-range years.
 .PP
-.IR Localtime\^
+.I Localtime\^
 and
 .I gmtime\^
 return pointers to ``tm'' structures, described below.
@@ -212,6 +216,20 @@ points to a static array of characters, which
 will also be overwritten at the next call
 (and by calls to
 .IR tzset ).
+.PP
+.I Asctime\^
+and
+.I ctime\^
+behave strangely for years before 1000 or after 9999.
+The 1989 and 1999 editions of the C Standard say
+that years from \-99 through 999 are converted without
+extra spaces, but this conflicts with longstanding
+tradition and with this implementation.
+Traditional implementations of these two functions are
+restricted to years in the range 1900 through 2099.
+To avoid this portability mess, new programs should use
+.I strftime\^
+instead.
 .PP
 Avoid using out-of-range values with
 .I mktime

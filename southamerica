@@ -174,7 +174,7 @@ Zone America/Buenos_Aires -3:53:48 -	LMT	1894 Oct 31
 # Shanks also makes the following claims, which we haven't verified:
 # - Formosa switched to -3:00 on 1991-01-07.
 # - La Rioja and San Juan switched to -4:00 on 1991-03-01
-#   and then to 03:00 on 1991-05-07.
+#   and then to -3:00 on 1991-05-07.
 # - Misiones switched to -3:00 on 1990-12-29.
 # - Chaco switched to -3:00 on 1991-01-04.
 # - San Luis switched to -4:00 on 1990-03-14, then to -3:00 on 1990-10-15,
@@ -428,8 +428,42 @@ Rule	Brazil	2000	only	-	Feb	27	 0:00	0	-
 #
 # For dates after mid-2002, the following rules are guesses
 # and are quite possibly wrong, but are more likely than no DST at all.
-Rule	Brazil	2000	max	-	Oct	Sun>=8	 0:00	1:00	S
+Rule	Brazil	2000	2001	-	Oct	Sun>=8	 0:00	1:00	S
 Rule	Brazil	2001	max	-	Feb	Sun>=15	 0:00	0	-
+#
+# From Celso Doria via David Madeo (2002-10-09):
+#
+# Yesterday, the local Brazilian authorities signed a decree stating that the
+# Brazilian daylight saving period will start on November 3rd 2002 and will
+# last until February 16th 2003.
+#
+# So, clocks will be set one hour forward on November 3rd (12:00 a.m. will be
+# changed to 1:00 a.m.) and at midnight (0:00 am) on February 16th,  Brazil
+# will adjust its clocks back one hour (23:00 pm on Feb 15th) marking the
+# end.
+#
+# The reason for the delay this year has to do with elections in Brazil.
+#
+# Unlike in the United States, elections in Brazil are 100% computerized and
+# the results are known almost immediately.  Yesterday,  it was the first
+# round of the elections when 115 million Brazilians voted for  President,
+# Governor,  Senators, Federal Deputies, and State Deputies. Nobody is
+# counting (or re-counting) votes anymore and we know there will be a second
+# round for the Presidency and also for some Governors. The 2nd round will
+# take place on October 27th.
+#
+# The reason why the DST will only begin November 3rd is that the thousands
+# of electoral machines used cannot have their time changed, and since the
+# Constitution says the elections must begin at 8:00 AM and end at 5:00 PM ,
+# the Government decided to postpone DST, instead of changing the
+# Constitution (maybe, for the next elections, it will be possible to change
+# the clock)...
+#
+Rule	Brazil	2002	only	-	Nov	 3	 0:00	1:00	S
+#
+Rule	Brazil	2003	max	-	Oct	Sun>=8	 0:00	1:00	S
+# For dates after mid-2003, the above rules with TO="max" are guesses
+# and are quite possibly wrong, but are more likely than no DST at all.
 
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

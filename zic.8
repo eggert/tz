@@ -67,7 +67,10 @@ The fields that make up a rule line are:
 Gives the (arbitrary) name of the set of rules this rule is part of.
 .TP
 .B FROM
-Gives the first year in which the rule applies.
+Gives the first year in which the rule applies;
+any abbreviation of the word
+.B maximum
+may be used to indicate the maximum year whose time values are representable.
 .TP
 .B TO
 Gives the last year in which the rule applies.
@@ -75,7 +78,9 @@ The word
 .B only
 may be used to repeat the value of the
 .B FROM
-field.
+field; any abbreviation of the word
+.B maximum
+may be used as above.
 .TP
 .B TYPE
 Gives the type of year in which the year applies.  If
@@ -186,8 +191,8 @@ A zone line has the form
 .sp
 .nf
 .ti +.5i
-.ta \w'Zone\0\0'u +\w'Australia/South\-west\0\0'u +\w'GMTOFF\0\0'u +\w'RULES/STDOFF\0\0'u +\w'FORMAT\0\0'u
-Zone	NAME	GMTOFF	RULES/STDOFF	FORMAT	[UNTIL]
+.ta \w'Zone\0\0'u +\w'Australia/South\-west\0\0'u +\w'GMTOFF\0\0'u +\w'RULES/SAVE\0\0'u +\w'FORMAT\0\0'u
+Zone	NAME	GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 .sp
 For example:
 .sp
@@ -211,7 +216,7 @@ and
 fields of rule lines;
 begin the field with a minus sign if time must be subtracted from GMT.
 .TP
-.B RULES/STDOFF
+.B RULES/SAVE
 The name of the rule(s) that apply in the time zone or,
 alternately, an amount of time to add to local standard time.
 If this field is
@@ -276,7 +281,7 @@ Times in
 .B UNTIL
 fields must be given in local standard (not local wall clock) time.
 .SH FILES
-/etc/timezones	standard directory used for created files
+/etc/zoneinfo	standard directory used for created files
 .SH "SEE ALSO"
-settz(3), tzfile(5)
+settz(3), tzfile(5), tzdump(8)
 .. %W%

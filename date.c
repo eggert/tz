@@ -44,6 +44,13 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #include "utmpx.h"
 #endif
 
+#ifndef OTIME_MSG
+#define OTIME_MSG "old time"
+#endif
+#ifndef NTIME_MSG
+#define NTIME_MSG "new time"
+#endif
+
 /*
 ** The two things date knows about time are. . .
 */

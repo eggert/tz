@@ -4,7 +4,7 @@
 
 #ifndef lint
 #ifndef NOID
-static char	sccsid[] = "%W%";
+static char	elsieid[] = "%W%";
 #endif /* !NOID */
 #endif /* !lint */
 

@@ -2,7 +2,6 @@
 
 TODO BEFORE comp.sources RELEASE:
 
-*	Find out if extant strftimes append newline.
 *	Incorporate changes from testers
 *	Turn everything with a version number less than "5.1" into "5.1".
 

@@ -70,11 +70,8 @@ ASCII string that's the time zone abbreviation to be used with
 return value.
 .PP
 .I Newctime
-returns a pointer to a string of the form
-.ti +.5i
-Sat Feb 15 15:45:51 1986 EST\\n\\0
-.br
-where the last (variable-width) field is the time zone abbreviation.
+returns
+.IR "asctime(newlocaltime(*clock))".
 .SH DIAGNOSTICS
 .I Settz
 returns zero if all seems well; it returns negative one otherwise

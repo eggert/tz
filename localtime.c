@@ -1183,6 +1183,8 @@ int * const		okayp;
 
 	*okayp = FALSE;
 	yourtm = *tmp;
+	if (yourtm.tm_sec >= SECSPERMIN + 2 || yourtm.tm_sec < 0)
+		normalize(&yourtm.tm_min, &yourtm.tm_sec, SECSPERMIN);
 	normalize(&yourtm.tm_hour, &yourtm.tm_min, MINSPERHOUR);
 	normalize(&yourtm.tm_mday, &yourtm.tm_hour, HOURSPERDAY);
 	normalize(&yourtm.tm_year, &yourtm.tm_mon, MONSPERYEAR);

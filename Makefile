@@ -396,9 +396,9 @@ public:		$(ENCHILADA) zic
 
 typecheck:	
 		make clean
-		for i in "long long" double unsigned; \
+		for i in "long long" unsigned double; \
 		do \
-			make CFLAGS="-D_TIME_T \"-Dtime_t=$$i\"" ; \
+			make CFLAGS="-DTYPECHECK -D_TIME_T \"-Dtime_t=$$i\"" ; \
 			./zdump -v US/Eastern ; \
 			make clean ; \
 		done

@@ -186,13 +186,13 @@ A zone line has the form
 .sp
 .nf
 .ti +.5i
-.ta \w'Zone\0\0'u +\w'Eastern\-US\0\0'u +\w'GMTOFF\0\0'u +\w'RULES\0\0'u
-Zone	NAME	GMTOFF	RULES	FORMAT
+.ta \w'Zone\0\0'u +\w'Australia/South\-west\0\0'u +\w'GMTOFF\0\0'u +\w'RULES\0\0'u +\w'FORMAT\0\0'u
+Zone	NAME	GMTOFF	RULES	FORMAT	[UNTIL]
 .sp
 For example:
 .sp
 .ti +.5i
-Zone	Eastern\-US	\-5:00	USA	E%sT
+Zone	Australia/South\-west	9:30	Aus	CST	1987 Mar 15 2:00
 .sp
 .fi
 The fields that make up a zone line are:
@@ -222,6 +222,22 @@ The format for time zone abbreviations in this time zone.
 The pair of characters
 .B %s
 is used to show where the ``variable part'' of the time zone abbreviation goes.
+.B UNTIL
+The time at which the GMT offset or the rule(s) change for a location.
+It is specified as a year, a month, a day, and a time of day.  If this is
+specified, the time zone information is generated from the given GMT offset
+and rule change until the time specified.
+.IP
+The next line must be a
+``continuation'' line; this has the same form as a zone line except that the
+string ``Zone'' and the name are omitted, as the continuation line will
+place information starting at the time specified as the
+.B UNTIL
+field in the previous line in the file used by the previous line.
+Continuation lines may contain an
+.B UNTIL
+field, just as zone lines do, indicating that the next line is a further
+continuation.
 .PP
 A link line has the form
 .sp

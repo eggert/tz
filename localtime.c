@@ -789,6 +789,10 @@ const int			lastditch;
 			** from GMT, and put the real standard and summer
 			** time offsets into the rules in place of the
 			** prototype offsets.
+			**
+			** XXX--want to be able to cope with "oldfix != dstfix"
+			** and "oldfix != stdfix" so that zones such as
+			** Europe/Berlin can be used as templates.
 			*/
 			sawstd = FALSE;
 			sawdst = FALSE;

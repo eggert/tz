@@ -15,30 +15,30 @@
 # Daylight Saving Time in the US was by local option, except during wartime.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	MostUS	1918	1919	-	Mar	lastSun	2:00	1:00	D
-Rule	MostUS	1918	1919	-	Oct	lastSun	2:00	0	S
-Rule	MostUS	1942	only	-	Feb	9	2:00	1:00	W # War
-Rule	MostUS	1945	only	-	Sep	30	2:00	0	S
-Rule	MostUS	1967	2037	-	Oct	lastSun	2:00	0	S
-Rule	MostUS	1967	1973	-	Apr	lastSun	2:00	1:00	D
-Rule	MostUS	1974	only	-	Jan	6	2:00	1:00	D
-Rule	MostUS	1975	only	-	Feb	23	2:00	1:00	D
-Rule	MostUS	1976	1986	-	Apr	lastSun	2:00	1:00	D
-Rule	MostUS	1987	2037	-	Apr	Sun>=1	2:00	1:00	D
+Rule	USA	1918	1919	-	Mar	lastSun	2:00	1:00	D
+Rule	USA	1918	1919	-	Oct	lastSun	2:00	0	S
+Rule	USA	1942	only	-	Feb	9	2:00	1:00	W # War
+Rule	USA	1945	only	-	Sep	30	2:00	0	S
+Rule	USA	1967	2037	-	Oct	lastSun	2:00	0	S
+Rule	USA	1967	1973	-	Apr	lastSun	2:00	1:00	D
+Rule	USA	1974	only	-	Jan	6	2:00	1:00	D
+Rule	USA	1975	only	-	Feb	23	2:00	1:00	D
+Rule	USA	1976	1986	-	Apr	lastSun	2:00	1:00	D
+Rule	USA	1987	2037	-	Apr	Sun>=1	2:00	1:00	D
 
 ###############################################################################
 
 # New names
 
 # Zone	NAME			GMTOFF	RULES	FORMAT
-Zone	US/Eastern		-5:00	MostUS	E%sT
-Zone	US/Central		-6:00	MostUS	C%sT
-Zone	US/Mountain		-7:00	MostUS	M%sT
-Zone	US/Pacific		-8:00	MostUS	P%sT
-Zone	US/Aleutian		-10:00	MostUS	A%sT
-Link	US/Aleutian		US/Alaskan
+Zone	US/Eastern		-5:00	USA	E%sT
+Zone	US/Central		-6:00	USA	C%sT
+Zone	US/Mountain		-7:00	USA	M%sT
+Zone	US/Pacific		-8:00	USA	P%sT
+Zone	US/Yukon		-9:00	USA	Y%sT
 
-# Old names
+# Old names, for S5 compatability
+# USA only, but then AT&T-IS never supported anybody else
 
 # Link	LINK-FROM	LINK-TO
 Link	US/Eastern	EST5EDT
@@ -80,20 +80,20 @@ Zone	US/Hawaiian	-10:00	Hawaii	H%sT
 
 # Canada is reportedly lots easier than the US--leastways since 1951.
 # I don't know what they did before then.
+# 4.3BSD claims that it's perfectly regular.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Canada	1967	2037	-	Apr	lastSun	2:00	1:00	D
 Rule	Canada	1967	2037	-	Oct	lastSun	2:00	0	S
 
 # Zone	NAME			GMTOFF	RULES	FORMAT
+# Bob Devine says that DST *is* observed in Newfoundland
+Zone	Canada/Newfoundland	-3:30	Canada	N%sT
 Zone	Canada/Atlantic		-4:00	Canada	A%sT
 Zone	Canada/Eastern		-5:00	Canada	E%sT
 Zone	Canada/Central		-6:00	Canada	C%sT
 Zone	Canada/Mountain		-7:00	Canada	M%sT
 Zone	Canada/Pacific		-8:00	Canada	P%sT
 Zone	Canada/Yukon		-9:00	Canada	Y%sT
-Zone	Canada/Aleutian		-10:00	Canada	A%sT
-# Bob Devine says that DST *is* observed in Newfoundland
-Zone	Canada/Newfoundland	-3:30	Canada	N%sT
 
 # ?Mexico?  !Quien sabe!

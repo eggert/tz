@@ -32,6 +32,11 @@ Link	America/Havana		Cuba
 Link	Africa/Cairo		Egypt
 Link	Europe/Dublin		Eire
 Link	Europe/London		GB
+Link	Etc/GMT			GMT
+Link	Etc/GMT+0		GMT+0
+Link	Etc/GMT-0		GMT-0
+Link	Etc/GMT0		GMT0
+Link	Etc/Greenwich		Greenwich
 Link	Asia/Hong_Kong		Hongkong
 Link	Atlantic/Reykjavik	Iceland
 Link	Asia/Tehran		Iran
@@ -52,6 +57,7 @@ Link	Asia/Taipei		ROC
 Link	Asia/Seoul		ROK
 Link	Asia/Singapore		Singapore
 Link	Europe/Istanbul		Turkey
+Link	Etc/UCT			UCT
 Link	America/Anchorage	US/Alaska
 Link	America/Atka		US/Aleutian
 Link	America/Phoenix		US/Arizona
@@ -64,3 +70,6 @@ Link	America/Detroit		US/Michigan
 Link	America/Denver		US/Mountain
 Link	America/Los_Angeles	US/Pacific
 Link	Pacific/Samoa		US/Samoa
+Link	Etc/UTC			UTC
+Link	Etc/Universal		Universal
+Link	Etc/Zulu		Zulu

@@ -131,7 +131,10 @@ register const struct state * const	sp;
 {
 	register int	i;
 
-	tzname[0] = tzname[1] = (char *) &sp->chars[0];
+	/*
+	** Avoid using stuff left over from previously set zone (if any).
+	*/
+	tzname[0] = tzname[1] = "   ";
 #ifdef USG_COMPAT
 	timezone = -sp->ttis[0].tt_gmtoff;
 	daylight = 0;

@@ -1,5 +1,3 @@
-#include "stdio.h"
-
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";
@@ -11,6 +9,7 @@ static char	elsieid[] = "%W%";
 #include "tzfile.h"
 #include "time.h"
 #include "string.h"
+#include "nonstd.h"
 
 #if defined __TURBOC__
 #include "io.h"			/* to pick up prototypes for open and such */
@@ -37,7 +36,17 @@ static char	elsieid[] = "%W%";
 #define ACCESS_MODE	4
 #endif /* !defined O_RDONLY */
 
-#ifdef const
+#ifdef __STDC__
+
+#include "time.h"
+
+#include "stdlib.h"
+
+#ifdef FILENAME_MAX
+#define MAXPATHLEN	FILENAME_MAX
+#endif /* defined FILENAME_MAX */
+
+#else /* !defined __STDC__ */
 
 #include "sys/types.h"		/* to get time_t */
 
@@ -47,16 +56,7 @@ extern char *	getenv();
 #include "sys/param.h"
 #endif /* !defined MAXPATHLEN */
 
-#else /* !defined const */
-
-#include "stdlib.h"
-#include "time.h"
-
-#ifdef FILENAME_MAX
-#define MAXPATHLEN	FILENAME_MAX
-#endif /* defined FILENAME_MAX */
-
-#endif /* !defined const */
+#endif /* !defined __STDC__ */
 
 #ifndef MAXPATHLEN
 #define MAXPATHLEN	1024

@@ -12,14 +12,13 @@ static char	sccsid[] = "%W%";
 
 #ifndef alloc_t
 #define alloc_t	unsigned
-#endif
+#endif /* !alloc_t */
 
 #ifdef MAL
 #define NULLMAL(x)	((x) == NULL || (x) == MAL)
-#endif
-#ifndef MAL
+#else /* !MAL */
 #define NULLMAL(x)	((x) == NULL)
-#endif
+#endif /* !MAL */
 
 extern char *	calloc();
 extern char *	malloc();
@@ -36,12 +35,11 @@ imalloc(n)
 		n = 1;
 	result = malloc((alloc_t) n);
 	return (result == MAL) ? NULL : result;
-#endif
-#ifndef MAL
+#else /* !MAL */
 	if (n == 0)
 		n = 1;
 	return malloc((alloc_t) n);
-#endif
+#endif /* !MAL */
 }
 
 char *

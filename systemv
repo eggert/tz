@@ -1,6 +1,5 @@
 # %W%
 
-#
 # Old rules, should the need arise.
 # No attempt is made to handle Newfoundland, since it cannot be expressed
 # using the System V "TZ" scheme (half-hour offset), or anything outside
@@ -8,6 +7,7 @@
 # the change in the DST rules in the US in 1987 (can't split between
 # Canada, with no changes, and the US)
 #
+# Be sure to compile this *without* leap second correction for true conformance.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	SystemV	min	1973	-	Apr	lastSun	2:00	1:00	D

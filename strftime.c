@@ -112,10 +112,10 @@ extern char *	tzname[];
 
 size_t
 strftime(s, maxsize, format, t)
-char *			s;
+char * const		s;
 const size_t		maxsize;
 const char * const	format;
-const struct tm *	t;
+const struct tm * const	t;
 {
 	char *	p;
 
@@ -132,9 +132,9 @@ const struct tm *	t;
 static char *
 _fmt(format, t, pt, ptlim)
 const char *		format;
-const struct tm *	t;
+const struct tm * const	t;
 char *			pt;
-const char *		ptlim;
+const char * const	ptlim;
 {
 	for ( ; *format; ++format) {
 		if (*format == '%') {
@@ -420,7 +420,7 @@ label:
 static char *
 _conv(n, format, pt, ptlim)
 const int		n;
-const char *		format;
+const char * const	format;
 char * const		pt;
 const char * const	ptlim;
 {

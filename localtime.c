@@ -22,7 +22,7 @@ static char	sccsid[] = "%W%";
 #endif /* !MAXPATHLEN */
 
 extern char *		getenv();
-exter struct tm *	gmtime();
+extern struct tm *	gmtime();
 extern char *		strcpy();
 extern char *		strcat();
 

@@ -156,14 +156,6 @@ struct tzhead {
 #define EPOCH_YEAR	1970
 #define EPOCH_WDAY	TM_THURSDAY
 
-/*
-** Given an integral argument (a) and a positive integral argument (b),
-** return a % b per C99.
-*/
-
-#define C99IPMOD(a, b)	((-1 % 2 < 0 || (a) >= 0) ? \
-				((a) % (b)) : ((a) % (b) - (b)))
-
 #define isleap(y) (((y) % 4) == 0 && (((y) % 100) != 0 || ((y) % 400) == 0))
 
 /*
@@ -173,11 +165,12 @@ struct tzhead {
 **	isleap(a + b) == isleap((a + b) % 400)
 ** or
 **	isleap(a + b) == isleap(a % 400 + b % 400)
-** (at least under the C99 definition of %).
+** This is true even if % means modulo rather than Fortran remainder
+** (which is allowed by C89 but not C99).
 ** We use this to avoid addition overflow problems.
 */
 
-#define isleap_sum(a, b)	isleap(C99IPMOD((a), 400) + C99IPMOD((b), 400))
+#define isleap_sum(a, b)	isleap((a) % 400 + (b) % 400)
 
 #ifndef USG
 

@@ -771,87 +771,82 @@ const int			lastditch;
 					SECSPERDAY;
 			}
 		} else {
-			int		sawstd;
-			int		sawdst;
-			long		stdfix;
-			long		dstfix;
-			long		oldfix;
-			int		isdst;
+			register long	theirstdoffset;
+			register long	theirdstoffset;
+			register long	theiroffset;
+			register int	isdst;
 			register int	i;
+			register int	j;
 
 			if (*name != '\0')
 				return -1;
 			if (load_result != 0)
 				return -1;
 			/*
-			** Compute the difference between the real and
-			** prototype standard and summer time offsets
-			** from GMT, and put the real standard and summer
-			** time offsets into the rules in place of the
-			** prototype offsets.
-			**
-			** XXX--want to be able to cope with "oldfix != dstfix"
-			** and "oldfix != stdfix" so that zones such as
-			** Europe/Berlin can be used as templates.
+			** Initial values of theirstdoffset and theirdstoffset.
 			*/
-			sawstd = FALSE;
-			sawdst = FALSE;
-			INITIALIZE(stdfix);
-			INITIALIZE(dstfix);
-			for (i = 0; i < sp->typecnt; ++i) {
-				if (sp->ttis[i].tt_isdst) {
-					oldfix = dstfix;
-					dstfix = sp->ttis[i].tt_gmtoff +
-						dstoffset;
-					if (sawdst && (oldfix != dstfix))
-						return -1;
-					sp->ttis[i].tt_gmtoff = -dstoffset;
-					sp->ttis[i].tt_abbrind = stdlen + 1;
-					sawdst = TRUE;
-				} else {
-					oldfix = stdfix;
-					stdfix = sp->ttis[i].tt_gmtoff +
-						stdoffset;
-					if (sawstd && (oldfix != stdfix))
-						return -1;
-					sp->ttis[i].tt_gmtoff = -stdoffset;
-					sp->ttis[i].tt_abbrind = 0;
-					sawstd = TRUE;
+			theirstdoffset = 0;
+			for (i = 0; i < sp->timecnt; ++i) {
+				j = sp->types[i];
+				if (!sp->ttis[j].tt_isdst) {
+					theirstdoffset = -sp->ttis[j].tt_gmtoff;
+					break;
+				}
+			}
+			theirdstoffset = 0;
+			for (i = 0; i < sp->timecnt; ++i) {
+				j = sp->types[i];
+				if (sp->ttis[j].tt_isdst) {
+					theirdstoffset = -sp->ttis[j].tt_gmtoff;
+					break;
 				}
 			}
 			/*
-			** Make sure we have both standard and summer time.
+			** Initially we're assumed to be in standard time.
 			*/
-			if (!sawdst || !sawstd)
-				return -1;
+			isdst = FALSE;
+			theiroffset = theirstdoffset;
 			/*
-			** Now correct the transition times by shifting
-			** them by the difference between the real and
-			** prototype offsets.  Note that this difference
-			** can be different in standard and summer time;
-			** the prototype probably has a 1-hour difference
-			** between standard and summer time, but a different
-			** difference can be specified in TZ.
+			** Now juggle transition times and types
+			** tracking offsets as you do.
 			*/
-			isdst = FALSE;	/* we start in standard time */
 			for (i = 0; i < sp->timecnt; ++i) {
-				register const struct ttinfo *	ttisp;
-
-				/*
-				** If summer time is in effect, and the
-				** transition time was not specified as
-				** standard time, add the summer time
-				** offset to the transition time;
-				** otherwise, add the standard time offset
-				** to the transition time.
-				*/
-				ttisp = &sp->ttis[sp->types[i]];
-				if (!ttisp->tt_ttisgmt)
-					sp->ats[i] +=
-						(isdst && !ttisp->tt_ttisstd) ?
-							dstfix : stdfix;
-				isdst = ttisp->tt_isdst;
+				j = sp->types[i];
+				sp->types[i] = sp->ttis[j].tt_isdst;
+				if (sp->ttis[j].tt_ttisgmt) {
+					/* No adjustment to transition time */
+				} else {
+					/*
+					** If summer time is in effect, and the
+					** transition time was not specified as
+					** standard time, add the summer time
+					** offset to the transition time;
+					** otherwise, add the standard time
+					** offset to the transition time.
+					*/
+					if (isdst && !sp->ttis[j].tt_ttisstd) {
+						sp->ats[i] += dstoffset -
+							theirdstoffset;
+					} else {
+						sp->ats[i] += stdoffset -
+							theirstdoffset;
+					}
+				}
+				theiroffset = -sp->ttis[j].tt_gmtoff;
+				if (sp->ttis[j].tt_isdst)
+					theirdstoffset = theiroffset;
+				else	theirstdoffset = theiroffset;
 			}
+			/*
+			** Finally, fill in ttis.
+			** ttisstd and ttisgmt need not be handled.
+			*/
+			sp->ttis[0].tt_gmtoff = -stdoffset;
+			sp->ttis[0].tt_isdst = FALSE;
+			sp->ttis[0].tt_abbrind = 0;
+			sp->ttis[1].tt_gmtoff = -dstoffset;
+			sp->ttis[1].tt_isdst = TRUE;
+			sp->ttis[1].tt_abbrind = stdlen + 1;
 		}
 	} else {
 		dstlen = 0;

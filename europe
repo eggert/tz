@@ -6,41 +6,40 @@
 #
 # One source shows that Bulgaria, Cyprus, Finland, and Greece observe DST from
 # the last Sunday in March to the last Sunday in September in 1986.
-# Did any/all of them have Middle Europe's 1983 wobble?
+# The source shows Romania changing a day later than everybody else.
 #
 # According to Bernard Sieloff's source, Poland is in the MET time zone but
 # uses the WE DST rules.  The Western USSR uses EET+1 and ME DST rules.
-# The source shows Romania changing a day later than everybody else.
-# Bernard Sieloff's source claims they switch on the same day, but at
+# Bernard Sieloff's source claims Romania switches on the same day, but at
 # 00:00 standard time (i.e., 01:00 DST).  It also claims that Turkey
 # switches on the same day, but switches on at 01:00 standard time
 # and off at 00:00 standard time (i.e., 01:00 DST)
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	GB-Eire	1969	2037	-	Mar	lastSun	1:00s	1:00	BST
-Rule	GB-Eire	1969	2037	-	Oct	lastSun	1:00s	0	GMT
+Rule	GB-Eire	1969	max	-	Mar	lastSun	1:00s	1:00	BST
+Rule	GB-Eire	1969	max	-	Oct	lastSun	1:00s	0	GMT
 
-Rule	W-Eur	1969	2037	-	Mar	lastSun	1:00s	1:00	" DST"
-Rule	W-Eur	1969	2037	-	Sep	lastSun	1:00s	0	-
+Rule	W-Eur	1969	max	-	Mar	lastSun	1:00s	1:00	" DST"
+Rule	W-Eur	1969	max	-	Sep	lastSun	1:00s	0	-
 
-Rule	M-Eur	1969	2037	-	Mar	lastSun	2:00s	1:00	" DST"
-Rule	M-Eur	1969	2037	-	Sep	lastSun	2:00s	0	-
+Rule	M-Eur	1969	max	-	Mar	lastSun	2:00s	1:00	" DST"
+Rule	M-Eur	1969	max	-	Sep	lastSun	2:00s	0	-
 
-Rule	E-Eur	1969	2037	-	Mar	lastSun	3:00s	1:00	" DST"
-Rule	E-Eur	1969	2037	-	Sep	lastSun	3:00s	0	-
+Rule	E-Eur	1969	max	-	Mar	lastSun	3:00s	1:00	" DST"
+Rule	E-Eur	1969	max	-	Sep	lastSun	3:00s	0	-
 
-Rule	Turkey	1969	2037	-	Mar	lastSun	1:00	1:00	" DST"
-Rule	Turkey	1969	2037	-	Sep	lastSun	1:00	0	-
+Rule	Turkey	1969	max	-	Mar	lastSun	1:00	1:00	" DST"
+Rule	Turkey	1969	max	-	Sep	lastSun	1:00	0	-
 
-Rule	W-SU	1969	2037	-	Mar	lastSun	2:00s	1:00	" DST"
-Rule	W-SU	1969	2037	-	Sep	lastSun	2:00s	0	-
+Rule	W-SU	1969	max	-	Mar	lastSun	2:00s	1:00	" DST"
+Rule	W-SU	1969	max	-	Sep	lastSun	2:00s	0	-
 
-# Zone	NAME		GMTOFF	RULES	FORMAT
-Zone	GB-Eire		0:00	GB-Eire	%s
-Zone	WET		0:00	W-Eur	WET%s
-Zone	Iceland		0:00	-	WET
-Zone	MET		1:00	M-Eur	MET%s
-Zone	Poland		1:00	W-Eur	MET%s
-Zone	EET		2:00	E-Eur	EET%s
-Zone	Turkey		3:00	Turkey	EET%s
-Zone	W-SU		3:00	M-Eur	????
+# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	GB-Eire		0:00	GB-Eire		%s
+Zone	WET		0:00	W-Eur		WET%s
+Zone	Iceland		0:00	-		WET
+Zone	MET		1:00	M-Eur		MET%s
+Zone	Poland		1:00	W-Eur		MET%s
+Zone	EET		2:00	E-Eur		EET%s
+Zone	Turkey		3:00	Turkey		EET%s
+Zone	W-SU		3:00	M-Eur		????

@@ -525,9 +525,9 @@ extern size_t	strftime();
 
 static void
 timeout(fp, format, tmp)
-FILE *	fp;
-char *	format;
-tm *	tmp;
+FILE *		fp;
+char *		format;
+struct tm *	tmp;
 {
 	char *	cp;
 	size_t	result, size;
@@ -991,7 +991,7 @@ netsettime(ntv)
 	msg.tsp_type = TSP_SETDATE;
 	msg.tsp_vers = TSPVERSION;
 	if (gethostname(hostname, sizeof (hostname))) {
-		perror("date: gethostname");
+		perror("gethostname");
 		goto bad;
 	}
 	(void) strncpy(msg.tsp_name, hostname, sizeof (hostname));
@@ -1047,7 +1047,7 @@ loop:
 			return (1);
 
 		default:
-			(void) fprintf(stderr,
+			fprintf(stderr,
 			    "date: Wrong ack received from timed: %s\n", 
 			    tsptype[msg.tsp_type]);
 			timed_ack = -1;

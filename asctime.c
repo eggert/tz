@@ -77,10 +77,10 @@ char *				buf;
 	long			year;
 	char			result[MAX_ASCTIME_BUF_SIZE];
 
-	if (timeptr->tm_wday < 0 || timeptr->tm_wday >= DAYSPERWEEK)
+	if ((unsigned) timeptr->tm_wday >= DAYSPERWEEK)
 		wn = "???";
 	else	wn = wday_name[timeptr->tm_wday];
-	if (timeptr->tm_mon < 0 || timeptr->tm_mon >= MONSPERYEAR)
+	if ((unsigned) timeptr->tm_mon >= MONSPERYEAR)
 		mn = "???";
 	else	mn = mon_name[timeptr->tm_mon];
 	year = timeptr->tm_year + (long) TM_YEAR_BASE;

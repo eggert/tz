@@ -597,7 +597,7 @@ char *	name;
 		perror(filename);
 		exit(1);
 	}
-	if (fclose(fp)) {
+	if (fp != stdin && fclose(fp)) {
 		(void) fprintf(stderr, "%s: Error closing ", progname);
 		perror(filename);
 		exit(1);

@@ -38,10 +38,10 @@ static const char	sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
 #include "locale.h"
 
 struct lc_time_T {
-	const char *	mon[12];
-	const char *	month[12];
-	const char *	wday[7];
-	const char *	weekday[7];
+	const char *	mon[MONSPERYEAR];
+	const char *	month[MONSPERYEAR];
+	const char *	wday[DAYSPERWEEK];
+	const char *	weekday[DAYSPERWEEK];
 	const char *	X_fmt;
 	const char *	x_fmt;
 	const char *	c_fmt;
@@ -148,12 +148,14 @@ label:
 				--format;
 				break;
 			case 'A':
-				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
+				pt = _add((t->tm_wday < 0 ||
+					t->tm_wday >= DAYSPERWEEK) ?
 					"?" : Locale->weekday[t->tm_wday],
 					pt, ptlim);
 				continue;
 			case 'a':
-				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
+				pt = _add((t->tm_wday < 0 ||
+					t->tm_wday >= DAYSPERWEEK) ?
 					"?" : Locale->wday[t->tm_wday],
 					pt, ptlim);
 				continue;
@@ -299,7 +301,8 @@ label:
 				pt = _add("\t", pt, ptlim);
 				continue;
 			case 'U':
-				pt = _conv((t->tm_yday + 7 - t->tm_wday) / 7,
+				pt = _conv((t->tm_yday + DAYSPERWEEK -
+					t->tm_wday) / DAYSPERWEEK,
 					"%02d", pt, ptlim);
 				continue;
 			case 'u':
@@ -309,7 +312,8 @@ label:
 				** [1 (Monday) - 7]"
 				** (ado, 5/24/93)
 				*/
-				pt = _conv((t->tm_wday == 0) ? 7 : t->tm_wday,
+				pt = _conv((t->tm_wday == 0) ?
+					DAYSPERWEEK : t->tm_wday,
 					"%d", pt, ptlim);
 				continue;
 			case 'V':	/* ISO 8601 week number */
@@ -406,9 +410,10 @@ label:
 				pt = _fmt("%e-%b-%Y", t, pt, ptlim);
 				continue;
 			case 'W':
-				pt = _conv((t->tm_yday + 7 -
+				pt = _conv((t->tm_yday + DAYSPERWEEK -
 					(t->tm_wday ?
-					(t->tm_wday - 1) : 6)) / 7,
+					(t->tm_wday - 1) :
+					(DAYSPERWEEK - 1))) / DAYSPERWEEK,
 					"%02d", pt, ptlim);
 				continue;
 			case 'w':

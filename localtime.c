@@ -1219,7 +1219,8 @@ register struct tm * const		tmp;
 	if (tmp->tm_wday < 0)
 		tmp->tm_wday += DAYSPERWEEK;
 	y = EPOCH_YEAR;
-#define LEAPS_THRU_END_OF(y)	((y) / 4 - (y) / 100 + (y) / 400)
+#define IPQ(i, p)	((i) / (p) - (((i) % (p)) < 0))
+#define LEAPS_THRU_END_OF(y)	(IPQ((y), 4) - IPQ((y), 100) + IPQ((y), 400))
 	while (days < 0 || days >= (long) year_lengths[yleap = isleap(y)]) {
 		register long	newy;
 

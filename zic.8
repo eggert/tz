@@ -398,6 +398,26 @@ or
 .q Rolling
 if the leap second time given by the other fields should be interpreted as
 local wall clock time.
+.PP
+A line such as
+.br
+.in +.5i
+#Updated Zone America/New_York 1997 Nov 19 12:00:00
+.br
+.in -.5i
+or
+.br
+.in +.5i
+#Updated Rule NYC 1997 Nov 19 12:00:00
+.br
+.in -.5i
+associates the update time given at the end of the line with the indicated
+zone or rule. Fields past the year are optional.
+When
+.I zic
+generates output for a zone,
+it stamps the output with the greatest update time associated with the zone
+or any of the rules the zone uses.
 .SH NOTE
 For areas with more than two types of local time,
 you may need to use local standard time in the

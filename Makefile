@@ -275,13 +275,13 @@ $(TZLIB):	$(LIBOBJS)
 		if [ -x /usr/ucb/ranlib -o -x /usr/bin/ranlib ] ; \
 			then ranlib $@ ; fi
 
-# We use the system's logwtmp and strftime in preference to ours if available.
+# We use the system's getopt and logwtmp in preference to ours if available.
 
 date:		$(DATEOBJS)
-		ar r ,lib.a logwtmp.o strftime.o
+		ar r ,lib.a getopt.o logwtmp.o
 		if [ -x /usr/ucb/ranlib -o -x /usr/bin/ranlib ] ; \
 			then ranlib ,lib.a ; fi
-		$(CC) $(CFLAGS) date.o localtime.o asctime.o getopt.o \
+		$(CC) $(CFLAGS) date.o localtime.o asctime.o strftime.o \
 			-lc ,lib.a -o $@
 		rm -f ,lib.a
 

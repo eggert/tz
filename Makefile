@@ -63,7 +63,7 @@ TZLIB=		/usr/lib/libz.a
 # If you'll never want to handle solar-time-based time zones, add
 #	-DNOSOLAR
 # to the end of the "CFLAGS=" line
-# (and remove solar87 from the DATA= line below).
+# (and remove solar87 and solar88 from the DATA= line below).
 #
 
 CFLAGS=
@@ -92,7 +92,7 @@ SOURCES=	tzfile.h zic.c zdump.c \
 		localtime.c asctime.c ctime.c dysize.c timemk.c \
 		scheck.c ialloc.c mkdir.c
 DATA=		asia australasia europe etcetera northamerica \
-		pacificnew systemv solar87
+		pacificnew southamerica systemv solar87 solar88
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
 all:		REDID_BINARIES zdump $(TZLIB)

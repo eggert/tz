@@ -5,41 +5,47 @@ static char	elsieid[] = "%W%";
 #endif /* !lint */
 
 #include "stdio.h"
-#include "sys/types.h"
 #include "time.h"
 #include "tzfile.h"
+#include "string.h"
+
+#if defined unix
+#include "sys/types.h"
+#endif /* defined unix */
+
+#ifndef const
+#include "stdlib.h"
+#endif /* !defined const */
+
+#ifndef EXIT_SUCCESS
+#define EXIT_SUCCESS	0
+#endif /* !defined EXIT_SUCCESS */
+
+#ifndef EXIT_FAILURE
+#define EXIT_FAILURE	1
+#endif /* !defined EXIT_FAILURE */
 
 #ifndef TRUE
 #define TRUE		1
 #define FALSE		0
 #endif
 
-extern char **		environ;
-extern char *		imalloc();
-extern char *		optarg;
-extern int		optind;
-#ifndef __STDC__
-#ifndef USG
-extern char *		sprintf();
-#endif /* !defined USG */
-#endif /* !defined __STDC__ */
-extern long		time();
-extern char *		tzname[2];
-extern void		tzset();
+extern char **	environ;
+extern char *	imalloc P((int n));
+extern int	getopt P((int argc, char * argv[], char * options));
+extern char *	optarg;
+extern int	optind;
+extern char *	tzname[2];
+extern void	tzset P((void));
 
-/*
-** For the benefit of cyntax...
-*/
-
-static long		tzdecode();
-static			readerr();
-static			show();
-
-static int		longest;
+static int	longest;
+static void     readerr P((FILE * fp, char * progname, char * filename));
+static void	show P((char * zone, time_t t, int v));
+static long	tzdecode P((const char * buffer));
 
 static long
 tzdecode(codep)
-char *	codep;
+const char *	codep;
 {
 	register int	i;
 	register long	result;
@@ -217,7 +223,7 @@ char *	argv[];
 	return 0;
 }
 
-static
+static void
 show(zone, t, v)
 char *	zone;
 time_t	t;
@@ -241,7 +247,7 @@ time_t	t;
 	(void) printf("\n");
 }
 
-static
+static void
 readerr(fp, progname, filename)
 FILE *	fp;
 char *	progname;
@@ -253,3 +259,7 @@ char *	filename;
 	else	(void) fprintf(stderr, "%s: Premature EOF\n", filename);
 	exit(1);
 }
+
+/*
+** UNIX is a registered trademark of AT&T.
+*/

@@ -1878,13 +1878,15 @@ const char * const	string;
 }
 
 static int
-mkdirs(name)
-char * const	name;
+mkdirs(argname)
+char * const	argname;
 {
+	register char *	name;
 	register char *	cp;
 
-	if ((cp = name) == NULL || *cp == '\0')
+	if (argname == NULL || *argname == '\0')
 		return 0;
+	cp = name = ecpyalloc(argname);
 	while ((cp = strchr(cp + 1, '/')) != 0) {
 		*cp = '\0';
 #ifndef unix
@@ -1906,11 +1908,13 @@ char * const	name;
 					"%s: Can't create directory ",
 					progname);
 				(void) perror(name);
+				ifree(name);
 				return -1;
 			}
 		}
 		*cp = '/';
 	}
+	ifree(name);
 	return 0;
 }
 

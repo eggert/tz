@@ -12,14 +12,10 @@ static char	sccsid[] = "%W%";
 #define arg4alloc	unsigned
 #endif
 
-#ifndef MAL
-#define MAL		0
-#endif
-
 extern char *		malloc();
 extern char *		calloc();
 extern char *		realloc();
-extern char *		strcat();
+extern char *		strcpy();
 
 static	E_oops()
 {
@@ -30,8 +26,12 @@ char *	emalloc(size)
 {
 	register char *	ret;
 
-	if ((ret = malloc((arg4alloc) size)) == MAL || ret == NULL)
+	if ((ret = malloc((arg4alloc) size)) == NULL)
 		E_oops();
+#ifdef MAL
+	if (ret == MAL)
+		E_oops();
+#endif
 	return ret;
 }
 
@@ -59,13 +59,20 @@ char *	old;
 char *	new;
 {
 	register char *	ret;
-	register	toalloc;
+	register	oldsize, newsize;
 
 	if (new == NULL)
 		new = "";
-	toalloc = strlen(new) + 1;
-	return (old == NULL) ? ecalloc(toalloc, sizeof *ret) :
-		erealloc(old, (toalloc + strlen(old)) * sizeof *ret);
+	newsize = strlen(new);
+	if (old == NULL) {
+		oldsize = 0;
+		ret = ecalloc(newsize + 1, sizeof *ret);
+	} else {
+		oldsize = strlen(old);
+		ret = erealloc(old, (oldsize + newsize + 1) * sizeof *ret);
+	}
+	(void) strcpy(ret + oldsize, new);
+	return ret;
 }
 
 char *	allocpy(string)

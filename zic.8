@@ -20,7 +20,8 @@ zic \- time zone compiler
 ] [
 .B \-s
 ] [
-.B \-y command
+.B \-y
+.I command
 ] [
 .I filename
 \&... ]
@@ -86,7 +87,7 @@ Use the given
 rather than
 .B yearistype
 when checking year types (see below).
-.sp
+.PP
 Input lines are made up of fields.
 Fields are separated from one another by any number of white space characters.
 Leading and trailing white space on input lines is ignored.
@@ -100,7 +101,6 @@ rule lines, zone lines, and link lines.
 .PP
 A rule line has the form
 .nf
-.B
 .ti +.5i
 .ta \w'Rule\0\0'u +\w'NAME\0\0'u +\w'FROM\0\0'u +\w'1973\0\0'u +\w'TYPE\0\0'u +\w'Apr\0\0'u +\w'lastSun\0\0'u +\w'2:00\0\0'u +\w'SAVE\0\0'u
 .sp
@@ -109,7 +109,7 @@ Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 For example:
 .ti +.5i
 .sp
-Rule	USA	1969	1973	\-	Apr	lastSun	2:00	1:00	D
+Rule	US	1967	1973	\-	Apr	lastSun	2:00	1:00	D
 .sp
 .fi
 The fields that make up a rule line are:
@@ -119,12 +119,16 @@ Gives the (arbitrary) name of the set of rules this rule is part of.
 .TP
 .B FROM
 Gives the first year in which the rule applies.
+Any integer year can be supplied; the Gregorian calendar is assumed.
 The word
 .B minimum
-(or an abbreviation) means the minimum year with a representable time value.
+(or an abbreviation) means the minimum year representable as an integer.
 The word
 .B maximum
-(or an abbreviation) means the maximum year with a representable time value.
+(or an abbreviation) means the maximum year representable as an integer.
+Rules can describe times that are not representable as time values,
+with the unrepresentable times ignored; this allows rules to be portable
+among hosts with differing time value types.
 .TP
 .B TO
 Gives the final year in which the rule applies.
@@ -257,13 +261,13 @@ A zone line has the form
 .sp
 .nf
 .ti +.5i
-.ta \w'Zone\0\0'u +\w'Australia/South\-west\0\0'u +\w'GMTOFF\0\0'u +\w'RULES/SAVE\0\0'u +\w'FORMAT\0\0'u
+.ta \w'Zone\0\0'u +\w'Australia/Adelaide\0\0'u +\w'GMTOFF\0\0'u +\w'RULES/SAVE\0\0'u +\w'FORMAT\0\0'u
 Zone	NAME	GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 .sp
 For example:
 .sp
 .ti +.5i
-Zone	Australia/South\-west	9:30	Aus	CST	1987 Mar 15 2:00
+Zone	Australia/Adelaide	9:30	Aus	CST	1971 Oct 31 2:00
 .sp
 .fi
 The fields that make up a zone line are:
@@ -346,9 +350,9 @@ lines may appear in any order in the input.
 .PP
 Lines in the file that describes leap seconds have the following form:
 .nf
-.B
 .ti +.5i
 .ta \w'Leap\0\0'u +\w'YEAR\0\0'u +\w'MONTH\0\0'u +\w'DAY\0\0'u +\w'HH:MM:SS\0\0'u +\w'CORR\0\0'u
+.sp
 Leap	YEAR	MONTH	DAY	HH:MM:SS	CORR	R/S
 .sp
 For example:
@@ -372,13 +376,18 @@ should be
 if a second was added
 or
 .q -
-if a second was skipped
-or
-.q ++
-if two seconds were added
-or
-.q --
-if two seconds were skipped.
+if a second was skipped.
+.\" There's no need to document the following, since it's impossible for more
+.\" than one leap second to be inserted or deleted at a time.
+.\" The C Standard is in error in suggesting the possibility.
+.\" See Terry J Quinn, The BIPM and the accurate measure of time,
+.\" Proc IEEE 79, 7 (July 1991), 894-905.
+.\"	or
+.\"	.q ++
+.\"	if two seconds were added
+.\"	or
+.\"	.q --
+.\"	if two seconds were skipped.
 The
 .B R/S
 field

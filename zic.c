@@ -3,7 +3,7 @@
 #include "stdio.h"
 
 #ifdef OBJECTID
-static char	sccsid[] = "@(#)tzcomp.c	2.1";
+static char	sccsid[] = "%W%";
 #endif
 
 #include "tzfile.h"

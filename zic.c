@@ -1447,21 +1447,33 @@ const int			zonecount;
 				if (useuntil && ktime >= untiltime)
 					break;
 				if (usestart) {
-					if (ktime < starttime) {
-						stdoff = rp->r_stdoff;
-						startoff = oadd(zp->z_gmtoff,
-							rp->r_stdoff);
-						(void) sprintf(startbuf,
-							zp->z_format,
-							rp->r_abbrvar);
-						startisdst =
-							rp->r_stdoff != 0;
-						continue;
+				    if (ktime < starttime) {
+					stdoff = rp->r_stdoff;
+					startoff = oadd(zp->z_gmtoff,
+						rp->r_stdoff);
+					(void) sprintf(startbuf, zp->z_format,
+						rp->r_abbrvar);
+					startisdst = rp->r_stdoff != 0;
+					continue;
+				    }
+				    usestart = FALSE;
+				    if (ktime != starttime) {
+					if (startisdst < 0 &&
+					    zp->z_gmtoff !=
+					    (zp - 1)->z_gmtoff) {
+						type = types[(timecnt == 0) ?
+							0 : (timecnt - 1)];
+						startoff = oadd(gmtoffs[type],
+							-(zp - 1)->z_gmtoff);
+						startisdst = startoff != 0;
+						startoff = oadd(startoff,
+							zp->z_gmtoff);
+						(void) strcpy(startbuf,
+							&chars[abbrinds[type]]);
 					}
-					if (ktime != starttime &&
-						startisdst >= 0)
+					if (startisdst >= 0)
 addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd));
-					usestart = FALSE;
+				    }
 				}
 				eats(zp->z_filename, zp->z_linenum,
 					rp->r_filename, rp->r_linenum);

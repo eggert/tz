@@ -96,17 +96,6 @@ static char	privatehid[] = "%W%";
 #endif /* !defined __STDC__ */
 #endif /* !defined P */
 
-/*
-** generic_T
-*/
-
-#ifdef __STDC__
-typedef void	generic_T;
-#endif /* defined __STDC__ */
-#ifndef __STDC__
-typedef char	generic_T;
-#endif /* !defined __STDC__ */
-
 #include "sys/types.h"	/* for time_t */
 #include "stdio.h"
 #include "ctype.h"

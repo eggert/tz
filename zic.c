@@ -1493,10 +1493,6 @@ const int			zonecount;
 		eat(zp->z_filename, zp->z_linenum);
 		startisdst = -1;
 		*startbuf = '\0';
-		if (zp->z_format != NULL &&
-			strchr(zp->z_format, '%') == NULL &&
-			strchr(zp->z_format, '/') == NULL)
-				(void) strcpy(startbuf, zp->z_format);
 		if (zp->z_nrules == 0) {
 			stdoff = zp->z_stdoff;
 			doabbr(startbuf, zp->z_format,
@@ -1608,6 +1604,15 @@ const int			zonecount;
 			}
 		}
 		if (usestart) {
+			if (zp->z_format != NULL &&
+				strchr(zp->z_format, '%') == NULL &&
+				strchr(zp->z_format, '/') == NULL) {
+					if (*startbuf == '\0')
+						(void) strcpy(startbuf,
+							zp->z_format);
+					if (startisdst < 0)
+						startisdst = zp->z_stdoff != 0;
+			}
 			eat(zp->z_filename, zp->z_linenum);
 			if (*startbuf == '\0')
 error(_("can't determine time zone abbrevation to use just after until time"));

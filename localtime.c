@@ -635,7 +635,7 @@ const int			lastditch;
 			return -1;
 	}
 	if (*name == '\0')
-		stdoffset = 0;
+		return -1;	/* was "stdoffset = 0;" */
 	else {
 		name = getoffset(name, &stdoffset);
 		if (name == NULL)
@@ -869,7 +869,7 @@ tzset()
 		(void) strcpy(lclptr->chars, GMT);
 	} else if (tzload(name, lclptr) != 0)
 		if (name[0] == ':' || tzparse(name, lclptr, FALSE) != 0)
-			(void) tzparse(name, lclptr, TRUE);
+			(void) gmtload(lclptr);
 	settzname();
 }
 

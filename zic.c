@@ -1381,9 +1381,6 @@ const int			zonecount;
 	** for noting the need to unconditionally initialize startttisstd.
 	*/
 	startttisstd = FALSE;
-#ifdef lint
-	starttime = 0;
-#endif /* defined lint */
 	for (i = 0; i < zonecount; ++i) {
 		zp = &zpfirst[i];
 		usestart = i > 0 && (zp - 1)->z_untiltime > min_time;
@@ -1445,9 +1442,6 @@ const int			zonecount;
 				** that takes effect earliest in the year.
 				*/
 				k = -1;
-#ifdef lint
-				ktime = 0;
-#endif /* defined lint */
 				for (j = 0; j < zp->z_nrules; ++j) {
 					rp = &zp->z_rules[j];
 					if (!rp->r_todo)

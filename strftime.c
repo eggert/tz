@@ -126,9 +126,12 @@ label:
 				** standard calls for "date, using locale's
 				** date format," anything goes.  Using just
 				** numbers (as here) makes Quakers happier.
-				** This is the ISO standard date format.
+				** Word from Paul Eggert (eggert@twinsun.com)
+				** is that %Y-%m-%d "is the ISO standard date
+				** format."
+				** (ado, 5/29/93)
 				*/
-				pt = _fmt("%Y-%m-%d", t, pt, ptlim);
+				pt = _fmt("%m/%d/%y", t, pt, ptlim);
 				continue;
 			case 'd':
 				pt = _conv(t->tm_mday, "%02d", pt, ptlim);

@@ -8,10 +8,6 @@ date \- show and set date and time
 [
 .B \-u
 ] [
-.B \-D
-] [
-.B \-S
-] [
 .B \-n
 ] [
 .B \-d
@@ -22,7 +18,7 @@ minutes-west
 ] [
 .BI + format
 ] [
-\fR[\fIyy\fR]\fImmddhhmm\fR[\fIyy\fR][\fB.\fIss\fR]
+\fR[\fIyyyy\fR]\fImmddhhmm\fR[\fIyy\fR][\fB.\fIss\fR]
 ]
 .SH DESCRIPTION
 .I Date
@@ -104,35 +100,25 @@ To set the date, use a command line argument with one of the following forms:
 .nf
 .if t .in +.5i
 .if n .in +2
-.ta \w'9803081454\0\0'u
+.ta \w'198903081454\0\0'u
 1454	24-hour-clock hours (first two digits) and minutes
 081454	Month day (first two digits), hours, and minutes
 03081454	Month (two digits, January is 01), month day, hours, minutes
 8903081454	Year, month, month day, hours, minutes
 0308145489	Month, month day, hours, minutes, year
+198903081454	Four-digit year, month, month day, hours minutes
 .if t .in -.5i
 .if n .in -2
 .fi
-If the year, month, or month day is not given,
+If the century, year, month, or month day is not given,
 the current value is used.
 Any of the above forms may be followed by a period and two digits that give
 the seconds part of the new time; if no seconds are given, zero is assumed.
-.\" WHAT ABOUT THE AMBIGUOUS TEN-DIGIT CASES?
 .PP
 These options are available:
 .TP
 .B \-u
 Use GMT when setting and showing the date and time.
-.TP
-.B \-D
-Take the command-line time to be Daylight Saving Time.
-Either this or the
-.B \-S
-option must be used in the witching hour(s) of days when clocks are
-turned back.
-.TP
-.B \-S
-Take the the command-line time to be Standard Time.
 .TP
 .B \-n
 Do not notify other networked systems of the time change.
@@ -148,10 +134,4 @@ option) is only available on systems that store such information.
 .BI "\-t " minutes-west
 Set the kernel-stored ``minutes west of GMT'' value to the one given on the
 command line.
-.SH NOTE
-In some parts of the year,
-avoid setting the time within a minute of noon if your area uses
-solar time.
-There's no way to specify which of two near-noon times you want
-since they're both ``standard.''
 .. %W%

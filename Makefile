@@ -160,13 +160,13 @@ REDID_BINARIES:	zic $(DATA) $(REDO)
 		./zic -d $(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
 		touch $@
 
-posix_only:
+posix_only:	zic $(TDATA)
 		./zic -d $(TZDIR) -L /dev/null $(TDATA)
 
-right_only:
+right_only:	zic leapseconds $(TDATA)
 		./zic -d $(TZDIR) -L leapseconds $(TDATA)
 
-other_two:
+other_two:	zic leapseconds $(TDATA)
 		./zic -d $(TZDIR)/posix -L /dev/null $(TDATA)
 		./zic -d $(TZDIR)/right -L leapseconds $(TDATA)
 
@@ -182,7 +182,7 @@ zdump:		$(TZDOBJS)
 
 $(TZLIB):	$(LIBOBJS)
 		ar ru $@ $(LIBOBJS)
-		-ar d $@ timemk.o dysize.o ctime.o
+		-ar d $@ timemk.o ctime.o
 		-ranlib $@
 
 zic:		$(TZCOBJS)

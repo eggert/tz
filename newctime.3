@@ -1,6 +1,6 @@
 .TH NEWCTIME 3 
 .SH NAME
-ctime, localtime, gmtime, asctime, tzset, tzsetwall, difftime \- convert date and time to ASCII
+asctime, ctime, difftime, gmtime, localtime, mktime, tzset, tzsetwall \- convert date and time to ASCII
 .SH SYNOPSIS
 .nf
 .B extern char *tzname[2];
@@ -9,8 +9,14 @@ ctime, localtime, gmtime, asctime, tzset, tzsetwall, difftime \- convert date an
 .PP
 .B void tzsetwall()
 .PP
+.B #include <sys/types.h>
+.PP
 .B char *ctime(clock)
-.B long *clock;
+.B time_t *clock;
+.PP
+.B double difftime(time1, time0)
+.B time_t time1;
+.B time_t time0;
 .PP
 .B #include <time.h>
 .PP
@@ -23,34 +29,17 @@ ctime, localtime, gmtime, asctime, tzset, tzsetwall, difftime \- convert date an
 .B struct tm *gmtime(clock)
 .B long *clock;
 .PP
-.B double difftime(time1, time0)
-.B time_t time1;
-.B time_t time0;
-.if !\nX \{\
+.B time_t mktime(tm)
+.B struct tm *tm;
 .PP
 cc ... -lz
 .fi
-\}
 .SH DESCRIPTION
 .I Tzset
 uses the value of the environment variable
 .B TZ
 to set time conversion information used by
 .IR localtime .
-.if \nX \{\
-IF
-.B TZ
-is absent from the environment,
-the behavior is implementation defined.
-If
-.B TZ
-does appear in the environment,
-.I localtime
-will only work correctly if
-its value is one of an
-implementation-defined set of values.
-\}
-.if !\nX \{\
 If
 .B TZ
 does not appear in the environment,
@@ -73,7 +62,6 @@ appears and
 begins with a character other than a slash,
 it's used as a pathname relative to a system time conversion information
 directory.
-\}
 .PP
 .I Tzsetwall
 sets things up so that
@@ -90,7 +78,9 @@ and returns a pointer to a
 of the form
 .br
 .ce
-Thu Nov 24 18:22:48 1986\\n\\0
+.eo
+Thu Nov 24 18:22:48 1986\n\0
+.ec
 .br
 All the fields have constant width.
 .PP
@@ -101,17 +91,13 @@ return pointers to ``tm'' structures, described below.
 .I Localtime\^
 corrects for the time zone and any time zone adjustments
 (such as Daylight Saving Time in the U.S.A.).
-.if \nX Whether, before doing so,
-.if !\nX Before doing so,
+Before doing so,
 .I localtime\^
 calls
 .I tzset\^
 (if
 .I tzset\^
-has not been called in
-.if \nX the current process) is implementation defined.
-.if !\nX the current process).
-.if !\nX \{\
+has not been called in the current process).
 After filling in the ``tm'' structure,
 .I localtime
 sets the
@@ -122,7 +108,6 @@ to a pointer to an
 ASCII string that's the time zone abbreviation to be used with
 .IR localtime 's
 return value.
-\}
 .PP
 .I Gmtime\^
 converts to Greenwich Mean Time (GMT).
@@ -133,6 +118,55 @@ converts a time value contained in a
 as shown in the above example,
 and returns a pointer
 to the string.
+.PP
+.I Mktime\^
+converts the broken-down time,
+expressed as local time,
+in the structure pointed to by
+.I tm
+into a calendar time value with the same encoding as that of the values
+returned by the
+.I time
+function.
+The original values of the
+.PP
+.B tm_wday
+and
+.B tm_yday
+components of the structure are ignored,
+and the original values of the other components are not restricted
+to their normal ranges.
+(A positive or zero value for
+.B tm_isdst
+causes
+.I mktime
+to presume initally that Daylight Saving Time,
+respectively,
+is or is not in effect for the specified time.
+A negative value for
+.B tm_isdst
+causes the
+.I mktime
+function to attempt to divine whether Daylight Saving Time is in effect
+for the specified time.)
+On successful completion, the values of the
+.B tm_wday
+and
+.B tm_yday
+components of the structure are set appropriately,
+and the other components are set to represent the specified calendar time,
+but with their values forced to their normal ranges; the final value of
+.B tm_mday
+is not set until
+.B tm_mon
+and
+.B tm_year
+are determined.
+.I Mktime\^
+returns the specified calendar time;
+If the calendar time cannot be represented,
+it returns
+.BR -1 .
 .PP
 .I Difftime\^
 returns the difference between two calendar times,
@@ -185,19 +219,23 @@ is in effect.
 is the offset (in seconds) of the time represented
 from GMT, with positive values indicating East
 of Greenwich.
-.if !\nX \{\
 .SH FILES
-.ta \w'/etc/zoneinfo/localtime\0\0'u
+.ta \w'/etc/zoneinfo/posixrules\0\0'u
 /etc/zoneinfo	time zone information directory
 .br
 /etc/zoneinfo/localtime	local time zone file
 .br
 /etc/zoneinfo/posixrules	used in converting POSIX-style TZ's
 .br
-/etc/zoneinfo/GMT	GMT file (needed for leap seconds)
-\}
+/etc/zoneinfo/GMT	for GMT leap seconds
+.sp
+If
+.B /etc/zoneinfo/GMT
+is absent,
+GMT leap seconds are loaded from
+.BR /etc/zoneinfo/posixrules .
 .SH SEE ALSO
-.if !\nX tzfile(5),
+tzfile(5),
 getenv(3),
 time(2)
 .SH NOTE

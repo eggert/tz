@@ -16,18 +16,40 @@ TZDIR=		/etc/zoneinfo
 
 TZLIB=		/usr/lib/libz.a
 
-CFLAGS=		-DTZDIR=\"$(TZDIR)\"
+#
+# If you're running on a System V-style system and don't want lint grief,
+# add
+#	-DUSG
+# to the end of the "CFLAGS=" line.
+#
+# If you want to use System V compatibility code, add
+#	-DUSG_COMPAT
+# to the end of the "CFLAGS=" line.
+#
+# If you want BSD compatibility code, add
+#	-DBSD_COMPAT
+# to the end of the "CFLAGS=" line.
+#
+# If you've used older versions of this software and want "tz_abbr"
+# compatibility  code, add
+#	-DTZA_COMPAT
+# to the end of the "CFLAGS=" line.
+#
+# If you want Source Code Control System ID's left out of object modules, add
+#	-DNOID
+# to the end of the "CFLAGS=" line.
+#
 
-# If you're running a Berkeley system, uncomment the next line.
-# CFLAGS=		-DOBJECTID -DTZDIR=\"$(TZDIR)\" -Dstrchr=index
+CFLAGS=
 
 # LINTFLAGS is set for 4.[123]BSD systems.
-# If you're using System V, you'll want
-# to comment out the "LINTFLAGS=" line.
+# If you're using System V, you'll want to comment out the "LINTFLAGS=" line.
 
 LINTFLAGS=	-phbaaxc
 
-LFLAGS=
+################################################################################
+
+TZDEF=		-DTZDIR=\"$(TZDIR)\"
 
 TZCSRCS=	zic.c scheck.c ialloc.c mkdir.c
 TZCOBJS=	zic.o scheck.o ialloc.o mkdir.o
@@ -38,49 +60,49 @@ SOURCES=	tzfile.h zic.c zdump.c newctime.c scheck.c ialloc.c mkdir.c
 DATA=		asia australasia europe etcetera northamerica pacificnew systemv
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
-all:	REDID_BINARIES zdump $(TZLIB)
+all:		REDID_BINARIES zdump $(TZLIB)
 
 REDID_BINARIES:	$(TZDIR) zic $(DATA)
-	PATH=.:$$PATH zic -l $(LOCALTIME) -d $(TZDIR) $(DATA) && > $@
+		PATH=.:$$PATH zic -l $(LOCALTIME) -d $(TZDIR) $(DATA) && > $@
 
-zdump:	$(TZDOBJS)
-	$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@
+zdump:		$(TZDOBJS)
+		$(CC) $(TZDEF) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@
 
 $(TZLIB):	newctime.o
-	ar ru $@ newctime.o
-	ranlib $@
+		ar ru $@ newctime.o
+		ranlib $@
 
-zic:	$(TZCOBJS)
-	$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
+zic:		$(TZCOBJS)
+		$(CC) $(TZDEF) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
 
 $(TZDIR):
-	mkdir $@
+		mkdir $@
 
 BUNDLES:	BUNDLE1 BUNDLE2 BUNDLE3
 
 BUNDLE1:	$(DOCS)
-	bundle $(DOCS) > BUNDLE1
+		bundle $(DOCS) > $@
 
 BUNDLE2:	$(SOURCES)
-	bundle $(SOURCES) > BUNDLE2
+		bundle $(SOURCES) > $@
 
 BUNDLE3:	$(DATA)
-	bundle $(DATA) > BUNDLE3
+		bundle $(DATA) > $@
 
 $(ENCHILADA):
-	sccs get $(REL) $(REV) $@
+		sccs get $(REL) $(REV) $@
 
-sure:	$(TZCSRCS) $(TZDSRCS) tzfile.h
-	lint $(LINTFLAGS) $(TZCSRCS)
-	lint $(LINTFLAGS) $(TZDSRCS)
+sure:		$(TZCSRCS) $(TZDSRCS) tzfile.h
+		lint $(LINTFLAGS) $(CFLAGS) $(TZCSRCS)
+		lint $(LINTFLAGS) $(CFLAGS) $(TZDSRCS)
 
 clean:
-	rm -f core *.o *.out REDID_BINARIES zdump zic BUNDLE* \#*
+		rm -f core *.o *.out REDID_BINARIES zdump zic BUNDLE* \#*
 
-CLEAN:	clean
-	sccs clean
+CLEAN:		clean
+		sccs clean
 
 listing:	$(ENCHILADA)
-	pr $(ENCHILADA) | lpr
+		pr $(ENCHILADA) | lpr
 
 zdump.o zic.o newctime.o:	tzfile.h

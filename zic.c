@@ -1004,20 +1004,6 @@ char *	name;
 	}
 }
 
-/*
-** Also--ideally--add the wierd logic to allow a zone specification such as
-**	Zone	US/Hawaii	-10:30	USA	H%sT	1933 Apr 30 2:00
-**				-10:30	1:00	HDT	1933 May 1 2:00
-**				-10:30	USA	H%sT	1947 Jun 8 2:00
-**				-10:00	-	HST
-** instead of
-**	Zone	US/Hawaii	-10:30	USA	H%sT	1933 Apr 30 2:00
-**				-10:30	1:00	HDT	1933 May 1 2:00
-**				-10:30	-	HST	1942
-**				-10:30	USA	H%sT	1947 Jun 8 2:00
-**				-10:00	-	HST
-*/
-
 static
 outzone(zpfirst, zonecount)
 struct zone *	zpfirst;
@@ -1032,6 +1018,9 @@ struct zone *	zpfirst;
 	register long			gmtoff;
 	register long			stdoff;
 	register long			year;
+	register long			startoff;
+	register int			startisdst;
+	char				startbuf[BUFSIZ];
 
 	/*
 	** Now. . .finally. . .generate some useful data!
@@ -1051,6 +1040,7 @@ struct zone *	zpfirst;
 		useuntil = i < (zonecount - 1);
 		zp = &zpfirst[i];
 		eat(zp->z_filename, zp->z_linenum);
+		startisdst = -1;
 		if (zp->z_nrules == 0) {
 			register int	type;
 
@@ -1116,10 +1106,24 @@ struct zone *	zpfirst;
 					break;	/* go on to next year */
 				rp = &zp->z_rules[k];
 				rp->r_todo = FALSE;
-				if (usestart && ktime < starttime)
-					continue;
 				if (useuntil && ktime >= untiltime)
 					break;
+				if (usestart) {
+					if (ktime < starttime) {
+						startoff = tadd(zp->z_gmtoff,
+							rp->r_stdoff);
+						(void) sprintf(startbuf,
+							zp->z_format,
+							rp->r_abbrvar);
+						startisdst =
+							rp->r_stdoff != 0;
+						continue;
+					}
+					if (ktime != starttime &&
+						startisdst >= 0)
+addtt(starttime, addtype(startoff, startbuf, startisdst));
+					usestart = FALSE;
+				}
 				eats(zp->z_filename, zp->z_linenum,
 					rp->r_filename, rp->r_linenum);
 				if (timecnt == 0 && !rp->r_todisstd)

@@ -23,6 +23,10 @@ static char	elsieid[] = "%W%";
 #include "stdlib.h"	/* for exit, malloc, atoi */
 #endif /* defined HAVE_STDLIB_H */
 
+#ifndef alloc_size_T
+#define alloc_size_T	size_t
+#endif /* !defined alloc_size_T */
+
 #ifndef MAX_STRING_LENGTH
 #define MAX_STRING_LENGTH	1024
 #endif /* !defined MAX_STRING_LENGTH */
@@ -159,11 +163,13 @@ char *	argv[];
 
 		for (i = 0;  environ[i] != NULL;  ++i)
 			continue;
-		fakeenv = (char **) malloc((i + 2) * sizeof *fakeenv);
+		fakeenv = (char **) malloc((alloc_size_T) ((i + 2) *
+			sizeof *fakeenv));
 		if (fakeenv == NULL ||
-			(fakeenv[0] = (char *) malloc(longest + 4)) == NULL) {
-				(void) perror(progname);
-				(void) exit(EXIT_FAILURE);
+			(fakeenv[0] = (char *) malloc((alloc_size_T) (longest +
+				4))) == NULL) {
+					(void) perror(progname);
+					(void) exit(EXIT_FAILURE);
 		}
 		to = 0;
 		(void) strcpy(fakeenv[to++], "TZ=");

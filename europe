@@ -243,6 +243,8 @@ Rule	W-SU	1986	max	-	Sep	lastSun	2:00s	0	-
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 Zone	WET		0:00	W-Eur		WET%s
 Zone	Iceland		0:00	-		WET
+Zone	Portugal	0:00	W-Eur		WET%s	1992 Sep 27 1:00s
+			1:00	M-Eur		MET%s
 Zone	MET		1:00	M-Eur		MET%s
 Zone	Poland		1:00	W-Eur		MET%s
 Zone	EET		2:00	E-Eur		EET%s
@@ -328,3 +330,14 @@ Link	MET	CET
 # ...
 # Monaco: has same DST as France.
 # ...
+
+# Date: Thu, 12 Nov 92 16:57:37 +0100
+# From: rps@inescca.inescc.pt (Rui Pedro Salgueiro)
+# ...
+# Portugal has recently (September, 27) changed timezone
+# (from WET to MET or CET) to harmonize with EEC.
+# I have made this description:
+# 
+# Zone	Portugal	0:00	W-Eur		WET%s	1992 Sep 27 1:00s
+# 			1:00	M-Eur		MET%s
+# ... 

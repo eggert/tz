@@ -9,19 +9,7 @@ static char	elsieid[] = "%W%";
 #include "stdio.h"
 #include "ctype.h"
 #include "string.h"
-
-#ifdef __STDC__
-#define P(s)	s
-#endif /* defined __STDC__ */
-
-#ifdef __TURBOC__
-#define P(s)	s
-#endif /* defined __TURBOC__ */
-
-#ifndef P
-#define P(s)	()
-#define const
-#endif /* !defined P */
+#include "nonstd.h"
 
 extern char *	imalloc P((int n));
 extern void	ifree P((char * p));

@@ -4,15 +4,15 @@
 # that's right for their area, even if it doesn't have a name or DST rules
 # (half hour zones are too much to bother with -- when someone asks!)
 
-Zone	GMT		0	-	GMT
-Link	GMT		UTC
-Link	GMT		UCT
-Link	GMT		Universal
-Link	GMT		Greenwich
-Link	GMT		Zulu
-Link	GMT		GMT-0
-Link	GMT		GMT+0
-Link	GMT		GMT0
+Zone	Etc/GMT		0	-	GMT
+Link	Etc/GMT				Etc/UTC
+Link	Etc/GMT				Etc/UCT
+Link	Etc/GMT				Etc/Universal
+Link	Etc/GMT				Etc/Greenwich
+Link	Etc/GMT				Etc/Zulu
+Link	Etc/GMT				Etc/GMT-0
+Link	Etc/GMT				Etc/GMT+0
+Link	Etc/GMT				Etc/GMT0
 
 # We use POSIX-style signedness in the names and output,
 # internal-style signedness in the specifications.

@@ -12,8 +12,12 @@ LOCALTIME=	Eastern
 
 TZDIR=		/etc/tzdir
 
-DEBUG=
+# LINTFLAGS is set for 4.1bsd systems.  If you're using System V, you'll want
+# to comment out the "LINTFLAGS=" line.
+
 LINTFLAGS=	-phbaaxc
+
+DEBUG=
 LFLAGS=
 CFLAGS=		$(DEBUG) -O -DOBJECTID -DTZDIR=\"$(TZDIR)\"
 
@@ -22,8 +26,8 @@ TZCOBJS=	tzcomp.o scheck.o strchr.o mkdir.o
 TZDSRCS=	tzdump.c settz.c
 TZDOBJS=	tzdump.o settz.o
 DATA=		asia australasia europe etcetera northamerica pacificnew
-ENCHILADA=	Makefile tzfile.h $(TZCSRCS) $(TZDSRCS) $(DATA) years.sh \
-			README settz.3 tzfile.5 tzcomp.8
+ENCHILADA=	README Makefile settz.3 tzfile.5 tzcomp.8 \
+			tzfile.h $(TZCSRCS) $(TZDSRCS) years.sh $(DATA)
 
 all:	REDID_BINARIES tzdump
 

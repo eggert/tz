@@ -41,7 +41,17 @@ otherwise.
 .BI "\-c " [loyear,]hiyear
 Cut off verbose output near the start of the given year(s).
 By default,
-the program cuts off verbose output near the starts of the years -1000 and 5000.
+the program cuts off verbose output near the starts of the years -500 and 2500.
+.SH LIMITATIONS
+The
+.B \-v
+option may not be used on systems with floating-point time_t values
+that are neither float nor double.
+.PP
+Time discontinuities are found by sampling the results returned by localtime
+at twelve-hour intervals.
+This works in all real-world cases;
+one can construct artificial time zones for which this fails.
 .SH "SEE ALSO"
 newctime(3), tzfile(5), zic(8)
 .\" %W%

@@ -8,25 +8,27 @@
 static char	sccsid[] = "%W%";
 #endif
 
-#ifndef arg4alloc
-#define arg4alloc	unsigned
+#ifndef alloc_t
+#define alloc_t	unsigned
 #endif
 
-extern char *		malloc();
-extern char *		calloc();
-extern char *		realloc();
-extern char *		strcpy();
+extern char *	malloc();
+extern char *	calloc();
+extern char *	realloc();
+extern char *	strcpy();
 
-static	E_oops()
+static
+E_oops()
 {
 	wildrexit("allocating memory");
 }
 
-char *	emalloc(size)
+char *
+emalloc(size)
 {
 	register char *	ret;
 
-	if ((ret = malloc((arg4alloc) size)) == NULL)
+	if ((ret = malloc((alloc_t) size)) == NULL)
 		E_oops();
 #ifdef MAL
 	if (ret == MAL)
@@ -35,26 +37,29 @@ char *	emalloc(size)
 	return ret;
 }
 
-char *	ecalloc(nelem, elsize)
+char *
+ecalloc(nelem, elsize)
 {
 	register char *	ret;
 
-	if ((ret = calloc((arg4alloc) nelem, (arg4alloc) elsize)) == NULL)
+	if ((ret = calloc((alloc_t) nelem, (alloc_t) elsize)) == NULL)
 		E_oops();
 	return ret;
 }
 
-char *	erealloc(ptr, size)
+char *
+erealloc(ptr, size)
 char *	ptr;
 {
 	register char *	ret;
 
-	if ((ret = realloc(ptr, (arg4alloc) size)) == NULL)
+	if ((ret = realloc(ptr, (alloc_t) size)) == NULL)
 		E_oops();
 	return ret;
 }
 
-char *	allocat(old, new)
+char *
+allocat(old, new)
 char *	old;
 char *	new;
 {
@@ -75,7 +80,8 @@ char *	new;
 	return ret;
 }
 
-char *	allocpy(string)
+char *
+allocpy(string)
 char *	string;
 {
 	return allocat((char *) NULL, string);

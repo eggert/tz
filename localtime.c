@@ -264,9 +264,6 @@ struct rule {
 #define	JULIAN_DAY		0	/* Jn - Julian day */
 #define	DAY_OF_YEAR		1	/* n - day of year */
 #define	MONTH_NTH_DAY_OF_WEEK	2	/* Mm.n.d - month, week, day of week */
-#ifdef BROKEN
-#define	MONTH_DAY		3	/* Mm.n.d - broken POSIX style */
-#endif
 
 static const int	mon_lengths[2][MONSPERYEAR] = {
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
@@ -406,11 +403,7 @@ register struct rule *	rulep;
 		/*
 		** Month, week, day.
 		*/
-#ifdef BROKEN
-		rulep->r_type = MONTH_DAY;
-#else
 		rulep->r_type = MONTH_NTH_DAY_OF_WEEK;
-#endif
 		++strp;
 		strp = getnum(strp, &rulep->r_mon, 1, MONSPERYEAR);
 		if (strp == NULL)
@@ -527,82 +520,6 @@ long				offset;
 		*/
 		value += d * SECSPERDAY;
 		break;
-
-#ifdef BROKEN
-	case MONTH_DAY:
-		/*
-		** Mm.n.d - dth day of week n of month m.
-		*/
-		value = janfirst;
-		for (i = 0; i < rulep->r_mon - 1; ++i)
-			value += mon_lengths[leapyear][i] * SECSPERDAY;
-
-		if (rulep->r_week == 5) {
-			/*
-			** Get day number of last day of month.
-			*/
-			d = mon_lengths[leapyear][rulep->r_mon - 1];
-		} else {
-			/*
-			** Get day number of first day of month.
-			*/
-			d = 1;
-		}
-
-		/*
-		** Use Zeller's Congruence to get day-of-week of that
-		** day.
-		*/
-		m1 = (rulep->r_mon + 9) % 12 + 1;
-		yy0 = (rulep->r_mon <= 2) ? (year - 1) : year;
-		yy1 = yy0 / 100;
-		yy2 = yy0 % 100;
-		dow = ((26 * m1 - 2) / 10 +
-			d + yy2 + yy2 / 4 + yy1 / 4 - 2 * yy1) % 7;
-		if (dow < 0)
-			dow += DAYSPERWEEK;
-
-		if (rulep->r_week == 5) {
-			/*
-			** "d" is the day-of-month of the last "dow" day of
-			** the month.  Step backwards through the month
-			** (decrementing "d", and decrementing "dow" modulo 7)
-			** until we have the day-of-week that we want.
-			*/
-			while (dow != rulep->r_day) {
-				--d;
-				--dow;
-				if (dow < 0)
-					dow += DAYSPERWEEK;
-			}
-		} else {
-			/*
-			** "d" is the day-of-month of the first "dow" day of
-			** the month.  Get the "day-of-month" (probably
-			** negative, meaning Sunday of that week was last
-			** month) of the Sunday of the first week of the month.
-			*/
-			d -= dow;
-
-			/*
-			** Now get the "day-of-month" of the Sunday beginning
-			** the week we're interested in.
-			*/
-			d += (rulep->r_week - 1) * DAYSPERWEEK;
-
-			/*
-			** Now get the "day-of-month" of the day of week we're
-			** interested in.
-			*/
-			d += rulep->r_day;
-		}
-
-		/*
-		** "d" is the day-of-month of the day we want.
-		*/
-		value += (d - 1) * SECSPERDAY;
-		break;
-#endif
 	}
 
 	/*

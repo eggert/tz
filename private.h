@@ -238,6 +238,11 @@ char *	scheck P((const char *string, const char *format));
 #define TYPE_SIGNED(type) (((type) -1) < 0)
 #endif /* !defined TYPE_SIGNED */
 
+/*
+** Since the definition of TYPE_INTEGRAL contains floating point numbers,
+** it cannot be used in preprocessor directives.
+*/
+
 #ifndef TYPE_INTEGRAL
 #define TYPE_INTEGRAL(type) (((type) 0.5) != 0.5)
 #endif /* !defined TYPE_INTEGRAL */

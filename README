@@ -18,10 +18,19 @@ as before.  If you've already compiled programs with older time zone software,
 just leave the "/etc/tzdir" and/or "/etc/timezones" files around until you
 have a chance to recompile.
 
+For better compatability with other versions of time conversion functions,
+the time zone abbreviation to be used with localtime's return vale is now
+pointed to be one of the two elements of the (char *) array tzname, rather
+than by the (char *) tz_abbr.  If you have code that uses tz_abbr, add a
+	-DTZ_ABBR
+to the end of the
+	CFLAGS=
+line in "Makefile".
+
 Historical local time information has been included here not because it
 is particularly useful, but rather to:
 
-*	give people an idea of the variety of local time rules that have
+*	give an idea of the variety of local time rules that have
 	existed in the past and thus an idea of the variety that may be
 	expected in the future;
 

@@ -219,6 +219,7 @@ static void
 show(zone, t, v)
 char *	zone;
 time_t	t;
+int	v;
 {
 	struct tm *		tmp;
 	extern struct tm *	localtime();

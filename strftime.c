@@ -495,7 +495,11 @@ label:
 				if (t->tm_isdst >= 0)
 					pt = _add(tzname[t->tm_isdst != 0],
 						pt, ptlim);
-				else	pt = _add("?", pt, ptlim);
+				/*
+				** C99 says that %Z must be replaced by the
+				** empty string if the time zone is not
+				** determinable.
+				*/
 				continue;
 			case 'z':
 				{
@@ -520,16 +524,24 @@ label:
 				** see GNU C strftime for details.
 				** For now, punt and conform to the
 				** standard, even though it's incorrect.
+				**
+				** C99 says that %z must be replaced by the
+				** empty string if the time zone is not
+				** determinable, so output nothing if the
+				** appropriate variables are not available.
 				*/
-				diff = 0;
-#ifdef USG_COMPAT
 				if (t->tm_isdst == 0)
-					diff = timezone;
-#endif /* defined USG_COMPAT */
+#ifdef USG_COMPAT
+					diff = -timezone;
+#else /* defined USG_COMPAT */
+					continue;
+#endif /* !defined USG_COMPAT */
+				else
 #ifdef ALTZONE
-				if (t->tm_isdst > 0)
-					diff = altzone;
-#endif /* defined ALTZONE */
+					diff = -altzone;
+#else /* !defined ALTZONE */
+					continue;
+#endif /* !defined ALTZONE */
 #endif /* !defined TM_GMTOFF */
 				if (diff < 0) {
 					sign = "-";

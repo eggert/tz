@@ -446,7 +446,7 @@ label:
 							pt, ptlim);
 					else if (*format == 'g') {
 						*warnp = IN_ALL;
-						pt = _conv(int(year % 100),
+						pt = _conv((int) (year % 100),
 							"%02d", pt, ptlim);
 					} else	pt = _lconv(year, "%04ld",
 							pt, ptlim);

@@ -484,16 +484,15 @@ register struct tm * intmp;
 			outt : -1;
 }
 
-#define YEAR_THIS_WAS_WRITTEN	1989
-
 static time_t
 gettime(cp, isdst)
 register char *	cp;
 int		isdst;
 {
 	register int	i;
+	register int	year;
 	struct tm	tm;
-	int		pairs[5];
+	int		pairs[6];
 	time_t		thist;
 	time_t		thatt;
 
@@ -553,40 +552,51 @@ int		isdst;
 			tm.tm_hour = pairs[2];
 			tm.tm_min = pairs[3];
 			return xtime(&tm);
+
 		case 5:	/* Ulp! yymmddhhmm or mmddhhmmyy */
-			tm.tm_year = pairs[0];
-			/*
-			** Looking ten years down the road. . .
-			*/
-			if (tm.tm_year + TM_YEAR_BASE < YEAR_THIS_WAS_WRITTEN)
-				tm.tm_year += 100;
+			year = tm.tm_year + TM_YEAR_BASE;
+			year = year % 100;
+			year = year + pairs[0];
+			tm.tm_year = year - TM_YEAR_BASE;
+
 			tm.tm_mon = pairs[1] - 1;
 			tm.tm_mday = pairs[2] - 1;
 			tm.tm_hour = pairs[3];
 			tm.tm_min = pairs[4];
+
 			thist = xtime(&tm);
+		
+#ifndef USG_COMPAT
+			return thist;
+#endif /* !defined USG_COMPAT */
+
 			tm.tm_mon = pairs[0] - 1;
 			tm.tm_mday = pairs[1] - 1;
 			tm.tm_hour = pairs[2];
 			tm.tm_min = pairs[3];
-			tm.tm_year = pairs[4];
-			/*
-			** . . .makes for decadent logic.
-			*/
-			if (tm.tm_year + TM_YEAR_BASE < YEAR_THIS_WAS_WRITTEN)
-				tm.tm_year += 100;
+
+			year = tm.tm_year + TM_YEAR_BASE;
+			year = year % 100;
+			year = year + pairs[0];
+			tm.tm_year = year - TM_YEAR_BASE;
+
 			thatt = xtime(&tm);
+
 			if (thist == -1)
 				if (thatt == -1)
 					break;
 				else	return thatt;
 			else	if (thatt == -1)
 					return thist;
-				else {
-					(void) fprintf(stderr,
-"date: GOLLY: WHAT THE DICKENS DO I TELL THE USER AT THIS POINT?\n");
-					display((char *) NULL);
-				}
+				else	abort(); /* correction coming soon! */
+		case 6:	/* yyyymmddhhmm--BSD finally wins in the 21st century */
+			year = pairs[0] * 100 + pairs[1];
+			tm.tm_year = year - TM_YEAR_BASE;
+			tm.tm_mon = pairs[2] - 1;
+			tm.tm_mday = pairs[3] - 1;
+			tm.tm_hour = pairs[4];
+			tm.tm_min = pairs[5];
+			return xtime(&tm);
 	}
 	return -1;
 }

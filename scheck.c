@@ -13,8 +13,10 @@ static char	elsieid[] = "%W%";
 
 #ifdef __STDC__
 extern char *	imalloc(int n);
+extern void	ifree(char * p);
 #else /* !defined __STDC__ */
 extern char *	imalloc();
+extern void	ifree();
 #endif /* !defined __STDC__ */
 
 char *

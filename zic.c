@@ -2139,8 +2139,8 @@ register const int			wantedy;
 				--i;
 			}
 		if (i < 0 || i >= len_months[isleap(y)][m]) {
-			error(_("no day in month matches rule"));
-			(void) exit(EXIT_FAILURE);
+			if (noise)
+				warning(_("rule goes past start/end of month--will not work with pre-2004 versions of zic"));
 		}
 	}
 	if (dayoff < 0 && !TYPE_SIGNED(time_t))

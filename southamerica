@@ -24,17 +24,24 @@
 # The only information I found is that there was no DST up to 1985.
 # But there was some before 1952!
 
-# From U.S. Naval Observatory (February 10, 1988):
-# BRASIL   WEST       5 H BEHIND UTC        (CRUZEIRO DO SUL) 
-# BRASIL   CENTRAL    4 H BEHIND UTC              (MANAUS)
-# BRASIL   EAST       3 H BEHIND UTC   COASTAL STATES, RIO, SP, BRASILIA
-# BRASIL              2 H BEHIND UTC   ATLANTIC ISLANDS 
-# BRAZIL              5 H BEHIND UTC   WEST (CRUZEIRO DO SUL) 
-# BRAZIL              4 H BEHIND UTC   CENTRAL    (MANAUS)
-# BRAZIL              3 H BEHIND UTC   COASTAL STATES, RIO, SP, BRASILIA
-# BRAZIL              3 H BEHIND UTC   FOR MOST MAJOR AIRPORTS. 
-# BRAZIL              2 H BEHIND UTC   ATLANTIC ISLANDS 
-# [Yes, they do have both Brasil and Brazil; no, they don't mention DST.--ado]
+# From U.S. Naval Observatory (January 16, 1989):
+# BRAZIL     WEST     5 H  BEHIND UTC    TERRITORY OF ACRE
+# BRAZIL     WEST     4 H  BEHIND UTC    ACRE OCT 23, '88-FEB 11,
+# BRAZIL                                 '89 (ESTIMATED)
+# BRAZIL     CENTRAL  4 H  BEHIND UTC    MANAUS
+# BRAZIL     CENTRAL  3 H  BEHIND UTC    MANAUS OCT 23, '88-FEB 11,
+# BRAZIL     CENTRAL                     '89 (ESTIMATED)
+# BRAZIL     EAST     3 H  BEHIND UTC    COASTAL STATES, RIO, SAO
+# BRAZIL     EAST                        PAULO, BRASILIA
+# BRAZIL     EAST     2 H  BEHIND UTC    COASTAL STATES, RIO, SAO
+# BRAZIL                                 PAULO, BRASILIA OCT 23,
+# BRAZIL                                 '88-FEB 11, '89
+# BRAZIL                                 (ESTIMATED)
+# BRAZIL              2 H  BEHIND UTC    ATLANTIC ISLANDS, FERNANDO
+# BRAZIL                                 DE NORONHA
+# BRAZIL              1 H  BEHIND UTC    OCT 23, '88-FEB 11, '89
+# BRAZIL                                 (ESTIMATED)
+# BRAZIL              3 H  BEHIND UTC    FOR MOST MAJOR AIRPORTS.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Brazil	1987	max	-	Feb	Sat<=14	2:00	0	S
@@ -74,12 +81,12 @@ Zone	Chile/EasterIsland	-6:00	Chile		E%sT
 # Paraguay: First day in October to last in March.  Midnight switch??
 # Since 1980.
 
-# From U.S. Naval Observatory (February 10, 1988):
-# PARAGUAY            4 H BEHIND UTC IN WINTER
-# PARAGUAY            3 H BEHIND UTC SEP 30 - MAR 30
+# From U.S. Naval Observatory (January 16, 1989):
+# PARAGUAY            4 H  BEHIND UTC
+# PARAGUAY            3 H  BEHIND UTC    OCT 1, '88-MAR 31, '89
 
-# From Arthur David Olson (February 13, 1988):
-# OAG, USNO, and Bob have different data.  Punt for now.
+# From Arthur David Olson (January 16, 1989):
+# Still don't know time of day when switch occurs.  Punt.
 
 ###############################################################################
 
@@ -89,8 +96,8 @@ Zone	Chile/EasterIsland	-6:00	Chile		E%sT
 # Argentina: first Sunday in October to first Sunday in April since 1976.
 # Double Summer time from 1969 to 1974.  Switches at midnight.
 
-# From U.S. Naval Observatory (February 10, 1988):
+# From U.S. Naval Observatory (January 16, 19889):
 # ARGENTINA           3 H BEHIND   UTC
 
-# From Arthur David Olson (February 13, 1988):
-# OAG, USNO and Bob have different data.  Punt for now.
+# From Arthur David Olson (January 16, 1989):
+# OAG, USNO and Bob have different data.  Punt.

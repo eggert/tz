@@ -293,10 +293,19 @@ posix_only:	zic $(TDATA)
 right_only:	zic leapseconds $(TDATA)
 		$(ZIC) -y $(YEARISTYPE) -d $(TZDIR) -L leapseconds $(TDATA)
 
+# In earlier versions of this makefile, the other two directories were
+# subdirectories of $(TZDIR).  However, this led to configuration errors.
+# For example, with posix_right under the earlier scheme,
+# TZ='right/Australia/Adelaide' got you localtime with leap seconds,
+# but gmtime without leap seconds, which led to problems with applications
+# like sendmail that subtract gmtime from localtime.
+# Therefore, the other two directories are now siblings of $(TZDIR).
+# You must replace all of $(TZDIR) to switch from not using leap seconds
+# to using them, or vice versa.
 other_two:	zic leapseconds $(TDATA)
-		$(ZIC) -y $(YEARISTYPE) -d $(TZDIR)/posix -L /dev/null $(TDATA)
+		$(ZIC) -y $(YEARISTYPE) -d $(TZDIR)-posix -L /dev/null $(TDATA)
 		$(ZIC) -y $(YEARISTYPE) \
-			-d $(TZDIR)/right -L leapseconds $(TDATA)
+			-d $(TZDIR)-right -L leapseconds $(TDATA)
 
 posix_right:	posix_only other_two
 

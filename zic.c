@@ -1314,9 +1314,9 @@ const char * const		timep;
 		return;
 	} else if (noise) {
 		if (rp->r_loyear < min_year_representable)
-			warning(_("starting year too low to be represented"));
+			warning(_("ending year too low to be represented"));
 		else if (rp->r_loyear > max_year_representable)
-			warning(_("starting year too high to be represented"));
+			warning(_("ending year too high to be represented"));
 	}
 	if (rp->r_loyear > rp->r_hiyear) {
 		error(_("starting year greater than ending year"));

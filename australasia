@@ -74,7 +74,7 @@ Zone	Australia/LHI		10:30	NSW	???
 #	a) Australian Eastern Time: (EST = GMT+10:00, EDT = GMT+11:00)
 #	. . .
 #	Summer of 86/87 - present (current legislation):
-#		third Sun Oct 02:00 EST -> third LSun Mar 02:00 EST
+#		third Sun Oct 02:00 EST -> third [S]un Mar 02:00 EST
 #
 # If this turns out to be true, substitute Sun<=21 (third Sunday in October)
 # for Sun<=24 (next-to-last Sunday in October) above. . .some time before

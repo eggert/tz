@@ -28,6 +28,7 @@ extern char *	irealloc P((char * old, int n));
 extern int	link P((const char * fromname, const char * toname));
 extern char *	optarg;
 extern int	optind;
+extern void	perror P((const char * string));
 extern char *	scheck P((const char * string, const char * format));
 
 static void	addtt P((time_t starttime, int type));
@@ -406,6 +407,7 @@ static const char *	directory = NULL;
 static const char *	leapsec = NULL;
 static int		sflag = FALSE;
 
+int
 main(argc, argv)
 int	argc;
 char *	argv[];
@@ -583,7 +585,7 @@ char *	name;
 ** Sort by rule name.
 */
 
-static
+static int
 rcomp(cp1, cp2)
 const genericptr_t	cp1;
 const genericptr_t	cp2;
@@ -812,7 +814,7 @@ register char **	fields;
 	rules[nrules++] = r;
 }
 
-static
+static int
 inzone(fields, nfields)
 register char **	fields;
 {
@@ -851,7 +853,7 @@ register char **	fields;
 	return inzsub(fields, nfields, FALSE);
 }
 
-static
+static int
 inzcont(fields, nfields)
 register char **	fields;
 {
@@ -862,7 +864,7 @@ register char **	fields;
 	return inzsub(fields, nfields, TRUE);
 }
 
-static
+static int
 inzsub(fields, nfields, iscont)
 register char **	fields;
 {
@@ -1454,7 +1456,7 @@ time_t	starttime;
 	++timecnt;
 }
 
-static
+static int
 addtype(gmtoff, abbr, isdst)
 long		gmtoff;
 const char *	abbr;
@@ -1535,7 +1537,7 @@ adjleap()
 	}
 }
 
-static
+static int
 yearistype(year, type)
 const char *	type;
 {
@@ -1561,13 +1563,13 @@ const char *	type;
 		(void) exit(EXIT_FAILURE);
 }
 
-static
+static int
 lowerit(a)
 {
 	return (isascii(a) && isupper(a)) ? tolower(a) : a;
 }
 
-static
+static int
 ciequal(ap, bp)		/* case-insensitive equality */
 register const char *	ap;
 register const char *	bp;
@@ -1801,7 +1803,7 @@ const char *	string;
 	charcnt += eitol(i);
 }
 
-static
+static int
 mkdirs(name)
 char *	name;
 {

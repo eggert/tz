@@ -280,17 +280,16 @@ label:
 					struct tm	tm;
 					char		buf[INT_STRLEN_MAXIMUM(
 								time_t) + 1];
+					time_t		mkt;
 
 					tm = *t;
-					(void) sprintf(buf,
-#if ((time_t) -1) < 0	/* if time_t is signed */
-						"%ld", (long)
-#endif /* time_t is signed */
-#if ((time_t) -1) >= 0	/* if time_t is unsigned */
-						"%lu", (unsigned long)
-#endif /* time_t is signed */
-
-						mktime(&tm));
+					mkt = mktime(&tm);
+					if (TYPE_SIGNED(time_t))
+						(void) sprintf(buf, "%ld",
+							(long)mkt);
+					else
+						(void) sprintf(buf, "%lu",
+							(unsigned long)mkt);
 					pt = _add(buf, pt, ptlim);
 				}
 				continue;

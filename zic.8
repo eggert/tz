@@ -264,12 +264,16 @@ field is used as an alternate name for that zone.
 .PP
 Except for continuation lines,
 lines may appear in any order in the input.
-.SH NOTE
+.SH NOTES
 For areas with more than two types of local time,
 you may need to use local standard time in the
 .B AT
 field of the earliest transition time's rule to ensure that
 the earliest transition time recorded in the compiled file is correct.
+.sp
+Times in
+.B UNTIL
+fields must be given in local standard (not local wall clock) time.
 .SH FILES
 /etc/timezones	standard directory used for created files
 .SH "SEE ALSO"

@@ -51,46 +51,46 @@ to be output in a particular way
 .nf
 .if t .in +.5i
 .if n .in +2
-.ta \w'%M\0\0'u +\w'Wed Mar  8 14:54:40 EST 1989\0\0'u
+.ta \w'%M\0\0'u +\w'Wed Mar  8 14:54:40 1989\\n\0\0'u
 	Sample output	Explanation
 %a	Wed	Abbreviated weekday name
 %A	Wednesday	Full weekday name
 %b	Mar	Abbreviated month name
 %B	March	Full month name
-%c	Wed Mar 08 14:54:40 EST 1989	Near-default (leading 0 on month day)
+%c	03/08/89 14:54:40	Month/day/year Hour:minute:second
+%C	Wed Mar  8 14:54:40 1989\\n	a la \fIasctime\^\fP(3)
 %d	08	Day of month (always two digits)
-%D	03/08/89	Month/day/year (eight characters)*
-%h	Mar	Abbreviated month name*
+%D	03/08/89	Month/day/year (eight characters)
+%e	 8	Day of month (leading zero blanked)
+%h	Mar	Abbreviated month name
 %H	14	24-hour-clock hour (two digits)
 %I	02	12-hour-clock hour (two digits)
 %j	067	Julian day number (three digits)
+%k	 2	12-hour-clock hour (leading zero blanked)
+%l	14	24-hour-clock hour (leading zero blanked)
 %m	03	Month number (two digits)
 %M	54	Minute (two digits)
-%n		newline character*
+%n	\\n	newline character
 %p	PM	AM/PM designation
-%r	14:54:40 PM	Hour:minute:second AM/PM designation*
-%R	14:54	Hour:minute*
+%r	02:54:40 PM	Hour:minute:second AM/PM designation
+%R	14:54	Hour:minute
 %S	40	Second (two digits)
-%t		tab character*
-%T	14:54:40	Hour:minute:second*
+%t	\\t	tab character
+%T	14:54:40	Hour:minute:second
 %U	10	Sunday-based week number (two digits)
 %w	3	Day number (one digit, Sunday is 0)
 %W	10	Monday-based week number (two digits)
-%x	Wed Mar 08 1989	Weekday Month Day Year
+%x	03/08/89	Month/day/year (eight characters)
 %X	14:54:40	Hour:minute:second
 %y	89	Last two digits of year
 %Y	1989	Year in full
 %Z	EST	Time zone abbreviation
-%%	%	percent sign
 .if t .in -.5i
-.if n .in -2
+.if n .i -2
 .fi
-Starred format specifications in the preceding table are available
-only on System-V-compatible systems.
 If a character other than one of those shown above appears after
 a percent sign in the format,
-.I date\^
-produces an error message.
+that following character is output.
 All other characters in the format are copied unchanged to the output;
 a newline character is always added at the end of the output.
 .PP

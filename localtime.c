@@ -47,11 +47,6 @@ static char	elsieid[] = "%W%";
 #define WILDABBR	"   "
 #endif /* !defined WILDABBR */
 
-#ifndef TRUE
-#define TRUE		1
-#define FALSE		0
-#endif /* !defined TRUE */
-
 static const char GMT[] = "GMT";
 
 struct ttinfo {				/* time type information */

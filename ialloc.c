@@ -11,6 +11,12 @@ static char	elsieid[] = "%W%";
 
 #ifdef __STDC__
 
+#include "stddef.h"
+
+/*
+** Should be "memory.h", but Turbo C 1.5 doesn't have it. . .
+*/
+
 #include "stdlib.h"
 
 #define alloc_t	size_t

@@ -15,9 +15,6 @@
 # EGYPT               3 H  AHEAD OF UTC  MAY 17 - SEP 30 (AFTER
 # EGYPT                                  RAMADAN)
 
-# From Arthur David Olson (January 21, 1989):
-# Stick with rules posted in 1988 until discrepancies above are resolved.
-
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Egypt	1960	max	-	May	1	2:00	1:00	" DST"
 Rule	Egypt	1960	max	-	Oct	1	2:00	0	-

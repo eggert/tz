@@ -3,7 +3,9 @@
 tzcomp \- time zone compiler
 .SH SYNOPSIS
 .B tzcomp
-filename ...
+[
+.B \-d
+directory ] filename ...
 .SH DESCRIPTION
 .I Tzcomp
 reads text from the file(s) named on the command line
@@ -13,6 +15,12 @@ If a
 is
 .BR ` - ',
 the standard input is read.
+.PP
+This option is available:
+.TP
+.B \-d directory
+Create time zone information files in the named directory rather than
+in the standard directory named below.
 .PP
 A sharp characters (#) in the input introduces a comment which extends to
 the end of the line the sharp character appears on.
@@ -206,7 +214,7 @@ Lines may appear in any order in the input.
 [Since a sample time zone file appears in the shell archive,
 this section has been omitted.]
 .SH FILES
-/etc/tzdir	default directory used for generated files
+/etc/tzdir	standard directory used for created files
 .SH "SEE ALSO"
 settz(3), tzfile(5)
 .. %W%

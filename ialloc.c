@@ -17,72 +17,141 @@ extern char *	calloc();
 extern char *	realloc();
 extern char *	strcpy();
 
-static
-E_oops()
+char *
+imalloc(n)
 {
-	wildrexit("allocating memory");
+#ifdef MAL
+	register char *	result;
+
+	result = malloc((alloc_t) n);
+	return (result == MAL) ? NULL : result;
+#endif
+#ifndef MAL
+	return malloc((alloc_t) n);
+#endif
+}
+
+char *
+icalloc(nelem, elsize)
+{
+	return calloc((alloc_t) nelem, (alloc_t) elsize);
+}
+
+char *
+irealloc(pointer, size)
+char *	pointer;
+{
+#ifdef MAL
+	if (pointer == MAL)
+		pointer = NULL;
+#endif
+	if (pointer == NULL)
+		return imalloc(size);
+	else	return realloc(pointer, (alloc_t) size);
+}
+
+ifree(p)
+char *	p;
+{
+#ifdef MAL
+	if (p == MAL)
+		p = NULL;
+#endif
+	if (p != NULL)
+		free(p);
+}
+
+char *
+icatalloc(old, new)
+char *	old;
+char *	new;
+{
+	register char *	result;
+	register	oldsize, newsize;
+
+#ifdef MAL
+	if (old == MAL)
+		old = NULL;
+	if (new == MAL)
+		new = NULL;
+#endif
+	oldsize = (old == NULL) ? 0 : strlen(old);
+	newsize = (new == NULL) ? 0 : strlen(new);
+	if ((result = irealloc(old, oldsize + newsize + 1)) != NULL)
+		if (new != NULL)
+			(void) strcpy(result + oldsize, new);
+	return result;
+}
+
+char *
+icpyalloc(string)
+char *	string;
+{
+	return icatalloc((char *) NULL, string);
 }
 
 char *
 emalloc(size)
 {
-	register char *	ret;
+	register char *	result;
 
-	if ((ret = malloc((alloc_t) size)) == NULL)
-		E_oops();
-#ifdef MAL
-	if (ret == MAL)
-		E_oops();
-#endif
-	return ret;
+	if ((result = imalloc(size)) == NULL)
+		oops();
+	return result;
 }
 
 char *
 ecalloc(nelem, elsize)
 {
-	register char *	ret;
+	register char *	result;
 
-	if ((ret = calloc((alloc_t) nelem, (alloc_t) elsize)) == NULL)
-		E_oops();
-	return ret;
+	if ((result = icalloc(nelem, elsize)) == NULL)
+		oops();
+	return result;
 }
 
 char *
 erealloc(ptr, size)
 char *	ptr;
 {
-	register char *	ret;
+	register char *	result;
 
-	if ((ret = realloc(ptr, (alloc_t) size)) == NULL)
-		E_oops();
-	return ret;
+	if ((result = irealloc(ptr, size)) == NULL)
+		oops();
+	return result;
+}
+
+efree(p)
+char *	p;
+{
+	ifree(p);
 }
 
 char *
-allocat(old, new)
+ecatalloc(old, new)
 char *	old;
 char *	new;
 {
-	register char *	ret;
-	register	oldsize, newsize;
+	register char *	result;
 
-	if (new == NULL)
-		new = "";
-	newsize = strlen(new);
-	if (old == NULL) {
-		oldsize = 0;
-		ret = ecalloc(newsize + 1, sizeof *ret);
-	} else {
-		oldsize = strlen(old);
-		ret = erealloc(old, (oldsize + newsize + 1) * sizeof *ret);
-	}
-	(void) strcpy(ret + oldsize, new);
-	return ret;
+	if ((result = icatalloc(old, new)) == NULL)
+		oops();
+	return result;
 }
 
 char *
-allocpy(string)
+ecpyalloc(string)
 char *	string;
 {
-	return allocat((char *) NULL, string);
+	register char *	result;
+
+	if ((result = icatalloc((char *) NULL, string)) == NULL)
+		oops();
+	return result;
+}
+
+static
+oops()
+{
+	wildrexit("allocating memory");
 }

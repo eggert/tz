@@ -240,7 +240,8 @@ char *		argv[];
 		tv.tv_usec = (int) ((adjust - tv.tv_sec) * 1000000);
 		if (adjtime(&tv, (struct timeval *) NULL) != 0)
 			oops("date: error: adjtime");
-#else /* ! HAVE_ADJTIME */
+#endif /* HAVE_ADJTIME */
+#if !HAVE_ADJTIME
 		reset((time_t) (now + adjust), nflag);
 #endif /* ! HAVE_ADJTIME */
 		/*
@@ -261,7 +262,8 @@ char *		argv[];
 			tz.tz_minuteswest = minuteswest;
 		if (settimeofday((struct timeval *) NULL, &tz) != 0)
 			oops("date: error: settimeofday");
-#else /* HAVE_SETTIMEOFDAY != 2 */
+#endif /* HAVE_SETTIMEOFDAY == 2 */
+#if HAVE_SETTIMEOFDAY != 2
 		(void) fprintf(stderr,
 "date: warning: kernel doesn't keep -d/-t information, option ignored\n");
 #endif /* HAVE_SETTIMEOFDAY != 2 */

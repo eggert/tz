@@ -54,7 +54,7 @@ static char *_fmt P((const char *, const struct tm *, char *, const char *));
 
 size_t strftime P((char *, size_t, const char *, const struct tm *));
 
-extern char *tzname[2];
+extern char *tzname[];
 
 size_t
 strftime(s, maxsize, format, t)

@@ -24,6 +24,8 @@ to the end of the
 	CFLAGS=
 line in "Makefile".
 
+To use the new functions, use a "-lz" option when compiling or linking.
+
 Historical local time information has been included here not because it
 is particularly useful, but rather to:
 
@@ -33,3 +35,8 @@ is particularly useful, but rather to:
 
 *	provide a test of the generality of the local time rule description
 	system.
+
+The information in the time zone data files is by no means authoritative;
+if you know that the rules are different from those in a file, by all means
+feel free to change file (and please send the changed version to seismo!elsie!tz
+for use in the future).

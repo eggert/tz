@@ -9,74 +9,98 @@ The time zone information files used by
 .IR settz (3)
 and
 .IR newlocaltime (3)
-have the format of the
+begin with a
 .I tzinfo
-structure described in the include file
+structure (as defined in the include file
 .B 
-"tzfile.h":
+"tzfile.h"\c
+):
 .sp
 .nf
 .in +.5i
-struct tzinfo {
-	int	tz_timecnt;
-	long	tz_times[TZ_MAX_TIMES];
-	char	tz_types[TZ_MAX_TIMES];
-	struct dsinfo {
-		long	ds_gmtoff;
-		char	ds_abbr[TZ_ABBR_LEN+1];
-		char	ds_isdst;
-	}	tz_dsinfo[TZ_MAX_TYPES];
+.ta .5i +\w'unsigned short  'u
+struct tzhead {
+	char	tzh_reserved[14];
+	unsigned short	tzh_timecnt;
+	unsigned short	tzh_typecnt;
+	unsigned short	tzh_charcnt;
 };
+.in -.5i
 .fi
 .PP
 The
-.B tz_timecnt
-field tells how many of the
-.B tz_times
-and
-.B tz_types
-stored in the file are meaningful.
-Each of the meaningful
-.B tz_times
-entries is a starting time (as returned by
-.IR time (2));
-the same-indexed
-.B tz_types
-entry is the index of the
-.B tz_dsinfo
-array element that tells about how "local time" is generated starting at that
-time.
-For a file to be used by
-.IR settz ,
-its
-.B tz_times
-entries must be sorted in ascending order.
+.B tzh_reserved
+element is currently unused.
+The
+.B tzh_timecnt
+element gives the number of "transition times" for which data is stored
+in the file;
+the
+.B tzh_typecnt
+(which must not be zero)
+element gives the number of "local time types" for which data is stored
+in the file;
+and the
+.B tzh_charcnt
+element gives the number of characters of "time zone abbreviation strings"
+stored in the file.
 .PP
-In the
-.B tz_dsinfo
-structures,
-.B ds_gmtoff
-gives the number of seconds that should be added to GMT;
-.B ds_abbr
-is the ASCII-NUL-terminated string used as the time zone abbreviation;
-and
+The above header is followed by
+.B tzh_timecnt
+values of type
+.BR long ;
+each is used as a transition time (as returned by
+.IR time (2))
+at which the rules for computing local time change.
+Next come
+.B tzh_timecnt
+values of type
+.BR "unsigned char" ;
+each one tells which of the different types of "local time" described in the
+file is associated with the same-indexed transition time.
+These values serve as indices into an array of
+.B ttinfo
+structures that appears next in the file; 
+these structures are defined as follows:
+.in +.5i
+.sp
+.nf
+.ta .5i +\w'unsigned short  'u
+struct ttinfo {	
+	long	tt_gmtoff;
+	int	tt_isdst;
+	unsigned int	tt_abbrind;
+};
+.in -.5i
+.fi
+.sp
+In each structure,
+.B tt_gmtoff
+gives the number of seconds to be added to GMT,
 .B
-ds_isdst
+tt_isdst
 tells whether
 .B
 tm_isdst
 should be set by
-.IR newlocaltime (3).
+.IR newlocaltime (3),
+and
+.B tt_abbrind
+serves as an index into the array of time zone abbreviation chaaracters
+that follow the
+.B ttinfo
+structure(s) in the file.
 .PP
 .I Newlocaltime
-uses the first element of
-.B tz_dsinfo
+uses the first
+.B ttinfo
+structure in the file
 if either
-.B tz_timecnt
+.B tzh_timecnt
 is zero or
 .IR newlocaltime 's
 argument is less than
-.BR tz_times[0] .
+the first transition time recorded in the file.
 .SH SEE ALSO
 settz(3)
 .. %W%

@@ -10,6 +10,19 @@ static char	elsieid[] = "%W%";
 #include "sys/stat.h"			/* for umask manifest constants */
 #endif /* defined unix */
 
+/*
+** On some ancient hosts, predicates like `isspace(C)' are defined
+** only if isascii(C) || C == EOF.  Modern hosts obey the C Standard,
+** which says they are defined only if C == (unsigned char)C || C == EOF.
+** Neither the C Standard nor Posix require that `isascii' exist.
+** For portability, we check both ancient and modern requirements.
+** If isascii is not defined, the isascii check succeeds trivially.
+*/
+#include "ctype.h"
+#ifndef isascii
+#define isascii(x) 1
+#endif
+
 struct rule {
 	const char *	r_filename;
 	int		r_linenum;
@@ -721,7 +734,7 @@ const char *	name;
 		while (fields[nfields] != NULL) {
 			static char	nada;
 
-			if (ciequal(fields[nfields], "-"))
+			if (strcmp(fields[nfields], "-") == 0)
 				fields[nfields] = &nada;
 			++nfields;
 		}
@@ -1702,8 +1715,9 @@ const char * const	type;
 
 static int
 lowerit(a)
-const int	a;
+int	a;
 {
+	a = (unsigned char)a;
 	return (isascii(a) && isupper(a)) ? tolower(a) : a;
 }
 
@@ -1775,7 +1789,7 @@ register char *	cp;
 		emalloc((int) ((strlen(cp) + 1) * sizeof *array));
 	nsubs = 0;
 	for ( ; ; ) {
-		while (isascii(*cp) && isspace(*cp))
+		while (isascii(*cp) && isspace((unsigned char)*cp))
 			++cp;
 		if (*cp == '\0' || *cp == '#')
 			break;
@@ -1788,8 +1802,8 @@ register char *	cp;
 					++dp;
 				else	error("Odd number of quotation marks");
 		} while (*cp != '\0' && *cp != '#' &&
-			(!isascii(*cp) || !isspace(*cp)));
-		if (isascii(*cp) && isspace(*cp))
+			(!isascii(*cp) || !isspace((unsigned char)*cp)));
+		if (isascii(*cp) && isspace((unsigned char)*cp))
 			++cp;
 		*dp = '\0';
 	}
@@ -1952,8 +1966,8 @@ char * const	argname;
 		/*
 		** DOS drive specifier?
 		*/
-		if (strlen(name) == 2 && isascii(name[0]) &&
-			isalpha(name[0]) && name[1] == ':') {
+		if (isalpha((unsigned char)name[0])
+		    && name[1] == ':' && !name[2]) {
 				*cp = '/';
 				continue;
 		}

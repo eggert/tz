@@ -8,12 +8,15 @@ tzfile \- time zone information
 The time zone information files used by
 .IR tzset (3)
 begin with bytes reserved for future use,
-followed by three four-byte values of type
+followed by four four-byte values of type
 .BR long ,
 written in a ``standard'' byte order
 (the high-order byte of the value is written first).
 These values are,
 in order:
+.TP
+.I tzh_leapcnt
+The number of leap seconds for which data is stored in the file.
 .TP
 .I tzh_timecnt
 The number of "transition times" for which data is stored
@@ -80,6 +83,18 @@ serves as an index into the array of time zone abbreviation characters
 that follow the
 .I ttinfo
 structure(s) in the file.
+.PP
+Finally, there are
+.I tzh_leapcnt
+pairs of four-byte values, written in standard byte order;
+the first value of each pair gives the time
+(as returned by 
+.IR time(2))
+at which a leap second occurs;
+the second gives the
+.I total
+number of leap seconds to be applied after the given time.
+The pairs of values are sorted in ascending order by time.
 .PP
 .I Localtime
 uses the first standard-time

@@ -24,7 +24,7 @@ char *	new;
 		new = "";
 	toalloc = strlen(new) + 1;
 	ret = (old == NULL) ? calloc(toalloc, sizeof *ret) :
-		realloc(old, (toalloc + strlen(old)) * sizeof *ret));
+		realloc(old, (toalloc + strlen(old)) * sizeof *ret);
 	if (ret != NULL)
 		(void) strcat(ret, new);
 	return ret;

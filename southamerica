@@ -21,6 +21,16 @@
 # there was no DST up to 1985.  But there was some before 1952!"
 
 # From U.S. Naval Observatory (February 10, 1988):
+#	BRASIL   WEST       5 H BEHIND UTC        (CRUZEIRO DO SUL) 
+#	BRASIL   CENTRAL    4 H BEHIND UTC              (MANAUS)
+#	BRASIL   EAST       3 H BEHIND UTC   COASTAL STATES, RIO, SP, BRASILIA
+#	BRASIL              2 H BEHIND UTC   ATLANTIC ISLANDS 
+#	BRAZIL              5 H BEHIND UTC   WEST (CRUZEIRO DO SUL) 
+#	BRAZIL              4 H BEHIND UTC   CENTRAL    (MANAUS)
+#	BRAZIL              3 H BEHIND UTC   COASTAL STATES, RIO, SP, BRASILIA
+#	BRAZIL              3 H BEHIND UTC   FOR MOST MAJOR AIRPORTS. 
+#	BRAZIL              2 H BEHIND UTC   ATLANTIC ISLANDS 
+# (Yes, they do have both Brasil and Brazil; no, they don't mention DST.)
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Brazil	1987	max	-	Feb	Sat<=14	2:00	0	S
@@ -57,6 +67,8 @@ Zone	Chile/EasterIsland	-6:00	Chile		E%sT
 # in March.  Midnight switch??  Since 1980."
 
 # From U.S. Naval Observatory (February 10, 1988):
+#	PARAGUAY            4 H BEHIND UTC IN WINTER
+#	PARAGUAY            3 H BEHIND UTC SEP 30 - MAR 30
 
 ###############################################################################
 

@@ -30,12 +30,12 @@ Rule	USA	1987	max	-	Apr	Sun>=1	2:00	1:00	D
 
 # New names
 
-# Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	 [UNTIL]
-Zone	US/Eastern		-5:00	USA		E%sT
-Zone	US/Central		-6:00	USA		C%sT
-Zone	US/Mountain		-7:00	USA		M%sT
-Zone	US/Pacific		-8:00	USA		P%sT
-Zone	US/Yukon		-9:00	USA		Y%sT
+# Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	 [UNTIL]
+Zone	US/Eastern	-5:00	USA		E%sT
+Zone	US/Central	-6:00	USA		C%sT
+Zone	US/Mountain	-7:00	USA		M%sT
+Zone	US/Pacific	-8:00	USA		P%sT
+Zone	US/Yukon	-9:00	USA		Y%sT
 
 # Old names, for S5 users
 
@@ -81,5 +81,7 @@ Zone	Canada/Central		-6:00	Canada		C%sT
 Zone	Canada/Mountain		-7:00	Canada		M%sT
 Zone	Canada/Pacific		-8:00	Canada		P%sT
 Zone	Canada/Yukon		-9:00	Canada		Y%sT
+
+################################################################################
 
 # ?Mexico?  !Quien sabe!

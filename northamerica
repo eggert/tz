@@ -558,7 +558,7 @@ Zone America/Whitehorse	-9:00:12 -	LMT	1900 Aug 20
 # Rules prior to 1987 are unknown.
 # The comments in the OAG say "Only Ensenada, Mexicale, San Felipe and Tijuana
 # observe DST."  This is presumably Baja California Norte, above 28th parallel,
-# as listed there; Mexico/BajaSur is for "Baja California Sur and N. Pacific
+# as listed there; [there is also] "Baja California Sur and N. Pacific
 # Coast (States of Sinaloa and Sonora)."
 
 # From Bob Devine (January 28, 1988):

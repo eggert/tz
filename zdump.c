@@ -189,9 +189,9 @@ time_t		t;
 		(void) printf(" %s", tzname[tmp->tm_isdst]);
 	if (v) {
 		(void) printf(" isdst=%d", tmp->tm_isdst);
-#ifdef KRE_COMPAT
-		(void) printf(" gmtoff=%ld", tmp->tm_gmtoff);
-#endif /* KRE_COMPAT */
+#ifdef TM_GMTOFF
+		(void) printf(" gmtoff=%ld", tmp->TM_GMTOFF);
+#endif /* defined TM_GMTOFF */
 	}
 	(void) printf("\n");
 }

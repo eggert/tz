@@ -17,6 +17,11 @@
 # "Brazil/Acre" is for the Territory of Acre; "Brazil/DeNoronha" is for
 # Fernando De Noronha.
 
+# From Bob Devine (January 28, 1988):  "The only information I found is that
+# there was no DST up to 1985.  But there was some before 1952!"
+
+# From U.S. Naval Observatory (February 10, 1988):
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Brazil	1987	max	-	Feb	Sat<=14	2:00	0	S
 Rule	Brazil	1987	max	-	Oct	Sat<=28	2:00	1:00	D
@@ -33,9 +38,12 @@ Zone	Brazil/DeNoronha	-2:00	Brazil		F%sT
 # The OAG lists October 11, 1987 and March 12, 1988 as the starting and
 # ending dates, giving them as "estimated date(s) based on previous year."
 
+# From Bob Devine (January 28, 1988):  "Chile has had 2nd Sunday in October to
+# 2nd Sunday in March DST since 1977.  Switch is at midnight. OAG is right."
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Chile	1987	max	-	Mar	Sun<=14	2:00	0	S
-Rule	Chile	1987	max	-	Oct	Sun<=14	2:00	1:00	D
+Rule	Chile	1977	max	-	Oct	Sun>=8	0:00	1:00	D
+Rule	Chile	1978	max	-	Mar	Sun>=8	0:00	0	S
 
 # Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 Zone	Chile/Continental	-4:00	Chile		C%sT
@@ -48,18 +56,16 @@ Zone	Chile/EasterIsland	-6:00	Chile		E%sT
 # From Bob Devine (January 28, 1988):  "Paraguay: First day in October to last
 # in March.  Midnight switch??  Since 1980."
 
-# From the U.S. Naval Observatory (February 10, 1988):
-#	PARAGUAY            4 H BEHIND UTC IN WINTER
-#	PARAGUAY            3 H BEHIND UTC SEP 30 - MAR 30
+# From U.S. Naval Observatory (February 10, 1988):
 
-# From Arthur David Olson:
-# Until USNO and Devine information can be reconciled,
-# the below is commented out.
-# (It encodes Devine's information).
+###############################################################################
 
-## Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-#Rule	Para	1980	max	-	Oct	1	0:00	1:00	D
-#Rule	Para	1981	max	-	Mar	1	0:00	0	S
+# Argentina
 
-## Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
-#Zone	Paraguay		-4:00	Para		P%sT
+# From Bob Devine (January 28, 1988):  "Argentina: first Sunday in October to
+# first Sunday in April since 1976.  Double Summer time from 1969 to 1974.
+# Switches at midnight.
+
+# From U.S. Naval Observatory (February 10, 1988):
+#	ARGENTINA           3 H BEHIND   UTC
+# (No mention of DST).

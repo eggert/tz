@@ -11,24 +11,32 @@ static char	elsieid[] = "%W%";
 #include "string.h"
 
 #ifdef __STDC__
-extern char *	imalloc(int n);
-extern void	ifree(char * p);
-#else /* !defined __STDC__ */
-extern char *	imalloc();
-extern void	ifree();
-#endif /* !defined __STDC__ */
+#define P(s)	s
+#endif /* defined __STDC__ */
+
+#ifdef __TURBOC__
+#define P(s)	s
+#endif /* defined __TURBOC__ */
+
+#ifndef P
+#define P(s)	()
+#define const
+#endif /* !defined P */
+
+extern char *	imalloc P((int n));
+extern void	ifree P((char * p));
 
 char *
 scheck(string, format)
-char *	string;
-char *	format;
+const char *	string;
+char *		format;
 {
-	register char *	fbuf;
-	register char *	fp;
-	register char *	tp;
-	register int	c;
-	register char *	result;
-	char		dummy;
+	register char *		fbuf;
+	register const char *	fp;
+	register char *		tp;
+	register int		c;
+	register char *		result;
+	char			dummy;
 
 	result = "";
 	if (string == NULL || format == NULL)

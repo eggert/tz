@@ -1012,14 +1012,13 @@ struct zone *	zpfirst;
 	register struct rule *		rp;
 	register int			i, j;
 	register int			usestart, useuntil;
-	register int			doadjust;
-	register long			adjustment;
 	register long			starttime, untiltime;
 	register long			gmtoff;
 	register long			stdoff;
 	register long			year;
 	register long			startoff;
 	register int			startisdst;
+	register int			type;
 	char				startbuf[BUFSIZ];
 
 	/*
@@ -1033,8 +1032,6 @@ struct zone *	zpfirst;
 	*/
 	gmtoff = zpfirst->z_gmtoff;
 	stdoff = 0;
-	doadjust = FALSE;
-	adjustment = 0;
 	for (i = 0; i < zonecount; ++i) {
 		usestart = i > 0;
 		useuntil = i < (zonecount - 1);
@@ -1042,8 +1039,6 @@ struct zone *	zpfirst;
 		eat(zp->z_filename, zp->z_linenum);
 		startisdst = -1;
 		if (zp->z_nrules == 0) {
-			register int	type;
-
 			type = addtype(tadd(zp->z_gmtoff, zp->z_stdoff),
 				zp->z_format, zp->z_stdoff != 0);
 			if (usestart)
@@ -1126,33 +1121,22 @@ addtt(starttime, addtype(startoff, startbuf, startisdst));
 				}
 				eats(zp->z_filename, zp->z_linenum,
 					rp->r_filename, rp->r_linenum);
-				if (timecnt == 0 && !rp->r_todisstd)
-					doadjust = TRUE;
-				else if (timecnt == 1)
-					adjustment = rp->r_stdoff;
 				(void) sprintf(buf, zp->z_format,
 					rp->r_abbrvar);
 				offset = tadd(zp->z_gmtoff, rp->r_stdoff);
-				addtt(ktime, addtype(offset, buf,
-					rp->r_stdoff != 0));
+				type = addtype(offset, buf, rp->r_stdoff != 0);
+				if (timecnt != 0 || rp->r_stdoff != 0)
+					addtt(ktime, type);
 				gmtoff = zp->z_gmtoff;
 				stdoff = rp->r_stdoff;
 			}
 		}
 		/*
-		** Now we may get to set starttime for the zone line.
+		** Now we may get to set starttime for the next zone line.
 		*/
 		if (useuntil)
 			starttime = tadd(zp->z_untiltime,
 				-gmtoffs[types[timecnt - 1]]);
-	}
-	if (doadjust) {
-		/*
-		** Adjust the first starting time to reflect the standard
-		** time offset assumed to have been in effect at the time
-		** of the first rule.
-		*/
-		ats[0] = tadd(ats[0], adjustment);
 	}
 	writezone(zpfirst->z_name);
 }

@@ -37,6 +37,10 @@ static char	privatehid[] = "%W%";
 #define HAVE_UNISTD_H		1
 #endif /* !defined HAVE_UNISTD_H */
 
+#ifndef HAVE_UTMPX_H
+#define HAVE_UTMPX_H		1
+#endif /* !defined HAVE_UTMPX_H */
+
 #ifndef LOCALE_HOME
 #define LOCALE_HOME		"/usr/lib/locale"
 #endif /* !defined LOCALE_HOME */

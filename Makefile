@@ -138,7 +138,7 @@ DOCS=		Patchlevel.h \
 		date.1 newctime.3 tzfile.5 zic.8 zdump.8 \
 		Makefile
 YDATA=		africa antarctica asia australasia \
-		europe northamerica southamerica pacificnew
+		europe northamerica southamerica pacificnew etcetera
 NDATA=		systemv
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)

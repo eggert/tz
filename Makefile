@@ -36,10 +36,10 @@ REDID_BINARIES:	$(TZDIR) tzcomp $(DATA) years
 	cp /dev/null $@
 
 tzdump:	$(TZDOBJS)
-	$(CC) $(LFLAGS) $(TZDOBJS) $(LIBS) -o $@
+	$(CC) $(LFLAGS) $(TZDOBJS) -o $@
 
 tzcomp:	$(TZCOBJS)
-	$(CC) $(LFLAGS) $(TZCOBJS) $(LIBS) -o $@
+	$(CC) $(LFLAGS) $(TZCOBJS) -o $@
 
 $(TZDIR):
 	mkdir $@

@@ -57,7 +57,7 @@ char *	argv[];
 	for (i = optind; i < argc; ++i) {
 		if (settz(argv[i]) != 0) {
 			(void) fprintf(stderr,
-				"%s: wild result from settz(\"%s\")\n",
+				"%s: settz(\"%s\") failed\n",
 				argv[0], argv[i]);
 			exit(1);
 		}
@@ -70,8 +70,8 @@ char *	argv[];
 			j = strlen(TZDIR) + 1 + strlen(argv[i]) + 1;
 			if (j > sizeof buf) {
 				(void) fprintf(stderr,
-					"%s: wild long timezone name %s\n",
-					argv[0], argv[i]);
+					"%s: timezone name %s/%s is too long\n",
+					argv[0], TZDIR, argv[i]);
 				exit(1);
 			}
 			(void) sprintf(buf, "%s/%s", TZDIR, argv[i]);
@@ -79,34 +79,24 @@ char *	argv[];
 		}
 		if (fp == NULL) {
 			(void) fprintf(stderr,
-				"%s: wild result opening %s file\n",
-				argv[0], argv[i]);
+				"%s: Can't open ", argv[0]);
+			perror(argv[i]);
 			exit(1);
 		}
-		if (fread((char *) &h, sizeof h, 1, fp) != 1) {
-			(void) fprintf(stderr,
-				"%s: wild result reading %s file\n",
-				argv[0], argv[i]);
-			exit(1);
-		}
+		if (fread((char *) &h, sizeof h, 1, fp) != 1)
+			readerr(fp, argv[0], argv[i]);
 		tp = (long *) calloc((alloc_t) h.tzh_timecnt, sizeof *tp);
 		if (tp == NULL) {
-			(void) fprintf(stderr,
-				"%s: wild result from calloc\n", argv[0]);
+			perror(argv[0]);
 			exit(1);
 		}
 		if (h.tzh_timecnt != 0)
 			if (fread((char *) tp, sizeof *tp, (int) h.tzh_timecnt,
-				fp) != h.tzh_timecnt) {
-				(void) fprintf(stderr,
-					"%s: wild result reading %s file\n",
-					argv[0], argv[i]);
-				exit(1);
-			}
+				fp) != h.tzh_timecnt)
+				readerr(fp, argv[0], argv[i]);
 		if (fclose(fp)) {
-			(void) fprintf(stderr,
-				"%s: wild result closing %s file\n",
-				argv[0], argv[i]);
+			(void) fprintf(stderr, "%s: Error closing ", argv[0]);
+			perror(argv[i]);
 			exit(1);
 		}
 		for (j = 0; j < h.tzh_timecnt; ++j) {
@@ -116,12 +106,12 @@ char *	argv[];
 		free((char *) tp);
 	}
 	if (fflush(stdout) || ferror(stdout)) {
-		(void) fprintf(stderr,
-			"%s: wild result writing to standard output\n",
-			argv[0]);
+		(void) fprintf(stderr, "%s: Error writing standard output ",
+			progname);
+		perror("standard output");
 		exit(1);
 	}
-	exit(0);
+	return 0;
 }
 
 static
@@ -129,17 +119,27 @@ show(zone, t, v)
 char *	zone;
 long	t;
 {
-	struct tm *		tmp;
-	extern struct tm *	newlocaltime();
-
 	(void) printf("%-*s  ", longest, zone);
 	if (v)
 		(void) printf("%.24s GMT = ", asctime(gmtime(&t)));
-	tmp = newlocaltime(&t);
-	(void) printf("%.24s", asctime(tmp));
+	(void) printf("%.24s", newctime(&t));
 	if (*tz_abbr != '\0')
 		(void) printf(" %s", tz_abbr);
 	if (v)
 		(void) printf(" isdst=%d\n", tmp->tm_isdst);
 	(void) printf("\n");
+}
+
+static
+readerr(fp, progname, filename)
+FILE *	fp;
+char *	progname;
+char *	filename;
+{
+	(void) fprintf(stderr, "%s: Error reading ", progname);
+	if (ferror(fp))
+		perror(filename);
+	else
+		(void) fprintf(stderr, "%s: Premature EOF\n", filename);
+	exit(1);
 }

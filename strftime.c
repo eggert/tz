@@ -635,6 +635,7 @@ const char * const	ptlim;
 	}
 	if (convert_yy)
 		pt = _conv(((trail < 0) ? -trail : trail), "%02d", pt, ptlim);
+	return pt;
 }
 
 #ifdef LOCALE_HOME

@@ -4,16 +4,18 @@
 
 #include "stdio.h"
 
-#if !defined lint && !defined NOID
+#ifndef lint
+#ifndef NOID
 static char	elsieid[] = "%W%"
-#endif /* !defined lint && !defined NOID */
+#endif /* !defined NOID */
+#endif /* !defined lint */
 
 #include "time.h"
 #include "tzfile.h"
 
-#if !defined __STDC__
+#ifndef __STDC__
 #define const
-#if !defined USG
+#ifndef USG
 extern char *	sprintf();
 #endif /* !defined USG */
 #endif /* !defined __STDC__ */

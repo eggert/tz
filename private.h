@@ -71,7 +71,9 @@ typedef char *		genericptr_t;
 #include "ctype.h"
 #include "errno.h"
 #include "string.h"
+#ifndef _TIME_
 #include "time.h"
+#endif /* !defined _TIME_ */
 
 #ifndef remove
 extern int	unlink P((const char * filename));

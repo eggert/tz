@@ -45,8 +45,8 @@ years:	years.sh
 	cp $? $@
 	chmod 555 $@
 
-bundle:	$(ENCHILADA)
-	bundle $(ENCHILADA) > bundle
+BUNDLE:	$(ENCHILADA)
+	bundle $(ENCHILADA) > BUNDLE
 
 $(ENCHILADA):
 	sccs get $(REL) $(REV) $@
@@ -56,7 +56,7 @@ sure:	$(TZCSRCS) $(TZDSRCS)
 	lint $(LINTFLAGS) $(TZDSRCS)
 
 clean:
-	rm -f core *.o *.out REDID_BINARIES years tzdump tzcomp bundle \#*
+	rm -f core *.o *.out REDID_BINARIES years tzdump tzcomp BUNDLE \#*
 
 CLEAN:	clean
 	sccs clean

@@ -38,25 +38,6 @@ static char	elsieid[] = "%W%";
 #define FALSE		0
 #endif /* !defined TRUE */
 
-static long		detzcode P((const char * codep));
-static void		settzname P((const struct state *sp));
-static char *		getzname P((const char *strp));
-static char *		getnum P((const char *strp, int *nump, int min,
-				int max));
-static char *		gettime P((const char *strp, long *timep));
-static char *		getoffset P((const char *strp, long *offsetp));
-static char *		getrule P((const char *strp, struct rule *rulep));
-static time_t		transtime P((time_t janfirst, int year,
-				const struct rule *rulep, long offset));
-static int		tzparse P((const char *name, struct state *sp));
-#ifdef STD_INSPIRED
-struct tm *		offtime P((const time_t * clockp, long offset));
-#endif /* !defined STD_INSPIRED */
-static void		timesub P((const time_t * clockp, long offset,
-				const struct state * sp, struct tm * tmp));
-static int		tzload P((const char * name, struct state * sp));
-void			tzsetwall P((void));
-
 struct ttinfo {				/* time type information */
 	long		tt_gmtoff;	/* GMT offset in seconds */
 	int		tt_isdst;	/* used to set tm_isdst */
@@ -79,6 +60,37 @@ struct state {
 	char		chars[TZ_MAX_CHARS + 1];
 	struct lsinfo	lsis[TZ_MAX_LEAPS];
 };
+
+struct rule {
+	int	r_type;		/* type of rule--see below */
+	int	r_day;		/* day number of rule */
+	int	r_week;		/* week number of rule */
+	int	r_mon;		/* month number of rule */
+	long	r_time;		/* transition time of rule */
+};
+
+#define	JULIAN_DAY		0	/* Jn - Julian day */
+#define	DAY_OF_YEAR		1	/* n - day of year */
+#define	MONTH_NTH_DAY_OF_WEEK	2	/* Mm.n.d - month, week, day of week */
+
+static long		detzcode P((const char * codep));
+static void		settzname P((const struct state *sp));
+static char *		getzname P((const char *strp));
+static char *		getnum P((const char *strp, int *nump, int min,
+				int max));
+static char *		gettime P((const char *strp, long *timep));
+static char *		getoffset P((const char *strp, long *offsetp));
+static char *		getrule P((const char *strp, struct rule *rulep));
+static time_t		transtime P((time_t janfirst, int year,
+				const struct rule *rulep, long offset));
+static int		tzparse P((const char *name, struct state *sp));
+#ifdef STD_INSPIRED
+struct tm *		offtime P((const time_t * clockp, long offset));
+#endif /* !defined STD_INSPIRED */
+static void		timesub P((const time_t * clockp, long offset,
+				const struct state * sp, struct tm * tmp));
+static int		tzload P((const char * name, struct state * sp));
+void			tzsetwall P((void));
 
 static struct state	lclstate;
 static struct state	gmtstate;
@@ -252,18 +264,6 @@ register struct state *	sp;
 		settzname(sp);
 	return 0;
 }
-
-struct rule {
-	int	r_type;		/* type of rule */
-	int	r_day;		/* day number of rule */
-	int	r_week;		/* week number of rule */
-	int	r_mon;		/* month number of rule */
-	long	r_time;		/* transition time of rule */
-};
-
-#define	JULIAN_DAY		0	/* Jn - Julian day */
-#define	DAY_OF_YEAR		1	/* n - day of year */
-#define	MONTH_NTH_DAY_OF_WEEK	2	/* Mm.n.d - month, week, day of week */
 
 static const int	mon_lengths[2][MONSPERYEAR] = {
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
@@ -454,6 +454,7 @@ time_t				janfirst;
 int				year;
 register const struct rule *	rulep;
 long				offset;
+/*###457 [cc] argument `rulep' doesn't match function prototype%%%*/
 {
 	register int	leapyear;
 	register time_t	value;
@@ -895,10 +896,10 @@ register struct tm *		tmp;
 	tmp->tm_sec = (int) (rem % SECSPERMIN);
 	if (hit)
 		/*
-		 * A positive leap second requires a special
-		 * representation.  This uses "... ??:59:60".
-		 */
-		 tmp->tm_sec += 1;
+		** A positive leap second requires a special
+		** representation.  This uses "... ??:59:60".
+		*/
+		tmp->tm_sec += 1;
 	tmp->tm_wday = (int) ((EPOCH_WDAY + days) % DAYSPERWEEK);
 	if (tmp->tm_wday < 0)
 		tmp->tm_wday += DAYSPERWEEK;

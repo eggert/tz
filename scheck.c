@@ -9,6 +9,7 @@ static char	elsieid[] = "%W%";
 #include "stdio.h"
 #include "ctype.h"
 #include "string.h"
+#include "stdlib.h"
 #include "nonstd.h"
 
 extern char *	imalloc P((int n));

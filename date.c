@@ -101,7 +101,7 @@ char *	argv[];
 
 	(void) time(&now);
 	format = value = NULL;
-	while ((ch = getopt(argc, argv, "und:t:a:")) != EOF) {
+	while ((ch = getopt(argc, argv, "ucnd:t:a:")) != EOF) {
 		switch (ch) {
 		default:
 			usage();

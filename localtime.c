@@ -10,12 +10,12 @@ static char	elsieid[] = "%W%";
 #include "time.h"
 #include "string.h"
 #include "stdlib.h"
-#include "stdio.h"	/* to get FILENAME_MAX */
-#include "fcntl.h"	/* to get O_BINARY and such */
+#include "stdio.h"	/* for FILENAME_MAX */
+#include "fcntl.h"	/* for O_RDONLY */
 #include "nonstd.h"
 
 #ifdef __TURBOC__
-#include "io.h"		/* to pick up prototypes for open and such */
+#include "io.h"		/* for open et al. prototypes */
 #endif /* defined __TURBOC__ */
 
 #define ACCESS_MODE	O_RDONLY
@@ -34,14 +34,10 @@ static char	elsieid[] = "%W%";
 static long		detzcode P((const char * codep));
 #ifdef STD_INSPIRED
 struct tm *     	offtime P((const time_t * clockp, long offset));
-#else /* !defined STD_INSPIRED */
-static struct tm *      offtime P((const time_t * clockp, long offset));
 #endif /* !defined STD_INSPIRED */
-static struct tm *	timesub P((const time_t * clockp, long offset,
-				const struct state * sp));
+static void		timesub P((const time_t * clockp, long offset,
+				const struct state * sp, struct tm * tmp));
 static int		tzload P((const char * name, struct state * sp));
-void			tzset P((void));
-static void		tzsetgmt P((struct state * sp));
 void			tzsetwall P((void));
 
 struct ttinfo {				/* time type information */
@@ -105,19 +101,19 @@ tzload(name, sp)
 register const char *	name;
 register struct state *	sp;
 {
-	register int	i;
-	register int	fid;
+	register const char *	p;
+	register int		i;
+	register int		fid;
 
 	if (name == 0 && (name = TZDEFAULT) == 0)
 		return -1;
 	{
-		register const char *	p;
-		register int	 	doaccess;
-		char			fullname[FILENAME_MAX];
+		register int 	doaccess;
+		char		fullname[FILENAME_MAX + 1];
 
 		doaccess = name[0] == '/';
 		if (!doaccess) {
-			if ((p = TZDIR) == 0)
+			if ((p = TZDIR) == NULL)
 				return -1;
 			if ((strlen(p) + strlen(name) + 1) >= sizeof fullname)
 				return -1;
@@ -127,9 +123,8 @@ register struct state *	sp;
 			/*
 			** Set doaccess if '.' (as in "../") shows up in name.
 			*/
-			while (*name != '\0')
-				if (*name++ == '.')
-					doaccess = TRUE;
+			if (strchr(name, '.') != NULL)
+				doaccess = TRUE;
 			name = fullname;
 		}
 		if (doaccess && access(name, ACCESS_MODE) != 0)
@@ -138,7 +133,6 @@ register struct state *	sp;
 			return -1;
 	}
 	{
-		register const char *		p;
 		register const struct tzhead *	tzhp;
 		char				buf[sizeof *sp];
 
@@ -213,7 +207,7 @@ register struct state *	sp;
 		daylight = 0;
 #endif /* defined USG_COMPAT */
 		for (i = 1; i < sp->typecnt; ++i) {
-			register struct ttinfo *	ttisp;
+			register const struct ttinfo *	ttisp;
 
 			ttisp = &sp->ttis[i];
 			if (ttisp->tt_isdst) {
@@ -251,7 +245,7 @@ register struct state *	sp;
 }
 
 void
-tzset P((void))
+tzset()
 {
 	register const char *	name;
 
@@ -277,9 +271,9 @@ const time_t *	timep;
 {
 	register const struct state *	sp;
 	register const struct ttinfo *	ttisp;
-	register struct tm *		tmp;
 	register int			i;
 	time_t				t;
+	static struct tm		tm;
 
 	if (!lcl_is_set)
 		tzset();
@@ -303,50 +297,57 @@ const time_t *	timep;
 	** To get (wrong) behavior that's compatible with System V Release 2.0
 	** you'd replace the statement below with
 	**	t += ttisp->tt_gmtoff;
-	**	tmp = timesub(&t, 0L, sp);
+	**	timesub(&t, 0L, sp, &tm);
 	*/
-	tmp = timesub(&t, ttisp->tt_gmtoff, sp);
-	tmp->tm_isdst = ttisp->tt_isdst;
-	tzname[tmp->tm_isdst] = &sp->chars[ttisp->tt_abbrind];
+	timesub(&t, ttisp->tt_gmtoff, sp, &tm);
+	tm.tm_isdst = ttisp->tt_isdst;
+	tzname[tm.tm_isdst] = &sp->chars[ttisp->tt_abbrind];
 #ifdef KRE_COMPAT
-	tmp->tm_zone = &sp->chars[ttisp->tt_abbrind];
+	tm.tm_zone = &sp->chars[ttisp->tt_abbrind];
 #endif /* defined KRE_COMPAT */
 #ifdef TZA_COMPAT
 	tz_abbr = &sp->chars[ttisp->tt_abbrind];
 #endif /* defined TZA_COMPAT */
-	return tmp;
+	return &tm;
 }
 
 struct tm *
 gmtime(clock)
 const time_t *	clock;
 {
-	register struct tm *	tmp;
+	static struct tm	tm;
 
-	tmp = offtime(clock, 0L);
-	tzname[0] = "GMT";
-#ifdef KRE_COMPAT
-	tmp->tm_zone = "GMT";		/* UCT ? */
-#endif /* defined KRE_COMPAT */
-	return tmp;
-}
-
-#ifdef STD_INSPIRED
-struct tm *
-#else /* !defined STD_INSPIRED */
-static struct tm *
-#endif /* !defined STD_INSPIRED */
-offtime(clock, offset)
-const time_t *	clock;
-long		offset;
-{
 	if (!gmt_is_set) {
 		gmt_is_set = TRUE;
 		if (tzload("GMT", &gmtstate) != 0)
 			tzsetgmt(&gmtstate);
 	}
-	return timesub(clock, offset, &gmtstate);
+	timesub(clock, 0L, &gmtstate, &tm);
+#ifdef KRE_COMPAT
+	tm.tm_zone = "GMT";		/* UCT ? */
+#endif /* defined KRE_COMPAT */
+	return &tm;
 }
+
+#ifdef STD_INSPIRED
+
+struct tm *
+offtime(clock, offset)
+const time_t *	clock;
+long		offset;
+{
+	static struct tm	tm;
+
+	if (!gmt_is_set) {
+		gmt_is_set = TRUE;
+		if (tzload("GMT", &gmtstate) != 0)
+			tzsetgmt(&gmtstate);
+	}
+	timesub(clock, offset, &gmtstate, &tm);
+	return &tm;
+}
+
+#endif /* defined STD_INSPIRED */
 
 static const int	mon_lengths[2][MONSPERYEAR] = {
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
@@ -357,14 +358,14 @@ static const int	year_lengths[2] = {
 	DAYSPERNYEAR, DAYSPERLYEAR
 };
 
-static struct tm *
-timesub(clock, offset, sp)
+static void
+timesub(clock, offset, sp, tmp)
 const time_t *			clock;
 long				offset;
 register const struct state *	sp;
+register struct tm *		tmp;
 {
 	register const struct lsinfo *	lp;
-	register struct tm *		tmp;
 	register long			days;
 	register long			rem;
 	register int			y;
@@ -372,7 +373,6 @@ register const struct state *	sp;
 	register const int *		ip;
 	register long			corr;
 	register int			hit;
-	static struct tm		tm;
 
 	corr = 0;
 	hit = FALSE;
@@ -387,7 +387,6 @@ register const struct state *	sp;
 			break;
 		}
 	}
-	tmp = &tm;
 	days = *clock / SECSPERDAY;
 	rem = *clock % SECSPERDAY;
 	rem += (offset - corr);

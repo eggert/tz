@@ -116,7 +116,7 @@ DATESRCS=	date.c localtime.c getopt.c logwtmp.c strftime.c
 DATEOBJS=	date.o localtime.o getopt.o logwtmp.o strftime.o
 LIBSRCS=	localtime.c asctime.c difftime.c
 LIBOBJS=	localtime.o asctime.o difftime.o
-HEADERS=	tzfile.h nonstd.h stdio.h stdlib.h time.h
+HEADERS=	tzfile.h private.h
 NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c emkdir.c getopt.c link.c
 NEWUCBSRCS=	date.c logwtmp.c strftime.c
 SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS)
@@ -181,13 +181,16 @@ clean:
 names:
 		@echo $(ENCHILADA)
 
-asctime.o:	nonstd.h stdio.h time.h tzfile.h
-difftime.o:	nonstd.h time.h
-emkdir.o:	nonstd.h stdio.h stdlib.h
-ialloc.o:	nonstd.h stdlib.h
-link.o:		nonstd.h stdio.h
-localtime.o:	nonstd.h stdio.h stdlib.h time.h tzfile.h
-scheck.o:	nonstd.h stdio.h stdlib.h
-zic.o:		nonstd.h stdio.h stdlib.h time.h tzfile.h
+zonenames:	$(TDATA)
+		@awk '/^Zone/ { print $$2 } /^Link/ { print $$3 }' $(TDATA)
+
+asctime.o:	private.h tzfile.h
+difftime.o:	private.h
+emkdir.o:	private.h
+ialloc.o:	private.h
+link.o:		private.h
+localtime.o:	private.h tzfile.h
+scheck.o:	private.h
+zic.o:		private.h tzfile.h
 
 .KEEP_STATE:

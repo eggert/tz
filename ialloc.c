@@ -6,36 +6,26 @@ static char	elsieid[] = "%W%";
 
 /*LINTLIBRARY*/
 
-#include "stdio.h"
 #include "string.h"
+#include "nonstd.h"
 
 #ifdef __STDC__
-#define P(s)	s
-#endif /* defined __STDC__ */
-
-#ifdef __TURBOC__
-#define P(s)	s
-#endif /* defined __TURBOC__ */
-
-#ifdef P
 
 #include "stdlib.h"
+
 #define alloc_t	size_t
 
-#else /* !defined P */
-
-#define P(s)	()
-#define const
+#else /* !defined __STDC__ */
 
 extern char *	calloc();
 extern char *	malloc();
 extern char *	realloc();
 
-#endif /* !defined P */
-
 #ifndef alloc_t
 #define alloc_t	unsigned
 #endif /* !defined alloc_t */
+
+#endif /* !defined __STDC__ */
 
 #ifdef MAL
 #define NULLMAL(x)	((x) == NULL || (x) == MAL)

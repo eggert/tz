@@ -81,7 +81,6 @@ YEARISTYPE=	./yearistype
 # Add the following to the end of the "CFLAGS=" line as needed.
 #  -DHAVE_ADJTIME=0 if `adjtime' does not exist (SVR0?)
 #  -DHAVE_LONG_DOUBLE=1 if your compiler supports the `long double' type
-#  -DHAVE_MKDIR=0 if the mkdir system call does not work (SVR0?)
 #  -DHAVE_SETLOCALE=0 if the setlocale function does not work (SVR3)
 #  -DHAVE_SETTIMEOFDAY=0 if settimeofday does not exist (SVR0?)
 #  -DHAVE_SETTIMEOFDAY=1 if settimeofday has just 1 arg (SVR4)
@@ -200,9 +199,9 @@ cc=		cc
 CC=		$(cc) -DTZDIR=\"$(TZDIR)\"
 
 TZCSRCS= \
-	zic.c localtime.c asctime.c scheck.c ialloc.c emkdir.c getopt.c optind.c
+	zic.c localtime.c asctime.c scheck.c ialloc.c getopt.c optind.c
 TZCOBJS= \
-	zic.o localtime.o asctime.o scheck.o ialloc.o emkdir.o getopt.o optind.o
+	zic.o localtime.o asctime.o scheck.o ialloc.o getopt.o optind.o
 TZDSRCS=	zdump.c localtime.c asctime.c ialloc.c getopt.c optind.c
 TZDOBJS=	zdump.o localtime.o asctime.o ialloc.o getopt.o optind.o
 DATESRCS= \
@@ -212,7 +211,7 @@ DATEOBJS= \
 LIBSRCS=	localtime.c asctime.c difftime.c
 LIBOBJS=	localtime.o asctime.o difftime.o
 HEADERS=	tzfile.h private.h
-NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c emkdir.c getopt.c optind.c
+NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c getopt.c optind.c
 NEWUCBSRCS=	date.c logwtmp.c strftime.c
 SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS)
 MANS=		newctime.3 newtzset.3 time2posix.3 tzfile.5 zic.8 zdump.8
@@ -284,16 +283,9 @@ posix_right:	posix_only other_two
 
 right_posix:	right_only other_two
 
-# The "ar d"s below ensure that obsolete object modules
-# (based on source provided with earlier versions of the time conversion stuff)
-# are removed from the library.
-
 $(TZLIB):	$(LIBOBJS)
 		-mkdir $(TOPDIR) $(LIBDIR)
-		sleep 3
 		ar ru $@ $(LIBOBJS)
-		if ar t $@ timemk.o 2>/dev/null ; then ar d $@ timemk.o ; fi
-		if ar t $@ ctime.o 2>/dev/null ; then ar d $@ ctime.o ; fi
 		if [ -x /usr/ucb/ranlib -o -x /usr/bin/ranlib ] ; \
 			then ranlib $@ ; fi
 
@@ -323,7 +315,6 @@ zonenames:	$(TDATA)
 asctime.o:	private.h tzfile.h
 date.o:		private.h
 difftime.o:	private.h
-emkdir.o:	private.h
 ialloc.o:	private.h
 localtime.o:	private.h tzfile.h
 scheck.o:	private.h

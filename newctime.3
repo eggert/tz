@@ -93,12 +93,14 @@ without affecting the zone used in future
 .I localtime
 calls.
 .PP
-.I Settz
+.I Tzset
 simply calls
-.I tzset
-with a
-.B NULL
-pointer.
+.I settz
+with the value of the environment variable
+.SM
+.B TZ
+as an argument or, if TZ is not present in the
+environment, a null pointer as an argument.
 .SH DIAGNOSTICS
 .I Settz
 returns zero if all seems well; it returns negative one otherwise

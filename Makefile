@@ -376,6 +376,11 @@ clean:
 		rm -f core *.o *.out tzselect zdump zic yearistype date \
 			,* *.tar.gz
 
+maintainer-clean: clean
+		@echo 'This command is intended for maintainers to use; it'
+		@echo 'deletes files that may need special tools to rebuild.'
+		rm -f *.txt
+
 names:
 		@echo $(ENCHILADA)
 
@@ -384,9 +389,9 @@ names:
 public:		$(ENCHILADA) zic
 		-mkdir /tmp/,tzpublic
 		-for i in $(TDATA) ; do zic -v -d /tmp/,tzpublic $$i 2>&1 | grep -v "starting year" ; done
-		for i in $(TDATA) ; do zic -d /tmp/,tzpublic $$i; done
+		for i in $(TDATA) ; do zic -d /tmp/,tzpublic $$i || exit; done
 		rm -f -r /tmp/,tzpublic
-		for i in *.[1-8] ; do sh workman.sh $$i > $$i.txt; done
+		for i in *.[1-8] ; do sh workman.sh $$i > $$i.txt || exit; done
 		$(AWK) -f checktab.awk $(PRIMARY_YDATA)
 		tar cf - $(DOCS) $(SOURCES) $(MISC) *.[1-8].txt | gzip -9 > tzcode.tar.gz
 		tar cf - $(DATA) | gzip -9 > tzdata.tar.gz

@@ -1,3 +1,4 @@
 # %W%
 # Zone	NAME		GMTOFF	RULES	FORMAT
 Zone	Japan		9:00	-	JST
+Zone	Singapore	8:00	-	SST

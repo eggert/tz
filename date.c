@@ -55,16 +55,9 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 
 /*
 ** What options should be provided?
-** We normally provide everything we can, and "#define X_OPTION"
-** for each option provided.  If "NO_X_OPTION" is defined for some case,
-** we leave the option out.
+** If "NO_X_OPTION" is defined for some case, we leave the option out.
 **
 ** "-u" is provided unconditionally.
-*/
-
-/*
-** Nothing special needed for BSD's "-n" option to not notify networked systems
-** of a time change--on non-networked systems, "date -n" == "date".
 */
 
 #ifndef N_OPTION
@@ -73,52 +66,23 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #endif /* !defined NO_N_OPTION */
 #endif /* !defined N_OPTION */
 
-/*
-** BSD's "-d dst" and "-t min-west" options, for setting the kernel's
-** notion of dst and offset, require the "settimeofday" system call;
-** its availability is deduced from "DST_NONE" being defined.
-*/
-
 #ifndef D_OPTION
 #ifndef NO_D_OPTION
-#ifdef DST_NONE
 #define D_OPTION
-#endif /* defined DST_NONE */
 #endif /* !defined NO_D_OPTION */
 #endif /* !defined D_OPTION */
 
 #ifndef T_OPTION
 #ifndef NO_T_OPTION
-#ifdef DST_NONE
 #define T_OPTION
-#endif /* defined DST_NONE */
 #endif /* !defined NO_T_OPTION */
 #endif /* !defined T_OPTION */
 
-/*
-** Sun's "-a sss.fff" option to slowly adjust the time requires the
-** "adjtime" system call.  We assume it's available if DST_NONE is defined.
-*/
-
 #ifndef A_OPTION
 #ifndef NO_A_OPTION
-#ifdef DST_NONE
 #define A_OPTION
-#endif /* defined DST_NONE */
 #endif /* !defined NO_A_OPTION */
 #endif /* !defined A_OPTION */
-
-/*
-** So much for options.  One "combination" setting makes life easier.
-*/
-
-#ifdef D_OPTION
-#define D_OR_T_OPTION
-#else /* !defined D_OPTION */
-#ifdef T_OPTION
-#define D_OR_T_OPTION
-#endif /* defined T_OPTION */
-#endif /* !defined D_OPTION */
 
 /*
 ** Finally, a feature.
@@ -154,6 +118,15 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #define EXIT_FAILURE	1
 #endif /* !defined EXIT_FAILURE */
 
+#ifndef TRUE
+#define TRUE		1
+#endif /* !defined TRUE */
+
+#ifndef FALSE
+#define FALSE		0
+#endif /* !defined FALSE */
+
+extern double		atof();
 extern char **		environ;
 extern char *		getlogin();
 extern int		logwtmp();
@@ -168,7 +141,9 @@ static int		retval = EXIT_SUCCESS;
 
 static void		checkfinal();
 static int		comptm();
+static time_t		convert();
 static void		display();
+static void		dogmt();
 static void		errensure();
 static void		iffy();
 #ifdef TSP_SETDATE
@@ -176,14 +151,13 @@ int			netsettime();
 #endif /* defined TSP_SETDATE */
 static char *		nondigit();
 static void		oops();
-static time_t		convert();
+static void		reset();
 static void		timeout();
 static void		usage();
 static void		wildinput();
 static time_t		xtime();
 
-static char	options[132];
-static char	usemes[132];
+static char		usemes[132];
 
 int
 main(argc, argv)
@@ -193,26 +167,18 @@ char *	argv[];
 	register char *		format;
 	register char *		value;
 	register char *		cp;
-	register char *		username;
 	register int		ch;
-	register int		convtype;
+	register int		dousg;
+	register int		aflag = 0;
+	register int		dflag = 0;
+	register int		nflag = 0;
+	register int		tflag = 0;
+	register int		minuteswest;
+	register int		dsttime;
+	register float		adjust;
 	time_t			now;
 	time_t			t;
-#ifdef DST_NONE
-	static struct timeval	tv;	/* static so tv_usec is 0 */
-#endif /* defined DST_NONE */
-#ifdef TSP_SETDATE
-	register int		nflag = 0;
-#endif /* defined TSP_SETDATE */
-#ifdef D_OR_T_OPTION
-	register int		dflag = 0;
-	register int		tflag = 0;
-	struct timezone		tz;
-#endif /* defined D_OR_T_OPTION */
-#ifdef A_OPTION
-	register int		aflag = 0;
-	struct timeval		atv;
-#endif /* defined A_OPTION */
+	char			options[132];
 
 	(void) time(&now);
 	format = value = NULL;
@@ -255,27 +221,11 @@ char *	argv[];
 		default:
 			usage();
 		case 'u':		/* do it in GMT */
-			{
-				register char **	saveenv;
-				static char *		fakeenv[] = {
-								"TZ=GMT0",
-								NULL
-							};
-
-				saveenv = environ;
-				environ = fakeenv;
-				tzset();
-				environ = saveenv;
-			}
+			dogmt();
 			break;
-#ifdef N_OPTION
 		case 'n':		/* don't set network */
-#ifdef TSP_SETDATE
 			nflag = 1;
-#endif /* defined TSP_SETDATE */
 			break;
-#endif /* defined N_OPTION */
-#ifdef D_OPTION
 		case 'd':		/* daylight savings time */
 			if (dflag) {
 				(void) fprintf(stderr,
@@ -284,13 +234,11 @@ char *	argv[];
 			}
 			dflag = 1;
 			cp = optarg;
-			tz.tz_dsttime = atoi(cp);
-			if (*optarg == '\0' || *nondigit(cp) != '\0')
+			dsttime = atoi(cp);
+			if (*cp == '\0' || *nondigit(cp) != '\0')
 				wildinput("-t value", optarg,
 					"must be a non-negative number");
 			break;
-#endif /* defined D_OPTION */
-#ifdef T_OPTION
 		case 't':		/* minutes west of GMT */
 			if (tflag) {
 				(void) fprintf(stderr,
@@ -299,15 +247,13 @@ char *	argv[];
 			}
 			tflag = 1;
 			cp = optarg;
-			tz.tz_minuteswest = atoi(cp);
+			minuteswest = atoi(cp);
 			if (*cp == '+' || *cp == '-')
 				++cp;
 			if (*cp == '\0' || *nondigit(cp) != '\0')
 				wildinput("-d value", optarg,
 					"must be a number");
 			break;
-#endif /* defined T_OPTION */
-#ifdef A_OPTION
 		case 'a':		/* adjustment */
 			if (aflag) {
 				(void) fprintf(stderr,
@@ -316,28 +262,19 @@ char *	argv[];
 			}
 			aflag = 1;
 			cp = optarg;
-			{
-				float		f;
-				extern double	atof();
-
-				f = atof(cp);
-				if (*cp == '+' || *cp == '-')
-					++cp;
-				if (*cp == '\0' || strcmp(cp, ".") == 0)
-					wildinput("-a value", optarg,
-						"must be a number");
-				cp = nondigit(cp);
-				if (*cp == '.')
-					++cp;
-				if (*nondigit(cp) != '\0')
-					wildinput("-a value", optarg,
-						"must be a number");
-				atv.tv_sec = (int) f;
-				atv.tv_usec =
-					(int) ((f - atv.tv_sec) * 1000000);
-			}
+			adjust = atof(cp);
+			if (*cp == '+' || *cp == '-')
+				++cp;
+			if (*cp == '\0' || strcmp(cp, ".") == 0)
+				wildinput("-a value", optarg,
+					"must be a number");
+			cp = nondigit(cp);
+			if (*cp == '.')
+				++cp;
+			if (*nondigit(cp) != '\0')
+				wildinput("-a value", optarg,
+					"must be a number");
 			break;
-#endif /* defined A_OPTION */
 		}
 	}
 	while (optind < argc) {
@@ -359,50 +296,100 @@ char *	argv[];
 			}
 	}
 	if (value != NULL) {
-		t = convert(value, (convtype = 0), now);
-#ifdef USG_INPUT
+		t = convert(value, (dousg = FALSE), now);
 		if (t == -1)
-			t = convert(value, (convtype = 1), now);
-#endif /* defined USG_INPUT */
+			t = convert(value, (dousg = TRUE), now);
 		if (t == -1) {
 			/*
-			** Utterly nonsensical time,
-			** or time that falls in a DST transition hole.
+			** Out of range values,
+			** or time that falls in a DST transition hole?
 			*/
+			dogmt();
+			t = convert(value, FALSE, now);
+			if (t == -1)
+				t = convert(value, TRUE, now);
 			wildinput("time", value,
-				"can't be converted to time_t");
+				(t == -1) ?
+				"out of range value given" :
+				"time skipped when clock springs forward");
 		}
 	}
 	/*
 	** Entire command line has now been checked.
 	*/
-#ifdef A_OPTION
 	if (aflag) {
-		if (adjtime(&atv, (struct timeval *) NULL) != 0)
+#ifdef DST_NONE
+		struct timeval	tv;
+
+		tv.tv_sec = (int) adjust;
+		tv.tv_usec = (int) ((adjust - tv.tv_sec) * 1000000);
+		if (adjtime(&tv, (struct timeval *) NULL) != 0)
 			oops("date: error: adjtime");
+#else /* !defined DST_NONE */
+		reset((time_t) (now + adjust), nflag);
+#endif /* !defined DST_NONE */
 		/*
 		** Sun silently ignores everything else; we follow suit.
 		*/
 		(void) exit(retval);
 	}
-#endif /* defined A_OPTION */
-#ifdef D_OR_T_OPTION
 	if (dflag || tflag) {
-		struct timezone	outz;
+#ifdef DST_NONE
+		struct timezone	tz;
 
 		if (!dflag || !tflag)
-			if (gettimeofday((struct timeval *) NULL, &outz) != 0)
+			if (gettimeofday((struct timeval *) NULL, &tz) != 0)
 				oops("date: error: gettimeofday");
 		if (dflag)
-			outz.tz_dsttime = tz.tz_dsttime;
+			tz.tz_dsttime = dsttime;
 		if (tflag)
-			outz.tz_minuteswest = tz.tz_minuteswest;
-		if (settimeofday((struct timeval *) NULL, &outz) != 0)
+			tz.tz_minuteswest = minuteswest;
+		if (settimeofday((struct timeval *) NULL, &tz) != 0)
 			oops("date: error: settimeofday");
+#else /* !defined DST_NONE */
+		(void) fprintf(stderr,
+"date: warning: kernel doesn't keep -d/-t information, option ignored\n");
+#endif /* !defined DST_NONE */
 	}
-#endif /* defined D_OR_T_OPTION */
+
 	if (value == NULL)
 		display(format);
+
+	reset(t, nflag);
+
+	checkfinal(value, dousg, t, now);
+
+	display(format);
+	/* gcc -Wall pacifier */
+	for ( ; ; )
+		;
+}
+
+static void
+dogmt()
+{
+	register char **	saveenv;
+	static char *		fakeenv[] = { "TZ=GMT0", NULL };
+
+	saveenv = environ;
+	environ = fakeenv;
+	tzset();
+	environ = saveenv;
+}
+
+static void
+reset(t, nflag)
+time_t	t;
+int	nflag;
+{
+	register char *		username;
+#ifdef DST_NONE
+	static struct timeval	tv;	/* static so tv_usec is 0 */
+#endif /* defined DST_NONE */
+
+#ifdef EBUG
+	return;
+#endif
 	username = getlogin();
 	if (username == NULL || *username == '\0') /* single-user or no tty */
 		username = "root";
@@ -417,14 +404,12 @@ char *	argv[];
 	if (nflag || !netsettime(tv))
 #endif /* defined TSP_SETDATE */
 	{
-#ifndef EBUG
 		logwtmp(OTIME_MSG, TIME_USER, "");
 		if (settimeofday(&tv, (struct timezone *) NULL) == 0) {
 			logwtmp(NTIME_MSG, TIME_USER, "");
 			syslog(LOG_AUTH | LOG_NOTICE, "date set by %s",
 				username);
 		} else 	oops("date: error: settimeofday");
-#endif /* !defined EBUG */
 	}
 #else /* !defined DST_NONE */
 	logwtmp(OTIME_MSG, TIME_USER, "");
@@ -432,13 +417,6 @@ char *	argv[];
 		logwtmp(NTIME_MSG, TIME_USER, "");
 	else	oops("date: error: stime");
 #endif /* !defined DST_NONE */
-
-	checkfinal(value, convtype, t);
-
-	display(format);
-	/* gcc -Wall pacifier */
-	for ( ; ; )
-		;
 }
 
 static void
@@ -486,13 +464,16 @@ char *	string;
 }
 
 static void
-iffy(thist, thatt)
+iffy(thist, thatt, value, reason)
 time_t	thist;
 time_t	thatt;
+char *	value;
+char *	reason;
 {
 	struct tm	tm;
 
-	(void) fprintf(stderr, "date: error: ambiguous time.  ");
+	(void) fprintf(stderr, "date: warning: ambiguous time \"%s\", %s.\n",
+		value, reason);
 	tm = *gmtime(&thist);
 	(void) fprintf(stderr, "Time was set as if you used\n");
 	/*
@@ -751,14 +732,12 @@ register struct tm * btmp;
 ** Check for iffy input.
 */
 
-#ifndef USG_INPUT
-/*ARGSUSED*/
-#endif /* defined USG_INPUT */
 static void
-checkfinal(value, convtype, t)
+checkfinal(value, didusg, t, oldnow)
 char *	value;
-int	convtype;
+int	didusg;
 time_t	t;
+time_t	oldnow;
 {
 	time_t		othert;
 	struct tm	tm;
@@ -766,14 +745,12 @@ time_t	t;
 	register int	pass;
 	register long	offset;
 	
-#ifdef USG_INPUT
 	/*
-	** If USG_INPUT is defined, check for USG/BSD ambiguity.
+	** See if there's both a USG and a BSD interpretation.
 	*/
-	othert = convert(value, !convtype, t);
+	othert = convert(value, !didusg, oldnow);
 	if (othert != -1 && othert != t)
-		iffy(t, othert);
-#endif /* defined USG_INPUT */
+		iffy(t, othert, value, "year could be at start or end");
 	/*
 	** See if there's both a DST and a STD version.
 	*/
@@ -782,7 +759,8 @@ time_t	t;
 	othertm.tm_isdst = !tm.tm_isdst;
 	othert = mktime(&tm);
 	if (othert != -1 && comptm(&tm, &othertm))
-		iffy(t, othert);
+		iffy(t, othert, value,
+			"both standard and summer time versions exist");
 /*
 ** Final check.
 **
@@ -811,7 +789,9 @@ time_t	t;
 			else	othert = t - 60 * offset;
 			othertm = *localtime(&othert);
 			if (comptm(&tm, &othertm) == 0)
-				iffy(t, othert);
+				iffy(t, othert, value,
+					"multiple same-type times exist");
+
 		}
 }
 
@@ -822,98 +802,90 @@ time_t	t;
 
 #define	ATOI2(ar)	(ar[0] - '0') * 10 + (ar[1] - '0'); ar += 2;
 
-#ifndef USG_INPUT
-/*ARGSUSED*/
-#endif /* !defined USG_INPUT */
 static time_t
-convert(format, dousg, t)
-register char *	format;
+convert(value, dousg, t)
+register char *	value;
 int		dousg;
 time_t		t;
 {
 	register char *	cp;
 	register char *	endp;
 	register int	i;
-	register int	year;
+	register int	cent, year_in_cent, month, hour, day, mins, secs;
 	struct tm	tm, outtm;
 	time_t		outt;
 
-	cp = format;
+#ifndef USG_INPUT
+	if (dousg)
+		return -1;
+#endif /* !defined USG_INPUT */
+
 	tm = *localtime(&t);
-	endp = strchr(format, '.');
+	cent = (tm.tm_year + TM_YEAR_BASE) / 100;
+	year_in_cent = (tm.tm_year + TM_YEAR_BASE) - cent * 100;
+	month = tm.tm_mon + 1;
+	day = tm.tm_mday;
+	hour = tm.tm_hour;
+	mins = tm.tm_min;
+
+	endp = strchr(value, '.');
 	if (endp == NULL) {
-		endp = strchr(format, '\0');
-		tm.tm_sec = 0;
+		endp = strchr(value, '\0');
+		secs = 0;
 	} else {
 		cp = endp + 1;
 		if (strlen(cp) != 2)
-			wildinput("time", format,
+			wildinput("time", value,
 				"seconds part is not two characters");
 		if (!isdigit(cp[1]) || !isdigit(cp[2]))
-			wildinput("time", format,
+			wildinput("time", value,
 				"seconds part contains a nondigit");
-		tm.tm_sec = ATOI2(cp);
+		secs = ATOI2(cp);
 	}
-	for (cp = format; cp < endp; ++cp)
+
+	for (cp = value; cp < endp; ++cp)
 		if (!isdigit(*cp))
-			wildinput("time", format,
+			wildinput("time", value,
 				"main part contains a nondigit");
-	cp = format;
+
+	cp = value;
 	switch (endp - cp) {
 		default:
-			wildinput("time", format, "main part is wrong length");
+			wildinput("time", value, "main part is wrong length");
+		case 12: /* yyyymmddhhmm */
+			cent = ATOI2(cp);
+			year_in_cent = ATOI2(cp);
+			/* fall through to. . . */
 		case 8:	/* mmddhhmm */
-			tm.tm_mon = ATOI2(cp);
-			--tm.tm_mon;
+			month = ATOI2(cp);
 			/* fall through to. . . */
 		case 6:	/* ddhhmm */
-			tm.tm_mday = ATOI2(cp);
+			day = ATOI2(cp);
 			/* fall through to. . . */
 		case 4:	/* hhmm */
-			tm.tm_hour = ATOI2(cp);
-			tm.tm_min = ATOI2(cp);
+			hour = ATOI2(cp);
+			mins = ATOI2(cp);
 			break;
-		case 10:	/* Ulp! yymmddhhmm or mmddhhmmyy */
-#ifdef USG_INPUT
-			if (dousg) {
-				tm.tm_mon = ATOI2(cp);
-				--tm.tm_mon;
-				tm.tm_mday = ATOI2(cp);
-				tm.tm_hour = ATOI2(cp);
-				tm.tm_min = ATOI2(cp);
-
-				year = tm.tm_year + TM_YEAR_BASE;
-				year -= year % 100;
-				year += ATOI2(cp);
-				tm.tm_year = year - TM_YEAR_BASE;
-
-				break;
+		case 10:
+			if (!dousg) {
+				year_in_cent = ATOI2(cp);
 			}
-#endif /* defined USG_INPUT */
-			year = tm.tm_year + TM_YEAR_BASE;
-			year -= year % 100;
-			year += ATOI2(cp);
-			tm.tm_year = year - TM_YEAR_BASE;
-
-			tm.tm_mon = ATOI2(cp);
-			--tm.tm_mon;
-			tm.tm_mday = ATOI2(cp);
-			tm.tm_hour = ATOI2(cp);
-			tm.tm_min = ATOI2(cp);
-
-			break;
-		case 12:	/* yyyymmddhhmm--BSD wins in the 21st century */
-			year = ATOI2(cp);
-			year *= 100;
-			year += ATOI2(cp);
-			tm.tm_year = year - TM_YEAR_BASE;
-			tm.tm_mon = ATOI2(cp);
-			--tm.tm_mon;
-			tm.tm_mday = ATOI2(cp);
-			tm.tm_hour = ATOI2(cp);
-			tm.tm_min = ATOI2(cp);
+			month = ATOI2(cp);
+			day = ATOI2(cp);
+			hour = ATOI2(cp);
+			mins = ATOI2(cp);
+			if (dousg) {
+				year_in_cent = ATOI2(cp);
+			}
 			break;
 	}
+
+	tm.tm_year = cent * 100 + year_in_cent - TM_YEAR_BASE;
+	tm.tm_mon = month - 1;
+	tm.tm_mday = day;
+	tm.tm_hour = hour;
+	tm.tm_min = mins;
+	tm.tm_sec = secs;
 	tm.tm_isdst = -1;
 	outtm = tm;
 	outt = mktime(&outtm);

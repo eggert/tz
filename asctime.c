@@ -3,6 +3,12 @@
 ** 1996-06-05 by Arthur David Olson (arthur_david_olson@nih.gov).
 */
 
+/*
+** Avoid the temptation to punt entirely to strftime;
+** the output of strftime is supposed to be locale specific
+** whereas the output of asctime is supposed to be constant.
+*/
+
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";

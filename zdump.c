@@ -412,17 +412,14 @@ register const struct tm *	timeptr;
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec);
 #define DIVISOR	10
-	lead = timeptr->tm_year / DIVISOR + TM_YEAR_BASE / DIVISOR;
 	trail = timeptr->tm_year % DIVISOR + TM_YEAR_BASE % DIVISOR;
-	if (trail > DIVISOR) {
-		trail -= DIVISOR;
-		++lead;
-	}
-	while (trail < 0) {
+	lead = timeptr->tm_year / DIVISOR + TM_YEAR_BASE / DIVISOR +
+		trail / DIVISOR;
+	trail %= DIVISOR;
+	if (trail < 0 && lead > 0) {
 		trail += DIVISOR;
 		--lead;
-	}
-	if (lead < 0 && trail != 0) {
+	} else if (lead < 0 && trail > 0) {
 		trail -= DIVISOR;
 		++lead;
 	}

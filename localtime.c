@@ -26,7 +26,7 @@ register char *	tzname;
 	register struct tzinfo *	tzp;
 	register struct dsinfo *	dsp;
 	register int			fid;
-	register int			i, hitype, ok;
+	register int			i, j, ok;
 	char				buf[256];
 
 	if (tzname == 0)
@@ -46,21 +46,20 @@ register char *	tzname;
 	if (close(fid) != 0 || !ok)
 		goto oops;
 	/*
-	** Check the information.
+	** Check for errors that could cause core dumps.
+	** Note:  all tz_dsinfo elements are checked even if they aren't used.
+	** Note that a zero-length time zone abbreviation is *not* considered
+	** to be an error.
 	*/
-	hitype = 0;
-	for (i = 0; i < tzp->tz_timecnt; ++i) {
-		if (i > 0 && tzp->tz_times[i] <= tzp->tz_times[i - 1])
+	for (i = 0; i < tzp->tz_timecnt; ++i)
+		if (tzp->tz_types[i] > TZ_MAX_TYPES)
 			goto oops;
-		if (tzp->tz_types[i] > hitype)
-			hitype = tzp->tz_types[i];
-	}
-	if (hitype > TZ_MAX_TYPES)
-		goto oops;
-	for (i = 0; i <= hitype; ++i) {
+	for (i = 0; i < TZ_MAX_TYPES; ++i) {
 		dsp = tzp->tz_dsinfo + i;
-		if (dsp->ds_abbr[TZ_ABBR_LEN] != '\0')
-			goto oops;
+		j = 0;
+		while (dsp->ds_abbr[j] != '\0')
+			if (++j > TZ_ABBR_LEN)
+				goto oops;
 	}
 	return 0;
 oops:

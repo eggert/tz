@@ -221,7 +221,7 @@ char *	argv[];
 #endif /* defined D_OR_T_OPTION */
 #ifdef A_OPTION
 	register int		aflag = 0;
-	static struct timeval	atv;	/* static so tv_usec is 0 */
+	struct timeval		atv;
 #endif /* defined A_OPTION */
 
 #ifdef D_OR_T_OPTION
@@ -346,7 +346,9 @@ char *	argv[];
 					++optarg;
 				if (nondigit(optarg) != '\0')
 					usage();
-				atv.tv_usec = 100000 * f;
+				atv.tv_sec = (int) f;
+				atv.tv_usec =
+					(int) ((f - atv.tv_sec) * 1000000);
 			}
 			break;
 #endif /* defined A_OPTION */

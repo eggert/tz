@@ -99,7 +99,7 @@ static const struct lc_time_T	C_time_locale = {
 
 	/* am */
 	"AM",
-	
+
 	/* pm */
 	"PM",
 
@@ -109,7 +109,7 @@ static const struct lc_time_T	C_time_locale = {
 
 static char *	_add P((const char *, char *, const char *));
 static char *	_conv P((int, const char *, char *, const char *));
-static char *_fmt P((const char *, const struct tm *, char *, const char *));
+static char *	_fmt P((const char *, const struct tm *, char *, const char *));
 
 size_t strftime P((char *, size_t, const char *, const struct tm *));
 

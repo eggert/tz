@@ -210,9 +210,9 @@ SHAR6.Z.uue:	$(USNO)
 		$(SHAR) $(USNO) | compress | uuencode SHAR6.Z > $@
 
 sure:		$(SOURCES)
-		$(LINT) $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZCSRCS)
-		$(LINT) $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZDSRCS)
-		$(LINT) $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(LIBSRCS)
+		for i in "$(TZCSRCS)" "$(TZDSRCS)" "$(DATESRCS)" "$(LIBSRCS)"; \
+		do $(LINT) $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $$i ; \
+		done
 
 # "/usr/5bin/lint -p" can dump core on SunOS 4.0, so no -p below. . .
 

@@ -143,6 +143,7 @@ const struct tm * const	t;
 #endif /* defined LOCALE_HOME */
 	warn = IN_NONE;
 	p = _fmt(((format == NULL) ? "%c" : format), t, s, s + maxsize, &warn);
+#ifndef NO_RUN_TIME_WARNINGS_ABOUT_YEAR_2000_PROBLEMS_THANK_YOU
 	if (warn != IN_NONE && getenv(YEAR_2000_NAME) != NULL) {
 		(void) fprintf(stderr, "\n");
 		if (format == NULL)
@@ -157,6 +158,7 @@ const struct tm * const	t;
 		else	(void) fprintf(stderr, "all locales");
 		(void) fprintf(stderr, "\n");
 	}
+#endif /* !defined NO_RUN_TIME_WARNINGS_ABOUT_YEAR_2000_PROBLEMS_THANK_YOU */
 	if (p == s + maxsize)
 		return 0;
 	*p = '\0';

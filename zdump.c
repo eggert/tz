@@ -14,7 +14,17 @@ static char	sccsid[] = "%W%";
 #define FALSE		0
 #endif
 
+#ifndef alloc_t
+#define alloc_t		unsigned
+#endif
+
+#ifndef MAL
+#define MAL		NULL
+#endif
+
 extern char *		asctime();
+extern char **		environ;
+extern char *		malloc();
 extern struct tm *	gmtime();
 extern char *		optarg;
 extern int		optind;
@@ -77,11 +87,23 @@ char *	argv[];
 		if (strlen(argv[i]) > longest)
 			longest = strlen(argv[i]);
 	for (i = optind; i < argc; ++i) {
-		if (settz(argv[i]) != 0) {
-			(void) fprintf(stderr, "%s: settz(\"%s\") failed\n",
-				argv[0], argv[i]);
+		register char **	saveenv;
+		char *			tzequals;
+		char *			fakeenv[2];
+
+		tzequals = malloc((alloc_t) (strlen(argv[1]) + 4));
+		if (tzequals == MAL) {
+			(void) fprintf(stderr, "%s: can't allocate memory\n",
+				argv[0]);
 			exit(1);
 		}
+		(void) sprintf(tzequals, "TZ=%s", argv[i]);
+		fakeenv[0] = tzequals;
+		fakeenv[1] = NULL;
+		saveenv = environ;
+		environ = fakeenv;
+		(void) tzset();
+		environ = saveenv;
 		show(argv[i], now, FALSE);
 		if (!vflag)
 			continue;

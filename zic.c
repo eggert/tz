@@ -389,8 +389,8 @@ static void
 usage()
 {
 	(void) fprintf(stderr,
-"%s: usage is %s [ -s ] [ -v ] [ -l localtime ] [ -p posixrules ] [ -d directory ]\n\
-\t[ -L leapseconds ] [ filename ... ]\n",
+"%s: usage is %s [ -s ] [ -v ] [ -l localtime ] [ -p posixrules ] [ -d directory ] \n\
+\t[ -L leapseconds ] [ -y yearistype ] [ filename ... ]\n",
 		progname, progname);
 	(void) exit(EXIT_FAILURE);
 }
@@ -399,6 +399,7 @@ static const char *	psxrules;
 static const char *	lcltime;
 static const char *	directory;
 static const char *	leapsec;
+static const char *	yitcommand;
 static int		sflag = FALSE;
 
 int
@@ -413,7 +414,7 @@ char *	argv[];
 	(void) umask(umask(022) | 022);
 #endif /* defined unix */
 	progname = argv[0];
-	while ((c = getopt(argc, argv, "d:l:p:L:vs")) != EOF)
+	while ((c = getopt(argc, argv, "d:l:p:L:vsy:")) != EOF)
 		switch (c) {
 			default:
 				usage();
@@ -447,6 +448,16 @@ char *	argv[];
 					(void) exit(EXIT_FAILURE);
 				}
 				break;
+			case 'y':
+				if (yitcommand == NULL)
+					yitcommand = optarg;
+				else {
+					(void) fprintf(stderr,
+"%s: More than one -y option specified\n",
+						progname);
+					(void) exit(EXIT_FAILURE);
+				}
+				break;
 			case 'L':
 				if (leapsec == NULL)
 					leapsec = optarg;
@@ -468,6 +479,8 @@ char *	argv[];
 		usage();	/* usage message by request */
 	if (directory == NULL)
 		directory = TZDIR;
+	if (yitcommand == NULL)
+		yitcommand = "yearistype";
 
 	setboundaries();
 
@@ -808,13 +821,14 @@ register char ** const	fields;
 const int		nfields;
 {
 	register int	i;
-	char		buf[132];
+	static char *	buf;
 
 	if (nfields < ZONE_MINFIELDS || nfields > ZONE_MAXFIELDS) {
 		error("wrong number of fields on Zone line");
 		return FALSE;
 	}
 	if (strcmp(fields[ZF_NAME], TZDEFAULT) == 0 && lcltime != NULL) {
+		buf = erealloc(buf, 132 + strlen(TZDEFAULT));
 		(void) sprintf(buf,
 			"\"Zone %s\" line and -l option are mutually exclusive",
 			TZDEFAULT);
@@ -822,6 +836,7 @@ const int		nfields;
 		return FALSE;
 	}
 	if (strcmp(fields[ZF_NAME], TZDEFRULES) == 0 && psxrules != NULL) {
+		buf = erealloc(buf, 132 + strlen(TZDEFRULES));
 		(void) sprintf(buf,
 			"\"Zone %s\" line and -p option are mutually exclusive",
 			TZDEFRULES);
@@ -831,6 +846,9 @@ const int		nfields;
 	for (i = 0; i < nzones; ++i)
 		if (zones[i].z_name != NULL &&
 			strcmp(zones[i].z_name, fields[ZF_NAME]) == 0) {
+				buf = erealloc(buf, 132 +
+					strlen(fields[ZF_NAME]) +
+					strlen(zones[i].z_filename));
 				(void) sprintf(buf,
 "duplicate zone name %s (file \"%s\", line %d)",
 					fields[ZF_NAME],
@@ -1223,15 +1241,11 @@ const char * const	name;
 {
 	register FILE *		fp;
 	register int		i, j;
-	char			fullname[BUFSIZ];
+	static char *		fullname;
 	static struct tzhead	tzh;
 
-	if (strlen(directory) + 1 + strlen(name) >= sizeof fullname) {
-		(void) fprintf(stderr,
-			"%s: File name %s/%s too long\n", progname,
-			directory, name);
-		(void) exit(EXIT_FAILURE);
-	}
+	fullname = erealloc(fullname,
+		strlen(directory) + 1 + strlen(name) + 1);
 	(void) sprintf(fullname, "%s/%s", directory, name);
 	if ((fp = fopen(fullname, "wb")) == NULL) {
 		if (mkdirs(fullname) != 0)
@@ -1569,8 +1583,8 @@ yearistype(year, type)
 const int		year;
 const char * const	type;
 {
-	char	buf[BUFSIZ];
-	int	result;
+	static char *	buf;
+	int		result;
 
 	if (type == NULL || *type == '\0')
 		return TRUE;
@@ -1578,7 +1592,8 @@ const char * const	type;
 		return (year % 4) == 0;
 	if (strcmp(type, "nonpres") == 0)
 		return (year % 4) != 0;
-	(void) sprintf(buf, "yearistype %d %s", year, type);
+	buf = erealloc(buf, 132 + strlen(yitcommand) + strlen(type));
+	(void) sprintf(buf, "%s %d %s", yitcommand, year, type);
 	result = system(buf);
 	if (result == 0)
 		return TRUE;

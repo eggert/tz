@@ -609,6 +609,8 @@ Zone	Europe/London	-0:00:37 -	LMT	1847 Sep 22
 			 0:00	GB-Eire	%s	1968 Feb 18 2:00
 			 1:00	-	BST	1971 Oct 31 2:00
 			 0:00	GB-Eire	%s
+# This link is for backward compatibility with the old naming convention.
+Link Europe/London GB
 Zone	Europe/Belfast	-0:23:40 -	LMT	1880 Aug  2
 			-0:25	-	DMT	1916 May 21 2:00    # Dublin MT
 			-0:25	1:00	DST	1916 Oct  1 3:00
@@ -626,6 +628,8 @@ Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
 			 0:00	GB-Eire	%s	1968 Feb 18 2:00
 			 1:00	-	BST	1971 Oct 31 3:00
 			 0:00	GB-Eire	%s
+# This link is for backward compatibility with the old naming convention.
+Link Europe/Dublin Eire
 
 ###############################################################################
 
@@ -1477,6 +1481,8 @@ Zone Europe/Moscow	2:30:20 -	LMT	1880
 			2:00	1:00  "EET DST"	1991 Sep lastSun 2:00s
 			2:00	-	EET	1992 Jan 19 2:00s
 			3:00	Russia	MS%s
+# This link is for backward compatibility with the old naming convention.
+Link Europe/Moscow	Moscow
 Zone Asia/Sverdlovsk	4:02:34 -	LMT	1924 May  2
 			4:00	-	SSK	1957 Mar
 			5:00	Russia	SS%s	1991 Sep 29 3:00
@@ -1667,6 +1673,8 @@ Zone	Europe/Istanbul	1:55:52 -	LMT	1880
 			2:00	Turkey	EET%s	1986
 			2:00	M-Eur	EET%s
 Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
+# This link is for backward compatibility with the old naming convention.
+Link Europe/Istanbul	Turkey
 
 # Ukraine
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S

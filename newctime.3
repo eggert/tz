@@ -1,6 +1,6 @@
-.TH SETTZ 3 
+.TH NEWCTIME 3 
 .SH NAME
-settz, ctime, localtime, zonetime \- convert date and time to ASCII
+settz, ctime, localtime, gmtime, asctime, zonetime, tzset \- convert date and time to ASCII
 .SH SYNOPSIS
 .nf
 .B settz(zonename)
@@ -9,19 +9,26 @@ settz, ctime, localtime, zonetime \- convert date and time to ASCII
 .B char *ctime(clock)
 .B long *clock;
 .PP
-.B
-#include "time.h"
+.B #include <time.h>
 .PP
 .B struct tm *localtime(clock)
 .B long *clock;
 .PP
-.B char *tz_abbr;
+.B struct tm *gmtime(clock)
+.B long *clock;
+.PP
+.B char *asctime(tm)
+.B struct tm *tm;
 .PP
 .B struct tm * zonetime(timep, zone)
 .B long *clock;
 .B char *zone;
 .PP
-.B cc ... -ltz
+.B extern char *tzname[2];
+.PP
+.B void tzset()
+.PP
+.B cc ... -lz
 .SH DESCRIPTION
 .I Settz
 sets time conversion information used by
@@ -67,8 +74,8 @@ with the value returned by
 .B
 getenv("TZ").
 .I Localtime
-sets
-tz_abbr
+sets the appropriate element of
+.B tzname
 to a pointer to an 
 ASCII string that's the time zone abbreviation to be used with
 .IR localtime 's

@@ -5,7 +5,9 @@ tzcomp \- time zone compiler
 .B tzcomp
 [
 .B \-d
-directory ] filename ...
+directory ] [
+.B \-l
+localtime ] filename ...
 .SH DESCRIPTION
 .I Tzcomp
 reads text from the file(s) named on the command line
@@ -16,14 +18,22 @@ is
 .BR ` - ',
 the standard input is read.
 .PP
-This option is available:
+These options are available:
 .TP
 .B \-d directory
 Create time zone information files in the named directory rather than
 in the standard directory named below.
+.TP
+.B \-l localtime
+Use the given time zone as local time.
 .PP
-A sharp characters (#) in the input introduces a comment which extends to
-the end of the line the sharp character appears on.
+Input lines are made up of fields.
+Fields are separated from one another by any number of white space characters.
+Leading and trailing white space on input lines is ignored.
+An unquoted sharp character (#) in the input introduces a comment which extends
+to the end of the line the sharp character appears on.
+White space characters and sharp characters may be enclosed in double quotes
+(") if they're to be used as part of a field.
 Any line which is blank (after comment stripping) is ignored.
 Non-blank lines are expected to be of one of three
 types:  rule lines, zone lines, and link lines.
@@ -119,8 +129,7 @@ Sun<=25	last Sunday on or before the 25th
 Names of days of the week may be abbreviated or spelled out in full.
 Note that there must be no spaces within the
 .B ON
-field 
-(or within any other field).
+field.
 .TP
 .B AT
 Gives the time of day at which the rule takes affect.

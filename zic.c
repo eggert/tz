@@ -3,7 +3,7 @@
 #include "stdio.h"
 
 #ifdef OBJECTID
-static char	sccsid[] = "%W%";
+static char	sccsid[] = "@(#)tzcomp.c	2.1";
 #endif
 
 #include "tzfile.h"
@@ -252,47 +252,6 @@ static struct ttinfo	ttis[TZ_MAX_TYPES];
 static char		chars[TZ_MAX_CHARS];
 
 /*
-** Exits.
-*/
-
-static
-tameexit()
-{
-	exit(0);
-}
-
-static
-wild2exit(part1, part2)
-char *	part1;
-char *	part2;
-{
-	register char *	between;
-
-	if (part1 == NULL)
-		part1 = "";
-	if (part2 == NULL)
-		part2 = "";
-	between = (*part1 == '\0' || *part2 == '\0') ? "" : " ";
-	(void) fprintf(stderr, "%s: wild %s%s%s\n",
-		progname, part1, between, part2);
-	exit(1);
-}
-
-static
-wildexit(string)
-char *	string;
-{
-	wild2exit(string, (char *) NULL);
-}
-
-static
-wildrexit(string)
-char *	string;
-{
-	wild2exit("result from", string);
-}
-
-/*
 ** Memory allocation.
 */
 
@@ -301,8 +260,10 @@ emalloc(size)
 {
 	register char *	cp;
 
-	if ((cp = malloc((alloc_t) size)) == NULL || cp == MAL)
-		wildrexit("malloc");
+	if ((cp = malloc((alloc_t) size)) == NULL) {
+		perror(progname);
+		exit(1);
+	}
 	return cp;
 }
 
@@ -312,8 +273,10 @@ char *	ptr;
 {
 	register char *	cp;
 
-	if ((cp = realloc(ptr, (alloc_t) size)) == NULL)
-		wildrexit("realloc");
+	if ((cp = realloc(ptr, (alloc_t) size)) == NULL) {
+		perror(progname);
+		exit(1);
+	}
 	return cp;
 }
 
@@ -357,12 +320,22 @@ char *	argv[];
 			case 'd':
 				if (directory == NULL)
 					directory = optarg;
-				else	wildexit("multiple command line -d's");
+				else {
+					(void) fprintf(stderr,
+"%s: More than one -d option specified\n",
+						progname);
+					exit(1);
+				}
 				break;
 			case 'l':
 				if (localtime == NULL)
 					localtime = optarg;
-				else	wildexit("multiple command line -l's");
+				else {
+					(void) fprintf(stderr,
+"%s: More than one -l option specified\n",
+						progname);
+					exit(1);
+				}
 		}
 	if (directory == NULL)
 		directory = TZDIR;
@@ -374,26 +347,37 @@ char *	argv[];
 	for (i = optind; i < argc; ++i)
 		infile(argv[i]);
 	if (errors)
-		wildexit("input data");
+		exit(1);
 	associate();
 	for (i = 0; i < nzones; ++i)
 		outzone(&zones[i]);
 	/*
 	** We'll take the easy way out on this last part.
 	*/
-	if (chdir(directory) != 0)
-		wild2exit("result from chdir to", directory);
+	if (chdir(directory) != 0) {
+		(void) fprintf(stderr, "%s: Can't chdir to ", progname);
+		perror(directory);
+		exit(1);
+	}
 	for (i = 0; i < nlinks; ++i) {
 		(void) unlink(links[i].l_to);
-		if (link(links[i].l_from, links[i].l_to) != 0)
-			wild2exit("result creating", links[i].l_to);
+		if (link(links[i].l_from, links[i].l_to) != 0) {
+			(void) fprintf(stderr, "%s: Can't link %s to ",
+			    progname, links[i].l_from);
+			perror(links[i].l_to);
+			exit(1);
+		}
 	}
 	if (localtime != NULL) {
 		(void) unlink(TZDEFAULT);
-		if (link(localtime, TZDEFAULT) != 0)
-			wild2exit("result creating", TZDEFAULT);
+		if (link(localtime, TZDEFAULT) != 0) {
+			(void) fprintf(stderr, "%s: Can't link %s to ",
+			    progname, localtime);
+			perror(TZDEFAULT);
+			exit(1);
+		}
 	}
-	tameexit();
+	exit (0);
 }
 
 /*
@@ -472,14 +456,14 @@ associate()
 		}
 	}
 	if (errors)
-		wildexit("unruly zone(s)");
+		exit(1);
 }
 
 static
 error(string)
 char *	string;
 {
-	(void) fprintf(stderr, "%s: file \"%s\", line %d: wild %s\n",
+	(void) fprintf(stderr, "%s: file \"%s\", line %d: %s\n",
 		progname, filename, linenum, string);
 	++errors;
 }
@@ -498,8 +482,11 @@ char *	name;
 	if (strcmp(name, "-") == 0) {
 		name = "standard input";
 		fp = stdin;
-	} else if ((fp = fopen(name, "r")) == NULL)
-		wild2exit("result opening", name);
+	} else if ((fp = fopen(name, "r")) == NULL) {
+		(void) fprintf(stderr, "%s: Can't open ", progname);
+		perror(name);
+		exit(1);
+	}
 	filename = eallocpy(name);
 	for (linenum = 1; ; ++linenum) {
 		if (fgets(buf, sizeof buf, fp) != buf)
@@ -507,11 +494,11 @@ char *	name;
 		cp = strchr(buf, '\n');
 		if (cp == NULL) {
 			error("long line");
-			wildexit("input data");
+			exit(1);
 		}
 		*cp = '\0';
-		if ((fields = getfields(buf)) == NULL)
-			wildrexit("getfields");
+		fields = getfields(buf);
+			/* can't return NULL, since "buf" is not NULL */
 		nfields = 0;
 		while (fields[nfields] != NULL) {
 			if (ciequal(fields[nfields], "-"))
@@ -521,7 +508,7 @@ char *	name;
 		if (nfields > 0)	/* non-blank line */
 			if ((lp = byword(fields[0], line_codes)) == NULL)
 				error("input line of unknown type");
-			else switch ((int) (lp->l_value)) {
+			else switch (lp->l_value) {
 				case LC_RULE:
 					inrule(fields, nfields);
 					break;
@@ -532,14 +519,23 @@ char *	name;
 					inlink(fields, nfields);
 					break;
 				default:	/* "cannot happen" */
-					wildrexit("lookup");
+					(void) fprintf(stderr,
+					    "%s: panic: Invalid l_value %ld\n",
+					    progname, lp->l_value);
+					exit(1);
 			}
 		free((char *) fields);
 	}
-	if (ferror(fp))
-		wild2exit("result reading", filename);
-	if (fp != stdin && fclose(fp))
-		wild2exit("result closing", filename);
+	if (ferror(fp)) {
+		(void) fprintf(stderr, "%s: Error reading ", progname);
+		perror(filename);
+		exit(1);
+	}
+	if (fclose(fp)) {
+		(void) fprintf("%s: Error closing ", progname);
+		perror(filename);
+		exit(1);
+	}
 }
 
 /*
@@ -766,6 +762,36 @@ char **	fields;
 	links[nlinks++] = l;
 }
 
+#define	PUTSHORT(val, fp) { \
+	register int shortval; \
+	register unsigned char c; \
+	shortval = val; \
+	c = shortval >> 8; \
+	if (putc(c, fp) == EOF) \
+		goto wreck; \
+	c = shortval; \
+	if (putc(c, fp) == EOF) \
+		goto wreck; \
+	}
+
+#define PUTLONG(val, fp) { \
+	register long longval; \
+	register unsigned char c; \
+	longval = val; \
+	c = longval >> 24; \
+	if (putc(c, fp) == EOF) \
+		goto wreck; \
+	c = longval >> 16; \
+	if (putc(c, fp) == EOF) \
+		goto wreck; \
+	c = longval >> 8; \
+	if (putc(c, fp) == EOF) \
+		goto wreck; \
+	c = longval; \
+	if (putc(c, fp) == EOF) \
+		goto wreck; \
+	}
+	
 static
 writezone(name)
 char *	name;
@@ -774,33 +800,60 @@ char *	name;
 	register int	i;
 	char		fullname[BUFSIZ];
 
-	if (strlen(directory) + 1 + strlen(name) >= BUFSIZ)
-		wild2exit("long directory/file", filename);
+	if (strlen(directory) + 1 + strlen(name) >= sizeof filename) {
+		(void) fprintf("%s: File name %s/%s too long\n", progname,
+		    directory, name);
+		exit(1);
+	}
 	(void) sprintf(fullname, "%s/%s", directory, name);
 	if ((fp = fopen(fullname, "w")) == NULL) {
-		mkdirs(fullname);
-		if ((fp = fopen(fullname, "w")) == NULL)
-			wild2exit("result creating", fullname);
+		if (mkdirs(fullname) < 0)
+			exit(1);
+		if ((fp = fopen(fullname, "w")) == NULL) {
+			(void) fprintf(stderr, "%s: Can't create ", progname);
+			perror(fullname);
+			exit(1);
+		}
 	}
-	if (fwrite((char *) &h, sizeof h, 1, fp) != 1)
+	if (fwrite((char *) h.tzh_reserved, sizeof h.tzh_reserved, 1, fp) != 1)
 		goto wreck;
+	PUTSHORT(h.tzh_timecnt, fp);
+	PUTSHORT(h.tzh_typecnt, fp);
+	PUTSHORT(h.tzh_charcnt, fp);
 	if ((i = h.tzh_timecnt) != 0) {
-		if (fwrite((char *) ats, sizeof ats[0], i, fp) != i)
-			goto wreck;
+		register long *atsp;
+		register int j;
+
+		atsp = &ats[0];
+		for (j = i; j > 0; --j)
+			PUTLONG(*atsp++, fp);
 		if (fwrite((char *) types, sizeof types[0], i, fp) != i)
 			goto wreck;
 	}
-	if ((i = h.tzh_typecnt) != 0)
-		if (fwrite((char *) ttis, sizeof ttis[0], i, fp) != i)
-			goto wreck;
+	if ((i = h.tzh_typecnt) != 0) {
+		register struct ttinfo *ttisp;
+		register unsigned char c;
+
+		ttisp = &ttis[0];
+		for ( ; i > 0; --i) {
+			PUTLONG(ttisp->tt_gmtoff, fp);
+			if (putc(ttisp->tt_isdst, fp) == EOF)
+				goto wreck;
+			if (putc(ttisp->tt_abbrind, fp) == EOF)
+				goto wreck;
+			ttisp++;
+		}
+	}
 	if ((i = h.tzh_charcnt) != 0)
 		if (fwrite(chars, sizeof chars[0], i, fp) != i)
 			goto wreck;
 	if (fclose(fp))
-		wild2exit("result closing", fullname);
+		goto wreck;
 	return;
 wreck:
-	wild2exit("result writing", fullname);
+	(void) fprintf("%s: Write error on ", progname);
+	perror(fullname);
+	exit(1);
 }
 
 struct temp {
@@ -843,7 +896,7 @@ char *	cp2;
 	filename = tp2->t_rp->r_filename;
 	linenum = tp2->t_rp->r_linenum;
 	error(cp);
-	wildexit(cp);
+	exit(1);
 	/*NOTREACHED*/
 }
 
@@ -854,7 +907,7 @@ long			y;
 {
 	if (ntemps >= TZ_MAX_TIMES) {
 		error("too many transitions?!");
-		wildexit("large number of transitions");
+		exit(1);
 	}
 	temps[ntemps].t_time = rpytime(rp, y);
 	temps[ntemps].t_rp = rp;
@@ -902,7 +955,7 @@ register struct zone *	zp;
 				filename = zp->z_filename;
 				linenum = zp->z_linenum;
 				error("large number of local time types");
-				wildexit("input data");
+				exit(1);
 			}
 			ttis[j].tt_gmtoff = gmtoff;
 			ttis[j].tt_isdst = rp->r_stdoff != 0;
@@ -968,25 +1021,52 @@ register struct rule *	rp;
 
 	(void) sprintf(command, "years %ld %ld %s",
 		rp->r_loyear, rp->r_hiyear, rp->r_yrtype);
-	if ((fp = popen(command, "r")) == NULL)
-		wild2exit("result opening pipe to", command);
+	if ((fp = popen(command, "r")) == NULL) {
+		(void) fprintf(stderr, "%s: Can't run command \"%s\"\n",
+		    progname, command);
+		exit(1);
+	}
 	for (n = 0; fgets(buf, sizeof buf, fp) == buf; ++n) {
-		if (strchr(buf, '\n') == 0)
-			wildrexit(command);
+		if (strchr(buf, '\n') == 0) {
+			(void) fprintf(stderr,
+"%s: Line read from command \"%s\" is too long\n",
+				progname, command);
+			(void) fprintf(stderr, "Line began with \"%s\"\n", buf);
+			exit(1);
+		}
 		*strchr(buf, '\n') = '\0';
-		if (sscanf(buf, scheck(buf, "%ld"), &y) != 1)
-			wildrexit(command);
-		if (y < rp->r_loyear || y > rp->r_hiyear)
-			wildrexit(command);
+		if (sscanf(buf, scheck(buf, "%ld"), &y) != 1) {
+			(void) fprintf(stderr,
+"%s: Line read from command \"%s\" is not a number\n",
+				progname, command);
+			(void) fprintf(stderr, "Line was \"%s\"\n", buf);
+			exit(1);
+		}
+		if (y < rp->r_loyear || y > rp->r_hiyear) {
+			(void) fprintf(stderr,
+"%s: Year %d read from command \"%s\" is not valid\n",
+				progname, y, command);
+			exit(1);
+		}
 		addrule(rp, y);
 	}
-	if (ferror(fp))
-		wild2exit("result reading from", command);
-	if (pclose(fp))
-		wild2exit("result closing pipe to", command);
+	if (ferror(fp)) {
+		(void) fprintf(stderr,
+			"%s: Error reading from command \"%s\": ",
+			progname, command);
+		perror("");
+		exit(1);
+	}
+	if (pclose(fp)) {
+		(void) fprintf(stderr,
+			"%s: Error closing pipe to command \"%s\": ",
+			progname, command);
+		perror("");
+		exit(1);
+	}
 	if (n == 0) {
 		error("no year in range matches type");
-		wildexit("input data");
+		exit(1);
 	}
 }
 
@@ -1089,7 +1169,7 @@ long	t2;
 	t = t1 + t2;
 	if (t1 > 0 && t2 > 0 && t <= 0 || t1 < 0 && t2 < 0 && t >= 0) {
 		error("time overflow");
-		wildexit("time overflow");
+		exit(1);
 	}
 	return t;
 }
@@ -1139,8 +1219,7 @@ register long		wantedy;
 			--i;
 		else {
 			error("use of 2/29 in non leap-year");
-			for ( ; ; )
-				wildexit("data");
+			exit(1);
 		}
 	}
 	--i;
@@ -1194,10 +1273,22 @@ char *	name;
 	register char *	cp;
 
 	if ((cp = name) == NULL || *cp == '\0')
-		return;
+		return 0;
 	while ((cp = strchr(cp + 1, '/')) != 0) {
 		*cp = '\0';
-		(void) mkdir(name, 0755);
+		if (access(name, 0) < 0) {
+			/*
+			 * It doesn't seem to exist, so we try to create it.
+			 */
+			if (mkdir(name, 0775) < 0) {
+				(void) fprintf(stderr,
+					"%s: Can't create directory ",
+					progname);
+				perror(name);
+				return -1;
+			}
+		}
 		*cp = '/';
 	}
+	return 0;
 }

@@ -2,18 +2,33 @@
 <HTML>
 <HEAD>
 <TITLE>
-Sources for Time Zone and Daylight Savings Data
+Sources for Time Zone and Daylight Saving Time Data
 </TITLE>
 </HEAD>
 <BODY>
-<H1>Sources for Time Zone and Daylight Savings Data</H1>
+<H1>Sources for Time Zone and Daylight Saving Time Data</H1>
 <P>
 <small>
 %W%
 </small>
 </P>
 <H2>Paul Eggert writes:</H2><P>
-The Web has several other sources for time zone and daylight savings data.
+The public-domain tz database contains code and data
+that represent the history of local time
+for many representative locations around the globe.
+It is updated periodically to reflect changes made by political bodies
+to UTC offsets and daylight-saving rules.
+This database (often called <samp>zoneinfo</samp>)
+is used by several implementations,
+including BSD, DJGPP, GNU/Linux, Irix, Solaris, and Unixware.
+In the tz database's
+<A HREF="ftp://elsie.nci.nih.gov/pub/">FTP distribution</A>,
+the code is in the file <samp>tzcode<var>C</var>.tar.gz</samp>,
+where <samp><var>C</var></samp> is the code's version;
+similarly, the data are in <samp>tzdata<var>D</var>.tar.gz</samp>,
+where <samp><var>D</var></samp> is the data's version.
+<P>
+The Web has several other sources for time zone and daylight saving time data.
 Here are some recent links that may be of interest.
 <UL>
 <LI><A HREF="http://www.bsdi.com/date">Date and Time Gateway</A>
@@ -28,8 +43,9 @@ is a text-based system containing links to local time servers
 throughout the world; though the coverage is limited,
 the live data provide a nice way to check one's tables.
 <LI><A HREF="http://tycho.usno.navy.mil/tzones.html">World Time Zones</A>
-contains US Naval Observatory data, used as the source for the usno* files.
-<LI>The US Central Intelligence Agency publishes a static
+contains US Naval Observatory data, used as the source
+for the <samp>usno*</samp> files.
+<LI>The US Central Intelligence agency publishes a static
 Standard Time Zones of the World map in multiple resolutions.
 including
 <A HREF="http://www.odci.gov/cia/publications/nsolo/rmap-gif/802483.gif">75
@@ -42,7 +58,7 @@ The pictorial quality is good, but the map does not indicate summer time,
 and parts of the data are a few years out of date.
 <LI><A HREF="http://pisolo.cstv.to.cnr.it/toi/uk/toi.html">The
 Time of Internet</A>
-contains good descriptions of Time Zones and daylight savings time,
+contains good descriptions of Time Zones and daylight saving time,
 with diagrams.
 The time zone map is out of date, however.
 <LI><A HREF="http://community.bellcore.com/mbr/gmt-explained.html">A Few Facts
@@ -51,7 +67,7 @@ answers questions like ``What is the difference between GMT and UTC?''
 <LI><A HREF="http://www.energy.ca.gov/energy/daylightsaving.html">Daylight
 Saving Time -- Saving Time, Saving Energy</A>
 is a history of DST in the US.
-<LI><A HREF="http://www.yahoo.com/Science/Weights_and_Measures/Measurements/Time/Daylight_Savings_Time/">Yahoo! - Science:Weights and Measures:Measurements:Time:Daylight Savings Time</A>
+<LI><A HREF="http://www.yahoo.com/Science/Weights_and_Measures/Measurements/Time/Daylight_Saving_Time/">Yahoo! - Science:Weights and Measures:Measurements:Time:Daylight Saving Time</A>
 is where the famous Internet indexing service Yahoo! collects its time zone
 info.
 <LI>The <A HREF="http://www.iata.org/">International Air Transport Association</A>
@@ -63,7 +79,7 @@ International Earth Rotation Service, the committee that decides
 when leap seconds occur.
 </UL>
 -- <A HREF="mailto:eggert@twinsun.com">eggert@twinsun.com</A>
-(1997-05-03)
+(1997-07-16)
 </P>
 <H2>Arthur David Olson writes:</H2><P>
 A good source of information about ISO 8601 seems to be

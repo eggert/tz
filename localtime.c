@@ -319,13 +319,6 @@ static int	year_lengths[2] = {
 	DAYS_PER_NYEAR, DAYS_PER_LYEAR
 };
 
-/*
-** Accurate only for the past couple of centuries;
-** that will probably do.
-*/
-
-#define isleap(y) (((y) % 4) == 0 && ((y) % 100) != 0 || ((y) % 400) == 0)
-
 #ifdef STD_INSPIRED
 struct tm *
 #else /* !STD_INSPIRED */

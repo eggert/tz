@@ -155,6 +155,7 @@ char *			tzname[2] = {
 **	Except for the strftime function, these functions [asctime,
 **	ctime, gmtime, localtime] return values in one of two static
 **	objects: a broken-down time structure and an array of char.
+** Thanks to Paul Eggert (eggert@twinsun.com) for noting this.
 */
 
 static struct tm	tm;
@@ -1130,6 +1131,12 @@ char *
 ctime(timep)
 const time_t * const	timep;
 {
+/*
+** Section 4.12.3.2 of X3.159-1989 requires that
+**	The ctime funciton converts the calendar time pointed to by timer
+**	to local time in the form of a string.  It is equivalent to
+**		asctime(localtime(timer))
+*/
 	return asctime(localtime(timep));
 }
 

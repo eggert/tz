@@ -2,12 +2,6 @@
 
 /*LINTLIBRARY*/
 
-/*
-** Should there be any built-in rules other than GMT?
-** In particular, should zones such as "EST5" (abbreviation is always "EST",
-** GMT offset is always 5 hours) be built in?
-*/
-
 #include "tzfile.h"
 #include "time.h"
 
@@ -24,14 +18,24 @@ static char	sccsid[] = "%W%";
 #define MAXPATHLEN	1024
 #endif
 
-extern char *		asctime();
-extern struct tm *	gmtime();
+extern char *		getenv();
 extern char *		strcpy();
 extern char *		strcat();
-extern char *		getenv();
+extern char *		sprintf();
+
+char *			asctime();
+struct tm *		gmtime();
+
+struct ttinfo {				/* time type information */
+	long		tt_gmtoff;	/* GMT offset in seconds */
+	int		tt_isdst;	/* used to set tm_isdst */
+	int		tt_abbrind;	/* abbreviation list index */
+};
 
 struct state {
-	struct tzhead	h;
+	int		timecnt;
+	int		typecnt;
+	int		charcnt;
 	long		ats[TZ_MAX_TIMES];
 	unsigned char	types[TZ_MAX_TIMES];
 	struct ttinfo	ttis[TZ_MAX_TYPES];
@@ -44,18 +48,17 @@ static char		isset;
 
 char *			tz_abbr;	/* set by localtime; available to all */
 
-static
-shortget(p)
-unsigned char *	p;
-{
-	return (p[0] << 8) | p[1];
-}
-
 static long
-longget(p)
-register unsigned char *	p;
+detzcode(codep)
+char *	codep;
 {
-	return ((((((p[0] << 8) | p[1]) << 8) | p[2]) << 8) | p[3]);
+	register long	result;
+	register int	i;
+
+	result = 0;
+	for (i = 0; i < 4; ++i)
+		result = (result << 8) | (codep[i] & 0xff);
+	return result;
 }
 
 static
@@ -96,54 +99,58 @@ register struct state *	sp;
 			return -1;
 	}
 	{
-		register unsigned char *	p;
-		unsigned char			buf[sizeof s];
+		register char *			p;
+		register struct tzhead *	tzhp;
+		char				buf[sizeof s];
 
-		p = buf;
-		i = read(fid, (char *) p, sizeof buf);
-		if (close(fid) != 0 || i < sizeof sp->h)
+		i = read(fid, buf, sizeof buf);
+		if (close(fid) != 0 || i < sizeof *tzhp)
 			return -1;
-		p += sizeof sp->h.tzh_reserved;
-		sp->h.tzh_timecnt = shortget(p += 2);
-		sp->h.tzh_typecnt = shortget(p += 2);
-		sp->h.tzh_charcnt = shortget(p += 2);
-		if (sp->h.tzh_timecnt > TZ_MAX_TIMES ||
-			sp->h.tzh_typecnt == 0 ||
-			sp->h.tzh_typecnt > TZ_MAX_TYPES ||
-			sp->h.tzh_charcnt > TZ_MAX_CHARS)
+		tzhp = (struct tzhead *) buf;
+		sp->timecnt = detzcode(tzhp->tzh_timecnt);
+		sp->typecnt = detzcode(tzhp->tzh_typecnt);
+		sp->charcnt = detzcode(tzhp->tzh_charcnt);
+		if (sp->timecnt > TZ_MAX_TIMES ||
+			sp->typecnt == 0 ||
+			sp->typecnt > TZ_MAX_TYPES ||
+			sp->charcnt > TZ_MAX_CHARS)
 				return -1;
-		if (i < sizeof sp->h.tzh_reserved + 3 * sizeof (short) +
-			sp->h.tzh_timecnt * (sizeof (long) + sizeof (char)) +
-			sp->h.tzh_typecnt * (sizeof (long) + 2*sizeof (char)) +
-			sp->h.tzh_charcnt * sizeof (char))
+		if (i < sizeof *tzhp +
+			sp->timecnt * (4 + sizeof (char)) +
+			sp->typecnt * (4 + 2 * sizeof (char)) +
+			sp->charcnt * sizeof (char))
 				return -1;
-		for (i = 0; i < sp->h.tzh_timecnt; ++i)
-			sp->ats[i] = longget(p += 4);
-		for (i = 0; i < sp->h.tzh_timecnt; ++i)
-			sp->types[i] = *p++;
-		for (i = 0; i < sp->h.tzh_typecnt; ++i) {
+		p = buf + sizeof *tzhp;
+		for (i = 0; i < sp->timecnt; ++i) {
+			sp->ats[i] = detzcode(p);
+			p += 4;
+		}
+		for (i = 0; i < sp->timecnt; ++i)
+			sp->types[i] = (unsigned char) *p++;
+		for (i = 0; i < sp->typecnt; ++i) {
 			register struct ttinfo *	ttisp;
 
 			ttisp = &sp->ttis[i];
-			ttisp->tt_gmtoff = longget(p += 4);
-			ttisp->tt_isdst = *p++;
-			ttisp->tt_abbrind = *p++;
+			ttisp->tt_gmtoff = detzcode(p);
+			p += 4;
+			ttisp->tt_isdst = (unsigned char) *p++;
+			ttisp->tt_abbrind = (unsigned char) *p++;
 		}
-		for (i = 0; i < sp->h.tzh_charcnt; ++i)
+		for (i = 0; i < sp->charcnt; ++i)
 			sp->chars[i] = *p++;
-		sp->chars[sp->h.tzh_charcnt] = '\0';	/* ensure '\0' at end */
+		sp->chars[i] = '\0';	/* ensure '\0' at end */
 	}
 	/*
 	** Check that all the local time type indices are valid.
 	*/
-	for (i = 0; i < sp->h.tzh_timecnt; ++i)
-		if (sp->types[i] >= sp->h.tzh_typecnt)
+	for (i = 0; i < sp->timecnt; ++i)
+		if (sp->types[i] >= sp->typecnt)
 			return -1;
 	/*
 	** Check that all the abbreviation indices are valid.
 	*/
-	for (i = 0; i < sp->h.tzh_typecnt; ++i)
-		if (sp->ttis[i].tt_abbrind >= sp->h.tzh_charcnt)
+	for (i = 0; i < sp->typecnt; ++i)
+		if (sp->ttis[i].tt_abbrind >= sp->charcnt)
 			return -1;
 	return 0;
 }
@@ -157,11 +164,11 @@ register struct state *	sp;
 settz(tzname)
 char *	tzname;
 {
-	register int	answer;
+	register int	result;
 
 	isset = TRUE;
 	if (tzname != 0 && *tzname == '\0')
-		answer = 0;			/* Use built-in GMT */
+		result = 0;			/* Use built-in GMT */
 	else {
 		if (tzload(tzname, &s) == 0)
 			return 0;
@@ -170,17 +177,17 @@ char *	tzname;
 		if (tzload((char *) 0, &s) == 0)
 			return -1;
 		*/
-		answer = -1;
+		result = -1;
 	}
-	s.h.tzh_timecnt = 0;
+	s.timecnt = 0;
 	s.ttis[0].tt_gmtoff = 0;
 	s.ttis[0].tt_abbrind = 0;
 	(void) strcpy(s.chars, "GMT");
-	return answer;
+	return result;
 }
 
 static struct tm *
-newsub(timep, sp)
+timesub(timep, sp)
 register long *		timep;
 register struct state *	sp;
 {
@@ -190,10 +197,10 @@ register struct state *	sp;
 	long				t;
 
 	t = *timep;
-	if (sp->h.tzh_timecnt == 0 || t < sp->ats[0])
+	if (sp->timecnt == 0 || t < sp->ats[0])
 		i = 0;
 	else {
-		for (i = 1; i < sp->h.tzh_timecnt; ++i)
+		for (i = 1; i < sp->timecnt; ++i)
 			if (t < sp->ats[i])
 				break;
 		i = sp->types[i - 1];
@@ -207,12 +214,12 @@ register struct state *	sp;
 }
 
 struct tm *
-newlocaltime(timep)
+localtime(timep)
 long *	timep;
 {
 	if (!isset)
 		(void) settz(getenv("TZ"));
-	return newsub(timep, &s);
+	return timesub(timep, &s);
 }
 
 struct tm *
@@ -222,12 +229,129 @@ char *	zone;
 {
 	struct state	st;
 
-	return (tzload(zone, &st) == 0) ? newsub(timep, &st) : 0;
+	return (tzload(zone, &st) == 0) ? timesub(timep, &st) : 0;
 }
 
 char *
-newctime(timep)
+ctime(timep)
 long *	timep;
 {
-	return asctime(newlocaltime(timep));
+	return asctime(localtime(timep));
+}
+
+/*
+********************************************************************************
+*/
+
+#define SECS_PER_MIN	60
+#define MINS_PER_HOUR	60
+#define HOURS_PER_DAY	24
+#define DAYS_PER_WEEK	7
+#define SECS_PER_HOUR	(SECS_PER_MIN * MINS_PER_HOUR)
+#define SECS_PER_DAY	((long) SECS_PER_HOUR * HOURS_PER_DAY)
+
+#define TM_SUNDAY	0
+#define TM_MONDAY	1
+#define TM_TUESDAY	2
+#define TM_WEDNESDAY	3
+#define TM_THURSDAY	4
+#define TM_FRIDAY	5
+#define TM_SATURDAY	6
+
+#define TM_YEAR_BASE	1900
+
+#define EPOCH_YEAR	1970
+#define EPOCH_WDAY	TM_THURSDAY
+
+static int	mon_lengths[2][12] = {	/* ". . .knuckles are 31. . ." */
+	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
+	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+};
+
+static int	year_lengths[2] = {
+	365, 366
+};
+
+/*
+** Since the times representable in a 32-bit signed integer
+** run from 1901 to 2037, the define below works--2000 IS a leap year.
+*/
+
+#define isleap(y) (((y) % 4) == 0)
+
+struct tm *
+gmtime(clock)
+long *	clock;
+{
+	register struct tm *	tmp;
+	register long		days;
+	register long		rem;
+	register int		y;
+	register int		yleap;
+	register int *		ip;
+	static struct tm	tm;
+
+	tmp = &tm;
+	y = EPOCH_YEAR;
+	days = *clock / SECS_PER_DAY;
+	rem = *clock % SECS_PER_DAY;
+	if (rem < 0) {
+		rem = rem + SECS_PER_DAY;
+		--days;
+	}
+	tmp->tm_hour = (int) (rem / SECS_PER_HOUR);
+	rem = rem % SECS_PER_HOUR;
+	tmp->tm_min = (int) (rem / SECS_PER_MIN);
+	tmp->tm_sec = (int) (rem % SECS_PER_MIN);
+	tmp->tm_wday = (int) ((EPOCH_WDAY + days) % DAYS_PER_WEEK);
+	if (tmp->tm_wday < 0)
+		tmp->tm_wday += DAYS_PER_WEEK;
+	y = EPOCH_YEAR;
+	if (days >= 0)
+		for ( ; ; ) {
+			yleap = isleap(y);
+			if (days < (long) year_lengths[yleap])
+				break;
+			++y;
+			days = days - (long) year_lengths[yleap];
+		}
+	else do {
+		--y;
+		yleap = isleap(y);
+		days = days + (long) year_lengths[yleap];
+	} while (days < 0);
+	tmp->tm_year = y - TM_YEAR_BASE;
+	tmp->tm_yday = (int) days;
+	ip = mon_lengths[yleap];
+	for (tmp->tm_mon = 0; days >= (long) ip[tmp->tm_mon]; ++(tmp->tm_mon))
+		days = days - (long) ip[tmp->tm_mon];
+	tmp->tm_mday = (int) (days + 1);
+	tmp->tm_isdst = 0;
+	return tmp;
+}
+
+/*
+** A la X3J11
+*/
+
+char *
+asctime(timeptr)
+register struct tm *	timeptr;
+{
+	static char	wday_name[7][3] = {
+		"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
+	};
+	static char	mon_name[12][3] = {
+		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+	};
+	static char	result[26];
+
+	(void) sprintf(result, "%.3s %.3s%3d %.2d:%.2d:%.2d %d\n",
+		wday_name[timeptr->tm_wday],
+		mon_name[timeptr->tm_mon],
+		timeptr->tm_mday, timeptr->tm_hour,
+		timeptr->tm_min, timeptr->tm_sec,
+		TM_YEAR_BASE + timeptr->tm_year);
+	return result;
 }

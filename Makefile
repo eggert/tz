@@ -282,6 +282,10 @@ clean:
 names:
 		@echo $(ENCHILADA)
 
+public:		$(ENCHILADA)
+		tar cf - $(DOCS) $(SOURCES) $(USNO) | compress > tzcode.tar.Z
+		tar cf - $(DATA) | compress > tzdata.tar.Z
+
 zonenames:	$(TDATA)
 		@awk '/^Zone/ { print $$2 } /^Link/ { print $$3 }' $(TDATA)
 

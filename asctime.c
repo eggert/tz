@@ -14,6 +14,8 @@ static char	elsieid[] = "%W%";
 #include "private.h"
 #include "tzfile.h"
 
+#define STANDARD_BUFFER_SIZE	26
+
 /*
 ** A la ISO/IEC 9945-1, ANSI/IEEE Std 1003.1, 2004 Edition.
 */
@@ -32,6 +34,7 @@ char *				buf;
 	};
 	register const char *	wn;
 	register const char *	mn;
+	register int		result;
 
 	if (timeptr->tm_wday < 0 || timeptr->tm_wday >= DAYSPERWEEK)
 		wn = "???";
@@ -44,11 +47,16 @@ char *				buf;
 	**	"%.3s %.3s%3d %.2d:%.2d:%.2d %d\n"
 	** Use "%02d", as it is a bit more portable than "%.2d".
 	*/
-	(void) sprintf(buf, "%.3s %.3s%3d %02d:%02d:%02d %ld\n",
+	result = snprintf(buf, STANDARD_BUFFER_SIZE,
+		"%.3s %.3s%3d %02d:%02d:%02d %ld\n",
 		wn, mn,
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec,
 		timeptr->tm_year + (long) TM_YEAR_BASE);
+	if (result < 0 || result >= STANDARD_BUFFER_SIZE) {
+		errno = EOVERFLOW;
+		return NULL;
+	}
 	return buf;
 }
 
@@ -61,15 +69,7 @@ char *
 asctime(timeptr)
 register const struct tm *	timeptr;
 {
-	/*
-	** Big enough for something such as
-	** ??? ???-2147483648 -2147483648:-2147483648:-2147483648 -2147483648\n
-	** (two three-character abbreviations, five strings denoting integers,
-	** three explicit spaces, two explicit colons, a newline,
-	** and a trailing ASCII nul).
-	*/
-	static char		result[3 * 2 + 5 * INT_STRLEN_MAXIMUM(int) +
-					3 + 2 + 1 + 1];
+	static char		result[STANDARD_BUFFER_SIZE];
 
 	return asctime_r(timeptr, result);
 }

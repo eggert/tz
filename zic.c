@@ -1194,7 +1194,7 @@ const char *	name;
 	register FILE *		fp;
 	register int		i, j;
 	char			fullname[BUFSIZ];
-	struct tzhead		tzh;
+	static struct tzhead	tzh;
 
 	if (strlen(directory) + 1 + strlen(name) >= sizeof fullname) {
 		(void) fprintf(stderr,
@@ -1212,10 +1212,7 @@ const char *	name;
 			exit(EXIT_FAILURE);
 		}
 	}
-#ifdef lint
-	tzh.tzh_reserved[0] = 0;
-#endif /* defined lint */
-	(void) fseek(fp, (long) sizeof tzh.tzh_reserved, 0);
+	(void) fwrite((char *) &tzh, sizeof tzh.tzh_reserved, 1, fp);
 	puttzcode(eitol(leapcnt), fp);
 	puttzcode(eitol(timecnt), fp);
 	puttzcode(eitol(typecnt), fp);

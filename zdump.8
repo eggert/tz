@@ -5,14 +5,16 @@ zdump \- time zone dumper
 .B zdump
 [
 .B \-v
-] [ zonename ... ]
+] [
+.B \-c
+cutoffyear ] [ zonename ... ]
 .SH DESCRIPTION
 .I Zdump
 prints the current time in each
 .I zonename
 named on the command line.
 .PP
-This option is available:
+These options are available:
 .TP
 .B \-v
 For each
@@ -30,6 +32,9 @@ Each line ends with
 if the given time is Daylight Saving Time or
 .B isdst=0
 otherwise.
+.TP
+.BI "\-c " cutoffyear
+Cut off the verbose output near the start of the given year.
 .SH FILES
 /etc/zoneinfo	standard zone information directory
 .SH "SEE ALSO"

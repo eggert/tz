@@ -11,6 +11,10 @@
 # San Diego: ACS Publications, Inc. (1991).
 # Except where otherwise noted, it is the source for the data below.
 #
+# Another source occasionally used is Edward W. Whitman, World Time Differences,
+# Whitman Publishing Co, 2 Niagara Av, Ealing, London (undated), which
+# I found in the UCLA library.
+#
 # I added so many Zone names that the old, mostly flat name space was unwieldy.
 # So I renamed the Zones to have the form AREA/LOCATION, where
 # AREA is the name of a continent or ocean, and
@@ -87,9 +91,10 @@ Rule	Algeria	1978	only	-	Mar	24	 1:00	1:00	" DST"
 Rule	Algeria	1978	only	-	Sep	22	 3:00	0	-
 Rule	Algeria	1980	only	-	Apr	25	 0:00	1:00	" DST"
 Rule	Algeria	1980	only	-	Oct	31	 2:00	0	-
+# Shanks gives 0:09 for Paris Mean Time; go with Whitman's more precise 0:09:05.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Algiers	0:12:12 -	LMT	1891 Mar 15 0:01
-			0:09	-	PMT	1911 Mar 11    # Paris Mean Time
+			0:09:05	-	PMT	1911 Mar 11    # Paris Mean Time
 			0:00	Algeria	WET%s	1940 Feb 25 2:00
 			1:00	Algeria	MET%s	1946 Oct  7
 			0:00	-	WET	1956 Jan 29
@@ -106,6 +111,7 @@ Zone	Africa/Luanda	0:52:56	-	LMT	1892
 			1:00	-	CAT
 
 # Benin
+# Whitman says they switched to 1:00 in 1946, not 1934; go with Shanks.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Africa/Porto-Novo	0:10:28	-	LMT	1912
 			0:00	-	WAT	1934 Feb 26
@@ -129,6 +135,7 @@ Zone Africa/Bujumbura	1:57:28	-	LMT	1890
 			2:00	-	SAT
 
 # Cameroon
+# Whitman says they switched to 1:00 in 1920; go with Shanks.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Douala	0:38:48	-	LMT	1912
 			1:00	-	CAT
@@ -247,10 +254,11 @@ Zone	Africa/Banjul	-1:06:36 -	LMT	1912
 
 # Ghana
 # From Paul Eggert <eggert@twinsun.com> (November 18, 1993):
-# WATST is my invention for ``West Africa one-Third Daylight Time''.
+# WATDT is my invention for ``West Africa one-Third Daylight Time''.
 # From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Ghana	1918	only	-	Jan	 1	0:00	0	WAT
+# Whitman says DST was observed from 1931 to ``the present''; go with Shanks.
 Rule	Ghana	1936	1942	-	Sep	 1	0:00	0:20	WATDT
 Rule	Ghana	1936	1942	-	Dec	31	0:00	0	WAT
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -292,11 +300,14 @@ Zone	Africa/Maseru	1:50:00 -	LMT	1903 Mar
 # In 1972 Liberia was the last country to switch
 # from a GMT offset that was not a multiple of 15 minutes.
 # Time magazine reported that it was in honor of their leader's birthday.
-# From Shanks (1991):
+# For Liberia before 1972, Shanks reports -0:44, and Whitman reports -0:44:30;
+# go with Whitman.
+#
+# From Shanks (1991), as corrected by Whitman:
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Monrovia	-0:43:08 -	LMT	1882
 			-0:43:08 -	MMT	1919 Mar # Monrovia Mean Time
-			-0:44	-	MMT	1972 May
+			-0:44:30 -	LST	1972 May # Liberia Standard Time
 			 0:00	-	WAT
 
 ###############################################################################
@@ -444,21 +455,23 @@ Zone	Africa/Kigali	2:00:16 -	LMT	1935 Jun
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Atlantic/St_Helena	-0:22:48 -	LMT	1890		# Jamestown
 			-0:06	-	?MT	1951	# a typo in Shanks?
-			0:00	-	GMT
-# Ascension, Gough, Inaccessible, Nightingale, Tristan da Cunha
+			 0:00	-	GMT
+# Whitman says Tristan da Cunha is on GMT, like Atlantic/St_Helena.
+#
+# Ascension, Gough, Inaccessible, Nightingale
 # no information; probably like Atlantic/St_Helena
 
 # Sao Tome and Principe
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Africa/Sao_Tome	0:26:56 -	LMT	1884
+Zone	Africa/Sao_Tome	 0:26:56 -	LMT	1884
 			-0:37	-	?MT	1912	# a typo in Shanks?
-			0:00	-	WAT
+			 0:00	-	WAT
 
 # Senegal
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Dakar	-1:09:44 -	LMT	1912
 			-1:00	-	AAT	1941 Jun
-			0:00	-	WAT
+			 0:00	-	WAT
 
 # Seychelles
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -468,6 +481,7 @@ Zone	Indian/Mahe	3:41:48 -	LMT	1906 Jun	# Victoria
 # Sierra Leone
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	SL	1913	only	-	Oct	26	0:00	0	-
+# Whitman gives Mar 31 - Aug 31 for 1931 on; go with Shanks.
 Rule	SL	1935	1942	-	Jun	 1	0:00	1:00	S
 Rule	SL	1935	1942	-	Oct	 1	0:00	0	-
 Rule	SL	1957	1962	-	Jun	 1	0:00	1:00	S
@@ -476,7 +490,7 @@ Rule	SL	1957	1962	-	Sep	 1	0:00	0	-
 Zone	Africa/Freetown	-0:53:00 -	LMT	1882
 			-0:53	-	FMT	1913 Jun
 			-1:00	SL	AA%sT	1957
-			0:00	SL	WA%sT
+			 0:00	SL	WA%sT
 
 # Somalia
 # From Paul Eggert <eggert@twinsun.com> (November 18, 1993):
@@ -553,9 +567,10 @@ Rule	Tunisia	1988	max	-	Sep	lastSun	 0:00s	0	-
 Rule	Tunisia	1989	only	-	Mar	26	 0:00s	1:00	" DST"
 Rule	Tunisia	1990	only	-	May	 1	 0:00s	1:00	" DST"
 Rule	Tunisia	1991	max	-	Mar	lastSun	 0:00s	1:00	" DST"
+# Shanks gives 0:09 for Paris Mean Time; go with Whitman's more precise 0:09:05.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Tunis	0:40:44 -	LMT	1881 May 12
-			0:09	-	PMT	1911 Mar  9    # Paris Mean Time
+			0:09:05	-	PMT	1911 Mar  9    # Paris Mean Time
 			1:00	Tunisia	MET%s
 
 # Uganda

@@ -130,7 +130,7 @@ struct rule {
 
 	int	r_loyear;	/* for example, 1986 */
 	int	r_hiyear;	/* for example, 1986 */
-	char *	r_command;
+	char *	r_yrtype;
 
 	int	r_month;	/* 0..11 */
 
@@ -586,13 +586,13 @@ char **	fields;
 		return;
 	}
 	if (*fields[RF_COMMAND] == '\0')
-		r.r_command = NULL;
+		r.r_yrtype = NULL;
 	else {
 		if (r.r_loyear == r.r_hiyear) {
 			error("typed single year");
 			return;
 		}
-		r.r_command = eallocpy(fields[RF_COMMAND]);
+		r.r_yrtype = eallocpy(fields[RF_COMMAND]);
 	}
 	/*
 	** Day work.
@@ -793,14 +793,15 @@ register struct zone *	zp;
 	register int			ndstypes;
 	register int			i, j;
 	register int			y;
-	struct tzinfo			t;
-	static struct tzinfo		zero;
-	struct dsinfo			d;
 	char				buf[BUFSIZ];
+	struct tzinfo			t;
+	struct dsinfo			d;
+	static struct tzinfo		tzero;
+	static struct dsinfo		dzero;
 
 	filename = zp->z_filename;
 	linenum = zp->z_linenum;
-	t = zero;			/* clear the structure */
+	t = tzero;
 	if (zp->z_nrules == 0) {	/* Piece of cake! */
 		t.tz_rulecnt = 0;
 		t.tz_dsinfo[0].ds_gmtoff = zp->z_gmtoff;
@@ -823,6 +824,7 @@ register struct zone *	zp;
 			error(buf);
 			wildexit("input data");
 		}
+		d = dzero;
 		(void) strcpy(d.ds_abbr, buf);
 		d.ds_gmtoff = zp->z_gmtoff + rp->r_stdoff;
 		d.ds_isdst = rp->r_stdoff != 0;
@@ -847,7 +849,7 @@ register struct zone *	zp;
 	ntemps = 0;
 	for (i = 0; i < zp->z_nrules; ++i) {
 		rp = &zp->z_rules[i];
-		if (*rp->r_command != '\0')
+		if (rp->r_yrtype != NULL && *rp->r_yrtype != '\0')
 			hard(rp);
 		else for (y = rp->r_loyear; y <= rp->r_hiyear; ++y)
 			addrule(rp, y);
@@ -872,8 +874,8 @@ register struct rule *	rp;
 	char		buf[BUFSIZ];
 	char		command[BUFSIZ];
 
-	(void) sprintf(command, "%s %d %d",
-		rp->r_command, rp->r_loyear, rp->r_hiyear);
+	(void) sprintf(command, "years %d %d %s",
+		rp->r_loyear, rp->r_hiyear, rp->r_yrtype);
 	if ((fp = popen(command, "r")) == NULL)
 		wild2exit("result opening pipe to", command);
 	for (n = 0; fgets(buf, sizeof buf, fp) == buf; ++n) {

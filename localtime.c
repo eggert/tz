@@ -1024,7 +1024,7 @@ register struct tm * const		tmp;
 	register int			i;
 
 	corr = 0;
-	hit = FALSE;
+	hit = 0;
 #ifdef ALL_STATE
 	i = (sp == NULL) ? 0 : sp->leapcnt;
 #endif /* defined ALL_STATE */
@@ -1034,9 +1034,19 @@ register struct tm * const		tmp;
 	while (--i >= 0) {
 		lp = &sp->lsis[i];
 		if (*timep >= lp->ls_trans) {
-			if (*timep == lp->ls_trans)
+			if (*timep == lp->ls_trans) {
 				hit = ((i == 0 && lp->ls_corr > 0) ||
 					lp->ls_corr > sp->lsis[i - 1].ls_corr);
+				if (hit)
+					while (i > 0 &&
+						sp->lsis[i].ls_trans ==
+						sp->lsis[i - 1].ls_trans + 1 &&
+						sp->lsis[i].ls_corr ==
+						sp->lsis[i - 1].ls_corr + 1) {
+							++hit;
+							--i;
+					}
+			}
 			corr = lp->ls_corr;
 			break;
 		}
@@ -1068,9 +1078,9 @@ register struct tm * const		tmp;
 	if (hit)
 		/*
 		** A positive leap second requires a special
-		** representation.  This uses "... ??:59:60".
+		** representation.  This uses "... ??:59:60" et seq.
 		*/
-		++(tmp->tm_sec);
+		tmp->tm_sec += hit;
 	tmp->tm_wday = (int) ((EPOCH_WDAY + days) % DAYSPERWEEK);
 	if (tmp->tm_wday < 0)
 		tmp->tm_wday += DAYSPERWEEK;

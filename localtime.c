@@ -2,7 +2,7 @@
 
 /*LINTLIBRARY*/
 
-#include "timezone.h"
+#include "tzfile.h"
 #include "time.h"
 
 #ifdef OBJECTID

@@ -382,10 +382,13 @@ char *	argv[];
 	** Entire command line has now been checked.
 	*/
 #ifdef A_OPTION
-	/*
-	** Just what order *should* we do things in if the user asks
-	** for both adjustment and time setting?
-	*/
+	if (aflag && value != NULL) {
+		(void) fprintf(stderr,
+			"date: error: attempt to both set and adjust time\n");
+		if (retval == EXIT_SUCCESS)
+			retval = EXIT_FAILURE;
+		display((char *) NULL);
+	}
 	if (aflag)
 		if (adjtime(&atv, (struct timeval *) NULL) != 0)
 			oops("date: error: adjtime");

@@ -1,0 +1,212 @@
+.TH TZCOMP 8
+.SH NAME
+tzcomp \- time zone compiler
+.SH SYNOPSIS
+.B tzcomp
+filename ...
+.SH DESCRIPTION
+.I Tzcomp
+reads text from the file(s) named on the command line
+and creates the time zone information files specified in this input.
+If a
+.I filename
+is
+.BR ` - ',
+the standard input is read.
+.PP
+A sharp characters (#) in the input introduces a comment which extends to
+the end of the line the sharp character appears on.
+Any line which is blank (after comment stripping) is ignored.
+Non-blank lines are expected to be of one of three
+types:  rule lines, zone lines, and link lines.
+.PP
+A rule line has the form
+.nf
+.B
+.ti +.5i
+.ta \w'Rule 'u +\w'MostNA 'u +\w'FROM 'u +\w'1973 'u +\w'TYPE 'u +\w'Apr 'u +\w'lastSun 'u +\w'2:00 'u +\w'SAVE 'u
+.sp
+Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+.sp
+For example:
+.ti +.5i
+.sp
+Rule	MostNA	1969	1973	-	Apr	lastSun	2:00	1:00	D
+.sp
+.fi
+The fields that make up a rule line are:
+.TP
+.B NAME
+Gives the (arbitrary) name of the set of rules this rule is part of.
+.TP
+.B FROM
+Gives the first year in which the rule applies.
+.TP
+.B TO
+Gives the last year in which the rule applies.
+.TP
+.B TYPE
+Gives the type of year in which the year applies.  If
+.B TYPE
+is
+.B
+"-"
+then the rule is taken to apply in all years between
+.B FROM
+and
+.B TO
+inclusive.
+If
+.B TYPE
+is something else, then the command
+.B
+.ti +.5i
+years from to type
+.br
+is executed with arguments
+.IR from ,
+.IR to ,
+and
+.IR type
+taken from the rule line; the rule is taken to apply only in those years
+printed by the
+.I years
+command.
+
+The distributed
+.I years
+command is a shell script that can handle year types
+.B uspres
+(United States presidential election years)
+and
+.B nonpres
+(all other years);
+other year types may be added by changing the script.
+.TP
+.B IN
+Names the month in which the rule takes effect.  Month names may be
+abbreviated.
+.TP
+.B ON
+Gives the day on which the rule takes effect.
+Recognized forms include:
+.nf
+.in +.5i
+.sp
+.ta \w'lastSun  'u
+5	the fifth of the month
+lastSun	the last Sunday in the month
+lastMon	the last Monday in the month
+Sun>=8	first Sunday on or after the eighth
+Sun<=25	last Sunday on or before the 25th
+.fi
+.in -.5i
+.sp
+Names of days of the week may be abbreviated or spelled out in full.
+Note that there must be no spaces within the
+.B ON
+field 
+(or within any other field).
+.TP
+.B AT
+Gives the time of day at which the rule takes affect.
+Recognized forms include:
+.nf
+.in +.5i
+.sp
+.ta \w'1:28:13  'u
+2	time in hours
+2:00	time in hours and minutes
+15:00	24-hour format time (for times after noon)
+1:28:14	time in hours, minutes, and seconds
+.fi
+.in -.5i
+.sp
+.TP
+.B SAVE
+Gives the amount of time to be added to local standard time when the rule is in
+effect.  This field has the same format as the
+.B AT
+field.
+.TP
+.B LETTER/S
+Gives the "variable part" (for example, the 'S' or 'D' in "EST" or "EDT")
+of time zone abbreviations to be used when this rule is in effect.
+If this field is
+.B
+"-",
+the variable part is null.
+.PP
+A zone line has the form
+.sp
+.nf
+.ti +.5i
+.ta \w'Zone 'u +\w'Eastern 'u +\w'GMTOFF 'u +\w'MostNA 'u
+Zone	NAME	GMTOFF	RULES	FORMAT
+.sp
+For example:
+.sp
+.ti +.5i
+Zone	Eastern	-5:00	MostNA	E%sT
+.sp
+.fi
+The fields that make up a zone line are:
+.TP
+.B NAME
+The name of the time zone.
+This is the name used in creating the time zone information file for the zone.
+.TP
+.B GMTOFF
+The amount of time to add to GMT to get standard time in this zone.
+This field has the same format as the
+.B AT
+and
+.B SAVE
+fields of rule lines;
+begin the field with a minus sign if time must be subtracted from GMT.
+.TP
+.B RULES
+The name of the rule(s) that apply in the time zone.
+If this field contains
+.B
+"-"
+then standard time always applies in the time zone.
+.TP
+.B FORMAT
+The format for time zone abbreviations in this time zone.
+The pairs of characters
+.B
+"%s"
+is used to show where the "variable part" of the time zone abbreviation goes.
+.PP
+A link line has the form
+.sp
+.nf
+.ti +.5i
+.ta \w'Link 'u +\w'Eastern 'u
+Link	FROM	TO
+.sp
+For example:
+.sp
+.ti +.5i
+Link	Eastern		EST5EDT
+.sp
+.fi
+The
+.B FROM
+field should appear as the
+.B NAME
+field in some zone line;
+the
+.B TO
+field is used as an alternate name for that zone.
+.PP
+Lines may appear in any order in the input.
+.SH EXAMPLE
+[Since a sample time zone file appears in the shell archive,
+this section has been omitted.]
+.SH FILES
+/etc/tzdir	default directory used for generated files
+.SH "SEE ALSO"
+settz(3), tzfile(5)
+.. %W%

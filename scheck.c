@@ -15,12 +15,13 @@ static char	sccsid[] = "%W%";
 #endif
 
 #ifndef MAL
-#define MAL	0
+#define MAL	NULL
 #endif
 
 extern char *	malloc();
 
-char *	scheck(string, format)
+char *
+scheck(string, format)
 char *	string;
 char *	format;
 {

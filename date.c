@@ -406,8 +406,8 @@ char *	argv[];
 	** We'll continue to put the entry in unconditionally for compatibility.
 	*/
 #ifdef DST_NONE
-#ifdef TSP_SETDATE
 	tv.tv_sec = t;
+#ifdef TSP_SETDATE
 #ifdef N_OPTION
 	if (!nflag)
 #endif /* defined N_OPTION */

@@ -1969,7 +1969,7 @@ char * const	argname;
 		** DOS drive specifier?
 		*/
 		if (isalpha((unsigned char) name[0]) &&
-			name[1] == ':' && name[2] != '\0') {
+			name[1] == ':' && name[2] == '\0') {
 				*cp = '/';
 				continue;
 		}

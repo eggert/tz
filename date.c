@@ -409,16 +409,19 @@ char *	argv[];
 	tv.tv_sec = t;
 #ifdef TSP_SETDATE
 #ifdef N_OPTION
-	if (!nflag)
-#endif /* defined N_OPTION */
-		if (netsettime(tv) != 1)
-			retval = EXIT_FAILURE;
+	if (nflag || !netsettime(tv))
+#else /* !defined N_OPTION */
+	if (!netsettime(tv))
+#endif /* !defined N_OPTION */
 #endif /* defined TSP_SETDATE */
-	logwtmp(OTIME_MSG, TIME_USER, "");
-	if (settimeofday(&tv, (struct timezone *) NULL) == 0) {
-		logwtmp(NTIME_MSG, TIME_USER, "");
-		syslog(LOG_AUTH | LOG_NOTICE, "date set by %s", username);
-	} else 	oops("date: error: settimeofday");
+	{
+		logwtmp(OTIME_MSG, TIME_USER, "");
+		if (settimeofday(&tv, (struct timezone *) NULL) == 0) {
+			logwtmp(NTIME_MSG, TIME_USER, "");
+			syslog(LOG_AUTH | LOG_NOTICE, "date set by %s",
+				username);
+		} else 	oops("date: error: settimeofday");
+	}
 #else /* !defined DST_NONE */
 	logwtmp(OTIME_MSG, TIME_USER, "");
 	if (stime(&t) == 0)

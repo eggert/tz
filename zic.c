@@ -21,7 +21,7 @@ typedef int	zic_t;
 
 /*
 ** On some ancient hosts, predicates like `isspace(C)' are defined
-** only if isascii(C) || C == EOF.  Modern hosts obey the C Standard,
+** only if isascii(C) || C == EOF. Modern hosts obey the C Standard,
 ** which says they are defined only if C == ((unsigned char) C) || C == EOF.
 ** Neither the C Standard nor Posix require that `isascii' exist.
 ** For portability, we check both ancient and modern requirements.
@@ -138,9 +138,9 @@ static void	usage P((void));
 static void	writezone P((const char * name));
 static int	yearistype P((int year, const char * type));
 
-#if !(HAVE_STRERROR - 0)
+#if !HAVE_STRERROR
 static char *	strerror P((int));
-#endif /* !(HAVE_STRERROR - 0) */
+#endif /* !HAVE_STRERROR */
 
 static int		charcnt;
 static int		errors;
@@ -380,7 +380,7 @@ char * const	ptr;
 ** Error handling.
 */
 
-#if !(HAVE_STRERROR - 0)
+#if !HAVE_STRERROR
 static char *
 strerror(errnum)
 int	errnum;
@@ -391,7 +391,7 @@ int	errnum;
 	return (errnum > 0 && errnum <= sys_nerr) ?
 		sys_errlist[errnum] : _("Unknown system error");
 }
-#endif /* !(HAVE_STRERROR - 0) */
+#endif /* !HAVE_STRERROR */
 
 static void
 eats(name, num, rname, rnum)
@@ -448,7 +448,9 @@ const char * const	string;
 static void
 usage P((void))
 {
-	(void) fprintf(stderr, _("%s: usage is %s [ --version ] [ -s ] [ -v ] [ -l localtime ] [ -p posixrules ] \\\n\t[ -d directory ] [ -L leapseconds ] [ -y yearistype ] [ filename ... ]\n"),
+	(void) fprintf(stderr, _("%s: usage is %s \
+[ --version ] [ -s ] [ -v ] [ -l localtime ] [ -p posixrules ] \\\n\
+\t[ -d directory ] [ -L leapseconds ] [ -y yearistype ] [ filename ... ]\n"),
 		progname, progname);
 	(void) exit(EXIT_FAILURE);
 }
@@ -472,13 +474,13 @@ char *	argv[];
 #ifdef unix
 	(void) umask(umask(S_IWGRP | S_IWOTH) | (S_IWGRP | S_IWOTH));
 #endif /* defined unix */
-#if HAVE_GETTEXT - 0
+#if HAVE_GETTEXT
 	(void) setlocale(LC_MESSAGES, "");
 #ifdef TZ_DOMAINDIR
 	(void) bindtextdomain(TZ_DOMAIN, TZ_DOMAINDIR);
 #endif /* defined TEXTDOMAINDIR */
 	(void) textdomain(TZ_DOMAIN);
-#endif /* HAVE_GETTEXT - 0 */
+#endif /* HAVE_GETTEXT */
 	progname = argv[0];
 	for (i = 1; i < argc; ++i)
 		if (strcmp(argv[i], "--version") == 0) {
@@ -631,22 +633,27 @@ const char * const	tofile;
 			(void) exit(EXIT_FAILURE);
 
 		result = link(fromname, toname);
-#if (HAVE_SYMLINK - 0)
+#if HAVE_SYMLINK
 		if (result != 0 &&
-		    access(fromname, F_OK) == 0 &&
-		    !itsdir(fromname)) {
-		        const char *s = tofile;
-		        register char * symlinkcontents = NULL;
-		        while ((s = strchr(s+1, '/')) != NULL)
-			        symlinkcontents = ecatalloc(symlinkcontents, "../");
-			symlinkcontents = ecatalloc(symlinkcontents, fromfile);
+			access(fromname, F_OK) == 0 &&
+			!itsdir(fromname)) {
+				const char *s = tofile;
+				register char * symlinkcontents = NULL;
 
-			result = symlink(symlinkcontents, toname);
-			if (result == 0)
+				while ((s = strchr(s+1, '/')) != NULL)
+					symlinkcontents =
+						ecatalloc(symlinkcontents,
+						"../");
+					symlinkcontents =
+						ecatalloc(symlinkcontents,
+						fromfile);
+					result = symlink(symlinkcontents,
+						toname);
+					if (result == 0)
 warning(_("hard link failed, symbolic link used"));
-			ifree(symlinkcontents);
+					ifree(symlinkcontents);
 		}
-#endif
+#endif /* HAVE_SYMLINK */
 		if (result != 0) {
 			const char *e = strerror(errno);
 
@@ -804,7 +811,7 @@ associate P((void))
 			*/
 			eat(zp->z_filename, zp->z_linenum);
 			zp->z_stdoff = gethms(zp->z_rule, _("unruly zone"),
-					      TRUE);
+				TRUE);
 			/*
 			** Note, though, that if there's no rule,
 			** a '%s' in the format is a bad thing.
@@ -1107,7 +1114,9 @@ const int		iscont;
 			zones[nzones - 1].z_untiltime > min_time &&
 			zones[nzones - 1].z_untiltime < max_time &&
 			zones[nzones - 1].z_untiltime >= z.z_untiltime) {
-				error(_("Zone continuation line end time is not after end time of previous line"));
+				error(_(
+"Zone continuation line end time is not after end time of previous line"
+					));
 				return FALSE;
 		}
 	}
@@ -1140,11 +1149,11 @@ const int		nfields;
 	dayoff = 0;
 	cp = fields[LP_YEAR];
 	if (sscanf(cp, scheck(cp, "%d"), &year) != 1) {
-			/*
-			 * Leapin' Lizards!
-			 */
-			error(_("invalid leaping year"));
-			return;
+		/*
+		** Leapin' Lizards!
+		*/
+		error(_("invalid leaping year"));
+		return;
 	}
 	j = EPOCH_YEAR;
 	while (j != year) {
@@ -1211,7 +1220,9 @@ const int		nfields;
 			return;
 		}
 		if ((lp = byword(fields[LP_ROLL], leap_types)) == NULL) {
-			error(_("illegal Rolling/Stationary field on Leap line"));
+			error(_(
+				"illegal Rolling/Stationary field on Leap line"
+				));
 			return;
 		}
 		leapadd(tadd(t, tod), positive, lp->l_value, count);
@@ -1473,14 +1484,13 @@ const char * const	name;
 			while (fromi < timecnt && attypes[fromi].type == 0)
 				++fromi;	/* handled by default rule */
 		for ( ; fromi < timecnt; ++fromi) {
-			if (toi != 0
-			    && ((attypes[fromi].at
-				 + gmtoffs[attypes[toi - 1].type])
-				<= (attypes[toi - 1].at
-				    + gmtoffs[toi == 1 ? 0
-					      : attypes[toi - 2].type]))) {
-				attypes[toi - 1].type = attypes[fromi].type;
-				continue;
+			if (toi != 0 && ((attypes[fromi].at +
+				gmtoffs[attypes[toi - 1].type]) <=
+				(attypes[toi - 1].at + gmtoffs[toi == 1 ? 0
+				: attypes[toi - 2].type]))) {
+					attypes[toi - 1].type =
+						attypes[fromi].type;
+					continue;
 			}
 			if (toi == 0 ||
 				attypes[toi - 1].type != attypes[fromi].type)
@@ -1526,7 +1536,8 @@ const char * const	name;
 	convert(eitol(typecnt), tzh.tzh_typecnt);
 	convert(eitol(charcnt), tzh.tzh_charcnt);
 	(void) strncpy(tzh.tzh_magic, TZ_MAGIC, sizeof tzh.tzh_magic);
-#define DO(field)	(void) fwrite((void *) tzh.field, (size_t) sizeof tzh.field, (size_t) 1, fp)
+#define DO(field)	(void) fwrite((void *) tzh.field, \
+				(size_t) sizeof tzh.field, (size_t) 1, fp)
 	DO(tzh_magic);
 	DO(tzh_reserved);
 	DO(tzh_ttisgmtcnt);
@@ -1745,12 +1756,13 @@ const int			zonecount;
 						continue;
 					}
 					if (*startbuf == '\0' &&
-					    startoff == oadd(zp->z_gmtoff,
-					    stdoff)) {
-						doabbr(startbuf, zp->z_format,
-							rp->r_abbrvar,
-							rp->r_stdoff != 0);
-					}
+						startoff == oadd(zp->z_gmtoff,
+						stdoff))
+							doabbr(startbuf,
+								zp->z_format,
+								rp->r_abbrvar,
+								rp->r_stdoff !=
+								0);
 				}
 				eats(zp->z_filename, zp->z_linenum,
 					rp->r_filename, rp->r_linenum);
@@ -2041,7 +2053,9 @@ register char *	cp;
 			else while ((*dp = *cp++) != '"')
 				if (*dp != '\0')
 					++dp;
-				else	error(_("Odd number of quotation marks"));
+				else	error(_(
+						"Odd number of quotation marks"
+						));
 		} while (*cp != '\0' && *cp != '#' &&
 			(!isascii(*cp) || !isspace((unsigned char) *cp)));
 		if (isascii(*cp) && isspace((unsigned char) *cp))
@@ -2162,7 +2176,8 @@ register const int			wantedy;
 			}
 		if (i < 0 || i >= len_months[isleap(y)][m]) {
 			if (noise)
-				warning(_("rule goes past start/end of month--will not work with pre-2004 versions of zic"));
+				warning(_("rule goes past start/end of month--\
+will not work with pre-2004 versions of zic"));
 		}
 	}
 	if (dayoff < 0 && !TYPE_SIGNED(zic_t))

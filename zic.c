@@ -78,31 +78,6 @@ static int	typecnt;
 static		yearistype();
 
 /*
-** Values a la localtime(3)
-*/
-
-#define TM_JANUARY	0
-#define TM_FEBRUARY	1
-#define TM_MARCH	2
-#define TM_APRIL	3
-#define TM_MAY		4
-#define TM_JUNE		5
-#define TM_JULY		6
-#define TM_AUGUST	7
-#define TM_SEPTEMBER	8
-#define TM_OCTOBER	9
-#define TM_NOVEMBER	10
-#define TM_DECEMBER	11
-
-#define TM_SUNDAY	0
-#define TM_MONDAY	1
-#define TM_TUESDAY	2
-#define TM_WEDNESDAY	3
-#define TM_THURSDAY	4
-#define TM_FRIDAY	5
-#define TM_SATURDAY	6
-
-/*
 ** Line codes.
 */
 
@@ -426,20 +401,8 @@ char *	argv[];
 
 	setboundaries();
 
-/*###429 [lint] warning illegal pointer combination%%%*/
-/*###429 [lint] warning possible pointer alignment problem%%%*/
-/*###431 [lint] warning illegal pointer combination%%%*/
-/*###431 [lint] warning possible pointer alignment problem%%%*/
 	zones = (struct zone *) emalloc(0);
-/*###430 [lint] warning illegal pointer combination%%%*/
-/*###430 [lint] warning possible pointer alignment problem%%%*/
-/*###434 [lint] warning illegal pointer combination%%%*/
-/*###434 [lint] warning possible pointer alignment problem%%%*/
 	rules = (struct rule *) emalloc(0);
-/*###431 [lint] warning illegal pointer combination%%%*/
-/*###431 [lint] warning possible pointer alignment problem%%%*/
-/*###437 [lint] warning illegal pointer combination%%%*/
-/*###437 [lint] warning possible pointer alignment problem%%%*/
 	links = (struct link *) emalloc(0);
 	for (i = optind; i < argc; ++i)
 		infile(argv[i]);
@@ -539,15 +502,7 @@ rcomp(cp1, cp2)
 char *	cp1;
 char *	cp2;
 {
-/*###530 [lint] warning illegal pointer combination%%%*/
-/*###537 [lint] warning illegal pointer combination%%%*/
 	return strcmp(((struct rule *) cp1)->r_name,
-/*###531 [lint] warning illegal pointer combination%%%*/
-/*###531 [lint] warning possible pointer alignment problem%%%*/
-/*###531 [lint] warning possible pointer alignment problem%%%*/
-/*###541 [lint] warning illegal pointer combination%%%*/
-/*###541 [lint] warning possible pointer alignment problem%%%*/
-/*###541 [lint] warning possible pointer alignment problem%%%*/
 		((struct rule *) cp2)->r_name);
 }
 
@@ -560,8 +515,6 @@ associate()
 	register int		i;
 
 	if (nrules != 0)
-/*###543 [lint] warning illegal pointer combination%%%*/
-/*###554 [lint] warning illegal pointer combination%%%*/
 		(void) qsort((char *) rules, nrules, sizeof *rules, rcomp);
 	for (i = 0; i < nzones; ++i) {
 		zp = &zones[i];
@@ -667,8 +620,6 @@ char *	name;
 					exit(1);
 			}
 		}
-/*###648 [lint] warning illegal pointer combination%%%*/
-/*###660 [lint] warning illegal pointer combination%%%*/
 		free((char *) fields);
 	}
 	if (ferror(fp)) {
@@ -749,12 +700,6 @@ register char **	fields;
 		fields[RF_MONTH], fields[RF_DAY], fields[RF_TOD]);
 	r.r_name = ecpyalloc(fields[RF_NAME]);
 	r.r_abbrvar = ecpyalloc(fields[RF_ABBRVAR]);
-/*###728 [lint] warning illegal pointer combination%%%*/
-/*###728 [lint] warning illegal pointer combination%%%*/
-/*###728 [lint] warning possible pointer alignment problem%%%*/
-/*###743 [lint] warning illegal pointer combination%%%*/
-/*###743 [lint] warning possible pointer alignment problem%%%*/
-/*###743 [lint] warning illegal pointer combination%%%*/
 	rules = (struct rule *) erealloc((char *) rules,
 		(nrules + 1) * sizeof *rules);
 	rules[nrules++] = r;
@@ -856,12 +801,6 @@ error("Zone continuation line end time is not after end time of previous line");
 			return FALSE;
 		}
 	}
-/*###829 [lint] warning possible pointer alignment problem%%%*/
-/*###829 [lint] warning illegal pointer combination%%%*/
-/*###829 [lint] warning illegal pointer combination%%%*/
-/*###847 [lint] warning illegal pointer combination%%%*/
-/*###847 [lint] warning possible pointer alignment problem%%%*/
-/*###847 [lint] warning illegal pointer combination%%%*/
 	zones = (struct zone *) erealloc((char *) zones,
 		(nzones + 1) * sizeof *zones);
 	zones[nzones++] = z;
@@ -894,12 +833,6 @@ register char **	fields;
 	l.l_linenum = linenum;
 	l.l_from = ecpyalloc(fields[LF_FROM]);
 	l.l_to = ecpyalloc(fields[LF_TO]);
-/*###861 [lint] warning illegal pointer combination%%%*/
-/*###861 [lint] warning illegal pointer combination%%%*/
-/*###861 [lint] warning possible pointer alignment problem%%%*/
-/*###882 [lint] warning illegal pointer combination%%%*/
-/*###882 [lint] warning illegal pointer combination%%%*/
-/*###882 [lint] warning possible pointer alignment problem%%%*/
 	links = (struct link *) erealloc((char *) links,
 		(nlinks + 1) * sizeof *links);
 	links[nlinks++] = l;
@@ -1091,8 +1024,6 @@ char *	name;
 	for (i = 0; i < timecnt; ++i)
 		puttzcode((long) ats[i], fp);
 	if (timecnt > 0)
-/*###1052 [lint] warning illegal pointer combination%%%*/
-/*###1077 [lint] warning illegal pointer combination%%%*/
 		(void) fwrite((char *) types, sizeof types[0],
 			(int) timecnt, fp);
 	for (i = 0; i < typecnt; ++i) {
@@ -1147,8 +1078,6 @@ struct zone *	zpfirst;
 			type = addtype(oadd(zp->z_gmtoff, zp->z_stdoff),
 				zp->z_format, zp->z_stdoff != 0);
 			if (usestart)
-/*###1106 [lint] warning starttime may be used before set%%%*/
-/*###1132 [lint] warning starttime may be used before set%%%*/
 				addtt(starttime, type);
 			gmtoff = zp->z_gmtoff;
 			stdoff = zp->z_stdoff;
@@ -1203,8 +1132,6 @@ struct zone *	zpfirst;
 					    jtime == max_time)
 						continue;
 					jtime = tadd(jtime, -offset);
-/*###1160 [lint] warning ktime may be used before set%%%*/
-/*###1187 [lint] warning ktime may be used before set%%%*/
 					if (k < 0 || jtime < ktime) {
 						k = j;
 						ktime = jtime;
@@ -1403,10 +1330,6 @@ register char *	cp;
 
 	if (cp == NULL)
 		return NULL;
-/*###1358 [lint] warning illegal pointer combination%%%*/
-/*###1358 [lint] warning possible pointer alignment problem%%%*/
-/*###1387 [lint] warning illegal pointer combination%%%*/
-/*###1387 [lint] warning possible pointer alignment problem%%%*/
 	array = (char **) emalloc((strlen(cp) + 1) * sizeof *array);
 	nsubs = 0;
 	for ( ; ; ) {
@@ -1530,7 +1453,7 @@ register int		wantedy;
 			if (wday < 0)
 				wday += LDAYS_PER_WEEK;
 		}
-		while (wday != LDAYS_PER_WEEK)
+		while (wday != eitol(rp->r_wday))
 			if (rp->r_dycode == DC_DOWGEQ) {
 				dayoff = oadd(dayoff, (long) 1);
 				if (++wday >= LDAYS_PER_WEEK)
@@ -1615,9 +1538,7 @@ eitol(i)
 {
 	long	l;
 
-/*###1595 [lint] warning assignment to long may sign-extend incorrectly%%%*/
 	l = i;
-/*###1596 [lint] warning assignment to long may sign-extend incorrectly%%%*/
 	if (l != i) {
 		(void) fprintf(stderr, "%s: %d did not sign extend correctly\n",
 			progname, i);

@@ -1600,6 +1600,7 @@ const int			zonecount;
 					break;
 				if (usestart && ktime == starttime)
 					usestart = FALSE;
+				stdoff = rp->r_stdoff;
 				if (usestart) {
 				    if (startisdst < 0 && ktime > starttime)
 					startisdst = (rp->r_stdoff == 0);
@@ -1624,7 +1625,6 @@ const int			zonecount;
 				type = addtype(offset, buf, rp->r_stdoff != 0,
 					rp->r_todisstd, rp->r_todisgmt);
 				addtt(ktime, type);
-				stdoff = rp->r_stdoff;
 			}
 		}
 		if (usestart) {

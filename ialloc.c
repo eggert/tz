@@ -17,6 +17,8 @@ static char	elsieid[] = "%W%";
 
 #else /* !defined __STDC__ */
 
+#include "stdio.h"		/* to pick up NULL */
+
 extern char *	calloc();
 extern char *	malloc();
 extern char *	realloc();

@@ -231,7 +231,7 @@ SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
 TABDATA=	iso3166.tab zone.tab
 DATA=		$(YDATA) $(NDATA) $(SDATA) $(TABDATA) leapseconds yearistype.sh
-MISC=		usno1988 usno1989 usno1989a usno1995 Music WWW
+MISC=		usno1988 usno1989 usno1989a usno1995 Music WWW gccdiffs
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(MISC)
 
 # And for the benefit of csh users on systems that assume the user

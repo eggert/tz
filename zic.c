@@ -73,7 +73,8 @@ struct zone {
 };
 
 extern int	emkdir P((const char * name, int mode));
-extern int	getopt P((int argc, char * const argv[], const char * options));
+extern int	getopt P((int argc, char * const argv[],
+			const char * options));
 extern char *	icatalloc P((char * old, const char * new));
 extern char *	icpyalloc P((const char * string));
 extern void	ifree P((char * p));
@@ -404,8 +405,8 @@ const char * const	string;
 static void
 usage P((void))
 {
-	(void) fprintf(stderr,
-"%s: usage is %s [ -s ] [ -v ] [ -l localtime ] [ -p posixrules ] [ -d directory ] \n\
+	(void) fprintf(stderr, "%s: usage is %s \
+[ -s ] [ -v ] [ -l localtime ] [ -p posixrules ] [ -d directory ]\n\
 \t[ -L leapseconds ] [ -y yearistype ] [ filename ... ]\n",
 		progname, progname);
 	(void) exit(EXIT_FAILURE);
@@ -969,7 +970,8 @@ const int		iscont;
 			zones[nzones - 1].z_untiltime > min_time &&
 			zones[nzones - 1].z_untiltime < max_time &&
 			zones[nzones - 1].z_untiltime >= z.z_untiltime) {
-error("Zone continuation line end time is not after end time of previous line");
+				error("Zone continuation line end time is not \
+after end time of previous line");
 				return FALSE;
 		}
 	}
@@ -1157,7 +1159,8 @@ const char * const		timep;
 	** Year work.
 	*/
 	cp = loyearp;
-	if ((lp = byword(cp, begin_years)) != NULL) switch ((int) lp->l_value) {
+	lp = byword(cp, begin_years);
+	if (lp != NULL) switch ((int) lp->l_value) {
 		case YR_MINIMUM:
 			rp->r_loyear = min_int;
 			break;
@@ -1503,7 +1506,7 @@ const int			zonecount;
 						startoff = oadd(startoff,
 							zp->z_gmtoff);
 						(void) strcpy(startbuf,
-							&chars[abbrinds[type]]);
+						    &chars[abbrinds[type]]);
 					}
 					if (startisdst >= 0)
 addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd));

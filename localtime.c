@@ -264,7 +264,7 @@ struct rule {
 #define	DAY_OF_YEAR		1	/* n - day of year */
 #define	MONTH_NTH_DAY_OF_WEEK	2	/* Mm.n.d - month, week, day of week */
 #ifdef BROKEN
-#define	MONTH_DAY		3	/* Mm.n.d with broken POSIX interpretation */
+#define	MONTH_DAY		3	/* Mm.n.d - broken POSIX style */
 #endif
 
 static const int	mon_lengths[2][MONSPERYEAR] = {
@@ -620,7 +620,8 @@ long				offset;
 /*
 ** Define MONTH_NTH_DAY_OF_WEEK rule for U.S. federal tables.
 */
-#define	MD_RULE(week, month)	{ MONTH_NTH_DAY_OF_WEEK, 0, week, month, 2*SECS_PER_HOUR }
+#define	MD_RULE(week, month) \
+	{ MONTH_NTH_DAY_OF_WEEK, 0, week, month, 2 * SECS_PER_HOUR }
 
 /*
 ** Define DAY_OF_YEAR rule for U.S. federal tables.
@@ -716,7 +717,7 @@ register struct state *	sp;
 			if (name == NULL)
 				return -1;
 		} else
-			dstoffset = stdoffset - 1*SECSPERHOUR;
+			dstoffset = stdoffset - 1 * SECSPERHOUR;
 		sp->typecnt = 2;	/* standard time and DST */
 		sp->charcnt = stdlen + 1 + dstlen + 1;
 		/*
@@ -760,7 +761,7 @@ register struct state *	sp;
 					*typep++ = 1;	/* DST ends */
 				}
 				janfirst +=
-					year_lengths[isleap(year)]*SECSPERDAY;
+					year_lengths[isleap(year)] * SECSPERDAY;
 			}
 		} else {
 			if (*name != '\0')
@@ -776,7 +777,7 @@ register struct state *	sp;
 					&usdaytab[i + 1], dstoffset);
 				*typep++ = 1;	/* DST ends */
 				janfirst +=
-					year_lengths[isleap(year)]*SECSPERDAY;
+					year_lengths[isleap(year)] * SECSPERDAY;
 			}
 			for ( ; year <= 2038; year++) {
 				*atp++ = transtime(janfirst, year,
@@ -786,7 +787,7 @@ register struct state *	sp;
 					&repeating[1], dstoffset);
 				*typep++ = 1;	/* DST ends */
 				janfirst +=
-					year_lengths[isleap(year)]*SECSPERDAY;
+					year_lengths[isleap(year)] * SECSPERDAY;
 			}
 		}
 	} else {

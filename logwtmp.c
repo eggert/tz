@@ -32,8 +32,12 @@ static char sccsid[] = "@(#)logwtmp.c	5.2 (Berkeley) 9/20/88";
 #include <utmp.h>
 
 #ifdef OLD_TIME
+
 char dummy_to_keep_linker_happy;
-#else /* !defined OLD_TIME */
+
+#endif /* defined OLD_TIME */
+
+#ifndef OLD_TIME
 
 #include <sys/file.h>
 #include <sys/time.h>

@@ -46,7 +46,11 @@ static struct state	s;
 
 static char		isset;
 
-char *			tz_abbr;	/* set by localtime; available to all */
+char *			tzname[2];	/* set by localtime; available to all */
+
+#ifdef TZ_ABBR
+char *			tz_abbr;	/* compatibility w/older versions */
+#endif
 
 static long
 detzcode(codep)
@@ -161,16 +165,16 @@ register struct state *	sp;
 ** settz(otherwise)	Use otherwise.
 */
 
-settz(tzname)
-char *	tzname;
+settz(name)
+char *	name;
 {
 	register int	result;
 
 	isset = TRUE;
-	if (tzname != 0 && *tzname == '\0')
+	if (name != 0 && *name == '\0')
 		result = 0;			/* Use built-in GMT */
 	else {
-		if (tzload(tzname, &s) == 0)
+		if (tzload(name, &s) == 0)
 			return 0;
 		/*
 		** If we want to try for local time on errors. . .
@@ -209,7 +213,10 @@ register struct state *	sp;
 	t += ttisp->tt_gmtoff;
 	tmp = gmtime(&t);
 	tmp->tm_isdst = ttisp->tt_isdst;
-	tz_abbr = &sp->chars[ttisp->tt_abbrind];
+#ifdef TZ_ABBR
+	tz_abbr =
+#endif
+	tzname[tmp->tm_isdst] = &sp->chars[ttisp->tt_abbrind];
 	return tmp;
 }
 
@@ -354,4 +361,14 @@ register struct tm *	timeptr;
 		timeptr->tm_min, timeptr->tm_sec,
 		TM_YEAR_BASE + timeptr->tm_year);
 	return result;
+}
+
+/*
+** System V compatability.
+*/
+
+void
+tzset()
+{
+	(void) settz((char *) 0);
 }

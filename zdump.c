@@ -8,14 +8,13 @@ static char	elsieid[] = "%W%";
 #include "time.h"
 #include "tzfile.h"
 #include "string.h"
+#include "nonstd.h"
 
-#if defined unix
-#include "sys/types.h"
-#endif /* defined unix */
-
-#ifndef const
+#ifdef __STDC__
 #include "stdlib.h"
-#endif /* !defined const */
+#else /* !defined __STDC__ */
+#include "sys/types.h"
+#endif /* !defined __STDC__ */
 
 #ifndef EXIT_SUCCESS
 #define EXIT_SUCCESS	0
@@ -259,7 +258,3 @@ char *	filename;
 	else	(void) fprintf(stderr, "%s: Premature EOF\n", filename);
 	exit(1);
 }
-
-/*
-** UNIX is a registered trademark of AT&T.
-*/

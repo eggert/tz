@@ -218,11 +218,22 @@ ZIC=		$(zic) $(ZFLAGS)
 # The name of a Posix-compliant `awk' on your system.
 AWK=		nawk
 
-# The name and arguments of a program to validate your web pages.
+# The path where SGML DTDs are kept.
+SGML_SEARCH_PATH= $(TOPDIR)/share/doc/sgml-lib/REC-xhtml1-20000126/
+
+# The catalog file(s) to use when validating XHTML.
+SGML_CATALOG_FILES= xhtml.soc
+
+# The name, arguments and environment of a program to validate your web pages.
 # See <http://www.jclark.com/sp/> for a validator, and
 # <http://validator.w3.org/source/> for a validation library.
 VALIDATE = nsgmls
-VALIDATEFLAGS = -s -B -wall -wno-unused-param
+VALIDATE_FLAGS = -s -B -wall -wno-unused-param -wxml
+VALIDATE_ENV = \
+  SGML_CATALOG_FILES=$(SGML_CATALOG_FILES) \
+  SGML_SEARCH_PATH=$(SGML_SEARCH_PATH) \
+  SP_CHARSET_FIXED=YES \
+  SP_ENCODING=UTF-8
 
 ###############################################################################
 
@@ -357,7 +368,7 @@ check_tables:	checktab.awk $(PRIMARY_YDATA)
 		$(AWK) -f checktab.awk $(PRIMARY_YDATA)
 
 check_web:	$(WEB_PAGES)
-		$(VALIDATE) $(VALIDATEFLAGS) $(WEB_PAGES)
+		$(VALIDATE_ENV) $(VALIDATE) $(VALIDATE_FLAGS) $(WEB_PAGES)
 
 clean:
 		rm -f core *.o *.out tzselect zdump zic yearistype date \

@@ -1173,8 +1173,10 @@ register struct tm * const		tmp;
 	if (tmp->tm_wday < 0)
 		tmp->tm_wday += DAYSPERWEEK;
 	y = EPOCH_YEAR;
-#define CYCLE_DAYS	1022679L	/* Any consecutive CYCLE_DAYS days... */
-#define CYCLE_YEARS	2800L		/* make up exactly CYCLE_YEARS years. */
+/* Any consecutive CYCLE_DAYS days make up exactly CYCLE_YEARS years */
+#define CYCLE_YEARS	2800L
+#define CYCLE_LEAPS	(CYCLE_YEARS/4 - CYCLE_YEARS/100 + CYCLE_YEARS/400)
+#define CYCLE_DAYS	(CYCLE_YEARS * DAYS_PER_NYEAR + CYCLE_LEAPS)
 	if (days >= CYCLE_DAYS || days <= -CYCLE_DAYS) {
 		register int	cycles;
 

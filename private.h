@@ -182,23 +182,17 @@ extern int	unlink P((const char * filename));
 ** Ensure that these are declared--redundantly declaring them shouldn't hurt.
 */
 
+#if !HAVE_STDLIB_H
 extern char *		getenv P((const char * name));
 extern generic_T *	malloc P((alloc_size_T size));
 extern generic_T *	calloc P((alloc_size_T nelem, alloc_size_T elsize));
 extern generic_T *	realloc P((generic_T * oldptr, alloc_size_T newsize));
-
-#if !HAVE_STDLIB_H
 extern void		exit P((int s));
-#endif /* !HAVE_STDLIB_H */
-/*
-** "int" return matches SunOS 4.1.1's "stdlib.h"
-*/
-extern int		qsort P((generic_T * base, qsort_size_T nelem,
+extern void		qsort P((generic_T * base, qsort_size_T nelem,
 				qsort_size_T elsize,
 				int (*comp) P((const generic_T *,
 					const generic_T *))));
 extern void		perror P((const char * string));
-#if !HAVE_STDLIB_H
 extern void		free P((generic_T * buf));
 #endif /* !HAVE_STDLIB_H */
 

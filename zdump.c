@@ -411,7 +411,7 @@ register const struct tm *	timeptr;
 		wn, mn,
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec);
-#define DIVISOR	100
+#define DIVISOR	10
 	lead = timeptr->tm_year / DIVISOR + TM_YEAR_BASE / DIVISOR;
 	trail = timeptr->tm_year % DIVISOR + TM_YEAR_BASE % DIVISOR;
 	while (trail < 0) {

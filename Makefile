@@ -385,7 +385,7 @@ names:
 # The zics below ensure that each data file can stand on its own.
 # We also do an all-files run to catch links to links.
 
-public:
+public:		$(ENCHILADA)
 		make maintainer-clean
 		make "CFLAGS=$(GCC_DEBUG_FLAGS)"
 		-mkdir /tmp/,tzpublic

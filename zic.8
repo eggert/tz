@@ -67,20 +67,28 @@ The fields that make up a rule line are:
 Gives the (arbitrary) name of the set of rules this rule is part of.
 .TP
 .B FROM
-Gives the first year in which the rule applies;
-any abbreviation of the word
+Gives the first year in which the rule applies.
+The word
+.B minimum
+(or an abbreviation) means the minimum year all of whose time values are
+representable.
+The word
 .B maximum
-may be used to indicate the maximum year whose time values are representable.
+(or an abbreviation) means the maximum year with a representable time value.
 .TP
 .B TO
-Gives the last year in which the rule applies.
-The word
+Gives the final year in which the rule applies.
+In addition to
+.B minimum
+and
+.B maximum
+(as above),
+the word
 .B only
+(or an abbreviation)
 may be used to repeat the value of the
 .B FROM
-field; any abbreviation of the word
-.B maximum
-may be used as above.
+field.
 .TP
 .B TYPE
 Gives the type of year in which the year applies.  If

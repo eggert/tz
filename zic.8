@@ -12,11 +12,21 @@ zic \- time zone compiler
 .B \-l
 .I localtime
 ] [
+.B \-L
+.I leapsecondfilename
+] [
 .B \-s
 ] [
 .I filename
 \&... ]
 .SH DESCRIPTION
+.if t .ds lq ``
+.if t .ds rq ''
+.if n .ds lq \&"\"
+.if n .ds rq \&"\"
+.de q
+\\$3\*(lq\\$1\*(rq\\$2
+..
 .I Zic
 reads text from the file(s) named on the command line
 and creates the time conversion information files specified in this input.
@@ -39,6 +49,11 @@ will act as if the file contained a link line of the form
 .sp
 .ti +.5i
 Link	\fItimezone\fP		localtime
+.TP
+.BI "\-L " leapsecondfilename
+Read leap second information from the file with the given name.
+If this option is not used,
+leap second information is read from a file named "leapseconds".
 .TP
 .B \-v
 Complain if a year that appears in a data file is outside the range
@@ -177,9 +192,13 @@ Recognized forms include:
 .sp
 Any of these forms may be followed by the letter
 .B w
-if the given time is local ``wall clock'' time or
+if the given time is local
+.q "wall clock"
+time or
 .B s
-if the given time is local ``standard'' time; in the absence of
+if the given time is local
+.q standard
+time; in the absence of
 .B w
 or
 .BR s ,
@@ -198,8 +217,17 @@ and
 suffixes are not used).
 .TP
 .B LETTER/S
-Gives the ``variable part'' (for example, the ``S'' or ``D'' in ``EST''
-or ``EDT'') of time zone abbreviations to be used when this rule is in effect.
+Gives the
+.q "variable part"
+(for example, the
+.q S
+or
+.q D
+in
+.q EST
+or
+.q EDT )
+of time zone abbreviations to be used when this rule is in effect.
 If this field is
 .BR \- ,
 the variable part is null.
@@ -244,7 +272,9 @@ then standard time always applies in the time zone.
 The format for time zone abbreviations in this time zone.
 The pair of characters
 .B %s
-is used to show where the ``variable part'' of the time zone abbreviation goes.
+is used to show where the
+.q "variable part"
+of the time zone abbreviation goes.
 .TP
 .B UNTIL
 The time at which the GMT offset or the rule(s) change for a location.
@@ -254,8 +284,11 @@ the time zone information is generated from the given GMT offset
 and rule change until the time specified.
 .IP
 The next line must be a
-``continuation'' line; this has the same form as a zone line except that the
-string ``Zone'' and the name are omitted, as the continuation line will
+.q continuation
+line; this has the same form as a zone line except that the
+string
+.q Zone
+and the name are omitted, as the continuation line will
 place information starting at the time specified as the
 .B UNTIL
 field in the previous line in the file used by the previous line.
@@ -289,6 +322,47 @@ field is used as an alternate name for that zone.
 .PP
 Except for continuation lines,
 lines may appear in any order in the input.
+.PP
+Lines in the file that describes leap seconds have the following form:
+.nf
+.B
+.ti +.5i
+.ta \w'Leap\0\0'u +\w'YEAR\0\0'u +\w'MONTH\0\0'u +\w'DAY\0\0'u +\w'HH:MM:SS\0\0'u +\w'CORR\0\0'u
+Leap	YEAR	MONTH	DAY	HH:MM:SS	CORR	R/S
+.sp
+For example:
+.ti +.5i
+.sp
+Leap	1974	Dec	31	23:59:60	+	S
+.sp
+.fi
+The 
+.BR YEAR ,
+.BR MONTH ,
+.BR DAY ,
+and
+.B HH:MM:SS
+fields tell when the leap second happened.
+The
+.B CORR
+field
+should be
+.q +
+if a second was added
+or 
+.q -
+if a second was skipped.
+The
+.B R/S
+field
+should be (an abbreviaton of)
+.q Stationary
+if the leap second time given by the other fields should be interpreted as GMT
+or
+(an abbreviation of)
+.q Rolling
+if the leap second time given by the other fields should be interpreted as
+local wall clock time.
 .SH NOTE
 For areas with more than two types of local time,
 you may need to use local standard time in the
@@ -296,7 +370,9 @@ you may need to use local standard time in the
 field of the earliest transition time's rule to ensure that
 the earliest transition time recorded in the compiled file is correct.
 .SH FILES
+.ta \w'/etc/zoneinfo\0\0'u
 /etc/zoneinfo	standard directory used for created files
+leapseconds	default leap second information file
 .SH "SEE ALSO"
 newctime(3), tzfile(5), zdump(8)
 .. %W%

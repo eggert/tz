@@ -1631,10 +1631,6 @@ const char * const	type;
 
 	if (type == NULL || *type == '\0')
 		return TRUE;
-	if (strcmp(type, "uspres") == 0)
-		return (year % 4) == 0;
-	if (strcmp(type, "nonpres") == 0)
-		return (year % 4) != 0;
 	buf = erealloc(buf, (int) (132 + strlen(yitcommand) + strlen(type)));
 	(void) sprintf(buf, "%s %d %s", yitcommand, year, type);
 	result = system(buf);

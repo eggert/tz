@@ -1,10 +1,12 @@
-#ifdef OBJECTID
-static char	sccsid[] = "%W%";
-#endif
+#
 
 /*LINTLIBRARY*/
 
 #include "stdio.h"
+
+#ifdef OBJECTID
+static char	sccsid[] = "%W%";
+#endif
 
 #ifndef arg4alloc
 #define arg4alloc	unsigned

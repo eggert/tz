@@ -58,7 +58,6 @@ static char	elsieid[] = "%W%";
 #endif /* !defined TRUE */
 
 static const char GMT[] = "GMT";
-static const char GMT0[] = "GMT0";
 
 struct ttinfo {				/* time type information */
 	long		tt_gmtoff;	/* GMT offset in seconds */
@@ -827,8 +826,8 @@ static void
 gmtload(sp)
 struct state * const	sp;
 {
-	if (tzload(GMT0, sp) != 0)
-		(void) tzparse(GMT0, sp, FALSE);	/* or (GMT, sp, TRUE) */
+	if (tzload(GMT, sp) != 0)
+		(void) tzparse(GMT, sp, TRUE);
 }
 
 void

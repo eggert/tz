@@ -1,5 +1,26 @@
 %W%
 
+TODO BEFORE comp.sources RELEASE:
+
+*	Get everything except usno date copyrighted.
+*	Should /etc/zoneinfo/GMT0 change to /etc/zoneinfo/GMT, with the
+	necessary change to the newctime.3 manual page?  If it is changed,
+	all the GMT0's can disappear from localtime.c.
+*	Gotta get "date.c" up to speed, and must conditionalize "logwtmp.c"
+	for the System V world.
+	In particular, how to handle ambiguous 10-character arguments to date
+	such as
+		date 0102030405
+	where it's unclear whether the year is at the start (UCB style)
+	or the end (System V style)?  Also--toss in a "-a" (adjust time)
+	option for the Sun world?
+*	Could use a date manual page.
+*	Need to update the newctime.3 to describe the treatment of TZ's such
+	as "Guy Mean Time", if it's decided that the treatment is reasonable.
+*	Turn most everything into version "5.1".
+
+===============================================================================
+
 This 1989 update of the time zone package features
 
 *	POSIXization (including interpretation of POSIX-style TZ environment
@@ -24,6 +45,10 @@ Support for the tz_abbr variable has been eliminated from this version
 Support for Turbo C compilation has also been eliminated; it was present to
 allow checking in an ANSI-style environment, and such checking is now done with
 gcc.
+
+And the "dyzise" has disappeared; it was present to allow compilation of the
+"date" command on old BSD systems, and a version of "date" is now provided in
+the package.
 
 Since POSIX frowns on correct leap second handling, the default behavior of
 the "zic" command (in the absence of a "-L" option) has been changed to omit

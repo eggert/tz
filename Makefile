@@ -244,8 +244,8 @@ CC=		$(cc) -DTZDIR=\"$(TZDIR)\"
 
 TZCSRCS=	zic.c localtime.c asctime.c scheck.c ialloc.c
 TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o
-TZDSRCS=	zdump.c localtime.c asctime.c ialloc.c
-TZDOBJS=	zdump.o localtime.o asctime.o ialloc.o
+TZDSRCS=	zdump.c localtime.c ialloc.c
+TZDOBJS=	zdump.o localtime.o ialloc.o
 DATESRCS=	date.c localtime.c logwtmp.c strftime.c asctime.c
 DATEOBJS=	date.o localtime.o logwtmp.o strftime.o asctime.o
 LIBSRCS=	localtime.c asctime.c difftime.c

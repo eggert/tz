@@ -415,7 +415,7 @@ register const char *	strp;
 {
 	register char	c;
 
-	while ((c = *strp) != '\0' && !isdigit(c) && c != ',' && c != '-' &&
+	while ((c = *strp) != '\0' && !is_digit(c) && c != ',' && c != '-' &&
 		c != '+')
 			++strp;
 	return strp;
@@ -438,15 +438,15 @@ const int		max;
 	register char	c;
 	register int	num;
 
-	if (strp == NULL || !isdigit(*strp))
+	if (strp == NULL || !is_digit(c = *strp))
 		return NULL;
 	num = 0;
-	while ((c = *strp) != '\0' && isdigit(c)) {
+	do {
 		num = num * 10 + (c - '0');
 		if (num > max)
 			return NULL;	/* illegal value */
-		++strp;
-	}
+		c = *++strp;
+	} while (is_digit(c));
 	if (num < min)
 		return NULL;		/* illegal value */
 	*nump = num;
@@ -508,14 +508,13 @@ getoffset(strp, offsetp)
 register const char *	strp;
 long * const		offsetp;
 {
-	register int	neg;
+	register int	neg = 0;
 
 	if (*strp == '-') {
 		neg = 1;
 		++strp;
-	} else if (isdigit(*strp) || *strp++ == '+')
-		neg = 0;
-	else	return NULL;		/* illegal offset */
+	} else if (*strp == '+')
+		++strp;
 	strp = getsecs(strp, offsetp);
 	if (strp == NULL)
 		return NULL;		/* illegal time */
@@ -560,7 +559,7 @@ register struct rule * const	rulep;
 		if (*strp++ != '.')
 			return NULL;
 		strp = getnum(strp, &rulep->r_day, 0, DAYSPERWEEK - 1);
-	} else if (isdigit(*strp)) {
+	} else if (is_digit(*strp)) {
 		/*
 		** Day of year.
 		*/

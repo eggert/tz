@@ -328,8 +328,8 @@ register struct state * const	sp;
 }
 
 static const int	mon_lengths[2][MONSPERYEAR] = {
-	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
-	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+	{ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
+	{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
 };
 
 static const int	year_lengths[2] = {

@@ -1084,11 +1084,12 @@ int *			okayp;
 			** It's okay to guess wrong since the guess
 			** gets checked.
 			*/
-			register struct state *	sp;
-			register int		i, j;
-			time_t			newt;
+			register const struct state *	sp;
+			register int			j;
+			time_t				newt;
 
-			sp = (funcp == localtime) ? &lclstate : &gmtstate;
+			sp = (const struct state *)
+				((funcp == localtime) ? &lclstate : &gmtstate);
 			for (i = 0; i < sp->typecnt; ++i) {
 				for (j = 0; j < sp->typecnt; ++j) {
 					newt = t + sp->ttis[i].tt_gmtoff -
@@ -1124,10 +1125,10 @@ struct tm *		timeptr;
 const struct tm * (*	funcp)();
 const long		offset;
 {
-	register time_t		t;
-	register struct state *	sp;
-	register int		samei, otheri;
-	int			okay;
+	register time_t			t;
+	register const struct state *	sp;
+	register int			samei, otheri;
+	int				okay;
 
 	if (timeptr->tm_isdst > 1)
 		return WRONG;
@@ -1140,7 +1141,8 @@ const long		offset;
 	** We try to divine the type they started from and adjust to the
 	** type they need.
 	*/
-	sp = (funcp == localtime) ? &lclstate : &gmtstate;
+	sp = (const struct state *) 
+		((funcp == localtime) ? &lclstate : &gmtstate);
 	for (samei = 0; samei < sp->typecnt; ++samei) {
 		if (sp->ttis[samei].tt_isdst != timeptr->tm_isdst)
 			continue;
@@ -1158,6 +1160,7 @@ const long		offset;
 			timeptr->tm_isdst = !timeptr->tm_isdst;
 		}
 	}
+	return WRONG;
 }
 
 time_t

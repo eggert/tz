@@ -209,7 +209,7 @@ label:
 				** (ado, 1993-05-24)
 				*/
 				pt = _yconv(t->tm_year, TM_YEAR_BASE, 1, 0,
-					    pt, ptlim);
+					pt, ptlim);
 				continue;
 			case 'c':
 				{
@@ -435,12 +435,12 @@ label:
 					if (*format == 'V')
 						pt = _conv(w, "%02d",
 							pt, ptlim);
-  					else if (*format == 'g') {
-  						*warnp = IN_ALL;
+					else if (*format == 'g') {
+						*warnp = IN_ALL;
 						pt = _yconv(year, base, 0, 1,
-  							pt, ptlim);
+							pt, ptlim);
 					} else	pt = _yconv(year, base, 1, 1,
-  							pt, ptlim);
+							pt, ptlim);
 				}
 				continue;
 			case 'v':
@@ -475,14 +475,14 @@ label:
 					*warnp = warn2;
 				}
 				continue;
-  			case 'y':
-  				*warnp = IN_ALL;
+			case 'y':
+				*warnp = IN_ALL;
 				pt = _yconv(t->tm_year, TM_YEAR_BASE, 0, 1,
-					    pt, ptlim);
-  				continue;
-  			case 'Y':
+					pt, ptlim);
+				continue;
+			case 'Y':
 				pt = _yconv(t->tm_year, TM_YEAR_BASE, 1, 1,
-					    pt, ptlim);
+					pt, ptlim);
 				continue;
 			case 'Z':
 #ifdef TM_ZONE
@@ -597,6 +597,14 @@ const char * const	ptlim;
 	return pt;
 }
 
+/*
+** POSIX and the C Standard are unclear or inconsistent about
+** what %C and %y do if the year is negative or exceeds 9999.
+** Use the convention that %C concatenated with %y yields the
+** same output as %Y, and that %Y contains at least 4 bytes,
+** with more only if necessary.
+*/
+
 static char *
 _yconv(a, b, convert_top, convert_yy, pt, ptlim)
 const int		a;
@@ -606,25 +614,26 @@ const int		convert_yy;
 char *			pt;
 const char * const	ptlim;
 {
-	char	buf[INT_STRLEN_MAXIMUM(int) + 2];
-	int	i;
-	char *	cp;
+	register int	lead;
+	register int	trail;
 
-	if (!convert_top && !convert_yy)
-		return pt;
-	cp = buf;
-	i = a + b;
-	if ((i > a) == (b > 0))
-		(void) sprintf(cp, "%04d", i);
-	else if (sizeof (long) > sizeof (int))
-		(void) sprintf(cp, "%04ld", (long) a + (long) b);
-	else 	(void) sprintf(cp, "%04.0lf", (double) a + (double) b);
-	i = strlen(cp) - 2;
-	if (!convert_top)
-		cp += i;
-	else	if (!convert_yy)
-			cp[i] = '\0';
-	return _add(cp, pt, ptlim);
+#define DIVISOR	100
+	lead = a / DIVISOR + b / DIVISOR;
+	trail = a % DIVISOR + b % DIVISOR;
+	while (trail < 0) {
+		trail += DIVISOR;
+		--lead;
+	}
+	if (lead < 0 && trail != 0) {
+		trail -= DIVISOR;
+		++lead;
+	}
+	if (convert_top)
+		if (lead == 0 && trail < 0)
+			pt = _add("-0", pt, ptlim);
+		else	pt = _conv(lead, "%02d", pt, ptlim);
+	if (convert_yy)
+		pt = _conv(((trail < 0) ? -trail : trail), "%02d", pt, ptlim);
 }
 
 #ifdef LOCALE_HOME

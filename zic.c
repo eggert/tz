@@ -7,11 +7,6 @@ static char	elsieid[] = "%W%";
 #include "private.h"
 #include "tzfile.h"
 
-#ifndef TRUE
-#define TRUE	1
-#define FALSE	0
-#endif /* !defined TRUE */
-
 struct rule {
 	const char *	r_filename;
 	int		r_linenum;

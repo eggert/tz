@@ -376,6 +376,8 @@ const int		max;
 	register char	c;
 	register int	num;
 
+	if (strp == NULL || !isdigit(*strp))
+		return NULL;
 	num = 0;
 	while ((c = *strp) != '\0' && isdigit(c)) {
 		num = num * 10 + (c - '0');
@@ -445,7 +447,7 @@ long * const		offsetp;
 	if (*strp == '-') {
 		neg = 1;
 		++strp;
-	} else if (*strp == '+' || isdigit(*strp))
+	} else if (isdigit(*strp) || *strp++ == '+')
 		neg = 0;
 	else	return NULL;		/* illegal offset */
 	strp = getsecs(strp, offsetp);

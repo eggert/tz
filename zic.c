@@ -675,7 +675,7 @@ char *	errstring;
 			return 0;
 	}
 	return eitol(sign) *
-		(eitol(hh * HOURS_PER_DAY + mm) *
+		(eitol(hh * MINS_PER_HOUR + mm) *
 		eitol(SECS_PER_MIN) + eitol(ss));
 }
 
@@ -1387,12 +1387,6 @@ long	t2;
 		exit(1);
 	}
 	return t;
-}
-
-static
-isleap(y)
-{
-	return (y % 4) == 0 && ((y % 100) != 0 || (y % 400) == 0);
 }
 
 /*

@@ -219,7 +219,7 @@
 # Actually, that date saw the usual switch to summer time.
 # Standard time was not changed until 1968-10-27 (the clocks didn't change).
 #
-# Here is another incorrect claim by Shanks: 
+# Here is another incorrect claim by Shanks:
 #     * Jersey, Guernsey, and the Isle of Man did not switch from GMT
 #	to daylight saving time until 1921 Apr 3, when they began to
 #	conform with Great Britain.
@@ -588,7 +588,7 @@ Zone	Europe/Minsk	1:50:16 -	LMT	1880
 # Thanks to Pascal Delmoitie <pascal@belnet.be> for these references.
 # The 1918 rules are listed for completeness; they apply to unoccupied Belgium.
 # Assume Brussels switched to WET in 1918 when the armistice took effect.
-# 
+#
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Belgium	1918	only	-	Mar	 9	 0:00s	1:00	S
 Rule	Belgium	1918	1919	-	Oct	Sat>=1	23:00s	0	-
@@ -770,7 +770,7 @@ Zone America/Thule	-4:35:08 -	LMT	1916 Jul 28 # Pituffik air base
 # But what this could mean for Estonia's chances of joining the European
 # Union are still unclear.  In 1994, the EU declared summer time compulsory
 # for all member states until 2001.  Brussels has yet to decide what to do
-# after that. 
+# after that.
 
 # From Mart Oruaas (2000-01-29):
 # Regulation no. 301 (1999-10-12) obsoletes previous regulation
@@ -819,7 +819,7 @@ Zone	Europe/Helsinki	1:39:52 -	LMT	1878 May 31
 #
 # Gabriel, Traite de l'heure dans le monde, Guy Tredaniel editeur,
 # Paris, 1991
-# 
+#
 # Francoise Gauquelin, Problemes de l'heure resolus en astrologie,
 # Guy tredaniel, Paris 1987
 
@@ -1251,7 +1251,7 @@ Zone	Europe/Vaduz	0:38:04 -	LMT	1894 Jun
 # as decided by the national government on Wednesday....
 # The Lithuanian government also announced plans to consider a
 # motion to give up shifting to summer time in spring, as it was
-# already done by Estonia. 
+# already done by Estonia.
 
 # From the <a href="http://www.tourism.lt/informa/ff.htm">
 # Fact File, Lithuanian State Department of Tourism
@@ -1628,7 +1628,7 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # According to a friend of mine who rode the Trans-Siberian Railroad from
 # Moscow to Irkutsk in 1995, public air and rail transport in Russia ...
 # still follows Moscow time, no matter where in Russia it is located.
-# 
+#
 # For Grozny, Chechnya, we have the following story from
 # John Daniszewski, "Scavengers in the Rubble", Los Angeles Times (2001-02-07):
 # News--often false--is spread by word of mouth.  A rumor that it was

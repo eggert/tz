@@ -712,6 +712,13 @@ register char **	fields;
 		error("wrong number of fields on Zone line");
 		return FALSE;
 	}
+	if (strcmp(fields[ZF_NAME], TZDEFAULT) == 0 && lcltime != NULL) {
+		(void) sprintf(buf,
+			"\"Zone %s\" line and -l option are mutually exclusive",
+			TZDEFAULT);
+		error(buf);
+		return FALSE;
+	}
 	for (i = 0; i < nzones; ++i)
 		if (zones[i].z_name != NULL &&
 			strcmp(zones[i].z_name, fields[ZF_NAME]) == 0) {

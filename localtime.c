@@ -824,6 +824,12 @@ const int			lastditch;
 					** otherwise, add the standard time
 					** offset to the transition time.
 					*/
+					/*
+					** Transitions from DST to DDST
+					** will effectively disappear since
+					** POSIX provides for only one DST
+					** offset.
+					*/
 					if (isdst && !sp->ttis[j].tt_ttisstd) {
 						sp->ats[i] += dstoffset -
 							theirdstoffset;

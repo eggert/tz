@@ -16,7 +16,6 @@
 # AREA is the name of a continent or ocean, and
 # LOCATION is the name of a specific location within that region.
 # For example, the old zone name `Egypt' is now `Africa/Cairo'.
-# For backward compatibility, I retained old names like `Egypt' as Links.
 #
 # Here are the general rules I used for choosing location names,
 # in decreasing order of importance:
@@ -214,9 +213,6 @@ Rule	Egypt	1990	max	-	May	 1	1:00	1:00	" DST"
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Cairo	2:05:00 -	LMT	1900 Oct
 			2:00	Egypt	EET%s
-# This link is for backward compatibility with the old naming convention.
-Link Africa/Cairo Egypt
-
 
 # Equatorial Guinea
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -341,9 +337,6 @@ Zone	Africa/Tripoli	0:52:44 -	LMT	1920
 			1:00	Libya	MET%s	1959
 			2:00	-	EET	1982
 			1:00	Libya	MET%s
-
-# This link is for backward compatibility with the old naming convention.
-Link Africa/Tripoli Libya
 
 # Madagascar
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

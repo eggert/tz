@@ -119,17 +119,6 @@ Zone Australia/Lord_Howe 10:36:20 -	LMT	1895 Feb
 Zone Indian/Christmas	7:02:52 -	LMT	1895 Feb
 			7:00	-	JT
 
-# These links are for backward compatibility with the old naming convention.
-Link	Australia/Adelaide	Australia/South
-Link	Australia/Brisbane	Australia/Queensland
-Link	Australia/Broken_Hill	Australia/Yancowinna
-Link	Australia/Darwin	Australia/North
-Link	Australia/Hobart	Australia/Tasmania
-Link	Australia/Lord_Howe	Australia/LHI
-Link	Australia/Melbourne	Australia/Victoria
-Link	Australia/Perth		Australia/West
-Link	Australia/Sydney	Australia/ACT # Australian Capital Territory
-Link	Australia/Sydney	Australia/NSW
 #
 # Ashmore Is, Cartier
 # no information; probably like Australia/Perth
@@ -238,10 +227,6 @@ Zone Pacific/Auckland	11:39:04 -	LMT	1868
 			11:30	NZ	NZ%sT	1940 Sep 29 2:00
 			12:00	NZ	NZ%sT
 Zone Pacific/Chatham	12:45	-	NZ-CHAT
-
-# This link is for backward compatibility with the old naming convention.
-Link Pacific/Auckland	NZ
-Link Pacific/Chatham	NZ-CHAT
 
 # Antipodes Is, Kermadec Is
 # no information; probably like Pacific/Auckland

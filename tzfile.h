@@ -1,8 +1,8 @@
 #ifndef lint
 #ifndef NOID
 static char	tzfilehid[] = "%W%";
-#endif /* !NOID */
-#endif /* !lint */
+#endif /* !defined NOID */
+#endif /* !defined lint */
 
 /*
 ** Information about time zone files.
@@ -10,11 +10,11 @@ static char	tzfilehid[] = "%W%";
 
 #ifndef TZDIR
 #define TZDIR		"/etc/zoneinfo"	/* Time zone object file directory */
-#endif /* !TZDIR */
+#endif /* !defined TZDIR */
 
 #ifndef TZDEFAULT
 #define TZDEFAULT	"localtime"
-#endif /* !TZDEFAULT */
+#endif /* !defined TZDEFAULT */
 
 /*
 ** Each file begins with. . .
@@ -56,23 +56,23 @@ struct tzhead {
 ** (where there are three time zone transitions every fourth year).
 */
 #define TZ_MAX_TIMES	370
-#endif /* !TZ_MAX_TIMES */
+#endif /* !defined TZ_MAX_TIMES */
 
 #ifndef TZ_MAX_TYPES
 #ifndef NOSOLAR
 #define TZ_MAX_TYPES	256	/* Limited by what (unsigned char)'s can hold */
-#else /* !NOSOLAR */
+#else /* !defined NOSOLAR */
 #define TZ_MAX_TYPES	10	/* Maximum number of local time types */
-#endif /* !NOSOLAR */
-#endif /* !TZ_MAX_TYPES */
+#endif /* !defined NOSOLAR */
+#endif /* !defined TZ_MAX_TYPES */
 
 #ifndef TZ_MAX_CHARS
 #define TZ_MAX_CHARS	50	/* Maximum number of abbreviation characters */
-#endif /* !TZ_MAX_CHARS */
+#endif /* !defined TZ_MAX_CHARS */
 
 #ifndef TZ_MAX_LEAPS
 #define	TZ_MAX_LEAPS	50	/* Maximum number of leap second corrections */
-#endif /* !TZ_MAX_LEAPS */
+#endif /* !defined TZ_MAX_LEAPS */
 
 #define SECS_PER_MIN	60
 #define MINS_PER_HOUR	60
@@ -119,9 +119,14 @@ struct tzhead {
 #define isleap(y) (((y) % 4) == 0 && ((y) % 100) != 0 || ((y) % 400) == 0)
 
 #ifdef __STDC__
-#define MODERN
+#define P(s)	s
 #endif /* defined __STDC__ */
 
 #ifdef __TURBOC__
-#define MODERN
+#define P(s)	s
 #endif /* defined __TURBOC__ */
+
+#ifndef P
+#define P(s)	()
+#define const
+#endif /* !defined P */

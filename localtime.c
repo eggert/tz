@@ -9,58 +9,22 @@ static char	elsieid[] = "%W%";
 #include "tzfile.h"
 #include "time.h"
 #include "string.h"
+#include "stdlib.h"
+#include "stdio.h"	/* to get FILENAME_MAX */
+#include "fcntl.h"	/* to get O_BINARY and such */
 #include "nonstd.h"
 
 #ifdef __TURBOC__
-#include "io.h"			/* to pick up prototypes for open and such */
-#include "fcntl.h"		/* to pick up O_BINARY and O_RDONLY bits */
+#include "io.h"		/* to pick up prototypes for open and such */
 #endif /* defined __TURBOC__ */
 
-#ifdef unix
-#include "fcntl.h"
-#endif /* defined unix */
+#define ACCESS_MODE	O_RDONLY
 
 #ifdef O_BINARY
-#ifdef O_RDONLY
-#define OPEN_MODE	O_BINARY | O_RDONLY
-#endif /* defined O_RDONLY */
-#endif /* defined O_BINARY */
-
-#ifndef OPEN_MODE
-#define OPEN_MODE	0
-#endif /* !defined OPEN_MODE */
-
-#ifdef O_RDONLY
-#define ACCESS_MODE	O_RDONLY
-#else /* !defined O_RDONLY */
-#define ACCESS_MODE	4
-#endif /* !defined O_RDONLY */
-
-#ifdef __STDC__
-
-#include "time.h"
-
-#include "stdlib.h"
-
-#ifdef FILENAME_MAX
-#define MAXPATHLEN	FILENAME_MAX
-#endif /* defined FILENAME_MAX */
-
-#else /* !defined __STDC__ */
-
-#include "sys/types.h"		/* to get time_t */
-
-extern char *	getenv();
-
-#ifndef MAXPATHLEN
-#include "sys/param.h"
-#endif /* !defined MAXPATHLEN */
-
-#endif /* !defined __STDC__ */
-
-#ifndef MAXPATHLEN
-#define MAXPATHLEN	1024
-#endif /* !defined MAXPATHLEN */
+#define OPEN_MODE	O_RDONLY | O_BINARY
+#else /* !defined O_BINARY */
+#define OPEN_MODE	O_RDONLY
+#endif /* !defined O_BINARY */
 
 #ifndef TRUE
 #define TRUE		1
@@ -74,8 +38,9 @@ struct tm *     	offtime P((const time_t * clockp, long offset));
 static struct tm *      offtime P((const time_t * clockp, long offset));
 #endif /* !defined STD_INSPIRED */
 static struct tm *	timesub P((const time_t * clockp, long offset,
-				struct state * sp));
+				const struct state * sp));
 static int		tzload P((const char * name, struct state * sp));
+void			tzset P((void));
 static void		tzsetgmt P((struct state * sp));
 void			tzsetwall P((void));
 
@@ -146,9 +111,9 @@ register struct state *	sp;
 	if (name == 0 && (name = TZDEFAULT) == 0)
 		return -1;
 	{
-		register char *	p;
-		register int	doaccess;
-		char		fullname[MAXPATHLEN];
+		register const char *	p;
+		register int	 	doaccess;
+		char			fullname[FILENAME_MAX];
 
 		doaccess = name[0] == '/';
 		if (!doaccess) {
@@ -173,8 +138,8 @@ register struct state *	sp;
 			return -1;
 	}
 	{
-		register char *			p;
-		register struct tzhead *	tzhp;
+		register const char *		p;
+		register const struct tzhead *	tzhp;
 		char				buf[sizeof *sp];
 
 		i = read(fid, buf, sizeof buf);
@@ -286,9 +251,9 @@ register struct state *	sp;
 }
 
 void
-tzset()
+tzset P((void))
 {
-	register char *	name;
+	register const char *	name;
 
 	lcl_is_set = TRUE;
 	name = getenv("TZ");
@@ -310,8 +275,8 @@ struct tm *
 localtime(timep)
 const time_t *	timep;
 {
-	register struct state *		sp;
-	register struct ttinfo *	ttisp;
+	register const struct state *	sp;
+	register const struct ttinfo *	ttisp;
 	register struct tm *		tmp;
 	register int			i;
 	time_t				t;
@@ -383,28 +348,28 @@ long		offset;
 	return timesub(clock, offset, &gmtstate);
 }
 
-static int	mon_lengths[2][MONS_PER_YEAR] = {
+static const int	mon_lengths[2][MONSPERYEAR] = {
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 };
 
-static int	year_lengths[2] = {
-	DAYS_PER_NYEAR, DAYS_PER_LYEAR
+static const int	year_lengths[2] = {
+	DAYSPERNYEAR, DAYSPERLYEAR
 };
 
 static struct tm *
 timesub(clock, offset, sp)
-const time_t *		clock;
-long			offset;
-register struct state *	sp;
+const time_t *			clock;
+long				offset;
+register const struct state *	sp;
 {
-	register struct lsinfo *	lp;
+	register const struct lsinfo *	lp;
 	register struct tm *		tmp;
 	register long			days;
 	register long			rem;
 	register int			y;
 	register int			yleap;
-	register int *			ip;
+	register const int *		ip;
 	register long			corr;
 	register int			hit;
 	static struct tm		tm;
@@ -423,30 +388,30 @@ register struct state *	sp;
 		}
 	}
 	tmp = &tm;
-	days = *clock / SECS_PER_DAY;
-	rem = *clock % SECS_PER_DAY;
+	days = *clock / SECSPERDAY;
+	rem = *clock % SECSPERDAY;
 	rem += (offset - corr);
 	while (rem < 0) {
-		rem += SECS_PER_DAY;
+		rem += SECSPERDAY;
 		--days;
 	}
-	while (rem >= SECS_PER_DAY) {
-		rem -= SECS_PER_DAY;
+	while (rem >= SECSPERDAY) {
+		rem -= SECSPERDAY;
 		++days;
 	}
-	tmp->tm_hour = (int) (rem / SECS_PER_HOUR);
-	rem = rem % SECS_PER_HOUR;
-	tmp->tm_min = (int) (rem / SECS_PER_MIN);
-	tmp->tm_sec = (int) (rem % SECS_PER_MIN);
+	tmp->tm_hour = (int) (rem / SECSPERHOUR);
+	rem = rem % SECSPERHOUR;
+	tmp->tm_min = (int) (rem / SECSPERMIN);
+	tmp->tm_sec = (int) (rem % SECSPERMIN);
 	if (hit)
 		/*
 		 * A positive leap second requires a special
 		 * representation.  This uses "... ??:59:60".
 		 */
 		 tmp->tm_sec += 1;
-	tmp->tm_wday = (int) ((EPOCH_WDAY + days) % DAYS_PER_WEEK);
+	tmp->tm_wday = (int) ((EPOCH_WDAY + days) % DAYSPERWEEK);
 	if (tmp->tm_wday < 0)
-		tmp->tm_wday += DAYS_PER_WEEK;
+		tmp->tm_wday += DAYSPERWEEK;
 	y = EPOCH_YEAR;
 	if (days >= 0)
 		for ( ; ; ) {
@@ -486,13 +451,9 @@ register struct state *	sp;
 
 char *
 ctime(timep)
-time_t *	timep;
+const time_t *	timep;
 {
 	return asctime(localtime(timep));
 }
 
 #endif /* defined BSD_COMPAT */
-
-/*
-** UNIX is a registered trademark of AT&T.
-*/

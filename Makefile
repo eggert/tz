@@ -78,10 +78,6 @@ REDO=		posix_right
 #	-DUSG
 # to the end of the "CFLAGS=" line.
 #
-# If you're on an AT&T-based system and use csh, add
-#	-DSHELL=/bin/sh
-# to the end of the "CFLAGS=" line.
-#
 # If you're running on a system where "strchr" is known as "index"
 # (for example, a 4.[012]BSD system), add
 #	-Dstrchr=index
@@ -196,6 +192,11 @@ TDATA=		$(YDATA) $(NDATA) $(SDATA)
 DATA=		$(YDATA) $(NDATA) $(SDATA) leapseconds
 USNO=		usno1988 usno1989
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(USNO)
+
+# And for the benefit of csh users on systems that assume the user
+# shell should be used to handle commands in Makefiles. . .
+
+SHELL=		/bin/sh
 
 all:		zic zdump $(LIBOBJS)
 

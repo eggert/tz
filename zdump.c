@@ -59,7 +59,7 @@ char *	argv[];
 					argv[0], argv[i]);
 				exit(1);
 		}
-		for (j = 0; j < t.tz_rulecnt; ++j)
+		for (j = 0; j < t.tz_timecnt; ++j)
 			(void) printf("%s: %s", argv[i],
 				newctime(&t.tz_times[j]));
 	}

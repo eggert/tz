@@ -144,6 +144,11 @@ static struct state	gmtmem;
 #define gmtptr		(&gmtmem)
 #endif /* State Farm */
 
+#ifndef TZ_STRLEN_MAX
+#define TZ_STRLEN_MAX 255
+#endif
+
+static char		lcl_TZname[TZ_STRLEN_MAX + 1];
 static int		lcl_is_set;
 static int		gmt_is_set;
 
@@ -857,7 +862,10 @@ static
 void
 tzsetwall P((void))
 {
-	lcl_is_set = TRUE;
+	if (lcl_is_set < 0)
+		return;
+	lcl_is_set = -1;
+
 #ifdef ALL_STATE
 	if (lclptr == NULL) {
 		lclptr = (struct state *) malloc(sizeof *lclptr);
@@ -882,7 +890,13 @@ tzset P((void))
 		tzsetwall();
 		return;
 	}
-	lcl_is_set = TRUE;
+
+	if (lcl_is_set > 0  &&  strcmp(lcl_TZname, name) == 0)
+		return;
+	lcl_is_set = (strlen(name) < sizeof(lcl_TZname));
+	if (lcl_is_set)
+		(void) strcpy(lcl_TZname, name);
+
 #ifdef ALL_STATE
 	if (lclptr == NULL) {
 		lclptr = (struct state *) malloc(sizeof *lclptr);
@@ -928,8 +942,6 @@ struct tm * const	tmp;
 	register int			i;
 	const time_t			t = *timep;
 
-	if (!lcl_is_set)
-		tzset();
 	sp = lclptr;
 #ifdef ALL_STATE
 	if (sp == NULL) {
@@ -969,6 +981,7 @@ struct tm *
 localtime(timep)
 const time_t * const	timep;
 {
+	tzset();
 	localsub(timep, 0L, &tm);
 	return &tm;
 }
@@ -1422,6 +1435,7 @@ time_t
 mktime(tmp)
 struct tm * const	tmp;
 {
+	tzset();
 	return time1(tmp, localsub, 0L);
 }
 
@@ -1496,8 +1510,6 @@ time_t *	timep;
 	register struct lsinfo *	lp;
 	register int			i;
 
-	if (!lcl_is_set)
-		(void) tzset();
 	sp = lclptr;
 	i = sp->leapcnt;
 	while (--i >= 0) {
@@ -1512,6 +1524,7 @@ time_t
 time2posix(t)
 time_t	t;
 {
+	tzset();
 	return t - leapcorr(&t);
 }
 
@@ -1522,6 +1535,7 @@ time_t	t;
 	time_t	x;
 	time_t	y;
 
+	tzset();
 	/*
 	** For a positive leap second hit, the result
 	** is not unique.  For a negative leap second

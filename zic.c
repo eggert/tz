@@ -999,19 +999,21 @@ const int		nfields;
 		register int	positive;
 		int		count;
 
-		positive = FALSE;
-		count = 1;
-		if (*cp == '-')
-			++cp;
-		else if (*cp == '+') {
-			++cp;
+		if (strcmp(cp, "") == 0) { /* infile() turns "-" into "" */
+			positive = FALSE;
+			count = 1;
+		} else if (strcmp(cp, "--") == 0) {
+			positive = FALSE;
+			count = 2;
+		} else if (strcmp(cp, "+") == 0) {
 			positive = TRUE;
-		}
-		if (*cp != '\0' &&
-			(sscanf(cp, scheck(cp, "%d"), &count) != 1 ||
-			count <= 0)) {
-				error("illegal CORRECTION field on Leap line");
-				return;
+			count = 1;
+		} else if (strcmp(cp, "++") == 0) {
+			positive = TRUE;
+			count = 2;
+		} else {
+			error("illegal CORRECTION field on Leap line");
+			return;
 		}
 		if ((lp = byword(fields[LP_ROLL], leap_types)) == NULL) {
 			error("illegal Rolling/Stationary field on Leap line");

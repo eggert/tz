@@ -27,6 +27,16 @@ Zone	Australia/Victoria	10:00	Oz	EST	1985 Oct lastSun 2:00
 				10:00	Oz	EST
 
 # New South Wales and subjurisdictions have their own ideas of a fun time.
+# Based on law library research by john@basser.cs.su.oz, who notes:
+#	In Australia, time is not legislated federally, but rather by the
+#	individual states.  Thus, while such terms as ``Eastern Standard Time''
+#	[I mean, of course, Australian EST, not any other kind] are in common
+#	use, _they have NO REAL MEANING_, as they are not defined in the
+#	legislation.  This is very important to understand. 
+#	I have researched New South Wales time only; . . .I hope that perhaps a
+#	resident of each state could be found to do it for their own state. 
+#	(And I can guarantee that Victoria and NSW are different, so the link
+#	between them in the current australasia file must be broken.)
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	NSW	1971	1985	-	Oct	lastSun	2:00	1:00	-

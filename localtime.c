@@ -55,7 +55,7 @@ register char *	tzname;
 	dsp = tzp->tz_dsinfo;
 	if (dsp->ds_abbr[0] == '\0' || dsp->ds_abbr[TZ_ABBR_LEN] != '\0')
 		return -1;
-	for (i = 0; i < tzp->tz_rulecnt; ++i) {
+	for (i = 0; i < tzp->tz_timecnt; ++i) {
 		if (i > 0 && tzp->tz_times[i] <= tzp->tz_times[i - 1])
 			return -1;
 		j = tzp->tz_types[i];
@@ -94,7 +94,7 @@ char *	tzname;
 			return -1;
 		answer = -1;
 	}
-	tzinfo.tz_rulecnt = 0;
+	tzinfo.tz_timecnt = 0;
 	tzinfo.tz_dsinfo[0].ds_gmtoff = 0;
 	(void) strcpy(tzinfo.tz_dsinfo[0].ds_abbr, "GMT");
 	return answer;
@@ -114,10 +114,10 @@ long *timep;
 	t = *timep;
 	if (tzp->tz_dsinfo[0].ds_abbr[0] == '\0')
 		(void) settz(getenv("TZ"));
-	if (tzp->tz_rulecnt == 0 || t < tzp->tz_times[0])
+	if (tzp->tz_timecnt == 0 || t < tzp->tz_times[0])
 		dsp = tzp->tz_dsinfo;
 	else {
-		for (i = 0; i < tzp->tz_rulecnt; ++i)
+		for (i = 0; i < tzp->tz_timecnt; ++i)
 			if (t < tzp->tz_times[i])
 				break;
 		dsp = tzp->tz_dsinfo + tzp->tz_types[i - 1];

@@ -2,9 +2,6 @@
 ** XXX--do the right thing if time_t is double and
 ** the value fed to gmtime or localtime is very very negative or
 ** very very positive (which causes problems with the days-and-rem logic).
-** Also: what of systems where time_t is unsigned
-** (in particular when used on date files generated on systems where
-** time_t is signed).
 */
 
 /*
@@ -418,6 +415,33 @@ register struct state * const	sp;
 						return -1;
 			}
 		}
+		/*
+		** Out-of-sort ats should mean we're running on a
+		** signed time_t system but using a data file with
+		** unsigned values (or vice versa).
+		*/
+		for (i = 0; i < sp->timecnt - 2; ++i)
+			if (sp->ats[i] > sp->ats[i + 1]) {
+				++i;
+				if (TYPE_SIGNED(time_t)) {
+					/*
+					** Ignore the end (easy).
+					*/
+					sp->timecnt = i;
+				} else {
+					/*
+					** Ignore the beginning (harder).
+					*/
+					register int	j;
+
+					for (j = 0; j + i < sp->timecnt; ++j) {
+						sp->ats[j] = sp->ats[j + i];
+						sp->types[j] = sp->types[j + i];
+					}
+					sp->timecnt = j;
+				}
+				break;
+			}
 	}
 	return 0;
 }

@@ -198,11 +198,9 @@ char *	argv[];
 #ifdef DST_NONE
 	static struct timeval	tv;	/* static so tv_usec is 0 */
 #endif /* defined DST_NONE */
-#ifdef N_OPTION
 #ifdef TSP_SETDATE
 	register int		nflag = 0;
 #endif /* defined TSP_SETDATE */
-#endif /* defined N_OPTION */
 #ifdef D_OR_T_OPTION
 	register int		dflag = 0;
 	register int		tflag = 0;
@@ -401,11 +399,7 @@ char *	argv[];
 #ifdef DST_NONE
 	tv.tv_sec = t;
 #ifdef TSP_SETDATE
-#ifdef N_OPTION
 	if (nflag || !netsettime(tv))
-#else /* !defined N_OPTION */
-	if (!netsettime(tv))
-#endif /* !defined N_OPTION */
 #endif /* defined TSP_SETDATE */
 	{
 		logwtmp(OTIME_MSG, TIME_USER, "");

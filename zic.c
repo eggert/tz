@@ -3,7 +3,7 @@
 #include "stdio.h"
 
 #ifdef OBJECTID
-static char	sccsid[] = "%W%";
+static char	sccsid[] = "@(#)tzcomp.c	2.8";
 #endif
 
 #include "tzfile.h"
@@ -11,10 +11,6 @@ static char	sccsid[] = "%W%";
 
 #ifndef alloc_t
 #define alloc_t	unsigned
-#endif
-
-#ifndef MAL
-#define MAL	NULL
 #endif
 
 #ifndef BUFSIZ
@@ -51,17 +47,19 @@ int		optind;
 
 static int	errors;
 static char *	filename;
+static char *	rfilename;
 static char **	getfields();
 static int	linenum;
+static int	rlinenum;
 static char *	progname;
 static long	rpytime();
 static long	tadd();
 
-#define	SECS_PER_MIN	60L
+#define SECS_PER_MIN	60L
 #define MINS_PER_HOUR	60L
 #define HOURS_PER_DAY	24L
 #define DAYS_PER_YEAR	365L	/* Except in leap years */
-#define	SECS_PER_HOUR	(SECS_PER_MIN * MINS_PER_HOUR)
+#define SECS_PER_HOUR	(SECS_PER_MIN * MINS_PER_HOUR)
 #define SECS_PER_DAY	(SECS_PER_HOUR * HOURS_PER_DAY)
 #define SECS_PER_YEAR	(SECS_PER_DAY * DAYS_PER_YEAR)
 
@@ -109,13 +107,38 @@ static long	tadd();
 #define ZF_GMTOFF	2
 #define ZF_RULE		3
 #define ZF_FORMAT	4
+#define ZF_UNTILYEAR	5
+#define ZF_UNTILMONTH	6
+#define ZF_UNTILDAY	7
+#define ZF_UNTILTIME	8
 #define ZONE_FIELDS	5
+#define ZONE_UNTILYEAR	6
+#define ZONE_UNTILMONTH	7
+#define ZONE_UNTILDAY	8
+#define ZONE_UNTILTIME	9
+
+/*
+** Which fields are which on a Zone continuation line.
+*/
+
+#define ZFC_GMTOFF		0
+#define ZFC_RULE		1
+#define ZFC_FORMAT		2
+#define ZFC_UNTILYEAR		3
+#define ZFC_UNTILMONTH		4
+#define ZFC_UNTILDAY		5
+#define ZFC_UNTILTIME		6
+#define ZONEC_FIELDS		3
+#define ZONEC_UNTILYEAR		4
+#define ZONEC_UNTILMONTH	5
+#define ZONEC_UNTILDAY		6
+#define ZONEC_UNTILTIME		7
 
 /*
 ** Which files are which on a Rule line.
 */
 
-#define	RF_NAME		1
+#define RF_NAME		1
 #define RF_LOYEAR	2
 #define RF_HIYEAR	3
 #define RF_COMMAND	4
@@ -154,8 +177,6 @@ struct rule {
 				/* above is wall clock time if FALSE */
 	long	r_stdoff;	/* offset from standard time */
 	char *	r_abbrvar;	/* variable part of time zone abbreviation */
-
-	int	r_type;	/* used when creating output files */
 };
 
 /*
@@ -176,6 +197,7 @@ struct zone {
 	long		z_gmtoff;
 	char *		z_rule;
 	char *		z_format;
+	long		z_until;
 
 	struct rule *	z_rules;
 	int		z_nrules;
@@ -286,7 +308,7 @@ char *	ptr;
 }
 
 static char *
-eallocpy(old)
+ecpyalloc(old)
 char *	old;
 {
 	register char *	new;
@@ -314,7 +336,7 @@ main(argc, argv)
 int	argc;
 char *	argv[];
 {
-	register int	i;
+	register int	i, j;
 	register int	c;
 
 #ifdef lint
@@ -357,8 +379,14 @@ char *	argv[];
 	if (errors)
 		exit(1);
 	associate();
-	for (i = 0; i < nzones; ++i)
-		outzone(&zones[i]);
+	for (i = 0; i < nzones; i = j) {
+		/*
+		 * Find the next non-continuation zone entry.
+		 */
+		for (j = i + 1; j < nzones && zones[j].z_name == NULL; j++)
+			;
+		outzone(&zones[i], j - i);
+	}
 	/*
 	** We'll take the easy way out on this last part.
 	*/
@@ -371,7 +399,7 @@ char *	argv[];
 		(void) unlink(links[i].l_to);
 		if (link(links[i].l_from, links[i].l_to) != 0) {
 			(void) fprintf(stderr, "%s: Can't link %s to ",
-			    progname, links[i].l_from);
+				progname, links[i].l_from);
 			perror(links[i].l_to);
 			exit(1);
 		}
@@ -380,12 +408,12 @@ char *	argv[];
 		(void) unlink(TZDEFAULT);
 		if (link(localtime, TZDEFAULT) != 0) {
 			(void) fprintf(stderr, "%s: Can't link %s to ",
-			    progname, localtime);
+				progname, localtime);
 			perror(TZDEFAULT);
 			exit(1);
 		}
 	}
-	exit (0);
+	exit(0);
 }
 
 /*
@@ -460,6 +488,8 @@ associate()
 		if (*zp->z_rule != '\0' && zp->z_nrules == 0) {
 			filename = zp->z_filename;
 			linenum = zp->z_linenum;
+			rfilename = NULL;
+			rlinenum = 0;
 			error("unruly zone");
 		}
 	}
@@ -473,6 +503,9 @@ char *	string;
 {
 	(void) fprintf(stderr, "%s: file \"%s\", line %d: %s\n",
 		progname, filename, linenum, string);
+	if (rfilename != NULL)
+		(void) fprintf(stderr, "%s: rule from file \"%s\", line %d\n",
+			progname, rfilename, rlinenum);
 	++errors;
 }
 
@@ -486,6 +519,7 @@ char *	name;
 	register struct lookup *	lp;
 	register int			nfields;
 	char				buf[BUFSIZ];
+	int				continuation;
 
 	if (strcmp(name, "-") == 0) {
 		name = "standard input";
@@ -495,13 +529,15 @@ char *	name;
 		perror(name);
 		exit(1);
 	}
-	filename = eallocpy(name);
+	filename = ecpyalloc(name);
+	rfilename = NULL;
+	continuation = 0;
 	for (linenum = 1; ; ++linenum) {
 		if (fgets(buf, sizeof buf, fp) != buf)
 			break;
 		cp = strchr(buf, '\n');
 		if (cp == NULL) {
-			error("long line");
+			error("line too long");
 			exit(1);
 		}
 		*cp = '\0';
@@ -513,25 +549,48 @@ char *	name;
 				fields[nfields] = "";
 			++nfields;
 		}
-		if (nfields > 0)	/* non-blank line */
-			if ((lp = byword(fields[0], line_codes)) == NULL)
-				error("input line of unknown type");
-			else switch ((int) (lp->l_value)) {
-				case LC_RULE:
-					inrule(fields, nfields);
-					break;
+		if (nfields > 0) {	/* non-blank line */
+			if (continuation != 0) {
+				switch (continuation) {
 				case LC_ZONE:
-					inzone(fields, nfields);
-					break;
-				case LC_LINK:
-					inlink(fields, nfields);
+					if (inzcont(fields, nfields))
+						continuation = LC_ZONE;
+					else	continuation = 0;
 					break;
 				default:	/* "cannot happen" */
 					(void) fprintf(stderr,
-					    "%s: panic: Invalid l_value %ld\n",
-					    progname, lp->l_value);
+"%s: panic: Invalid continuation type %d\n",
+						progname, continuation);
 					exit(1);
+				}
+			} else {
+				lp = byword(fields[0], line_codes);
+				if (lp == NULL)
+					error("input line of unknown type");
+				else {
+					switch ((int) (lp->l_value)) {
+					case LC_RULE:
+						inrule(fields, nfields);
+						continuation = 0;
+						break;
+					case LC_ZONE:
+						if (inzone(fields, nfields))
+							continuation = LC_ZONE;
+						else	continuation = 0;
+						break;
+					case LC_LINK:
+						inlink(fields, nfields);
+						continuation = 0;
+						break;
+					default:	/* "cannot happen" */
+						(void) fprintf(stderr,
+"%s: panic: Invalid l_value %ld\n",
+							progname, lp->l_value);
+						exit(1);
+					}
+				}
 			}
+		}
 		free((char *) fields);
 	}
 	if (ferror(fp)) {
@@ -591,13 +650,13 @@ char **	fields;
 	struct rule			r;
 
 	if (nfields != RULE_FIELDS) {
-		error("number of fields on Rule line");
+		error("wrong number of fields on Rule line");
 		return;
 	}
 	r.r_filename = filename;
 	r.r_linenum = linenum;
 	if ((lp = byword(fields[RF_MONTH], mon_names)) == NULL) {
-		error("month name");
+		error("invalid month name");
 		return;
 	}
 	r.r_month = lp->l_value;
@@ -616,15 +675,15 @@ char **	fields;
 				break;
 		}
 	}
-	r.r_tod = getoff(fields[RF_TOD], "time of day");
-	r.r_stdoff = getoff(fields[RF_STDOFF], "Standard Time offset");
+	r.r_tod = getoff(fields[RF_TOD], "invalid time of day");
+	r.r_stdoff = getoff(fields[RF_STDOFF], "invalid Standard Time offset");
 	/*
 	** Year work.
 	*/
 	cp = fields[RF_LOYEAR];
 	if (sscanf(cp, scheck(cp, "%ld"), &r.r_loyear) != 1 ||
 		r.r_loyear <= 0) {
-			error("low year");
+			error("invalid starting year");
 			return;
 	}
 	cp = fields[RF_HIYEAR];
@@ -632,11 +691,11 @@ char **	fields;
 		r.r_hiyear = r.r_loyear;
 	else if (sscanf(cp, scheck(cp, "%ld"), &r.r_hiyear) != 1 ||
 		r.r_hiyear <= 0) {
-			error("high year");
+			error("invalid ending year");
 			return;
 	}
 	if (r.r_loyear > r.r_hiyear) {
-		error("low year (greater than high year)");
+		error("starting year greater than ending year");
 		return;
 	}
 	if (*fields[RF_COMMAND] == '\0')
@@ -646,7 +705,7 @@ char **	fields;
 			error("typed single year");
 			return;
 		}
-		r.r_yrtype = eallocpy(fields[RF_COMMAND]);
+		r.r_yrtype = ecpyalloc(fields[RF_COMMAND]);
 	}
 	/*
 	** Day work.
@@ -675,11 +734,11 @@ char **	fields;
 		if (r.r_dycode != DC_DOM) {
 			*cp++ = 0;
 			if (*cp++ != '=') {
-				error("day of month");
+				error("invalid day of month");
 				return;
 			}
 			if ((lp = byword(fields[RF_DAY], wday_names)) == NULL) {
-				error("weekday name");
+				error("invalid weekday name");
 				return;
 			}
 			r.r_wday = lp->l_value;
@@ -688,7 +747,7 @@ char **	fields;
 			r.r_dayofmonth <= 0 ||
 			(r.r_dayofmonth > mon_lengths[r.r_month] &&
 			r.r_month != TM_FEBRUARY && r.r_dayofmonth != 29)) {
-				error("day of month");
+				error("invalid day of month");
 				return;
 		}
 	}
@@ -696,8 +755,8 @@ char **	fields;
 		error("nameless rule");
 		return;
 	}
-	r.r_name = eallocpy(fields[RF_NAME]);
-	r.r_abbrvar = eallocpy(fields[RF_ABBRVAR]);
+	r.r_name = ecpyalloc(fields[RF_NAME]);
+	r.r_abbrvar = ecpyalloc(fields[RF_ABBRVAR]);
 	rules = (struct rule *) erealloc((char *) rules,
 		(nrules + 1) * sizeof *rules);
 	rules[nrules++] = r;
@@ -707,40 +766,144 @@ static
 inzone(fields, nfields)
 char **	fields;
 {
-	register char *	cp;
 	register int	i;
-	struct zone	z;
 	char		buf[132];
 
-	if (nfields != ZONE_FIELDS) {
-		error("number of fields on Zone line");
-		return;
+	if (nfields < ZONE_FIELDS || nfields > ZONE_UNTILTIME) {
+		error("wrong number of fields on Zone line");
+		return FALSE;
+	}
+	for (i = 0; i < nzones; ++i)
+		if (zones[i].z_name != NULL &&
+			strcmp(zones[i].z_name, fields[ZF_NAME]) == 0) {
+				(void) sprintf(buf,
+"duplicate zone name %s (file \"%s\", line %d)",
+					fields[ZF_NAME],
+					zones[i].z_filename,
+					zones[i].z_linenum);
+				error(buf);
+				return FALSE;
+		}
+	return inzsub(fields, nfields, FALSE);
+}
+
+static
+inzcont(fields, nfields)
+char **	fields;
+{
+	if (nfields < ZONEC_FIELDS || nfields > ZONEC_UNTILTIME) {
+		error("wrong number of fields on Zone continuation line");
+		return FALSE;
+	}
+	return inzsub(fields, nfields, TRUE);
+}
+
+static
+inzsub(fields, nfields, iscont)
+char **	fields;
+{
+	register struct lookup *	lp;
+	register char *			cp;
+	struct zone			z;
+	struct rule			r;
+	register int			i_gmtoff, i_rule, i_format;
+	register int			i_untilyear, i_untilmonth;
+	register int			i_untilday, i_untiltime;
+	long				year;
+
+	if (iscont) {
+		i_gmtoff = ZFC_GMTOFF;
+		i_rule = ZFC_RULE;
+		i_format = ZFC_FORMAT;
+		i_untilyear = ZFC_UNTILYEAR;
+		i_untilmonth = ZFC_UNTILMONTH;
+		i_untilday = ZFC_UNTILDAY;
+		i_untiltime = ZFC_UNTILTIME;
+		z.z_name = NULL;
+	} else {
+		i_gmtoff = ZF_GMTOFF;
+		i_rule = ZF_RULE;
+		i_format = ZF_FORMAT;
+		i_untilyear = ZF_UNTILYEAR;
+		i_untilmonth = ZF_UNTILMONTH;
+		i_untilday = ZF_UNTILDAY;
+		i_untiltime = ZF_UNTILTIME;
+		z.z_name = ecpyalloc(fields[ZF_NAME]);
 	}
 	z.z_filename = filename;
 	z.z_linenum = linenum;
-	for (i = 0; i < nzones; ++i)
-		if (strcmp(zones[i].z_name, fields[ZF_NAME]) == 0) {
-			(void) sprintf(buf,
-				"duplicate zone name %s (file \"%s\", line %d)",
-				fields[ZF_NAME],
-				zones[i].z_filename,
-				zones[i].z_linenum);
-			error(buf);
-			return;
-		}
-	z.z_gmtoff = getoff(fields[ZF_GMTOFF], "GMT offset");
-	if ((cp = strchr(fields[ZF_FORMAT], '%')) != 0) {
+	z.z_gmtoff = getoff(fields[i_gmtoff], "invalid GMT offset");
+	if ((cp = strchr(fields[i_format], '%')) != 0) {
 		if (*++cp != 's' || strchr(cp, '%') != 0) {
-			error("format");
-			return;
+			error("invalid abbreviation format");
+			return FALSE;
 		}
 	}
-	z.z_name = eallocpy(fields[ZF_NAME]);
-	z.z_rule = eallocpy(fields[ZF_RULE]);
-	z.z_format = eallocpy(fields[ZF_FORMAT]);
+	z.z_rule = ecpyalloc(fields[i_rule]);
+	z.z_format = ecpyalloc(fields[i_format]);
+	if (nfields <= i_untilyear)
+		z.z_until = 0;	/* does not expire */
+	else {
+		/*
+		** We have a date/time at which this zone subspecification
+		** expires.  Stuff it into a dummy rule structure so that
+		** we can use "rpytime" to convert it to a time.
+		*/
+		if (sscanf(fields[i_untilyear],
+			scheck(fields[i_untilyear], "%ld"), &year) != 1 ||
+			year <= 0) {
+				error("invalid year");
+				return FALSE;
+		}
+		if (nfields <= i_untilmonth)
+			r.r_month = 1;	/* default to January */
+		else {
+			if ((lp = byword(fields[i_untilmonth],
+				mon_names)) == NULL) {
+					error("invalid month name");
+					return FALSE;
+			}
+			r.r_month = lp->l_value;
+		}
+		if (nfields <= i_untilday)
+			r.r_dayofmonth = 1;	/* default to first */
+		else if (sscanf(fields[i_untilday],
+			scheck(fields[i_untilday], "%ld"),
+			&r.r_dayofmonth) != 1 ||
+			r.r_dayofmonth <= 0 ||
+			(r.r_dayofmonth > mon_lengths[r.r_month] &&
+			r.r_month != TM_FEBRUARY &&
+			!isleap(year) &&
+			r.r_dayofmonth != 29)) {
+				error("invalid day of month");
+				return FALSE;
+		}
+		r.r_dycode = DC_DOM;
+		if (nfields <= i_untiltime)
+			r.r_tod = 0;	/* default to midnight */
+		else	r.r_tod = getoff(fields[i_untiltime],
+				"invalid time of day");
+		z.z_until = rpytime(&r, year);
+	}
+	if (iscont) {
+		if (nzones == 0) {	/* "cannot happen" */
+			(void) fprintf(stderr,
+"%s: panic: continuation line not preceded by Zone line\n", progname);
+			exit(1);
+		}
+		if (z.z_until != 0 && zones[nzones - 1].z_until >= z.z_until) {
+			error("Zone continuation line ending time is not after ending time of previous line");
+			return FALSE;
+		}
+	}
 	zones = (struct zone *) erealloc((char *) zones,
 		(nzones + 1) * sizeof *zones);
 	zones[nzones++] = z;
+	/*
+	** If there was an UNTIL field on this line,
+	** there's more information about the zone on the next line.
+	*/
+	return nfields > i_untilyear;
 }
 
 static
@@ -750,7 +913,7 @@ char **	fields;
 	struct link	l;
 
 	if (nfields != LINK_FIELDS) {
-		error("number of fields on Link line");
+		error("wrong number of fields on Link line");
 		return;
 	}
 	if (*fields[LF_FROM] == '\0') {
@@ -763,14 +926,14 @@ char **	fields;
 	}
 	l.l_filename = filename;
 	l.l_linenum = linenum;
-	l.l_from = eallocpy(fields[LF_FROM]);
-	l.l_to = eallocpy(fields[LF_TO]);
+	l.l_from = ecpyalloc(fields[LF_FROM]);
+	l.l_to = ecpyalloc(fields[LF_TO]);
 	links = (struct link *) erealloc((char *) links,
 		(nlinks + 1) * sizeof *links);
 	links[nlinks++] = l;
 }
 
-#define	PUTSHORT(val, fp) { \
+#define PUTSHORT(val, fp) { \
 	register int shortval; \
 	register unsigned char c; \
 	shortval = val; \
@@ -864,9 +1027,18 @@ wreck:
 	exit(1);
 }
 
+/*
+** "struct temp" defines a point at which a new local time offset, etc.
+** comes into effect.  "t_time" is the time (in seconds since the epoch)
+** when it comes into effect; "t_rp" points to the rule that generated
+** it; "t_type" indicates the "type", i.e., the GMT offset, an indication
+** of whether DST is in effect or not, and the time zone abbreviation.
+*/
+
 struct temp {
 	long		t_time;
 	struct rule *	t_rp;
+	int		t_type;
 };
 
 static struct temp	temps[TZ_MAX_TIMES];
@@ -893,11 +1065,17 @@ char *	cp2;
 	else if (diff < 0)
 		return -1;
 	/*
-	** Oops!
+	** Two equal start times appeared; something's wrong.
 	*/
-	if (tp1->t_rp->r_type == tp2->t_rp->r_type)
+	if (tp1->t_rp == NULL || tp2->t_rp == NULL) {
+		error("tzcomp's little mind is blown");
+		exit(1);
+	}
+	if (tp1->t_type == tp2->t_type)
 		cp = "duplicate rule?!";
 	else	cp = "inconsistent rules?!";
+	rfilename = NULL;
+	rlinenum = 0;
 	filename = tp1->t_rp->r_filename;
 	linenum = tp1->t_rp->r_linenum;
 	error(cp);
@@ -909,117 +1087,189 @@ char *	cp2;
 }
 
 static
-addrule(rp, y)
-register struct rule *	rp;
-long			y;
+outzone(zpfirst, zonecount)
+register struct zone *	zpfirst;
+int			zonecount;
+{
+	register struct zone *		zp;
+	register struct rule *		rp;
+	register int			i, j;
+	long				starttime;
+
+	h.tzh_timecnt = 0;
+	h.tzh_typecnt = 0;
+	h.tzh_charcnt = 0;
+	/*
+	** Now. . .finally. . .generate some useable data!
+	*/
+	ntemps = 0;
+	starttime = 0;
+	for (i = 0; i < zonecount; ++i) {
+		/*
+		** See what the different local time types are.
+		** Plug the indices into the rules.
+		*/
+		zp = &zpfirst[i];
+		if (zp->z_nrules == 0)
+			trivial(zp, starttime);
+		else for (j = 0; j < zp->z_nrules; ++j) {
+			rp = &zp->z_rules[j];
+			filename = rp->r_filename;
+			linenum = rp->r_linenum;
+			rfilename = NULL;
+			rlinenum = 0;
+			if (rp->r_yrtype != NULL && *rp->r_yrtype != '\0')
+				hard(rp, zp, starttime, zp->z_until);
+			else	easy(rp, zp, starttime, zp->z_until);
+		}
+		starttime = zp->z_until;
+	}
+	h.tzh_timecnt = ntemps;
+	(void) qsort((char *) temps, ntemps, sizeof *temps, tcomp);
+	for (i = 0; i < ntemps; ++i) {
+		ats[i] = temps[i].t_time;
+		types[i] = temps[i].t_type;
+		if ((rp = temps[i].t_rp) != NULL) {
+			filename = rp->r_filename;
+			linenum = rp->r_linenum;
+			rfilename = NULL;
+			rlinenum = 0;
+			if (!rp->r_todisstd) {
+				/*
+				** Credit to munnari!kre for pointing out
+				** the need for the following.  (This can
+				** still mess up on the earliest rule; who's
+				** got the solution?  It can also mess up
+				** if a time switch results in a day switch;
+				** this is left as an exercise for the reader.)
+				*/
+				if (i == 0) {
+					/*
+					** Kludge--not guaranteed to work.
+					*/
+					if (ntemps > 1)
+						rp = temps[1].t_rp;
+					else	rp = NULL;
+				} else	rp = temps[i - 1].t_rp;
+				if (rp != NULL)
+					ats[i] = tadd(ats[i], -rp->r_stdoff);
+			}
+		}
+	}
+	writezone(zpfirst->z_name);
+	return;
+}
+
+static
+addtype(gmtoff, abbr, isdst, zp)
+long			gmtoff;
+char *			abbr;
+int			isdst;
+register struct zone *	zp;
+{
+	register int	i;
+
+	/*
+	** See if there's already an entry for this zone type.
+	** If so, just return its index.
+	*/
+	for (i = 0; i < h.tzh_typecnt; ++i) {
+		if (gmtoff == ttis[i].tt_gmtoff &&
+			strcmp(abbr, &chars[ttis[i].tt_abbrind]) == 0)
+				return i;
+	}
+	/*
+	** There isn't one; add a new one, unless there are already too
+	** many.
+	*/
+	if (h.tzh_typecnt >= TZ_MAX_TYPES) {
+		filename = zp->z_filename;
+		linenum = zp->z_linenum;
+		rfilename = NULL;
+		rlinenum = 0;
+		error("too many local time types");
+		exit(1);
+	}
+	ttis[i].tt_gmtoff = gmtoff;
+	ttis[i].tt_isdst = isdst;
+	ttis[i].tt_abbrind = h.tzh_charcnt;
+	newabbr(abbr);
+	++h.tzh_typecnt;
+	return i;
+}
+
+static
+trivial(zp, from)
+register struct zone *	zp;
+long			from;
 {
 	if (ntemps >= TZ_MAX_TIMES) {
 		error("too many transitions?!");
 		exit(1);
 	}
-	temps[ntemps].t_time = rpytime(rp, y);
-	temps[ntemps].t_rp = rp;
+	filename = zp->z_filename;
+	linenum = zp->z_linenum;
+	rfilename = NULL;
+	rlinenum = 0;
+	temps[ntemps].t_time = tadd(from, -zp->z_gmtoff);
+	temps[ntemps].t_rp = NULL;
+	temps[ntemps].t_type = addtype(zp->z_gmtoff, zp->z_format, 0, zp);
 	++ntemps;
 }
 
 static
-outzone(zp)
+addrule(rp, y, zp, from, until)
+register struct rule *	rp;
+long			y;
 register struct zone *	zp;
+long			from;
+long			until;
 {
-	register struct rule *		rp;
-	register int			i, j;
-	register long			y;
-	register long			gmtoff;
-	char				buf[BUFSIZ];
+	long		newtime;
+	char		buf[BUFSIZ];
 
-	h.tzh_timecnt = 0;
-	h.tzh_typecnt = 0;
-	h.tzh_charcnt = 0;
-	if (zp->z_nrules == 0) {	/* Piece of cake! */
-		h.tzh_timecnt = 0;
-		h.tzh_typecnt = 1;
-		ttis[0].tt_gmtoff = zp->z_gmtoff;
-		ttis[0].tt_isdst = 0;
-		ttis[0].tt_abbrind = 0;
-		newabbr(zp->z_format);
-		writezone(zp->z_name);
-		return;
+	newtime = rpytime(rp, y);
+	if (from != 0 && newtime < from)
+		return 1;	/* this zone data doesn't take effect yet */
+	if (until != 0 && newtime >= until)
+		return 0;	/* this zone data has expired */
+	if (ntemps >= TZ_MAX_TIMES) {
+		error("too many transitions?!");
+		exit(1);
 	}
-	/*
-	** See what the different local time types are.
-	** Plug the indices into the rules.
-	*/
-	for (i = 0; i < zp->z_nrules; ++i) {
-		rp = &zp->z_rules[i];
-		(void) sprintf(buf, zp->z_format, rp->r_abbrvar);
-		gmtoff = tadd(zp->z_gmtoff, rp->r_stdoff);
-		for (j = 0; j < h.tzh_typecnt; ++j) {
-			if (gmtoff == ttis[j].tt_gmtoff &&
-				strcmp(buf, &chars[ttis[j].tt_abbrind]) == 0)
-					break;
-		}
-		if (j >= h.tzh_typecnt) {
-			if (h.tzh_typecnt >= TZ_MAX_TYPES) {
-				filename = zp->z_filename;
-				linenum = zp->z_linenum;
-				error("large number of local time types");
-				exit(1);
-			}
-			ttis[j].tt_gmtoff = gmtoff;
-			ttis[j].tt_isdst = rp->r_stdoff != 0;
-			ttis[j].tt_abbrind = h.tzh_charcnt;
-			newabbr(buf);
-			++h.tzh_typecnt;
-		}
-		rp->r_type = j;
-	}
-	/*
-	** Now. . .finally. . .generate some useable data!
-	*/
-	ntemps = 0;
-	for (i = 0; i < zp->z_nrules; ++i) {
-		rp = &zp->z_rules[i];
-		filename = rp->r_filename;
-		linenum = rp->r_linenum;
-		if (rp->r_yrtype != NULL && *rp->r_yrtype != '\0')
-			hard(rp);
-		else for (y = rp->r_loyear; y <= rp->r_hiyear; ++y)
-			addrule(rp, y);
-	}
-	h.tzh_timecnt = ntemps;
-	(void) qsort((char *) temps, ntemps, sizeof *temps, tcomp);
-	for (i = 0; i < ntemps; ++i) {
-		rp = temps[i].t_rp;
-		filename = rp->r_filename;
-		linenum = rp->r_linenum;
-		types[i] = rp->r_type;
-		ats[i] = tadd(temps[i].t_time, -zp->z_gmtoff);
-		if (!rp->r_todisstd) {
-			/*
-			** Credit to munnari!kre for pointing out the need for
-			** the following.  (This can still mess up on the
-			** earliest rule; who's got the solution?  It can also
-			** mess up if a time switch results in a day switch;
-			** this is left as an exercise for the reader.)
-			*/
-			if (i == 0) {
-				/*
-				** Kludge--not guaranteed to work.
-				*/
-				if (ntemps > 1)
-					ats[0] = tadd(ats[0],
-						-temps[1].t_rp->r_stdoff);
-			} else	ats[i] = tadd(ats[i],
-				-temps[i - 1].t_rp->r_stdoff);
-		}
-	}
-	writezone(zp->z_name);
-	return;
+	filename = zp->z_filename;
+	linenum = zp->z_linenum;
+	rfilename = rp->r_filename;
+	rlinenum = rp->r_linenum;
+	temps[ntemps].t_time = tadd(newtime, -zp->z_gmtoff);
+	temps[ntemps].t_rp = rp;
+	(void) sprintf(buf, zp->z_format, rp->r_abbrvar);
+	temps[ntemps].t_type = addtype(tadd(zp->z_gmtoff, rp->r_stdoff),
+		buf, rp->r_stdoff != 0, zp);
+	++ntemps;
+	return 1;
 }
 
 static
-hard(rp)
+easy(rp, zp, from, until)
 register struct rule *	rp;
+register struct zone *	zp;
+long			from;
+long			until;
+{
+	long	y;
+
+	for (y = rp->r_loyear; y <= rp->r_hiyear; ++y)
+		if (!addrule(rp, y, zp, from, until))
+			break;
+}
+
+static
+hard(rp, zp, from, until)
+register struct rule *	rp;
+register struct zone *	zp;
+long			from;
+long			until;
 {
 	register FILE *	fp;
 	register int	n;
@@ -1031,7 +1281,7 @@ register struct rule *	rp;
 		rp->r_loyear, rp->r_hiyear, rp->r_yrtype);
 	if ((fp = popen(command, "r")) == NULL) {
 		(void) fprintf(stderr, "%s: Can't run command \"%s\"\n",
-		    progname, command);
+			progname, command);
 		exit(1);
 	}
 	for (n = 0; fgets(buf, sizeof buf, fp) == buf; ++n) {
@@ -1056,7 +1306,8 @@ register struct rule *	rp;
 				progname, y, command);
 			exit(1);
 		}
-		addrule(rp, y);
+		if (!addrule(rp, y, zp, from, until))
+			break;
 	}
 	if (ferror(fp)) {
 		(void) fprintf(stderr,
@@ -1120,21 +1371,15 @@ register struct lookup *	table;
 
 	if (word == NULL || table == NULL)
 		return NULL;
-	/*
-	** First check for exact match.
-	*/
-	for (lp = table; lp->l_word != NULL; ++lp)
-		if (ciequal(word, lp->l_word))
-			return lp;
-	/*
-	** Now check for unique inexact match.
-	*/
 	foundlp = NULL;
 	for (lp = table; lp->l_word != NULL; ++lp)
-		if (isabbr(word, lp->l_word))
-			if (foundlp == NULL)
-				foundlp = lp;
-			else	return NULL;	/* two inexact matches */
+		if (ciequal(word, lp->l_word))		/* "exact" match */
+			return lp;
+		else if (!isabbr(word, lp->l_word))
+			continue;
+		else if (foundlp == NULL)
+			foundlp = lp;
+		else	return NULL;		/* two inexact matches */
 	return foundlp;
 }
 
@@ -1194,6 +1439,11 @@ long	y;
 {
 	return (y % 4) == 0 && ((y % 100) != 0 || (y % 400) == 0);
 }
+
+/*
+** Given a rule, and a year, compute the date - in seconds since January 1,
+** 1970, 00:00 LOCAL time - in that year that the rule refers to.
+*/
 
 static long
 rpytime(rp, wantedy)
@@ -1275,7 +1525,7 @@ char *	string;
 
 	i = strlen(string);
 	if (h.tzh_charcnt + i >= TZ_MAX_CHARS)
-		error("long time zone abbreviations");
+		error("too many, or too long, time zone abbreviations");
 	(void) strcpy(&chars[h.tzh_charcnt], string);
 	h.tzh_charcnt += i + 1;
 }

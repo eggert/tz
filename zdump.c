@@ -370,14 +370,18 @@ const long	y;
 		if (myy < y) {
 			seconds = isleap(myy) ? SECSPERLYEAR : SECSPERNYEAR;
 			++myy;
-			if (absolute_max_time - t < seconds)
-				return absolute_max_time;
+			if (t > absolute_max_time - seconds) {
+				t = absolute_max_time;
+				break;
+			}
 			t += seconds;
 		} else {
 			--myy;
 			seconds = isleap(myy) ? SECSPERLYEAR : SECSPERNYEAR;
-			if (t - absolute_min_time < seconds)
-				return absolute_min_time;
+			if (t < absolute_min_time + seconds) {
+				t = absolute_min_time;
+				break;
+			}
 			t -= seconds;
 		}
 	}

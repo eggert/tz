@@ -172,9 +172,16 @@ _fmt(format, t)
 				_conv(t->tm_year + TM_YEAR_BASE, 4);
 				continue;
 			case 'Z':
-				if (t->tm_zone)
-					_add(t->tm_zone);
-				else	_add("?");
+#ifdef TM_ZONE
+				if (t->TM_ZONE)
+					_add(t->TM_ZONE);
+				else
+#endif /* defined TM_ZONE */
+				if (t->tm_isdst == 0 || t->tm_isdst == 1) {
+					extern char *	tzname[2];
+
+					_add(tzname[t->tm_isdst]);
+				} else	_add("?");
 				continue;
 			case '%':
 			/*

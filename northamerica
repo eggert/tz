@@ -161,16 +161,16 @@ Zone	Mexico/General		-6:00	-		CST
 ###############################################################################
 
 # Jamaica
-# From Bob Devine:  "Follows US rules."
+# From Bob Devine (January 28, 1988):  "Follows US rules."
 
 Link	US/Eastern	Jamaica
 
 ###############################################################################
 
 # Cuba
-# From Bob Devine:  ". . .DST is from 2nd Sunday in May to 2nd Sunday in
-# October since 1981.  Change at midnight.  In 1979 & 1980, started at 3rd
-# Sunday in March (I think)."
+# From Bob Devine (January 28, 1988):  ". . .DST is from 2nd Sunday in May to
+# 2nd Sunday in October since 1981.  Change at midnight.  In 1979 & 1980,
+# started at 3rd Sunday in March (I think)."
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Cuba	1979	1980	-	Mar	Sun>=15	0:00	1:00	D

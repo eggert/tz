@@ -1,8 +1,20 @@
 # %W%
 
-# Use an absolute path name for TZDIR unless you're just testing the software.
+# If you want something other than Eastern United States time used on your
+# system, change the line below (after finding the zone you want in tzinfo,
+# or adding it to tzinfo).  Alternately, if you discover you've got the
+# wrong time zone, you can just
+#	tzcomp -l rightzone
+
+LOCALTIME=	Eastern
+
+# Since this stuff isn't part of any official release, we'll put it in the
+# directory /usr/local/lib/tzdir rather than the directory /etc/tzdir that's
+# mentioned in the writeups.  You may want to change that.  In any case,
+# use an absolute path name for TZDIR unless you're just testing the software.
 
 TZDIR=		/usr/local/lib/tzdir
+
 DEBUG=
 LINTFLAGS=	-phbaaxc
 LFLAGS=
@@ -18,7 +30,7 @@ ENCHILADA=	Makefile tzfile.h $(TZCSRCS) $(TZDSRCS) tzinfo years.sh \
 all:	REDID_BINARIES tzdump
 
 REDID_BINARIES:	$(TZDIR) tzcomp tzinfo years
-	tzcomp -d $(TZDIR) tzinfo
+	tzcomp -l $(LOCALTIME) -d $(TZDIR) tzinfo
 	cp /dev/null $@
 
 tzdump:	$(TZDOBJS)
@@ -37,9 +49,6 @@ years:	years.sh
 
 bundle:	$(ENCHILADA)
 	bundle $(ENCHILADA) > bundle
-
-modstd: README settz.3 tzfile.5 tzcomp.8 tzinfo
-	bundle README settz.3 tzfile.5 tzcomp.8 tzinfo > modstd
 
 $(ENCHILADA):
 	sccs get $(REL) $(REV) $@

@@ -651,6 +651,18 @@ Zone America/Glace_Bay	-3:59:48 -	LMT	1902 Jun 15
 # Nipigon (EST) and Rainy River (CST) are the largest that we know of.
 # Far west Ontario is like Winnipeg; far east Quebec is like Halifax.
 
+# From Paul Eggert (1997-10-17):
+# msb@sq.com writes that an article in the 1997-10-14 Toronto Star
+# says that Atikokan, Ontario currently does not observe DST,
+# but will vote on 11-10 whether to use EST/EDT.
+# He also writes that the Ontario Time Act (1990, Chapter T.9)
+# <URL:http://www.gov.on.ca/MBS/english/publications/statregs/conttext.html>
+# says that Ontario east of 90W uses EST/EDT, and west of 90W uses CST/CDT.
+# Officially Atikokan is therefore on CST/CDT, and most likely this report
+# concerns a non-official time observed as a matter of local practice.
+# For what it's worth, Shanks (1995) says that Atikokan has agreed with
+# Rainy River ever since standard time was introduced.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Mont	1917	only	-	Mar	25	2:00	1:00	D
 Rule	Mont	1917	only	-	Apr	24	0:00	0	S

@@ -88,7 +88,7 @@ char *	new;
 	else if (newsize == 0)
 		return old;
 	else	oldsize = strlen(old);
-	if ((result = irealloc(old, (alloc_t) (oldsize + newsize + 1))) != NULL)
+	if ((result = irealloc(old, oldsize + newsize + 1)) != NULL)
 		if (!NULLMAL(new))
 			(void) strcpy(result + oldsize, new);
 	return result;

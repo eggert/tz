@@ -1,17 +1,21 @@
-#
+#include "stdio.h"
 
 /*LINTLIBRARY*/
 
-#include "stdio.h"
-
-#if !defined lint && !defined NOID
+#ifndef lint
+#ifndef NOID
 static char	elsieid[] = "%W%";
-#endif /* !defined lint && !defined NOID */
+#endif /* !defined lint */
+#endif /* !defined NOID */
 
 #include "ctype.h"
 #include "string.h"
 
+#ifdef __STDC__
+extern char *	imalloc(int n);
+#else /* !defined __STDC__ */
 extern char *	imalloc();
+#endif /* !defined __STDC__ */
 
 char *
 scheck(string, format)

@@ -108,17 +108,14 @@ static const struct lc_time_T	C_time_locale = {
 
 static char *	_add P((const char *, char *, const char *));
 static char *	_conv P((int, const char *, char *, const char *));
-static char *	_lconv P((long, const char *, char *, const char *));
 static char *	_fmt P((const char *, const struct tm *, char *, const char *, int *));
-
-size_t strftime P((char *, size_t, const char *, const struct tm *));
+static char *	_yconv P((int, int, int, int, char *, const char *));
 
 extern char *	tzname[];
 
 #ifndef YEAR_2000_NAME
 #define YEAR_2000_NAME	"CHECK_STRFTIME_FORMATS_FOR_TWO_DIGIT_YEARS"
 #endif /* !defined YEAR_2000_NAME */
-
 
 #define IN_NONE	0
 #define IN_SOME	1
@@ -211,20 +208,8 @@ label:
 				** something completely different.
 				** (ado, 1993-05-24)
 				*/
-				{
-					long	year;
-					int	top;
-
-					year = t->tm_year;
-					year += TM_YEAR_BASE;
-					top = year / 100;
-					if (top == 0 && year < 0) {
-						pt = _add("-0", pt, ptlim);
-					} else {
-						pt = _conv(top, "%02d",
-							pt, ptlim);
-					}
-				}
+				pt = _yconv(t->tm_year, TM_YEAR_BASE, 1, 0,
+					    pt, ptlim);
 				continue;
 			case 'c':
 				{
@@ -392,13 +377,14 @@ label:
 ** (ado, 1996-01-02)
 */
 				{
-					long	year;
+					int	year;
+					int	base;
 					int	yday;
 					int	wday;
 					int	w;
 
 					year = t->tm_year;
-					year += TM_YEAR_BASE;
+					base = TM_YEAR_BASE;
 					yday = t->tm_yday;
 					wday = t->tm_wday;
 					for ( ; ; ) {
@@ -406,7 +392,7 @@ label:
 						int	bot;
 						int	top;
 
-						len = isleap(year) ?
+						len = isleap_sum(year, base) ?
 							DAYSPERLYEAR :
 							DAYSPERNYEAR;
 						/*
@@ -425,7 +411,7 @@ label:
 							top += DAYSPERWEEK;
 						top += len;
 						if (yday >= top) {
-							++year;
+							++base;
 							w = 1;
 							break;
 						}
@@ -434,8 +420,8 @@ label:
 								DAYSPERWEEK);
 							break;
 						}
-						--year;
-						yday += isleap(year) ?
+						--base;
+						yday += isleap_sum(year, base) ?
 							DAYSPERLYEAR :
 							DAYSPERNYEAR;
 					}
@@ -449,18 +435,12 @@ label:
 					if (*format == 'V')
 						pt = _conv(w, "%02d",
 							pt, ptlim);
-					else if (*format == 'g') {
-						int	i;
-
-						*warnp = IN_ALL;
-						i = year % 100;
-						if (i < 0) {
-							i = -i;
-						}
-						pt = _conv(i, "%02d",
-							pt, ptlim);
-					} else	pt = _lconv(year, "%04ld",
-							pt, ptlim);
+  					else if (*format == 'g') {
+  						*warnp = IN_ALL;
+						pt = _yconv(year, base, 0, 1,
+  							pt, ptlim);
+					} else	pt = _yconv(year, base, 1, 1,
+  							pt, ptlim);
 				}
 				continue;
 			case 'v':
@@ -495,22 +475,14 @@ label:
 					*warnp = warn2;
 				}
 				continue;
-			case 'y':
-				*warnp = IN_ALL;
-				{
-					int	i;
-
-					i = (t->tm_year +
-						(long) TM_YEAR_BASE) % 100;
-					if (i < 0) {
-						i = -i;
-					}
-					pt = _conv(i, "%02d", pt, ptlim);
-				}
-				continue;
-			case 'Y':
-				pt = _lconv(t->tm_year + (long) TM_YEAR_BASE,
-					"%04ld", pt, ptlim);
+  			case 'y':
+  				*warnp = IN_ALL;
+				pt = _yconv(t->tm_year, TM_YEAR_BASE, 0, 1,
+					    pt, ptlim);
+  				continue;
+  			case 'Y':
+				pt = _yconv(t->tm_year, TM_YEAR_BASE, 1, 1,
+					    pt, ptlim);
 				continue;
 			case 'Z':
 #ifdef TM_ZONE
@@ -615,19 +587,6 @@ const char * const	ptlim;
 }
 
 static char *
-_lconv(n, format, pt, ptlim)
-const long		n;
-const char * const	format;
-char * const		pt;
-const char * const	ptlim;
-{
-	char	buf[INT_STRLEN_MAXIMUM(long) + 1];
-
-	(void) sprintf(buf, format, n);
-	return _add(buf, pt, ptlim);
-}
-
-static char *
 _add(str, pt, ptlim)
 const char *		str;
 char *			pt;
@@ -636,6 +595,36 @@ const char * const	ptlim;
 	while (pt < ptlim && (*pt = *str++) != '\0')
 		++pt;
 	return pt;
+}
+
+static char *
+_yconv(a, b, convert_top, convert_yy, pt, ptlim)
+const int		a;
+const int		b;
+const int		convert_top;
+const int		convert_yy;
+char *			pt;
+const char * const	ptlim;
+{
+	char	buf[INT_STRLEN_MAXIMUM(int) + 2];
+	int	i;
+	char *	cp;
+
+	if (!convert_top && !convert_yy)
+		return pt;
+	cp = buf;
+	i = a + b;
+	if ((i > a) == (b > 0))
+		(void) sprintf(cp, "%04d", i);
+	else if (sizeof (long) > sizeof (int))
+		(void) sprintf(cp, "%04ld", (long) a + (long) b);
+	else 	(void) sprintf(cp, "%04.0lf", (double) a + (double) b);
+	i = strlen(cp) - 2;
+	if (!convert_top)
+		cp += i;
+	else	if (!convert_yy)
+			cp[i] = '\0';
+	return _add(cp, pt, ptlim);
 }
 
 #ifdef LOCALE_HOME

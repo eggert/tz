@@ -1,8 +1,8 @@
 #ifndef lint
 #ifndef NOID
 static char	elsieid[] = "%W%";
-#endif /* !NOID */
-#endif /* !lint */
+#endif /* !defined NOID */
+#endif /* !defined lint */
 
 #include "stdio.h"
 #include "time.h"
@@ -27,7 +27,7 @@ static char	elsieid[] = "%W%";
 #ifndef TRUE
 #define TRUE		1
 #define FALSE		0
-#endif
+#endif /* !defined TRUE */
 
 extern char **	environ;
 extern char *	imalloc P((int n));

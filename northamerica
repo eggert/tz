@@ -989,15 +989,11 @@ Rule	Toronto	1922	1923	-	May	Sun>=8	2:00	1:00	D
 # Shanks says 1923-09-19; assume it's a typo and that "-16" was meant.
 Rule	Toronto	1922	1926	-	Sep	Sun>=15	2:00	0	S
 Rule	Toronto	1924	1927	-	May	Sun>=1	2:00	1:00	D
-Rule	Toronto	1927	1928	-	Sep	lastSun	2:00	0	S
-Rule	Toronto	1928	only	-	Apr	lastSun	2:00	1:00	D
-Rule	Toronto	1929	only	-	Apr	lastSun	2:00	1:00	D
-Rule	Toronto	1929	only	-	Sep	lastSun	2:00	0	S
-Rule	Toronto	1930	1931	-	Apr	lastSun	2:00	1:00	D
-Rule	Toronto	1930	1932	-	Sep	lastSun	2:00	0	S
-Rule	Toronto	1932	only	-	May	 1	2:00	1:00	D
+Rule	Toronto	1927	1932	-	Sep	lastSun	2:00	0	S
+Rule	Toronto	1928	1931	-	Apr	lastSun	2:00	1:00	D
+Rule	Toronto	1932	only	-	May	1	2:00	1:00	D
 Rule	Toronto	1933	1940	-	Apr	lastSun	2:00	1:00	D
-Rule	Toronto	1933	only	-	Oct	 1	2:00	0	S
+Rule	Toronto	1933	only	-	Oct	1	2:00	0	S
 Rule	Toronto	1934	1939	-	Sep	lastSun	2:00	0	S
 Rule	Toronto	1945	1946	-	Sep	lastSun	2:00	0	S
 Rule	Toronto	1946	only	-	Apr	lastSun	2:00	1:00	D

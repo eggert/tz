@@ -134,6 +134,7 @@ static size_t	longest;
 static char *	progname;
 static void	show P((char * zone, time_t t, int v));
 static void	dumptime P((const struct tm * tmp));
+static time_t	yeartot P((long y));
 
 int
 main(argc, argv)
@@ -143,9 +144,12 @@ char *	argv[];
 	register int		i;
 	register int		c;
 	register int		vflag;
-	register char *		cutoff;
-	register int		cutyear;
-	register long		cuttime;
+	register char *		cutarg;
+	register int		havecutloyear;
+	long			cutloyear;
+	long			cuthiyear;
+	register time_t		cutlotime;
+	register time_t		cuthitime;
 	char **			fakeenv;
 	time_t			now;
 	time_t			t;
@@ -154,7 +158,9 @@ char *	argv[];
 	struct tm		tm;
 	struct tm		newtm;
 
-	INITIALIZE(cuttime);
+	havecutloyear = FALSE;
+	INITIALIZE(cutlotime);
+	INITIALIZE(cuthitime);
 #if HAVE_GETTEXT
 	(void) setlocale(LC_MESSAGES, "");
 #ifdef TZ_DOMAINDIR
@@ -169,26 +175,39 @@ char *	argv[];
 			(void) exit(EXIT_SUCCESS);
 		}
 	vflag = 0;
-	cutoff = NULL;
+	cutarg = NULL;
 	while ((c = getopt(argc, argv, "c:v")) == 'c' || c == 'v')
 		if (c == 'v')
 			vflag = 1;
-		else	cutoff = optarg;
+		else	cutarg = optarg;
 	if ((c != EOF && c != -1) ||
 		(optind == argc - 1 && strcmp(argv[optind], "=") == 0)) {
 			(void) fprintf(stderr,
-_("%s: usage is %s [ --version ] [ -v ] [ -c cutoff ] zonename ...\n"),
+_("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 				argv[0], argv[0]);
 			(void) exit(EXIT_FAILURE);
 	}
-	if (cutoff != NULL) {
+	if (cutarg != NULL) {
 		int	y;
+		char	dummy;
 
-		cutyear = atoi(cutoff);
-		cuttime = 0;
-		for (y = EPOCH_YEAR; y < cutyear; ++y)
-			cuttime += DAYSPERNYEAR + isleap(y);
-		cuttime *= SECSPERHOUR * HOURSPERDAY;
+		if (sscanf(cutarg, "%ld%c", &cuthiyear, &dummy) == 1) {
+			cuthitime = yeartot(cuthiyear);
+		} else if (sscanf(cutarg, "%ld,%ld%c",
+			&cutloyear, &cuthiyear, &dummy) == 2) {
+				havecutloyear = TRUE;
+				if (cutloyear >= cuthiyear) {
+(void) fprintf(stderr, _("%s: cutloyear >= cuthiyear in -c argument %s\n"),
+						argv[0], cutarg);
+					(void) exit(EXIT_FAILURE);
+				}
+			cutlotime = yeartot(cutloyear);
+			cuthitime = yeartot(cuthiyear);
+		} else {
+(void) fprintf(stderr, _("%s: wild -c argument %s\n"),
+				argv[0], cutarg);
+			(void) exit(EXIT_FAILURE);
+		}
 	}
 	(void) time(&now);
 	longest = 0;
@@ -235,13 +254,15 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c cutoff ] zonename ...\n"),
 		show(argv[i], t, TRUE);
 		t += SECSPERHOUR * HOURSPERDAY;
 		show(argv[i], t, TRUE);
+		if (cutarg != NULL)
+			t = cutlotime;
 		tm = *localtime(&t);
 		(void) strncpy(buf, abbr(&tm), (sizeof buf) - 1);
 		for ( ; ; ) {
-			if (cutoff != NULL && t >= cuttime)
+			if (cutarg != NULL && t >= cuthitime)
 				break;
 			newt = t + SECSPERHOUR * 12;
-			if (cutoff != NULL && newt >= cuttime)
+			if (cutarg != NULL && newt >= cuthitime)
 				break;
 			if (newt <= t)
 				break;
@@ -278,6 +299,28 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c cutoff ] zonename ...\n"),
 	/* gcc -Wall pacifier */
 	for ( ; ; )
 		continue;
+}
+
+static time_t
+yeartot(y)
+const long	y;
+{
+	register time_t	t;
+	register long	myy;
+
+	t = 0;
+	myy = EPOCH_YEAR;
+	while (myy != y) {
+		if (myy < y) {
+			t += DAYSPERNYEAR + isleap(myy);
+			++myy;
+		} else {
+			--myy;
+			t -= DAYSPERNYEAR + isleap(myy);
+		}
+	}
+	t *= (long) SECSPERHOUR * (long) HOURSPERDAY;
+	return t;
 }
 
 static time_t

@@ -203,7 +203,8 @@ CFLAGS=
 # If you want zic's -s option used when installing, uncomment the next line
 # ZFLAGS=	-s
 
-ZIC=		./zic $(ZFLAGS)
+zic=		./zic
+ZIC=		$(zic) $(ZFLAGS)
 
 # The name of a Posix-compliant `awk' on your system.
 AWK=		awk

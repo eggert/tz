@@ -3,11 +3,11 @@
 # From Paul Eggert (1997-03-28):
 # To keep things manageable, we list only locations occupied year-round;
 # see
-# <a href=http://earth.agu.org/amen/nations.html>
+# <a href="http://earth.agu.org/amen/nations.html">
 # Antarctic Activities of Member Nations of the Antarctic Treaty (1996-05-24)
 # </a>
 # and
-# <a href=http://www.spri.cam.ac.uk/bob/periant.htm>
+# <a href="http://www.spri.cam.ac.uk/bob/periant.htm">
 # Summary of the Peri-Antarctic Islands (1996-09-05)
 # </a>
 # for information.
@@ -50,10 +50,10 @@ Zone Antarctica/Casey	0	-	___	1969
 Zone Antarctica/Mawson	0	-	___	1954 Feb 13
 			6:00	-	MAWT	# Mawson Time
 # References:
-# <a href=http://www.antdiv.gov.au/aad/exop/sfo/casey/casey_aws.html>
+# <a href="http://www.antdiv.gov.au/aad/exop/sfo/casey/casey_aws.html">
 # http://www.antdiv.gov.au/aad/exop/sfo/casey/casey_aws.html (1996-07-15)
 # </a>
-# <a href=http://www.antdiv.gov.au/aad/exop/sfo/mawson/video.html>
+# <a href="http://www.antdiv.gov.au/aad/exop/sfo/mawson/video.html">
 # http://www.antdiv.gov.au/aad/exop/sfo/mawson/video.html (1996-04-19)
 # </a>
 
@@ -103,7 +103,7 @@ Zone Antarctica/DumontDUrville 0 -	___	1947
 			0	-	___	1956 Nov
 			10:00	-	DDUT	# Dumont-d'Urville Time
 # Reference:
-# <a href=http://www.icair.iac.org.nz/science/reports/fr/IFRTP.html>
+# <a href="http://www.icair.iac.org.nz/science/reports/fr/IFRTP.html">
 # Support and Development of Polar Research and Technology (1996-09-10)
 # </a>
 
@@ -212,7 +212,7 @@ Zone Antarctica/McMurdo	0	-	___	1956
 # at that time (1957).  (Source: Siple's book 90 degrees SOUTH.)
 #
 # From Susan Smith
-# <a href=http://www.cybertours.com/whs/pole10.html>
+# <a href="http://www.cybertours.com/whs/pole10.html">
 # http://www.cybertours.com/whs/pole10.html (1995-11-13 16:24:56 +1300):
 # </a>
 # We use the same time as McMurdo does.

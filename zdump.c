@@ -64,16 +64,15 @@ static char	elsieid[] = "%W%";
 #define isleap(y) ((((y) % 4) == 0 && ((y) % 100) != 0) || ((y) % 400) == 0)
 #endif /* !defined isleap */
 
-#if HAVE_GETTEXT - 0
+#if HAVE_GETTEXT
 #include "locale.h"	/* for setlocale */
 #include "libintl.h"
-#endif /* HAVE_GETTEXT - 0 */
+#endif /* HAVE_GETTEXT */
 
 #ifndef GNUC_or_lint
 #ifdef lint
 #define GNUC_or_lint
-#endif /* defined lint */
-#ifndef lint
+#else /* !defined lint */
 #ifdef __GNUC__
 #define GNUC_or_lint
 #endif /* defined __GNUC__ */
@@ -83,8 +82,7 @@ static char	elsieid[] = "%W%";
 #ifndef INITIALIZE
 #ifdef GNUC_or_lint
 #define INITIALIZE(x)	((x) = 0)
-#endif /* defined GNUC_or_lint */
-#ifndef GNUC_or_lint
+#else /* !defined GNUC_or_lint */
 #define INITIALIZE(x)
 #endif /* !defined GNUC_or_lint */
 #endif /* !defined INITIALIZE */
@@ -96,11 +94,11 @@ static char	elsieid[] = "%W%";
 */
 
 #ifndef _
-#if HAVE_GETTEXT - 0
+#if HAVE_GETTEXT
 #define _(msgid) gettext(msgid)
-#else /* !(HAVE_GETTEXT - 0) */
+#else /* !HAVE_GETTEXT */
 #define _(msgid) msgid
-#endif /* !(HAVE_GETTEXT - 0) */
+#endif /* !HAVE_GETTEXT */
 #endif /* !defined _ */
 
 #ifndef TZ_DOMAIN
@@ -110,8 +108,7 @@ static char	elsieid[] = "%W%";
 #ifndef P
 #ifdef __STDC__
 #define P(x)	x
-#endif /* defined __STDC__ */
-#ifndef __STDC__
+#else /* !defined __STDC__ */
 #define P(x)	()
 #endif /* !defined __STDC__ */
 #endif /* !defined P */
@@ -151,13 +148,13 @@ char *	argv[];
 	struct tm		newtm;
 
 	INITIALIZE(cuttime);
-#if HAVE_GETTEXT - 0
+#if HAVE_GETTEXT
 	(void) setlocale(LC_MESSAGES, "");
 #ifdef TZ_DOMAINDIR
 	(void) bindtextdomain(TZ_DOMAIN, TZ_DOMAINDIR);
-#endif /* defined(TEXTDOMAINDIR) */
+#endif /* defined TEXTDOMAINDIR */
 	(void) textdomain(TZ_DOMAIN);
-#endif /* HAVE_GETTEXT - 0 */
+#endif /* HAVE_GETTEXT */
 	progname = argv[0];
 	for (i = 1; i < argc; ++i)
 		if (strcmp(argv[i], "--version") == 0) {

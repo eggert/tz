@@ -1056,7 +1056,7 @@ struct tm * const	tmp;
 		for (i = 1; i < sp->timecnt; ++i)
 			if (t < sp->ats[i])
 				break;
-		i = sp->types[i - 1];
+		i = (int) sp->types[i - 1];
 	}
 	ttisp = &sp->ttis[i];
 	/*
@@ -1087,11 +1087,11 @@ const time_t * const	timep;
 */
 
 struct tm *
-localtime_r(timep, tm)
+localtime_r(timep, tmp)
 const time_t * const	timep;
-struct tm *		tm;
+struct tm *		tmp;
 {
-	return localsub(timep, 0L, tm);
+	return localsub(timep, 0L, tmp);
 }
 
 /*
@@ -1149,11 +1149,11 @@ const time_t * const	timep;
 */
 
 struct tm *
-gmtime_r(timep, tm)
+gmtime_r(timep, tmp)
 const time_t * const	timep;
-struct tm *		tm;
+struct tm *		tmp;
 {
-	return gmtsub(timep, 0L, tm);
+	return gmtsub(timep, 0L, tmp);
 }
 
 #ifdef STD_INSPIRED
@@ -1333,9 +1333,9 @@ ctime_r(timep, buf)
 const time_t * const	timep;
 char *			buf;
 {
-	struct tm	tm;
+	struct tm	mytm;
 
-	return asctime_r(localtime_r(timep, &tm), buf);
+	return asctime_r(localtime_r(timep, &mytm), buf);
 }
 
 /*
@@ -1436,7 +1436,6 @@ const int		do_norm_secs;
 {
 	register const struct state *	sp;
 	register int			dir;
-	register int			bits;
 	register int			i, j;
 	register int			saved_seconds;
 	register long			li;
@@ -1526,10 +1525,8 @@ const int		do_norm_secs;
 		else	hi = (time_t) FLT_MAX;
 		lo = -hi;
 	} else {
-		register int	i;
-
 		lo = 1;
-		for (i = 0; i < TYPE_BIT(time_t) - 1; ++i)
+		for (i = 0; i < (int) TYPE_BIT(time_t) - 1; ++i)
 			lo *= 2;
 		hi = -(lo + 1);
 	}

@@ -61,7 +61,7 @@ static char	elsieid[] = "%W%";
 #define WILDABBR	"   "
 #endif /* !defined WILDABBR */
 
-static char		wildabbr[] = "WILDABBR";
+static char		wildabbr[] = WILDABBR;
 
 static const char	gmt[] = "GMT";
 

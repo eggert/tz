@@ -41,7 +41,8 @@ static char	tzfilehid[] = "%W%";
 */
 
 struct tzhead {
-	char	tzh_reserved[24];	/* reserved for future use */
+	char	tzh_reserved[20];	/* reserved for future use */
+	char	tzh_ttisgmtcnt[4];	/* coded number of trans. time flags */
 	char	tzh_ttisstdcnt[4];	/* coded number of trans. time flags */
 	char	tzh_leapcnt[4];		/* coded number of leap seconds */
 	char	tzh_timecnt[4];		/* coded number of transition times */
@@ -67,6 +68,11 @@ struct tzhead {
 **					transition time is wall clock time
 **					if absent, transition times are
 **					assumed to be wall clock time
+**	tzh_ttisgmtcnt (char)s		indexed by type; if TRUE, transition
+**					time is GMT, if FALSE,
+**					transition time is local time
+**					if absent, transition times are
+**					assumed to be local time
 */
 
 /*

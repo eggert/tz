@@ -63,6 +63,13 @@ struct lsinfo {				/* leap second information */
 
 #define BIGGEST(a, b)	(((a) > (b)) ? (a) : (b))
 
+#ifdef TZNAME_MAX
+#define MY_TZNAME_MAX	TZNAME_MAX
+#endif /* defined TZNAME_MAX */
+#ifndef TZNAME_MAX
+#define MY_TZNAME_MAX	255
+#endif /* !defined TZNAME_MAX */
+
 struct state {
 	int		leapcnt;
 	int		timecnt;
@@ -72,14 +79,7 @@ struct state {
 	unsigned char	types[TZ_MAX_TIMES];
 	struct ttinfo	ttis[TZ_MAX_TYPES];
 	char		chars[BIGGEST(BIGGEST(TZ_MAX_CHARS + 1, sizeof GMT),
-				(2 * (
-#ifdef TZNAME_MAX
-				TZNAME_MAX
-#endif /* defined TZNAME_MAX */
-#ifndef TZNAME_MAX
-				255
-#endif /* !defined TZNAME_MAX */
-				+ 1)))];
+				(2 * (MY_TZNAME_MAX + 1)))];
 	struct lsinfo	lsis[TZ_MAX_LEAPS];
 };
 

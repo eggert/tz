@@ -2,8 +2,7 @@
 #ifndef NOID
 static char	elsieid[] = "%W%";
 /*
-** The catenation of UCB's date.c and logwtmp.c,
-** less logwtmp.c's repeated #include's,
+** UCB's date.c, plus BSD conditionalizing, pluse changes to use "mktime".
 ** plus BSD conditionalizing,
 ** plus changes to use "mktime".
 */
@@ -47,7 +46,6 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #include <errno.h>
 #include <syslog.h>
 #include <utmp.h>
-#include <tzfile.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <strings.h>
@@ -56,9 +54,6 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 
 static struct timeval	tv;
 static int	retval;
-
-static int	dmsize[] =
-	{ -1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 main(argc, argv)
 	int argc;
@@ -119,20 +114,27 @@ main(argc, argv)
 	if (!argc)
 		goto display;
 
+	if (uflag) {
+		/*
+		** Take measures to ensure that mktime uses GMT.
+		*/
+	}
 	if (gtime(*argv)) {
 		usage();
 		retval = 1;
 		goto display;
 	}
-
-	if (!uflag) {		/* convert to GMT assuming local time */
-		tv.tv_sec += (long)tz.tz_minuteswest * SECS_PER_MIN;
-				/* now fix up local daylight time */
-		if (localtime((time_t *)&tv.tv_sec)->tm_isdst)
-			tv.tv_sec -= SECS_PER_HOUR;
+	if (uflag) {
+		/*
+		** Undo measures to ensure that mktime uses GMT.
+		*/
 	}
+
 #ifdef BSD
 	if (nflag || !netsettime(tv)) {
+#else
+	{
+#endif /* !defined BSD */
 		logwtmp("|", "date", "");
 		if (settimeofday(&tv, (struct timezone *)NULL)) {
 			perror("settimeofday");
@@ -141,7 +143,6 @@ main(argc, argv)
 		}
 		logwtmp("{", "date", "");
 	}
-#endif /* defined BSD */
 
 	username = getlogin();
 	if (!username || *username == '\0')	/* single-user or no tty */
@@ -158,11 +159,12 @@ display:
 		tzn = "GMT";
 	}
 	else {
-		struct tm *tp;
+		struct tm *	tp;
+		extern char *	tzname[2];
 
 		tp = localtime((time_t *)&tv.tv_sec);
 		ap = asctime(tp);
-		tzn = tp->tm_zone;
+		tzn = tzname[tp->tm_isdst];
 	}
 	printf("%.20s%s%s", ap, tzn, ap + 19);
 	exit(retval);
@@ -171,71 +173,64 @@ display:
 /*
  * gtime --
  *	convert user's time into number of seconds
+ * STILL TO DO:  COPE WITH DST/STD.
  */
 static
 gtime(ap)
 	register char *ap;
 {
-	register int year, month;
-	register char *C;
-	struct tm *L;
-	int day, hour, mins, secs;
+	register char * C;
+	time_t		t;
+	struct tm	in, out;
 
-	for (secs = 0, C = ap; *C; ++C) {
+	in = *localtime((time_t *)&tv.tv_sec);
+	in.tm_sec = 0;
+	for (C = ap; *C; ++C) {
 		if (*C == '.') {		/* seconds provided */
 			if (strlen(C) != 3)
 				return(1);
-			*C = NULL;
-			secs = (C[1] - '0') * 10 + (C[2] - '0');
+			if (!isdigit(C[1]) || !isdigit(C[2]))
+				return(1);
+			in.tm_sec = (C[1] - '0') * 10 + (C[2] - '0');
 			break;
 		}
 		if (!isdigit(*C))
 			return(-1);
 	}
 
-	L = localtime((time_t *)&tv.tv_sec);
-	year = L->tm_year;			/* defaults */
-	month = L->tm_mon + 1;
-	day = L->tm_mday;
-
 	switch ((int)(C - ap)) {		/* length */
 		case 10:			/* yymmddhhmm */
-			year = ATOI2(ap);
+			in.tm_year = ATOI2(ap);
+			if (in.tm_year < 70)	/* epoch year */
+				in.tm_year += 100;
 		case 8:				/* mmddhhmm */
-			month = ATOI2(ap);
+			in.tm_mon = ATOI2(ap);
+			--in.tm_mon;
 		case 6:				/* ddhhmm */
-			day = ATOI2(ap);
+			in.tm_mday = ATOI2(ap);
 		case 4:				/* hhmm */
-			hour = ATOI2(ap);
-			mins = ATOI2(ap);
+			in.tm_hour = ATOI2(ap);
+			in.tm_min = ATOI2(ap);
 			break;
 		default:
 			return(1);
 	}
 
-	if (*ap || month < 1 || month > 12 || day < 1 || day > 31 ||
-	     mins < 0 || mins > 59 || secs < 0 || secs > 59)
-		return(1);
-	if (hour == 24) {
-		++day;
-		hour = 0;
+	out = in;
+	tv.tv_sec = mktime(&out);
+	if (tv.tv_sec == -1 ||
+		out.tm_year != in.tm_year ||
+		out.tm_mon != in.tm_mon ||
+		out.tm_hour != in.tm_hour ||
+		out.tm_min != in.tm_min ||
+		out.tm_sec != in.tm_sec) {
+			/*
+			** Old code allows hour == 24;
+			** check for it here.
+			*/
+			return 1;
 	}
-	else if (hour < 0 || hour > 23)
-		return(1);
-
-	tv.tv_sec = 0;
-	year += TM_YEAR_BASE;
-	if (isleap(year) && month > 2)
-		++tv.tv_sec;
-	for (--year;year >= EPOCH_YEAR;--year)
-		tv.tv_sec += isleap(year) ? DAYS_PER_LYEAR : DAYS_PER_NYEAR;
-	while (--month)
-		tv.tv_sec += dmsize[month];
-	tv.tv_sec += day - 1;
-	tv.tv_sec = HOURS_PER_DAY * tv.tv_sec + hour;
-	tv.tv_sec = MINS_PER_HOUR * tv.tv_sec + mins;
-	tv.tv_sec = SECS_PER_MIN * tv.tv_sec + secs;
-	return(0);
+	return 0;
 }
 
 #ifdef BSD
@@ -379,52 +374,4 @@ bad:
 usage()
 {
 	fputs("usage: date [-nu] [-d dst] [-t minutes_west] [yymmddhhmm[.ss]]\n", stderr);
-}
-
-/*
- * Copyright (c) 1988 The Regents of the University of California.
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms are permitted
- * provided that the above copyright notice and this paragraph are
- * duplicated in all such forms and that any documentation,
- * advertising materials, and other materials related to such
- * distribution and use acknowledge that the software was developed
- * by the University of California, Berkeley.  The name of the
- * University may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
- * THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- */
-
-#if defined(LIBC_SCCS) && !defined(lint)
-static char sccsid[] = "@(#)logwtmp.c	5.2 (Berkeley) 9/20/88";
-#endif /* LIBC_SCCS and not lint */
-
-#include <sys/stat.h>
-
-#define	WTMPFILE	"/usr/adm/wtmp"
-
-logwtmp(line, name, host)
-	char *line, *name, *host;
-{
-	struct utmp ut;
-	struct stat buf;
-	int fd;
-	time_t time();
-	char *strncpy();
-
-	if ((fd = open(WTMPFILE, O_WRONLY|O_APPEND, 0)) < 0)
-		return;
-	if (!fstat(fd, &buf)) {
-		(void)strncpy(ut.ut_line, line, sizeof(ut.ut_line));
-		(void)strncpy(ut.ut_name, name, sizeof(ut.ut_name));
-		(void)strncpy(ut.ut_host, host, sizeof(ut.ut_host));
-		(void)time(&ut.ut_time);
-		if (write(fd, (char *)&ut, sizeof(struct utmp)) !=
-		    sizeof(struct utmp))
-			(void)ftruncate(fd, buf.st_size);
-	}
-	(void)close(fd);
 }

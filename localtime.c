@@ -6,7 +6,8 @@ static char	elsieid[] = "%W%";
 
 /*
 ** Leap second handling from Bradley White (bww@k.gp.cs.cmu.edu).
-** POSIX-format TZ environment variable handling from Guy Harris (guy@sun.com).
+** POSIX-format TZ environment variable handling from Guy Harris
+** (guy@auspex.uucp).
 */
 
 /*LINTLIBRARY*/

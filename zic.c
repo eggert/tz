@@ -93,6 +93,8 @@ static void	associate P((void));
 static int	ciequal P((const char * ap, const char * bp));
 static void	convert P((long val, char * buf));
 static void	dolink P((const char * fromfile, const char * tofile));
+static void	doabbr P((char * abbr, const char * format,
+			const char * letters, int isdst));
 static void	eat P((const char * name, int num));
 static void	eats P((const char * name, int num,
 			const char * rname, int rnum));
@@ -1361,7 +1363,7 @@ doabbr(abbr, format, letters, isdst)
 char * const		abbr;
 const char * const	format;
 const char * const	letters;
-int			isdst;
+const int		isdst;
 {
 	if (strchr(format, '/') == NULL) {
 		if (letters == NULL)

@@ -62,6 +62,7 @@ struct ttinfo {				/* time type information */
 	int		tt_isdst;	/* used to set tm_isdst */
 	int		tt_abbrind;	/* abbreviation list index */
 	int		tt_ttisstd;	/* TRUE if transition is std time */
+	int		tt_ttisgmt;	/* TRUE if transition is GMT */
 };
 
 struct lsinfo {				/* leap second information */
@@ -290,12 +291,14 @@ register struct state * const	sp;
 		register const struct tzhead *	tzhp;
 		char				buf[sizeof *sp + sizeof *tzhp];
 		int				ttisstdcnt;
+		int				ttisgmtcnt;
 
 		i = read(fid, buf, sizeof buf);
 		if (close(fid) != 0 || i < sizeof *tzhp)
 			return -1;
 		tzhp = (struct tzhead *) buf;
 		ttisstdcnt = (int) detzcode(tzhp->tzh_ttisstdcnt);
+		ttisgmtcnt = (int) detzcode(tzhp->tzh_ttisgmtcnt);
 		sp->leapcnt = (int) detzcode(tzhp->tzh_leapcnt);
 		sp->timecnt = (int) detzcode(tzhp->tzh_timecnt);
 		sp->typecnt = (int) detzcode(tzhp->tzh_typecnt);
@@ -304,14 +307,16 @@ register struct state * const	sp;
 			sp->typecnt <= 0 || sp->typecnt > TZ_MAX_TYPES ||
 			sp->timecnt < 0 || sp->timecnt > TZ_MAX_TIMES ||
 			sp->charcnt < 0 || sp->charcnt > TZ_MAX_CHARS ||
-			(ttisstdcnt != sp->typecnt && ttisstdcnt != 0))
+			(ttisstdcnt != sp->typecnt && ttisstdcnt != 0) ||
+			(ttisgmtcnt != sp->typecnt && ttisgmtcnt != 0))
 				return -1;
 		if (i < sizeof *tzhp +
 			sp->timecnt * (4 + sizeof (char)) +
 			sp->typecnt * (4 + 2 * sizeof (char)) +
 			sp->charcnt * sizeof (char) +
 			sp->leapcnt * 2 * 4 +
-			ttisstdcnt * sizeof (char))
+			ttisstdcnt * sizeof (char) +
+			ttisgmtcnt * sizeof (char))
 				return -1;
 		p = buf + sizeof *tzhp;
 		for (i = 0; i < sp->timecnt; ++i) {
@@ -359,6 +364,19 @@ register struct state * const	sp;
 				ttisp->tt_ttisstd = *p++;
 				if (ttisp->tt_ttisstd != TRUE &&
 					ttisp->tt_ttisstd != FALSE)
+						return -1;
+			}
+		}
+		for (i = 0; i < sp->typecnt; ++i) {
+			register struct ttinfo *	ttisp;
+
+			ttisp = &sp->ttis[i];
+			if (ttisgmtcnt == 0)
+				ttisp->tt_ttisgmt = FALSE;
+			else {
+				ttisp->tt_ttisgmt = *p++;
+				if (ttisp->tt_ttisgmt != TRUE &&
+					ttisp->tt_ttisgmt != FALSE)
 						return -1;
 			}
 		}
@@ -813,6 +831,10 @@ const int			lastditch;
 			** the prototype probably has a 1-hour difference
 			** between standard and summer time, but a different
 			** difference can be specified in TZ.
+			*/
+			/*
+			** XXX--STILL MUST MAKE USE OF GMT INFO
+			** SCHLEPPED ELSEWHERE.
 			*/
 			isdst = FALSE;	/* we start in standard time */
 			for (i = 0; i < sp->timecnt; ++i) {

@@ -113,27 +113,32 @@ char *	argv[];
 		show(argv[i], now, FALSE);
 		if (!vflag)
 			continue;
-		if (argv[i][0] == '/')
-			fp = fopen(argv[i], "r");
-		else {
-			j = strlen(TZDIR) + 1 + strlen(argv[i]) + 1;
-			if (j > sizeof buf) {
-				(void) fprintf(stderr,
-					"%s: timezone name %s/%s is too long\n",
-					argv[0], TZDIR, argv[i]);
-				exit(1);
-			}
-			(void) sprintf(buf, "%s/%s", TZDIR, argv[i]);
-			fp = fopen(buf, "r");
-		}
-		if (fp == NULL) {
-			(void) fprintf(stderr, "%s: Can't open ", argv[0]);
-			perror(argv[i]);
-			exit(1);
-		}
-		{
+		if (argv[i][0] == '\0') {
+			fp = NULL;
+			timecnt = 0;
+			leapcnt = 0;
+		} else {
 			char		code[4];
 
+			if (argv[i][0] == '/')
+				fp = fopen(argv[i], "r");
+			else {
+				j = strlen(TZDIR) + 1 + strlen(argv[i]) + 1;
+				if (j > sizeof buf) {
+					(void) fprintf(stderr,
+"%s: timezone name %s/%s is too long\n",
+						argv[0], TZDIR, argv[i]);
+					exit(1);
+				}
+				(void) sprintf(buf, "%s/%s", TZDIR, argv[i]);
+				fp = fopen(buf, "r");
+			}
+			if (fp == NULL) {
+				(void) fprintf(stderr, "%s: Can't open ",
+					argv[0]);
+				perror(argv[i]);
+				exit(1);
+			}
 (void) fseek(fp, (long) sizeof ((struct tzhead *) 0)->tzh_reserved, 0);
 			if (fread((char *) code, sizeof code, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
@@ -165,8 +170,9 @@ char *	argv[];
 			show(argv[i], t - 1, TRUE);
 			show(argv[i], t, TRUE);
 		}
-		(void) fseek(fp, (long) sizeof (struct tzhead) + timecnt * 5
-					+ typecnt * 6 + charcnt, 0);
+		if (fp != NULL)
+			(void) fseek(fp, (long) sizeof (struct tzhead) +
+				timecnt * 5 + typecnt * 6 + charcnt, 0);
 		for (k = leapcnt; k > 0; --k) {
 			char	code[4];
 
@@ -180,7 +186,7 @@ char *	argv[];
 			show(argv[i], t, TRUE);
 			show(argv[i], t + 1, TRUE);
 		}
-		if (fclose(fp)) {
+		if (fp != NULL && fclose(fp)) {
 			(void) fprintf(stderr, "%s: Error closing ", argv[0]);
 			perror(argv[i]);
 			exit(1);

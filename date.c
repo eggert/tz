@@ -3,9 +3,19 @@
 static char	elsieid[] = "%W%";
 /*
 ** Modified from the UCB version whose sccsid appears below.
+** Add -a option for benefit of Sun?
 */
 #endif /* !defined NOID */
 #endif /* !defined lint */
+
+/*
+** Is this next right????  There's a TSP_SETTIME but no TSP_SETDATE in
+** Sun's "protocols/timed.h".  Are the two synonymous?
+*/
+
+#ifdef sun
+#define TSP_SETDATE	TSP_SETTIME
+#endif /* defined sun */
 
 /*
  * Copyright (c) 1985, 1987, 1988 The Regents of the University of California.
@@ -48,211 +58,228 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #include <ctype.h>
 #include <strings.h>
 #include "tzfile.h"
-#include "nonstd.h"
 
-/*
-** TO DO:  
-**	   Toss in the -a option for time adjustment.
-**	   Ensure that BEFORE and AFTER characters are correct for System V.
-**	   Multiple noons in Riyadh???
-*/
+#ifndef TIME_USER
+#ifdef OTIME_MSG
+#define TIME_USER	username
+#else /* !defined OTIME_MSG */
+#define TIME_USER	"date"
+#endif /* !defined OTIME_MSG */
+#endif /* !defined OTIME_USER */
 
+#ifndef OTIME_MSG
+#define OTIME_MSG	"|"
+#endif /* !defined OTIME_MSG */
+
+#ifndef NTIME_MSG
+#define NTIME_MSG	"{"
+#endif /* !defined NTIME_MSG */
+
+#ifndef EXIT_SUCCESS
 #define EXIT_SUCCESS	0
+#endif /* !defined EXIT_SUCCESS */
+
+#ifndef EXIT_FAILURE
 #define EXIT_FAILURE	1
+#endif /* !defined EXIT_FAILURE */
 
-#define BEFORE		"|"
-#define AFTER		"{"
-
-extern char *		tzname[2];
-
+extern char **		environ;
+extern char *		getlogin();
+extern char *		optarg;
 extern int		optind;
-static int		retval = EXIT_SUCCESS;
-
-static void		display();
+extern time_t		time();
+extern char *		tzname[2];
 
 static time_t		now;
 
-#ifndef USG
+static int		retval = EXIT_SUCCESS;
 
-static struct timeval	tv;
+static void		display();
+static void		timeout();
+static void		usage();
 
-int
-main(argc, argv)
-	int argc;
-	char **argv;
-{
-	extern int optind;
-	extern char *optarg;
-	struct timezone tz;
-	char *ap, *tzn;
-	int ch, nflag;
-	int	isdst, newdst;
-	char * cp;
-	char *username, *getlogin();
-	time_t time();
-	char *	format;
-	char *	value;
-
-	(void) time(&now);
-	format = value = NULL;
-	nflag = 0;
-	tz.tz_dsttime = tz.tz_minuteswest = 0;
-	isdst = -1;
-	format = NULL;
-	while ((ch = getopt(argc, argv, "d:nut:DS")) != EOF)
-		switch (ch) {
-		case 'D':
-		case 'S':
-			newdst = (ch == 'D') ? 1 : 0;
-			if (isdst >= 0 && newdst != isdst)
-				usage();
-			isdst = newdst;
-			break;
-		case 'd':		/* daylight savings time */
-			tz.tz_dsttime = atoi(optarg) ? 1 : 0;
-			break;
-		case 'n':		/* don't set network */
-			nflag = 1;
-			break;
-		case 'u':		/* do it in GMT */
-			setgmt();
-			break;
-		case 't':		/* minutes west of GMT */
-					/* error check; we can't allow "PST" */
-			if (isdigit(*optarg)) {
-				tz.tz_minuteswest = atoi(optarg);
-				break;
-			}
-			/*FALLTHROUGH*/
-		default:
-			usage();
-		}
-	while (optind < argc) {
-		cp = argv[optind++];
-		if (*cp == '+')
-			if (format == NULL)
-				format = cp + 1;
-			else	usage();
-		else	if (value == NULL)
-				value = cp;
-			else	usage();
-	}
-	if ((tz.tz_minuteswest || tz.tz_dsttime) &&
-	    settimeofday((struct timeval *)NULL, &tz)) {
-		perror("settimeofday");
-		retval = 1;
-		display(format);
-	}
-	if (value == NULL)
-		display(format);
-
-	if (gettimeofday(&tv, &tz)) {
-		perror("gettimeofday");
-		(void) exit(EXIT_FAILURE);
-	}
-
-	tv.tv_sec = gtime(value, isdst);
-	if (tv.tv_sec == -1) {
-		usage();
-		retval = 1;
-		display(format);
-	}
-
-	if (nflag || !netsettime(tv)) {
-		logwtmp(BEFORE, "date", "");
-		if (settimeofday(&tv, (struct timezone *)NULL)) {
-			perror("settimeofday");
-			retval = 1;
-			display(format);
-		}
-		logwtmp(AFTER, "date", "");
-	}
-
-	username = getlogin();
-	if (!username || *username == '\0')	/* single-user or no tty */
-		username = "root";
-	syslog(LOG_AUTH | LOG_NOTICE, "date set by %s", username);
-
-	display(format);
-	for ( ; ; )
-		;
-}
-
-usage()
-{
-	fputs("usage: date [-nu] [-d dst] [-D] [-S] [-t minutes_west] [yymmddhhmm[.ss]]\n", stderr);
-	retval = EXIT_FAILURE;
-	display((char *) NULL);
-}
-
-#else /* defined USG */
+#ifdef DST_NONE
+#define OPTIONS	"uDSnd:t:"
+#else /* !defined DST_NONE */
+#define OPTIONS	"uDSn"
+#endif /* !defined DST_NONE */
 
 int
 main(argc, argv)
 int	argc;
 char *	argv[];
 {
-	char *	cp;
-	int	ch;
-	time_t	time();
-	time_t	t;
-	int	isdst;
-	char *	format;
-	char *	value;
+	register char *		format;
+	register char *		value;
+	register char *		cp;
+	register char *		username;
+	register int		ch;
+	register int		isdst;
+	register int		nflag;
+	time_t			t;
+#ifdef DST_NONE
+	register int		tflag, dflag;
+	struct timezone		tz;
+	static struct timeval	tv;	/* static so tv_usec is 0 */
 
+	if (gettimeofday((struct timeval *) NULL, &tz) != 0) {
+		perror("date: error: gettimeofday");
+		(void) exit(EXIT_FAILURE);
+	}
+	tflag = dflag = 0;
+#endif /* defined DST_NONE */
 	(void) time(&now);
 	format = value = NULL;
 	isdst = -1;
-	while ((ch = getopt(argc, argv, "uDS")) != EOF)
+	nflag = 0;
+	while ((ch = getopt(argc, argv, OPTIONS)) != EOF) {
 		switch (ch) {
-			case 'D':
-			case 'S':
-				newdst = (ch == 'D') ? 1 : 0;
-				if (isdst >= 0 && newdst != isdst)
-					usage();
-				isdst = newdst;
-				break;
-			case 'u':
-				setgmt():
-				break;
-			default:
+		default:
+			usage();
+		case 'S':		/* take time to be Standard time */
+		case 'D':		/* take time to be Deviant time */
+			if (isdst != -1) {
+				(void) fprintf(stderr,
+					"date: error: multiple -S/-D's used");
 				usage();
+			}
+			isdst = (ch == 'S') ? 0 : 1;
+			break;
+		case 'u':		/* do it in GMT */
+			{
+				register char **	saveenv;
+				static char *		fakeenv[] = {
+								"TZ=GMT0",
+								NULL
+							};
+
+				saveenv = environ;
+				environ = fakeenv;
+				tzset();
+				environ = saveenv;
+			}
+			break;
+		case 'n':		/* don't set network */
+			nflag = 1;
+			break;
+#ifdef DST_NONE
+		case 'd':		/* daylight savings time */
+			if (dflag) {
+				(void) fprintf(stderr,
+					"date: error: multiple -d's used");
+				usage();
+			}
+			dflag = 1;
+			tz.tz_dsttime = atoi(optarg);
+			if (*optarg == '\0')
+				usage();
+			while (*optarg != '\0')
+				if (!isdigit(*optarg))
+					usage();
+			break;
+		case 't':		/* minutes west of GMT */
+			if (tflag) {
+				(void) fprintf(stderr,
+					"date: error: multiple -t's used");
+				usage();
+			}
+			tflag = 1;
+			tz.tz_minuteswest = atoi(optarg);
+			if (*optarg == '+' || *optarg == '-')
+				++optarg;
+			if (*optarg == '\0')
+				usage();
+			while (*optarg != '\0')
+				if (!isdigit(*optarg))
+					usage();
+			break;
+#endif /* defined DST_NONE */
 		}
+	}
 	while (optind < argc) {
 		cp = argv[optind++];
 		if (*cp == '+')
 			if (format == NULL)
 				format = cp + 1;
-			else	usage();
+			else {
+				(void) fprintf(stderr, 
+					"date: error: multiple formats given\n");
+				usage();
+			}
 		else	if (value == NULL)
 				value = cp;
-			else	usage();
+			else {
+				(void) fprintf(stderr,
+					"date: error: multiple values given\n");
+				usage();
+			}
 	}
+	if (value != NULL) {
+		t = gtime(value, isdst);
+		if (t == -1)
+			usage();
+	}
+	/*
+	** Entire command line has now been checked.
+	*/
+#ifdef DST_NONE
+	if ((tflag || dflag) &&
+		settimeofday((struct timeval *) NULL, &tz) != 0) {
+			perror("date: error: settimeofday");
+			retval = 1;
+			display(format);
+	}
+#endif /* defined DST_NONE */
 	if (value == NULL)
 		display(format);
-	t = gtime(value, isdst);
-	if (t == -1)
-		usage();
-	logwtmp(BEFORE, "date", "");
-	if (stime(&t) == 0)
-		logwtmp(AFTER, "date", "");
-	else {
-		perror("stime");
-		retval = 1;
+	username = getlogin();
+	if (username == NULL || *username == '\0') /* single-user or no tty */
+		username = "root";
+#ifdef DST_NONE
+	if (!nflag) {
+		tv.tv_sec = t;
+		if (netsettime(tv) != 1)
+			exit(EXIT_FAILURE);
 	}
+	logwtmp(OTIME_MSG, TIME_USER, "");
+	if (settimeofday(&tv, (struct timezone *) NULL) == 0) {
+		logwtmp(NTIME_MSG, TIME_USER, "");
+		syslog(LOG_AUTH | LOG_NOTICE, "date set by %s", username);
+	} else {
+		perror("date: error: settimeofday");
+		retval = EXIT_FAILURE;
+	}
+#else /* !defined DST_NONE */
+	logwtmp(OTIME_MSG, TIME_USER, "");
+	if (stime(&t) == 0)
+		logwtmp(NTIME_MSG, TIME_USER, "");
+	else {
+		perror("date: error: stime");
+		retval = EXIT_FAILURE;
+	}
+#endif /* !defined DST_NONE */
+
 	display(format);
+	for ( ; ; )
+		;
 }
 
+#ifdef DST_NONE
+static char	usemes[] = "\
+date: usage is date [-uDSn][-d dst][-t mins_west] [[yy]mmddhhmm[yy][.ss]] [+fmt]\
+";
+#else /* !defined DST_NONE */
+static char	usemes[] = "\
+date: usage is date [-uDSn] [[yy]mmddhhmm[yy][.ss]] [+format]";
+#endif /* !defined DST_NONE */
+
+static void
 usage()
 {
-	(void) fprintf(stderr, "date: usage is date [-u] yymmddhhmm[.ss]\n");
+	(void) fprintf(stderr, usemes);
 	retval = EXIT_FAILURE;
 	display((char *) NULL);
 }
-
-#endif /* defined USG */
-
-static void	timeout();
 
 static void
 display(format)
@@ -268,7 +295,7 @@ char *	format;
 	(void) fflush(stdout);
 	(void) fflush(stderr);
 	if (ferror(stdout) || ferror(stderr)) {
-		(void) fprintf(stderr, "date: wild result writing\n");
+		(void) fprintf(stderr, "date: error: couldn't write results\n");
 		retval = EXIT_FAILURE;
 	}
 	(void) exit(retval);
@@ -306,8 +333,9 @@ struct tm *	tmp;
 		switch (c = *format++) {
 		default:
 			(void) fprintf(stderr,
-				"date: bad format character - %c\n", c);
-			(void) exit(EXIT_FAILURE);
+				"date: error: bad format character - %c\n", c);
+			retval = EXIT_FAILURE;
+			display((char *) NULL);
 		case 'a':
 			(void) printf("%.3s", wday_names[tmp->tm_mon]);
 			break;
@@ -406,29 +434,17 @@ struct tm *	tmp;
 	}
 }
 
-setgmt()
-{
-	register char **	saveenv;
-	extern char **		environ;
-	static char *		fakeenv[] = { "TZ=GMT0", NULL };
-
-	saveenv = environ;
-	environ = fakeenv;
-	tzset();
-	environ = saveenv;
-}
-
 /*
  * gtime --
  *	convert user's input into a time_t.
- * Track the BSD behavior of treating
+ * Track the UCB behavior of treating
  * 	2415
  * as 12:15 AM tomorrow rather than 12:15 AM today.
  */
 
 static int
 pair(cp)
-register const char * const	cp;
+register char * cp;
 {
 	if (!isdigit(cp[0]) || !isdigit(cp[1]))
 		return -1;
@@ -437,7 +453,7 @@ register const char * const	cp;
 
 static time_t
 xtime(intmp)
-register const struct tm * const	intmp;
+register struct tm * intmp;
 {
 	struct tm	intm;
 	struct tm	outtm;
@@ -481,8 +497,8 @@ register const struct tm * const	intmp;
 
 static time_t
 gtime(cp, isdst)
-register const char *	cp;
-int			isdst;
+register char *	cp;
+int		isdst;
 {
 	register int	i;
 	struct tm	tm;
@@ -501,7 +517,8 @@ int			isdst;
 				return thist;
 			else {
 				(void) fprintf(stderr,
-"date: use -S or -D to control whether given time is Daylight or Standard\n");
+"date: error: ambiguous time--use -S/-D to tell if it's Daylight or Standard\n"
+					);
 				return -1;
 			}
 	}
@@ -577,12 +594,13 @@ int			isdst;
 					return thist;
 				else {
 					(void) fprintf(stderr,
-"date: WHAT THE DICKENS DO I TELL THE USER AT THIS POINT?\n");
+"date: GOLLY: WHAT THE DICKENS DO I TELL THE USER AT THIS POINT?\n");
 					display((char *) NULL);
 				}
 	}
 }
 
+#ifdef DST_NONE
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
@@ -604,9 +622,6 @@ extern	int errno;
 netsettime(ntv)
 	struct timeval ntv;
 {
-#ifndef TSP_SETDATE
-	return 0;
-#else /* defined TSP_SETDATE */
 	int s, length, port, timed_ack, found, err;
 	long waittime;
 	fd_set ready;
@@ -650,7 +665,7 @@ netsettime(ntv)
 	msg.tsp_type = TSP_SETDATE;
 	msg.tsp_vers = TSPVERSION;
 	if (gethostname(hostname, sizeof (hostname))) {
-		perror("gethostname");
+		perror("date: gethostname");
 		goto bad;
 	}
 	(void) strncpy(msg.tsp_name, hostname, sizeof (hostname));
@@ -720,5 +735,5 @@ bad:
 	(void)close(s);
 	retval = 2;
 	return (0);
-#endif /* defined TSP_SETDATE */
 }
+#endif /* defined DST_NONE */

@@ -21,20 +21,6 @@ static char	privatehid[] = "%W%";
 #endif /* !defined lint */
 
 /*
-** Nested includes
-*/
-
-#include "sys/types.h"	/* for time_t */
-#include "stdio.h"
-#include "ctype.h"
-#include "errno.h"
-#include "string.h"
-#include "limits.h"	/* for CHAR_BIT */
-#include "time.h"
-#include "stdlib.h"
-#include "unistd.h"	/* for F_OK and R_OK */
-
-/*
 ** Defaults for preprocessor symbols.
 ** You can override these in your C compiler options, e.g. `-DHAVE_ADJTIME=0'.
 */
@@ -47,9 +33,39 @@ static char	privatehid[] = "%W%";
 #define HAVE_SETTIMEOFDAY	3
 #endif /* !defined HAVE_SETTIMEOFDAY */
 
+#ifndef HAVE_UNISTD_H
+#define HAVE_UNISTD_H		1
+#endif /* !defined HAVE_UNISTD_H */
+
 #ifndef LOCALE_HOME
 #define LOCALE_HOME		"/usr/lib/locale"
 #endif /* !defined LOCALE_HOME */
+
+/*
+** Nested includes
+*/
+
+#include "sys/types.h"	/* for time_t */
+#include "stdio.h"
+#include "ctype.h"
+#include "errno.h"
+#include "string.h"
+#include "limits.h"	/* for CHAR_BIT */
+#include "time.h"
+#include "stdlib.h"
+
+#if HAVE_UNISTD_H - 0
+#include "unistd.h"	/* for F_OK and R_OK */
+#endif /* HAVE_UNISTD_H - 0 */
+
+#if !(HAVE_UNISTD_H - 0)
+#ifndef F_OK
+#define F_OK	0
+#endif /* !defined F_OK */
+#ifndef R_OK
+#define R_OK	4
+#endif /* !defined R_OK */
+#endif /* !(HAVE_UNISTD_H - 0) */
 
 /*
 ** Workarounds for compilers/systems.

@@ -2,7 +2,7 @@
 #ifndef NOID
 static char	elsieid[] = "%W%";
 /*
-** Modified from the UCB version whose sccsid appears below.
+** Modified from the UCB version whose SCCS ID appears below.
 */
 #endif /* !defined NOID */
 #endif /* !defined lint */
@@ -49,36 +49,6 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #define SECSPERMIN	60
 #endif /* !defined SECSPERMIN */
 
-#include "syslog.h"
-#ifndef NO_SOCKETS
-#include "sys/socket.h"
-#include "netinet/in.h"
-#include "netdb.h"
-#define TSPTYPES
-#include "protocols/timed.h"
-#endif /* !defined NO_SOCKETS */
-
-#ifndef TIME_USER
-#ifdef OTIME_MSG
-#define TIME_USER	username
-#else /* !defined OTIME_MSG */
-#include "sys/param.h"
-#ifdef BSD4_4
-#define TIME_USER	"date"
-#else /* !defined BSD4_4 */
-#define TIME_USER	""
-#endif /* !defined BSD4_4 */
-#endif /* !defined OTIME_MSG */
-#endif /* !defined TIME_USER */
-
-#ifndef OTIME_MSG
-#define OTIME_MSG	"|"
-#endif /* !defined OTIME_MSG */
-
-#ifndef NTIME_MSG
-#define NTIME_MSG	"{"
-#endif /* !defined NTIME_MSG */
-
 extern double		atof();
 extern char **		environ;
 extern char *		getlogin();
@@ -99,9 +69,6 @@ static void		display();
 static void		dogmt();
 static void		errensure();
 static void		iffy();
-#ifdef TSP_SETDATE
-int			netsettime();
-#endif /* defined TSP_SETDATE */
 static char *		nondigit();
 static void		oops();
 static void		reset();
@@ -317,50 +284,113 @@ dogmt()
 	environ = saveenv;
 }
 
+#ifdef OLD_TIME
+
+/*
+** We assume we're on a System-V-based system,
+** should use stime,
+** should write System-V-format utmp entries,
+** and don't have network notification to worry about.
+*/
+
+/*ARGSUSED*/
+static void
+reset(newt, nflag)
+time_t	newt;
+int	nflag;
+{
+	register int		fid;
+	time_t			oldt;
+	static struct {
+		struct utmp	before;
+		struct utmp	after;
+	} s;
+
+	/*
+	** Wouldn't it be great if stime returned the old time?
+	*/
+	(void) time(&oldt);
+	if (stime(&newt) != 0)
+		oops("date: error: stime");
+	s.before.ut_type = OLD_TIME;
+	s.before.ut_time = oldt;
+	(void) strcpy(s.before.ut_line, OTIME_MSG);
+	s.after.ut_type = NEW_TIME;
+	s.after.ut_time = newt;
+	(void) strcpy(s.after.ut_line, NTIME_MSG);
+	fid = open(WTMP_FILE, O_WRONLY | O_APPEND);
+	if (fid < 0)
+		oops("date: error: log file open");
+	if (write(fid, (char *) &s, sizeof s) != sizeof s)
+		oops("date: error: log file write");
+	if (close(fid) != 0)
+		oops("date: error: log file close");
+	pututline(&s.before);
+	pututline(&s.after);
+}
+
+#else /* !defined OLD_TIME */
+
+/*
+** We assume we're on a BSD-based system,
+** should use settimeofday,
+** should write BSD-format utmp entries (using logwtmp),
+** and may get to worry about network notification.
+** The "time name" changes between 4.3-tahoe and 4.4;
+** we include sys/param.h to determine which we should use.
+*/
+
+#ifndef TIME_NAME
+#include "sys/param.h"
+#ifdef BSD4_4
+#define TIME_NAME	"date"
+#else /* !defined BSD4_4 */
+#define TIME_NAME	""
+#endif /* !defined BSD4_4 */
+#endif /* !defined TIME_NAME */
+
+#include "syslog.h"
+#include "sys/socket.h"
+#include "netinet/in.h"
+#include "netdb.h"
+#define TSPTYPES
+#include "protocols/timed.h"
+
 #ifndef TSP_SETDATE
 /*ARGSUSED*/
 #endif /* !defined TSP_SETDATE */
 static void
-reset(t, nflag)
-time_t	t;
+reset(newt, nflag)
+time_t	newt;
 int	nflag;
 {
 	register char *		username;
-#ifdef DST_NONE
 	static struct timeval	tv;	/* static so tv_usec is 0 */
-#endif /* defined DST_NONE */
 
 #ifdef EBUG
 	return;
-#endif
+#endif /* defined EBUG */
 	username = getlogin();
 	if (username == NULL || *username == '\0') /* single-user or no tty */
 		username = "root";
-	/*
-	** You could argue that we shouldn't put the "before" entry into wtmp
-	** until we've determined that the time-setting call has succeeded.
-	** We'll continue to put the entry in unconditionally for compatibility.
-	*/
-#ifdef DST_NONE
-	tv.tv_sec = t;
+	tv.tv_sec = newt;
 #ifdef TSP_SETDATE
 	if (nflag || !netsettime(tv))
 #endif /* defined TSP_SETDATE */
 	{
-		logwtmp(OTIME_MSG, TIME_USER, "");
+		/*
+		** "old" entry is always written, for compatability.
+		*/
+		logwtmp("|", TIME_NAME, "");
 		if (settimeofday(&tv, (struct timezone *) NULL) == 0) {
-			logwtmp(NTIME_MSG, TIME_USER, "");
+			logwtmp("{", TIME_NAME, "");	/* } */
 			syslog(LOG_AUTH | LOG_NOTICE, "date set by %s",
 				username);
 		} else 	oops("date: error: settimeofday");
 	}
-#else /* !defined DST_NONE */
-	logwtmp(OTIME_MSG, TIME_USER, "");
-	if (stime(&t) == 0)
-		logwtmp(NTIME_MSG, TIME_USER, "");
-	else	oops("date: error: stime");
-#endif /* !defined DST_NONE */
 }
+
+#endif /* !defined OLD_TIME */
 
 static void
 wildinput(item, value, reason)

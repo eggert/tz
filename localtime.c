@@ -99,14 +99,13 @@ register struct state *	sp;
 	}
 	{
 		register unsigned char *	p;
-		register struct ttinfo *	ttisp;
 		unsigned char			buf[sizeof s];
 
 		p = buf;
 		i = read(fid, (char *) p, sizeof buf);
 		if (close(fid) != 0 || i < sizeof sp->h)
 			return -1;
-		p += sizeof h.tzh_reserved;
+		p += sizeof sp->h.tzh_reserved;
 		GETSHORT(sp->h.tzh_timecnt, p);
 		GETSHORT(sp->h.tzh_typecnt, p);
 		GETSHORT(sp->h.tzh_charcnt, p);
@@ -115,7 +114,7 @@ register struct state *	sp;
 			sp->h.tzh_typecnt > TZ_MAX_TYPES ||
 			sp->h.tzh_charcnt > TZ_MAX_CHARS)
 				return -1;
-		if (i < sizeof h.tzh_reserved + 3 * sizeof (short) +
+		if (i < sizeof sp->h.tzh_reserved + 3 * sizeof (short) +
 			sp->h.tzh_timecnt * (sizeof (long) + sizeof (char)) +
 			sp->h.tzh_typecnt * (sizeof (long) + 2*sizeof (char)) +
 			sp->h.tzh_charcnt * sizeof (char))
@@ -124,7 +123,10 @@ register struct state *	sp;
 			GETLONG(sp->ats[i], p);
 		for (i = 0; i < sp->h.tzh_timecnt; ++i)
 			sp->types[i] = *p++;
-		for (i = 0, ttisp = ttis; i < sp->h.tzh_typecnt; ++i, ++ttisp) {
+		for (i = 0; i < sp->h.tzh_typecnt; ++i) {
+			register struct ttinfo *	ttisp;
+
+			ttisp = &sp->ttis[i];
 			GETLONG(ttisp->tt_gmtoff, p);
 			ttisp->tt_abbrind = *p++;
 			ttisp->tt_abbrind = *p++;

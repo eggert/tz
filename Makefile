@@ -12,7 +12,8 @@ TZCSRCS=	tzcomp.c scheck.c strchr.c
 TZCOBJS=	tzcomp.o scheck.o strchr.o
 TZDSRCS=	tzdump.c settz.c
 TZDOBJS=	tzdump.o settz.o
-ENCHILADA=	Makefile tzfile.h $(TZCSRCS) $(TZDSRCS) tzinfo years.sh
+ENCHILADA=	Makefile tzfile.h $(TZCSRCS) $(TZDSRCS) tzinfo years.sh \
+			README settz.3 tzfile.5 tzcomp.8
 
 all:	REDID_BINARIES tzdump
 
@@ -36,6 +37,9 @@ years:	years.sh
 
 bundle:	$(ENCHILADA)
 	bundle $(ENCHILADA) > bundle
+
+modstd: README settz.3 tzfile.5 tzcomp.8 tzinfo
+	bundle README settz.3 tzfile.5 tzcomp.8 tzinfo > modstd
 
 $(ENCHILADA):
 	sccs get $(REL) $(REV) $@

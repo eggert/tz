@@ -91,6 +91,7 @@ static time_t		now;
 
 static int		retval = EXIT_SUCCESS;
 
+static void		ambiguous();
 static void		display();
 static time_t		gettime();
 int			netsettime();
@@ -115,7 +116,6 @@ char *	argv[];
 	register char *		cp;
 	register char *		username;
 	register int		ch;
-	register int		isdst;
 	register int		nflag;
 	time_t			t;
 #ifdef DST_NONE
@@ -131,21 +131,11 @@ char *	argv[];
 #endif /* defined DST_NONE */
 	(void) time(&now);
 	format = value = NULL;
-	isdst = -1;
 	nflag = 0;
 	while ((ch = getopt(argc, argv, OPTIONS)) != EOF) {
 		switch (ch) {
 		default:
 			usage();
-		case 'S':		/* take time to be Standard time */
-		case 'D':		/* take time to be Deviant time */
-			if (isdst != -1) {
-				(void) fprintf(stderr,
-					"date: error: multiple -S/-D's used");
-				usage();
-			}
-			isdst = (ch == 'S') ? 0 : 1;
-			break;
 		case 'u':		/* do it in GMT */
 			{
 				register char **	saveenv;
@@ -216,7 +206,7 @@ char *	argv[];
 			}
 	}
 	if (value != NULL) {
-		t = gettime(value, isdst);
+		t = gettime(value, -1);
 		if (t == -1)
 			usage();
 	}
@@ -264,11 +254,11 @@ char *	argv[];
 
 #ifdef DST_NONE
 static char	usemes[] = "\
-date: usage is date [-uDSn][-d dst][-t mins_west] [[yy]mmddhhmm[yy][.ss]] [+fmt]\
+date: usage is date [-un][-d dst][-t mins_west] [[yyyy]mmddhhmm[yy][.ss]] [+fmt]\
 ";
 #else /* !defined DST_NONE */
 static char	usemes[] = "\
-date: usage is date [-uDSn] [[yy]mmddhhmm[yy][.ss]] [+format]";
+date: usage is date [-un] [[yyyy]mmddhhmm[yy][.ss]] [+format]";
 #endif /* !defined DST_NONE */
 
 static void
@@ -289,6 +279,38 @@ char *	string;
 }
 
 static void
+ambiguous(thist, thatt)
+time_t	thist;
+time_t	thatt;
+{
+	struct tm	tm;
+
+	(void) fprintf(stderr, "date: error: ambiguous time.\n");
+	tm = *gmtime(&thist);
+	/*
+	** Avoid running afoul of SCCS!
+	*/
+	timeout(stderr, "Use\n\tdate -u %Y", &tm);
+	timeout(stderr, "%m%d%H", &tm);
+	timeout(stderr, "%M.%S\n", &tm);
+	tm = *localtime(&thist);
+	timeout(stderr, "to get %c");
+	(void) fprintf(stderr, " (%s time)",
+		tm.tm_isdst ? "summer" : "standard");
+	(void) fprintf(stderr, ", ");
+	tm = *gmtime(&thatt);
+	timeout(stderr, "or\n\tdate -u %Y", &tm);
+	timeout(stderr, "%m%d%H", &tm);
+	timeout(stderr, "%M.%S\n", &tm);
+	tm = *localtime(&thatt);
+	timeout(stderr, "to get %c");
+	(void) fprintf(stderr, " (%s time)",
+		tm.tm_isdst ? "summer" : "standard");
+	(void) fprintf(stderr, ".\n");
+	(void) exit(EXIT_FAILURE);
+}
+
+static void
 display(format)
 char *	format;
 {
@@ -296,7 +318,7 @@ char *	format;
 
 	(void) time(&now);
 	tm = *localtime(&now);
-	timeout((format == NULL) ? "%c" : format, &tm);
+	timeout(stdout, (format == NULL) ? "%c" : format, &tm);
 	(void) putchar('\n');
 	(void) fflush(stdout);
 	(void) fflush(stderr);
@@ -322,7 +344,8 @@ static char *	mon_names[] = {
 };
 
 static void
-timeout(format, tmp)
+timeout(fp, format, tmp)
+register FILE *	fp;
 register char *	format;
 struct tm *	tmp;
 {
@@ -334,7 +357,7 @@ struct tm *	tmp;
 		if (c == '\0')
 			return;
 		if (c != '%') {
-			(void) putchar(c);
+			(void) putc(c, fp);
 			continue;
 		}
 /*
@@ -348,79 +371,82 @@ struct tm *	tmp;
 			/*
 			** Clear out possible partial output.
 			*/
-			(void) putchar('\n');
-			(void) fflush(stdout);
+			(void) putc('\n', fp);
+			(void) fflush(fp);
 			(void) fprintf(stderr,
 				"date: error: bad format character - %c\n", c);
 			retval = EXIT_FAILURE;
 			display((char *) NULL);
 		case 'a':
-			(void) printf("%.3s", wday_names[tmp->tm_wday]);
+			(void) fprintf(fp, "%.3s", wday_names[tmp->tm_wday]);
 			break;
 		case 'A':
-			(void) printf("%s", wday_names[tmp->tm_wday]);
+			(void) fprintf(fp, "%s", wday_names[tmp->tm_wday]);
 			break;
 		case 'b':
 		case 'h':
-			(void) printf("%.3s", mon_names[tmp->tm_mon]);
+			(void) fprintf(fp, "%.3s", mon_names[tmp->tm_mon]);
 			break;
 		case 'B':
-			(void) printf("%s", mon_names[tmp->tm_mon]);
+			(void) fprintf(fp, "%s", mon_names[tmp->tm_mon]);
 			break;
 		case 'c':
-			timeout("%x %X %Z %Y", tmp);
+			timeout(fp, "%x %X %Z %Y", tmp);
 			break;
 		case 'd':
-			(void) printf("%02.2d", tmp->tm_mday);
+			(void) fprintf(fp, "%02.2d", tmp->tm_mday);
 			break;
 		case 'D':
-			timeout("%m/%d/%y", tmp);
+			timeout(fp, "%m/%d/%y", tmp);
 			break;
 		case 'H':
-			(void) printf("%02.2d", tmp->tm_hour);
+			(void) fprintf(fp, "%02.2d", tmp->tm_hour);
 			break;
 		case 'I':
-			(void) printf("%02.2d", ((tmp->tm_hour % 12) == 0) ?
+			(void) fprintf(fp, "%02.2d",
+				((tmp->tm_hour % 12) == 0) ?
 				12 : (tmp->tm_hour % 12));
 			break;
 		case 'j':
-			(void) printf("%03.3d", tmp->tm_yday + 1);
+			(void) fprintf(fp, "%03.3d", tmp->tm_yday + 1);
 			break;
 		case 'm':
-			(void) printf("%02.2d", tmp->tm_mon + 1);
+			(void) fprintf(fp, "%02.2d", tmp->tm_mon + 1);
 			break;
 		case 'M':
-			(void) printf("%02.2d", tmp->tm_min);
+			(void) fprintf(fp, "%02.2d", tmp->tm_min);
 			break;
 		case 'n':
-			(void) putchar('\n');
+			(void) putc('\n', fp);
 			break;
 		case 'p':
-			(void) printf("%cM", (tmp->tm_hour >= 12) ? 'P' : 'A');
+			(void) fprintf(fp, "%cM",
+				(tmp->tm_hour >= 12) ? 'P' : 'A');
 			break;
 		case 'r':
-			timeout("%I:%M:%S %p", tmp);
+			timeout(fp, "%I:%M:%S %p", tmp);
 			break;
 		case 'R':
-			timeout("%H:%M", tmp);
+			timeout(fp, "%H:%M", tmp);
 			break;
 		case 'S':
-			(void) printf("%02.2d", tmp->tm_sec);
+			(void) fprintf(fp, "%02.2d", tmp->tm_sec);
 			break;
 		case 't':
-			(void) putchar('\t');
+			(void) putc('\t', fp);
 			break;
 		case 'T':
 		case 'X':
-			timeout("%H:%M:%S", tmp);
+			timeout(fp, "%H:%M:%S", tmp);
 			break;
 		case 'U':
 			/* How many Sundays fall on or before this day? */
 			wday = tmp->tm_wday;
-			(void) printf("%02.2d", (tmp->tm_yday + 7 - wday) / 7);
+			(void) fprintf(fp, "%02.2d",
+				(tmp->tm_yday + 7 - wday) / 7);
 			break;
 		case 'w':
-			(void) printf("%d", tmp->tm_wday);
+			(void) fprintf(fp, "%d", tmp->tm_wday);
 			break;
 		case 'W':
 			/* How many Mondays fall on or before this day? */
@@ -428,24 +454,25 @@ struct tm *	tmp;
 			wday = tmp->tm_wday;
 			if (--wday < 0)
 				wday = 6;
-			(void) printf("%02.2d", (tmp->tm_yday + 7 - wday) / 7);
+			(void) fprintf(fp, "%02.2d",
+				(tmp->tm_yday + 7 - wday) / 7);
 			break;
 		case 'x':
-			timeout("%a %b ", tmp);
-			(void) printf("%2d", tmp->tm_mday);
+			timeout(fp, "%a %b ", tmp);
+			(void) fprintf(fp, "%2d", tmp->tm_mday);
 			break;
 		case 'y':
-			(void) printf("%02.2d",
+			(void) fprintf(fp, "%02.2d",
 				(tmp->tm_year + TM_YEAR_BASE) % 100);
 			break;
 		case 'Y':
-			(void) printf("%d", tmp->tm_year + TM_YEAR_BASE);
+			(void) fprintf(fp, "%d", tmp->tm_year + TM_YEAR_BASE);
 			break;
 		case 'Z':
-			(void) printf("%s", tzname[tmp->tm_isdst]);
+			(void) fprintf(fp, "%s", tzname[tmp->tm_isdst]);
 			break;
 		case '%':
-			(void) putchar('%');
+			(void) putc('%', fp);
 			break;
 		}
 	}
@@ -505,12 +532,7 @@ int		isdst;
 			else	return thatt;
 		else	if (thatt == -1)
 				return thist;
-			else {
-				(void) fprintf(stderr,
-"date: error: ambiguous time--use -D/-S to tell if it's Daylight or Standard\n"
-					);
-				return -1;
-			}
+			else	ambiguous(thist, thatt);
 	}
 	tm = *localtime(&now);
 	tm.tm_isdst = isdst;
@@ -542,25 +564,25 @@ int		isdst;
 			tm.tm_min = pairs[1];
 			return xtime(&tm);
 		case 3:	/* ddhhmm */
-			tm.tm_mday = pairs[0] - 1;
+			tm.tm_mday = pairs[0];
 			tm.tm_hour = pairs[1];
 			tm.tm_min = pairs[2];
 			return xtime(&tm);
 		case 4:	/* mmddhhmm */
 			tm.tm_mon = pairs[0] - 1;
-			tm.tm_mday = pairs[1] - 1;
+			tm.tm_mday = pairs[1];
 			tm.tm_hour = pairs[2];
 			tm.tm_min = pairs[3];
 			return xtime(&tm);
 
 		case 5:	/* Ulp! yymmddhhmm or mmddhhmmyy */
 			year = tm.tm_year + TM_YEAR_BASE;
-			year = year % 100;
+			year -= year % 100;
 			year = year + pairs[0];
 			tm.tm_year = year - TM_YEAR_BASE;
 
 			tm.tm_mon = pairs[1] - 1;
-			tm.tm_mday = pairs[2] - 1;
+			tm.tm_mday = pairs[2];
 			tm.tm_hour = pairs[3];
 			tm.tm_min = pairs[4];
 
@@ -571,13 +593,13 @@ int		isdst;
 #endif /* !defined USG_COMPAT */
 
 			tm.tm_mon = pairs[0] - 1;
-			tm.tm_mday = pairs[1] - 1;
+			tm.tm_mday = pairs[1];
 			tm.tm_hour = pairs[2];
 			tm.tm_min = pairs[3];
 
 			year = tm.tm_year + TM_YEAR_BASE;
-			year = year % 100;
-			year = year + pairs[0];
+			year -= year % 100;
+			year = year + pairs[4];
 			tm.tm_year = year - TM_YEAR_BASE;
 
 			thatt = xtime(&tm);
@@ -588,12 +610,13 @@ int		isdst;
 				else	return thatt;
 			else	if (thatt == -1)
 					return thist;
-				else	abort(); /* correction coming soon! */
+				else	ambiguous(thist, thatt);
+
 		case 6:	/* yyyymmddhhmm--BSD finally wins in the 21st century */
 			year = pairs[0] * 100 + pairs[1];
 			tm.tm_year = year - TM_YEAR_BASE;
 			tm.tm_mon = pairs[2] - 1;
-			tm.tm_mday = pairs[3] - 1;
+			tm.tm_mday = pairs[3];
 			tm.tm_hour = pairs[4];
 			tm.tm_min = pairs[5];
 			return xtime(&tm);

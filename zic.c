@@ -277,7 +277,7 @@ static struct lookup	end_years[] = {
 	NULL,			0
 };
 
-static long	mon_lengths[2][12] = {	/* ". . .knuckles are 31. . ." */
+static long	mon_lengths[2][MONS_PER_YEAR] = {
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 };

@@ -32,7 +32,7 @@ static char	privatehid[] = "%W%";
 #include "limits.h"	/* for CHAR_BIT */
 #include "time.h"
 #include "stdlib.h"
-#include "unistd.h"
+#include "unistd.h"	/* for F_OK and R_OK */
 
 /*
 ** Defaults for preprocessor symbols.

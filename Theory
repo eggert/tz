@@ -104,13 +104,6 @@ Points of interest to folks with Version 7 or BSD systems:
 	file "/etc/zoneinfo/localtime"; see the time zone compiler writeup for
 	information on how to initialize this file.
 
-*	The BSD "dysize" function is only included if the preprocessor symbol
-	BSD_COMPAT is defined.  For a year y, the BSD code returns the value
-	   ((y % 4) == 0) : 366 : 365
-	while this code returns the value
-	   (((y) % 4) == 0 && ((y) % 100) != 0 || ((y) % 400) == 0) ? 366 : 365
-	There's a comment in the code telling how to get the BSD value.
-
 The functions that are conditionally compiled if STD_INSPIRED is defined should,
 at this point, be looked on primarily as food for thought.  They are not in
 any sense "standard compatible"--some are not, in fact, specified in *any*

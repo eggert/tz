@@ -104,9 +104,8 @@ _fmt(format, t)
 					_add("?");
 				else	_add(bfmt[t->tm_mon]);
 				continue;
-				/* XXX - use "%m/%d/%y %H:%M:%S" == "%D %X"? */
 			case 'c':
-				_fmt("%a %b %d %X %Z %Y", t);
+				_fmt("%D %X", t);
 				continue;
 			case 'C':
 				_fmt("%a %b %e %X %Y\n", t);
@@ -134,6 +133,11 @@ _fmt(format, t)
 				_conv(t->tm_hour % 12 ?
 				    t->tm_hour % 12 : 12, 2, ' ');
 				continue;
+#ifdef KITCHEN_SINK
+			case 'K':
+				_add("kitchen sink");
+				continue;
+#endif /* defined KITCHEN_SINK */
 			case 'l':
 				_conv(t->tm_hour, 2, ' ');
 				continue;
@@ -177,9 +181,8 @@ _fmt(format, t)
 			case 'w':
 				_conv(t->tm_wday, 1, '0');
 				continue;
-				/* XXX - use "%m/%d/%y" == "%D"? */
 			case 'x':
-				_fmt("%a %b %d %Y", t);
+				_fmt("%D", t);
 				continue;
 			case 'y':
 				_conv((t->tm_year + TM_YEAR_BASE) % 100,

@@ -146,10 +146,8 @@
 # If you can predict what Parliament will do, you should be in
 # politics making a fortune, not computing.
 
-# ...
-# Date: Fri, 3 Sep 93 13:43:41 BST
-# From: Peter Ilieve <peter@memex.co.uk>
-# ...
+# From Peter Ilieve (peter@memex.co.uk) (September 3, 1993)
+#
 # I have some more up to date info.
 # 
 # Our Government...couldn't...make a decision after the 1989 consultation
@@ -185,6 +183,30 @@
 # a typo it was in that paper or before and was just copied into the 1989
 # paper. I have a few other avenues to explore on this and will let you know
 # the outcome.
+
+# From Peter Ilieve (peter@memex.co.uk) (September 3, 1993)
+#
+# > # Current rules
+# > Rule GB-Eire 1981	max	-	Mar	lastSun	1:00s	1:00	BST
+# > Rule GB-Eire 1981	max	-	Oct	Sun>=23	1:00s	0	GMT
+# 
+# The ending rule here doesn't match the EC rules, which specify the fourth
+# Sunday in October for the UK and Eire. The `fourth Sunday' rule wasn't
+# followed in 1989, but then the sixth EC directive wasn't in force then
+# and I don't know what previous ones said. 1995 is the next year with
+# the 4th Sun on 22 Oct, but that year isn't covered by the UK Summer Time
+# Order or the sixth EC directive. Your Oct Sun>=23 rule matches history
+# and with things only announced for 2 years or so in advance who knows
+# what will happen.
+# 
+# There are renewed rumours that the Government here will make another
+# attempt at resolving this issue, which is what prompted me to start
+# asking the Home Office and the EC about it again. The EC categorically
+# state they are not asking anybody to change timezone, they only want
+# common start/end dates. The UK Govt. seem to want to change our zone
+# and blame the resulting fuss on the EC. Me, I think we should scrap
+# summer time completely, noon is when the Sun is overhead, and that should
+# be the end of it.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 # 1916 to 1925--irregular

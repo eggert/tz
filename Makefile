@@ -257,9 +257,6 @@ SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS) tzselect.ksh
 MANS=		newctime.3 newstrftime.3 newtzset.3 time2posix.3 \
 			tzfile.5 tzselect.8 zic.8 zdump.8
 DOCS=		README Theory $(MANS) date.1 Makefile
-TXTS=		newctime.3.txt newstrftime.3.txt newtzset.3.txt \
-			time2posix.3.txt tzfile.5.txt tzselect.8.txt \
-			zic.8.txt zdump.8.txt date.1.txt
 PRIMARY_YDATA=	africa antarctica asia australasia \
 		europe northamerica southamerica
 YDATA=		$(PRIMARY_YDATA) pacificnew etcetera factory backward
@@ -270,8 +267,8 @@ TABDATA=	iso3166.tab zone.tab
 DATA=		$(YDATA) $(NDATA) $(SDATA) $(TABDATA) leapseconds yearistype.sh
 WEB_PAGES=	tz-art.htm tz-link.htm
 MISC=		usno1988 usno1989 usno1989a usno1995 usno1997 usno1998 \
-			$(WEB_PAGES) checktab.awk workman.sh
-ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(MISC)
+			$(WEB_PAGES) checktab.awk
+ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(MISC) workman.sh
 
 # And for the benefit of csh users on systems that assume the user
 # shell should be used to handle commands in Makefiles. . .
@@ -377,40 +374,24 @@ check_web:	$(WEB_PAGES)
 
 clean:
 		rm -f core *.o *.out tzselect zdump zic yearistype date \
-			,* *.tar.gz $(TXTS) workman
+			,* *.tar.gz
 
 names:
 		@echo $(ENCHILADA)
 
 # The zics below ensure that each data file can stand on its own.
 
-public:		$(ENCHILADA) zic $(TXTS)
+public:		$(ENCHILADA) zic
 		-mkdir /tmp/,tzpublic
 		for i in $(TDATA) ; do zic -d /tmp/,tzpublic $$i ; done
+		for i in *.[1-8] ; do sh workman.sh $$i > $$i.txt; done
 		rm -f -r /tmp/,tzpublic
 		$(AWK) -f checktab.awk $(PRIMARY_YDATA)
-		tar cf - $(DOCS) $(SOURCES) $(MISC) $(TXTS) | gzip -9 > tzcode.tar.gz
+		tar cf - $(DOCS) $(SOURCES) $(MISC) *.[1-8].txt | gzip -9 > tzcode.tar.gz
 		tar cf - $(DATA) | gzip -9 > tzdata.tar.gz
 
 zonenames:	$(TDATA)
 		@$(AWK) '/^Zone/ { print $$2 } /^Link/ { print $$3 }' $(TDATA)
-
-newctime.3.txt:		newctime.3
-newstrftime.3.txt:	newstrftime.3
-newtzset.3.txt:		newtzset.3
-time2posix.3.txt:	time2posix.3
-tzfile.5.txt:		tzfile.5
-tzselect.8.txt:		tzselect.8
-zic.8.txt:		zic.8
-zdump.8.txt:		zdump.8
-date.1.txt:		date.1
-
-$(TXTS): workman
-	./workman $(@:.txt=) > $@
-
-workman: workman.sh
-	cp $? $@
-	chmod +x $@
 
 asctime.o:	private.h tzfile.h
 date.o:		private.h

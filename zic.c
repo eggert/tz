@@ -37,35 +37,45 @@ extern char *	strcat();
 extern char *	strchr();
 extern char *	strcpy();
 
-static long	charcnt;
+static		addtt();
+static		addtype();
+static		associate();
+static int	charcnt;
+static		ciequal();
+static long	eitol();
 static int	errors;
 static char *	filename;
-static long	gethms();
 static char **	getfields();
+static long	gethms();
+static		infile();
+static		inlink();
+static		inrule();
+static		inzcont();
+static		inzone();
+static		inzsub();
 static int	linenum;
+static		lowerit();
+static time_t	max_time;
+static int	max_year;
+static time_t	min_time;
+static int	min_year;
+static		mkdirs();
+static		newabbr();
+static int	noise;
+static		nondunlink();
+static long	oadd();
+static		outzone();
 static char *	progname;
 static char *	rfilename;
 static int	rlinenum;
 static time_t	rpytime();
-static long	oadd();
+static		rulesub();
+static		setboundaries();
 static time_t	tadd();
-static long	timecnt;
-static long	typecnt;
-static long	min_year;
-static long	max_year;
-static time_t	min_time;
-static time_t	max_time;
+static int	timecnt;
 static int	tt_signed;
-static int	noise;
-
-#define LSECS_PER_MIN	((long) SECS_PER_MIN)
-#define LMINS_PER_HOUR	((long) MINS_PER_HOUR)
-#define LHOURS_PER_DAY	((long) HOURS_PER_DAY)
-#define LSECS_PER_HOUR	(LSECS_PER_MIN * LMINS_PER_HOUR)
-#define LSECS_PER_DAY	(LSECS_PER_HOUR * LHOURS_PER_DAY)
-
-#define LEPOCH_YEAR	((long) EPOCH_YEAR)
-#define EPOCH_WDAY	TM_THURSDAY
+static int	typecnt;
+static		yearistype();
 
 /*
 ** Values a la localtime(3)
@@ -157,15 +167,15 @@ struct rule {
 	int	r_linenum;
 	char *	r_name;
 
-	long	r_loyear;	/* for example, 1986 */
-	long	r_hiyear;	/* for example, 1986 */
+	int	r_loyear;	/* for example, 1986 */
+	int	r_hiyear;	/* for example, 1986 */
 	char *	r_yrtype;
 
-	long	r_month;	/* 0..11 */
+	int	r_month;	/* 0..11 */
 
 	int	r_dycode;	/* see below */
-	long	r_dayofmonth;
-	long	r_wday;
+	int	r_dayofmonth;
+	int	r_wday;
 
 	long	r_tod;		/* time from midnight */
 	int	r_todisstd;	/* above is standard time if TRUE */
@@ -290,12 +300,12 @@ static struct lookup	end_years[] = {
 	NULL,			0
 };
 
-static long	len_months[2][MONS_PER_YEAR] = {
+static int	len_months[2][MONS_PER_YEAR] = {
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
 	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 };
 
-static long	len_years[2] = {
+static int	len_years[2] = {
 	DAYS_PER_NYEAR, DAYS_PER_LYEAR
 };
 
@@ -416,8 +426,20 @@ char *	argv[];
 
 	setboundaries();
 
+/*###429 [lint] warning illegal pointer combination%%%*/
+/*###429 [lint] warning possible pointer alignment problem%%%*/
+/*###431 [lint] warning illegal pointer combination%%%*/
+/*###431 [lint] warning possible pointer alignment problem%%%*/
 	zones = (struct zone *) emalloc(0);
+/*###430 [lint] warning illegal pointer combination%%%*/
+/*###430 [lint] warning possible pointer alignment problem%%%*/
+/*###434 [lint] warning illegal pointer combination%%%*/
+/*###434 [lint] warning possible pointer alignment problem%%%*/
 	rules = (struct rule *) emalloc(0);
+/*###431 [lint] warning illegal pointer combination%%%*/
+/*###431 [lint] warning possible pointer alignment problem%%%*/
+/*###437 [lint] warning illegal pointer combination%%%*/
+/*###437 [lint] warning possible pointer alignment problem%%%*/
 	links = (struct link *) emalloc(0);
 	for (i = optind; i < argc; ++i)
 		infile(argv[i]);
@@ -464,29 +486,27 @@ char *	argv[];
 static
 setboundaries()
 {
-	register int		bits;
 	register time_t 	bit;
-	register struct tm *	tmp;
 
-	/*
-	** Count the bits in a time_t.
-	*/
-	for (bits = 0, bit = 1; bit > 0; ++bits, bit <<= 1)
+	for (bit = 1; bit > 0; bit <<= 1)
 		;
-
-	if (bit < 0) {		/* time_t is a signed type */
-		tt_signed = TRUE;
-		min_time = (time_t) 1 << bits;
-		max_time = ((time_t) 1 << bits) - 1;
-	} else {
+	if (bit == 0) {		/* time_t is an unsigned type */
 		tt_signed = FALSE;
 		min_time = 0;
 		max_time = ~(time_t) 0;
+	} else {
+		tt_signed = TRUE;
+		min_time = bit;
+		max_time = bit;
+		++max_time;
+		max_time = -max_time;
 	}
-	tmp = gmtime(&min_time);
-	min_year = TM_YEAR_BASE + tmp->tm_year;
-	tmp = gmtime(&max_time);
-	max_year = TM_YEAR_BASE + tmp->tm_year;
+	/*
+	** Ought to get rid of these gmtime calls to allow folks
+	** to switch time_t types.
+	*/
+	min_year = TM_YEAR_BASE + gmtime(&min_time)->tm_year;
+	max_year = TM_YEAR_BASE + gmtime(&max_time)->tm_year;
 }
 
 /*
@@ -519,7 +539,15 @@ rcomp(cp1, cp2)
 char *	cp1;
 char *	cp2;
 {
+/*###530 [lint] warning illegal pointer combination%%%*/
+/*###537 [lint] warning illegal pointer combination%%%*/
 	return strcmp(((struct rule *) cp1)->r_name,
+/*###531 [lint] warning illegal pointer combination%%%*/
+/*###531 [lint] warning possible pointer alignment problem%%%*/
+/*###531 [lint] warning possible pointer alignment problem%%%*/
+/*###541 [lint] warning illegal pointer combination%%%*/
+/*###541 [lint] warning possible pointer alignment problem%%%*/
+/*###541 [lint] warning possible pointer alignment problem%%%*/
 		((struct rule *) cp2)->r_name);
 }
 
@@ -532,6 +560,8 @@ associate()
 	register int		i;
 
 	if (nrules != 0)
+/*###543 [lint] warning illegal pointer combination%%%*/
+/*###554 [lint] warning illegal pointer combination%%%*/
 		(void) qsort((char *) rules, nrules, sizeof *rules, rcomp);
 	for (i = 0; i < nzones; ++i) {
 		zp = &zones[i];
@@ -632,11 +662,13 @@ char *	name;
 					break;
 				default:	/* "cannot happen" */
 					(void) fprintf(stderr,
-"%s: panic: Invalid l_value %ld\n",
+"%s: panic: Invalid l_value %d\n",
 						progname, lp->l_value);
 					exit(1);
 			}
 		}
+/*###648 [lint] warning illegal pointer combination%%%*/
+/*###660 [lint] warning illegal pointer combination%%%*/
 		free((char *) fields);
 	}
 	if (ferror(fp)) {
@@ -666,7 +698,7 @@ gethms(string, errstring, signable)
 char *	string;
 char *	errstring;
 {
-	long	hh, mm, ss, sign;
+	int	hh, mm, ss, sign;
 
 	if (string == NULL || *string == '\0')
 		return 0;
@@ -676,22 +708,24 @@ char *	errstring;
 		sign = -1;
 		++string;
 	} else	sign = 1;
-	if (sscanf(string, scheck(string, "%ld"), &hh) == 1)
+	if (sscanf(string, scheck(string, "%d"), &hh) == 1)
 		mm = ss = 0;
-	else if (sscanf(string, scheck(string, "%ld:%ld"), &hh, &mm) == 2)
+	else if (sscanf(string, scheck(string, "%d:%d"), &hh, &mm) == 2)
 		ss = 0;
-	else if (sscanf(string, scheck(string, "%ld:%ld:%ld"),
+	else if (sscanf(string, scheck(string, "%d:%d:%d"),
 		&hh, &mm, &ss) != 3) {
 			error(errstring);
 			return 0;
 	}
-	if (hh < 0 || hh >= LHOURS_PER_DAY ||
-		mm < 0 || mm >= LMINS_PER_HOUR ||
-		ss < 0 || ss >= LSECS_PER_MIN) {
+	if (hh < 0 || hh >= HOURS_PER_DAY ||
+		mm < 0 || mm >= MINS_PER_HOUR ||
+		ss < 0 || ss >= SECS_PER_MIN) {
 			error(errstring);
 			return 0;
 	}
-	return (long) sign * (((hh * LMINS_PER_HOUR) + mm) * LSECS_PER_MIN + ss);
+	return eitol(sign) *
+		(eitol(hh * HOURS_PER_DAY + mm) *
+		eitol(SECS_PER_MIN) + eitol(ss));
 }
 
 static
@@ -715,6 +749,12 @@ register char **	fields;
 		fields[RF_MONTH], fields[RF_DAY], fields[RF_TOD]);
 	r.r_name = ecpyalloc(fields[RF_NAME]);
 	r.r_abbrvar = ecpyalloc(fields[RF_ABBRVAR]);
+/*###728 [lint] warning illegal pointer combination%%%*/
+/*###728 [lint] warning illegal pointer combination%%%*/
+/*###728 [lint] warning possible pointer alignment problem%%%*/
+/*###743 [lint] warning illegal pointer combination%%%*/
+/*###743 [lint] warning possible pointer alignment problem%%%*/
+/*###743 [lint] warning illegal pointer combination%%%*/
 	rules = (struct rule *) erealloc((char *) rules,
 		(nrules + 1) * sizeof *rules);
 	rules[nrules++] = r;
@@ -816,6 +856,12 @@ error("Zone continuation line end time is not after end time of previous line");
 			return FALSE;
 		}
 	}
+/*###829 [lint] warning possible pointer alignment problem%%%*/
+/*###829 [lint] warning illegal pointer combination%%%*/
+/*###829 [lint] warning illegal pointer combination%%%*/
+/*###847 [lint] warning illegal pointer combination%%%*/
+/*###847 [lint] warning possible pointer alignment problem%%%*/
+/*###847 [lint] warning illegal pointer combination%%%*/
 	zones = (struct zone *) erealloc((char *) zones,
 		(nzones + 1) * sizeof *zones);
 	zones[nzones++] = z;
@@ -848,6 +894,12 @@ register char **	fields;
 	l.l_linenum = linenum;
 	l.l_from = ecpyalloc(fields[LF_FROM]);
 	l.l_to = ecpyalloc(fields[LF_TO]);
+/*###861 [lint] warning illegal pointer combination%%%*/
+/*###861 [lint] warning illegal pointer combination%%%*/
+/*###861 [lint] warning possible pointer alignment problem%%%*/
+/*###882 [lint] warning illegal pointer combination%%%*/
+/*###882 [lint] warning illegal pointer combination%%%*/
+/*###882 [lint] warning possible pointer alignment problem%%%*/
 	links = (struct link *) erealloc((char *) links,
 		(nlinks + 1) * sizeof *links);
 	links[nlinks++] = l;
@@ -900,13 +952,15 @@ char *			timep;
 			break;
 		default:	/* "cannot happen" */
 			(void) fprintf(stderr,
-				"%s: panic: Invalid l_value %ld\n",
+				"%s: panic: Invalid l_value %d\n",
 				progname, lp->l_value);
 			exit(1);
-	} else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_loyear) != 1 ||
+	} else if (sscanf(cp, scheck(cp, "%d"), &rp->r_loyear) != 1 ||
 		rp->r_loyear < min_year || rp->r_loyear > max_year) {
-			error("invalid starting year");
-			return;
+			if (noise)
+				error("invalid starting year");
+			if (rp->r_loyear > max_year)
+				return;
 	}
 	cp = hiyearp;
 	if ((lp = byword(cp, end_years)) != NULL) switch ((int) lp->l_value) {
@@ -921,13 +975,15 @@ char *			timep;
 			break;
 		default:	/* "cannot happen" */
 			(void) fprintf(stderr,
-				"%s: panic: Invalid l_value %ld\n",
+				"%s: panic: Invalid l_value %d\n",
 				progname, lp->l_value);
 			exit(1);
-	} else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_hiyear) != 1 ||
+	} else if (sscanf(cp, scheck(cp, "%d"), &rp->r_hiyear) != 1 ||
 		rp->r_hiyear < min_year || rp->r_hiyear > max_year) {
-			error("invalid ending year");
-			return;
+			if (noise)
+				error("invalid ending year");
+			if (rp->r_hiyear < min_year)
+				return;
 	}
 	if (rp->r_hiyear < min_year)
  		return;
@@ -981,7 +1037,7 @@ char *			timep;
 			}
 			rp->r_wday = lp->l_value;
 		}
-		if (sscanf(cp, scheck(cp, "%ld"), &rp->r_dayofmonth) != 1 ||
+		if (sscanf(cp, scheck(cp, "%d"), &rp->r_dayofmonth) != 1 ||
 			rp->r_dayofmonth <= 0 ||
 			(rp->r_dayofmonth > len_months[1][rp->r_month])) {
 				error("invalid day of month");
@@ -1029,12 +1085,14 @@ char *	name;
 		}
 	}
 	(void) fseek(fp, (long) sizeof ((struct tzhead *) 0)->tzh_reserved, 0);
-	puttzcode((long) timecnt, fp);
-	puttzcode((long) typecnt, fp);
-	puttzcode((long) charcnt, fp);
+	puttzcode(eitol(timecnt), fp);
+	puttzcode(eitol(typecnt), fp);
+	puttzcode(eitol(charcnt), fp);
 	for (i = 0; i < timecnt; ++i)
 		puttzcode((long) ats[i], fp);
 	if (timecnt > 0)
+/*###1052 [lint] warning illegal pointer combination%%%*/
+/*###1077 [lint] warning illegal pointer combination%%%*/
 		(void) fwrite((char *) types, sizeof types[0],
 			(int) timecnt, fp);
 	for (i = 0; i < typecnt; ++i) {
@@ -1062,7 +1120,7 @@ struct zone *	zpfirst;
 	register time_t			starttime, untiltime;
 	register long			gmtoff;
 	register long			stdoff;
-	register long			year;
+	register int			year;
 	register long			startoff;
 	register int			startisdst;
 	register int			type;
@@ -1089,6 +1147,8 @@ struct zone *	zpfirst;
 			type = addtype(oadd(zp->z_gmtoff, zp->z_stdoff),
 				zp->z_format, zp->z_stdoff != 0);
 			if (usestart)
+/*###1106 [lint] warning starttime may be used before set%%%*/
+/*###1132 [lint] warning starttime may be used before set%%%*/
 				addtt(starttime, type);
 			gmtoff = zp->z_gmtoff;
 			stdoff = zp->z_stdoff;
@@ -1143,6 +1203,8 @@ struct zone *	zpfirst;
 					    jtime == max_time)
 						continue;
 					jtime = tadd(jtime, -offset);
+/*###1160 [lint] warning ktime may be used before set%%%*/
+/*###1187 [lint] warning ktime may be used before set%%%*/
 					if (k < 0 || jtime < ktime) {
 						k = j;
 						ktime = jtime;
@@ -1238,19 +1300,15 @@ char *	abbr;
 	for (j = 0; j < charcnt; ++j)
 		if (strcmp(&chars[j], abbr) == 0)
 			break;
-	if (j < charcnt)
-		abbrinds[i] = j;
-	else {
-		abbrinds[i] = charcnt;
+	if (j == charcnt)
 		newabbr(abbr);
-	}
+	abbrinds[i] = j;
 	++typecnt;
 	return i;
 }
 
 static
 yearistype(year, type)
-long	year;
 char *	type;
 {
 	char	buf[BUFSIZ];
@@ -1262,7 +1320,7 @@ char *	type;
 		return (year % 4) == 0;
 	if (strcmp(type, "nonpres") == 0)
 		return (year % 4) != 0;
-	(void) sprintf(buf, "yearistype %ld %s", year, type);
+	(void) sprintf(buf, "yearistype %d %s", year, type);
 	result = system(buf);
 	if (result == 0)
 		return TRUE;
@@ -1345,6 +1403,10 @@ register char *	cp;
 
 	if (cp == NULL)
 		return NULL;
+/*###1358 [lint] warning illegal pointer combination%%%*/
+/*###1358 [lint] warning possible pointer alignment problem%%%*/
+/*###1387 [lint] warning illegal pointer combination%%%*/
+/*###1387 [lint] warning possible pointer alignment problem%%%*/
 	array = (char **) emalloc((strlen(cp) + 1) * sizeof *array);
 	nsubs = 0;
 	for ( ; ; ) {
@@ -1406,7 +1468,6 @@ long	t2;
 
 static
 isleap(y)
-long	y;
 {
 	return (y % 4) == 0 && ((y % 100) != 0 || (y % 400) == 0);
 }
@@ -1419,15 +1480,15 @@ long	y;
 static time_t
 rpytime(rp, wantedy)
 register struct rule *	rp;
-register long		wantedy;
+register int		wantedy;
 {
-	register long	i, y, wday, m;
+	register int	y, m, i;
 	register long	dayoff;			/* with a nod to Margaret O. */
 	register time_t	t;
 
 	dayoff = 0;
 	m = TM_JANUARY;
-	y = LEPOCH_YEAR;
+	y = EPOCH_YEAR;
 	while (wantedy != y) {
 		if (wantedy > y) {
 			i = len_years[isleap(y)];
@@ -1436,11 +1497,11 @@ register long		wantedy;
 			--y;
 			i = -len_years[isleap(y)];
 		}
-		dayoff = oadd(dayoff, i);
+		dayoff = oadd(dayoff, eitol(i));
 	}
 	while (m != rp->r_month) {
 		i = len_months[isleap(y)][m];
-		dayoff = oadd(dayoff, i);
+		dayoff = oadd(dayoff, eitol(i));
 		++m;
 	}
 	i = rp->r_dayofmonth;
@@ -1453,31 +1514,34 @@ register long		wantedy;
 		}
 	}
 	--i;
-	dayoff = oadd(dayoff, i);
+	dayoff = oadd(dayoff, eitol(i));
 	if (rp->r_dycode == DC_DOWGEQ || rp->r_dycode == DC_DOWLEQ) {
-		wday = EPOCH_WDAY;
+		register long	wday;
+
+#define LDAYS_PER_WEEK	((long) DAYS_PER_WEEK)
+		wday = eitol(EPOCH_WDAY);
 		/*
 		** Don't trust mod of negative numbers.
 		*/
 		if (dayoff >= 0)
-			wday = (wday + dayoff) % DAYS_PER_WEEK;
+			wday = (wday + dayoff) % LDAYS_PER_WEEK;
 		else {
-			wday -= ((-dayoff) % DAYS_PER_WEEK);
+			wday -= ((-dayoff) % LDAYS_PER_WEEK);
 			if (wday < 0)
-				wday += DAYS_PER_WEEK;
+				wday += LDAYS_PER_WEEK;
 		}
-		while (wday != rp->r_wday) {
+		while (wday != LDAYS_PER_WEEK)
 			if (rp->r_dycode == DC_DOWGEQ) {
 				dayoff = oadd(dayoff, (long) 1);
-				++wday;
+				if (++wday >= LDAYS_PER_WEEK)
+					wday = 0;
 				++i;
 			} else {
 				dayoff = oadd(dayoff, (long) -1);
-				--wday;
+				if (--wday < 0)
+					wday = LDAYS_PER_WEEK;
 				--i;
 			}
-			wday = (wday + DAYS_PER_WEEK) % DAYS_PER_WEEK;
-		}
 		if (i < 0 || i >= len_months[isleap(y)][m]) {
 			error("no day in month matches rule");
 			exit(1);
@@ -1489,11 +1553,11 @@ register long		wantedy;
 		error("time before zero");
 		exit(1);
 	}
-	t = (time_t) dayoff * LSECS_PER_DAY;
+	t = (time_t) dayoff * SECS_PER_DAY;
 	/*
 	** Cheap overflow check.
 	*/
-	if (t / LSECS_PER_DAY != dayoff) {
+	if (t / SECS_PER_DAY != dayoff) {
 		if (wantedy == rp->r_hiyear)
 			return max_time;
 		if (wantedy == rp->r_loyear)
@@ -1516,7 +1580,7 @@ char *	string;
 		exit(1);
 	}
 	(void) strcpy(&chars[charcnt], string);
-	charcnt += i;
+	charcnt += eitol(i);
 }
 
 static
@@ -1544,6 +1608,22 @@ char *	name;
 		*cp = '/';
 	}
 	return 0;
+}
+
+static long
+eitol(i)
+{
+	long	l;
+
+/*###1595 [lint] warning assignment to long may sign-extend incorrectly%%%*/
+	l = i;
+/*###1596 [lint] warning assignment to long may sign-extend incorrectly%%%*/
+	if (l != i) {
+		(void) fprintf(stderr, "%s: %d did not sign extend correctly\n",
+			progname, i);
+		exit(1);
+	}
+	return l;
 }
 
 /*

@@ -94,6 +94,7 @@ static int		retval = EXIT_SUCCESS;
 static void		display();
 static time_t		gettime();
 int			netsettime();
+static void		oops();
 static void		timeout();
 static void		usage();
 static time_t		xtime();
@@ -224,11 +225,8 @@ char *	argv[];
 	*/
 #ifdef DST_NONE
 	if ((tflag || dflag) &&
-		settimeofday((struct timeval *) NULL, &tz) != 0) {
-			perror("date: error: settimeofday");
-			retval = 1;
-			display(format);
-	}
+		settimeofday((struct timeval *) NULL, &tz) != 0)
+			oops("date: error: settimeofday");
 #endif /* defined DST_NONE */
 	if (value == NULL)
 		display(format);
@@ -244,27 +242,19 @@ char *	argv[];
 	** write to wtmp.
 	*/
 #ifdef DST_NONE
-	if (!nflag) {
-		tv.tv_sec = t;
-		if (netsettime(tv) != 1)
-			exit(EXIT_FAILURE);
-	}
+	tv.tv_sec = t;
+	if (!nflag && netsettime(tv) != 1)
+		retval = EXIT_FAILURE;
 	logwtmp(OTIME_MSG, TIME_USER, "");
 	if (settimeofday(&tv, (struct timezone *) NULL) == 0) {
 		logwtmp(NTIME_MSG, TIME_USER, "");
 		syslog(LOG_AUTH | LOG_NOTICE, "date set by %s", username);
-	} else {
-		perror("date: error: settimeofday");
-		retval = EXIT_FAILURE;
-	}
+	} else 	oops("date: error: settimeofday");
 #else /* !defined DST_NONE */
 	logwtmp(OTIME_MSG, TIME_USER, "");
 	if (stime(&t) == 0)
 		logwtmp(NTIME_MSG, TIME_USER, "");
-	else {
-		perror("date: error: stime");
-		retval = EXIT_FAILURE;
-	}
+	else	oops("date: error: stime");
 #endif /* !defined DST_NONE */
 
 	display(format);
@@ -290,11 +280,21 @@ usage()
 }
 
 static void
+oops(string)
+char *	string;
+{
+	(void) perror(string);
+	retval = EXIT_FAILURE;
+	display((char *) NULL);
+}
+
+static void
 display(format)
 char *	format;
 {
 	struct tm	tm;
 
+	(void) time(&now);
 	tm = *localtime(&now);
 	timeout((format == NULL) ? "%c" : format, &tm);
 	(void) putchar('\n');
@@ -302,7 +302,8 @@ char *	format;
 	(void) fflush(stderr);
 	if (ferror(stdout) || ferror(stderr)) {
 		(void) fprintf(stderr, "date: error: couldn't write results\n");
-		retval = EXIT_FAILURE;
+		if (retval == EXIT_SUCCESS)
+			retval = EXIT_FAILURE;
 	}
 	(void) exit(retval);
 	for ( ; ; )
@@ -336,17 +337,28 @@ struct tm *	tmp;
 			(void) putchar(c);
 			continue;
 		}
+/*
+** Format characters below come from:
+** December 7, 1988 version of X3J11's description of the strftime function;
+** the System V Release 2.0 description of the date command;
+** and the System V Release 3.1 description of the ascftime function.
+*/
 		switch (c = *format++) {
 		default:
+			/*
+			** Clear out possible partial output.
+			*/
+			(void) putchar('\n');
+			(void) fflush(stdout);
 			(void) fprintf(stderr,
 				"date: error: bad format character - %c\n", c);
 			retval = EXIT_FAILURE;
 			display((char *) NULL);
 		case 'a':
-			(void) printf("%.3s", wday_names[tmp->tm_mon]);
+			(void) printf("%.3s", wday_names[tmp->tm_wday]);
 			break;
 		case 'A':
-			(void) printf("%s", wday_names[tmp->tm_mon]);
+			(void) printf("%s", wday_names[tmp->tm_wday]);
 			break;
 		case 'b':
 		case 'h':
@@ -368,7 +380,8 @@ struct tm *	tmp;
 			(void) printf("%02.2d", tmp->tm_hour);
 			break;
 		case 'I':
-			(void) printf("%02.2d", ((tmp->tm_hour - 1) % 12) + 1);
+			(void) printf("%02.2d", ((tmp->tm_hour % 12) == 0) ?
+				12 : (tmp->tm_hour % 12));
 			break;
 		case 'j':
 			(void) printf("%03.3d", tmp->tm_yday + 1);
@@ -383,10 +396,13 @@ struct tm *	tmp;
 			(void) putchar('\n');
 			break;
 		case 'p':
-			(void) printf("%cM", (tmp->tm_hour >= 12) ? 'A' : 'P');
+			(void) printf("%cM", (tmp->tm_hour >= 12) ? 'P' : 'A');
 			break;
 		case 'r':
 			timeout("%I:%M:%S %p", tmp);
+			break;
+		case 'R':
+			timeout("%H:%M", tmp);
 			break;
 		case 'S':
 			(void) printf("%02.2d", tmp->tm_sec);
@@ -395,6 +411,7 @@ struct tm *	tmp;
 			(void) putchar('\t');
 			break;
 		case 'T':
+		case 'X':
 			timeout("%H:%M:%S", tmp);
 			break;
 		case 'U':
@@ -411,14 +428,11 @@ struct tm *	tmp;
 			wday = tmp->tm_wday;
 			if (--wday < 0)
 				wday = 6;
-			(void) printf("%02.2d",
-				(tmp->tm_yday + 7 - wday) / 7);
+			(void) printf("%02.2d", (tmp->tm_yday + 7 - wday) / 7);
 			break;
 		case 'x':
-			timeout("%a %b %d", tmp);
-			break;
-		case 'X':
-			timeout("%H:%M:%S", tmp);
+			timeout("%a %b ", tmp);
+			(void) printf("%2d", tmp->tm_mday);
 			break;
 		case 'y':
 			(void) printf("%02.2d",
@@ -494,7 +508,7 @@ int		isdst;
 				return thist;
 			else {
 				(void) fprintf(stderr,
-"date: error: ambiguous time--use -S/-D to tell if it's Daylight or Standard\n"
+"date: error: ambiguous time--use -D/-S to tell if it's Daylight or Standard\n"
 					);
 				return -1;
 			}

@@ -6,7 +6,7 @@ TZDIR=		/usr/local/lib/tzdir
 DEBUG=
 LINTFLAGS=	-phbaaxc
 LFLAGS=
-CFLAGS=		$(DEBUG) -DOBJECTID -DTZDIR=\"$(TZDIR)\"
+CFLAGS=		$(DEBUG) -O -DOBJECTID -DTZDIR=\"$(TZDIR)\"
 
 TZCSRCS=	tzcomp.c scheck.c strchr.c
 TZCOBJS=	tzcomp.o scheck.o strchr.o

@@ -185,7 +185,7 @@ const char * const	codep;
 }
 
 static void
-settzname()
+settzname P((void))
 {
 	register const struct state * const	sp = lclptr;
 	register int				i;
@@ -646,8 +646,8 @@ const int			lastditch;
 {
 	const char *			stdname;
 	const char *			dstname;
-	unsigned			stdlen;
-	unsigned			dstlen;
+	size_t				stdlen;
+	size_t				dstlen;
 	long				stdoffset;
 	long				dstoffset;
 	register time_t *		atp;
@@ -855,7 +855,7 @@ struct state * const	sp;
 static
 #endif /* !defined STD_INSPIRED */
 void
-tzsetwall()
+tzsetwall P((void))
 {
 	lcl_is_set = TRUE;
 #ifdef ALL_STATE
@@ -873,7 +873,7 @@ tzsetwall()
 }
 
 void
-tzset()
+tzset P((void))
 {
 	register const char *	name;
 

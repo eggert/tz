@@ -22,7 +22,7 @@ esac | perl -ne '
 		next;
 	}
 	chomp;
-	s/.//g;
+	s/.\010//g;
 	s/[ 	]*$//;
 	if (/^$/) {
 		$sawblank = 1;

@@ -8,6 +8,8 @@ date \- show and set date and time
 [
 .B \-u
 ] [
+.B \-c
+] [
 .B \-n
 ] [
 .B \-d
@@ -86,7 +88,7 @@ to be output in a particular way
 %Y	1989	Year in full
 %Z	EST	Time zone abbreviation
 .if t .in -.5i
-.if n .i -2
+.if n .in -2
 .fi
 If a character other than one of those shown above appears after
 a percent sign in the format,
@@ -123,7 +125,7 @@ the seconds part of the new time; if no seconds are given, zero is assumed.
 .PP
 These options are available:
 .TP
-.B \-u
+.BR \-u " or " \-c
 Use GMT when setting and showing the date and time.
 .TP
 .B \-n

@@ -82,7 +82,7 @@ extern void	perror();
 
 static char *	abbr();
 static long	delta();
-static void	hunt();
+static time_t	hunt();
 static int	longest;
 static char *	progname;
 static void	show();
@@ -177,7 +177,8 @@ char *	argv[];
 			if (delta(&newtm, &tm) != (newt - t) ||
 				newtm.tm_isdst != tm.tm_isdst ||
 				strcmp(abbr(&newtm), buf) != 0) {
-					hunt(argv[i], t, newt);
+					newt = hunt(argv[i], t, newt);
+					newtm = *localtime(&newt);
 					(void) strncpy(buf, abbr(&newtm),
 						(sizeof buf) - 1);
 			}
@@ -208,7 +209,7 @@ char *	argv[];
 		;
 }
 
-static void
+static time_t
 hunt(name, lot, hit)
 char *	name;
 time_t	lot;
@@ -237,6 +238,7 @@ time_t	hit;
 	}
 	show(name, lot, TRUE);
 	show(name, hit, TRUE);
+	return hit;
 }
 
 /*

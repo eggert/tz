@@ -1407,11 +1407,11 @@ const int			zonecount;
 					** assuming the current gmtoff and
 					** stdoff values.
 					*/
-					offset = gmtoff;
-					if (!zp->z_untilrule.r_todisstd)
-						offset = oadd(offset, stdoff);
 					untiltime = tadd(zp->z_untiltime,
-						-offset);
+						-gmtoff);
+					if (!zp->z_untilrule.r_todisstd)
+						untiltime = tadd(untiltime,
+							-stdoff);
 				}
 				/*
 				** Find the rule (of those to do, if any)
@@ -1470,9 +1470,7 @@ addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd));
 				offset = oadd(zp->z_gmtoff, rp->r_stdoff);
 				type = addtype(offset, buf, rp->r_stdoff != 0,
 					rp->r_todisstd);
-				if (timecnt != 0 || rp->r_stdoff != 0 ||
-					typecnt > 1)
-						addtt(ktime, type);
+				addtt(ktime, type);
 				stdoff = rp->r_stdoff;
 			}
 		}
@@ -1496,6 +1494,8 @@ const int	type;
 {
 	if (timecnt != 0 && type == types[timecnt - 1])
 		return;	/* easy enough! */
+	if (timecnt == 0 && type == 0 && isdsts[0] == 0)
+		return; /* handled by default rule */
 	if (timecnt >= TZ_MAX_TIMES) {
 		error("too many transitions?!");
 		(void) exit(EXIT_FAILURE);

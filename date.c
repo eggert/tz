@@ -497,9 +497,9 @@ const char * const	format;
 
 	(void) time(&now);
 	tm = *localtime(&now);
-#if HAVE_SETLOCALE - 0
+#if HAVE_SETLOCALE
 	setlocale(LC_TIME, "");
-#endif /* HAVE_SETLOCALE - 0 */
+#endif /* HAVE_SETLOCALE */
 	timeout(stdout, format ? format : "%+", &tm);
 	(void) putchar('\n');
 	(void) fflush(stdout);

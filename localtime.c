@@ -73,9 +73,8 @@ char *	codep;
 }
 
 static
-tzload(name, sp)
-register char *		name;
-register struct state *	sp;
+tzload(name)
+register char *	name;
 {
 	register int	i;
 	register int	fid;
@@ -118,101 +117,93 @@ register struct state *	sp;
 		if (close(fid) != 0 || i < sizeof *tzhp)
 			return -1;
 		tzhp = (struct tzhead *) buf;
-		sp->timecnt = detzcode(tzhp->tzh_timecnt);
-		sp->typecnt = detzcode(tzhp->tzh_typecnt);
-		sp->charcnt = detzcode(tzhp->tzh_charcnt);
-		if (sp->timecnt > TZ_MAX_TIMES ||
-			sp->typecnt == 0 ||
-			sp->typecnt > TZ_MAX_TYPES ||
-			sp->charcnt > TZ_MAX_CHARS)
+		s.timecnt = detzcode(tzhp->tzh_timecnt);
+		s.typecnt = detzcode(tzhp->tzh_typecnt);
+		s.charcnt = detzcode(tzhp->tzh_charcnt);
+		if (s.timecnt > TZ_MAX_TIMES ||
+			s.typecnt == 0 ||
+			s.typecnt > TZ_MAX_TYPES ||
+			s.charcnt > TZ_MAX_CHARS)
 				return -1;
 		if (i < sizeof *tzhp +
-			sp->timecnt * (4 + sizeof (char)) +
-			sp->typecnt * (4 + 2 * sizeof (char)) +
-			sp->charcnt * sizeof (char))
+			s.timecnt * (4 + sizeof (char)) +
+			s.typecnt * (4 + 2 * sizeof (char)) +
+			s.charcnt * sizeof (char))
 				return -1;
 		p = buf + sizeof *tzhp;
-		for (i = 0; i < sp->timecnt; ++i) {
-			sp->ats[i] = detzcode(p);
+		for (i = 0; i < s.timecnt; ++i) {
+			s.ats[i] = detzcode(p);
 			p += 4;
 		}
-		for (i = 0; i < sp->timecnt; ++i)
-			sp->types[i] = (unsigned char) *p++;
-		for (i = 0; i < sp->typecnt; ++i) {
+		for (i = 0; i < s.timecnt; ++i)
+			s.types[i] = (unsigned char) *p++;
+		for (i = 0; i < s.typecnt; ++i) {
 			register struct ttinfo *	ttisp;
 
-			ttisp = &sp->ttis[i];
+			ttisp = &s.ttis[i];
 			ttisp->tt_gmtoff = detzcode(p);
 			p += 4;
 			ttisp->tt_isdst = (unsigned char) *p++;
 			ttisp->tt_abbrind = (unsigned char) *p++;
 		}
-		for (i = 0; i < sp->charcnt; ++i)
-			sp->chars[i] = *p++;
-		sp->chars[i] = '\0';	/* ensure '\0' at end */
+		for (i = 0; i < s.charcnt; ++i)
+			s.chars[i] = *p++;
+		s.chars[i] = '\0';	/* ensure '\0' at end */
 	}
 	/*
 	** Check that all the local time type indices are valid.
 	*/
-	for (i = 0; i < sp->timecnt; ++i)
-		if (sp->types[i] >= sp->typecnt)
+	for (i = 0; i < s.timecnt; ++i)
+		if (s.types[i] >= s.typecnt)
 			return -1;
 	/*
 	** Check that all abbreviation indices are valid.
 	*/
-	for (i = 0; i < sp->typecnt; ++i)
-		if (sp->ttis[i].tt_abbrind >= sp->charcnt)
+	for (i = 0; i < s.typecnt; ++i)
+		if (s.ttis[i].tt_abbrind >= s.charcnt)
 			return -1;
 	/*
 	** Set tzname elements to initial values.
 	*/
 #ifndef strchr
-	timezone = sp->ttis[0].tt_gmtoff;
+	timezone = s.ttis[0].tt_gmtoff;
 	daylight = 0;
 #endif
-	tzname[0] = tzname[1] = &sp->chars[0];
-	for (i = 1; i < sp->typecnt; ++i) {
+	tzname[0] = tzname[1] = &s.chars[0];
+	for (i = 1; i < s.typecnt; ++i) {
 		register struct ttinfo *	ttisp;
 
-		ttisp = &sp->ttis[i];
+		ttisp = &s.ttis[i];
 		if (ttisp->tt_isdst) {
 #ifndef strchr
 			daylight = 1;
 #endif
-			tzname[1] = &sp->chars[ttisp->tt_abbrind];
+			tzname[1] = &s.chars[ttisp->tt_abbrind];
 		} else {
 #ifndef strchr
 			timezone = ttisp->tt_gmtoff;
 #endif
-			tzname[0] = &sp->chars[ttisp->tt_abbrind];
+			tzname[0] = &s.chars[ttisp->tt_abbrind];
 		}
 	}
 	return 0;
 }
 
-/*
-** settz("")		Use built-in GMT.
-** settz((char *) 0)	Use TZDEFAULT.
-** settz(otherwise)	Use otherwise.
-*/
-
-settz(name)
-char *	name;
+void
+tzset()
 {
-	register int	result;
+	register char *	name;
 
 	tz_is_set = TRUE;
-	if (name != 0 && *name == '\0')
-		result = 0;			/* Use built-in GMT */
-	else {
-		if (tzload(name, &s) == 0)
-			return 0;
+	name = getenv("TZ");
+	if (name == 0 || *name != '\0') {
+		if (tzload(name) == 0)
+			return;
 		/*
 		** If we want to try for local time on errors. . .
-		if (tzload((char *) 0, &s) == 0)
-			return -1;
+		if (tzload((char *) 0) == 0)
+			return;
 		*/
-		result = -1;
 	}
 	s.timecnt = 0;
 #ifndef strchr
@@ -225,66 +216,42 @@ char *	name;
 	s.ttis[0].tt_abbrind = 0;
 	(void) strcpy(s.chars, "GMT");
 	tzname[0] = tzname[1] = s.chars;
-	return result;
-}
-
-static struct tm *
-timesub(timep, sp)
-register long *		timep;
-register struct state *	sp;
-{
-	register struct ttinfo *	ttisp;
-	register struct tm *		tmp;
-	register int			i;
-	long				t;
-
-	t = *timep;
-	if (sp->timecnt == 0 || t < sp->ats[0]) {
-		i = 0;
-		while (sp->ttis[i].tt_isdst)
-			if (++i >= sp->timecnt) {
-				i = 0;
-				break;
-			}
-	} else {
-		for (i = 1; i < sp->timecnt; ++i)
-			if (t < sp->ats[i])
-				break;
-		i = sp->types[i - 1];
-	}
-	ttisp = &sp->ttis[i];
-	t += ttisp->tt_gmtoff;
-	tmp = gmtime(&t);
-	tmp->tm_isdst = ttisp->tt_isdst;
-#ifdef TZ_ABBR
-	tz_abbr =
-#endif
-	tzname[tmp->tm_isdst] = &sp->chars[ttisp->tt_abbrind];
-	return tmp;
 }
 
 struct tm *
 localtime(timep)
 long *	timep;
 {
+	register struct ttinfo *	ttisp;
+	register struct tm *		tmp;
+	register int			i;
+	long				t;
+
 	if (!tz_is_set)
-		(void) settz(getenv("TZ"));
-	return timesub(timep, &s);
-}
-
-struct tm *
-zonetime(timep, zone)
-long *	timep;
-char *	zone;
-{
-	/*
-	** This struct needs to be static since tzname[i] may end up pointing
-	** to it.  Alternately, localtime might copy time zone abbreviations
-	** into small buffers.  We'll take the easy way out for now.
-	*/
-	static struct state	st;
-
-	return (tzload(zone, &st) == 0) ? timesub(timep, &st) : 0;
+		(void) tzset();
+	t = *timep;
+	if (s.timecnt == 0 || t < s.ats[0]) {
+		i = 0;
+		while (s.ttis[i].tt_isdst)
+			if (++i >= s.timecnt) {
+				i = 0;
+				break;
+			}
+	} else {
+		for (i = 1; i < s.timecnt; ++i)
+			if (t < s.ats[i])
+				break;
+		i = s.types[i - 1];
+	}
+	ttisp = &s.ttis[i];
+	t += ttisp->tt_gmtoff;
+	tmp = gmtime(&t);
+	tmp->tm_isdst = ttisp->tt_isdst;
+#ifdef TZ_ABBR
+	tz_abbr =
+#endif
+	tzname[tmp->tm_isdst] = &s.chars[ttisp->tt_abbrind];
+	return tmp;
 }
 
 char *
@@ -428,7 +395,7 @@ register struct tm *	timeptr;
 	register struct ttinfo *	ttisp;
 
 	if (!tz_is_set)
-		(void) settz(getenv("TZ"));
+		(void) tzset();
 
 	/*
 	** First, check that the time structure passed to us contains
@@ -499,14 +466,4 @@ register struct tm *	timeptr;
 
 	*timeptr = *localtime(&gmtimevalue);
 	return gmtimevalue;
-}
-
-/*
-** System V compatibility.
-*/
-
-void
-tzset()
-{
-	(void) settz(getenv("TZ"));
 }

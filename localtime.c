@@ -260,9 +260,12 @@ struct rule {
 	long	r_time;		/* transition time of rule */
 };
 
-#define	JULIAN_DAY	0	/* Jn - Julian day */
-#define	DAY_OF_YEAR	1	/* n - day of year */
-#define	MONTH_DAY	2	/* Mm.n.d - month, week, day */
+#define	JULIAN_DAY		0	/* Jn - Julian day */
+#define	DAY_OF_YEAR		1	/* n - day of year */
+#define	MONTH_NTH_DAY_OF_WEEK	2	/* Mm.n.d - month, week, day of week */
+#ifdef BROKEN
+#define	MONTH_DAY		3	/* Mm.n.d with broken POSIX interpretation */
+#endif
 
 static const int	mon_lengths[2][MONSPERYEAR] = {
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
@@ -402,7 +405,11 @@ register struct rule *	rulep;
 		/*
 		** Month, week, day.
 		*/
+#ifdef BROKEN
 		rulep->r_type = MONTH_DAY;
+#else
+		rulep->r_type = MONTH_NTH_DAY_OF_WEEK;
+#endif
 		++strp;
 		strp = getnum(strp, &rulep->r_mon, 1, MONSPERYEAR);
 		if (strp == NULL)
@@ -478,8 +485,50 @@ long				offset;
 		value = janfirst + rulep->r_day * SECSPERDAY;
 		break;
 
-	case MONTH_DAY:
+	case MONTH_NTH_DAY_OF_WEEK:
+		/*
+		** Mm.n.d - nth "dth day" of month m.
+		*/
+		value = janfirst;
+		for (i = 0; i < rulep->r_mon - 1; ++i)
+			value += mon_lengths[leapyear][i] * SECSPERDAY;
+
+		/*
+		** Use Zeller's Congruence to get day-of-week of first day of
+		** month.
+		*/
+		m1 = (rulep->r_mon + 9) % 12 + 1;
+		yy0 = (rulep->r_mon <= 2) ? (year - 1) : year;
+		yy1 = yy0 / 100;
+		yy2 = yy0 % 100;
+		dow = ((26 * m1 - 2) / 10 +
+			1 + yy2 + yy2 / 4 + yy1 / 4 - 2 * yy1) % 7;
+		if (dow < 0)
+			dow += DAYSPERWEEK;
+
+		/*
+		** "dow" is the day-of-week of the first day of the month.  Get
+		** the day-of-month (zero-origin) of the first "dow" day of the
+		** month.
+		*/
+		d = rulep->r_day - dow;
+		if (d < 0)
+			d += DAYSPERWEEK;
+		for (i = 1; i < rulep->r_week; ++i) {
+			if (d + DAYSPERWEEK >=
+				mon_lengths[leapyear][rulep->r_mon - 1])
+					break;
+			d += DAYSPERWEEK;
+		}
+
+		/*
+		** "d" is the day-of-month (zero-origin) of the day we want.
+		*/
+		value += d * SECSPERDAY;
+		break;
+
 #ifdef BROKEN
+	case MONTH_DAY:
 		/*
 		** Mm.n.d - dth day of week n of month m.
 		*/
@@ -551,48 +600,8 @@ long				offset;
 		** "d" is the day-of-month of the day we want.
 		*/
 		value += (d - 1) * SECSPERDAY;
-#else
-		/*
-		** Mm.n.d - nth "dth day" of month m.
-		*/
-		value = janfirst;
-		for (i = 0; i < rulep->r_mon - 1; ++i)
-			value += mon_lengths[leapyear][i] * SECSPERDAY;
-
-		/*
-		** Use Zeller's Congruence to get day-of-week of first day of
-		** month.
-		*/
-		m1 = (rulep->r_mon + 9) % 12 + 1;
-		yy0 = (rulep->r_mon <= 2) ? (year - 1) : year;
-		yy1 = yy0 / 100;
-		yy2 = yy0 % 100;
-		dow = ((26 * m1 - 2) / 10 +
-			1 + yy2 + yy2 / 4 + yy1 / 4 - 2 * yy1) % 7;
-		if (dow < 0)
-			dow += DAYSPERWEEK;
-
-		/*
-		** "dow" is the day-of-week of the first day of the month.  Get
-		** the day-of-month (zero-origin) of the first "dow" day of the
-		** month.
-		*/
-		d = rulep->r_day - dow;
-		if (d < 0)
-			d += DAYSPERWEEK;
-		for (i = 1; i < rulep->r_week; ++i) {
-			if (d + DAYSPERWEEK >=
-				mon_lengths[leapyear][rulep->r_mon - 1])
-					break;
-			d += DAYSPERWEEK;
-		}
-
-		/*
-		** "d" is the day-of-month (zero-origin) of the day we want.
-		*/
-		value += d * SECSPERDAY;
-#endif
 		break;
+#endif
 	}
 
 	/*
@@ -609,9 +618,9 @@ long				offset;
 */
 
 /*
-** Define MONTH_DAY rule for U.S. federal tables.
+** Define MONTH_NTH_DAY_OF_WEEK rule for U.S. federal tables.
 */
-#define	MD_RULE(week, month)	{ MONTH_DAY, 0, week, month, 2 * SECSPERHOUR }
+#define	MD_RULE(week, month)	{ MONTH_NTH_DAY_OF_WEEK, 0, week, month, 2*SECS_PER_HOUR }
 
 /*
 ** Define DAY_OF_YEAR rule for U.S. federal tables.
@@ -657,10 +666,6 @@ static struct rule usdaytab[] = {
 
 #define	N_US_RULES	(sizeof usdaytab / sizeof usdaytab[0])
 
-/*
-** XXX - "Mm.0.d" doesn't ask for first "d" day of month "m", so this doesn't
-** work right (then again, neither does "Mm.0.d"!).
-*/
 static struct rule repeating[] = {
 		/* 1987 on: first Sun. in Apr - last Sun. in Oct */
 	MD_RULE(0, 4), MD_RULE(5, 10)

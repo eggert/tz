@@ -49,7 +49,8 @@ static char	elsieid[] = "%W%";
 ** seven explicit spaces, two explicit colons, a newline,
 ** and a trailing ASCII nul).
 ** The values above are for systems where an int is 32 bits and are provided
-** as an example; the define below calculates the maximum for system at hand.
+** as an example; the define below calculates the maximum for the system at
+** hand.
 */
 #define MAX_ASCTIME_BUF_SIZE	(2*3+5*INT_STRLEN_MAXIMUM(int)+7+2+1+1)
 

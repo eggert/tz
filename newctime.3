@@ -16,6 +16,10 @@ settz, newctime, newlocaltime \- convert date and time to ASCII
 .B long *clock;
 .PP
 .B char *tz_abbr;
+.PP
+.B struct tm * zonetime(timep, zone)
+.B long *clock;
+.B char *zone;
 .SH DESCRIPTION
 .I Settz
 sets time conversion information used by
@@ -70,6 +74,9 @@ return value.
 .I Newctime
 returns
 .IR "asctime(newlocaltime(*clock))" .
+.PP
+.I Zonetime
+converts the argument time using the argument zone.
 .SH DIAGNOSTICS
 .I Settz
 returns zero if all seems well; it returns negative one otherwise

@@ -20,7 +20,7 @@ static char	tzfilehid[] = "%W%";
 #endif /* !defined TZDEFAULT */
 
 #ifndef TZDEFRULES
-#define TZDEFRULES	"_ST0_DT"	/* rules for EST5EDT-style TZ */
+#define TZDEFRULES	"posixrules"
 #endif /* !defined TZDEFRULES */
 
 /*

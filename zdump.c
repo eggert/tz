@@ -4,45 +4,80 @@ static char	elsieid[] = "%W%";
 #endif /* !defined NOID */
 #endif /* !defined lint */
 
-#include "stdio.h"
-#include "time.h"
-#include "tzfile.h"
-#include "string.h"
-#include "stdlib.h"
-#include "nonstd.h"
+/*
+** This code has been made entirely independent of the rest of the time
+** conversion package to increase confidence in the verification it provides.
+** You can use this code to help in verifying other implementations.
+*/
+
+#include <stdio.h>
+#include <time.h>
+#include <sys/types.h>
 
 #ifndef TRUE
 #define TRUE		1
+#endif /* !defined TRUE */
+
+#ifndef FALSE
 #define FALSE		0
 #endif /* !defined TRUE */
 
+#ifndef EXIT_SUCCESS
+#define EXIT_SUCCESS	0
+#endif /* !defined EXIT_SUCCESS */
+
+#ifndef EXIT_FAILURE
+#define EXIT_FAILURE	1
+#endif /* !defined EXIT_FAILURE */
+
+#ifndef SECSPERMIN
+#define SECSPERMIN	60
+#endif /* !defined SECSPERMIN */
+
+#ifndef SECSPERHOUR
+#define SECSPERHOUR	3600
+#endif /* !defined SECSPERHOUR */
+
+#ifndef HOURSPERDAY
+#define HOURSPERDAY	24
+#endif /* !defined HOURSPERDAY */
+
+#ifndef EPOCH_YEAR
+#define EPOCH_YEAR	1970
+#endif /* !defined EPOCH_YEAR */
+
+#ifndef DAYSPERNYEAR
+#define DAYSPERNYEAR	365
+#endif /* !defined DAYSPERNYEAR */
+
 extern char **	environ;
-extern void	ifree P((char * p));
-extern char *	imalloc P((int n));
-extern int	getopt P((int argc, char * argv[], char * options));
+extern int	getopt();
+extern char *	malloc();
 extern char *	optarg;
 extern int	optind;
-extern char *	tzname[2];
-extern void	tzset P((void));
+extern void	tzset();
+
+char *		tzname[2];
 
 static int	longest;
-static void	show P((const char * zone, time_t t, int v));
-static void	hunt P((const char * name, time_t lot, time_t hit));
-static long	delta P((const struct tm * newp, const struct tm * oldp));
+static void	show();
+static void	hunt();
+static long	delta();
 
 int
 main(argc, argv)
 int	argc;
 char *	argv[];
 {
-	register int		i, c;
-	register int		vflag;
-	register const char *	cutoff;
-	register int		cutyear;
-	register long		cuttime;
-	time_t			now;
-	time_t			t, newt;
-	struct tm		tm, newtm;
+	register int	i, c;
+	register int	vflag;
+	register char *	cutoff;
+	register int	cutyear;
+	register long	cuttime;
+	time_t		now;
+	time_t		t, newt;
+	time_t		hibit;
+	struct tm	tm, newtm;
 
 	vflag = 0;
 	cutoff = NULL;
@@ -68,12 +103,14 @@ char *	argv[];
 	for (i = optind; i < argc; ++i)
 		if (strlen(argv[i]) > longest)
 			longest = strlen(argv[i]);
+	for (hibit = 1; (hibit << 1) != 0; hibit <<= 1)
+		;
 	for (i = optind; i < argc; ++i) {
 		register char **	saveenv;
 		char *			tzequals;
 		char *			fakeenv[2];
 
-		tzequals = imalloc(strlen(argv[i]) + 4);
+		tzequals = malloc(strlen(argv[i]) + 4);
 		if (tzequals == NULL) {
 			(void) fprintf(stderr, "%s: can't allocate memory\n",
 				argv[0]);
@@ -85,12 +122,15 @@ char *	argv[];
 		saveenv = environ;
 		environ = fakeenv;
 		(void) tzset();
-		ifree(tzequals);
+		free(tzequals);
 		environ = saveenv;
 		show(argv[i], now, FALSE);
 		if (!vflag)
 			continue;
-		t = 0x80000000;
+		/*
+		** Get lowest value of t.
+		*/
+		t = hibit;
 		if (t > 0)		/* time_t is unsigned */
 			t = 0;
 		show(argv[i], t, TRUE);
@@ -111,9 +151,12 @@ char *	argv[];
 			t = newt;
 			tm = newtm;
 		}
-		t = 0xffffffff;
+		/*
+		** Get highest value of t.
+		*/
+		t = ~((time_t) 0);
 		if (t < 0)		/* time_t is signed */
-			t = 0x7fffffff ;
+			t &= ~hibit;
 		t -= SECSPERHOUR * HOURSPERDAY;
 		show(argv[i], t, TRUE);
 		t += SECSPERHOUR * HOURSPERDAY;
@@ -132,9 +175,9 @@ char *	argv[];
 
 static void
 hunt(name, lot, hit)
-const char * const	name;
-time_t			lot;
-time_t			hit;
+char *	name;
+time_t	lot;
+time_t	hit;
 {
 	time_t		t;
 	struct tm	lotm;
@@ -159,8 +202,8 @@ time_t			hit;
 
 static long
 delta(newp, oldp)
-const struct tm * const	newp;
-const struct tm * const	oldp;
+struct tm *	newp;
+struct tm *	oldp;
 {
 	long	result;
 
@@ -174,10 +217,10 @@ const struct tm * const	oldp;
 
 static void
 show(zone, t, v)
-const char * const	zone;
-const time_t		t;
+char *	zone;
+time_t	t;
 {
-	const struct tm *	tmp;
+	struct tm *		tmp;
 	extern struct tm *	localtime();
 
 	(void) printf("%-*s  ", longest, zone);
@@ -185,8 +228,9 @@ const time_t		t;
 		(void) printf("%.24s GMT = ", asctime(gmtime(&t)));
 	tmp = localtime(&t);
 	(void) printf("%.24s", asctime(tmp));
-	if (*tzname[tmp->tm_isdst] != '\0')
-		(void) printf(" %s", tzname[tmp->tm_isdst]);
+	if (tzname[tmp->tm_isdst] != NULL &&
+		*tzname[tmp->tm_isdst] != '\0')
+			(void) printf(" %s", tzname[tmp->tm_isdst]);
 	if (v) {
 		(void) printf(" isdst=%d", tmp->tm_isdst);
 #ifdef TM_GMTOFF

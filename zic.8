@@ -20,11 +20,11 @@ the standard input is read.
 .PP
 These options are available:
 .TP
-.B \-d directory
+.BI "\-d " directory
 Create time zone information files in the named directory rather than
 in the standard directory named below.
 .TP
-.B \-l localtime
+.BI "\-l " localtime
 Use the given time zone as local time.
 .PP
 Input lines are made up of fields.
@@ -75,7 +75,7 @@ Gives the type of year in which the year applies.  If
 is
 .B
 "-"
-then the rule is taken to apply in all years between
+then the rule applies in all years between
 .B FROM
 and
 .B TO
@@ -92,14 +92,14 @@ is executed with arguments
 .IR to ,
 and
 .IR type
-taken from the rule line; the rule is taken to apply only in those years
+taken from the rule line; the rule applies only in those years
 printed by the
 .I years
 command.
 
 The distributed
 .I years
-command is a shell script that can handle year types
+command is a shell script that handles year types
 .B uspres
 (United States presidential election years)
 and
@@ -151,7 +151,8 @@ in the absence of 'w' or 's', wall clock time is assumed.
 .TP
 .B SAVE
 Gives the amount of time to be added to local standard time when the rule is in
-effect.  This field has the same format as the
+effect (although, of course, the 'w' and 's' suffixes are not used).
+This field has the same format as the
 .B AT
 field.
 .TP
@@ -200,7 +201,7 @@ then standard time always applies in the time zone.
 .TP
 .B FORMAT
 The format for time zone abbreviations in this time zone.
-The pairs of characters
+The pair of characters
 .B
 "%s"
 is used to show where the "variable part" of the time zone abbreviation goes.
@@ -230,7 +231,8 @@ field is used as an alternate name for that zone.
 Lines may appear in any order in the input.
 .SH NOTE
 For areas with more than two types of local time (if indeed there are such),
-you may get to use local standard time in "AT" fields to ensure that
+you may get to use local standard time in "AT" field of the earliest
+transition time's rule to ensure that
 the earliest transition time recorded in the compiled file is correct.
 .SH FILES
 /etc/tzdir	standard directory used for created files

@@ -1344,6 +1344,10 @@ const int			zonecount;
 	*/
 	gmtoff = zpfirst->z_gmtoff;
 	stdoff = 0;
+	/*
+	** Thanks to Earl Chew (earl@dnd.icp.nec.com.au)
+	** for noting the need to unconditionally initialize startttisstd.
+	*/
 	startttisstd = FALSE;
 #ifdef lint
 	starttime = 0;

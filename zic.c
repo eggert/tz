@@ -362,6 +362,7 @@ usage()
 
 static char *	lcltime = NULL;
 static char *	directory = NULL;
+static int	sflag = FALSE;
 
 main(argc, argv)
 int	argc;
@@ -374,7 +375,7 @@ char *	argv[];
 	umask(umask(022) | 022);
 #endif
 	progname = argv[0];
-	while ((c = getopt(argc, argv, "d:l:v")) != EOF)
+	while ((c = getopt(argc, argv, "d:l:vs")) != EOF)
 		switch (c) {
 			default:
 				usage();
@@ -400,6 +401,9 @@ char *	argv[];
 				break;
 			case 'v':
 				noise = TRUE;
+				break;
+			case 's':
+				sflag = TRUE;
 				break;
 		}
 	if (optind == argc - 1 && strcmp(argv[optind], "=") == 0)
@@ -465,12 +469,16 @@ setboundaries()
 		tt_signed = FALSE;
 		min_time = 0;
 		max_time = ~(time_t) 0;
+		if (sflag)
+			max_time >>= 1;
 	} else {
 		tt_signed = TRUE;
 		min_time = bit;
 		max_time = bit;
 		++max_time;
 		max_time = -max_time;
+		if (sflag)
+			min_time = 0;
 	}
 	min_year = TM_YEAR_BASE + gmtime(&min_time)->tm_year;
 	max_year = TM_YEAR_BASE + gmtime(&max_time)->tm_year;

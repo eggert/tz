@@ -105,3 +105,25 @@ Points of interest to folks with Version 7 or BSD systems:
 	while this code returns the value
 	   (((y) % 4) == 0 && ((y) % 100) != 0 || ((y) % 400) == 0) ? 366 : 365
 	There's a comment in the code telling how to get the BSD value.
+
+The functions that are conditionally compiled if STD_INSPIRED is defined should,
+at this point, be looked on primarily as food for thought.  They are not in
+any sense "standard compatible"--some are not, in fact, specified in *any*
+standard.  They do, however, represent responses of various authors to
+standardization proposals.
+
+Other time conversion proposals, in particular the one developed by folks at
+Hewlett Packard, offer a wider selection of functions that provide capabilities
+beyond those provided here.  The absence of such functions from this package
+is not meant to discourage the development, standardization, or use of such
+functions.  Rather, their absence reflects the decision to make this package
+close to SVR2 (with the exceptions outlined above) to ensure its broad
+acceptability.  If more powerful time conversion functions can be standardized,
+so much the better.
+
+It's probably not wise to standardize everything in this package.
+While the command
+	nroff -man newctime.3
+produces a document that describes this package, the command
+	nroff -man -rX3J11 newctime.3
+produces a document that describes the "standardizable" parts.

@@ -49,7 +49,7 @@ LINTFLAGS=	-phbaaxc
 
 ################################################################################
 
-TZDEF=		-DTZDIR=\"$(TZDIR)\"
+CC=		cc -DTZDIR=\"$(TZDIR)\"
 
 TZCSRCS=	zic.c scheck.c ialloc.c mkdir.c
 TZCOBJS=	zic.o scheck.o ialloc.o mkdir.o
@@ -70,14 +70,14 @@ REDID_BINARIES:	$(TZDIR) zic $(DATA)
 		PATH=.:$$PATH zic -l $(LOCALTIME) -d $(TZDIR) $(DATA) && > $@
 
 zdump:		$(TZDOBJS)
-		$(CC) $(TZDEF) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@
+		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@
 
 $(TZLIB):	$(LIBOBJS)
 		ar ru $@ $(LIBOBJS)
 		test -f /usr/bin/ranlib && ranlib $@
 
 zic:		$(TZCOBJS)
-		$(CC) $(TZDEF) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
+		$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
 
 $(TZDIR):
 		mkdir $@

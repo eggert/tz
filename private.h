@@ -199,7 +199,7 @@ extern void		free P((char * buf));
 #endif /* !defined INT_STRLEN_MAXIMUM */
 
 /*
-** UNIX is a registered trademark of AT&T.
+** UNIX was a registered trademark of UNIX System Laboratories in 1993.
 ** VAX is a trademark of Digital Equipment Corporation.
 */
 

@@ -129,19 +129,9 @@ register char *	name;
 		i = read(fid, buf, sizeof buf);
 		if (close(fid) != 0 || i < sizeof *tzhp)
 			return -1;
-/*###132 [lint] warning possible pointer alignment problem%%%*/
-/*###132 [lint] warning illegal pointer combination%%%*/
-/*###132 [lint] warning illegal pointer combination%%%*/
-/*###132 [lint] warning possible pointer alignment problem%%%*/
 		tzhp = (struct tzhead *) buf;
-/*###133 [lint] warning long assignment may lose accuracy%%%*/
-/*###133 [lint] warning long assignment may lose accuracy%%%*/
 		s.timecnt = (int) detzcode(tzhp->tzh_timecnt);
-/*###134 [lint] warning long assignment may lose accuracy%%%*/
-/*###134 [lint] warning long assignment may lose accuracy%%%*/
 		s.typecnt = (int) detzcode(tzhp->tzh_typecnt);
-/*###135 [lint] warning long assignment may lose accuracy%%%*/
-/*###135 [lint] warning long assignment may lose accuracy%%%*/
 		s.charcnt = (int) detzcode(tzhp->tzh_charcnt);
 		if (s.timecnt > TZ_MAX_TIMES ||
 			s.typecnt == 0 ||
@@ -348,18 +338,10 @@ long		offset;
 		rem -= SECS_PER_DAY;
 		++days;
 	}
-/*###348 [lint] warning long assignment may lose accuracy%%%*/
-/*###348 [lint] warning long assignment may lose accuracy%%%*/
 	tmp->tm_hour = (int) (rem / SECS_PER_HOUR);
 	rem = rem % SECS_PER_HOUR;
-/*###350 [lint] warning long assignment may lose accuracy%%%*/
-/*###350 [lint] warning long assignment may lose accuracy%%%*/
 	tmp->tm_min = (int) (rem / SECS_PER_MIN);
-/*###351 [lint] warning long assignment may lose accuracy%%%*/
-/*###351 [lint] warning long assignment may lose accuracy%%%*/
 	tmp->tm_sec = (int) (rem % SECS_PER_MIN);
-/*###352 [lint] warning long assignment may lose accuracy%%%*/
-/*###352 [lint] warning long assignment may lose accuracy%%%*/
 	tmp->tm_wday = (int) ((EPOCH_WDAY + days) % DAYS_PER_WEEK);
 	if (tmp->tm_wday < 0)
 		tmp->tm_wday += DAYS_PER_WEEK;
@@ -367,35 +349,21 @@ long		offset;
 	if (days >= 0)
 		for ( ; ; ) {
 			yleap = isleap(y);
-/*###359 [lint] warning assignment to long may sign-extend incorrectly%%%*/
-/*###359 [lint] warning assignment to long may sign-extend incorrectly%%%*/
 			if (days < (long) year_lengths[yleap])
 				break;
 			++y;
-/*###362 [lint] warning assignment to long may sign-extend incorrectly%%%*/
-/*###362 [lint] warning assignment to long may sign-extend incorrectly%%%*/
 			days = days - (long) year_lengths[yleap];
 		}
 	else do {
 		--y;
 		yleap = isleap(y);
-/*###367 [lint] warning assignment to long may sign-extend incorrectly%%%*/
-/*###367 [lint] warning assignment to long may sign-extend incorrectly%%%*/
 		days = days + (long) year_lengths[yleap];
 	} while (days < 0);
 	tmp->tm_year = y - TM_YEAR_BASE;
-/*###370 [lint] warning long assignment may lose accuracy%%%*/
-/*###370 [lint] warning long assignment may lose accuracy%%%*/
 	tmp->tm_yday = (int) days;
 	ip = mon_lengths[yleap];
-/*###372 [lint] warning assignment to long may sign-extend incorrectly%%%*/
-/*###372 [lint] warning assignment to long may sign-extend incorrectly%%%*/
 	for (tmp->tm_mon = 0; days >= (long) ip[tmp->tm_mon]; ++(tmp->tm_mon))
-/*###373 [lint] warning assignment to long may sign-extend incorrectly%%%*/
-/*###373 [lint] warning assignment to long may sign-extend incorrectly%%%*/
 		days = days - (long) ip[tmp->tm_mon];
-/*###374 [lint] warning long assignment may lose accuracy%%%*/
-/*###374 [lint] warning long assignment may lose accuracy%%%*/
 	tmp->tm_mday = (int) (days + 1);
 	tmp->tm_isdst = 0;
 #ifdef KRE_COMPAT

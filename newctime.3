@@ -1,40 +1,48 @@
-.TH NEWCTIME 3 
+.TH CTIME 3 
 .SH NAME
-settz, ctime, localtime, gmtime, asctime, zonetime, tzset \- convert date and time to ASCII
+ctime, localtime, gmtime, asctime, tzset \- convert date and time to ASCII
 .SH SYNOPSIS
 .nf
-.B settz(zonename)
-.B char *zonename;
+.B extern char *tzname[2];
+.PP
+.B void tzset()
 .PP
 .B char *ctime(clock)
 .B long *clock;
 .PP
 .B #include <time.h>
 .PP
+.B char *asctime(tm)
+.B struct tm *tm;
+.PP
 .B struct tm *localtime(clock)
 .B long *clock;
 .PP
 .B struct tm *gmtime(clock)
 .B long *clock;
-.PP
-.B char *asctime(tm)
-.B struct tm *tm;
-.PP
-.B struct tm * zonetime(timep, zone)
-.B long *clock;
-.B char *zone;
-.PP
-.B extern char *tzname[2];
-.PP
-.B void tzset()
-.PP
-.B cc ... -lz
+.fi
 .SH DESCRIPTION
-.I Settz
-sets time conversion information used by
+.I Tzset
+uses the value of the environment variable
+.B TZ
+to set time conversion information used by
 .IR localtime .
 If
-.I zonename
+.B TZ
+does not appear in the environment,
+the best available approximation to local wall clock time is used by
+.IR localtime .
+.if !\nX \{\
+If
+.B TZ
+does appear in the environment,
+.I localtime
+will only work correctly if
+its value is one of an
+implementation-defined set of values.\}
+.el \{\
+If the value of
+.B TZ
 begins with a slash,
 it is used as the absolute pathname of the
 .IR tzfile (5)-format
@@ -42,42 +50,40 @@ file from which to read the time conversion information;
 if
 .I zonename
 begins with some other character,
-it is used as a pathname relative to the standard time conversion information
-directory.  A call of the form
-.ti +.5i
-.B
-settz("")
-.br
-causes built-in information about GMT to be used; a call of the form
-.ti +.5i
-.B
-settz((char *) 0)
-.br
-is treated as if it were a call of the form
-.ti +.5i
-.B
-settz("localtime")
+it is used as a pathname relative to a system time conversion information
+directory.
+\}
 .PP
-.IR Ctime ,
-.IR localtime ,
-.IR gmtime ,
+.I Ctime\^
+converts a long integer, pointed to by
+.IR clock ,
+representing the time in seconds since
+00:00:00 GMT, January 1, 1970,
+and returns a pointer to a
+26-character string
+of the form
+.br
+.ce
+Thu Nov 24 18:22:48 1986\\n\\0
+.br
+All the fields have constant width.
+.PP
+.IR Localtime\^
 and
-.I asctime
-have the same arguments and return values as
-the seasoned versions described in
-.IR ctime (3) .
-If
-.I localtime
-is called before
-.I settz
-is called,
-.I localtime
+.I gmtime\^
+return pointers to ``tm'' structures, described below.
+.I Localtime\^
+corrects for the time zone and any time zone adjustments
+(Daylight Savings time in the U.S.A.);
+before doing so,
+.I localtime\^
 calls
-.I settz
-with the value returned by
-.B
-getenv("TZ").
-.I Localtime
+.I tzset\^
+if
+.I tzset\^
+has not been called in the current process.
+After filling in the ``tm'' structure,
+.I localtime
 sets the
 .BR tm_isdst 'th
 element of
@@ -87,26 +93,47 @@ ASCII string that's the time zone abbreviation to be used with
 .IR localtime 's
 return value.
 .PP
-.I Zonetime
-converts the argument time using the argument zone,
-without affecting the zone used in future
-.I localtime
-calls.
+.I Gmtime\^
+converts to Greenwich Mean Time (GMT).
 .PP
-.I Tzset
-simply calls
-.I settz
-with the value of the environment variable
-.SM
-.B TZ
-as an argument or, if TZ is not present in the
-environment, a null pointer as an argument.
-.SH DIAGNOSTICS
-.I Settz
-returns zero if all seems well; it returns negative one otherwise
-(and sets things up so that its built-in information about GMT is used).
-.SH FILES
-/etc/zoneinfo	standard time conversion information directory
-.SH "SEE ALSO"
-ctime(3), getenv(3), tzfile(5)
+.I Asctime\^
+converts a time value contained in a
+``tm'' structure to a 26-character string,
+as shown in the above example,
+and returns a pointer
+to the string.
+.PP
+Declarations of all the functions and externals, and the ``tm'' structure,
+are in the
+.B <time.h>\^
+header file.
+The structure declaration is:
+.RS
+.PP
+.nf
+struct tm {
+        int tm_sec;	/\(** seconds (0 - 59) \(**/
+        int tm_min;	/\(** minutes (0 - 59) \(**/
+        int tm_hour;	/\(** hours (0 - 23) \(**/
+        int tm_mday;	/\(** day of month (1 - 31) \(**/
+        int tm_mon;	/\(** month of year (0 - 11) \(**/
+        int tm_year;	/\(** year \- 1900 \(**/
+        int tm_wday;	/\(** day of week (Sunday = 0) \(**/
+        int tm_yday;	/\(** day of year (0 - 365) \(**/
+        int tm_isdst;	/\(** is DST in effect? \(**/
+};
+.fi
+.RE
+.PP
+.I Tm_isdst\^
+is non-zero if a 
+time zone adjustment such as Daylight Savings time
+is in effect.
+.SH SEE ALSO
+.if \nX tzfile(5),
+getenv(3),
+time(2)
+.SH BUGS
+The return values point to static data
+whose content is overwritten by each call.
 .. %W%

@@ -47,7 +47,7 @@ const time_t	time0;
 	** Handle cases where both time1 and time0 have the same sign
 	** (meaning that their difference cannot overflow).
 	*/
-	if (time1 >= 0 && time0 >= 0 || time1 < 0 && time0 < 0)
+	if ((time1 < 0) == (time0 < 0))
 		return time1 - time0;
 	/*
 	** time1 and time0 have opposite signs.

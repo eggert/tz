@@ -1481,9 +1481,11 @@ addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd));
 		** Now we may get to set starttime for the next zone line.
 		*/
 		if (useuntil) {
-			starttime = tadd(zp->z_untiltime,
-				-gmtoffs[types[timecnt - 1]]);
+			starttime = tadd(zp->z_untiltime, -gmtoff);
 			startttisstd = zp->z_untilrule.r_todisstd;
+			if (!startttisstd)
+				starttime = tadd(starttime, -stdoff);
+			gmtoff = (zp + 1)->z_gmtoff;
 		}
 	}
 	writezone(zpfirst->z_name);

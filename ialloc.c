@@ -21,7 +21,7 @@ char *	icalloc P((int nelem, int elsize));
 char *	icatalloc P((char * old, const char * new));
 char *	icpyalloc P((const char * string));
 char *	imalloc P((int n));
-char *	irealloc P((char * pointer, int size));
+void *	irealloc P((void * pointer, int size));
 void	ifree P((char * pointer));
 
 char *
@@ -49,9 +49,9 @@ int	elsize;
 	return calloc((alloc_size_t) nelem, (alloc_size_t) elsize);
 }
 
-char *
+void *
 irealloc(pointer, size)
-char * const	pointer;
+void * const	pointer;
 const int	size;
 {
 	if (NULLMAL(pointer))

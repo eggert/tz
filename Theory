@@ -42,7 +42,7 @@ These are the changes that have been made to the SVR2 functions:
 	other rules to be encoded, and allows for situations where more than
 	two time zone abbreviations are used.
 
-	It was recognized that allowing the "TZ" envirnoment variable to
+	It was recognized that allowing the "TZ" environment variable to
 	take on values such as "US/Eastern" might cause "old" programs
 	(that expect "TZ" to have a certain form) to operate incorrectly;
 	consideration was given to using some other environment variable

@@ -142,6 +142,8 @@ YEARISTYPE=	./yearistype
 # These functions may well disappear in future releases of the time
 # conversion package.
 #
+# XXX--NEED WORDS ON CONDITIONAL COMPILATION OF POSIX2TIME AND TIME2POSIX HERE!
+#
 # If you want Source Code Control System ID's left out of object modules, add
 #	-DNOID
 # to the end of the "CFLAGS=" line.

@@ -22,8 +22,7 @@ Rule	ROK	1987	max	-	May	Sun<=14	2:00	1:00	D
 Rule	ROK	1987	max	-	Oct	Sun<=14	3:00	0	S
 
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
-Zone	ROK		9:00	-		KST	1987
-			9:00	ROK		K%sT
+Zone	ROK		9:00	ROK		K%sT
 
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 Zone	Japan		9:00	-		JST

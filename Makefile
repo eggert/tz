@@ -25,9 +25,9 @@ LOCALTIME=	Factory
 # Use the command
 #	make zonenames
 # to get a list of the values you can use for POSIXRULES.
-# If you want POSIX compatibility, use "US/Eastern".
+# If you want POSIX compatibility, use "America/New_York".
 
-POSIXRULES=	US/Eastern
+POSIXRULES=	America/New_York
 
 # Everything gets put in subdirectories of. . .
 

@@ -44,22 +44,20 @@ static char		isset;
 
 char *			tz_abbr;	/* set by localtime; available to all */
 
-#define	GETSHORT(val, p) { \
-	register int shortval; \
-	shortval = *p++; \
-	shortval = (shortval << 8) | *p++; \
-	val = shortval; \
-	}
+static
+getshort(p)
+unsigned char *	p;
+{
+	return (p[0] << 8) | p[1];
+}
 
-#define GETLONG(val, p) { \
-	register long longval; \
-	longval = *p++; \
-	longval = (longval << 8) | *p++; \
-	longval = (longval << 8) | *p++; \
-	longval = (longval << 8) | *p++; \
-	val = longval; \
-	}
-	
+static long
+getlong(p)
+register unsigned char *	p;
+{
+	return ((((((p[0] << 8) | p[1]) << 8) | p[2]) << 8) | p[3]);
+}
+
 static
 tzload(tzname, sp)
 register char *		tzname;
@@ -106,9 +104,9 @@ register struct state *	sp;
 		if (close(fid) != 0 || i < sizeof sp->h)
 			return -1;
 		p += sizeof sp->h.tzh_reserved;
-		GETSHORT(sp->h.tzh_timecnt, p);
-		GETSHORT(sp->h.tzh_typecnt, p);
-		GETSHORT(sp->h.tzh_charcnt, p);
+		sp->h.tzh_timecnt = getshort(p += 2);
+		sp->h.tzh_typecnt = getshort(p += 2);
+		sp->h.tzh_charcnt = getshort(p += 2);
 		if (sp->h.tzh_timecnt > TZ_MAX_TIMES ||
 			sp->h.tzh_typecnt == 0 ||
 			sp->h.tzh_typecnt > TZ_MAX_TYPES ||
@@ -120,14 +118,14 @@ register struct state *	sp;
 			sp->h.tzh_charcnt * sizeof (char))
 				return -1;
 		for (i = 0; i < sp->h.tzh_timecnt; ++i)
-			GETLONG(sp->ats[i], p);
+			sp->ats[i] = getlong(p += 4);
 		for (i = 0; i < sp->h.tzh_timecnt; ++i)
 			sp->types[i] = *p++;
 		for (i = 0; i < sp->h.tzh_typecnt; ++i) {
 			register struct ttinfo *	ttisp;
 
 			ttisp = &sp->ttis[i];
-			GETLONG(ttisp->tt_gmtoff, p);
+			ttisp->tt_gmtoff = getlong(p += 4);
 			ttisp->tt_isdst = *p++;
 			ttisp->tt_abbrind = *p++;
 		}

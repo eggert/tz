@@ -17,11 +17,11 @@ LINTFLAGS=	-phbaaxc
 LFLAGS=
 CFLAGS=		$(DEBUG) -O -DOBJECTID -DTZDIR=\"$(TZDIR)\"
 
-TZCSRCS=	tzcomp.c scheck.c strchr.c
-TZCOBJS=	tzcomp.o scheck.o strchr.o
+TZCSRCS=	tzcomp.c scheck.c strchr.c mkdir.c
+TZCOBJS=	tzcomp.o scheck.o strchr.o mkdir.o
 TZDSRCS=	tzdump.c settz.c
 TZDOBJS=	tzdump.o settz.o
-DATA=		asia australia europe etcetera northamerica pacificnew
+DATA=		asia australasia europe etcetera northamerica pacificnew
 ENCHILADA=	Makefile tzfile.h $(TZCSRCS) $(TZDSRCS) $(DATA) years.sh \
 			README settz.3 tzfile.5 tzcomp.8
 

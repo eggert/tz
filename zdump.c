@@ -1,5 +1,4 @@
 /*
-** XXX--handle systems where time_t is floating
 ** XXX--handle systems where asctime/localtime return NULL
 */
 
@@ -16,6 +15,7 @@ static char	elsieid[] = "%W%";
 #include "sys/types.h"	/* for time_t */
 #include "time.h"	/* for struct tm */
 #include "stdlib.h"	/* for exit, malloc, atoi */
+#include "float.h"	/* for FLT_MIN, FLT_MAX, et al. */
 
 #ifndef ZDUMP_LO_YEAR
 #define ZDUMP_LO_YEAR	(-1000)
@@ -170,7 +170,7 @@ char *	argv[];
 	register long		cuthiyear = ZDUMP_HI_YEAR;
 	register time_t		cutlotime;
 	register time_t		cuthitime;
-	char **			fakeenv;
+	register char **	fakeenv;
 	time_t			now;
 	time_t			t;
 	time_t			newt;
@@ -313,9 +313,18 @@ setabsolutes()
 		/*
 		** time_t is floating.
 		*/
-(void) fprintf(stderr, _("%s: cannot use -v on system with floating time_t\n"),
-			progname);
-		(void) exit(EXIT_FAILURE);
+		if (sizeof (time_t) == sizeof (float)) {
+			absolute_min_time = (time_t) FLT_MIN;
+			absolute_max_time = (time_t) FLT_MAX;
+		} else if (sizeof (time_t) == sizeof (double)) {
+			absolute_min_time = (time_t) DBL_MIN;
+			absolute_max_time = (time_t) DBL_MAX;
+		} else {
+			(void) fprintf(stderr,
+_("%s: use of -v on system with floating time_t other than float or double\n"),
+				progname);
+			(void) exit(EXIT_FAILURE);
+		}
 	} else if (0 > (time_t) -1) {
 		/*
 		** time_t is signed.
@@ -404,8 +413,8 @@ delta(newp, oldp)
 struct tm *	newp;
 struct tm *	oldp;
 {
-	long	result;
-	int	tmy;
+	register long	result;
+	register int	tmy;
 
 	if (newp->tm_year < oldp->tm_year)
 		return -delta(oldp, newp);
@@ -428,7 +437,7 @@ char *	zone;
 time_t	t;
 int	v;
 {
-	struct tm *	tmp;
+	register struct tm *	tmp;
 
 	(void) printf("%-*s  ", (int) longest, zone);
 	if (v) {

@@ -12,21 +12,21 @@ static char	elsieid[] = "%W%";
 #include "private.h"
 
 /*
- * Copyright (c) 1989 The Regents of the University of California.
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms are permitted
- * provided that the above copyright notice and this paragraph are
- * duplicated in all such forms and that any documentation,
- * advertising materials, and other materials related to such
- * distribution and use acknowledge that the software was developed
- * by the University of California, Berkeley.  The name of the
- * University may not be used to endorse or promote products derived
- * from this software without specific prior written permission.
- * THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
- */
+** Copyright (c) 1989 The Regents of the University of California.
+** All rights reserved.
+**
+** Redistribution and use in source and binary forms are permitted
+** provided that the above copyright notice and this paragraph are
+** duplicated in all such forms and that any documentation,
+** advertising materials, and other materials related to such
+** distribution and use acknowledge that the software was developed
+** by the University of California, Berkeley.  The name of the
+** University may not be used to endorse or promote products derived
+** from this software without specific prior written permission.
+** THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+** IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+*/
 
 #ifndef LIBC_SCCS
 #ifndef lint
@@ -36,40 +36,87 @@ static const char sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
 
 #include "tzfile.h"
 
-static const char afmt[][4] = {
-	"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
-};
-static const char Afmt[][10] = {
-	"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
-	"Saturday"
-};
-static const char bfmt[][4] = {
-	"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
-	"Oct", "Nov", "Dec"
-};
-static const char Bfmt[][10] = {
-	"January", "February", "March", "April", "May", "June", "July",
-	"August", "September", "October", "November", "December"
+struct lc_time_T {
+	const char *	mon[12];
+	const char *	month[12];
+	const char *	wday[7];
+	const char *	weekday[7];
+	const char *	X_fmt;
+	const char *	x_fmt;
+	const char *	c_fmt;
+	const char *	am;
+	const char *	pm;
+	const char *	date_fmt;
 };
 
-static char *_add P((const char *, char *, const char *));
-static char *_conv P((int, const char *, char *, const char *));
-static char *_fmt P((const char *, const struct tm *, char *, const char *));
+static const struct lc_time_T	C_time_locale = {
+	{
+		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+	}, {
+		"January", "February", "March", "April", "May", "June",
+		"July", "August", "September", "October", "November", "December"
+	}, {
+		"Sun", "Mon", "Tue", "Wed",
+		"Thu", "Fri", "Sat"
+	}, {
+		"Sunday", "Monday", "Tuesday", "Wednesday",
+		"Thursday", "Friday", "Saturday"
+	},
+
+	/* X_fmt */
+	"%H:%M:%S",
+
+	/*
+	** x_fmt
+	** Since the C language standard calls for
+	** "date, using locale's date format," anything goes.
+	** Using just numbers (as here) makes Quakers happier;
+	** it's also compatible with SVR4.
+	*/
+	"%m/%d/%y",
+
+	/* c_fmt */
+#ifdef EGGERT
+	"%a %b %d %H:%M:%S %Y",
+#endif /* defined EGGERT */
+#ifndef EGGERT
+	"%D %X",	/* %m/%d/%y %H:%M:%S */
+#endif /* !defined EGGERT */
+
+	/* am */
+	"AM",
+	
+	/* pm */
+	"PM",
+
+	/* date_fmt */
+	"%a %b %e %H:%M:%S %Z %Y"
+};
+
+static char *	_add P((const char *, char *, const char *));
+static char *	_conv P((int, const char *, char *, const char *));
+static char *_fmt P((const char *, const struct tm *, char *, const char *,
+			struct lc_time_T *));
+static const struct lc_time_T *	_loc P((struct lc_time_T *));
 
 size_t strftime P((char *, size_t, const char *, const struct tm *));
 
-extern char *tzname[];
+extern char *	tzname[];
 
 size_t
 strftime(s, maxsize, format, t)
-	char *s;
-	size_t maxsize;
-	const char *format;
-	const struct tm *t;
+char *			s;
+const size_t		maxsize;
+const char * const	format;
+const struct tm *	t;
 {
-	char *p;
-
-	p = _fmt(((format == NULL) ? "%c" : format), t, s, s + maxsize);
+	char *			p;
+	struct lc_time_T	localebuf;
+  
+	localebuf.mon[0] = 0;
+	p = _fmt(((format == NULL) ? "%c" : format),
+		t, s, s + maxsize, &localebuf);
 	if (p == s + maxsize)
 		return 0;
 	*p = '\0';
@@ -77,13 +124,14 @@ strftime(s, maxsize, format, t)
 }
 
 static char *
-_fmt(format, t, pt, ptlim)
-	const char *format;
-	const struct tm *t;
-	char *pt;
-	const char *ptlim;
+_fmt(format, t, pt, ptlim, ptloc)
+const char *		format;
+const struct tm *	t;
+char *			pt;
+const char *		ptlim;
+struct lc_time_T *	ptloc;
 {
-	for (; *format; ++format) {
+	for ( ; *format; ++format) {
 		if (*format == '%') {
 label:
 			switch(*++format) {
@@ -92,23 +140,24 @@ label:
 				break;
 			case 'A':
 				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
-					"?" : Afmt[t->tm_wday], pt, ptlim);
+					"?" : _loc(ptloc)->weekday[t->tm_wday],
+					pt, ptlim);
 				continue;
 			case 'a':
 				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
-					"?" : afmt[t->tm_wday], pt, ptlim);
+					"?" : _loc(ptloc)->wday[t->tm_wday],
+					pt, ptlim);
 				continue;
 			case 'B':
 				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
-					"?" : Bfmt[t->tm_mon], pt, ptlim);
+					"?" : _loc(ptloc)->month[t->tm_mon],
+					pt, ptlim);
 				continue;
 			case 'b':
 			case 'h':
 				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
-					"?" : bfmt[t->tm_mon], pt, ptlim);
-				continue;
-			case 'c':
-				pt = _fmt("%D %X", t, pt, ptlim);
+					"?" : _loc(ptloc)->mon[t->tm_mon],
+					pt, ptlim);
 				continue;
 			case 'C':
 				/*
@@ -121,28 +170,12 @@ label:
 				pt = _conv((t->tm_year + TM_YEAR_BASE) / 100,
 					"%02d", pt, ptlim);
 				continue;
-			case 'D':
-				pt = _fmt("%m/%d/%y", t, pt, ptlim);
+			case 'c':
+				pt = _fmt(_loc(ptloc)->c_fmt, t,
+					pt, ptlim, ptloc);
 				continue;
-			case 'x':
-				/*
-				** Version 3.0 of strftime from Arnold Robbins
-				** (arnold@skeeve.atl.ga.us) does the
-				** equivalent of...
-				**	_fmt("%a %b %e %Y");
-				** ...for %x; since the X3J11 C language
-				** standard calls for "date, using locale's
-				** date format," anything goes.  Using just
-				** numbers (as here) makes Quakers happier.
-				** Word from Paul Eggert (eggert@twinsun.com)
-				** is that %Y-%m-%d is the ISO standard date
-				** format, specified in ISO 2014 and later
-				** ISO 8601:1988, with a summary available in
-				** pub/doc/ISO/english/ISO8601.ps.Z on
-				** ftp.uni-erlangen.de.
-				** (ado, 5/30/93)
-				*/
-				pt = _fmt("%m/%d/%y", t, pt, ptlim);
+			case 'D':
+				pt = _fmt("%m/%d/%y", t, pt, ptlim, ptloc);
 				continue;
 			case 'd':
 				pt = _conv(t->tm_mday, "%02d", pt, ptlim);
@@ -220,21 +253,22 @@ label:
 				pt = _add("\n", pt, ptlim);
 				continue;
 			case 'p':
-				pt = _add(t->tm_hour >= 12 ? "PM" : "AM",
+				pt = _add((t->tm_hour >= 12) ?
+					_loc(ptloc)->pm :
+					_loc(ptloc)->am,
 					pt, ptlim);
 				continue;
 			case 'R':
-				pt = _fmt("%H:%M", t, pt, ptlim);
+				pt = _fmt("%H:%M", t, pt, ptlim, ptloc);
 				continue;
 			case 'r':
-				pt = _fmt("%I:%M:%S %p", t, pt, ptlim);
+				pt = _fmt("%I:%M:%S %p", t, pt, ptlim, ptloc);
 				continue;
 			case 'S':
 				pt = _conv(t->tm_sec, "%02d", pt, ptlim);
 				continue;
 			case 'T':
-			case 'X':
-				pt = _fmt("%H:%M:%S", t, pt, ptlim);
+				pt = _fmt("%H:%M:%S", t, pt, ptlim, ptloc);
 				continue;
 			case 't':
 				pt = _add("\t", pt, ptlim);
@@ -321,7 +355,7 @@ label:
 				** "date as dd-bbb-YYYY"
 				** (ado, 5/24/93)
 				*/
-				pt = _fmt("%e-%b-%Y", t, pt, ptlim);
+				pt = _fmt("%e-%b-%Y", t, pt, ptlim, ptloc);
 				continue;
 			case 'W':
 				pt = _conv((t->tm_yday + 7 -
@@ -331,6 +365,14 @@ label:
 				continue;
 			case 'w':
 				pt = _conv(t->tm_wday, "%d", pt, ptlim);
+				continue;
+			case 'X':
+				pt = _fmt(_loc(ptloc)->X_fmt, t,
+					pt, ptlim, ptloc);
+				continue;
+			case 'x':
+				pt = _fmt(_loc(ptloc)->x_fmt, t,
+					pt, ptlim, ptloc);
 				continue;
 			case 'y':
 				pt = _conv((t->tm_year + TM_YEAR_BASE) % 100,
@@ -370,10 +412,10 @@ label:
 
 static char *
 _conv(n, format, pt, ptlim)
-	int n;
-	const char *format;
-	char *pt;
-	const char *ptlim;
+const int		n;
+const char *		format;
+char * const		pt;
+const char * const	ptlim;
 {
 	char buf[INT_STRLEN_MAXIMUM(int) + 1];
 
@@ -383,11 +425,18 @@ _conv(n, format, pt, ptlim)
 
 static char *
 _add(str, pt, ptlim)
-	const char *str;
-	char *pt;
-	const char *ptlim;
+const char *		str;
+char *			pt;
+const char * const	ptlim;
 {
 	while (pt < ptlim && (*pt = *str++) != '\0')
 		++pt;
 	return pt;
+}
+
+static const struct lc_time_T *
+_loc(ptloc)
+struct lc_time_T *	ptloc;
+{
+	return &C_time_locale;
 }

@@ -549,7 +549,7 @@ struct tm *	tmp;
 		size += INCR;
 		cp = realloc(cp, size);
 	}
-	(void) fwrite(cp, 1, size, fp);
+	(void) fwrite(cp, 1, result, fp);
 	free(cp);
 }
 

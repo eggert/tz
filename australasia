@@ -105,6 +105,14 @@ Zone	NZ-CHAT			12:45	-		NZ-CHAT # Chatham Island
 
 ###############################################################################
 
+# Kwajalein
+
+# Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	Kwajalein		-12:00	-		KST	1993 Aug 20
+				12:00	-		KST
+
+###############################################################################
+
 # NOTES
 
 ###############################################################################
@@ -431,3 +439,13 @@ Zone	NZ-CHAT			12:45	-		NZ-CHAT # Chatham Island
 # From Arthur David Olson (March 8, 1992):
 # The chosen rules use the Davies October 8 values for the start of DST in 1989
 # rather than the October 1 value.
+
+###############################################################################
+
+# Kwajalein
+
+# In comp.risks 14.87 (26 August 1993), Peter Neumann writes:
+# I wonder what happened in Kwajalein, where there was NO Friday,
+# August 20, 1993.  Thursday night at midnight Kwajalein switched sides with
+# respect to the International Date Line, to rejoin its fellow islands,
+# going from 11:59 p.m. Thursday to 12:00 m. Saturday in a blink.

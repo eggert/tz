@@ -22,12 +22,6 @@ static char	sccsid[] = "%W%";
 #define FALSE	0
 #endif
 
-#ifdef lint
-#define scheck(string, format)	(format)
-#endif
-#ifndef lint
-extern char *	scheck();
-#endif
 
 extern char *	calloc();
 extern char *	malloc();
@@ -35,6 +29,7 @@ extern char *	optarg;
 extern int	optind;
 extern FILE *	popen();
 extern char *	realloc();
+extern char *	scheck();
 extern char *	sprintf();
 extern char *	strcat();
 extern char *	strchr();

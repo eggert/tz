@@ -17,11 +17,11 @@ static char	elsieid[] = "%W%";
 
 #ifndef HAVE_STDLIB_H
 #define HAVE_STDLIB_H 1
-#endif
+#endif /* !defined HAVE_STDLIB_H */
 
 #if HAVE_STDLIB_H
 #include "stdlib.h"   /* for exit, malloc, atoi */
-#endif
+#endif /* defined HAVE_STDLIB_H */
 
 #ifndef MAX_STRING_LENGTH
 #define MAX_STRING_LENGTH	1024

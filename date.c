@@ -281,7 +281,7 @@ char *	argv[];
 
 	/* gcc -Wall pacifier */
 	for ( ; ; )
-		;
+		continue;
 }
 
 static void

@@ -390,8 +390,8 @@ label:
 					if (*format == 'V')
 						pt = _conv(w, "%02d",
 							pt, ptlim);
-					else if (*format == 'G')
-						pt = _conv(year, "%02d",
+					else if (*format == 'g')
+						pt = _conv(year % 100, "%02d",
 							pt, ptlim);
 					else	pt = _conv(year, "%04d",
 							pt, ptlim);

@@ -381,7 +381,10 @@ label:
 							DAYSPERNYEAR;
 					}
 #ifdef XPG4_1994_04_09
-					if (w == 52 && t->tm_mon == TM_JANUARY)
+					if ((w == 52
+					     && t->tm_mon == TM_JANUARY)
+					    || (w == 1
+						&& t->tm_mon == TM_DECEMBER))
 						w = 53;
 #endif /* defined XPG4_1994_04_09 */
 					if (*format == 'V')

@@ -204,7 +204,7 @@ sure:		$(SOURCES)
 # "/usr/5bin/lint -p" can dump core on SunOS 4.0, so no -p below. . .
 
 SURE:		sure $(ENCHILADA)
-		make sure LINT=/usr/5bin/lint LINTFLAGS=""
+		make sure LINT=/usr/5bin/lint LINTFLAGS=-DUSG
 		make sure LINT=gcc LINTFLAGS="-c -O -ansi -pedantic -Wall"
 		rm -f zic zdump *.o
 		spell $(ENCHILADA)

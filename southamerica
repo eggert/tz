@@ -175,11 +175,6 @@ Zone America/Manaus	-4:00:04 -	LMT	1914
 Zone America/Porto_Acre	-4:31:12 -	LMT	1914
 			-5:00	-	AST	1963 Dec 9
 			-5:00	Brazil	A%sT
-# These links are for backward compatibility with the old naming convention.
-Link America/Sao_Paulo	Brazil/East
-Link America/Manaus	Brazil/West
-Link America/Porto_Acre	Brazil/Acre
-Link America/Noronha	Brazil/DeNoronha
 #
 # Martin Vaz and Trinidade are like America/Noronha.
 
@@ -210,9 +205,6 @@ Zone Pacific/Easter	-7:17:28 -	LMT	1890	    # Mataveri
 			-7:17	-	MMT	1932 Sep    # Mataveri Mean Time
 			-7:00	Chile	M%sT	1982 Mar 14
 			-6:00	Chile	C%sT
-# These links are for backward compatibility with the old naming convention.
-Link America/Santiago	Chile/Continental
-Link Pacific/Easter	Chile/EasterIsland
 #
 # Juan Fernandez Is, San Ambrosio, San Felix
 # no information; probably like America/Santiago

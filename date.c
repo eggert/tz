@@ -203,13 +203,9 @@ char *	argv[];
 	register int		nflag = 0;
 #endif /* defined TSP_SETDATE */
 #endif /* defined N_OPTION */
-#ifdef D_OPTION
-	register int		dflag = 0;
-#endif /* defined D_OPTION */ 
-#ifdef T_OPTION
-	register int		tflag = 0;
-#endif /* defined T_OPTION */ 
 #ifdef D_OR_T_OPTION
+	register int		dflag = 0;
+	register int		tflag = 0;
 	struct timezone		tz;
 #endif /* defined D_OR_T_OPTION */
 #ifdef A_OPTION
@@ -217,13 +213,6 @@ char *	argv[];
 	struct timeval		atv;
 #endif /* defined A_OPTION */
 
-#ifdef D_OR_T_OPTION
-	if (gettimeofday((struct timeval *) NULL, &tz) != 0) {
-		perror("date: error: gettimeofday");
-		errensure();
-		(void) exit(retval);
-	}
-#endif /* defined D_OR_T_OPTION */
 	(void) time(&now);
 	format = value = NULL;
 	/*
@@ -385,9 +374,19 @@ char *	argv[];
 			oops("date: error: adjtime");
 #endif /* defined A_OPTION */
 #ifdef D_OR_T_OPTION
-	if ((tflag || dflag) &&
-		settimeofday((struct timeval *) NULL, &tz) != 0)
+	if (dflag || tflag) {
+		struct timezone	outz;
+
+		if (!dflag || !tflag)
+			if (gettimeofday((struct timeval *) NULL, &outz) != 0)
+				oops("date: error: gettimeofday");
+		if (dflag)
+			outz.tz_dsttime = tz.tz_dsttime;
+		if (tflag)
+			outz.tz_minuteswest = tz.tz_minuteswest;
+		if (settimeofday((struct timeval *) NULL, &outz) != 0)
 			oops("date: error: settimeofday");
+	}
 #endif /* defined D_OR_T_OPTION */
 	if (value == NULL)
 		display(format);

@@ -989,6 +989,13 @@ Rule	Toronto	1922	1923	-	May	Sun>=8	2:00	1:00	D
 # Shanks says 1923-09-19; assume it's a typo and that "-16" was meant.
 Rule	Toronto	1922	1926	-	Sep	Sun>=15	2:00	0	S
 Rule	Toronto	1924	1927	-	May	Sun>=1	2:00	1:00	D
+# The 1927-to-1939 rules can be expressed more simply as
+# Rule	Toronto	1927	1937	-	Sep	Sun>=25	2:00	0	S
+# Rule	Toronto	1928	1937	-	Apr	Sun>=25	2:00	1:00	D
+# Rule	Toronto	1938	1940	-	Apr	lastSun	2:00	1:00	D
+# Rule	Toronto	1938	1939	-	Sep	lastSun	2:00	0	S
+# The rules below avoid use of Sun>=25
+# (which pre-2004 versions of zic cannot handle).
 Rule	Toronto	1927	1932	-	Sep	lastSun	2:00	0	S
 Rule	Toronto	1928	1931	-	Apr	lastSun	2:00	1:00	D
 Rule	Toronto	1932	only	-	May	1	2:00	1:00	D

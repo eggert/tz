@@ -18,7 +18,7 @@ static char	elsieid[] = "%W%";
 #include "sys/stat.h"
 #endif /* !defined __STDC__ */
 
-#if !defined unix
+#ifndef unix
 extern FILE *	popen P((const char * command));
 #endif /* !defined unix */
 

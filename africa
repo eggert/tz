@@ -1,0 +1,43 @@
+# %W%
+
+#
+###############################################################################
+#
+# . . .
+# Date: Thu, 28 Jan 88 20:25:39 PST
+# . . .
+# From: ncifcrf!decwrl.dec.com!devine%cookie.DEC (Bob Devine)
+# . . .
+# Egypt: DST from first day of May to first of October (ending may
+# also be on Sept 30th not 31st -- you might want to ask one of the
+# soc.* groups, you might hit someone who could ask an embassy).
+# DST since 1960 except for 1981-82.
+# . . .
+# Libya: Since 1982 April 1st to September 30th (?)
+#
+###############################################################################
+#
+# From the U.S. Naval Observatory (on 2/10/88):
+#
+# 	LIBYA               2 H AHEAD OF UTC
+# 	EGYPT               2 H AHEAD UTC 
+# 	EGYPT               3 H AHEAD UTC SUMMER (AFTER RAMADAN)
+#
+###############################################################################
+#
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+
+Rule	Egypt	1960	max	-	May	1	2:00	1:00	" DST"
+Rule	Egypt	1960	max	-	Oct	1	2:00	0	-
+
+Rule	Libya	1982	max	-	Apr	1	2:00	1:00	" DST"
+Rule	Libya	1982	max	-	Sep	30	2:00	0	-
+
+# Zone	NAME	GMTOFF	RULES/SAVE	FORMAT	 [UNTIL]
+
+Zone	Egypt	2:00	Egypt		EET%s	1981
+		2:00	-		EET%s	1983
+		2:00	Egypt		EET%s
+
+Zone	Libya	2:00	Libya		EET%s

@@ -150,6 +150,15 @@ char *			tzname[2] = {
 	WILDABBR
 };
 
+/*
+** Section 4.12.3 of X3.159-1989 requires that
+**	Except for the strftime function, these functions [asctime,
+**	ctime, gmtime, localtime] return values in one of two static
+**	objects: a broken-down time structure and an array of char.
+*/
+
+static struct tm	tm;
+
 #ifdef USG_COMPAT
 time_t			timezone = 0;
 int			daylight = 0;
@@ -948,8 +957,6 @@ struct tm *
 localtime(timep)
 const time_t * const	timep;
 {
-	static struct tm	tm;
-
 	localsub(timep, 0L, &tm);
 	return &tm;
 }
@@ -998,8 +1005,6 @@ struct tm *
 gmtime(timep)
 const time_t * const	timep;
 {
-	static struct tm	tm;
-
 	gmtsub(timep, 0L, &tm);
 	return &tm;
 }
@@ -1011,8 +1016,6 @@ offtime(timep, offset)
 const time_t * const	timep;
 const long		offset;
 {
-	static struct tm	tm;
-
 	gmtsub(timep, offset, &tm);
 	return &tm;
 }

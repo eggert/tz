@@ -69,7 +69,7 @@ strftime(s, maxsize, format, t)
 {
 	char *p;
 
-	p = _fmt(format, t, s, s + maxsize);
+	p = _fmt(((format == NULL) ? "%c" : format), t, s, s + maxsize);
 	if (p == s + maxsize)
 		return 0;
 	*p = '\0';

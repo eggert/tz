@@ -139,6 +139,8 @@ struct rule {
 	long	r_wday;
 
 	long	r_tod;		/* time from midnight */
+	int	r_todisstd;	/* above is standard time if TRUE */
+				/* above is wall clock time if FALSE */
 	long	r_stdoff;	/* offset from standard time */
 	char *	r_abbrvar;	/* variable part of time zone abbreviation */
 
@@ -182,8 +184,8 @@ static struct link *	links;
 static int		nlinks;
 
 struct lookup {
-	char *	l_word;
-	long	l_value;
+	char *		l_word;
+	long		l_value;
 };
 
 static struct lookup *	byword();
@@ -295,7 +297,7 @@ emalloc(size)
 
 static char *
 erealloc(ptr, size)
-char *		ptr;
+char *	ptr;
 {
 	register char *	cp;
 
@@ -349,7 +351,7 @@ char *	argv[];
 			case 'l':
 				if (localtime == NULL)
 					localtime = optarg;
-				else	wildexit("multiple command line l's");
+				else	wildexit("multiple command line -l's");
 		}
 	if (directory == NULL)
 		directory = TZDIR;
@@ -569,6 +571,21 @@ char **	fields;
 		error("month name");
 		return;
 	} else r.r_month = lp->l_value;
+	r.r_todisstd = FALSE;
+	cp = fields[RF_TOD];
+	if (strlen(cp) > 0) {
+		cp += strlen(cp) - 1;
+		switch (lowerit(*cp)) {
+			case 's':
+				r.r_todisstd = TRUE;
+				*cp = '\0';
+				break;
+			case 'w':
+				r.r_todisstd = FALSE;
+				*cp = '\0';
+				break;
+		}
+	}
 	if ((r.r_tod = getoff(fields[RF_TOD])) < 0) {
 		error("time of day");
 		return;
@@ -873,22 +890,25 @@ register struct zone *	zp;
 	t.tz_timecnt = ntemps;
 	(void) qsort((char *) temps, ntemps, sizeof *temps, tcomp);
 	for (i = 0; i < ntemps; ++i) {
-		t.tz_types[i] = temps[i].t_rp->r_type;
+		rp = temps[i].t_rp;
+		t.tz_types[i] = rp->r_type;
 		t.tz_times[i] = temps[i].t_time - zp->z_gmtoff;
-		/*
-		** Credit to munnari!kre for pointing out the need for the
-		** following.  (This can still mess up on the earliest rule;
-		** who's got the solution?  It can also mess up if a time
-		** switch results in a day switch; this is left as an exercise
-		** for the reader.
-		*/
-		if (i == 0) {
+		if (!rp->r_todisstd) {
 			/*
-			** Kludge--not guaranteed to work.
+			** Credit to munnari!kre for pointing out the need for
+			** the following.  (This can still mess up on the
+			** earliest rule; who's got the solution?  It can also
+			** mess up if a time switch results in a day switch;
+			** this is left as an exercise for the reader.)
 			*/
-			if (ntemps > 1)
-				t.tz_times[0] -= temps[1].t_rp->r_stdoff;
-		} else	t.tz_times[i] -= temps[i - 1].t_rp->r_stdoff;
+			if (i == 0) {
+				/*
+				** Kludge--not guaranteed to work.
+				*/
+				if (ntemps > 1)
+					t.tz_times[0] -= rp->r_stdoff;
+			} else	t.tz_times[i] -= temps[i - 1].t_rp->r_stdoff;
+		}
 	}
 	writezone(zp->z_name, &t);
 	return;

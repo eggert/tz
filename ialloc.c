@@ -8,13 +8,6 @@ static char	elsieid[] = "%W%";
 
 #include "private.h"
 
-#ifdef MAL
-#define NULLMAL(x)	((x) == NULL || (x) == MAL)
-#endif /* defined MAL */
-#ifndef MAL
-#define NULLMAL(x)	((x) == NULL)
-#endif /* !defined MAL */
-
 #define nonzero(n)	(((n) == 0) ? 1 : (n))
 
 char *	icalloc P((int nelem, int elsize));
@@ -28,15 +21,7 @@ char *
 imalloc(n)
 const int	n;
 {
-#ifdef MAL
-	register char *	result;
-
-	result = malloc((size_t) nonzero(n));
-	return NULLMAL(result) ? NULL : result;
-#endif /* defined MAL */
-#ifndef MAL
 	return malloc((size_t) nonzero(n));
-#endif /* !defined MAL */
 }
 
 char *
@@ -54,7 +39,7 @@ irealloc(pointer, size)
 void * const	pointer;
 const int	size;
 {
-	if (NULLMAL(pointer))
+	if (pointer == NULL)
 		return imalloc(size);
 	return realloc((void *) pointer, (size_t) nonzero(size));
 }
@@ -67,14 +52,14 @@ const char * const	new;
 	register char *	result;
 	register int	oldsize, newsize;
 
-	newsize = NULLMAL(new) ? 0 : strlen(new);
-	if (NULLMAL(old))
+	newsize = (new == NULL) ? 0 : strlen(new);
+	if (old == NULL)
 		oldsize = 0;
 	else if (newsize == 0)
 		return old;
 	else	oldsize = strlen(old);
 	if ((result = irealloc(old, oldsize + newsize + 1)) != NULL)
-		if (!NULLMAL(new))
+		if (new != NULL)
 			(void) strcpy(result + oldsize, new);
 	return result;
 }
@@ -90,7 +75,7 @@ void
 ifree(p)
 char * const	p;
 {
-	if (!NULLMAL(p))
+	if (p != NULL)
 		(void) free(p);
 }
 
@@ -98,6 +83,6 @@ void
 icfree(p)
 char * const	p;
 {
-	if (!NULLMAL(p))
+	if (p != NULL)
 		(void) free(p);
 }

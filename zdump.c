@@ -270,9 +270,10 @@ abbr(tmp)
 struct tm *	tmp;
 {
 	register char *	result;
+	static char	nada[1];
 
 	if (tmp->tm_isdst != 0 && tmp->tm_isdst != 1)
-		return "";
+		return nada;
 	result = tzname[tmp->tm_isdst];
-	return (result == NULL) ? "" : result;
+	return (result == NULL) ? nada : result;
 }

@@ -4,11 +4,25 @@
 ** Format of time zone information files.
 */
 
+#ifndef TZDIR
 #define TZDIR		"/etc/tzdir"	/* Time zone object file directory */
+#endif
+
+#ifndef TZDEFAULT
 #define TZDEFAULT	"localtime"
+#endif
+
+#ifndef TZ_MAX_RULES
 #define TZ_MAX_RULES	170		/* Maximum number of rules */
+#endif
+
+#ifndef TZ_MAX_TYPES
 #define TZ_MAX_TYPES	10		/* Maximum number of Saving Times */
+#endif
+
+#ifndef TZ_ABBR_LEN
 #define TZ_ABBR_LEN	7		/* Maximum Time Zone abbr. length */
+#endif
 
 struct dsinfo {
 	long	ds_gmtoff;		/* Offset from GMT in seconds */

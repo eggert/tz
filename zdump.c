@@ -1,13 +1,10 @@
-#
-
-#include "stdio.h"
-
 #ifndef lint
 #ifndef NOID
-static char	sccsid[] = "%W%";
+static char	elsieid[] = "%W%";
 #endif /* !NOID */
 #endif /* !lint */
 
+#include "stdio.h"
 #include "sys/types.h"
 #include "time.h"
 #include "tzfile.h"
@@ -17,15 +14,15 @@ static char	sccsid[] = "%W%";
 #define FALSE		0
 #endif
 
-extern char *		asctime();
 extern char **		environ;
-extern struct tm *	gmtime();
 extern char *		imalloc();
 extern char *		optarg;
 extern int		optind;
+#ifndef __STDC__
 #ifndef USG
 extern char *		sprintf();
-#endif /* !USG */
+#endif /* !defined USG */
+#endif /* !defined __STDC__ */
 extern long		time();
 extern char *		tzname[2];
 extern void		tzset();
@@ -118,10 +115,10 @@ char *	argv[];
 			timecnt = 0;
 			leapcnt = 0;
 		} else {
-			char		code[4];
+			char	code[4];
 
 			if (argv[i][0] == '/')
-				fp = fopen(argv[i], "r");
+				fp = fopen(argv[i], "rb");
 			else {
 				j = strlen(TZDIR) + 1 + strlen(argv[i]) + 1;
 				if (j > sizeof buf) {
@@ -131,7 +128,7 @@ char *	argv[];
 					exit(1);
 				}
 				(void) sprintf(buf, "%s/%s", TZDIR, argv[i]);
-				fp = fopen(buf, "r");
+				fp = fopen(buf, "rb");
 			}
 			if (fp == NULL) {
 				(void) fprintf(stderr, "%s: Can't open ",
@@ -139,7 +136,18 @@ char *	argv[];
 				perror(argv[i]);
 				exit(1);
 			}
-(void) fseek(fp, (long) sizeof ((struct tzhead *) 0)->tzh_reserved, 0);
+			/*
+			** Contorted. . .
+			*/
+			{
+				struct tzhead	tzh;
+
+#ifdef lint
+				tzh.tzh_reserved[0] = 0;
+#endif /* defined lint */
+				(void) fseek(fp,
+					(long) sizeof tzh.tzh_reserved, 0);
+			}
 			if (fread((char *) code, sizeof code, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
 			leapcnt = tzdecode(code);

@@ -38,9 +38,9 @@ Zone	Australia/Victoria	10:00	Oz	EST	1985 Oct lastSun 2:00
 #	individual states.  Thus, while such terms as ``Eastern Standard Time''
 #	[I mean, of course, Australian EST, not any other kind] are in common
 #	use, _they have NO REAL MEANING_, as they are not defined in the
-#	legislation.  This is very important to understand. 
+#	legislation.  This is very important to understand.
 #	I have researched New South Wales time only; . . .I hope that perhaps a
-#	resident of each state could be found to do it for their own state. 
+#	resident of each state could be found to do it for their own state.
 #	(And I can guarantee that Victoria and NSW are different, so the link
 #	between them in the current australasia file must be broken.)
 

@@ -160,6 +160,10 @@ extern void		free P((char * buf));
 #define FALSE	0
 #endif /* !defined FALSE */
 
+#ifndef INT_STRLEN_MAXIMUM
+#define INT_STRLEN_MAXIMUM	(1 + (sizeof (int) * CHAR_BIT + 1) / 3)
+#endif /* !defined INT_STRLEN_MAXIMUM */
+
 /*
 ** UNIX is a registered trademark of AT&T.
 ** VAX is a trademark of Digital Equipment Corporation.

@@ -337,6 +337,10 @@ static const int	len_years[2] = {
 
 static time_t		ats[TZ_MAX_TIMES];
 static unsigned char	types[TZ_MAX_TIMES];
+static struct attype {
+	time_t		at;
+	unsigned char	type;
+}			attypes[TZ_MAX_TIMES];
 static long		gmtoffs[TZ_MAX_TYPES];
 static char		isdsts[TZ_MAX_TYPES];
 static unsigned char	abbrinds[TZ_MAX_TYPES];
@@ -429,9 +433,7 @@ const char * const	string;
 static void
 usage P((void))
 {
-	(void) fprintf(stderr, _("%s: usage is %s \
-[ -s ] [ -v ] [ -l localtime ] [ -p posixrules ] [ -d directory ]\n\
-\t[ -L leapseconds ] [ -y yearistype ] [ filename ... ]\n"),
+	(void) fprintf(stderr, _("%s: usage is %s [ -s ] [ -v ] [ -l localtime ] [ -p posixrules ] [ -d directory ]\n\t[ -L leapseconds ] [ -y yearistype ] [ filename ... ]\n"),
 		progname, progname);
 	(void) exit(EXIT_FAILURE);
 }
@@ -622,8 +624,7 @@ const char * const	tofile;
 */
 
 #define MAX_BITS_IN_FILE	32
-#define TIME_T_BITS_IN_FILE	((TYPE_BIT(time_t) < MAX_BITS_IN_FILE) ? \
-					TYPE_BIT(time_t) : MAX_BITS_IN_FILE)
+#define TIME_T_BITS_IN_FILE	((TYPE_BIT(time_t) < MAX_BITS_IN_FILE) ? TYPE_BIT(time_t) : MAX_BITS_IN_FILE)
 
 static void
 setboundaries P((void))
@@ -1010,8 +1011,7 @@ const int		iscont;
 			zones[nzones - 1].z_untiltime > min_time &&
 			zones[nzones - 1].z_untiltime < max_time &&
 			zones[nzones - 1].z_untiltime >= z.z_untiltime) {
-				error(_("Zone continuation line end time is \
-not after end time of previous line"));
+				error(_("Zone continuation line end time is not after end time of previous line"));
 				return FALSE;
 		}
 	}
@@ -1319,6 +1319,21 @@ FILE * const	fp;
 	(void) fwrite((void *) buf, (size_t) sizeof buf, (size_t) 1, fp);
 }
 
+static int
+atcomp(avp, bvp)
+void *	avp;
+void *	bvp;
+{
+	time_t		diff;
+
+	diff = ((struct attype *) avp)->at - ((struct attype *) bvp)->at;
+	if (diff > 0)
+		return 1;
+	if (diff < 0)
+		return -1;
+	return 0;
+}
+
 static void
 writezone(name)
 const char * const	name;
@@ -1328,6 +1343,13 @@ const char * const	name;
 	static char *		fullname;
 	static struct tzhead	tzh;
 
+	if (timecnt > 1)
+		(void) qsort((void *) attypes, (size_t) timecnt,
+			(size_t) sizeof *attypes, atcomp);
+	for (i = 0; i < timecnt; ++i) {
+		ats[i] = attypes[i].at;
+		types[i] = attypes[i].type;
+	}
 	fullname = erealloc(fullname,
 		(int) (strlen(directory) + 1 + strlen(name) + 1));
 	(void) sprintf(fullname, "%s/%s", directory, name);
@@ -1347,8 +1369,7 @@ const char * const	name;
 	convert(eitol(timecnt), tzh.tzh_timecnt);
 	convert(eitol(typecnt), tzh.tzh_typecnt);
 	convert(eitol(charcnt), tzh.tzh_charcnt);
-#define DO(field)	(void) fwrite((void *) tzh.field, \
-		(size_t) sizeof tzh.field, (size_t) 1, fp)
+#define DO(field)	(void) fwrite((void *) tzh.field, (size_t) sizeof tzh.field, (size_t) 1, fp)
 	DO(tzh_reserved);
 	DO(tzh_ttisgmtcnt);
 	DO(tzh_ttisstdcnt);
@@ -1474,6 +1495,7 @@ const int			zonecount;
 		gmtoff = zp->z_gmtoff;
 		eat(zp->z_filename, zp->z_linenum);
 		startisdst = -1;
+		*startbuf = '\0';
 		if (zp->z_nrules == 0) {
 			stdoff = zp->z_stdoff;
 			doabbr(startbuf, zp->z_format,
@@ -1553,36 +1575,23 @@ const int			zonecount;
 				rp->r_todo = FALSE;
 				if (useuntil && ktime >= untiltime)
 					break;
+				if (usestart && ktime == starttime)
+					usestart = FALSE;
 				if (usestart) {
-				    if (ktime < starttime) {
-					stdoff = rp->r_stdoff;
-					startoff = oadd(zp->z_gmtoff,
-						rp->r_stdoff);
-					doabbr(startbuf, zp->z_format,
-						rp->r_abbrvar,
-						rp->r_stdoff != 0);
-					startisdst = rp->r_stdoff != 0;
+				    if (startisdst < 0 && ktime > starttime)
+					startisdst = (rp->r_stdoff == 0);
+				    if (ktime < starttime ||
+					(*startbuf == '\0' &&
+					startisdst == (rp->r_stdoff != 0))) {
+						startoff = oadd(zp->z_gmtoff,
+							rp->r_stdoff);
+						doabbr(startbuf, zp->z_format,
+							rp->r_abbrvar,
+							rp->r_stdoff != 0);
+						startisdst = rp->r_stdoff != 0;
+				    }
+				    if (ktime < starttime)
 					continue;
-				    }
-				    usestart = FALSE;
-				    if (ktime != starttime) {
-					if (startisdst < 0 &&
-					    zp->z_gmtoff !=
-					    (zp - 1)->z_gmtoff) {
-						type = (timecnt == 0) ? 0 :
-							types[timecnt - 1];
-						startoff = oadd(gmtoffs[type],
-							-(zp - 1)->z_gmtoff);
-						startisdst = startoff != 0;
-						startoff = oadd(startoff,
-							zp->z_gmtoff);
-						(void) strcpy(startbuf,
-						    &chars[abbrinds[type]]);
-					}
-					if (startisdst >= 0)
-addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd,
-	startttisgmt));
-				    }
 				}
 				eats(zp->z_filename, zp->z_linenum,
 					rp->r_filename, rp->r_linenum);
@@ -1595,6 +1604,16 @@ addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd,
 				stdoff = rp->r_stdoff;
 			}
 		}
+		if (usestart)
+			if (*startbuf != '\0')
+				addtt(starttime,
+					addtype(startoff, startbuf,
+						startisdst, startttisstd,
+						startttisgmt));
+			else {
+				eat(zp->z_filename, zp->z_linenum);
+error(_("can't determine time zone abbrevation to use after until time"));
+			}
 		/*
 		** Now we may get to set starttime for the next zone line.
 		*/
@@ -1622,8 +1641,8 @@ const int	type;
 		error(_("too many transitions?!"));
 		(void) exit(EXIT_FAILURE);
 	}
-	ats[timecnt] = starttime;
-	types[timecnt] = type;
+	attypes[timecnt].at = starttime;
+	attypes[timecnt].type = type;
 	++timecnt;
 }
 

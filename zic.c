@@ -1360,16 +1360,19 @@ const int			zonecount;
 	starttime = 0;
 #endif /* defined lint */
 	for (i = 0; i < zonecount; ++i) {
-		usestart = i > 0;
-		useuntil = i < (zonecount - 1);
 		zp = &zpfirst[i];
+		usestart = i > 0 && (zp - 1)->z_untiltime > min_time;
+		useuntil = i < (zonecount - 1);
+		if (useuntil && zp->z_untiltime <= min_time)
+			continue;
 		gmtoff = zp->z_gmtoff;
 		eat(zp->z_filename, zp->z_linenum);
 		startisdst = -1;
 		if (zp->z_nrules == 0) {
 			stdoff = zp->z_stdoff;
+			(void) strcpy(startbuf, zp->z_format);
 			type = addtype(oadd(zp->z_gmtoff, stdoff),
-				zp->z_format, stdoff != 0, startttisstd);
+				startbuf, stdoff != 0, startttisstd);
 			if (usestart)
 				addtt(starttime, type);
 			else if (stdoff != 0)
@@ -1457,8 +1460,8 @@ const int			zonecount;
 					if (startisdst < 0 &&
 					    zp->z_gmtoff !=
 					    (zp - 1)->z_gmtoff) {
-						type = types[(timecnt == 0) ?
-							0 : (timecnt - 1)];
+						type = (timecnt == 0) ? 0 :
+							types[timecnt - 1];
 						startoff = oadd(gmtoffs[type],
 							-(zp - 1)->z_gmtoff);
 						startisdst = startoff != 0;
@@ -1854,7 +1857,7 @@ const char * const	string;
 	register int	i;
 
 	i = strlen(string) + 1;
-	if (charcnt + i >= TZ_MAX_CHARS) {
+	if (charcnt + i > TZ_MAX_CHARS) {
 		error("too many, or too long, time zone abbreviations");
 		(void) exit(EXIT_FAILURE);
 	}

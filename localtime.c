@@ -546,16 +546,9 @@ register struct state *	sp;
 	int				dstlen;
 	long				stdoffset;
 	long				dstoffset;
-	struct rule			start;
-	struct rule			end;
-	register int			year;
-	register time_t			janfirst;
 	register time_t *		atp;
 	register unsigned char *	typep;
 	register char *			cp;
-	register int			i;
-	time_t				starttime;
-	time_t				endtime;
 
 	stdname = name;
 	name = getzname(name);
@@ -565,6 +558,7 @@ register struct state *	sp;
 	name = getoffset(name, &stdoffset);
 	if (name == NULL)
 		return -1;
+	sp->leapcnt = 0;		/* so, we're off a little */
 	if (*name != '\0') {
 		dstname = name;
 		name = getzname(name);
@@ -580,6 +574,13 @@ register struct state *	sp;
 		if (stdlen + 1 + dstlen + 1 > sizeof sp->chars)
 			return -1;
 		if (*name == ',' || *name == ';') {
+			struct rule			start;
+			struct rule			end;
+			register int			year;
+			register time_t			janfirst;
+			time_t				starttime;
+			time_t				endtime;
+
 			++name;
 			if ((name = getrule(name, &start)) == NULL)
 				return -1;
@@ -653,7 +654,9 @@ register struct state *	sp;
 		sp->ttis[0].tt_isdst = 0;
 		sp->ttis[0].tt_abbrind = 0;
 	}
-	sp->charcnt = stdlen + 1 + dstlen + 1;
+	sp->charcnt = stdlen + 1;
+	if (dstlen > 0)
+		sp->charcnt += dstlen + 1;
   	if (sp->charcnt > sizeof sp->chars)
   		return -1;
 	cp = sp->chars;
@@ -664,7 +667,6 @@ register struct state *	sp;
 		(void) strncpy(cp, dstname, dstlen);
 		*(cp + dstlen) = '\0';
 	}
-	sp->leapcnt = 0;		/* so, we're off a little */
 	if (sp == &lclstate)
 		settzname(sp);
 	return 0;

@@ -7,7 +7,9 @@ tzfile \- time zone information
 .SH DESCRIPTION
 The time zone information files used by
 .IR tzset (3)
-begin with bytes reserved for future use,
+begin with the magic characters "TZif" to identify then as
+time zone information files,
+followed by bytes reserved for future use,
 followed by seven four-byte values of type
 .BR long ,
 written in a ``standard'' byte order

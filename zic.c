@@ -37,7 +37,7 @@ struct rule {
 	long		r_tod;		/* time from midnight */
 	int		r_todisstd;	/* above is standard time if TRUE */
 					/* or wall clock time if FALSE */
-	int		r_todisuniv;	/* above is universal time if TRUE */
+	int		r_todisgmt;	/* above is GMT if TRUE */
 					/* or local time if FALSE */
 	long		r_stdoff;	/* offset from standard time */
 	const char *	r_abbrvar;	/* variable part of abbreviation */
@@ -87,7 +87,7 @@ extern char *	scheck P((const char * string, const char * format));
 
 static void	addtt P((time_t starttime, int type));
 static int	addtype P((long gmtoff, const char * abbr, int isdst,
-				int ttisstd));
+				int ttisstd, int ttisgmt));
 static void	leapadd P((time_t t, int positive, int rolling, int count));
 static void	adjleap P((void));
 static void	associate P((void));
@@ -334,6 +334,7 @@ static long		gmtoffs[TZ_MAX_TYPES];
 static char		isdsts[TZ_MAX_TYPES];
 static unsigned char	abbrinds[TZ_MAX_TYPES];
 static char		ttisstds[TZ_MAX_TYPES];
+static char		ttisgmts[TZ_MAX_TYPES];
 static char		chars[TZ_MAX_CHARS];
 static time_t		trans[TZ_MAX_LEAPS];
 static long		corr[TZ_MAX_LEAPS];
@@ -1130,25 +1131,25 @@ const char * const		timep;
 	}
 	rp->r_month = lp->l_value;
 	rp->r_todisstd = FALSE;
-	rp->r_todisuniv = FALSE;
+	rp->r_todisgmt = FALSE;
 	dp = ecpyalloc(timep);
 	if (*dp != '\0') {
 		ep = dp + strlen(dp) - 1;
 		switch (lowerit(*ep)) {
 			case 's':	/* Standard */
 				rp->r_todisstd = TRUE;
-				rp->r_todisuniv = FALSE;
+				rp->r_todisgmt = FALSE;
 				*ep = '\0';
 				break;
 			case 'w':	/* Wall */
 				rp->r_todisstd = FALSE;
-				rp->r_todisuniv = FALSE;
+				rp->r_todisgmt = FALSE;
 				*ep = '\0';
 			case 'g':	/* Greenwich */
 			case 'u':	/* Universal */
 			case 'z':	/* Zulu */
 				rp->r_todisstd = TRUE;
-				rp->r_todisuniv = TRUE;
+				rp->r_todisgmt = TRUE;
 				*ep = '\0';
 				break;
 		}
@@ -1302,6 +1303,7 @@ const char * const	name;
 			(void) exit(EXIT_FAILURE);
 		}
 	}
+	convert(eitol(typecnt), tzh.tzh_ttisgmtcnt);
 	convert(eitol(typecnt), tzh.tzh_ttisstdcnt);
 	convert(eitol(leapcnt), tzh.tzh_leapcnt);
 	convert(eitol(timecnt), tzh.tzh_timecnt);
@@ -1353,6 +1355,8 @@ const char * const	name;
 	}
 	for (i = 0; i < typecnt; ++i)
 		(void) putc(ttisstds[i], fp);
+	for (i = 0; i < typecnt; ++i)
+		(void) putc(ttisgmts[i], fp);
 	if (ferror(fp) || fclose(fp)) {
 		(void) fprintf(stderr, "%s: Write error on ", progname);
 		(void) perror(fullname);
@@ -1395,6 +1399,7 @@ const int			zonecount;
 	register long			startoff;
 	register int			startisdst;
 	register int			startttisstd;
+	register int			startttisgmt;
 	register int			type;
 	char				startbuf[BUFSIZ];
 
@@ -1416,6 +1421,7 @@ const int			zonecount;
 	** for noting the need to unconditionally initialize startttisstd.
 	*/
 	startttisstd = FALSE;
+	startttisgmt = FALSE;
 	for (i = 0; i < zonecount; ++i) {
 		zp = &zpfirst[i];
 		usestart = i > 0 && (zp - 1)->z_untiltime > min_time;
@@ -1430,7 +1436,8 @@ const int			zonecount;
 			doabbr(startbuf, zp->z_format,
 				(char *) NULL, stdoff != 0);
 			type = addtype(oadd(zp->z_gmtoff, stdoff),
-				startbuf, stdoff != 0, startttisstd);
+				startbuf, stdoff != 0, startttisstd,
+				startttisgmt);
 			if (usestart)
 				addtt(starttime, type);
 			else if (stdoff != 0)
@@ -1466,7 +1473,7 @@ const int			zonecount;
 					** stdoff values.
 					*/
 					untiltime = zp->z_untiltime;
-					if (!zp->z_untilrule.r_todisuniv)
+					if (!zp->z_untilrule.r_todisgmt)
 						untiltime = tadd(untiltime,
 							-gmtoff);
 					if (!zp->z_untilrule.r_todisstd)
@@ -1484,7 +1491,7 @@ const int			zonecount;
 						continue;
 					eats(zp->z_filename, zp->z_linenum,
 						rp->r_filename, rp->r_linenum);
-					offset = rp->r_todisuniv ? 0 : gmtoff;
+					offset = rp->r_todisgmt ? 0 : gmtoff;
 					if (!rp->r_todisstd)
 						offset = oadd(offset, stdoff);
 					jtime = rp->r_temp;
@@ -1530,7 +1537,8 @@ const int			zonecount;
 						    &chars[abbrinds[type]]);
 					}
 					if (startisdst >= 0)
-addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd));
+addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd,
+	startttisgmt));
 				    }
 				}
 				eats(zp->z_filename, zp->z_linenum,
@@ -1539,7 +1547,7 @@ addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd));
 					rp->r_stdoff != 0);
 				offset = oadd(zp->z_gmtoff, rp->r_stdoff);
 				type = addtype(offset, buf, rp->r_stdoff != 0,
-					rp->r_todisstd);
+					rp->r_todisstd, rp->r_todisgmt);
 				addtt(ktime, type);
 				stdoff = rp->r_stdoff;
 			}
@@ -1550,6 +1558,7 @@ addtt(starttime, addtype(startoff, startbuf, startisdst, startttisstd));
 		if (useuntil) {
 			starttime = tadd(zp->z_untiltime, -gmtoff);
 			startttisstd = zp->z_untilrule.r_todisstd;
+			startttisgmt = zp->z_untilrule.r_todisgmt;
 			if (!startttisstd)
 				starttime = tadd(starttime, -stdoff);
 		}
@@ -1576,11 +1585,12 @@ const int	type;
 }
 
 static int
-addtype(gmtoff, abbr, isdst, ttisstd)
+addtype(gmtoff, abbr, isdst, ttisstd, ttisgmt)
 const long		gmtoff;
 const char * const	abbr;
 const int		isdst;
 const int		ttisstd;
+const int		ttisgmt;
 {
 	register int	i, j;
 
@@ -1591,7 +1601,8 @@ const int		ttisstd;
 	for (i = 0; i < typecnt; ++i) {
 		if (gmtoff == gmtoffs[i] && isdst == isdsts[i] &&
 			strcmp(abbr, &chars[abbrinds[i]]) == 0 &&
-			ttisstd == ttisstds[i])
+			ttisstd == ttisstds[i] &&
+			ttisgmt == ttisgmts[i])
 				return i;
 	}
 	/*
@@ -1605,6 +1616,7 @@ const int		ttisstd;
 	gmtoffs[i] = gmtoff;
 	isdsts[i] = isdst;
 	ttisstds[i] = ttisstd;
+	ttisgmts[i] = ttisgmt;
 
 	for (j = 0; j < charcnt; ++j)
 		if (strcmp(&chars[j], abbr) == 0)

@@ -1324,14 +1324,11 @@ atcomp(avp, bvp)
 void *	avp;
 void *	bvp;
 {
-	time_t		diff;
-
-	diff = ((struct attype *) avp)->at - ((struct attype *) bvp)->at;
-	if (diff > 0)
-		return 1;
-	if (diff < 0)
+	if (((struct attype *) avp)->at < ((struct attype *) bvp)->at)
 		return -1;
-	return 0;
+	else if (((struct attype *) avp)->at > ((struct attype *) bvp)->at)
+		return 1;
+	else	return 0;
 }
 
 static void

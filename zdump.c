@@ -172,7 +172,7 @@ char *	argv[];
 	if ((c != EOF && c != -1) ||
 		(optind == argc - 1 && strcmp(argv[optind], "=") == 0)) {
 			(void) fprintf(stderr,
-_("%s: usage is %s [ -v ] [ -c cutoff ] zonename ...\n"),
+_("%s: usage is %s [ --version ] [ -v ] [ -c cutoff ] zonename ...\n"),
 				argv[0], argv[0]);
 			(void) exit(EXIT_FAILURE);
 	}

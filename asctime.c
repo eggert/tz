@@ -6,10 +6,8 @@ static char	elsieid[] = "%W%";
 
 /*LINTLIBRARY*/
 
-#include "stdio.h"
-#include "time.h"
+#include "private.h"
 #include "tzfile.h"
-#include "nonstd.h"
 
 /*
 ** A la X3J11, with core dump avoidance.
@@ -26,9 +24,9 @@ register const struct tm *	timeptr;
 		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 	};
-	static char	result[26];
-	register char *	wn;
-	register char *	mn;
+	static char		result[26];
+	register const char *	wn;
+	register const char *	mn;
 
 	if (timeptr->tm_wday < 0 || timeptr->tm_wday >= DAYSPERWEEK)
 		wn = "???";

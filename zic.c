@@ -136,9 +136,9 @@ static void	usage P((void));
 static void	writezone P((const char * name));
 static int	yearistype P((int year, const char * type));
 
-#if ! HAVE_STRERROR
+#if !HAVE_STRERROR
 static char *	strerror P((int));
-#endif
+#endif /* !HAVE_STRERROR */
 
 static int		charcnt;
 static int		errors;

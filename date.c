@@ -291,16 +291,30 @@ char *		argv[];
 }
 
 static void
-dogmt P((void))
+dogmt()
 {
-	register char **	saveenv;
-	static char		tzgmt0[] = "TZ=GMT0";
-	static char *		fakeenv[] = { tzgmt0, NULL };
+	static char **	fakeenv;
 
-	saveenv = environ;
-	environ = fakeenv;
-	tzset();
-	environ = saveenv;
+	if (fakeenv == NULL) {
+		register int	from, to, n;
+
+		for (n = 0;  environ[n] != NULL;  ++n)
+			continue;
+		fakeenv = (char **) malloc((alloc_size_T) (n + 2) *
+			sizeof *fakeenv);
+		if (fakeenv == NULL) {
+			(void) perror("Memory exhausted");
+			errensure();
+			(void) exit(retval);
+		}
+		to = 0;
+		fakeenv[to++] = "TZ=GMT0";
+		for (from = 1; environ[from] != NULL; ++from)
+			if (strncmp(environ[from], "TZ=", 3) != 0)
+				fakeenv[to++] = environ[from];
+		fakeenv[to] = NULL;
+		environ = fakeenv;
+	}
 }
 
 #ifdef OLD_TIME

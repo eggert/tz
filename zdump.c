@@ -149,7 +149,7 @@ static char *	abbr P((struct tm * tmp));
 static long	delta P((struct tm * newp, struct tm * oldp));
 static void	dumptime P((const struct tm * tmp));
 static time_t	hunt P((char * name, time_t lot, time_t	hit));
-static void	setabsolutes();
+static void	setabsolutes P((void));
 static void	show P((char * zone, time_t t, int v));
 static const char *	tformat P((void));
 static time_t	yeartot P((long y));
@@ -244,12 +244,12 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 		if (cutarg != NULL) {
 			long	lo;
 			long	hi;
-			char	c;
+			char	dummy;
 
-			if (sscanf(cutarg, "%ld%c", &hi, &c) == 1) {
+			if (sscanf(cutarg, "%ld%c", &hi, &dummy) == 1) {
 				cuthiyear = hi;
 			} else if (sscanf(cutarg, "%ld,%ld%c",
-				&lo, &hi, &c) == 2) {
+				&lo, &hi, &dummy) == 2) {
 					cutloyear = lo;
 					cuthiyear = hi;
 			} else {

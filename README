@@ -5,6 +5,11 @@ TODO BEFORE comp.sources RELEASE:
 *	Should /etc/zoneinfo/GMT0 change to /etc/zoneinfo/GMT, with the
 	necessary change to the newctime.3 manual page?  If it is changed,
 	all the GMT0's can disappear from localtime.c.
+*	Should (a variant of) the old "etcetera" file be reinstated, to
+	ensure that folks in out-of-the-way places can do things such as
+		zic -l GMT5
+	to establish a reasonable approximation to their time zone as local
+	time?
 *	Gotta get "date.c" up to speed, and must conditionalize "logwtmp.c"
 	for the System V world.  In particular, what about the
 		date 2415

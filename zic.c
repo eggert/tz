@@ -878,8 +878,13 @@ register struct zone *	zp;
 		** switch results in a day switch; this is left as an exercise
 		** for the reader.
 		*/
-		if (i > 0)
-			t.tz_times[i] -= temps[i - 1].t_rp->r_stdoff;
+		if (i == 0) {
+			/*
+			** Kludge--not guaranteed to work.
+			*/
+			if (ntemps > 1)
+				t.tz_times[0] -= temps[1].t_rp->r_stdoff;
+		} else	t.tz_times[i] -= temps[i - 1].t_rp->r_stdoff;
 	}
 	writezone(zp->z_name, &t);
 	return;

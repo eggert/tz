@@ -385,7 +385,7 @@ int	nflag;
 #endif /* defined TSP_SETDATE */
 	{
 		/*
-		** "old" entry is always written, for compatability.
+		** "old" entry is always written, for compatibility.
 		*/
 		logwtmp("|", TIME_NAME, "");
 		if (settimeofday(&tv, (struct timezone *) NULL) == 0) {

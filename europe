@@ -1519,7 +1519,6 @@ Zone	Europe/Oslo	0:43:00 -	LMT	1895
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Atlantic/Jan_Mayen	-1:00	-	EGT
 
-# XXX--worry about 1918!!
 # Poland
 # Austrian and German Poland switched from the Julian to the Gregorian calendar
 # on 1582 Oct 15.  Russian Poland switched on 1918 Jan 14.

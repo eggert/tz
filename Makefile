@@ -89,7 +89,7 @@ ENCHILADA=	$(DOCS) $(SOURCES) $(DATA)
 
 all:		REDID_BINARIES zdump $(TZLIB)
 
-REDID_BINARIES:	$(TZDIR) zic $(DATA)
+REDID_BINARIES:	zic $(DATA)
 		PATH=.:$$PATH zic -l $(LOCALTIME) -d $(TZDIR) $(DATA) && > $@
 
 zdump:		$(TZDOBJS)
@@ -101,9 +101,6 @@ $(TZLIB):	$(LIBOBJS)
 
 zic:		$(TZCOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
-
-$(TZDIR):
-		mkdir $@
 
 BUNDLES:	BUNDLE1 BUNDLE2 BUNDLE3
 

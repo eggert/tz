@@ -5,7 +5,7 @@
 # Alternately, if you discover you've got the wrong time zone, you can just
 #	zic -l rightzone
 
-LOCALTIME=	factory
+LOCALTIME=	Factory
 
 # If you want something other than Eastern United States time as a template
 # for handling POSIX-style time zone environment variables,

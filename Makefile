@@ -20,7 +20,15 @@ TZDIR=		/etc/zoneinfo
 
 TZLIB=		/usr/lib/libz.a
 
-#
+# /dev/null for BSD and such, nul for MS-DOS and such
+
+NULL=		/dev/null
+
+# If you don't want leap second correction done, change "leapseconds" to
+# "$(NULL)" below.
+
+LEAPSECONDS=	leapseconds
+
 # If you're running on a System V-style system and don't want lint grief,
 # add
 #	-DUSG
@@ -64,7 +72,6 @@ TZLIB=		/usr/lib/libz.a
 #	-DNOSOLAR
 # to the end of the "CFLAGS=" line
 # (and remove solar87 and solar88 from the DATA= line below).
-#
 
 CFLAGS=
 
@@ -101,10 +108,10 @@ ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(XDATA)
 all:		REDID_BINARIES zdump $(TZLIB)
 
 REDID_BINARIES:	zic $(DATA)
-		PATH=.:$$PATH zic -d $(TZDIR) $(DATA) && \
-		PATH=.:$$PATH zic -d $(TZDIR) -L /dev/null systemv && \
-		PATH=.:$$PATH zic -d $(TZDIR) -l $(LOCALTIME) && \
-		> $@
+	PATH=.:$$PATH zic -d $(TZDIR) -L $(LEAPSECONDS) $(DATA) && \
+	PATH=.:$$PATH zic -d $(TZDIR) -L $(NULL) systemv && \
+	PATH=.:$$PATH zic -d $(TZDIR) -L $(LEAPSECONDS) -l $(LOCALTIME) && \
+	> $@
 
 zdump:		$(TZDOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) -o $@

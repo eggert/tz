@@ -8,9 +8,15 @@ static char	sccsid[] = "%W%";
 
 #include "tzfile.h"
 #include "ctype.h"
+#include "sys/types.h"
+#include "sys/stat.h"
 
-#ifndef size_t
-#define size_t	unsigned
+#ifndef alloc_t
+#define alloc_t	unsigned
+#endif
+
+#ifndef MAL
+#define MAL	NULL
 #endif
 
 #ifndef BUFSIZ
@@ -299,7 +305,7 @@ emalloc(size)
 {
 	register char *	cp;
 
-	if ((cp = malloc((size_t) size)) == NULL) {
+	if ((cp = malloc((alloc_t) size)) == MAL || cp == NULL) {
 		perror(progname);
 		exit(1);
 	}
@@ -312,7 +318,7 @@ char *	ptr;
 {
 	register char *	cp;
 
-	if ((cp = realloc(ptr, (size_t) size)) == NULL) {
+	if ((cp = realloc(ptr, (alloc_t) size)) == NULL) {
 		perror(progname);
 		exit(1);
 	}
@@ -466,9 +472,6 @@ char *	argv[];
 ** We get to be careful here since there's a fair chance of root running us.
 */
 
-#include "sys/types.h"
-#include "sys/stat.h"
-
 static
 nondunlink(name)
 char *	name;
@@ -580,6 +583,7 @@ char *	name;
 	register struct lookup *	lp;
 	register int			nfields;
 	register int			wantcont;
+	register int			num;
 	char				buf[BUFSIZ];
 
 	if (strcmp(name, "-") == 0) {
@@ -590,9 +594,9 @@ char *	name;
 		perror(name);
 		exit(1);
 	}
-	eat(ecpyalloc(name), -1);
 	wantcont = FALSE;
-	for (linenum = 1; ; ++linenum) {
+	for (num = 1; ; ++num) {
+		eat(name, num);
 		if (fgets(buf, sizeof buf, fp) != buf)
 			break;
 		cp = strchr(buf, '\n');
@@ -756,12 +760,12 @@ static
 inzsub(fields, nfields, iscont)
 register char **	fields;
 {
-	register char *			cp;
-	struct zone			z;
-	register int			i_gmtoff, i_rule, i_format;
-	register int			i_untilyear, i_untilmonth;
-	register int			i_untilday, i_untiltime;
-	register int			hasuntil;
+	register char *	cp;
+	struct zone	z;
+	register int	i_gmtoff, i_rule, i_format;
+	register int	i_untilyear, i_untilmonth;
+	register int	i_untilday, i_untiltime;
+	register int	hasuntil;
 
 	if (iscont) {
 		i_gmtoff = ZFC_GMTOFF;
@@ -1080,7 +1084,6 @@ int			zonecount;
 	register int			i, j;
 	register int			usestart, useuntil;
 	register long			starttime;
-	register int (*			funcp)();
 
 	/*
 	** Now. . .finally. . .generate some useful data!
@@ -1270,6 +1273,7 @@ char *	type;
 	(void) fprintf(stderr, "%s: command was '%s', result was %d\n",
 		progname, buf, result);
 	exit(1);
+	/*NOTREACHED*/
 }
 
 static
@@ -1291,8 +1295,8 @@ register char *	bp;
 
 static
 isabbr(abbr, word)
-register char *		abbr;
-register char *		word;
+register char *	abbr;
+register char *	word;
 {
 	if (lowerit(*abbr) != lowerit(*word))
 		return FALSE;

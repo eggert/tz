@@ -217,10 +217,6 @@ extern void		free P((generic_T * buf));
 	((sizeof(type) * CHAR_BIT - 1) * 302 / 1000 + 2)
 #endif /* !defined INT_STRLEN_MAXIMUM */
 
-#if HAVE_MKDIR
-#define emkdir(name, mode) mkdir(name, mode)
-#endif /* HAVE_MKDIR */
-
 #ifndef LOCALE_HOME
 #define LOCALE_HOME	"/usr/lib/locale"
 #endif /* !defined LOCALE_HOME */

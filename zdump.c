@@ -121,7 +121,7 @@ char *	argv[];
 			if (fread((char *) code, sizeof code, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
 			t = tzdecode(code);
-			if (t > cuttime)
+			if (cutoff != NULL && t > cuttime)
 				break;
 			show(argv[i], t - 1, TRUE);
 			show(argv[i], t, TRUE);

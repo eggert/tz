@@ -2,9 +2,11 @@
 
 #include "stdio.h"
 
-#ifdef OBJECTID
+#ifndef lint
+#ifndef NOID
 static char	sccsid[] = "%W%";
-#endif
+#endif /* !NOID */
+#endif /* !lint */
 
 #include "time.h"
 #include "tzfile.h"
@@ -14,18 +16,10 @@ static char	sccsid[] = "%W%";
 #define FALSE		0
 #endif
 
-#ifndef alloc_t
-#define alloc_t		unsigned
-#endif
-
-#ifndef MAL
-#define MAL		NULL
-#endif
-
 extern char *		asctime();
 extern char **		environ;
-extern char *		malloc();
 extern struct tm *	gmtime();
+extern char *		imalloc();
 extern char *		optarg;
 extern int		optind;
 #ifdef strchr
@@ -91,8 +85,8 @@ char *	argv[];
 		char *			tzequals;
 		char *			fakeenv[2];
 
-		tzequals = malloc((alloc_t) (strlen(argv[1]) + 4));
-		if (tzequals == MAL) {
+		tzequals = imalloc(strlen(argv[1]) + 4);
+		if (tzequals == NULL) {
 			(void) fprintf(stderr, "%s: can't allocate memory\n",
 				argv[0]);
 			exit(1);
@@ -159,6 +153,7 @@ char *	argv[];
 		show(argv[i], t, TRUE);
 		t = 0x7fffffff;
 		show(argv[i], t, TRUE);
+		free(tzequals);
 	}
 	if (fflush(stdout) || ferror(stdout)) {
 		(void) fprintf(stderr, "%s: Error writing standard output ",

@@ -1,9 +1,22 @@
+#ifndef TZFILE_H
+
+#define TZFILE_H
+
+/*
+** This header is for use ONLY with the time conversion code.
+** There is no guarantee that it will remain unchanged,
+** or that it will remain at all.
+** Do NOT copy it to any system include directory.
+** Thank you!
+*/
+
+/*
+** ID
+*/
+
 #ifndef lint
 #ifndef NOID
-#ifndef TZFILE_H
-#define TZFILE_H
 static char	tzfilehid[] = "%W%";
-#endif /* !defined TZFILE_H */
 #endif /* !defined NOID */
 #endif /* !defined lint */
 
@@ -151,3 +164,5 @@ struct tzhead {
 #define MONS_PER_YEAR	MONSPERYEAR
 
 #endif /* !defined USG */
+
+#endif /* !defined TZFILE_H */

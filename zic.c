@@ -521,7 +521,7 @@ char *	name;
 		if (nfields > 0)	/* non-blank line */
 			if ((lp = byword(fields[0], line_codes)) == NULL)
 				error("input line of unknown type");
-			else switch (lp->l_value) {
+			else switch ((int) (lp->l_value)) {
 				case LC_RULE:
 					inrule(fields, nfields);
 					break;

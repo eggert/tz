@@ -346,7 +346,12 @@ clean:
 names:
 		@echo $(ENCHILADA)
 
-public:		$(ENCHILADA)
+# The zics below ensure that each data file can stand on its own.
+
+public:		$(ENCHILADA) zic
+		-mkdir /tmp/,tzpublic
+		for i in $(TDATA) ; do zic -d /tmp/,tzpublic $$i ; done
+		rm -f -r /tmp/,tzpublic
 		tar cf - $(DOCS) $(SOURCES) $(MISC) | gzip -9 > tzcode.tar.gz
 		tar cf - $(DATA) | gzip -9 > tzdata.tar.gz
 

@@ -54,6 +54,8 @@ static char *_fmt P((const char *, const struct tm *, char *, const char *));
 
 size_t strftime P((char *, size_t, const char *, const struct tm *));
 
+extern char *tzname[2];
+
 size_t
 strftime(s, maxsize, format, t)
 	char *s;
@@ -307,8 +309,6 @@ label:
 				else
 #endif /* defined TM_ZONE */
 				if (t->tm_isdst == 0 || t->tm_isdst == 1) {
-					extern char *	tzname[2];
-
 					pt = _add(tzname[t->tm_isdst],
 						pt, ptlim);
 				} else  pt = _add("?", pt, ptlim);

@@ -73,4 +73,7 @@ clean:
 CLEAN:	clean
 	sccs clean
 
+listing:	$(ENCHILADA)
+	pr $(ENCHILADA) | lpr
+
 zdump.o zic.o newctime.o:	tzfile.h

@@ -16,12 +16,9 @@ static char	elsieid[] = "%W%";
 #include "tzfile.h"
 #include "fcntl.h"
 
-#ifdef R_OK
-#define ACCESS_MODE R_OK
-#endif /* defined R_OK */
-#ifndef R_OK
-#define ACCESS_MODE 4
-#endif /* !defined R_OK */
+/*
+** SunOS 4.1.1 headers lack O_BINARY.
+*/
 
 #ifdef O_BINARY
 #define OPEN_MODE	(O_RDONLY | O_BINARY)
@@ -282,7 +279,7 @@ register struct state * const	sp;
 				doaccess = TRUE;
 			name = fullname;
 		}
-		if (doaccess && access(name, ACCESS_MODE) != 0)
+		if (doaccess && access(name, R_OK) != 0)
 			return -1;
 		if ((fid = open(name, OPEN_MODE)) == -1)
 			return -1;

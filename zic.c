@@ -14,7 +14,7 @@ static char	sccsid[] = "%W%";
 #endif
 
 #ifndef MAL
-#define MAL	0
+#define MAL	NULL
 #endif
 
 #ifndef BUFSIZ
@@ -27,7 +27,6 @@ static char	sccsid[] = "%W%";
 #endif
 
 extern char *	calloc();
-extern char *	strchr();
 extern char *	malloc();
 extern char *	optarg;
 extern int	optind;
@@ -36,13 +35,14 @@ extern char *	realloc();
 extern char *	scheck();
 extern char *	sprintf();
 extern char *	strcat();
+extern char *	strchr();
 extern char *	strcpy();
 
 static int	errors;
-static char *	progname;
 static char *	filename;
 static char **	getfields();
 static int	linenum;
+static char *	progname;
 static long	rpytime();
 static long	tadd();
 
@@ -383,7 +383,7 @@ char *	argv[];
 		if (link(links[i].l_from, links[i].l_to) != 0)
 			wild2exit("result creating", links[i].l_to);
 	}
-	if (localtime) {
+	if (localtime != NULL) {
 		(void) unlink(TZDEFAULT);
 		if (link(localtime, TZDEFAULT) != 0)
 			wild2exit("result creating", TZDEFAULT);
@@ -410,13 +410,22 @@ char *	cp2;
 {
 	register struct rule *	rp1;
 	register struct rule *	rp2;
+	register long		l1, l2;
 	register int		diff;
 
 	rp1 = (struct rule *) cp1;
 	rp2 = (struct rule *) cp2;
 	if ((diff = strcmp(rp1->r_name, rp2->r_name)) != 0)
 		return diff;
-	return abs(rp1->r_stdoff) - abs(rp2->r_stdoff);
+	if ((l1 = rp1->r_stdoff) < 0)
+		l1 = -l1;
+	if ((l2 = rp2->r_stdoff) < 0)
+		l2 = -l2;
+	if (l1 > l2)
+		return 1;
+	else if (l1 < l2)
+		return -1;
+	else	return 0;
 }
 
 static
@@ -630,7 +639,7 @@ char **	fields;
 	}
 	/*
 	** Day work.
-	** Accept things like:
+	** Accept things such as:
 	**	1
 	**	last-Sunday
 	**	Sun<=20
@@ -758,7 +767,7 @@ char *	name;
 	register int	i;
 	char		fullname[BUFSIZ];
 
-	if (strlen(directory) + 1 + strlen(name) + 1 > BUFSIZ)
+	if (strlen(directory) + 1 + strlen(name) >= BUFSIZ)
 		wild2exit("long directory/file", filename);
 	(void) sprintf(fullname, "%s/%s", directory, name);
 	if ((fp = fopen(fullname, "w")) == NULL) {

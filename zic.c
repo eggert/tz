@@ -1697,7 +1697,7 @@ const int			zonecount;
 					(void) strcpy(startbuf, zp->z_format);
 			eat(zp->z_filename, zp->z_linenum);
 			if (*startbuf == '\0')
-error(_("can't determine time zone abbrevation to use just after until time"));
+error(_("can't determine time zone abbreviation to use just after until time"));
 			else	addtt(starttime,
 					addtype(startoff, startbuf,
 						startoff != zp->z_gmtoff,

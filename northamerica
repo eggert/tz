@@ -181,7 +181,7 @@ Zone Pacific/Honolulu	-10:30	US	H%sT	1933 Apr 30 2:00
 
 
 # These links are for backward compatibility with the old naming convention.
-Link	America/Anchorage	US/Anchorage
+Link	America/Anchorage	US/Alaska
 Link	America/Atka		US/Aleutian
 Link	America/Chicago		US/Central
 Link	America/Denver		US/Mountain

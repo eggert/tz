@@ -1335,10 +1335,6 @@ const int			zonecount;
 	starttime = 0;
 	starttodisstd = FALSE;
 #endif /* defined lint */
-#ifdef __TURBOC__
-	starttime = 0;
-	starttodisstd = FALSE;
-#endif /* defined __TURBOC__ */
 	for (i = 0; i < zonecount; ++i) {
 		usestart = i > 0;
 		useuntil = i < (zonecount - 1);
@@ -1396,9 +1392,6 @@ const int			zonecount;
 #ifdef lint
 				ktime = 0;
 #endif /* defined lint */
-#ifdef __TURBOC__
-				ktime = 0;
-#endif /* defined __TURBOC__ */
 				for (j = 0; j < zp->z_nrules; ++j) {
 					rp = &zp->z_rules[j];
 					if (!rp->r_todo)

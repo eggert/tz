@@ -25,13 +25,14 @@ register const struct tm *	timeptr;
 		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 	};
 	/*
-	** Big enough for
+	** Big enough for something such as
 	** ??? ???-2147483648 -2147483648:-2147483648:-2147483648 -2147483648\n
-	** (two three-character abbreviations, five eleven-character numbers,
+	** (two three-character abbreviations, five strings denoting integers,
 	** three explicit spaces, two explicit colons, a newline,
-	** and a trailing ASCII nul.)
+	** and a trailing ASCII nul).
 	*/
-	static char		result[3 * 2 + 5 * 11 + 3 + 2 + 1 + 1];
+	static char		result[3 * 2 + 5 * INT_STRLEN_MAXIMUM +
+					3 + 2 + 1 + 1];
 	register const char *	wn;
 	register const char *	mn;
 

@@ -277,7 +277,7 @@ date:		$(DATEOBJS)
 		rm -f ,lib.a
 
 clean:
-		rm -f core *.o *.out zdump zic date ,*
+		rm -f core *.o *.out zdump zic yearistype date ,*
 
 names:
 		@echo $(ENCHILADA)

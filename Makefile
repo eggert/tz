@@ -373,13 +373,12 @@ check_web:	$(WEB_PAGES)
 		$(VALIDATE_ENV) $(VALIDATE) $(VALIDATE_FLAGS) $(WEB_PAGES)
 
 clean:
-		rm -f core *.o *.out tzselect zdump zic yearistype date \
-			,* *.tar.gz
+		rm -f core *.o *.out tzselect zdump zic yearistype date
 
 maintainer-clean: clean
 		@echo 'This command is intended for maintainers to use; it'
 		@echo 'deletes files that may need special tools to rebuild.'
-		rm -f *.txt
+		rm -f *.[1-8].txt tzcode.tar.gz tzdata.tar.gz
 
 names:
 		@echo $(ENCHILADA)

@@ -112,7 +112,9 @@ static void		gmtsub P((const time_t * timep, long offset,
 				struct tm * tmp));
 static void		localsub P((const time_t * timep, long offset,
 				struct tm * tmp));
-static void		normalize P((int * tensptr, int * unitsptr, int base));
+static int		increment_overflow P((int * number, int delta));
+static int		normalize_overflow P((int * tensptr, int * unitsptr,
+				int base));
 static void		settzname P((void));
 static time_t		time1 P((struct tm * tmp, void (* funcp)(),
 				long offset));
@@ -1145,8 +1147,20 @@ const time_t * const	timep;
 ** Simplified normalize logic courtesy Paul Eggert (eggert@twinsun.com).
 */
 
-static void
-normalize(tensptr, unitsptr, base)
+static int
+increment_overflow(number, delta)
+int *	number;
+int	delta;
+{
+	int number0;
+	
+	number0 = *number;
+	*number += delta;
+	return (*number < number0) != (delta < 0);
+}
+
+static int
+normalize_overflow(tensptr, unitsptr, base)
 int * const	tensptr;
 int * const	unitsptr;
 const int	base;
@@ -1156,8 +1170,8 @@ const int	base;
 	tensdelta = (*unitsptr >= 0) ?
 		(*unitsptr / base) :
 		(-1 - (-1 - *unitsptr) / base);
-	*tensptr += tensdelta;
 	*unitsptr -= tensdelta * base;
+	return increment_overflow(tensptr, tensdelta);
 }
 
 static int
@@ -1194,41 +1208,65 @@ int * const		okayp;
 
 	*okayp = FALSE;
 	yourtm = *tmp;
-	if (yourtm.tm_sec >= SECSPERMIN + 2 || yourtm.tm_sec < 0)
-		normalize(&yourtm.tm_min, &yourtm.tm_sec, SECSPERMIN);
-	normalize(&yourtm.tm_hour, &yourtm.tm_min, MINSPERHOUR);
-	normalize(&yourtm.tm_mday, &yourtm.tm_hour, HOURSPERDAY);
-	normalize(&yourtm.tm_year, &yourtm.tm_mon, MONSPERYEAR);
+	if (normalize_overflow(&yourtm.tm_hour, &yourtm.tm_min, MINSPERHOUR))
+		return WRONG;
+	if (normalize_overflow(&yourtm.tm_mday, &yourtm.tm_hour, HOURSPERDAY))
+		return WRONG;
+	if (normalize_overflow(&yourtm.tm_year, &yourtm.tm_mon, MONSPERYEAR))
+		return WRONG;
+	/*
+	** Turn yourtm.tm_year into an actual year number for now.
+	** It is converted back to an offset from TM_YEAR_BASE later.
+	*/
+	if (increment_overflow(&yourtm.tm_year, TM_YEAR_BASE))
+		return WRONG;
 	while (yourtm.tm_mday <= 0) {
-		--yourtm.tm_year;
-		yourtm.tm_mday +=
-			year_lengths[isleap(yourtm.tm_year + TM_YEAR_BASE)];
+		if (increment_overflow(&yourtm.tm_year, -1))
+			return WRONG;
+		yourtm.tm_mday += year_lengths[isleap(yourtm.tm_year)];
 	}
 	while (yourtm.tm_mday > DAYSPERLYEAR) {
-		yourtm.tm_mday -=
-			year_lengths[isleap(yourtm.tm_year + TM_YEAR_BASE)];
-		++yourtm.tm_year;
+		yourtm.tm_mday -= year_lengths[isleap(yourtm.tm_year)];
+		if (increment_overflow(&yourtm.tm_year, 1))
+			return WRONG;
 	}
 	for ( ; ; ) {
-		i = mon_lengths[isleap(yourtm.tm_year +
-			TM_YEAR_BASE)][yourtm.tm_mon];
+		i = mon_lengths[isleap(yourtm.tm_year)][yourtm.tm_mon];
 		if (yourtm.tm_mday <= i)
 			break;
 		yourtm.tm_mday -= i;
 		if (++yourtm.tm_mon >= MONSPERYEAR) {
 			yourtm.tm_mon = 0;
-			++yourtm.tm_year;
+			if (increment_overflow(&yourtm.tm_year, 1))
+				return WRONG;
 		}
 	}
-	saved_seconds = yourtm.tm_sec;
-	yourtm.tm_sec = 0;
+	if (increment_overflow(&yourtm.tm_year, -TM_YEAR_BASE))
+		return WRONG;
+	if (yourtm.tm_year + TM_YEAR_BASE < EPOCH_YEAR) {
+		/*
+		** We can't set tm_sec to 0, because that might push the
+		** time below the minimum representable time.
+		** Set tm_sec to 59 instead.
+		** This assumes that the minimum representable time is
+		** not in the same minute that a leap second was deleted from,
+		** which is a safer assumption than using 58 would be.
+		*/
+		if (increment_overflow(&yourtm.tm_sec, 1 - SECSPERMIN))
+			return WRONG;
+		saved_seconds = yourtm.tm_sec;
+		yourtm.tm_sec = SECSPERMIN - 1;
+	} else {
+		saved_seconds = yourtm.tm_sec;
+		yourtm.tm_sec = 0;
+	}
 	/*
 	** Calculate the number of magnitude bits in a time_t
 	** (this works regardless of whether time_t is
 	** signed or unsigned, though lint complains if unsigned).
 	*/
 	for (bits = 0, t = 1; t > 0; ++bits, t <<= 1)
-		;
+		continue;
 	/*
 	** If time_t is signed, then 0 is the median value,
 	** if time_t is unsigned, then 1 << bits is median.
@@ -1288,7 +1326,10 @@ int * const		okayp;
 		return WRONG;
 	}
 label:
-	t += saved_seconds;
+	newt = t + saved_seconds;
+	if ((newt < t) != (saved_seconds < 0))
+		return WRONG;
+	t = newt;
 	(*funcp)(&t, offset, tmp);
 	*okayp = TRUE;
 	return t;

@@ -492,7 +492,7 @@ const char * const	format;
 	tm = *localtime(&now);
 #if HAVE_SETLOCALE - 0
 	setlocale(LC_TIME, "");
-#endif
+#endif /* HAVE_SETLOCALE - 0 */
 	timeout(stdout, format ? format : "%+", &tm);
 	(void) putchar('\n');
 	(void) fflush(stdout);

@@ -1,19 +1,16 @@
 # %W%
 
 # If you want something other than Eastern United States time used on your
-# system, change the line below (after finding the zone you want in tzinfo,
-# or adding it to tzinfo).  Alternately, if you discover you've got the
-# wrong time zone, you can just
+# system, change the line below (after finding the zone you want in the
+# time zone files, or adding it to a time zone file).
+# Alternately, if you discover you've got the wrong time zone, you can just
 #	tzcomp -l rightzone
 
 LOCALTIME=	Eastern
 
-# Since this stuff isn't part of any official release, we'll put it in the
-# directory /usr/local/lib/tzdir rather than the directory /etc/tzdir that's
-# mentioned in the writeups.  You may want to change that.  In any case,
-# use an absolute path name for TZDIR unless you're just testing the software.
+# Use an absolute path name for TZDIR unless you're just testing the software.
 
-TZDIR=		/usr/local/lib/tzdir
+TZDIR=		/etc/tzdir
 
 DEBUG=
 LINTFLAGS=	-phbaaxc
@@ -24,13 +21,14 @@ TZCSRCS=	tzcomp.c scheck.c strchr.c
 TZCOBJS=	tzcomp.o scheck.o strchr.o
 TZDSRCS=	tzdump.c settz.c
 TZDOBJS=	tzdump.o settz.o
-ENCHILADA=	Makefile tzfile.h $(TZCSRCS) $(TZDSRCS) tzinfo years.sh \
+DATA=		asia australia europe etcetera newpacific northamerica
+ENCHILADA=	Makefile tzfile.h $(TZCSRCS) $(TZDSRCS) $(DATA) years.sh \
 			README settz.3 tzfile.5 tzcomp.8
 
 all:	REDID_BINARIES tzdump
 
-REDID_BINARIES:	$(TZDIR) tzcomp tzinfo years
-	tzcomp -l $(LOCALTIME) -d $(TZDIR) tzinfo
+REDID_BINARIES:	$(TZDIR) tzcomp $(DATA) years
+	tzcomp -l $(LOCALTIME) -d $(TZDIR) $(DATA)
 	cp /dev/null $@
 
 tzdump:	$(TZDOBJS)

@@ -26,13 +26,19 @@ static char	sccsid[] = "%W%";
 #define FALSE	0
 #endif
 
+#ifdef lint
+#define scheck(string, format)	(format)
+#endif
+#ifndef lint
+extern char *	scheck();
+#endif
+
 extern char *	calloc();
 extern char *	malloc();
 extern char *	optarg;
 extern int	optind;
 extern FILE *	popen();
 extern char *	realloc();
-extern char *	scheck();
 extern char *	sprintf();
 extern char *	strcat();
 extern char *	strchr();
@@ -269,8 +275,7 @@ char *	part2;
 	between = (*part1 == '\0' || *part2 == '\0') ? "" : " ";
 	(void) fprintf(stderr, "%s: wild %s%s%s\n",
 		progname, part1, between, part2);
-	for ( ; ; )
-		exit(1);
+	exit(1);
 }
 
 static
@@ -590,7 +595,8 @@ char **	fields;
 	if ((lp = byword(fields[RF_MONTH], mon_names)) == NULL) {
 		error("month name");
 		return;
-	} else r.r_month = lp->l_value;
+	}
+	r.r_month = lp->l_value;
 	r.r_todisstd = FALSE;
 	cp = fields[RF_TOD];
 	if (strlen(cp) > 0) {
@@ -612,14 +618,15 @@ char **	fields;
 	** Year work.
 	*/
 	cp = fields[RF_LOYEAR];
-	if (sscanf(cp, scheck(cp, "%d"), &r.r_loyear) != 1 || r.r_loyear <= 0) {
-		error("low year");
-		return;
+	if (sscanf(cp, scheck(cp, "%ld"), &r.r_loyear) != 1 ||
+		r.r_loyear <= 0) {
+			error("low year");
+			return;
 	}
 	cp = fields[RF_HIYEAR];
 	if (*cp == '\0' || ciequal(cp, "only"))
 		r.r_hiyear = r.r_loyear;
-	else if (sscanf(cp, scheck(cp, "%d"), &r.r_hiyear) != 1 ||
+	else if (sscanf(cp, scheck(cp, "%ld"), &r.r_hiyear) != 1 ||
 		r.r_hiyear <= 0) {
 			error("high year");
 			return;
@@ -673,7 +680,7 @@ char **	fields;
 			}
 			r.r_wday = lp->l_value;
 		}
-		if (sscanf(cp, scheck(cp, "%d"), &r.r_dayofmonth) != 1 ||
+		if (sscanf(cp, scheck(cp, "%ld"), &r.r_dayofmonth) != 1 ||
 			r.r_dayofmonth <= 0 ||
 			(r.r_dayofmonth > mon_lengths[r.r_month] &&
 			r.r_month != TM_FEBRUARY && r.r_dayofmonth != 29)) {
@@ -1099,9 +1106,9 @@ rpytime(rp, wantedy)
 register struct rule *	rp;
 register long		wantedy;
 {
-	register long	i, y, wday, dayoff, t, m;
+	register long	i, y, wday, t, m;
+	register long	dayoff;			/* with a nod to Margaret O. */
 
-	t = 0;
 	dayoff = 0;
 	m = TM_JANUARY;
 	y = EPOCH_YEAR;
@@ -1117,15 +1124,13 @@ register long		wantedy;
 			if (isleap(y))
 				--i;
 		}
-		dayoff += i;
-		t = tadd(t, (long) i * SECS_PER_DAY);
+		dayoff = tadd(dayoff, i);
 	}
 	while (m != rp->r_month) {
 		i = mon_lengths[m];
 		if (m == TM_FEBRUARY && isleap(y))
 			++i;
-		dayoff += i;
-		t = tadd(t, (long) i * SECS_PER_DAY);
+		dayoff = tadd(dayoff, i);
 		++m;
 	}
 	i = rp->r_dayofmonth;
@@ -1139,8 +1144,7 @@ register long		wantedy;
 		}
 	}
 	--i;
-	dayoff += i;
-	t = tadd(t, (long) i * SECS_PER_DAY);
+	dayoff = tadd(dayoff, i);
 	if (rp->r_dycode == DC_DOWGEQ || rp->r_dycode == DC_DOWLEQ) {
 		wday = EPOCH_WDAY;
 		/*
@@ -1157,11 +1161,16 @@ register long		wantedy;
 			if (rp->r_dycode == DC_DOWGEQ)
 				i = 1;
 			else	i = -1;
-			dayoff += i;
-			t = tadd(t, (long) i * SECS_PER_DAY);
+			dayoff = tadd(dayoff, i);
 			wday = (wday + i + 7) % 7;
 		}
 	}
+	t = dayoff * SECS_PER_DAY;
+	/*
+	** Cheap overflow check.
+	*/
+	if (t / SECS_PER_DAY != dayoff)
+		error("time overflow");
 	return tadd(t, rp->r_tod);
 }
 
@@ -1172,7 +1181,7 @@ char *	string;
 	register int	i;
 
 	i = strlen(string);
-	if (h.tzh_charcnt + i > TZ_MAX_CHARS)
+	if (h.tzh_charcnt + i >= TZ_MAX_CHARS)
 		error("long time zone abbreviations");
 	(void) strcpy(&chars[h.tzh_charcnt], string);
 	h.tzh_charcnt += i + 1;

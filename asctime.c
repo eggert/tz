@@ -15,7 +15,7 @@ static char	elsieid[] = "%W%";
 #include "tzfile.h"
 
 #if STRICTLY_STANDARD_ASCTIME
-#define ASCTIME_FMT	"%.3s %.3s%3d %.2d:%.2d:%.2d %ld\n"
+#define ASCTIME_FMT	"%.3s %.3s%3d %.2d:%.2d:%.2d %.0lf\n"
 #define ASCTIME_FMT_B	ASCTIME_FMT
 #else /* !STRICTLY_STANDARD_ASCTIME */
 /*
@@ -31,14 +31,14 @@ static char	elsieid[] = "%W%";
 ** For years that are less than four digits, we pad the output with
 ** spaces before the newline to get the newline in the traditional place.
 */
-#define ASCTIME_FMT	"%.3s %.3s%3d %02.2d:%02.2d:%02.2d %-4ld\n"
+#define ASCTIME_FMT	"%.3s %.3s%3d %02.2d:%02.2d:%02.2d %-4.0lf\n"
 /*
 ** For years that are more than four digits we put extra spaces before the year
 ** so that code trying to overwrite the newline won't end up overwriting
 ** a digit within a year and truncating the year (operating on the assumption
 ** that no output is better than wrong output).
 */
-#define ASCTIME_FMT_B	"%.3s %.3s%3d %02.2d:%02.2d:%02.2d     %ld\n"
+#define ASCTIME_FMT_B	"%.3s %.3s%3d %02.2d:%02.2d:%02.2d     %.0lf\n"
 #endif /* !STRICTLY_STANDARD_ASCTIME */
 
 #define STD_ASCTIME_BUF_SIZE	26
@@ -74,7 +74,7 @@ char *				buf;
 	};
 	register const char *	wn;
 	register const char *	mn;
-	long			year;
+	double			year;
 	char			result[MAX_ASCTIME_BUF_SIZE];
 
 	if (timeptr->tm_wday < 0 || timeptr->tm_wday >= DAYSPERWEEK)
@@ -83,7 +83,7 @@ char *				buf;
 	if (timeptr->tm_mon < 0 || timeptr->tm_mon >= MONSPERYEAR)
 		mn = "???";
 	else	mn = mon_name[timeptr->tm_mon];
-	year = timeptr->tm_year + (long) TM_YEAR_BASE;
+	year = (double) timeptr->tm_year + (double) TM_YEAR_BASE;
 	/*
 	** We avoid using snprintf since it's not available on all systems.
 	*/

@@ -206,11 +206,14 @@ is replaced by the year with century as a decimal number.
 %y
 is replaced by the year without century as a decimal number (00-99).
 .TP
-%z
-is replaced by the offset from UCT in the format +HHMM or -HHMM as appropriate.
-.TP
 %Z
-is replaced by the time zone name.
+is replaced by the time zone name,
+or by the empty string if this is not determinable.
+.TP
+%z
+is replaced by the offset from UTC in the format +HHMM or -HHMM as appropriate,
+with positive values representing locations east of Greenwich,
+or by the empty string if this is not determinable.
 .TP
 %%
 is replaced by a single %.

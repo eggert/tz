@@ -10,7 +10,7 @@ LOCALTIME=	US/Eastern
 
 # Use an absolute path name for TZDIR unless you're just testing the software.
 
-TZDIR=		/etc/tzdir
+TZDIR=		/etc/timezones
 
 # You may want to change this define if you're just testing the software.
 

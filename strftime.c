@@ -46,7 +46,9 @@ struct lc_time_T {
 	const char *	c_fmt;
 	const char *	am;
 	const char *	pm;
+#ifdef EGGERT
 	const char *	date_fmt;
+#endif /* defined EGGERT */
 };
 
 static const struct lc_time_T	C_time_locale = {
@@ -90,8 +92,10 @@ static const struct lc_time_T	C_time_locale = {
 	/* pm */
 	"PM",
 
+#ifdef EGGERT
 	/* date_fmt */
 	"%a %b %e %H:%M:%S %Z %Y"
+#endif /* defined EGGERT */
 };
 
 static char *	_add P((const char *, char *, const char *));
@@ -393,6 +397,12 @@ label:
 						pt, ptlim);
 				} else  pt = _add("?", pt, ptlim);
 				continue;
+#ifdef EGGERT
+			case '+':
+				pt = _fmt(_loc(ptloc)->date_fmt, t,
+					pt, ptlim, ptloc);
+				continue;
+#endif /* defined EGGERT */
 			case '%':
 			/*
 			 * X311J/88-090 (4.12.3.5): if conversion char is

@@ -36,13 +36,13 @@ imalloc(n)
 #else /* !defined MAL */
 	if (n == 0)
 		n = 1;
-#if defined __TURBOC__
+#if defined __TURBOC__ && __TURBOC__ == 1
 	/*
-	** Beat a TURBOC bug.
+	** Beat a TURBOC 1.0 bug.
 	*/
 	if ((n & 1) != 0)
 		++n;
-#endif /* defined __TURBOC__ */
+#endif /* defined __TURBOC__  && __TURBOC__ == 1 */
 	return malloc((alloc_t) n);
 #endif /* !defined MAL */
 }
@@ -52,10 +52,10 @@ icalloc(nelem, elsize)
 {
 	if (nelem == 0 || elsize == 0)
 		nelem = elsize = 1;
-#if defined __TURBOC__
+#if defined __TURBOC__ && __TURBOC__ == 1
 	if ((nelem & 1) != 0 && (elsize & 1) != 0)
 		++nelem;
-#endif /* defined __TURBOC__ */
+#endif /* defined __TURBOC__ && __TURBOC__ == 1 */
 	return calloc((alloc_t) nelem, (alloc_t) elsize);
 }
 
@@ -67,10 +67,10 @@ char *	pointer;
 		return imalloc(size);
 	if (size == 0)
 		size = 1;
-#if defined __TURBOC__
+#if defined __TURBOC__ && __TURBOC__ == 1
 	if ((size & 1) != 0)
 		++size;
-#endif /* defined __TURBOC__ */
+#endif /* defined __TURBOC__ && __TURBOC__ == 1 */
 	return realloc(pointer, (alloc_t) size);
 }
 

@@ -98,7 +98,7 @@ struct tzhead {
 #endif /* !defined TZ_MAX_CHARS */
 
 #ifndef TZ_MAX_LEAPS
-#define	TZ_MAX_LEAPS	50	/* Maximum number of leap second corrections */
+#define TZ_MAX_LEAPS	50	/* Maximum number of leap second corrections */
 #endif /* !defined TZ_MAX_LEAPS */
 
 #define SECSPERMIN	60

@@ -61,7 +61,7 @@ struct zone {
 };
 
 extern int	emkdir P((const char * name, int mode));
-extern int	getopt P((int argc, char * argv[], const char * options));
+extern int	getopt P((int argc, char * const argv[], const char * options));
 extern char *	icatalloc P((char * old, const char * new));
 extern char *	icpyalloc P((const char * string));
 extern void	ifree P((char * p));

@@ -548,11 +548,11 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # For now we'll continue to assume 2:00s for changes since 1960.
 
 # From Eric Ulevik <eau@zip.com.au> (1998-01-05):
-# 
+#
 # Here are some URLs to Australian time legislation. These URLs are stable,
 # and should probably be included in the data file. There are probably more
 # relevant entries in this database.
-# 
+#
 # NSW (including LHI and Broken Hill):
 # <a href="http://www.austlii.edu.au/au/legis/nsw/consol_act/sta1987137/index.html">
 # Standard Time Act 1987 (updated 1995-04-04)
@@ -815,7 +815,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # ``Look you've got to remember in my family when this came up last time
 # I voted for it, my wife voted against it and she said to me it's all very
 # well for you, you don't have to worry about getting the children out of
-# bed, getting them to school, getting them to sleep at night. 
+# bed, getting them to school, getting them to sleep at night.
 # I've been through all this argument domestically...my wife rules.''
 #
 # Broken Hill will stick with South Australian time in 2000.  See:
@@ -934,7 +934,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 # From Rives McDow (1998-10-08):
 # Fiji will introduce DST effective 0200 local time, 1998-11-01
-# until 0300 local time 1999-02-28.  Each year the DST period will 
+# until 0300 local time 1999-02-28.  Each year the DST period will
 # be from the first Sunday in November until the last Sunday in February.
 
 # From Paul Eggert (2000-01-08):
@@ -1080,12 +1080,12 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 # From Steffen Thorsen [straen@thorsen.priv.no] (1999-09-09):
 # * Tonga will introduce DST in November
-# 
+#
 # I was given this link by John Letts <johnletts@earthlink.net>:
 # <a hef="http://news.bbc.co.uk/hi/english/world/asia-pacific/newsid_424000/424764.stm">
 # http://news.bbc.co.uk/hi/english/world/asia-pacific/newsid_424000/424764.stm
 # </a>
-# 
+#
 # I have not been able to find exact dates for the transition in November
 # yet. By reading this article it seems like Fiji will be 14 hours ahead
 # of UTC as well, but as far as I know Fiji will only be 13 hours ahead
@@ -1095,10 +1095,10 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # According to <a href="http://www.tongaonline.com/news/sept1799.html>
 # http://www.tongaonline.com/news/sept1799.html
 # </a>:
-# "Daylight Savings Time will take effect on Oct. 2 through April 15, 2000 
-# and annually thereafter from the first Saturday in October through the 
-# third Saturday of April.  Under the system approved by Privy Council on 
-# Sept. 10, clocks must be turned ahead one hour on the opening day and 
+# "Daylight Savings Time will take effect on Oct. 2 through April 15, 2000
+# and annually thereafter from the first Saturday in October through the
+# third Saturday of April.  Under the system approved by Privy Council on
+# Sept. 10, clocks must be turned ahead one hour on the opening day and
 # set back an hour on the closing date."
 # Alas, no indication of the time of day.
 
@@ -1122,7 +1122,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # The International Date Line
 
 # From Gwillim Law (2000-01-03):
-# 
+#
 # The International Date Line is not defined by any international standard,
 # convention, or treaty.  Mapmakers are free to draw it as they please.
 # Reputable mapmakers will simply ensure that every point of land appears on

@@ -28,7 +28,8 @@ static char	tzfilehid[] = "%W%";
 */
 
 struct tzhead {
-	char	tzh_reserved[28];	/* reserved for future use */
+	char	tzh_reserved[24];	/* reserved for future use */
+	char	tzh_ttisstdcnt[4];	/* coded number of trans. time flags */
 	char	tzh_leapcnt[4];		/* coded number of leap seconds */
 	char	tzh_timecnt[4];		/* coded number of transition times */
 	char	tzh_typecnt[4];		/* coded number of local time types */
@@ -42,12 +43,17 @@ struct tzhead {
 **	tzh_timecnt (unsigned char)s	types of local time starting at above
 **	tzh_typecnt repetitions of
 **		one (char [4])		coded GMT offset in seconds
-**		one (unsigned char)	used to set tm_isdt
+**		one (unsigned char)	used to set tm_isdst
 **		one (unsigned char)	that's an abbreviation list index
 **	tzh_charcnt (char)s		'\0'-terminated zone abbreviations
 **	tzh_leapcnt repetitions of
 **		one (char [4])		coded leap second transition times
 **		one (char [4])		total correction after above
+**	tzh_ttisstdcnt (char)s		indexed by type; if TRUE, transition
+**					time is standard time, if FALSE,
+**					transition time is wall clock time
+**					if absent, transition times are
+**					assumed to be wall clock time
 */
 
 /*

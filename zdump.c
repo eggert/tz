@@ -314,10 +314,8 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 		(void) exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
-
-	/* gcc -Wall pacifier */
-	for ( ; ; )
-		continue;
+	/* If exit fails to exit... */
+	return EXIT_FAILURE;
 }
 
 static void

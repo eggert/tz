@@ -17,18 +17,15 @@ structure described in the include file
 .sp
 .nf
 .in +.5i
-.ta .5i +\w'struct dsinfo  'u
-struct dsinfo {
-	long	ds_gmtoff;
-	char	ds_abbr[TZ_ABBR_LEN+1];
-	char	ds_isdst;
-};
-
 struct tzinfo {
 	int	tz_timecnt;
 	long	tz_times[TZ_MAX_TIMES];
 	char	tz_types[TZ_MAX_TIMES];
-	struct dsinfo	tz_dsinfo[TZ_MAX_TYPES];
+	struct dsinfo {
+		long	ds_gmtoff;
+		char	ds_abbr[TZ_ABBR_LEN+1];
+		char	ds_isdst;
+	}	tz_dsinfo[TZ_MAX_TYPES];
 };
 .fi
 .PP

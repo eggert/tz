@@ -391,8 +391,8 @@ register const struct tm *	timeptr;
 	};
 	register const char *	wn;
 	register const char *	mn;
-	int			lead;
-	int			trail;
+	register int		lead;
+	register int		trail;
 
 	/*
 	** The packaged versions of localtime and gmtime never put out-of-range

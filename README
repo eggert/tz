@@ -4,7 +4,7 @@
 "Any time you want it to be." -- Frank Baxter as The Scientist
 					(from the Bell System film on time)
 
-This 1989 update of the time zone package features
+The 1989 update of the time zone package featured
 
 *	POSIXization (including interpretation of POSIX-style TZ environment
 	variables, provided by Guy Harris),
@@ -40,8 +40,6 @@ Since POSIX frowns on correct leap second handling, the default behavior of
 the "zic" command (in the absence of a "-L" option) has been changed to omit
 leap second information from its output files.
 
-Please send comments or information to ado@elsie.nci.nih.gov.
-
 Be sure to read the comments in "Makefile" and make any changes
 needed to make things right for your system.
 
@@ -67,3 +65,8 @@ time conversion package:  Keith Bostic; Bob Devine; Robert Elz; Guy Harris;
 Mark Horton; John Mackin; and Bradley White.  Thanks also to Michael Bloom,
 Art Neilson, Stephen Prince, John Sovereign, and Frank Wales for testing work.
 None of them are responsible for remaining errors.
+
+Look in the ~ftp/pub directory of elsie.nci.nih.gov (128.231.16.1)
+for updated versions of these files.
+
+Please send comments or information to ado@elsie.nci.nih.gov.

@@ -32,7 +32,7 @@ asctime, ctime, difftime, gmtime, localtime, mktime, tzset, tzsetwall \- convert
 .B time_t mktime(tm)
 .B struct tm *tm;
 .PP
-cc ... -lz
+.B cc ... -lz
 .fi
 .SH DESCRIPTION
 .I Tzset
@@ -300,7 +300,6 @@ returned by the
 .I time
 function.
 The original values of the
-.PP
 .B tm_wday
 and
 .B tm_yday
@@ -408,7 +407,7 @@ UTC leap seconds are loaded from
 tzfile(5),
 getenv(3),
 time(2)
-.SH NOTE
+.SH NOTES
 The return values point to static data
 whose content is overwritten by each call.
 The
@@ -421,4 +420,8 @@ will also be overwritten at the next call
 .I tzset
 or
 .IR tzsetwall ).
+.PP
+Avoid using out-of-range values with
+.I mktime
+when setting up lunch with promptness sticklers in Riyadh.
 .. %W%

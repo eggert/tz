@@ -21,7 +21,8 @@ static char	tzfilehid[] = "%W%";
 */
 
 struct tzhead {
-	char	tzh_reserved[32];	/* reserved for future use */
+	char	tzh_reserved[28];	/* reserved for future use */
+	char	tzh_leapcnt[4];		/* coded number of leap seconds */
 	char	tzh_timecnt[4];		/* coded number of transition times */
 	char	tzh_typecnt[4];		/* coded number of local time types */
 	char	tzh_charcnt[4];		/* coded number of abbr. chars */
@@ -37,6 +38,9 @@ struct tzhead {
 **		one (unsigned char)	used to set tm_isdt
 **		one (unsigned char)	that's an abbreviation list index
 **	tzh_charcnt (char)s		'\0'-terminated zone abbreviaton strings
+**	tzh_leapcnt repetitions of
+**		one (char [4])		coded leap second transition times
+**		one (char [4])		total correction after above
 */
 
 /*
@@ -65,6 +69,10 @@ struct tzhead {
 #ifndef TZ_MAX_CHARS
 #define TZ_MAX_CHARS	50	/* Maximum number of abbreviation characters */
 #endif /* !TZ_MAX_CHARS */
+
+#ifndef TZ_MAX_LEAPS
+#define	TZ_MAX_LEAPS	50	/* Maximum number of leap second corrections */
+#endif /* !TZ_MAX_LEAPS */
 
 #define SECS_PER_MIN	60
 #define MINS_PER_HOUR	60

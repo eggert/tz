@@ -56,7 +56,10 @@ long			timezone = 0;
 int			daylight = 0;
 #endif /* USG_COMPAT */
 
-char *			tzname[2] = { "GMT", "GMT" };
+char *			tzname[2] = {
+	"GMT",
+	"GMT"
+};
 
 #ifdef TZA_COMPAT
 char *			tz_abbr;	/* compatibility w/older versions */

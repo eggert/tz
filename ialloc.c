@@ -30,10 +30,14 @@ imalloc(n)
 #ifdef MAL
 	register char *	result;
 
+	if (n == 0)
+		n = 1;
 	result = malloc((alloc_t) n);
 	return (result == MAL) ? NULL : result;
 #endif
 #ifndef MAL
+	if (n == 0)
+		n = 1;
 	return malloc((alloc_t) n);
 #endif
 }
@@ -41,6 +45,10 @@ imalloc(n)
 char *
 icalloc(nelem, elsize)
 {
+	if (nelem == 0)
+		nelem = 1;
+	if (elsize == 0)
+		elsize = 1;
 	return calloc((alloc_t) nelem, (alloc_t) elsize);
 }
 
@@ -48,6 +56,8 @@ char *
 irealloc(pointer, size)
 char *	pointer;
 {
+	if (size == 0)
+		size = 1;
 	if (NULLMAL(pointer))
 		return imalloc(size);
 	else	return realloc(pointer, (alloc_t) size);

@@ -769,6 +769,10 @@ char *	cp2;
 
 	tp1 = (struct temp *) cp1;
 	tp2 = (struct temp *) cp2;
+	if (tp1->t_time > 0 && tp2->t_time <= 0)
+		return 1;
+	if (tp1->t_time <= 0 && tp2->t_time > 0)
+		return -1;
 	if ((diff = tp1->t_time - tp2->t_time) > 0)
 		return 1;
 	else if (diff < 0)

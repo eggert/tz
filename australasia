@@ -31,7 +31,6 @@ Zone	Australia/West		8:00	-	WST
 
 Zone	Australia/Victoria	10:00	Oz	EST	1985 Oct Sun>=14 2:00
 				10:00	1:00	EST	1986 Mar Sun<=21 3:00
-				10:00	0	EST	1986 Oct Sun>=14 2:00
 				10:00	Oz	EST
 Link	Australia/Victoria	Australia/NSW
 

@@ -53,7 +53,7 @@ static int	inzcont P((char ** fields, int nfields));
 static int	inzone P((char ** fields, int nfields));
 static int	inzsub P((char ** fields, int nfields, int iscont));
 static int	itsabbr P((const char * abbr, const char * word));
-static int	itsdir P((const char * name));
+static int	itsdir P((char * name));
 static int	lowerit P((int c));
 static char *	memcheck P((char * tocheck));
 static int	mkdirs P((char * filename));
@@ -547,7 +547,7 @@ setboundaries()
 
 static int
 itsdir(name)
-const char *	name;
+char *	name;
 {
 	struct stat	s;
 

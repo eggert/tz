@@ -75,5 +75,6 @@ ado@ncifcrf.gov for use in the future).  Europeans take note!
 
 Thanks to these Timezone Caballeros who've made major contributions to the
 time conversion package:  Keith Bostic; Bob Devine; Robert Elz; Guy Harris;
-Mark Horton; John Mackin; and Bradley White.  Thanks also to Art Neilson
-for testing work.  None of them are responsible for remaining errors.
+Mark Horton; John Mackin; and Bradley White.  Thanks also to Michael Bloom,
+Art Neilson, and Frank Wales for testing work.  None of them are responsible
+for remaining errors.

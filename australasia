@@ -16,12 +16,23 @@ Rule	Oz	1987	max	-	Mar	Sun<=21	3:00	0	-
 # Zone	NAME			GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Australia/Tasmania	10:00	Oz	EST
 Zone	Australia/Queensland	10:00	-	EST
-Zone	Australia/East-SA	9:30	Oz	CST	1987 Mar Sun<=21 3:00
-				10:00	Oz	EST
-Zone	Australia/West-SA	9:30	Oz	CST	1987 Mar Sun<=21 3:00
-				10:00	-	EST
 Zone	Australia/North		9:30	-	CST
 Zone	Australia/West		8:00	-	WST
+#
+# According to a December, 1986 letter from kre:
+# "Turns out to have been premature, I gather SA has changed its mind,
+# and isn't going to have EST anywhere now, so the West-SA and East-SA
+# distinction isn't needed...  They're staying GMT+9:30 all over.
+# I will try and find out what they're doing with DST, but it probably
+# won't be easy, I suspect that they have no idea..."
+#
+# So. . .we'll comment out these next four lines:
+# Zone	Australia/East-SA	9:30	Oz	CST	1987 Mar Sun<=21 3:00
+# 				10:00	Oz	EST
+# Zone	Australia/West-SA	9:30	Oz	CST	1987 Mar Sun<=21 3:00
+# 				10:00	-	EST
+# . . .and stay with:
+Zone	Australia/South		9:30	Oz	CST
 
 # Victoria and New South Wales made the jump to a later ending date for
 # DST in 1986 rather than 1987.  New South Wales also had another variation

@@ -1,4 +1,4 @@
-# @(#)asia	7.42
+# %W%
 
 # This data is by no means authoritative; if you think you know better,
 # go ahead and edit the file (and please send any changes to
@@ -648,10 +648,28 @@ Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
 # Since 1938, all Japanese possessions have been like Asia/Tokyo.
 
 # Jordan
-# From Steffen Thorsen (1999-05-08):
+# From Steffen Thorsen [straen@thorsen.priv.no] (1999-05-08):
 # Jordan do not have DST this year.  It also seems that they are not going
 # to use it the next years either.  "We do not need it" was the answer I got
 # from the Jordan National Information Centre (http://www.nic.gov.jo).
+#
+# From Steffen Thorsen [straen@thorsen.priv.no] (1999-09-09):
+# In April I reported that Jordan had stopped using DST. Now the government 
+# will use DST all year long, as reported in this Jordanian newspaper:
+# <a href="http://star.arabia.com/990701/JO9.html">
+# http://star.arabia.com/990701/JO9.html
+# </a>
+# 
+# "Summer time is back 
+# Clocks in Jordan were forwarded one hour on Wednesday at midnight, in 
+# accordance with the government's decision to implement summer time all
+# year round."
+# 
+# It seems that DST was introduced on 30 June at 24:00 (or 1 July 00:00).
+# This link might also be of interest:
+# <a href="http://star.arabia.com/990624/JO2.html">
+# http://star.arabia.com/990624/JO2.html
+# </a>
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule    Jordan	1973	only	-	Jun	6	0:00	1:00	S
@@ -676,7 +694,8 @@ Rule    Jordan	1994	only	-	Sep	Fri>=15	0:00	0	-
 Rule    Jordan	1995	1998	-	Sep	Fri>=15	0:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Amman	2:23:44 -	LMT	1931
-			2:00	Jordan	EE%sT
+			2:00	Jordan	EE%sT	1999 Jul
+			2:00	1:00	EEST
 
 # Kazakhstan
 # From Paul Eggert (1996-11-22):

@@ -22,6 +22,11 @@ TZLIB=		/usr/lib/libz.a
 #	-DUSG
 # to the end of the "CFLAGS=" line.
 #
+# If you're running on a system where "strchr" is known as "index",
+# for example, a 4.[012]BSD system), add
+#	-Dstrchr=index
+# to the end of the  "CFLAGS=" line.
+#
 # If you want to use System V compatibility code, add
 #	-DUSG_COMPAT
 # to the end of the "CFLAGS=" line.

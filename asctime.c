@@ -11,10 +11,7 @@ static char	sccsid[] = "%W%";
 #endif /* !lint */
 
 #include "time.h"
-
-#ifndef TM_YEAR_BASE
-#define TM_YEAR_BASE	1900
-#endif /* !TM_YEAR_BASE */
+#include "tzfile.h"
 
 #ifndef USG
 extern char *	sprintf();

@@ -75,12 +75,12 @@ struct rule {
 
 static long		detzcode P((const char * codep));
 static void		settzname P((const struct state *sp));
-static char *		getzname P((const char *strp));
-static char *		getnum P((const char *strp, int *nump, int min,
+static const char *	getzname P((const char *strp));
+static const char *	getnum P((const char *strp, int *nump, int min,
 				int max));
-static char *		gettime P((const char *strp, long *timep));
-static char *		getoffset P((const char *strp, long *offsetp));
-static char *		getrule P((const char *strp, struct rule *rulep));
+static const char *	gettime P((const char *strp, long *timep));
+static const char *	getoffset P((const char *strp, long *offsetp));
+static const char *	getrule P((const char *strp, struct rule *rulep));
 static time_t		transtime P((time_t janfirst, int year,
 				const struct rule *rulep, long offset));
 static int		tzparse P((const char *name, struct state *sp));
@@ -114,7 +114,7 @@ char *			tz_abbr;	/* compatibility w/older versions */
 
 static long
 detzcode(codep)
-const char *	codep;
+const char * const	codep;
 {
 	register long	result;
 	register int	i;
@@ -127,11 +127,11 @@ const char *	codep;
 
 static void
 settzname(sp)
-register const struct state *	sp;
+register const struct state * const	sp;
 {
 	register int	i;
 
-	tzname[0] = tzname[1] = &sp->chars[0];
+	tzname[0] = tzname[1] = (char *) &sp->chars[0];
 #ifdef USG_COMPAT
 	timezone = -sp->ttis[0].tt_gmtoff;
 	daylight = 0;
@@ -141,12 +141,12 @@ register const struct state *	sp;
 
 		ttisp = &sp->ttis[i];
 		if (ttisp->tt_isdst) {
-			tzname[1] = &sp->chars[ttisp->tt_abbrind];
+			tzname[1] = (char *) &sp->chars[ttisp->tt_abbrind];
 #ifdef USG_COMPAT
 			daylight = 1;
 #endif /* defined USG_COMPAT */
 		} else {
-			tzname[0] = &sp->chars[ttisp->tt_abbrind];
+			tzname[0] = (char *) &sp->chars[ttisp->tt_abbrind];
 #ifdef USG_COMPAT
 			timezone = -ttisp->tt_gmtoff;
 #endif /* defined USG_COMPAT */
@@ -156,8 +156,8 @@ register const struct state *	sp;
 
 static int
 tzload(name, sp)
-register const char *	name;
-register struct state *	sp;
+register const char *		name;
+register struct state * const	sp;
 {
 	register const char *	p;
 	register int		i;
@@ -280,7 +280,7 @@ static const int	year_lengths[2] = {
 ** character.
 */
 
-static char *
+static const char *
 getzname(strp)
 register const char *	strp;
 {
@@ -299,12 +299,12 @@ register const char *	strp;
 ** Otherwise, return a pointer to the first character not part of the number.
 */
 
-static char *
+static const char *
 getnum(strp, nump, min, max)
 register const char *	strp;
-int *			nump;
-int			min;
-int			max;
+int * const		nump;
+const int		min;
+const int		max;
 {
 	register char	c;
 	register int	num;
@@ -329,10 +329,10 @@ int			max;
 ** Otherwise, return a pointer to the first character not part of the time.
 */
 
-static char *
+static const char *
 gettime(strp, timep)
 register const char *	strp;
-long *			timep;
+long * const		timep;
 {
 	int	num;
 
@@ -364,10 +364,10 @@ long *			timep;
 ** Otherwise, return a pointer to the first character not part of the time.
 */
 
-static char *
+static const char *
 getoffset(strp, offsetp)
 register const char *	strp;
-long *			offsetp;
+long * const		offsetp;
 {
 	register int	neg;
 
@@ -392,10 +392,10 @@ long *			offsetp;
 ** Otherwise, return a pointer to the first character not part of the rule.
 */
 
-static char *
+static const char *
 getrule(strp, rulep)
-const char *		strp;
-register struct rule *	rulep;
+const char *			strp;
+register struct rule * const	rulep;
 {
 	if (*strp == 'J') {
 		/*
@@ -450,11 +450,10 @@ register struct rule *	rulep;
 
 static time_t
 transtime(janfirst, year, rulep, offset)
-time_t				janfirst;
-int				year;
-register const struct rule *	rulep;
-long				offset;
-/*###457 [cc] argument `rulep' doesn't match function prototype%%%*/
+const time_t				janfirst;
+const int				year;
+register const struct rule * const	rulep;
+const long				offset;
 {
 	register int	leapyear;
 	register time_t	value;
@@ -545,11 +544,11 @@ long				offset;
 
 static int
 tzparse(name, sp)
-const char *		name;
-register struct state *	sp;
+const char *			name;
+register struct state * const	sp;
 {
-	char *				stdname;
-	char *				dstname;
+	const char *			stdname;
+	const char *			dstname;
 	int				stdlen;
 	int				dstlen;
 	long				stdoffset;
@@ -726,7 +725,7 @@ register struct state *	sp;
 
 static void
 tzsetgmt(sp)
-register struct state *	sp;
+register struct state * const	sp;
 {
 	sp->leapcnt = 0;		/* so, we're off a little */
 	sp->timecnt = 0;
@@ -762,7 +761,7 @@ tzsetwall()
 
 struct tm *
 localtime(timep)
-const time_t *	timep;
+const time_t * const	timep;
 {
 	register const struct state *	sp;
 	register const struct ttinfo *	ttisp;
@@ -796,7 +795,7 @@ const time_t *	timep;
 	*/
 	timesub(&t, ttisp->tt_gmtoff, sp, &tm);
 	tm.tm_isdst = ttisp->tt_isdst;
-	tzname[tm.tm_isdst] = &sp->chars[ttisp->tt_abbrind];
+	tzname[tm.tm_isdst] = (char *) &sp->chars[ttisp->tt_abbrind];
 #ifdef TM_ZONE
 	tm.TM_ZONE = &sp->chars[ttisp->tt_abbrind];
 #endif /* defined TM_ZONE */
@@ -805,7 +804,7 @@ const time_t *	timep;
 
 struct tm *
 gmtime(clock)
-const time_t *	clock;
+const time_t * const	clock;
 {
 	static struct tm	tm;
 
@@ -825,8 +824,8 @@ const time_t *	clock;
 
 struct tm *
 offtime(clock, offset)
-const time_t *	clock;
-long		offset;
+const time_t * const	clock;
+const long		offset;
 {
 	static struct tm	tm;
 
@@ -843,10 +842,10 @@ long		offset;
 
 static void
 timesub(clock, offset, sp, tmp)
-const time_t *			clock;
-long				offset;
-register const struct state *	sp;
-register struct tm *		tmp;
+const time_t * const			clock;
+const long				offset;
+register const struct state * const	sp;
+register struct tm * const		tmp;
 {
 	register const struct lsinfo *	lp;
 	register long			days;
@@ -943,7 +942,7 @@ register struct tm *		tmp;
 
 char *
 ctime(timep)
-const time_t *	timep;
+const time_t * const	timep;
 {
 	return asctime(localtime(timep));
 }
@@ -980,8 +979,8 @@ const time_t *	timep;
 
 static void
 normalize(tensptr, unitsptr, base)
-int *	tensptr;
-int *	unitsptr;
+int * const	tensptr;
+int * const	unitsptr;
 {
 	if (*unitsptr >= base) {
 		*tensptr += *unitsptr / base - 1;
@@ -999,8 +998,8 @@ int *	unitsptr;
 
 static int
 tmcomp(atmp, btmp)
-register const struct tm * atmp;
-register const struct tm * btmp;
+register const struct tm * const atmp;
+register const struct tm * const btmp;
 {
 	register int	result;
 
@@ -1018,10 +1017,10 @@ register const struct tm * btmp;
 
 static time_t
 time2(timeptr, funcp, offset, okayp)
-struct tm *		timeptr;
-const struct tm * (*	funcp)();
+struct tm * const	timeptr;
+struct tm * (*		funcp)();
 const long		offset;
-int *			okayp;
+int * const		okayp;
 {
 	register int	dir;
 	register int	bits;
@@ -1122,8 +1121,8 @@ label:
 
 static time_t
 time1(timeptr, funcp, offset)
-struct tm *		timeptr;
-const struct tm * (*	funcp)();
+struct tm * const	timeptr;
+struct tm * (* const	funcp)();
 const long		offset;
 {
 	register time_t			t;
@@ -1166,7 +1165,7 @@ const long		offset;
 
 time_t
 mktime(timeptr)
-struct tm *	timeptr;
+struct tm * const	timeptr;
 {
 	return time1(timeptr, localtime, 0L);
 }
@@ -1175,14 +1174,14 @@ struct tm *	timeptr;
 
 time_t
 timelocal(timeptr)
-struct tm *	timeptr;
+struct tm * const	timeptr;
 {
 	return mktime(timeptr);
 }
 
 time_t
 timegm(timeptr)
-struct tm *	timeptr;
+struct tm * const	timeptr;
 {
 	return time1(timeptr, gmtime, 0L);
 }
@@ -1191,8 +1190,8 @@ extern struct tm *	offtime P((const time_t * clock, long offset));
 
 time_t
 timeoff(timeptr, offset)
-struct tm *	timeptr;
-const long	offset;
+struct tm * const	timeptr;
+const long		offset;
 {
 
 	return time1(timeptr, offtime, offset);
@@ -1209,7 +1208,7 @@ const long	offset;
 
 long
 gtime(tm)
-struct tm *	tmp;
+struct tm * const	tmp;
 {
 	time_t	t;
 

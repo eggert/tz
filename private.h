@@ -21,6 +21,46 @@ static char	privatehid[] = "%W%";
 #endif /* !defined lint */
 
 /*
+** Here are defaults for various preprocessor symbols.
+** You can override these in your C compiler options, e.g. `-DHAVE_ADJTIME=0'.
+*/
+
+#ifndef HAVE_ADJTIME
+#define HAVE_ADJTIME	1
+#endif
+#ifndef HAVE_MKDIR
+#define HAVE_MKDIR	1
+#endif
+#ifndef HAVE_SETLOCALE
+#define HAVE_SETLOCALE	1
+#endif
+#ifndef HAVE_SETTIMEOFDAY
+#define HAVE_SETTIMEOFDAY	3
+#endif
+#ifndef HAVE_STDLIB_H
+#define HAVE_STDLIB_H	1
+#endif
+#ifndef HAVE_UNISTD_H
+#define HAVE_UNISTD_H	1
+#endif
+
+#ifndef LOCALE_HOME
+#define LOCALE_HOME	"/usr/lib/locale"
+#endif
+
+#ifndef alloc_size_T
+#define alloc_size_T	size_t
+#endif
+
+#ifndef fwrite_size_T
+#define fwrite_size_T	size_t
+#endif
+
+#ifndef qsort_size_T
+#define qsort_size_T	size_t
+#endif
+
+/*
 ** const
 */
 
@@ -100,6 +140,14 @@ typedef char		generic_T;
 #include "time.h"
 #endif /* !defined _TIME_ */
 
+#if HAVE_STDLIB_H
+#include "stdlib.h"
+#endif
+
+#if HAVE_UNISTD_H
+#include "unistd.h"
+#endif
+
 #ifndef remove
 extern int	unlink P((const char * filename));
 #define remove	unlink
@@ -130,34 +178,6 @@ extern int	unlink P((const char * filename));
 #define EXIT_FAILURE	1
 #endif /* !defined EXIT_FAILURE */
 
-#ifdef __STDC__
-
-#define alloc_size_T	size_t
-#define qsort_size_T	size_t
-#define fwrite_size_T	size_t
-
-#endif /* defined __STDC__ */
-#ifndef __STDC__
-
-#ifndef alloc_size_T
-#define alloc_size_T	unsigned
-#endif /* !defined alloc_size_T */
-
-#ifndef qsort_size_T
-#ifdef USG
-#define qsort_size_T	unsigned
-#endif /* defined USG */
-#ifndef USG
-#define qsort_size_T	int
-#endif /* !defined USG */
-#endif /* !defined qsort_size_T */
-
-#ifndef fwrite_size_T
-#define fwrite_size_T	int
-#endif /* !defined fwrite_size_T */
-
-#endif /* !defined __STDC__ */
-
 /*
 ** Ensure that these are declared--redundantly declaring them shouldn't hurt.
 */
@@ -167,7 +187,6 @@ extern generic_T *	malloc P((alloc_size_T size));
 extern generic_T *	calloc P((alloc_size_T nelem, alloc_size_T elsize));
 extern generic_T *	realloc P((generic_T * oldptr, alloc_size_T newsize));
 
-#ifdef USG
 extern void		exit P((int s));
 extern void		qsort P((generic_T * base, qsort_size_T nelem,
 				qsort_size_T elsize,
@@ -175,7 +194,6 @@ extern void		qsort P((generic_T * base, qsort_size_T nelem,
 					const generic_T *))));
 extern void		perror P((const char * string));
 extern void		free P((generic_T * buf));
-#endif /* defined USG */
 
 #ifndef TRUE
 #define TRUE	1
@@ -195,6 +213,10 @@ extern void		free P((generic_T * buf));
 #define INT_STRLEN_MAXIMUM(type) \
 	((sizeof(type) * CHAR_BIT - 1) * 302 / 1000 + 2)
 #endif /* !defined INT_STRLEN_MAXIMUM */
+
+#if HAVE_MKDIR
+#define emkdir(name, mode) mkdir(name, mode)
+#endif
 
 #ifndef LOCALE_HOME
 #define LOCALE_HOME	"/usr/lib/locale"

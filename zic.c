@@ -44,7 +44,7 @@ extern char *	strcpy();
 static long	charcnt;
 static int	errors;
 static char *	filename;
-static long	getoff();
+static long	gethms();
 static char **	getfields();
 static int	linenum;
 static char *	progname;
@@ -171,6 +171,8 @@ struct rule {
 				/* above is wall clock time if FALSE */
 	long	r_stdoff;	/* offset from standard time */
 	char *	r_abbrvar;	/* variable part of time zone abbreviation */
+
+	int	r_todo;		/* a rule to do (used in outzone) */
 };
 
 /*
@@ -490,11 +492,7 @@ char *	name;
 */
 
 /*
-** Sort by rule name, by magnitude of standard time offset for rules of
-** the same name, and by low year for rules of the same magnitude.
-** The second and third sorts get early standard time entries to the start
-** of the file (and we want one at the start of the file,
-** since the first entry gets used for times not covered by the rules).
+** Sort by rule name.
 */
 
 static
@@ -502,29 +500,8 @@ rcomp(cp1, cp2)
 char *	cp1;
 char *	cp2;
 {
-	register struct rule *	rp1;
-	register struct rule *	rp2;
-	register long		l1, l2;
-	register int		diff;
-
-	rp1 = (struct rule *) cp1;
-	rp2 = (struct rule *) cp2;
-	if ((diff = strcmp(rp1->r_name, rp2->r_name)) != 0)
-		return diff;
-	if ((l1 = rp1->r_stdoff) < 0)
-		l1 = -l1;
-	if ((l2 = rp2->r_stdoff) < 0)
-		l2 = -l2;
-	if (l1 > l2)
-		return 1;
-	else if (l1 < l2)
-		return -1;
-	diff = rp1->r_loyear - rp2->r_loyear;
-	if (diff > 0)
-		return 1;
-	else if (diff < 0)
-		return -1;
-	else	return 0;
+	return strcmp(((struct rule *) cp1)->r_name,
+		((struct rule *) cp2)->r_name);
 }
 
 static
@@ -562,7 +539,13 @@ associate()
 			** Maybe we have a local standard time offset.
 			*/
 			eat(zp->z_filename, zp->z_linenum);
-			zp->z_stdoff = getoff(zp->z_rule, "unruly zone");
+			zp->z_stdoff = gethms(zp->z_rule, "unruly zone", TRUE);
+			/*
+			** Note, though, that if there's no rule,
+			** a '%s' in the format is a bad thing.
+			*/
+			if (strchr(zp->z_format, '%') != 0)
+				error("%s in ruleless zone");
 		}
 	}
 	if (errors)
@@ -660,7 +643,7 @@ char *	name;
 */
 
 static long
-getoff(string, errstring)
+gethms(string, errstring, signable)
 char *	string;
 char *	errstring;
 {
@@ -668,7 +651,9 @@ char *	errstring;
 
 	if (string == NULL || *string == '\0')
 		return 0;
-	if (*string == '-') {
+	if (!signable)
+		sign = 1;
+	else if (*string == '-') {
 		sign = -1;
 		++string;
 	} else	sign = 1;
@@ -706,7 +691,7 @@ register char **	fields;
 	}
 	r.r_filename = filename;
 	r.r_linenum = linenum;
-	r.r_stdoff = getoff(fields[RF_STDOFF], "invalid Standard Time offset");
+	r.r_stdoff = gethms(fields[RF_STDOFF], "invalid saved time", TRUE);
 	rulesub(&r, fields[RF_LOYEAR], fields[RF_HIYEAR], fields[RF_COMMAND],
 		fields[RF_MONTH], fields[RF_DAY], fields[RF_TOD]);
 	r.r_name = ecpyalloc(fields[RF_NAME]);
@@ -784,7 +769,7 @@ register char **	fields;
 	}
 	z.z_filename = filename;
 	z.z_linenum = linenum;
-	z.z_gmtoff = getoff(fields[i_gmtoff], "invalid GMT offset");
+	z.z_gmtoff = gethms(fields[i_gmtoff], "invalid GMT offset", TRUE);
 	if ((cp = strchr(fields[i_format], '%')) != 0) {
 		if (*++cp != 's' || strchr(cp, '%') != 0) {
 			error("invalid abbreviation format");
@@ -881,7 +866,7 @@ char *			timep;
 				break;
 		}
 	}
-	rp->r_tod = getoff(timep, "invalid time of day");
+	rp->r_tod = gethms(timep, "invalid time of day", FALSE);
 	/*
 	** Year work.
 	*/
@@ -889,7 +874,7 @@ char *			timep;
 	if ((lp = byword(cp, begin_years)) != NULL)
 		rp->r_loyear = lp->l_value;
 	else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_loyear) != 1 ||
-		rp->r_loyear <= 0) {
+		rp->r_loyear < MIN_YEAR || rp->r_loyear > MAX_YEAR) {
 			error("invalid starting year");
 			return;
 	}
@@ -898,7 +883,7 @@ char *			timep;
 		if ((rp->r_hiyear = lp->l_value) == ONLY)
 			rp->r_hiyear = rp->r_loyear;
 	} else if (sscanf(cp, scheck(cp, "%ld"), &rp->r_hiyear) != 1 ||
-		rp->r_hiyear <= 0) {
+		rp->r_hiyear < MIN_YEAR || rp->r_hiyear > MAX_YEAR) {
 			error("invalid ending year");
 			return;
 	}
@@ -1020,66 +1005,33 @@ char *	name;
 }
 
 /*
-** "struct temp" defines a point at which a new local time offset, etc.
-** comes into effect.  "t_time" is the time (in seconds since the epoch)
-** when it comes into effect; "t_rp" points to the rule that generated
-** it; "t_type" indicates the "type", i.e., the GMT offset, an indication
-** of whether DST is in effect or not, and the time zone abbreviation.
+** Also--ideally--add the wierd logic to allow a zone specification such as
+**	Zone	US/Hawaii	-10:30	USA	H%sT	1933 Apr 30 2:00
+**				-10:30	1:00	HDT	1933 May 1 2:00
+**				-10:30	USA	H%sT	1947 Jun 8 2:00
+**				-10:00	-	HST
+** instead of
+**	Zone	US/Hawaii	-10:30	USA	H%sT	1933 Apr 30 2:00
+**				-10:30	1:00	HDT	1933 May 1 2:00
+**				-10:30	-	HST	1942
+**				-10:30	USA	H%sT	1947 Jun 8 2:00
+**				-10:00	-	HST
 */
-
-struct temp {
-	long		t_time;
-	struct rule *	t_rp;
-	int		t_type;
-};
-
-static struct temp	temps[TZ_MAX_TIMES];
-static int		ntemps;
-
-static
-tcomp(cp1, cp2)
-char *	cp1;
-char *	cp2;
-{
-	register struct temp *	tp1;
-	register struct temp *	tp2;
-	register char *		cp;
-	register long		diff;
-
-	tp1 = (struct temp *) cp1;
-	tp2 = (struct temp *) cp2;
-	if (tp1->t_time > 0 && tp2->t_time <= 0)
-		return 1;
-	if (tp1->t_time <= 0 && tp2->t_time > 0)
-		return -1;
-	if ((diff = tp1->t_time - tp2->t_time) > 0)
-		return 1;
-	else if (diff < 0)
-		return -1;
-	/*
-	** Two equal start times appeared; something's wrong.
-	*/
-	if (tp1->t_type == tp2->t_type)
-		cp = "duplicate rule?!";
-	else	cp = "inconsistent rules?!";
-	eat(tp1->t_rp->r_filename, tp1->t_rp->r_linenum);
-	error(cp);
-	eat(tp2->t_rp->r_filename, tp2->t_rp->r_linenum);
-	error(cp);
-	exit(1);
-	/*NOTREACHED*/
-}
 
 static
 outzone(zpfirst, zonecount)
-register struct zone *	zpfirst;
-int			zonecount;
+struct zone *	zpfirst;
 {
 	register struct zone *		zp;
 	register struct rule *		rp;
 	register int			i, j;
 	register int			usestart, useuntil;
-	register long			starttime;
+	register int			doadjust;
+	register long			adjustment;
+	register long			starttime, untiltime;
+	register long			gmtoff;
+	register long			stdoff;
+	register long			year;
 
 	/*
 	** Now. . .finally. . .generate some useful data!
@@ -1087,74 +1039,137 @@ int			zonecount;
 	timecnt = 0;
 	typecnt = 0;
 	charcnt = 0;
-	ntemps = 0;
-	starttime = 0;
+	/*
+	** Two guesses. . .the second may well be corrected later.
+	*/
+	gmtoff = zpfirst->z_gmtoff;
+	stdoff = 0;
+	doadjust = FALSE;
+	adjustment = 0;
 	for (i = 0; i < zonecount; ++i) {
 		usestart = i > 0;
 		useuntil = i < (zonecount - 1);
-		/*
-		** See what the different local time types are.
-		** Plug the indices into the rules.
-		*/
 		zp = &zpfirst[i];
-		/*
-		** I think this is worng. . .
-		*/
-		zp->z_untilrule.r_stdoff = zp->z_stdoff;
 		eat(zp->z_filename, zp->z_linenum);
-		if (zp->z_nrules == 0)
-			trivial(zp, usestart, starttime);
-		else for (j = 0; j < zp->z_nrules; ++j) {
-			rp = &zp->z_rules[j];
-			eats(zp->z_filename, zp->z_linenum,
-				rp->r_filename, rp->r_linenum);
-			outsub(rp, zp,
-				usestart, starttime, useuntil, zp->z_untiltime);
-		}
-		if (!useuntil)
-			continue;
-		starttime = zp->z_untiltime;
-		/*
-		** GMT offset may be changing!
-		*/
-		starttime = tadd(starttime,
-			tadd((zp + 1)->z_gmtoff, -zp->z_gmtoff));
-	}
-	timecnt = ntemps;
-	(void) qsort((char *) temps, ntemps, sizeof *temps, tcomp);
-	for (i = 0; i < ntemps; ++i) {
-		ats[i] = temps[i].t_time;
-		types[i] = temps[i].t_type;
-		if (!rp->r_todisstd) {
+		if (zp->z_nrules == 0) {
+			register int	type;
+
+			type = addtype(tadd(zp->z_gmtoff, zp->z_stdoff),
+				zp->z_format, zp->z_stdoff != 0);
+			if (usestart)
+				addtt(starttime, type);
+			gmtoff = zp->z_gmtoff;
+			stdoff = zp->z_stdoff;
+		} else for (year = MIN_YEAR; year <= MAX_YEAR; ++year) {
+			if (useuntil && year > zp->z_untilrule.r_hiyear)
+				break;
 			/*
-			** Credit to munnari!kre for pointing out
-			** the need for the following.  (This can
-			** still mess up on the earliest rule; who's
-			** got the solution?  It can also mess up
-			** if a time switch results in a day switch;
-			** this is left as an exercise for the reader.)
+			** Mark which rules to do in the current year.
 			*/
-			eat(rp->r_filename, rp->r_linenum);
-			if (i == 0) {
+			for (j = 0; j < zp->z_nrules; ++j) {
+				rp = &zp->z_rules[j];
+				eats(zp->z_filename, zp->z_linenum,
+					rp->r_filename, rp->r_linenum);
+				rp->r_todo = year >= rp->r_loyear &&
+						year <= rp->r_hiyear &&
+						yearistype(year, rp->r_yrtype);
+			}
+			for ( ; ; ) {
+				register int	k;
+				register long	jtime, ktime, offset;
+				char		buf[BUFSIZ];
+
+				if (useuntil) {
+					/*
+					** Turn untiltime into GMT
+					** assuming the current gmtoff and
+					** stdoff values.
+					*/
+					offset = gmtoff;
+					if (!zp->z_untilrule.r_todisstd)
+						offset = tadd(offset, stdoff);
+					untiltime = tadd(zp->z_untiltime,
+						-offset);
+				}
 				/*
-				** Kludge--not guaranteed to work.
+				** Find the rule (of those to do, if any)
+				** that takes effect earliest in the year.
 				*/
-				if (ntemps > 1)
-					rp = temps[1].t_rp;
-				else	rp = NULL;
-			} else	rp = temps[i - 1].t_rp;
-			ats[i] = tadd(ats[i], -rp->r_stdoff);
+				k = -1;
+				for (j = 0; j < zp->z_nrules; ++j) {
+					rp = &zp->z_rules[j];
+					if (!rp->r_todo)
+						continue;
+					eats(zp->z_filename, zp->z_linenum,
+						rp->r_filename, rp->r_linenum);
+					offset = gmtoff;
+					if (!rp->r_todisstd)
+						offset = tadd(offset, stdoff);
+					jtime = tadd(rpytime(rp, year),
+						-offset);
+					if (k < 0 || jtime < ktime) {
+						k = j;
+						ktime = jtime;
+					}
+				}
+				if (k < 0)
+					break;	/* go on to next year */
+				rp = &zp->z_rules[k];
+				rp->r_todo = FALSE;
+				if (usestart && ktime < starttime)
+					continue;
+				if (useuntil && ktime >= untiltime)
+					break;
+				eats(zp->z_filename, zp->z_linenum,
+					rp->r_filename, rp->r_linenum);
+				if (timecnt == 0 && !rp->r_todisstd)
+					doadjust = TRUE;
+				else if (timecnt == 1)
+					adjustment = rp->r_stdoff;
+				(void) sprintf(buf, zp->z_format,
+					rp->r_abbrvar);
+				offset = tadd(zp->z_gmtoff, rp->r_stdoff);
+				addtt(ktime, addtype(offset, buf,
+					rp->r_stdoff != 0));
+				gmtoff = zp->z_gmtoff;
+				stdoff = rp->r_stdoff;
+			}
 		}
+		/*
+		** Now we may get to set starttime for the zone line.
+		*/
+		if (useuntil)
+			starttime = tadd(zp->z_untiltime,
+				-gmtoffs[types[timecnt - 1]]);
+	}
+	if (doadjust) {
+		/*
+		** Adjust the first starting time to reflect the standard
+		** time offset assumed to have been in effect at the time
+		** of the first rule.
+		*/
+		ats[0] = tadd(ats[0], adjustment);
 	}
 	writezone(zpfirst->z_name);
-	return;
+}
+
+static
+addtt(starttime, type)
+long	starttime;
+{
+	if (timecnt >= TZ_MAX_TIMES) {
+		error("too many transitions?!");
+		exit(1);
+	}
+	ats[timecnt] = starttime;
+	types[timecnt] = type;
+	++timecnt;
 }
 
 static
 addtype(gmtoff, abbr, isdst)
 long	gmtoff;
 char *	abbr;
-int	isdst;
 {
 	register int	i;
 
@@ -1181,72 +1196,6 @@ int	isdst;
 	newabbr(abbr);
 	++typecnt;
 	return i;
-}
-
-static
-trivial(zp, usestart, starttime)
-register struct zone *	zp;
-long			starttime;
-{
-	register int	type;
-
-	type = addtype(tadd(zp->z_gmtoff, zp->z_stdoff),
-			zp->z_format, zp->z_stdoff != 0);
-	if (!usestart)
-		return;
-	if (ntemps >= TZ_MAX_TIMES) {
-		error("too many transitions?!");
-		exit(1);
-	}
-	temps[ntemps].t_time = tadd(starttime, -zp->z_gmtoff);
-	temps[ntemps].t_rp = &zp->z_untilrule;
-	temps[ntemps].t_type = type;
-	++ntemps;
-}
-
-static
-addrule(rp, y, zp, usestart, starttime, useuntil, untiltime)
-register struct rule *	rp;
-long			y;
-register struct zone *	zp;
-long			starttime;
-long			untiltime;
-{
-	long	newtime;
-	char	buf[BUFSIZ];
-
-	newtime = rpytime(rp, y);
-	if (usestart && newtime < starttime)
-		return 1;	/* this zone data doesn't take effect yet */
-	if (useuntil && newtime >= untiltime)
-		return 0;	/* this zone data has expired */
-	if (ntemps >= TZ_MAX_TIMES) {
-		error("too many transitions?!");
-		exit(1);
-	}
-	temps[ntemps].t_time = tadd(newtime, -zp->z_gmtoff);
-	temps[ntemps].t_rp = rp;
-	(void) sprintf(buf, zp->z_format, rp->r_abbrvar);
-	temps[ntemps].t_type = addtype(tadd(zp->z_gmtoff, rp->r_stdoff),
-		buf, rp->r_stdoff != 0);
-	++ntemps;
-	return 1;
-}
-
-static
-outsub(rp, zp, usestart, starttime, useuntil, untiltime)
-register struct rule *	rp;
-register struct zone *	zp;
-long			starttime;
-long			untiltime;
-{
-	long	y;
-
-	for (y = rp->r_loyear; y <= rp->r_hiyear; ++y)
-		if (yearistype(y, rp->r_yrtype))
-			if (!addrule(rp, y, zp,
-				usestart, starttime, useuntil, untiltime))
-					break;
 }
 
 static

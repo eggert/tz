@@ -5,7 +5,7 @@
 # Alternately, if you discover you've got the wrong time zone, you can just
 #	zic -l rightzone
 
-LOCALTIME=	factory
+LOCALTIME=	Factory
 
 # If you want something other than Eastern United States time as a template
 # for handling POSIX-style time zone environment variables,
@@ -130,15 +130,15 @@ DATEOBJS=	date.o localtime.o getopt.o logwtmp.o
 LIBSRCS=	localtime.c asctime.c difftime.c
 LIBOBJS=	localtime.o asctime.o difftime.o
 HEADERS=	tzfile.h nonstd.h stdio.h stdlib.h time.h
-NONLIBSRCS=	zic.c zdump.c date.c \
-		scheck.c ialloc.c emkdir.c getopt.c link.c logwtmp.c
-SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS)
+NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c emkdir.c getopt.c link.c
+DATESRCS=	date.c logwtmp.c
+SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(DATESRCS)
 DOCS=		Patchlevel.h \
 		README Theory \
 		date.1 newctime.3 tzfile.5 zic.8 zdump.8 \
 		Makefile
 YDATA=		africa antarctica asia australasia \
-		europe northamerica southamerica pacificnew etcetera
+		europe northamerica southamerica pacificnew etcetera factory
 NDATA=		systemv
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
@@ -189,7 +189,7 @@ zic:		$(TZCOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZCOBJS) -o $@
 
 SHARS:		SHAR1.Z.uue SHAR2.Z.uue SHAR3.Z.uue \
-		SHAR4.Z.uue SHAR5.Z.uue SHAR6.Z.uue
+		SHAR4.Z.uue SHAR5.Z.uue SHAR6.Z.uue SHAR7.Z.uue
 
 SHAR1.Z.uue:	$(DOCS)
 		$(SHAR) $(DOCS) | compress | uuencode SHAR1.Z > $@
@@ -208,6 +208,9 @@ SHAR5.Z.uue:	$(SDATA)
 
 SHAR6.Z.uue:	$(USNO)
 		$(SHAR) $(USNO) | compress | uuencode SHAR6.Z > $@
+
+SHAR7.Z.uue:	$(DATESRCS)
+		$(SHAR) $(DATESRCS) | compress | uuencode SHAR7.Z > $@
 
 sure:		$(SOURCES)
 		for i in "$(TZCSRCS)" "$(TZDSRCS)" "$(DATESRCS)" "$(LIBSRCS)"; \

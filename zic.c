@@ -1397,10 +1397,20 @@ const char * const	name;
 		if (isdsts[0] == 0)
 			while (attypes[fromi].type == 0)
 				++fromi;	/* handled by default rule */
-		for ( ; fromi < timecnt; ++fromi)
+		for ( ; fromi < timecnt; ++fromi) {
+			if (toi != 0
+			    && ((attypes[fromi].at
+				 + gmtoffs[attypes[toi - 1].type])
+				<= (attypes[toi - 1].at
+				    + gmtoffs[toi == 1 ? 0
+					      : attypes[toi - 2].type]))) {
+				attypes[toi - 1].type = attypes[fromi].type;
+				continue;
+			}
 			if (toi == 0 ||
 				attypes[toi - 1].type != attypes[fromi].type)
 					attypes[toi++] = attypes[fromi];
+		}
 		timecnt = toi;
 	}
 	/*

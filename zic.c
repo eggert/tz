@@ -1340,9 +1340,33 @@ const char * const	name;
 	time_t			ats[TZ_MAX_TIMES];
 	unsigned char		types[TZ_MAX_TIMES];
 
+	/*
+	** Sort.
+	*/
 	if (timecnt > 1)
 		(void) qsort((void *) attypes, (size_t) timecnt,
 			(size_t) sizeof *attypes, atcomp);
+	/*
+	** Optimize.
+	*/
+	{
+		int	fromi;
+		int	toi;
+
+		toi = 0;
+		fromi = 0;
+		if (isdsts[0] == 0)
+			while (attypes[fromi].type == 0)
+				++fromi;	/* handled by default rule */
+		for ( ; fromi < timecnt; ++fromi)
+			if (toi == 0 ||
+				attypes[toi - 1].type != attypes[fromi].type)
+					attypes[toi++] = attypes[fromi];
+		timecnt = toi;
+	}
+	/*
+	** Transfer.
+	*/
 	for (i = 0; i < timecnt; ++i) {
 		ats[i] = attypes[i].at;
 		types[i] = attypes[i].type;
@@ -1642,10 +1666,6 @@ addtt(starttime, type)
 const time_t	starttime;
 const int	type;
 {
-	if (timecnt != 0 && type == attypes[timecnt - 1].type)
-		return;	/* easy enough! */
-	if (timecnt == 0 && type == 0 && isdsts[0] == 0)
-		return; /* handled by default rule */
 	if (timecnt >= TZ_MAX_TIMES) {
 		error(_("too many transitions?!"));
 		(void) exit(EXIT_FAILURE);

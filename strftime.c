@@ -2,7 +2,7 @@
 #ifndef NOID
 static char	elsieid[] = "%W%";
 /*
-** Based on the UCB version whose ID appears below.
+** Based on the UCB version with the ID appearing below.
 ** This is ANSIish only when time is treated identically in all locales and
 ** when "multibyte character == plain character".
 */

@@ -300,7 +300,10 @@ dogmt()
 	static char **	fakeenv;
 
 	if (fakeenv == NULL) {
-		register int	from, to, n;
+		register int	from;
+		register int	to;
+		register int	n;
+		static char	tzegmt0[] = "TZ=GMT0";
 
 		for (n = 0;  environ[n] != NULL;  ++n)
 			continue;
@@ -312,7 +315,7 @@ dogmt()
 			(void) exit(retval);
 		}
 		to = 0;
-		fakeenv[to++] = "TZ=GMT0";
+		fakeenv[to++] = tzegmt0;
 		for (from = 1; environ[from] != NULL; ++from)
 			if (strncmp(environ[from], "TZ=", 3) != 0)
 				fakeenv[to++] = environ[from];

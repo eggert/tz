@@ -29,9 +29,9 @@ static char	elsieid[] = "%W%";
 static char sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
 #endif /* LIBC_SCCS and not lint */
 
-#include <sys/types.h>
-#include <sys/time.h>
-#include <tzfile.h>
+#include "sys/types.h"
+#include "sys/time.h"
+#include "tzfile.h"
 
 static char *afmt[] = {
 	"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",

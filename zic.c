@@ -646,9 +646,8 @@ associate P((void))
 	register int		i;
 
 	if (nrules != 0)
-		(void) qsort((void *) rules,
-			(qsort_size_T) nrules,
-			(qsort_size_T) sizeof *rules, rcomp);
+		(void) qsort((void *) rules, (size_t) nrules,
+			(size_t) sizeof *rules, rcomp);
 	for (i = 0; i < nzones; ++i) {
 		zp = &zones[i];
 		zp->z_rules = NULL;
@@ -1276,9 +1275,7 @@ FILE * const	fp;
 	char	buf[4];
 
 	convert(val, buf);
-	(void) fwrite((void *) buf,
-		(fwrite_size_T) sizeof buf,
-		(fwrite_size_T) 1, fp);
+	(void) fwrite((void *) buf, (size_t) sizeof buf, (size_t) 1, fp);
 }
 
 static void
@@ -1308,9 +1305,7 @@ const char * const	name;
 	convert(eitol(timecnt), tzh.tzh_timecnt);
 	convert(eitol(typecnt), tzh.tzh_typecnt);
 	convert(eitol(charcnt), tzh.tzh_charcnt);
-	(void) fwrite((void *) &tzh,
-		(fwrite_size_T) sizeof tzh,
-		(fwrite_size_T) 1, fp);
+	(void) fwrite((void *) &tzh, (size_t) sizeof tzh, (size_t) 1, fp);
 	for (i = 0; i < timecnt; ++i) {
 		j = leapcnt;
 		while (--j >= 0)
@@ -1321,18 +1316,16 @@ const char * const	name;
 		puttzcode((long) ats[i], fp);
 	}
 	if (timecnt > 0)
-		(void) fwrite((void *) types,
-			(fwrite_size_T) sizeof types[0],
-			(fwrite_size_T) timecnt, fp);
+		(void) fwrite((void *) types, (size_t) sizeof types[0],
+			(size_t) timecnt, fp);
 	for (i = 0; i < typecnt; ++i) {
 		puttzcode((long) gmtoffs[i], fp);
 		(void) putc(isdsts[i], fp);
 		(void) putc(abbrinds[i], fp);
 	}
 	if (charcnt != 0)
-		(void) fwrite((void *) chars,
-			(fwrite_size_T) sizeof chars[0],
-			(fwrite_size_T) charcnt, fp);
+		(void) fwrite((void *) chars, (size_t) sizeof chars[0],
+			(size_t) charcnt, fp);
 	for (i = 0; i < leapcnt; ++i) {
 		if (roll[i]) {
 			if (timecnt == 0 || trans[i] < ats[0]) {

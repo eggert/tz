@@ -185,7 +185,7 @@ LIBOBJS=	localtime.o asctime.o difftime.o
 HEADERS=	tzfile.h private.h
 NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c emkdir.c getopt.c
 NEWUCBSRCS=	date.c logwtmp.c strftime.c
-SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS) yearistype.sh
+SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS)
 MANS=		newctime.3 newtzset.3 tzfile.5 zic.8 zdump.8
 DOCS=		README Theory $(MANS) date.1 Makefile
 YDATA=		africa antarctica asia australasia \
@@ -193,7 +193,7 @@ YDATA=		africa antarctica asia australasia \
 NDATA=		systemv
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
-DATA=		$(YDATA) $(NDATA) $(SDATA) leapseconds
+DATA=		$(YDATA) $(NDATA) $(SDATA) leapseconds yearistype.sh
 USNO=		usno1988 usno1989
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(USNO)
 

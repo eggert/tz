@@ -91,6 +91,14 @@ TZLIB=		/usr/lib/libz.a
 #	-DNOSOLAR
 # to the end of the "CFLAGS=" line
 # (and comment out the "SDATA=" line below).
+#
+# If you want to allocate state structures in localtime, add
+#	-DALL_STATE
+# to the end of the "CFLAGS=" line.
+#
+# If you want an "altzone" variable (a la System V Release 3.1), add
+#	-DALTZONE
+# to the end of the "CFLAGS=" line.
 
 CFLAGS=
 
@@ -125,7 +133,7 @@ DOCS=		Patchlevel.h \
 		newctime.3 tzfile.5 zic.8 zdump.8 \
 		Makefile
 YDATA=		africa antarctica asia australasia \
-		europe northamerica southamerica pacificnew
+		europe northamerica southamerica pacificnew etcetera
 NDATA=		systemv
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)

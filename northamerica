@@ -70,10 +70,16 @@ Link	US/Hawaii	HST
 # Canada is reportedly lots easier than the US--leastways since 1951.
 # I don't know what they did before then.
 # 4.3BSD claims that it's perfectly regular.
+# According to a posting in "comp.bugs.misc", "comp.unix.wizards", etc.
+# on February 8, 1987, by Dave Sherman of the Law Society of Upper Canada,
+# "...Canada (well, Ontario and at least some of the other provinces) are
+# adopting the new daylight savings time rules...".  We assume all of
+# Canada is doing so.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Canada	1967	max	-	Apr	lastSun	2:00	1:00	D
-Rule	Canada	1967	max	-	Oct	lastSun	2:00	0	S
+Rule	Canada	1969	max	-	Oct	lastSun	2:00	0	S
+Rule	Canada	1969	1986	-	Apr	lastSun	2:00	1:00	D
+Rule	Canada	1987	max	-	Apr	Sun>=1	2:00	1:00	D
 
 # Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 # Bob Devine says that DST *is* observed in Newfoundland

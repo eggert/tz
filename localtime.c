@@ -424,10 +424,16 @@ long * const		secsp;
 {
 	int	num;
 
-	strp = getnum(strp, &num, 0, HOURSPERDAY);
+	/*
+	** `HOURSPERDAY * DAYSPERWEEK - 1' allows quasi-Posix rules like
+	** "M10.4.6/26", which does not conform to Posix,
+	** but which specifies the equivalent of
+	** ``02:00 on the first Sunday on or after 23 Oct''.
+	*/
+	strp = getnum(strp, &num, 0, HOURSPERDAY * DAYSPERWEEK - 1);
 	if (strp == NULL)
 		return NULL;
-	*secsp = num * SECSPERHOUR;
+	*secsp = num * (long) SECSPERHOUR;
 	if (*strp == ':') {
 		++strp;
 		strp = getnum(strp, &num, 0, MINSPERHOUR - 1);
@@ -436,7 +442,8 @@ long * const		secsp;
 		*secsp += num * SECSPERMIN;
 		if (*strp == ':') {
 			++strp;
-			strp = getnum(strp, &num, 0, SECSPERMIN - 1);
+			/* `SECSPERMIN' allows for leap seconds.  */
+			strp = getnum(strp, &num, 0, SECSPERMIN);
 			if (strp == NULL)
 				return NULL;
 			*secsp += num;

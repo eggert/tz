@@ -6,7 +6,7 @@
 static char	sccsid[] = "%W%";
 #endif
 
-#include "timezone.h"
+#include "tzfile.h"
 #include "ctype.h"
 
 #ifndef alloc_t

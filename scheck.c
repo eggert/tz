@@ -29,6 +29,7 @@ char *	format;
 	register char *	tp;
 	register int	c;
 	register char *	result;
+	char		dummy;
 
 	if (string == NULL || format == NULL)
 		return "";
@@ -59,9 +60,14 @@ char *	format;
 	}
 	if (c != '\0')
 		result = "";
-	else if (sscanf(string, fbuf) != EOF)
-		result = "";
-	else	result = format;
+	else {
+		*(tp - 1) = '%';
+		*tp++ = 'c';
+		*tp++ = '\0';
+		if (sscanf(string, fbuf, &dummy) == 1)
+			result = "";
+		else	result = format;
+	}
 	free(fbuf);
 	return result;
 }

@@ -47,7 +47,7 @@ These are the changes that have been made to the SVR2 functions:
 	abbreviations are used.
 
 	It was recognized that allowing the "TZ" environment variable to
-	take on values such as "US/Eastern" might cause "old" programs
+	take on values such as "America/New_York" might cause "old" programs
 	(that expect "TZ" to have a certain form) to operate incorrectly;
 	consideration was given to using some other environment variable
 	(for example, "TIMEZONE") to hold the string used to generate the

@@ -212,9 +212,14 @@ register struct state *	sp;
 	long				t;
 
 	t = *timep;
-	if (sp->timecnt == 0 || t < sp->ats[0])
+	if (sp->timecnt == 0 || t < sp->ats[0]) {
 		i = 0;
-	else {
+		while (sp->ttis[i].tt_isdst)
+			if (++i >= sp->timecnt) {
+				i = 0;
+				break;
+			}
+	} else {
 		for (i = 1; i < sp->timecnt; ++i)
 			if (t < sp->ats[i])
 				break;

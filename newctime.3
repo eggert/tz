@@ -325,8 +325,15 @@ On successful completion, the values of the
 and
 .B tm_yday
 components of the structure are set appropriately,
-and the other components are set to represent the specified calendar time,
-but with their values forced to their normal ranges; the final value of
+and the other components
+(including
+.I tm_zone
+and
+.I tm_gmtoff
+on systems where these components are supported)
+are set to represent the specified calendar time,
+but with their values forced to their normal ranges;
+the final value of
 .B tm_mday
 is not set until
 .B tm_mon

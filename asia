@@ -648,28 +648,14 @@ Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
 # Since 1938, all Japanese possessions have been like Asia/Tokyo.
 
 # Jordan
-# From Steffen Thorsen [straen@thorsen.priv.no] (1999-05-08):
-# Jordan do not have DST this year.  It also seems that they are not going
-# to use it the next years either.  "We do not need it" was the answer I got
-# from the Jordan National Information Centre (http://www.nic.gov.jo).
 #
-# From Steffen Thorsen [straen@thorsen.priv.no] (1999-09-09):
-# In April I reported that Jordan had stopped using DST. Now the government 
-# will use DST all year long, as reported in this Jordanian newspaper:
+# From
 # <a href="http://star.arabia.com/990701/JO9.html">
-# http://star.arabia.com/990701/JO9.html
-# </a>
-# 
-# "Summer time is back 
-# Clocks in Jordan were forwarded one hour on Wednesday at midnight, in 
-# accordance with the government's decision to implement summer time all
-# year round."
-# 
-# It seems that DST was introduced on 30 June at 24:00 (or 1 July 00:00).
-# This link might also be of interest:
-# <a href="http://star.arabia.com/990624/JO2.html">
-# http://star.arabia.com/990624/JO2.html
-# </a>
+# Jordan Week (1999-07-01)
+# </a> via Steffen Thorsen (1999-09-09):
+# Clocks in Jordan were forwarded one hour on Wednesday at midnight,
+# in accordance with the government's decision to implement summer time
+# all year round.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule    Jordan	1973	only	-	Jun	6	0:00	1:00	S
@@ -953,7 +939,17 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # one-hour forward at this time.  As a sign of independence from Israeli rule,
 # the PA has decided to implement DST in April.
 
-# These rules for Egypt are stolen from the `africa' file.
+# From Paul Eggert (1999-09-20):
+# Daoud Kuttab writes in
+# <a href="http://www.jpost.com/com/Archive/22.Apr.1999/Opinion/Article-2.html">
+# Holiday havoc
+# </a> (Jerusalem Post, 1999-04-22) that
+# the Palestinian National Authority changed to DST on 1999-04-15.
+# I vaguely recall that they switch back in October (sorry, forgot the source).
+# For now, let's assume that the spring switch was at 24:00,
+# and that they switch at 0:00 on the 3rd Fridays of April and October.
+
+# The rules for Egypt are stolen from the `africa' file.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule EgyptAsia	1957	only	-	May	10	0:00	1:00	S
 Rule EgyptAsia	1957	1958	-	Oct	 1	0:00	0	-
@@ -961,12 +957,17 @@ Rule EgyptAsia	1958	only	-	May	 1	0:00	1:00	S
 Rule EgyptAsia	1959	1967	-	May	 1	1:00	1:00	S
 Rule EgyptAsia	1959	1965	-	Sep	30	3:00	0	-
 Rule EgyptAsia	1966	only	-	Oct	 1	3:00	0	-
+
+Rule Palestine	1999	max	-	Apr	Fri>=15	0:00	1:00	S
+Rule Palestine	1999	max	-	Oct	Fri>=15	0:00	0	-
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct
 			2:00	Zion	EET	1948 May 15
 			2:00 EgyptAsia	EE%sT	1967 Jun  5
 			2:00	Zion	I%sT	1996
-			2:00	Jordan	EE%sT
+			2:00	Jordan	EE%sT	1999
+			2:00 Palestine	EE%sT
 
 # Paracel Is
 # no information

@@ -25,6 +25,8 @@ struct rule {
 	long		r_tod;		/* time from midnight */
 	int		r_todisstd;	/* above is standard time if TRUE */
 					/* or wall clock time if FALSE */
+	int		r_todisuniv;	/* above is universal time if TRUE */
+					/* or local time if FALSE */
 	long		r_stdoff;	/* offset from standard time */
 	const char *	r_abbrvar;	/* variable part of abbreviation */
 
@@ -1113,16 +1115,25 @@ const char * const		timep;
 	}
 	rp->r_month = lp->l_value;
 	rp->r_todisstd = FALSE;
+	rp->r_todisuniv = FALSE;
 	dp = ecpyalloc(timep);
 	if (*dp != '\0') {
 		ep = dp + strlen(dp) - 1;
 		switch (lowerit(*ep)) {
-			case 's':
+			case 's':	/* Standard */
 				rp->r_todisstd = TRUE;
+				rp->r_todisuniv = FALSE;
 				*ep = '\0';
 				break;
-			case 'w':
+			case 'w':	/* Wall */
 				rp->r_todisstd = FALSE;
+				rp->r_todisuniv = FALSE;
+				*ep = '\0';
+			case 'g':	/* Greenwich */
+			case 'u':	/* Universal */
+			case 'z':	/* Zulu */
+				rp->r_todisstd = TRUE;
+				rp->r_todisuniv = TRUE;
 				*ep = '\0';
 				break;
 		}
@@ -1421,8 +1432,10 @@ const int			zonecount;
 					** assuming the current gmtoff and
 					** stdoff values.
 					*/
-					untiltime = tadd(zp->z_untiltime,
-						-gmtoff);
+					untiltime = zp->z_untiltime;
+					if (!zp->z_untilrule.r_todisuniv)
+						untiltime = tadd(untiltime,
+							-gmtoff);
 					if (!zp->z_untilrule.r_todisstd)
 						untiltime = tadd(untiltime,
 							-stdoff);
@@ -1441,7 +1454,7 @@ const int			zonecount;
 						continue;
 					eats(zp->z_filename, zp->z_linenum,
 						rp->r_filename, rp->r_linenum);
-					offset = gmtoff;
+					offset = rp->r_todisuniv ? 0 : gmtoff;
 					if (!rp->r_todisstd)
 						offset = oadd(offset, stdoff);
 					jtime = rp->r_temp;

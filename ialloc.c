@@ -18,10 +18,15 @@ static char	elsieid[] = "%W%";
 #define NULLMAL(x)	((x) == NULL)
 #endif /* !defined MAL */
 
+#if defined __STDC__ || defined __TURBOC__
+#include "memory.h"
+#include "string.h"
+#else /* !defined __STDC__ || defined __TURBOC__ */
 extern char *	calloc();
 extern char *	malloc();
 extern char *	realloc();
 extern char *	strcpy();
+#endif /* !defined __STDC__ || defined __TURBOC__ */
 
 char *
 imalloc(n)

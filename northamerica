@@ -104,7 +104,7 @@ Zone	Canada/Mountain		-7:00	Canada		M%sT
 Zone	Canada/Pacific		-8:00	Canada		P%sT
 Zone	Canada/Yukon		-9:00	Canada		Y%sT
 
-################################################################################
+###############################################################################
 
 # Mexico
 # Rules are from the Official Airline Guide, Worldwide Edition, for 1987.
@@ -122,3 +122,26 @@ Rule	Mexico	1987	max	-	Apr	Sun>=1	2:00	1:00	D
 Zone	Mexico/BajaNorte	-8:00	Mexico		P%sT
 Zone	Mexico/BajaSur		-7:00	-		MST
 Zone	Mexico/General		-6:00	-		CST
+
+###############################################################################
+
+# Jamaica
+# From Bob Devine:  "Follows US rules."
+
+Link	US/Eastern	Jamaica
+
+###############################################################################
+
+# Cuba
+# From Bob Devine:  ". . .DST is from 2nd Sunday in May to 2nd Sunday in
+# October since 1981.  Change at midnight.  In 1979 & 1980, started at 3rd
+# Sunday in March (I think).
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Cuba	1979	1980	-	Mar	Sun>=15	0:00	1:00	D
+Rule	Cuba	1979	1980	-	Oct	Sun>=8	0:00	0	S
+Rule	Cuba	1981	max	-	May	Sun>=8	0:00	1:00	D
+Rule	Cuba	1981	max	-	Oct	Sun>=8	0:00	0	S
+
+# Zone	NAME			GMTOFF	RULES/SAVE	FORMAT
+Zone	Cuba			-5:00	Cuba		C%sT

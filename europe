@@ -10,6 +10,10 @@
 # San Diego: ACS Publications, Inc. (1991).
 # Except where otherwise noted, it is the source for the data below.
 #
+# Another source occasionally used is Edward W. Whitman, World Time Differences,
+# Whitman Publishing Co, 2 Niagara Av, Ealing, London (undated), which
+# I found in the UCLA library.
+#
 # I invented the abbreviations marked `*' in the following table;
 # the rest are from earlier versions of this file, or from other sources.
 # The starred Russian names are dubious.  Corrections are welcome!
@@ -28,7 +32,7 @@
 #	 2:00	EET+DST Eastern Europe
 #	 3:00	MSK MSD	Moscow
 #	 3:00	TUR+DST	Turkey (no longer used)*
-#	 4:00	SSK SSD	Sverdlovsk*
+#	 4:00	ESK ESD	Yekaterinburg*
 #	 5:00	OSK OSD	Omsk*
 #	 6:00	NSK NSD	Novosibirsk
 #	 7:00	ISK ISD	Irkutsk*
@@ -76,134 +80,6 @@
 # In the tables below, we condense this complicated story into a single
 # transition date for London, namely 1847 Sep 22.  We don't know as much
 # about Dublin, so we use 1880 Aug 2, the legal transition time.
-
-# From Peter Ilieve <peter@memex.co.uk> (July 4, 1989):
-#
-# From the UK Government paper "Summer Time: A Consultation Document"
-# (HMSO Cm722 June 1989), which is about the possibility of the UK moving
-# into the central European timezone and synchronising its summer time with
-# the rest of Europe (by moving the end date back a month to end Sep.,
-# the start dates are already the same).
-#
-# Summer time was not observed before 1916.
-# It was introduced in the First World War in response to its introduction
-# by Germany in March 1916.
-# During the Second World War normal summer time was used in Winter and double
-# summer time was used in Summer.
-# Between 1968 and 1971 GMT+1 was used all year as an experiment.
-# This caused voluble objections in Scotland and the experiment was judged
-# a failure.
-#
-# Although it does not say what happens in Europe, it does say that most
-# of Europe did not use summer time until 1979, presumably dropping it
-# after the 1st and/or 2nd war.
-#
-# Note that this is not necessarily accurate for Eire.
-#
-# The paper gives a complete record of dates from 1916, and dates up to 1992.
-# The intention is to have the new system, if any, start in 1993.
-# The dates are (copied exactly from the table in the paper):
-#
-#	Summer Time			Double Summer Time
-# Year	Start		End		Start		End
-# 1916	21 May		1 October
-# 1917	8 April		17 September
-# 1918	24 March	30 September
-# 1919	30 March	29 September
-# 1920	28 March	25 October
-#			(extended from
-#			27 Sep. because
-#			of coal strike)
-#
-# 1921	3 April		3 October
-# 1922	26 March	8 October
-# 1923	22 April	16 September
-# 1924	20 April	21 September		[Some of the dates in these
-# 1925 to	3rd Sunday	1st Sunday	three lines are incorrect;
-# 1938	in April	in October		-- see below.]
-#
-# 1939	16 April	19 November
-# 1940	25 February	continued
-# 1941	continued	continued	4 May		10 August
-# 1942	continued	continued	5 April		9 August
-# 1943	continued	continued	4 April		15 August
-# 1944	continued	continued	2 April		17 September
-# 1945	continued	7 October	2 April		15 July
-#
-# 1946	14 April	6 October
-# 1947	16 March	2 November	13 April	10 August
-# 1948	14 March	31 October
-# 1949	3 April		30 October
-# 1950	16 April	22 October
-# 1951	15 April	21 October
-# 1952	20 April	26 October
-#
-# 1953	19 April	4 October
-# 1954	11 April	3 October
-# 1955	17 April	2 October
-# 1956	15 April	7 October	[`15 April' is disputed; see below.]
-# 1957	14 April	6 October
-# 1958	20 April	5 October
-# 1959	19 April	4 October
-# 1960	10 April	2 October
-#
-# 1961	26 March	29 October
-# 1962	25 March	28 October
-# 1963	31 March	27 October
-# 1964	22 March	25 October
-# 1965	21 March	24 October
-# 1966	20 March	23 October
-# 1967	19 March	29 October
-#
-# 1968	18 February	continued
-# 1969	continued	continued
-# 1970	continued	continued
-# 1971	continued	31 October
-# 1972	19 March	29 October
-# 1973	18 March	28 October
-# 1974	17 March	27 October
-#
-# 1975	16 March	26 October
-# 1976	21 March	24 October
-# 1977	20 March	23 October
-# 1978	19 March	29 October
-# 1979	18 March	28 October
-# 1980	16 March	26 October
-# 1981	29 March	25 October
-#
-# 1982	28 March	24 October
-# 1983	27 March	23 October
-# 1984	25 March	28 October
-# 1985	31 March	27 October
-# 1986	30 March	26 October
-# 1987	29 March	25 October
-# 1988	27 March	23 October
-#
-# 1989	26 March	29 October
-# 1990	25 March	28 October
-# 1991	31 March	27 October
-# 1992	29 March	25 October
-#
-# These dates agree with the ones from Whitaker's Almanac for 1960--87. . .
-
-# From Peter Ilieve (peter@memex.co.uk) (October 18, 1993)
-#
-# I made a transcription error in my table for 1924. The government Green
-# Paper I was copying from actually says 20 April, which I mangled into
-# 30 April.
-#
-# This still differs from the 13 April printed in Shanks' book.  I would
-# side with Shanks here. Software that purports to calculate the date of
-# Easter says that 20 April 1924 was Easter. The Summer Time Act 1922,
-# which was the relevant law at the time, says that Summer Time starts
-# after the 3rd Saturday in April, unless that is Easter, when it is the
-# 2nd Saturday.  I asked the Home Office about this discrepancy but they
-# weren't interested in helping at all.
-#
-# If you continue to include my email with the table of dates in it in
-# your europe file I would appreciate it saying the 20 April for 1924, as
-# that is what the document I was quoting from said. Add a note somewhere
-# to say that the date is almost certainly bogus.
 
 # From Arthur David Olson (January 19, 1989):
 #
@@ -502,6 +378,176 @@
 # who provided the wartime regulations and a snippet of Hansard explaining
 # why double summer time started on a Monday in 1945 (it was Easter).
 
+# From Peter Ilieve <peter@memex.co.uk> (November 18, 1993)
+#
+# Here is a revised version of my tabrules file for the perl script I sent
+# before. I have personally verified the various Orders back to 1953 and
+# all the Acts.
+#
+# There are no changes to the dates we already have.
+#
+# My doubt about an early start in 1967 on 18 Feb was misplaced, the Order
+# does say 18 Feb. This is an interesting case as the first Order gave a
+# different date of 7 April 1967 for the Isle of Man but this was changed
+# before it came into effect by another Order for the Isle of Man alone.
+#
+# I don't think I will be able to find any more of the earlier Orders.
+# The annual volumes for 1949--52 do not contain the various Summer Time
+# Orders. They therefore don't appear in the index. They rate a mention in
+# italics in the numerical list at the start but that is all.
+# I think what happens is that the annual volume is produced well after the
+# end of the year in question, by which time the Summer Time Order is spent.
+# They assume that nobody would ever be stupid enough to want to see it
+# again so they leave it out.
+#
+# It might be a good idea to put this table, or the output of tabscript
+# showing all the moves because of Easter, in the europe file comments in
+# place of my old transcription of the Green Paper table [the UK Government
+# paper "Summer Time: A Consultation Document" (HMSO Cm722 June 1989)].
+#
+# The next thing on the horizon is the 7th EC/EU directive and the matching
+# UK Order. I expect I will keep quiet until then.
+#
+#
+# 		Peter Ilieve		peter@memex.co.uk
+#
+#
+# ## control file for tabscript, a program to generate UK summer time dates
+# ## matching the table in Cm 722, the 1989 Green Paper.
+# ## Lines like this are comments.
+# ## Lines with a single # at the start are copied into the output
+# ## Control lines are of the form
+# ## <years> <start date> <end date> <flags> <double start> <double end>
+# ## <years> is either a single year or a hyphen separated range, with --
+# ## also accepted as I use this in TeX a lot.
+# ## <start date> and <end date> are a digit followed bu a month name.
+# ## It is either an nth Saturday or an explcit date, depending on <flags>.
+# ## 0 and/or none are used when there is no date, as during 1968--71.
+# ## <flags> can contain `fixed' to indicate explicit dates and `double'
+# ## to indicate double summer time dates are present.
+# ## At present double requires fixed as well.
+# ## <double start> and <double end> are like the start and end dates, with
+# ## the exception of the 0 and/or none feature.
+#
+# ## Blank lines are also ignored.
+#
+# ## Places where I am uncertain, not having personally verified the dates
+# ## against the Act or Order, are marked ???
+# ## These dates are taken from the Cm 722 table.
+#
+# # Summer Time Act, 1916
+# 1916 21 May 1 October fixed
+#
+# ## I haven't yet looked for Orders for 1916--22 and I doubt I will find them.
+# # unknown Order or Orders ???
+# 1917 8 apr 17 sep fixed
+# 1918 24 mar 30 sep fixed
+# 1919 30 mar 29 sep fixed
+# # end date extended in 1920 from 27 Sep because of coal strike (from Cm 722)
+# 1920 28 mar 25 oct fixed
+# 1921 3 apr 3 oct fixed
+#
+# # Summer Time Act, 1922
+# # came into force 22 July 1922, too late for 1922, so missing Order ???
+# 1922 26 mar 8 oct fixed
+# 1923-1924 3 April 3 September
+#
+# # Summer Time Act, 1925
+# 1925--1938 3 April 1 October
+#
+# # Defence (Summer Time) Regulations, 1939
+# 1939 3 April 3 November
+# # 1940 amendment (SR&O 1940 Nos. 172 & 1883)
+# 1940 4 feb 0 none
+# # 1941 amendment (SR&O 1941 No. 476)
+# 1941 0 none 0 none fixed,double 4 may 10 aug
+# # 1942 amendment (SR&O 1942 No. 506)
+# 1942 0 none 0 none fixed,double 5 apr 9 aug
+# 1943 0 none 0 none fixed,double 4 apr 15 aug
+# # 1944 amendment (SR&O 1944 No. 932)
+# 1944 0 none 0 none fixed,double 2 apr 17 sep
+# # 1945 dates from Hansard, Oral Answers, 1 March 1945
+# 1945 0 none 7 oct fixed,double 2 apr 15 jul
+#
+# # reversion to Summer Time Act, 1925
+# 1946 3 April 1 October
+#
+# # Summer Time Act, 1947
+# # Fixed dates for 1947 only, gives power to have double summer time
+# 1947 16 mar 2 nov fixed,double 13 apr 10 aug
+# ## I can't find any trace of the Order for 1948.
+# # Unknown Order ???
+# 1948 14 mar 31 oct fixed
+# ## I know the numbers for the 1949--52 ones but the text is missing from the
+# ## annual volumes. I also don't know if the 49 Order was for 49 or 50, etc.
+# # Summer Time Order, 1949 (SI1949/373) ???
+# 1949 3 apr 30 oct fixed
+# # Summer Time Order, 1950 (SI1950/518) ???
+# 1950 16 apr 22 oct fixed
+# # Summer Time Order, 1951 (SI1951/430) ???
+# 1951 15 apr 21 oct fixed
+# # Summer Time Order, 1952 (SI1952/451) ???
+# 1952 20 apr 26 oct fixed
+#
+# # reversion to Summer Time Act, 1925
+# 1953--1960 3 April 1 October
+#
+# ## All Orders from here on specify fixed dates, not day after nth Sunday
+# ## Start pattern looks like Mar lastSun up to 1963, Mar Sun>=19 up to 1967.
+# ## End pattern looks like Oct Sun>=23 up to 1967.
+# # Summer Time Order, 1961 (SI1961/71)
+# 1961 26 March 29 October fixed
+# # Summer Time (1962) Order, 1961 (SI1961/2465)
+# 1962 25 Mar 28 Oct fixed
+# # Summer Time Order, 1963 (SI1963/81)
+# 1963 31 March 27 October fixed
+# # Summer Time (1964) Order, 1963 (SI1963/2101)
+# 1964 22 March 25 October fixed
+# # Summer Time Order, 1964 (SI1964/1201)
+# 1965 21 Mar 24 Oct fixed
+# 1966 20 Mar 23 Oct fixed
+# 1967 19 Mar 29 Oct fixed
+# # Summer Time Order, 1967 (SI1967/1148)
+# # Specifies different start date of 7 April for Isle of Man
+# # Summer Time Order, 1968 (SI1968/117)
+# # Changes Isle of Man start date to 18 Feb to match rest of UK
+# # British Standard Time Act, 1968
+# 1968 18 feb 0 none fixed
+# 1969--1970 0 none 0 none
+# 1971 0 none 31 oct fixed
+#
+# # Summer Time Act, 1972
+# 1972-1980 3 March 4 October
+#
+# # The pattern here looks like Last Sun in Mar, day after 4th Sat in Oct
+# # First EC Directive ???
+# # Summer Time Order, 1980 (SI1980/1089)
+# 1981    29 Mar  25 Oct fixed
+# 1982    28 Mar  24 Oct fixed
+# # Second EC Directive ???
+# # Summer Time Order, 1982 (SI1982/1673)
+# 1983    27 Mar  23 Oct fixed
+# 1984    25 Mar  28 Oct fixed
+# 1985    31 Mar  27 Oct fixed
+# # Third EC Directive ???
+# # Summer Time Order, 1986 (SI1986/223)
+# 1986    30 Mar  26 Oct fixed
+# 1987    29 Mar  25 Oct fixed
+# 1988    27 Mar  23 Oct fixed
+# # Fourth EC Directive ???
+# # Summer Time Order, 1988 (SI1988/931)
+# 1989    26 Mar  29 Oct fixed
+# # Fifth EC Directive ???
+# # Summer Time Order, 1989 (SI1989/985)
+# 1990    25 Mar  28 Oct fixed
+# 1991    31 Mar  27 Oct fixed
+# 1992    29 Mar  25 Oct fixed
+# # Sixth EC Directive
+# # Summer Time Order, 1992 (SI1992/1729)
+# 1993    28 Mar  24 Oct fixed
+# 1994    27 Mar  23 Oct fixed
+
+
 # From Paul Eggert <eggert@twinsun.com> (November 18, 1993):
 #
 # As Ilieve remarks, the date `20 April 1924' in the table of ``Summer Time: A
@@ -528,13 +574,15 @@
 #     * Jersey, Guernsey, and the Isle of Man did not switch from GMT
 #	to daylight savings time until 1921 Apr 3, when they began to
 #	conform with Great Britain.
+#
+# Whitman says Dublin Mean Time was -0:25:21, which is more precise than Shanks.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	GB-Eire 1847	only	-	Sep	22	0:00	0	GMT
 # 1916 to 1925--irregular
 Rule	GB-Eire	1916	only	-	May	21	2:00s	1:00	BST
-Rule	GB-Eire	1916	only	-	Oct	1	2:00s	0	GMT
-Rule	GB-Eire	1917	only	-	Apr	8	2:00s	1:00	BST
+Rule	GB-Eire	1916	only	-	Oct	 1	2:00s	0	GMT
+Rule	GB-Eire	1917	only	-	Apr	 8	2:00s	1:00	BST
 Rule	GB-Eire	1917	only	-	Sep	17	2:00s	0	GMT
 Rule	GB-Eire	1918	only	-	Mar	24	2:00s	1:00	BST
 Rule	GB-Eire	1918	only	-	Sep	30	2:00s	0	GMT
@@ -542,10 +590,10 @@ Rule	GB-Eire	1919	only	-	Mar	30	2:00s	1:00	BST
 Rule	GB-Eire	1919	only	-	Sep	29	2:00s	0	GMT
 Rule	GB-Eire	1920	only	-	Mar	28	2:00s	1:00	BST
 Rule	GB-Eire	1920	only	-	Oct	25	2:00s	0	GMT
-Rule	GB-Eire	1921	only	-	Apr	3	2:00s	1:00	BST
-Rule	GB-Eire	1921	only	-	Oct	3	2:00s	0	GMT
+Rule	GB-Eire	1921	only	-	Apr	 3	2:00s	1:00	BST
+Rule	GB-Eire	1921	only	-	Oct	 3	2:00s	0	GMT
 Rule	GB-Eire	1922	only	-	Mar	26	2:00s	1:00	BST
-Rule	GB-Eire	1922	only	-	Oct	8	2:00s	0	GMT
+Rule	GB-Eire	1922	only	-	Oct	 8	2:00s	0	GMT
 Rule	GB-Eire	1923	only	-	Apr	Sun>=16	2:00s	1:00	BST
 Rule	GB-Eire	1923	1924	-	Sep	Sun>=16	2:00s	0	GMT
 Rule	GB-Eire	1924	only	-	Apr	13	2:00s	1:00	BST
@@ -556,7 +604,7 @@ Rule	GB-Eire	1927	only	-	Apr	10	2:00s	1:00	BST
 Rule	GB-Eire	1928	1929	-	Apr	Sun>=16	2:00s	1:00	BST
 Rule	GB-Eire	1930	only	-	Apr	13	2:00s	1:00	BST
 Rule	GB-Eire	1931	1932	-	Apr	Sun>=16	2:00s	1:00	BST
-Rule	GB-Eire	1933	only	-	Apr	9	2:00s	1:00	BST
+Rule	GB-Eire	1933	only	-	Apr	 9	2:00s	1:00	BST
 Rule	GB-Eire	1934	only	-	Apr	Sun>=16	2:00s	1:00	BST
 Rule	GB-Eire	1935	only	-	Apr	14	2:00s	1:00	BST
 Rule	GB-Eire	1936	1937	-	Apr	Sun>=16	2:00s	1:00	BST
@@ -570,19 +618,19 @@ Rule	GB-Eire	1941	1943	-	Aug	Sun>=9	1:00s	1:00	BST
 Rule	GB-Eire	1942	1944	-	Apr	Sun>=2	1:00s	2:00	DST
 Rule	GB-Eire	1944	only	-	Sep	Sun>=16	1:00s	1:00	BST
 # Double daylight starts on a Monday in 1945--see above.
-Rule	GB-Eire	1945	only	-	Apr	2	1:00s	2:00	DST
+Rule	GB-Eire	1945	only	-	Apr	 2	1:00s	2:00	DST
 Rule	GB-Eire	1945	only	-	Jul	15	1:00s	1:00	BST
-Rule	GB-Eire	1945	only	-	Oct	7	2:00s	0	GMT
+Rule	GB-Eire	1945	only	-	Oct	 7	2:00s	0	GMT
 Rule	GB-Eire	1946	only	-	Apr	14	2:00s	1:00	BST
-Rule	GB-Eire	1946	only	-	Oct	6	2:00s	0	GMT
+Rule	GB-Eire	1946	only	-	Oct	 6	2:00s	0	GMT
 Rule	GB-Eire	1947	only	-	Mar	16	2:00s	1:00	BST
 Rule	GB-Eire	1947	only	-	Apr	13	1:00s	2:00	DST
 Rule	GB-Eire	1947	only	-	Aug	10	1:00s	1:00	BST
-Rule	GB-Eire	1947	only	-	Nov	2	2:00s	0	GMT
+Rule	GB-Eire	1947	only	-	Nov	 2	2:00s	0	GMT
 # So much for double saving time.  1948 and 1949, irregular.
 Rule	GB-Eire	1948	only	-	Mar	14	2:00s	1:00	BST
 Rule	GB-Eire	1948	1949	-	Oct	lastSun	2:00s	0	GMT
-Rule	GB-Eire	1949	only	-	Apr	3	2:00s	1:00	BST
+Rule	GB-Eire	1949	only	-	Apr	 3	2:00s	1:00	BST
 # 1950 through start of 1953, regular.
 Rule	GB-Eire	1950	1953	-	Apr	Sun>=14	2:00s	1:00	BST
 Rule	GB-Eire	1950	1952	-	Oct	Sun>=21	2:00s	0	GMT
@@ -610,14 +658,14 @@ Zone	Europe/London	-0:00:37 -	LMT	1847 Sep 22
 			 1:00	-	BST	1971 Oct 31 2:00
 			 0:00	GB-Eire	%s
 Zone	Europe/Belfast	-0:23:40 -	LMT	1880 Aug  2
-			-0:25	-	DMT	1916 May 21 2:00    # Dublin MT
-			-0:25	1:00	DST	1916 Oct  1 3:00
+			-0:25:21 -	DMT	1916 May 21 2:00    # Dublin MT
+			-0:25:21 1:00	DST	1916 Oct  1 3:00
 			 0:00	GB-Eire	%s	1968 Feb 18 2:00
 			 1:00	-	BST	1971 Oct 31 3:00
 			 0:00	GB-Eire	%s
-Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
-			-0:25	-	DMT	1916 May 21 2:00    # Dublin MT
-			-0:25	1:00	DST	1916 Oct  1 3:00
+Zone	Europe/Dublin	-0:25:21 -	LMT	1880 Aug  2
+			-0:25:21 -	DMT	1916 May 21 2:00    # Dublin MT
+			-0:25:21 1:00	DST	1916 Oct  1 3:00
 			 0:00	GB-Eire	%s	1940 Feb 25 2:00
 			 0:00	1:00	BST	1946 Oct  6 2:00
 			 0:00	-	GMT	1947 Mar 16 2:00
@@ -631,55 +679,61 @@ Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
 
 # Continental Europe
 
-Rule	W-Eur	1800	only	-	Jan	1	0:00	0	-
-Rule	W-Eur	1977	1980	-	Apr	Sun>=1	1:00s	1:00	" DST"
-Rule	W-Eur	1977	only	-	Sep	lastSun	1:00s	0	-
-Rule	W-Eur	1978	only	-	Oct	1	1:00s	0	-
-Rule	W-Eur	1979	max	-	Sep	lastSun	1:00s	0	-
-Rule	W-Eur	1981	max	-	Mar	lastSun	1:00s	1:00	" DST"
+Rule	W-Eur	1800	only	-	Jan	 1	 0:00	0	-
+Rule	W-Eur	1977	1980	-	Apr	Sun>=1	 1:00s	1:00	" DST"
+Rule	W-Eur	1977	only	-	Sep	lastSun	 1:00s	0	-
+Rule	W-Eur	1978	only	-	Oct	 1	 1:00s	0	-
+Rule	W-Eur	1979	max	-	Sep	lastSun	 1:00s	0	-
+Rule	W-Eur	1981	max	-	Mar	lastSun	 1:00s	1:00	" DST"
 
-Rule	M-Eur	1800	only	-	Jan	1	0:00	0	-
+Rule	M-Eur	1800	only	-	Jan	 1	 0:00	0	-
 Rule	M-Eur	1916	only	-	Apr	30	23:00	1:00	" DST"
-Rule	M-Eur	1916	only	-	Oct	1	1:00	0	-
-Rule	M-Eur	1917	1918	-	Apr	Mon>=15	2:00s	1:00	" DST"
-Rule	M-Eur	1917	1918	-	Sep	Mon>=15	2:00s	0	-
-Rule	M-Eur	1940	only	-	Apr	1	2:00s	1:00	" DST"
-Rule	M-Eur	1942	only	-	Nov	2	2:00s	0	-
-Rule	M-Eur	1943	only	-	Mar	29	2:00s	1:00	" DST"
-Rule	M-Eur	1943	only	-	Oct	4	2:00s	0	-
-Rule	M-Eur	1944	only	-	Apr	3	2:00s	1:00	" DST"
-Rule	M-Eur	1944	only	-	Oct	2	2:00s	0	-
-Rule	M-Eur	1977	1980	-	Apr	Sun>=1	2:00s	1:00	" DST"
-Rule	M-Eur	1977	only	-	Sep	lastSun	2:00s	0	-
-Rule	M-Eur	1978	only	-	Oct	1	2:00s	0	-
-Rule	M-Eur	1979	max	-	Sep	lastSun	2:00s	0	-
-Rule	M-Eur	1981	max	-	Mar	lastSun	2:00s	1:00	" DST"
+Rule	M-Eur	1916	only	-	Oct	 1	 1:00	0	-
+Rule	M-Eur	1917	1918	-	Apr	Mon>=15	 2:00s	1:00	" DST"
+Rule	M-Eur	1917	1918	-	Sep	Mon>=15	 2:00s	0	-
+Rule	M-Eur	1940	only	-	Apr	 1	 2:00s	1:00	" DST"
+# Shanks says DST was continuous from 1940 Apr 1 to 1942 Nov 2; go with Whitman.
+Rule	M-Eur	1940	only	-	Dec	31	 2:00s	0	-
+Rule	M-Eur	1941	only	-	Feb	25	 2:00s	1:00	" DST"
+Rule	M-Eur	1941	only	-	Oct	 5	 2:00s	0	-
+Rule	M-Eur	1942	only	-	Jan	 1	 2:00s	1:00	" DST"
+Rule	M-Eur	1942	only	-	Nov	 2	 2:00s	0	-
+Rule	M-Eur	1943	only	-	Mar	29	 2:00s	1:00	" DST"
+Rule	M-Eur	1943	only	-	Oct	 4	 2:00s	0	-
+Rule	M-Eur	1944	only	-	Apr	 3	 2:00s	1:00	" DST"
+# Whitman gives 1944 Oct 7; go with Shanks.
+Rule	M-Eur	1944	only	-	Oct	 2	 2:00s	0	-
+Rule	M-Eur	1977	1980	-	Apr	Sun>=1	 2:00s	1:00	" DST"
+Rule	M-Eur	1977	only	-	Sep	lastSun	 2:00s	0	-
+Rule	M-Eur	1978	only	-	Oct	 1	 2:00s	0	-
+Rule	M-Eur	1979	max	-	Sep	lastSun	 2:00s	0	-
+Rule	M-Eur	1981	max	-	Mar	lastSun	 2:00s	1:00	" DST"
 
-Rule	E-Eur	1981	max	-	Mar	lastSun	3:00s	1:00	" DST"
-Rule	E-Eur	1981	max	-	Sep	lastSun	3:00s	0	-
+Rule	E-Eur	1981	max	-	Mar	lastSun	 3:00s	1:00	" DST"
+Rule	E-Eur	1981	max	-	Sep	lastSun	 3:00s	0	-
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Russia	1880	only	-	Jan	1	0:00	0	-
-Rule	Russia	1917	only	-	Jul	1	23:00	1:00	" DST"
-Rule	Russia	1917	only	-	Dec	28	0:00	0	-
+Rule	Russia	1880	only	-	Jan	 1	 0:00	0	-
+Rule	Russia	1917	only	-	Jul	 1	23:00	1:00	" DST"
+Rule	Russia	1917	only	-	Dec	28	 0:00	0	-
 Rule	Russia	1918	only	-	May	31	22:00	2:00	" DDST"
-Rule	Russia	1918	only	-	Sep	17	0:00	1:00	" DST"
+Rule	Russia	1918	only	-	Sep	17	 0:00	1:00	" DST"
 Rule	Russia	1919	only	-	May	31	23:00	2:00	" DDST"
-Rule	Russia	1919	only	-	Jul	1	2:00	1:00	D
-Rule	Russia	1919	only	-	Aug	16	0:00	0	K
+Rule	Russia	1919	only	-	Jul	 1	 2:00	1:00	D
+Rule	Russia	1919	only	-	Aug	16	 0:00	0	K
 Rule	Russia	1921	only	-	Feb	14	23:00	1:00	D
 # Shanks gives 1921 Mar 21 for the following transition.
 # From Andrew A. Chernov <ache@astral.msk.su> (November 12, 1993):
 # My sources says, that it is Mar 20, not 21.
 Rule	Russia	1921	only	-	Mar	20	23:00	2:00	DD
-Rule	Russia	1921	only	-	Sep	1	0:00	1:00	D
-Rule	Russia	1921	only	-	Oct	1	0:00	0	K
-Rule	Russia	1981	1984	-	Apr	1	0:00	1:00	D
-Rule	Russia	1981	1983	-	Oct	1	0:00	0	K
-Rule	Russia	1984	1990	-	Sep	lastSun	2:00s	0	K
-Rule	Russia	1985	1990	-	Mar	lastSun	2:00s	1:00	D
-Rule	Russia	1992	max	-	Sep	lastSun	2:00s	0	K
-Rule	Russia	1992	max	-	Mar	lastSun	2:00s	1:00	D
+Rule	Russia	1921	only	-	Sep	 1	 0:00	1:00	D
+Rule	Russia	1921	only	-	Oct	 1	 0:00	0	K
+Rule	Russia	1981	1984	-	Apr	 1	 0:00	1:00	D
+Rule	Russia	1981	1983	-	Oct	 1	 0:00	0	K
+Rule	Russia	1984	1990	-	Sep	lastSun	 2:00s	0	K
+Rule	Russia	1985	1990	-	Mar	lastSun	 2:00s	1:00	D
+Rule	Russia	1992	max	-	Sep	lastSun	 2:00s	0	K
+Rule	Russia	1992	max	-	Mar	lastSun	 2:00s	1:00	D
 
 # These are for backward compatibility with older versions.
 
@@ -737,13 +791,13 @@ Zone	Europe/Andorra	0:06:04 -	LMT	1901
 # Austria
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Austria	1918	only	-	Jun	16	3:00	0	-
-Rule	Austria	1920	only	-	Apr	5	2:00s	1:00	" DST"
+Rule	Austria	1920	only	-	Apr	 5	2:00s	1:00	" DST"
 Rule	Austria	1920	only	-	Sep	13	2:00s	0	-
-Rule	Austria	1945	only	-	Apr	2	2:00s	1:00	" DST"
+Rule	Austria	1945	only	-	Apr	 2	2:00s	1:00	" DST"
 Rule	Austria	1945	only	-	Nov	18	2:00s	0	-
 Rule	Austria	1946	only	-	Apr	14	2:00s	1:00	" DST"
 Rule	Austria	1946	1948	-	Oct	Sun>=1	2:00s	0	-
-Rule	Austria	1947	only	-	Apr	6	2:00s	1:00	" DST"
+Rule	Austria	1947	only	-	Apr	 6	2:00s	1:00	" DST"
 Rule	Austria	1948	only	-	Apr	18	2:00s	1:00	" DST"
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Vienna	1:05:20 -	LMT	1893 Apr
@@ -763,38 +817,43 @@ Zone	Europe/Minsk	1:50:16 -	LMT	1880
 			2:00	Russia	MS%s
 
 # Belgium
+# Whitman and Shanks disagree; go with Shanks, usually.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Belgium	1919	only	-	Mar	1	23:00s	1:00	" DST"
-Rule	Belgium	1919	only	-	Oct	4	23:00s	0	-
-Rule	Belgium	1920	only	-	Feb	14	23:00s	1:00	" DST"
+# From Whitman:
+Rule	Belgium	1919	only	-	Mar	 1	23:00s	1:00	" DST"
+Rule	Belgium	1919	only	-	Oct	 4	23:00s	0	-
+# Shanks gives 1920 Feb 14 23:00s; go with Whitman.
+Rule	Belgium	1920	1921	-	Mar	14	23:00s	1:00	" DST"
 Rule	Belgium	1920	only	-	Oct	23	23:00s	0	-
-Rule	Belgium	1921	only	-	Mar	14	23:00s	1:00	" DST"
 Rule	Belgium	1921	only	-	Oct	25	23:00s	0	-
 Rule	Belgium	1922	only	-	Mar	25	23:00s	1:00	" DST"
+# Whitman gives 1927 Oct 1 2:00s and 1928 Oct 7 2:00s; go with Shanks.
 Rule	Belgium	1922	1928	-	Oct	Sat>=1	23:00s	0	-
 Rule	Belgium	1923	only	-	Apr	21	23:00s	1:00	" DST"
 Rule	Belgium	1924	only	-	Mar	29	23:00s	1:00	" DST"
-Rule	Belgium	1925	only	-	Apr	5	23:00s	1:00	" DST"
+Rule	Belgium	1925	only	-	Apr	 4	23:00s	1:00	" DST"
 Rule	Belgium	1926	only	-	Apr	17	23:00s	1:00	" DST"
-Rule	Belgium	1927	only	-	Apr	9	23:00s	1:00	" DST"
+Rule	Belgium	1927	only	-	Apr	 9	23:00s	1:00	" DST"
 Rule	Belgium	1928	only	-	Apr	14	23:00s	1:00	" DST"
-Rule	Belgium	1929	1938	-	Oct	Sun>=2	2:00s	0	-
-Rule	Belgium	1929	only	-	Apr	21	2:00s	1:00	" DST"
-Rule	Belgium	1930	only	-	Apr	13	2:00s	1:00	" DST"
-Rule	Belgium	1931	only	-	Apr	19	2:00s	1:00	" DST"
-Rule	Belgium	1932	only	-	Apr	17	2:00s	1:00	" DST"
-Rule	Belgium	1933	only	-	Mar	26	2:00s	1:00	" DST"
-Rule	Belgium	1934	only	-	Apr	8	2:00s	1:00	" DST"
-Rule	Belgium	1935	only	-	Mar	31	2:00s	1:00	" DST"
-Rule	Belgium	1936	only	-	Apr	19	2:00s	1:00	" DST"
-Rule	Belgium	1937	only	-	Apr	4	2:00s	1:00	" DST"
-Rule	Belgium	1938	only	-	Mar	27	2:00s	1:00	" DST"
-Rule	Belgium	1939	only	-	Apr	16	2:00s	1:00	" DST"
-Rule	Belgium	1939	only	-	Nov	19	2:00s	0	-
-Rule	Belgium	1945	only	-	Apr	2	2:00s	1:00	" DST"
-Rule	Belgium	1945	only	-	Sep	16	2:00s	0	-
-Rule	Belgium	1946	only	-	May	19	2:00s	1:00	" DST"
-Rule	Belgium	1946	only	-	Oct	7	2:00s	0	-
+Rule	Belgium	1929	only	-	Apr	21	 2:00s	1:00	" DST"
+Rule	Belgium	1929	1938	-	Oct	Sun>=2	 2:00s	0	-
+Rule	Belgium	1930	only	-	Apr	13	 2:00s	1:00	" DST"
+Rule	Belgium	1931	only	-	Apr	19	 2:00s	1:00	" DST"
+Rule	Belgium	1932	only	-	Apr	17	 2:00s	1:00	" DST"
+Rule	Belgium	1933	only	-	Mar	26	 2:00s	1:00	" DST"
+Rule	Belgium	1934	only	-	Apr	 8	 2:00s	1:00	" DST"
+Rule	Belgium	1935	only	-	Mar	31	 2:00s	1:00	" DST"
+Rule	Belgium	1936	only	-	Apr	19	 2:00s	1:00	" DST"
+# Whitman says 1937 Apr 18 2:00s; go with Shanks.
+Rule	Belgium	1937	only	-	Apr	 4	 2:00s	1:00	" DST"
+# Whitman says 1938 Apr 10 2:00s; go with Shanks.
+Rule	Belgium	1938	only	-	Mar	27	 2:00s	1:00	" DST"
+Rule	Belgium	1939	only	-	Apr	16	 2:00s	1:00	" DST"
+Rule	Belgium	1939	only	-	Nov	19	 2:00s	0	-
+Rule	Belgium	1945	only	-	Apr	 2	 2:00s	1:00	" DST"
+Rule	Belgium	1945	only	-	Sep	16	 2:00s	0	-
+Rule	Belgium	1946	only	-	May	19	 2:00s	1:00	" DST"
+Rule	Belgium	1946	only	-	Oct	 7	 2:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Brussels	0:17:20 -	LMT	1880
 			0:17	-	BST	1892 May  1 12:00
@@ -820,10 +879,10 @@ Zone	Europe/Sarajevo	1:13:40	-	LMT	1884
 # the rest switched on 1920 Sep 17.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Bulg	1979	only	-	Mar	31	23:00	1:00	" DST"
-Rule	Bulg	1979	only	-	Oct	1	1:00	0	-
+Rule	Bulg	1979	only	-	Oct	 1	 1:00	0	-
 Rule	Bulg	1980	1982	-	Apr	Sat<=7	23:00	1:00	" DST"
-Rule	Bulg	1980	only	-	Sep	29	1:00	0	-
-Rule	Bulg	1981	only	-	Sep	27	2:00	0	-
+Rule	Bulg	1980	only	-	Sep	29	 1:00	0	-
+Rule	Bulg	1981	only	-	Sep	27	 2:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Sofia	1:33:16 -	LMT	1880
 			1:57	-	TST	1894 Nov 30
@@ -846,13 +905,13 @@ Zone	Europe/Zagreb	1:03:52	-	LMT	1884
 # Czech Republic
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Czech	1944	only	-	Sep	17	2:00s	0	-
-Rule	Czech	1945	only	-	Apr	8	2:00s	1:00	" DST"
+Rule	Czech	1945	only	-	Apr	 8	2:00s	1:00	" DST"
 Rule	Czech	1945	only	-	Nov	18	2:00s	0	-
-Rule	Czech	1946	only	-	May	6	2:00s	1:00	" DST"
+Rule	Czech	1946	only	-	May	 6	2:00s	1:00	" DST"
 Rule	Czech	1946	1949	-	Oct	Sun>=1	2:00s	0	-
 Rule	Czech	1947	only	-	Apr	20	2:00s	1:00	" DST"
 Rule	Czech	1948	only	-	Apr	18	2:00s	1:00	" DST"
-Rule	Czech	1949	only	-	Apr	9	2:00s	1:00	" DST"
+Rule	Czech	1949	only	-	Apr	 9	2:00s	1:00	" DST"
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Prague	0:57:44 -	LMT	1850
 			0:58	-	PMT	1891 Oct     # Prague Mean Time
@@ -864,18 +923,22 @@ Zone	Europe/Prague	0:57:44 -	LMT	1850
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Denmark	1916	only	-	May	14	23:00	1:00	" DST"
 Rule	Denmark	1916	only	-	Sep	30	23:00	0	-
-Rule	Denmark	1940	only	-	May	15	0:00	1:00	" DST"
-Rule	Denmark	1945	only	-	Apr	2	2:00s	1:00	" DST"
-Rule	Denmark	1945	only	-	Aug	15	2:00s	0	-
-Rule	Denmark	1946	only	-	May	1	2:00s	1:00	" DST"
-Rule	Denmark	1946	only	-	Sep	1	2:00s	0	-
-Rule	Denmark	1947	only	-	May	4	2:00s	1:00	" DST"
-Rule	Denmark	1947	only	-	Aug	10	2:00s	0	-
-Rule	Denmark	1948	only	-	May	9	2:00s	1:00	" DST"
-Rule	Denmark	1948	only	-	Aug	8	2:00s	0	-
+Rule	Denmark	1940	only	-	May	15	 0:00	1:00	" DST"
+Rule	Denmark	1945	only	-	Apr	 2	 2:00s	1:00	" DST"
+Rule	Denmark	1945	only	-	Aug	15	 2:00s	0	-
+Rule	Denmark	1946	only	-	May	 1	 2:00s	1:00	" DST"
+Rule	Denmark	1946	only	-	Sep	 1	 2:00s	0	-
+Rule	Denmark	1947	only	-	May	 4	 2:00s	1:00	" DST"
+Rule	Denmark	1947	only	-	Aug	10	 2:00s	0	-
+Rule	Denmark	1948	only	-	May	 9	 2:00s	1:00	" DST"
+Rule	Denmark	1948	only	-	Aug	 8	 2:00s	0	-
+# Whitman also gives 1949 Apr 9 to 1949 Oct 1, and disagrees in minor ways
+# about many of the above dates; go with Shanks.
+#
+# For 1894, Shanks says Jan, Whitman Apr; go with Whitman.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Europe/Copenhagen	 0:50:20 -	LMT	1890
-			 0:50	-	CMT	1894	 # Copenhagen Mean Time
+			 0:50	-	CMT	1894 Apr  # Copenhagen Mean Time
 			 1:00	Denmark	MET%s	1942 Nov  2 2:00s
 			 1:00	M-Eur	MET%s	1945 Apr  2 2:00
 			 1:00	Denmark	MET%s	1980 Apr  6 2:00
@@ -918,13 +981,15 @@ Zone	Europe/Helsinki	1:39:52 -	LMT	1878 May 31
 			2:00	M-Eur	EET%s
 
 # France
+# Shanks seems to use `24:00' ambiguously; we resolve it with Whitman.
+# From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	France	1911	only	-	Mar	11	0:00	0	-
+Rule	France	1911	only	-	Jan	 1	 0:00	0	-
 Rule	France	1916	only	-	Jun	14	23:00s	1:00	" DST"
-Rule	France	1916	1919	-	Oct	Sun>=7	23:00s	0	-
+Rule	France	1916	1919	-	Oct	Sun>=1	 0:00	0	-
 Rule	France	1917	only	-	Mar	24	23:00s	1:00	" DST"
-Rule	France	1918	only	-	Mar	9	23:00s	1:00	" DST"
-Rule	France	1919	only	-	Mar	1	23:00s	1:00	" DST"
+Rule	France	1918	only	-	Mar	 9	23:00s	1:00	" DST"
+Rule	France	1919	only	-	Mar	 1	23:00s	1:00	" DST"
 Rule	France	1920	only	-	Feb	14	23:00s	1:00	" DST"
 Rule	France	1920	only	-	Oct	23	23:00s	0	-
 Rule	France	1921	only	-	Mar	14	23:00s	1:00	" DST"
@@ -933,45 +998,46 @@ Rule	France	1922	only	-	Mar	25	23:00s	1:00	" DST"
 Rule	France	1922	1938	-	Oct	Sat>=1	23:00s	0	-
 Rule	France	1923	only	-	May	26	23:00s	1:00	" DST"
 Rule	France	1924	only	-	Mar	29	23:00s	1:00	" DST"
-Rule	France	1925	only	-	Apr	4	23:00s	1:00	" DST"
+Rule	France	1925	only	-	Apr	 4	23:00s	1:00	" DST"
 Rule	France	1926	only	-	Apr	17	23:00s	1:00	" DST"
-Rule	France	1927	only	-	Apr	9	23:00s	1:00	" DST"
+Rule	France	1927	only	-	Apr	 9	23:00s	1:00	" DST"
 Rule	France	1928	only	-	Apr	14	23:00s	1:00	" DST"
 Rule	France	1929	only	-	Apr	20	23:00s	1:00	" DST"
 Rule	France	1930	only	-	Apr	12	23:00s	1:00	" DST"
 Rule	France	1931	only	-	Apr	18	23:00s	1:00	" DST"
-Rule	France	1932	only	-	Apr	2	23:00s	1:00	" DST"
+Rule	France	1932	only	-	Apr	 2	23:00s	1:00	" DST"
 Rule	France	1933	only	-	Mar	25	23:00s	1:00	" DST"
-Rule	France	1934	only	-	Apr	7	23:00s	1:00	" DST"
+Rule	France	1934	only	-	Apr	 7	23:00s	1:00	" DST"
 Rule	France	1935	only	-	Mar	30	23:00s	1:00	" DST"
 Rule	France	1936	only	-	Apr	18	23:00s	1:00	" DST"
-Rule	France	1937	only	-	Apr	3	23:00s	1:00	" DST"
+Rule	France	1937	only	-	Apr	 3	23:00s	1:00	" DST"
 Rule	France	1938	only	-	Mar	26	23:00s	1:00	" DST"
 Rule	France	1939	only	-	Apr	15	23:00s	1:00	" DST"
 Rule	France	1939	only	-	Nov	18	23:00s	0	-
-Rule	France	1940	only	-	Feb	25	2:00	1:00	" DST"
+Rule	France	1940	only	-	Feb	25	 2:00	1:00	" DST"
 # The French rules for 1941-1944 were not used in Paris,
 # but were used in other places (e.g. Monaco).
-Rule	France	1941	only	-	May	5	0:00	2:00	" DDST"
-Rule	France	1941	only	-	Oct	6	1:00	1:00	" DST"
-Rule	France	1942	only	-	Mar	8	0:00	2:00	" DDST"
-Rule	France	1942	only	-	Nov	2	3:00	1:00	" DST"
-Rule	France	1943	only	-	Mar	29	2:00	2:00	" DDST"
-Rule	France	1943	only	-	Nov	4	3:00	1:00	" DST"
-Rule	France	1944	only	-	Apr	3	2:00	2:00	" DDST"
-Rule	France	1944	only	-	Oct	8	1:00	1:00	" DST"
-Rule	France	1945	only	-	Apr	2	2:00	2:00	" DDST"
-Rule	France	1945	only	-	Sep	16	3:00	0	-
+Rule	France	1941	only	-	May	 5	 0:00	2:00	" DDST"
+Rule	France	1941	only	-	Oct	 6	 1:00	1:00	" DST"
+Rule	France	1942	only	-	Mar	 8	 0:00	2:00	" DDST"
+Rule	France	1942	only	-	Nov	 2	 3:00	1:00	" DST"
+Rule	France	1943	only	-	Mar	29	 2:00	2:00	" DDST"
+Rule	France	1943	only	-	Nov	 4	 3:00	1:00	" DST"
+Rule	France	1944	only	-	Apr	 3	 2:00	2:00	" DDST"
+Rule	France	1944	only	-	Oct	 8	 1:00	1:00	" DST"
+Rule	France	1945	only	-	Apr	 2	 2:00	2:00	" DDST"
+Rule	France	1945	only	-	Sep	16	 3:00	0	-
 # From Paul Eggert <eggert@twinsun.com) (November 18, 1993):
 # Shanks gives no times for 1975, but according to Cm722,
 # France introduced summer time in 1975 from 20 March to 22 September.
-Rule	France	1975	only	-	Mar	20	2:00s	1:00	" DST"
-Rule	France	1975	only	-	Sep	22	2:00s	0	-
-Rule	France	1976	only	-	Mar	28	2:00s	1:00	" DST"
-Rule	France	1976	only	-	Sep	lastSun	2:00s	0	-
+Rule	France	1975	only	-	Mar	20	 2:00s	1:00	" DST"
+Rule	France	1975	only	-	Sep	22	 2:00s	0	-
+Rule	France	1976	only	-	Mar	28	 2:00s	1:00	" DST"
+Rule	France	1976	only	-	Sep	lastSun	 2:00s	0	-
+# Shanks gives 0:09 for Paris Mean Time; go with Whitman's more precise 0:09:05.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Paris	0:09:20 -	LMT	1891 Mar 15 0:01
-			0:09	-	PMT	1911 Mar 11    # Paris Mean Time
+Zone	Europe/Paris	0:09:05 -	LMT	1891 Mar 15 0:01
+			0:09:05	-	PMT	1911 Mar 11    # Paris Mean Time
 			0:00	France	WET%s	1940 Jun 14
 			1:00	M-Eur	MET%s	1944 Aug 25
 			0:00	France	WET%s	1945 Sep 16 3:00
@@ -980,13 +1046,14 @@ Zone	Europe/Paris	0:09:20 -	LMT	1891 Mar 15 0:01
 
 # Germany
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Germany	1945	only	-	Apr	2	2:00s	1:00	" DST"
+Rule	Germany	1945	only	-	Apr	 2	2:00s	1:00	" DST"
 Rule	Germany	1945	only	-	May	24	2:00	2:00	" DDST"
 Rule	Germany	1945	only	-	Sep	24	3:00	1:00	" DST"
 Rule	Germany	1945	only	-	Nov	18	2:00s	0	-
 Rule	Germany	1946	only	-	Apr	14	2:00s	1:00	" DST"
+# Whitman gives 1948 Oct 31; go with Shanks.
 Rule	Germany	1946	1949	-	Oct	Sun>=1	2:00s	0	-
-Rule	Germany	1947	only	-	Apr	6	2:00s	1:00	" DST"
+Rule	Germany	1947	only	-	Apr	 6	2:00s	1:00	" DST"
 Rule	Germany	1947	only	-	May	11	2:00s	2:00	" DDST"
 Rule	Germany	1947	only	-	Jun	29	3:00	1:00	" DST"
 Rule	Germany	1948	only	-	Apr	18	2:00s	1:00	" DST"
@@ -1010,14 +1077,18 @@ Zone Europe/Gibraltar	-0:21:24 -	LMT	1880 Aug  2
 # The rest switched on 1920 Mar 18.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Greece	1916	only	-	July	28	0:01	0	-
-Rule	Greece	1932	only	-	Jul	7	0:00	1:00	" DST"
-Rule	Greece	1932	only	-	Sep	1	0:00	0	-
-Rule	Greece	1941	only	-	Apr	7	0:00	1:00	" DST"
-Rule	Greece	1942	only	-	Nov	2	3:00	0	-
+# Whitman gives 1932 Jul 5 - Nov 1; go with Shanks.
+Rule	Greece	1932	only	-	Jul	 7	0:00	1:00	" DST"
+Rule	Greece	1932	only	-	Sep	 1	0:00	0	-
+# Whitman gives 1941 Apr 25 - ?; go with Shanks.
+Rule	Greece	1941	only	-	Apr	 7	0:00	1:00	" DST"
+# Whitman gives 1942 Feb 2 - ?; go with Shanks.
+Rule	Greece	1942	only	-	Nov	 2	3:00	0	-
 Rule	Greece	1943	only	-	Mar	30	0:00	1:00	" DST"
-Rule	Greece	1943	only	-	Oct	4	0:00	0	-
-Rule	Greece	1952	only	-	Jul	1	0:00	1:00	" DST"
-Rule	Greece	1952	only	-	Nov	2	0:00	0	-
+Rule	Greece	1943	only	-	Oct	 4	0:00	0	-
+# Whitman gives 1944 Oct 3 - Oct 31; go with Shanks.
+Rule	Greece	1952	only	-	Jul	 1	0:00	1:00	" DST"
+Rule	Greece	1952	only	-	Nov	 2	0:00	0	-
 Rule	Greece	1975	only	-	Apr	12	0:00s	1:00	" DST"
 Rule	Greece	1975	only	-	Nov	26	0:00s	0	-
 Rule	Greece	1976	only	-	Apr	11	2:00s	1:00	" DST"
@@ -1025,9 +1096,9 @@ Rule	Greece	1976	only	-	Oct	10	2:00s	0	-
 Rule	Greece	1977	1978	-	Apr	Sun>=1	2:00s	1:00	" DST"
 Rule	Greece	1977	only	-	Sep	26	2:00s	0	-
 Rule	Greece	1978	only	-	Sep	24	4:00	0	-
-Rule	Greece	1979	only	-	Apr	1	9:00	1:00	" DST"
+Rule	Greece	1979	only	-	Apr	 1	9:00	1:00	" DST"
 Rule	Greece	1979	only	-	Sep	29	2:00	0	-
-Rule	Greece	1980	only	-	Apr	1	0:00	1:00	" DST"
+Rule	Greece	1980	only	-	Apr	 1	0:00	1:00	" DST"
 Rule	Greece	1980	only	-	Sep	28	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Athens	1:34:52 -	LMT	1895 Sep 14
@@ -1039,25 +1110,25 @@ Zone	Europe/Athens	1:34:52 -	LMT	1895 Sep 14
 
 # Hungary
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Hungary	1918	only	-	Sep	29	2:00s	0	-
-Rule	Hungary	1919	only	-	Apr	15	3:00	1:00	" DST"
-Rule	Hungary	1919	only	-	Sep	15	3:00	0	-
-Rule	Hungary	1920	only	-	Apr	5	3:00	1:00	" DST"
-Rule	Hungary	1920	only	-	Sep	30	3:00	0	-
-Rule	Hungary	1945	only	-	May	1	23:00	1:00	" DST"
-Rule	Hungary	1945	only	-	Nov	3	0:00	0	-
-Rule	Hungary	1946	only	-	Mar	31	2:00s	1:00	" DST"
-Rule	Hungary	1946	1949	-	Oct	Sun>=1	2:00s	0	-
-Rule	Hungary	1947	1949	-	Apr	Sun>=4	2:00s	1:00	" DST"
-Rule	Hungary	1950	only	-	Apr	17	2:00s	1:00	" DST"
-Rule	Hungary	1950	only	-	Oct	23	2:00s	0	-
-Rule	Hungary	1954	1955	-	May	23	0:00	1:00	" DST"
-Rule	Hungary	1954	1955	-	Oct	3	0:00	0	-
-Rule	Hungary	1956	only	-	Jun	Sun>=1	0:00	1:00	" DST"
-Rule	Hungary	1956	only	-	Sep	lastSun	0:00	0	-
-Rule	Hungary	1957	only	-	Jun	Sun>=1	1:00	1:00	" DST"
-Rule	Hungary	1957	only	-	Sep	lastSun	3:00	0	-
-Rule	Hungary	1980	only	-	Apr	6	1:00	1:00	" DST"
+Rule	Hungary	1918	only	-	Sep	29	 2:00s	0	-
+Rule	Hungary	1919	only	-	Apr	15	 3:00	1:00	" DST"
+Rule	Hungary	1919	only	-	Sep	15	 3:00	0	-
+Rule	Hungary	1920	only	-	Apr	 5	 3:00	1:00	" DST"
+Rule	Hungary	1920	only	-	Sep	30	 3:00	0	-
+Rule	Hungary	1945	only	-	May	 1	23:00	1:00	" DST"
+Rule	Hungary	1945	only	-	Nov	 3	 0:00	0	-
+Rule	Hungary	1946	only	-	Mar	31	 2:00s	1:00	" DST"
+Rule	Hungary	1946	1949	-	Oct	Sun>=1	 2:00s	0	-
+Rule	Hungary	1947	1949	-	Apr	Sun>=4	 2:00s	1:00	" DST"
+Rule	Hungary	1950	only	-	Apr	17	 2:00s	1:00	" DST"
+Rule	Hungary	1950	only	-	Oct	23	 2:00s	0	-
+Rule	Hungary	1954	1955	-	May	23	 0:00	1:00	" DST"
+Rule	Hungary	1954	1955	-	Oct	 3	 0:00	0	-
+Rule	Hungary	1956	only	-	Jun	Sun>=1	 0:00	1:00	" DST"
+Rule	Hungary	1956	only	-	Sep	lastSun	 0:00	0	-
+Rule	Hungary	1957	only	-	Jun	Sun>=1	 1:00	1:00	" DST"
+Rule	Hungary	1957	only	-	Sep	lastSun	 3:00	0	-
+Rule	Hungary	1980	only	-	Apr	 6	 1:00	1:00	" DST"
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Budapest	1:16:20 -	LMT	1890 Oct
 			1:00	M-Eur	MET%s	1918 Jul
@@ -1071,70 +1142,103 @@ Zone	Europe/Budapest	1:16:20 -	LMT	1890 Oct
 # From Adam David <adam@veda.is> (November 6, 1993):
 # The name of the timezone in Iceland for system / mail / news purposes is GMT.
 #
-# From Shanks (1991):
+# (December 5, 1993):
+# This material is paraphrased from the 1988 edition of the University of
+# Iceland Almanak.
+#
+# From January 1st, 1908 the whole of Iceland was standardised at 1 hour
+# behind GMT. Previously, local mean solar time was used in different parts
+# of Iceland, the almanak had been based on Reykjavik mean solar time which
+# was 1 hour and 28 minutes behind GMT.
+#
+# "first day of winter" referred to [below] means the first day of the 26 weeks
+# of winter, according to the old icelandic calendar that dates back to the
+# time the norsemen first settled Iceland.  The first day of winter is always
+# Saturday, but is not dependent on the Julian or Gregorian calendars.
+#
+# (December 10, 1993):
+# I have a reference from the Oxford Icelandic-English dictionary for the
+# beginning of winter, which ties it to the ecclesiastical calendar (and thus
+# to the julian/gregorian calendar) over the period in question.
+#	the winter begins on the Saturday next before St. Luke's day
+#	(old style), or on St. Luke's day, if a Saturday.
+# St. Luke's day ought to be traceable from ecclesiatical sources. "old style"
+# might be a reference to the Julian calendar as opposed to Gregorian, or it
+# might mean something else (???). The Gregorian calendar was not introduced
+# in Iceland until 1700.
+#
+# From Paul Eggert <eggert@twinsun.com> (December 9, 1993):
+# The Iceland Almanak, Shanks and Whitman disagree on many points.
+# We go with the Almanak, except for one claim from Shanks, namely that
+# Reykavik was -1:28 from 1837 to 1908, local mean time before that.
+#
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Iceland	1908	only	-	Jan	1	0:00	0	S
-Rule	Iceland	1917	1918	-	Feb	20	2:00	1:00	D
-Rule	Iceland	1917	only	-	Oct	25	2:00	0	S
-Rule	Iceland	1918	1919	-	Nov	15	2:00	0	S
-Rule	Iceland	1919	only	-	Feb	19	2:00	1:00	D
-Rule	Iceland	1921	only	-	Mar	19	2:00	1:00	D
-Rule	Iceland	1921	only	-	Jun	22	2:00	0	S
-Rule	Iceland	1941	1942	-	Mar	Sat>=1	2:00	1:00	D
-Rule	Iceland	1941	1942	-	Jul	2	2:00	0	S
-Rule	Iceland	1943	1946	-	Mar	Sun>=1	2:00	1:00	D
-Rule	Iceland	1943	1948	-	Oct	Sun>=22	2:00	0	S
-Rule	Iceland	1947	1962	-	Apr	Sun>=1	2:00	1:00	D
-Rule	Iceland	1949	only	-	Oct	30	2:00	0	S
-Rule	Iceland	1950	only	-	Oct	22	2:00	0	S
-# From Paul Eggert <eggert@twinsun.com) (November 18, 1993):
-# Shanks's ``1953 Oct 26'' is probably a typo for Oct 25.
-# Likewise, correct Shanks's ``1961 Oct 22'' to Oct 29.
-Rule	Iceland	1951	1967	-	Oct	Sun>=23	1:00s	0	S
-Rule	Iceland	1963	1968	-	Apr	Sun>=1	1:00s	1:00	D
+Rule	Iceland	1908	only	-	Jan	 1	 0:00	0	S
+Rule	Iceland	1917	1918	-	Feb	19	23:00	1:00	D
+Rule	Iceland	1917	only	-	Oct	21	 1:00	0	S
+Rule	Iceland	1918	only	-	Nov	16	 1:00	0	S
+Rule	Iceland	1939	only	-	Apr	29	23:00	1:00	D
+Rule	Iceland	1939	only	-	Nov	29	 2:00	0	S
+Rule	Iceland	1940	only	-	Feb	25	 2:00	1:00	D
+Rule	Iceland	1940	only	-	Nov	 3	 2:00	0	S
+Rule	Iceland	1941	only	-	Mar	 2	 1:00s	1:00	D
+Rule	Iceland	1941	only	-	Nov	 2	 1:00s	0	S
+Rule	Iceland	1942	only	-	Mar	 8	 1:00s	1:00	D
+Rule	Iceland	1942	only	-	Oct	25	 1:00s	0	S
+# 1943-1946 - first Sunday in March until first Sunday in winter
+Rule	Iceland	1943	1946	-	Mar	Sun>=1	 1:00s	1:00	D
+Rule	Iceland	1943	1948	-	Oct	Sun>=22	 1:00s	0	S
+# 1947-1967 - first Sunday in April until first Sunday in winter
+Rule	Iceland	1947	1967	-	Apr	Sun>=1	 1:00s	1:00	D
+# 1949 Oct transition delayed by 1 week
+Rule	Iceland	1949	only	-	Oct	30	 1:00s	0	S
+Rule	Iceland	1950	1966	-	Oct	Sun>=22	 1:00s	0	S
+Rule	Iceland	1967	only	-	Oct	29	 1:00s	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Atlantic/Reykjavik	-1:27:24 -	LMT	1837
 			-1:28	-	RMT	1908	   # Reykjavik Mean Time
-			-1:00	Iceland	I%sT	1968 Oct 27 1:00s
+			-1:00	Iceland	I%sT	1968 Apr 7 1:00s
 			 0:00	-	GMT
 
 # Italy
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Italy	1893	only	-	Nov	1	0:00	0	S
-Rule	Italy	1916	only	-	Jun	4	0:00	1:00	" DST"
-Rule	Italy	1916	only	-	Oct	1	0:00	0	-
-Rule	Italy	1917	only	-	Apr	1	0:00	1:00	" DST"
-Rule	Italy	1917	only	-	Sep	30	0:00	0	-
-Rule	Italy	1918	only	-	Mar	10	0:00	1:00	" DST"
-Rule	Italy	1918	1919	-	Oct	Sun>=1	0:00	0	-
-Rule	Italy	1919	only	-	Mar	2	0:00	1:00	" DST"
-Rule	Italy	1920	only	-	Mar	21	0:00	1:00	" DST"
-Rule	Italy	1920	only	-	Sep	19	0:00	0	-
+Rule	Italy	1893	only	-	Nov	 1	0:00s	0	S
+# Shanks gives transition times of 1916-1920 as 24:00; go with Whitman.
+Rule	Italy	1916	only	-	Jun	 3	0:00s	1:00	" DST"
+Rule	Italy	1916	only	-	Sep	30	0:00s	0	-
+Rule	Italy	1917	only	-	Mar	31	0:00s	1:00	" DST"
+Rule	Italy	1917	only	-	Sep	30	0:00s	0	-
+Rule	Italy	1918	only	-	Mar	 9	0:00s	1:00	" DST"
+Rule	Italy	1918	1919	-	Oct	Sun>=1	0:00s	0	-
+Rule	Italy	1919	only	-	Mar	 1	0:00s	1:00	" DST"
+Rule	Italy	1920	only	-	Mar	20	0:00s	1:00	" DST"
+# Shanks gives 1920 Sep 18; go with Whitman.
+Rule	Italy	1920	only	-	Oct	 1	0:00s	0	-
 Rule	Italy	1940	only	-	Jun	15	0:00	1:00	" DST"
-Rule	Italy	1945	only	-	Apr	2	2:00	1:00	" DST"
+Rule	Italy	1945	only	-	Apr	 2	2:00	1:00	" DST"
 Rule	Italy	1945	only	-	Sep	17	0:00	0	-
 Rule	Italy	1946	only	-	Mar	17	2:00s	1:00	" DST"
-Rule	Italy	1946	only	-	Oct	6	2:00s	0	-
+Rule	Italy	1946	only	-	Oct	 6	2:00s	0	-
 Rule	Italy	1947	only	-	Mar	16	0:00s	1:00	" DST"
-Rule	Italy	1947	only	-	Oct	5	0:00s	0	-
+Rule	Italy	1947	only	-	Oct	 5	0:00s	0	-
 Rule	Italy	1948	only	-	Feb	29	2:00s	1:00	" DST"
-Rule	Italy	1948	only	-	Oct	3	2:00s	0	-
+Rule	Italy	1948	only	-	Oct	 3	2:00s	0	-
 Rule	Italy	1966	1968	-	May	Sun>=22	0:00	1:00	" DST"
 Rule	Italy	1966	1969	-	Sep	Sun>=22	0:00	0	-
-Rule	Italy	1969	only	-	Jun	1	0:00	1:00	" DST"
+Rule	Italy	1969	only	-	Jun	 1	0:00	1:00	" DST"
 Rule	Italy	1970	only	-	May	31	0:00	1:00	" DST"
 Rule	Italy	1970	only	-	Sep	lastSun	0:00	0	-
 Rule	Italy	1971	1972	-	May	Sun>=22	0:00	1:00	" DST"
 Rule	Italy	1971	only	-	Sep	lastSun	1:00	0	-
-Rule	Italy	1972	only	-	Oct	1	0:00	0	-
-Rule	Italy	1973	only	-	Jun	3	0:00	1:00	" DST"
+Rule	Italy	1972	only	-	Oct	 1	0:00	0	-
+Rule	Italy	1973	only	-	Jun	 3	0:00	1:00	" DST"
 Rule	Italy	1973	1974	-	Sep	lastSun	0:00	0	-
 Rule	Italy	1974	only	-	May	26	0:00	1:00	" DST"
-Rule	Italy	1975	only	-	Jun	1	0:00s	1:00	" DST"
+Rule	Italy	1975	only	-	Jun	 1	0:00s	1:00	" DST"
 Rule	Italy	1975	1977	-	Sep	lastSun	0:00s	0	-
 Rule	Italy	1976	only	-	May	30	0:00s	1:00	" DST"
 Rule	Italy	1977	1979	-	May	Sun>=22	0:00s	1:00	" DST"
-Rule	Italy	1978	only	-	Oct	1	0:00s	0	-
+Rule	Italy	1978	only	-	Oct	 1	0:00s	0	-
 Rule	Italy	1979	only	-	Sep	30	0:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Rome	0:49:56 -	LMT	1866 Sep 22
@@ -1180,29 +1284,30 @@ Zone	Europe/Vilnius	1:41:16	-	LMT	1880
 			2:00	M-Eur	MET%s
 
 # Luxembourg
+# Whitman disagrees with most of these dates in minor ways; go with Shanks.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Lux	1904	only	-	Jun	1	0:00	0	-
+Rule	Lux	1904	only	-	Jun	 1	 0:00	0	-
 Rule	Lux	1916	only	-	May	14	23:00	1:00	" DST"
-Rule	Lux	1916	only	-	Oct	1	1:00	0	-
+Rule	Lux	1916	only	-	Oct	 1	 1:00	0	-
 Rule	Lux	1917	only	-	Apr	28	23:00	1:00	" DST"
-Rule	Lux	1917	only	-	Sep	17	1:00	0	-
-Rule	Lux	1918	only	-	Apr	Mon>=15	2:00s	1:00	" DST"
-Rule	Lux	1918	only	-	Sep	Mon>=15	2:00s	0	-
-Rule	Lux	1919	only	-	Mar	1	23:00	1:00	" DST"
-Rule	Lux	1919	only	-	Oct	5	3:00	0	-
+Rule	Lux	1917	only	-	Sep	17	 1:00	0	-
+Rule	Lux	1918	only	-	Apr	Mon>=15	 2:00s	1:00	" DST"
+Rule	Lux	1918	only	-	Sep	Mon>=15	 2:00s	0	-
+Rule	Lux	1919	only	-	Mar	 1	23:00	1:00	" DST"
+Rule	Lux	1919	only	-	Oct	 5	 3:00	0	-
 Rule	Lux	1920	only	-	Feb	14	23:00	1:00	" DST"
-Rule	Lux	1920	only	-	Oct	24	2:00	0	-
+Rule	Lux	1920	only	-	Oct	24	 2:00	0	-
 Rule	Lux	1921	only	-	Mar	14	23:00	1:00	" DST"
-Rule	Lux	1921	only	-	Oct	26	2:00	0	-
+Rule	Lux	1921	only	-	Oct	26	 2:00	0	-
 Rule	Lux	1922	only	-	Mar	25	23:00	1:00	" DST"
-Rule	Lux	1922	only	-	Oct	Sun>=2	1:00	0	-
+Rule	Lux	1922	only	-	Oct	Sun>=2	 1:00	0	-
 Rule	Lux	1923	only	-	Apr	21	23:00	1:00	" DST"
-Rule	Lux	1923	only	-	Oct	Sun>=2	2:00	0	-
+Rule	Lux	1923	only	-	Oct	Sun>=2	 2:00	0	-
 Rule	Lux	1924	only	-	Mar	29	23:00	1:00	" DST"
-Rule	Lux	1924	1928	-	Oct	Sun>=2	1:00	0	-
-Rule	Lux	1925	only	-	Apr	5	23:00	1:00	" DST"
+Rule	Lux	1924	1928	-	Oct	Sun>=2	 1:00	0	-
+Rule	Lux	1925	only	-	Apr	 5	23:00	1:00	" DST"
 Rule	Lux	1926	only	-	Apr	17	23:00	1:00	" DST"
-Rule	Lux	1927	only	-	Apr	9	23:00	1:00	" DST"
+Rule	Lux	1927	only	-	Apr	 9	23:00	1:00	" DST"
 Rule	Lux	1928	only	-	Apr	14	23:00	1:00	" DST"
 Rule	Lux	1929	only	-	Apr	20	23:00	1:00	" DST"
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1251,49 +1356,62 @@ Zone	Europe/Chisinau	1:55:20 -	LMT	1924 May  2
 			2:00	M-Eur	EET%s
 
 # Monaco
+# Shanks gives 0:09 for Paris Mean Time; go with Whitman's more precise 0:09:05.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Monaco	0:29:32 -	LMT	1891 Mar 15
-			0:09	-	PMT	1911 Mar 11    # Paris Mean Time
+			0:09:05	-	PMT	1911 Mar 11    # Paris Mean Time
 			0:00	France	WET%s	1945 Sep 16 3:00
 			1:00	France	MET%s	1977 Apr Sun>=1 2:00
 			1:00	M-Eur	MET%s
 
 # Netherlands
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Neth	1892	only	-	May	1	0:00	0	AMT
-Rule	Neth	1916	only	-	May	1	0:00	1:00	NST
-Rule	Neth	1916	only	-	Oct	1	0:00	0	AMT
+Rule	Neth	1892	only	-	May	 1	0:00	0	AMT
+# Shanks gives 1916 May 1 0:00 and 1916 Oct 1 0:00; go with Whitman.
+Rule	Neth	1916	only	-	May	 1	2:00s	1:00	NST
+Rule	Neth	1916	only	-	Oct	 2	2:00s	0	AMT
 Rule	Neth	1917	only	-	Apr	16	2:00s	1:00	NST
 Rule	Neth	1917	only	-	Sep	17	2:00s	0	AMT
+# Whitman gives 1918 Apr 14, 1918 Oct 31, and 1921 Sep 28; go with Shanks.
 Rule	Neth	1918	1921	-	Apr	Mon>=1	2:00s	1:00	NST
 Rule	Neth	1918	1921	-	Sep	Mon>=24	2:00s	0	AMT
 Rule	Neth	1922	only	-	Mar	26	2:00s	1:00	NST
+# Whitman gives 1939 Oct 1; go with Shanks.
 Rule	Neth	1922	1939	-	Oct	Sun>=2	2:00s	0	AMT
-Rule	Neth	1923	only	-	Jun	1	2:00s	1:00	NST
+Rule	Neth	1923	only	-	Jun	 1	2:00s	1:00	NST
 Rule	Neth	1924	only	-	Mar	30	2:00s	1:00	NST
-Rule	Neth	1925	only	-	Jun	5	2:00s	1:00	NST
+# Whitman gives 1925 Apr 5; go with Shanks.
+Rule	Neth	1925	only	-	Jun	 5	2:00s	1:00	NST
+# For 1926 through 1930 Whitman gives Apr 15; go with Shanks.
 Rule	Neth	1926	1931	-	May	15	2:00s	1:00	NST
 Rule	Neth	1932	only	-	May	22	2:00s	1:00	NST
 Rule	Neth	1933	1936	-	May	15	2:00s	1:00	NST
 Rule	Neth	1937	only	-	May	22	2:00s	1:00	NST
+# Whitman gives 1939 Apr 15 and 1940 Apr 19; go with Shanks.
 Rule	Neth	1938	1939	-	May	15	2:00s	1:00	NST
-Rule	Neth	1945	only	-	Apr	2	2:00s	1:00	-
+Rule	Neth	1945	only	-	Apr	 2	2:00s	1:00	-
 Rule	Neth	1945	only	-	May	20	2:00s	0	" DST"
+# Before 1937, Shanks says just `0:20'; we use Whitman's more precise figure.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Europe/Amsterdam	0:19:36 -	LMT	1892 May
-			0:20	Neth	%s	1937 Jul
-			1:20	Neth	%s	1940 May 16 2:00
+Zone Europe/Amsterdam	0:19:28 -	LMT	1892 May
+			0:19:28	Neth	%s	1937 Jul
+			0:20	Neth	%s	1940 May 16 0:40
 			1:00	M-Eur	MET%s	1945 Apr  2 2:00
 			1:00	Neth	MET%s	1977 Apr Sun>=1 2:00
 			1:00	M-Eur	MET%s
 
 # Norway
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Norway	1892	only	-	May	1	0:00	0	-
+Rule	Norway	1892	only	-	May	 1	0:00	0	-
+# Whitman gives 1916 May 21 - 1916 Oct 21; go with Shanks.
 Rule	Norway	1916	only	-	May	22	1:00	1:00	" DST"
 Rule	Norway	1916	only	-	Sep	30	0:00	0	-
-Rule	Norway	1945	only	-	Apr	2	2:00s	1:00	" DST"
-Rule	Norway	1945	only	-	Oct	1	2:00s	0	-
+# Shanks omits the following transition; go with Whitman.
+Rule	Norway	1935	only	-	Aug	11	0:00	1:00	" DST"
+# Whitman says DST observed until 1942 Nov 1, then 1943 Mar 29 - Oct 4,
+# 1944 Apr 3 - Oct 2, and 1945 Apr 1 - Oct 1; go with Shanks after 1940.
+Rule	Norway	1945	only	-	Apr	 2	2:00s	1:00	" DST"
+Rule	Norway	1945	only	-	Oct	 1	2:00s	0	-
 Rule	Norway	1959	1964	-	Mar	Sun>=15	2:00s	1:00	" DST"
 Rule	Norway	1959	1965	-	Sep	Sun>=15	2:00s	0	-
 Rule	Norway	1965	only	-	Apr	25	2:00s	1:00	" DST"
@@ -1305,8 +1423,9 @@ Zone	Europe/Oslo	0:43:00 -	LMT	1895
 			1:00	M-Eur	MET%s
 # Svalbard is like Europe/Oslo.
 #
-# Jan Mayen
-# no information
+# From Whitman:
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone Atlantic/Jan_Mayen	-1:00	-	EGT
 
 # Poland
 # Austrian and German Poland switched from the Julian to the Gregorian calendar
@@ -1314,20 +1433,23 @@ Zone	Europe/Oslo	0:43:00 -	LMT	1895
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Poland	1918	1919	-	Sep	16	2:00s	0	-
 Rule	Poland	1919	only	-	Apr	15	2:00s	1:00	" DST"
-Rule	Poland	1944	only	-	Oct	4	2:00	0	-
+# Whitman gives 1944 Nov 30; go with Shanks.
+Rule	Poland	1944	only	-	Oct	 4	2:00	0	-
+# For 1944-1948 Whitman gives the previous day; go with SHanks.
 Rule	Poland	1945	only	-	Apr	29	0:00	1:00	" DST"
-Rule	Poland	1945	only	-	Nov	1	0:00	0	-
+Rule	Poland	1945	only	-	Nov	 1	0:00	0	-
 Rule	Poland	1946	only	-	Apr	14	0:00	1:00	" DST"
-Rule	Poland	1946	only	-	Sep	7	0:00	0	-
-Rule	Poland	1947	only	-	May	4	0:00	1:00	" DST"
+Rule	Poland	1946	only	-	Sep	 7	0:00	0	-
+Rule	Poland	1947	only	-	May	 4	0:00	1:00	" DST"
 Rule	Poland	1947	1948	-	Oct	Sun>=1	0:00	0	-
 Rule	Poland	1948	only	-	Apr	18	0:00	1:00	" DST"
-Rule	Poland	1957	only	-	Jun	2	1:00s	1:00	" DST"
+# Whitman also gives 1949 Apr 9 - 1949 Oct 1; go with Shanks.
+Rule	Poland	1957	only	-	Jun	 2	1:00s	1:00	" DST"
 Rule	Poland	1957	1958	-	Sep	lastSun	1:00s	0	-
 Rule	Poland	1958	only	-	Mar	30	1:00s	1:00	" DST"
 Rule	Poland	1959	only	-	May	31	1:00s	1:00	" DST"
 Rule	Poland	1959	1961	-	Oct	Sun>=1	1:00s	0	-
-Rule	Poland	1960	only	-	Apr	3	1:00s	1:00	" DST"
+Rule	Poland	1960	only	-	Apr	 3	1:00s	1:00	" DST"
 Rule	Poland	1961	1964	-	May	Sun>=25	1:00s	1:00	" DST"
 Rule	Poland	1962	1964	-	Sep	lastSun	1:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1339,17 +1461,16 @@ Zone	Europe/Warsaw	1:24:00 -	LMT	1880
 			1:00	M-Eur	MET%s	1944 Oct
 			1:00	Poland	MET%s	1977 Apr  3 1:00
 			1:00	W-Eur	MET%s
-# This link is for backward compatibility with the old naming convention.
-Link Europe/Warsaw Poland
 
 # Portugal
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Port	1911	only	-	May	24	0:00	0	-
+Rule	Port	1911	only	-	May	24	 0:00	0	-
 Rule	Port	1916	only	-	Jun	17	23:00	1:00	" DST"
-Rule	Port	1916	only	-	Nov	1	1:00	0	-
+# Whitman gives 1916 Oct 31; go with Shanks.
+Rule	Port	1916	only	-	Nov	 1	 1:00	0	-
 Rule	Port	1917	only	-	Feb	28	23:00s	1:00	" DST"
 Rule	Port	1917	1921	-	Oct	14	23:00s	0	-
-Rule	Port	1918	only	-	Mar	1	23:00s	1:00	" DST"
+Rule	Port	1918	only	-	Mar	 1	23:00s	1:00	" DST"
 Rule	Port	1919	only	-	Feb	28	23:00s	1:00	" DST"
 Rule	Port	1920	only	-	Feb	29	23:00s	1:00	" DST"
 Rule	Port	1921	only	-	Feb	28	23:00s	1:00	" DST"
@@ -1357,24 +1478,30 @@ Rule	Port	1924	only	-	Apr	16	23:00s	1:00	" DST"
 Rule	Port	1924	only	-	Oct	14	23:00s	0	-
 Rule	Port	1926	only	-	Apr	17	23:00s	1:00	" DST"
 Rule	Port	1926	1929	-	Oct	Sat>=1	23:00s	0	-
-Rule	Port	1927	only	-	Apr	9	23:00s	1:00	" DST"
+Rule	Port	1927	only	-	Apr	 9	23:00s	1:00	" DST"
 Rule	Port	1928	only	-	Apr	14	23:00s	1:00	" DST"
 Rule	Port	1929	only	-	Apr	20	23:00s	1:00	" DST"
 Rule	Port	1931	only	-	Apr	18	23:00s	1:00	" DST"
+# Whitman gives 1931 Oct 8; go with Shanks.
 Rule	Port	1931	1932	-	Oct	Sat>=1	23:00s	0	-
-Rule	Port	1932	only	-	Apr	2	23:00s	1:00	" DST"
-Rule	Port	1934	only	-	Apr	4	23:00s	1:00	" DST"
+Rule	Port	1932	only	-	Apr	 2	23:00s	1:00	" DST"
+# Shanks gives 1934 Apr 4; go with Whitman.
+Rule	Port	1934	only	-	Apr	 7	23:00s	1:00	" DST"
+# Whitman gives 1934 Oct 5; go with Shanks.
 Rule	Port	1934	1938	-	Oct	Sat>=1	23:00s	0	-
-Rule	Port	1935	only	-	Apr	30	23:00s	1:00	" DST"
+# Shanks gives 1935 Apr 30; go with Whitman.
+Rule	Port	1935	only	-	Mar	30	23:00s	1:00	" DST"
 Rule	Port	1936	only	-	Apr	18	23:00s	1:00	" DST"
-Rule	Port	1937	only	-	Apr	3	23:00s	1:00	" DST"
+# Whitman gives 1937 Apr 2; go with Shanks.
+Rule	Port	1937	only	-	Apr	 3	23:00s	1:00	" DST"
 Rule	Port	1938	only	-	Mar	26	23:00s	1:00	" DST"
 Rule	Port	1939	only	-	Apr	15	23:00s	1:00	" DST"
+# Whitman gives 1939 Oct 7; go with Shanks.
 Rule	Port	1939	only	-	Nov	18	23:00s	0	-
 Rule	Port	1940	only	-	Feb	24	23:00s	1:00	" DST"
-Rule	Port	1940	only	-	Oct	7	23:00s	0	-
-Rule	Port	1941	only	-	Apr	5	23:00s	1:00	" DST"
-Rule	Port	1941	only	-	Oct	5	23:00s	0	-
+# Shanks gives 1940 Oct 7; go with Whitman.
+Rule	Port	1940	1941	-	Oct	 5	23:00s	0	-
+Rule	Port	1941	only	-	Apr	 5	23:00s	1:00	" DST"
 Rule	Port	1942	1945	-	Mar	Sat>=8	23:00s	1:00	" DST"
 Rule	Port	1942	only	-	Apr	25	22:00s	2:00	" DDST"
 Rule	Port	1942	only	-	Aug	15	22:00s	1:00	" DST"
@@ -1384,16 +1511,20 @@ Rule	Port	1943	1945	-	Aug	Sat>=25	22:00s	1:00	" DST"
 Rule	Port	1944	1945	-	Apr	Sat>=21	22:00s	2:00	" DDST"
 Rule	Port	1946	only	-	Apr	Sat>=1	23:00s	1:00	" DST"
 Rule	Port	1946	only	-	Oct	Sat>=1	23:00s	0	-
-Rule	Port	1947	1965	-	Apr	Sun>=1	2:00s	1:00	" DST"
-Rule	Port	1947	1965	-	Oct	Sun>=1	2:00s	0	-
-Rule	Port	1977	only	-	Mar	27	0:00s	1:00	" DST"
-Rule	Port	1977	only	-	Sep	25	0:00s	0	-
-Rule	Port	1978	1979	-	Apr	Sun>=1	0:00s	1:00	" DST"
-Rule	Port	1978	only	-	Oct	1	0:00s	0	-
-Rule	Port	1979	1982	-	Sep	lastSun	1:00s	0	-
-Rule	Port	1980	only	-	Mar	lastSun	0:00s	1:00	" DST"
-Rule	Port	1981	1982	-	Mar	lastSun	1:00s	1:00	" DST"
-Rule	Port	1983	only	-	Mar	lastSun	2:00s	1:00	" DST"
+Rule	Port	1947	1949	-	Apr	Sun>=1	 2:00s	1:00	" DST"
+Rule	Port	1947	1949	-	Oct	Sun>=1	 2:00s	0	-
+# Shanks says DST was observed in 1950; go with Whitman.
+# Whitman gives Oct lastSun for 1952 on; go with Shanks.
+Rule	Port	1951	1965	-	Apr	Sun>=1	 2:00s	1:00	" DST"
+Rule	Port	1951	1965	-	Oct	Sun>=1	 2:00s	0	-
+Rule	Port	1977	only	-	Mar	27	 0:00s	1:00	" DST"
+Rule	Port	1977	only	-	Sep	25	 0:00s	0	-
+Rule	Port	1978	1979	-	Apr	Sun>=1	 0:00s	1:00	" DST"
+Rule	Port	1978	only	-	Oct	 1	 0:00s	0	-
+Rule	Port	1979	1982	-	Sep	lastSun	 1:00s	0	-
+Rule	Port	1980	only	-	Mar	lastSun	 0:00s	1:00	" DST"
+Rule	Port	1981	1982	-	Mar	lastSun	 1:00s	1:00	" DST"
+Rule	Port	1983	only	-	Mar	lastSun	 2:00s	1:00	" DST"
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Lisbon	-0:36:32 -	LMT	1884
 			-0:37	-	LMT	1911 May 24   # Lisbon Mean Time
@@ -1420,8 +1551,6 @@ Zone Atlantic/Madeira	-1:07:36 -	LMT	1884		# Funchal
 			 0:00	-	WET	1977 Mar 27
 			 0:00	Port	WET%s	1983 Sep 25 1:00s
 			 0:00	W-Eur	WET%s
-# This link is for backward compatibility with the old naming convention.
-Link Europe/Lisbon Portugal
 
 # Slovakia
 Link Europe/Prague Europe/Bratislava
@@ -1430,14 +1559,14 @@ Link Europe/Prague Europe/Bratislava
 # Catholic Romania switched from the Julian to the Gregorian calendar on
 # on 1919 Mar 18.  Greek Orthodox Romania switched on 1920 Mar 18.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Romania	1931	only	-	Jul	24	0:00	0	-
-Rule	Romania	1932	only	-	May	22	0:00s	1:00	" DST"
-Rule	Romania	1932	1939	-	Oct	Sun>=1	0:00s	0	-
-Rule	Romania	1933	1939	-	Apr	Sun>=2	0:00s	1:00	" DST"
-Rule	Romania	1979	only	-	May	27	0:00	1:00	" DST"
-Rule	Romania	1979	only	-	Sep	lastSun	0:00	0	-
-Rule	Romania	1980	only	-	Apr	5	23:00	1:00	" DST"
-Rule	Romania	1980	only	-	Sep	lastSun	1:00	0	-
+Rule	Romania	1931	only	-	Jul	24	 0:00	0	-
+Rule	Romania	1932	only	-	May	21	 0:00s	1:00	" DST"
+Rule	Romania	1932	1939	-	Oct	Sun>=1	 0:00s	0	-
+Rule	Romania	1933	1939	-	Apr	Sun>=2	 0:00s	1:00	" DST"
+Rule	Romania	1979	only	-	May	27	 0:00	1:00	" DST"
+Rule	Romania	1979	only	-	Sep	lastSun	 0:00	0	-
+Rule	Romania	1980	only	-	Apr	 5	23:00	1:00	" DST"
+Rule	Romania	1980	only	-	Sep	lastSun	 1:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 			1:44	-	BMT	1931 Jul 24	# Bucharest MT
@@ -1473,12 +1602,10 @@ Zone Europe/Moscow	2:30:20 -	LMT	1880
 			2:00	1:00  "EET DST"	1991 Sep lastSun 2:00s
 			2:00	-	EET	1992 Jan 19 2:00s
 			3:00	Russia	MS%s
-# This link is for backward compatibility with the old naming convention.
-Link Europe/Moscow	Moscow
-Zone Asia/Sverdlovsk	4:02:34 -	LMT	1924 May  2
-			4:00	-	SSK	1957 Mar
-			5:00	Russia	SS%s	1991 Sep 29 3:00
-			4:00	Russia	SS%s
+Zone Asia/Yekaterinburg	4:02:34 -	LMT	1924 May  2
+			4:00	-	ESK	1957 Mar
+			5:00	Russia	ES%s	1991 Sep 29 3:00
+			4:00	Russia	ES%s
 Zone Asia/Omsk		4:53:36	-	LMT	1924 May  2
 			5:00	-	TSK	1957 Mar
 			6:00	Russia	TS%s	1991 Sep 29 3:00
@@ -1538,37 +1665,43 @@ Zone Europe/Ljubljana	0:58:04	-	LMT	1884
 
 # Spain
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Spain	1901	only	-	Jan	1	0:00	0	-
-Rule	Spain	1917	only	-	May	5	23:00s	1:00	" DST"
-Rule	Spain	1917	1919	-	Oct	6	23:00s	0	-
+Rule	Spain	1901	only	-	Jan	 1	 0:00	0	-
+# For 1917-1919 Whitman gives Apr Sat>=1 - Oct Sat>=1; go with Shanks.
+Rule	Spain	1917	only	-	May	 5	23:00s	1:00	" DST"
+Rule	Spain	1917	1919	-	Oct	 6	23:00s	0	-
 Rule	Spain	1918	only	-	Apr	15	23:00s	1:00	" DST"
-Rule	Spain	1919	only	-	Apr	5	23:00s	1:00	" DST"
+Rule	Spain	1919	only	-	Apr	 5	23:00s	1:00	" DST"
+# Whitman gives 1921 Feb 28 - Oct 14; go with Shanks.
 Rule	Spain	1924	only	-	Apr	16	23:00s	1:00	" DST"
-Rule	Spain	1924	only	-	Oct	4	23:00s	0	-
+# Whitman gives 1924 Oct 14; go with Shanks.
+Rule	Spain	1924	only	-	Oct	 4	23:00s	0	-
 Rule	Spain	1926	only	-	Apr	17	23:00s	1:00	" DST"
+# Whitman says no DST in 1929; go with Shanks.
 Rule	Spain	1926	1929	-	Oct	Sat>=1	23:00s	0	-
-Rule	Spain	1927	only	-	Apr	9	23:00s	1:00	" DST"
+Rule	Spain	1927	only	-	Apr	 9	23:00s	1:00	" DST"
 Rule	Spain	1928	only	-	Apr	14	23:00s	1:00	" DST"
 Rule	Spain	1929	only	-	Apr	20	23:00s	1:00	" DST"
+# Whitman gives 1937 Jun 16, 1938 Apr 16, 1940 Apr 13; go with Shanks.
 Rule	Spain	1937	only	-	May	22	23:00s	1:00	" DST"
 Rule	Spain	1937	1939	-	Oct	Sat>=1	23:00s	0	-
 Rule	Spain	1938	only	-	Mar	22	23:00s	1:00	" DST"
 Rule	Spain	1939	only	-	Apr	15	23:00s	1:00	" DST"
 Rule	Spain	1940	only	-	Mar	16	23:00s	1:00	" DST"
-Rule	Spain	1942	only	-	May	2	22:00s	2:00	" DDST"
-Rule	Spain	1942	only	-	Sep	1	22:00s	1:00	" DST"
+# Whitman says no DST 1942-1945; go with Shanks.
+Rule	Spain	1942	only	-	May	 2	22:00s	2:00	" DDST"
+Rule	Spain	1942	only	-	Sep	 1	22:00s	1:00	" DST"
 Rule	Spain	1943	1946	-	Apr	Sat>=13	22:00s	2:00	" DDST"
-Rule	Spain	1943	only	-	Oct	3	22:00s	1:00	" DST"
+Rule	Spain	1943	only	-	Oct	 3	22:00s	1:00	" DST"
 Rule	Spain	1944	only	-	Oct	10	22:00s	1:00	" DST"
-Rule	Spain	1945	only	-	Sep	30	1:00	1:00	" DST"
+Rule	Spain	1945	only	-	Sep	30	 1:00	1:00	" DST"
 Rule	Spain	1949	only	-	Apr	30	23:00	1:00	" DST"
-Rule	Spain	1949	only	-	Sep	30	1:00	0	-
+Rule	Spain	1949	only	-	Sep	30	 1:00	0	-
 Rule	Spain	1974	1975	-	Apr	Sat>=13	23:00	1:00	" DST"
-Rule	Spain	1974	1975	-	Oct	Sun>=1	1:00	0	-
+Rule	Spain	1974	1975	-	Oct	Sun>=1	 1:00	0	-
 Rule	Spain	1976	only	-	Mar	27	23:00	1:00	" DST"
-Rule	Spain	1976	1977	-	Sep	lastSun	1:00	0	-
-Rule	Spain	1977	1978	-	Apr	2	23:00	1:00	" DST"
-Rule	Spain	1978	only	-	Oct	1	1:00	0	-
+Rule	Spain	1976	1977	-	Sep	lastSun	 1:00	0	-
+Rule	Spain	1977	1978	-	Apr	 2	23:00	1:00	" DST"
+Rule	Spain	1978	only	-	Oct	 1	 1:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Madrid	 0:14:44 -	LMT	1901
 			 0:00	Spain	WET%s	1946 Sep 30
@@ -1594,9 +1727,12 @@ Zone Europe/Stockholm	1:12:12 -	LMT	1878 May 31
 # By the end of the 18th century clocks and watches became commonplace
 # and their performance improved enormously.  Communities began to keep
 # mean time in preference to apparent time -- Geneva from 1780 ....
-# From Shanks (1991):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Swiss	1894	only	-	Jun	1	0:00	0	-
+# From Whitman (who writes ``Midnight?''):
+Rule	Swiss	1940	only	-	Nov	 2	0:00	1:00	" DST"
+Rule	Swiss	1940	only	-	Dec	31	0:00	0	" DST"
+# From Shanks (1991):
 Rule	Swiss	1941	1942	-	May	Sun>=1	2:00	1:00	" DST"
 Rule	Swiss	1941	1942	-	Oct	Sun>=1	0:00	0	" DST"
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1618,12 +1754,17 @@ Rule	Turkey	1921	only	-	Apr	 3	0:00	1:00	" DST"
 Rule	Turkey	1921	only	-	Oct	 3	0:00	0	-
 Rule	Turkey	1922	only	-	Mar	26	0:00	1:00	" DST"
 Rule	Turkey	1922	only	-	Oct	 8	0:00	0	-
+# Whitman gives 1923 Apr 28 - Sep 16 and no DST in 1924-1925; go with Shanks.
 Rule	Turkey	1924	only	-	May	13	0:00	1:00	" DST"
 Rule	Turkey	1924	1925	-	Oct	 1	0:00	0	-
 Rule	Turkey	1925	only	-	May	 1	0:00	1:00	" DST"
+# Shanks omits the first two transitions in 1940; go with Whitman.
+Rule	Turkey	1940	only	-	Jun	30	0:00	1:00	" DST"
+Rule	Turkey	1940	only	-	Oct	 5	0:00	0	-
 Rule	Turkey	1940	only	-	Dec	 1	0:00	1:00	" DST"
 Rule	Turkey	1941	only	-	Sep	21	0:00	0	-
 Rule	Turkey	1942	only	-	Apr	 1	0:00	1:00	" DST"
+# Whitman omits the next two transition and gives 1945 Oct 1; go with Shanks.
 Rule	Turkey	1942	only	-	Nov	 1	0:00	0	-
 Rule	Turkey	1945	only	-	Apr	 2	0:00	1:00	" DST"
 Rule	Turkey	1945	only	-	Oct	 8	0:00	0	-
@@ -1654,7 +1795,7 @@ Rule	Turkey	1979	1980	-	Apr	Sun>=1	3:00	1:00	" DST"
 Rule	Turkey	1979	1982	-	Oct	Mon>=11	0:00	0	-
 Rule	Turkey	1981	1982	-	Mar	lastSun	3:00	1:00	" DST"
 Rule	Turkey	1983	only	-	Jul	31	0:00	1:00	" DST"
-Rule	Turkey	1983	only	-	Oct	2	0:00	0	-
+Rule	Turkey	1983	only	-	Oct	 2	0:00	0	-
 Rule	Turkey	1985	only	-	Apr	20	0:00	1:00	" DST"
 Rule	Turkey	1985	only	-	Sep	28	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1665,17 +1806,15 @@ Zone	Europe/Istanbul	1:55:52 -	LMT	1880
 			2:00	Turkey	EET%s	1986
 			2:00	M-Eur	EET%s
 Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
-# This link is for backward compatibility with the old naming convention.
-Link Europe/Istanbul	Turkey
 
 # Ukraine
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Ukraine	1919	only	-	Jul	1	2:00	1:00	" DST"
-Rule	Ukraine	1919	only	-	Aug	16	0:00	0	-
+Rule	Ukraine	1919	only	-	Jul	 1	 2:00	1:00	" DST"
+Rule	Ukraine	1919	only	-	Aug	16	 0:00	0	-
 Rule	Ukraine	1921	only	-	Feb	14	23:00	1:00	" DST"
 Rule	Ukraine	1921	only	-	Mar	21	23:00	2:00	" DDST"
-Rule	Ukraine	1921	only	-	Sep	1	0:00	1:00	" DST"
-Rule	Ukraine	1921	only	-	Oct	1	0:00	0	-
+Rule	Ukraine	1921	only	-	Sep	 1	 0:00	1:00	" DST"
+Rule	Ukraine	1921	only	-	Oct	 1	 0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Kiev	2:02:04 -	LMT	1880
 			2:02	Russia	LST%s	1919 Jul  1 2:00

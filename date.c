@@ -121,7 +121,7 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #endif /* !defined D_OPTION */
 
 /*
-** Finally, features.
+** Finally, a feature.
 */
 
 #ifndef USG_INPUT
@@ -129,16 +129,6 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #define USG_INPUT
 #endif /* !defined NO_USG_INPUT */
 #endif /* !defined USG_INPUT */
-
-#ifndef USG_OUTPUT
-#ifndef NO_USG_OUTPUT
-#define USG_OUTPUT
-#endif /* !defined NO_USG_OUTPUT */
-#endif /* !defined USG_OUTPUT */
-
-/*
-** So much for features.
-*/
 
 #ifndef TIME_USER
 #ifdef OTIME_MSG
@@ -531,6 +521,35 @@ char *	format;
 	(void) exit(retval);
 }
 
+#ifdef USE_STRFTIME
+
+/*
+** ...then you don't get System V compatibility (or at least not from me).
+*/
+
+extern size_t	strftime();
+
+static void
+timeout(fp, format, tmp)
+FILE *	fp;
+char *	format;
+tm *	tmp;
+{
+	char	buf[1024];
+	int	result;
+
+	result = strftime(buf, sizeof buf, format, tmp);
+	if (result == 0 && *format != '\0') {
+		(void) fprintf(stderr,
+			"date: error: strftime: result is too long\n");
+		errensure();
+		(void) exit(retval);
+	}
+	(void) fwrite(buf, 1, result, fp);
+}
+
+#else /* !defined USE_STRFTIME */
+
 static char *	wday_names[] = {
 	"Sunday",	"Monday",	"Tuesday",	"Wednesday",
 	"Thursday",	"Friday",	"Saturday"
@@ -659,7 +678,6 @@ struct tm *	tmp;
 		case '%':
 			(void) putc('%', fp);
 			break;
-#ifdef USG_OUTPUT
 /*
 ** Format characters below from:
 ** the System V Release 2.0 description of the date command;
@@ -686,10 +704,11 @@ struct tm *	tmp;
 		case 'T':
 			timeout(fp, "%X", tmp);
 			break;
-#endif /* defined USG_OUTPUT */
 		}
 	}
 }
+
+#endif /* !defined USE_STRFTIME */
 
 /*
 ** If a jurisdiction shifts time *without* shifting whether time is

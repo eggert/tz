@@ -115,7 +115,13 @@ char *	argv[];
 		}
 		free((char *) tp);
 	}
-	return 0;
+	if (fflush(stdout) || ferror(stdout)) {
+		(void) fprintf(stderr,
+			"%s: wild result writing to standard output\n",
+			argv[0]);
+		exit(1);
+	}
+	exit(0);
 }
 
 static
@@ -123,11 +129,17 @@ show(zone, t, v)
 char *	zone;
 long	t;
 {
+	struct tm *		tmp;
+	extern struct tm *	newlocaltime();
+
 	(void) printf("%-*s  ", longest, zone);
 	if (v)
 		(void) printf("%.24s GMT = ", asctime(gmtime(&t)));
-	(void) printf("%.24s", newctime(&t));
+	tmp = newlocaltime(&t);
+	(void) printf("%.24s", asctime(tmp));
 	if (*tz_abbr != '\0')
 		(void) printf(" %s", tz_abbr);
+	if (v)
+		(void) printf(" isdst=%d\n", tmp->tm_isdst);
 	(void) printf("\n");
 }

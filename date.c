@@ -119,7 +119,7 @@ char *		argv[];
 	(void) setlocale(LC_TIME, "");
 	(void) time(&now);
 	format = value = NULL;
-	while ((ch = getopt(argc, argv, "ucnd:t:a:")) != EOF) {
+	while ((ch = getopt(argc, argv, "ucnd:t:a:")) != EOF && ch != -1) {
 		switch (ch) {
 		default:
 			usage();

@@ -186,8 +186,8 @@ A zone line has the form
 .sp
 .nf
 .ti +.5i
-.ta \w'Zone\0\0'u +\w'Australia/South\-west\0\0'u +\w'GMTOFF\0\0'u +\w'RULES\0\0'u +\w'FORMAT\0\0'u
-Zone	NAME	GMTOFF	RULES	FORMAT	[UNTIL]
+.ta \w'Zone\0\0'u +\w'Australia/South\-west\0\0'u +\w'GMTOFF\0\0'u +\w'RULES/STDOFF\0\0'u +\w'FORMAT\0\0'u
+Zone	NAME	GMTOFF	RULES/STDOFF	FORMAT	[UNTIL]
 .sp
 For example:
 .sp
@@ -211,8 +211,9 @@ and
 fields of rule lines;
 begin the field with a minus sign if time must be subtracted from GMT.
 .TP
-.B RULES
-The name of the rule(s) that apply in the time zone.
+.B RULES/STDOFF
+The name of the rule(s) that apply in the time zone or,
+alternately, an amount of time to add to local standard time.
 If this field is
 .B \-
 then standard time always applies in the time zone.

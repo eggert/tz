@@ -2,6 +2,7 @@
 ** XXX--do the right thing if time_t is double and
 ** the value fed to gmtime or localtime is very very negative or
 ** very very positive (which causes problems with the days-and-rem logic).
+** Also: do the right thing in mktime if time_t is double.
 */
 
 /*
@@ -135,9 +136,9 @@ static const char *	getsecs P((const char * strp, long * secsp));
 static const char *	getoffset P((const char * strp, long * offsetp));
 static const char *	getrule P((const char * strp, struct rule * rulep));
 static void		gmtload P((struct state * sp));
-static void		gmtsub P((const time_t * timep, long offset,
+static struct tm *	gmtsub P((const time_t * timep, long offset,
 				struct tm * tmp));
-static void		localsub P((const time_t * timep, long offset,
+static struct tm *	localsub P((const time_t * timep, long offset,
 				struct tm * tmp));
 static int		increment_overflow P((int * number, int delta));
 static int		long_increment_overflow P((long * number, int delta));
@@ -147,18 +148,18 @@ static int		normalize_overflow P((int * tensptr, int * unitsptr,
 				int base));
 static void		settzname P((void));
 static time_t		time1 P((struct tm * tmp,
-				void(*funcp) P((const time_t *,
+				struct tm * (*funcp) P((const time_t *,
 				long, struct tm *)),
 				long offset));
 static time_t		time2 P((struct tm *tmp,
-				void(*funcp) P((const time_t *,
+				struct tm * (*funcp) P((const time_t *,
 				long, struct tm*)),
 				long offset, int * okayp));
 static time_t		time2sub P((struct tm *tmp,
-				void(*funcp) P((const time_t *,
+				struct tm * (*funcp) P((const time_t *,
 				long, struct tm*)),
 				long offset, int * okayp, int do_norm_secs));
-static void		timesub P((const time_t * timep, long offset,
+static struct tm *	timesub P((const time_t * timep, long offset,
 				const struct state * sp, struct tm * tmp));
 static int		tmcomp P((const struct tm * atmp,
 				const struct tm * btmp));
@@ -1033,7 +1034,7 @@ tzset P((void))
 */
 
 /*ARGSUSED*/
-static void
+static struct tm *
 localsub(timep, offset, tmp)
 const time_t * const	timep;
 const long		offset;
@@ -1042,14 +1043,13 @@ struct tm * const	tmp;
 	register struct state *		sp;
 	register const struct ttinfo *	ttisp;
 	register int			i;
+	register struct tm *		result;
 	const time_t			t = *timep;
 
 	sp = lclptr;
 #ifdef ALL_STATE
-	if (sp == NULL) {
-		gmtsub(timep, offset, tmp);
-		return;
-	}
+	if (sp == NULL)
+		return gmtsub(timep, offset, tmp);
 #endif /* defined ALL_STATE */
 	if (sp->timecnt == 0 || t < sp->ats[0]) {
 		i = 0;
@@ -1071,12 +1071,13 @@ struct tm * const	tmp;
 	**	t += ttisp->tt_gmtoff;
 	**	timesub(&t, 0L, sp, tmp);
 	*/
-	timesub(&t, ttisp->tt_gmtoff, sp, tmp);
+	result = timesub(&t, ttisp->tt_gmtoff, sp, tmp);
 	tmp->tm_isdst = ttisp->tt_isdst;
 	tzname[tmp->tm_isdst] = &sp->chars[ttisp->tt_abbrind];
 #ifdef TM_ZONE
 	tmp->TM_ZONE = &sp->chars[ttisp->tt_abbrind];
 #endif /* defined TM_ZONE */
+	return result;
 }
 
 struct tm *
@@ -1084,8 +1085,7 @@ localtime(timep)
 const time_t * const	timep;
 {
 	tzset();
-	localsub(timep, 0L, &tm);
-	return &tm;
+	return localsub(timep, 0L, &tm);
 }
 
 /*
@@ -1097,20 +1097,21 @@ localtime_r(timep, tm)
 const time_t * const	timep;
 struct tm *		tm;
 {
-	localsub(timep, 0L, tm);
-	return tm;
+	return localsub(timep, 0L, tm);
 }
 
 /*
 ** gmtsub is to gmtime as localsub is to localtime.
 */
 
-static void
+static struct tm *
 gmtsub(timep, offset, tmp)
 const time_t * const	timep;
 const long		offset;
 struct tm * const	tmp;
 {
+	register struct tm *	result;
+
 	if (!gmt_is_set) {
 		gmt_is_set = TRUE;
 #ifdef ALL_STATE
@@ -1119,7 +1120,7 @@ struct tm * const	tmp;
 #endif /* defined ALL_STATE */
 			gmtload(gmtptr);
 	}
-	timesub(timep, offset, gmtptr, tmp);
+	result = timesub(timep, offset, gmtptr, tmp);
 #ifdef TM_ZONE
 	/*
 	** Could get fancy here and deliver something such as
@@ -1139,14 +1140,14 @@ struct tm * const	tmp;
 #endif /* State Farm */
 	}
 #endif /* defined TM_ZONE */
+	return result;
 }
 
 struct tm *
 gmtime(timep)
 const time_t * const	timep;
 {
-	gmtsub(timep, 0L, &tm);
-	return &tm;
+	return gmtsub(timep, 0L, &tm);
 }
 
 /*
@@ -1158,8 +1159,7 @@ gmtime_r(timep, tm)
 const time_t * const	timep;
 struct tm *		tm;
 {
-	gmtsub(timep, 0L, tm);
-	return tm;
+	return gmtsub(timep, 0L, tm);
 }
 
 #ifdef STD_INSPIRED
@@ -1169,13 +1169,12 @@ offtime(timep, offset)
 const time_t * const	timep;
 const long		offset;
 {
-	gmtsub(timep, offset, &tm);
-	return &tm;
+	return gmtsub(timep, offset, &tm);
 }
 
 #endif /* defined STD_INSPIRED */
 
-static void
+static struct tm *
 timesub(timep, offset, sp, tmp)
 const time_t * const			timep;
 const long				offset;
@@ -1275,6 +1274,7 @@ register struct tm * const		tmp;
 #ifdef TM_GMTOFF
 	tmp->TM_GMTOFF = offset;
 #endif /* defined TM_GMTOFF */
+	return tmp;
 }
 
 char *
@@ -1391,7 +1391,7 @@ register const struct tm * const btmp;
 static time_t
 time2sub(tmp, funcp, offset, okayp, do_norm_secs)
 struct tm * const	tmp;
-void (* const		funcp) P((const time_t*, long, struct tm*));
+struct tm * (* const	funcp) P((const time_t*, long, struct tm*));
 const long		offset;
 int * const		okayp;
 const int		do_norm_secs;
@@ -1486,7 +1486,7 @@ const int		do_norm_secs;
 	*/
 	t = TYPE_SIGNED(time_t) ? 0 : (((unsigned long) 1) << bits);
 	for ( ; ; ) {
-		(*funcp)(&t, offset, &mytm);
+		/* XXX */ (void) (*funcp)(&t, offset, &mytm);
 		dir = tmcomp(&mytm, &yourtm);
 		if (dir != 0) {
 			if (bits-- < 0)
@@ -1524,7 +1524,7 @@ const int		do_norm_secs;
 					continue;
 				newt = t + sp->ttis[j].tt_gmtoff -
 					sp->ttis[i].tt_gmtoff;
-				(*funcp)(&newt, offset, &mytm);
+				/* XXX */ (void) (*funcp)(&newt, offset, &mytm);
 				if (tmcomp(&mytm, &yourtm) != 0)
 					continue;
 				if (mytm.tm_isdst != yourtm.tm_isdst)
@@ -1543,15 +1543,15 @@ label:
 	if ((newt < t) != (saved_seconds < 0))
 		return WRONG;
 	t = newt;
-	(*funcp)(&t, offset, tmp);
-	*okayp = TRUE;
+	if ((*funcp)(&t, offset, tmp))
+		*okayp = TRUE;
 	return t;
 }
 
 static time_t
 time2(tmp, funcp, offset, okayp)
 struct tm * const	tmp;
-void (* const		funcp) P((const time_t*, long, struct tm*));
+struct tm * (* const	funcp) P((const time_t*, long, struct tm*));
 const long		offset;
 int * const		okayp;
 {
@@ -1569,7 +1569,7 @@ int * const		okayp;
 static time_t
 time1(tmp, funcp, offset)
 struct tm * const	tmp;
-void (* const		funcp) P((const time_t *, long, struct tm *));
+struct tm * (* const	funcp) P((const time_t *, long, struct tm *));
 const long		offset;
 {
 	register time_t			t;

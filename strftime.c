@@ -52,6 +52,8 @@ struct lc_time_T {
 	const char *	date_fmt;
 };
 
+static struct lc_time_T		localebuf;
+
 static const struct lc_time_T	C_time_locale = {
 	{
 		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -99,9 +101,8 @@ static const struct lc_time_T	C_time_locale = {
 
 static char *	_add P((const char *, char *, const char *));
 static char *	_conv P((int, const char *, char *, const char *));
-static char *_fmt P((const char *, const struct tm *, char *, const char *,
-			struct lc_time_T *));
-static const struct lc_time_T *	_loc P((struct lc_time_T *));
+static char *_fmt P((const char *, const struct tm *, char *, const char *));
+static const struct lc_time_T *	_loc P((void));
 
 size_t strftime P((char *, size_t, const char *, const struct tm *));
 
@@ -115,11 +116,9 @@ const char * const	format;
 const struct tm *	t;
 {
 	char *			p;
-	struct lc_time_T	localebuf;
 
 	localebuf.mon[0] = 0;
-	p = _fmt(((format == NULL) ? "%c" : format),
-		t, s, s + maxsize, &localebuf);
+	p = _fmt(((format == NULL) ? "%c" : format), t, s, s + maxsize);
 	if (p == s + maxsize)
 		return 0;
 	*p = '\0';
@@ -127,12 +126,11 @@ const struct tm *	t;
 }
 
 static char *
-_fmt(format, t, pt, ptlim, ptloc)
+_fmt(format, t, pt, ptlim)
 const char *		format;
 const struct tm *	t;
 char *			pt;
 const char *		ptlim;
-struct lc_time_T *	ptloc;
 {
 	for ( ; *format; ++format) {
 		if (*format == '%') {
@@ -143,23 +141,23 @@ label:
 				break;
 			case 'A':
 				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
-					"?" : _loc(ptloc)->weekday[t->tm_wday],
+					"?" : _loc()->weekday[t->tm_wday],
 					pt, ptlim);
 				continue;
 			case 'a':
 				pt = _add((t->tm_wday < 0 || t->tm_wday > 6) ?
-					"?" : _loc(ptloc)->wday[t->tm_wday],
+					"?" : _loc()->wday[t->tm_wday],
 					pt, ptlim);
 				continue;
 			case 'B':
 				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
-					"?" : _loc(ptloc)->month[t->tm_mon],
+					"?" : _loc()->month[t->tm_mon],
 					pt, ptlim);
 				continue;
 			case 'b':
 			case 'h':
 				pt = _add((t->tm_mon < 0 || t->tm_mon > 11) ?
-					"?" : _loc(ptloc)->mon[t->tm_mon],
+					"?" : _loc()->mon[t->tm_mon],
 					pt, ptlim);
 				continue;
 			case 'C':
@@ -174,11 +172,10 @@ label:
 					"%02d", pt, ptlim);
 				continue;
 			case 'c':
-				pt = _fmt(_loc(ptloc)->c_fmt, t,
-					pt, ptlim, ptloc);
+				pt = _fmt(_loc()->c_fmt, t, pt, ptlim);
 				continue;
 			case 'D':
-				pt = _fmt("%m/%d/%y", t, pt, ptlim, ptloc);
+				pt = _fmt("%m/%d/%y", t, pt, ptlim);
 				continue;
 			case 'd':
 				pt = _conv(t->tm_mday, "%02d", pt, ptlim);
@@ -257,21 +254,21 @@ label:
 				continue;
 			case 'p':
 				pt = _add((t->tm_hour >= 12) ?
-					_loc(ptloc)->pm :
-					_loc(ptloc)->am,
+					_loc()->pm :
+					_loc()->am,
 					pt, ptlim);
 				continue;
 			case 'R':
-				pt = _fmt("%H:%M", t, pt, ptlim, ptloc);
+				pt = _fmt("%H:%M", t, pt, ptlim);
 				continue;
 			case 'r':
-				pt = _fmt("%I:%M:%S %p", t, pt, ptlim, ptloc);
+				pt = _fmt("%I:%M:%S %p", t, pt, ptlim);
 				continue;
 			case 'S':
 				pt = _conv(t->tm_sec, "%02d", pt, ptlim);
 				continue;
 			case 'T':
-				pt = _fmt("%H:%M:%S", t, pt, ptlim, ptloc);
+				pt = _fmt("%H:%M:%S", t, pt, ptlim);
 				continue;
 			case 't':
 				pt = _add("\t", pt, ptlim);
@@ -358,7 +355,7 @@ label:
 				** "date as dd-bbb-YYYY"
 				** (ado, 5/24/93)
 				*/
-				pt = _fmt("%e-%b-%Y", t, pt, ptlim, ptloc);
+				pt = _fmt("%e-%b-%Y", t, pt, ptlim);
 				continue;
 			case 'W':
 				pt = _conv((t->tm_yday + 7 -
@@ -370,12 +367,10 @@ label:
 				pt = _conv(t->tm_wday, "%d", pt, ptlim);
 				continue;
 			case 'X':
-				pt = _fmt(_loc(ptloc)->X_fmt, t,
-					pt, ptlim, ptloc);
+				pt = _fmt(_loc()->X_fmt, t, pt, ptlim);
 				continue;
 			case 'x':
-				pt = _fmt(_loc(ptloc)->x_fmt, t,
-					pt, ptlim, ptloc);
+				pt = _fmt(_loc()->x_fmt, t, pt, ptlim);
 				continue;
 			case 'y':
 				pt = _conv((t->tm_year + TM_YEAR_BASE) % 100,
@@ -398,8 +393,7 @@ label:
 				continue;
 #ifdef EGGERT
 			case '+':
-				pt = _fmt(_loc(ptloc)->date_fmt, t,
-					pt, ptlim, ptloc);
+				pt = _fmt(_loc()->date_fmt, t, pt, ptlim);
 				continue;
 #endif /* defined EGGERT */
 			case '%':
@@ -444,8 +438,7 @@ const char * const	ptlim;
 }
 
 static const struct lc_time_T *
-_loc(ptloc)
-struct lc_time_T *	ptloc;
+_loc P((void))
 {
 	static const char	locale_home[] = LOCALE_HOME;
 	static const char	lc_time[] = "LC_TIME";
@@ -464,10 +457,10 @@ struct lc_time_T *	ptloc;
 	size_t			bufsize;
 
 	/*
-	** Use ptloc->mon[0] to signal whether locale is already set up.
+	** Use localebuf.mon[0] to signal whether locale is already set up.
 	*/
-	if (ptloc->mon[0])
-		return ptloc;
+	if (localebuf.mon[0])
+		return &localebuf;
 #if HAVE_SETLOCALE - 0
 	name = setlocale(LC_TIME, (char *) NULL);
 #endif /* HAVE_SETLOCALE */
@@ -484,9 +477,9 @@ struct lc_time_T *	ptloc;
 	lbuf = locale_buf;
 	if (lbuf && strcmp(name, lbuf) == 0) {
 		p = lbuf;
-		for (ap=(const char **)ptloc; ap<(const char **)(ptloc + 1); ap++)
+		for (ap=(const char **)&localebuf; ap<(const char **)(&localebuf + 1); ap++)
 			*ap = p += strlen(p) + 1;
-		return ptloc;
+		return &localebuf;
 	}
 	/*
 	** Slurp the locale file into the cache.
@@ -525,11 +518,11 @@ struct lc_time_T *	ptloc;
 	if (close(fd) != 0)
 		goto bad_lbuf;
 	/*
-	** Parse the locale file into *ptloc.
+	** Parse the locale file into localebuf.
 	*/
 	if (plim[-1] != '\n')
 		goto bad_lbuf;
-	for (ap=(const char **)ptloc; ap<(const char **)(ptloc + 1); ap++) {
+	for (ap=(const char **)&localebuf; ap<(const char **)(&localebuf + 1); ap++) {
 		if (p == plim)
 			goto bad_lbuf;
 		*ap = p;
@@ -542,14 +535,14 @@ struct lc_time_T *	ptloc;
 	*/
 	locale_buf = lbuf;
 
-	return ptloc;
+	return &localebuf;
 
 bad_lbuf:
 	free(lbuf);
 bad_locale:
 	(void) close(fd);
 no_locale:
-	*ptloc = C_time_locale;
+	localebuf = C_time_locale;
 	locale_buf = locale_buf_C;
-	return ptloc;
+	return &localebuf;
 }

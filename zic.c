@@ -1496,6 +1496,10 @@ const int			zonecount;
 		eat(zp->z_filename, zp->z_linenum);
 		startisdst = -1;
 		*startbuf = '\0';
+		if (zp->z_format != NULL &&
+			strchr(zp->z_format, '%') == NULL &&
+			strchr(zp->z_format, '/') == NULL)
+				(void) strcpy(startbuf, zp->z_format);
 		if (zp->z_nrules == 0) {
 			stdoff = zp->z_stdoff;
 			doabbr(startbuf, zp->z_format,

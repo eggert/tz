@@ -4,21 +4,19 @@
 
 #include "stdio.h"
 
-#ifndef lint
-#ifndef NOID
+#if !defined lint && !defined NOID
 static char	sccsid[] = "%W%";
-#endif /* !NOID */
-#endif /* !lint */
+#endif /* !defined lint && !defined NOID */
 
-#ifndef alloc_t
+#if !defined alloc_t
 #define alloc_t	unsigned
-#endif /* !alloc_t */
+#endif /* !defined alloc_t */
 
-#ifdef MAL
+#if defined MAL
 #define NULLMAL(x)	((x) == NULL || (x) == MAL)
-#else /* !MAL */
+#else /* !defined MAL */
 #define NULLMAL(x)	((x) == NULL)
-#endif /* !MAL */
+#endif /* !defined MAL */
 
 extern char *	calloc();
 extern char *	malloc();
@@ -28,18 +26,25 @@ extern char *	strcpy();
 char *
 imalloc(n)
 {
-#ifdef MAL
+#if defined MAL
 	register char *	result;
 
 	if (n == 0)
 		n = 1;
 	result = malloc((alloc_t) n);
 	return (result == MAL) ? NULL : result;
-#else /* !MAL */
+#else /* !defined MAL */
 	if (n == 0)
 		n = 1;
+#if defined __TURBOC__
+	/*
+	** Beat a TURBOC bug.
+	*/
+	if ((n & 1) != 0)
+		++n;
+#endif /* defined __TURBOC__ */
 	return malloc((alloc_t) n);
-#endif /* !MAL */
+#endif /* !defined MAL */
 }
 
 char *
@@ -47,6 +52,10 @@ icalloc(nelem, elsize)
 {
 	if (nelem == 0 || elsize == 0)
 		nelem = elsize = 1;
+#if defined __TURBOC__
+	if ((nelem & 1) != 0 && (elsize & 1) != 0)
+		++nelem;
+#endif /* defined __TURBOC__ */
 	return calloc((alloc_t) nelem, (alloc_t) elsize);
 }
 
@@ -58,6 +67,10 @@ char *	pointer;
 		return imalloc(size);
 	if (size == 0)
 		size = 1;
+#if defined __TURBOC__
+	if ((size & 1) != 0)
+		++size;
+#endif /* defined __TURBOC__ */
 	return realloc(pointer, (alloc_t) size);
 }
 

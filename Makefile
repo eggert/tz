@@ -16,7 +16,7 @@ TZDIR=		/etc/zoneinfo
 
 TZLIB=		/usr/lib/libz.a
 
-CFLAGS=		-DOBJECTID -DTZDIR=\"$(TZDIR)\"
+CFLAGS=		-DTZDIR=\"$(TZDIR)\"
 
 # If you're running a Berkeley system, uncomment the next line.
 # CFLAGS=		-DOBJECTID -DTZDIR=\"$(TZDIR)\" -Dstrchr=index

@@ -13,10 +13,10 @@ static char	elsieid[] = "%W%";
 */
 
 #ifdef HAVE_LONG_DOUBLE
-	typedef long double long_double;
+#define long_double	long double
 #endif /* defined HAVE_LONG_DOUBLE */
 #ifndef HAVE_LONG_DOUBLE
-	typedef double long_double;
+#define long_double	double
 #endif /* !defined HAVE_LONG_DOUBLE */
 
 double

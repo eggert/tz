@@ -78,7 +78,7 @@ extern int	unlink P((const char * filename));
 
 #ifndef MAXPATHLEN
 #ifdef unix
-#include <sys/param.h>
+#include "sys/param.h"
 #endif /* defined unix */
 #endif /* !defined MAXPATHLEN */
 
@@ -102,7 +102,6 @@ extern int	unlink P((const char * filename));
 
 #define alloc_size_t	size_t
 #define qsort_size_t	size_t
-#define fread_size_t	size_t
 #define fwrite_size_t	size_t
 
 #else /* !defined __STDC__ */
@@ -121,10 +120,6 @@ typedef int		qsort_size_t;
 typedef unsigned	qsort_size_t;
 #endif /* !defined BSD */
 #endif /* !defined qsort_size_t */
-
-#ifndef fread_size_t
-typedef int		fread_size_t;
-#endif /* !defined fread_size_t */
 
 #ifndef fwrite_size_t
 typedef int		fwrite_size_t;

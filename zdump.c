@@ -130,10 +130,9 @@ char *	argv[];
 			exit(1);
 		}
 		{
-			struct tzhead *	tzhp;
 			char		code[4];
 
-			(void) fseek(fp, (long) sizeof tzhp->tzh_reserved, 0);
+(void) fseek(fp, (long) sizeof ((struct tzhead *) 0)->tzh_reserved, 0);
 			if (fread((char *) code, sizeof code, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
 			timecnt = tzdecode(code);

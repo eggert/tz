@@ -227,13 +227,19 @@ in decreasing order of importance:
 	Use `_' to represent a space.
 	Omit `.' from abbreviations in names, e.g. prefer `St_Helena'
 		to `St._Helena'.
+	Do not change established names if they only marginally
+		violate the above rules.  For example, don't change
+		the existing name `Rome' to `Milan' merely because
+		Milan's population has grown to be somewhat greater
+		than Rome's.
+	If a name is changed, put its old spelling in the `backward' file.
 
 The file `zone.tab' lists the geographical locations used to name
 time zone rule files.
 
 Older versions of this package used a different naming scheme,
 and these older names are still supported.
-See the file `backwards' for most of these older names
+See the file `backward' for most of these older names
 (e.g. `US/Eastern' instead of `America/New_York').
 The other old-fashioned names still supported are
 `WET', `CET', `MET', `EET' (see the file `europe'),

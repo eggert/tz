@@ -29,7 +29,7 @@
 #	If a name is ambiguous, use a less ambiguous alternative;
 #		e.g. many cities are named San Jose and Georgetown, so
 #		prefer `Costa_Rica' to `San_Jose' and `Guyana' to `Georgetown'.
-#	Keep locations compact.   Use cities or small islands, not countries
+#	Keep locations compact.  Use cities or small islands, not countries
 #		or regions, so that any future time zone changes do not split
 #		locations into different time zones.  E.g. prefer `Paris'
 #		to `France', since France has had multiple time zones.
@@ -52,13 +52,13 @@
 #
 # I made up the following time zone abbreviations; corrections are welcome!
 #		LMT	Local Mean Time
-#      -2:00	CVT	Cape Verde Time (no longer used)
-#      -1:00	AAT	Atlantic Africa Time
-#	0:00	WAT	West Africa Time
-#	1:00	CAT	Central Africa Time
-#	2:00	SAT	South Africa Time
-#	3:00	EAT	East Africa Time
-#	4:00	SMT	Seychelles and Mascarene Time
+#	-2:00	CVT	Cape Verde Time (no longer used)
+#	-1:00	AAT	Atlantic Africa Time
+#	 0:00	WAT	West Africa Time
+#	 1:00	CAT	Central Africa Time
+#	 2:00	SAT	South Africa Time
+#	 3:00	EAT	East Africa Time
+#	 4:00	SMT	Seychelles and Mascarene Time
 # The final `T' is replaced by `ST' for summer time, e.g. `SAST'.
 # BEAT is British East Africa Time, which was 2:30 before 1948 and 2:45 after.
 

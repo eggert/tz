@@ -36,7 +36,7 @@ char *	format;
 	if (string == NULL || format == NULL)
 		return result;
 	fbuf = malloc((alloc_t) (2 * strlen(format) + 4));
-	if (fbuf == MAL)
+	if (fbuf == MAL || fbuf == NULL)
 		return result;
 	fp = format;
 	tp = fbuf;

@@ -97,7 +97,8 @@ char *	argv[];
 		if (c == 'v')
 			vflag = 1;
 		else	cutoff = optarg;
-	if (c != EOF || optind == argc - 1 && strcmp(argv[optind], "=") == 0) {
+	if (c != EOF ||
+	   (optind == argc - 1 && strcmp(argv[optind], "=") == 0)) {
 		(void) fprintf(stderr,
 			"%s: usage is %s [ -v ] [ -c cutoff ] zonename ...\n",
 			argv[0], argv[0]);

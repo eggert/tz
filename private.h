@@ -54,6 +54,10 @@ static char	privatehid[] = "%W%";
 #define HAVE_SYMLINK		1
 #endif /* !defined HAVE_SYMLINK */
 
+#ifndef HAVE_SYS_STAT_H
+#define HAVE_SYS_STAT_H		1
+#endif /* !defined HAVE_SYS_STAT_H */
+
 #ifndef HAVE_SYS_WAIT_H
 #define HAVE_SYS_WAIT_H		1
 #endif /* !defined HAVE_SYS_WAIT_H */
@@ -121,16 +125,6 @@ static char	privatehid[] = "%W%";
 /*
 ** Workarounds for compilers/systems.
 */
-
-/*
-** SunOS 4.1.1 cc lacks const.
-*/
-
-#ifndef const
-#ifndef __STDC__
-#define const
-#endif /* !defined __STDC__ */
-#endif /* !defined const */
 
 /*
 ** SunOS 4.1.1 cc lacks prototypes.

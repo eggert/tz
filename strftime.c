@@ -620,6 +620,10 @@ const char * const	ptlim;
 #define DIVISOR	100
 	lead = a / DIVISOR + b / DIVISOR;
 	trail = a % DIVISOR + b % DIVISOR;
+	if (trail > DIVISOR) {
+		trail -= DIVISOR;
+		++lead;
+	}
 	while (trail < 0) {
 		trail += DIVISOR;
 		--lead;

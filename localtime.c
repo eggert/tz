@@ -59,6 +59,17 @@ static char		wildabbr[] = "WILDABBR";
 
 static const char	gmt[] = "GMT";
 
+/*
+** The DST rules to use if TZ has no rules and we can't load TZDEFRULES.
+** We default to the current US rules (as of 1999-08-17).
+** POSIX 1003.1 section 8.1.1 says that the default DST rules are
+** implementation dependent; for historical reasons, US rules are a
+** common default.
+*/
+#ifndef TZDEFRULESTRING
+#define TZDEFRULESTRING ",M4.1.0,M10.5.0"
+#endif /* !defined TZDEFDST */
+
 struct ttinfo {				/* time type information */
 	long		tt_gmtoff;	/* UTC offset in seconds */
 	int		tt_isdst;	/* used to set tm_isdst */
@@ -734,20 +745,8 @@ const int			lastditch;
 			if (name == NULL)
 				return -1;
 		} else	dstoffset = stdoffset - SECSPERHOUR;
-#if 0
-		/*
-		** XXX--get justification for U.S.-centricism
-		** before adopting the following code;
-		** also get to document the behavior.
-		*/
 		if (*name == '\0' && load_result != 0)
-			/*
-			** Default to US rules as of 1999-08-17 if TZ has
-			** no rules and we can't load the default rules,
-			*/
-			name = ",M4.1.0,M10.5.0";
-
-#endif
+			name = TZDEFRULESTRING;
 		if (*name == ',' || *name == ';') {
 			struct rule	start;
 			struct rule	end;

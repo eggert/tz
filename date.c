@@ -745,7 +745,7 @@ char *	reason;
 extern	int errno;
 /*
  * Set the date in the machines controlled by timedaemons
- * by communicating the new date to the local timedaemon. 
+ * by communicating the new date to the local timedaemon.
  * If the timedaemon is in the master state, it performs the
  * correction on all slaves.  If it is in the slave state, it
  * notifies the master that a correction is needed.
@@ -854,7 +854,7 @@ loop:
 
 		default:
 			fprintf(stderr,
-			    "date: Wrong ack received from timed: %s\n", 
+			    "date: Wrong ack received from timed: %s\n",
 			    tsptype[msg.tsp_type]);
 			timed_ack = -1;
 			break;

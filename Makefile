@@ -96,7 +96,8 @@ DOCS=		Patchlevel.h \
 		README Theory \
 		newctime.3 tzfile.5 zic.8 zdump.8 \
 		Makefile Makefile.tc
-SOURCES=	tzfile.h nonstd.h zic.c zdump.c \
+SOURCES=	tzfile.h nonstd.h stdio.h stdlib.h time.h \
+		zic.c zdump.c \
 		localtime.c asctime.c ctime.c dysize.c timemk.c \
 		scheck.c ialloc.c emkdir.c getopt.c link.c
 YDATA=		africa antarctica asia australasia \
@@ -142,10 +143,21 @@ tz.shar.Z.uue:	$(ENCHILADA)
 $(ENCHILADA):
 		sccs get $(REL) $(REV) $@
 
-sure:		$(TZCSRCS) $(TZDSRCS) tzfile.h
+sure:		$(SOURCES)
 		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZCSRCS)
 		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZDSRCS)
 		lint $(LINTFLAGS) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(LIBSRCS)
+
+LINTUCB=	PATH=/usr/ucb:/bin:/usr/bin lint -phbaaxc
+LINT5BIN=	PATH=/usr/5bin lint -phbaax
+
+SURE:		sure
+		$(LINTUCB) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZCSRCS)
+		$(LINTUCB) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZDSRCS)
+		$(LINTUCB) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(LIBSRCS)
+		$(LINT5BIN) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZCSRCS)
+		$(LINT5BIN) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(TZDSRCS)
+		$(LINT5BIN) $(CFLAGS) -DTZDIR=\"$(TZDIR)\" $(LIBSRCS)
 
 clean:
 		rm -f core *.o *.out REDID_BINARIES zdump zic \
@@ -157,7 +169,14 @@ CLEAN:		clean
 names:
 		@echo $(ENCHILADA)
 
-asctime.o ctime.o localtime.o timemk.o zdump.o zic.o: tzfile.h
-
-asctime.o ctime.o emkdir.o ialloc.o \
-	link.o localtime.o scheck.o zdump.o zic.o: nonstd.h
+asctime.o:	nonstd.h stdio.h time.h tzfile.h
+ctime.o:	nonstd.h time.h
+dysize.o:	tzfile.h
+emkdir.o:	nonstd.h stdlib.h
+ialloc.o:	nonstd.h stdlib.h
+link.o:		nonstd.h stdio.h
+localtime.o:	nonstd.h stdio.h stdlib.h time.h tzfile.h
+scheck.o:	nonstd.h stdio.h stdlib.h
+timemk.o:	nonstd.h time.h tzfile.h
+zdump.o:	nonstd.h stdio.h stdlib.h time.h tzfile.h
+zic.o:		nonstd.h stdio.h stdlib.h time.h tzfile.h

@@ -183,6 +183,14 @@ struct rule {
 #define DC_DOWGEQ	1	/* 1..31 */	/* 0..6 (Sun..Sat) */
 #define DC_DOWLEQ	2	/* 1..31 */	/* 0..6 (Sun..Sat) */
 
+/*
+** Year synonyms.
+*/
+
+#define YR_MINIMUM	0
+#define YR_MAXIMUM	1
+#define YR_ONLY		2
+
 static struct rule *	rules;
 static int		nrules;	/* number of rules */
 
@@ -219,7 +227,7 @@ static int		nlinks;
 
 struct lookup {
 	char *		l_word;
-	long		l_value;
+	int		l_value;
 };
 
 static struct lookup *	byword();
@@ -268,10 +276,6 @@ static struct lookup	lasts[] = {
 	"last-Saturday",	TM_SATURDAY,
 	NULL,			0
 };
-
-#define YR_MINIMUM	0
-#define YR_MAXIMUM	1
-#define YR_ONLY		2
 
 static struct lookup	begin_years[] = {
 	"minimum",		YR_MINIMUM,
@@ -925,14 +929,12 @@ char *			timep;
 			error("invalid ending year");
 			return;
 	}
-#ifndef ASWAS
 	if (rp->r_hiyear < min_year)
  		return;
  	if (rp->r_loyear < min_year)
  		rp->r_loyear = min_year;
  	if (rp->r_hiyear > max_year)
  		rp->r_hiyear = max_year;
-#endif /* !ASWAS */
 	if (rp->r_loyear > rp->r_hiyear) {
 		error("starting year greater than ending year");
 		return;
@@ -1136,16 +1138,11 @@ struct zone *	zpfirst;
 					offset = gmtoff;
 					if (!rp->r_todisstd)
 						offset = oadd(offset, stdoff);
-#ifdef ASWAS
-					jtime = tadd(rpytime(rp, year),
-						-offset);
-#else /* !ASWAS */
 					jtime = rpytime(rp, year);
 					if (jtime == min_time ||
 					    jtime == max_time)
 						continue;
 					jtime = tadd(jtime, -offset);
-#endif /* !ASWAS */
 					if (k < 0 || jtime < ktime) {
 						k = j;
 						ktime = jtime;
@@ -1381,7 +1378,7 @@ long	t2;
 	register long	t;
 
 	t = t1 + t2;
-	if (t2 > 0 && t < t1 || t2 < 0 && t > t1) {
+	if (t2 > 0 && t <= t1 || t2 < 0 && t >= t1) {
 		error("time overflow");
 		exit(1);
 	}
@@ -1395,18 +1392,12 @@ long	t2;
 {
 	register time_t	t;
 
-#ifndef ASWAS
 	if (t1 == max_time && t2 > 0)
 		return max_time;
 	if (t1 == min_time && t2 < 0)
 		return min_time;
-#endif /* !ASWAS */
 	t = t1 + t2;
-#ifdef ASWAS
-	if (t1 > 0 && t2 > 0 && t <= 0 || t1 < 0 && t2 < 0 && t >= 0) {
-#else /* !ASWAS */
-	if (t2 > 0 && t < t1 || t2 < 0 && t > t1) {
-#endif /* !ASWAS */
+	if (t2 > 0 && t <= t1 || t2 < 0 && t >= t1) {
 		error("time overflow");
 		exit(1);
 	}
@@ -1492,9 +1483,6 @@ register long		wantedy;
 			exit(1);
 		}
 	}
-#ifdef ASWAS
-	t = dayoff * LSECS_PER_DAY;
-#else /* !ASWAS */
 	if (dayoff < 0 && !tt_signed) {
 		if (wantedy == rp->r_loyear)
 			return min_time;
@@ -1502,17 +1490,14 @@ register long		wantedy;
 		exit(1);
 	}
 	t = (time_t) dayoff * LSECS_PER_DAY;
-#endif /* !ASWAS */
 	/*
 	** Cheap overflow check.
 	*/
 	if (t / LSECS_PER_DAY != dayoff) {
-#ifndef ASWAS
 		if (wantedy == rp->r_hiyear)
 			return max_time;
 		if (wantedy == rp->r_loyear)
 			return min_time;
-#endif /* !ASWAS */
 		error("time overflow");
 		exit(1);
 	}

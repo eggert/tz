@@ -5,12 +5,19 @@ static char	elsieid[] = "%W%";
 #endif /* !defined lint */
 
 /*
-** This code has been made fairly independent of the rest of the time
+** This code has been made independent of the rest of the time
 ** conversion package to increase confidence in the verification it provides.
 ** You can use this code to help in verifying other implementations.
 */
 
-#include "private.h"
+#include "stdio.h"	/* for stdout, stderr */
+#include "string.h"	/* for strcpy */
+#include "sys/types.h"	/* for time_t */
+#include "time.h"	/* for struct tm */
+
+#ifndef MAX_STRING_LENGTH
+#define MAX_STRING_LENGTH	1024
+#endif /* !defined MAX_STRING_LENGTH */
 
 #ifndef TRUE
 #define TRUE		1
@@ -18,7 +25,15 @@ static char	elsieid[] = "%W%";
 
 #ifndef FALSE
 #define FALSE		0
-#endif /* !defined TRUE */
+#endif /* !defined FALSE */
+
+#ifndef EXIT_SUCCESS
+#define EXIT_SUCCESS	0
+#endif /* !defined EXIT_SUCCESS */
+
+#ifndef EXIT_FAILURE
+#define EXIT_FAILURE	1
+#endif /* !defined EXIT_FAILURE */
 
 #ifndef SECSPERMIN
 #define SECSPERMIN	60
@@ -45,17 +60,20 @@ extern int	getopt();
 extern char *	optarg;
 extern int	optind;
 extern time_t	time();
+extern char *	tzname[2];
 extern void	tzset();
 
-char *		tzname[2];
+#ifdef USG
+extern void	exit();
+extern void	perror();
+#endif /* defined USG */
 
-static int	longest;
-static void	show();
-static void	hunt();
+static char *	abbr();
 static long	delta();
-static char *	ecpyalloc();
-
+static void	hunt();
+static int	longest;
 static char *	progname;
+static void	show();
 
 int
 main(argc, argv)
@@ -101,23 +119,22 @@ char *	argv[];
 		;
 	for (i = optind; i < argc; ++i) {
 		register char **	saveenv;
-		char *			tzequals;
-		char *			ab;
+		static char		buf[MAX_STRING_LENGTH];
 		char *			fakeenv[2];
 
-		tzequals = malloc((unsigned) (strlen(argv[i]) + 4));
-		if (tzequals == NULL) {
-			(void) fprintf(stderr, "%s: can't allocate memory\n",
-				argv[0]);
+		if (strlen(argv[i]) + 4 > sizeof buf) {
+			(void) fflush(stdout);
+			(void) fprintf(stderr, "%s: argument too long -- %s\n",
+				progname, argv[i]);
 			(void) exit(EXIT_FAILURE);
 		}
-		(void) sprintf(tzequals, "TZ=%s", argv[i]);
-		fakeenv[0] = tzequals;
+		(void) strcpy(buf, "TZ=");
+		(void) strcat(buf, argv[i]);
+		fakeenv[0] = buf;
 		fakeenv[1] = NULL;
 		saveenv = environ;
 		environ = fakeenv;
 		(void) tzset();
-		free(tzequals);
 		environ = saveenv;
 		show(argv[i], now, FALSE);
 		if (!vflag)
@@ -132,7 +149,7 @@ char *	argv[];
 		t += SECSPERHOUR * HOURSPERDAY;
 		show(argv[i], t, TRUE);
 		tm = *localtime(&t);
-		ab = ecpyalloc(tzname[tm.tm_isdst]);
+		(void) strncpy(buf, abbr(&tm), (sizeof buf) - 1);
 		for ( ; ; ) {
 			if (cutoff != NULL && t >= cuttime)
 				break;
@@ -144,10 +161,10 @@ char *	argv[];
 			newtm = *localtime(&newt);
 			if (delta(&newtm, &tm) != (newt - t) ||
 				newtm.tm_isdst != tm.tm_isdst ||
-				strcmp(tzname[newtm.tm_isdst], ab) != 0) {
+				strcmp(abbr(&newtm), buf) != 0) {
 					hunt(argv[i], t, newt);
-					free(ab);
-					ab = ecpyalloc(tzname[newtm.tm_isdst]);
+					(void) strncpy(buf, abbr(&newtm),
+						(sizeof buf) - 1);
 			}
 			t = newt;
 			tm = newtm;
@@ -170,6 +187,8 @@ char *	argv[];
 		(void) exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
+
+	/* gcc -Wall pacifier */
 	for ( ; ; )
 		;
 }
@@ -183,10 +202,10 @@ time_t	hit;
 	time_t		t;
 	struct tm	lotm;
 	struct tm	tm;
-	char *		loab;
+	static char	loab[MAX_STRING_LENGTH];
 
 	lotm = *localtime(&lot);
-	loab = ecpyalloc(tzname[lotm.tm_isdst]);
+	(void) strncpy(loab, abbr(&lotm), (sizeof loab) - 1);
 	while ((hit - lot) >= 2) {
 		t = lot / 2 + hit / 2;
 		if (t <= lot)
@@ -196,14 +215,13 @@ time_t	hit;
 		tm = *localtime(&t);
 		if (delta(&tm, &lotm) == (t - lot) &&
 			tm.tm_isdst == lotm.tm_isdst &&
-			strcmp(tzname[tm.tm_isdst], loab) == 0) {
+			strcmp(abbr(&tm), loab) == 0) {
 				lot = t;
 				lotm = tm;
 		} else	hit = t;
 	}
 	show(name, lot, TRUE);
 	show(name, hit, TRUE);
-	free(loab);
 }
 
 static long
@@ -235,9 +253,8 @@ int	v;
 		(void) printf("%.24s GMT = ", asctime(gmtime(&t)));
 	tmp = localtime(&t);
 	(void) printf("%.24s", asctime(tmp));
-	if (tzname[tmp->tm_isdst] != NULL &&
-		*tzname[tmp->tm_isdst] != '\0')
-			(void) printf(" %s", tzname[tmp->tm_isdst]);
+	if (*abbr(tmp) != '\0')
+		(void) printf(" %s", abbr(tmp));
 	if (v) {
 		(void) printf(" isdst=%d", tmp->tm_isdst);
 #ifdef TM_GMTOFF
@@ -248,18 +265,13 @@ int	v;
 }
 
 static char *
-ecpyalloc(string)
-char *	string;
+abbr(tmp)
+struct tm *	tmp;
 {
 	register char *	result;
-	register int	length;
 
-	length = strlen(string);
-	result = malloc((alloc_size_t) (length + 1));
-	if (result == 0) {
-		(void) fprintf(stderr, "%s: can't allocate memory\n", progname);
-		(void) exit(EXIT_FAILURE);
-	}
-	(void) strcpy(result, string);
-	return result;
+	if (tmp->tm_isdst != 0 && tmp->tm_isdst != 1)
+		return "";
+	result = tzname[tmp->tm_isdst];
+	return (result == NULL) ? "" : result;
 }

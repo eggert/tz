@@ -1,13 +1,13 @@
 # %W%
 #
-# From Arthur David Olson (October 28, 1995):
+# From Arthur David Olson (1995-12-21):
 #
 # Here's time zone information from the United States Naval Observatory
 # via http://tycho.usno.navy.mil/tzones.html. See USNO's note at the end.
 World Time Zones
 For selected countries, the local standard time offset from UTC is given,
 with daylight savings time where observed.
-Time: Sat Oct 28 23:24:15 utc 1995
+Time: Thu Dec 21 17:43:00 utc 1995
 Afghanistan: +4.5 hours
 Albania: +1 hours (Local summer +2 hours)
 Algeria: +1 hours (Local summer +2 hours)
@@ -299,9 +299,10 @@ USA Central: -6 hours (Local summer -5 hours)
 USA Eastern: -5 hours (Local summer -4 hours)
 USA Mountain: -7 hours (Local summer -6 hours)
 USA Arizona: -7 hours
-USA Hawaii: -10 hours
 USA Indiana East: -5 hours
 USA Pacific: -8 hours (Local summer -7 hours)
+USA Alaska: -9 hours (Local summer -8 hours)
+USA Hawaii Aleutian: - hours (Local summer -10 hours)
 Uruguay: -3 hours
 Uzbekistan: +5 hours
 Vanuatu: +11 hours (Local summer +12 hours)
@@ -317,9 +318,10 @@ Yemen: +3 hours
 Yugoslavia: +1 hours (Local summer +2 hours)
 Zaire Kasai: +2 hours
 Zaire Kinshasa Mbandaka: +1 hours
-Zaire Haut Zaire: - hours (Local summer +2 hours)
+Zaire Haut Zaire: +2 hours
 Zaire Kivu: +2 hours
 Zaire Shaba: +2 hours
 Zambia: +2 hours
 Zimbabwe: +2 hours
-All timezone information is non-authoritative. Send corrections to: res@tuttle.usno.navy.mil
+All timezone information is non-authoritative. Send corrections to:
+res@tuttle.usno.navy.mil

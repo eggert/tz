@@ -46,10 +46,10 @@ static int	linenum;
 static long	rpytime();
 static long	tadd();
 
-#define	SECS_PER_MIN	60
-#define MINS_PER_HOUR	60
-#define HOURS_PER_DAY	24
-#define DAYS_PER_YEAR	365	/* Except in leap years */
+#define	SECS_PER_MIN	60L
+#define MINS_PER_HOUR	60L
+#define HOURS_PER_DAY	24L
+#define DAYS_PER_YEAR	365L	/* Except in leap years */
 #define	SECS_PER_HOUR	(SECS_PER_MIN * MINS_PER_HOUR)
 #define SECS_PER_DAY	(SECS_PER_HOUR * HOURS_PER_DAY)
 #define SECS_PER_YEAR	(SECS_PER_DAY * DAYS_PER_YEAR)
@@ -128,15 +128,15 @@ struct rule {
 	int	r_linenum;
 	char *	r_name;
 
-	int	r_loyear;	/* for example, 1986 */
-	int	r_hiyear;	/* for example, 1986 */
+	long	r_loyear;	/* for example, 1986 */
+	long	r_hiyear;	/* for example, 1986 */
 	char *	r_yrtype;
 
-	int	r_month;	/* 0..11 */
+	long	r_month;	/* 0..11 */
 
 	int	r_dycode;	/* see below */
-	int	r_dayofmonth;
-	int	r_wday;
+	long	r_dayofmonth;
+	long	r_wday;
 
 	long	r_tod;		/* time from midnight */
 	long	r_stdoff;	/* offset from standard time */
@@ -183,7 +183,7 @@ static int		nlinks;
 
 struct lookup {
 	char *	l_word;
-	int	l_value;
+	long	l_value;
 };
 
 static struct lookup *	byword();
@@ -233,7 +233,7 @@ static struct lookup	lasts[] = {
 	NULL,			0
 };
 
-static int	mon_lengths[] = {	/* ". . .knuckles are 31. . ." */
+static long	mon_lengths[] = {	/* ". . .knuckles are 31. . ." */
 	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 };
 
@@ -531,18 +531,19 @@ static long
 getoff(string)
 char *		string;
 {
-	int	hh, mm, ss, sign;
+	long	hh, mm, ss, sign;
 
 	if (*string == '-') {
 		sign = -1;
 		++string;
 	} else	sign = 1;
-	if (sscanf(string, scheck(string, "%d"), &hh) == 1)
+	if (sscanf(string, scheck(string, "%ld"), &hh) == 1)
 		mm = ss = 0;
-	else if (sscanf(string, scheck(string, "%d:%d"), &hh, &mm) == 2)
+	else if (sscanf(string, scheck(string, "%ld:%ld"), &hh, &mm) == 2)
 		ss = 0;
-	else if (sscanf(string, scheck(string, "%d:%d:%d"), &hh, &mm, &ss) != 3)
-		return -1;
+	else if (sscanf(string, scheck(string, "%ld:%ld:%ld"),
+		&hh, &mm, &ss) != 3)
+			return -1;
 	if (hh < 0 || hh >= HOURS_PER_DAY ||
 		mm < 0 || mm >= MINS_PER_HOUR ||
 		ss < 0 || ss >= SECS_PER_MIN)
@@ -738,6 +739,8 @@ struct tzinfo *	data;
 	register FILE *	fp;
 	char		fullname[BUFSIZ];
 
+	if (strlen(directory) + 1 + strlen(name) + 1 > BUFSIZ)
+		wild2exit("long directory/file", filename);
 	(void) sprintf(fullname, "%s/%s", directory, name);
 	if ((fp = fopen(fullname, "w")) == NULL)
 		wild2exit("result creating", fullname);
@@ -783,6 +786,7 @@ char *	cp2;
 static
 addrule(rp, y)
 register struct rule *	rp;
+long			y;
 {
 	if (ntemps >= TZ_MAX_TIMES) {
 		filename = rp->r_filename;
@@ -803,7 +807,7 @@ register struct zone *	zp;
 	register struct dsinfo *	dsp;
 	register int			ndstypes;
 	register int			i, j;
-	register int			y;
+	register long			y;
 	char				buf[BUFSIZ];
 	struct tzinfo			t;
 	struct dsinfo			d;
@@ -868,8 +872,17 @@ register struct zone *	zp;
 	t.tz_timecnt = ntemps;
 	(void) qsort((char *) temps, ntemps, sizeof *temps, tcomp);
 	for (i = 0; i < ntemps; ++i) {
-		t.tz_times[i] = temps[i].t_time - zp->z_gmtoff;
 		t.tz_types[i] = temps[i].t_rp->r_type;
+		t.tz_times[i] = temps[i].t_time - zp->z_gmtoff;
+		/*
+		** Credit to munnari!kre for pointing out the need for the
+		** following.  (This can still mess up on the earliest rule;
+		** who's got the solution?  It can also mess up if a time
+		** switch results in a day switch; this is left as an exercise
+		** for the reader.
+		*/
+		if (i > 0)
+			t.tz_times[i] -= temps[i - 1].t_rp->r_stdoff;
 	}
 	writezone(zp->z_name, &t);
 	return;
@@ -881,11 +894,11 @@ register struct rule *	rp;
 {
 	register FILE *	fp;
 	register int	n;
-	int		y;
+	long		y;
 	char		buf[BUFSIZ];
 	char		command[BUFSIZ];
 
-	(void) sprintf(command, "years %d %d %s",
+	(void) sprintf(command, "years %ld %ld %s",
 		rp->r_loyear, rp->r_hiyear, rp->r_yrtype);
 	if ((fp = popen(command, "r")) == NULL)
 		wild2exit("result opening pipe to", command);
@@ -893,7 +906,7 @@ register struct rule *	rp;
 		if (strchr(buf, '\n') == 0)
 			wildrexit(command);
 		*strchr(buf, '\n') = '\0';
-		if (sscanf(buf, scheck(buf, "%d"), &y) != 1)
+		if (sscanf(buf, scheck(buf, "%ld"), &y) != 1)
 			wildrexit(command);
 		if (y < rp->r_loyear || y > rp->r_hiyear)
 			wildrexit(command);
@@ -1015,6 +1028,7 @@ long	t2;
 
 static
 isleap(y)
+long	y;
 {
 	return (y % 4) == 0 && ((y % 100) != 0 || (y % 400) == 0);
 }
@@ -1022,14 +1036,9 @@ isleap(y)
 static long
 rpytime(rp, wantedy)
 register struct rule *	rp;
-register int		wantedy;
+register long		wantedy;
 {
-	register int	i;
-	register int	y;
-	register int	m;
-	register int	wday;
-	register long	dayoff;
-	register long	t;
+	register long	i, y, wday, dayoff, t, m;
 
 	t = 0;
 	dayoff = 0;
@@ -1037,11 +1046,15 @@ register int		wantedy;
 	y = EPOCH_YEAR;
 	while (wantedy != y) {
 		if (wantedy > y) {
-			i = DAYS_PER_YEAR + isleap(y);
+			i = DAYS_PER_YEAR;
+			if (isleap(y))
+				++i;
 			++y;
 		} else {
 			--y;
-			i = -(DAYS_PER_YEAR + isleap(y));
+			i = -DAYS_PER_YEAR;
+			if (isleap(y))
+				--i;
 		}
 		dayoff += i;
 		t = tadd(t, (long) i * SECS_PER_DAY);

@@ -173,7 +173,6 @@ extern int	unlink P((const char * filename));
 
 /*
 ** UNIX was a registered trademark of UNIX System Laboratories in 1993.
-** VAX is a trademark of Digital Equipment Corporation.
 */
 
 #endif /* !defined PRIVATE_H */

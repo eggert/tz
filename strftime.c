@@ -5,11 +5,6 @@ static char	elsieid[] = "%W%";
 ** Based on the UCB version with the ID appearing below.
 ** This is ANSIish only when "multibyte character == plain character".
 */
-#ifndef EGGERT
-/*
-** This is ANSIish only when time is treated identically in all locales.
-*/
-#endif /* !defined EGGERT */
 #endif /* !defined NOID */
 #endif /* !defined lint */
 
@@ -39,12 +34,10 @@ static const char sccsid[] = "@(#)strftime.c	5.4 (Berkeley) 3/14/89";
 #endif /* !defined LIBC_SCCS */
 
 #include "tzfile.h"
-#ifdef EGGERT
 #include "fcntl.h"
 #if HAVE_SETLOCALE - 0
 #include "locale.h"
 #endif /* HAVE_SETLOCALE - 0 */
-#endif /* defined EGGERT */
 
 struct lc_time_T {
 	const char *	mon[12];
@@ -454,10 +447,6 @@ static const struct lc_time_T *
 _loc(ptloc)
 struct lc_time_T *	ptloc;
 {
-#ifndef EGGERT
-	return &C_time_locale;
-#endif /* !defined EGGERT */
-#ifdef EGGERT
 	static const char	locale_home[] = LOCALE_HOME;
 	static const char	lc_time[] = "LC_TIME";
 	static char *		locale_buf;
@@ -507,14 +496,14 @@ struct lc_time_T *	ptloc;
 		sizeof(locale_home) + namesize + sizeof(lc_time))
 			goto no_locale;
 	(void) sprintf(filename, "%s/%s/%s", locale_home, name, lc_time);
-	fd = open(filename, O_RDONLY, 0);
+	fd = open(filename, O_RDONLY);
 	if (fd < 0) {
 		/*
 		** Old Sun systems have a different naming convention.
 		*/
 		(void) sprintf(filename, "%s/%s/%s", locale_home,
 			lc_time, name);
-		fd = open(filename, O_RDONLY, 0);
+		fd = open(filename, O_RDONLY);
 		if (fd < 0)
 			goto no_locale;
 	}
@@ -564,5 +553,4 @@ no_locale:
 	*ptloc = C_time_locale;
 	locale_buf = locale_buf_C;
 	return ptloc;
-#endif /* defined EGGERT */
 }

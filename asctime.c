@@ -21,6 +21,7 @@ static char	elsieid[] = "%W%";
 /*
 ** Some systems only handle "%.2d"; others only handle "%02d";
 ** "%02.2d" makes (most) everybody happy.
+** At least some versions of gcc warn about the %02.2d; ignore the warning.
 */
 /*
 ** All years associated with 32-bit time_t values are exactly four digits long;

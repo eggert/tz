@@ -20,7 +20,7 @@ Zone	Australia/North		9:30	-	CST	# No DST here
 Zone	Australia/West		8:00	-	WST	# No DST here
 Zone	Australia/South		9:30	Oz	CST
 
-# Victoria the jump to a later ending date for DST in 1986 rather than 1987.
+# Victoria jumped to a later ending date for DST in 1986 rather than 1987.
 
 Zone	Australia/Victoria	10:00	Oz	EST	1985 Oct lastSun 2:00
 				10:00	1:00	EST	1986 Mar Sun<=21 3:00

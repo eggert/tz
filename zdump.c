@@ -28,22 +28,20 @@ int			optind;
 
 static int		longest;
 
-#define	GETSHORT(val, p) { \
-	register int shortval; \
-	shortval = *p++; \
-	shortval = (shortval << 8) | *p++; \
-	val = shortval; \
-	}
+static
+getshort(p)
+unsigned char *	p;
+{
+	return (p[0] << 8) | p[1];
+}
 
-#define GETLONG(val, p) { \
-	register long longval; \
-	longval = *p++; \
-	longval = (longval << 8) | *p++; \
-	longval = (longval << 8) | *p++; \
-	longval = (longval << 8) | *p++; \
-	val = longval; \
-	}
-	
+static long
+getlong(p)
+register unsigned char *	p;
+{
+	return ((((((p[0] << 8) | p[1]) << 8) | p[2]) << 8) | p[3]);
+}
+
 main(argc, argv)
 int	argc;
 char *	argv[];
@@ -99,26 +97,22 @@ char *	argv[];
 			exit(1);
 		}
 		{
-			register unsigned char *	p;
 			unsigned char			two[2];
 			struct tzhead			h;
 
 			(void) fseek(fp, (long) sizeof h.tzh_reserved, 0);
 			if (fread((char *) two, sizeof two, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
-			p = two;
-			GETSHORT(timecnt, p);
+			timecnt = getshort(two);
 			(void) fseek(fp, (long) (2 * sizeof (short)), 1);
 		}
 		for (j = 0; j < timecnt; ++j) {
-			register unsigned char *	p;
 			unsigned char			four[4];
 			long				t;
 
 			if (fread((char *) four, sizeof four, 1, fp) != 1)
 				readerr(fp, argv[0], argv[i]);
-			p = four;
-			GETLONG(t, p);
+			t = getlong(four);
 			show(argv[i], t - 1, TRUE);
 			show(argv[i], t, TRUE);
 		}

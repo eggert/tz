@@ -204,6 +204,9 @@ char *	argv[];
 	register char *		username;
 	register int		ch;
 	time_t			t;
+#ifdef DST_NONE
+	static struct timeval	tv;	/* static so tv_usec is 0 */
+#endif /* defined DST_NONE */
 #ifdef N_OPTION
 #ifdef TSP_SETDATE
 	register int		nflag = 0;
@@ -217,7 +220,6 @@ char *	argv[];
 #endif /* defined T_OPTION */ 
 #ifdef D_OR_T_OPTION
 	struct timezone		tz;
-	static struct timeval	tv;	/* static so tv_usec is 0 */
 #endif /* defined D_OR_T_OPTION */
 #ifdef A_OPTION
 	register int		aflag = 0;

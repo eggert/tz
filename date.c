@@ -45,6 +45,12 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #include "strings.h"
 #include "tzfile.h"
 
+#include "sys/socket.h"
+#include "netinet/in.h"
+#include "netdb.h"
+#define TSPTYPES
+#include "protocols/timed.h"
+
 /*
 ** What options should be provided?
 ** We normally provide everything we can, and "#define X_OPTION"
@@ -158,6 +164,7 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 
 extern char **		environ;
 extern char *		getlogin();
+extern int		logwtmp();
 extern time_t		mktime();
 extern char *		optarg;
 extern int		optind;
@@ -194,15 +201,17 @@ char *	argv[];
 	register int		ch;
 	time_t			t;
 #ifdef N_OPTION
+#ifdef TSP_SETDATE
 	register int		nflag = 0;
+#endif /* defined TSP_SETDATE */
 #endif /* defined N_OPTION */
 #ifdef D_OPTION
 	register int		dflag = 0;
-#endif  /* defined D_OPTION */ 
+#endif /* defined D_OPTION */ 
 #ifdef T_OPTION
 	register int		tflag = 0;
-#endif  /* defined T_OPTION */ 
-#ifdef D_OR_T_OPTION */
+#endif /* defined T_OPTION */ 
+#ifdef D_OR_T_OPTION
 	struct timezone		tz;
 	static struct timeval	tv;	/* static so tv_usec is 0 */
 #endif /* defined D_OR_T_OPTION */
@@ -219,7 +228,6 @@ char *	argv[];
 #endif /* defined D_OR_T_OPTION */
 	(void) time(&now);
 	format = value = NULL;
-	nflag = 0;
 	/*
 	** "-u" and are available everywhere.
 	** (It's easy to obey "-n" if there's no network!)
@@ -275,7 +283,9 @@ char *	argv[];
 			break;
 #ifdef N_OPTION
 		case 'n':		/* don't set network */
+#ifdef TSP_SETDATE
 			nflag = 1;
+#endif /* defined TSP_SETDATE */
 			break;
 #endif /* defined N_OPTION */
 #ifdef D_OPTION
@@ -446,6 +456,7 @@ static void
 ambiguous(thist, thatt, was_set)
 time_t	thist;
 time_t	thatt;
+int	was_set;
 {
 	struct tm	tm;
 
@@ -461,7 +472,7 @@ time_t	thatt;
 	timeout(stderr, "%m%d%H", &tm);
 	timeout(stderr, "%M.%S\n", &tm);
 	tm = *localtime(&thist);
-	timeout(stderr, "to get %c");
+	timeout(stderr, "to get %c", &tm);
 	(void) fprintf(stderr, " (%s time)",
 		tm.tm_isdst ? "summer" : "standard");
 	if (was_set)
@@ -472,7 +483,7 @@ time_t	thatt;
 	timeout(stderr, "%m%d%H", &tm);
 	timeout(stderr, "%M.%S\n", &tm);
 	tm = *localtime(&thatt);
-	timeout(stderr, "to get %c");
+	timeout(stderr, "to get %c", &tm);
 	(void) fprintf(stderr, " (%s time)",
 		tm.tm_isdst ? "summer" : "standard");
 	(void) fprintf(stderr, ".\n");
@@ -855,12 +866,6 @@ int		isdst;
 }
 
 #ifdef TSP_SETDATE
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
-#define TSPTYPES
-#include <protocols/timed.h>
-
 #define	WAITACK		2	/* seconds */
 #define	WAITDATEACK	5	/* seconds */
 

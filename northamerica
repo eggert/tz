@@ -116,6 +116,12 @@ Zone	US/Alaska	-9:00	US		AK%sT	# Abbreviation per USNO
 
 Zone	US/East-Indiana	-5:00	US		E%sT	1946
 			-5:00	-		EST	# Always EST as of 1986
+# From Arthur David Olson (October 28, 1991):
+# An article on page A3 of the Sunday, October 27, 1991 Washington Post
+# notes that Starke County switched from Central time to Eastern time as of
+# October 27, 1991.
+Zone	US/Indiana-Starke -6:00	US		C%sT	1991 Oct 27 2:00
+			-5:00	-		EST	# Always EST as of 1991
 Zone	US/Arizona	-7:00	US		M%sT	1946
 			-7:00	-		MST	# Always MST as of 1986
 

@@ -32,15 +32,16 @@
 #	 2:00	EET+DST Eastern Europe
 #	 3:00	MSK MSD	Moscow
 #	 3:00	TUR+DST	Turkey (no longer used)*
-#	 4:00	ESK ESD	Yekaterinburg*
-#	 5:00	OSK OSD	Omsk*
-#	 6:00	NSK NSD	Novosibirsk
-#	 7:00	ISK ISD	Irkutsk*
-#	 8:00	YSK YSD	Yakutsk*
-#	 9:00	VSK VSD	Vladivostok*
-#	10:00	GSK GSD	Magadan*
-#	11:00	PSK PSD	Petropavlovsk-Kamchatski*
-#	12:00	ASK ASD	Anadyr*
+#	 4:00	KSK KSD	Kuybyshev*
+#	 5:00	ESK ESD	Yekaterinburg*
+#	 6:00	OSK OSD	Omsk*
+#	 7:00	NSK NSD	Novosibirsk
+#	 8:00	ISK ISD	Irkutsk*
+#	 9:00	YSK YSD	Yakutsk*
+#	10:00	VSK VSD	Vladivostok*
+#	11:00	GSK GSD	Magadan*
+#	12:00	PSK PSD	Petropavlovsk-Kamchatski*
+#	13:00	ASK ASD	Anadyr*
 #
 # See the `africa' file for Zone naming conventions.
 #
@@ -421,7 +422,7 @@
 # ## <years> is either a single year or a hyphen separated range, with --
 # ## also accepted as I use this in TeX a lot.
 # ## <start date> and <end date> are a digit followed bu a month name.
-# ## It is either an nth Saturday or an explcit date, depending on <flags>.
+# ## It is either an nth Saturday or an explicit date, depending on <flags>.
 # ## 0 and/or none are used when there is no date, as during 1968--71.
 # ## <flags> can contain `fixed' to indicate explicit dates and `double'
 # ## to indicate double summer time dates are present.
@@ -730,10 +731,8 @@ Rule	Russia	1921	only	-	Sep	 1	 0:00	1:00	D
 Rule	Russia	1921	only	-	Oct	 1	 0:00	0	K
 Rule	Russia	1981	1984	-	Apr	 1	 0:00	1:00	D
 Rule	Russia	1981	1983	-	Oct	 1	 0:00	0	K
-Rule	Russia	1984	1990	-	Sep	lastSun	 2:00s	0	K
-Rule	Russia	1985	1990	-	Mar	lastSun	 2:00s	1:00	D
-Rule	Russia	1992	max	-	Sep	lastSun	 2:00s	0	K
-Rule	Russia	1992	max	-	Mar	lastSun	 2:00s	1:00	D
+Rule	Russia	1984	max	-	Sep	lastSun	 2:00s	0	K
+Rule	Russia	1985	max	-	Mar	lastSun	 2:00s	1:00	D
 
 # These are for backward compatibility with older versions.
 
@@ -813,8 +812,11 @@ Zone	Europe/Minsk	1:50:16 -	LMT	1880
 			2:31	Russia	LST%s	1919 Jul 1 2:00
 			3:00	Russia	MS%s	1922 Oct
 			2:00	-	EET	1930 Jun 21
-			3:00	Russia	MS%s	1991 Sep 29 3:00
-			2:00	Russia	MS%s
+			3:00	Russia	MS%s	1991 Mar 31 2:00s
+# From Paul Eggert <eggert@twinsun.com> (May 28, 1994): A guess at recent dates:
+			2:00	1:00  "EET DST"	1991 Sep 29 2:00s
+			2:00	-	EET	1992 Jan 19 2:00s
+			3:00	Russia	MS%s
 
 # Belgium
 # Whitman and Shanks disagree; go with Shanks, usually.
@@ -966,8 +968,9 @@ Zone	Europe/Tallinn	1:39:00	-	LMT	1880
 			2:00	-	EET	1940 Aug  6
 			3:00	-	MSK	1941 Sep 15
 			1:00	M-Eur	MET%s	1944 Sep 22
-			3:00	Russia	MS%s	1989 Mar 26 2:00
-			2:00	M-Eur	MET%s
+			3:00	Russia	MS%s	1989 Mar 26 2:00s
+			2:00	1:00  "EET DST"	1989 Sep 24 2:00s
+			2:00	M-Eur	EET%s
 
 # Finland
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
@@ -1162,7 +1165,7 @@ Zone	Europe/Budapest	1:16:20 -	LMT	1890 Oct
 # to the julian/gregorian calendar) over the period in question.
 #	the winter begins on the Saturday next before St. Luke's day
 #	(old style), or on St. Luke's day, if a Saturday.
-# St. Luke's day ought to be traceable from ecclesiatical sources. "old style"
+# St. Luke's day ought to be traceable from ecclesiastical sources. "old style"
 # might be a reference to the Julian calendar as opposed to Gregorian, or it
 # might mean something else (???). The Gregorian calendar was not introduced
 # in Iceland until 1700.
@@ -1260,8 +1263,9 @@ Zone	Europe/Riga	1:36:24	-	LMT	1880
 			2:00	-	EET	1940 Aug  5
 			3:00	-	MSK	1941 Jul
 			1:00	M-Eur	MET%s	1944 Aug  8
-			3:00	Russia	MS%s	1991 Sep 29 3:00
-			2:00	M-Eur	MET%s
+			3:00	Russia	MS%s	1991 Mar 31 2:00s
+			2:00	1:00  "EET DST"	1991 Sep 29 2:00s
+			2:00	M-Eur	EET%s
 
 # Liechtenstein
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1280,8 +1284,9 @@ Zone	Europe/Vilnius	1:41:16	-	LMT	1880
 			1:00	-	MET	1940 Aug  3
 			3:00	-	MSK	1941 Jun 24
 			1:00	M-Eur	MET%s	1944 Aug
-			3:00	Russia	MS%s	1991 Sep 29 3:00
-			2:00	M-Eur	MET%s
+			3:00	Russia	MS%s	1991 Mar 31 2:00s
+			2:00	1:00  "EET DST"	1991 Sep 29 2:00s
+			2:00	M-Eur	EET%s
 
 # Luxembourg
 # Whitman disagrees with most of these dates in minor ways; go with Shanks.
@@ -1319,7 +1324,7 @@ Zone Europe/Luxembourg	0:24:36 -	LMT	1904 Jun
 			1:00	Belgium	MET%s	1979 Apr  1 2:00
 			1:00	M-Eur	MET%s
 
-# The Former Yugoslav Republic of Macedonia
+# Macedonia
 # They switched from the Julian to the Gregorian calendar on 1918 Mar 18.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Skopje	1:25:44	-	LMT	1884
@@ -1351,8 +1356,8 @@ Zone	Europe/Malta	0:58:04 -	LMT	1893 Nov  2	# Valletta
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Chisinau	1:55:20 -	LMT	1924 May  2
 			2:00	-	EET	1930 Jun 21
-			3:00	-	MSK	1981 Apr
-			3:00	Russia	MS%s	1991 Sep 29 2:00s
+			3:00	Russia	MS%s	1991 Mar 31 2:00s
+			2:00	1:00  "EET DST"	1991 Sep 29 2:00s
 			2:00	M-Eur	EET%s
 
 # Monaco
@@ -1435,7 +1440,7 @@ Rule	Poland	1918	1919	-	Sep	16	2:00s	0	-
 Rule	Poland	1919	only	-	Apr	15	2:00s	1:00	" DST"
 # Whitman gives 1944 Nov 30; go with Shanks.
 Rule	Poland	1944	only	-	Oct	 4	2:00	0	-
-# For 1944-1948 Whitman gives the previous day; go with SHanks.
+# For 1944-1948 Whitman gives the previous day; go with Shanks.
 Rule	Poland	1945	only	-	Apr	29	0:00	1:00	" DST"
 Rule	Poland	1945	only	-	Nov	 1	0:00	0	-
 Rule	Poland	1946	only	-	Apr	14	0:00	1:00	" DST"
@@ -1574,74 +1579,91 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 			2:00	M-Eur	EET%s
 
 # Russia
-# From Paul Eggert <eggert@twinsun.com> (November 18, 1993):
+# From Paul Eggert <eggert@twinsun.com> (May 28, 1994):
 # Moscow and Novosibirsk time zone names, and Moscow rules after 1991,
 # are from Andrew A. Chernov <ache@astral.msk.su>.
-# I invented the other time zone names.
-# The rest is from Shanks; it's probably wrong after 1991.
-# We're not sure whether St Petersburg switched in step with Moscow after 1991;
-# it might be a useless name, so we'll comment it out for now.
+# I invented the other time zone names, and (unless otherwise specified)
+# guessed what happened after 1991; the clocks were chaotic, and we know little.
+# The rest is from Shanks.
 #
 # From Shanks (1991):
 # Western Russia switched from the Julian to the Gregorian calendar
-# on 1918 Jan 14.  Eatern Russia switched on 1920 Mar 18.
+# on 1918 Jan 14.  Eastern Russia switched on 1920 Mar 18.
 # In 1929 the Soviet Union instituted a 5 day week; in 1932 it instituted
 # a 6 day week; on 1940 Jun 27 it returned to the Gregorian week.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#Zone Europe/St_Petersburg 2:30:20 -	LMT	1880
-#			2:01	Russia	LST%s	1919 Jul  1 2:00
-#			3:00	Russia	MS%s	1922 Oct
-#			2:00	-	EET	1930 Jun 21
-#			3:00	Russia	MS%s	1991 Sep 29 3:00
-#			2:00	Russia	SPS%s
-Zone Europe/Moscow	2:30:20 -	LMT	1880
-			2:31	Russia	LST%s	1919 Jul  1 2:00
-			3:00	Russia	MS%s	1922 Oct
-			2:00	-	EET	1930 Jun 21
-			3:00	Russia	MS%s	1991 Mar lastSun 2:00s
-			2:00	1:00  "EET DST"	1991 Sep lastSun 2:00s
-			2:00	-	EET	1992 Jan 19 2:00s
-			3:00	Russia	MS%s
-Zone Asia/Yekaterinburg	4:02:34 -	LMT	1924 May  2
-			4:00	-	ESK	1957 Mar
-			5:00	Russia	ES%s	1991 Sep 29 3:00
-			4:00	Russia	ES%s
-Zone Asia/Omsk		4:53:36	-	LMT	1924 May  2
-			5:00	-	TSK	1957 Mar
-			6:00	Russia	TS%s	1991 Sep 29 3:00
-			5:00	Russia	OS%s
-Zone Asia/Novosibirsk	5:31:40 -	LMT	1924 May  2
-			6:00	-	NSK	1957 Mar
-			7:00	Russia	NS%s	1991 Sep 29 3:00
-			6:00	Russia	NS%s
-Zone Asia/Irkutsk	6:57:20 -	LMT	1880
-			6:57	-	LST	1924 May  2
-			7:00	-	ISK	1957 Mar
-			8:00	Russia	IS%s	1991 Sep 29 3:00
-			7:00	Russia	IS%s
-Zone Asia/Yakutsk	8:38:40 -	LMT	1924 May  2
-			8:00	-	YSK	1957 Mar
-			9:00	Russia	YS%s	1991 Sep 29 3:00
-			8:00	Russia	YS%s
-Zone Asia/Vladivostok	8:47:44 -	LMT	1880
-			8:48	-	LST	1924 May  2
-			9:00	-	VSK	1957 Mar
-			10:00	Russia	VS%s	1991 Sep 29 3:00
-			9:00	Russia	VS%s
+Zone Europe/Moscow	 2:30:20 -	LMT	1880
+			 2:31	Russia	LST%s	1919 Jul  1 2:00
+			 3:00	Russia	MS%s	1922 Oct
+			 2:00	-	EET	1930 Jun 21
+			 3:00	Russia	MS%s	1991 Mar 31 2:00s
+			 2:00	1:00  "EET DST"	1991 Sep 29 2:00s
+			 2:00	-	EET	1992 Jan 19 2:00s
+			 3:00	Russia	MS%s
+Zone Europe/Kuybyshev	 3:20:36 -	LMT	1924 May  2
+			 3:00	-	KSK	1957 Mar
+			 4:00	Russia	KS%s	1991 Mar 31 2:00s
+			 3:00	1:00	KSD	1991 Sep 29 2:00s
+			 3:00	-	KSK	1992 Jan 19 2:00s
+			 4:00	Russia	KS%s
+Zone Asia/Yekaterinburg	 4:02:34 -	LMT	1924 May  2
+			 4:00	-	SSK	1957 Mar
+			 5:00	Russia	SS%s	1991 Mar 31 2:00s
+			 4:00	1:00	SSD	1991 Sep 29 2:00s
+			 4:00	-	SSK	1992 Jan 19 2:00s
+			 5:00	Russia	ES%s	# name change from Sverdlovsk
+Zone Asia/Omsk		 4:53:36 -	LMT	1924 May  2
+			 5:00	-	OSK	1957 Mar
+			 6:00	Russia	OS%s	1991 Mar 31 2:00s
+			 5:00	1:00	OSD	1991 Sep 29 2:00s
+			 5:00	-	OSK	1992 Jan 19 2:00s
+			 6:00	Russia	OS%s
+Zone Asia/Novosibirsk	 5:31:40 -	LMT	1924 May  2
+			 6:00	-	NSK	1957 Mar
+			 7:00	Russia	NS%s	1991 Mar 31 2:00s
+			 6:00	1:00	NSD	1991 Sep 29 2:00s
+			 6:00	-	NSK	1992 Jan 19 2:00s
+			 7:00	Russia	NS%s
+Zone Asia/Irkutsk	 6:57:20 -	LMT	1880
+			 6:57	-	LST	1924 May  2
+			 7:00	-	ISK	1957 Mar
+			 8:00	Russia	IS%s	1991 Mar 31 2:00s
+			 7:00	1:00	ISD	1991 Sep 29 2:00s
+			 7:00	-	ISK	1992 Jan 19 2:00s
+			 8:00	Russia	IS%s
+Zone Asia/Yakutsk	 8:38:40 -	LMT	1924 May  2
+			 8:00	-	YSK	1957 Mar
+			 9:00	Russia	YS%s	1991 Mar 31 2:00s
+			 8:00	1:00	YSD	1991 Sep 29 2:00s
+			 8:00	-	YSK	1992 Jan 19 2:00s
+			 9:00	Russia	YS%s
+Zone Asia/Vladivostok	 8:47:44 -	LMT	1880
+			 8:48	-	LST	1924 May  2
+			 9:00	-	VSK	1957 Mar
+			10:00	Russia	VS%s	1991 Mar 31 2:00s
+			 9:00	1:00	VSD	1991 Sep 29 2:00s
+			 9:00	-	VSK	1992 Jan 19 2:00s
+			10:00	Russia	VS%s
 # MSK is taken; settle for GSK.
 Zone Asia/Magadan	10:03:12 -	LMT	1924 May  2
 			10:00	-	GSK	1957 Mar
-			11:00	Russia	GS%s	1991 Sep 29 3:00
-			10:00	Russia	GS%s
+			11:00	Russia	GS%s	1991 Mar 31 2:00s
+			10:00	1:00	GSD	1991 Sep 29 2:00s
+			10:00	-	GSK	1992 Jan 19 2:00s
+			11:00	Russia	GS%s
 # This name should be Asia/Petropavlovsk-Kamchatski, but that's too long.
 Zone Asia/Kamchatka	10:34:36 -	LMT	1924 May  2
 			11:00	-	PSK	1957 Mar
-			12:00	Russia	PS%s	1991 Sep 29 3:00
-			11:00	Russia	PS%s
+			12:00	Russia	PS%s	1991 Mar 31 2:00s
+			11:00	1:00	PSD	1991 Sep 29 2:00s
+			11:00	-	PSK	1992 Jan 19 2:00s
+			12:00	Russia	PS%s
 Zone Asia/Anadyr	11:49:56 -	LMT	1924 May  2
 			12:00	-	ASK	1957 Mar
-			13:00	Russia	AS%s	1991 Sep 29 3:00
-			12:00	Russia	AS%s
+			13:00	Russia	AS%s	1991 Mar 31 2:00s
+			12:00	1:00	ASD	1991 Sep 29 2:00s
+			12:00	-	ASK	1992 Jan 19 2:00s
+			13:00	Russia	AS%s
 
 # Serbia
 # They switched from the Julian to the Gregorian calendar on 1918 Mar 18.
@@ -1816,12 +1838,24 @@ Rule	Ukraine	1921	only	-	Mar	21	23:00	2:00	" DDST"
 Rule	Ukraine	1921	only	-	Sep	 1	 0:00	1:00	" DST"
 Rule	Ukraine	1921	only	-	Oct	 1	 0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Kiev	2:02:04 -	LMT	1880
+Zone Europe/Kiev	2:02:04 -	LMT	1880
 			2:02	Russia	LST%s	1919 Jul  1 2:00
 			2:02	Ukraine	LST%s	1924 May  2
 			2:00	-	EET	1930 Jun 21
 			3:00	Russia	MS%s	1990 Jul 17
 			2:00	M-Eur	EET%s
+Zone Europe/Simferopol	2:16:24 -	LMT	1880
+			2:08	Russia	LST%s	1919 Jul  1 2:00
+			2:08	Ukraine	LST%s	1924 May  2
+			2:00	-	EET	1930 Jun 21
+			3:00	Russia	MS%s	1991 Mar 31 2:00s
+			2:00	1:00  "EET DST"	1991 Sep 29 2:00s
+# From Paul Eggert <eggert@twinsun.com> (May 28, 1994):
+# Today's _Economist_ (p 45) reports that Crimea switched
+# from Kiev to Moscow time sometime after the January elections.
+# For now, we'll guess that there was a 2-hour leap forward on March 27.
+			2:00	M-Eur	EET%s	1994 Mar 27 2:00s
+			3:00	Russia	MS%s
 
 ###############################################################################
 

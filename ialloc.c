@@ -4,24 +4,27 @@ static char	sccsid[] = "%W%";
 
 /*LINTLIBRARY*/
 
-#include <stdio.h>
-#include "alloc.h"
+#include "stdio.h"
+
+#ifndef arg4alloc
+#define arg4alloc	unsigned
+#endif
 
 char *	allocat(old, new)
 char *	old;
 char *	new;
 {
 	register char *	ret;
-	register int	len;
+	arg4alloc	toalloc;
 	extern char *	calloc();
 	extern char *	realloc();
 	extern char *	strcat();
 
 	if (new == NULL)
 		new = "";
-	len = strlen(new) + 1;
-	ret = (old == NULL) ? calloc((arg4alloc) len, sizeof *ret) :
-		realloc(old, (arg4alloc) ((len + strlen(old)) * sizeof *ret));
+	toalloc = strlen(new) + 1;
+	ret = (old == NULL) ? calloc(toalloc, sizeof *ret) :
+		realloc(old, (toalloc + strlen(old)) * sizeof *ret));
 	if (ret != NULL)
 		(void) strcat(ret, new);
 	return ret;

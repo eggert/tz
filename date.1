@@ -100,7 +100,7 @@ To set the date, use a command line argument with one of the following forms:
 .nf
 .if t .in +.5i
 .if n .in +2
-.ta \w'198903081454\0\0'u
+.ta \w'198903081454\0'u
 1454	24-hour-clock hours (first two digits) and minutes
 081454	Month day (first two digits), hours, and minutes
 03081454	Month (two digits, January is 01), month day, hours, minutes
@@ -134,10 +134,4 @@ option) is only available on systems that store such information.
 .BI "\-t " minutes-west
 Set the kernel-stored ``minutes west of GMT'' value to the one given on the
 command line.
-.SH NOTE
-In some parts of the year,
-avoid setting the time within a minute of noon if your area uses
-solar time.
-There's no way to specify which of two near-noon times you want
-since they're both ``standard.''
 .. %W%

@@ -196,7 +196,7 @@ NDATA=		systemv
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
 DATA=		$(YDATA) $(NDATA) $(SDATA) leapseconds yearistype.sh
-USNO=		usno1988 usno1989
+USNO=		usno1988 usno1989 usno1989a
 ENCHILADA=	$(DOCS) $(SOURCES) $(DATA) $(USNO)
 
 # And for the benefit of csh users on systems that assume the user

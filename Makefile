@@ -123,6 +123,9 @@ SHAR2:		$(SOURCES)
 SHAR3:		$(DATA) leapseconds Patchlevel.h
 		$(SHAR) $(DATA) > $@
 
+tz.shar.Z.uue:	$(ENCHILADA)
+		$(SHAR) $(ENCHILADA) | compress | uuencode tz.shar.Z > $@
+
 $(ENCHILADA):
 		sccs get $(REL) $(REV) $@
 

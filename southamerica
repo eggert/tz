@@ -7,6 +7,8 @@
 # starts and ends are based on the assumption that they switch a 2AM just
 # as everybody else does.
 
+###############################################################################
+
 # Brazil
 # The OAG lists October 25, 1987 and February 12, 1988 as the starting and
 # ending dates, giving them as "estimated date(s) based on previous year".  We
@@ -25,6 +27,8 @@ Zone	Brazil/West		-4:00	Brazil		W%sT
 Zone	Brazil/Acre		-5:00	Brazil		A%sT
 Zone	Brazil/DeNoronha	-2:00	Brazil		F%sT
 
+###############################################################################
+
 # Chile
 # The OAG lists October 11, 1987 and March 12, 1988 as the starting and
 # ending dates, giving them as "estimated date(s) based on previous year."
@@ -36,3 +40,26 @@ Rule	Chile	1987	max	-	Oct	Sun<=14	2:00	1:00	D
 # Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
 Zone	Chile/Continental	-4:00	Chile		C%sT
 Zone	Chile/EasterIsland	-6:00	Chile		E%sT
+
+###############################################################################
+
+# Paraguay
+
+# From Bob Devine (January 28, 1988):  "Paraguay: First day in October to last
+# in March.  Midnight switch??  Since 1980."
+
+# From the U.S. Naval Observatory (February 10, 1988):
+#	PARAGUAY            4 H BEHIND UTC IN WINTER
+#	PARAGUAY            3 H BEHIND UTC SEP 30 - MAR 30
+
+# From Arthur David Olson:
+# Until USNO and Devine information can be reconciled,
+# the below is commented out.
+# (It encodes Devine's information).
+
+## Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+#Rule	Para	1980	max	-	Oct	1	0:00	1:00	D
+#Rule	Para	1981	max	-	Mar	1	0:00	0	S
+
+## Zone	NAME			GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+#Zone	Paraguay		-4:00	Para		P%sT

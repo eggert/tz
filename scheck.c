@@ -56,7 +56,7 @@ char *	format;
 	}
 	*(tp - 1) = '%';
 	*tp++ = 'c';
-	*tp++ = '\0';
+	*tp = '\0';
 	if (sscanf(string, fbuf, &dummy) != 1)
 		result = format;
 	free(fbuf);

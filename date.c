@@ -348,10 +348,10 @@ struct tm *	tmp;
 			retval = EXIT_FAILURE;
 			display((char *) NULL);
 		case 'a':
-			(void) printf("%.3s", wday_names[tmp->tm_mon]);
+			(void) printf("%.3s", wday_names[tmp->tm_wday]);
 			break;
 		case 'A':
-			(void) printf("%s", wday_names[tmp->tm_mon]);
+			(void) printf("%s", wday_names[tmp->tm_wday]);
 			break;
 		case 'b':
 		case 'h':
@@ -394,7 +394,7 @@ struct tm *	tmp;
 			timeout("%I:%M:%S %p", tmp);
 			break;
 		case 'R':
-			timeout("%H:%M", tmp):
+			timeout("%H:%M", tmp);
 			break;
 		case 'S':
 			(void) printf("%02.2d", tmp->tm_sec);
@@ -403,6 +403,7 @@ struct tm *	tmp;
 			(void) putchar('\t');
 			break;
 		case 'T':
+		case 'X':
 			timeout("%H:%M:%S", tmp);
 			break;
 		case 'U':
@@ -423,10 +424,8 @@ struct tm *	tmp;
 				(tmp->tm_yday + 7 - wday) / 7);
 			break;
 		case 'x':
-			timeout("%a %b %d", tmp);
-			break;
-		case 'X':
-			timeout("%H:%M:%S", tmp);
+			timeout("%a %b ", tmp);
+			(void) printf("%2d", tmp->tm_mday);
 			break;
 		case 'y':
 			(void) printf("%02.2d",

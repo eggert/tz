@@ -43,25 +43,196 @@ to set time conversion information used by
 If
 .B TZ
 does not appear in the environment,
-the best available approximation to local wall clock time is used by
+the best available approximation to local wall clock time, as specified
+by the
+.IR tzfile (5)-format
+file
+.B localtime
+in the system time conversion information directory, is used by
 .IR localtime .
 If
 .B TZ
 appears in the environment but its value is a null string,
-Greenwich Mean Time is used (without leap second correction);
-if
+Coordinated Universal Time (UTC) is used (without leap second
+correction).  If
 .B TZ
-appears and
-begins with a slash,
-it is used as the absolute pathname of the
-.IR tzfile (5)-format
-file from which to read the time conversion information;
-if
+appears in the environment and its value is not a null string:
+.IP
+if the value begins with a colon, it is used as a pathname of a file
+from which to read the time conversion information;
+.IP
+if the value does not begin with a colon, it is first used as the
+pathname of a file from which to read the time conversion information,
+and, if that file cannot be read, is used directly as a specification of
+the time conversion information.
+.PP
+When
 .B TZ
-appears and
-begins with a character other than a slash,
-it's used as a pathname relative to a system time conversion information
+is used as a pathname, if it begins with a slash,
+it is used as an absolute pathname; otherwise,
+it is used as a pathname relative to a system time conversion information
 directory.
+The file must be in the format specified in
+.IR tzfile (5).
+.PP
+When
+.B TZ
+is used directly as a specification of the time conversion information,
+it must have the following syntax (spaces inserted for clarity):
+.IP
+\fIstd\|offset\fR[\fIdst\fR[\fIoffset\fR][\fB,\fIrule\fR]]
+.PP
+Where:
+.RS
+.TP 15
+.IR std " and " dst
+Three or more bytes that are the designation for the standard
+.RI ( std )
+or summer
+.RI ( dst )
+time zone.  Only
+.I std
+is required; if
+.I dst
+is missing, then summer time does not apply in this locale.
+Upper- and lowercase letters are explicitly allowed.  Any characters
+except a leading colon
+.RB ( : ),
+digits, comma
+.RB ( , ),
+minus
+.RB ( \(mi ),
+plus
+.RB ( \(pl ),
+and ASCII NUL are allowed.
+.TP
+.I offset
+Indicates the value one must add to the local time to arrive at
+Coordinated Universal Time.  The
+.I offset
+has the form:
+.RS
+.IP
+\fIhh\fR[\fB:\fImm\fR[\fB:\fIss\fR]]
+.RE
+.IP
+The minutes
+.RI ( mm )
+and seconds
+.RI ( ss )
+are optional.  The hour
+.RI ( hh )
+is required and may be a single digit.  The
+.I offset
+following
+.I std
+is required.  If no
+.I offset
+follows
+.IR dst ,
+summer time is assumed to be one hour ahead of standard time.  One or
+more digits may be used; the value is always interpreted as a decimal
+number.  The hour must be between zero and 24, and the minutes (and
+seconds) \(em if present \(em between zero and 59.  If preceded by a
+.RB `` \(mi '',
+the time zone shall be east of the Prime Meridian; otherwise it shall be
+west (which may be indicated by an optional preceding
+.RB `` \(pl '').
+.TP
+.I rule
+Indicates when to change to and back from summer time.  The
+.I rule
+has the form:
+.RS
+.IP
+\fIdate\fB/\fItime\fB,\fIdate\fB/\fItime\fR
+.RE
+.IP
+where the first
+.I date
+describes when the change from standard to summer time occurs and the
+second
+.I date
+describes when the change back happens.  Each
+.I time
+field describes when, in current local time, the change to the other
+time is made.
+.IP
+The format of
+.I date
+is one of the following:
+.RS
+.TP 10
+.BI J n
+The Julian day
+.I n
+.RI "(1\ \(<=" "\ n\ " "\(<=\ 365).
+Leap days are not counted; that is, in all years \(em including leap
+years \(em February 28 is day 59 and March 1 is day 60.  It is
+impossible to explicitly refer to the occasional February 29.
+.TP
+.I n
+The zero-based Julian day
+.RI "(0\ \(<=" "\ n\ " "\(<=\ 365).
+Leap days are counted, and it is possible to refer to February 29.
+.TP
+.BI M m . n . d
+The
+.IR d' th
+day
+.RI "(0\ \(<=" "\ d\ " "\(<=\ 6)
+of week
+.I n
+of month
+.I m
+of the year
+.RI "(1\ \(<=" "\ n\ " "\(<=\ 5,
+.RI "1\ \(<=" "\ m\ " "\(<=\ 12,
+where week 5 means ``the last
+.I d
+day in month
+.IR m ''
+which may occur in either the fourth or the fifth week).  Week 1 is the
+first week in which the
+.IR d' th
+day occurs.  Day zero is Sunday.
+.RE
+.IP "" 15
+The
+.I time
+has the same format as
+.I offset
+except that no leading sign
+.RB (`` \(mi ''
+or
+.RB `` \(pl '')
+is allowed.  The default, if
+.I time
+is not given, is
+.BR 02:00:00 .
+.RE
+.LP
+If no
+.I rule
+is present in
+.BR TZ ,
+the rules specified
+by the
+.IR tzfile (5)-format
+file
+.B posixrules
+in the system time conversion information directory are used, with the
+standard and summer time offsets from UTC replaced by those specified by
+the
+.I offset
+values in
+.BR TZ .
+.PP
+For compatibility with System V Release 3.1, a semicolon
+.RB ( ; )
+may be used to separate the
+.I rule
+from the rest of the specification.
 .PP
 .I Tzsetwall
 sets things up so that
@@ -72,7 +243,7 @@ returns the best available approximation of local wall clock time.
 converts a long integer, pointed to by
 .IR clock ,
 representing the time in seconds since
-00:00:00 GMT, January 1, 1970,
+00:00:00 UTC, January 1, 1970,
 and returns a pointer to a
 26-character string
 of the form
@@ -110,7 +281,7 @@ ASCII string that's the time zone abbreviation to be used with
 return value.
 .PP
 .I Gmtime\^
-converts to Greenwich Mean Time (GMT).
+converts to Coordinated Universal Time.
 .PP
 .I Asctime\^
 converts a time value contained in a
@@ -140,14 +311,15 @@ to their normal ranges.
 .B tm_isdst
 causes
 .I mktime
-to presume initally that Daylight Saving Time,
+to presume initally that summer time (for example, Daylight Saving Time 
+in the U.S.A.)
 respectively,
 is or is not in effect for the specified time.
 A negative value for
 .B tm_isdst
 causes the
 .I mktime
-function to attempt to divine whether Daylight Saving Time is in effect
+function to attempt to divine whether summer time is in effect
 for the specified time.)
 On successful completion, the values of the
 .B tm_wday
@@ -194,9 +366,9 @@ includes the following fields:
 	int tm_year;	/\(** year \- 1900 \(**/
 	int tm_wday;	/\(** day of week (Sunday = 0) \(**/
 	int tm_yday;	/\(** day of year (0 - 365) \(**/
-	int tm_isdst;	/\(** is DST in effect? \(**/
+	int tm_isdst;	/\(** is summer time in effect? \(**/
 	char \(**tm_zone;	/\(** abbreviation of timezone name \(**/
-	long tm_gmtoff;	/\(** offset from GMT in seconds \(**/
+	long tm_gmtoff;	/\(** offset from UTC in seconds \(**/
 .fi
 .RE
 .PP
@@ -211,14 +383,12 @@ There is no guarantee that these fields will continue to exist
 in this form in future releases of this code.
 .PP
 .I Tm_isdst\^
-is non-zero if a 
-time zone adjustment such as Daylight Saving Time
-is in effect.
+is non-zero if summer time is in effect.
 .PP
 .I Tm_gmtoff
 is the offset (in seconds) of the time represented
-from GMT, with positive values indicating East
-of Greenwich.
+from UTC, with positive values indicating east
+of the Prime Meridian.
 .SH FILES
 .ta \w'/etc/zoneinfo/posixrules\0\0'u
 /etc/zoneinfo	time zone information directory
@@ -227,12 +397,12 @@ of Greenwich.
 .br
 /etc/zoneinfo/posixrules	used in converting POSIX-style TZ's
 .br
-/etc/zoneinfo/GMT	for GMT leap seconds
+/etc/zoneinfo/GMT	for UTC leap seconds
 .sp
 If
 .B /etc/zoneinfo/GMT
 is absent,
-GMT leap seconds are loaded from
+UTC leap seconds are loaded from
 .BR /etc/zoneinfo/posixrules .
 .SH SEE ALSO
 tzfile(5),
@@ -251,4 +421,4 @@ will also be overwritten at the next call
 .I tzset
 or
 .IR tzsetwall ).
-.. %W%
+.. @(#)newctime.3	4.3

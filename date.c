@@ -123,7 +123,7 @@ char *		argv[];
 		switch (ch) {
 		default:
 			usage();
-		case 'u':		/* do it in GMT */
+		case 'u':		/* do it in UTC */
 		case 'c':
 			dogmt();
 			break;
@@ -143,7 +143,7 @@ char *		argv[];
 				wildinput(_("-t value"), optarg,
 					_("must be a non-negative number"));
 			break;
-		case 't':		/* minutes west of GMT */
+		case 't':		/* minutes west of UTC */
 			if (tflag) {
 				(void) fprintf(stderr,
 					_("date: error: multiple -t's used"));
@@ -222,7 +222,7 @@ _("date: error: multiple values in command line\n"));
 				**	TZ=America/New_York date 8712311859.60
 				** when the leap second was inserted.)
 				** The normal check won't work since
-				** the given time is valid in GMT.
+				** the given time is valid in UTC.
 				*/
 				if (atoi(cp + 1) >= SECSPERMIN)
 					wildinput(_("time"), value,

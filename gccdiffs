@@ -1,3 +1,5 @@
+%W%
+
 Here are changes to GNU's gcc-2.7.2.1 "c-common.c" file that allow strftime
 formats to be checked against what GNU's glibc-1.09.1 "strftime" accepts.
 Formats are also checked for specifications that may or must print only the

@@ -181,8 +181,8 @@ static void		timeout();
 static void		usage();
 static time_t		xtime();
 
-static char *	options[132];
-static char *	usemes[132];
+static char	options[132];
+static char	usemes[132];
 
 int
 main(argc, argv)

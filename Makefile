@@ -182,7 +182,7 @@ HEADERS=	tzfile.h private.h
 NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c emkdir.c getopt.c
 NEWUCBSRCS=	date.c logwtmp.c strftime.c
 SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS)
-MANS=		newctime.3 tzset.3 tzfile.5 zic.8 zdump.8
+MANS=		newctime.3 newtzset.3 tzfile.5 zic.8 zdump.8
 DOCS=		Patchlevel.h README Theory $(MANS) date.1 Makefile
 YDATA=		africa antarctica asia australasia \
 		europe northamerica southamerica pacificnew etcetera factory
@@ -249,6 +249,7 @@ right_posix:	right_only other_two
 # are removed from the library.
 
 $(TZLIB):	$(LIBOBJS)
+		-mkdir $(TOPDIR) $(LIBDIR)
 		ar ru $@ $(LIBOBJS)
 		if ar t $@ timemk.o 2>/dev/null ; then ar d $@ timemk.o ; fi
 		if ar t $@ ctime.o 2>/dev/null ; then ar d $@ ctime.o ; fi

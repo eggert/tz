@@ -54,6 +54,10 @@ TZLIB=		/usr/lib/libz.a
 #	-Dstrchr=index
 # to the end of the "CFLAGS=" line.
 #
+# If your're running on a system with a "mkdir" function, feel free to add
+#	-Demkdir=mkdir
+# to the end of the "CFLAGS=" line
+#
 # If you want to use System V compatibility code, add
 #	-DUSG_COMPAT
 # to the end of the "CFLAGS=" line.

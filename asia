@@ -45,7 +45,7 @@ Zone	PRC		8:00	PRC		C%sT
 # From Guy Harris
 
 # Zone	NAME		GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
-Zone	ROC		8:00	-		CST	# Republic of China
+Zone	ROC		8:00	-		CST
 
 ###############################################################################
 

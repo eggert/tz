@@ -1020,7 +1020,7 @@ const int		iscont;
 	}
 	z.z_filename = filename;
 	z.z_linenum = linenum;
-	z.z_gmtoff = gethms(fields[i_gmtoff], _("invalid GMT offset"), TRUE);
+	z.z_gmtoff = gethms(fields[i_gmtoff], _("invalid UTC offset"), TRUE);
 	if ((cp = strchr(fields[i_format], '%')) != 0) {
 		if (*++cp != 's' || strchr(cp, '%') != 0) {
 			error(_("invalid abbreviation format"));
@@ -1630,7 +1630,7 @@ const int			zonecount;
 				INITIALIZE(ktime);
 				if (useuntil) {
 					/*
-					** Turn untiltime into GMT
+					** Turn untiltime into UTC
 					** assuming the current gmtoff and
 					** stdoff values.
 					*/

@@ -6,18 +6,9 @@ static char	elsieid[] = "%W%";
 
 #include "private.h"
 #include "tzfile.h"
-
-#include "sys/stat.h"
-#ifndef S_IWGRP
-#define S_IWGRP 00020
-#endif /* !defined S_IWGRP */
-#ifndef S_IWOTH
-#define S_IWOTH 00002
-#endif /* !defined S_IWOTH */
-
-#ifndef F_OK
-#define F_OK 0
-#endif /* !defined F_OK */
+#ifdef unix
+#include "sys/stat.h"			/* for umask manifest constants */
+#endif /* defined unix */
 
 struct rule {
 	const char *	r_filename;

@@ -12,7 +12,7 @@ static char	tzfilehid[] = "%W%";
 */
 
 #ifndef TZDIR
-#define TZDIR		"/etc/zoneinfo"	/* Time zone object file directory */
+#define TZDIR	"/usr/local/etc/zoneinfo" /* Time zone object file directory */
 #endif /* !defined TZDIR */
 
 #ifndef TZDEFAULT

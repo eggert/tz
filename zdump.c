@@ -318,7 +318,7 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 			newtmp = localtime(&newt);
 			if (newtmp != NULL)
 				newtm = *newtmp;
-			if ((tmp == NULL || newtmp == NULL) ?  (tmp != newtmp) :
+			if ((tmp == NULL || newtmp == NULL) ? (tmp != newtmp) :
 				(delta(&newtm, &tm) != (newt - t) ||
 				newtm.tm_isdst != tm.tm_isdst ||
 				strcmp(abbr(&newtm), buf) != 0)) {

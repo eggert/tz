@@ -132,9 +132,9 @@ char *	argv[];
 
 static void
 hunt(name, lot, hit)
-const char *	name;
-time_t		lot;
-time_t		hit;
+const char * const	name;
+time_t			lot;
+time_t			hit;
 {
 	time_t		t;
 	struct tm	lotm;
@@ -159,8 +159,8 @@ time_t		hit;
 
 static long
 delta(newp, oldp)
-const struct tm *	newp;
-const struct tm *	oldp;
+const struct tm * const	newp;
+const struct tm * const	oldp;
 {
 	long	result;
 
@@ -174,8 +174,8 @@ const struct tm *	oldp;
 
 static void
 show(zone, t, v)
-const char *	zone;
-time_t		t;
+const char * const	zone;
+const time_t		t;
 {
 	const struct tm *	tmp;
 	extern struct tm *	localtime();

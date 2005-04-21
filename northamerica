@@ -1427,7 +1427,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # Shanks reports that Baja was at -8:00 in 1922/1923.
 # Shanks says the 1930 transition in Baja was 1930-11-16.
 # Shanks reports no DST during summer 1931.
-# Shanks reports a transition at 1032-03-30 23:00, not 1932-04-01.
+# Shanks reports a transition at 1932-03-30 23:00, not 1932-04-01.
 # Shanks does not report transitions for Baja in 1945 or 1948.
 # Shanks reports southern Mexico transitions on 1981-12-01, not 12-23.
 # Shanks says Quintana Roo switched to -6:00 on 1982-12-02, and to -5:00
@@ -1931,11 +1931,28 @@ Zone America/Montserrat	-4:08:52 -	LMT	1911 Jul 1 0:01   # Olveston
 # Nicaragua seems to be back at -6:00 but I have not been able to find when
 # they changed from -5:00.
 #
+# From Steffen Thorsen (2005-04-12):
+# I've got reports from 8 different people that Nicaragua just started
+# DST on Sunday 2005-04-10, in order to save energy because of
+# expensive petroleum.  The exact end date for DST is not yet
+# announced, only "September" but some sites also say "mid-September".
+# Some background information is available on the President's official site:
+# http://www.presidencia.gob.ni/Presidencia/Files_index/Secretaria/Notas%20de%20Prensa/Presidente/2005/ABRIL/Gobierno-de-nicaragua-adelanta-hora-oficial-06abril.htm
+# The Decree, no 23-2005 is available here:
+# http://www.presidencia.gob.ni/buscador_gaceta/BD/DECRETOS/2005/Decreto%2023-2005%20Se%20adelanta%20en%20una%20hora%20en%20todo%20el%20territorio%20nacional%20apartir%20de%20las%2024horas%20del%2009%20de%20Abril.pdf
+#
+# From Paul Eggert (2005-04-12):
+# The decree doesn't say anything about daylight saving, but for now let's
+# assume that it is daylight saving and that they'll switch back on the
+# 2nd Sunday in September.
+#
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Nic	1979	1980	-	Mar	Sun>=16	0:00	1:00	D
 Rule	Nic	1979	1980	-	Jun	Mon>=23	0:00	0	S
 Rule	Nic	1992	only	-	Jan	1	4:00	1:00	D
 Rule	Nic	1992	only	-	Sep	24	0:00	0	S
+Rule	Nic	2005	only	-	Apr	10	0:00	1:00	D
+Rule	Nic	2005	only	-	Sep	11	0:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Managua	-5:45:08 -	LMT	1890
 			-5:45:12 -	MMT	1934 Jun 23 # Managua Mean Time?
@@ -1943,7 +1960,7 @@ Zone	America/Managua	-5:45:08 -	LMT	1890
 			-5:00	-	EST	1975 Feb 16
 			-6:00	Nic	C%sT	1993 Jan 1 4:00
 			-5:00	-	EST	1998 Dec
-			-6:00	-	CST
+			-6:00	Nic	C%sT
 
 # Panama
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

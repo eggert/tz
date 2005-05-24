@@ -111,7 +111,9 @@ LDLIBS=
 #  -DNO_RUN_TIME_WARNINGS_ABOUT_YEAR_2000_PROBLEMS_THANK_YOU=1
 #	if you do not want run time warnings about formats that may cause
 #	year 2000 grief
-#
+#  -DZIC_MAX_ABBR_LEN_WO_WARN=3
+#	(or some other number) to set the maximum time zone abbreviation length
+#	that zic will accept without a warning (the default is 6)
 GCC_DEBUG_FLAGS = -Dlint -g -O -fno-common \
 	-Wall -Wcast-qual -Wconversion -Wmissing-prototypes \
 	-Wnested-externs -Wpointer-arith -Wshadow \

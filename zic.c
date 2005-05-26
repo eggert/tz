@@ -10,8 +10,6 @@ typedef int	zic_t;
 #include "locale.h"
 #include "tzfile.h"
 
-#define GRANDPARENTED	"Local time zone must be set--see zic manual page"
-
 #ifndef ZIC_MAX_ABBR_LEN_WO_WARN
 #define ZIC_MAX_ABBR_LEN_WO_WARN	6
 #endif /* !defined ZIC_MAX_ABBR_LEN_WO_WARN */

@@ -137,6 +137,7 @@ struct rule {
 
 static long		detzcode P((const char * codep));
 static const char *	getzname P((const char * strp));
+static const char *	getqzname P((const char * strp, const char delim));
 static const char *	getnum P((const char * strp, int * nump, int min,
 				int max));
 static const char *	getsecs P((const char * strp, long * secsp));
@@ -501,6 +502,27 @@ register const char *	strp;
 }
 
 /*
+** Given a pointer into an extended time zone string, scan until the ending
+** delimiter of the zone name is located.   Return a pointer to the delimiter.
+**
+** As with getzname above, the legal character set is actually quite
+** restricted, with other characters producing undefined results.
+** We choose not to care - allowing almost anything to be in the zone abbrev.
+*/
+
+static const char *
+getqzname(strp, delim)
+register const char *	strp;
+const char		delim;
+{
+	register char	c;
+
+	while ((c = *strp) != '\0' && c != delim)
+		++strp;
+	return strp;
+}
+
+/*
 ** Given a pointer into a time zone string, extract a number from that string.
 ** Check that the number is within a specified range; if it is not, return
 ** NULL.
@@ -784,8 +806,18 @@ const int			lastditch;
 			stdlen = (sizeof sp->chars) - 1;
 		stdoffset = 0;
 	} else {
-		name = getzname(name);
-		stdlen = name - stdname;
+		if (*name == '<') {
+			name++;
+			stdname = name;
+			name = getqzname(name, '>');
+			if (*name != '>')
+				return (-1);
+			stdlen = name - stdname;
+			name++;
+		} else {
+			name = getzname(name);
+			stdlen = name - stdname;
+		}
 		if (stdlen < 3)
 			return -1;
 		if (*name == '\0')
@@ -798,9 +830,18 @@ const int			lastditch;
 	if (load_result != 0)
 		sp->leapcnt = 0;		/* so, we're off a little */
 	if (*name != '\0') {
-		dstname = name;
-		name = getzname(name);
-		dstlen = name - dstname;	/* length of DST zone name */
+		if (*name == '<') {
+			dstname = ++name;
+			name = getqzname(name, '>');
+			if (*name != '>')
+				return -1;
+			dstlen = name - dstname;
+			name++;
+		} else {
+			dstname = name;
+			name = getzname(name);
+			dstlen = name - dstname; /* length of DST zone name */
+		}
 		if (dstlen < 3)
 			return -1;
 		if (*name != '\0' && *name != ',' && *name != ';') {

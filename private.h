@@ -25,6 +25,8 @@ static char	privatehid[] = "@(#)private.h	7.55";
 #endif /* !defined NOID */
 #endif /* !defined lint */
 
+#define GRANDPARENTED	"Local time zone must be set--see zic manual page"
+
 /*
 ** Defaults for preprocessor symbols.
 ** You can override these in your C compiler options, e.g. `-DHAVE_ADJTIME=0'.

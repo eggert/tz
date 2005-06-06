@@ -28,11 +28,11 @@ static char	elsieid[] = "%W%";
 
 #ifndef TZ_ABBR_CHAR_SET
 #define TZ_ABBR_CHAR_SET \
-	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 :+-"
+	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 :+-._"
 #endif /* !defined TZ_ABBR_CHAR_SET */
 
 #ifndef TZ_ABBR_ERR_CHAR
-#define TZ_ABBR_ERR_CHAR	'X'
+#define TZ_ABBR_ERR_CHAR	'_'
 #endif /* !defined TZ_ABBR_ERR_CHAR */
 
 /*

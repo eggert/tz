@@ -818,8 +818,6 @@ const int			lastditch;
 			name = getzname(name);
 			stdlen = name - stdname;
 		}
-		if (stdlen < 3)
-			return -1;
 		if (*name == '\0')
 			return -1;
 		name = getoffset(name, &stdoffset);
@@ -842,8 +840,6 @@ const int			lastditch;
 			name = getzname(name);
 			dstlen = name - dstname; /* length of DST zone name */
 		}
-		if (dstlen < 3)
-			return -1;
 		if (*name != '\0' && *name != ',' && *name != ';') {
 			name = getoffset(name, &dstoffset);
 			if (name == NULL)

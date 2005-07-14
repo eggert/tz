@@ -168,7 +168,7 @@
 # known as "British" Summer Time in all parts of the United Kingdom.
 
 # Date: 4 Jan 89 08:57:25 GMT (Wed)
-# From: Jonathan Leffler <nih-csl!uunet!mcvax!sphinx.co.uk!john>
+# From: Jonathan Leffler
 # [British Summer Time] is fixed annually by Act of Parliament.
 # If you can predict what Parliament will do, you should be in
 # politics making a fortune, not computing.
@@ -2392,11 +2392,11 @@ Zone Europe/Simferopol	2:16:24 -	LMT	1880
 #
 # Tom Hofmann, Scientific Computer Center, CIBA-GEIGY AG,
 # 4002 Basle, Switzerland
-# UUCP: ...!mcvax!cernvax!cgcha!wtho
+# ...
 
 # ...
 # Date: Wed, 4 Feb 87 22:35:22 +0100
-# From: seismo!mcvax!cwi.nl!dik (Dik T. Winter)
+# From: Dik T. Winter
 # ...
 #
 # The information from Tom Hofmann is (as far as I know) not entirely correct.

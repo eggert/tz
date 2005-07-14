@@ -2,7 +2,7 @@
 
 # %W%
 
-# Contributed by Paul Eggert <eggert@twinsun.com>.
+# Contributed by Paul Eggert.
 
 BEGIN {
 	FS = "\t"

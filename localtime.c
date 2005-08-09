@@ -1616,9 +1616,13 @@ const int		do_norm_secs;
 		if (dir != 0) {
 			if (t == lo) {
 				++t;
+				if (t <= lo)
+					return WRONG;
 				++lo;
 			} else if (t == hi) {
 				--t;
+				if (t >= hi)
+					return WRONG;
 				--hi;
 			}
 			if (lo > hi)

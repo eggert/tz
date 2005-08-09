@@ -116,15 +116,14 @@ Rule	US	1918	1919	-	Oct	lastSun	2:00	0	S
 Rule	US	1942	only	-	Feb	9	2:00	1:00	W # War
 Rule	US	1945	only	-	Aug	14	23:00u	1:00	P # Peace
 Rule	US	1945	only	-	Sep	30	2:00	0	S
-Rule	US	1967	max	-	Oct	lastSun	2:00	0	S
+Rule	US	1967	2006	-	Oct	lastSun	2:00	0	S
 Rule	US	1967	1973	-	Apr	lastSun	2:00	1:00	D
 Rule	US	1974	only	-	Jan	6	2:00	1:00	D
 Rule	US	1975	only	-	Feb	23	2:00	1:00	D
 Rule	US	1976	1986	-	Apr	lastSun	2:00	1:00	D
-Rule	US	1987	max	-	Apr	Sun>=1	2:00	1:00	D
-# <a href="http://thomas.loc.gov/cgi-bin/bdquery/z?d106:h.r.00177:">
-# H.R.177
-# </a> (introduced 1999-01-06) would change April to March in the above rule.
+Rule	US	1987	2006	-	Apr	Sun>=1	2:00	1:00	D
+Rule	US	2007	max	-	Mar	Sun>=8	2:00	1:00	D
+Rule	US	2007	max	-	Nov	Sun>=1	2:00	0	S
 
 # From Bob Devine (1988-01-28):
 # ...Alaska (and Hawaii) had the timezone names changed in 1967.
@@ -202,7 +201,26 @@ Rule	US	1987	max	-	Apr	Sun>=1	2:00	1:00	D
 # Public law 106-564 (2000-12-23) introduced the abbreviation
 # "Chamorro Standard Time" for time in Guam and the Northern Marianas.
 # See the file "australasia".
-
+ 
+# From Arthur David Olson, 2005-08-09
+# The following was signed into law on 2005-08-08.
+#
+# H.R. 6, Energy Policy Act of 2005, SEC. 110. DAYLIGHT SAVINGS.
+#   (a) Amendment- Section 3(a) of the Uniform Time Act of 1966 (15
+#   U.S.C. 260a(a)) is amended--
+#     (1) by striking `first Sunday of April' and inserting `second
+#     Sunday of March'; and
+#     (2) by striking `last Sunday of October' and inserting `first
+#     Sunday of November'.
+#   (b) Effective Date- Subsection (a) shall take effect 1 year after the
+#   date of enactment of this Act or March 1, 2007, whichever is later.
+#   (c) Report to Congress- Not later than 9 months after the effective
+#   date stated in subsection (b), the Secretary shall report to Congress
+#   on the impact of this section on energy consumption in the United
+#   States.
+#   (d) Right to Revert- Congress retains the right to revert the
+#   Daylight Saving Time back to the 2005 time schedules once the
+#   Department study is complete.
 
 # US eastern time, represented by New York
 

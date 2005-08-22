@@ -150,19 +150,6 @@ These are the extensions that have been made to the POSIX functions:
 
 Points of interest to folks with other systems:
 
-*	In the near future this package is intended to generate time zone
-	information files containing two sets of data.  The first set
-	uses 32-bit time stamps covering times from 1901-12-13
-	20:45:52 through 2038-01-19 03:14:07 UTC; it is for backward
-	compatibility with older versions of this and other libraries.
-	The second set uses 64-bit time stamps containing about 400
-	years of transition times, which are extrapolated into the
-	indefinite future; it is for newer libraries, typically on
-	hosts with 64-bit time stamps.  New files are approximately
-	nine times the size of the old, because the added data set
-	contains about four times as many transitions, and its time
-	stamps are twice as wide.
-		
 *	This package is already part of many POSIX-compliant hosts,
 	including BSD, HP, Linux, Network Appliance, SCO, SGI, and Sun.
 	On such hosts, the primary use of this package

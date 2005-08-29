@@ -198,7 +198,6 @@ abbrok(abbr, zone)
 const char * const	abbr;
 const char * const	zone;
 {
-	register int		i;
 	register const char *	cp;
 	register char *		wp;
 

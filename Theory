@@ -242,6 +242,8 @@ in decreasing order of importance:
 	Include at least one location per time zone rule set per country.
 		One such location is enough.  Use ISO 3166 (see the file
 		iso3166.tab) to help decide whether something is a country.
+		However, uninhabited ISO 3166 regions like Bouvet Island
+		do not need locations, since local time is not defined there.
 	If all the clocks in a country's region have agreed since 1970,
 		don't bother to include more than one location
 		even if subregions' clocks disagreed before 1970.

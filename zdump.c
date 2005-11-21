@@ -147,7 +147,7 @@ static char *	progname;
 static int	warned;
 
 static char *	abbr P((struct tm * tmp));
-static void	abbrok P((const char * abbr, const char * zone));
+static void	abbrok P((const char * abbrp, const char * zone));
 static long	delta P((struct tm * newp, struct tm * oldp));
 static void	dumptime P((const struct tm * tmp));
 static time_t	hunt P((char * name, time_t lot, time_t	hit));
@@ -194,8 +194,8 @@ time_t *	tp;
 #endif /* !defined TYPECHECK */
 
 static void
-abbrok(abbr, zone)
-const char * const	abbr;
+abbrok(abbrp, zone)
+const char * const	abbrp;
 const char * const	zone;
 {
 	register const char *	cp;
@@ -203,15 +203,15 @@ const char * const	zone;
 
 	if (warned)
 		return;
-	cp = abbr;
+	cp = abbrp;
 	wp = NULL;
 	while (isascii(*cp) && isalpha(*cp))
 		++cp;
-	if (cp - abbr == 0)
+	if (cp - abbrp == 0)
 		wp = _("lacks alphabetic at start");
-	if (cp - abbr < 3)
+	if (cp - abbrp < 3)
 		wp = _("has fewer than 3 alphabetics");
-	if (cp - abbr > 6)
+	if (cp - abbrp > 6)
 		wp = _("has more than 6 alphabetics");
 	if (wp == NULL && (*cp == '+' || *cp == '-')) {
 		++cp;
@@ -226,7 +226,7 @@ const char * const	zone;
 	(void) fflush(stdout);
 	(void) fprintf(stderr,
 		_("%s: warning: zone \"%s\" abbreviation \"%s\" %s\n"),
-		progname, zone, abbr, wp);
+		progname, zone, abbrp, wp);
 	warned = TRUE;
 }
 

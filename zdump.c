@@ -225,7 +225,7 @@ const char * const	zone;
 		return;
 	(void) fflush(stdout);
 	(void) fprintf(stderr,
-		"%s: warning: zone \"%s\" abbreviation \"%s\" %s\n",
+		_("%s: warning: zone \"%s\" abbreviation \"%s\" %s\n"),
 		progname, zone, abbr, wp);
 	warned = TRUE;
 }

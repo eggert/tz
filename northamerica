@@ -1815,6 +1815,11 @@ Zone America/Costa_Rica	-5:36:20 -	LMT	1890		# San Jose
 # to normal hours (after daylight saving time)".
 # For now, let's assume that it's a one-year temporary measure.
 
+# From Carlos A. Carnero Delgado (2005-11-12):
+# This year (just like in 2004-2005) there's no change in time zone
+# adjustment in Cuba.  We will stay in daylight saving time:
+# http://www.granma.cu/espanol/2005/noviembre/mier9/horario.html
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Cuba	1928	only	-	Jun	10	0:00	1:00	D
 Rule	Cuba	1928	only	-	Oct	10	0:00	0	S
@@ -1845,7 +1850,7 @@ Rule	Cuba	1997	only	-	Oct	12	0:00s	0	S
 Rule	Cuba	1998	1999	-	Mar	lastSun	0:00s	1:00	D
 Rule	Cuba	1998	2003	-	Oct	lastSun	0:00s	0	S
 Rule	Cuba	2000	max	-	Apr	Sun>=1	0:00s	1:00	D
-Rule	Cuba	2005	max	-	Oct	lastSun	0:00s	0	S
+Rule	Cuba	2006	max	-	Oct	lastSun	0:00s	0	S
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Havana	-5:29:28 -	LMT	1890

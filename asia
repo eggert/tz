@@ -99,9 +99,12 @@ Zone	Asia/Yerevan	2:58:00 -	LMT	1924 May  2
 			4:00 RussiaAsia	AM%sT
 
 # Azerbaijan
+# From Rustam Aliyev of the Azerbaijan Internet Forum (2005-10-23):
+# According to the resolution of Cabinet of Ministers, 1997
+# Resolution available at: http://aif.az/docs/daylight_res.pdf
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Azer	1997	max	-	Mar	lastSun	 1:00	1:00	S
-Rule	Azer	1997	max	-	Oct	lastSun	 1:00	0	-
+Rule	Azer	1997	max	-	Mar	lastSun	 4:00	1:00	S
+Rule	Azer	1997	max	-	Oct	lastSun	 5:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Baku	3:19:24 -	LMT	1924 May  2
 			3:00	-	BAKT	1957 Mar    # Baku Time
@@ -348,6 +351,17 @@ Link	Asia/Nicosia	Europe/Nicosia
 # Mikhail Saakashvili, who said the change was partly prompted by the process
 # of integration into Europe.
 
+# From Teimuraz Abashidze (2005-11-07):
+# Government of Georgia ... decided to NOT CHANGE daylight savings time on
+# [Oct.] 30, as it was done before during last more than 10 years.
+# Currently, we are in fact GMT +4:00, as before 30 October it was GMT
+# +3:00.... The problem is, there is NO FORMAL LAW or governmental document
+# about it.  As far as I can find, I was told, that there is no document,
+# because we just DIDN'T ISSUE document about switching to winter time....
+# I don't know what can be done, especially knowing that some years ago our
+# DST rules where changed THREE TIMES during one month.
+
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Tbilisi	2:59:16 -	LMT	1880
 			2:59:16	-	TBMT	1924 May  2 # Tbilisi Mean Time
@@ -359,7 +373,8 @@ Zone	Asia/Tbilisi	2:59:16 -	LMT	1880
 			4:00 E-EurAsia	GE%sT	1996 Oct lastSun
 			4:00	1:00	GEST	1997 Mar lastSun
 			4:00 E-EurAsia	GE%sT	2004 Jun 27
-			3:00 RussiaAsia	GE%sT
+			3:00 RussiaAsia	GE%sT	2005 Mar lastSun 2:00
+			4:00	-	GET
 
 # East Timor
 

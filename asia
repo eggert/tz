@@ -930,6 +930,9 @@ Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
 # The decision was taken because of the increase in working hours in
 # government's departments from six to seven hours.
 #
+# From Paul Eggert (2005-11-22):
+# Starting 2003 transitions are from Steffen Thorsen's web site timeanddate.com.
+#
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Jordan	1973	only	-	Jun	6	0:00	1:00	S
 Rule	Jordan	1973	1975	-	Oct	1	0:00	0	-
@@ -952,8 +955,11 @@ Rule	Jordan	1993	1998	-	Apr	Fri>=1	0:00	1:00	S
 Rule	Jordan	1994	only	-	Sep	Fri>=15	0:00	0	-
 Rule	Jordan	1995	1998	-	Sep	Fri>=15	0:00s	0	-
 Rule	Jordan	1999	only	-	Jul	 1	0:00s	1:00	S
-Rule	Jordan	1999	max	-	Sep	lastThu	0:00s	0	-
+Rule	Jordan	1999	2002	-	Sep	lastThu	0:00s	0	-
 Rule	Jordan	2000	max	-	Mar	lastThu	0:00s	1:00	S
+Rule	Jordan	2003	only	-	Oct	24	0:00s	0	-
+Rule	Jordan	2004	only	-	Oct	15	0:00s	0	-
+Rule	Jordan	2005	max	-	Sep	lastFri	0:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Amman	2:23:44 -	LMT	1931
 			2:00	Jordan	EE%sT
@@ -1423,6 +1429,9 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # For now, let's assume that the spring switch was at 24:00,
 # and that they switch at 0:00 on the 3rd Fridays of April and October.
 
+# From Paul Eggert (2005-11-22):
+# Starting 2004 transitions are from Steffen Thorsen's web site timeanddate.com.
+
 # The rules for Egypt are stolen from the `africa' file.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule EgyptAsia	1957	only	-	May	10	0:00	1:00	S
@@ -1433,7 +1442,9 @@ Rule EgyptAsia	1959	1965	-	Sep	30	3:00	0	-
 Rule EgyptAsia	1966	only	-	Oct	 1	3:00	0	-
 
 Rule Palestine	1999	max	-	Apr	Fri>=15	0:00	1:00	S
-Rule Palestine	1999	max	-	Oct	Fri>=15	0:00	0	-
+Rule Palestine	1999	2003	-	Oct	Fri>=15	0:00	0	-
+Rule Palestine	2004	only	-	Oct	 1	1:00	0	-
+Rule Palestine	2005	max	-	Oct	 4	1:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct

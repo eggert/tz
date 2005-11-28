@@ -12,6 +12,10 @@ static char	elsieid[] = "%W%";
 #include "time.h"	/* for struct tm */
 #include "stdlib.h"	/* for exit, malloc, atoi */
 #include "float.h"	/* for FLT_MAX and DBL_MAX */
+#include "ctype.h"	/* for isalpha et al. */
+#ifndef isascii
+#define isascii(x) 1
+#endif
 
 #ifndef ZDUMP_LO_YEAR
 #define ZDUMP_LO_YEAR	(-500)
@@ -205,7 +209,7 @@ const char * const	zone;
 		return;
 	cp = abbrp;
 	wp = NULL;
-	while (isascii(*cp) && isalpha(*cp))
+	while (isascii((int) *cp) && isalpha((int) *cp))
 		++cp;
 	if (cp - abbrp == 0)
 		wp = _("lacks alphabetic at start");
@@ -215,7 +219,7 @@ const char * const	zone;
 		wp = _("has more than 6 alphabetics");
 	if (wp == NULL && (*cp == '+' || *cp == '-')) {
 		++cp;
-		if (isascii(*cp) && isdigit(*cp))
+		if (isascii((int) *cp) && isdigit((int) *cp))
 			if (*cp++ == '1' && *cp >= '0' && *cp <= '4')
 				++cp;
 	}
@@ -509,7 +513,7 @@ time_t	hit;
 }
 
 /*
-** Thanks to Paul Eggert (eggert@twinsun.com) for logic used in delta.
+** Thanks to Paul Eggert for logic used in delta.
 */
 
 static long

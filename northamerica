@@ -2036,13 +2036,18 @@ Zone America/Montserrat	-4:08:52 -	LMT	1911 Jul 1 0:01   # Olveston
 # changes in 2000.  Perhaps a note could be added to the northamerica file, to
 # the effect that we have indirect evidence that DST was observed in 2000.
 #
+# From Jesper Norgaard Welen (2005-11-02):
+# Nicaragua left DST the 2005-10-02 at 00:00 (local time).
+# http://www.presidencia.gob.ni/presidencia/files_index/secretaria/comunicados/2005/septiembre/26septiembre-cambio-hora.htm
+# (2005-09-26)
+#
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Nic	1979	1980	-	Mar	Sun>=16	0:00	1:00	D
 Rule	Nic	1979	1980	-	Jun	Mon>=23	0:00	0	S
-Rule	Nic	1992	only	-	Jan	1	4:00	1:00	D
+Rule	Nic	1992	only	-	Jan	 1	4:00	1:00	D
 Rule	Nic	1992	only	-	Sep	24	0:00	0	S
 Rule	Nic	2005	only	-	Apr	10	0:00	1:00	D
-Rule	Nic	2005	only	-	Sep	18	0:00	0	S
+Rule	Nic	2005	only	-	Oct	 2	0:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Managua	-5:45:08 -	LMT	1890
 			-5:45:12 -	MMT	1934 Jun 23 # Managua Mean Time?

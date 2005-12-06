@@ -209,7 +209,7 @@ const char * const	zone;
 		return;
 	cp = abbrp;
 	wp = NULL;
-	while (isascii(*cp) && isalpha(*cp))
+	while (isascii((unsigned char) *cp) && isalpha((unsigned char) *cp))
 		++cp;
 	if (cp - abbrp == 0)
 		wp = _("lacks alphabetic at start");
@@ -219,9 +219,10 @@ const char * const	zone;
 		wp = _("has more than 6 alphabetics");
 	if (wp == NULL && (*cp == '+' || *cp == '-')) {
 		++cp;
-		if (isascii(*cp) && isdigit(*cp))
-			if (*cp++ == '1' && *cp >= '0' && *cp <= '4')
-				++cp;
+		if (isascii((unsigned char) *cp) &&
+			isdigit((unsigned char) *cp))
+				if (*cp++ == '1' && *cp >= '0' && *cp <= '4')
+					++cp;
 	}
 	if (*cp != '\0')
 		wp = _("differs from POSIX standard");

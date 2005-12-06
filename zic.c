@@ -2046,8 +2046,9 @@ register char *	cp;
 		emalloc((int) ((strlen(cp) + 1) * sizeof *array));
 	nsubs = 0;
 	for ( ; ; ) {
-		while (isascii(*cp) && isspace((unsigned char) *cp))
-			++cp;
+		while (isascii((unsigned char) *cp) &&
+			isspace((unsigned char) *cp))
+				++cp;
 		if (*cp == '\0' || *cp == '#')
 			break;
 		array[nsubs++] = dp = cp;
@@ -2210,8 +2211,9 @@ const char * const	string;
 		*/
 		cp = string;
 		wp = NULL;
-		while (isascii(*cp) && isalpha(*cp))
-			++cp;
+		while (isascii((unsigned char) *cp) &&
+			isalpha((unsigned char) *cp))
+				++cp;
 		if (cp - string == 0)
 wp = _("time zone abbreviation lacks alphabetic at start");
 		if (noise && cp - string > 3)
@@ -2220,9 +2222,11 @@ wp = _("time zone abbreviation has more than 3 alphabetics");
 wp = _("time zone abbreviation has too many alphabetics");
 		if (wp == NULL && (*cp == '+' || *cp == '-')) {
 			++cp;
-			if (isascii(*cp) && isdigit(*cp))
-				if (*cp++ == '1' && *cp >= '0' && *cp <= '4')
-					++cp;
+			if (isascii((unsigned char) *cp) &&
+				isdigit((unsigned char) *cp))
+					if (*cp++ == '1' &&
+						*cp >= '0' && *cp <= '4')
+							++cp;
 		}
 		if (*cp != '\0')
 wp = _("time zone abbreviation differs from POSIX standard");

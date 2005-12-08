@@ -551,9 +551,10 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 # Australia
 
-# <a href="http://www.dstc.qut.edu.au/DST/marg/daylight.html">
+# <a href="http://www.dstc.qut.edu.au/DST/marg/daylight.html" chkurls="nocheck">
 # Australia's Daylight Saving Times
 # </a>, by Margaret Turner, summarizes daylight saving issues in Australia.
+# [ADO: no nameserver entry for www.dstc.qut.edu.au on 2005-12-08.]
 
 # From John Mackin (1991-03-06):
 # We in Australia have _never_ referred to DST as `daylight' time.
@@ -962,9 +963,10 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 # From Paul Eggert (1999-09-27):
 # The Information Service of the Australian National Standards Commission
-# <a href="http://www.nsc.gov.au/InfoServ/Ileaflet/il27.htm">
+# <a href="http://www.nsc.gov.au/InfoServ/Ileaflet/il27.htm" chkurls="nocheck">
 # Daylight Saving
 # </a> page (1995-04) has an excellent overall history of Australian DST.
+# [ADO: no nameserver entry for www.nsc.gov.au on 2005-12-08.]
 # The Community Relations Division of the NSW Attorney General's Department
 # publishes a history of daylight saving in NSW.  See:
 # <a href="http://www.lawlink.nsw.gov.au/crd.nsf/pages/time2">

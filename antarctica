@@ -107,7 +107,7 @@ Zone Antarctica/Mawson	0	-	zzz	1954 Feb 13
 
 # France - year-round bases
 #
-# From Antoine Leca <Antoine.Leca@Renault.FR> (1997-01-20):
+# From Antoine Leca (1997-01-20):
 # Time data are from Nicole Pailleau at the IFRTP
 # (French Institute for Polar Research and Technology).
 # She confirms that French Southern Territories and Terre Adelie bases
@@ -300,7 +300,7 @@ Zone Antarctica/McMurdo	0	-	zzz	1956
 # Normally it wouldn't have a separate entry, since it's like the
 # larger Antarctica/McMurdo since 1970, but it's too famous to omit.
 #
-# From Chris Carrier <72157.3334@CompuServe.COM> (1996-06-27):
+# From Chris Carrier (1996-06-27):
 # Siple, the first commander of the South Pole station,
 # stated that he would have liked to have kept GMT at the station,
 # but that he found it more convenient to keep GMT+12

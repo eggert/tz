@@ -4,7 +4,7 @@
 
 /*
 ** This file is in the public domain, so clarified as of
-** 1996-06-05 by Arthur David Olson (arthur_david_olson@nih.gov).
+** 1996-06-05 by Arthur David Olson.
 */
 
 /*
@@ -105,7 +105,7 @@ struct tzhead {
 #ifdef NOSOLAR
 /*
 ** Must be at least 14 for Europe/Riga as of Jan 12 1995,
-** as noted by Earl Chew <earl@hpato.aus.hp.com>.
+** as noted by Earl Chew.
 */
 #define TZ_MAX_TYPES	20	/* Maximum number of local time types */
 #endif /* !defined NOSOLAR */

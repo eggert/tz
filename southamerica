@@ -526,10 +526,11 @@ Rule	Brazil	1997	only	-	Feb	16	 0:00	0	-
 # to help dealing with the shortages of electric power.
 #
 # From Paul Eggert (1998-02-25):
-# <a href="http://churchnet.ucsm.ac.uk/news/files2/news165.htm">
+# <a href="http://churchnet.ucsm.ac.uk/news/files2/news165.htm" chkurls="nocheck">
 # Brazil Prepares for Papal Visit
 # </a>,
 # Church Net UK (1997-10-02).
+# [ADO: request to churchnet.ucsm.ac.uk times out 2005-12-08.]
 #
 # Decree 2,317 (1997-09-04), adopted by same states.
 Rule	Brazil	1997	only	-	Oct	 6	 0:00	1:00	S

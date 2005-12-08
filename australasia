@@ -1050,7 +1050,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # Lord Howe Island
 
 # From George Shepherd via Simon Woodhead via Robert Elz (1991-03-06):
-# LHI...		[ Courtesy of Pauline Van Winsen.. pauline@Aus ]
+# LHI...		[ Courtesy of Pauline Van Winsen ]
 #					[ Dec 1990 ]
 # Lord Howe Island is located off the New South Wales coast, and is half an
 # hour ahead of NSW time.
@@ -1090,7 +1090,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # From George Shepherd via Simon Woodhead via Robert Elz (1991-03-06):
 # # The Country of New Zealand   (Australia's east island -) Gee they hate that!
 # #				   or is Australia the west island of N.Z.
-# #	[ courtesy of Geoff Tribble.. Geofft@Aus.. Auckland N.Z. ]
+# #	[ courtesy of Geoff Tribble.. Auckland N.Z. ]
 # #				[ Nov 1990 ]
 # ...
 # Rule	NZ      1974    1988	-	Oct	lastSun	2:00	1:00	D

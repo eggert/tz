@@ -1648,7 +1648,7 @@ const int			zonecount;
 	typecnt = 0;
 	charcnt = 0;
 	/*
-	** Thanks to Earl Chew (earl@dnd.icp.nec.com.au)
+	** Thanks to Earl Chew
 	** for noting the need to unconditionally initialize startttisstd.
 	*/
 	startttisstd = FALSE;

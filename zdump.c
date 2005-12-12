@@ -270,7 +270,7 @@ char *	argv[];
 	for (i = 1; i < argc; ++i)
 		if (strcmp(argv[i], "--version") == 0) {
 			(void) printf("%s\n", elsieid);
-			(void) exit(EXIT_SUCCESS);
+			exit(EXIT_SUCCESS);
 		}
 	vflag = 0;
 	cutarg = NULL;
@@ -283,7 +283,7 @@ char *	argv[];
 			(void) fprintf(stderr,
 _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 				progname, progname);
-			(void) exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 	}
 	if (vflag) {
 		if (cutarg != NULL) {
@@ -300,7 +300,7 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 			} else {
 (void) fprintf(stderr, _("%s: wild -c argument %s\n"),
 					progname, cutarg);
-				(void) exit(EXIT_FAILURE);
+				exit(EXIT_FAILURE);
 			}
 		}
 		setabsolutes();
@@ -323,7 +323,7 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 		if (fakeenv == NULL ||
 			(fakeenv[0] = (char *) malloc(longest + 4)) == NULL) {
 					(void) perror(progname);
-					(void) exit(EXIT_FAILURE);
+					exit(EXIT_FAILURE);
 		}
 		to = 0;
 		(void) strcpy(fakeenv[to++], "TZ=");
@@ -390,7 +390,7 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 	if (fflush(stdout) || ferror(stdout)) {
 		(void) fprintf(stderr, "%s: ", progname);
 		(void) perror(_("Error writing standard output"));
-		(void) exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
 	/* If exit fails to exit... */
@@ -414,7 +414,7 @@ setabsolutes()
 			(void) fprintf(stderr,
 _("%s: use of -v on system with floating time_t other than float or double\n"),
 				progname);
-			(void) exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
 	} else if (0 > (time_t) -1) {
 		/*

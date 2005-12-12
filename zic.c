@@ -648,14 +648,14 @@ const char * const	tofile;
 					symlinkcontents =
 						ecatalloc(symlinkcontents,
 						"../");
-					symlinkcontents =
-						ecatalloc(symlinkcontents,
-						fromfile);
-					result = symlink(symlinkcontents,
-						toname);
-					if (result == 0)
+				symlinkcontents =
+					ecatalloc(symlinkcontents,
+					fromfile);
+				result = symlink(symlinkcontents,
+					toname);
+				if (result == 0)
 warning(_("hard link failed, symbolic link used"));
-					ifree(symlinkcontents);
+				ifree(symlinkcontents);
 		}
 #endif /* HAVE_SYMLINK */
 		if (result != 0) {

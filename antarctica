@@ -59,11 +59,10 @@ Rule	ChileAQ	2000	max	-	Mar	Sun>=9	0:00	0	-
 # Australia - territories
 # Heard Island, McDonald Islands (uninhabited)
 #	previously sealers and scientific personnel wintered
-#	<a href="http://www.dstc.qut.edu.au/DST/marg/daylight.html" chkurls="nocheck">
+#	<a href="http://web.archive.org/web/20021204222245/http://www.dstc.qut.edu.au/DST/marg/daylight.html">
 #	Margaret Turner reports
 #	</a> (1999-09-30) that they're UTC+5, with no DST;
 #	presumably this is when they have visitors.
-# [ADO: no nameserver entry for www.dstc.qut.edu.au on 2005-12-08.]
 #
 # year-round bases
 # Casey, Bailey Peninsula, -6617+11032, since 1969

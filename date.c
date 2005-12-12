@@ -264,7 +264,7 @@ _("date: error: multiple values in command line\n"));
 		/*
 		** Sun silently ignores everything else; we follow suit.
 		*/
-		(void) exit(retval);
+		exit(retval);
 	}
 	if (dflag || tflag) {
 #if HAVE_SETTIMEOFDAY == 2
@@ -299,7 +299,7 @@ _("date: warning: kernel doesn't keep -d/-t information, option ignored\n"));
 
 		tm = *localtime(&t);
 		timeout(stdout, "%c\n", &tm);
-		(void) exit(retval);
+		exit(retval);
 	}
 #endif /* defined EBUG */
 
@@ -327,7 +327,7 @@ dogmt()
 		if (fakeenv == NULL) {
 			(void) perror(_("Memory exhausted"));
 			errensure();
-			(void) exit(retval);
+			exit(retval);
 		}
 		to = 0;
 		fakeenv[to++] = tzegmt0;
@@ -522,7 +522,7 @@ usage P((void))
 	(void) fprintf(stderr, _("date: usage is date [-u] [-c] [-n] [-d dst] \
 [-t min-west] [-a sss.fff] [[yyyy]mmddhhmm[yyyy][.ss]] [+format]\n"));
 	errensure();
-	(void) exit(retval);
+	exit(retval);
 }
 
 static void
@@ -556,7 +556,7 @@ const char * const	format;
 			_("date: error: couldn't write results\n"));
 		errensure();
 	}
-	(void) exit(retval);
+	exit(retval);
 }
 
 extern size_t	strftime();
@@ -582,7 +582,7 @@ const struct tm * const	tmp;
 			(void) fprintf(stderr,
 				_("date: error: can't get memory\n"));
 			errensure();
-			(void) exit(retval);
+			exit(retval);
 		}
 		cp[0] = '\1';
 		result = strftime(cp, size, format, tmp);
@@ -819,7 +819,7 @@ const char * const	reason;
 	(void) fprintf(stderr, _(" (%s).\n"),
 		tm.tm_isdst ? _("summer time") : _("standard time"));
 	errensure();
-	(void) exit(retval);
+	exit(retval);
 }
 
 #ifdef TSP_SETDATE

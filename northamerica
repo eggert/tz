@@ -133,6 +133,31 @@ Rule	US	1987	2006	-	Apr	Sun>=1	2:00	1:00	D
 Rule	US	2007	max	-	Mar	Sun>=8	2:00	1:00	D
 Rule	US	2007	max	-	Nov	Sun>=1	2:00	0	S
 
+# From Arthur David Olson, 2005-12-19
+# We generate the files specified below to guard against old files with
+# obsolete information being left in the time zone binary directory.
+# We do these as separate Zones rather than as Links to avoid problems if
+# a particular place changes whether it observes DST.
+# We put these specifications here in the northamerica file both to
+# increase the chances that they'll actually get compiled and to
+# avoid the need to duplicate the US rules in another file.
+
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	AST4ADT		-4:00	US	A%sT
+Zone	EST5EDT		-5:00	US	E%sT
+Zone	CST6CDT		-6:00	US	C%sT
+Zone	MST7MDT		-7:00	US	M%sT
+Zone	PST8PDT		-8:00	US	P%sT
+Zone	YST9YDT		-9:00	US	Y%sT
+Zone	HST10HDT	-10:00	US	H%sT
+Zone	AST4		-4:00	-	AST
+Zone	EST5		-5:00	-	EST
+Zone	CST6		-6:00	-	CST
+Zone	MST7		-7:00	-	MST
+Zone	PST8		-8:00	-	PST
+Zone	YST9		-9:00	-	YST
+Zone	HST10		-10:00	-	HST
+
 # From Bob Devine (1988-01-28):
 # ...Alaska (and Hawaii) had the timezone names changed in 1967.
 #    old			 new

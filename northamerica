@@ -136,6 +136,8 @@ Rule	US	2007	max	-	Nov	Sun>=1	2:00	0	S
 # From Arthur David Olson, 2005-12-19
 # We generate the files specified below to guard against old files with
 # obsolete information being left in the time zone binary directory.
+# We limit the list to names that have appeared in previous versions of
+# this time zone package.
 # We do these as separate Zones rather than as Links to avoid problems if
 # a particular place changes whether it observes DST.
 # We put these specifications here in the northamerica file both to

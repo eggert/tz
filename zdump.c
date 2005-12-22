@@ -212,26 +212,26 @@ const char * const	zone;
 	while (isascii((unsigned char) *cp) && isalpha((unsigned char) *cp))
 		++cp;
 	if (cp - abbrp == 0)
-		wp = _("lacks alphabetic at start");
-	if (cp - abbrp < 3)
-		wp = _("has fewer than 3 alphabetics");
-	if (cp - abbrp > 6)
-		wp = _("has more than 6 alphabetics");
+		wp = "lacks alphabetic at start";
+	else if (cp - abbrp < 3)
+		wp = "has fewer than 3 alphabetics";
+	else if (cp - abbrp > 6)
+		wp = "has more than 6 alphabetics";
 	if (wp == NULL && (*cp == '+' || *cp == '-')) {
 		++cp;
 		if (isascii((unsigned char) *cp) &&
 			isdigit((unsigned char) *cp))
 				if (*cp++ == '1' && *cp >= '0' && *cp <= '4')
 					++cp;
+		if (*cp != '\0')
+			wp = "differs from POSIX standard";
 	}
-	if (*cp != '\0')
-		wp = _("differs from POSIX standard");
 	if (wp == NULL)
 		return;
 	(void) fflush(stdout);
 	(void) fprintf(stderr,
 		_("%s: warning: zone \"%s\" abbreviation \"%s\" %s\n"),
-		progname, zone, abbrp, wp);
+		progname, zone, abbrp, _(wp));
 	warned = TRUE;
 }
 

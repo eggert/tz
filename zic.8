@@ -411,12 +411,32 @@ or
 .q Rolling
 if the leap second time given by the other fields should be interpreted as
 local wall clock time.
-.SH NOTE
+.SH NOTES
 For areas with more than two types of local time,
 you may need to use local standard time in the
 .B AT
 field of the earliest transition time's rule to ensure that
 the earliest transition time recorded in the compiled file is correct.
+.PP
+If,
+for a particular zone,
+a clock advance caused by the start of daylight saving
+coincides with and is equal to
+a clock retreat caused by a change in UTC offset,
+.IR zic
+produces a single transition to daylight saving at the new UTC offset 
+(without any change in wall clock time).
+If you want two separate transitions
+(for example,
+a one-hour retreat from
+U. S. Eastern Standard Time
+to
+U. S. Central Standard Time
+followed one hour later by a one-hour advance to
+U. S. Central Daylight Time),
+you can artificially
+(and slightly inaccurately)
+specify the UTC offset change as occuring a single second too early.
 .SH FILE
 /usr/local/etc/zoneinfo	standard directory used for created files
 .SH "SEE ALSO"

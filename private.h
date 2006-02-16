@@ -133,12 +133,11 @@ static char	privatehid[] = "@(#)private.h	7.55";
 */
 
 #ifndef P
-#ifdef __STDC__
+#if __STDC__
 #define P(x)	x
-#endif /* defined __STDC__ */
-#ifndef __STDC__
+#else /* !__STDC__ */
 #define P(x)	()
-#endif /* !defined __STDC__ */
+#endif /* !__STDC__ */
 #endif /* !defined P */
 
 /*

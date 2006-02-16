@@ -254,7 +254,7 @@ _("date: error: multiple values in command line\n"));
 		struct timeval	tv;
 
 		tv.tv_sec = (int) adjust;
-		tv.tv_usec = (int) ((adjust - tv.tv_sec) * 1000000);
+		tv.tv_usec = (int) ((adjust - tv.tv_sec) * 1000000L);
 		if (adjtime(&tv, (struct timeval *) NULL) != 0)
 			oops("adjtime");
 #endif /* HAVE_ADJTIME */

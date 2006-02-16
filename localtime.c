@@ -510,9 +510,13 @@ register const char *	strp;
 */
 
 static const char *
+#ifdef __STDC__
+getqzname(register const char *strp, const char delim)
+#else /* !defined __STDC__ */
 getqzname(strp, delim)
 register const char *	strp;
 const char		delim;
+#endif /* !defined __STDC__ */
 {
 	register char	c;
 

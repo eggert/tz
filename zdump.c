@@ -15,7 +15,7 @@ static char	elsieid[] = "%W%";
 #include "ctype.h"	/* for isalpha et al. */
 #ifndef isascii
 #define isascii(x) 1
-#endif
+#endif /* !defined isascii */
 
 #ifndef ZDUMP_LO_YEAR
 #define ZDUMP_LO_YEAR	(-500)
@@ -418,14 +418,21 @@ _("%s: use of -v on system with floating time_t other than float or double\n"),
 		}
 	} else if (0 > (time_t) -1) {
 		/*
-		** time_t is signed.
+		** time_t is signed.  Assume overflow wraps around.
 		*/
-		register time_t	hibit;
+		time_t t = 0;
+		time_t t1 = 1;
 
-		for (hibit = 1; (hibit * 2) != 0; hibit *= 2)
-			continue;
-		absolute_min_time = hibit;
-		absolute_max_time = -(hibit + 1);
+		while (t < t1) {
+			t = t1;
+			t1 = 2 * t1 + 1;
+		}
+		  
+		absolute_max_time = t;
+		t = -t;
+		absolute_min_time = t - 1;
+		if (t < absolute_min_time)
+			absolute_min_time = t;
 	} else {
 		/*
 		** time_t is unsigned.
@@ -470,12 +477,12 @@ const long	y;
 static time_t
 #ifdef __STDC__
 hunt(char *name, time_t lot, time_t hit)
-#else	/* !defined __STDC__ */
+#else /* !defined __STDC__ */
 hunt(name, lot, hit)
 char *	name;
 time_t	lot;
 time_t	hit;
-#endif	/* !defined __STDC__ */
+#endif /* !defined __STDC__ */
 {
 	time_t			t;
 	long			diff;
@@ -547,12 +554,12 @@ struct tm *	oldp;
 static void
 #ifdef __STDC__
 show(char *zone, time_t t, int v)
-#else	/* !defined __STDC__ */
+#else /* !defined __STDC__ */
 show(zone, t, v)
 char *	zone;
 time_t	t;
 int	v;
-#endif	/* !defined __STDC__ */
+#endif /* !defined __STDC__ */
 {
 	register struct tm *	tmp;
 

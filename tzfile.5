@@ -9,7 +9,9 @@ The time zone information files used by
 .IR tzset (3)
 begin with the magic characters "TZif" to identify then as
 time zone information files,
-followed by sixteen bytes reserved for future use,
+followed by a character identifying the version of the file's format
+(as of 2005, either an ASCII NUL or a '2')
+followed by fifteen bytes containing zeroes reserved for future use,
 followed by six four-byte values of type
 .BR long ,
 written in a ``standard'' byte order
@@ -131,6 +133,16 @@ if either
 .I tzh_timecnt
 is zero or the time argument is less than the first transition time recorded
 in the file.
+.PP
+For version-2-format time zone files,
+the above header and data is followed by a second header and data,
+identical in format except that
+eight bytes are used for each transition time or leap second time.
+After the second header and data comes a newline-encloded,
+POSIX-TZ-environment-variable-style string for use in handling instants
+after the last transition time stored in the file
+(with nothing between the newlines if there is no POSIX representation for
+such instants).
 .SH SEE ALSO
 newctime(3)
 .\" %W%

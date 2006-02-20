@@ -136,7 +136,7 @@ struct rule {
 
 static long		detzcode P((const char * codep));
 static const char *	getzname P((const char * strp));
-static const char *	getqzname P((const char * strp, const char delim));
+static const char *	getqzname P((const char * strp, const int delim));
 static const char *	getnum P((const char * strp, int * nump, int min,
 				int max));
 static const char *	getsecs P((const char * strp, long * secsp));
@@ -511,11 +511,11 @@ register const char *	strp;
 
 static const char *
 #if __STDC__
-getqzname(register const char *strp, const char delim)
+getqzname(register const char *strp, const int delim)
 #else /* !__STDC__ */
 getqzname(strp, delim)
 register const char *	strp;
-const char		delim;
+const int		delim;
 #endif /* !__STDC__ */
 {
 	register char	c;

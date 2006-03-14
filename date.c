@@ -352,13 +352,7 @@ dogmt()
 
 /*ARGSUSED*/
 static void
-#if __STDC__
 reset(const time_t newt, const int nflag)
-#else /* !__STDC__ */
-reset(newt, nflag)
-const time_t	newt;
-const int	nflag;
-#endif /* !__STDC__ */
 {
 	register int		fid;
 	time_t			oldt;
@@ -623,14 +617,7 @@ register const struct tm * const btmp;
 #define ATOI2(ar)	(ar[0] - '0') * 10 + (ar[1] - '0'); ar += 2;
 
 static time_t
-#if __STDC__
 convert(register const char * const value, const int dousg, const time_t t)
-#else /* !__STDC__ */
-convert(value, dousg, t)
-register const char * const	value;
-const int			dousg;
-const time_t			t;
-#endif /* !__STDC__ */
 {
 	register const char *	cp;
 	register const char *	dotp;
@@ -734,18 +721,10 @@ const time_t			t;
 */
 
 static void
-#if __STDC__
 checkfinal(const char * const	value,
 	   const int		didusg,
 	   const time_t		t,
 	   const time_t		oldnow)
-#else /* !__STDC__ */
-checkfinal(value, didusg, t, oldnow)
-const char * const	value;
-const int		didusg;
-const time_t		t;
-const time_t		oldnow;
-#endif /* !__STDC__ */
 {
 	time_t		othert;
 	struct tm	tm;
@@ -804,16 +783,8 @@ const time_t		oldnow;
 }
 
 static void
-#if __STDC__
 iffy(const time_t thist, const time_t thatt,
 	const char * const value, const char * const reason)
-#else /* !__STDC__ */
-iffy(thist, thatt, value, reason)
-const time_t		thist;
-const time_t		thatt;
-const char * const	value;
-const char * const	reason;
-#endif /* !__STDC__ */
 {
 	struct tm	tm;
 

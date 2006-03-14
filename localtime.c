@@ -1257,10 +1257,17 @@ struct tm * const	tmp;
 				break;
 			}
 	} else {
-		for (i = 1; i < sp->timecnt; ++i)
-			if (t < sp->ats[i])
-				break;
-		i = (int) sp->types[i - 1];
+		register int	lo = 1;
+		register int	hi = sp->timecnt;
+
+		while (lo < hi) {
+			register int	mid = (lo + hi) >> 1;
+
+			if (t < sp->ats[mid])
+				hi = mid;
+			else	lo = mid + 1;
+		}
+		i = (int) sp->types[lo - 1];
 	}
 	ttisp = &sp->ttis[i];
 	/*

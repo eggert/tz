@@ -48,10 +48,6 @@ static char	privatehid[] = "%W%";
 #define HAVE_SETTIMEOFDAY	3
 #endif /* !defined HAVE_SETTIMEOFDAY */
 
-#ifndef HAVE_STDINT_H
-#define HAVE_STDINT_H		(199901 <= __STDC_VERSION__)
-#endif /* !defined HAVE_STDINT_H */
-
 #ifndef HAVE_STRERROR
 #define HAVE_STRERROR		1
 #endif /* !defined HAVE_STRERROR */
@@ -128,16 +124,33 @@ static char	privatehid[] = "%W%";
 /* Unlike <ctype.h>'s isdigit, this also works if c < 0 | c > UCHAR_MAX. */
 #define is_digit(c) ((unsigned)(c) - '0' <= 9)
 
+/*
+** Define HAVE_STDINT_H's default value here, rather than at the
+** start, since __GLIBC__'s value depends on previously-included
+** files.
+** (glibc 2.1 and later have stdint.h, even with pre-C99 compilers.)
+*/
+#ifndef HAVE_STDINT_H
+#define HAVE_STDINT_H \
+	(199901 <= __STDC_VERSION__ || \
+	2 < (__GLIBC__ + (0 < __GLIBC_MINOR__)))
+#endif /* !defined HAVE_STDINT_H */
+
 #if HAVE_STDINT_H
-#include <stdint.h>
+#include "stdint.h"
 #endif /* !HAVE_STDINT_H */
 
 #ifndef INT_FAST64_MAX
-#ifdef LLONG_MAX
+/* Pre-C99 GCC compilers define __LONG_LONG_MAX__ instead of LLONG_MAX.  */
+#if defined LLONG_MAX || defined __LONG_LONG_MAX__
 typedef long long	int_fast64_t;
-#else /* !defined LLONG_MAX */
+#else /* ! (defined LLONG_MAX || defined __LONG_LONG_MAX__) */
+#if (LONG_MAX >> 31) < 0xffffffff
+Please use a compiler that supports a 64-bit integer type (or wider);
+you may need to compile with "-DHAVE_STDINT_H".
+#endif /* (LONG_MAX >> 31) < 0xffffffff */
 typedef long		int_fast64_t;
-#endif /* !defined LLONG_MAX */
+#endif /* ! (defined LLONG_MAX || defined __LONG_LONG_MAX__) */
 #endif /* !defined INT_FAST64_MAX */
 
 #ifndef INT32_MAX
@@ -152,15 +165,11 @@ typedef long		int_fast64_t;
 */
 
 /*
-** SunOS 4.1.1 cc lacks prototypes.
+** If your compiler lacks prototypes, "#define P(x) ()".
 */
 
 #ifndef P
-#if __STDC__
 #define P(x)	x
-#else /* !__STDC__ */
-#define P(x)	()
-#endif /* ! __STDC__ */
 #endif /* !defined P */
 
 /*

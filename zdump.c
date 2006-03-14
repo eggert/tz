@@ -130,11 +130,7 @@ static char	elsieid[] = "%W%";
 #endif /* !defined TZ_DOMAIN */
 
 #ifndef P
-#if __STDC__
 #define P(x)	x
-#else /* !__STDC__ */
-#define P(x)	()
-#endif /* !__STDC__ */
 #endif /* !defined P */
 
 extern char **	environ;
@@ -475,14 +471,7 @@ const long	y;
 }
 
 static time_t
-#if __STDC__
 hunt(char *name, time_t lot, time_t hit)
-#else /* !__STDC__ */
-hunt(name, lot, hit)
-char *	name;
-time_t	lot;
-time_t	hit;
-#endif /* !__STDC__ */
 {
 	time_t			t;
 	long			diff;
@@ -552,14 +541,7 @@ struct tm *	oldp;
 }
 
 static void
-#if __STDC__
 show(char *zone, time_t t, int v)
-#else /* !__STDC__ */
-show(zone, t, v)
-char *	zone;
-time_t	t;
-int	v;
-#endif /* !__STDC__ */
 {
 	register struct tm *	tmp;
 

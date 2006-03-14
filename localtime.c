@@ -602,13 +602,7 @@ register const char *	strp;
 */
 
 static const char *
-#if __STDC__
 getqzname(register const char *strp, const int delim)
-#else /* !__STDC__ */
-getqzname(strp, delim)
-register const char *	strp;
-const int		delim;
-#endif /* !__STDC__ */
 {
 	register int	c;
 

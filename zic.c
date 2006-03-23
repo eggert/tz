@@ -1587,6 +1587,9 @@ const char * const	string;
 		int		writetype[TZ_MAX_TIMES];
 		int		typemap[TZ_MAX_TYPES];
 		register int	thistypecnt;
+		char		thischars[TZ_MAX_CHARS];
+		char		thischarcnt;
+		int 		indmap[TZ_MAX_CHARS];
 
 		if (pass == 1) {
 			thistimei = timei32;
@@ -1618,6 +1621,19 @@ const char * const	string;
 		thistypecnt = 0;
 		for (i = 0; i < typecnt; ++i)
 			typemap[i] = writetype[i] ?  thistypecnt++ : -1;
+		for (i = 0; i < sizeof indmap / sizeof indmap[0]; ++i)
+			indmap[i] = -1;
+		thischarcnt = 0;
+		for (i = 0; i < typecnt; ++i) {
+			if (!writetype[i])
+				continue;
+			if (indmap[abbrinds[i]] >= 0)
+				continue;
+			indmap[abbrinds[i]] = thischarcnt;
+			(void) strcpy(&thischars[thischarcnt],
+				&chars[abbrinds[i]]);
+			thischarcnt += strlen(&chars[abbrinds[i]]) + 1;
+		}
 #define DO(field)	(void) fwrite((void *) tzh.field, \
 				(size_t) sizeof tzh.field, (size_t) 1, fp)
 		tzh = tzh0;
@@ -1628,7 +1644,7 @@ const char * const	string;
 		convert(eitol(thisleapcnt), tzh.tzh_leapcnt);
 		convert(eitol(thistimecnt), tzh.tzh_timecnt);
 		convert(eitol(thistypecnt), tzh.tzh_typecnt);
-		convert(eitol(charcnt), tzh.tzh_charcnt);
+		convert(eitol(thischarcnt), tzh.tzh_charcnt);
 		DO(tzh_magic);
 		DO(tzh_version);
 		DO(tzh_reserved);
@@ -1656,11 +1672,12 @@ const char * const	string;
 			if (writetype[i]) {
 				puttzcode(gmtoffs[i], fp);
 				(void) putc(isdsts[i], fp);
-				(void) putc(abbrinds[i], fp);
+				(void) putc((unsigned char) indmap[abbrinds[i]], fp);
 			}
-		if (charcnt != 0)
-			(void) fwrite((void *) chars, (size_t) sizeof chars[0],
-				(size_t) charcnt, fp);
+		if (thischarcnt != 0)
+			(void) fwrite((void *) thischars,
+				(size_t) sizeof thischars[0],
+				(size_t) thischarcnt, fp);
 		for (i = thisleapi; i < thisleaplim; ++i) {
 			register zic_t	todo;
 

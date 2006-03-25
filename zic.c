@@ -1606,9 +1606,14 @@ const char * const	string;
 		thisleaplim = thisleapi + thisleapcnt;
 		for (i = 0; i < typecnt; ++i)
 			writetype[i] = thistimecnt == timecnt;
-		if (thistimecnt == 0)
-			writetype[types[thistimelim - 1]] = TRUE;
-		else {
+		if (thistimecnt == 0) {
+			/*
+			** No transition times fall in the current
+			** (32- or 64-bit) window.
+			*/
+			if (typecnt != 0)
+				writetype[typecnt - 1] = TRUE;
+		} else {
 			for (i = thistimei - 1; i < thistimelim; ++i)
 				if (i >= 0)
 					writetype[types[i]] = TRUE;

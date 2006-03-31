@@ -1630,14 +1630,23 @@ const char * const	string;
 			indmap[i] = -1;
 		thischarcnt = 0;
 		for (i = 0; i < typecnt; ++i) {
+			register int	j;
+			register char *	thisabbr;
+
 			if (!writetype[i])
 				continue;
 			if (indmap[abbrinds[i]] >= 0)
 				continue;
-			indmap[abbrinds[i]] = thischarcnt;
-			(void) strcpy(&thischars[thischarcnt],
-				&chars[abbrinds[i]]);
-			thischarcnt += strlen(&chars[abbrinds[i]]) + 1;
+			thisabbr = &chars[abbrinds[i]];
+			for (j = 0; j < thischarcnt; ++j)
+				if (strcmp(&thischars[j], thisabbr) == 0)
+					break;
+			if (j == thischarcnt) {
+				(void) strcpy(&thischars[thischarcnt],
+					thisabbr);
+				thischarcnt += strlen(thisabbr) + 1;
+			}
+			indmap[abbrinds[i]] = j;
 		}
 #define DO(field)	(void) fwrite((void *) tzh.field, \
 				(size_t) sizeof tzh.field, (size_t) 1, fp)

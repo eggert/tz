@@ -257,7 +257,7 @@ MO	+2214+11335	Asia/Macau
 MP	+1512+14545	Pacific/Saipan
 MQ	+1436-06105	America/Martinique
 MR	+1806-01557	Africa/Nouakchott
-MS	+1644-06213	America/Montserrat
+MS	+1643-06213	America/Montserrat
 MT	+3554+01431	Europe/Malta
 MU	-2010+05730	Indian/Mauritius
 MV	+0410+07330	Indian/Maldives
@@ -376,10 +376,11 @@ US	+382232-0862041	America/Indiana/Marengo	Eastern Time - Indiana - Crawford Cou
 US	+411745-0863730	America/Indiana/Knox	Eastern Time - Indiana - Starke County
 US	+384452-0850402	America/Indiana/Vevay	Eastern Time - Indiana - Switzerland County
 US	+415100-0873900	America/Chicago	Central Time
-US	+384038-0873143	America/Indiana/Vincennes	Central Time - Indiana - Daviess, Dubois, Knox, Martin, Perry & Pulaski
+US	+384038-0873143	America/Indiana/Vincennes	Central Time - Indiana - Daviess, Dubois, Knox & Perry Counties
 US	+382931-0871643	America/Indiana/Petersburg	Central Time - Indiana - Pike County
 US	+450628-0873651	America/Menominee	Central Time - Michigan - Dickinson, Gogebic, Iron & Menominee Counties
 US	+470659-1011757	America/North_Dakota/Center	Central Time - North Dakota - Oliver County
+US	+465042-1012439	America/North_Dakota/New_Salem	Central Time - North Dakota - Morton County (except Mandan area)
 US	+394421-1045903	America/Denver	Mountain Time
 US	+433649-1161209	America/Boise	Mountain Time - south Idaho & east Oregon
 US	+364708-1084111	America/Shiprock	Mountain Time - Navajo

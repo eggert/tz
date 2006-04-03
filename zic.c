@@ -1630,7 +1630,6 @@ const char * const	string;
 			indmap[i] = -1;
 		thischarcnt = 0;
 		for (i = 0; i < typecnt; ++i) {
-			register int	j;
 			register char *	thisabbr;
 
 			if (!writetype[i])
@@ -1642,7 +1641,7 @@ const char * const	string;
 				if (strcmp(&thischars[j], thisabbr) == 0)
 					break;
 			if (j == thischarcnt) {
-				(void) strcpy(&thischars[thischarcnt],
+				(void) strcpy(&thischars[(int) thischarcnt],
 					thisabbr);
 				thischarcnt += strlen(thisabbr) + 1;
 			}

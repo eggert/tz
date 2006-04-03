@@ -9,7 +9,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="US-ASCII"' />
 <meta name="DC.Creator" content="Eggert, Paul" />
 <meta name="DC.Contributor" content="Olson, Arthur David" />
-<meta name="DC.Date" content="2006-01-20" />
+<meta name="DC.Date" content="2006-03-22" />
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time" />
 <meta name="DC.Identifier" content="http://www.twinsun.com/tz/tz-link.htm" />
@@ -147,15 +147,18 @@ Consortium</a> is promoting further work in this area. <a
 href="ftp://ftp.rfc-editor.org/internet-drafts/draft-royer-ical-basic-04.txt">iCalendar
 Basic</a> is a draft simplified definition that omits VTIMEZONE due to
 its complexity, but this removal is expected to appear as an
-independent specification later.</li>
+independent specification later. <a
+href="http://www.calconnect.org/publications/icalendartimezoneproblemsandrecommendationsv1.0.pdf">iCalendar
+TIMEZONE Problems and Recommendations</a> offers guidelines and
+recommendations for the use of VTIMEZONE and <code>tz</code>.</li>
 <li><a
-href="ftp://ftp.rfc-editor.org/internet-drafts/draft-royer-timezone-registry-03.txt">Time
+href="http://ietfreport.isoc.org/idref/draft-royer-timezone-registry/">Time
 Zone Registry</a> proposes an <a href="http://www.iana.org/"><abbr
 title="Internet Assigned Numbers Authority">IANA</abbr></a> time zone
 registration process that would establish unique names for each
 version of each <code>tz</code> zone, along with a polygonal
 representation of the geographical area corresponding to the
-zone.</li>
+zone. (This draft has expired, though.)</li>
 <li>The <a
 href="http://lists.w3.org/Archives/Public/www-rdf-calendar/">www-rdf-calendar</a>
 list discusses <a
@@ -254,7 +257,7 @@ a Mac OS X program. Its developers
 <a href="http://www.veladg.com/tzoffer.html">offer free
 licenses</a> to <code>tz</code> contributors.</li>
 <li><a
-href="http://www.cimmyt.org/timezone/">World Time Explorer</a> is a
+href="http://www.worldtimeexplorer.com/index.html">World Time Explorer</a> is a
 Microsoft Windows program.</li>
 </ul>
 <h2>Other time zone databases</h2>
@@ -436,6 +439,12 @@ title="Network Time Protocol">NTP</abbr>: The Network
 Time Protocol</a>
 discusses how to synchronize clocks of
 Internet hosts.</li>
+<li><a
+href="ftp://ftp.rfc-editor.org/internet-drafts/draft-lear-dhc-timezone-option-02.txt">A
+Timezone Option for <abbr title="Dynamic Host Configuration
+Protocol">DHCP</abbr></a> proposes a <a
+href="http://www.dhcp.org/">DHCP</a> option for a server to configure
+a client's time zone and daylight saving settings automatically.</a>
 <li><a href="http://gauss.gge.unb.ca/GMT.UT.and.the.RGO.html">A Few
 Facts Concerning <abbr title="Greenwich Mean Time">GMT</abbr>, <abbr
 title="Universal Time">UT</abbr>, and

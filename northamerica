@@ -570,8 +570,10 @@ Zone America/Boise	-7:44:49 -	LMT	1883 Nov 18 12:15:11
 # From Paul Eggert (2005-08-16):
 # http://www.mccsc.edu/time.html says that Indiana will use DST starting 2006.
 
+# From Nathan Stratton Treadway (2006-03-30):
+# http://www.dot.gov/affairs/dot0406.htm [3705 B]
 # From Deborah Goldsmith (2006-01-18):
-# http://dmses.dot.gov/docimages/pdf95/382329_web.pdf
+# http://dmses.dot.gov/docimages/pdf95/382329_web.pdf [2.9 MB]
 # From Paul Eggert (2006-01-20):
 # It says "DOT is relocating the time zone boundary in Indiana to move Starke,
 # Pulaski, Knox, Daviess, Martin, Pike, Dubois, and Perry Counties from the

@@ -1,5 +1,8 @@
 #! /bin/sh
 
+: 'This file is in the public domain, so clarified as of'
+: '2006-07-17 by Arthur David Olson.'
+
 : '%W%'
 
 case $#-$1 in

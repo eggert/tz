@@ -1537,7 +1537,7 @@ const char * const	string;
 	for (i = 0; i < timecnt; ++i) {
 		j = leapcnt;
 		while (--j >= 0)
-			if (ats[i] >= trans[j]) {
+			if (ats[i] > trans[j] - corr[j]) {
 				ats[i] = tadd(ats[i], corr[j]);
 				break;
 			}

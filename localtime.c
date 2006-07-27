@@ -556,9 +556,9 @@ register const int		doextend;
 	}
 	i = 2 * YEARSPERREPEAT;
 	sp->goback = sp->goahead = sp->timecnt > i;
-	sp->goback &= sp->types[i] == sp->types[0] &&
+	sp->goback = sp->goback && sp->types[i] == sp->types[0] &&
 		differ_by_repeat(sp->ats[i], sp->ats[0]);
-	sp->goahead &=
+	sp->goahead = sp->goahead &&
 		sp->types[sp->timecnt - 1] == sp->types[sp->timecnt - 1 - i] &&
 		differ_by_repeat(sp->ats[sp->timecnt - 1],
 			 sp->ats[sp->timecnt - 1 - i]);

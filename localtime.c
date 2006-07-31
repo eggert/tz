@@ -916,7 +916,6 @@ const int			lastditch;
 	load_result = tzload(TZDEFRULES, sp, FALSE);
 	if (load_result != 0)
 		sp->leapcnt = 0;		/* so, we're off a little */
-	sp->timecnt = 0;
 	if (*name != '\0') {
 		if (*name == '<') {
 			dstname = ++name;
@@ -967,6 +966,7 @@ const int			lastditch;
 			atp = sp->ats;
 			typep = sp->types;
 			janfirst = 0;
+			sp->timecnt = 0;
 			for (year = EPOCH_YEAR;
 			    sp->timecnt + 2 <= TZ_MAX_TIMES;
 			    ++year) {

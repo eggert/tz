@@ -1,4 +1,9 @@
 #! /usr/bin/perl -w
+
+# %W%
+
+# Courtesy Ken Pizzini.
+
 use strict;
 
 #This file released to the public domain.
@@ -10,8 +15,7 @@ my $contZone = '';
 while (<>) {
   my $origline = $_;
   my @fields = ();
-  while (/^\s*[^#]/) {
-    s/^\s*((?:"[^"]*"|[^\s#])+)// or last;
+  while (s/^\s*((?:"[^"]*"|[^\s#])+)//) {
     push @fields, $1;
   }
   next unless @fields;

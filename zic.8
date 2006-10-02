@@ -269,7 +269,7 @@ A zone line has the form
 .nf
 .ti +.5i
 .ta \w'Zone\0\0'u +\w'Australia/Adelaide\0\0'u +\w'GMTOFF\0\0'u +\w'RULES/SAVE\0\0'u +\w'FORMAT\0\0'u
-Zone	NAME	GMTOFF	RULES/SAVE	FORMAT	[UNTIL]
+Zone	NAME	GMTOFF	RULES/SAVE	FORMAT	[UNTILYEAR [MONTH [DAY [TIME]]]]
 .sp
 For example:
 .sp
@@ -311,15 +311,15 @@ Alternately,
 a slash (/)
 separates standard and daylight abbreviations.
 .TP
-.B UNTIL
+.B UNTILYEAR [MONTH [DAY [TIME]]]
 The time at which the UTC offset or the rule(s) change for a location.
 It is specified as a year, a month, a day, and a time of day.
 If this is specified,
 the time zone information is generated from the given UTC offset
 and rule change until the time specified.
 The month, day, and time of day have the same format as the IN, ON, and AT
-columns of a rule; trailing columns can be omitted, and default to the
-earliest possible value for the missing columns.
+fields of a rule; trailing fields can be omitted, and default to the
+earliest possible value for the missing fields.
 .IP
 The next line must be a
 .q continuation
@@ -328,11 +328,11 @@ string
 .q Zone
 and the name are omitted, as the continuation line will
 place information starting at the time specified as the
-.B UNTIL
-field in the previous line in the file used by the previous line.
-Continuation lines may contain an
-.B UNTIL
-field, just as zone lines do, indicating that the next line is a further
+.q until
+information in the previous line in the file used by the previous line.
+Continuation lines may contain
+.q until
+information, just as zone lines do, indicating that the next line is a further
 continuation.
 .PP
 A link line has the form

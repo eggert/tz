@@ -764,8 +764,8 @@ Zone America/Santiago	-4:42:46 -	LMT	1890
 			-4:42:46 -	SMT	1927 Sep  1 # Santiago Mean Time
 			-5:00	Chile	CL%sT	1947 May 22 # Chile Time
 			-4:00	Chile	CL%sT
-Zone Pacific/Easter	-7:17:28 -	LMT	1890
-			-7:17:28 -	EMT	1932 Sep    # Easter Mean Time
+Zone Pacific/Easter	-7:17:44 -	LMT	1890
+			-7:17:44 -	EMT	1932 Sep    # Easter Mean Time
 			-7:00	Chile	EAS%sT	1982 Mar 13 21:00 # Easter I Time
 			-6:00	Chile	EAS%sT
 #

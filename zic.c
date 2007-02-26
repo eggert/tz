@@ -2644,7 +2644,7 @@ wp = _("time zone abbreviation differs from POSIX standard");
 
 static int
 mkdirs(argname)
-char * const	argname;
+char *		argname;
 {
 	register char *	name;
 	register char *	cp;

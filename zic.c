@@ -2024,7 +2024,7 @@ const int			zonecount;
 
 wp = ecpyalloc(_("no POSIX environment variable for zone"));
 		wp = ecatalloc(wp, " ");
-		wp = ecatalloc(wp, zpfirst->z_name); 
+		wp = ecatalloc(wp, zpfirst->z_name);
 		warning(wp);
 		ifree(wp);
 	}

@@ -2296,6 +2296,16 @@ Zone	Europe/Zurich	0:34:08 -	LMT	1848 Sep 12
 # From Paul Eggert (2007-01-03):
 # Prefer the above source to Shanks & Pottenger for time stamps after 1990.
 
+# From Steffen Thorsen (2007-03-09):
+# Starting 2007 though, it seems that they are adopting EU's 1:00 UTC
+# start/end time, according to the following page (2007-03-07):
+# http://www.ntvmsnbc.com/news/402029.asp
+# The official document is located here - it is in Turkish...:
+# http://rega.basbakanlik.gov.tr/eskiler/2007/03/20070307-7.htm
+# I was able to locate the following seemingly official document
+# (on a non-government server though) describing dates between 2002 and 2006:
+# http://www.alomaliye.com/bkk_2002_3769.htm
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Turkey	1916	only	-	May	 1	0:00	1:00	S
 Rule	Turkey	1916	only	-	Oct	 1	0:00	0	-
@@ -2352,15 +2362,16 @@ Rule	Turkey	1985	only	-	Apr	20	0:00	1:00	S
 Rule	Turkey	1985	only	-	Sep	28	0:00	0	-
 Rule	Turkey	1986	1990	-	Mar	lastSun	2:00s	1:00	S
 Rule	Turkey	1986	1990	-	Sep	lastSun	2:00s	0	-
-Rule	Turkey	1991	max	-	Mar	lastSun	1:00s	1:00	S
+Rule	Turkey	1991	2006	-	Mar	lastSun	1:00s	1:00	S
 Rule	Turkey	1991	1995	-	Sep	lastSun	1:00s	0	-
-Rule	Turkey	1996	max	-	Oct	lastSun	1:00s	0	-
+Rule	Turkey	1996	2006	-	Oct	lastSun	1:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Istanbul	1:55:52 -	LMT	1880
 			1:56:56	-	IMT	1910 Oct # Istanbul Mean Time?
 			2:00	Turkey	EE%sT	1978 Oct 15
 			3:00	Turkey	TR%sT	1985 Apr 20 # Turkey Time
-			2:00	Turkey	EE%sT
+			2:00	Turkey	EE%sT	2007
+			2:00	EU	EE%sT
 Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 
 # Ukraine

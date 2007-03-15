@@ -786,20 +786,20 @@ Zone	America/Bogota	-4:56:20 -	LMT	1884 Mar 13
 
 # Curacao
 #
-# From Paul Eggert (2006-03-22): 
+# From Paul Eggert (2006-03-22):
 # Shanks & Pottenger say that The Bottom and Philipsburg have been at
 # -4:00 since standard time was introduced on 1912-03-02; and that
 # Kralendijk and Rincon used Kralendijk Mean Time (-4:33:08) from
 # 1912-02-02 to 1965-01-01.  The former is dubious, since S&P also say
 # Saba Island has been like Curacao.
-# This all predates our 1970 cutoff, though.  
+# This all predates our 1970 cutoff, though.
 #
 # By July 2007 Curacao and St Maarten are planned to become
 # associated states within the Netherlands, much like Aruba;
 # Bonaire, Saba and St Eustatius would become directly part of the
 # Netherlands as Kingdom Islands.  This won't affect their time zones
 # though, as far as we know.
-# 
+#
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Curacao	-4:35:44 -	LMT	1912 Feb 12	# Willemstad
 			-4:30	-	ANT	1965 # Netherlands Antilles Time

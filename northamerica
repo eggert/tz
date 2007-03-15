@@ -1716,7 +1716,7 @@ Zone America/Dawson_Creek -8:00:56 -	LMT	1884
 # From Chris Walton (2007-03-14):
 # Today I phoned the "hamlet office" to find out what Resolute was doing with
 # its clocks.
-# 
+#
 # The individual that answered the phone confirmed that the clocks did not
 # move at the end of daylight saving on October 29/2006.  He also told me that
 # the clocks did not move this past weekend (March 11/2007)....
@@ -2049,7 +2049,7 @@ Zone	America/Antigua	-4:07:12 -	LMT	1912 Mar 2
 # Bahamas
 #
 # From Sue Williams (2006-12-07):
-# The Bahamas announced about a month ago that they plan to change their DST 
+# The Bahamas announced about a month ago that they plan to change their DST
 # rules to sync with the U.S. starting in 2007....
 # http://www.jonesbahamas.com/?c=45&a=10412
 

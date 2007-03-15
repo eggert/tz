@@ -1713,6 +1713,17 @@ Zone America/Dawson_Creek -8:00:56 -	LMT	1884
 # daylight saving....
 # http://www.nnsl.com/frames/newspapers/2006-11/nov13_06none.html
 
+# From Chris Walton (2007-03-14):
+# Today I phoned the "hamlet office" to find out what Resolute was doing with
+# its clocks.
+# 
+# The individual that answered the phone confirmed that the clocks did not
+# move at the end of daylight saving on October 29/2006.  He also told me that
+# the clocks did not move this past weekend (March 11/2007)....
+#
+# America/Resolute should use the "Canada" Rule up to October 29/2006.
+# After that it should be fixed on Eastern Standard Time until further notice.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	NT_YK	1918	only	-	Apr	14	2:00	1:00	D
 Rule	NT_YK	1918	only	-	Oct	27	2:00	0	S
@@ -1743,7 +1754,7 @@ Zone America/Resolute	0	-	zzz	1947 Aug 31 # Resolute founded
 			-6:00	NT_YK	C%sT	2000 Oct 29 2:00
 			-5:00	-	EST	2001 Apr  1 3:00
 			-6:00	Canada	C%sT	2006 Oct 29 2:00
-			-5:00	Canada	E%sT
+			-5:00	-	EST
 # aka Kangiqiniq
 Zone America/Rankin_Inlet 0	-	zzz	1957 # Rankin Inlet founded
 			-6:00	NT_YK	C%sT	2000 Oct 29 2:00

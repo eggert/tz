@@ -217,7 +217,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=10	0:00	1:00	D
 # BTW, I did some research on-line and found some info regarding these five
 # historic timezones from some Taiwan websites.  And yes, there are official
 # Chinese names for these locales (before 1949).
-# 
+#
 # From Jesper Norgaard Welen (2006-07-14):
 # I have investigated the timezones around 1970 on the
 # http://www.astro.com/atlas site [with provinces and county
@@ -629,7 +629,7 @@ Rule	Iraq	1985	1990	-	Sep	lastSun	1:00s	0	S
 Rule	Iraq	1986	1990	-	Mar	lastSun	1:00s	1:00	D
 # IATA SSIM (1991/1996) says Apr 1 12:01am UTC; guess the `:01' is a typo.
 # Shanks & Pottenger say Iraq did not observe DST 1992/1997; ignore this.
-# 
+#
 Rule	Iraq	1991	max	-	Apr	 1	3:00s	1:00	D
 Rule	Iraq	1991	max	-	Oct	 1	3:00s	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

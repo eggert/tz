@@ -114,7 +114,7 @@ static void	associate P((void));
 static int	ciequal P((const char * ap, const char * bp));
 static void	convert P((long val, char * buf));
 static void	convert64 P((zic_t val, char * buf));
-static void	dolink P((const char * fromfile, const char * tofile));
+static void	dolink P((const char * fromfield, const char * tofield));
 static void	doabbr P((char * abbr, const char * format,
 			const char * letters, int isdst, int doquotes));
 static void	eat P((const char * name, int num));
@@ -628,26 +628,26 @@ _("%s: More than one -L option specified\n"),
 }
 
 static void
-dolink(fromfile, tofile)
-const char * const	fromfile;
-const char * const	tofile;
+dolink(fromfield, tofield)
+const char * const	fromfield;
+const char * const	tofield;
 {
 	register char *	fromname;
 	register char *	toname;
 
-	if (fromfile[0] == '/')
-		fromname = ecpyalloc(fromfile);
+	if (fromfield[0] == '/')
+		fromname = ecpyalloc(fromfield);
 	else {
 		fromname = ecpyalloc(directory);
 		fromname = ecatalloc(fromname, "/");
-		fromname = ecatalloc(fromname, fromfile);
+		fromname = ecatalloc(fromname, fromfield);
 	}
-	if (tofile[0] == '/')
-		toname = ecpyalloc(tofile);
+	if (tofield[0] == '/')
+		toname = ecpyalloc(tofield);
 	else {
 		toname = ecpyalloc(directory);
 		toname = ecatalloc(toname, "/");
-		toname = ecatalloc(toname, tofile);
+		toname = ecatalloc(toname, tofield);
 	}
 	/*
 	** We get to be careful here since
@@ -666,7 +666,7 @@ const char * const	tofile;
 		if (result != 0 &&
 			access(fromname, F_OK) == 0 &&
 			!itsdir(fromname)) {
-				const char *s = tofile;
+				const char *s = tofield;
 				register char * symlinkcontents = NULL;
 
 				while ((s = strchr(s+1, '/')) != NULL)

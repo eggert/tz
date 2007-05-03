@@ -945,15 +945,17 @@ const int		signable;
 			error(errstring);
 			return 0;
 	}
-	if ((hh < 0 || hh >= HOURSPERDAY ||
+	if (hh < 0 ||
 		mm < 0 || mm >= MINSPERHOUR ||
-		ss < 0 || ss > SECSPERMIN) &&
-		!(hh == HOURSPERDAY && mm == 0 && ss == 0)) {
+		ss < 0 || ss > SECSPERMIN) {
 			error(errstring);
 			return 0;
 	}
-	if (noise && hh == HOURSPERDAY)
+	if (noise && hh == HOURSPERDAY && mm == 0 && ss == 0)
 		warning(_("24:00 not handled by pre-1998 versions of zic"));
+	if (noise && (hh > HOURSPERDAY ||
+		(hh == HOURSPERDAY && (mm != 0 || ss != 0))))
+warning(_("values over 24 hours not handled by pre-2007 versions of zic"));
 	return eitol(sign) *
 		(eitol(hh * MINSPERHOUR + mm) *
 		eitol(SECSPERMIN) + eitol(ss));

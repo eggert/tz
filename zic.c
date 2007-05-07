@@ -926,7 +926,8 @@ const char *		string;
 const char * const	errstring;
 const int		signable;
 {
-	int	hh, mm, ss, sign;
+	long	hh;
+	int	mm, ss, sign;
 
 	if (string == NULL || *string == '\0')
 		return 0;
@@ -936,11 +937,11 @@ const int		signable;
 		sign = -1;
 		++string;
 	} else	sign = 1;
-	if (sscanf(string, scheck(string, "%d"), &hh) == 1)
+	if (sscanf(string, scheck(string, "%ld"), &hh) == 1)
 		mm = ss = 0;
-	else if (sscanf(string, scheck(string, "%d:%d"), &hh, &mm) == 2)
+	else if (sscanf(string, scheck(string, "%ld:%d"), &hh, &mm) == 2)
 		ss = 0;
-	else if (sscanf(string, scheck(string, "%d:%d:%d"),
+	else if (sscanf(string, scheck(string, "%ld:%d:%d"),
 		&hh, &mm, &ss) != 3) {
 			error(errstring);
 			return 0;
@@ -951,14 +952,17 @@ const int		signable;
 			error(errstring);
 			return 0;
 	}
+	if (LONG_MAX / SECSPERHOUR < hh) {
+		error(_("time overflow"));
+		return 0;
+	}
 	if (noise && hh == HOURSPERDAY && mm == 0 && ss == 0)
 		warning(_("24:00 not handled by pre-1998 versions of zic"));
 	if (noise && (hh > HOURSPERDAY ||
 		(hh == HOURSPERDAY && (mm != 0 || ss != 0))))
 warning(_("values over 24 hours not handled by pre-2007 versions of zic"));
-	return eitol(sign) *
-		(eitol(hh * MINSPERHOUR + mm) *
-		eitol(SECSPERMIN) + eitol(ss));
+	return oadd(eitol(sign) * hh * eitol(SECSPERHOUR),
+		    eitol(sign) * (eitol(mm) * eitol(SECSPERMIN) + eitol(ss)));
 }
 
 static void
@@ -2271,6 +2275,10 @@ const int		ttisgmt;
 	*/
 	if (typecnt >= TZ_MAX_TYPES) {
 		error(_("too many local time types"));
+		exit(EXIT_FAILURE);
+	}
+	if (! (-1L - 2147483647L <= gmtoff && gmtoff <= 2147483647L)) {
+		error(_("UTC offset out of range"));
 		exit(EXIT_FAILURE);
 	}
 	gmtoffs[i] = gmtoff;

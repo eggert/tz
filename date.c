@@ -75,21 +75,21 @@ extern char *		tzname[2];
 
 static int		retval = EXIT_SUCCESS;
 
-static void		checkfinal P((const char *, int, time_t, time_t));
-static int		comptm P((const struct tm *, const struct tm *));
-static time_t		convert P((const char *, int, time_t));
-static void		display P((const char *));
-static void		dogmt P((void));
-static void		errensure P((void));
-static void		iffy P((time_t, time_t, const char *, const char *));
-int			main P((int, char**));
-static const char *	nondigit P((const char *));
-static void		oops P((const char *));
-static void		reset P((time_t, int));
-static void		timeout P((FILE *, const char *, const struct tm *));
-static void		usage P((void));
-static void		wildinput P((const char *, const char *,
-				const char *));
+static void		checkfinal(const char *, int, time_t, time_t);
+static int		comptm(const struct tm *, const struct tm *);
+static time_t		convert(const char *, int, time_t);
+static void		display(const char *);
+static void		dogmt(void);
+static void		errensure(void);
+static void		iffy(time_t, time_t, const char *, const char *);
+int			main(int, char**);
+static const char *	nondigit(const char *);
+static void		oops(const char *);
+static void		reset(time_t, int);
+static void		timeout(FILE *, const char *, const struct tm *);
+static void		usage(void);
+static void		wildinput(const char *, const char *,
+				const char *);
 
 int
 main(argc, argv)
@@ -499,7 +499,7 @@ const char * const	reason;
 }
 
 static void
-errensure P((void))
+errensure(void)
 {
 	if (retval == EXIT_SUCCESS)
 		retval = EXIT_FAILURE;
@@ -515,7 +515,7 @@ register const char *	cp;
 }
 
 static void
-usage P((void))
+usage(void)
 {
 	(void) fprintf(stderr, _("date: usage is date [-u] [-c] [-n] [-d dst] \
 [-t min-west] [-a sss.fff] [[yyyy]mmddhhmm[yyyy][.ss]] [+format]\n"));

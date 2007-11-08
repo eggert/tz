@@ -165,14 +165,6 @@ typedef long		int_fast64_t;
 */
 
 /*
-** If your compiler lacks prototypes, "#define P(x) ()".
-*/
-
-#ifndef P
-#define P(x)	x
-#endif /* !defined P */
-
-/*
 ** SunOS 4.1.1 headers lack EXIT_SUCCESS.
 */
 
@@ -214,7 +206,7 @@ typedef long		int_fast64_t;
 */
 
 #ifndef remove
-extern int	unlink P((const char * filename));
+extern int	unlink(const char * filename);
 #define remove	unlink
 #endif /* !defined remove */
 
@@ -242,14 +234,14 @@ extern char *	asctime_r();
 ** Private function declarations.
 */
 
-char *		icalloc P((int nelem, int elsize));
-char *		icatalloc P((char * old, const char * new));
-char *		icpyalloc P((const char * string));
-char *		imalloc P((int n));
-void *		irealloc P((void * pointer, int size));
-void		icfree P((char * pointer));
-void		ifree P((char * pointer));
-const char *	scheck P((const char * string, const char * format));
+char *		icalloc(int nelem, int elsize);
+char *		icatalloc(char * old, const char * new);
+char *		icpyalloc(const char * string);
+char *		imalloc(int n);
+void *		irealloc(void * pointer, int size);
+void		icfree(char * pointer);
+void		ifree(char * pointer);
+const char *	scheck(const char * string, const char * format);
 
 /*
 ** Finally, some convenience items.
@@ -337,8 +329,8 @@ const char *	scheck P((const char * string, const char * format));
 #if HAVE_INCOMPATIBLE_CTIME_R
 #undef asctime_r
 #undef ctime_r
-char *asctime_r P((struct tm const *, char *));
-char *ctime_r P((time_t const *, char *));
+char *asctime_r(struct tm const *, char *);
+char *ctime_r(time_t const *, char *);
 #endif /* HAVE_INCOMPATIBLE_CTIME_R */
 
 #ifndef YEARSPERREPEAT

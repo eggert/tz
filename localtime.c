@@ -136,51 +136,51 @@ struct rule {
 ** Prototypes for static functions.
 */
 
-static long		detzcode P((const char * codep));
-static time_t		detzcode64 P((const char * codep));
-static int		differ_by_repeat P((time_t t1, time_t t0));
-static const char *	getzname P((const char * strp));
-static const char *	getqzname P((const char * strp, const int delim));
-static const char *	getnum P((const char * strp, int * nump, int min,
-				int max));
-static const char *	getsecs P((const char * strp, long * secsp));
-static const char *	getoffset P((const char * strp, long * offsetp));
-static const char *	getrule P((const char * strp, struct rule * rulep));
-static void		gmtload P((struct state * sp));
-static struct tm *	gmtsub P((const time_t * timep, long offset,
-				struct tm * tmp));
-static struct tm *	localsub P((const time_t * timep, long offset,
-				struct tm * tmp));
-static int		increment_overflow P((int * number, int delta));
-static int		leaps_thru_end_of P((int y));
-static int		long_increment_overflow P((long * number, int delta));
-static int		long_normalize_overflow P((long * tensptr,
-				int * unitsptr, int base));
-static int		normalize_overflow P((int * tensptr, int * unitsptr,
-				int base));
-static void		settzname P((void));
-static time_t		time1 P((struct tm * tmp,
-				struct tm * (*funcp) P((const time_t *,
-				long, struct tm *)),
-				long offset));
-static time_t		time2 P((struct tm *tmp,
-				struct tm * (*funcp) P((const time_t *,
-				long, struct tm*)),
-				long offset, int * okayp));
-static time_t		time2sub P((struct tm *tmp,
-				struct tm * (*funcp) P((const time_t *,
-				long, struct tm*)),
-				long offset, int * okayp, int do_norm_secs));
-static struct tm *	timesub P((const time_t * timep, long offset,
-				const struct state * sp, struct tm * tmp));
-static int		tmcomp P((const struct tm * atmp,
-				const struct tm * btmp));
-static time_t		transtime P((time_t janfirst, int year,
-				const struct rule * rulep, long offset));
-static int		tzload P((const char * name, struct state * sp,
-				int doextend));
-static int		tzparse P((const char * name, struct state * sp,
-				int lastditch));
+static long		detzcode(const char * codep);
+static time_t		detzcode64(const char * codep);
+static int		differ_by_repeat(time_t t1, time_t t0);
+static const char *	getzname(const char * strp);
+static const char *	getqzname(const char * strp, const int delim);
+static const char *	getnum(const char * strp, int * nump, int min,
+				int max);
+static const char *	getsecs(const char * strp, long * secsp);
+static const char *	getoffset(const char * strp, long * offsetp);
+static const char *	getrule(const char * strp, struct rule * rulep);
+static void		gmtload(struct state * sp);
+static struct tm *	gmtsub(const time_t * timep, long offset,
+				struct tm * tmp);
+static struct tm *	localsub(const time_t * timep, long offset,
+				struct tm * tmp);
+static int		increment_overflow(int * number, int delta);
+static int		leaps_thru_end_of(int y);
+static int		long_increment_overflow(long * number, int delta);
+static int		long_normalize_overflow(long * tensptr,
+				int * unitsptr, int base);
+static int		normalize_overflow(int * tensptr, int * unitsptr,
+				int base);
+static void		settzname(void);
+static time_t		time1(struct tm * tmp,
+				struct tm * (*funcp)(const time_t *,
+				long, struct tm *),
+				long offset);
+static time_t		time2(struct tm *tmp,
+				struct tm * (*funcp)(const time_t *,
+				long, struct tm*),
+				long offset, int * okayp);
+static time_t		time2sub(struct tm *tmp,
+				struct tm * (*funcp)(const time_t *,
+				long, struct tm*),
+				long offset, int * okayp, int do_norm_secs);
+static struct tm *	timesub(const time_t * timep, long offset,
+				const struct state * sp, struct tm * tmp);
+static int		tmcomp(const struct tm * atmp,
+				const struct tm * btmp);
+static time_t		transtime(time_t janfirst, int year,
+				const struct rule * rulep, long offset);
+static int		tzload(const char * name, struct state * sp,
+				int doextend);
+static int		tzparse(const char * name, struct state * sp,
+				int lastditch);
 
 #ifdef ALL_STATE
 static struct state *	lclptr;
@@ -253,7 +253,7 @@ const char * const	codep;
 }
 
 static void
-settzname P((void))
+settzname(void)
 {
 	register struct state * const	sp = lclptr;
 	register int			i;
@@ -1120,7 +1120,7 @@ struct state * const	sp;
 static
 #endif /* !defined STD_INSPIRED */
 void
-tzsetwall P((void))
+tzsetwall(void)
 {
 	if (lcl_is_set < 0)
 		return;
@@ -1141,7 +1141,7 @@ tzsetwall P((void))
 }
 
 void
-tzset P((void))
+tzset(void)
 {
 	register const char *	name;
 
@@ -1639,7 +1639,7 @@ register const struct tm * const btmp;
 static time_t
 time2sub(tmp, funcp, offset, okayp, do_norm_secs)
 struct tm * const	tmp;
-struct tm * (* const	funcp) P((const time_t*, long, struct tm*));
+struct tm * (* const	funcp)(const time_t*, long, struct tm*);
 const long		offset;
 int * const		okayp;
 const int		do_norm_secs;
@@ -1827,7 +1827,7 @@ label:
 static time_t
 time2(tmp, funcp, offset, okayp)
 struct tm * const	tmp;
-struct tm * (* const	funcp) P((const time_t*, long, struct tm*));
+struct tm * (* const	funcp)(const time_t*, long, struct tm*);
 const long		offset;
 int * const		okayp;
 {
@@ -1845,7 +1845,7 @@ int * const		okayp;
 static time_t
 time1(tmp, funcp, offset)
 struct tm * const	tmp;
-struct tm * (* const	funcp) P((const time_t *, long, struct tm *));
+struct tm * (* const	funcp)(const time_t *, long, struct tm *);
 const long		offset;
 {
 	register time_t			t;

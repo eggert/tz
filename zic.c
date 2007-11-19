@@ -2012,7 +2012,8 @@ const int			zonecount;
 	}
 	for (i = 0; i < zonecount; ++i) {
 		zp = &zpfirst[i];
-		updateminmax(zp->z_untilrule.r_loyear);
+		if (i < zonecount - 1)
+			updateminmax(zp->z_untilrule.r_loyear);
 		for (j = 0; j < zp->z_nrules; ++j) {
 			rp = &zp->z_rules[j];
 			if (rp->r_lowasnum)
@@ -2043,8 +2044,11 @@ wp = ecpyalloc(_("no POSIX environment variable for zone"));
 		else	max_year = INT_MAX;
 	}
 	/*
-	** For the benefit of older systems, generate data through 2037.
+	** For the benefit of older systems,
+	** generate data from 1900 through 2037.
 	*/
+	if (min_year > 1900)
+		min_year = 1900;
 	if (max_year < 2037)
 		max_year = 2037;
 	for (i = 0; i < zonecount; ++i) {

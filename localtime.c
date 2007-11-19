@@ -177,6 +177,7 @@ static int		tmcomp(const struct tm * atmp,
 				const struct tm * btmp);
 static time_t		transtime(time_t janfirst, int year,
 				const struct rule * rulep, long offset);
+static int		typesequiv(const struct state * sp, int a, int b);
 static int		tzload(const char * name, struct state * sp,
 				int doextend);
 static int		tzparse(const char * name, struct state * sp,
@@ -556,13 +557,40 @@ register const int		doextend;
 	}
 	i = 2 * YEARSPERREPEAT;
 	sp->goback = sp->goahead = sp->timecnt > i;
-	sp->goback = sp->goback && sp->types[i] == sp->types[0] &&
+	sp->goback = sp->goback &&
+		typesequiv(sp, sp->types[i], sp->types[0]) &&
 		differ_by_repeat(sp->ats[i], sp->ats[0]);
 	sp->goahead = sp->goahead &&
-		sp->types[sp->timecnt - 1] == sp->types[sp->timecnt - 1 - i] &&
+		typesequiv(sp, sp->types[sp->timecnt - 1],
+		sp->types[sp->timecnt - 1 - i]) &&
 		differ_by_repeat(sp->ats[sp->timecnt - 1],
 			 sp->ats[sp->timecnt - 1 - i]);
 	return 0;
+}
+
+static int
+typesequiv(sp, a, b)
+const struct state * const	sp;
+const int			a;
+const int			b;
+{
+	register int	result;
+
+	if (sp == NULL ||
+		a < 0 || a >= sp->typecnt ||
+		b < 0 || b >= sp->typecnt)
+			result = FALSE;
+	else {
+		register const struct ttinfo *	ap = &sp->ttis[a];
+		register const struct ttinfo *	bp = &sp->ttis[b];
+		result = ap->tt_gmtoff == bp->tt_gmtoff &&
+			ap->tt_isdst == bp->tt_isdst &&
+			ap->tt_ttisstd == bp->tt_ttisstd &&
+			ap->tt_ttisgmt == bp->tt_ttisgmt &&
+			strcmp(&sp->chars[ap->tt_abbrind],
+			&sp->chars[bp->tt_abbrind]) == 0;
+	}
+	return result;
 }
 
 static const int	mon_lengths[2][MONSPERYEAR] = {

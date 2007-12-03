@@ -1809,12 +1809,8 @@ const int		do_norm_secs;
 		** It's okay to guess wrong since the guess
 		** gets checked.
 		*/
-		/*
-		** The (void *) casts are the benefit of SunOS 3.3 on Sun 2's.
-		*/
 		sp = (const struct state *)
-			(((void *) funcp == (void *) localsub) ?
-			lclptr : gmtptr);
+			((funcp == localsub) ? lclptr : gmtptr);
 #ifdef ALL_STATE
 		if (sp == NULL)
 			return WRONG;
@@ -1908,11 +1904,7 @@ const long		offset;
 	** We try to divine the type they started from and adjust to the
 	** type they need.
 	*/
-	/*
-	** The (void *) casts are the benefit of SunOS 3.3 on Sun 2's.
-	*/
-	sp = (const struct state *) (((void *) funcp == (void *) localsub) ?
-		lclptr : gmtptr);
+	sp = (const struct state *) ((funcp == localsub) ?  lclptr : gmtptr);
 #ifdef ALL_STATE
 	if (sp == NULL)
 		return WRONG;

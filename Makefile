@@ -86,7 +86,6 @@ YEARISTYPE=	./yearistype
 LDLIBS=
 
 # Add the following to the end of the "CFLAGS=" line as needed.
-#  -Dconst= if `const' does not work (SunOS 4.x cc, OSF1 V5.0 cc)
 #  -DHAVE_ADJTIME=0 if `adjtime' does not exist (SVR0?)
 #  -DHAVE_GETTEXT=1 if `gettext' works (GNU, Linux, Solaris); also see LDLIBS
 #  -DHAVE_INCOMPATIBLE_CTIME_R=1 if your system's time.h declares

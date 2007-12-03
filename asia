@@ -577,6 +577,15 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # daylight saving time ...
 # http://uk.reuters.com/article/oilRpt/idUKBLA65048420070916
 #
+# From Roozbeh Pournader (2007-11-05):
+# This is quoted from Official Gazette of the Islamic Republic of
+# Iran, Volume 63, Number 18242, dated Tuesday 1386/6/24
+# [2007-10-16]. I am doing the best translation I can:...
+# The official time of the country will be moved forward for one hour
+# on the 24 hours of the first day of the month of Farvardin and will
+# be changed back to its previous state on the 24 hours of the
+# thirtieth day of Shahrivar.
+#
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Iran	1978	1980	-	Mar	21	0:00	1:00	D
 Rule	Iran	1978	only	-	Oct	21	0:00	0	S

@@ -311,7 +311,7 @@ _("date: warning: kernel doesn't keep -d/-t information, option ignored\n"));
 }
 
 static void
-dogmt()
+dogmt(void)
 {
 	static char **	fakeenv;
 

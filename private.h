@@ -109,17 +109,15 @@ static char	privatehid[] = "%W%";
 #endif /* !defined WEXITSTATUS */
 
 #if HAVE_UNISTD_H
-#include "unistd.h"	/* for F_OK and R_OK */
+#include "unistd.h"	/* for F_OK, R_OK, and other POSIX goodness */
 #endif /* HAVE_UNISTD_H */
 
-#if !HAVE_UNISTD_H
 #ifndef F_OK
 #define F_OK	0
 #endif /* !defined F_OK */
 #ifndef R_OK
 #define R_OK	4
 #endif /* !defined R_OK */
-#endif /* !HAVE_UNISTD_H */
 
 /* Unlike <ctype.h>'s isdigit, this also works if c < 0 | c > UCHAR_MAX. */
 #define is_digit(c) ((unsigned)(c) - '0' <= 9)
@@ -165,69 +163,13 @@ typedef long		int_fast64_t;
 */
 
 /*
-** SunOS 4.1.1 headers lack EXIT_SUCCESS.
-*/
-
-#ifndef EXIT_SUCCESS
-#define EXIT_SUCCESS	0
-#endif /* !defined EXIT_SUCCESS */
-
-/*
-** SunOS 4.1.1 headers lack EXIT_FAILURE.
-*/
-
-#ifndef EXIT_FAILURE
-#define EXIT_FAILURE	1
-#endif /* !defined EXIT_FAILURE */
-
-/*
-** SunOS 4.1.1 headers lack FILENAME_MAX.
-*/
-
-#ifndef FILENAME_MAX
-
-#ifndef MAXPATHLEN
-#ifdef unix
-#include "sys/param.h"
-#endif /* defined unix */
-#endif /* !defined MAXPATHLEN */
-
-#ifdef MAXPATHLEN
-#define FILENAME_MAX	MAXPATHLEN
-#endif /* defined MAXPATHLEN */
-#ifndef MAXPATHLEN
-#define FILENAME_MAX	1024		/* Pure guesswork */
-#endif /* !defined MAXPATHLEN */
-
-#endif /* !defined FILENAME_MAX */
-
-/*
-** SunOS 4.1.1 libraries lack remove.
-*/
-
-#ifndef remove
-extern int	unlink(const char * filename);
-#define remove	unlink
-#endif /* !defined remove */
-
-/*
-** Some ancient errno.h implementations don't declare errno.
-** But some newer errno.h implementations define it as a macro.
-** Fix the former without affecting the latter.
-*/
-
-#ifndef errno
-extern int errno;
-#endif /* !defined errno */
-
-/*
 ** Some time.h implementations don't declare asctime_r.
 ** Others might define it as a macro.
 ** Fix the former without affecting the latter.
 */
 
 #ifndef asctime_r
-extern char *	asctime_r();
+extern char *	asctime_r(struct tm const *, char *);
 #endif
 
 /*

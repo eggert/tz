@@ -88,6 +88,9 @@ static char	elsieid[] = "%W%";
 #define SECSPERNYEAR	(SECSPERDAY * DAYSPERNYEAR)
 #define SECSPERLYEAR	(SECSPERNYEAR + SECSPERDAY)
 
+#ifndef HAVE_GETTEXT
+#define HAVE_GETTEXT 0
+#endif
 #if HAVE_GETTEXT
 #include "locale.h"	/* for setlocale */
 #include "libintl.h"
@@ -128,10 +131,6 @@ static char	elsieid[] = "%W%";
 #ifndef TZ_DOMAIN
 #define TZ_DOMAIN "tz"
 #endif /* !defined TZ_DOMAIN */
-
-#ifndef P
-#define P(x)	x
-#endif /* !defined P */
 
 extern char **	environ;
 extern int	getopt(int argc, char * const argv[],
@@ -394,7 +393,7 @@ _("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
 }
 
 static void
-setabsolutes()
+setabsolutes(void)
 {
 	if (0.5 == (time_t) 0.5) {
 		/*
@@ -592,7 +591,7 @@ struct tm *	tmp;
 */
 
 static const char *
-tformat()
+tformat(void)
 {
 	if (0.5 == (time_t) 0.5) {	/* floating */
 		if (sizeof (time_t) > sizeof (double))

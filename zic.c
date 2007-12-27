@@ -160,10 +160,6 @@ static void	usage(void);
 static void	writezone(const char * name, const char * string);
 static int	yearistype(int year, const char * type);
 
-#if !HAVE_STRERROR
-static char *	strerror(int);
-#endif /* !HAVE_STRERROR */
-
 static int		charcnt;
 static int		errors;
 static const char *	filename;
@@ -404,19 +400,6 @@ char * const	ptr;
 /*
 ** Error handling.
 */
-
-#if !HAVE_STRERROR
-static char *
-strerror(errnum)
-int	errnum;
-{
-	extern char *	sys_errlist[];
-	extern int	sys_nerr;
-
-	return (errnum > 0 && errnum <= sys_nerr) ?
-		sys_errlist[errnum] : _("Unknown system error");
-}
-#endif /* !HAVE_STRERROR */
 
 static void
 eats(name, num, rname, rnum)

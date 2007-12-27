@@ -48,10 +48,6 @@ static char	privatehid[] = "%W%";
 #define HAVE_SETTIMEOFDAY	3
 #endif /* !defined HAVE_SETTIMEOFDAY */
 
-#ifndef HAVE_STRERROR
-#define HAVE_STRERROR		1
-#endif /* !defined HAVE_STRERROR */
-
 #ifndef HAVE_SYMLINK
 #define HAVE_SYMLINK		1
 #endif /* !defined HAVE_SYMLINK */

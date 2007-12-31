@@ -115,7 +115,9 @@ A negative value for
 causes the
 .I mktime
 function to attempt to divine whether summer time is in effect
-for the specified time.)
+for the specified time; in this case it does not use a consistent
+rule and may give a different answer when later
+presented with the same argument.)
 On successful completion, the values of the
 .B tm_wday
 and

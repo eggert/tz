@@ -759,6 +759,45 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # America/Santiago.  The pre-1980 Pacific/Easter data are dubious,
 # but we have no other source.
 
+# From Paul Eggert (2008-02-08):
+# The Associated Press reports that yesterday Chile announced it will
+# extend DST this year due to a drought, until the last Saturday in
+# March....Here's the URL I used for the AP
+# report (though it may not work for you: AP Google URLs are unreliable
+# in my experience):
+# <a href="http://ap.google.com/article/ALeqM5gvriCVJJJ0RYvhGDq06v1nEykPDgD8ULKSI80">
+# http://ap.google.com/article/ALeqM5gvriCVJJJ0RYvhGDq06v1nEykPDgD8ULKSI80
+# </a>
+# Without further info, I guess I would assume that DST will end in
+# Chile and in Easter Island on March 30 at 03:00 UTC.
+
+# From Gunther Vermeir (2008-02-11)
+# I received this information from a colleague in the Oracle office in Chili:
+# There is a announcement on 
+# <a href=http://www.gobiernodechile.cl/noticias_det/?which=10062>
+# http://www.gobiernodechile.cl/noticias_det/?which=10062
+# </a>
+# This article is published in the official page of the Government and 
+# states that the Ministry of Energy announced the change in DST. Now, in 
+# order for it to become completely official it has to be published in 
+# 'Diario Official'. All decrees and resolutions become official when are 
+# published here (www.diariooficial.cl).
+
+# From Sean Coffey (2008-03-05)
+# 
+# This Chile DST extension/change would appear to be going 
+# ahead.
+# 
+# <a href="http://www.timeanddate.com/news/time/chile-extends-daylight-saving-time.html">
+# http://www.timeanddate.com/news/time/chile-extends-daylight-saving-time.html 
+# </a>
+# <a href="http://www.timeanddate.com/worldclock/city.html?n=232">
+# http://www.timeanddate.com/worldclock/city.html?n=232
+# </a>
+# <a href="http://www.gobiernodechile.cl/noticias_det/?which=10062">
+# http://www.gobiernodechile.cl/noticias_det/?which=10062
+# </a>
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Chile	1927	1932	-	Sep	 1	0:00	1:00	S
 Rule	Chile	1928	1932	-	Apr	 1	0:00	0	-
@@ -789,7 +828,9 @@ Rule	Chile	1998	only	-	Mar	Sun>=9	3:00u	0	-
 Rule	Chile	1998	only	-	Sep	27	4:00u	1:00	S
 Rule	Chile	1999	only	-	Apr	 4	3:00u	0	-
 Rule	Chile	1999	max	-	Oct	Sun>=9	4:00u	1:00	S
-Rule	Chile	2000	max	-	Mar	Sun>=9	3:00u	0	-
+Rule	Chile	2000	2007	-	Mar	Sun>=9	3:00u	0	-
+Rule	Chile	2008	only	-	Mar	30	3:00u	0	-
+Rule	Chile	2009	max	-	Mar	Sun>=9	3:00u	0	-
 # IATA SSIM anomalies: (1992-02) says 1992-03-14;
 # (1996-09) says 1998-03-08.  Ignore these.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

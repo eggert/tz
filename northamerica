@@ -2205,6 +2205,25 @@ Zone America/Costa_Rica	-5:36:20 -	LMT	1890		# San Jose
 # 
 # http://www.worldtimezone.com/dst_news/dst_news_cuba03.html
 
+# From Arthur David Olson (2008-03-09):
+# I'm in Maryland which is now observing United States Eastern Daylight
+# Time. At 9:44 local time I used RealPlayer to listen to
+# <a href="http://media.enet.cu/radioreloj">
+# http://media.enet.cu/radioreloj
+# </a>, a Cuban information station, and heard
+# the time announced as "ocho cuarenta y cuatro" ("eight forty-four"),
+# indicating that Cuba is still on standard time.
+
+# From Dirk Losch (2008-03-05):
+# I've been informed that the DST in Cuba will begin at 30th of 
+# March 2008. The information is based on IATA.
+
+# From Arthur David Olson (2008-03-10):
+# The above matches what's found at the unofficial site
+# <a href="http://www.timeanddate.com/worldclock/results.html?query=havana">
+# http://www.timeanddate.com/worldclock/results.html?query=havana
+# </a>. Assume lastSun from 2008 forward.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Cuba	1928	only	-	Jun	10	0:00	1:00	D
 Rule	Cuba	1928	only	-	Oct	10	0:00	0	S
@@ -2236,7 +2255,8 @@ Rule	Cuba	1998	1999	-	Mar	lastSun	0:00s	1:00	D
 Rule	Cuba	1998	2003	-	Oct	lastSun	0:00s	0	S
 Rule	Cuba	2000	2006	-	Apr	Sun>=1	0:00s	1:00	D
 Rule	Cuba	2006	max	-	Oct	lastSun	0:00s	0	S
-Rule	Cuba	2007	max	-	Mar	Sun>=8	0:00s	1:00	D
+Rule	Cuba	2007	only	-	Mar	Sun>=8	0:00s	1:00	D
+Rule	Cuba	2008	max	-	Mar	lastSun	0:00s	1:00	D
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Havana	-5:29:28 -	LMT	1890

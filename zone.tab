@@ -42,7 +42,8 @@ AQ	-7824+10654	Antarctica/Vostok	Vostok Station, S Magnetic Pole
 AQ	-6640+14001	Antarctica/DumontDUrville	Dumont-d'Urville Station, Terre Adelie
 AQ	-690022+0393524	Antarctica/Syowa	Syowa Station, E Ongul I
 AR	-3436-05827	America/Argentina/Buenos_Aires	Buenos Aires (BA, CF)
-AR	-3124-06411	America/Argentina/Cordoba	most locations (CB, CC, CN, ER, FM, LP, MN, NQ, RN, SA, SE, SF, SL)
+AR	-3124-06411	America/Argentina/Cordoba	most locations (CB, CC, CN, ER, FM, LP, MN, NQ, RN, SA, SE, SF)
+AR	-3319-06621	America/Argentina/San_Luis	San Luis (SL)
 AR	-2411-06518	America/Argentina/Jujuy	Jujuy (JY)
 AR	-2649-06513	America/Argentina/Tucuman	Tucuman (TM)
 AR	-2828-06547	America/Argentina/Catamarca	Catamarca (CT), Chubut (CH)

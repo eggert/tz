@@ -1873,13 +1873,13 @@ Zone	Asia/Tashkent	4:37:12 -	LMT	1924 May  2
 
 # Vietnam
 
-# From Paul Eggert (1993-11-18):
-# Saigon's official name is Thanh-Pho Ho Chi Minh, but it's too long.
-# We'll stick with the traditional name for now.
+# From Arthur David Olson (2008-03-18):
+# The English-language name of Vietnam's most populous city is "Ho Chi Min City";
+# we use Ho_Chi_Minh below to avoid a name of more than 14 characters.
 
 # From Shanks & Pottenger:
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Saigon	7:06:40 -	LMT	1906 Jun  9
+Zone	Asia/Ho_Chi_Minh	7:06:40 -	LMT	1906 Jun  9
 			7:06:20	-	SMT	1911 Mar 11 0:01 # Saigon MT?
 			7:00	-	ICT	1912 May
 			8:00	-	ICT	1931 May

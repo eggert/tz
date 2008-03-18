@@ -446,13 +446,13 @@ Zone	Asia/Dili	8:22:20 -	LMT	1912
 
 # India
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Calcutta	5:53:28 -	LMT	1880	# Kolkata
+Zone	Asia/Kolkata	5:53:28 -	LMT	1880	# Kolkata
 			5:53:20	-	HMT	1941 Oct    # Howrah Mean Time?
 			6:30	-	BURT	1942 May 15 # Burma Time
 			5:30	-	IST	1942 Sep
 			5:30	1:00	IST	1945 Oct 15
 			5:30	-	IST
-# The following are like Asia/Calcutta:
+# The following are like Asia/Kolkata:
 #	Andaman Is
 #	Lakshadweep (Laccadive, Minicoy and Amindivi Is)
 #	Nicobar Is
@@ -1702,7 +1702,7 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 # kept their clocks set five and a half hours ahead of Greenwich Mean
 # Time (GMT), in line with neighbor India.
 # From Paul Eggert (2006-04-18):
-# People who live in regions under Tamil control can use TZ='Asia/Calcutta',
+# People who live in regions under Tamil control can use [TZ='Asia/Kolkata'],
 # as that zone has agreed with the Tamil areas since our cutoff date of 1970.
 
 # From K Sethu (2006-04-25):

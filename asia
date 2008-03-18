@@ -1792,9 +1792,7 @@ Rule	Syria	2006	only	-	Sep	22	0:00	0	-
 # From Paul Eggert (2007-03-29):
 # Today the AP reported "Syria will switch to summertime at midnight Thursday."
 # http://www.iht.com/articles/ap/2007/03/29/africa/ME-GEN-Syria-Time-Change.php
-# For lack of better info, assume the rule changed to "last Friday in March"
-# this year.
-Rule	Syria	2007	max	-	Mar	lastFri	0:00	1:00	S
+Rule	Syria	2007	only	-	Mar	lastFri	0:00	1:00	S
 # From Jesper Norgard (2007-10-27):
 # The sister center ICARDA of my work CIMMYT is confirming that Syria DST will
 # not take place 1.st November at 0:00 o'clock but 1.st November at 24:00 or
@@ -1816,10 +1814,40 @@ Rule	Syria	2007	max	-	Mar	lastFri	0:00	1:00	S
 # Council of Ministers also approved the commencement of work on 
 # identifying the winter time as of Friday, 2/11/2007 where the 60th 
 # minute delay at midnight Thursday 1/11/2007.
-#
-# From Arthur David Olson (2007-10-30):
-# My best guess for the future is first Friday in November.
-Rule	Syria	2007	max	-	Nov	 Fri>=1	0:00	0	-
+Rule	Syria	2007	only	-	Nov	 Fri>=1	0:00	0	-
+
+# From Stephen Colebourne (2008-03-17):
+# For everyone's info, I saw an IATA time zone change for [Syria] for
+# this month (March 2008) in the last day or so...This is the data IATA
+# are now using:
+# Country     Time Standard   --- DST Start ---   --- DST End ---  DST
+# Name        Zone Variation   Time    Date        Time    Date
+# Variation
+# Syrian Arab
+# Republic    SY    +0200      2200  03APR08       2100  30SEP08   +0300
+#                              2200  02APR09       2100  30SEP09   +0300
+#                              2200  01APR10       2100  30SEP10   +0300
+
+# From Arthur David Olson (2008-03-17):
+# Here's a link to English-language coverage by the Syrian Arab News
+# Agency (SANA)...
+# <a href="http://www.sana.sy/eng/21/2008/03/11/165173.htm">
+# http://www.sana.sy/eng/21/2008/03/11/165173.htm
+# </a>...which reads (in part) "The Cabinet approved the suggestion of the
+# Ministry of Electricity to begin daylight savings time on Friday April
+# 4th, advancing clocks one hour ahead on midnight of Thursday April 3rd."
+# Since Syria is two hours east of UTC, the 2200 and 2100 transition times
+# shown above match up with midnight in Syria.
+
+# From Arthur David Olson (2008-03-18):
+# My buest guess at a Syrian rule is "the Friday nearest April 1";
+# coding that involves either using a "Mar Fri>=29" construct that old time zone
+# compilers can't handle  or having multiple Rules (a la Israel).
+# For now, use "Apr Fri>=1", and go with IATA on a uniform Sep 30 end.
+
+Rule	Syria	2008	max	-	Apr	Fri>=1	0:00	1:00	S
+Rule	Syria	2008	max	-	Oct	1	0:00	0	-
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Damascus	2:25:12 -	LMT	1920	# Dimashq
 			2:00	Syria	EE%sT

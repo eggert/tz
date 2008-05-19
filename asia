@@ -1376,6 +1376,42 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # They decided not to adopt daylight-saving time....
 # http://www.mongolnews.mn/index.php?module=unuudur&sec=view&id=15742
 
+# From Deborah Goldsmith (2008-03-30):
+# We received a bug report claiming that the tz database UTC offset for
+# Asia/Choibalsan (GMT+09:00) is incorrect, and that it should be GMT
+# +08:00 instead. Different sources appear to disagree with the tz
+# database on this, e.g.:
+#
+# <a href="http://www.timeanddate.com/worldclock/city.html?n=1026">
+# http://www.timeanddate.com/worldclock/city.html?n=1026
+# </a>
+# <a href="http://www.worldtimeserver.com/current_time_in_MN.aspx">
+# http://www.worldtimeserver.com/current_time_in_MN.aspx
+# </a>
+#
+# both say GMT+08:00.
+
+# From Steffen Thorsen (2008-03-31):
+# eznis airways, which operates several domestic flights, has a flight
+# schedule here:
+# <a href="http://www.eznis.com/Container.jsp?id=112"
+# http://www.eznis.com/Container.jsp?id=112
+# </a>
+# (click the English flag for English)
+#
+# There it appears that flights between Choibalsan and Ulaanbatar arrive
+# about 1:35 - 1:50 hours later in local clock time, no matter the
+# direction, while Ulaanbaatar-Khvod takes 2 hours in the Eastern
+# direction and 3:35 back, which indicates that Ulaanbatar and Khvod are
+# in different time zones (like we know about), while Choibalsan and
+# Ulaanbatar are in the same time zone (correction needed).
+
+# From Arthur David Olson (2008-05-19):
+# Assume that Choibalsan is indeed offset by 8:00.
+# XXX--in the absence of better information, assume that transition
+# was at the start of 2008-03-31 (the day of Steffen Thorsen's report);
+# this is almost surely wrong.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Mongol	1983	1984	-	Apr	1	0:00	1:00	S
 Rule	Mongol	1983	only	-	Oct	1	0:00	0	-
@@ -1411,7 +1447,8 @@ Zone	Asia/Ulaanbaatar 7:07:32 -	LMT	1905 Aug
 Zone	Asia/Choibalsan	7:38:00 -	LMT	1905 Aug
 			7:00	-	ULAT	1978
 			8:00	-	ULAT	1983 Apr
-			9:00	Mongol	CHO%sT	# Choibalsan Time
+			9:00	Mongol	CHO%sT	2008 Mar 31 # Choibalsan Time
+			8:00	Mongol	CHO%sT
 
 # Nepal
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

@@ -1461,10 +1461,32 @@ Zone	Asia/Muscat	3:54:20 -	LMT	1920
 # The minister told a news conference that the experiment had rather
 # shown 8 per cent higher consumption of electricity.
 
+# From Alex Krivenyshev (2008-05-15):
+# 
+# Here is an article that Pakistan plan to introduce Daylight Saving Time 
+# on June 1, 2008 for 3 months.
+# 
+# "... The federal cabinet on Wednesday announced a new conservation plan to help 
+# reduce load shedding by approving the closure of commercial centres at 9pm and 
+# moving clocks forward by one hour for the next three months. 
+# ...."
+# 
+# <a href="http://www.worldtimezone.net/dst_news/dst_news_pakistan01.html">
+# http://www.worldtimezone.net/dst_news/dst_news_pakistan01.html
+# </a>
+# OR
+# <a href="http://www.dailytimes.com.pk/default.asp?page=2008%5C05%5C15%5Cstory_15-5-2008_pg1_4">
+# http://www.dailytimes.com.pk/default.asp?page=2008%5C05%5C15%5Cstory_15-5-2008_pg1_4
+# </a>
+
+# From Arthur David Olson (2008-05-19):
+# XXX--midnight transitions is a guess; 2008 only is a guess.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule Pakistan	2002	only	-	Apr	Sun>=2	0:01	1:00	S
 Rule Pakistan	2002	only	-	Oct	Sun>=2	0:01	0	-
+Rule Pakistan	2008	only	-	Jun	1	0:00	1:00	S
+Rule Pakistan	2008	only	-	Sep	1	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Karachi	4:28:12 -	LMT	1907
 			5:30	-	IST	1942 Sep

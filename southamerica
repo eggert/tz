@@ -662,13 +662,13 @@ Rule	Brazil	2000	only	-	Feb	27	 0:00	0	-
 Rule	Brazil	2000	2001	-	Oct	Sun>=8	 0:00	1:00	S
 Rule	Brazil	2001	2006	-	Feb	Sun>=15	 0:00	0	-
 # Decree 4,399 (2002-10-01) repeals DST in AL, CE, MA, PB, PE, PI, RN, SE.
-# <a href="http://www.presidencia.gov.br/CCIVIL/decreto/2002/D4399.htm"></a>
+# <a href="http://www.presidencia.gov.br/CCIVIL/decreto/2002/D4399.htm">4,339</a>
 Rule	Brazil	2002	only	-	Nov	 3	 0:00	1:00	S
 # Decree 4,844 (2003-09-24; corrected 2003-09-26) repeals DST in BA, MT, TO.
-# <a href="http://www.presidencia.gov.br/CCIVIL/decreto/2003/D4844.htm"></a>
+# <a href="http://www.presidencia.gov.br/CCIVIL/decreto/2003/D4844.htm">4,844</a>
 Rule	Brazil	2003	only	-	Oct	19	 0:00	1:00	S
 # Decree 5,223 (2004-10-01) reestablishes DST in MT.
-# <a href="http://www.planalto.gov.br/ccivil_03/_Ato2004-2006/2004/Decreto/D5223.htm"></a>
+# <a href="http://www.planalto.gov.br/ccivil_03/_Ato2004-2006/2004/Decreto/D5223.htm">5,223</a>
 Rule	Brazil	2004	only	-	Nov	 2	 0:00	1:00	S
 # Decree <a href="http://pcdsh01.on.br/DecHV5539.gif">5,539</a> (2005-09-19),
 # adopted by the same states as before.

@@ -825,7 +825,6 @@ Zone America/Santarem	-3:38:48 -	LMT	1914
 			-3:00	-	BRT
 #
 # Rondonia (RO)
-# Rondonia includes Altamira, Oribidos, Prainha, and Oriximina.
 Zone America/Porto_Velho -4:15:36 -	LMT	1914
 			-4:00	Brazil	AM%sT	1988 Sep 12
 			-4:00	-	AMT
@@ -905,7 +904,7 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # http://www.horaoficial.cl/cambio.htm
 # </a>.
 
-# From José Miguel Garrido (2008-03-05):
+# From Jose Miguel Garrido (2008-03-05):
 # ...
 # You could see the announces of the change on 
 # <a href="http://www.shoa.cl/noticias/2008/04hora/hora.htm">

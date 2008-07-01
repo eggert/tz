@@ -547,17 +547,17 @@ Zone	America/La_Paz	-4:32:36 -	LMT	1890
 # </a>.
 
 # From Paul Schulze (2008-06-24):
-# ...by law number 11.662 of April 24, 2008 (published in the "Dirio Oficial da Unio"...)
-# in Brazil there are changes in the timezones, effective today (00:00am
-# at June 24, 2008) as follows:
+# ...by law number 11.662 of April 24, 2008 (published in the "Diario
+# Oficial da Uniao"...) in Brazil there are changes in the timezones,
+# effective today (00:00am at June 24, 2008) as follows:
 #
 # a) The timezone UTC+5 is e[x]tinguished, with all the Acre state and the
 # part of the Amazonas state that had this timezone now being put to the
 # timezone UTC+4
-# b) The whole Par state now is put at timezone UTC+3, instead of just
+# b) The whole Para state now is put at timezone UTC+3, instead of just
 # part of it, as was before.
 #
-# This change follows a proposal of senator Tio Viana of Acre state, that
+# This change follows a proposal of senator Tiao Viana of Acre state, that
 # proposed it due to concerns about open television channels displaying
 # programs inappropriate to youths in the states that had the timezone
 # UTC+5 too early in the night. In the occasion, some more corrections

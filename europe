@@ -483,7 +483,45 @@ Rule	C-Eur	1943	only	-	Oct	 4	 2:00s	0	-
 Rule	C-Eur	1944	1945	-	Apr	Mon>=1	 2:00s	1:00	S
 # Whitman gives 1944 Oct 7; go with Shanks & Pottenger.
 Rule	C-Eur	1944	only	-	Oct	 2	 2:00s	0	-
-Rule	C-Eur	1945	only	-	Sep	16	 2:00	0	-
+# From Jesper Norgaard Welen (2008-07-13):
+#
+# I found what is probably a typo of 2:00 which should perhaps be 2:00s
+# in the C-Eur rule from tz database version 2008d (this part was
+# corrected in version 2008d). The circumstancial evidence is simply the
+# tz database itself, as seen below:
+#
+# Zone Europe/Paris 0:09:21 - LMT 1891 Mar 15  0:01
+#    0:00 France WE%sT 1945 Sep 16  3:00
+#
+# Zone Europe/Monaco 0:29:32 - LMT 1891 Mar 15
+#    0:00 France WE%sT 1945 Sep 16 3:00
+#
+# Zone Europe/Belgrade 1:22:00 - LMT 1884
+#    1:00 1:00 CEST 1945 Sep 16  2:00s
+#
+# Rule France 1945 only - Sep 16  3:00 0 -
+# Rule Belgium 1945 only - Sep 16  2:00s 0 -
+# Rule Neth 1945 only - Sep 16 2:00s 0 -
+#
+# The rule line to be changed is:
+#
+# Rule C-Eur 1945 only - Sep 16  2:00 0 -
+#
+# It seems that Paris, Monaco, Rule France, Rule Belgium all agree on
+# 2:00 standard time, e.g. 3:00 local time.  However there are no
+# countries that use C-Eur rules in September 1945, so the only items
+# affected are apparently these ficticious zones that translates acronyms
+# CET and MET:
+#
+# Zone CET  1:00 C-Eur CE%sT
+# Zone MET  1:00 C-Eur ME%sT
+#
+# It this is right then the corrected version would look like:
+#
+# Rule C-Eur 1945 only - Sep 16  2:00s 0 -
+#
+# A small step for mankind though 8-)
+Rule	C-Eur	1945	only	-	Sep	16	 2:00s	0	-
 Rule	C-Eur	1977	1980	-	Apr	Sun>=1	 2:00s	1:00	S
 Rule	C-Eur	1977	only	-	Sep	lastSun	 2:00s	0	-
 Rule	C-Eur	1978	only	-	Oct	 1	 2:00s	0	-

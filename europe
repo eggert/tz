@@ -764,7 +764,8 @@ Rule	Bulg	1981	only	-	Sep	27	 2:00	0	-
 Zone	Europe/Sofia	1:33:16 -	LMT	1880
 			1:56:56	-	IMT	1894 Nov 30 # Istanbul MT?
 			2:00	-	EET	1942 Nov  2  3:00
-			1:00	C-Eur	CE%sT	1945 Apr  2  3:00
+			1:00	C-Eur	CE%sT	1945
+			1:00	-	CET	1945 Apr 2 3:00
 			2:00	-	EET	1979 Mar 31 23:00
 			2:00	Bulg	EE%sT	1982 Sep 26  2:00
 			2:00	C-Eur	EE%sT	1991
@@ -1242,7 +1243,7 @@ Rule	Hungary	1980	only	-	Apr	 6	 1:00	1:00	S
 Zone	Europe/Budapest	1:16:20 -	LMT	1890 Oct
 			1:00	C-Eur	CE%sT	1918
 			1:00	Hungary	CE%sT	1941 Apr  6  2:00
-			1:00	C-Eur	CE%sT	1945 May  1 23:00
+			1:00	C-Eur	CE%sT	1945
 			1:00	Hungary	CE%sT	1980 Sep 28  2:00s
 			1:00	EU	CE%sT
 
@@ -2159,7 +2160,8 @@ Zone Asia/Anadyr	11:49:56 -	LMT	1924 May  2
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Belgrade	1:22:00	-	LMT	1884
 			1:00	-	CET	1941 Apr 18 23:00
-			1:00	C-Eur	CE%sT	1945 May  8  2:00s
+			1:00	C-Eur	CE%sT	1945
+			1:00	-	CET	1945 May 8 2:00s
 			1:00	1:00	CEST	1945 Sep 16  2:00s
 # Metod Kozelj reports that the legal date of
 # transition to EU rules was 1982-11-27, for all of Yugoslavia at the time.

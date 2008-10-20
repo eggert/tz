@@ -192,20 +192,26 @@ Rule	Arg	2000	only	-	Mar	3	0:00	0	-
 # http://www.infoleg.gov.ar/infolegInternet/anexos/135000-139999/136191/norma.htm
 # </a>
 # So there is no summer time in Argentina for now.
-#
+
+# From Mariano Absatz (2008-10-20):
 # Decree 1693/2008 applies Law 26.350 for the summer 2008/2009 establishing DST in Argentina
 # From 2008-10-19 until 2009-03-15
+# <a href="http://www.boletinoficial.gov.ar/Bora.Portal/CustomControls/PdfContent.aspx?fp=16102008&pi=3&pf=4&s=0&sec=01">
 # http://www.boletinoficial.gov.ar/Bora.Portal/CustomControls/PdfContent.aspx?fp=16102008&pi=3&pf=4&s=0&sec=01
+# </a>
 #
 # Decree 1705/2008 excepting 12 Provinces from applying DST in the summer 2008/2009:
 # Catamarca, La Rioja, Mendoza, Salta, San Juan, San Luis, La Pampa, Neuquen, Rio Negro, Chubut, Santa Cruz
 # and Tierra del Fuego
+# <a href="http://www.boletinoficial.gov.ar/Bora.Portal/CustomControls/PdfContent.aspx?fp=17102008&pi=1&pf=1&s=0&sec=01">
 # http://www.boletinoficial.gov.ar/Bora.Portal/CustomControls/PdfContent.aspx?fp=17102008&pi=1&pf=1&s=0&sec=01
+# </a>
 # 
 # Press release 235 dated Saturday October 18th, from the Government of the Province of Jujuy saying 
 # it will not apply DST either (even when it was not included in Decree 1705/2008)
+# <a href="http://www.jujuy.gov.ar/index2/partes_prensa/18_10_08/235-181008.doc">
 # http://www.jujuy.gov.ar/index2/partes_prensa/18_10_08/235-181008.doc
-#
+# </a>
 
 Rule	Arg	2007	only	-	Dec	30	0:00	1:00	S
 Rule	Arg	2008	max	-	Mar	Sun>=15	0:00	0	-

@@ -230,6 +230,17 @@ const char * const	zone;
 	warned = TRUE;
 }
 
+static void
+usage(const char *progname, FILE *stream, int status)
+{
+	(void) fprintf(stream,
+_("%s: usage is %s [ --version ] [ --help ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n\
+\n\
+Report bugs to tz@elsie.nci.nih.gov.\n"),
+		       progname, progname);
+	exit(status);
+}
+
 int
 main(argc, argv)
 int	argc;
@@ -266,6 +277,8 @@ char *	argv[];
 		if (strcmp(argv[i], "--version") == 0) {
 			(void) printf("%s\n", elsieid);
 			exit(EXIT_SUCCESS);
+		} else if (strcmp(argv[i], "--help") == 0) {
+			usage(progname, stdout, EXIT_SUCCESS);
 		}
 	vflag = 0;
 	cutarg = NULL;
@@ -275,10 +288,7 @@ char *	argv[];
 		else	cutarg = optarg;
 	if ((c != EOF && c != -1) ||
 		(optind == argc - 1 && strcmp(argv[optind], "=") == 0)) {
-			(void) fprintf(stderr,
-_("%s: usage is %s [ --version ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n"),
-				progname, progname);
-			exit(EXIT_FAILURE);
+			usage(progname, stderr, EXIT_FAILURE);
 	}
 	if (vflag) {
 		if (cutarg != NULL) {

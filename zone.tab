@@ -136,8 +136,8 @@ CD	-0418+01518	Africa/Kinshasa	west Dem. Rep. of Congo
 CD	-1140+02728	Africa/Lubumbashi	east Dem. Rep. of Congo
 CF	+0422+01835	Africa/Bangui
 CG	-0416+01517	Africa/Brazzaville
-CH	+4723+00832	Europe/Zurich
-CH	+4614+00604	Europe/Geneva
+CH	+4723+00832	Europe/Zurich	most locations
+CH	+4614+00604	Europe/Geneva	Geneva only
 CI	+0519-00402	Africa/Abidjan
 CK	-2114-15946	Pacific/Rarotonga
 CL	-3327-07040	America/Santiago	most locations

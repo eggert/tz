@@ -2376,9 +2376,6 @@ Zone	Europe/Zurich	0:34:08 -	LMT	1848 Sep 12
 			0:29:44	-	BMT	1894 Jun # Bern Mean Time
 			1:00	Swiss	CE%sT	1981
 			1:00	EU	CE%sT
-Zone	Europe/Geneva	0:24:56	-	LMT	1894 Jun # avoid GMT
-			1:00	Swiss	CE%sT	1981
-			1:00	EU	CE%sT
 
 # Turkey
 

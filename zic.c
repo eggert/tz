@@ -1995,7 +1995,7 @@ const int			zonecount;
 	min_year = max_year = EPOCH_YEAR;
 	if (leapseen) {
 		updateminmax(leapminyear);
-		updateminmax(leapmaxyear);
+		updateminmax(leapmaxyear + (leapmaxyear < INT_MAX));
 	}
 	for (i = 0; i < zonecount; ++i) {
 		zp = &zpfirst[i];

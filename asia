@@ -1049,6 +1049,37 @@ Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
 # http://www.petranews.gov.jo/nepras/2006/Sep/05/4000.htm
 # "Jordan will switch to winter time on Friday, October 27".
 #
+
+# From Phil Pizzey (2009-04-02):
+# ...I think I may have spotted an error in the timezone data for
+# Jordan.
+# The current (2009d) asia file shows Jordan going to daylight
+# saving
+# time on the last Thursday in March.
+#
+# Rule  Jordan      2000  max	-  Mar   lastThu     0:00s 1:00  S
+#
+# However timeanddate.com, which I usually find reliable, shows Jordan
+# going to daylight saving time on the last Friday in March since 2002.
+# Please see
+# <a href="http://www.timeanddate.com/worldclock/timezone.html?n=11">
+# http://www.timeanddate.com/worldclock/timezone.html?n=11
+# </a>
+
+# From Steffen Thorsen (2009-04-02):
+# This single one might be good enough, (2009-03-24, Arabic):
+# <a href="http://petra.gov.jo/Artical.aspx?Lng=2&Section=8&Artical=95279">
+# http://petra.gov.jo/Artical.aspx?Lng=2&Section=8&Artical=95279
+# </a>
+#
+# Google's translation:
+#
+# > The Council of Ministers decided in 2002 to adopt the principle of timely
+# > submission of the summer at 60 minutes as of midnight on the last Thursday
+# > of the month of March of each year.
+#
+# So - this means the midnight between Thursday and Friday since 2002.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Jordan	1973	only	-	Jun	6	0:00	1:00	S
 Rule	Jordan	1973	1975	-	Oct	1	0:00	0	-
@@ -1071,8 +1102,8 @@ Rule	Jordan	1993	1998	-	Apr	Fri>=1	0:00	1:00	S
 Rule	Jordan	1994	only	-	Sep	Fri>=15	0:00	0	-
 Rule	Jordan	1995	1998	-	Sep	Fri>=15	0:00s	0	-
 Rule	Jordan	1999	only	-	Jul	 1	0:00s	1:00	S
-Rule	Jordan	1999	2002	-	Sep	lastThu	0:00s	0	-
-Rule	Jordan	2000	max	-	Mar	lastThu	0:00s	1:00	S
+Rule	Jordan	1999	2002	-	Sep	lastFri	0:00s	0	-
+Rule	Jordan	2000	max	-	Mar	lastFri	0:00s	1:00	S
 Rule	Jordan	2003	only	-	Oct	24	0:00s	0	-
 Rule	Jordan	2004	only	-	Oct	15	0:00s	0	-
 Rule	Jordan	2005	only	-	Sep	lastFri	0:00s	0	-
@@ -1727,8 +1758,8 @@ Rule Palestine	2005	only	-	Oct	 4	2:00	0	-
 Rule Palestine	2006	2008	-	Apr	 1	0:00	1:00	S
 Rule Palestine	2006	only	-	Sep	22	0:00	0	-
 Rule Palestine	2007	only	-	Sep	Thu>=8	2:00	0	-
-Rule Palestine	2008	only	-	Aug	lastThu	2:00	0	-
-Rule Palestine	2009	max	-	Mar	lastThu	0:00	1:00	S
+Rule Palestine	2008	only	-	Aug	lastFri	2:00	0	-
+Rule Palestine	2009	max	-	Mar	lastFri	0:00	1:00	S
 Rule Palestine	2009	max	-	Sep	lastSun	2:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

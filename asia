@@ -1080,6 +1080,9 @@ Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
 #
 # So - this means the midnight between Thursday and Friday since 2002.
 
+# From Arthur David Olson (2009-04-06):
+# We still have Jordan switching to DST on Thursdays in 2000 and 2001.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Jordan	1973	only	-	Jun	6	0:00	1:00	S
 Rule	Jordan	1973	1975	-	Oct	1	0:00	0	-
@@ -1103,7 +1106,8 @@ Rule	Jordan	1994	only	-	Sep	Fri>=15	0:00	0	-
 Rule	Jordan	1995	1998	-	Sep	Fri>=15	0:00s	0	-
 Rule	Jordan	1999	only	-	Jul	 1	0:00s	1:00	S
 Rule	Jordan	1999	2002	-	Sep	lastFri	0:00s	0	-
-Rule	Jordan	2000	max	-	Mar	lastFri	0:00s	1:00	S
+Rule	Jordan	2000	2001	-	Mar	lastThu	0:00s	1:00	S
+Rule	Jordan	2002	max	-	Mar	lastFri	0:00s	1:00	S
 Rule	Jordan	2003	only	-	Oct	24	0:00s	0	-
 Rule	Jordan	2004	only	-	Oct	15	0:00s	0	-
 Rule	Jordan	2005	only	-	Sep	lastFri	0:00s	0	-
@@ -1760,7 +1764,7 @@ Rule Palestine	2006	only	-	Sep	22	0:00	0	-
 Rule Palestine	2007	only	-	Sep	Thu>=8	2:00	0	-
 Rule Palestine	2008	only	-	Aug	lastFri	2:00	0	-
 Rule Palestine	2009	max	-	Mar	lastFri	0:00	1:00	S
-Rule Palestine	2009	max	-	Sep	lastSun	2:00	0	-
+Rule Palestine	2009	max	-	Sep	lastMon	2:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct

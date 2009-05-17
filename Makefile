@@ -1,4 +1,7 @@
+# <pre>
 # %W%
+# This file is in the public domain, so clarified as of
+# 2009-05-17 by Arthur David Olson.
 
 # Change the line below for your time zone (after finding the zone you want in
 # the time zone files, or adding it to a time zone file).

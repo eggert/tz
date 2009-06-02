@@ -147,9 +147,28 @@ Zone	Asia/Bahrain	3:22:20 -	LMT	1920		# Al Manamah
 #
 # The switch will remain in effect from June 16 to Sept 30 (2009) but if
 # implemented the next year, it will come in force from April 1, 2010
+
+# From Steffen Thorsen (2009-06-02):
+# They have finally decided now, but changed the start date to midnight between
+# the 19th and 20th, and they have not set the end date yet.
+#
+# Some sources:
+# <a href="http://in.reuters.com/article/southAsiaNews/idINIndia-40017620090601">
+# http://in.reuters.com/article/southAsiaNews/idINIndia-40017620090601
+# </a>
+# <a href="http://bdnews24.com/details.php?id=85889&cid=2">
+# http://bdnews24.com/details.php?id=85889&cid=2
+# </a>
+#
+# Our wrap-up:
+# <a href="http://www.timeanddate.com/news/time/bangladesh-daylight-saving-2009.html">
+# http://www.timeanddate.com/news/time/bangladesh-daylight-saving-2009.html
+# </a>
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Bang	2009	only	-	Jun	16	 0:00	1:00	S
-Rule	Bang	2009	only	-	Oct	1	 0:00s	0	-
+Rule	Bang	2009	only	-	Jan	1	0:00	0	-
+Rule	Bang	2009	only	-	Jun	20	0:00	1:00	S
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Dhaka	6:01:40 -	LMT	1890
 			5:53:20	-	HMT	1941 Oct    # Howrah Mean Time?

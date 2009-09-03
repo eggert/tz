@@ -1856,6 +1856,22 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # http://www.timeanddate.com/news/time/westbank-gaza-dst-2009.html
 # </a>
 
+# From Alexander Krivenyshev (2009-09-02):
+# Seems that Gaza Strip will go back to Winter Time same date as West Bank.
+#
+# According to Palestinian Ministry Of Interior, West Bank and Gaza Strip plan
+# to change time back to Standard time on September 4, 2009.
+#
+# "Winter time unite the West Bank and Gaza"
+# (from Palestinian National Authority):
+# <a href="http://www.moi.gov.ps/en/?page=633167343250594025&nid=11505
+# http://www.moi.gov.ps/en/?page=633167343250594025&nid=11505
+# </a>
+# or
+# <a href="http://www.worldtimezone.com/dst_news/dst_news_gazastrip02.html>
+# http://www.worldtimezone.com/dst_news/dst_news_gazastrip02.html
+# </a>
+
 # The rules for Egypt are stolen from the `africa' file.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule EgyptAsia	1957	only	-	May	10	0:00	1:00	S
@@ -1874,7 +1890,7 @@ Rule Palestine	2006	only	-	Sep	22	0:00	0	-
 Rule Palestine	2007	only	-	Sep	Thu>=8	2:00	0	-
 Rule Palestine	2008	only	-	Aug	lastFri	2:00	0	-
 Rule Palestine	2009	max	-	Mar	lastFri	0:00	1:00	S
-Rule Palestine	2009	max	-	Sep	lastMon	2:00	0	-
+Rule Palestine	2009	max	-	Sep	Fri>=1	2:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct

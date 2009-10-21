@@ -215,9 +215,23 @@ Rule	Arg	2000	only	-	Mar	3	0:00	0	-
 # http://www.jujuy.gov.ar/index2/partes_prensa/18_10_08/235-181008.doc
 # </a>
 
+# From fullinet (2009-10-18):
+# As announced in
+# <a hef="http://www.argentina.gob.ar/argentina/portal/paginas.dhtml?pagina=356">
+# http://www.argentina.gob.ar/argentina/portal/paginas.dhtml?pagina=356
+# </a>
+# (an official .gob.ar) under title: "Sin Cambio de Hora" (english: "No hour change")
+#
+# "Por el momento, el Gobierno Nacional resolvio no modificar la hora
+# oficial, decision que estaba en estudio para su implementacion el
+# domingo 18 de octubre. Desde el Ministerio de Planificacion se anuncio
+# que la Argentina hoy, en estas condiciones meteorologicas, no necesita
+# la modificacion del huso horario, ya que 2009 nos encuentra con
+# crecimiento en la produccion y distribucion energetica."
+
 Rule	Arg	2007	only	-	Dec	30	0:00	1:00	S
-Rule	Arg	2008	max	-	Mar	Sun>=15	0:00	0	-
-Rule	Arg	2008	max	-	Oct	Sun>=15	0:00	1:00	S
+Rule	Arg	2008	2009	-	Mar	Sun>=15	0:00	0	-
+Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	S
  
 # From Mariano Absatz (2004-05-21):
 # Today it was officially published that the Province of Mendoza is changing
@@ -396,37 +410,6 @@ Rule	Arg	2008	max	-	Oct	Sun>=15	0:00	1:00	S
 # </a>
 # is that "The province will most likely follow the next daylight saving schedule,
 # which is planned for the second Sunday in October."
-
-# From Alexander Krivenyshev (2009-09-19):
-# Some  Argentinian Provinces (Buenos Aires, Entre Ríos) are opposing to the
-# Daylight Saving Time for the 2009-2010 season.
-#
-# (Spanish)
-# "El cambio de huso horario en Entre Ríos deberá ser aprobado por la
-# Legislatura":
-# <a href="http://www.analisisdigital.com.ar/noticias.php?ed=1&di=0&no=110168">
-# http://www.analisisdigital.com.ar/noticias.php?ed=1&di=0&no=110168
-# </a>
-# English translation - "The time zone change in Entre Rios must be approved by
-# the Legislature."
-#
-# (Spanish)
-# "Mar del Plata no quiere cambiar la hora."
-# <a href="http://www.mensajeroweb.com.ar/index.php?x=nota/33861/1/mar-del-plata-no-quiere-cambiar-la-hora">
-# http://www.mensajeroweb.com.ar/index.php?x=nota/33861/1/mar-del-plata-no-quiere-cambiar-la-hora
-# </a>
-# English translation - "Mar del Plata is not to change the time"
-#
-# or
-# (some English translation)
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_argentina07.html">
-# http://www.worldtimezone.com/dst_news/dst_news_argentina07.html
-# </a>
-
-# From Arthur David Olson (2009-09-22):
-# "Mar del Plata no quiere cambiar la hora" translates to
-# "Mar del Plata doesn't want to change the time"
-# (less definitive than "is not to").
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 #

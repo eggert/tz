@@ -571,7 +571,7 @@ Zone America/Argentina/Mendoza -4:35:16 - LMT	1894 Oct 31
 # San Luis (SL)
 
 Rule	SanLuis	2008	max	-	Mar	Sun>=8	0:00	0	-
-Rule	SanLuis	2008	max	-	Oct	Sun>=8	0:00	1:00	S
+Rule	SanLuis	2007	max	-	Oct	Sun>=8	0:00	1:00	S
 
 Zone America/Argentina/San_Luis -4:25:24 - LMT	1894 Oct 31
 			-4:16:48 -	CMT	1920 May

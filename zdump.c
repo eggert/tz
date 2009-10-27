@@ -236,7 +236,9 @@ const char * const	zone;
 }
 
 static void
-usage(const char *progname, FILE *stream, int status)
+usage(stream, status)
+FILE * const	stream;
+const int	status;
 {
 	(void) fprintf(stream,
 _("%s: usage is %s [ --version ] [ --help ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n\
@@ -283,7 +285,7 @@ char *	argv[];
 			(void) printf("%s\n", elsieid);
 			exit(EXIT_SUCCESS);
 		} else if (strcmp(argv[i], "--help") == 0) {
-			usage(progname, stdout, EXIT_SUCCESS);
+			usage(stdout, EXIT_SUCCESS);
 		}
 	vflag = 0;
 	cutarg = NULL;
@@ -293,7 +295,7 @@ char *	argv[];
 		else	cutarg = optarg;
 	if ((c != EOF && c != -1) ||
 		(optind == argc - 1 && strcmp(argv[optind], "=") == 0)) {
-			usage(progname, stderr, EXIT_FAILURE);
+			usage(stderr, EXIT_FAILURE);
 	}
 	if (vflag) {
 		if (cutarg != NULL) {

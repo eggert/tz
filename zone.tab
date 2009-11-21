@@ -148,8 +148,10 @@ CM	+0403+00942	Africa/Douala
 CN	+3114+12128	Asia/Shanghai	east China - Beijing, Guangdong, Shanghai, etc.
 CN	+4545+12641	Asia/Harbin	Heilongjiang (except Mohe), Jilin
 CN	+2934+10635	Asia/Chongqing	central China - Sichuan, Yunnan, Guangxi, Shaanxi, Guizhou, etc.
-CN	+4348+08735	Asia/Urumqi	most of Tibet & Xinjiang
-CN	+3929+07559	Asia/Kashgar	west Tibet & Xinjiang
+CN	+4348+08735	Asia/Urumqi	most of Tibet & Xinjiang (offset 6 hours from UTC as base)
+CN	+4348+08735	Asia/Wulumuqi	most of Tibet & Xinjiang (using Beijing time)
+CN	+3929+07559	Asia/Kashgar	west Tibet & Xinjiang (offset 6 hours from UTC as base)
+CN	+3929+07559	Asia/Kashi	west Tibet & Xinjiang (using Beijing time)
 CO	+0436-07405	America/Bogota
 CR	+0956-08405	America/Costa_Rica
 CU	+2308-08222	America/Havana

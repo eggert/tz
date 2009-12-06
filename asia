@@ -370,8 +370,8 @@ Zone	Asia/Kashgar	5:03:56	-	LMT	1928 # or Kashi or Kaxgar
 
 
 # From Lee Yiu Chung (2009-10-24):
-# I found there are some mistakes for the historial DST rule for Hong
-# Kong. Accoring to the DST record from Hong Kong Observatory (actually,
+# I found there are some mistakes for the...DST rule for Hong
+# Kong. [According] to the DST record from Hong Kong Observatory (actually,
 # it is not [an] observatory, but the official meteorological agency of HK,
 # and also serves as the official timing agency), there are some missing
 # and incorrect rules. Although the exact switch over time is missing, I

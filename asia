@@ -196,6 +196,24 @@ Zone	Asia/Bahrain	3:22:20 -	LMT	1920		# Al Manamah
 # http://www.thaindian.com/newsportal/business/bangladesh-to-continue-indefinitely-with-advanced-time_100259987.html
 # </a>
 
+# From Alexander Krivenyshev (2009-12-24):
+# According to Bangladesh newspaper "The Daily Star,"
+# Bangladesh will change its clock back to Standard Time on Dec 31, 2009.
+#
+# Clock goes back 1-hr on Dec 31 night.
+# <a href="http://www.thedailystar.net/newDesign/news-details.php?nid=119228">
+# http://www.thedailystar.net/newDesign/news-details.php?nid=119228
+# </a>
+# and
+# <a href="http://www.worldtimezone.com/dst_news/dst_news_bangladesh05.html">
+# http://www.worldtimezone.com/dst_news/dst_news_bangladesh05.html
+# </a>
+#
+# "...The government yesterday decided to put the clock back by one hour
+# on December 31 midnight and the new time will continue until March 31,
+# 2010 midnight. The decision came at a cabinet meeting at the Prime
+# Minister's Office last night..."
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Dhaka	6:01:40 -	LMT	1890
 			5:53:20	-	HMT	1941 Oct    # Howrah Mean Time?
@@ -204,6 +222,8 @@ Zone	Asia/Dhaka	6:01:40 -	LMT	1890
 			6:30	-	BURT	1951 Sep 30
 			6:00	-	DACT	1971 Mar 26 # Dacca Time
 			6:00	-	BDT	2009 Jun 19 23:00 # Bangladesh Time
+			6:00	1:00	BDST	2010
+			6:00	-	BDT	2010 Apr
 			6:00	1:00	BDST
 
 # Bhutan

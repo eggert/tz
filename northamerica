@@ -1987,16 +1987,25 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # http://www.timeanddate.com/news/time/north-mexico-dst-change.html
 # </a>
 
-# From Arthur David Olson (2010-01-06):
-# An excerpt from 20091210-V.pdf:
-# Excepto los municipios fronterizos de Tijuana y Mexicali en Baja California;
-# Ciudad Ju&aacute;rez y Ojinaga en Chihuahua;
-# Ciudad Acu&ntilde;a, Piedras Negras en Coahuila;
-# Ciudad An&aacute;huac en Nuevo Le&oacute;n;
-# y Nuevo Laredo, Reynosa y Matamoros en Tamaulipas,
-# en los municipios mencionados esta aplicaci&oacute;n surtir&aacute;
-# efecto desde las dos horas del segundo domingo de marzo
-# y concluir&aacute; a las dos horas del primer domingo de noviembre.
+# From Arthur David Olson (2010-01-20):
+# The page
+# <a href="http://dof.gob.mx/nota_detalle.php?codigo=5127480&fecha=06/01/2010">
+# http://dof.gob.mx/nota_detalle.php?codigo=5127480&fecha=06/01/2010
+# </a>
+# includes this text:
+# En los municipios fronterizos de Tijuana y Mexicali en Baja California;
+# Ju&aacute;rez y Ojinaga en Chihuahua; Acu&ntilde;a y Piedras Negras en Coahuila;
+# An&aacute;huac en Nuevo Le&oacute;n; y Nuevo Laredo, Reynosa y Matamoros en
+# Tamaulipas, la aplicaci&oacute;n de este horario estacional surtir&aacute; efecto
+# desde las dos horas del segundo domingo de marzo y concluir&aacute; a las dos
+# horas del primer domingo de noviembre.
+# En los municipios fronterizos que se encuentren ubicados en la franja
+# fronteriza norte en el territorio comprendido entre la l&iacute;nea
+# internacional y la l&iacute;nea paralela ubicada a una distancia de veinte
+# kil&oacute;metros, as&iacute; como la Ciudad de Ensenada, Baja California, hacia el
+# interior del pa&iacute;s, la aplicaci&oacute;n de este horario estacional surtir&aacute;
+# efecto desde las dos horas del segundo domingo de marzo y concluir&aacute; a
+# las dos horas del primer domingo de noviembre.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Mexico	1939	only	-	Feb	5	0:00	1:00	D
@@ -2024,13 +2033,13 @@ Zone America/Merida	-5:58:28 -	LMT	1922 Jan  1  0:01:32
 			-6:00	-	CST	1981 Dec 23
 			-5:00	-	EST	1982 Dec  2
 			-6:00	Mexico	C%sT
-# Coahuila, Durango, Nuevo Leon, Tamaulipas (Ciudad Acuna, Ciudad Anahuac, Matamoros, Nuevo Laredo, Piedras Negras, Reynosa)
+# Coahuila, Durango, Nuevo Leon, Tamaulipas (near US border)
 Zone America/Matamoros	-6:40:00 -	LMT	1921 Dec 31 23:20:00
 			-6:00	-	CST	1988
 			-6:00	US	C%sT	1989
 			-6:00	Mexico	C%sT	2010
 			-6:00	US	C%sT
-# Coahuila, Durango, Nuevo Leon, Tamaulipas (except Ciudad Acuna, Ciudad Anahuac, Matamoros, Nuevo Laredo, Piedras Negras, Reynosa)
+# Coahuila, Durango, Nuevo Leon, Tamaulipas (away from US border)
 Zone America/Monterrey	-6:41:16 -	LMT	1921 Dec 31 23:18:44
 			-6:00	-	CST	1988
 			-6:00	US	C%sT	1989
@@ -2045,7 +2054,7 @@ Zone America/Mexico_City -6:36:36 -	LMT	1922 Jan  1 0:23:24
 			-6:00	Mexico	C%sT	2001 Sep 30 02:00
 			-6:00	-	CST	2002 Feb 20
 			-6:00	Mexico	C%sT
-# Chihuahua (Ojinaga)
+# Chihuahua (near US border)
 Zone America/Ojinaga	-6:57:40 -	LMT	1922 Jan 1 0:02:20
 			-7:00	-	MST	1927 Jun 10 23:00
 			-6:00	-	CST	1930 Nov 15
@@ -2057,8 +2066,8 @@ Zone America/Ojinaga	-6:57:40 -	LMT	1922 Jan 1 0:02:20
 			-6:00	-	CST	1998 Apr Sun>=1 3:00
 			-7:00	Mexico	M%sT	2010
 			-7:00	US	M%sT
-# Chihuahua (except Ojinaga)
-Zone America/Chihuahua	-7:04:20 -	LMT	1921 Dec 31 23:55:40	# XXX
+# Chihuahua (away from US border)
+Zone America/Chihuahua	-7:04:20 -	LMT	1921 Dec 31 23:55:40
 			-7:00	-	MST	1927 Jun 10 23:00
 			-6:00	-	CST	1930 Nov 15
 			-7:00	-	MST	1931 May  1 23:00
@@ -2091,7 +2100,7 @@ Zone America/Mazatlan	-7:05:40 -	LMT	1921 Dec 31 23:54:20
 			-7:00	-	MST	1949 Jan 14
 			-8:00	-	PST	1970
 			-7:00	Mexico	M%sT
-# Baja California (Mexicali and Tijuana)
+# Baja California (near US border)
 Zone America/Tijuana	-7:48:04 -	LMT	1922 Jan  1  0:11:56
 			-7:00	-	MST	1924
 			-8:00	-	PST	1927 Jun 10 23:00
@@ -2111,8 +2120,8 @@ Zone America/Tijuana	-7:48:04 -	LMT	1922 Jan  1  0:11:56
 			-8:00	US	P%sT	2002 Feb 20
 			-8:00	Mexico	P%sT	2010
 			-8:00	US	P%sT
-# Baja California (except Mexicali and Tijuana)
-Zone America/Ensenada	-7:46:28 -	LMT	1922 Jan  1  0:13:32
+# Baja California (away from US border)
+Zone America/Santa_Isabel	-7:39:28 -	LMT	1922 Jan  1  0:20:32
 			-7:00	-	MST	1924
 			-8:00	-	PST	1927 Jun 10 23:00
 			-7:00	-	MST	1930 Nov 15

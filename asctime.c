@@ -91,6 +91,10 @@ char *				buf;
 	char			year[INT_STRLEN_MAXIMUM(int) + 2];
 	char			result[MAX_ASCTIME_BUF_SIZE];
 
+	if (timeptr == NULL) {
+		errno = EINVAL;
+		return "??? ??? ?? ??:??:?? ????\n";
+	}
 	if (timeptr->tm_wday < 0 || timeptr->tm_wday >= DAYSPERWEEK)
 		wn = "???";
 	else	wn = wday_name[timeptr->tm_wday];

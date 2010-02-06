@@ -93,8 +93,7 @@ char *				buf;
 
 	if (timeptr == NULL) {
 		errno = EINVAL;
-		(void) strcpy(buf, "??? ??? ?? ??:??:?? ????\n");
-		return buf;
+		return strcpy(buf, "??? ??? ?? ??:??:?? ????\n");
 	}
 	if (timeptr->tm_wday < 0 || timeptr->tm_wday >= DAYSPERWEEK)
 		wn = "???";
@@ -118,10 +117,9 @@ char *				buf;
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec,
 		year);
-	if (strlen(result) < STD_ASCTIME_BUF_SIZE || buf == buf_asctime) {
-		(void) strcpy(buf, result);
-		return buf;
-	} else {
+	if (strlen(result) < STD_ASCTIME_BUF_SIZE || buf == buf_asctime)
+		return strcpy(buf, result);
+	else {
 #ifdef EOVERFLOW
 		errno = EOVERFLOW;
 #else /* !defined EOVERFLOW */

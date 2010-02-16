@@ -350,6 +350,7 @@ register const int		doextend;
 					4 * TZ_MAX_TIMES];
 	} u;
 
+	memset(sp, 0, sizeof *sp);
 	if (name == NULL && (name = TZDEFAULT) == NULL)
 		return -1;
 	{

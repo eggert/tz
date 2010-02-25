@@ -350,6 +350,7 @@ register const int		doextend;
 					4 * TZ_MAX_TIMES];
 	} u;
 
+	sp->goback = sp->goahead = FALSE;
 	if (name == NULL && (name = TZDEFAULT) == NULL)
 		return -1;
 	{
@@ -389,7 +390,6 @@ register const int		doextend;
 	nread = read(fid, u.buf, sizeof u.buf);
 	if (close(fid) < 0 || nread <= 0)
 		return -1;
-	sp->goback = sp->goahead = FALSE;
 	for (stored = 4; stored <= 8; stored *= 2) {
 		int		ttisstdcnt;
 		int		ttisgmtcnt;

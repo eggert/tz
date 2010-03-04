@@ -1380,7 +1380,7 @@ Rule	Para	2005	2009	-	Mar	Sun>=8	0:00	0	-
 # and that on the first Sunday of the month of October, it is to be set
 # forward 60 minutes, in all the territory of the Paraguayan Republic.
 # ...
-Rule	Para	2010	max	-	Oct	Sun<=7	0:00	1:00	S
+Rule	Para	2010	max	-	Oct	Sun>=1	0:00	1:00	S
 Rule	Para	2010	max	-	Apr	Sun>=8	0:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

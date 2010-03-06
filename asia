@@ -241,7 +241,7 @@ Zone	Asia/Bahrain	3:22:20 -	LMT	1920		# Al Manamah
 # The file
 # <a href=http://www.cabinet.gov/bd/file_upload/news_events/en_169.pdf>
 # http://www.cabinet.gov/bd/file_upload/news_events/en_169.pdf
-</a>
+# </a>
 # is in Bengali; it does contain two "31"s as well as two "11.59"s and a "10.59"
 # which is consistent with the information provided by Nobutomo Nakano.
 

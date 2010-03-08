@@ -247,7 +247,7 @@ Zone	Asia/Bahrain	3:22:20 -	LMT	1920		# Al Manamah
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Dhaka	2009	only	-	Jun	19	23:00	1:00	S
-Rule	Dhaka	2010	only	-	Dec	31	23:59	0	-
+Rule	Dhaka	2009	only	-	Dec	31	23:59	0	-
 Rule	Dhaka	2010	max	-	Mar	31	22:59	1:00	S
 Rule	Dhaka	2010	max	-	Oct	31	23:59	0	-
 

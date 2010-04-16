@@ -717,7 +717,7 @@ Rule	Morocco	2008	only	-	Sep	 1	 0:00	0	-
 Rule	Morocco	2009	only	-	Jun	 1	 0:00	1:00	S
 Rule	Morocco	2009	only	-	Aug	 21	 0:00	0	-
 Rule	Morocco	2010	only	-	May	 2	 0:00	1:00	S
-Rule	Morocco	2010	only	-	Aug	 22	 0:00	0	-
+Rule	Morocco	2010	only	-	Aug	 8	 0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Africa/Casablanca	-0:30:20 -	LMT	1913 Oct 26
 			 0:00	Morocco	WE%sT	1984 Mar 16

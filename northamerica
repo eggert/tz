@@ -1354,6 +1354,53 @@ Zone America/Montreal	-4:54:16 -	LMT	1884
 #     Some cities in the United States have pushed the deadline back
 #     three weeks and will change over from daylight saving in October.
 
+# From Arthur David Olson (2010-07-17):
+#
+# "Standard Time and Time Zones in Canada" appeared in
+# The Journal of The Royal Astronomical Society of Canada,
+# volume 26, number 2 (February 1932) and, as of 2010-07-17,
+# was available at
+# <a href="http://adsabs.harvard.edu/full/1932JRASC..26...49S">
+# http://adsabs.harvard.edu/full/1932JRASC..26...49S
+# </a>
+#
+# It includes the text below (starting on page 57):
+#
+#   A list of the places in Canada using daylight saving time would
+# require yearly revision. From information kindly furnished by
+# the provincial governments and by the postmasters in many cities
+# and towns, it is found that the following places used daylight sav-
+# ing in 1930. The information for the province of Quebec is definite,
+# for the other provinces only approximate:
+#
+# 	Province	Daylight saving time used
+# Prince Edward Island	Not used.
+# Nova Scotia		In Halifax only.
+# New Brunswick		In St. John only.
+# Quebec		In the following places:
+# 			Montreal	Lachine
+# 			Quebec		Mont-Royal
+# 			Levis		Iberville
+# 			St. Lambert	Cap de la Madeleine
+# 			Verdun		Loretteville
+# 			Westmount	Richmond
+# 			Outremont	St. Jerome
+# 			Longueuil	Greenfield Park
+# 			Arvida		Waterloo
+# 			Chambly-Canton	Beaulieu
+# 			Melbourne	La Tuque
+# 			St. Theophile	Buckingham
+# Ontario		Used generally in the cities and towns along
+# 			the southerly part of the province. Not
+# 			used in the northwesterlhy part.
+# Manitoba		Not used.
+# Saskatchewan		In Regina only.
+# Alberta		Not used.
+# British Columbia	Not used.
+#
+#   With some exceptions, the use of daylight saving may be said to be limited
+# to those cities and towns lying between Quebec city and Windsor, Ont.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Toronto	1919	only	-	Mar	30	23:30	1:00	D
 Rule	Toronto	1919	only	-	Oct	26	0:00	0	S

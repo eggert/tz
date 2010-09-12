@@ -1588,7 +1588,11 @@ const char * const	string;
 		char		thischars[TZ_MAX_CHARS];
 		char		thischarcnt;
 		int 		indmap[TZ_MAX_CHARS];
+		register int	mrudst, mrustd;
+		register int	savedtypecnt;
 
+		savedtypecnt = typecnt;
+		mrudst = mrustd = -1;
 		if (pass == 1) {
 			thistimei = timei32;
 			thistimecnt = timecnt32;
@@ -1613,8 +1617,12 @@ const char * const	string;
 				writetype[typecnt - 1] = TRUE;
 		} else {
 			for (i = thistimei - 1; i < thistimelim; ++i)
-				if (i >= 0)
+				if (i >= 0) {
 					writetype[types[i]] = TRUE;
+					if (isdsts[types[i]])
+						mrudst = types[i];
+					else	mrustd = types[i];
+				}
 			/*
 			** For America/Godthab and Antarctica/Palmer
 			*/
@@ -1644,6 +1652,51 @@ const char * const	string;
 				thischarcnt += strlen(thisabbr) + 1;
 			}
 			indmap[abbrinds[i]] = j;
+		}
+		/*
+		** For pre-2011 systems: if the last-to-be-written standard
+		** (or daylight) type has a different offset from the
+		** most recently used offset,
+		** append an (unused) copy of the most recently used type
+		** (to help get global "altzone" and "timezone" variables
+		** set correctly).
+		*/
+		{
+			register int	hidst, histd;
+
+			hidst = histd = -1;
+
+			for (i = 0; i < typecnt; ++i)
+				if (writetype[i])
+					if (isdsts[i])
+						hidst = i;
+					else	histd = i;
+			if (histd >= 0 && mrustd >= 0 && histd != mrustd &&
+				gmtoffs[histd] != gmtoffs[mrustd] &&
+				typecnt < TZ_MAX_TYPES) {
+					gmtoffs[typecnt] = gmtoffs[mrustd];
+					isdsts[typecnt] = isdsts[mrustd];
+					abbrinds[typecnt] = abbrinds[mrustd];
+					ttisstds[typecnt] = ttisstds[mrustd];
+					ttisgmts[typecnt] = ttisgmts[mrustd];
+					writetype[typecnt] = 1;
+					typemap[typecnt] = thistypecnt;
+					++typecnt;
+					++thistypecnt;
+			}
+			if (hidst >= 0 && mrudst >= 0 && hidst != mrudst &&
+				gmtoffs[hidst] != gmtoffs[mrudst] &&
+				typecnt < TZ_MAX_TYPES) {
+					gmtoffs[typecnt] = gmtoffs[mrudst];
+					isdsts[typecnt] = isdsts[mrudst];
+					abbrinds[typecnt] = abbrinds[mrudst];
+					ttisstds[typecnt] = ttisstds[mrustd];
+					ttisgmts[typecnt] = ttisgmts[mrudst];
+					writetype[typecnt] = 1;
+					typemap[typecnt] = thistypecnt;
+					++typecnt;
+					++thistypecnt;
+			}
 		}
 #define DO(field)	(void) fwrite((void *) tzh.field, \
 				(size_t) sizeof tzh.field, (size_t) 1, fp)
@@ -1720,6 +1773,7 @@ const char * const	string;
 		for (i = 0; i < typecnt; ++i)
 			if (writetype[i])
 				(void) putc(ttisgmts[i], fp);
+		typecnt = savedtypecnt;
 	}
 	(void) fprintf(fp, "\n%s\n", string);
 	if (ferror(fp) || fclose(fp)) {

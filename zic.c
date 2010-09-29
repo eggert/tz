@@ -1881,16 +1881,16 @@ const long			gmtoff;
 		register int	week;
 
 		if (rp->r_dycode == DC_DOWGEQ) {
-			week = 1 + rp->r_dayofmonth / DAYSPERWEEK;
-			if ((week - 1) * DAYSPERWEEK + 1 != rp->r_dayofmonth)
+			if ((rp->r_dayofmonth % DAYSPERWEEK) != 1)
 				return -1;
+			week = 1 + rp->r_dayofmonth / DAYSPERWEEK;
 		} else if (rp->r_dycode == DC_DOWLEQ) {
 			if (rp->r_dayofmonth == len_months[1][rp->r_month])
 				week = 5;
 			else {
-				week = 1 + rp->r_dayofmonth / DAYSPERWEEK;
-				if (week * DAYSPERWEEK - 1 != rp->r_dayofmonth)
+				if ((rp->r_dayofmonth % DAYSPERWEEK) != 0)
 					return -1;
+				week = rp->r_dayofmonth / DAYSPERWEEK;
 			}
 		} else	return -1;	/* "cannot happen" */
 		(void) sprintf(result, "M%d.%d.%d",

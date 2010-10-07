@@ -287,8 +287,7 @@ and these older names are still supported.
 See the file `backward' for most of these older names
 (e.g. `US/Eastern' instead of `America/New_York').
 The other old-fashioned names still supported are
-`WET', `CET', `MET', `EET' (see the file `europe'),
-and `Factory' (see the file `factory').
+`WET', `CET', `MET', and `EET' (see the file `europe').
 
 
 ----- Time zone abbreviations -----

@@ -337,16 +337,26 @@ register const int		doextend;
 	register int			fid;
 	register int			stored;
 	register int			nread;
-	union {
+	typedef union {
 		struct tzhead	tzhead;
 		char		buf[2 * sizeof(struct tzhead) +
 					2 * sizeof *sp +
 					4 * TZ_MAX_TIMES];
-	} u;
+	} u_t;
+#ifdef ALL_STATE
+	register u_t *			up;
+
+	up = (u_t *) calloc(1, sizeof *up);
+	if (up == NULL)
+		return -1;
+#else /* !defined ALL_STATE */
+	u_t				u;
+	register u_t * const		up = &u;
+#endif /* !defined ALL_STATE */
 
 	sp->goback = sp->goahead = FALSE;
 	if (name == NULL && (name = TZDEFAULT) == NULL)
-		return -1;
+		goto oops;
 	{
 		register int	doaccess;
 		/*
@@ -363,9 +373,9 @@ register const int		doextend;
 		doaccess = name[0] == '/';
 		if (!doaccess) {
 			if ((p = TZDIR) == NULL)
-				return -1;
+				goto oops;
 			if ((strlen(p) + strlen(name) + 1) >= sizeof fullname)
-				return -1;
+				goto oops;
 			(void) strcpy(fullname, p);
 			(void) strcat(fullname, "/");
 			(void) strcat(fullname, name);
@@ -377,32 +387,32 @@ register const int		doextend;
 			name = fullname;
 		}
 		if (doaccess && access(name, R_OK) != 0)
-			return -1;
+			goto oops;
 		if ((fid = open(name, OPEN_MODE)) == -1)
-			return -1;
+			goto oops;
 	}
-	nread = read(fid, u.buf, sizeof u.buf);
+	nread = read(fid, up->buf, sizeof up->buf);
 	if (close(fid) < 0 || nread <= 0)
-		return -1;
+		goto oops;
 	for (stored = 4; stored <= 8; stored *= 2) {
 		int		ttisstdcnt;
 		int		ttisgmtcnt;
 
-		ttisstdcnt = (int) detzcode(u.tzhead.tzh_ttisstdcnt);
-		ttisgmtcnt = (int) detzcode(u.tzhead.tzh_ttisgmtcnt);
-		sp->leapcnt = (int) detzcode(u.tzhead.tzh_leapcnt);
-		sp->timecnt = (int) detzcode(u.tzhead.tzh_timecnt);
-		sp->typecnt = (int) detzcode(u.tzhead.tzh_typecnt);
-		sp->charcnt = (int) detzcode(u.tzhead.tzh_charcnt);
-		p = u.tzhead.tzh_charcnt + sizeof u.tzhead.tzh_charcnt;
+		ttisstdcnt = (int) detzcode(up->tzhead.tzh_ttisstdcnt);
+		ttisgmtcnt = (int) detzcode(up->tzhead.tzh_ttisgmtcnt);
+		sp->leapcnt = (int) detzcode(up->tzhead.tzh_leapcnt);
+		sp->timecnt = (int) detzcode(up->tzhead.tzh_timecnt);
+		sp->typecnt = (int) detzcode(up->tzhead.tzh_typecnt);
+		sp->charcnt = (int) detzcode(up->tzhead.tzh_charcnt);
+		p = up->tzhead.tzh_charcnt + sizeof up->tzhead.tzh_charcnt;
 		if (sp->leapcnt < 0 || sp->leapcnt > TZ_MAX_LEAPS ||
 			sp->typecnt <= 0 || sp->typecnt > TZ_MAX_TYPES ||
 			sp->timecnt < 0 || sp->timecnt > TZ_MAX_TIMES ||
 			sp->charcnt < 0 || sp->charcnt > TZ_MAX_CHARS ||
 			(ttisstdcnt != sp->typecnt && ttisstdcnt != 0) ||
 			(ttisgmtcnt != sp->typecnt && ttisgmtcnt != 0))
-				return -1;
-		if (nread - (p - u.buf) <
+				goto oops;
+		if (nread - (p - up->buf) <
 			sp->timecnt * stored +		/* ats */
 			sp->timecnt +			/* types */
 			sp->typecnt * 6 +		/* ttinfos */
@@ -410,7 +420,7 @@ register const int		doextend;
 			sp->leapcnt * (stored + 4) +	/* lsinfos */
 			ttisstdcnt +			/* ttisstds */
 			ttisgmtcnt)			/* ttisgmts */
-				return -1;
+				goto oops;
 		for (i = 0; i < sp->timecnt; ++i) {
 			sp->ats[i] = (stored == 4) ?
 				detzcode(p) : detzcode64(p);
@@ -419,7 +429,7 @@ register const int		doextend;
 		for (i = 0; i < sp->timecnt; ++i) {
 			sp->types[i] = (unsigned char) *p++;
 			if (sp->types[i] >= sp->typecnt)
-				return -1;
+				goto oops;
 		}
 		for (i = 0; i < sp->typecnt; ++i) {
 			register struct ttinfo *	ttisp;
@@ -429,11 +439,11 @@ register const int		doextend;
 			p += 4;
 			ttisp->tt_isdst = (unsigned char) *p++;
 			if (ttisp->tt_isdst != 0 && ttisp->tt_isdst != 1)
-				return -1;
+				goto oops;
 			ttisp->tt_abbrind = (unsigned char) *p++;
 			if (ttisp->tt_abbrind < 0 ||
 				ttisp->tt_abbrind > sp->charcnt)
-					return -1;
+					goto oops;
 		}
 		for (i = 0; i < sp->charcnt; ++i)
 			sp->chars[i] = *p++;
@@ -458,7 +468,7 @@ register const int		doextend;
 				ttisp->tt_ttisstd = *p++;
 				if (ttisp->tt_ttisstd != TRUE &&
 					ttisp->tt_ttisstd != FALSE)
-						return -1;
+						goto oops;
 			}
 		}
 		for (i = 0; i < sp->typecnt; ++i) {
@@ -471,7 +481,7 @@ register const int		doextend;
 				ttisp->tt_ttisgmt = *p++;
 				if (ttisp->tt_ttisgmt != TRUE &&
 					ttisp->tt_ttisgmt != FALSE)
-						return -1;
+						goto oops;
 			}
 		}
 		/*
@@ -504,11 +514,11 @@ register const int		doextend;
 		/*
 		** If this is an old file, we're done.
 		*/
-		if (u.tzhead.tzh_version[0] == '\0')
+		if (up->tzhead.tzh_version[0] == '\0')
 			break;
-		nread -= p - u.buf;
+		nread -= p - up->buf;
 		for (i = 0; i < nread; ++i)
-			u.buf[i] = p[i];
+			up->buf[i] = p[i];
 		/*
 		** If this is a narrow integer time_t system, we're done.
 		*/
@@ -516,13 +526,13 @@ register const int		doextend;
 			break;
 	}
 	if (doextend && nread > 2 &&
-		u.buf[0] == '\n' && u.buf[nread - 1] == '\n' &&
+		up->buf[0] == '\n' && up->buf[nread - 1] == '\n' &&
 		sp->typecnt + 2 <= TZ_MAX_TYPES) {
 			struct state	ts;
 			register int	result;
 
-			u.buf[nread - 1] = '\0';
-			result = tzparse(&u.buf[1], &ts, FALSE);
+			up->buf[nread - 1] = '\0';
+			result = tzparse(&up->buf[1], &ts, FALSE);
 			if (result == 0 && ts.typecnt == 2 &&
 				sp->charcnt + ts.charcnt <= TZ_MAX_CHARS) {
 					for (i = 0; i < 2; ++i)
@@ -566,7 +576,15 @@ register const int		doextend;
 					break;
 		}
 	}
+#ifdef ALL_STATE
+	(void) free((void *) up);
+#endif /* defined ALL_STATE */
 	return 0;
+oops:
+#ifdef ALL_STATE
+	(void) free((void *) up);
+#endif /* defined ALL_STATE */
+	return -1;
 }
 
 static int

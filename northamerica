@@ -487,7 +487,11 @@ Zone America/Adak	 12:13:21 -	LMT	1867 Oct 18
 # from 1942-02-09 to 1945-09-30 (page 221, with no time of day given for
 # when clocks changed) and that clocks were changed by 30 minutes
 # effective the second Sunday of June, 1947 (page 219, with no time of
-# day given for when clocks changed).
+# day given for when clocks changed). A footnote for the 1933 changes
+# cites Session Laws of Hawaii 1933, "Act. 90 (approved 26 Apr. 1933)
+# and Act 163 (approved 21 May 1933)." Unless the Act was approved very
+# early on the 21st, the time for transition out of DST in 1933 below
+# is wrong.
 
 Zone Pacific/Honolulu	-10:31:26 -	LMT	1896 Jan 13 12:00 #Schmitt&Cox
 			-10:30	-	HST	1933 Apr 30 2:00 #Schmitt&Cox+2

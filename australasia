@@ -84,8 +84,7 @@ Rule	AS	1986	only	-	Oct	19	2:00s	1:00	-
 Rule	AS	1987	2007	-	Oct	lastSun	2:00s	1:00	-
 Rule	AS	1972	only	-	Feb	27	2:00s	0	-
 Rule	AS	1973	1985	-	Mar	Sun>=1	2:00s	0	-
-Rule	AS	1986	1989	-	Mar	Sun>=15	2:00s	0	-
-Rule	AS	1990	only	-	Mar	Sun>=18	2:00s	0	-
+Rule	AS	1986	1990	-	Mar	Sun>=15	2:00s	0	-
 Rule	AS	1991	only	-	Mar	Sun>=1	2:00s	0	-
 Rule	AS	1992	only	-	Mar	Sun>=18	2:00s	0	-
 Rule	AS	1993	only	-	Mar	Sun>=1	2:00s	0	-

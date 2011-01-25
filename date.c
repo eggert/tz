@@ -76,7 +76,6 @@ extern char *		tzname[2];
 static int		retval = EXIT_SUCCESS;
 
 static void		checkfinal(const char *, int, time_t, time_t);
-static int		comptm(const struct tm *, const struct tm *);
 static time_t		convert(const char *, int, time_t);
 static void		display(const char *);
 static void		dogmt(void);
@@ -86,6 +85,7 @@ int			main(int, char**);
 static const char *	nondigit(const char *);
 static void		oops(const char *);
 static void		reset(time_t, int);
+static int		sametm(const struct tm *, const struct tm *);
 static void		timeout(FILE *, const char *, const struct tm *);
 static void		usage(void);
 static void		wildinput(const char *, const char *,
@@ -594,19 +594,16 @@ const struct tm * const	tmp;
 }
 
 static int
-comptm(atmp, btmp)
+sametm(atmp, btmp)
 register const struct tm * const atmp;
 register const struct tm * const btmp;
 {
-	register int	result;
-
-	if ((result = (atmp->tm_year - btmp->tm_year)) == 0 &&
-		(result = (atmp->tm_mon - btmp->tm_mon)) == 0 &&
-		(result = (atmp->tm_mday - btmp->tm_mday)) == 0 &&
-		(result = (atmp->tm_hour - btmp->tm_hour)) == 0 &&
-		(result = (atmp->tm_min - btmp->tm_min)) == 0)
-			result = atmp->tm_sec - btmp->tm_sec;
-	return result;
+	return atmp->tm_year == btmp->tm_year &&
+		atmp->tm_mon == btmp->tm_mon &&
+		atmp->tm_mday == btmp->tm_mday &&
+		atmp->tm_hour == btmp->tm_hour &&
+		atmp->tm_min == btmp->tm_min &&
+		atmp->tm_sec == btmp->tm_sec;
 }
 
 /*
@@ -708,7 +705,7 @@ convert(register const char * const value, const int dousg, const time_t t)
 	tm.tm_isdst = -1;
 	outtm = tm;
 	outt = mktime(&outtm);
-	return (comptm(&tm, &outtm) == 0) ? outt : -1;
+	return sametm(&tm, &outtm) ? outt : -1;
 }
 
 /*
@@ -746,7 +743,7 @@ checkfinal(const char * const	value,
 	othertm.tm_isdst = !tm.tm_isdst;
 	othert = mktime(&othertm);
 	if (othert != -1 && othertm.tm_isdst != tm.tm_isdst &&
-		comptm(&tm, &othertm) == 0)
+		sametm(&tm, &othertm))
 			iffy(t, othert, value,
 			    _("both standard and summer time versions exist"));
 /*
@@ -776,7 +773,7 @@ checkfinal(const char * const	value,
 				othert = t + 60 * offset;
 			else	othert = t - 60 * offset;
 			othertm = *localtime(&othert);
-			if (comptm(&tm, &othertm) == 0)
+			if (sametm(&tm, &othertm))
 				iffy(t, othert, value,
 					_("multiple matching times exist"));
 		}

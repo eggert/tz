@@ -561,9 +561,27 @@ Rule	Russia	1985	1991	-	Mar	lastSun	 2:00s	1:00	S
 #
 Rule	Russia	1992	only	-	Mar	lastSat	 23:00	1:00	S
 Rule	Russia	1992	only	-	Sep	lastSat	 23:00	0	-
-Rule	Russia	1993	max	-	Mar	lastSun	 2:00s	1:00	S
+Rule	Russia	1993	2011	-	Mar	lastSun	 2:00s	1:00	S
 Rule	Russia	1993	1995	-	Sep	lastSun	 2:00s	0	-
-Rule	Russia	1996	max	-	Oct	lastSun	 2:00s	0	-
+Rule	Russia	1996	2010	-	Oct	lastSun	 2:00s	0	-
+
+# From Steffen Thorsen (2011-02-08):
+# Many news sources report that Russia will move clocks forward for DST
+# as usual, but not back again, so they will stay permanently on DST,
+# from 2011.
+#
+# Some examples:
+# <a href="http://themoscownews.com/society/20110208/188402634.html">
+# http://themoscownews.com/society/20110208/188402634.html
+# </a>
+# <a href="http://www.straitstimes.com/BreakingNews/World/Story/STIStory_632614.html">
+# http://www.straitstimes.com/BreakingNews/World/Story/STIStory_632614.html
+# </a>
+#
+# We will keep this page updated:
+# <a href="http://www.timeanddate.com/news/time/russia-winter-time.html">
+# http://www.timeanddate.com/news/time/russia-winter-time.html
+# </a>
 
 # These are for backward compatibility with older versions.
 

@@ -743,6 +743,17 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 # anche-prochain-5538.html
 # </a>
 
+# From Petr Machata (2011-03-30):
+# They have it written in English here:
+# <a href="http://www.map.ma/eng/sections/home/morocco_to_spring_fo/view">
+# http://www.map.ma/eng/sections/home/morocco_to_spring_fo/view
+# </a>
+#
+# It says there that "Morocco will resume its standard time on July 31,
+# 2011 at midnight." Now they don't say whether they mean midnight of
+# wall clock time (i.e. 11pm UTC), but that's what I would assume. It has
+# also been like that in the past.
+
 # RULE	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 
 Rule	Morocco	1939	only	-	Sep	12	 0:00	1:00	S
@@ -767,7 +778,7 @@ Rule	Morocco	2009	only	-	Aug	 21	 0:00	0	-
 Rule	Morocco	2010	only	-	May	 2	 0:00	1:00	S
 Rule	Morocco	2010	only	-	Aug	 8	 0:00	0	-
 Rule	Morocco	2011	only	-	Apr	 3	 0:00	1:00	S
-Rule	Morocco	2011	only	-	Jul	 31	 1:00	0	-
+Rule	Morocco	2011	only	-	Jul	 31	 0	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Africa/Casablanca	-0:30:20 -	LMT	1913 Oct 26
 			 0:00	Morocco	WE%sT	1984 Mar 16

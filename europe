@@ -2165,12 +2165,47 @@ Zone Asia/Krasnoyarsk	 6:11:20 -	LMT	1920 Jan  6
 # From Oscar van Vlijmen (2001-08-25): [This region consists of]
 # Respublika Buryatiya, Irkutskaya oblast',
 # Ust'-Ordynskij Buryatskij avtonomnyj okrug.
+
+# From Alexander Krivenyshev (2011-03-16):
+# According to various media sources (in Russian):
+# <a href="http://www.irk.ru/news/20110316/time/">
+# http://www.irk.ru/news/20110316/time/
+# </a>
+# <a href="http://www.bratsk.ru/report/show/8416.html">
+# http://www.bratsk.ru/report/show/8416.html
+# </a>
+# Irkutsk Region (Russia) has received government permission to change
+# time zone to Krasnoyarsk time zone (UTC+8 summer time after March 27,
+# 2011). On March 27, 2011 Irkutsk will keep its clock without change to
+# Summer Time (DST) when most of Russia will move to DST. After March 27,
+# 2011 time difference between Moscow (UTC+4 after March 27, 2011) and
+# Irkutsk (UTC+8 after March 27, 2011) will be 4 hours, not 5 hours.
+#
+# or
+# <a href="http://www.worldtimezone.com/dst_news/dst_news_russia27.html">
+# http://www.worldtimezone.com/dst_news/dst_news_russia27.html
+# </a>
+
+# From Alexander Ray (2011-03-27):
+# In the time zone change Russia took this March, Irkutsk Oblast began
+# using Krasnoyarsk Time while Buryatia didn't, so a split of
+# Asia/Irkutsk is in order, creating Asia/UlanUde(?).
+
 Zone Asia/Irkutsk	 6:57:20 -	LMT	1880
 			 6:57:20 -	IMT	1920 Jan 25 # Irkutsk Mean Time
 			 7:00	-	IRKT	1930 Jun 21 # Irkutsk Time
 			 8:00	Russia	IRK%sT	1991 Mar 31 2:00s
 			 7:00	Russia	IRK%sT	1992 Jan 19 2:00s
-			 8:00	Russia	IRK%sT
+			 8:00	Russia	IRK%sT	2011 Mar 27 2:00s
+			 7:00	Russia	KRA%sT
+
+Zone Asia/Ulan_Ude	 7:10:24 -	LMT	1880
+			 6:57:20 -	IMT	1920 Jan 25 # Irkutsk Mean Time
+			 7:00	-	IRKT	1930 Jun 21 # Irkutsk Time
+			 8:00	Russia	IRK%sT	1991 Mar 31 2:00s
+			 7:00	Russia	IRK%sT	1992 Jan 19 2:00s
+			 8:00	Russia	BUR%sT
+
 #
 # From Oscar van Vlijmen (2003-10-18): [This region consists of]
 # Aginskij Buryatskij avtonomnyj okrug, Amurskaya oblast',

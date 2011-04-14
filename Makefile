@@ -116,7 +116,7 @@ LDLIBS=
 #  -DZIC_MAX_ABBR_LEN_WO_WARN=3
 #	(or some other number) to set the maximum time zone abbreviation length
 #	that zic will accept without a warning (the default is 6)
-GCC_DEBUG_FLAGS = -Dlint -g -O -fno-common \
+GCC_DEBUG_FLAGS = -Dlint -g -O3 -fno-common \
 	-Wall -Wcast-qual -Wconversion -Wmissing-prototypes \
 	-Wnested-externs -Wpointer-arith -Wshadow \
 	-Wtraditional # -Wstrict-prototypes -Wwrite-strings

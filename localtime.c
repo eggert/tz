@@ -1613,31 +1613,39 @@ char *			buf;
 #endif /* !defined WRONG */
 
 /*
-** Simplified normalize logic courtesy Paul Eggert.
+** Normalize logic courtesy Paul Eggert.
 */
 
 static int
-increment_overflow(number, delta)
-int *	number;
-int	delta;
+increment_overflow(ip, j)
+int * const	ip;
+int		j;
 {
-	int	number0;
+	register int const	i = *ip;
 
-	number0 = *number;
-	*number += delta;
-	return (*number < number0) != (delta < 0);
+	/*
+	** If i >= 0 there can only be overflow if i + j > INT_MAX
+	** or if j > INT_MAX - i; given i >= 0, INT_MAX - i cannot overflow.
+	** If i < 0 there can only be overflow if i + j < INT_MIN
+	** or if j < INT_MIN - i; given i < 0, INT_MIN - i cannot overflow.
+	*/
+	if ((i >= 0) ? (j > INT_MAX - i) : (j < INT_MIN - i))
+		return TRUE;
+	*ip += j;
+	return FALSE;
 }
 
 static int
-long_increment_overflow(number, delta)
-long *	number;
-int	delta;
+long_increment_overflow(lp, m)
+long * const	lp;
+int const	m;
 {
-	long	number0;
+	register long const	l = *lp;
 
-	number0 = *number;
-	*number += delta;
-	return (*number < number0) != (delta < 0);
+	if ((l >= 0) ? (m > LONG_MAX - l) : (m < LONG_MIN - l))
+		return TRUE;
+	*lp += m;
+	return FALSE;
 }
 
 static int

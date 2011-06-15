@@ -21,6 +21,10 @@
 #
 # Lines beginning with `#' are comments.
 #
+# From Arthur David Olson (2011-06-15):
+# Resynchronized today with the ISO3116 site
+# (deleting AN and adding BQ, CW, and SX).
+#
 #country-
 #code	country name
 AD	Andorra

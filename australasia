@@ -579,7 +579,7 @@ Zone Pacific/Apia	 12:33:04 -	LMT	1879 Jul  5
 			-11:00	-	WST	2010 Sep 26
 			-11:00	1:00	WSDT	2011 Apr 2 4:00
 			-11:00	-	WST	2011 Dec 30
-			+13:00	-	WST
+			 13:00	-	WST
 
 # Solomon Is
 # excludes Bougainville, for which see Papua New Guinea

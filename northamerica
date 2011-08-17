@@ -1167,12 +1167,39 @@ Rule	StJohns	1960	1986	-	Oct	lastSun	2:00	0	S
 # From Paul Eggert (2000-10-02):
 # INMS (2000-09-12) says that, since 1988 at least, Newfoundland switches
 # at 00:01 local time.  For now, assume it started in 1987.
+
+# From Michael Pelley (2011-08-05):
+# The Government of Newfoundland and Labrador has pending changes to
+# modify the hour for daylight savings time to come into effect in
+# November 2011. This modification would change the time from 12:01AM to
+# 2:00AM on the dates of the switches of Daylight Savings Time to/from
+# Standard Time.
+#
+# As a matter of reference, in Canada provinces have the authority of
+# setting time zone information. The legislation has passed our
+# legislative body (The House of Assembly) and is awaiting the
+# proclamation to come into effect. You may find this information at:
+# <a href="http://www.assembly.nl.ca/legislation/sr/lists/Proclamation.htm">
+# http://www.assembly.nl.ca/legislation/sr/lists/Proclamation.htm
+# </a>
+# and
+# search within that web page for Standard Time (Amendment) Act. The Act
+# may be found at:
+# <a href="http://www.assembly.nl.ca/business/bills/Bill1106.htm">
+# http://www.assembly.nl.ca/business/bills/Bill1106.htm
+# </a>
+# ...
+# MICHAEL PELLEY | Manager of Enterprise Architecture - Solution Delivery
+# Office of the Chief Information Officer Executive Council Government of
+# Newfoundland & Labrador P.O. Box 8700, 40 Higgins Line, St. John's NL
+# A1B 4J6
+
 Rule	StJohns	1987	only	-	Apr	Sun>=1	0:01	1:00	D
 Rule	StJohns	1987	2006	-	Oct	lastSun	0:01	0	S
 Rule	StJohns	1988	only	-	Apr	Sun>=1	0:01	2:00	DD
 Rule	StJohns	1989	2006	-	Apr	Sun>=1	0:01	1:00	D
-Rule	StJohns	2007	max	-	Mar	Sun>=8	0:01	1:00	D
-Rule	StJohns	2007	max	-	Nov	Sun>=1	0:01	0	S
+Rule	StJohns	2007	2011	-	Mar	Sun>=8	0:01	1:00	D
+Rule	StJohns	2007	2010	-	Nov	Sun>=1	0:01	0	S
 #
 # St John's has an apostrophe, but Posix file names can't have apostrophes.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1182,7 +1209,8 @@ Zone America/St_Johns	-3:30:52 -	LMT	1884
 			-3:30:52 StJohns N%sT	1935 Mar 30
 			-3:30	StJohns	N%sT	1942 May 11
 			-3:30	Canada	N%sT	1946
-			-3:30	StJohns	N%sT
+			-3:30	StJohns	N%sT	2011 Nov
+			-3:30	Canada	N%sT
 
 # most of east Labrador
 

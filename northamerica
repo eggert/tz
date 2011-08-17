@@ -468,6 +468,10 @@ Zone America/Los_Angeles -7:52:58 -	LMT	1883 Nov 18 12:07:02
 # own time. I asked about daylight saving; they said it wasn't used. I
 # did not inquire about practices in the past.
 
+# From Arthur David Olson (2011-08-17):
+# For lack of better information, assume that Metlakatla's
+# abandonment of use of daylight saving resulted from the 1983 vote.
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Juneau	 15:02:19 -	LMT	1867 Oct 18
 			 -8:57:41 -	LMT	1900 Aug 20 12:00
@@ -493,7 +497,7 @@ Zone America/Metlakatla	 15:13:42 -	LMT	1867 Oct 18
 			 -8:00	US	P%sT	1946
 			 -8:00	-	PST	1969
 			 -8:00	US	P%sT	1983 Oct 30 2:00
-			 -8:00	US	MeST
+			 -8:00	-	MeST
 Zone America/Yakutat	 14:41:05 -	LMT	1867 Oct 18
 			 -9:18:55 -	LMT	1900 Aug 20 12:00
 			 -9:00	-	YST	1942

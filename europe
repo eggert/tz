@@ -561,9 +561,9 @@ Rule	Russia	1985	1991	-	Mar	lastSun	 2:00s	1:00	S
 #
 Rule	Russia	1992	only	-	Mar	lastSat	 23:00	1:00	S
 Rule	Russia	1992	only	-	Sep	lastSat	 23:00	0	-
-Rule	Russia	1993	max	-	Mar	lastSun	 2:00s	1:00	S
+Rule	Russia	1993	2010	-	Mar	lastSun	 2:00s	1:00	S
 Rule	Russia	1993	1995	-	Sep	lastSun	 2:00s	0	-
-Rule	Russia	1996	max	-	Oct	lastSun	 2:00s	0	-
+Rule	Russia	1996	2010	-	Oct	lastSun	 2:00s	0	-
 
 # From Alexander Krivenyshev (2011-06-14):
 # According to Kremlin press service, Russian President Dmitry Medvedev
@@ -583,7 +583,6 @@ Rule	Russia	1996	max	-	Oct	lastSun	 2:00s	0	-
 # From Arthur David Olson (2011-06-15):
 # Take "abolishing daylight saving time" to mean that time is now considered
 # to be standard.
-# At least for now, keep the "old" Russia rules for the benefit of Belarus.
 
 # These are for backward compatibility with older versions.
 
@@ -689,6 +688,23 @@ Zone	Europe/Vienna	1:05:20 -	LMT	1893 Apr
 			1:00	EU	CE%sT
 
 # Belarus
+# From Yauhen Kharuzhy (2011-09-16):
+# By latest Belarus government act Europe/Minsk timezone was changed to
+# GMT+3 without DST (was GMT+2 with DST).
+#
+# Sources (Russian language):
+# 1.
+# <a href="http://www.belta.by/ru/all_news/society/V-Belarusi-otmenjaetsja-perexod-na-sezonnoe-vremja_i_572952.html">
+# http://www.belta.by/ru/all_news/society/V-Belarusi-otmenjaetsja-perexod-na-sezonnoe-vremja_i_572952.html
+# </a>
+# 2.
+# <a href="http://naviny.by/rubrics/society/2011/09/16/ic_articles_116_175144/">
+# http://naviny.by/rubrics/society/2011/09/16/ic_articles_116_175144/
+# </a>
+# 3.
+# <a href="http://news.tut.by/society/250578.html">
+# http://news.tut.by/society/250578.html
+# </a>
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Minsk	1:50:16 -	LMT	1880
 			1:50	-	MMT	1924 May 2 # Minsk Mean Time
@@ -700,7 +716,8 @@ Zone	Europe/Minsk	1:50:16 -	LMT	1880
 			2:00	1:00	EEST	1991 Sep 29 2:00s
 			2:00	-	EET	1992 Mar 29 0:00s
 			2:00	1:00	EEST	1992 Sep 27 0:00s
-			2:00	Russia	EE%sT
+			2:00	Russia	EE%sT	2011 Mar 27 2:00s
+			3:00	-	MIST
 
 # Belgium
 #

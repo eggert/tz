@@ -2194,7 +2194,23 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # http://www.timeanddate.com/news/time/westbank-gaza-end-dst-2010.html
 # </a>
 
+# From Alexander Krivenyshev (2011-08-27):
+# According to the article in The Jerusalem Post:
+# "...Earlier this month, the Palestinian government in the West Bank decided to
+# move to standard time for 30 days, during Ramadan. The Palestinians in the
+# Gaza Strip accepted the change and also moved their clocks one hour back.
+# The Hamas government said on Saturday that it won't observe summertime after
+# the Muslim feast of Id al-Fitr, which begins on Tuesday..."
+# ...
+# <a href="http://www.jpost.com/MiddleEast/Article.aspx?id=235650">
+# http://www.jpost.com/MiddleEast/Article.aspx?id=235650
+# </a>
+# or
+# <a href="http://www.worldtimezone.com/dst_news/dst_news_gazastrip05.html">
+# http://www.worldtimezone.com/dst_news/dst_news_gazastrip05.html
+# </a>
 # The rules for Egypt are stolen from the `africa' file.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule EgyptAsia	1957	only	-	May	10	0:00	1:00	S
 Rule EgyptAsia	1957	1958	-	Oct	 1	0:00	0	-
@@ -2212,9 +2228,11 @@ Rule Palestine	2006	only	-	Sep	22	0:00	0	-
 Rule Palestine	2007	only	-	Sep	Thu>=8	2:00	0	-
 Rule Palestine	2008	only	-	Aug	lastFri	2:00	0	-
 Rule Palestine	2009	only	-	Mar	lastFri	0:00	1:00	S
-Rule Palestine	2010	max	-	Mar	lastSat	0:01	1:00	S
-Rule Palestine	2009	max	-	Sep	Fri>=1	2:00	0	-
+Rule Palestine	2009	only	-	Sep	Fri>=1	2:00	0	-
+Rule Palestine	2010	only	-	Mar	lastSat	0:01	1:00	S
 Rule Palestine	2010	only	-	Aug	11	0:00	0	-
+Rule Palestine	2011	only	-	Apr	Sat>=1	0:01	1:00	S
+Rule Palestine	2011	only	-	Aug	Sat>=1	0:00	0:00	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct
@@ -2222,6 +2240,15 @@ Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct
 			2:00 EgyptAsia	EE%sT	1967 Jun  5
 			2:00	Zion	I%sT	1996
 			2:00	Jordan	EE%sT	1999
+			2:00 Palestine	EE%sT
+
+Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
+			2:00	Zion	EET	1948 May 15
+			2:00 EgyptAsia	EE%sT	1967 Jun  5
+			2:00	Zion	I%sT	1996
+			2:00	Jordan	EE%sT	1999
+			2:00 Palestine	EE%sT	2011 Aug 30
+			2:00	1:00	EEST	2011 Oct  3 3:00
 			2:00 Palestine	EE%sT
 
 # Paracel Is

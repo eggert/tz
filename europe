@@ -717,7 +717,7 @@ Zone	Europe/Minsk	1:50:16 -	LMT	1880
 			2:00	-	EET	1992 Mar 29 0:00s
 			2:00	1:00	EEST	1992 Sep 27 0:00s
 			2:00	Russia	EE%sT	2011 Mar 27 2:00s
-			3:00	-	MINST # MINsk Standard Time
+			3:00	-	FET # Further-eastern European Time
 
 # Belgium
 #
@@ -2051,7 +2051,7 @@ Zone Europe/Kaliningrad	 1:22:00 -	LMT	1893 Apr
 			 2:00	Poland	CE%sT	1946
 			 3:00	Russia	MSK/MSD	1991 Mar 31 2:00s
 			 2:00	Russia	EE%sT	2011 Mar 27 2:00s
-			 3:00	-	KALT
+			 3:00	-	FET # Further-eastern European Time
 #
 # From Oscar van Vlijmen (2001-08-25): [This region consists of]
 # Respublika Adygeya, Arkhangel'skaya oblast',
@@ -2630,6 +2630,28 @@ Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 # of March at 3am the time is changing to 4am and each last Sunday of
 # October the time at 4am is changing to 3am"
 
+# From Alexander Krivenyshev (2011-09-20):
+# On September 20, 2011 the deputies of the Verkhovna Rada agreed to
+# abolish the transfer clock to winter time.
+#
+# Bill number 8330 of MP from the Party of Regions Oleg Nadoshi got
+# approval from 266 deputies.
+#
+# Ukraine abolishes transter back to the winter time (in Russian)
+# <a href="http://news.mail.ru/politics/6861560/">
+# http://news.mail.ru/politics/6861560/
+# </a>
+#
+# The Ukrainians will no longer change the clock (in Russian)
+# <a href="http://www.segodnya.ua/news/14290482.html">
+# http://www.segodnya.ua/news/14290482.html
+# </a>
+#
+# Deputies cancelled the winter time (in Russian)
+# <a href="http://www.pravda.com.ua/rus/news/2011/09/20/6600616/">
+# http://www.pravda.com.ua/rus/news/2011/09/20/6600616/
+# </a>
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 # Most of Ukraine since 1970 has been like Kiev.
 # "Kyiv" is the transliteration of the Ukrainian name, but
@@ -2643,7 +2665,8 @@ Zone Europe/Kiev	2:02:04 -	LMT	1880
 			3:00	-	MSK	1990 Jul  1 2:00
 			2:00	-	EET	1992
 			2:00	E-Eur	EE%sT	1995
-			2:00	EU	EE%sT
+			2:00	EU	EE%sT	2011 Mar lastSun 1:00u
+			3:00	-	FET # Further-eastern European Time
 # Ruthenia used CET 1990/1991.
 # "Uzhhorod" is the transliteration of the Ukrainian name, but
 # "Uzhgorod" is more common in English.
@@ -2657,7 +2680,8 @@ Zone Europe/Uzhgorod	1:29:12 -	LMT	1890 Oct
 			1:00	-	CET	1991 Mar 31 3:00
 			2:00	-	EET	1992
 			2:00	E-Eur	EE%sT	1995
-			2:00	EU	EE%sT
+			2:00	EU	EE%sT	2011 Mar lastSun 1:00u
+			3:00	-	FET # Further-eastern European Time
 # Zaporozh'ye and eastern Lugansk oblasts observed DST 1990/1991.
 # "Zaporizhia" is the transliteration of the Ukrainian name, but
 # "Zaporozh'ye" is more common in English.  Use the common English
@@ -2670,7 +2694,8 @@ Zone Europe/Zaporozhye	2:20:40 -	LMT	1880
 			1:00	C-Eur	CE%sT	1943 Oct 25
 			3:00	Russia	MSK/MSD	1991 Mar 31 2:00
 			2:00	E-Eur	EE%sT	1995
-			2:00	EU	EE%sT
+			2:00	EU	EE%sT	2011 Mar lastSun 1:00u
+			3:00	-	FET # Further-eastern European Time
 # Central Crimea used Moscow time 1994/1997.
 Zone Europe/Simferopol	2:16:24 -	LMT	1880
 			2:16	-	SMT	1924 May  2 # Simferopol Mean T
@@ -2695,7 +2720,8 @@ Zone Europe/Simferopol	2:16:24 -	LMT	1880
 # Assume it happened in March by not changing the clocks.
 			3:00	Russia	MSK/MSD	1997
 			3:00	-	MSK	1997 Mar lastSun 1:00u
-			2:00	EU	EE%sT
+			2:00	EU	EE%sT	2011 Mar lastSun 1:00u
+			3:00	-	FET # Further-eastern European Time
 
 ###############################################################################
 

@@ -2245,8 +2245,9 @@ Rule Palestine	2009	only	-	Mar	lastFri	0:00	1:00	S
 Rule Palestine	2009	only	-	Sep	Fri>=1	2:00	0	-
 Rule Palestine	2010	only	-	Mar	lastSat	0:01	1:00	S
 Rule Palestine	2010	only	-	Aug	11	0:00	0	-
-Rule Palestine	2011	only	-	Apr	Sat>=1	0:01	1:00	S
-Rule Palestine	2011	only	-	Aug	Sat>=1	0:00	0:00	-
+
+# From Arthur David Olson (2011-09-20):
+# 2011 transitions per http://www.timeanddate.com as of 2011-09-20.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct
@@ -2254,7 +2255,9 @@ Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct
 			2:00 EgyptAsia	EE%sT	1967 Jun  5
 			2:00	Zion	I%sT	1996
 			2:00	Jordan	EE%sT	1999
-			2:00 Palestine	EE%sT
+			2:00 Palestine	EE%sT	2011 Apr  2 12:01
+			2:00	1:00	EEST	2011 Aug  1
+			2:00	-	EET
 
 Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 			2:00	Zion	EET	1948 May 15
@@ -2263,9 +2266,11 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 			2:00	Jordan	EE%sT	1999
 			2:00 Palestine	EE%sT	2008 Aug
 			2:00 	1:00	EEST	2008 Sep
-			2:00 Palestine	EE%sT	2011 Aug 30
+			2:00 Palestine	EE%sT	2011 Apr  1 12:01
+			2:00	1:00	EEST	2011 Aug  1
+			2:00	-	EET	2011 Aug 30
 			2:00	1:00	EEST	2011 Oct  3 3:00
-			2:00 Palestine	EE%sT
+			2:00	-	EET
 
 # Paracel Is
 # no information

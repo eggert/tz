@@ -1,5 +1,5 @@
 # <pre>
-# %W%
+# @(#)Makefile	8.11
 # This file is in the public domain, so clarified as of
 # 2009-05-17 by Arthur David Olson.
 
@@ -43,7 +43,8 @@ TOPDIR=		/usr/local
 # (and subdirectories).
 # Use an absolute path name for TZDIR unless you're just testing the software.
 
-TZDIR=		$(TOPDIR)/etc/zoneinfo
+# TZDIR=		$(TOPDIR)/etc/zoneinfo
+TZDIR=	/home/kre/src/tz/data/TZ
 
 # The "tzselect", "zic", and "zdump" commands get installed in. . .
 
@@ -212,7 +213,7 @@ GCC_DEBUG_FLAGS = -Dlint -g -O3 -fno-common \
 # before the first Monday in January when a "%V" format is used and January 1
 # falls on a Friday, Saturday, or Sunday.
 
-CFLAGS=
+CFLAGS= -DSTD_INSPIRED
 
 # If you want zic's -s option used when installing, uncomment the next line
 # ZFLAGS=	-s

@@ -2783,6 +2783,20 @@ Zone America/Costa_Rica	-5:36:20 -	LMT	1890		# San Jose
 # <a href="http://www.timeanddate.com/news/time/cuba-time-changes-2011.html">
 # http://www.timeanddate.com/news/time/cuba-time-changes-2011.html
 # </a>
+# 
+# From Steffen Thorsen (2012-03-01)
+# According to Radio Reloj, Cuba will start DST on Midnight between March 
+# 31 and April 1.
+# 
+# Radio Reloj has the following info (Spanish):
+# <a href="http://www.radioreloj.cu/index.php/noticias-radio-reloj/71-miscelaneas/7529-cuba-aplicara-el-horario-de-verano-desde-el-1-de-abril">
+# http://www.radioreloj.cu/index.php/noticias-radio-reloj/71-miscelaneas/7529-cuba-aplicara-el-horario-de-verano-desde-el-1-de-abril
+# </a>
+#
+# Our info on it:
+# <a href="http://www.timeanddate.com/news/time/cuba-starts-dst-2012.html">
+# http://www.timeanddate.com/news/time/cuba-starts-dst-2012.html
+# </a>
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Cuba	1928	only	-	Jun	10	0:00	1:00	D
@@ -2820,8 +2834,9 @@ Rule	Cuba	2008	only	-	Mar	Sun>=15	0:00s	1:00	D
 Rule	Cuba	2009	2010	-	Mar	Sun>=8	0:00s	1:00	D
 Rule	Cuba	2011	only	-	Mar	Sun>=15	0:00s	1:00	D
 Rule	Cuba	2011	only	-	Nov	13	0:00s	0	S
-Rule	Cuba	2012	max	-	Mar	Sun>=8	0:00s	1:00	D
+Rule	Cuba	2012	only	-	Apr	1	0:00s	1:00	D
 Rule	Cuba	2012	max	-	Oct	lastSun	0:00s	0	S
+Rule	Cuba	2013	max	-	Mar	Sun>=8	0:00s	1:00	D
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Havana	-5:29:28 -	LMT	1890

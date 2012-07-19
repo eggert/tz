@@ -226,7 +226,9 @@ ZIC=		$(zic) $(ZFLAGS)
 AWK=		nawk
 
 # The path where SGML DTDs are kept.
-SGML_SEARCH_PATH= $(TOPDIR)/share/doc/sgml-lib/REC-html401-19991224/
+# The default is appropriate for Ubuntu.
+SGML_TOPDIR= /usr
+SGML_SEARCH_PATH= $(SGML_TOPDIR)/share/xml/xhtml/schema/dtd/REC-html401-19991224
 
 # The catalog file(s) to use when validating.
 SGML_CATALOG_FILES= HTML4.cat

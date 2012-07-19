@@ -798,6 +798,23 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 # "...&agrave; partir du dernier dimance d'avril et non fins mars,
 # comme annonc&eacute; pr&eacute;c&eacute;demment."
 
+# From Milamber Space Network (2012-07-17):
+# The official return to GMT is announced by the Moroccan government:
+# <a href="http://www.mmsp.gov.ma/fr/actualites.aspx?id=288">
+# http://www.mmsp.gov.ma/fr/actualites.aspx?id=288 [in French]
+# </a>
+#
+# Google translation, lightly edited:
+# Back to the standard time of the Kingdom (GMT)
+# Pursuant to Decree No. 2-12-126 issued on 26 Jumada (I) 1433 (April 18,
+# 2012) and in accordance with the order of Mr. President of the
+# Government No. 3-47-12 issued on 24 Sha'ban (11 July 2012), the Ministry
+# of Public Service and Administration Modernization announces the return
+# of the legal time of the Kingdom (GMT) from Friday, July 20, 2012 until
+# Monday, August 20, 2012.  So the time will be delayed by 60 minutes from
+# 3:00 am Friday, July 20, 2012 and will again be advanced by 60 minutes
+# August 20, 2012 from 2:00 am.
+
 # RULE	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 
 Rule	Morocco	1939	only	-	Sep	12	 0:00	1:00	S
@@ -825,6 +842,8 @@ Rule	Morocco	2011	only	-	Apr	 3	 0:00	1:00	S
 Rule	Morocco	2011	only	-	Jul	 31	 0	0	-
 Rule	Morocco	2012	max	-	Apr	 lastSun 2:00	1:00	S
 Rule	Morocco	2012	max	-	Sep	 lastSun 3:00	0	-
+Rule	Morocco	2012	only	-	Jul	 20	 3:00	0	-
+Rule	Morocco	2012	only	-	Aug	 20	 2:00	1:00	S
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Africa/Casablanca	-0:30:20 -	LMT	1913 Oct 26

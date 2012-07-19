@@ -1,7 +1,5 @@
 #! /usr/bin/perl -w
 
-# %W%
-
 # Courtesy Ken Pizzini.
 
 use strict;

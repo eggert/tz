@@ -3,7 +3,7 @@
 ** 2009-05-17 by Arthur David Olson.
 */
 
-static char	elsieid[] = "%W%";
+#include "version.h"
 
 /*
 ** This code has been made independent of the rest of the time
@@ -282,7 +282,7 @@ char *	argv[];
 	progname = argv[0];
 	for (i = 1; i < argc; ++i)
 		if (strcmp(argv[i], "--version") == 0) {
-			(void) printf("%s\n", elsieid);
+			(void) printf("%s\n", TZCODE_VERSION);
 			exit(EXIT_SUCCESS);
 		} else if (strcmp(argv[i], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);

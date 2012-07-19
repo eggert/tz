@@ -1,12 +1,3 @@
-#ifndef lint
-#ifndef NOID
-static char	elsieid[] = "%W%";
-/*
-** Modified from the UCB version with the SCCS ID appearing below.
-*/
-#endif /* !defined NOID */
-#endif /* !defined lint */
-
 /*
  * Copyright (c) 1985, 1987, 1988 The Regents of the University of California.
  * All rights reserved.

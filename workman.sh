@@ -1,7 +1,6 @@
 #! /bin/sh
 
 # <pre>
-# %W%
 # This file is in the public domain, so clarified as of
 # 2009-05-17 by Arthur David Olson.
 

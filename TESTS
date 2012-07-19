@@ -1,7 +1,5 @@
 #! /bin/sh
 
-# '%W%'
-
 rm -f -r try
 mkdir try
 make `make names`

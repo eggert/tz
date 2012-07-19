@@ -16,16 +16,6 @@
 */
 
 /*
-** ID
-*/
-
-#ifndef lint
-#ifndef NOID
-static char	tzfilehid[] = "%W%";
-#endif /* !defined NOID */
-#endif /* !defined lint */
-
-/*
 ** Information about time zone files.
 */
 

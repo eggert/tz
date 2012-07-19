@@ -1,13 +1,3 @@
-#ifndef lint
-#ifndef NOID
-static char	elsieid[] = "%W%";
-/*
-** Based on the UCB version with the ID appearing below.
-** This is ANSIish only when "multibyte character == plain character".
-*/
-#endif /* !defined NOID */
-#endif /* !defined lint */
-
 #include "private.h"
 
 /*

@@ -1,7 +1,5 @@
 # Check tz tables for consistency.
 
-# %W%
-
 # Contributed by Paul Eggert.
 
 BEGIN {

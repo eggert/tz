@@ -15,16 +15,6 @@
 ** Thank you!
 */
 
-/*
-** ID
-*/
-
-#ifndef lint
-#ifndef NOID
-static char	privatehid[] = "%W%";
-#endif /* !defined NOID */
-#endif /* !defined lint */
-
 #define GRANDPARENTED	"Local time zone must be set--see zic manual page"
 
 /*

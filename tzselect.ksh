@@ -1,6 +1,6 @@
 #! /bin/ksh
 
-VERSION='%W%'
+TZCODE_VERSION=see_Makefile
 
 # Ask the user about the time zone, and output the resulting TZ value to stdout.
 # Interact with the user via stderr and stdin.
@@ -55,7 +55,7 @@ EOF
     exit 0
 elif [ "$1" = "--version" ]; then
     cat <<EOF
-tzselect $VERSION
+tzselect $TZCODE_VERSION
 EOF
     exit 0
 fi

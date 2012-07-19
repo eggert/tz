@@ -3,12 +3,6 @@
 ** 1996-06-05 by Arthur David Olson.
 */
 
-#ifndef lint
-#ifndef NOID
-static char	elsieid[] = "%W%";
-#endif /* !defined NOID */
-#endif /* !defined lint */
-
 /*
 ** Leap second handling from Bradley White.
 ** POSIX-style TZ environment variable handling from Guy Harris.

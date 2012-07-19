@@ -3,12 +3,6 @@
 ** 2006-07-17 by Arthur David Olson.
 */
 
-#ifndef lint
-#ifndef NOID
-static char	elsieid[] = "%W%";
-#endif /* !defined lint */
-#endif /* !defined NOID */
-
 /*LINTLIBRARY*/
 
 #include "private.h"

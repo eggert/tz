@@ -1,5 +1,3 @@
-# %W%
-
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	POSIX	1970	1973	-	Apr	lastSun	2:00	1:00	D
 Rule	POSIX	1974	only	-	Jan	6	2:00	1:00	D

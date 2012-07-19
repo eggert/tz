@@ -3,8 +3,7 @@
 ** 2006-07-17 by Arthur David Olson.
 */
 
-static char	elsieid[] = "%W%";
-
+#include "version.h"
 #include "private.h"
 #include "locale.h"
 #include "tzfile.h"
@@ -498,7 +497,7 @@ char *	argv[];
 	}
 	for (i = 1; i < argc; ++i)
 		if (strcmp(argv[i], "--version") == 0) {
-			(void) printf("%s\n", elsieid);
+			(void) printf("%s\n", TZCODE_VERSION);
 			exit(EXIT_SUCCESS);
 		} else if (strcmp(argv[i], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);

@@ -1,7 +1,9 @@
 # <pre>
-# %W%
 # This file is in the public domain, so clarified as of
 # 2009-05-17 by Arthur David Olson.
+
+# Version number of this code distribution.
+TZCODE_VERSION = tzcode2012b
 
 # Change the line below for your time zone (after finding the zone you want in
 # the time zone files, or adding it to a time zone file).
@@ -309,6 +311,10 @@ INSTALL:	ALL install date.1
 		-rm -f $(MANDIR)/man1/date.1
 		cp date.1 $(MANDIR)/man1/.
 
+version.h:
+		echo >$@ \
+		  'static char const TZCODE_VERSION[]="$(TZCODE_VERSION)";'
+
 zdump:		$(TZDOBJS)
 		$(CC) $(CFLAGS) $(LFLAGS) $(TZDOBJS) $(LDLIBS) -o $@
 
@@ -359,6 +365,7 @@ tzselect:	tzselect.ksh
 		sed \
 			-e 's|AWK=[^}]*|AWK=$(AWK)|g' \
 			-e 's|TZDIR=[^}]*|TZDIR=$(TZDIR)|' \
+			-e 's|\(TZCODE_VERSION\)=.*|\1=$(TZCODE_VERSION)|' \
 			<$? >$@
 		chmod +x $@
 
@@ -371,7 +378,8 @@ check_web:	$(WEB_PAGES)
 		$(VALIDATE_ENV) $(VALIDATE) $(VALIDATE_FLAGS) $(WEB_PAGES)
 
 clean:
-		rm -f core *.o *.out tzselect zdump zic yearistype date
+		rm -f core *.o *.out \
+		  date tzselect version.h zdump zic yearistype
 
 maintainer-clean: clean
 		@echo 'This command is intended for maintainers to use; it'
@@ -416,6 +424,7 @@ ialloc.o:	private.h
 localtime.o:	private.h tzfile.h
 scheck.o:	private.h
 strftime.o:	tzfile.h
-zic.o:		private.h tzfile.h
+zdump.o:	version.h
+zic.o:		private.h tzfile.h version.h
 
 .KEEP_STATE:

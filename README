@@ -1,3 +1,5 @@
+README for the tz distribution
+
 This file is in the public domain, so clarified as of
 2009-05-17 by Arthur David Olson.
 
@@ -39,9 +41,9 @@ tz distribution on a GNU/Linux or similar host.
 
 	mkdir tz
 	cd tz
-	wget 'ftp://munnari.oz.au/pub/tz*.tar.gz'
-	gzip -dc tzcode*.tar.gz | tar -xf -
-	gzip -dc tzdata*.tar.gz | tar -xf -
+	wget --retr-symlinks 'ftp://ftp.iana.org/tz/tz*-latest.tar.gz'
+	gzip -dc tzcode-latest.tar.gz | tar -xf -
+	gzip -dc tzdata-latest.tar.gz | tar -xf -
 
 Be sure to read the comments in "Makefile" and make any changes needed
 to make things right for your system, especially if you are using some
@@ -79,7 +81,7 @@ Michael Bloom, Art Neilson, Stephen Prince, John Sovereign, and Frank Wales
 for testing work, and to Gwillim Law for checking local mean time data.
 None of them are responsible for remaining errors.
 
-Look in the ~ftp/pub directory of munnari.oz.au
+Look in <ftp://ftp.iana.org/tz/releases/>
 for updated versions of these files.
 
 Please send comments or information to tz@iana.org.

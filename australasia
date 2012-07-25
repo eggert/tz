@@ -640,25 +640,25 @@ Zone Pacific/Guadalcanal 10:39:48 -	LMT	1912 Oct	# Honiara
 #
 # From Gwillim Law (2011-12-29)
 # A correspondent informed me that Tokelau, like Samoa, will be skipping
-# December 31 this year, thereby changing its time zone from UTC-10 to
-# UTC+14. When I tried to verify this statement, I found a confirming
-# article in Time magazine online
-# <a href="http://www.time.com/time/world/article/0,8599,2103243,00.html">
-# (http://www.time.com/time/world/article/0,8599,2103243,00.html).
-# </a>
+# December 31 this year ...
 #
-# From Jonathan Leffler (2011-12-29)
-# Information from the BBC to the same effect:
-# <a href="http://www.bbc.co.uk/news/world-asia-16351377">
-# http://www.bbc.co.uk/news/world-asia-16351377
-# </a>
+# From Steffen Thorsen (2012-07-25)
+# ... we double checked by calling hotels and offices based in Tokelau asking
+# about the time there, and they all told a time that agrees with UTC+13....
+# Shanks says UTC-10 from 1901 [but] ... there is a good chance the change
+# actually was to UTC-11 back then.
 #
-# Patch supplied by Tim Parenti (2011-12-29)
+# From Paul Eggert (2012-07-25)
+# A Google Books snippet of Appendix to the Journals of the House of
+# Representatives of New Zealand, Session 1948,
+# <http://books.google.com/books?id=ZaVCAQAAIAAJ>, page 65, says Tokelau
+# was "11 hours slow on G.M.T."  Go with Thorsen and assume Shanks & Pottenger
+# are off by an hour starting in 1901.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Pacific/Fakaofo	-11:24:56 -	LMT	1901
-			-10:00	-	TKT 2011 Dec 30	# Tokelau Time
-			14:00	-	TKT
+			-11:00	-	TKT 2011 Dec 30	# Tokelau Time
+			13:00	-	TKT
 
 # Tonga
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S

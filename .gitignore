@@ -1,0 +1,10 @@
+*.o
+*.tar.gz
+*.txt
+*~
+ChangeLog
+tzselect
+version.h
+yearistype
+zdump
+zic

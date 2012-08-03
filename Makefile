@@ -3,7 +3,7 @@
 # 2009-05-17 by Arthur David Olson.
 
 # Version numbers of the code and data distributions.
-VERSION = 2012d
+VERSION = 2012e
 
 # Change the line below for your time zone (after finding the zone you want in
 # the time zone files, or adding it to a time zone file).

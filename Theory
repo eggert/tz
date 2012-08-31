@@ -226,7 +226,7 @@ among the following goals:
    agreed since 1970.  This is essential for the intended use: static
    clocks keeping local civil time.
 
- * Indicate to humans as to where that region is.  This simplifes use.
+ * Indicate to humans as to where that region is.  This simplifies use.
 
  * Be robust in the presence of political changes.  This reduces the
    number of updates and backward-compatibility hacks.  For example,

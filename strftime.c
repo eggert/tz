@@ -114,11 +114,8 @@ extern char *	tzname[];
 #define IN_ALL	3
 
 size_t
-strftime(s, maxsize, format, t)
-char * const		s;
-const size_t		maxsize;
-const char * const	format;
-const struct tm * const	t;
+strftime(char * const s, const size_t maxsize, const char *const format,
+	 const struct tm *const t)
 {
 	char *	p;
 	int	warn;
@@ -152,12 +149,8 @@ const struct tm * const	t;
 }
 
 static char *
-_fmt(format, t, pt, ptlim, warnp)
-const char *		format;
-const struct tm * const	t;
-char *			pt;
-const char * const	ptlim;
-int *			warnp;
+_fmt(const char *format, const struct tm *const t, char * pt,
+     const char *const ptlim, int *warnp)
 {
 	for ( ; *format; ++format) {
 		if (*format == '%') {
@@ -565,11 +558,8 @@ label:
 }
 
 static char *
-_conv(n, format, pt, ptlim)
-const int		n;
-const char * const	format;
-char * const		pt;
-const char * const	ptlim;
+_conv(const int n, const char *const format, char *const pt,
+      const char *const ptlim)
 {
 	char	buf[INT_STRLEN_MAXIMUM(int) + 1];
 
@@ -578,10 +568,7 @@ const char * const	ptlim;
 }
 
 static char *
-_add(str, pt, ptlim)
-const char *		str;
-char *			pt;
-const char * const	ptlim;
+_add(const char *str, char *pt, const char *const ptlim)
 {
 	while (pt < ptlim && (*pt = *str++) != '\0')
 		++pt;
@@ -597,13 +584,8 @@ const char * const	ptlim;
 */
 
 static char *
-_yconv(a, b, convert_top, convert_yy, pt, ptlim)
-const int		a;
-const int		b;
-const int		convert_top;
-const int		convert_yy;
-char *			pt;
-const char * const	ptlim;
+_yconv(const int a, const int b, const int convert_top, const int convert_yy,
+       char *pt, const char *const ptlim)
 {
 	register int	lead;
 	register int	trail;
@@ -654,7 +636,7 @@ _loc(void)
 	*/
 	if (localebuf.mon[0])
 		return &localebuf;
-	name = setlocale(LC_TIME, (char *) NULL);
+	name = setlocale(LC_TIME, NULL);
 	if (name == NULL || *name == '\0')
 		goto no_locale;
 	/*
@@ -702,7 +684,7 @@ _loc(void)
 	(void) strcpy(lbuf, name);
 	p = lbuf + namesize;
 	plim = p + st.st_size;
-	if (read(fd, p, (size_t) st.st_size) != st.st_size)
+	if (read(fd, p, st.st_size) != st.st_size)
 		goto bad_lbuf;
 	if (close(fd) != 0)
 		goto bad_lbuf;

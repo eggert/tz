@@ -119,6 +119,12 @@
 #endif /* !defined GNUC_or_lint */
 #endif /* !defined INITIALIZE */
 
+#if 2 < __GNUC__ || (__GNUC__ == 2 && 96 <= __GNUC_MINOR__)
+# define ATTRIBUTE_PURE __attribute__ ((__pure__))
+#else
+# define ATTRIBUTE_PURE /* empty */
+#endif
+
 /*
 ** For the benefit of GNU folk...
 ** `_(MSGID)' uses the current locale's message library string for MSGID.
@@ -152,20 +158,19 @@ static int	warned;
 
 static char *	abbr(struct tm * tmp);
 static void	abbrok(const char * abbrp, const char * zone);
-static long	delta(struct tm * newp, struct tm * oldp);
+static long	delta(struct tm * newp, struct tm * oldp) ATTRIBUTE_PURE;
 static void	dumptime(const struct tm * tmp);
 static time_t	hunt(char * name, time_t lot, time_t	hit);
 static void	setabsolutes(void);
 static void	show(char * zone, time_t t, int v);
 static const char *	tformat(void);
-static time_t	yeartot(long y);
+static time_t	yeartot(long y) ATTRIBUTE_PURE;
 
 #ifndef TYPECHECK
 #define my_localtime	localtime
 #else /* !defined TYPECHECK */
 static struct tm *
-my_localtime(tp)
-time_t *	tp;
+my_localtime(time_t *tp)
 {
 	register struct tm *	tmp;
 
@@ -198,12 +203,10 @@ time_t *	tp;
 #endif /* !defined TYPECHECK */
 
 static void
-abbrok(abbrp, zone)
-const char * const	abbrp;
-const char * const	zone;
+abbrok(const char *const abbrp, const char *const zone)
 {
 	register const char *	cp;
-	register char *		wp;
+	register const char *	wp;
 
 	if (warned)
 		return;
@@ -236,9 +239,7 @@ const char * const	zone;
 }
 
 static void
-usage(stream, status)
-FILE * const	stream;
-const int	status;
+usage(FILE * const stream, const int status)
 {
 	(void) fprintf(stream,
 _("%s: usage is %s [ --version ] [ --help ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n\
@@ -249,9 +250,7 @@ Report bugs to tz@elsie.nci.nih.gov.\n"),
 }
 
 int
-main(argc, argv)
-int	argc;
-char *	argv[];
+main(int argc, char *argv[])
 {
 	register int		i;
 	register int		c;
@@ -330,10 +329,9 @@ char *	argv[];
 
 		for (i = 0; environ[i] != NULL; ++i)
 			continue;
-		fakeenv = (char **) malloc((size_t) ((i + 2) *
-			sizeof *fakeenv));
-		if (fakeenv == NULL ||
-			(fakeenv[0] = (char *) malloc(longest + 4)) == NULL) {
+		fakeenv = malloc((i + 2) * sizeof *fakeenv);
+		if (fakeenv == NULL
+		    || (fakeenv[0] = malloc(longest + 4)) == NULL) {
 					(void) perror(progname);
 					exit(EXIT_FAILURE);
 		}
@@ -451,8 +449,7 @@ _("%s: use of -v on system with floating time_t other than float or double\n"),
 }
 
 static time_t
-yeartot(y)
-const long	y;
+yeartot(const long y)
 {
 	register long	myy;
 	register long	seconds;
@@ -530,9 +527,7 @@ hunt(char *name, time_t lot, time_t hit)
 */
 
 static long
-delta(newp, oldp)
-struct tm *	newp;
-struct tm *	oldp;
+delta(struct tm * newp, struct tm *oldp)
 {
 	register long	result;
 	register int	tmy;
@@ -586,8 +581,7 @@ show(char *zone, time_t t, int v)
 }
 
 static char *
-abbr(tmp)
-struct tm *	tmp;
+abbr(struct tm *tmp)
 {
 	register char *	result;
 	static char	nada;
@@ -626,8 +620,7 @@ tformat(void)
 }
 
 static void
-dumptime(timeptr)
-register const struct tm *	timeptr;
+dumptime(register const struct tm *timeptr)
 {
 	static const char	wday_name[][3] = {
 		"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"

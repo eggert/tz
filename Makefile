@@ -118,10 +118,18 @@ LDLIBS=
 #  -DZIC_MAX_ABBR_LEN_WO_WARN=3
 #	(or some other number) to set the maximum time zone abbreviation length
 #	that zic will accept without a warning (the default is 6)
-GCC_DEBUG_FLAGS = -Dlint -g -O3 -fno-common \
-	-Wall -Wcast-qual -Wconversion -Wmissing-prototypes \
-	-Wnested-externs -Wpointer-arith -Wshadow \
-	-Wtraditional # -Wstrict-prototypes -Wwrite-strings
+GCC_DEBUG_FLAGS = -Dlint -g3 -O3 -fno-common -fstrict-aliasing \
+	-Wall -Wextra \
+	-Wbad-function-cast -Wcast-align -Wcast-qual \
+	-Wformat=2 -Winit-self \
+	-Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes \
+	-Wnested-externs \
+	-Wno-format-nonliteral -Wno-sign-compare -Wno-sign-conversion \
+	-Wno-type-limits \
+	-Wno-unused-parameter -Woverlength-strings -Wpointer-arith \
+	-Wshadow -Wstrict-prototypes -Wsuggest-attribute=const \
+	-Wsuggest-attribute=noreturn -Wsuggest-attribute=pure -Wtrampolines \
+	-Wwrite-strings
 #
 # If you want to use System V compatibility code, add
 #	-DUSG_COMPAT

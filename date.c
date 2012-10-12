@@ -83,9 +83,7 @@ static void		wildinput(const char *, const char *,
 				const char *);
 
 int
-main(argc, argv)
-const int	argc;
-char *		argv[];
+main(const int argc, char *argv[])
 {
 	register const char *	format;
 	register const char *	value;
@@ -246,11 +244,11 @@ _("date: error: multiple values in command line\n"));
 
 		tv.tv_sec = (int) adjust;
 		tv.tv_usec = (int) ((adjust - tv.tv_sec) * 1000000L);
-		if (adjtime(&tv, (struct timeval *) NULL) != 0)
+		if (adjtime(&tv, NULL) != 0)
 			oops("adjtime");
 #endif /* HAVE_ADJTIME */
 #if !HAVE_ADJTIME
-		reset((time_t) (now + adjust), nflag);
+		reset(now + adjust, nflag);
 #endif /* !HAVE_ADJTIME */
 		/*
 		** Sun silently ignores everything else; we follow suit.
@@ -262,13 +260,13 @@ _("date: error: multiple values in command line\n"));
 		struct timezone	tz;
 
 		if (!dflag || !tflag)
-			if (gettimeofday((struct timeval *) NULL, &tz) != 0)
+			if (gettimeofday(NULL, &tz) != 0)
 				oops("gettimeofday");
 		if (dflag)
 			tz.tz_dsttime = dsttime;
 		if (tflag)
 			tz.tz_minuteswest = minuteswest;
-		if (settimeofday((struct timeval *) NULL, &tz) != 0)
+		if (settimeofday(NULL, &tz) != 0)
 			oops("settimeofday");
 #endif /* HAVE_SETTIMEOFDAY == 2 */
 #if HAVE_SETTIMEOFDAY != 2
@@ -314,7 +312,7 @@ dogmt(void)
 
 		for (n = 0;  environ[n] != NULL;  ++n)
 			continue;
-		fakeenv = (char **) malloc((size_t) (n + 2) * sizeof *fakeenv);
+		fakeenv = malloc((n + 2) * sizeof *fakeenv);
 		if (fakeenv == NULL) {
 			(void) perror(_("Memory exhausted"));
 			errensure();
@@ -445,9 +443,7 @@ extern int		logwtmp();
 /*ARGSUSED*/
 #endif /* !defined TSP_SETDATE */
 static void
-reset(newt, nflag)
-const time_t	newt;
-const int	nflag;
+reset(const time_t newt, const int nflag)
 {
 	register const char *	username;
 	static struct timeval	tv;	/* static so tv_usec is 0 */
@@ -467,7 +463,7 @@ const int	nflag;
 		** "old" entry is always written, for compatibility.
 		*/
 		logwtmp("|", TIME_NAME, "");
-		if (settimeofday(&tv, (struct timezone *) NULL) == 0) {
+		if (settimeofday(&tv, NULL) == 0) {
 			logwtmp("{", TIME_NAME, "");	/* } */
 			syslog(LOG_AUTH | LOG_NOTICE, _("date set by %s"),
 				username);
@@ -478,10 +474,8 @@ const int	nflag;
 #endif /* !defined OLD_TIME */
 
 static void
-wildinput(item, value, reason)
-const char * const	item;
-const char * const	value;
-const char * const	reason;
+wildinput(const char *const item, const char *const value,
+	  const char *const reason)
 {
 	(void) fprintf(stderr,
 		_("date: error: bad command line %s \"%s\", %s\n"),
@@ -497,8 +491,7 @@ errensure(void)
 }
 
 static const char *
-nondigit(cp)
-register const char *	cp;
+nondigit(register const char *cp)
 {
 	while (is_digit(*cp))
 		++cp;
@@ -515,8 +508,7 @@ usage(void)
 }
 
 static void
-oops(string)
-const char * const	string;
+oops(const char *const string)
 {
 	int		e = errno;
 
@@ -524,12 +516,11 @@ const char * const	string;
 	errno = e;
 	(void) perror(string);
 	errensure();
-	display((char *) NULL);
+	display(NULL);
 }
 
 static void
-display(format)
-const char * const	format;
+display(const char *const format)
 {
 	struct tm	tm;
 	time_t		now;
@@ -553,10 +544,7 @@ extern size_t	strftime();
 #define INCR	1024
 
 static void
-timeout(fp, format, tmp)
-FILE * const		fp;
-const char * const	format;
-const struct tm * const	tmp;
+timeout(FILE *const fp, const char *const format, const struct tm *const tmp)
 {
 	char *	cp;
 	size_t	result;
@@ -565,7 +553,7 @@ const struct tm * const	tmp;
 	if (*format == '\0')
 		return;
 	size = INCR;
-	cp = malloc((size_t) size);
+	cp = malloc(size);
 	for ( ; ; ) {
 		if (cp == NULL) {
 			(void) fprintf(stderr,
@@ -578,16 +566,15 @@ const struct tm * const	tmp;
 		if (result != 0 || cp[0] == '\0')
 			break;
 		size += INCR;
-		cp = realloc(cp, (size_t) size);
+		cp = realloc(cp, size);
 	}
 	(void) fwrite(cp, 1, result, fp);
 	free(cp);
 }
 
 static int
-sametm(atmp, btmp)
-register const struct tm * const atmp;
-register const struct tm * const btmp;
+sametm(register const struct tm *const atmp,
+       register const struct tm *const btmp)
 {
 	return atmp->tm_year == btmp->tm_year &&
 		atmp->tm_mon == btmp->tm_mon &&
@@ -813,8 +800,7 @@ iffy(const time_t thist, const time_t thatt,
  * notifies the master that a correction is needed.
  * Returns 1 on success, 0 on failure.
  */
-netsettime(ntv)
-	struct timeval ntv;
+netsettime(struct timeval ntv)
 {
 	int s, length, port, timed_ack, found, err;
 	long waittime;
@@ -833,7 +819,7 @@ netsettime(ntv)
 	}
 	dest.sin_port = sp->s_port;
 	dest.sin_family = AF_INET;
-	dest.sin_addr.s_addr = htonl((u_long)INADDR_ANY);
+	dest.sin_addr.s_addr = htonl(INADDR_ANY);
 	s = socket(AF_INET, SOCK_DGRAM, 0);
 	if (s < 0) {
 		if (errno != EPROTONOSUPPORT)
@@ -843,7 +829,7 @@ netsettime(ntv)
 	bzero((char *)&sin, sizeof (sin));
 	sin.sin_family = AF_INET;
 	for (port = IPPORT_RESERVED - 1; port > IPPORT_RESERVED / 2; port--) {
-		sin.sin_port = htons((u_short)port);
+		sin.sin_port = htons(port);
 		if (bind(s, (struct sockaddr *)&sin, sizeof (sin)) >= 0)
 			break;
 		if (errno != EADDRINUSE) {
@@ -863,9 +849,9 @@ netsettime(ntv)
 		goto bad;
 	}
 	(void) strncpy(msg.tsp_name, hostname, sizeof (hostname));
-	msg.tsp_seq = htons((u_short)0);
-	msg.tsp_time.tv_sec = htonl((u_long)ntv.tv_sec);
-	msg.tsp_time.tv_usec = htonl((u_long)ntv.tv_usec);
+	msg.tsp_seq = htons(0);
+	msg.tsp_time.tv_sec = htonl(ntv.tv_sec);
+	msg.tsp_time.tv_usec = htonl(ntv.tv_usec);
 	length = sizeof (struct sockaddr_in);
 	if (connect(s, &dest, length) < 0) {
 		perror("date: connect");
@@ -883,7 +869,7 @@ loop:
 	tout.tv_usec = 0;
 	FD_ZERO(&ready);
 	FD_SET(s, &ready);
-	found = select(FD_SETSIZE, &ready, (fd_set *)0, (fd_set *)0, &tout);
+	found = select(FD_SETSIZE, &ready, 0, 0, &tout);
 	length = sizeof err;
 	if (getsockopt(s, SOL_SOCKET, SO_ERROR, (char *)&err, &length) == 0
 	    && err) {

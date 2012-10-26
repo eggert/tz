@@ -69,7 +69,7 @@ static char	buf_asctime[MAX_ASCTIME_BUF_SIZE];
 */
 
 char *
-asctime_r(register const struct tm *timeptr, char *buf)
+asctime_r(const struct tm *timeptr, char *buf)
 {
 	static const char	wday_name[][3] = {
 		"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
@@ -78,8 +78,8 @@ asctime_r(register const struct tm *timeptr, char *buf)
 		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 	};
-	register const char *	wn;
-	register const char *	mn;
+	const char *wn;
+	const char *mn;
 	char			year[INT_STRLEN_MAXIMUM(int) + 2];
 	char			result[MAX_ASCTIME_BUF_SIZE];
 
@@ -126,7 +126,7 @@ asctime_r(register const struct tm *timeptr, char *buf)
 */
 
 char *
-asctime(register const struct tm *timeptr)
+asctime(const struct tm *timeptr)
 {
 	return asctime_r(timeptr, buf_asctime);
 }

@@ -587,8 +587,8 @@ static char *
 _yconv(const int a, const int b, const int convert_top, const int convert_yy,
        char *pt, const char *const ptlim)
 {
-	register int	lead;
-	register int	trail;
+	int	lead;
+	int	trail;
 
 #define DIVISOR	100
 	trail = a % DIVISOR + b % DIVISOR;

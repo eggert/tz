@@ -85,20 +85,20 @@ static void		wildinput(const char *, const char *,
 int
 main(const int argc, char *argv[])
 {
-	register const char *	format;
-	register const char *	value;
-	register const char *	cp;
-	register int		ch;
-	register int		dousg;
-	register int		aflag = 0;
-	register int		dflag = 0;
-	register int		nflag = 0;
-	register int		tflag = 0;
-	register int		minuteswest;
-	register int		dsttime;
-	register double		adjust;
-	time_t			now;
-	time_t			t;
+	const char *	format;
+	const char *	value;
+	const char *	cp;
+	int		ch;
+	int		dousg;
+	int		aflag = 0;
+	int		dflag = 0;
+	int		nflag = 0;
+	int		tflag = 0;
+	int		minuteswest;
+	int		dsttime;
+	double		adjust;
+	time_t		now;
+	time_t		t;
 
 	INITIALIZE(dousg);
 	INITIALIZE(minuteswest);
@@ -305,9 +305,9 @@ dogmt(void)
 	static char **	fakeenv;
 
 	if (fakeenv == NULL) {
-		register int	from;
-		register int	to;
-		register int	n;
+		int		from;
+		int		to;
+		int		n;
 		static char	tzegmt0[] = "TZ=GMT0";
 
 		for (n = 0;  environ[n] != NULL;  ++n)
@@ -343,7 +343,7 @@ dogmt(void)
 static void
 reset(const time_t newt, const int nflag)
 {
-	register int		fid;
+	int			fid;
 	time_t			oldt;
 	static struct {
 		struct utmp	before;
@@ -439,13 +439,17 @@ extern int		logwtmp();
 #define settimeofday(t, tz) (settimeofday)(t)
 #endif /* HAVE_SETTIMEOFDAY == 1 */
 
+#ifdef TSP_SETDATE
+static int netsettime(struct timeval);
+#endif
+
 #ifndef TSP_SETDATE
 /*ARGSUSED*/
 #endif /* !defined TSP_SETDATE */
 static void
 reset(const time_t newt, const int nflag)
 {
-	register const char *	username;
+	const char *		username;
 	static struct timeval	tv;	/* static so tv_usec is 0 */
 
 #ifdef EBUG
@@ -491,7 +495,7 @@ errensure(void)
 }
 
 static const char *
-nondigit(register const char *cp)
+nondigit(const char *cp)
 {
 	while (is_digit(*cp))
 		++cp;
@@ -573,8 +577,7 @@ timeout(FILE *const fp, const char *const format, const struct tm *const tmp)
 }
 
 static int
-sametm(register const struct tm *const atmp,
-       register const struct tm *const btmp)
+sametm(const struct tm *const atmp, const struct tm *const btmp)
 {
 	return atmp->tm_year == btmp->tm_year &&
 		atmp->tm_mon == btmp->tm_mon &&
@@ -592,11 +595,11 @@ sametm(register const struct tm *const atmp,
 #define ATOI2(ar)	(ar[0] - '0') * 10 + (ar[1] - '0'); ar += 2;
 
 static time_t
-convert(register const char * const value, const int dousg, const time_t t)
+convert(const char * const value, const int dousg, const time_t t)
 {
-	register const char *	cp;
-	register const char *	dotp;
-	register int	cent, year_in_cent, month, hour, day, mins, secs;
+	const char *	cp;
+	const char *	dotp;
+	int		cent, year_in_cent, month, hour, day, mins, secs;
 	struct tm	tm, outtm;
 	time_t		outt;
 
@@ -704,8 +707,8 @@ checkfinal(const char * const	value,
 	time_t		othert;
 	struct tm	tm;
 	struct tm	othertm;
-	register int	pass;
-	register long	offset;
+	int		pass;
+	long		offset;
 
 	/*
 	** See if there's both a USG and a BSD interpretation.
@@ -800,6 +803,7 @@ iffy(const time_t thist, const time_t thatt,
  * notifies the master that a correction is needed.
  * Returns 1 on success, 0 on failure.
  */
+static int
 netsettime(struct timeval ntv)
 {
 	int s, length, port, timed_ack, found, err;
@@ -812,7 +816,7 @@ netsettime(struct timeval ntv)
 	struct sockaddr_in sin, dest, from;
 
 	sp = getservbyname("timed", "udp");
-	if (sp == 0) {
+	if (! sp) {
 		fputs(_("udp/timed: unknown service\n"), stderr);
 		retval = 2;
 		return (0);
@@ -869,7 +873,7 @@ loop:
 	tout.tv_usec = 0;
 	FD_ZERO(&ready);
 	FD_SET(s, &ready);
-	found = select(FD_SETSIZE, &ready, 0, 0, &tout);
+	found = select(FD_SETSIZE, &ready, NULL, NULL, &tout);
 	length = sizeof err;
 	if (getsockopt(s, SOL_SOCKET, SO_ERROR, (char *)&err, &length) == 0
 	    && err) {

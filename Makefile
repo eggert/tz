@@ -455,7 +455,7 @@ typecheck:
 		make clean
 		for i in "long long" unsigned double; \
 		do \
-			make CFLAGS="-DTYPECHECK -D_TIME_T \"-Dtime_t=$$i\"" ; \
+			make CFLAGS="-DTYPECHECK -D__time_t_defined -D_TIME_T \"-Dtime_t=$$i\"" ; \
 			./zdump -v Europe/Rome ; \
 			make clean ; \
 		done

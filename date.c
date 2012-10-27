@@ -85,20 +85,20 @@ static void		wildinput(const char *, const char *,
 int
 main(const int argc, char *argv[])
 {
-	const char *	format;
-	const char *	value;
-	const char *	cp;
-	int		ch;
-	int		dousg;
-	int		aflag = 0;
-	int		dflag = 0;
-	int		nflag = 0;
-	int		tflag = 0;
-	int		minuteswest;
-	int		dsttime;
-	double		adjust;
-	time_t		now;
-	time_t		t;
+	register const char *	format;
+	register const char *	value;
+	register const char *	cp;
+	register int		ch;
+	register int		dousg;
+	register int		aflag = 0;
+	register int		dflag = 0;
+	register int		nflag = 0;
+	register int		tflag = 0;
+	register int		minuteswest;
+	register int		dsttime;
+	register double		adjust;
+	time_t			now;
+	time_t			t;
 
 	INITIALIZE(dousg);
 	INITIALIZE(minuteswest);
@@ -305,9 +305,9 @@ dogmt(void)
 	static char **	fakeenv;
 
 	if (fakeenv == NULL) {
-		int		from;
-		int		to;
-		int		n;
+		register int	from;
+		register int	to;
+		register int	n;
 		static char	tzegmt0[] = "TZ=GMT0";
 
 		for (n = 0;  environ[n] != NULL;  ++n)
@@ -343,7 +343,7 @@ dogmt(void)
 static void
 reset(const time_t newt, const int nflag)
 {
-	int			fid;
+	register int		fid;
 	time_t			oldt;
 	static struct {
 		struct utmp	before;
@@ -449,7 +449,7 @@ static int netsettime(struct timeval);
 static void
 reset(const time_t newt, const int nflag)
 {
-	const char *		username;
+	register const char *	username;
 	static struct timeval	tv;	/* static so tv_usec is 0 */
 
 #ifdef EBUG
@@ -495,7 +495,7 @@ errensure(void)
 }
 
 static const char *
-nondigit(const char *cp)
+nondigit(register const char *cp)
 {
 	while (is_digit(*cp))
 		++cp;
@@ -577,7 +577,8 @@ timeout(FILE *const fp, const char *const format, const struct tm *const tmp)
 }
 
 static int
-sametm(const struct tm *const atmp, const struct tm *const btmp)
+sametm(register const struct tm *const atmp,
+       register const struct tm *const btmp)
 {
 	return atmp->tm_year == btmp->tm_year &&
 		atmp->tm_mon == btmp->tm_mon &&
@@ -595,11 +596,11 @@ sametm(const struct tm *const atmp, const struct tm *const btmp)
 #define ATOI2(ar)	(ar[0] - '0') * 10 + (ar[1] - '0'); ar += 2;
 
 static time_t
-convert(const char * const value, const int dousg, const time_t t)
+convert(register const char * const value, const int dousg, const time_t t)
 {
-	const char *	cp;
-	const char *	dotp;
-	int		cent, year_in_cent, month, hour, day, mins, secs;
+	register const char *	cp;
+	register const char *	dotp;
+	register int	cent, year_in_cent, month, hour, day, mins, secs;
 	struct tm	tm, outtm;
 	time_t		outt;
 
@@ -707,8 +708,8 @@ checkfinal(const char * const	value,
 	time_t		othert;
 	struct tm	tm;
 	struct tm	othertm;
-	int		pass;
-	long		offset;
+	register int	pass;
+	register long	offset;
 
 	/*
 	** See if there's both a USG and a BSD interpretation.

@@ -10,12 +10,12 @@
 const char *
 scheck(const char *const string, const char *const format)
 {
-	char *		fbuf;
-	const char *	fp;
-	char *		tp;
-	int		c;
-	const char *	result;
-	char		dummy;
+	register char *		fbuf;
+	register const char *	fp;
+	register char *		tp;
+	register int		c;
+	register const char *	result;
+	char			dummy;
 
 	result = "";
 	if (string == NULL || format == NULL)

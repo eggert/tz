@@ -238,6 +238,10 @@ ZIC=		$(zic) $(ZFLAGS)
 # The name of a Posix-compliant `awk' on your system.
 AWK=		awk
 
+# The full path name of a Posix-compliant shell that supports the Korn shell's
+# 'select' statement, as an extension.  These days, Bash is the most popular.
+KSHELL=		/bin/bash
+
 # The path where SGML DTDs are kept.
 # The default is appropriate for Ubuntu.
 SGML_TOPDIR= /usr
@@ -389,6 +393,7 @@ date:		$(DATEOBJS)
 
 tzselect:	tzselect.ksh
 		sed \
+			-e 's|#!/bin/bash|#!$(KSHELL)|g' \
 			-e 's|AWK=[^}]*|AWK=$(AWK)|g' \
 			-e 's|TZDIR=[^}]*|TZDIR=$(TZDIR)|' \
 			-e 's|\(TZVERSION\)=.*|\1=tz$(VERSION)|' \

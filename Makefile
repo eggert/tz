@@ -231,7 +231,7 @@ zic=		./zic
 ZIC=		$(zic) $(ZFLAGS)
 
 # The name of a Posix-compliant `awk' on your system.
-AWK=		nawk
+AWK=		awk
 
 # The path where SGML DTDs are kept.
 # The default is appropriate for Ubuntu.

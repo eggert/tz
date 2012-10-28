@@ -8,10 +8,11 @@
 <meta http-equiv="Content-type" content='text/html; charset="US-ASCII"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2012-10-26">
+<meta name="DC.Date" content="2012-10-28">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
-<meta name="DC.Identifier" content="http://cs.ucla.edu/~eggert/tz/tz-link.htm">
+<meta name="DC.Identifier"
+ content="http://www.iana.org/time-zones/repository/tz-link.htm">
 <meta name="Keywords"
  content="database,daylight saving,DST,time zone,timezone,tz,zoneinfo">
 </head>
@@ -102,6 +103,10 @@ gzip -dc tzdata-latest.tar.gz | tar -xf -
 The code and data files can also be obtained from the
 <a href="http://www.iana.org">IANA</a>
 <a href="http://www.iana.org/time-zones">timezone web page</a>.
+An <a href="https://github.com/eggert/tz">unofficial development
+repository</a> of the code and data is available
+in <a href="http://git-scm.com/">Git</a> form; be careful, as this
+repository is less well tested and probably contains more errors.
 <p>
 The code lets you compile the <code>tz</code> source files into
 machine-readable binary files, one for each location. It also lets

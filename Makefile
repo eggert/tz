@@ -420,6 +420,8 @@ maintainer-clean: clean
 names:
 		@echo $(ENCHILADA)
 
+public:		check check_public set-timestamps tarballs signatures
+
 # Set the time stamps to those of the git repository, if available,
 # and if the files have not changed since then.
 # This uses GNU 'touch' syntax 'touch -d@N FILE',
@@ -439,26 +441,41 @@ set-timestamps:
 # The zics below ensure that each data file can stand on its own.
 # We also do an all-files run to catch links to links.
 
-public:		$(ENCHILADA) set-timestamps
+check_public:	$(ENCHILADA)
 		make maintainer-clean
 		make "CFLAGS=$(GCC_DEBUG_FLAGS)"
 		mkdir -m go-rwx /tmp/,tzpublic
-		-for i in $(TDATA) ; do zic -v -d /tmp/,tzpublic $$i 2>&1 | grep -v "starting year" ; done
+		-for i in $(TDATA) ; do \
+		  zic -v -d /tmp/,tzpublic $$i 2>&1 | grep -v "starting year" ; \
+		done
 		for i in $(TDATA) ; do zic -d /tmp/,tzpublic $$i || exit; done
 		zic -v -d /tmp/,tzpublic $(TDATA) || exit
 		rm -f -r /tmp/,tzpublic
+
+tarballs:	tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz
+
+tzcode$(VERSION).tar.gz: $(COMMON) $(DOCS) $(SOURCES) $(MISC)
 		for i in *.[1-8] ; do \
 		  LC_ALL=C sh workman.sh $$i > $$i.txt && \
 		  touch -r $$i $$i.txt || exit; \
 		done
-		$(AWK) -f checktab.awk $(PRIMARY_YDATA)
 		LC_ALL=C && export LC_ALL && \
 		tar $(TARFLAGS) -cf - \
 		    $(COMMON) $(DOCS) $(SOURCES) $(MISC) *.[1-8].txt | \
-		  gzip $(GZIPFLAGS) > tzcode$(VERSION).tar.gz
+		  gzip $(GZIPFLAGS) > $@
+
+tzdata$(VERSION).tar.gz: $(COMMON) $(DATA)
 		LC_ALL=C && export LC_ALL && \
 		tar $(TARFLAGS) -cf - $(COMMON) $(DATA) | \
-		  gzip $(GZIPFLAGS) > tzdata$(VERSION).tar.gz
+		  gzip $(GZIPFLAGS) > $@
+
+signatures:	tzcode$(VERSION).tar.gz.sign tzdata$(VERSION).tar.gz.sign
+
+tzcode$(VERSION).tar.gz.sign: tzcode$(VERSION).tar.gz
+		gpg --armor --detach-sign -o $@ $?
+
+tzdata$(VERSION).tar.gz.sign: tzdata$(VERSION).tar.gz
+		gpg --armor --detach-sign -o $@ $?
 
 typecheck:
 		make clean

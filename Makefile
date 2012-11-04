@@ -415,7 +415,7 @@ clean:
 maintainer-clean: clean
 		@echo 'This command is intended for maintainers to use; it'
 		@echo 'deletes files that may need special tools to rebuild.'
-		rm -f *.[1-8].txt tzcode*.tar.gz tzdata*.tar.gz
+		rm -f *.[1-8].txt *.asc *.tar.gz
 
 names:
 		@echo $(ENCHILADA)
@@ -469,13 +469,13 @@ tzdata$(VERSION).tar.gz: $(COMMON) $(DATA)
 		tar $(TARFLAGS) -cf - $(COMMON) $(DATA) | \
 		  gzip $(GZIPFLAGS) > $@
 
-signatures:	tzcode$(VERSION).tar.gz.sign tzdata$(VERSION).tar.gz.sign
+signatures:	tzcode$(VERSION).tar.gz.asc tzdata$(VERSION).tar.gz.asc
 
-tzcode$(VERSION).tar.gz.sign: tzcode$(VERSION).tar.gz
-		gpg --armor --detach-sign -o $@ $?
+tzcode$(VERSION).tar.gz.asc: tzcode$(VERSION).tar.gz
+		gpg --armor --detach-sign $?
 
-tzdata$(VERSION).tar.gz.sign: tzdata$(VERSION).tar.gz
-		gpg --armor --detach-sign -o $@ $?
+tzdata$(VERSION).tar.gz.asc: tzdata$(VERSION).tar.gz
+		gpg --armor --detach-sign $?
 
 typecheck:
 		make clean

@@ -1,3 +1,4 @@
+*.asc
 *.o
 *.tar.gz
 *.txt

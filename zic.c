@@ -2534,8 +2534,8 @@ newabbr(const char *const string)
 				++cp;
 		if (cp - string == 0)
 mp = _("time zone abbreviation lacks alphabetic at start");
-		if (noise && cp - string > 3)
-mp = _("time zone abbreviation has more than 3 alphabetics");
+		if (noise && cp - string < 3)
+mp = _("time zone abbreviation has fewer than 3 alphabetics");
 		if (cp - string > ZIC_MAX_ABBR_LEN_WO_WARN)
 mp = _("time zone abbreviation has too many alphabetics");
 		if (mp == NULL && (*cp == '+' || *cp == '-')) {

@@ -1199,7 +1199,6 @@ Rule	Zion	2012	only	-	Mar	Fri>=26	2:00	1:00	D
 Rule	Zion	2012	only	-	Sep	23	2:00	0	S
 
 # From Ephraim Silverberg (2012-10-18):
-
 # Yesterday, the Interior Ministry Committee, after more than a year
 # past, approved sending the proposed June 2011 changes to the Time
 # Decree Law back to the Knesset for second and third (final) votes
@@ -1211,6 +1210,10 @@ Rule	Zion	2012	only	-	Sep	23	2:00	0	S
 # second day of the Jewish Rosh Hashana holiday, in which case DST ends a day
 # later (i.e. at 02:00 the first Monday after October 2).
 # [Rosh Hashana holidays are factored in until 2100.]
+
+# From Ephraim Silverberg (2012-11-05):
+# The Knesset passed today (in second and final readings) the amendment to the
+# Time Decree Law making the changes ... law.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Zion	2013	max	-	Mar	Fri>=23	2:00	1:00	D

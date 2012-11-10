@@ -4,7 +4,7 @@
 
 # This data is by no means authoritative; if you think you know better,
 # go ahead and edit the file (and please send any changes to
-# tz@elsie.nci.nih.gov for general use in the future).
+# tz@iana.org for general use in the future).
 
 # From Paul Eggert (2006-03-22):
 #
@@ -2052,8 +2052,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # occurred before our cutoff date of 1970.
 # However, as we get more information, we may need to add entries
 # for parts of the West Bank as they transitioned from Israel's rules
-# to Palestine's rules.  If you have more info about this, please
-# send it to tz@elsie.nci.nih.gov for incorporation into future editions.
+# to Palestine's rules.
 
 # From IINS News Service - Israel - 1998-03-23 10:38:07 Israel time,
 # forwarded by Ephraim Silverberg:

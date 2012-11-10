@@ -272,7 +272,7 @@ usage(FILE * const stream, const int status)
 	(void) fprintf(stream,
 _("%s: usage is %s [ --version ] [ --help ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n\
 \n\
-Report bugs to tz@elsie.nci.nih.gov.\n"),
+Report bugs to tz@iana.org.\n"),
 		       progname, progname);
 	exit(status);
 }

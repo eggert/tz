@@ -43,7 +43,7 @@ if [ "$1" = "--help" ]; then
 Usage: tzselect
 Select a time zone interactively.
 
-Report bugs to tz@elsie.nci.nih.gov.
+Report bugs to tz@iana.org.
 EOF
     exit 0
 elif [ "$1" = "--version" ]; then

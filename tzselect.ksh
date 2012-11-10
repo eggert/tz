@@ -1,5 +1,6 @@
 #!/bin/bash
 
+PKGVERSION='(tzcode) '
 TZVERSION=see_Makefile
 
 # Ask the user about the time zone, and output the resulting TZ value to stdout.
@@ -45,12 +46,12 @@ Select a time zone interactively.
 
 Report bugs to tz@iana.org.
 EOF
-    exit 0
+    exit
 elif [ "$1" = "--version" ]; then
     cat <<EOF
-tzselect $TZVERSION
+tzselect $PKGVERSION$TZVERSION
 EOF
-    exit 0
+    exit
 fi
 
 # Make sure the tables are readable.

@@ -2,6 +2,9 @@
 # This file is in the public domain, so clarified as of
 # 2009-05-17 by Arthur David Olson.
 
+# Package name for the code distribution.
+PACKAGE=	tzcode
+
 # Version numbers of the code and data distributions.
 VERSION=	2012i
 
@@ -340,8 +343,8 @@ INSTALL:	ALL install date.1
 		cp date.1 $(MANDIR)/man1/.
 
 version.h:
-		echo >$@ \
-		  'static char const TZVERSION[]="tz$(VERSION)";'
+		(echo 'static char const PKGVERSION[]="($(PACKAGE)) ";' && \
+		 echo 'static char const TZVERSION[]="$(VERSION)";') >$@
 
 zdump:		$(TZDOBJS)
 		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(TZDOBJS) $(LDLIBS)
@@ -392,8 +395,9 @@ tzselect:	tzselect.ksh
 		sed \
 			-e 's|#!/bin/bash|#!$(KSHELL)|g' \
 			-e 's|AWK=[^}]*|AWK=$(AWK)|g' \
+			-e 's|\(PKGVERSION\)=.*|\1='\''($(PACKAGE)) '\''|' \
 			-e 's|TZDIR=[^}]*|TZDIR=$(TZDIR)|' \
-			-e 's|\(TZVERSION\)=.*|\1=tz$(VERSION)|' \
+			-e 's|\(TZVERSION\)=.*|\1=$(VERSION)|' \
 			<$? >$@
 		chmod +x $@
 

@@ -8,6 +8,9 @@ PACKAGE=	tzcode
 # Version numbers of the code and data distributions.
 VERSION=	2012j
 
+# Email address for bug reports.
+BUGEMAIL=	tz@iana.org
+
 # Change the line below for your time zone (after finding the zone you want in
 # the time zone files, or adding it to a time zone file).
 # Alternately, if you discover you've got the wrong time zone, you can just
@@ -344,7 +347,8 @@ INSTALL:	ALL install date.1
 
 version.h:
 		(echo 'static char const PKGVERSION[]="($(PACKAGE)) ";' && \
-		 echo 'static char const TZVERSION[]="$(VERSION)";') >$@
+		 echo 'static char const TZVERSION[]="$(VERSION)";' && \
+		 echo 'static char const REPORT_BUGS_TO[]="$(BUGEMAIL)";') >$@
 
 zdump:		$(TZDOBJS)
 		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(TZDOBJS) $(LDLIBS)
@@ -396,6 +400,7 @@ tzselect:	tzselect.ksh
 			-e 's|#!/bin/bash|#!$(KSHELL)|g' \
 			-e 's|AWK=[^}]*|AWK=$(AWK)|g' \
 			-e 's|\(PKGVERSION\)=.*|\1='\''($(PACKAGE)) '\''|' \
+			-e 's|\(REPORT_BUGS_TO\)=.*|\1=$(BUGEMAIL)|' \
 			-e 's|TZDIR=[^}]*|TZDIR=$(TZDIR)|' \
 			-e 's|\(TZVERSION\)=.*|\1=$(VERSION)|' \
 			<$? >$@

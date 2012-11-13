@@ -2,6 +2,7 @@
 
 PKGVERSION='(tzcode) '
 TZVERSION=see_Makefile
+REPORT_BUGS_TO=tz@iana.org
 
 # Ask the user about the time zone, and output the resulting TZ value to stdout.
 # Interact with the user via stderr and stdin.
@@ -44,7 +45,7 @@ if [ "$1" = "--help" ]; then
 Usage: tzselect
 Select a time zone interactively.
 
-Report bugs to tz@iana.org.
+Report bugs to $REPORT_BUGS_TO.
 EOF
     exit
 elif [ "$1" = "--version" ]; then

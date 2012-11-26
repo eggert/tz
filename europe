@@ -2043,7 +2043,7 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 
 # Russia
 
-# From Alexander Krivenyshev (2011-09-15): 
+# From Alexander Krivenyshev (2011-09-15):
 # Based on last Russian Government Decree # 725 on August 31, 2011
 # (Government document
 # <a href="http://www.government.ru/gov/results/16355/print/">
@@ -2345,11 +2345,17 @@ Zone Asia/Vladivostok	 8:47:44 -	LMT	1922 Nov 15
 # From Arthur David Olson (2012-05-09):
 # Tomponskij and Ust'-Majskij switched from Vladivostok time to Yakutsk time
 # in 2011.
-
-Zone Asia/Khandyga	 9:02:13 -	LMT	1922 Nov 15
-			 9:00	-	VLAT	1930 Jun 21 # Vladivostok Time
-			10:00	Russia	VLA%sT	1991 Mar 31 2:00s
-			 9:00	Russia	VLA%sST	1992 Jan 19 2:00s
+#
+# From Paul Eggert (2012-11-25):
+# Shanks and Pottenger (2003) has Khandyga on Yakutsk time.
+# Make a wild guess that it switched to Vladivostok time in 2004.
+# This transition is no doubt wrong, but we have no better info.
+#
+Zone Asia/Khandyga	 9:02:13 -	LMT	1919 Dec 15
+			 8:00	-	YAKT	1930 Jun 21 # Yakutsk Time
+			 9:00	Russia	YAK%sT	1991 Mar 31 2:00s
+			 8:00	Russia	YAK%sT	1992 Jan 19 2:00s
+			 9:00	Russia	YAK%sT	2004
 			10:00	Russia	VLA%sT	2011 Mar 27 2:00s
 			11:00	-	VLAT	2011 Sep 13 0:00s # Decree 725?
 			10:00	-	YAKT
@@ -2382,9 +2388,10 @@ Zone Asia/Magadan	10:03:12 -	LMT	1924 May  2
 
 # From Arthur David Olson (2012-05-09):
 # Ojmyakonskij and the Kuril Islands switched from
-# Magadan time to Vladivostok time in 2011
-Zone Asia/Ust-Nera	 9:32:54 -	LMT	1924 May  2
-			10:00	-	MAGT	1930 Jun 21 # Magadan Time
+# Magadan time to Vladivostok time in 2011.
+Zone Asia/Ust-Nera	 9:32:54 -	LMT	1919 Dec 15
+			 8:00	-	YAKT	1930 Jun 21 # Yakutsk Time
+			 9:00	Russia	YAKT	1981 Apr  1
 			11:00	Russia	MAG%sT	1991 Mar 31 2:00s
 			10:00	Russia	MAG%sT	1992 Jan 19 2:00s
 			11:00	Russia	MAG%sT	2011 Mar 27 2:00s

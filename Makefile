@@ -264,6 +264,17 @@ VALIDATE_ENV = \
   SP_CHARSET_FIXED=YES \
   SP_ENCODING=UTF-8
 
+# INVALID_CHAR is a regular expression that matches invalid characters in
+# distributed files.  For now, stick to a safe subset of ASCII.
+# The caller must set the shell variable 'sharp' to the character '#',
+# since Makefile macros cannot contain '#'.
+# TAB_CHAR is a single tab character, in single quotes.
+TAB_CHAR=	'	'
+INVALID_CHAR1=	$(TAB_CHAR)' !\"'$$sharp'$$%&'\''()*+,./0123456789:;<=>?@'
+INVALID_CHAR2=	'ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\^_`'
+INVALID_CHAR3=	'abcdefghijklmnopqrstuvwxyz{|}~'
+INVALID_CHAR=	'[^]'$(INVALID_CHAR1)$(INVALID_CHAR2)$(INVALID_CHAR3)'-]'
+
 # Flags to give 'tar' when making a distribution.
 # Try to use flags appropriate for GNU tar.
 GNUTARFLAGS=	--numeric-owner --owner=0 --group=0 --mode=go+u,go-w
@@ -406,7 +417,10 @@ tzselect:	tzselect.ksh
 			<$? >$@
 		chmod +x $@
 
-check:		check_tables check_web
+check:		check_character_set check_tables check_web
+
+check_character_set: $(ENCHILADA)
+		sharp='#'; ! grep -n $(INVALID_CHAR) $(ENCHILADA)
 
 check_tables:	checktab.awk $(PRIMARY_YDATA)
 		$(AWK) -f checktab.awk $(PRIMARY_YDATA)

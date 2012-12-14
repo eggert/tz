@@ -381,21 +381,11 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	S
 # <a/>
 # is the official page for the Province Government).
 #
-# There's also a note in only one of the major national papers (La Nación) at
-# <a href="http://www.lanacion.com.ar/nota.asp?nota_id=1107912">
+# There's also a note in only one of the major national papers ...
 # http://www.lanacion.com.ar/nota.asp?nota_id=1107912
-# </a>
 #
-# The press release says:
-#  (...) anunció que el próximo domingo a las 00:00 los puntanos deberán
-# atrasar una hora sus relojes.
-#
-# A partir de entonces, San Luis establecerá el huso horario propio de
-# la Provincia. De esta manera, durante el periodo del calendario anual
-# 2009, el cambio horario quedará comprendido entre las 00:00 del tercer
-# domingo de marzo y las 24:00 del segundo sábado de octubre.
-# Quick&dirty translation
-# (...) announced that next Sunday, at 00:00, Puntanos (the San Luis
+# The press release says [quick and dirty translation]:
+# ... announced that next Sunday, at 00:00, Puntanos (the San Luis
 # inhabitants) will have to turn back one hour their clocks
 #
 # Since then, San Luis will establish its own Province timezone. Thus,
@@ -812,9 +802,9 @@ Zone	America/La_Paz	-4:32:36 -	LMT	1890
 
 # From Guilherme Bernardes Rodrigues (2011-10-07):
 # There is news in the media, however there is still no decree about it.
-# I just send a e-mail to Zulmira Brandão at
+# I just send a e-mail to Zulmira Brandao at
 # <a href="http://pcdsh01.on.br/">http://pcdsh01.on.br/</a> the
-# oficial agency about time in Brazil, and she confirmed that the old rule is
+# official agency about time in Brazil, and she confirmed that the old rule is
 # still in force.
 
 # From Guilherme Bernardes Rodrigues (2011-10-14)

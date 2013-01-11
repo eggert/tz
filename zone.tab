@@ -159,7 +159,8 @@ CW	+1211-06900	America/Curacao
 CX	-1025+10543	Indian/Christmas
 CY	+3510+03322	Asia/Nicosia
 CZ	+5005+01426	Europe/Prague
-DE	+5230+01322	Europe/Berlin
+DE	+5230+01322	Europe/Berlin	most locations
+DE	+4742+00841	Europe/Busingen	Busingen
 DJ	+1136+04309	Africa/Djibouti
 DK	+5540+01235	Europe/Copenhagen
 DM	+1518-06124	America/Dominica

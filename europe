@@ -1239,6 +1239,21 @@ Zone	Europe/Berlin	0:53:28 -	LMT	1893 Apr
 			1:00	Germany	CE%sT	1980
 			1:00	EU	CE%sT
 
+# From Tobias Conradi (2011-09-12):
+# Busingen <http://www.buesingen.de>, surrounded by the Swiss canton
+# Schaffhausen, did not start observing DST in 1980 as the rest of DE
+# (West Germany at that time) and DD (East Germany at that time) did.
+# DD merged into DE, the area is currently covered by code DE in ISO 3166-1,
+# which in turn is covered by the zone Europe/Berlin.
+#
+# Source for the time in Busingen 1980:
+# http://www.srf.ch/player/video?id=c012c029-03b7-4c2b-9164-aa5902cd58d3
+
+# From Arthur David Olson (2012-03-03):
+# Busingen and Zurich have shared clocks since 1970.
+
+Link	Europe/Zurich	Europe/Busingen
+
 # Georgia
 # Please see the "asia" file for Asia/Tbilisi.
 # Herodotus (Histories, IV.45) says Georgia north of the Phasis (now Rioni)

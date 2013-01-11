@@ -246,9 +246,10 @@ AWK=		awk
 KSHELL=		/bin/bash
 
 # The path where SGML DTDs are kept.
-# The default is appropriate for Ubuntu.
+# The default is appropriate for Ubuntu 12.10.
 SGML_TOPDIR= /usr
-SGML_SEARCH_PATH= $(SGML_TOPDIR)/share/xml/xhtml/schema/dtd/REC-html401-19991224
+SGML_DTDDIR= $(SGML_TOPDIR)/share/xml/w3c-sgml-lib/schema/dtd
+SGML_SEARCH_PATH= $(SGML_DTDDIR)/REC-html401-19991224
 
 # The catalog file(s) to use when validating.
 SGML_CATALOG_FILES= HTML4.cat

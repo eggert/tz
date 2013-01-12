@@ -1851,7 +1851,9 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 			rp = &zp->z_rules[i];
 			if (stdrp == NULL || rp->r_hiyear > stdrp->r_hiyear ||
 				(rp->r_hiyear == stdrp->r_hiyear &&
-				rp->r_month > stdrp->r_month))
+				(rp->r_month > stdrp->r_month ||
+				(rp->r_month == stdrp->r_month &&
+				rp->r_dayofmonth > stdrp->r_dayofmonth))))
 					stdrp = rp;
 		}
 		if (stdrp != NULL && stdrp->r_stdoff != 0)

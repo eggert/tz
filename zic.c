@@ -1748,7 +1748,7 @@ stringoffset(char *result, long offset)
 	minutes = offset % MINSPERHOUR;
 	offset /= MINSPERHOUR;
 	hours = offset;
-	if (hours >= HOURSPERDAY) {
+	if (hours > HOURSPERDAY) {
 		result[0] = '\0';
 		return -1;
 	}

@@ -8,7 +8,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="US-ASCII"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2012-11-13">
+<meta name="DC.Date" content="2013-02-21">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -101,7 +101,7 @@ gzip -dc tzdata-latest.tar.gz | tar -xf -
 </code></pre>
 <p>
 The code and data files can also be obtained from the
-<a href="http://www.iana.org/time-zones">timezone web page</a>
+<a href="http://www.iana.org/time-zones">Time Zone Database website</a>
 of the <a href="http://www.iana.org">Internet Assigned Numbers
 Authority (IANA)</a>.
 An <a href="https://github.com/eggert/tz">unofficial development
@@ -128,7 +128,7 @@ messages</a>.</p>
 The Web has several other sources for time zone and daylight saving time data.
 Here are some links that may be of interest.
 </p>
-<h2>Web pages using recent versions of the <code>tz</code> database</h2>
+<h2>Web sites using recent versions of the <code>tz</code> database</h2>
 <p>
 These are listed roughly in ascending order of complexity and fanciness.
 </p>
@@ -138,7 +138,7 @@ lets you see the <code>TZ</code> values directly.</li>
 <li><a
 href="http://convertit.com/Go/ConvertIt/World_Time/Current_Time.ASP">Current
 Time in 1000 Places</a> uses descriptions of the values.</li>
-<li><a href="http://www.timezoneconverter.com/">Time Zone Converter</a>
+<li><a href="http://www.timezoneconverter.com/cgi-bin/tzc.tzc">Time Zone Converter</a>
 uses a pulldown menu.</li>
 <li><a href="http://home.tiscali.nl/~t876506/TZworld.html">Complete
 timezone information for all countries</a> displays tables of DST rules.
@@ -278,6 +278,12 @@ DateTime::TimeZone::Tzfile</a>
 is a <code>tz</code> binary file reader written in Perl.
 It is freely available under the same terms as Perl
 (dual <abbr>GPL</abbr> and Artistic license).</li>
+<li>The
+public-domain <a href="https://github.com/dbaron/tz.js">tz.js</a>
+library contains a Python tool that converts <code>tz</code> binary data into
+<a href="http://www.json.org/">JSON</a>-format data suitable for use
+in its <a href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a> library for time zone conversion. Dates before 1970
+are not supported.</li>
 </ul>
 <h2>Other <code>tz</code>-based time zone software</h2>
 <ul>
@@ -338,7 +344,7 @@ is another time zone database.</li>
 contains data from the Time Service Department of the
 <abbr>US</abbr> Naval Observatory, used as the source
 for the <code>usno*</code> files in the <code>tz</code> distribution.</li>
-<li>The <a href="http://iata.org/ps/publications/SSIM.htm">Standard
+<li>The <a href="http://www.iata.org/publications/Pages/ssim.aspx">Standard
 Schedules Information Manual</a> of the
 <a href="http://iata.org/index.htm">International Air Transport
 Association</a>
@@ -467,7 +473,7 @@ hreflang="he">announcements (in Hebrew)</a>.</dd>
 <dt>Mexico</dt>
 <dd>The Investigation and Analysis Service of the Mexican Library of
 Congress has published a <a
-href="http://www.cddhcu.gob.mx/bibliot/publica/inveyana/polisoc/horver/"
+href="http://www.diputados.gob.mx/bibliot/publica/inveyana/polisoc/horver/"
 hreflang="es">history of Mexican local time (in Spanish)</a>.</dd>
 <dt>Malaysia</dt>
 <dd>See Singapore below.</dd>
@@ -530,7 +536,7 @@ Times</a> explains more abstruse astronomical time scales like
 Scales</a> goes into more detail, particularly for historical variants.</li>
 <li>The <a href="http://iau.org/"><abbr
 title="International Astronomical Union">IAU</abbr></a>'s <a
-href="http://www.iau-sofa.rl.ac.uk/"><abbr
+href="http://www.iausofa.org/"><abbr
 title="Standards Of Fundamental Astronomy">SOFA</abbr></a>
 initiative publishes Fortran
 code for converting among time scales like

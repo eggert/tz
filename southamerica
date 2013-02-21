@@ -1240,9 +1240,13 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # b. Saturday, September 1, 2012, clocks should go forward 60 minutes; that is,
 # at 23:59:59, instead of passing to 0:00, the time should be adjusted to be
 # 01:00 on September 2.
-#
-# Note that...this is yet another "temporary" change that will be reevaluated
-# AGAIN in 2013.
+
+# From Steffen Thorsen (2013-02-15):
+# According to several news sources, Chile has extended DST this year,
+# they will end DST later and start DST earlier than planned.  They
+# hope to save energy.  The new end date is 2013-04-28 00:00 and new
+# start date is 2013-09-08 00:00....
+# http://www.gob.cl/informa/2013/02/15/gobierno-anuncia-fechas-de-cambio-de-hora-para-el-ano-2013.htm
 
 # NOTE: ChileAQ rules for Antarctic bases are stored separately in the
 # 'antarctica' file.
@@ -1285,10 +1289,8 @@ Rule	Chile	2009	only	-	Mar	Sun>=9	3:00u	0	-
 Rule	Chile	2010	only	-	Apr	Sun>=1	3:00u	0	-
 Rule	Chile	2011	only	-	May	Sun>=2	3:00u	0	-
 Rule	Chile	2011	only	-	Aug	Sun>=16	4:00u	1:00	S
-Rule	Chile	2012	only	-	Apr	Sun>=23	3:00u	0	-
-Rule	Chile	2012	only	-	Sep	Sun>=2	4:00u	1:00	S
-Rule	Chile	2013	max	-	Mar	Sun>=9	3:00u	0	-
-Rule	Chile	2013	max	-	Oct	Sun>=9	4:00u	1:00	S
+Rule	Chile	2012	max	-	Apr	Sun>=23	3:00u	0	-
+Rule	Chile	2012	max	-	Sep	Sun>=2	4:00u	1:00	S
 # IATA SSIM anomalies: (1992-02) says 1992-03-14;
 # (1996-09) says 1998-03-08.  Ignore these.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

@@ -11,6 +11,10 @@
 # Thomas G. Shanks and Rique Pottenger, The International Atlas (6th edition),
 # San Diego: ACS Publications, Inc. (2003).
 #
+# For data circa 1899, a common source is:
+# Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94
+# <http://www.jstor.org/stable/1774359>.
+#
 # Gwillim Law writes that a good source
 # for recent time zone data is the International Air Transport
 # Association's Standard Schedules Information Manual (IATA SSIM),
@@ -446,6 +450,9 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	S
 # UTC-03:00 "summer time", we should't just let San Luis go back to "Arg"
 # rules...San Luis is still using "Western ARgentina Time" and it got
 # stuck on Summer daylight savings time even though the summer is over.
+
+# From Paul Eggert (2013-02-21):
+# Milne says Cordoba time was -4:16:48.2.  Round to the nearest second.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 #
@@ -1303,17 +1310,23 @@ Zone Pacific/Easter	-7:17:44 -	LMT	1890
 # San Felix, and Antarctic bases, are like America/Santiago.
 
 # Colombia
+
+# Milne gives 4:56:16.4 for Bogota time in 1899; round to nearest.  He writes,
+# "A variation of fifteen minutes in the public clocks of Bogota is not rare."
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	CO	1992	only	-	May	 3	0:00	1:00	S
 Rule	CO	1993	only	-	Apr	 4	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Bogota	-4:56:20 -	LMT	1884 Mar 13
-			-4:56:20 -	BMT	1914 Nov 23 # Bogota Mean Time
+Zone	America/Bogota	-4:56:16 -	LMT	1884 Mar 13
+			-4:56:16 -	BMT	1914 Nov 23 # Bogota Mean Time
 			-5:00	CO	CO%sT	# Colombia Time
 # Malpelo, Providencia, San Andres
 # no information; probably like America/Bogota
 
 # Curacao
+
+# Milne gives 4:35:46.9 for Curacao mean time; round to nearest.
 #
 # From Paul Eggert (2006-03-22):
 # Shanks & Pottenger say that The Bottom and Philipsburg have been at
@@ -1330,7 +1343,7 @@ Zone	America/Bogota	-4:56:20 -	LMT	1884 Mar 13
 # though, as far as we know.
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Curacao	-4:35:44 -	LMT	1912 Feb 12	# Willemstad
+Zone	America/Curacao	-4:35:47 -	LMT	1912 Feb 12	# Willemstad
 			-4:30	-	ANT	1965 # Netherlands Antilles Time
 			-4:00	-	AST
 
@@ -1343,6 +1356,8 @@ Link	America/Curacao	America/Lower_Princes # Sint Maarten
 Link	America/Curacao	America/Kralendijk # Bonaire, Sint Estatius and Saba
 
 # Ecuador
+#
+# Milne says the Sentral and South American Telegraph Company used -5:24:15.
 #
 # From Paul Eggert (2007-03-04):
 # Apparently Ecuador had a failed experiment with DST in 1992.

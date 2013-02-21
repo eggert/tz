@@ -30,6 +30,12 @@
 #	William Willett, The Waste of Daylight, 19th edition
 #	</a> (1914-03)
 #
+#	Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94
+#	<http://www.jstor.org/stable/1774359>.  He writes:
+#	"It is requested that corrections and additions to these tables
+#	may be sent to Mr. John Milne, Royal Geographical Society,
+#	Savile Row, London."  Nowadays please email them to tz@iana.org.
+#
 #	Brazil's Departamento Servico da Hora (DSH),
 #	<a href="http://pcdsh01.on.br/HISTHV.htm">
 #	History of Summer Time
@@ -666,6 +672,8 @@ Zone	Europe/Andorra	0:06:04 -	LMT	1901
 
 # Austria
 
+# Milne says Vienna time was 1:05:21.
+
 # From Paul Eggert (2006-03-22): Shanks & Pottenger give 1918-06-16 and
 # 1945-11-18, but the Austrian Federal Office of Metrology and
 # Surveying (BEV) gives 1918-09-16 and for Vienna gives the "alleged"
@@ -683,7 +691,7 @@ Rule	Austria	1948	only	-	Apr	18	2:00s	1:00	S
 Rule	Austria	1980	only	-	Apr	 6	0:00	1:00	S
 Rule	Austria	1980	only	-	Sep	28	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Vienna	1:05:20 -	LMT	1893 Apr
+Zone	Europe/Vienna	1:05:21 -	LMT	1893 Apr
 			1:00	C-Eur	CE%sT	1920
 			1:00	Austria	CE%sT	1940 Apr  1 2:00s
 			1:00	C-Eur	CE%sT	1945 Apr  2 2:00s

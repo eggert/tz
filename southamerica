@@ -1567,6 +1567,15 @@ Rule	Para	2005	2009	-	Mar	Sun>=8	0:00	0	-
 # ...
 Rule	Para	2010	max	-	Oct	Sun>=1	0:00	1:00	S
 Rule	Para	2010	max	-	Apr	Sun>=8	0:00	0	-
+#
+# From Steffen Thorsen (2013-03-07):
+# Paraguay will end DST on 2013-03-24 00:00....
+# They do not tell if this will be a permanent change or just this year....
+# http://www.ande.gov.py/interna.php?id=1075
+#
+# From Paul Eggert (2013-03-07):
+# For now, assume it's just this year.
+Rule	Para	2013	only	-	Mar	24	0:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Asuncion	-3:50:40 -	LMT	1890

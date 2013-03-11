@@ -8,7 +8,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="US-ASCII"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2013-02-21">
+<meta name="DC.Date" content="2013-03-11">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -37,8 +37,8 @@ is used by several implementations,
 including
 <a href="http://www.gnu.org/software/libc/">the
 <abbr title="GNU's Not Unix">GNU</abbr>
-C Library</a> used in
-<a href="http://www.linux.org/"><abbr>GNU</abbr>/Linux</a>,
+C Library</a> (used in
+<a href="http://www.linux.org/"><abbr>GNU</abbr>/Linux</a>),
 <a href="http://www.android.com/">Android</a>,
 <a href="http://www.freebsd.org/">FreeBSD</a>,
 <a href="http://netbsd.org/">NetBSD</a>,
@@ -46,11 +46,14 @@ C Library</a> used in
 <a href="http://cygwin.com/">Cygwin</a>,
 <a href="http://www.delorie.com/djgpp/"><abbr
 title="DJ's GNU Programming Platform">DJGPP</abbr></a>,
+<a href="http://en.wikipedia.org/wiki/WebOS">webOS</a>,
 <a href="http://ibm.com/aix">AIX</a>,
+<a href="http://en.wikipedia.org/wiki/BlackBerry_10">BlackBerry 10</a>,
+<a href="http://www.apple.com/ios/">iOS</a>,
 <a href="http://h71000.www7.hp.com/">OpenVMS</a>,
 <a href="http://oracle.com/database">Oracle Database</a>,
 <a href="http://www.apple.com/osx/">OS X</a>,
-<a href="http://sun.com/software/solaris">Solaris</a>,
+<a href="http://oracle.com/solaris">Solaris</a>,
 <a href="http://h30097.www3.hp.com/">Tru64</a>, and
 <a href="http://sco.com/products/unixware">UnixWare</a>.</p>
 <p>
@@ -123,7 +126,10 @@ messages</a> sent to the mailing list, <a
 href="https://mm.icann.org/mailman/listinfo/tz">subscribe</a> to it,
 and browse the <a
 href="http://mm.icann.org/pipermail/tz/">archive of old
-messages</a>.</p>
+messages</a>. For further information about updates, please see
+<a href="http://tools.ietf.org/html/rfc6557">Procedures for
+Maintaining the Time Zone Database</a> (Internet <abbr title="Request
+For Comments">RFC</abbr> 6557).</p>
 <p>
 The Web has several other sources for time zone and daylight saving time data.
 Here are some links that may be of interest.
@@ -159,14 +165,9 @@ tz data files.</li>
 </ul>
 <h2>Other time zone database formats</h2>
 <ul>
-<li>The <a href="ftp://ftp.rfc-editor.org/in-notes/rfc2445.txt">
+<li>The <a href="http://tools.ietf.org/html/rfc5545">
 Internet Calendaring and Scheduling Core Object Specification
-(iCalendar)</a>, Internet <abbr title="Request For
-Comments">RFC</abbr> 2445, published by the (now-concluded) <a
-href="http://ietf.org/html.charters/OLD/calsch-charter.html"><abbr
-title="Internet Engineering Task Force">IETF</abbr>
-Calendaring and Scheduling Working Group (<abbr
-title="Calendaring and Scheduling Working Group">calsch</abbr>)</a>
+(iCalendar)</a>, Internet <abbr>RFC</abbr> 5445
 covers time zone
 data; see its VTIMEZONE calendar component.
 <a href="http://calconnect.org/">CalConnect, The Calendaring and Scheduling
@@ -513,7 +514,7 @@ Time Protocol</a>
 discusses how to synchronize clocks of
 Internet hosts.</li>
 <li><a
-href="ftp://ftp.rfc-editor.org/in-notes/rfc4833.txt">Timezone
+href="http://tools.ietf.org/html/rfc4833">Timezone
 Options for <abbr title="Dynamic Host Configuration Protocol">DHCP</abbr></a>
 (Internet <abbr>RFC</abbr> 4833)
 specifies a <a
@@ -590,13 +591,13 @@ interchange -- Representation of dates and times</a>.</li>
 Schema: Datatypes - dateTime</a> specifies a format inspired by
 <abbr>ISO</abbr> 8601 that is in common use in XML data.</li>
 <li>
-<a href="ftp://ftp.rfc-editor.org/in-notes/rfc2822.txt">Internet
-Message Format</a> (Internet <abbr>RFC</abbr> 2822) &sect;3.3
+<a href="http://tools.ietf.org/html/rfc5322">Internet
+Message Format</a> (Internet <abbr>RFC</abbr> 5322) &sect;3.3
 specifies the time notation used in email and <a
-href="ftp://ftp.rfc-editor.org/in-notes/rfc2616.txt"><abbr>HTTP</abbr></a>
+href="http://tools.ietf.org/html/rfc2616"><abbr>HTTP</abbr></a>
 headers.</li>
 <li>
-<a href="ftp://ftp.rfc-editor.org/in-notes/rfc3339.txt">Date and Time
+<a href="http://tools.ietf.org/html/rfc3339">Date and Time
 on the Internet: Timestamps</a> (Internet <abbr>RFC</abbr> 3339)
 specifies an <abbr>ISO</abbr> 8601
 profile for use in new Internet

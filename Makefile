@@ -189,10 +189,6 @@ GCC_DEBUG_FLAGS = -Dlint -g3 -O3 -fno-common -fstrict-aliasing \
 # These functions may well disappear in future releases of the time
 # conversion package.
 #
-# If you want Source Code Control System ID's left out of object modules, add
-#	-DNOID
-# to the end of the "CFLAGS=" line.
-#
 # If you'll never want to handle solar-time-based time zones, add
 #	-DNOSOLAR
 # to the end of the "CFLAGS=" line

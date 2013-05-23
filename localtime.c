@@ -112,6 +112,7 @@ struct state {
 	char		chars[BIGGEST(BIGGEST(TZ_MAX_CHARS + 1, sizeof gmt),
 				(2 * (MY_TZNAME_MAX + 1)))];
 	struct lsinfo	lsis[TZ_MAX_LEAPS];
+	int		defaulttype; /* for early times or if no transitions */
 };
 
 struct rule {
@@ -275,7 +276,7 @@ settzname(void)
 		register const struct ttinfo * const	ttisp = &sp->ttis[i];
 
 		tzname[ttisp->tt_isdst] = &sp->chars[ttisp->tt_abbrind];
-	}	
+	}
 	for (i = 0; i < sp->timecnt; ++i) {
 		register const struct ttinfo * const	ttisp =
 							&sp->ttis[
@@ -582,6 +583,40 @@ tzload(register const char *name, register struct state *const sp,
 					break;
 		}
 	}
+	/*
+	** If type 0 is is unused in transitions,
+	** it's the type to use for early times.
+	*/
+	for (i = 0; i < sp->typecnt; ++i)
+		if (sp->types[i] == 0)
+			break;
+	i = (i >= sp->typecnt) ? 0 : -1;
+	/*
+	** Absent the above,
+	** if there are transition times
+	** and the first transition is to a daylight time
+	** find the standard type less than and closest to
+	** the type of the first transition.
+	*/
+	if (i < 0 && sp->timecnt > 0 && sp->ttis[sp->types[0]].tt_isdst) {
+		i = sp->types[0];
+		while (--i >= 0)
+			if (!sp->ttis[i].tt_isdst)
+				break;
+	}
+	/*
+	** If no result yet, find the first standard type.
+	** If there is none, punt to type zero.
+	*/
+	if (i < 0) {
+		i = 0;
+		while (sp->ttis[i].tt_isdst)
+			if (++i >= sp->typecnt) {
+				i = 0;
+				break;
+			}
+	}
+	sp->defaulttype = i;
 #ifdef ALL_STATE
 	free(up);
 #endif /* defined ALL_STATE */
@@ -1283,12 +1318,7 @@ localsub(const time_t *const timep, const long offset, struct tm *const tmp)
 			return result;
 	}
 	if (sp->timecnt == 0 || t < sp->ats[0]) {
-		i = 0;
-		while (sp->ttis[i].tt_isdst)
-			if (++i >= sp->typecnt) {
-				i = 0;
-				break;
-			}
+		i = sp->defaulttype;
 	} else {
 		register int	lo = 1;
 		register int	hi = sp->timecnt;

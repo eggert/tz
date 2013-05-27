@@ -9,7 +9,14 @@
 ** This code has been made independent of the rest of the time
 ** conversion package to increase confidence in the verification it provides.
 ** You can use this code to help in verifying other implementations.
+**
+** However, include private.h when debugging, so that it overrides
+** time_t consistently with the rest of the package.
 */
+
+#ifdef time_tz
+# include "private.h"
+#endif
 
 #include "stdio.h"	/* for stdout, stderr, perror */
 #include "string.h"	/* for strcpy */
@@ -112,14 +119,6 @@
 #endif /* !defined lint */
 #endif /* !defined GNUC_or_lint */
 
-#ifndef INITIALIZE
-#ifdef GNUC_or_lint
-#define INITIALIZE(x)	((x) = 0)
-#else /* !defined GNUC_or_lint */
-#define INITIALIZE(x)
-#endif /* !defined GNUC_or_lint */
-#endif /* !defined INITIALIZE */
-
 #if 2 < __GNUC__ || (__GNUC__ == 2 && 96 <= __GNUC_MINOR__)
 # define ATTRIBUTE_PURE __attribute__ ((__pure__))
 #else
@@ -151,20 +150,16 @@ extern char *	optarg;
 extern int	optind;
 extern char *	tzname[2];
 
-/* The minimum and maximum finite time values.  Shift 'long long' or
-   'long' instead of 'time_t'; this avoids compile-time errors when
-   time_t is floating-point.  In practice, 'long long' is wide enough.  */
+/* The minimum and maximum finite time values.  */
 static time_t const absolute_min_time =
   ((time_t) 0.5 == 0.5
    ? (sizeof (time_t) == sizeof (float) ? (time_t) -FLT_MAX
       : sizeof (time_t) == sizeof (double) ? (time_t) -DBL_MAX
       : sizeof (time_t) == sizeof (long double) ? (time_t) -LDBL_MAX
       : 0)
+#ifndef TIME_T_FLOATING
    : (time_t) -1 < 0
-#ifdef LLONG_MAX
-   ? (time_t) ((long long) -1 << (CHAR_BIT * sizeof (time_t) - 1))
-#else
-   ? (time_t) ((long) -1 << (CHAR_BIT * sizeof (time_t) - 1))
+   ? (time_t) -1 << (CHAR_BIT * sizeof (time_t) - 1)
 #endif
    : 0);
 static time_t const absolute_max_time =
@@ -173,13 +168,11 @@ static time_t const absolute_max_time =
       : sizeof (time_t) == sizeof (double) ? (time_t) DBL_MAX
       : sizeof (time_t) == sizeof (long double) ? (time_t) LDBL_MAX
       : -1)
+#ifndef TIME_T_FLOATING
    : (time_t) -1 < 0
-#ifdef LLONG_MAX
-   ? (time_t) (- (~ 0 < 0) - ((long long) -1 << (CHAR_BIT * sizeof (time_t) - 1)))
-#else
-   ? (time_t) (- (~ 0 < 0) - ((long) -1 << (CHAR_BIT * sizeof (time_t) - 1)))
+   ? - (~ 0 < 0) - ((time_t) -1 << (CHAR_BIT * sizeof (time_t) - 1))
 #endif
-   : (time_t) -1);
+   : -1);
 static size_t	longest;
 static char *	progname;
 static int	warned;
@@ -270,9 +263,9 @@ static void
 usage(FILE * const stream, const int status)
 {
 	(void) fprintf(stream,
-_("%s: usage is %s [ --version ] [ --help ] [ -v ] [ -c [loyear,]hiyear ] zonename ...\n\
-\n\
-Report bugs to %s.\n"),
+_("%s: usage: %s [--version] [--help] [-{vV}] [-{ct} [lo,]hi] zonename ...\n"
+  "\n"
+  "Report bugs to %s.\n"),
 		       progname, progname, REPORT_BUGS_TO);
 	exit(status);
 }
@@ -281,11 +274,10 @@ int
 main(int argc, char *argv[])
 {
 	register int		i;
-	register int		c;
 	register int		vflag;
+	register int		Vflag;
 	register char *		cutarg;
-	register long		cutloyear = ZDUMP_LO_YEAR;
-	register long		cuthiyear = ZDUMP_HI_YEAR;
+	register char *		cuttimes;
 	register time_t		cutlotime;
 	register time_t		cuthitime;
 	register char **	fakeenv;
@@ -297,8 +289,8 @@ main(int argc, char *argv[])
 	register struct tm *	tmp;
 	register struct tm *	newtmp;
 
-	INITIALIZE(cutlotime);
-	INITIALIZE(cuthitime);
+	cutlotime = absolute_min_time;
+	cuthitime = absolute_max_time;
 #if HAVE_GETTEXT
 	(void) setlocale(LC_ALL, "");
 #ifdef TZ_DOMAINDIR
@@ -314,22 +306,30 @@ main(int argc, char *argv[])
 		} else if (strcmp(argv[i], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
 		}
-	vflag = 0;
-	cutarg = NULL;
-	while ((c = getopt(argc, argv, "c:v")) == 'c' || c == 'v')
-		if (c == 'v')
-			vflag = 1;
-		else	cutarg = optarg;
-	if ((c != EOF && c != -1) ||
-		(optind == argc - 1 && strcmp(argv[optind], "=") == 0)) {
-			usage(stderr, EXIT_FAILURE);
-	}
-	if (vflag) {
-		if (cutarg != NULL) {
-			long	lo;
-			long	hi;
-			char	dummy;
+	vflag = Vflag = 0;
+	cutarg = cuttimes = NULL;
+	for (;;)
+	  switch (getopt(argc, argv, "c:t:vV")) {
+	  case 'c': cutarg = optarg; break;
+	  case 't': cuttimes = optarg; break;
+	  case 'v': vflag = 1; break;
+	  case 'V': Vflag = 1; break;
+	  case -1:
+	    if (! (optind == argc - 1 && strcmp(argv[optind], "=") == 0))
+	      goto arg_processing_done;
+	    /* Fall through.  */
+	  default:
+	    usage(stderr, EXIT_FAILURE);
+	  }
+ arg_processing_done:;
 
+	if (vflag | Vflag) {
+		long	lo;
+		long	hi;
+		char	dummy;
+		register long cutloyear = ZDUMP_LO_YEAR;
+		register long cuthiyear = ZDUMP_HI_YEAR;
+		if (cutarg != NULL) {
 			if (sscanf(cutarg, "%ld%c", &hi, &dummy) == 1) {
 				cuthiyear = hi;
 			} else if (sscanf(cutarg, "%ld,%ld%c",
@@ -343,8 +343,36 @@ main(int argc, char *argv[])
 			}
 		}
 		checkabsolutes();
-		cutlotime = yeartot(cutloyear);
-		cuthitime = yeartot(cuthiyear);
+		if (cutarg != NULL || cuttimes == NULL) {
+			cutlotime = yeartot(cutloyear);
+			cuthitime = yeartot(cuthiyear);
+		}
+		if (cuttimes != NULL) {
+			if (sscanf(cuttimes, "%ld%c", &hi, &dummy) == 1) {
+				if (hi < cuthitime) {
+					if (hi < absolute_min_time)
+						hi = absolute_min_time;
+					cuthitime = hi;
+				}
+			} else if (sscanf(cuttimes, "%ld,%ld%c",
+					  &lo, &hi, &dummy) == 2) {
+				if (cutlotime < lo) {
+					if (absolute_max_time < lo)
+						lo = absolute_max_time;
+					cutlotime = lo;
+				}
+				if (hi < cuthitime) {
+					if (hi < absolute_min_time)
+						hi = absolute_min_time;
+					cuthitime = hi;
+				}
+			} else {
+				(void) fprintf(stderr,
+					_("%s: wild -t argument %s\n"),
+					progname, cuttimes);
+				exit(EXIT_FAILURE);
+			}
+		}
 	}
 	(void) time(&now);
 	longest = 0;
@@ -375,15 +403,17 @@ main(int argc, char *argv[])
 		static char	buf[MAX_STRING_LENGTH];
 
 		(void) strcpy(&fakeenv[0][3], argv[i]);
-		if (!vflag) {
+		if (! (vflag | Vflag)) {
 			show(argv[i], now, FALSE);
 			continue;
 		}
 		warned = FALSE;
 		t = absolute_min_time;
-		show(argv[i], t, TRUE);
-		t += SECSPERHOUR * HOURSPERDAY;
-		show(argv[i], t, TRUE);
+		if (!Vflag) {
+			show(argv[i], t, TRUE);
+			t += SECSPERHOUR * HOURSPERDAY;
+			show(argv[i], t, TRUE);
+		}
 		if (t < cutlotime)
 			t = cutlotime;
 		tmp = my_localtime(&t);
@@ -415,11 +445,13 @@ main(int argc, char *argv[])
 			tm = newtm;
 			tmp = newtmp;
 		}
-		t = absolute_max_time;
-		t -= SECSPERHOUR * HOURSPERDAY;
-		show(argv[i], t, TRUE);
-		t += SECSPERHOUR * HOURSPERDAY;
-		show(argv[i], t, TRUE);
+		if (!Vflag) {
+			t = absolute_max_time;
+			t -= SECSPERHOUR * HOURSPERDAY;
+			show(argv[i], t, TRUE);
+			t += SECSPERHOUR * HOURSPERDAY;
+			show(argv[i], t, TRUE);
+		}
 	}
 	if (fflush(stdout) || ferror(stdout)) {
 		(void) fprintf(stderr, "%s: ", progname);

@@ -109,21 +109,23 @@ LDLIBS=
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
 #  -DHAVE_SYS_STAT_H=0 if your compiler lacks a "sys/stat.h"
 #  -DHAVE_SYS_WAIT_H=0 if your compiler lacks a "sys/wait.h"
-#  -DLOCALE_HOME=\"path\" if locales are in "path", not "/usr/lib/locale"
 #  -DHAVE_UNISTD_H=0 if your compiler lacks a "unistd.h" (Microsoft C++ 7?)
 #  -DHAVE_UTMPX_H=1 if your compiler has a "utmpx.h"
-#  -DTZDEFRULESTRING=\",date/time,date/time\" to default to the specified
-#	DST transitions if the time zone files cannot be accessed
-#  -DTZ_DOMAIN=\"foo\" to use "foo" for gettext domain name; default is "tz"
-#  -TTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
-#	the default is system-supplied, typically "/usr/lib/locale"
-#  $(GCC_DEBUG_FLAGS) if you are using GCC and want lots of checking
+#  -DLOCALE_HOME=\"path\" if locales are in "path", not "/usr/lib/locale"
 #  -DNO_RUN_TIME_WARNINGS_ABOUT_YEAR_2000_PROBLEMS_THANK_YOU=1
 #	if you do not want run time warnings about formats that may cause
 #	year 2000 grief
+#  -DTIME_T_FLOATING=1 if your time_t (or time_tz) is floating point
+#  -Dtime_tz=\"T\" to use T as the time_t type, rather than the system time_t
+#  -DTZ_DOMAIN=\"foo\" to use "foo" for gettext domain name; default is "tz"
+#  -TTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
+#	the default is system-supplied, typically "/usr/lib/locale"
+#  -DTZDEFRULESTRING=\",date/time,date/time\" to default to the specified
+#	DST transitions if the time zone files cannot be accessed
 #  -DZIC_MAX_ABBR_LEN_WO_WARN=3
 #	(or some other number) to set the maximum time zone abbreviation length
 #	that zic will accept without a warning (the default is 6)
+#  $(GCC_DEBUG_FLAGS) if you are using GCC and want lots of checking
 GCC_DEBUG_FLAGS = -Dlint -g3 -O3 -fno-common -fstrict-aliasing \
 	-Wall -Wextra \
 	-Wbad-function-cast -Wcast-align -Wcast-qual \

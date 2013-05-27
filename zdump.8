@@ -37,15 +37,28 @@ Each line ends with
 if the given time is Daylight Saving Time or
 .B isdst=0
 otherwise.
+.B \-V
+Like
+.BR \-v ,
+except omit the times relative to the extreme time values.
+This generates output that is easier to compare to that of
+implementations with different time representations.
 .TP
 .BI "\-c " [loyear,]hiyear
 Cut off verbose output near the start of the given year(s).
+.TP
+.BI "\-t " [lotime,]hitime
+Cut off verbose output at the start of the given time(s),
+given in seconds since 1970-01-01 00:00:00 UTC.
 By default,
-the program cuts off verbose output near the starts of the years -500 and 2500.
+the program cuts off verbose output near the starts of the years
+\-500 and 2500.
 .SH LIMITATIONS
 The
 .B \-v
-option may not be used on systems with floating-point time_t values
+and
+.B \-V
+options may not be used on systems with floating-point time_t values
 that are neither float nor double.
 .PP
 Time discontinuities are found by sampling the results returned by localtime

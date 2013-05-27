@@ -150,6 +150,10 @@ typedef long		int_fast64_t;
 # define ATTRIBUTE_PURE /* empty */
 #endif
 
+#if __STDC_VERSION__ < 199901 && !defined restrict
+# define restrict /* empty */
+#endif
+
 /*
 ** Workarounds for compilers/systems.
 */
@@ -162,6 +166,58 @@ typedef long		int_fast64_t;
 
 #ifndef asctime_r
 extern char *	asctime_r(struct tm const *, char *);
+#endif
+
+/*
+** Compile with -Dtime_tz=T to build the tz package with a private
+** time_t type equivalent to T rather than the system-supplied time_t.
+** This debugging feature can test unusual design decisions
+** (e.g., time_t wider than 'long', or unsigned time_t) even on
+** typical platforms.
+*/
+#ifdef time_tz
+static time_t sys_time(time_t *x) { return time(x); }
+
+# undef  ctime
+# define ctime tz_ctime
+# undef  ctime_r
+# define ctime_r tz_ctime_r
+# undef  difftime
+# define difftime tz_difftime
+# undef  gmtime
+# define gmtime tz_gmtime
+# undef  gmtime_r
+# define gmtime_r tz_gmtime_r
+# undef  localtime
+# define localtime tz_localtime
+# undef  localtime_r
+# define localtime_r tz_localtime_r
+# undef  mktime
+# define mktime tz_mktime
+# undef  time
+# define time tz_time
+# undef  time_t
+# define time_t tz_time_t
+
+typedef time_tz time_t;
+
+char *ctime(time_t const *);
+char *ctime_r(time_t const *, char *);
+double difftime(time_t, time_t);
+struct tm *gmtime(time_t const *);
+struct tm *gmtime_r(time_t const *restrict, struct tm *restrict);
+struct tm *localtime(time_t const *);
+struct tm *localtime_r(time_t const *restrict, struct tm *restrict);
+time_t mktime(struct tm *);
+
+static time_t
+time(time_t *p)
+{
+	time_t r = sys_time(0);
+	if (p)
+		*p = r;
+	return r;
+}
 #endif
 
 /*

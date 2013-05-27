@@ -53,6 +53,9 @@ TOPDIR=		/usr/local
 
 TZDIR=		$(TOPDIR)/etc/zoneinfo
 
+# Types to try, as an alternative to time_t.  int64_t should be first.
+TIME_T_ALTERNATIVES= int64_t int32_t uint32_t uint64_t
+
 # The "tzselect", "zic", and "zdump" commands get installed in. . .
 
 ETCDIR=		$(TOPDIR)/etc
@@ -427,9 +430,10 @@ check_tables:	checktab.awk $(PRIMARY_YDATA)
 check_web:	$(WEB_PAGES)
 		$(VALIDATE_ENV) $(VALIDATE) $(VALIDATE_FLAGS) $(WEB_PAGES)
 
-clean:
+clean_misc:
 		rm -f core *.o *.out \
 		  date tzselect version.h zdump zic yearistype
+clean:		clean_misc
 		rm -f -r tzpublic
 
 maintainer-clean: clean
@@ -440,7 +444,8 @@ maintainer-clean: clean
 names:
 		@echo $(ENCHILADA)
 
-public:		check check_public set-timestamps tarballs signatures
+public:		check check_public check_time_t_alternatives \
+		set-timestamps tarballs signatures
 
 # Set the time stamps to those of the git repository, if available,
 # and if the files have not changed since then.
@@ -469,6 +474,35 @@ check_public:	$(ENCHILADA)
 		  $(zic) -v -d tzpublic $$i 2>&1 || exit; \
 		done
 		$(zic) -v -d tzpublic $(TDATA)
+		rm -f -r tzpublic
+
+# Check that the code works under various alternative
+# implementations of time_t.
+check_time_t_alternatives:
+		mkdir tzpublic
+		zones=`$(AWK) '/^[^#]/ { print $$3 }' <zone.tab` && \
+		for type in $(TIME_T_ALTERNATIVES); do \
+		  mkdir tzpublic/$$type && \
+		  make clean_misc && \
+		  make TOPDIR=`pwd`/tzpublic/$$type \
+		    CFLAGS='$(CFLAGS) -Dtime_tz='"'$$type'" \
+		    install && \
+		  diff -qr tzpublic/int64_t/etc/zoneinfo tzpublic/$$type/etc/zoneinfo && \
+		  case $$type in \
+		  int32_t) range=-2147483648,2147483647;; \
+		  uint32_t) range=0,4294967296;; \
+		  int64_t) continue;; \
+		  *u*) range=0,10000000000;; \
+		  *) range=-10000000000,10000000000;; \
+		  esac && \
+		  echo checking $$type zones ... && \
+		  tzpublic/int64_t/etc/zdump -V -t $$range $$zones \
+		      >tzpublic/int64_t.out && \
+		  tzpublic/$$type/etc/zdump -V -t $$range $$zones \
+		      >tzpublic/$$type.out && \
+		  diff -u tzpublic/int64_t.out tzpublic/$$type.out \
+		    || exit; \
+		done
 		rm -f -r tzpublic
 
 tarballs:	tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz

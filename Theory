@@ -264,12 +264,12 @@ in decreasing order of importance:
 		TZ strings.  A file name component must not exceed 14
 		characters or start with `-'.  E.g., prefer `Brunei'
 		to `Bandar_Seri_Begawan'.
-	Include at least one location per time zone rule set per country.
-		One such location is enough.  Use ISO 3166 (see the file
-		iso3166.tab) to help decide whether something is a country.
-		However, uninhabited ISO 3166 regions like Bouvet Island
+	Do not use names that differ only in case.  Although the reference
+	        implementation is case-sensitive, some other implementations
+		are not, and they would mishandle names differing only in case.
+	Uninhabited regions like the North Pole and Bouvet Island
 		do not need locations, since local time is not defined there.
-	If all the clocks in a country's region have agreed since 1970,
+	If all the clocks in a region have agreed since 1970,
 		don't bother to include more than one location
 		even if subregions' clocks disagreed before 1970.
 		Otherwise these tables would become annoyingly large.
@@ -283,7 +283,7 @@ in decreasing order of importance:
 	Use mainstream English spelling, e.g. prefer `Rome' to `Roma', and
 		prefer `Athens' to the true name (which uses Greek letters).
 		The POSIX file name restrictions encourage this rule.
-	Use the most populous among locations in a country's time zone,
+	Use the most populous among locations in a zone,
 		e.g. prefer `Shanghai' to `Beijing'.  Among locations with
 		similar populations, pick the best-known location,
 		e.g. prefer `Rome' to `Milan'.
@@ -302,10 +302,11 @@ in decreasing order of importance:
 		Milan's population has grown to be somewhat greater
 		than Rome's.
 	If a name is changed, put its old spelling in the `backward' file.
+		This means old spellings will continue to work.
 
 The file `zone.tab' lists the geographical locations used to name
 time zone rule files.  It is intended to be an exhaustive list
-of canonical names for geographic regions.
+of names for geographic regions as described above.
 
 Older versions of this package used a different naming scheme,
 and these older names are still supported.
@@ -359,14 +360,13 @@ in decreasing order of importance:
 		If this is not available or is a phrase mentioning the country
 		(e.g. ``Cape Verde Time''), then:
 
-		When a country has a single or principal time zone region,
+		When a country is identified with a single or principal zone,
 			append `T' to the country's ISO	code, e.g. `CVT' for
 			Cape Verde Time.  For summer time append `ST';
 			for double summer time append `DST'; etc.
-		When a country has multiple time zones, take the first three
-			letters of an English place name identifying each zone
-			and then append `T', `ST', etc. as before;
-			e.g. `VLAST' for VLAdivostok Summer Time.
+		Otherwise, take the first three letters of an English place
+			name identifying each zone and append 'T', 'ST', etc.
+			as before; e.g. 'VLAST' for VLAdivostok Summer Time.
 
 	Use UTC (with time zone abbreviation "zzz") for locations while
 		uninhabited.  The "zzz" mnemonic is that these locations are,
@@ -587,7 +587,8 @@ Sources:
 
 Michael Allison and Robert Schmunk,
 "Technical Notes on Mars Solar Time as Adopted by the Mars24 Sunclock"
-<http://www.giss.nasa.gov/tools/mars24/help/notes.html> (2004-07-30).
+<http://www.giss.nasa.gov/tools/mars24/help/notes.html> (2012-08-08).
 
 Jia-Rui Chong, "Workdays Fit for a Martian", Los Angeles Times
+<http://articles.latimes.com/2004/jan/14/science/sci-marstime14>
 (2004-01-14), pp A1, A20-A21.

@@ -708,8 +708,7 @@ checkfinal(const char * const	value,
 	time_t		othert;
 	struct tm	tm;
 	struct tm	othertm;
-	register int	pass;
-	register long	offset;
+	register int	pass, offset;
 
 	/*
 	** See if there's both a USG and a BSD interpretation.
@@ -807,8 +806,7 @@ iffy(const time_t thist, const time_t thatt,
 static int
 netsettime(struct timeval ntv)
 {
-	int s, length, port, timed_ack, found, err;
-	long waittime;
+	int s, length, port, timed_ack, found, err, waittime;
 	fd_set ready;
 	char hostname[MAXHOSTNAMELEN];
 	struct timeval tout;

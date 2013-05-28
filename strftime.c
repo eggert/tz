@@ -317,10 +317,10 @@ label:
 					tm = *t;
 					mkt = mktime(&tm);
 					if (TYPE_SIGNED(time_t))
-						(void) sprintf(buf, "%ld",
-							(long) mkt);
-					else	(void) sprintf(buf, "%lu",
-							(unsigned long) mkt);
+						(void) sprintf(buf, "%"PRIdMAX,
+							(intmax_t) mkt);
+					else	(void) sprintf(buf, "%"PRIuMAX,
+							(uintmax_t) mkt);
 					pt = _add(buf, pt, ptlim);
 				}
 				continue;

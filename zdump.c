@@ -30,6 +30,47 @@
 #define isascii(x) 1
 #endif /* !defined isascii */
 
+/*
+** Substitutes for pre-C99 compilers.
+** Much of this section of code is stolen from private.h.
+*/
+
+#ifndef HAVE_STDINT_H
+# define HAVE_STDINT_H \
+    (199901 <= __STDC_VERSION__ || 2 < (__GLIBC__ + (0 < __GLIBC_MINOR__)))
+#endif
+#if HAVE_STDINT_H
+# include "stdint.h"
+#endif
+#ifndef HAVE_INTTYPES_H
+# define HAVE_INTTYPES_H HAVE_STDINT_H
+#endif
+#if HAVE_INTTYPES_H
+# include <inttypes.h>
+#endif
+
+#ifndef INT_FAST32_MAX
+# if INT_MAX >> 31 == 0
+typedef long int_fast32_t;
+# else
+typedef int int_fast32_t;
+# endif
+#endif
+
+#ifndef INTMAX_MAX
+# if defined LLONG_MAX || defined __LONG_LONG_MAX__
+typedef long long intmax_t;
+#  define PRIdMAX "lld"
+# else
+typedef long intmax_t;
+#  define PRIdMAX "ld"
+# endif
+#endif
+#ifndef SCNdMAX
+# define SCNdMAX PRIdMAX
+#endif
+
+
 #ifndef ZDUMP_LO_YEAR
 #define ZDUMP_LO_YEAR	(-500)
 #endif /* !defined ZDUMP_LO_YEAR */
@@ -97,7 +138,7 @@
 #define isleap_sum(a, b)	isleap((a) % 400 + (b) % 400)
 #endif /* !defined isleap_sum */
 
-#define SECSPERDAY	((long) SECSPERHOUR * HOURSPERDAY)
+#define SECSPERDAY	((int_fast32_t) SECSPERHOUR * HOURSPERDAY)
 #define SECSPERNYEAR	(SECSPERDAY * DAYSPERNYEAR)
 #define SECSPERLYEAR	(SECSPERNYEAR + SECSPERDAY)
 
@@ -179,13 +220,13 @@ static int	warned;
 
 static char *	abbr(struct tm * tmp);
 static void	abbrok(const char * abbrp, const char * zone);
-static long	delta(struct tm * newp, struct tm * oldp) ATTRIBUTE_PURE;
+static intmax_t	delta(struct tm * newp, struct tm * oldp) ATTRIBUTE_PURE;
 static void	dumptime(const struct tm * tmp);
 static time_t	hunt(char * name, time_t lot, time_t	hit);
 static void	checkabsolutes(void);
 static void	show(char * zone, time_t t, int v);
 static const char *	tformat(void);
-static time_t	yeartot(long y) ATTRIBUTE_PURE;
+static time_t	yeartot(intmax_t y) ATTRIBUTE_PURE;
 
 #ifndef TYPECHECK
 #define my_localtime	localtime
@@ -324,15 +365,15 @@ main(int argc, char *argv[])
  arg_processing_done:;
 
 	if (vflag | Vflag) {
-		long	lo;
-		long	hi;
-		char	dummy;
-		register long cutloyear = ZDUMP_LO_YEAR;
-		register long cuthiyear = ZDUMP_HI_YEAR;
+		intmax_t	lo;
+		intmax_t	hi;
+		char		dummy;
+		register intmax_t cutloyear = ZDUMP_LO_YEAR;
+		register intmax_t cuthiyear = ZDUMP_HI_YEAR;
 		if (cutarg != NULL) {
-			if (sscanf(cutarg, "%ld%c", &hi, &dummy) == 1) {
+			if (sscanf(cutarg, "%"SCNdMAX"%c", &hi, &dummy) == 1) {
 				cuthiyear = hi;
-			} else if (sscanf(cutarg, "%ld,%ld%c",
+			} else if (sscanf(cutarg, "%"SCNdMAX",%"SCNdMAX"%c",
 				&lo, &hi, &dummy) == 2) {
 					cutloyear = lo;
 					cuthiyear = hi;
@@ -348,13 +389,13 @@ main(int argc, char *argv[])
 			cuthitime = yeartot(cuthiyear);
 		}
 		if (cuttimes != NULL) {
-			if (sscanf(cuttimes, "%ld%c", &hi, &dummy) == 1) {
+			if (sscanf(cuttimes, "%"SCNdMAX"%c", &hi, &dummy) == 1) {
 				if (hi < cuthitime) {
 					if (hi < absolute_min_time)
 						hi = absolute_min_time;
 					cuthitime = hi;
 				}
-			} else if (sscanf(cuttimes, "%ld,%ld%c",
+			} else if (sscanf(cuttimes, "%"SCNdMAX",%"SCNdMAX"%c",
 					  &lo, &hi, &dummy) == 2) {
 				if (cutlotime < lo) {
 					if (absolute_max_time < lo)
@@ -475,11 +516,11 @@ _("%s: use of -v on system with floating time_t other than float or double\n"),
 }
 
 static time_t
-yeartot(const long y)
+yeartot(const intmax_t y)
 {
-	register long	myy;
-	register long	seconds;
-	register time_t	t;
+	register intmax_t	myy;
+	register int_fast32_t	seconds;
+	register time_t		t;
 
 	myy = EPOCH_YEAR;
 	t = 0;
@@ -509,7 +550,6 @@ static time_t
 hunt(char *name, time_t lot, time_t hit)
 {
 	time_t			t;
-	long			diff;
 	struct tm		lotm;
 	register struct tm *	lotmp;
 	struct tm		tm;
@@ -522,7 +562,7 @@ hunt(char *name, time_t lot, time_t hit)
 		(void) strncpy(loab, abbr(&lotm), (sizeof loab) - 1);
 	}
 	for ( ; ; ) {
-		diff = (long) (hit - lot);
+		time_t diff = hit - lot;
 		if (diff < 2)
 			break;
 		t = lot;
@@ -552,11 +592,11 @@ hunt(char *name, time_t lot, time_t hit)
 ** Thanks to Paul Eggert for logic used in delta.
 */
 
-static long
+static intmax_t
 delta(struct tm * newp, struct tm *oldp)
 {
-	register long	result;
-	register int	tmy;
+	register intmax_t	result;
+	register int		tmy;
 
 	if (newp->tm_year < oldp->tm_year)
 		return -delta(oldp, newp);
@@ -632,12 +672,18 @@ tformat(void)
 		return "%g";
 	}
 	if (0 > (time_t) -1) {		/* signed */
+		if (sizeof (time_t) == sizeof (intmax_t))
+			return "%"PRIdMAX;
 		if (sizeof (time_t) > sizeof (long))
 			return "%lld";
 		if (sizeof (time_t) > sizeof (int))
 			return "%ld";
 		return "%d";
 	}
+#ifdef PRIuMAX
+	if (sizeof (time_t) == sizeof (uintmax_t))
+		return "%"PRIuMAX;
+#endif
 	if (sizeof (time_t) > sizeof (unsigned long))
 		return "%llu";
 	if (sizeof (time_t) > sizeof (unsigned int))

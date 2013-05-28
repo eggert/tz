@@ -124,18 +124,64 @@
 #include "stdint.h"
 #endif /* !HAVE_STDINT_H */
 
+#ifndef HAVE_INTTYPES_H
+# define HAVE_INTTYPES_H HAVE_STDINT_H
+#endif
+#if HAVE_INTTYPES_H
+# include <inttypes.h>
+#endif
+
 #ifndef INT_FAST64_MAX
 /* Pre-C99 GCC compilers define __LONG_LONG_MAX__ instead of LLONG_MAX.  */
 #if defined LLONG_MAX || defined __LONG_LONG_MAX__
 typedef long long	int_fast64_t;
+# ifdef LLONG_MAX
+#  define INT_FAST64_MIN LLONG_MIN
+#  define INT_FAST64_MAX LLONG_MAX
+# else
+#  define INT_FAST64_MIN __LONG_LONG_MIN__
+#  define INT_FAST64_MAX __LONG_LONG_MAX__
+# endif
+# define SCNdFAST64 "lld"
 #else /* ! (defined LLONG_MAX || defined __LONG_LONG_MAX__) */
 #if (LONG_MAX >> 31) < 0xffffffff
 Please use a compiler that supports a 64-bit integer type (or wider);
 you may need to compile with "-DHAVE_STDINT_H".
 #endif /* (LONG_MAX >> 31) < 0xffffffff */
 typedef long		int_fast64_t;
+# define INT_FAST64_MIN LONG_MIN
+# define INT_FAST64_MAX LONG_MAX
+# define SCNdFAST64 "ld"
 #endif /* ! (defined LLONG_MAX || defined __LONG_LONG_MAX__) */
 #endif /* !defined INT_FAST64_MAX */
+
+#ifndef INT_FAST32_MAX
+# if INT_MAX >> 31 == 0
+typedef long int_fast32_t;
+# else
+typedef int int_fast32_t;
+# endif
+#endif
+
+#ifndef INTMAX_MAX
+# if defined LLONG_MAX || defined __LONG_LONG_MAX__
+typedef long long intmax_t;
+#  define PRIdMAX "lld"
+# else
+typedef long intmax_t;
+#  define PRIdMAX "ld"
+# endif
+#endif
+
+#ifndef UINTMAX_MAX
+# if defined ULLONG_MAX || defined __LONG_LONG_MAX__
+typedef unsigned long long uintmax_t;
+#  define PRIuMAX "llu"
+# else
+typedef unsigned long uintmax_t;
+#  define PRIuMAX "lu"
+# endif
+#endif
 
 #ifndef INT32_MAX
 #define INT32_MAX 0x7fffffff
@@ -144,10 +190,20 @@ typedef long		int_fast64_t;
 #define INT32_MIN (-1 - INT32_MAX)
 #endif /* !defined INT32_MIN */
 
-#if 2 < __GNUC__ || (__GNUC__ == 2 && 96 <= __GNUC_MINOR__)
+#if 2 < __GNUC__ + (96 <= __GNUC_MINOR__)
+# define ATTRIBUTE_CONST __attribute__ ((const))
 # define ATTRIBUTE_PURE __attribute__ ((__pure__))
 #else
+# define ATTRIBUTE_CONST /* empty */
 # define ATTRIBUTE_PURE /* empty */
+#endif
+
+#if !defined _Noreturn && __STDC_VERSION__ < 201112
+# if 2 < __GNUC__ + (8 <= __GNUC_MINOR__)
+#  define _Noreturn __attribute__ ((__noreturn__))
+# else
+#  define _Noreturn
+# endif
 #endif
 
 #if __STDC_VERSION__ < 199901 && !defined restrict

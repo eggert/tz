@@ -1244,7 +1244,7 @@ Rule	Zion	2028	max	-	Oct	Sun>=2	2:00	0	S
 #Rule	Zion	2082	max	-	Oct	Sun>=2	2:00	0	S
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Jerusalem	2:20:56 -	LMT	1880
+Zone	Asia/Jerusalem	2:20:54 -	LMT	1880
 			2:20:40	-	JMT	1918	# Jerusalem Mean Time?
 			2:00	Zion	I%sT
 

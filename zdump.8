@@ -5,12 +5,15 @@ zdump \- time zone dumper
 .B zdump
 [
 .B \-\-version
-]
-[
+] [
 .B \-v
 ] [
+.B \-V
+] [
 .B \-c
-[loyear,]hiyear ] [ zonename ... ]
+[loyear,]hiyear ] [
+.B \-t
+[lotime,]hitime ] [ zonename ... ]
 .SH DESCRIPTION
 .I Zdump
 prints the current time in each
@@ -37,6 +40,7 @@ Each line ends with
 if the given time is Daylight Saving Time or
 .B isdst=0
 otherwise.
+.TP
 .B \-V
 Like
 .BR \-v ,
@@ -46,13 +50,12 @@ implementations with different time representations.
 .TP
 .BI "\-c " [loyear,]hiyear
 Cut off verbose output near the start of the given year(s).
+By default,
+the program cuts off verbose output near the starts of the years \-500 and 2500.
 .TP
 .BI "\-t " [lotime,]hitime
 Cut off verbose output at the start of the given time(s),
-given in seconds since 1970-01-01 00:00:00 UTC.
-By default,
-the program cuts off verbose output near the starts of the years
-\-500 and 2500.
+given in decimal seconds since 1970-01-01 00:00:00 UTC.
 .SH LIMITATIONS
 The
 .B \-v

@@ -2547,8 +2547,8 @@ Rule	Syria	2006	only	-	Sep	22	0:00	0	-
 Rule	Syria	2007	only	-	Mar	lastFri	0:00	1:00	S
 # From Jesper Norgard (2007-10-27):
 # The sister center ICARDA of my work CIMMYT is confirming that Syria DST will
-# not take place 1.st November at 0:00 o'clock but 1.st November at 24:00 or
-# rather Midnight between Thursday and Friday. This does make more sence than
+# not take place 1st November at 0:00 o'clock but 1st November at 24:00 or
+# rather Midnight between Thursday and Friday. This does make more sense than
 # having it between Wednesday and Thursday (two workdays in Syria) since the
 # weekend in Syria is not Saturday and Sunday, but Friday and Saturday. So now
 # it is implemented at midnight of the last workday before weekend...

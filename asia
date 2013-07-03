@@ -1212,36 +1212,18 @@ Rule	Zion	2011	only	-	Oct	 2	2:00	0	S
 Rule	Zion	2012	only	-	Mar	Fri>=26	2:00	1:00	D
 Rule	Zion	2012	only	-	Sep	23	2:00	0	S
 
-# From Ephraim Silverberg (2012-10-18):
-# Yesterday, the Interior Ministry Committee, after more than a year
-# past, approved sending the proposed June 2011 changes to the Time
-# Decree Law back to the Knesset for second and third (final) votes
-# before the upcoming elections on Jan. 22, 2013.  Hence, although the
-# changes are not yet law, they are expected to be so before February 2013.
+# From Ephraim Silverberg (2013-06-27):
+# On June 23, 2013, the Israeli government approved changes to the
+# Time Decree Law.  The next day, the changes passed the First Reading
+# in the Knesset.  The law is expected to pass the Second and Third
+# (final) Readings by the beginning of September 2013.
 #
-# As of 2013, DST starts at 02:00 on the Friday before the last Sunday in March.
-# DST ends at 02:00 on the first Sunday after October 1, unless it occurs on the
-# second day of the Jewish Rosh Hashana holiday, in which case DST ends a day
-# later (i.e. at 02:00 the first Monday after October 2).
-# [Rosh Hashana holidays are factored in until 2100.]
-
-# From Ephraim Silverberg (2012-11-05):
-# The Knesset passed today (in second and final readings) the amendment to the
-# Time Decree Law making the changes ... law.
+# As of 2013, DST starts at 02:00 on the Friday before the last Sunday
+# in March.  DST ends at 02:00 on the last Sunday of October.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Zion	2013	max	-	Mar	Fri>=23	2:00	1:00	D
-Rule	Zion	2013	2026	-	Oct	Sun>=2	2:00	0	S
-Rule	Zion	2027	only	-	Oct	Mon>=3	2:00	0	S
-Rule	Zion	2028	max	-	Oct	Sun>=2	2:00	0	S
-# The following rules are commented out for now, as they break older
-# versions of zic that support only signed 32-bit timestamps, i.e.,
-# through 2038-01-19 03:14:07 UTC.
-#Rule	Zion	2028	2053	-	Oct	Sun>=2	2:00	0	S
-#Rule	Zion	2054	only	-	Oct	Mon>=3	2:00	0	S
-#Rule	Zion	2055	2080	-	Oct	Sun>=2	2:00	0	S
-#Rule	Zion	2081	only	-	Oct	Mon>=3	2:00	0	S
-#Rule	Zion	2082	max	-	Oct	Sun>=2	2:00	0	S
+Rule	Zion	2013	max	-	Oct	lastSun	2:00	0	S
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Jerusalem	2:20:54 -	LMT	1880

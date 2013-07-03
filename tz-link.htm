@@ -8,7 +8,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="US-ASCII"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2013-05-10">
+<meta name="DC.Date" content="2013-07-03">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -31,8 +31,7 @@ href="http://en.wikipedia.org/wiki/Coordinated_Universal_Time"><abbr
 title="Coordinated Universal Time">UTC</abbr></a> offsets, and
 <a href="http://en.wikipedia.org/wiki/Daylight_saving">daylight-saving</a>
 rules.
-This database (often called <code>zoneinfo</code> or <a
-href="http://en.wikipedia.org/wiki/Tz_database"><code>tz</code></a>)
+This database (often called <code>zoneinfo</code> or <code>tz</code>)
 is used by several implementations,
 including
 <a href="http://www.gnu.org/software/libc/">the
@@ -40,6 +39,8 @@ including
 C Library</a> (used in
 <a href="http://www.linux.org/"><abbr>GNU</abbr>/Linux</a>),
 <a href="http://www.android.com/">Android</a>,
+<a href="https://developer.mozilla.org/en-US/docs/Mozilla/Firefox_OS">Firefox
+OS</a>,
 <a href="http://www.freebsd.org/">FreeBSD</a>,
 <a href="http://netbsd.org/">NetBSD</a>,
 <a href="http://openbsd.org/">OpenBSD</a>,
@@ -134,6 +135,17 @@ For Comments">RFC</abbr> 6557).</p>
 The Web has several other sources for time zone and daylight saving time data.
 Here are some links that may be of interest.
 </p>
+<h2>Commentary on the <code>tz</code> database</h2>
+<ul>
+<li>The article
+<a href="http://en.wikipedia.org/wiki/Tz_database">tz database</a> is
+an encyclopedic summary.</li>
+<li><a href="http://www.cstdbill.com/tzdb/tz-how-to.html">How to Read the
+tz Database Source Files</a> explains the tz database format.</li>
+<li><a href="http://blog.jonudell.net/2009/10/23/a-literary-appreciation-of-the-olsonzoneinfotz-database/">A
+literary appreciation of the Olson/Zoneinfo/tz database</a> comments on the
+database's style.</li>
+</ul>
 <h2>Web sites using recent versions of the <code>tz</code> database</h2>
 <p>
 These are listed roughly in ascending order of complexity and fanciness.
@@ -176,8 +188,8 @@ href="http://calconnect.org/publications/icalendartimezoneproblemsandrecommendat
 TIMEZONE Problems and Recommendations</a> offers guidelines and
 recommendations for the use of VTIMEZONE and <code>tz</code>.</li>
 <li><a href="http://calconnect.org/dstlinks.shtml">Extended Daylight
-Saving Time Links, Advisories and Changes</a> lists vendor material on recent
-daylight saving time changes.</li>
+Saving Time Links, Advisories and Changes</a> lists vendor material on 2007
+U.S. daylight saving time changes.</li>
 <li><a
 href="http://calconnect.org/publications/timezoneregistryandservicerecommendationsv1.0.pdf">Timezone
 Registry and Service Recommendations</a> discusses a
@@ -235,16 +247,16 @@ contains a class
 <code>org.joda.time.tz.ZoneInfoCompiler</code> that compiles
 <code>tz</code> source into a Joda-specific binary format. Joda Time
 is freely available under a <abbr>BSD</abbr>-style license.</li>
-<li><a href="http://pytz.sourceforge.net">PyTZ - Python Time
-Zone Library</a> compiles <code>tz</code> source into
+<li><a href="http://pytz.sourceforge.net">pytz - World Timezone
+Definitions for Python</a> compiles <code>tz</code> source into
 <a href="http://python.org/">Python</a>.
 It is freely available under a <abbr>BSD</abbr>-style license.</li>
 <li><a href="http://tzinfo.rubyforge.org/">TZInfo - Ruby Timezone Library</a>
 compiles <code>tz</code> source into
-<a href="http://ruby-lang.org">Ruby</a>.
+<a href="http://www.ruby-lang.org/en/">Ruby</a>.
 It is freely available under the <abbr
 title="Massachusetts Institute of Technology">MIT</abbr> license.</li>
-<li>The <a href="http://chronos-st.org/">Chronos Date/Time
+<li>The <a href="http://www.squeaksource.com/Chronos/">Chronos Date/Time
 Library</a> is
 a <a href="http://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a> class
 library that compiles <code>tz</code> source into a time zone repository whose format
@@ -331,7 +343,7 @@ time zone history atlases published in both <a
 href="http://astrocom.com/astrology-products/software/acs-atlas-software">computer</a>
 and book form (<a
 href="http://www.astrocom.com/astrology/books/american-atlas">one volume
-for the USA</a>, and <a
+for the U.S.</a>, and <a
 href="http://www.astrocom.com/astrology/books/international-atlas">one for
 other locations</a>) by <a
 href="http://astrocom.com/">Astro Computing Services</a>.</li>
@@ -421,6 +433,9 @@ surveys the evolution of timekeeping.</li>
 <li><a href="http://webexhibits.org/daylightsaving/">About Daylight
 Saving Time - History, rationale, laws &amp; dates</a>
 is an overall history of <abbr>DST</abbr>.</li>
+<li><a href="http://www.w3.org/TR/timezone/">Working with Time Zones</a>
+contains guidelines and best practices for software applications that
+deal with civil time.</li>
 <li><a href="http://energy.ca.gov/daylightsaving.html">Saving Time,
 Saving Energy</a> discusses a primary justification for <abbr>DST</abbr>.</li>
 <li><a href="http://seizethedaylight.com/dst/">A Brief
@@ -499,7 +514,7 @@ href="http://www.polyomino.org.uk/british-time/">History of
 legal time in Britain</a> discusses in detail the country
 with perhaps the best-documented history of clock adjustments.
 The National Physical Laboratory also maintains an <a
-href="http://www.npl.co.uk/educate-explore/what-is-the-time/archive-of-summer-time-dates-1916-2006">Archive
+href="http://www.npl.co.uk/educate-explore/what-is-time/archive-of-summer-time-dates-1916-2006">Archive
 of Summer time dates</a>.</dd>
 </dl>
 <h2>Precision timekeeping</h2>
@@ -578,8 +593,8 @@ contentious issue.</li>
 <h2>Time notation</h2>
 <ul>
 <li>
-<a href="http://www.cl.cam.ac.uk/~mgk25/iso-time.html">A Summary of
-the International Standard Date and Time Notation</a> is a good
+<a href="http://www.cl.cam.ac.uk/~mgk25/iso-time.html">A summary of
+the international standard date and time notation</a> is a good
 summary of
 <a
 href="http://www.iso.org/iso/catalogue_detail?csnumber=40874"><abbr

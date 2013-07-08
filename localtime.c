@@ -1434,6 +1434,18 @@ offtime(const time_t *const timep, const int_fast32_t offset)
 #endif /* defined STD_INSPIRED */
 
 /*
+** Convert T to time_t, truncating toward zero if time_t is integral.
+** On most platforms, double_to_time(0.5) returns 0; the exceptions are
+** the rare platforms where time_t is floating.
+*/
+
+static time_t
+double_to_time(double t)
+{
+	return t;
+}
+
+/*
 ** Return the number of leap years through the end of the given year
 ** where, to make the math easy, the answer for year zero is defined as zero.
 */
@@ -1514,7 +1526,7 @@ timesub(const time_t *const timep, const int_fast32_t offset,
 	}
 	{
 		register int_fast32_t	seconds;
-		register time_t		half_second = 0.5;
+		register time_t		half_second = double_to_time(0.5);
 
 		seconds = tdays * SECSPERDAY + half_second;
 		tdays = seconds / SECSPERDAY;

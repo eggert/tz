@@ -1426,7 +1426,7 @@ gmtime_r(const time_t *const timep, struct tm *tmp)
 #ifdef STD_INSPIRED
 
 struct tm *
-offtime(const time_t *const timep, const int_fast32_t offset)
+offtime(const time_t *const timep, const long offset)
 {
 	return gmtsub(timep, offset, &tm);
 }
@@ -1997,7 +1997,7 @@ timegm(struct tm *const tmp)
 }
 
 time_t
-timeoff(struct tm *const tmp, const int_fast32_t offset)
+timeoff(struct tm *const tmp, const long offset)
 {
 	if (tmp != NULL)
 		tmp->tm_isdst = 0;
@@ -2013,7 +2013,7 @@ timeoff(struct tm *const tmp, const int_fast32_t offset)
 ** previous versions of the CMUCS runtime library.
 */
 
-int_fast32_t
+long
 gtime(struct tm *const tmp)
 {
 	const time_t	t = mktime(tmp);

@@ -1267,20 +1267,17 @@ truncate_time(time_t t)
 	** INTMAX_MAX is converted to a larger time_t value before it
 	** is compared.
 	**
-	** On all platforms that we know of, if a time value is
-	** outside intmax_t/uintmax_t range, then it is an integer so we can
-	** simply return it.  There's no simple, portable way to check this.
+	** On all platforms that we know of (1) it is safe to compare
+	** INTMAX_MIN and INTMAX_MAX to floating-point values without
+	** worrying about undefined behavior due to floating-point
+	** overflow on conversion, and (2) any time_t value outside
+	** intmax_t range is an integer so we can simply return it.
+	** We know of no simple, portable way to check these assumptions.
 	** If you know of a counterexample platform, please report a bug.
 	*/
-	if (!TYPE_INTEGRAL(time_t)) {
-		if (INTMAX_MIN < t && t < INTMAX_MAX) {
-			intmax_t i = t;
-			return i;
-		}
-		if (0 <= t && t < UINTMAX_MAX) {
-			uintmax_t i = t;
-			return i;
-		}
+	if (!TYPE_INTEGRAL(time_t) && INTMAX_MIN < t && t < INTMAX_MAX) {
+		intmax_t i = t;
+		return i;
 	}
 
 	return t;

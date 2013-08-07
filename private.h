@@ -186,15 +186,9 @@ typedef long intmax_t;
 # if defined ULLONG_MAX || defined __LONG_LONG_MAX__
 typedef unsigned long long uintmax_t;
 #  define PRIuMAX "llu"
-#  ifdef ULLONG_MAX
-#   define UINTMAX_MAX ULLONG_MAX
-#  else
-#   define UINTMAX_MAX (__LONG_LONG_MAX__ * 2ULL + 1)
-#  endif
 # else
 typedef unsigned long uintmax_t;
 #  define PRIuMAX "lu"
-#  define UINTMAX_MAX ULONG_MAX
 # endif
 #endif
 

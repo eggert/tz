@@ -167,9 +167,18 @@ typedef int int_fast32_t;
 # if defined LLONG_MAX || defined __LONG_LONG_MAX__
 typedef long long intmax_t;
 #  define PRIdMAX "lld"
+#  ifdef LLONG_MAX
+#   define INTMAX_MAX LLONG_MAX
+#   define INTMAX_MIN LLONG_MIN
+#  else
+#   define INTMAX_MAX __LONG_LONG_MAX__
+#   define INTMAX_MIN __LONG_LONG_MIN__
+#  endif
 # else
 typedef long intmax_t;
 #  define PRIdMAX "ld"
+#  define INTMAX_MAX LONG_MAX
+#  define INTMAX_MIN LONG_MIN
 # endif
 #endif
 
@@ -177,9 +186,15 @@ typedef long intmax_t;
 # if defined ULLONG_MAX || defined __LONG_LONG_MAX__
 typedef unsigned long long uintmax_t;
 #  define PRIuMAX "llu"
+#  ifdef ULLONG_MAX
+#   define UINTMAX_MAX ULLONG_MAX
+#  else
+#   define UINTMAX_MAX (__LONG_LONG_MAX__ * 2ULL + 1)
+#  endif
 # else
 typedef unsigned long uintmax_t;
 #  define PRIuMAX "lu"
+#  define UINTMAX_MAX ULONG_MAX
 # endif
 #endif
 

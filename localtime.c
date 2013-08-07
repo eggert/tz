@@ -1254,6 +1254,38 @@ tzset(void)
 	settzname();
 }
 
+/* Return T with any fractional part discarded.  */
+static time_t
+truncate_time(time_t t)
+{
+	/*
+	** If time_t is floating-point, convert it to integer and
+	** back; this discards the fraction.  Avoid using <math.h>
+	** functions, as we don't want to depend on <math.h>.  Use <,
+	** not <=, when comparing against *_MIN and *_MAX values, as
+	** this avoids undefined behavior when, for example,
+	** INTMAX_MAX is converted to a larger time_t value before it
+	** is compared.
+	**
+	** On all platforms that we know of, if a time value is
+	** outside intmax_t/uintmax_t range, then it is an integer so we can
+	** simply return it.  There's no simple, portable way to check this.
+	** If you know of a counterexample platform, please report a bug.
+	*/
+	if (!TYPE_INTEGRAL(time_t)) {
+		if (INTMAX_MIN < t && t < INTMAX_MAX) {
+			intmax_t i = t;
+			return i;
+		}
+		if (0 <= t && t < UINTMAX_MAX) {
+			uintmax_t i = t;
+			return i;
+		}
+	}
+
+	return t;
+}
+
 /*
 ** The easy way to behave "as if no library function calls" localtime
 ** is to not call it--so we drop its guts into "localsub", which can be
@@ -1283,21 +1315,15 @@ localsub(const time_t *const timep, const int_fast32_t offset,
 		(sp->goahead && t > sp->ats[sp->timecnt - 1])) {
 			time_t			newt = t;
 			register time_t		seconds;
-			register time_t		tcycles;
-			register int_fast64_t	icycles;
+			register time_t		years;
 
 			if (t < sp->ats[0])
 				seconds = sp->ats[0] - t;
 			else	seconds = t - sp->ats[sp->timecnt - 1];
 			--seconds;
-			tcycles = seconds / YEARSPERREPEAT / AVGSECSPERYEAR;
-			++tcycles;
-			icycles = tcycles;
-			if (tcycles - icycles >= 1 || icycles - tcycles >= 1)
-				return NULL;
-			seconds = icycles;
-			seconds *= YEARSPERREPEAT;
-			seconds *= AVGSECSPERYEAR;
+			years = (truncate_time (seconds / SECSPERREPEAT + 1)
+				 * YEARSPERREPEAT);
+			seconds = years * AVGSECSPERYEAR;
 			if (t < sp->ats[0])
 				newt += seconds;
 			else	newt -= seconds;
@@ -1310,8 +1336,8 @@ localsub(const time_t *const timep, const int_fast32_t offset,
 
 				newy = tmp->tm_year;
 				if (t < sp->ats[0])
-					newy -= icycles * YEARSPERREPEAT;
-				else	newy += icycles * YEARSPERREPEAT;
+					newy -= years;
+				else	newy += years;
 				tmp->tm_year = newy;
 				if (tmp->tm_year != newy)
 					return NULL;

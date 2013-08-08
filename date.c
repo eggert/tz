@@ -54,14 +54,9 @@ static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
 #define SECSPERMIN	60
 #endif /* !defined SECSPERMIN */
 
-extern double		atof();
 extern char **		environ;
-extern char *		getlogin();
-extern time_t		mktime();
 extern char *		optarg;
 extern int		optind;
-extern char *		strchr();
-extern time_t		time();
 extern char *		tzname[2];
 
 static int		retval = EXIT_SUCCESS;
@@ -270,6 +265,8 @@ _("date: error: multiple values in command line\n"));
 			oops("settimeofday");
 #endif /* HAVE_SETTIMEOFDAY == 2 */
 #if HAVE_SETTIMEOFDAY != 2
+		(void) dsttime;
+		(void) minuteswest;
 		(void) fprintf(stderr,
 _("date: warning: kernel doesn't keep -d/-t information, option ignored\n"));
 #endif /* HAVE_SETTIMEOFDAY != 2 */
@@ -542,8 +539,6 @@ display(const char *const format)
 	}
 	exit(retval);
 }
-
-extern size_t	strftime();
 
 #define INCR	1024
 

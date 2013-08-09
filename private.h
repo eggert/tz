@@ -74,6 +74,7 @@
 #include "sys/types.h"	/* for time_t */
 #include "stdio.h"
 #include "errno.h"
+#include "float.h"	/* for FLT_MAX and DBL_MAX */
 #include "string.h"
 #include "limits.h"	/* for CHAR_BIT et al. */
 #include "time.h"
@@ -166,6 +167,7 @@ typedef int int_fast32_t;
 #ifndef INTMAX_MAX
 # if defined LLONG_MAX || defined __LONG_LONG_MAX__
 typedef long long intmax_t;
+#  define strtoimax strtoll
 #  define PRIdMAX "lld"
 #  ifdef LLONG_MAX
 #   define INTMAX_MAX LLONG_MAX
@@ -176,6 +178,7 @@ typedef long long intmax_t;
 #  endif
 # else
 typedef long intmax_t;
+#  define strtoimax strtol
 #  define PRIdMAX "ld"
 #  define INTMAX_MAX LONG_MAX
 #  define INTMAX_MIN LONG_MIN
@@ -312,6 +315,30 @@ const char *	scheck(const char * string, const char * format);
 #ifndef TYPE_SIGNED
 #define TYPE_SIGNED(type) (((type) -1) < 0)
 #endif /* !defined TYPE_SIGNED */
+
+/* The minimum and maximum finite time values.  */
+static time_t const time_t_min =
+  ((time_t) 0.5 == 0.5
+   ? (sizeof (time_t) == sizeof (float) ? (time_t) -FLT_MAX
+      : sizeof (time_t) == sizeof (double) ? (time_t) -DBL_MAX
+      : sizeof (time_t) == sizeof (long double) ? (time_t) -LDBL_MAX
+      : 0)
+#ifndef TIME_T_FLOATING
+   : (time_t) -1 < 0
+   ? (time_t) -1 << (CHAR_BIT * sizeof (time_t) - 1)
+#endif
+   : 0);
+static time_t const time_t_max =
+  ((time_t) 0.5 == 0.5
+   ? (sizeof (time_t) == sizeof (float) ? (time_t) FLT_MAX
+      : sizeof (time_t) == sizeof (double) ? (time_t) DBL_MAX
+      : sizeof (time_t) == sizeof (long double) ? (time_t) LDBL_MAX
+      : -1)
+#ifndef TIME_T_FLOATING
+   : (time_t) -1 < 0
+   ? - (~ 0 < 0) - ((time_t) -1 << (CHAR_BIT * sizeof (time_t) - 1))
+#endif
+   : -1);
 
 /*
 ** Since the definition of TYPE_INTEGRAL contains floating point numbers,

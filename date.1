@@ -10,6 +10,9 @@ date \- show and set date and time
 ] [
 .B \-c
 ] [
+.B \-r
+seconds
+] [
 .B \-n
 ] [
 .B \-d
@@ -132,6 +135,14 @@ These options are available:
 .TP
 .BR \-u " or " \-c
 Use UTC when setting and showing the date and time.
+.TP
+.BI "\-r " seconds
+Output the date that corresponds to
+.I seconds
+past the epoch of 1970-01-01 00:00:00 UTC, where
+.I seconds
+should be an integer, either decimal, octal (leading 0), or
+hexadecimal (leading 0x), preceded by an optional sign.
 .TP
 .B \-n
 Do not notify other networked systems of the time change.

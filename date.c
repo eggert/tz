@@ -63,7 +63,7 @@ static int		retval = EXIT_SUCCESS;
 
 static void		checkfinal(const char *, int, time_t, time_t);
 static time_t		convert(const char *, int, time_t);
-static void		display(const char *);
+static void		display(const char *, time_t);
 static void		dogmt(void);
 static void		errensure(void);
 static void		iffy(time_t, time_t, const char *, const char *);
@@ -89,11 +89,14 @@ main(const int argc, char *argv[])
 	register int		dflag = 0;
 	register int		nflag = 0;
 	register int		tflag = 0;
+	register int		rflag = 0;
 	register int		minuteswest;
 	register int		dsttime;
 	register double		adjust;
 	time_t			now;
 	time_t			t;
+	intmax_t		secs;
+	char *			endarg;
 
 	INITIALIZE(dousg);
 	INITIALIZE(minuteswest);
@@ -109,15 +112,35 @@ main(const int argc, char *argv[])
 #endif /* defined(TEXTDOMAINDIR) */
 	(void) textdomain(TZ_DOMAIN);
 #endif /* HAVE_GETTEXT */
-	(void) time(&now);
+	t = now = time(NULL);
 	format = value = NULL;
-	while ((ch = getopt(argc, argv, "ucnd:t:a:")) != EOF && ch != -1) {
+	while ((ch = getopt(argc, argv, "ucr:nd:t:a:")) != EOF && ch != -1) {
 		switch (ch) {
 		default:
 			usage();
 		case 'u':		/* do it in UTC */
 		case 'c':
 			dogmt();
+			break;
+		case 'r':		/* seconds since 1970 */
+			if (rflag) {
+				(void) fprintf(stderr,
+					_("date: error: multiple -r's used"));
+				usage();
+			}
+			rflag = 1;
+			errno = 0;
+			secs = strtoimax (optarg, &endarg, 0);
+			if (*endarg || optarg == endarg)
+				errno = EINVAL;
+			else if (! (time_t_min <= secs && secs <= time_t_max))
+				errno = ERANGE;
+			if (errno) {
+				perror(optarg);
+				errensure();
+				exit(retval);
+			}
+			t = secs;
 			break;
 		case 'n':		/* don't set network */
 			nflag = 1;
@@ -183,7 +206,7 @@ main(const int argc, char *argv[])
 _("date: error: multiple formats in command line\n"));
 				usage();
 			}
-		else	if (value == NULL)
+		else	if (value == NULL && !rflag)
 				value = cp;
 			else {
 				(void) fprintf(stderr,
@@ -272,28 +295,14 @@ _("date: warning: kernel doesn't keep -d/-t information, option ignored\n"));
 #endif /* HAVE_SETTIMEOFDAY != 2 */
 	}
 
-	if (value == NULL)
-		display(format);
-
-	reset(t, nflag);
-
-	checkfinal(value, dousg, t, now);
-
-#ifdef EBUG
-	{
-		struct tm	tm;
-
-		tm = *localtime(&t);
-		timeout(stdout, "%c\n", &tm);
-		exit(retval);
+	if (value) {
+		reset(t, nflag);
+		checkfinal(value, dousg, t, now);
+		t = time(NULL);
 	}
-#endif /* defined EBUG */
 
-	display(format);
-
-	/* gcc -Wall pacifier */
-	for ( ; ; )
-		continue;
+	display(format, t);
+	return retval;
 }
 
 static void
@@ -449,9 +458,6 @@ reset(const time_t newt, const int nflag)
 	register const char *	username;
 	static struct timeval	tv;	/* static so tv_usec is 0 */
 
-#ifdef EBUG
-	return;
-#endif /* defined EBUG */
 	username = getlogin();
 	if (username == NULL || *username == '\0') /* single-user or no tty */
 		username = "root";
@@ -502,8 +508,10 @@ nondigit(register const char *cp)
 static void
 usage(void)
 {
-	(void) fprintf(stderr, _("date: usage is date [-u] [-c] [-n] [-d dst] \
-[-t min-west] [-a sss.fff] [[yyyy]mmddhhmm[yyyy][.ss]] [+format]\n"));
+	(void) fprintf(stderr,
+		       _("date: usage: date [-u] [-c] [-r seconds] [-n]"
+			 " [-d dst] [-t min-west] [-a sss.fff]"
+			 " [[yyyy]mmddhhmm[yyyy][.ss]] [+format]\n"));
 	errensure();
 	exit(retval);
 }
@@ -517,18 +525,23 @@ oops(const char *const string)
 	errno = e;
 	(void) perror(string);
 	errensure();
-	display(NULL);
+	display(NULL, time(NULL));
+	exit(retval);
 }
 
 static void
-display(const char *const format)
+display(const char *const format, time_t const now)
 {
-	struct tm	tm;
-	time_t		now;
+	struct tm *tmp;
 
-	(void) time(&now);
-	tm = *localtime(&now);
-	timeout(stdout, format ? format : "%+", &tm);
+	tmp = localtime(&now);
+	if (!tmp) {
+		(void) fprintf(stderr,
+			_("date: error: time out of range\n"));
+		errensure();
+		return;
+	}
+	timeout(stdout, format ? format : "%+", tmp);
 	(void) putchar('\n');
 	(void) fflush(stdout);
 	(void) fflush(stderr);
@@ -537,20 +550,27 @@ display(const char *const format)
 			_("date: error: couldn't write results\n"));
 		errensure();
 	}
-	exit(retval);
 }
 
 #define INCR	1024
 
 static void
-timeout(FILE *const fp, const char *const format, const struct tm *const tmp)
+timeout(FILE *const fp, const char *const format, const struct tm *tmp)
 {
 	char *	cp;
 	size_t	result;
 	size_t	size;
+	struct tm tm;
 
 	if (*format == '\0')
 		return;
+	if (!tmp) {
+		(void) fprintf(stderr, _("date: error: time out of range\n"));
+		errensure();
+		return;
+	}
+	tm = *tmp;
+	tmp = &tm;
 	size = INCR;
 	cp = malloc(size);
 	for ( ; ; ) {
@@ -596,10 +616,13 @@ convert(register const char * const value, const int dousg, const time_t t)
 	register const char *	cp;
 	register const char *	dotp;
 	register int	cent, year_in_cent, month, hour, day, mins, secs;
-	struct tm	tm, outtm;
+	struct tm	tm, outtm, *tmp;
 	time_t		outt;
 
-	tm = *localtime(&t);
+	tmp = localtime(&t);
+	if (!tmp)
+		return -1;
+	tm = *tmp;
 #define DIVISOR	100
 	year_in_cent = tm.tm_year % DIVISOR + TM_YEAR_BASE % DIVISOR;
 	cent = tm.tm_year / DIVISOR + TM_YEAR_BASE / DIVISOR +
@@ -701,7 +724,7 @@ checkfinal(const char * const	value,
 	   const time_t		oldnow)
 {
 	time_t		othert;
-	struct tm	tm;
+	struct tm	tm, *tmp;
 	struct tm	othertm;
 	register int	pass, offset;
 
@@ -714,8 +737,10 @@ checkfinal(const char * const	value,
 	/*
 	** See if there's both a DST and a STD version.
 	*/
-	tm = *localtime(&t);
-	othertm = tm;
+	tmp = localtime(&t);
+	if (!tmp)
+		iffy(t, othert, value, _("time out of range"));
+	othertm = tm = *tmp;
 	othertm.tm_isdst = !tm.tm_isdst;
 	othert = mktime(&othertm);
 	if (othert != -1 && othertm.tm_isdst != tm.tm_isdst &&
@@ -748,7 +773,11 @@ checkfinal(const char * const	value,
 			else if (pass == 3)
 				othert = t + 60 * offset;
 			else	othert = t - 60 * offset;
-			othertm = *localtime(&othert);
+			tmp = localtime(&othert);
+			if (!tmp)
+				iffy(t, othert, value,
+					_("time out of range"));
+			othertm = *tmp;
 			if (sametm(&tm, &othertm))
 				iffy(t, othert, value,
 					_("multiple matching times exist"));
@@ -759,29 +788,32 @@ static void
 iffy(const time_t thist, const time_t thatt,
 	const char * const value, const char * const reason)
 {
-	struct tm	tm;
+	struct tm *tmp;
+	int dst;
 
 	(void) fprintf(stderr, _("date: warning: ambiguous time \"%s\", %s.\n"),
 		value, reason);
-	tm = *gmtime(&thist);
+	tmp = gmtime(&thist);
 	/*
 	** Avoid running afoul of SCCS!
 	*/
 	timeout(stderr, _("Time was set as if you used\n\tdate -u %m%d%H\
 %M\
-%Y.%S\n"), &tm);
-	tm = *localtime(&thist);
-	timeout(stderr, _("to get %c"), &tm);
+%Y.%S\n"), tmp);
+	tmp = localtime(&thist);
+	dst = tmp ? tmp->tm_isdst : 0;
+	timeout(stderr, _("to get %c"), tmp);
 	(void) fprintf(stderr, _(" (%s).  Use\n"),
-		tm.tm_isdst ? _("summer time") : _("standard time"));
-	tm = *gmtime(&thatt);
+		dst ? _("summer time") : _("standard time"));
+	tmp = gmtime(&thatt);
 	timeout(stderr, _("\tdate -u %m%d%H\
 %M\
-%Y.%S\n"), &tm);
-	tm = *localtime(&thatt);
-	timeout(stderr, _("to get %c"), &tm);
+%Y.%S\n"), tmp);
+	tmp = localtime(&thatt);
+	dst = tmp ? tmp->tm_isdst : 0;
+	timeout(stderr, _("to get %c"), tmp);
 	(void) fprintf(stderr, _(" (%s).\n"),
-		tm.tm_isdst ? _("summer time") : _("standard time"));
+		dst ? _("summer time") : _("standard time"));
 	errensure();
 	exit(retval);
 }

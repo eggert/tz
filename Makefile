@@ -51,7 +51,8 @@ TOPDIR=		/usr/local
 # (and subdirectories).
 # Use an absolute path name for TZDIR unless you're just testing the software.
 
-TZDIR=		$(TOPDIR)/etc/zoneinfo
+TZDIR_BASENAME=	zoneinfo
+TZDIR=		$(TOPDIR)/etc/$(TZDIR_BASENAME)
 
 # Types to try, as an alternative to time_t.  int64_t should be first.
 TIME_T_ALTERNATIVES= int64_t int32_t uint32_t uint64_t
@@ -390,14 +391,20 @@ right_only:	zic leapseconds $(TDATA)
 # Therefore, the other two directories are now siblings of $(TZDIR).
 # You must replace all of $(TZDIR) to switch from not using leap seconds
 # to using them, or vice versa.
-other_two:	zic leapseconds $(TDATA)
+right_posix:	right_only
+		rm -fr $(TZDIR)-leaps
+		ln -s $(TZDIR_BASENAME) $(TZDIR)-leaps || \
+		  $(ZIC) -y $(YEARISTYPE) \
+			-d $(TZDIR)-leaps -L leapseconds $(TDATA)
 		$(ZIC) -y $(YEARISTYPE) -d $(TZDIR)-posix -L /dev/null $(TDATA)
+
+posix_right:	posix_only
+		rm -fr $(TZDIR)-posix
+		ln -s $(TZDIR_BASENAME) $(TZDIR)-posix || \
+		  $(ZIC) -y $(YEARISTYPE) \
+			-d $(TZDIR)-posix -L /dev/null $(TDATA)
 		$(ZIC) -y $(YEARISTYPE) \
 			-d $(TZDIR)-leaps -L leapseconds $(TDATA)
-
-posix_right:	posix_only other_two
-
-right_posix:	right_only other_two
 
 zones:		$(REDO)
 

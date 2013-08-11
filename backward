@@ -27,6 +27,8 @@ Link	America/Rio_Branco	America/Porto_Acre
 Link	America/Argentina/Cordoba	America/Rosario
 Link	America/Guadeloupe	America/St_Barthelemy
 Link	America/St_Thomas	America/Virgin
+Link	Pacific/Auckland	Antarctica/McMurdo
+Link	Pacific/Auckland	Antarctica/South_Pole
 Link	Europe/Oslo		Arctic/Longyearbyen
 Link	Asia/Ashgabat		Asia/Ashkhabad
 Link	Asia/Kolkata		Asia/Calcutta

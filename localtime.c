@@ -13,7 +13,6 @@
 #include "private.h"
 #include "tzfile.h"
 #include "fcntl.h"
-#include "float.h"	/* for FLT_MAX and DBL_MAX */
 
 #ifndef TZ_ABBR_MAX_LEN
 #define TZ_ABBR_MAX_LEN	16
@@ -318,9 +317,8 @@ settzname(void)
 static int
 differ_by_repeat(const time_t t1, const time_t t0)
 {
-	if (TYPE_INTEGRAL(time_t) &&
-		TYPE_BIT(time_t) - TYPE_SIGNED(time_t) < SECSPERREPEAT_BITS)
-			return 0;
+	if (TYPE_BIT(time_t) - TYPE_SIGNED(time_t) < SECSPERREPEAT_BITS)
+		return 0;
 	return t1 - t0 == SECSPERREPEAT;
 }
 
@@ -527,9 +525,9 @@ tzload(register const char *name, register struct state *const sp,
 		for (i = 0; i < nread; ++i)
 			up->buf[i] = p[i];
 		/*
-		** If this is a narrow integer time_t system, we're done.
+		** If this is a narrow time_t system, we're done.
 		*/
-		if (stored >= (int) sizeof(time_t) && TYPE_INTEGRAL(time_t))
+		if (stored >= (int) sizeof(time_t))
 			break;
 	}
 	if (doextend && nread > 2 &&
@@ -1254,35 +1252,6 @@ tzset(void)
 	settzname();
 }
 
-/* Return T with any fractional part discarded.  */
-static time_t
-truncate_time(time_t t)
-{
-	/*
-	** If time_t is floating-point, convert it to integer and
-	** back; this discards the fraction.  Avoid using <math.h>
-	** functions, as we don't want to depend on <math.h>.  Use <,
-	** not <=, when comparing against *_MIN and *_MAX values, as
-	** this avoids undefined behavior when, for example,
-	** INTMAX_MAX is converted to a larger time_t value before it
-	** is compared.
-	**
-	** On all platforms that we know of (1) it is safe to compare
-	** INTMAX_MIN and INTMAX_MAX to floating-point values without
-	** worrying about undefined behavior due to floating-point
-	** overflow on conversion, and (2) any time_t value outside
-	** intmax_t range is an integer so we can simply return it.
-	** We know of no simple, portable way to check these assumptions.
-	** If you know of a counterexample platform, please report a bug.
-	*/
-	if (!TYPE_INTEGRAL(time_t) && INTMAX_MIN < t && t < INTMAX_MAX) {
-		intmax_t i = t;
-		return i;
-	}
-
-	return t;
-}
-
 /*
 ** The easy way to behave "as if no library function calls" localtime
 ** is to not call it--so we drop its guts into "localsub", which can be
@@ -1318,8 +1287,7 @@ localsub(const time_t *const timep, const int_fast32_t offset,
 				seconds = sp->ats[0] - t;
 			else	seconds = t - sp->ats[sp->timecnt - 1];
 			--seconds;
-			years = (truncate_time (seconds / SECSPERREPEAT + 1)
-				 * YEARSPERREPEAT);
+			years = (seconds / SECSPERREPEAT + 1) * YEARSPERREPEAT;
 			seconds = years * AVGSECSPERYEAR;
 			if (t < sp->ats[0])
 				newt += seconds;
@@ -1457,18 +1425,6 @@ offtime(const time_t *const timep, const long offset)
 #endif /* defined STD_INSPIRED */
 
 /*
-** Convert T to time_t, truncating toward zero if time_t is integral.
-** On most platforms, double_to_time(0.5) returns 0; the exceptions are
-** the rare platforms where time_t is floating.
-*/
-
-static time_t
-double_to_time(double t)
-{
-	return t;
-}
-
-/*
 ** Return the number of leap years through the end of the given year
 ** where, to make the math easy, the answer for year zero is defined as zero.
 */
@@ -1549,9 +1505,8 @@ timesub(const time_t *const timep, const int_fast32_t offset,
 	}
 	{
 		register int_fast32_t	seconds;
-		register time_t		half_second = double_to_time(0.5);
 
-		seconds = tdays * SECSPERDAY + half_second;
+		seconds = tdays * SECSPERDAY;
 		tdays = seconds / SECSPERDAY;
 		rem += seconds - tdays * SECSPERDAY;
 	}
@@ -1811,11 +1766,6 @@ time2sub(struct tm *const tmp,
 	if (!TYPE_SIGNED(time_t)) {
 		lo = 0;
 		hi = lo - 1;
-	} else if (!TYPE_INTEGRAL(time_t)) {
-		if (sizeof(time_t) > sizeof(float))
-			hi = (time_t) DBL_MAX;
-		else	hi = (time_t) FLT_MAX;
-		lo = -hi;
 	} else {
 		lo = 1;
 		for (i = 0; i < (int) TYPE_BIT(time_t) - 1; ++i)

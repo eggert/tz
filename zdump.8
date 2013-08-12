@@ -57,13 +57,6 @@ the program cuts off verbose output near the starts of the years \-500 and 2500.
 Cut off verbose output at the start of the given time(s),
 given in decimal seconds since 1970-01-01 00:00:00 UTC.
 .SH LIMITATIONS
-The
-.B \-v
-and
-.B \-V
-options may not be used on systems with floating-point time_t values
-that are neither float nor double.
-.PP
 Time discontinuities are found by sampling the results returned by localtime
 at twelve-hour intervals.
 This works in all real-world cases;

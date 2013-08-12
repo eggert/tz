@@ -121,7 +121,6 @@ LDLIBS=
 #  -DNO_RUN_TIME_WARNINGS_ABOUT_YEAR_2000_PROBLEMS_THANK_YOU=1
 #	if you do not want run time warnings about formats that may cause
 #	year 2000 grief
-#  -DTIME_T_FLOATING=1 if your time_t (or time_tz) is floating point
 #  -Dtime_tz=\"T\" to use T as the time_t type, rather than the system time_t
 #  -DTZ_DOMAIN=\"foo\" to use "foo" for gettext domain name; default is "tz"
 #  -TTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
@@ -541,7 +540,7 @@ tzdata$(VERSION).tar.gz.asc: tzdata$(VERSION).tar.gz
 
 typecheck:
 		make clean
-		for i in "long long" unsigned double; \
+		for i in "long long" unsigned; \
 		do \
 			make CFLAGS="-DTYPECHECK -D__time_t_defined -D_TIME_T \"-Dtime_t=$$i\"" ; \
 			./zdump -v Europe/Rome ; \

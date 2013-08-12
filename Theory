@@ -104,11 +104,10 @@ POSIX has the following properties and limitations.
 	new implementations these days typically use a signed 64-bit integer.
 	Unsigned 32-bit integers are used on one or two platforms,
 	and 36-bit integers are also used occasionally.
-	Although POSIX.1-2013 requires time_t to be an integer type,
-	earlier POSIX versions also allowed time_t to be a floating-point type.
-	No known platforms have a floating-point time_t and although
-	the tz code attempts to support floating-point time_t this has not
-	been tested and will probably be removed at some point.
+	Although earlier POSIX versions allowed time_t to be a
+	floating-point type, this was not supported by any practical
+	systems, and POSIX.1-2013 and the tz code both require time_t
+	to be an integer type.
 
 These are the extensions that have been made to the POSIX functions:
 

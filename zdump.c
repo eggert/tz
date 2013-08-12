@@ -23,7 +23,6 @@
 #include "sys/types.h"	/* for time_t */
 #include "time.h"	/* for struct tm */
 #include "stdlib.h"	/* for exit, malloc, atoi */
-#include "float.h"	/* for FLT_MAX and DBL_MAX */
 #include "limits.h"	/* for CHAR_BIT, LLONG_MAX */
 #include "ctype.h"	/* for isalpha et al. */
 #ifndef isascii
@@ -193,26 +192,12 @@ extern char *	tzname[2];
 
 /* The minimum and maximum finite time values.  */
 static time_t const absolute_min_time =
-  ((time_t) 0.5 == 0.5
-   ? (sizeof (time_t) == sizeof (float) ? (time_t) -FLT_MAX
-      : sizeof (time_t) == sizeof (double) ? (time_t) -DBL_MAX
-      : sizeof (time_t) == sizeof (long double) ? (time_t) -LDBL_MAX
-      : 0)
-#ifndef TIME_T_FLOATING
-   : (time_t) -1 < 0
+  ((time_t) -1 < 0
    ? (time_t) -1 << (CHAR_BIT * sizeof (time_t) - 1)
-#endif
    : 0);
 static time_t const absolute_max_time =
-  ((time_t) 0.5 == 0.5
-   ? (sizeof (time_t) == sizeof (float) ? (time_t) FLT_MAX
-      : sizeof (time_t) == sizeof (double) ? (time_t) DBL_MAX
-      : sizeof (time_t) == sizeof (long double) ? (time_t) LDBL_MAX
-      : -1)
-#ifndef TIME_T_FLOATING
-   : (time_t) -1 < 0
+  ((time_t) -1 < 0
    ? - (~ 0 < 0) - ((time_t) -1 << (CHAR_BIT * sizeof (time_t) - 1))
-#endif
    : -1);
 static size_t	longest;
 static char *	progname;
@@ -223,7 +208,6 @@ static void	abbrok(const char * abbrp, const char * zone);
 static intmax_t	delta(struct tm * newp, struct tm * oldp) ATTRIBUTE_PURE;
 static void	dumptime(const struct tm * tmp);
 static time_t	hunt(char * name, time_t lot, time_t	hit);
-static void	checkabsolutes(void);
 static void	show(char * zone, time_t t, int v);
 static const char *	tformat(void);
 static time_t	yeartot(intmax_t y) ATTRIBUTE_PURE;
@@ -383,7 +367,6 @@ main(int argc, char *argv[])
 				exit(EXIT_FAILURE);
 			}
 		}
-		checkabsolutes();
 		if (cutarg != NULL || cuttimes == NULL) {
 			cutlotime = yeartot(cutloyear);
 			cuthitime = yeartot(cuthiyear);
@@ -502,17 +485,6 @@ main(int argc, char *argv[])
 	exit(EXIT_SUCCESS);
 	/* If exit fails to exit... */
 	return EXIT_FAILURE;
-}
-
-static void
-checkabsolutes(void)
-{
-	if (absolute_max_time < absolute_min_time) {
-		(void) fprintf(stderr,
-_("%s: use of -v on system with floating time_t other than float or double\n"),
-			       progname);
-		exit(EXIT_FAILURE);
-	}
 }
 
 static time_t
@@ -666,11 +638,6 @@ abbr(struct tm *tmp)
 static const char *
 tformat(void)
 {
-	if (0.5 == (time_t) 0.5) {	/* floating */
-		if (sizeof (time_t) > sizeof (double))
-			return "%Lg";
-		return "%g";
-	}
 	if (0 > (time_t) -1) {		/* signed */
 		if (sizeof (time_t) == sizeof (intmax_t))
 			return "%"PRIdMAX;

@@ -318,10 +318,11 @@ NDATA=		systemv factory
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
 TABDATA=	iso3166.tab zone.tab
-DATA=		$(YDATA) $(NDATA) $(SDATA) $(TABDATA) leapseconds yearistype.sh
+DATA=		$(YDATA) $(NDATA) $(SDATA) $(TABDATA) \
+			leap-seconds.list yearistype.sh
 WEB_PAGES=	tz-art.htm tz-link.htm
 MISC=		usno1988 usno1989 usno1989a usno1995 usno1997 usno1998 \
-			$(WEB_PAGES) checktab.awk workman.sh \
+			$(WEB_PAGES) checktab.awk leapseconds.awk workman.sh \
 			zoneinfo2tdf.pl
 ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC)
 
@@ -375,6 +376,9 @@ yearistype:	yearistype.sh
 		cp yearistype.sh yearistype
 		chmod +x yearistype
 
+leapseconds:	leapseconds.awk leap-seconds.list
+		$(AWK) -f leapseconds.awk leap-seconds.list >$@
+
 posix_only:	zic $(TDATA)
 		$(ZIC) -y $(YEARISTYPE) -d $(TZDIR) -L /dev/null $(TDATA)
 
@@ -390,14 +394,14 @@ right_only:	zic leapseconds $(TDATA)
 # Therefore, the other two directories are now siblings of $(TZDIR).
 # You must replace all of $(TZDIR) to switch from not using leap seconds
 # to using them, or vice versa.
-right_posix:	right_only
+right_posix:	right_only leapseconds
 		rm -fr $(TZDIR)-leaps
 		ln -s $(TZDIR_BASENAME) $(TZDIR)-leaps || \
 		  $(ZIC) -y $(YEARISTYPE) \
 			-d $(TZDIR)-leaps -L leapseconds $(TDATA)
 		$(ZIC) -y $(YEARISTYPE) -d $(TZDIR)-posix -L /dev/null $(TDATA)
 
-posix_right:	posix_only
+posix_right:	posix_only leapseconds
 		rm -fr $(TZDIR)-posix
 		ln -s $(TZDIR_BASENAME) $(TZDIR)-posix || \
 		  $(ZIC) -y $(YEARISTYPE) \
@@ -440,7 +444,7 @@ check_web:	$(WEB_PAGES)
 
 clean_misc:
 		rm -f core *.o *.out \
-		  date tzselect version.h zdump zic yearistype
+		  date leapseconds tzselect version.h zdump zic yearistype
 clean:		clean_misc
 		rm -f -r tzpublic
 

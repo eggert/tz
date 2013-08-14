@@ -3,25 +3,22 @@
 # This file is in the public domain, so clarified as of
 # 2009-05-17 by Arthur David Olson.
 #
-# From Paul Eggert (2013-05-27):
+# From Paul Eggert (2013-08-14):
 #
 # This file contains a table where each row stands for an area that is
-# the intersection of a country and a zone.  In a zone, civil clocks
-# have agreed since 1970.  The columns of the table are as follows:
+# the intersection of a region identified by a country code and of a
+# zone where civil clocks have agreed since 1970.  The columns of the
+# table are as follows:
 #
 # 1.  ISO 3166 2-character country code.  See the file 'iso3166.tab'.
 # 2.  Latitude and longitude of the area's principal location
 #     in ISO 6709 sign-degrees-minutes-seconds format,
 #     either +-DDMM+-DDDMM or +-DDMMSS+-DDDMMSS,
 #     first latitude (+ is north), then longitude (+ is east).
-#     Often this is the location named in column 3, but there
-#     are exceptions for zones that cross country boundaries.
 # 3.  Zone name used in value of TZ environment variable.
 #     Please see the 'Theory' file for how zone names are chosen.
 #     If multiple zones overlap a country, each has a row in the
-#     table, with column 1 being duplicated.  Conversely, if multiple
-#     countries overlap a zone, each has a row in the table, with
-#     column 3 being duplicated.
+#     table, with column 1 being duplicated.
 # 4.  Comments; present if and only if the country has multiple rows.
 #
 # Columns are separated by a single tab.
@@ -45,7 +42,7 @@ AI	+1812-06304	America/Anguilla
 AL	+4120+01950	Europe/Tirane
 AM	+4011+04430	Asia/Yerevan
 AO	-0848+01314	Africa/Luanda
-AQ	-7750+16636	Pacific/Auckland	McMurdo, South Pole, Scott (New Zealand time)
+AQ	-7750+16636	Antarctica/McMurdo	McMurdo, South Pole, Scott (New Zealand time)
 AQ	-6734-06808	Antarctica/Rothera	Rothera Station, Adelaide Island
 AQ	-6448-06406	Antarctica/Palmer	Palmer Station, Anvers Island
 AQ	-6736+06253	Antarctica/Mawson	Mawson Station, Holme Bay
@@ -82,9 +79,9 @@ AU	-1228+13050	Australia/Darwin	Northern Territory
 AU	-3157+11551	Australia/Perth	Western Australia - most locations
 AU	-3143+12852	Australia/Eucla	Western Australia - Eucla area
 AW	+1230-06958	America/Aruba
-AX	+6006+01957	Europe/Helsinki
+AX	+6006+01957	Europe/Mariehamn
 AZ	+4023+04951	Asia/Baku
-BA	+4352+01825	Europe/Belgrade
+BA	+4352+01825	Europe/Sarajevo
 BB	+1306-05937	America/Barbados
 BD	+2343+09025	Asia/Dhaka
 BE	+5050+00420	Europe/Brussels
@@ -93,11 +90,11 @@ BG	+4241+02319	Europe/Sofia
 BH	+2623+05035	Asia/Bahrain
 BI	-0323+02922	Africa/Bujumbura
 BJ	+0629+00237	Africa/Porto-Novo
-BL	+1753-06251	America/Guadeloupe
+BL	+1753-06251	America/St_Barthelemy
 BM	+3217-06446	Atlantic/Bermuda
 BN	+0456+11455	Asia/Brunei
 BO	-1630-06809	America/La_Paz
-BQ	+120903-0681636	America/Curacao
+BQ	+120903-0681636	America/Kralendijk
 BR	-0351-03225	America/Noronha	Atlantic islands
 BR	-0127-04829	America/Belem	Amapa, E Para
 BR	-0343-03830	America/Fortaleza	NE Brazil (MA, PI, CE, RN, PB)
@@ -172,7 +169,7 @@ CX	-1025+10543	Indian/Christmas
 CY	+3510+03322	Asia/Nicosia
 CZ	+5005+01426	Europe/Prague
 DE	+5230+01322	Europe/Berlin	most locations
-DE	+4742+00841	Europe/Zurich	Busingen
+DE	+4742+00841	Europe/Busingen	Busingen
 DJ	+1136+04309	Africa/Djibouti
 DK	+5540+01235	Europe/Copenhagen
 DM	+1518-06124	America/Dominica
@@ -201,7 +198,7 @@ GB	+513030-0000731	Europe/London
 GD	+1203-06145	America/Grenada
 GE	+4143+04449	Asia/Tbilisi
 GF	+0456-05220	America/Cayenne
-GG	+4927-00232	Europe/London
+GG	+4927-00232	Europe/Guernsey
 GH	+0533-00013	Africa/Accra
 GI	+3608-00521	Europe/Gibraltar
 GL	+6411-05144	America/Godthab	most locations
@@ -220,7 +217,7 @@ GW	+1151-01535	Africa/Bissau
 GY	+0648-05810	America/Guyana
 HK	+2217+11409	Asia/Hong_Kong
 HN	+1406-08713	America/Tegucigalpa
-HR	+4548+01558	Europe/Belgrade
+HR	+4548+01558	Europe/Zagreb
 HT	+1832-07220	America/Port-au-Prince
 HU	+4730+01905	Europe/Budapest
 ID	-0610+10648	Asia/Jakarta	Java & Sumatra
@@ -229,14 +226,14 @@ ID	-0507+11924	Asia/Makassar	east & south Borneo, Sulawesi (Celebes), Bali, Nusa
 ID	-0232+14042	Asia/Jayapura	west New Guinea (Irian Jaya) & Malukus (Moluccas)
 IE	+5320-00615	Europe/Dublin
 IL	+314650+0351326	Asia/Jerusalem
-IM	+5409-00428	Europe/London
+IM	+5409-00428	Europe/Isle_of_Man
 IN	+2232+08822	Asia/Kolkata
 IO	-0720+07225	Indian/Chagos
 IQ	+3321+04425	Asia/Baghdad
 IR	+3540+05126	Asia/Tehran
 IS	+6409-02151	Atlantic/Reykjavik
 IT	+4154+01229	Europe/Rome
-JE	+4912-00207	Europe/London
+JE	+4912-00207	Europe/Jersey
 JM	+1800-07648	America/Jamaica
 JO	+3157+03556	Asia/Amman
 JP	+353916+1394441	Asia/Tokyo
@@ -271,12 +268,12 @@ LY	+3254+01311	Africa/Tripoli
 MA	+3339-00735	Africa/Casablanca
 MC	+4342+00723	Europe/Monaco
 MD	+4700+02850	Europe/Chisinau
-ME	+4226+01916	Europe/Belgrade
-MF	+1804-06305	America/Guadeloupe
+ME	+4226+01916	Europe/Podgorica
+MF	+1804-06305	America/Marigot
 MG	-1855+04731	Indian/Antananarivo
 MH	+0709+17112	Pacific/Majuro	most locations
 MH	+0905+16720	Pacific/Kwajalein	Kwajalein
-MK	+4159+02126	Europe/Belgrade
+MK	+4159+02126	Europe/Skopje
 ML	+1239-00800	Africa/Bamako
 MM	+1647+09610	Asia/Rangoon
 MN	+4755+10653	Asia/Ulaanbaatar	most locations
@@ -369,18 +366,18 @@ SD	+1536+03232	Africa/Khartoum
 SE	+5920+01803	Europe/Stockholm
 SG	+0117+10351	Asia/Singapore
 SH	-1555-00542	Atlantic/St_Helena
-SI	+4603+01431	Europe/Belgrade
-SJ	+7800+01600	Europe/Oslo
-SK	+4809+01707	Europe/Prague
+SI	+4603+01431	Europe/Ljubljana
+SJ	+7800+01600	Arctic/Longyearbyen
+SK	+4809+01707	Europe/Bratislava
 SL	+0830-01315	Africa/Freetown
-SM	+4355+01228	Europe/Rome
+SM	+4355+01228	Europe/San_Marino
 SN	+1440-01726	Africa/Dakar
 SO	+0204+04522	Africa/Mogadishu
 SR	+0550-05510	America/Paramaribo
 SS	+0451+03136	Africa/Juba
 ST	+0020+00644	Africa/Sao_Tome
 SV	+1342-08912	America/El_Salvador
-SX	+180305-0630250	America/Curacao
+SX	+180305-0630250	America/Lower_Princes
 SY	+3330+03618	Asia/Damascus
 SZ	-2618+03106	Africa/Mbabane
 TC	+2128-07108	America/Grand_Turk
@@ -440,7 +437,7 @@ US	+211825-1575130	Pacific/Honolulu	Hawaii
 UY	-3453-05611	America/Montevideo
 UZ	+3940+06648	Asia/Samarkand	west Uzbekistan
 UZ	+4120+06918	Asia/Tashkent	east Uzbekistan
-VA	+415408+0122711	Europe/Rome
+VA	+415408+0122711	Europe/Vatican
 VC	+1309-06114	America/St_Vincent
 VE	+1030-06656	America/Caracas
 VG	+1827-06437	America/Tortola

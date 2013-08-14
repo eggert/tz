@@ -4,6 +4,7 @@
 *.txt
 *~
 ChangeLog
+leapseconds
 tzselect
 version.h
 yearistype

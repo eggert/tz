@@ -1489,9 +1489,10 @@ timesub(const time_t *const timep, const int_fast32_t offset,
 		register int	leapdays;
 
 		tdelta = tdays / DAYSPERLYEAR;
-		idelta = tdelta;
-		if (tdelta - idelta >= 1 || idelta - tdelta >= 1)
+		if (! ((! TYPE_SIGNED(time_t) || INT_MIN <= tdelta)
+		       && tdelta <= INT_MAX))
 			return NULL;
+		idelta = tdelta;
 		if (idelta == 0)
 			idelta = (tdays < 0) ? -1 : 1;
 		newy = y;

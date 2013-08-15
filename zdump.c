@@ -244,7 +244,7 @@ my_localtime(time_t *tp)
 
 		tm = *tmp;
 		t = mktime(&tm);
-		if (t - *tp >= 1 || *tp - t >= 1) {
+		if (t != *tp) {
 			(void) fflush(stdout);
 			(void) fprintf(stderr, "\n%s: ", progname);
 			(void) fprintf(stderr, tformat(), *tp);

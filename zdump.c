@@ -60,9 +60,15 @@ typedef int int_fast32_t;
 # if defined LLONG_MAX || defined __LONG_LONG_MAX__
 typedef long long intmax_t;
 #  define PRIdMAX "lld"
+#  ifdef LLONG_MAX
+#   define INTMAX_MAX LLONG_MAX
+#  else
+#   define INTMAX_MAX __LONG_LONG_MAX__
+#  endif
 # else
 typedef long intmax_t;
 #  define PRIdMAX "ld"
+#  define INTMAX_MAX LONG_MAX
 # endif
 #endif
 #ifndef SCNdMAX
@@ -140,6 +146,17 @@ typedef long intmax_t;
 #define SECSPERDAY	((int_fast32_t) SECSPERHOUR * HOURSPERDAY)
 #define SECSPERNYEAR	(SECSPERDAY * DAYSPERNYEAR)
 #define SECSPERLYEAR	(SECSPERNYEAR + SECSPERDAY)
+#define SECSPER400YEARS	(SECSPERNYEAR * (intmax_t) (300 + 3)	\
+			 + SECSPERLYEAR * (intmax_t) (100 - 3))
+
+/*
+** True if SECSPER400YEARS is known to be representable as an
+** intmax_t.  It's OK that SECSPER400YEARS_FITS can in theory be false
+** even if SECSPER400YEARS is representable, because when that happens
+** the code merely runs a bit more slowly, and this slowness doesn't
+** occur on any practical platform.
+*/
+enum { SECSPER400YEARS_FITS = SECSPERLYEAR <= INTMAX_MAX / 400 };
 
 #ifndef HAVE_GETTEXT
 #define HAVE_GETTEXT 0
@@ -490,30 +507,42 @@ main(int argc, char *argv[])
 static time_t
 yeartot(const intmax_t y)
 {
-	register intmax_t	myy;
-	register int_fast32_t	seconds;
+	register intmax_t	myy, seconds, years;
 	register time_t		t;
 
 	myy = EPOCH_YEAR;
 	t = 0;
-	while (myy != y) {
-		if (myy < y) {
+	while (myy < y) {
+		if (SECSPER400YEARS_FITS && 400 <= y - myy) {
+			intmax_t diff400 = (y - myy) / 400;
+			if (INTMAX_MAX / SECSPER400YEARS < diff400)
+				return absolute_max_time;
+			seconds = diff400 * SECSPER400YEARS;
+			years = diff400 * 400;
+                } else {
 			seconds = isleap(myy) ? SECSPERLYEAR : SECSPERNYEAR;
-			++myy;
-			if (t > absolute_max_time - seconds) {
-				t = absolute_max_time;
-				break;
-			}
-			t += seconds;
-		} else {
-			--myy;
-			seconds = isleap(myy) ? SECSPERLYEAR : SECSPERNYEAR;
-			if (t < absolute_min_time + seconds) {
-				t = absolute_min_time;
-				break;
-			}
-			t -= seconds;
+			years = 1;
 		}
+		myy += years;
+		if (t > absolute_max_time - seconds)
+			return absolute_max_time;
+		t += seconds;
+	}
+	while (y < myy) {
+		if (SECSPER400YEARS_FITS && y + 400 <= myy && myy < 0) {
+			intmax_t diff400 = (myy - y) / 400;
+			if (INTMAX_MAX / SECSPER400YEARS < diff400)
+				return absolute_min_time;
+			seconds = diff400 * SECSPER400YEARS;
+			years = diff400 * 400;
+		} else {
+			seconds = isleap(myy - 1) ? SECSPERLYEAR : SECSPERNYEAR;
+			years = 1;
+		}
+		myy -= years;
+		if (t < absolute_min_time + seconds)
+			return absolute_min_time;
+		t -= seconds;
 	}
 	return t;
 }

@@ -40,6 +40,15 @@ LOCALTIME=	GMT
 
 POSIXRULES=	America/New_York
 
+# Default time zone table type for 'tzselect'.  See tzselect.8 for details.
+# Possible values are:
+# 'time' - for a smaller time zone table
+# 'zone' - for a backward compatible time zone table; it contains
+#   alternative TZ values present for compatibility with older versions of
+#   this software.
+
+ZONETABTYPE=	zone
+
 # Also see TZDEFRULESTRING below, which takes effect only
 # if the time zone files cannot be accessed.
 
@@ -317,7 +326,7 @@ YDATA=		$(PRIMARY_YDATA) pacificnew etcetera backward
 NDATA=		systemv factory
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
-TABDATA=	iso3166.tab zone.tab
+TABDATA=	iso3166.tab time.tab zone.tab
 DATA=		$(YDATA) $(NDATA) $(SDATA) $(TABDATA) \
 			leap-seconds.list yearistype.sh
 WEB_PAGES=	tz-art.htm tz-link.htm
@@ -331,15 +340,15 @@ ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC)
 
 SHELL=		/bin/sh
 
-all:		tzselect zic zdump $(LIBOBJS)
+all:		tzselect zic zdump $(LIBOBJS) $(TABDATA)
 
 ALL:		all date
 
-install:	all $(DATA) $(REDO) $(TZLIB) $(MANS) $(TABDATA)
+install:	all $(DATA) $(REDO) $(TZLIB) $(MANS)
 		$(ZIC) -y $(YEARISTYPE) \
 			-d $(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
-		-rm -f $(TZDIR)/iso3166.tab $(TZDIR)/zone.tab
-		cp iso3166.tab zone.tab $(TZDIR)/.
+		-rm -f $(TZDIR)/iso3166.tab $(TZDIR)/time.tab $(TZDIR)/zone.tab
+		cp iso3166.tab time.tab zone.tab $(TZDIR)/.
 		-mkdir $(TOPDIR) $(ETCDIR)
 		cp tzselect zic zdump $(ETCDIR)/.
 		-mkdir $(TOPDIR) $(MANDIR) \
@@ -411,6 +420,9 @@ posix_right:	posix_only leapseconds
 
 zones:		$(REDO)
 
+time.tab:	$(YDATA) zone.tab zone-time.awk
+		$(AWK) -f zone-time.awk $(YDATA) >$@
+
 $(TZLIB):	$(LIBOBJS)
 		-mkdir $(TOPDIR) $(LIBDIR)
 		ar ru $@ $(LIBOBJS)
@@ -428,6 +440,7 @@ tzselect:	tzselect.ksh
 			-e 's|\(REPORT_BUGS_TO\)=.*|\1=$(BUGEMAIL)|' \
 			-e 's|TZDIR=[^}]*|TZDIR=$(TZDIR)|' \
 			-e 's|\(TZVERSION\)=.*|\1=$(VERSION)|' \
+			-e 's|^\(ZONETABTYPE\)=.*|\1=$(ZONETABTYPE)|' \
 			<$? >$@
 		chmod +x $@
 

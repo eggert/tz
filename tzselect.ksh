@@ -3,6 +3,7 @@
 PKGVERSION='(tzcode) '
 TZVERSION=see_Makefile
 REPORT_BUGS_TO=tz@iana.org
+ZONETABTYPE=zone
 
 # Ask the user about the time zone, and output the resulting TZ value to stdout.
 # Interact with the user via stderr and stdin.
@@ -40,24 +41,37 @@ REPORT_BUGS_TO=tz@iana.org
 	exit 1
 }
 
-if [ "$1" = "--help" ]; then
-    cat <<EOF
-Usage: tzselect
+usage="Usage: tzselect [--version] [--help] [-t ZONETABTYPE]
 Select a time zone interactively.
+ZONETABTYPE should be one of 'time' or 'zone'.
 
-Report bugs to $REPORT_BUGS_TO.
-EOF
-    exit
-elif [ "$1" = "--version" ]; then
-    cat <<EOF
-tzselect $PKGVERSION$TZVERSION
-EOF
-    exit
-fi
+Report bugs to $REPORT_BUGS_TO."
+
+while getopts t:-: opt
+do
+    case $opt$OPTARG in
+    t*)
+	ZONETABTYPE=$OPTARG ;;
+    -help)
+	exec echo "$usage" ;;
+    -version)
+	exec echo "tzselect $PKGVERSION$TZVERSION" ;;
+    -*)
+	echo >&2 "$0: -$opt$OPTARG: unknown option; try '$0 --help'"; exit 1 ;;
+    *)
+	echo >&2 "$0: try '$0 --help'"; exit 1 ;;
+    esac
+done
+
+shift $((OPTIND-1))
+case $# in
+0) ;;
+*) echo >&2 "$0: $1: unknown argument"; exit 1 ;;
+esac
 
 # Make sure the tables are readable.
 TZ_COUNTRY_TABLE=$TZDIR/iso3166.tab
-TZ_ZONE_TABLE=$TZDIR/zone.tab
+TZ_ZONE_TABLE=$TZDIR/$ZONETABTYPE.tab
 for f in $TZ_COUNTRY_TABLE $TZ_ZONE_TABLE
 do
 	<$f || {

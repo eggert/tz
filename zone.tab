@@ -423,8 +423,7 @@ US	+465042-1012439	America/North_Dakota/New_Salem	Central Time - North Dakota - 
 US	+471551-1014640	America/North_Dakota/Beulah	Central Time - North Dakota - Mercer County
 US	+394421-1045903	America/Denver	Mountain Time
 US	+433649-1161209	America/Boise	Mountain Time - south Idaho & east Oregon
-US	+364708-1084111	America/Shiprock	Mountain Time - Navajo
-US	+332654-1120424	America/Phoenix	Mountain Standard Time - Arizona
+US	+332654-1120424	America/Phoenix	Mountain Standard Time - Arizona (except Navajo)
 US	+340308-1181434	America/Los_Angeles	Pacific Time
 US	+611305-1495401	America/Anchorage	Alaska Time
 US	+581807-1342511	America/Juneau	Alaska Time - Alaska panhandle

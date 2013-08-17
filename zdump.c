@@ -452,7 +452,7 @@ main(int argc, char *argv[])
 		t = absolute_min_time;
 		if (!Vflag) {
 			show(argv[i], t, TRUE);
-			t += SECSPERHOUR * HOURSPERDAY;
+			t += SECSPERDAY;
 			show(argv[i], t, TRUE);
 		}
 		if (t < cutlotime)
@@ -463,9 +463,11 @@ main(int argc, char *argv[])
 			(void) strncpy(buf, abbr(&tm), (sizeof buf) - 1);
 		}
 		for ( ; ; ) {
-			if (t >= cuthitime || t >= cuthitime - SECSPERHOUR * 12)
+			newt = (t < absolute_max_time - SECSPERDAY / 2
+				? t + SECSPERDAY / 2
+				: absolute_max_time);
+			if (cuthitime <= newt)
 				break;
-			newt = t + SECSPERHOUR * 12;
 			newtmp = localtime(&newt);
 			if (newtmp != NULL)
 				newtm = *newtmp;
@@ -488,9 +490,9 @@ main(int argc, char *argv[])
 		}
 		if (!Vflag) {
 			t = absolute_max_time;
-			t -= SECSPERHOUR * HOURSPERDAY;
+			t -= SECSPERDAY;
 			show(argv[i], t, TRUE);
-			t += SECSPERHOUR * HOURSPERDAY;
+			t += SECSPERDAY;
 			show(argv[i], t, TRUE);
 		}
 	}

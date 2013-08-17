@@ -497,7 +497,7 @@ errensure(void)
 		retval = EXIT_FAILURE;
 }
 
-static const char *
+static const char * ATTRIBUTE_PURE
 nondigit(register const char *cp)
 {
 	while (is_digit(*cp))

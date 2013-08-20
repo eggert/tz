@@ -4,6 +4,12 @@ tzselect \- select a time zone
 .SH SYNOPSIS
 .B tzselect
 [
+.B \-c
+.I coord
+] [
+.B \-n
+.I limit
+] [
 .B \-t
 .I zonetabtype
 ] [
@@ -20,6 +26,26 @@ The output is suitable as a value for the TZ environment variable.
 .PP
 All interaction with the user is done via standard input and standard error.
 .SH OPTIONS
+.TP
+.BI "\-c " coord
+Instead of asking for continent and then country and then city,
+ask for selection from time zones whose largest cities
+are closest to the location with geographical coordinates
+.IR coord .
+Use ISO 6709 notation for
+.IR coord ,
+for example,
+.B "\-c\ \+42.391415\-071.570419"
+for 42.391415\(de\|N, 71.570419\(de\|W, and
+.B "\-c\ +404226\-0740319"
+for 48\(de\|42\(fm\|26\(sd\|N, 74\(de\|3\(fm\|19\(sd\|W.
+.TP
+.BI "\-n " limit
+When
+.B \-c
+is used, display the closest
+.I limit
+locations (default 10).
 .TP
 .BI "\-t " zonetabtype
 Make selections from the time zone table of type

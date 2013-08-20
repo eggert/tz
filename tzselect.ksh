@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export LC_ALL=C
+
 PKGVERSION='(tzcode) '
 TZVERSION=see_Makefile
 REPORT_BUGS_TO=tz@iana.org
@@ -41,15 +43,43 @@ ZONETABTYPE=zone
 	exit 1
 }
 
-usage="Usage: tzselect [--version] [--help] [-t ZONETABTYPE]
+coord=
+location_limit=10
+
+usage="Usage: tzselect [--version] [--help] [-c COORD] [-n LIMIT] [-t ZONETABTYPE]
 Select a time zone interactively.
-ZONETABTYPE should be one of 'time' or 'zone'.
+
+Options:
+
+  -c COORD
+    Instead of asking for continent and then country and then city,
+    ask for selection from time zones whose largest cities
+    are closest to the location with geographical coordinates COORD.
+    COORD should use ISO 6709 notation, for example, '-c +4852+00220'
+    for Paris.
+
+  -n LIMIT
+    Display at most LIMIT locations when -c is used (default $location_limit).
+
+  -t ZONETABTYPE
+    Use time zone table ZONETABTYPE.  ZONETABTYPE should be one of
+    'time' or 'zone'.
+
+  --version
+    Output version information.
+
+  --help
+    Output this help.
 
 Report bugs to $REPORT_BUGS_TO."
 
-while getopts t:-: opt
+while getopts c:n:t:-: opt
 do
     case $opt$OPTARG in
+    c*)
+	coord=$OPTARG ;;
+    n*)
+	location_limit=$OPTARG ;;
     t*)
 	ZONETABTYPE=$OPTARG ;;
     -help)
@@ -90,6 +120,66 @@ case $(echo 1 | (select x in x; do break; done) 2>/dev/null) in
 ?*) PS3=
 esac
 
+# Awk script to read a time zone table and output the same table,
+# with each column preceded by its distance from 'here'.
+output_distances='
+  BEGIN {
+    FS = "\t"
+    while (getline <TZ_COUNTRY_TABLE)
+      if ($0 ~ /^[^#]/)
+        country[$1] = $2
+    country["US"] = "US" # Otherwise the strings get too long.
+  }
+  function cvt1(coord, deg, min, ilen, sign, sec) {
+    ilen = length(coord)
+    sign = substr(coord, 1, 1)
+    if (coord ~ /\./) {
+      deg = coord + 0
+    } else {
+      if (ilen <= 6) {
+	 sec = 0
+      } else {
+	 sec = sign substr(coord, ilen - 1)
+	 ilen -= 2
+      }
+      min = sign substr(coord, ilen - 1, 2)
+      deg = substr(coord, 1, ilen - 2)
+      deg = (deg * 3600.0 + min * 60.0 + sec) / 3600.0
+    }
+    return deg * 0.017453292519943295
+  }
+  function convert_latitude(coord) {
+    match(coord, /..*[-+]/)
+    return cvt1(substr(coord, 1, RLENGTH - 1))
+  }
+  function convert_longitude(coord) {
+    match(coord, /..*[-+]/)
+    return cvt1(substr(coord, RLENGTH))
+  }
+  # Great-circle distance between points with given latitude and longitude.
+  # Inputs and output are in radians.  This uses the great-circle special
+  # case of the Vicenty formula for distances on ellipsoids.
+  function dist(lat1, long1, lat2, long2, dlong, x, y, num, denom) {
+    dlong = long2 - long1
+    x = cos (lat2) * sin (dlong)
+    y = cos (lat1) * sin (lat2) - sin (lat1) * cos (lat2) * cos (dlong)
+    num = sqrt (x * x + y * y)
+    denom = sin (lat1) * sin (lat2) + cos (lat1) * cos (lat2) * cos (dlong)
+    return atan2(num, denom)
+  }
+  BEGIN {
+    coord_lat = convert_latitude(coord)
+    coord_long = convert_longitude(coord)
+  }
+  /^[^#]/ {
+    here_lat = convert_latitude($2)
+    here_long = convert_longitude($2)
+    line = $1 "\t" $2 "\t" $3 "\t" country[$1]
+    if (NF == 4)
+      line = line " - " $4
+    printf "%g\t%s\n", dist(coord_lat, coord_long, here_lat, here_long), line
+  }
+'
 
 # Begin the main loop.  We come back here if the user wants to retry.
 while
@@ -101,10 +191,14 @@ while
 	country=
 	region=
 
+	case $coord in
+	?*)
+		continent=coord;;
+	'')
 
 	# Ask the user for continent or ocean.
 
-	echo >&2 'Please select a continent or ocean.'
+	echo >&2 'Please select a continent, ocean, "coord", or "TZ".'
 
 	select continent in \
 	    Africa \
@@ -117,7 +211,8 @@ while
 	    Europe \
 	    'Indian Ocean' \
 	    'Pacific Ocean' \
-	    'none - I want to specify the time zone using the Posix TZ format.'
+	    'coord - I want to use geographical coordinates.' \
+	    'TZ - I want to specify the time zone using the Posix TZ format.'
 	do
 	    case $continent in
 	    '')
@@ -130,10 +225,12 @@ while
 		break
 	    esac
 	done
+	esac
+
 	case $continent in
 	'')
 		exit 1;;
-	none)
+	TZ)
 		# Ask the user for a Posix TZ string.  Check that it conforms.
 		while
 			echo >&2 'Please enter the desired value' \
@@ -158,6 +255,45 @@ while
 		done
 		TZ_for_date=$TZ;;
 	*)
+		case $continent in
+		coord)
+		    case $coord in
+		    '')
+			echo >&2 'Please enter coordinates' \
+				'in ISO 6709 notation.'
+			echo >&2 'For example, +4042-07403 stands for'
+			echo >&2 '40 degrees 42 minutes north,' \
+				'74 degrees 3 minutes west.'
+			read coord;;
+		    esac
+		    distance_table=$($AWK \
+			    -v coord="$coord" \
+			    -v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
+			    "$output_distances" <$TZ_ZONE_TABLE |
+		      sort -n |
+		      sed "${location_limit}q"
+		    )
+		    regions=$(echo "$distance_table" | $AWK '
+		      BEGIN { FS = "\t" }
+		      { print $NF }
+		    ')
+		    echo >&2 'Please select one of the following' \
+			    'time zone regions,'
+		    echo >&2 'listed roughly in increasing order' \
+			    "of distance from $coord".
+		    select region in $regions
+		    do
+			case $region in
+			'') echo >&2 'Please enter a number in range.';;
+			?*) break;;
+			esac
+		    done
+		    TZ=$(echo "$distance_table" | $AWK -v region="$region" '
+		      BEGIN { FS="\t" }
+		      $NF == region { print $4 }
+		    ')
+		    ;;
+		*)
 		# Get list of names of countries in the continent or ocean.
 		countries=$($AWK -F'\t' \
 			-v continent="$continent" \
@@ -185,7 +321,8 @@ while
 		# If there's more than one country, ask the user which one.
 		case $countries in
 		*"$newline"*)
-			echo >&2 'Please select a country.'
+			echo >&2 'Please select a country' \
+				'whose clocks agree with yours.'
 			select country in $countries
 			do
 			    case $country in
@@ -256,6 +393,7 @@ while
 			}
 			$1 == cc && $4 == region { print $3 }
 		' <$TZ_ZONE_TABLE)
+		esac
 
 		# Make sure the corresponding zoneinfo file exists.
 		TZ_for_date=$TZDIR/$TZ
@@ -292,9 +430,11 @@ Universal Time is now:	$UTdate."
 	echo >&2 ""
 	echo >&2 "The following information has been given:"
 	echo >&2 ""
-	case $country+$region in
-	?*+?*)	echo >&2 "	$country$newline	$region";;
-	?*+)	echo >&2 "	$country";;
+	case $country%$region%$coord in
+	?*%?*%)	echo >&2 "	$country$newline	$region";;
+	?*%%)	echo >&2 "	$country";;
+	%?*%?*) echo >&2 "	coord $coord$newline	$region";;
+	%%?*)	echo >&2 "	coord $coord";;
 	+)	echo >&2 "	TZ='$TZ'"
 	esac
 	echo >&2 ""
@@ -313,7 +453,7 @@ Universal Time is now:	$UTdate."
 	'') exit 1;;
 	Yes) break
 	esac
-do :
+do coord=
 done
 
 case $SHELL in

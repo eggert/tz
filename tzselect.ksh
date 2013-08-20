@@ -200,31 +200,39 @@ while
 
 	echo >&2 'Please select a continent, ocean, "coord", or "TZ".'
 
-	select continent in \
-	    Africa \
-	    Americas \
-	    Antarctica \
-	    'Arctic Ocean' \
-	    Asia \
-	    'Atlantic Ocean' \
-	    Australia \
-	    Europe \
-	    'Indian Ocean' \
-	    'Pacific Ocean' \
-	    'coord - I want to use geographical coordinates.' \
-	    'TZ - I want to specify the time zone using the Posix TZ format.'
-	do
-	    case $continent in
-	    '')
-		echo >&2 'Please enter a number in range.';;
-	    ?*)
+        quoted_continents=$(
+	  $AWK -F'\t' '
+	    /^[^#]/ {
+              entry = substr($3, 1, index($3, "/") - 1)
+              if (entry == "America")
+		entry = entry "s"
+              if (entry ~ /^(Arctic|Atlantic|Indian|Pacific)$/)
+		entry = entry " Ocean"
+              printf "'\''%s'\''\n", entry
+            }
+          ' $TZ_ZONE_TABLE |
+	  sort -u |
+	  tr '\n' ' '
+	  echo ''
+	)
+
+	eval '
+	    select continent in '"$quoted_continents"' \
+		"coord - I want to use geographical coordinates." \
+		"TZ - I want to specify the time zone using the Posix TZ format."
+	    do
 		case $continent in
-		Americas) continent=America;;
-		*' '*) continent=$(expr "$continent" : '\([^ ]*\)')
+		"")
+		    echo >&2 "Please enter a number in range.";;
+		?*)
+		    case $continent in
+		    Americas) continent=America;;
+		    *" "*) continent=$(expr "$continent" : '\''\([^ ]*\)'\'')
+		    esac
+		    break
 		esac
-		break
-	    esac
-	done
+	    done
+	'
 	esac
 
 	case $continent in

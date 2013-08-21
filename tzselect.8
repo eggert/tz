@@ -31,14 +31,41 @@ All interaction with the user is done via standard input and standard error.
 Instead of asking for continent and then country and then city,
 ask for selection from time zones whose largest cities
 are closest to the location with geographical coordinates
-.IR coord .
+.I coord.
 Use ISO 6709 notation for
-.IR coord ,
-for example,
-.B "\-c\ \+42.391415\-071.570419"
-for 42.391415\(de\|N, 71.570419\(de\|W, and
-.B "\-c\ +404226\-0740319"
-for 48\(de\|42\(fm\|26\(sd\|N, 74\(de\|3\(fm\|19\(sd\|W.
+.I coord,
+that is, a latitude immediately followed by a longitude.  The latitude
+and longitude should be signed integers followed by an optional
+decimal point and fraction: positive numbers represent north and east,
+negative south and west.  Latitudes with two and longitudes with three
+integer digits are treated as degrees; latitudes with four or six and
+longitudes with five or seven integer digits are treated as
+.I "DDMM, DDDMM, DDMMSS,"
+or
+.I DDDMMSS
+representing
+.I DD
+or
+.I DDD
+degrees,
+.I MM
+minutes,
+and zero or
+.I SS
+seconds, with any trailing fractions represent fractional minutes or
+(if
+.I SS
+is present) seconds.  The decimal point is that of the current locale.
+For example, in the (default) C locale,
+.B "\-c\ +40.689\-074.045"
+specifies 40.689\(de\|N, 74.045\(de\|W,
+.B "\-c\ +4041.4\-07402.7"
+specifies 40\(de\|41.4\(fm\|N, 74\(de\|2.7\(fm\|W, and
+.B "\-c\ +404121\-0740240"
+specifies 40\(de\|41\(fm\|21\(sd\|N, 74\(de\|2\(fm\|40\(sd\|W.
+If
+.I coord
+is not one of the documented forms, the resulting behavior is unspecified.
 .TP
 .BI "\-n " limit
 When
@@ -49,7 +76,7 @@ locations (default 10).
 .TP
 .BI "\-t " zonetabtype
 Make selections from the time zone table of type
-.IR zonetabtype .
+.I zonetabtype.
 Possible
 .I zonetabtype
 values include:

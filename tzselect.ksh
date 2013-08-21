@@ -1,7 +1,5 @@
 #!/bin/bash
 
-export LC_ALL=C
-
 PKGVERSION='(tzcode) '
 TZVERSION=see_Makefile
 REPORT_BUGS_TO=tz@iana.org
@@ -130,31 +128,30 @@ output_distances='
         country[$1] = $2
     country["US"] = "US" # Otherwise the strings get too long.
   }
-  function cvt1(coord, deg, min, ilen, sign, sec) {
-    ilen = length(coord)
-    sign = substr(coord, 1, 1)
-    if (coord ~ /\./) {
-      deg = coord + 0
-    } else {
-      if (ilen <= 6) {
-	 sec = 0
-      } else {
-	 sec = sign substr(coord, ilen - 1)
-	 ilen -= 2
-      }
-      min = sign substr(coord, ilen - 1, 2)
-      deg = substr(coord, 1, ilen - 2)
-      deg = (deg * 3600.0 + min * 60.0 + sec) / 3600.0
-    }
-    return deg * 0.017453292519943295
+  function convert_coord(coord, deg, min, ilen, sign, sec) {
+    if (coord ~ /^[-+]?[0-9]?[0-9][0-9][0-9][0-9][0-9][0-9]([^0-9]|$)/) {
+      degminsec = coord
+      intdeg = degminsec < 0 ? -int(-degminsec / 10000) : int(degminsec / 10000)
+      minsec = degminsec - intdeg * 10000
+      intmin = minsec < 0 ? -int(-minsec / 100) : int(minsec / 100)
+      sec = minsec - intmin * 100
+      deg = (intdeg * 3600 + intmin * 60 + sec) / 3600
+    } else if (coord ~ /^[-+]?[0-9]?[0-9][0-9][0-9][0-9]([^0-9]|$)/) {
+      degmin = coord
+      intdeg = degmin < 0 ? -int(-degmin / 100) : int(degmin / 100)
+      min = degmin - intdeg * 100
+      deg = (intdeg * 60 + min) / 60
+    } else
+      deg = coord
+    return deg * 0.017453292519943296
   }
   function convert_latitude(coord) {
     match(coord, /..*[-+]/)
-    return cvt1(substr(coord, 1, RLENGTH - 1))
+    return convert_coord(substr(coord, 1, RLENGTH - 1))
   }
   function convert_longitude(coord) {
     match(coord, /..*[-+]/)
-    return cvt1(substr(coord, RLENGTH))
+    return convert_coord(substr(coord, RLENGTH))
   }
   # Great-circle distance between points with given latitude and longitude.
   # Inputs and output are in radians.  This uses the great-circle special

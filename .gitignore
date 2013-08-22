@@ -4,6 +4,7 @@
 *.txt
 *~
 ChangeLog
+date
 leapseconds
 time.tab
 tzselect

@@ -54,7 +54,8 @@ Options:
     ask for selection from time zones whose largest cities
     are closest to the location with geographical coordinates COORD.
     COORD should use ISO 6709 notation, for example, '-c +4852+00220'
-    for Paris.
+    for Paris (in degrees and minutes, North and East), or
+    '-c -35-058' for Buenos Aires (in degrees, South and West).
 
   -n LIMIT
     Display at most LIMIT locations when -c is used (default $location_limit).

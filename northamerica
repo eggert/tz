@@ -636,8 +636,9 @@ Zone America/Phoenix	-7:28:18 -	LMT	1883 Nov 18 11:31:42
 # Navajo Nation participates in the Daylight Saving Time policy, due to its
 # large size and location in three states."  (The "only" means that other
 # tribal nations don't use DST.)
-
-Link America/Denver America/Shiprock
+#
+# From Paul Eggert (2013-08-26):
+# See America/Denver for a zone appropriate for the Navajo Nation.
 
 # Southern Idaho (Ada, Adams, Bannock, Bear Lake, Bingham, Blaine,
 # Boise, Bonneville, Butte, Camas, Canyon, Caribou, Cassia, Clark,

@@ -1341,25 +1341,23 @@ Zone America/Moncton	-4:19:08 -	LMT	1883 Dec  9
 
 # Quebec
 
-# From Paul Eggert (2006-07-09):
+# From Paul Eggert (2013-08-26):
 # Shanks & Pottenger write that since 1970 most of Quebec has been
 # like Montreal.
 
-# From Paul Eggert (2006-06-27):
 # Matthews and Vincent (1998) also write that Quebec east of the -63
 # meridian is supposed to observe AST, but residents as far east as
 # Natashquan use EST/EDT, and residents east of Natashquan use AST.
-# In "Official time in Quebec" the Quebec department of justice writes in
-# http://www.justice.gouv.qc.ca/english/publications/generale/temps-regl-1-a.htm
-# that "The residents of the Municipality of the
-# Cote-Nord-du-Golfe-Saint-Laurent and the municipalities of Saint-Augustin,
-# Bonne-Esperance and Blanc-Sablon apply the Official Time Act as it is
-# written and use Atlantic standard time all year round. The same applies to
-# the residents of the Native facilities along the lower North Shore."
-# <http://www.assnat.qc.ca/eng/37legislature2/Projets-loi/Publics/06-a002.htm>
+# The Quebec department of justice writes in
+# "The situation in Minganie and Basse-Cote-Nord"
+# http://www.justice.gouv.qc.ca/english/publications/generale/temps-minganie-a.htm
+# that the coastal strip from just east of Natashquan to Blanc-Sablon
+# observes Atlantic standard time all year round.
+# http://www.assnat.qc.ca/Media/Process.aspx?MediaId=ANQ.Vigie.Bll.DocumentGenerique_8845en
 # says this common practice was codified into law as of 2007.
 # For lack of better info, guess this practice began around 1970, contra to
 # Shanks & Pottenger who have this region observing AST/ADT.
+# See America/Puerto_Rico.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Mont	1917	only	-	Mar	25	2:00	1:00	D
@@ -1392,9 +1390,6 @@ Rule	Mont	1951	1956	-	Sep	lastSun	2:00	0	S
 Rule	Mont	1957	1973	-	Oct	lastSun	2:00	0	S
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Blanc-Sablon -3:48:28 -	LMT	1884
-			-4:00	Canada	A%sT	1970
-			-4:00	-	AST
 Zone America/Montreal	-4:54:16 -	LMT	1884
 			-5:00	Mont	E%sT	1918
 			-5:00	Canada	E%sT	1919
@@ -1468,14 +1463,16 @@ Zone America/Montreal	-4:54:16 -	LMT	1884
 # can say for certain that Atikokan has been practicing the current
 # time keeping since 1952, at least.
 
-# From Paul Eggert (2006-07-17):
+# From Paul Eggert (2013-08-26):
 # Shanks & Pottenger say that Atikokan has agreed with Rainy River
 # ever since standard time was introduced, but the information from
 # McKinnon sounds more authoritative.  For now, assume that Atikokan
 # switched to EST immediately after WWII era daylight saving time
 # ended.  This matches the old (less-populous) America/Coral_Harbour
 # entry since our cutoff date of 1970, so we can move
-# America/Coral_Harbour to the 'backward' file.
+# America/Coral_Harbour to the 'backward' file.  And Atikokan itself
+# is the same as America/Panama since 1970, so we can move
+# America/Atikokan to the 'backward' file as well.
 
 # From Mark Brader (2010-03-06):
 #
@@ -1633,11 +1630,6 @@ Zone America/Rainy_River -6:18:16 -	LMT	1895
 			-6:00	Canada	C%sT	1940 Sep 29
 			-6:00	1:00	CDT	1942 Feb  9 2:00s
 			-6:00	Canada	C%sT
-Zone America/Atikokan	-6:06:28 -	LMT	1895
-			-6:00	Canada	C%sT	1940 Sep 29
-			-6:00	1:00	CDT	1942 Feb  9 2:00s
-			-6:00	Canada	C%sT	1945 Sep 30 2:00
-			-5:00	-	EST
 
 
 # Manitoba
@@ -1872,7 +1864,8 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # period should be PDT rather than MST, but that doesn't seem important enough
 # (to anyone) to further complicate the rules.
 
-# The transition dates (and times) are guesses.
+# From Paul Eggert (2013-08-26):
+# See America/Phoenix, since Creston has agreed with Phoenix since 1970.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Vanc	1918	only	-	Apr	14	2:00	1:00	D
@@ -1891,10 +1884,6 @@ Zone America/Vancouver	-8:12:28 -	LMT	1884
 Zone America/Dawson_Creek -8:00:56 -	LMT	1884
 			-8:00	Canada	P%sT	1947
 			-8:00	Vanc	P%sT	1972 Aug 30 2:00
-			-7:00	-	MST
-Zone America/Creston	-7:46:04 -	LMT	1884
-			-7:00	-	MST	1916 Oct 1
-			-8:00	-	PST	1918 Jun 2
 			-7:00	-	MST
 
 # Northwest Territories, Nunavut, Yukon
@@ -2546,15 +2535,10 @@ Zone America/Santa_Isabel	-7:39:28 -	LMT	1922 Jan  1  0:20:32
 ###############################################################################
 
 # Anguilla
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Anguilla	-4:12:16 -	LMT	1912 Mar 2
-			-4:00	-	AST
+# See America/Puerto_Rico.
 
 # Antigua and Barbuda
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Antigua	-4:07:12 -	LMT	1912 Mar 2
-			-5:00	-	EST	1951
-			-4:00	-	AST
+# See America/Puerto_Rico.
 
 # Bahamas
 #
@@ -2564,14 +2548,8 @@ Zone	America/Antigua	-4:07:12 -	LMT	1912 Mar 2
 # The Bahamas announced about a month ago that they plan to change their DST
 # rules to sync with the U.S. starting in 2007....
 # http://www.jonesbahamas.com/?c=45&a=10412
-
-# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Bahamas	1964	1975	-	Oct	lastSun	2:00	0	S
-Rule	Bahamas	1964	1975	-	Apr	lastSun	2:00	1:00	D
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Nassau	-5:09:30 -	LMT	1912 Mar 2
-			-5:00	Bahamas	E%sT	1976
-			-5:00	US	E%sT
+#
+# See America/Toronto.
 
 # Barbados
 
@@ -2617,14 +2595,11 @@ Zone	America/Belize	-5:52:48 -	LMT	1912 Apr
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Atlantic/Bermuda	-4:19:18 -	LMT	1930 Jan  1 2:00    # Hamilton
 			-4:00	-	AST	1974 Apr 28 2:00
-			-4:00	Bahamas	A%sT	1976
+			-4:00	Canada	A%sT	1976
 			-4:00	US	A%sT
 
 # Cayman Is
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Cayman	-5:25:32 -	LMT	1890		# Georgetown
-			-5:07:12 -	KMT	1912 Feb    # Kingston Mean Time
-			-5:00	-	EST
+# See America/Panama.
 
 # Costa Rica
 
@@ -2870,9 +2845,7 @@ Zone	America/Havana	-5:29:28 -	LMT	1890
 			-5:00	Cuba	C%sT
 
 # Dominica
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Dominica	-4:05:36 -	LMT	1911 Jul 1 0:01		# Roseau
-			-4:00	-	AST
+# See America/Puerto_Rico.
 
 # Dominican Republic
 
@@ -2921,15 +2894,10 @@ Zone America/El_Salvador -5:56:48 -	LMT	1921		# San Salvador
 			-6:00	Salv	C%sT
 
 # Grenada
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Grenada	-4:07:00 -	LMT	1911 Jul	# St George's
-			-4:00	-	AST
+# See America/Puerto_Rico.
 
 # Guadeloupe
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Guadeloupe	-4:06:08 -	LMT	1911 Jun 8	# Pointe a Pitre
-			-4:00	-	AST
-# Use America/Guadeloupe also for St Barthelemy and for St Martin (French part).
+# See America/Puerto_Rico.
 
 # Guatemala
 #
@@ -3099,9 +3067,7 @@ Zone America/Martinique	-4:04:20 -      LMT	1890		# Fort-de-France
 # From Paul Eggert (2006-03-22):
 # In 1995 volcanic eruptions forced evacuation of Plymouth, the capital.
 # world.gazetteer.com says Cork Hill is the most populous location now.
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Montserrat	-4:08:52 -	LMT	1911 Jul 1 0:01   # Cork Hill
-			-4:00	-	AST
+# See America/Puerto_Rico.
 
 # Nicaragua
 #
@@ -3182,16 +3148,17 @@ Zone America/Puerto_Rico -4:24:25 -	LMT	1899 Mar 28 12:00    # San Juan
 			-4:00	US	A%sT	1946
 			-4:00	-	AST
 
+# St Barthelemy
+# See America/Puerto_Rico.
+
 # St Kitts-Nevis
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/St_Kitts	-4:10:52 -	LMT	1912 Mar 2	# Basseterre
-			-4:00	-	AST
+# See America/Puerto_Rico.
 
 # St Lucia
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/St_Lucia	-4:04:00 -	LMT	1890		# Castries
-			-4:04:00 -	CMT	1912	    # Castries Mean Time
-			-4:00	-	AST
+# See America/Puerto_Rico.
+
+# St Martin (French part)
+# See America/Puerto_Rico.
 
 # St Pierre and Miquelon
 # There are too many St Pierres elsewhere, so we'll use `Miquelon'.
@@ -3202,10 +3169,7 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15	# St Pierre
 			-3:00	Canada	PM%sT
 
 # St Vincent and the Grenadines
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/St_Vincent	-4:04:56 -	LMT	1890		# Kingstown
-			-4:04:56 -	KMT	1912	   # Kingstown Mean Time
-			-4:00	-	AST
+# See America/Puerto_Rico.
 
 # Turks and Caicos
 #
@@ -3239,11 +3203,7 @@ Zone America/Grand_Turk	-4:44:32 -	LMT	1890
 			-5:00	TC	E%sT
 
 # British Virgin Is
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Tortola	-4:18:28 -	LMT	1911 Jul    # Road Town
-			-4:00	-	AST
+# See America/Puerto_Rico.
 
 # Virgin Is
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/St_Thomas	-4:19:44 -	LMT	1911 Jul    # Charlotte Amalie
-			-4:00	-	AST
+# See America/Puerto_Rico.

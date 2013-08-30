@@ -4,6 +4,7 @@
 *.txt
 *~
 ChangeLog
+back-pre1970
 date
 leapseconds
 time.tab

@@ -224,7 +224,23 @@ could misbehave if data were omitted for pre-1970 transitions.
 However, the database is not designed for and does not suffice for
 applications requiring accurate handling of all past times everywhere,
 as it would take far too much effort and guesswork to record all
-details of pre-1970 civil timekeeping.
+details of pre-1970 civil timekeeping.  The pre-1970 data in this
+database covers only a tiny sliver of how clocks actually behaved;
+the vast majority of the necessary information was lost or never
+recorded, and much of what little remains is fabricated.
+
+Local mean time (LMT) offsets are recorded in the database only
+because the format requires an offset.  They should not be considered
+meaningful, and should not prompt creation of zones merely because two
+locations differ in LMT.  Historically, not only did different
+locations in the same zone typically use different LMT offsets, often
+different people in the same location maintained mean-time clocks that
+differed significantly, and many people used solar or some other time
+instead of mean time.  As for leap seconds, we don't know the history
+of earth's rotation accurately enough to map SI seconds to historical
+solar time to more than about one-hour accuracy; see Stephenson FR
+(2003), Historical eclipses and Earth's rotation, A&G 44: 2.22-2.27
+<http://dx.doi.org/10.1046/j.1468-4004.2003.44222.x>.
 
 As noted in the README file, the tz database is not authoritative
 (particularly not for pre-1970 time stamps), and it surely has errors.
@@ -384,8 +400,11 @@ in decreasing order of importance:
 			name identifying each zone and append 'T', 'ST', etc.
 			as before; e.g. 'VLAST' for VLAdivostok Summer Time.
 
-	Use UTC (with time zone abbreviation "zzz") for locations while
-		uninhabited.  The "zzz" mnemonic is that these locations are,
+	Use 'LMT' for local mean time of locations before the introduction
+		of standard time; see "Scope of the tz database".
+
+	Use UTC (with time zone abbreviation 'zzz') for locations while
+		uninhabited.  The 'zzz' mnemonic is that these locations are,
 		in some sense, asleep.
 
 Application writers should note that these abbreviations are ambiguous

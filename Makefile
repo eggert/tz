@@ -49,22 +49,6 @@ POSIXRULES=	America/New_York
 
 ZONETABTYPE=	zone
 
-# How to support obsolescent time zones in a backward-compatible way.
-# This variable affects only pre-1970 time stamps, on hosts that support them.
-# It has two possible values, 'backward' and 'pre1970 back-pre1970'.
-#
-# 'backward' is the traditional approach, and is simpler and more efficient;
-# it is designed to generate one zone for each region where clocks have agreed
-# since 1970.
-#
-# 'pre1970 back-pre1970' can generate more than one zone in that situation,
-# which means it can preserve a bit of pre-1970 data that 'backward' does not;
-# almost all pre-1970 data is missing, though, so don't get your hopes up.
-#
-# Sometimes 'backward' is more-compatible with earlier versions of this database,
-# and sometimes 'pre1970 back-pre1970' is; it depends on the situation.
-BACKWARD=	backward
-
 # Also see TZDEFRULESTRING below, which takes effect only
 # if the time zone files cannot be accessed.
 
@@ -338,7 +322,7 @@ COMMON=		Makefile
 DOCS=		README Theory $(MANS) date.1
 PRIMARY_YDATA=	africa antarctica asia australasia \
 		europe northamerica southamerica
-YDATA=		$(PRIMARY_YDATA) pacificnew etcetera $(BACKWARD)
+YDATA=		$(PRIMARY_YDATA) pacificnew etcetera backward
 NDATA=		systemv factory
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
@@ -346,10 +330,10 @@ TABDATA=	iso3166.tab time.tab zone.tab
 DATA=		$(YDATA) $(NDATA) $(SDATA) $(TABDATA) \
 			leap-seconds.list yearistype.sh
 WEB_PAGES=	tz-art.htm tz-link.htm
-AWK_SCRIPTS=	back-pre1970.awk checktab.awk leapseconds.awk zone-time.awk
+AWK_SCRIPTS=	checktab.awk leapseconds.awk zone-time.awk
 MISC=		usno1988 usno1989 usno1989a usno1995 usno1997 usno1998 \
-			$(WEB_PAGES) $(AWK_SCRIPTS) \
-			workman.sh zoneinfo2tdf.pl
+			$(WEB_PAGES) $(AWK_SCRIPTS) workman.sh \
+			zoneinfo2tdf.pl
 ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC)
 
 # And for the benefit of csh users on systems that assume the user
@@ -440,9 +424,6 @@ zones:		$(REDO)
 time.tab:	$(YDATA) zone.tab zone-time.awk
 		$(AWK) -f zone-time.awk $(YDATA) >$@
 
-back-pre1970:	pre1970 backward
-		$(AWK) -v pre1970=pre1970 -f $@.awk backward >$@
-
 $(TZLIB):	$(LIBOBJS)
 		-mkdir $(TOPDIR) $(LIBDIR)
 		ar ru $@ $(LIBOBJS)
@@ -477,7 +458,7 @@ check_web:	$(WEB_PAGES)
 
 clean_misc:
 		rm -f core *.o *.out \
-		  back-pre1970 time.tab \
+		  time.tab \
 		  date leapseconds tzselect version.h zdump zic yearistype
 clean:		clean_misc
 		rm -f -r tzpublic
@@ -509,7 +490,7 @@ set-timestamps:
 		  $$cmd || exit; \
 		done
 
-# The zics below ensure that each non-pre1970 data file can stand on its own.
+# The zics below ensure that each data file can stand on its own.
 # We also do an all-files run to catch links to links.
 
 check_public:	$(ENCHILADA)
@@ -517,8 +498,7 @@ check_public:	$(ENCHILADA)
 		make "CFLAGS=$(GCC_DEBUG_FLAGS)"
 		mkdir tzpublic
 		for i in $(TDATA) ; do \
-		  test $$i = pre1970 || $(zic) -v -d tzpublic $$i 2>&1 \
-		    || exit; \
+		  $(zic) -v -d tzpublic $$i 2>&1 || exit; \
 		done
 		$(zic) -v -d tzpublic $(TDATA)
 		rm -f -r tzpublic

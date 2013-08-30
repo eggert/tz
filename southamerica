@@ -631,7 +631,10 @@ Zone America/Argentina/Ushuaia -4:33:12 - LMT 1894 Oct 31
 			-3:00	-	ART
 
 # Aruba
-# See America/Puerto_Rico.
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	America/Aruba	-4:40:24 -	LMT	1912 Feb 12	# Oranjestad
+			-4:30	-	ANT	1965 # Netherlands Antilles Time
+			-4:00	-	AST
 
 # Bolivia
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1325,7 +1328,7 @@ Zone	America/Bogota	-4:56:16 -	LMT	1884 Mar 13
 
 # Curacao
 
-# Milne gives 4:35:46.9 for Curacao mean time.
+# Milne gives 4:35:46.9 for Curacao mean time; round to nearest.
 #
 # From Paul Eggert (2006-03-22):
 # Shanks & Pottenger say that The Bottom and Philipsburg have been at
@@ -1341,7 +1344,14 @@ Zone	America/Bogota	-4:56:16 -	LMT	1884 Mar 13
 # Netherlands as Kingdom Islands.  This won't affect their time zones
 # though, as far as we know.
 #
-# For all these regions, see America/Puerto_Rico.
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	America/Curacao	-4:35:47 -	LMT	1912 Feb 12	# Willemstad
+			-4:30	-	ANT	1965 # Netherlands Antilles Time
+			-4:00	-	AST
+
+# Sint Maarten
+# Caribbean Netherlands
+# Use America/Curacao.
 
 # Ecuador
 #
@@ -1615,7 +1625,9 @@ Zone America/Paramaribo	-3:40:40 -	LMT	1911
 			-3:00	-	SRT
 
 # Trinidad and Tobago
-# See America/Puerto_Rico.
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone America/Port_of_Spain -4:06:04 -	LMT	1912 Mar 2
+			-4:00	-	AST
 
 # Uruguay
 # From Paul Eggert (1993-11-18):

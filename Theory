@@ -228,6 +228,10 @@ details of pre-1970 civil timekeeping.  The pre-1970 data in this
 database covers only a tiny sliver of how clocks actually behaved;
 the vast majority of the necessary information was lost or never
 recorded, and much of what little remains is fabricated.
+Although 1970 is a somewhat-arbitrary cutoff, there are significant
+challenges to moving the cutoff back even by a decade or two, due to
+the wide variety of local practices before computer timekeeping
+became prevalent.
 
 Local mean time (LMT) offsets are recorded in the database only
 because the format requires an offset.  They should not be considered
@@ -235,8 +239,9 @@ meaningful, and should not prompt creation of zones merely because two
 locations differ in LMT.  Historically, not only did different
 locations in the same zone typically use different LMT offsets, often
 different people in the same location maintained mean-time clocks that
-differed significantly, and many people used solar or some other time
-instead of mean time.  As for leap seconds, we don't know the history
+differed significantly, many people used solar or some other time
+instead of mean time, and standard time often replaced LMT only gradually
+at each location.  As for leap seconds, we don't know the history
 of earth's rotation accurately enough to map SI seconds to historical
 solar time to more than about one-hour accuracy; see Stephenson FR
 (2003), Historical eclipses and Earth's rotation, A&G 44: 2.22-2.27
@@ -336,9 +341,16 @@ in decreasing order of importance:
 	If a name is changed, put its old spelling in the 'backward' file.
 		This means old spellings will continue to work.
 
-The file 'zone.tab' lists the geographical locations used to name
-time zone rule files.  It is intended to be an exhaustive list
-of names for geographic regions as described above.
+The file 'zone.tab' lists geographical locations used to name time
+zone rule files.  It is intended to be an exhaustive list of names
+for geographic regions as described above; this is a subset of the
+Zone entries in the data.  The file 'time.tab' is a simplified
+version of 'zone.tab', the intent being that entries are coalesced
+if their time stamps agree after 1970, which means the entries are
+distinct in 'zone.tab' only because of the abovementioned political
+constraints.  Although a 'zone.tab' location's longitude corresponds
+to its LMT offset with one hour for every 15 degrees east longitude,
+this relationship is not exact and is not true for 'time.tab'.
 
 Older versions of this package used a different naming scheme,
 and these older names are still supported.

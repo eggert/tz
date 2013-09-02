@@ -1349,9 +1349,13 @@ Zone	America/Curacao	-4:35:47 -	LMT	1912 Feb 12	# Willemstad
 			-4:30	-	ANT	1965 # Netherlands Antilles Time
 			-4:00	-	AST
 
-# Sint Maarten
-# Caribbean Netherlands
-# Use America/Curacao.
+# From Arthur David Olson (2011-06-15):
+# use links for places with new iso3166 codes.
+# The name "Lower Prince's Quarter" is both longer than fourteen charaters
+# and contains an apostrophe; use "Lower_Princes" below.
+
+Link	America/Curacao	America/Lower_Princes	# Sint Maarten
+Link	America/Curacao	America/Kralendijk	# Caribbean Netherlands
 
 # Ecuador
 #
@@ -1646,7 +1650,7 @@ Rule	Uruguay	1937	1941	-	Mar	lastSun	 0:00	0	-
 # Whitman gives 1937 Oct 3; go with Shanks & Pottenger.
 Rule	Uruguay	1937	1940	-	Oct	lastSun	 0:00	0:30	HS
 # Whitman gives 1941 Oct 24 - 1942 Mar 27, 1942 Dec 14 - 1943 Apr 13,
-# and 1943 Apr 13 ``to present time''; go with Shanks & Pottenger.
+# and 1943 Apr 13 "to present time"; go with Shanks & Pottenger.
 Rule	Uruguay	1941	only	-	Aug	 1	 0:00	0:30	HS
 Rule	Uruguay	1942	only	-	Jan	 1	 0:00	0	-
 Rule	Uruguay	1942	only	-	Dec	14	 0:00	1:00	S

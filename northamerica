@@ -20,7 +20,7 @@
 # Howse writes (pp 121-125) that time zones were invented by
 # Professor Charles Ferdinand Dowd (1825-1904),
 # Principal of Temple Grove Ladies' Seminary (Saratoga Springs, NY).
-# His pamphlet ``A System of National Time for Railroads'' (1870)
+# His pamphlet "A System of National Time for Railroads" (1870)
 # was the result of his proposals at the Convention of Railroad Trunk Lines
 # in New York City (1869-10).  His 1870 proposal was based on Washington, DC,
 # but in 1872-05 he moved the proposed origin to Greenwich.
@@ -40,8 +40,8 @@
 
 # From Paul Eggert (2001-03-06):
 # Daylight Saving Time was first suggested as a joke by Benjamin Franklin
-# in his whimsical essay ``An Economical Project for Diminishing the Cost
-# of Light'' published in the Journal de Paris (1784-04-26).
+# in his whimsical essay "An Economical Project for Diminishing the Cost
+# of Light" published in the Journal de Paris (1784-04-26).
 # Not everyone is happy with the results:
 #
 #	I don't really care how time is reckoned so long as there is some
@@ -167,8 +167,8 @@ Zone	PST8PDT		 -8:00	US	P%sT
 #    of the Aleutian islands.   No DST.
 
 # From Paul Eggert (1995-12-19):
-# The tables below use `NST', not `NT', for Nome Standard Time.
-# I invented `CAWT' for Central Alaska War Time.
+# The tables below use 'NST', not 'NT', for Nome Standard Time.
+# I invented 'CAWT' for Central Alaska War Time.
 
 # From U. S. Naval Observatory (1989-01-19):
 # USA  EASTERN       5 H  BEHIND UTC    NEW YORK, WASHINGTON
@@ -237,9 +237,9 @@ Zone	PST8PDT		 -8:00	US	P%sT
 # H.R. 6, Energy Policy Act of 2005, SEC. 110. DAYLIGHT SAVINGS.
 #   (a) Amendment- Section 3(a) of the Uniform Time Act of 1966 (15
 #   U.S.C. 260a(a)) is amended--
-#     (1) by striking `first Sunday of April' and inserting `second
+#     (1) by striking 'first Sunday of April' and inserting 'second
 #     Sunday of March'; and
-#     (2) by striking `last Sunday of October' and inserting `first
+#     (2) by striking 'last Sunday of October' and inserting 'first
 #     Sunday of November'.
 #   (b) Effective Date- Subsection (a) shall take effect 1 year after the
 #   date of enactment of this Act or March 1, 2007, whichever is later.
@@ -678,13 +678,13 @@ Zone America/Boise	-7:44:49 -	LMT	1883 Nov 18 12:15:11
 #   and Switzerland counties have their own time zone histories as noted below.
 #
 # Shanks partitioned Indiana into 345 regions, each with its own time history,
-# and wrote ``Even newspaper reports present contradictory information.''
+# and wrote "Even newspaper reports present contradictory information."
 # Those Hoosiers!  Such a flighty and changeable people!
 # Fortunately, most of the complexity occurred before our cutoff date of 1970.
 #
 # Other than Indianapolis, the Indiana place names are so nondescript
-# that they would be ambiguous if we left them at the `America' level.
-# So we reluctantly put them all in a subdirectory `America/Indiana'.
+# that they would be ambiguous if we left them at the 'America' level.
+# So we reluctantly put them all in a subdirectory 'America/Indiana'.
 
 # From Paul Eggert (2005-08-16):
 # http://www.mccsc.edu/time.html says that Indiana will use DST starting 2006.
@@ -948,8 +948,8 @@ Zone America/Kentucky/Monticello -5:39:24 - LMT	1883 Nov 18 12:20:36
 # This story is too entertaining to be false, so go with Howse over Shanks.
 #
 # From Paul Eggert (2001-03-06):
-# Garland (1927) writes ``Cleveland and Detroit advanced their clocks
-# one hour in 1914.''  This change is not in Shanks.  We have no more
+# Garland (1927) writes "Cleveland and Detroit advanced their clocks
+# one hour in 1914."  This change is not in Shanks.  We have no more
 # info, so omit this for now.
 #
 # Most of Michigan observed DST from 1973 on, but was a bit late in 1975.
@@ -989,7 +989,7 @@ Zone America/Menominee	-5:50:27 -	LMT	1885 Sep 18 12:00
 # occupied 1857/1900 by the Navassa Phosphate Co
 # US lighthouse 1917/1996-09
 # currently uninhabited
-# see Mark Fineman, ``An Isle Rich in Guano and Discord'',
+# see Mark Fineman, "An Isle Rich in Guano and Discord",
 # _Los Angeles Times_ (1998-11-10), A1, A10; it cites
 # Jimmy Skaggs, _The Great Guano Rush_ (1994).
 
@@ -1023,7 +1023,7 @@ Zone America/Menominee	-5:50:27 -	LMT	1885 Sep 18 12:00
 #	Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94
 #	<http://www.jstor.org/stable/1774359>.
 #
-# See the `europe' file for Greenland.
+# See the 'europe' file for Greenland.
 
 # Canada
 
@@ -1224,7 +1224,7 @@ Zone America/St_Johns	-3:30:52 -	LMT	1884
 
 # most of east Labrador
 
-# The name `Happy Valley-Goose Bay' is too long; use `Goose Bay'.
+# The name 'Happy Valley-Goose Bay' is too long; use 'Goose Bay'.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Goose_Bay	-4:01:40 -	LMT	1884 # Happy Valley-Goose Bay
 			-3:30:52 -	NST	1918
@@ -1404,7 +1404,6 @@ Zone America/Montreal	-4:54:16 -	LMT	1884
 			-5:00	Canada	E%sT	1946
 			-5:00	Mont	E%sT	1974
 			-5:00	Canada	E%sT
-
 
 # Ontario
 
@@ -2211,7 +2210,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # From Paul Eggert (1996-06-12):
 # For an English translation of the decree, see
 # <a href="http://mexico-travel.com/extra/timezone_eng.html">
-# ``Diario Oficial: Time Zone Changeover'' (1996-01-04).
+# "Diario Oficial: Time Zone Changeover" (1996-01-04).
 # </a>
 
 # From Rives McDow (1998-10-08):
@@ -2640,7 +2639,7 @@ Rule	CR	1991	1992	-	Jan	Sat>=15	0:00	1:00	D
 # go with Shanks & Pottenger.
 Rule	CR	1991	only	-	Jul	 1	0:00	0	S
 Rule	CR	1992	only	-	Mar	15	0:00	0	S
-# There are too many San Joses elsewhere, so we'll use `Costa Rica'.
+# There are too many San Joses elsewhere, so we'll use 'Costa Rica'.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San Jose
 			-5:36:13 -	SJMT	1921 Jan 15 # San Jose Mean Time
@@ -2931,7 +2930,10 @@ Zone	America/Grenada	-4:07:00 -	LMT	1911 Jul	# St George's
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Guadeloupe	-4:06:08 -	LMT	1911 Jun 8	# Pointe a Pitre
 			-4:00	-	AST
-# Use America/Guadeloupe also for St Barthelemy and for St Martin (French part).
+# St Barthelemy
+Link America/Guadeloupe	America/St_Barthelemy
+# St Martin (French part)
+Link America/Guadeloupe	America/Marigot
 
 # Guatemala
 #
@@ -3177,7 +3179,7 @@ Zone	America/Panama	-5:18:08 -	LMT	1890
 			-5:00	-	EST
 
 # Puerto Rico
-# There are too many San Juans elsewhere, so we'll use `Puerto_Rico'.
+# There are too many San Juans elsewhere, so we'll use 'Puerto_Rico'.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Puerto_Rico -4:24:25 -	LMT	1899 Mar 28 12:00    # San Juan
 			-4:00	-	AST	1942 May  3
@@ -3196,7 +3198,7 @@ Zone America/St_Lucia	-4:04:00 -	LMT	1890		# Castries
 			-4:00	-	AST
 
 # St Pierre and Miquelon
-# There are too many St Pierres elsewhere, so we'll use `Miquelon'.
+# There are too many St Pierres elsewhere, so we'll use 'Miquelon'.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15	# St Pierre
 			-4:00	-	AST	1980 May

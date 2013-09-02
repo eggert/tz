@@ -240,12 +240,16 @@ locations differ in LMT.  Historically, not only did different
 locations in the same zone typically use different LMT offsets, often
 different people in the same location maintained mean-time clocks that
 differed significantly, many people used solar or some other time
-instead of mean time, and standard time often replaced LMT only gradually
-at each location.  As for leap seconds, we don't know the history
-of earth's rotation accurately enough to map SI seconds to historical
-solar time to more than about one-hour accuracy; see Stephenson FR
-(2003), Historical eclipses and Earth's rotation, A&G 44: 2.22-2.27
-<http://dx.doi.org/10.1046/j.1468-4004.2003.44222.x>.
+instead of mean time, and standard time often replaced LMT only
+gradually at each location.  As for leap seconds, civil time was not
+based on atomic time before 1972, and we don't know the history of
+earth's rotation accurately enough to map SI seconds to historical
+solar time to more than about one-hour accuracy.  See: Morrison LV,
+Stephenson FR. Historical values of the Earth's clock error Delta T
+and the calculation of eclipses. J Hist Astron. 2004;35:327-36
+<http://adsabs.harvard.edu/full/2004JHA....35..327M>; Historical
+values of the Earth's clock error. J Hist Astron. 2005;36:339
+<http://adsabs.harvard.edu/full/2005JHA....36..339M>.
 
 As noted in the README file, the tz database is not authoritative
 (particularly not for pre-1970 time stamps), and it surely has errors.

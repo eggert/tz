@@ -299,15 +299,21 @@ Here are the general rules used for choosing location names,
 in decreasing order of importance:
 
 	Use only valid POSIX file name components (i.e., the parts of
-		names other than '/').  Within a file name component,
+		names other than '/').  Do not use the file name
+		components '.' and '..'.  Within a file name component,
 		use only ASCII letters, '.', '-' and '_'.  Do not use
 		digits, as that might create an ambiguity with POSIX
 		TZ strings.  A file name component must not exceed 14
 		characters or start with '-'.  E.g., prefer 'Brunei'
 		to 'Bandar_Seri_Begawan'.
+	A name must not be empty, or contain '//', or start or end with '/'.
 	Do not use names that differ only in case.  Although the reference
-	        implementation is case-sensitive, some other implementations
+		implementation is case-sensitive, some other implementations
 		are not, and they would mishandle names differing only in case.
+	If one name A is an initial prefix of another name AB (ignoring case),
+		then B must not start with '/', as a regular file cannot have
+		the same name as a directory in POSIX.  For example,
+		'America/New_York' precludes 'America/New_York/Bronx'.
 	Uninhabited regions like the North Pole and Bouvet Island
 		do not need locations, since local time is not defined there.
 	If all the clocks in a region have agreed since 1970,

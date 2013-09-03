@@ -362,6 +362,9 @@ field is used as an alternate name for that zone.
 .PP
 Except for continuation lines,
 lines may appear in any order in the input.
+However, the behavior is unspecified if multiple zone or link lines
+define the same name, or if the source of one link line is the target
+of another.
 .PP
 Lines in the file that describes leap seconds have the following form:
 .nf

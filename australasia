@@ -749,8 +749,17 @@ Zone Pacific/Funafuti	11:56:52 -	LMT	1901
 # no information; was probably like Pacific/Kiritimati
 
 # Johnston
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Pacific/Johnston	-10:00	-	HST
+#
+# From Paul Eggert (2013-09-03):
+# In his memoirs of June 6th to October 4, 1945
+# <http://www.315bw.org/Herb_Bach.htm> (2005), Herbert C. Bach writes,
+# "We started our letdown to Kwajalein Atoll and landed there at 5:00 AM
+# Johnston time, 1:30 AM Kwajalein time."  This was in June 1945, and
+# confirms that Johnston kept the same time as Honolulu in summer 1945.
+# We have no better information, so for now, assume this has been true
+# indefinitely into the past.
+#
+Link Pacific/Honolulu Pacific/Johnston
 
 # Kingman
 # uninhabited

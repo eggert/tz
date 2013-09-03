@@ -2547,9 +2547,7 @@ Zone America/Santa_Isabel	-7:39:28 -	LMT	1922 Jan  1  0:20:32
 ###############################################################################
 
 # Anguilla
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Anguilla	-4:12:16 -	LMT	1912 Mar 2
-			-4:00	-	AST
+Link America/Port_of_Spain America/Anguilla
 
 # Antigua and Barbuda
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -2871,9 +2869,7 @@ Zone	America/Havana	-5:29:28 -	LMT	1890
 			-5:00	Cuba	C%sT
 
 # Dominica
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Dominica	-4:05:36 -	LMT	1911 Jul 1 0:01		# Roseau
-			-4:00	-	AST
+Link America/Port_of_Spain America/Dominica
 
 # Dominican Republic
 
@@ -2922,18 +2918,13 @@ Zone America/El_Salvador -5:56:48 -	LMT	1921		# San Salvador
 			-6:00	Salv	C%sT
 
 # Grenada
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Grenada	-4:07:00 -	LMT	1911 Jul	# St George's
-			-4:00	-	AST
-
+Link America/Port_of_Spain America/Grenada
 # Guadeloupe
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Guadeloupe	-4:06:08 -	LMT	1911 Jun 8	# Pointe a Pitre
-			-4:00	-	AST
+Link America/Port_of_Spain America/Guadeloupe
 # St Barthelemy
-Link America/Guadeloupe	America/St_Barthelemy
+Link America/Port_of_Spain America/St_Barthelemy
 # St Martin (French part)
-Link America/Guadeloupe	America/Marigot
+Link America/Port_of_Spain America/Marigot
 
 # Guatemala
 #
@@ -3100,12 +3091,7 @@ Zone America/Martinique	-4:04:20 -      LMT	1890		# Fort-de-France
 			-4:00	-	AST
 
 # Montserrat
-# From Paul Eggert (2006-03-22):
-# In 1995 volcanic eruptions forced evacuation of Plymouth, the capital.
-# world.gazetteer.com says Cork Hill is the most populous location now.
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Montserrat	-4:08:52 -	LMT	1911 Jul 1 0:01   # Cork Hill
-			-4:00	-	AST
+Link America/Port_of_Spain America/Montserrat
 
 # Nicaragua
 #
@@ -3187,15 +3173,10 @@ Zone America/Puerto_Rico -4:24:25 -	LMT	1899 Mar 28 12:00    # San Juan
 			-4:00	-	AST
 
 # St Kitts-Nevis
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/St_Kitts	-4:10:52 -	LMT	1912 Mar 2	# Basseterre
-			-4:00	-	AST
+Link America/Port_of_Spain America/St_Kitts
 
 # St Lucia
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/St_Lucia	-4:04:00 -	LMT	1890		# Castries
-			-4:04:00 -	CMT	1912	    # Castries Mean Time
-			-4:00	-	AST
+Link America/Port_of_Spain America/St_Lucia
 
 # St Pierre and Miquelon
 # There are too many St Pierres elsewhere, so we'll use 'Miquelon'.
@@ -3206,10 +3187,7 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15	# St Pierre
 			-3:00	Canada	PM%sT
 
 # St Vincent and the Grenadines
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/St_Vincent	-4:04:56 -	LMT	1890		# Kingstown
-			-4:04:56 -	KMT	1912	   # Kingstown Mean Time
-			-4:00	-	AST
+Link America/Port_of_Spain America/St_Vincent
 
 # Turks and Caicos
 #
@@ -3243,11 +3221,7 @@ Zone America/Grand_Turk	-4:44:32 -	LMT	1890
 			-5:00	TC	E%sT
 
 # British Virgin Is
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Tortola	-4:18:28 -	LMT	1911 Jul    # Road Town
-			-4:00	-	AST
+Link America/Port_of_Spain America/Tortola
 
 # Virgin Is
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/St_Thomas	-4:19:44 -	LMT	1911 Jul    # Charlotte Amalie
-			-4:00	-	AST
+Link America/Port_of_Spain America/St_Thomas

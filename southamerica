@@ -631,10 +631,7 @@ Zone America/Argentina/Ushuaia -4:33:12 - LMT 1894 Oct 31
 			-3:00	-	ART
 
 # Aruba
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Aruba	-4:40:24 -	LMT	1912 Feb 12	# Oranjestad
-			-4:30	-	ANT	1965 # Netherlands Antilles Time
-			-4:00	-	AST
+Link America/Curacao America/Aruba
 
 # Bolivia
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

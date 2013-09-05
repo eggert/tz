@@ -451,6 +451,17 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	S
 # rules...San Luis is still using "Western ARgentina Time" and it got
 # stuck on Summer daylight savings time even though the summer is over.
 
+# From Paul Eggert (2013-09-05):
+# Perhaps San Luis operates on the legal fiction that it is at UTC-4
+# with perpetual summer time, but ordinary usage typically seems to
+# just say it's at UTC-3; see, for example,
+# <http://es.wikipedia.org/wiki/Hora_oficial_argentina>.
+# We've documented similar situations as being plain changes to
+# standard time, so let's do that here too.  This does not change UTC
+# offsets, only tm_isdst and the time zone abbreviations.  One minor
+# plus is that this silences a zic complaint that there's no POSIX TZ
+# setting for time stamps past 2038.
+
 # From Paul Eggert (2013-02-21):
 # Milne says Cordoba time was -4:16:48.2.  Round to the nearest second.
 
@@ -588,7 +599,7 @@ Zone America/Argentina/Mendoza -4:35:16 - LMT	1894 Oct 31
 # San Luis (SL)
 
 Rule	SanLuis	2008	2009	-	Mar	Sun>=8	0:00	0	-
-Rule	SanLuis	2007	2009	-	Oct	Sun>=8	0:00	1:00	S
+Rule	SanLuis	2007	2008	-	Oct	Sun>=8	0:00	1:00	S
 
 Zone America/Argentina/San_Luis -4:25:24 - LMT	1894 Oct 31
 			-4:16:48 -	CMT	1920 May
@@ -604,7 +615,8 @@ Zone America/Argentina/San_Luis -4:25:24 - LMT	1894 Oct 31
 			-3:00	-	ART	2004 May 31
 			-4:00	-	WART	2004 Jul 25
 			-3:00	Arg	AR%sT	2008 Jan 21
-			-4:00	SanLuis	WAR%sT
+			-4:00	SanLuis	WAR%sT	2009 Oct 11
+			-3:00	-	ART
 #
 # Santa Cruz (SC)
 Zone America/Argentina/Rio_Gallegos -4:36:52 - LMT 1894 Oct 31

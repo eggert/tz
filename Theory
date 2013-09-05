@@ -368,7 +368,8 @@ this relationship is not exact and is not true for 'time.tab'.
 Older versions of this package used a different naming scheme,
 and these older names are still supported.
 See the file 'backward' for most of these older names
-(e.g. 'US/Eastern' instead of 'America/New_York').
+(e.g. 'US/Eastern' instead of 'America/New_York');
+excluding 'backward' should not affect the other data.
 The other old-fashioned names still supported are
 'WET', 'CET', 'MET', and 'EET' (see the file 'europe').
 

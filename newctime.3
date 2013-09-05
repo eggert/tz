@@ -36,8 +36,6 @@ asctime, ctime, difftime, gmtime, localtime, mktime \- convert date and time to 
 .I Ctime\^
 converts a long integer, pointed to by
 .IR clock ,
-representing the time in seconds since
-00:00:00 UTC, 1970-01-01,
 and returns a pointer to a
 string of the form
 .br
@@ -58,6 +56,17 @@ with five spaces before the year.
 These unusual formats are designed to make it less likely that older
 software that expects exactly 26 bytes of output will mistakenly output
 misleading values for out-of-range years.
+.PP
+The
+.BI * clock
+time stamp represents the time in seconds since 1970-01-01 00:00:00
+Coordinated Universal Time (UTC).
+The POSIX standard says that time stamps must be nonnegative
+must ignore leap seconds.
+Many implementations extend POSIX by allowing negative time stamps,
+and can therefore represent time stamps that that predate the
+introduction of UTC and are some other flavor of Universal Time (UT).
+Some implementations support leap seconds, in contradiction to POSIX.
 .PP
 .I Localtime\^
 and
@@ -186,6 +195,7 @@ is non-zero if summer time is in effect.
 is the offset (in seconds) of the time represented
 from UT, with positive values indicating east
 of the Prime Meridian.
+The field's name is derived from Greenwich Mean Time, a precursor of UT.
 .SH FILES
 .ta \w'/usr/local/etc/zoneinfo/posixrules\0\0'u
 /usr/local/etc/zoneinfo	time zone information directory

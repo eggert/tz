@@ -55,7 +55,7 @@ struct tzhead {
 **	tzh_timecnt (char [4])s		coded transition times a la time(2)
 **	tzh_timecnt (unsigned char)s	types of local time starting at above
 **	tzh_typecnt repetitions of
-**		one (char [4])		coded UTC offset in seconds
+**		one (char [4])		coded UT offset in seconds
 **		one (unsigned char)	used to set tm_isdst
 **		one (unsigned char)	that's an abbreviation list index
 **	tzh_charcnt (char)s		'\0'-terminated zone abbreviations
@@ -68,7 +68,7 @@ struct tzhead {
 **					if absent, transition times are
 **					assumed to be wall clock time
 **	tzh_ttisgmtcnt (char)s		indexed by type; if TRUE, transition
-**					time is UTC, if FALSE,
+**					time is UT, if FALSE,
 **					transition time is local time
 **					if absent, transition times are
 **					assumed to be local time

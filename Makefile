@@ -28,7 +28,7 @@ LOCALTIME=	GMT
 # time zone files, or adding it to a time zone file).
 # (When a POSIX-style environment variable is handled, the rules in the
 # template file are used to determine "spring forward" and "fall back" days and
-# times; the environment variable itself specifies UTC offsets of standard and
+# times; the environment variable itself specifies UT offsets of standard and
 # summer time.)
 # Alternately, if you discover you've got the wrong time zone, you can just
 #	zic -p rightzone
@@ -196,7 +196,7 @@ GCC_DEBUG_FLAGS = -Dlint -g3 -O3 -fno-common -fstrict-aliasing \
 # that gives an offset to add to the time_t when converting it.
 # "timelocal" is equivalent to "mktime".
 # "timegm" is like "timelocal" except that it turns a struct tm into
-# a time_t using UTC (rather than local time as "timelocal" does).
+# a time_t using UT (rather than local time as "timelocal" does).
 # "timeoff" is like "timegm" except that it accepts a second (long) argument
 # that gives an offset to use when converting to a time_t.
 # "posix2time" and "time2posix" are described in an included manual page.

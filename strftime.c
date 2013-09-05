@@ -501,7 +501,7 @@ label:
 				diff = t->TM_GMTOFF;
 #else /* !defined TM_GMTOFF */
 				/*
-				** C99 says that the UTC offset must
+				** C99 says that the UT offset must
 				** be computed by looking only at
 				** tm_isdst. This requirement is
 				** incorrect, since it means the code

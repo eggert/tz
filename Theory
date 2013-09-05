@@ -43,7 +43,7 @@ POSIX has the following properties and limitations.
 		"+" and "-" in the names.
 	offset
 		is of the form '[+-]hh:[mm[:ss]]' and specifies the
-		offset west of UTC.  'hh' may be a single digit; 0<=hh<=24.
+		offset west of UT.  'hh' may be a single digit; 0<=hh<=24.
 		The default DST offset is one hour ahead of standard time.
 	date[/time],date[/time]
 		specifies the beginning and end of DST.  If this is absent,
@@ -189,7 +189,7 @@ Points of interest to folks with other systems:
 	but this functionality was removed in later versions of BSD.
 
 *	In SVR2, time conversion fails for near-minimum or near-maximum
-	time_t values when doing conversions for places that don't use UTC.
+	time_t values when doing conversions for places that don't use UT.
 	This package takes care to do these conversions correctly.
 
 The functions that are conditionally compiled if STD_INSPIRED is defined
@@ -428,14 +428,14 @@ in decreasing order of importance:
 	Use 'LMT' for local mean time of locations before the introduction
 		of standard time; see "Scope of the tz database".
 
-	Use UTC (with time zone abbreviation 'zzz') for locations while
+	Use UT (with time zone abbreviation 'zzz') for locations while
 		uninhabited.  The 'zzz' mnemonic is that these locations are,
 		in some sense, asleep.
 
 Application writers should note that these abbreviations are ambiguous
 in practice: e.g. 'EST' has a different meaning in Australia than
 it does in the United States.  In new applications, it's often better
-to use numeric UTC offsets like '-0500' instead of time zone
+to use numeric UT offsets like '-0500' instead of time zone
 abbreviations like 'EST'; this avoids the ambiguity.
 
 

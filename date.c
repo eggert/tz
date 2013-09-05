@@ -118,7 +118,7 @@ main(const int argc, char *argv[])
 		switch (ch) {
 		default:
 			usage();
-		case 'u':		/* do it in UTC */
+		case 'u':		/* do it in UT */
 		case 'c':
 			dogmt();
 			break;

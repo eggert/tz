@@ -1863,7 +1863,7 @@ Zone	Europe/Oslo	0:43:00 -	LMT	1895 Jan  1
 # before 1895, and therefore probably changed the local time somewhere
 # between 1895 and 1925 (inclusive).
 
-# From Paul Eggert (2013-09-02):
+# From Paul Eggert (2013-09-04):
 #
 # Actually, Jan Mayen was never occupied by Germany during World War II,
 # so it must have diverged from Oslo time during the war, as Oslo was
@@ -1874,7 +1874,7 @@ Zone	Europe/Oslo	0:43:00 -	LMT	1895 Jan  1
 # 1941 with a small Norwegian garrison and continued operations despite
 # frequent air ttacks from Germans.  In 1943 the Americans established a
 # radiolocating station on the island, called "Atlantic City".  Possibly
-# the UTC offset changed during the war, but I think it unlikely that
+# the UT offset changed during the war, but I think it unlikely that
 # Jan Mayen used German daylight-saving rules.
 #
 # Svalbard is more complicated, as it was raided in August 1941 by an

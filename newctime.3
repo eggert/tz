@@ -165,7 +165,7 @@ includes the following fields:
 	int tm_yday;	/\(** day of year (0 - 365) \(**/
 	int tm_isdst;	/\(** is summer time in effect? \(**/
 	char \(**tm_zone;	/\(** abbreviation of timezone name \(**/
-	long tm_gmtoff;	/\(** offset from UTC in seconds \(**/
+	long tm_gmtoff;	/\(** offset from UT in seconds \(**/
 .fi
 .RE
 .PP
@@ -184,7 +184,7 @@ is non-zero if summer time is in effect.
 .PP
 .I Tm_gmtoff
 is the offset (in seconds) of the time represented
-from UTC, with positive values indicating east
+from UT, with positive values indicating east
 of the Prime Meridian.
 .SH FILES
 .ta \w'/usr/local/etc/zoneinfo/posixrules\0\0'u

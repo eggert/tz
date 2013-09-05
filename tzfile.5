@@ -20,7 +20,7 @@ These values are,
 in order:
 .TP
 .I tzh_ttisgmtcnt
-The number of UTC/local indicators stored in the file.
+The number of UT/local indicators stored in the file.
 .TP
 .I tzh_ttisstdcnt
 The number of standard/wall indicators stored in the file.
@@ -83,7 +83,7 @@ and a one-byte value for
 .IR tt_abbrind .
 In each structure,
 .I tt_gmtoff
-gives the number of seconds to be added to UTC,
+gives the number of seconds to be added to UT,
 .I tt_isdst
 tells whether
 .I tm_isdst
@@ -118,9 +118,9 @@ time zone environment variables.
 .PP
 Finally there are
 .I tzh_ttisgmtcnt
-UTC/local indicators, each stored as a one-byte value;
+UT/local indicators, each stored as a one-byte value;
 they tell whether the transition times associated with local time types
-were specified as UTC or local time,
+were specified as UT or local time,
 and are used when a time zone file is used in handling POSIX-style
 time zone environment variables.
 .PP

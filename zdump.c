@@ -628,7 +628,7 @@ show(char *zone, time_t t, int v)
 			(void) printf(tformat(), t);
 		} else {
 			dumptime(tmp);
-			(void) printf(" UTC");
+			(void) printf(" UT");
 		}
 		(void) printf(" = ");
 	}

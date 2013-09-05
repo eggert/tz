@@ -77,11 +77,11 @@ static const char	gmt[] = "GMT";
 #endif /* !defined TZDEFDST */
 
 struct ttinfo {				/* time type information */
-	int_fast32_t	tt_gmtoff;	/* UTC offset in seconds */
+	int_fast32_t	tt_gmtoff;	/* UT offset in seconds */
 	int		tt_isdst;	/* used to set tm_isdst */
 	int		tt_abbrind;	/* abbreviation list index */
 	int		tt_ttisstd;	/* TRUE if transition is std time */
-	int		tt_ttisgmt;	/* TRUE if transition is UTC */
+	int		tt_ttisgmt;	/* TRUE if transition is UT */
 };
 
 struct lsinfo {				/* leap second information */
@@ -842,7 +842,7 @@ getrule(const char *strp, register struct rule *const rulep)
 
 /*
 ** Given the Epoch-relative time of January 1, 00:00:00 UTC, in a year, the
-** year, a rule, and the offset from UTC at the time that rule takes effect,
+** year, a rule, and the offset from UT at the time that rule takes effect,
 ** calculate the Epoch-relative time that rule takes effect.
 */
 
@@ -925,10 +925,10 @@ transtime(const time_t janfirst, const int year,
 	}
 
 	/*
-	** "value" is the Epoch-relative time of 00:00:00 UTC on the day in
+	** "value" is the Epoch-relative time of 00:00:00 UT on the day in
 	** question. To get the Epoch-relative time of the specified local
 	** time on that day, add the transition time and the current offset
-	** from UTC.
+	** from UT.
 	*/
 	return value + rulep->r_time + offset;
 }
@@ -1379,7 +1379,7 @@ gmtsub(const time_t *const timep, const int_fast32_t offset,
 #ifdef TM_ZONE
 	/*
 	** Could get fancy here and deliver something such as
-	** "UTC+xxxx" or "UTC-xxxx" if offset is non-zero,
+	** "UT+xxxx" or "UT-xxxx" if offset is non-zero,
 	** but this is no time for a treasure hunt.
 	*/
 	if (offset != 0)

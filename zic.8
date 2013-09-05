@@ -288,13 +288,13 @@ This is the name used in creating the time conversion information file for the
 zone.
 .TP
 .B GMTOFF
-The amount of time to add to UTC to get standard time in this zone.
+The amount of time to add to UT to get standard time in this zone.
 This field has the same format as the
 .B AT
 and
 .B SAVE
 fields of rule lines;
-begin the field with a minus sign if time must be subtracted from UTC.
+begin the field with a minus sign if time must be subtracted from UT.
 .TP
 .B RULES/SAVE
 The name of the rule(s) that apply in the time zone or,
@@ -315,10 +315,10 @@ a slash (/)
 separates standard and daylight abbreviations.
 .TP
 .B UNTILYEAR [MONTH [DAY [TIME]]]
-The time at which the UTC offset or the rule(s) change for a location.
+The time at which the UT offset or the rule(s) change for a location.
 It is specified as a year, a month, a day, and a time of day.
 If this is specified,
-the time zone information is generated from the given UTC offset
+the time zone information is generated from the given UT offset
 and rule change until the time specified.
 The month, day, and time of day have the same format as the IN, ON, and AT
 fields of a rule; trailing fields can be omitted, and default to the
@@ -485,9 +485,9 @@ If,
 for a particular zone,
 a clock advance caused by the start of daylight saving
 coincides with and is equal to
-a clock retreat caused by a change in UTC offset,
+a clock retreat caused by a change in UT offset,
 .IR zic
-produces a single transition to daylight saving at the new UTC offset
+produces a single transition to daylight saving at the new UT offset
 (without any change in wall clock time).
 To get separate transitions
 use multiple zone continuation lines

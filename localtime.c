@@ -835,7 +835,7 @@ getrule(const char *strp, register struct rule *const rulep)
 		** Time specified.
 		*/
 		++strp;
-		strp = getsecs(strp, &rulep->r_time);
+		strp = getoffset(strp, &rulep->r_time);
 	} else	rulep->r_time = 2 * SECSPERHOUR;	/* default = 2:00:00 */
 	return strp;
 }

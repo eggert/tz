@@ -1776,7 +1776,7 @@ stringoffset(char *result, zic_t offset)
 	minutes = offset % MINSPERHOUR;
 	offset /= MINSPERHOUR;
 	hours = offset;
-	if (hours > HOURSPERDAY) {
+	if (hours >= HOURSPERDAY * DAYSPERWEEK) {
 		result[0] = '\0';
 		return -1;
 	}
@@ -1793,7 +1793,7 @@ static int
 stringrule(char *result, const struct rule *const rp, const zic_t dstoff,
 	   const zic_t gmtoff)
 {
-	register zic_t	tod;
+	register zic_t	tod = rp->r_tod;
 
 	result = end(result);
 	if (rp->r_dycode == DC_DOM) {
@@ -1807,32 +1807,33 @@ stringrule(char *result, const struct rule *const rp, const zic_t dstoff,
 		(void) sprintf(result, "J%d", total + rp->r_dayofmonth);
 	} else {
 		register int	week;
+		register int	wday = rp->r_wday;
+		register int	wdayoff;
 
 		if (rp->r_dycode == DC_DOWGEQ) {
-			if ((rp->r_dayofmonth % DAYSPERWEEK) != 1)
-				return -1;
-			week = 1 + rp->r_dayofmonth / DAYSPERWEEK;
+			wdayoff = (rp->r_dayofmonth - 1) % DAYSPERWEEK;
+			wday -= wdayoff;
+			tod += wdayoff * SECSPERDAY;
+			week = 1 + (rp->r_dayofmonth - 1) / DAYSPERWEEK;
 		} else if (rp->r_dycode == DC_DOWLEQ) {
 			if (rp->r_dayofmonth == len_months[1][rp->r_month])
 				week = 5;
 			else {
-				if ((rp->r_dayofmonth % DAYSPERWEEK) != 0)
-					return -1;
+				wdayoff = rp->r_dayofmonth % DAYSPERWEEK;
+				wday -= wdayoff;
+				tod += wdayoff * SECSPERDAY;
 				week = rp->r_dayofmonth / DAYSPERWEEK;
 			}
 		} else	return -1;	/* "cannot happen" */
+		if (wday < 0)
+			wday += DAYSPERWEEK;
 		(void) sprintf(result, "M%d.%d.%d",
-			rp->r_month + 1, week, rp->r_wday);
+			rp->r_month + 1, week, wday);
 	}
-	tod = rp->r_tod;
 	if (rp->r_todisgmt)
 		tod += gmtoff;
 	if (rp->r_todisstd && rp->r_stdoff == 0)
 		tod += dstoff;
-	if (tod < 0) {
-		result[0] = '\0';
-		return -1;
-	}
 	if (tod != 2 * SECSPERMIN * MINSPERHOUR) {
 		(void) strcat(result, "/");
 		if (stringoffset(end(result), tod) != 0)

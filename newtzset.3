@@ -177,16 +177,47 @@ The
 .I time
 has the same format as
 .I offset
-except that no leading sign
+except that POSIX does not allow a leading sign
 .RB (`` \(mi ''
 or
-.RB `` \(pl '')
-is allowed.  The default, if
+.RB `` \(pl '').
+As an extension to POSIX, the hours part of
+.I time
+can range from \(mi167 to 167; this allows for unusual rules such
+as "the Saturday before the first Sunday of March".  The default, if
 .I time
 is not given, is
 .BR 02:00:00 .
 .RE
 .LP
+Here are some examples of
+.B TZ
+values that directly specify the time zone rules; they use some of the
+extensions to POSIX.
+.TP
+.B EST5
+stands for US eastern
+time (EST), 5 hours behind UTC, without daylight saving.
+.TP
+.B FJT\(mi12FJST,M10.3.4/74,M1.3.4/75
+stands for Fiji Time (FJT) and Fiji Summer Time (FJST), 12 hours ahead
+of UTC, where clocks spring forward at 74:00 on the third Thursday in
+October (i.e., 02:00 on the first Sunday on or after October 18), and
+fall back at 75:00 on the third Thursday in January (i.e., 03:00 on
+the first Sunday on or after January 18).
+.TP
+.B IST\(mi2IDT,M3.4.4/26,M10.5.0
+stands for Israel standard time (IST) and Israel daylight time (IDT),
+2 hours ahead of UTC, where clocks spring forward at 26:00 on the
+fourth Thursday in March (i.e., 02:00 on the first Friday on or after
+March 23), and fall back at 02:00 on the last Sunday in October.
+.TP
+.B WGT3WGST,M3.5.0/\(mi2,M10.5.0/\(mi1
+stands for Western Greenland Time (WGT) and Western Greenland Summer
+Time (WGST), 3 hours behind UTC, where clocks follow the EU rules of
+springing forward the last Sunday in March at \(mi02:00 (i.e., 01:00 UTC)
+and falling back the last Sunday in October at \(mi01:00 (i.e., 01:00 UTC).
+.PP
 If no
 .I rule
 is present in

@@ -1886,7 +1886,7 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 					stdrp = rp;
 		}
 		if (stdrp != NULL && stdrp->r_stdoff != 0)
-			return;	/* We end up in DST (a POSIX no-no). */
+			dstrp = stdrp; /* We end up in DST.  */
 		/*
 		** Horrid special case: if year is 2037,
 		** presume this is a zone handled on a year-by-year basis;
@@ -1913,12 +1913,16 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 				return;
 		}
 	(void) strcat(result, ",");
-	if (stringrule(result, dstrp, dstrp->r_stdoff, zp->z_gmtoff) != 0) {
+	if (dstrp == stdrp)
+		(void) strcat(result, "J1/0");
+	else if (stringrule(result, dstrp, dstrp->r_stdoff, zp->z_gmtoff) != 0) {
 		result[0] = '\0';
 		return;
 	}
 	(void) strcat(result, ",");
-	if (stringrule(result, stdrp, dstrp->r_stdoff, zp->z_gmtoff) != 0) {
+	if (dstrp == stdrp)
+		(void) strcat(result, "J365/24");
+	else if (stringrule(result, stdrp, dstrp->r_stdoff, zp->z_gmtoff) != 0) {
 		result[0] = '\0';
 		return;
 	}

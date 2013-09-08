@@ -132,6 +132,10 @@ describes when the change back happens.  Each
 .I time
 field describes when, in current local time, the change to the other
 time is made.
+As an extension to POSIX, daylight saving is assumed to be in effect
+all year if it begins January 1 at 00:00 and ends December 31 at
+24:00 plus the difference between daylight saving and standard time,
+leaving no room for standard time in the calendar.
 .IP
 The format of
 .I date
@@ -183,7 +187,7 @@ or
 .RB `` \(pl '').
 As an extension to POSIX, the hours part of
 .I time
-can range from \(mi167 to 167; this allows for unusual rules such
+can range from \(mi167 through 167; this allows for unusual rules such
 as "the Saturday before the first Sunday of March".  The default, if
 .I time
 is not given, is
@@ -211,6 +215,16 @@ stands for Israel standard time (IST) and Israel daylight time (IDT),
 2 hours ahead of UTC, where clocks spring forward at 26:00 on the
 fourth Thursday in March (i.e., 02:00 on the first Friday on or after
 March 23), and fall back at 02:00 on the last Sunday in October.
+.TP
+.B WART4WARST,J1/0,J365/25
+stands for Western Argentina Summer Time (WARST), 3 hours behind UTC.
+There is a dummy transition to standard time on December 31 at 25:00
+daylight saving time (i.e., 24:00 standard time, equivalent to January
+1 at 00:00 standard time), and a simultaneous transition to daylight
+saving time on January 1 at 00:00 standard time, so daylight saving
+time is in effect all year and the initial
+.B WART
+is a placeholder.
 .TP
 .B WGT3WGST,M3.5.0/\(mi2,M10.5.0/\(mi1
 stands for Western Greenland Time (WGT) and Western Greenland Summer

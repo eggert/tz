@@ -145,10 +145,14 @@ POSIX-TZ-environment-variable-style string for use in handling instants
 after the last transition time stored in the file
 (with nothing between the newlines if there is no POSIX representation for
 such instants).
-This string may use a minor extension to the POSIX TZ format: the
-hours part of its transition times may be signed and range from
+As described in
+.IR newtzset (3),
+this string may use two minor extensions to the POSIX TZ format.
+First, the hours part of its transition times may be signed and range from
 \(mi167 through 167 instead of the POSIX-required unsigned values
-from 0 through 24.
+from 0 through 24.  Second, DST is in effect all year if it starts
+January 1 at 00:00 and ends December 31 at 24:00 plus the difference
+between daylight saving and standard time.
 .SH SEE ALSO
 newctime(3), newtzset(3)
 .\" This file is in the public domain, so clarified as of

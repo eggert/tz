@@ -1008,6 +1008,7 @@ tzparse(const char *name, register struct state *const sp,
 			struct rule	start;
 			struct rule	end;
 			register int	year;
+			register int	yearlim;
 			register time_t	janfirst;
 			time_t		starttime;
 			time_t		endtime;
@@ -1035,35 +1036,43 @@ tzparse(const char *name, register struct state *const sp,
 			atp = sp->ats;
 			typep = sp->types;
 			janfirst = 0;
-			sp->timecnt = 0;
-			for (year = EPOCH_YEAR;
-			    sp->timecnt + 2 <= TZ_MAX_TIMES;
-			    ++year) {
-			    	time_t	newfirst;
+			yearlim = EPOCH_YEAR + YEARSPERREPEAT;
+			for (year = EPOCH_YEAR; year < yearlim; year++) {
+				int_fast32_t yearsecs;
 
 				starttime = transtime(janfirst, year, &start,
 					stdoffset);
 				endtime = transtime(janfirst, year, &end,
 					dstoffset);
-				if (starttime > endtime) {
-					*atp++ = endtime;
-					*typep++ = 1;	/* DST ends */
-					*atp++ = starttime;
-					*typep++ = 0;	/* DST begins */
-				} else {
-					*atp++ = starttime;
-					*typep++ = 0;	/* DST begins */
-					*atp++ = endtime;
-					*typep++ = 1;	/* DST ends */
+				yearsecs = (year_lengths[isleap(year)]
+					    * SECSPERDAY);
+				if (starttime > endtime
+				    || (starttime < endtime
+					&& (endtime - starttime
+					    < (yearsecs
+					       + (stdoffset - dstoffset))))) {
+					if (&sp->ats[TZ_MAX_TIMES - 2] < atp)
+						break;
+					yearlim = year + YEARSPERREPEAT + 1;
+					if (starttime > endtime) {
+						*atp++ = endtime;
+						*typep++ = 1;	/* DST ends */
+						*atp++ = starttime;
+						*typep++ = 0;	/* DST begins */
+					} else {
+						*atp++ = starttime;
+						*typep++ = 0;	/* DST begins */
+						*atp++ = endtime;
+						*typep++ = 1;	/* DST ends */
+					}
 				}
-				sp->timecnt += 2;
-				newfirst = janfirst;
-				newfirst += year_lengths[isleap(year)] *
-					SECSPERDAY;
-				if (newfirst <= janfirst)
+				if (time_t_max - janfirst < yearsecs)
 					break;
-				janfirst = newfirst;
+				janfirst += yearsecs;
 			}
+			sp->timecnt = atp - sp->ats;
+			if (!sp->timecnt)
+				sp->typecnt = 1;	/* Perpetual DST.  */
 		} else {
 			register int_fast32_t	theirstdoffset;
 			register int_fast32_t	theirdstoffset;

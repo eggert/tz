@@ -1804,7 +1804,11 @@ stringrule(char *result, const struct rule *const rp, const zic_t dstoff,
 		total = 0;
 		for (month = 0; month < rp->r_month; ++month)
 			total += len_months[0][month];
-		(void) sprintf(result, "J%d", total + rp->r_dayofmonth);
+		/* Omit the "J" in Jan and Feb, as that's shorter.  */
+		if (rp->r_month <= 1)
+		  (void) sprintf(result, "%d", total + rp->r_dayofmonth - 1);
+		else
+		  (void) sprintf(result, "J%d", total + rp->r_dayofmonth);
 	} else {
 		register int	week;
 		register int	wday = rp->r_wday;
@@ -1842,6 +1846,20 @@ stringrule(char *result, const struct rule *const rp, const zic_t dstoff,
 	return 0;
 }
 
+static int
+rule_cmp(struct rule const *a, struct rule const *b)
+{
+	if (!a)
+		return -!!b;
+	if (!b)
+		return 1;
+	if (a->r_hiyear != b->r_hiyear)
+		return a->r_hiyear < b->r_hiyear ? -1 : 1;
+	if (a->r_month - b->r_month != 0)
+		return a->r_month - b->r_month;
+	return a->r_dayofmonth - b->r_dayofmonth;
+}
+
 static void
 stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 {
@@ -1851,6 +1869,7 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 	register struct rule *		dstrp;
 	register int			i;
 	register const char *		abbrvar;
+	struct rule			stdr, dstr;
 
 	result[0] = '\0';
 	zp = zpfirst + zonecount - 1;
@@ -1874,19 +1893,17 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 	if (stdrp == NULL && dstrp == NULL) {
 		/*
 		** There are no rules running through "max".
-		** Let's find the latest rule.
+		** Find the latest std rule in stdabbrrp
+		** and latest rule of any type in stdrp.
 		*/
+		register struct rule *stdabbrrp = NULL;
 		for (i = 0; i < zp->z_nrules; ++i) {
 			rp = &zp->z_rules[i];
-			if (stdrp == NULL || rp->r_hiyear > stdrp->r_hiyear ||
-				(rp->r_hiyear == stdrp->r_hiyear &&
-				(rp->r_month > stdrp->r_month ||
-				(rp->r_month == stdrp->r_month &&
-				rp->r_dayofmonth > stdrp->r_dayofmonth))))
-					stdrp = rp;
+			if (rp->r_stdoff == 0 && rule_cmp(stdabbrrp, rp) < 0)
+				stdabbrrp = rp;
+			if (rule_cmp(stdrp, rp) < 0)
+				stdrp = rp;
 		}
-		if (stdrp != NULL && stdrp->r_stdoff != 0)
-			dstrp = stdrp; /* We end up in DST.  */
 		/*
 		** Horrid special case: if year is 2037,
 		** presume this is a zone handled on a year-by-year basis;
@@ -1894,6 +1911,27 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 		*/
 		if (stdrp != NULL && stdrp->r_hiyear == 2037)
 			return;
+
+		if (stdrp != NULL && stdrp->r_stdoff != 0) {
+			/* Perpetual DST.  */
+			dstr.r_month = TM_JANUARY;
+			dstr.r_dycode = DC_DOM;
+			dstr.r_dayofmonth = 1;
+			dstr.r_tod = 0;
+			dstr.r_todisstd = dstr.r_todisgmt = FALSE;
+			dstr.r_stdoff = stdrp->r_stdoff;
+			dstr.r_abbrvar = stdrp->r_abbrvar;
+			stdr.r_month = TM_DECEMBER;
+			stdr.r_dycode = DC_DOM;
+			stdr.r_dayofmonth = 31;
+			stdr.r_tod = SECSPERDAY + stdrp->r_stdoff;
+			stdr.r_todisstd = stdr.r_todisgmt = FALSE;
+			stdr.r_stdoff = 0;
+			stdr.r_abbrvar
+			  = (stdabbrrp ? stdabbrrp->r_abbrvar : "");
+			dstrp = &dstr;
+			stdrp = &stdr;
+		}
 	}
 	if (stdrp == NULL && (zp->z_nrules != 0 || zp->z_stdoff != 0))
 		return;
@@ -1913,16 +1951,12 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 				return;
 		}
 	(void) strcat(result, ",");
-	if (dstrp == stdrp)
-		(void) strcat(result, "J1/0");
-	else if (stringrule(result, dstrp, dstrp->r_stdoff, zp->z_gmtoff) != 0) {
+	if (stringrule(result, dstrp, dstrp->r_stdoff, zp->z_gmtoff) != 0) {
 		result[0] = '\0';
 		return;
 	}
 	(void) strcat(result, ",");
-	if (dstrp == stdrp)
-		(void) strcat(result, "J365/24");
-	else if (stringrule(result, stdrp, dstrp->r_stdoff, zp->z_gmtoff) != 0) {
+	if (stringrule(result, stdrp, dstrp->r_stdoff, zp->z_gmtoff) != 0) {
 		result[0] = '\0';
 		return;
 	}

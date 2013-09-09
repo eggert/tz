@@ -1564,10 +1564,11 @@ Zone	Europe/Riga	1:36:24	-	LMT	1880
 			2:00	EU	EE%sT
 
 # Liechtenstein
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Vaduz	0:38:04 -	LMT	1894 Jun
-			1:00	-	CET	1981
-			1:00	EU	CE%sT
+# From Paul Eggert (2013-09-09):
+# Shanks & Pottenger say Vaduz is like Zurich.
+# Given the close ties between Liechtenstein and Switzerland during WWII,
+# assume our circa-1941 corrections to Zurich apply also to Vaduz.
+Link Europe/Zurich Europe/Vaduz
 
 # Lithuania
 

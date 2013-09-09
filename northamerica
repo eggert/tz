@@ -2622,7 +2622,7 @@ Zone Atlantic/Bermuda	-4:19:18 -	LMT	1930 Jan  1 2:00    # Hamilton
 # Cayman Is
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Cayman	-5:25:32 -	LMT	1890		# Georgetown
-			-5:07:12 -	KMT	1912 Feb    # Kingston Mean Time
+			-5:07:11 -	KMT	1912 Feb    # Kingston Mean Time
 			-5:00	-	EST
 
 # Costa Rica
@@ -3067,17 +3067,12 @@ Zone America/Tegucigalpa -5:48:52 -	LMT	1921 Apr
 # Great Swan I ceded by US to Honduras in 1972
 
 # Jamaica
-
-# From Bob Devine (1988-01-28):
-# Follows US rules.
-
-# From U. S. Naval Observatory (1989-01-19):
-# JAMAICA             5 H  BEHIND UTC
-
-# From Shanks & Pottenger:
+# Shanks & Pottenger give -5:07:12, but Milne records -5:07:10.41 from an
+# unspecified official document, and says "This time is used throughout the
+# island".  Go with Milne.  Round to the nearest second as required by zic.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Jamaica	-5:07:12 -	LMT	1890		# Kingston
-			-5:07:12 -	KMT	1912 Feb    # Kingston Mean Time
+Zone	America/Jamaica	-5:07:11 -	LMT	1890		# Kingston
+			-5:07:11 -	KMT	1912 Feb    # Kingston Mean Time
 			-5:00	-	EST	1974 Apr 28 2:00
 			-5:00	US	E%sT	1984
 			-5:00	-	EST
@@ -3217,7 +3212,7 @@ Rule	TC	2007	max	-	Mar	Sun>=8	2:00	1:00	D
 Rule	TC	2007	max	-	Nov	Sun>=1	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Grand_Turk	-4:44:32 -	LMT	1890
-			-5:07:12 -	KMT	1912 Feb    # Kingston Mean Time
+			-5:07:11 -	KMT	1912 Feb    # Kingston Mean Time
 			-5:00	TC	E%sT
 
 # British Virgin Is

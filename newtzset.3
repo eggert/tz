@@ -203,34 +203,35 @@ extensions to POSIX.
 stands for US eastern
 time (EST), 5 hours behind UTC, without daylight saving.
 .TP
-.B FJT\(mi12FJST,M10.3.4/74,M1.3.4/75
+.B FJT\(mi12FJST,M10.3.1/146,M1.3.4/75
 stands for Fiji Time (FJT) and Fiji Summer Time (FJST), 12 hours ahead
-of UTC, where clocks spring forward at 74:00 on the third Thursday in
-October (i.e., 02:00 on the first Sunday on or after October 18), and
-fall back at 75:00 on the third Thursday in January (i.e., 03:00 on
-the first Sunday on or after January 18).
+of UTC, springing forward on October's third Monday at
+146:00 (i.e., 02:00 on the first Sunday on or after October 21), and
+falling back on January's third Thursday at 75:00 (i.e., 03:00 on the
+first Sunday on or after January 18).
 .TP
 .B IST\(mi2IDT,M3.4.4/26,M10.5.0
-stands for Israel standard time (IST) and Israel daylight time (IDT),
-2 hours ahead of UTC, where clocks spring forward at 26:00 on the
-fourth Thursday in March (i.e., 02:00 on the first Friday on or after
-March 23), and fall back at 02:00 on the last Sunday in October.
+stands for Israel Standard Time (IST) and Israel Daylight Time (IDT),
+2 hours ahead of UTC, springing forward on March's fourth
+Tuesday at 26:00 (i.e., 02:00 on the first Friday on or after March
+23), and falling back on October's last Sunday at 02:00.
 .TP
 .B WART4WARST,J1/0,J365/25
 stands for Western Argentina Summer Time (WARST), 3 hours behind UTC.
-There is a dummy transition to standard time on December 31 at 25:00
-daylight saving time (i.e., 24:00 standard time, equivalent to January
-1 at 00:00 standard time), and a simultaneous transition to daylight
-saving time on January 1 at 00:00 standard time, so daylight saving
-time is in effect all year and the initial
+There is a dummy fall-back transition on December 31 at 25:00 daylight
+saving time (i.e., 24:00 standard time, equivalent to January 1 at
+00:00 standard time), and a simultaneous spring-forward transition on
+January 1 at 00:00 standard time, so daylight saving time is in effect
+all year and the initial
 .B WART
 is a placeholder.
 .TP
 .B WGT3WGST,M3.5.0/\(mi2,M10.5.0/\(mi1
-stands for Western Greenland Time (WGT) and Western Greenland Summer
+stands for Western Greenland time (WGT) and Western Greenland Summer
 Time (WGST), 3 hours behind UTC, where clocks follow the EU rules of
-springing forward the last Sunday in March at \(mi02:00 (i.e., 01:00 UTC)
-and falling back the last Sunday in October at \(mi01:00 (i.e., 01:00 UTC).
+springing forward on March's last Sunday at 01:00 UTC (\(mi02:00 local
+time) and falling back on October's last Sunday at 01:00 UTC
+(\(mi01:00 local time).
 .PP
 If no
 .I rule

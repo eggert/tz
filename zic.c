@@ -8,6 +8,8 @@
 #include "locale.h"
 #include "tzfile.h"
 
+#include <stdarg.h>
+
 #define	ZIC_VERSION	'2'
 
 typedef int_fast64_t	zic_t;
@@ -389,16 +391,16 @@ eat(const char *const name, const int num)
 	eats(name, num, NULL, -1);
 }
 
-static void
-error(const char *const string)
+static void ATTRIBUTE_FORMAT((printf, 1, 0))
+verror(const char *const string, va_list args)
 {
 	/*
 	** Match the format of "cc" to allow sh users to
 	**	zic ... 2>&1 | error -t "*" -v
 	** on BSD systems.
 	*/
-	(void) fprintf(stderr, _("\"%s\", line %d: %s"),
-		filename, linenum, string);
+	fprintf(stderr, _("\"%s\", line %d: "), filename, linenum);
+	vfprintf(stderr, string, args);
 	if (rfilename != NULL)
 		(void) fprintf(stderr, _(" (rule from \"%s\", line %d)"),
 			rfilename, rlinenum);
@@ -406,15 +408,23 @@ error(const char *const string)
 	++errors;
 }
 
-static void
-warning(const char *const string)
+static void ATTRIBUTE_FORMAT((printf, 1, 2))
+error(const char *const string, ...)
 {
-	char *	cp;
+	va_list args;
+	va_start(args, string);
+	verror(string, args);
+	va_end(args);
+}
 
-	cp = ecpyalloc(_("warning: "));
-	cp = ecatalloc(cp, string);
-	error(cp);
-	free(cp);
+static void ATTRIBUTE_FORMAT((printf, 1, 2))
+warning(const char *const string, ...)
+{
+	va_list args;
+	fprintf(stderr, _("warning: "));
+	va_start(args, string);
+	verror(string, args);
+	va_end(args);
 	--errors;
 }
 
@@ -743,7 +753,7 @@ associate(void)
 			** a '%s' in the format is a bad thing.
 			*/
 			if (strchr(zp->z_format, '%') != 0)
-				error(_("%s in ruleless zone"));
+				error("%s", _("%s in ruleless zone"));
 		}
 	}
 	if (errors)
@@ -873,13 +883,13 @@ gethms(const char *string, const char *const errstring, const int signable)
 		ss = 0;
 	else if (sscanf(string, scheck(string, "%"SCNdZIC":%d:%d"),
 		&hh, &mm, &ss) != 3) {
-			error(errstring);
+			error("%s", errstring);
 			return 0;
 	}
 	if (hh < 0 ||
 		mm < 0 || mm >= MINSPERHOUR ||
 		ss < 0 || ss > SECSPERMIN) {
-			error(errstring);
+			error("%s", errstring);
 			return 0;
 	}
 	if (ZIC_MAX / SECSPERHOUR < hh) {
@@ -925,40 +935,31 @@ static int
 inzone(register char **const fields, const int nfields)
 {
 	register int	i;
-	static char *	buf;
 
 	if (nfields < ZONE_MINFIELDS || nfields > ZONE_MAXFIELDS) {
 		error(_("wrong number of fields on Zone line"));
 		return FALSE;
 	}
 	if (strcmp(fields[ZF_NAME], TZDEFAULT) == 0 && lcltime != NULL) {
-		buf = erealloc(buf, 132 + strlen(TZDEFAULT));
-		(void) sprintf(buf,
+		error(
 _("\"Zone %s\" line and -l option are mutually exclusive"),
 			TZDEFAULT);
-		error(buf);
 		return FALSE;
 	}
 	if (strcmp(fields[ZF_NAME], TZDEFRULES) == 0 && psxrules != NULL) {
-		buf = erealloc(buf, 132 + strlen(TZDEFRULES));
-		(void) sprintf(buf,
+		error(
 _("\"Zone %s\" line and -p option are mutually exclusive"),
 			TZDEFRULES);
-		error(buf);
 		return FALSE;
 	}
 	for (i = 0; i < nzones; ++i)
 		if (zones[i].z_name != NULL &&
 			strcmp(zones[i].z_name, fields[ZF_NAME]) == 0) {
-				buf = erealloc(buf,
-					       (132 + strlen(fields[ZF_NAME])
-						+ strlen(zones[i].z_filename)));
-				(void) sprintf(buf,
+				error(
 _("duplicate zone name %s (file \"%s\", line %d)"),
 					fields[ZF_NAME],
 					zones[i].z_filename,
 					zones[i].z_linenum);
-				error(buf);
 				return FALSE;
 		}
 	return inzsub(fields, nfields, FALSE);
@@ -2032,15 +2033,10 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 	** Generate lots of data if a rule can't cover all future times.
 	*/
 	stringzone(envvar, zpfirst, zonecount);
-	if (noise && envvar[0] == '\0') {
-		register char *	wp;
-
-wp = ecpyalloc(_("no POSIX environment variable for zone"));
-		wp = ecatalloc(wp, " ");
-		wp = ecatalloc(wp, zpfirst->z_name);
-		warning(wp);
-		free(wp);
-	}
+	if (noise && envvar[0] == '\0')
+		warning("%s %s",
+			_("no POSIX environment variable for zone"),
+			zpfirst->z_name);
 	if (envvar[0] == '\0') {
 		if (min_year >= ZIC_MIN + YEARSPERREPEAT)
 			min_year -= YEARSPERREPEAT;
@@ -2622,14 +2618,8 @@ mp = _("time zone abbreviation has too many alphabetics");
 		}
 		if (*cp != '\0')
 mp = _("time zone abbreviation differs from POSIX standard");
-		if (mp != NULL) {
-			char *wp = ecpyalloc(mp);
-			wp = ecatalloc(wp, " (");
-			wp = ecatalloc(wp, string);
-			wp = ecatalloc(wp, ")");
-			warning(wp);
-			free(wp);
-		}
+		if (mp != NULL)
+			warning("%s (%s)", mp, string);
 	}
 	i = strlen(string) + 1;
 	if (charcnt + i > TZ_MAX_CHARS) {

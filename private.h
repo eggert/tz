@@ -204,9 +204,11 @@ typedef unsigned long uintmax_t;
 #if 2 < __GNUC__ + (96 <= __GNUC_MINOR__)
 # define ATTRIBUTE_CONST __attribute__ ((const))
 # define ATTRIBUTE_PURE __attribute__ ((__pure__))
+# define ATTRIBUTE_FORMAT(spec) __attribute__ ((__format__ spec))
 #else
 # define ATTRIBUTE_CONST /* empty */
 # define ATTRIBUTE_PURE /* empty */
+# define ATTRIBUTE_FORMAT(spec) /* empty */
 #endif
 
 #if !defined _Noreturn && __STDC_VERSION__ < 201112

@@ -77,14 +77,42 @@ If this option is not used,
 no leap second information appears in output files.
 .TP
 .B \-v
-Complain if a year that appears in a data file is outside the range
+Be more verbose, and complain about the following situations:
+.RS
+.PP
+The input data specifies a link to a link.
+.PP
+A year that appears in a data file is outside the range
 of years representable by
 .IR time (2)
 values.
-Also complain if a time of 24:00
-(which cannot be handled by pre-1998 versions of
-.IR zic )
-appears in the input.
+.PP
+A time of 24:00 or more appears in the input.
+Pre-1998 versions of
+.I zic
+prohibit 24:00, and pre-2007 versions prohibit times greater than 24:00.
+.PP
+A rule goes past the start or end of the month.
+Pre-2004 versions of
+.I zic
+prohibit this.
+.PP
+The output file does not contain all the information about the
+long-term future of a zone, because the future cannot be summarized as
+an extended POSIX TZ string.  For example, as of 2013 this problem
+occurs for Iran's daylight-saving rules for the predicted future, as
+these rules are based on the Iranian calendar, which cannot be
+represented.
+.PP
+The output contains data that may not be handled properly by client
+code designed for older
+.I zic
+output formats.  These compatibility issues affect only time stamps
+before 1970 or after the start of 2038.
+.PP
+A time zone abbreviation has fewer than 3 characters.
+POSIX requires at least 3.
+.RE
 .TP
 .B \-s
 Limit time values stored in output files to values that are the same

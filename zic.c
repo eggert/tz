@@ -10,7 +10,7 @@
 
 #include <stdarg.h>
 
-#define	ZIC_VERSION	'2'
+#define	ZIC_VERSION	'3'
 
 typedef int_fast64_t	zic_t;
 #define ZIC_MIN INT_FAST64_MIN
@@ -1795,6 +1795,7 @@ stringrule(char *result, const struct rule *const rp, const zic_t dstoff,
 	   const zic_t gmtoff)
 {
 	register zic_t	tod = rp->r_tod;
+	register int	compat = 0;
 
 	result = end(result);
 	if (rp->r_dycode == DC_DOM) {
@@ -1817,6 +1818,8 @@ stringrule(char *result, const struct rule *const rp, const zic_t dstoff,
 
 		if (rp->r_dycode == DC_DOWGEQ) {
 			wdayoff = (rp->r_dayofmonth - 1) % DAYSPERWEEK;
+			if (wdayoff)
+				compat = 2013;
 			wday -= wdayoff;
 			tod += wdayoff * SECSPERDAY;
 			week = 1 + (rp->r_dayofmonth - 1) / DAYSPERWEEK;
@@ -1825,6 +1828,8 @@ stringrule(char *result, const struct rule *const rp, const zic_t dstoff,
 				week = 5;
 			else {
 				wdayoff = rp->r_dayofmonth % DAYSPERWEEK;
+				if (wdayoff)
+					compat = 2013;
 				wday -= wdayoff;
 				tod += wdayoff * SECSPERDAY;
 				week = rp->r_dayofmonth / DAYSPERWEEK;
@@ -1843,8 +1848,15 @@ stringrule(char *result, const struct rule *const rp, const zic_t dstoff,
 		(void) strcat(result, "/");
 		if (stringoffset(end(result), tod) != 0)
 			return -1;
+		if (tod < 0) {
+			if (compat < 2013)
+				compat = 2013;
+		} else if (SECSPERDAY <= tod) {
+			if (compat < 1994)
+				compat = 1994;
+		}
 	}
-	return 0;
+	return compat;
 }
 
 static int
@@ -1861,7 +1873,7 @@ rule_cmp(struct rule const *a, struct rule const *b)
 	return a->r_dayofmonth - b->r_dayofmonth;
 }
 
-static void
+static int
 stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 {
 	register const struct zone *	zp;
@@ -1870,6 +1882,8 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 	register struct rule *		dstrp;
 	register int			i;
 	register const char *		abbrvar;
+	register int			compat = 0;
+	register int			c;
 	struct rule			stdr, dstr;
 
 	result[0] = '\0';
@@ -1884,11 +1898,11 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 		if (rp->r_stdoff == 0) {
 			if (stdrp == NULL)
 				stdrp = rp;
-			else	return;
+			else	return -1;
 		} else {
 			if (dstrp == NULL)
 				dstrp = rp;
-			else	return;
+			else	return -1;
 		}
 	}
 	if (stdrp == NULL && dstrp == NULL) {
@@ -1911,7 +1925,7 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 		** do not try to apply a rule to the zone.
 		*/
 		if (stdrp != NULL && stdrp->r_hiyear == 2037)
-			return;
+			return -1;
 
 		if (stdrp != NULL && stdrp->r_stdoff != 0) {
 			/* Perpetual DST.  */
@@ -1935,32 +1949,39 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 		}
 	}
 	if (stdrp == NULL && (zp->z_nrules != 0 || zp->z_stdoff != 0))
-		return;
+		return -1;
 	abbrvar = (stdrp == NULL) ? "" : stdrp->r_abbrvar;
 	doabbr(result, zp->z_format, abbrvar, FALSE, TRUE);
 	if (stringoffset(end(result), -zp->z_gmtoff) != 0) {
 		result[0] = '\0';
-		return;
+		return -1;
 	}
 	if (dstrp == NULL)
-		return;
+		return compat;
 	doabbr(end(result), zp->z_format, dstrp->r_abbrvar, TRUE, TRUE);
 	if (dstrp->r_stdoff != SECSPERMIN * MINSPERHOUR)
 		if (stringoffset(end(result),
 			-(zp->z_gmtoff + dstrp->r_stdoff)) != 0) {
 				result[0] = '\0';
-				return;
+				return -1;
 		}
 	(void) strcat(result, ",");
-	if (stringrule(result, dstrp, dstrp->r_stdoff, zp->z_gmtoff) != 0) {
+	c = stringrule(result, dstrp, dstrp->r_stdoff, zp->z_gmtoff);
+	if (c < 0) {
 		result[0] = '\0';
-		return;
+		return -1;
 	}
+	if (compat < c)
+		compat = c;
 	(void) strcat(result, ",");
-	if (stringrule(result, stdrp, dstrp->r_stdoff, zp->z_gmtoff) != 0) {
+	c = stringrule(result, stdrp, dstrp->r_stdoff, zp->z_gmtoff);
+	if (c < 0) {
 		result[0] = '\0';
-		return;
+		return -1;
 	}
+	if (compat < c)
+		compat = c;
+	return compat;
 }
 
 static void
@@ -1984,6 +2005,7 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 	register int			max_abbr_len;
 	register int			max_envvar_len;
 	register int			prodstic; /* all rules are min to max */
+	register int			compat;
 
 	max_abbr_len = 2 + max_format_len + max_abbrvar_len;
 	max_envvar_len = 2 * max_abbr_len + 5 * 9;
@@ -2032,11 +2054,21 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 	/*
 	** Generate lots of data if a rule can't cover all future times.
 	*/
-	stringzone(envvar, zpfirst, zonecount);
-	if (noise && envvar[0] == '\0')
-		warning("%s %s",
-			_("no POSIX environment variable for zone"),
-			zpfirst->z_name);
+	compat = stringzone(envvar, zpfirst, zonecount);
+	if (noise && compat != 0) {
+		if (compat < 0)
+			warning("%s %s",
+				_("no POSIX environment variable for zone"),
+				zpfirst->z_name);
+		else {
+			/* Circa-COMPAT clients, and earlier clients, might
+			   not work for this zone when given dates before
+			   1970 or after 2038.  */
+			warning(_("%s: pre-%d clients may mishandle"
+				  " distant timestamps"),
+				zpfirst->z_name, compat);
+		}
+	}
 	if (envvar[0] == '\0') {
 		if (min_year >= ZIC_MIN + YEARSPERREPEAT)
 			min_year -= YEARSPERREPEAT;

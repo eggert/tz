@@ -1873,6 +1873,8 @@ rule_cmp(struct rule const *a, struct rule const *b)
 	return a->r_dayofmonth - b->r_dayofmonth;
 }
 
+enum { YEAR_BY_YEAR_ZONE = 1 };
+
 static int
 stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 {
@@ -1925,7 +1927,7 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 		** do not try to apply a rule to the zone.
 		*/
 		if (stdrp != NULL && stdrp->r_hiyear == 2037)
-			return -1;
+			return YEAR_BY_YEAR_ZONE;
 
 		if (stdrp != NULL && stdrp->r_stdoff != 0) {
 			/* Perpetual DST.  */
@@ -2006,6 +2008,7 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 	register int			max_envvar_len;
 	register int			prodstic; /* all rules are min to max */
 	register int			compat;
+	register int			do_extend;
 
 	max_abbr_len = 2 + max_format_len + max_abbrvar_len;
 	max_envvar_len = 2 * max_abbr_len + 5 * 9;
@@ -2055,7 +2058,8 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 	** Generate lots of data if a rule can't cover all future times.
 	*/
 	compat = stringzone(envvar, zpfirst, zonecount);
-	if (noise && compat != 0) {
+	do_extend = compat < 0 || compat == YEAR_BY_YEAR_ZONE;
+	if (noise && compat != 0 && compat != YEAR_BY_YEAR_ZONE) {
 		if (compat < 0)
 			warning("%s %s",
 				_("no POSIX environment variable for zone"),
@@ -2069,12 +2073,27 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 				zpfirst->z_name, compat);
 		}
 	}
-	if (envvar[0] == '\0') {
-		if (min_year >= ZIC_MIN + YEARSPERREPEAT)
-			min_year -= YEARSPERREPEAT;
+	if (do_extend) {
+		/*
+		** Search through a couple of extra years past the obvious
+		** 400, to avoid edge cases.  For example, suppose a non-POSIX
+		** rule applies from 2012 onwards and has transitions in March
+		** and September, plus some one-off transitions in November
+		** 2013.  If zic looked only at the last 400 years, it would
+		** set max_year=2413, with the intent that the 400 years 2014
+		** through 2413 will be repeated.  The last transition listed
+		** in the tzfile would be in 2413-09, less than 400 years
+		** after the last one-off transition in 2013-11.  Two years
+		** might be overkill, but with the kind of edge cases
+		** available we're not sure that one year would suffice.
+		*/
+		enum { years_of_observations = YEARSPERREPEAT + 2 };
+
+		if (min_year >= ZIC_MIN + years_of_observations)
+			min_year -= years_of_observations;
 		else	min_year = ZIC_MIN;
-		if (max_year <= ZIC_MAX - YEARSPERREPEAT)
-			max_year += YEARSPERREPEAT;
+		if (max_year <= ZIC_MAX - years_of_observations)
+			max_year += years_of_observations;
 		else	max_year = ZIC_MAX;
 		/*
 		** Regardless of any of the above,
@@ -2084,7 +2103,7 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 		*/
 		if (prodstic) {
 			min_year = 1900;
-			max_year = min_year + YEARSPERREPEAT;
+			max_year = min_year + years_of_observations;
 		}
 	}
 	/*
@@ -2248,6 +2267,44 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 				starttime = tadd(starttime, -stdoff);
 			if (!startttisgmt)
 				starttime = tadd(starttime, -gmtoff);
+		}
+	}
+	if (do_extend) {
+		/*
+		** If we're extending the explicitly listed observations
+		** for 400 years because we can't fill the POSIX-TZ field,
+		** check whether we actually ended up explicitly listing
+		** observations through that period.  If there aren't any
+		** near the end of the 400-year period, add a redundant
+		** one at the end of the final year, to make it clear
+		** that we are claiming to have definite knowledge of
+		** the lack of transitions up to that point.
+		*/
+		struct rule xr;
+		struct attype *lastat;
+		xr.r_month = TM_JANUARY;
+		xr.r_dycode = DC_DOM;
+		xr.r_dayofmonth = 1;
+		xr.r_tod = 0;
+		for (lastat = &attypes[0], i = 1; i < timecnt; i++)
+			if (attypes[i].at > lastat->at)
+				lastat = &attypes[i];
+		if (lastat->at < rpytime(&xr, max_year - 1)) {
+			/*
+			** Create new type code for the redundant entry,
+			** to prevent it being optimised away.
+			*/
+			if (typecnt >= TZ_MAX_TYPES) {
+				error(_("too many local time types"));
+				exit(EXIT_FAILURE);
+			}
+			gmtoffs[typecnt] = gmtoffs[lastat->type];
+			isdsts[typecnt] = isdsts[lastat->type];
+			ttisstds[typecnt] = ttisstds[lastat->type];
+			ttisgmts[typecnt] = ttisgmts[lastat->type];
+			abbrinds[typecnt] = abbrinds[lastat->type];
+			++typecnt;
+			addtt(rpytime(&xr, max_year + 1), typecnt-1);
 		}
 	}
 	writezone(zpfirst->z_name, envvar);

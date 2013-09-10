@@ -1765,17 +1765,19 @@ writezone(const char *const name, const char *const string)
 				(void) putc(ttisgmts[i], fp);
 	}
 	(void) fprintf(fp, "\n%s\n", string);
-	if (genname || genoptions)
+	if (genname || genoptions) {
 		fprintf(fp, "=TZ\n");
-	if (genname) {
-		fprintf(fp, "name");
-		writevalue(fp, name);
-	}
-	for (i = 0; i < genoptions; i++) {
-		register char const *v = genoption[i];
-		register int namelen = strchr(v, '=') - v;
-		fprintf(fp, "%.*s", namelen, v);
-		writevalue(fp, v + namelen + 1);
+		if (genname) {
+			fprintf(fp, "name");
+			writevalue(fp, name);
+		}
+		for (i = 0; i < genoptions; i++) {
+			register char const *v = genoption[i];
+			register int namelen = strchr(v, '=') - v;
+			fprintf(fp, "%.*s", namelen, v);
+			writevalue(fp, v + namelen + 1);
+		}
+		fprintf(fp, "\n%s\n", string);
 	}
 	if (ferror(fp) || fclose(fp)) {
 		(void) fprintf(stderr, _("%s: Error writing %s\n"),

@@ -158,15 +158,18 @@ between daylight saving and standard time.
 Also, for version-3-format time zone files, the version-2 header and
 data are optionally followed by a section containing auxiliary
 meta-information that is not needed to process time stamps.  This
-section, if present, consists of the four magic bytes "=TZ\en"
-followed by zero or more newline-terminated byte strings, each
-containing a name-value pair separated by "=".  Names consist of ASCII
-letters, digits and underscores, and start with a letter; duplicate
-names are not allowed.  Two common names are "name", the Zone name for
-the data, and "version", the version number.  Values consist of any
-bytes except NUL, newline, and backslash; however, newline and
-backslash can represented via the two-byte strings "\en" and "\e\e"
-respectively.
+section, if present, consists of the four magic bytes "=TZ\en",
+followed by zero or more newline-terminated byte strings, followed by
+another copy of the newline-enclosed POSIX-TZ-style string (this last
+is for the benefit of any older clients that look for the TZ string at
+the very end of the file).  Each newline-terminated byte string
+consists of a name-value pair separated by "=" and terminated by
+newline.  Names consist of ASCII letters, digits and underscores, and
+start with a letter; duplicate names are not allowed.  Two common
+names are "name", the Zone name for the data, and "version", the
+version number.  Values consist of any bytes except NUL, newline, and
+backslash; however, newline and backslash can represented via the
+two-byte strings "\en" and "\e\e" respectively.
 .SH SEE ALSO
 newctime(3), newtzset(3)
 .\" This file is in the public domain, so clarified as of

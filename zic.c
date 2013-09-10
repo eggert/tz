@@ -463,13 +463,11 @@ addgenoption(char const *option)
 		if (! (isascii (*o) && (isalnum(*o) || *o == '_')))
 			return 0;
 	namelen = o - option;
-	if (INT_MAX < namelen)
-		return 0; /* fprintf won't work.  */
 	if (namelen == sizeof "name" - 1
 	    && memcmp(option, "name", namelen) == 0)
 		return 0;
 	for (i = 0; i < genoptions; i++)
-		if (strncmp(genoption[i], option, namelen  + 1) == 0)
+		if (strncmp(genoption[i], option, namelen + 1) == 0)
 			return 0;
 	genoption = erealloc(genoption, (genoptions + 1) * sizeof *genoption);
 	genoption[genoptions++] = option;
@@ -1427,22 +1425,6 @@ is32(const zic_t x)
 }
 
 static void
-writevalue(FILE *fp, char const *v)
-{
-	fputc('=', fp);
-
-	for (; *v; v++)
-		if (*v == '\n')
-			fprintf(fp, "\\n");
-		else if (*v == '\\')
-			fprintf(fp, "\\\\");
-		else
-			fputc(*v, fp);
-
-	fputc('\n', fp);
-}
-
-static void
 writezone(const char *const name, const char *const string)
 {
 	register FILE *			fp;
@@ -1450,6 +1432,7 @@ writezone(const char *const name, const char *const string)
 	register int			leapcnt32, leapi32;
 	register int			timecnt32, timei32;
 	register int			pass;
+	register int_fast32_t		genlen;
 	static char *			fullname;
 	static const struct tzhead	tzh0;
 	static struct tzhead		tzh;
@@ -1765,20 +1748,22 @@ writezone(const char *const name, const char *const string)
 				(void) putc(ttisgmts[i], fp);
 	}
 	(void) fprintf(fp, "\n%s\n", string);
-	if (genname || genoptions) {
-		fprintf(fp, "=TZ\n");
-		if (genname) {
-			fprintf(fp, "name");
-			writevalue(fp, name);
-		}
-		for (i = 0; i < genoptions; i++) {
-			register char const *v = genoption[i];
-			register int namelen = strchr(v, '=') - v;
-			fprintf(fp, "%.*s", namelen, v);
-			writevalue(fp, v + namelen + 1);
-		}
-		fprintf(fp, "\n%s\n", string);
+
+	genlen = 0;
+	if (genname)
+		genlen += sizeof "name=" + strlen (name);
+	for (i = 0; i < genoptions; i++)
+		genlen += strlen (genoption[i]) + 1;
+	puttzcode(genlen, fp);
+
+	if (genname)
+		fprintf(fp, "name=%s%c", name, 0);
+	for (i = 0; i < genoptions; i++) {
+		register char const *v = genoption[i];
+		register int namelen = strchr(v, '=') - v;
+		fprintf(fp, "%s%c", v, 0);
 	}
+	fprintf(fp, "%c\n%s\n", 0, string);
 	if (ferror(fp) || fclose(fp)) {
 		(void) fprintf(stderr, _("%s: Error writing %s\n"),
 			progname, fullname);

@@ -348,31 +348,34 @@ all:		tzselect zic zdump $(LIBOBJS) $(TABDATA)
 
 ALL:		all date
 
-install:	all $(DATA) $(REDO) $(TZLIB) $(MANS)
+install:	all $(DATA) $(REDO) $(DESTDIR)$(TZLIB) $(MANS)
 		$(ZIC) -y $(YEARISTYPE) \
-			-d $(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
-		-rm -f $(TZDIR)/iso3166.tab $(TZDIR)/time.tab $(TZDIR)/zone.tab
-		cp iso3166.tab time.tab zone.tab $(TZDIR)/.
-		-mkdir $(TOPDIR) $(ETCDIR)
-		cp tzselect zic zdump $(ETCDIR)/.
-		-mkdir $(TOPDIR) $(MANDIR) \
-			$(MANDIR)/man3 $(MANDIR)/man5 $(MANDIR)/man8
-		-rm -f $(MANDIR)/man3/newctime.3 \
-			$(MANDIR)/man3/newtzset.3 \
-			$(MANDIR)/man5/tzfile.5 \
-			$(MANDIR)/man8/tzselect.8 \
-			$(MANDIR)/man8/zdump.8 \
-			$(MANDIR)/man8/zic.8
-		cp newctime.3 newtzset.3 $(MANDIR)/man3/.
-		cp tzfile.5 $(MANDIR)/man5/.
-		cp tzselect.8 zdump.8 zic.8 $(MANDIR)/man8/.
+			-d $(DESTDIR)$(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
+		-rm -f $(DESTDIR)$(TZDIR)/iso3166.tab \
+			$(DESTDIR)$(TZDIR)/time.tab $(DESTDIR)$(TZDIR)/zone.tab
+		cp iso3166.tab time.tab zone.tab $(DESTDIR)$(TZDIR)/.
+		-mkdir $(DESTDIR)$(TOPDIR) $(DESTDIR)$(ETCDIR)
+		cp tzselect zic zdump $(DESTDIR)$(ETCDIR)/.
+		-mkdir $(DESTDIR)$(TOPDIR) $(DESTDIR)$(MANDIR) \
+			$(DESTDIR)$(MANDIR)/man3 $(DESTDIR)$(MANDIR)/man5 \
+			$(DESTDIR)$(MANDIR)/man8
+		-rm -f $(DESTDIR)$(MANDIR)/man3/newctime.3 \
+			$(DESTDIR)$(MANDIR)/man3/newtzset.3 \
+			$(DESTDIR)$(MANDIR)/man5/tzfile.5 \
+			$(DESTDIR)$(MANDIR)/man8/tzselect.8 \
+			$(DESTDIR)$(MANDIR)/man8/zdump.8 \
+			$(DESTDIR)$(MANDIR)/man8/zic.8
+		cp newctime.3 newtzset.3 $(DESTDIR)$(MANDIR)/man3/.
+		cp tzfile.5 $(DESTDIR)$(MANDIR)/man5/.
+		cp tzselect.8 zdump.8 zic.8 $(DESTDIR)$(MANDIR)/man8/.
 
 INSTALL:	ALL install date.1
-		-mkdir $(TOPDIR) $(BINDIR)
-		cp date $(BINDIR)/.
-		-mkdir $(TOPDIR) $(MANDIR) $(MANDIR)/man1
-		-rm -f $(MANDIR)/man1/date.1
-		cp date.1 $(MANDIR)/man1/.
+		-mkdir $(DESTDIR)$(TOPDIR) $(DESTDIR)$(BINDIR)
+		cp date $(DESTDIR)$(BINDIR)/.
+		-mkdir $(DESTDIR)$(TOPDIR) $(DESTDIR)$(MANDIR) \
+			$(DESTDIR)$(MANDIR)/man1
+		-rm -f $(DESTDIR)$(MANDIR)/man1/date.1
+		cp date.1 $(DESTDIR)$(MANDIR)/man1/.
 
 version.h:
 		(echo 'static char const PKGVERSION[]="($(PACKAGE)) ";' && \
@@ -393,10 +396,12 @@ leapseconds:	leapseconds.awk leap-seconds.list
 		$(AWK) -f leapseconds.awk leap-seconds.list >$@
 
 posix_only:	zic $(TDATA)
-		$(ZIC) -y $(YEARISTYPE) -d $(TZDIR) -L /dev/null $(TDATA)
+		$(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR) \
+			-L /dev/null $(TDATA)
 
 right_only:	zic leapseconds $(TDATA)
-		$(ZIC) -y $(YEARISTYPE) -d $(TZDIR) -L leapseconds $(TDATA)
+		$(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR) \
+			-L leapseconds $(TDATA)
 
 # In earlier versions of this makefile, the other two directories were
 # subdirectories of $(TZDIR).  However, this led to configuration errors.
@@ -408,27 +413,28 @@ right_only:	zic leapseconds $(TDATA)
 # You must replace all of $(TZDIR) to switch from not using leap seconds
 # to using them, or vice versa.
 right_posix:	right_only leapseconds
-		rm -fr $(TZDIR)-leaps
-		ln -s $(TZDIR_BASENAME) $(TZDIR)-leaps || \
-		  $(ZIC) -y $(YEARISTYPE) \
-			-d $(TZDIR)-leaps -L leapseconds $(TDATA)
-		$(ZIC) -y $(YEARISTYPE) -d $(TZDIR)-posix -L /dev/null $(TDATA)
+		rm -fr $(DESTDIR)$(TZDIR)-leaps
+		ln -s $(TZDIR_BASENAME) $(DESTDIR)$(TZDIR)-leaps || \
+		  $(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR)-leaps \
+			-L leapseconds $(TDATA)
+		$(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR)-posix \
+			-L /dev/null $(TDATA)
 
 posix_right:	posix_only leapseconds
-		rm -fr $(TZDIR)-posix
-		ln -s $(TZDIR_BASENAME) $(TZDIR)-posix || \
-		  $(ZIC) -y $(YEARISTYPE) \
-			-d $(TZDIR)-posix -L /dev/null $(TDATA)
-		$(ZIC) -y $(YEARISTYPE) \
-			-d $(TZDIR)-leaps -L leapseconds $(TDATA)
+		rm -fr $(DESTDIR)$(TZDIR)-posix
+		ln -s $(TZDIR_BASENAME) $(DESTDIR)$(TZDIR)-posix || \
+		  $(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR)-posix \
+			-L /dev/null $(TDATA)
+		$(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR)-leaps \
+			-L leapseconds $(TDATA)
 
 zones:		$(REDO)
 
 time.tab:	$(YDATA) zone.tab zone-time.awk
 		$(AWK) -f zone-time.awk $(YDATA) >$@
 
-$(TZLIB):	$(LIBOBJS)
-		-mkdir $(TOPDIR) $(LIBDIR)
+$(DESTDIR)$(TZLIB): $(LIBOBJS)
+		-mkdir -p $(DESTDIR)$(TOPDIR) $(DESTDIR)$(LIBDIR)
 		ar ru $@ $(LIBOBJS)
 		if [ -x /usr/ucb/ranlib ] || [ -x /usr/bin/ranlib ]; \
 			then ranlib $@ ; fi

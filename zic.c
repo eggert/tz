@@ -9,6 +9,7 @@
 #include "tzfile.h"
 
 #include <stdarg.h>
+#include <stddef.h>
 
 #define	ZIC_VERSION	'3'
 
@@ -140,6 +141,9 @@ static int	yearistype(int year, const char * type);
 static int		charcnt;
 static int		errors;
 static const char *	filename;
+static const char **	genoption;
+static int		genoptions;
+static int		genname;
 static int		leapcnt;
 static int		leapseen;
 static zic_t		leapminyear;
@@ -432,7 +436,8 @@ static _Noreturn void
 usage(FILE *stream, int status)
 {
 	(void) fprintf(stream, _("%s: usage is %s \
-[ --version ] [ --help ] [ -v ] [ -l localtime ] [ -p posixrules ] \\\n\
+[ --version ] [ --help ] [ -v ] [ -l localtime ]\\\n\
+\t[ -n ] [ -o name=value ]... [ -p posixrules ] \\\n\
 \t[ -d directory ] [ -L leapseconds ] [ -y yearistype ] [ filename ... ]\n\
 \n\
 Report bugs to %s.\n"),
@@ -445,6 +450,31 @@ static const char *	lcltime;
 static const char *	directory;
 static const char *	leapsec;
 static const char *	yitcommand;
+
+static int
+addgenoption(char const *option)
+{
+	register char const *o = option;
+	register ptrdiff_t namelen;
+	register int i;
+	if (! (isascii (*o) && isalpha(*o)))
+		return 0;
+	while (*++o != '=')
+		if (! (isascii (*o) && (isalnum(*o) || *o == '_')))
+			return 0;
+	namelen = o - option;
+	if (INT_MAX < namelen)
+		return 0; /* fprintf won't work.  */
+	if (namelen == sizeof "name" - 1
+	    && memcmp(option, "name", namelen) == 0)
+		return 0;
+	for (i = 0; i < genoptions; i++)
+		if (strncmp(genoption[i], option, namelen  + 1) == 0)
+			return 0;
+	genoption = erealloc(genoption, (genoptions + 1) * sizeof *genoption);
+	genoption[genoptions++] = option;
+	return 1;
+}
 
 int
 main(int argc, char **argv)
@@ -476,7 +506,7 @@ main(int argc, char **argv)
 		} else if (strcmp(argv[i], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
 		}
-	while ((c = getopt(argc, argv, "d:l:p:L:vsy:")) != EOF && c != -1)
+	while ((c = getopt(argc, argv, "d:l:p:L:no:vsy:")) != EOF && c != -1)
 		switch (c) {
 			default:
 				usage(stderr, EXIT_FAILURE);
@@ -497,6 +527,17 @@ _("%s: More than one -d option specified\n"),
 					(void) fprintf(stderr,
 _("%s: More than one -l option specified\n"),
 						progname);
+					exit(EXIT_FAILURE);
+				}
+				break;
+			case 'n':
+				genname = TRUE;
+				break;
+			case 'o':
+				if (!addgenoption(optarg)) {
+					fprintf(stderr,
+						_("%s: %s: invalid -o option\n"),
+						progname, optarg);
 					exit(EXIT_FAILURE);
 				}
 				break;
@@ -1386,6 +1427,22 @@ is32(const zic_t x)
 }
 
 static void
+writevalue(FILE *fp, char const *v)
+{
+	fputc('=', fp);
+
+	for (; *v; v++)
+		if (*v == '\n')
+			fprintf(fp, "\\n");
+		else if (*v == '\\')
+			fprintf(fp, "\\\\");
+		else
+			fputc(*v, fp);
+
+	fputc('\n', fp);
+}
+
+static void
 writezone(const char *const name, const char *const string)
 {
 	register FILE *			fp;
@@ -1708,6 +1765,18 @@ writezone(const char *const name, const char *const string)
 				(void) putc(ttisgmts[i], fp);
 	}
 	(void) fprintf(fp, "\n%s\n", string);
+	if (genname || genoptions)
+		fprintf(fp, "=TZ\n");
+	if (genname) {
+		fprintf(fp, "name");
+		writevalue(fp, name);
+	}
+	for (i = 0; i < genoptions; i++) {
+		register char const *v = genoption[i];
+		register int namelen = strchr(v, '=') - v;
+		fprintf(fp, "%.*s", namelen, v);
+		writevalue(fp, v + namelen + 1);
+	}
 	if (ferror(fp) || fclose(fp)) {
 		(void) fprintf(stderr, _("%s: Error writing %s\n"),
 			progname, fullname);

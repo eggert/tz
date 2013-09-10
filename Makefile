@@ -250,6 +250,9 @@ LDFLAGS=	$(LFLAGS)
 zic=		./zic
 ZIC=		$(zic) $(ZFLAGS)
 
+# Uncomment this to put name and version info into zic output files.
+#ZFLAGS=	-n -o version='$(VERSION)'
+
 # The name of a Posix-compliant `awk' on your system.
 AWK=		awk
 

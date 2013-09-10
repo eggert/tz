@@ -154,6 +154,19 @@ First, the hours part of its transition times may be signed and range from
 from 0 through 24.  Second, DST is in effect all year if it starts
 January 1 at 00:00 and ends December 31 at 24:00 plus the difference
 between daylight saving and standard time.
+.PP
+Also, for version-3-format time zone files, the version-2 header and
+data are optionally followed by a section containing auxiliary
+meta-information that is not needed to process time stamps.  This
+section, if present, consists of the four magic bytes "=TZ\en"
+followed by zero or more newline-terminated byte strings, each
+containing a name-value pair separated by "=".  Names consist of ASCII
+letters, digits and underscores, and start with a letter; duplicate
+names are not allowed.  Two common names are "name", the Zone name for
+the data, and "version", the version number.  Values consist of any
+bytes except NUL, newline, and backslash; however, newline and
+backslash can represented via the two-byte strings "\en" and "\e\e"
+respectively.
 .SH SEE ALSO
 newctime(3), newtzset(3)
 .\" This file is in the public domain, so clarified as of

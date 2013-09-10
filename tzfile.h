@@ -83,12 +83,18 @@ struct tzhead {
 ** (with nothing between the newlines if there is no POSIX representation for
 ** such instants).
 **
-** If tz_version is '3' or greatar, the above is extended as follows.
+** If tz_version is '3' or greater, the above is extended as follows.
 ** First, the POSIX TZ string's hour offset may range from -167
 ** through 167 as compared to the POSIX-required 0 through 24.
 ** Second, its DST start time may be January 1 at 00:00 and its stop
 ** time December 31 at 24:00 plus the difference between DST and
 ** standard time, indicating DST all year.
+** Third, the newline-enclosed TZ string is preceded by a new section
+** consisting of another copy of the string, followed by a four-byte
+** integer size value, followed by zero or more NUL-terminated
+** name=value byte strings, followed by an additional NUL.  The size
+** value gives the total size of the name=value byte strings,
+** including their terminating NUL bytes, but excluding the additional NUL.
 */
 
 /*

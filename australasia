@@ -496,6 +496,7 @@ Zone Pacific/Auckland	11:39:04 -	LMT	1868 Nov  2
 Zone Pacific/Chatham	12:13:48 -	LMT	1957 Jan  1
 			12:45	Chatham	CHA%sT
 
+Link Pacific/Auckland Antarctica/McMurdo
 
 # Auckland Is
 # uninhabited; Maori and Moriori, colonial settlers, pastoralists, sealers,
@@ -768,7 +769,7 @@ Zone Pacific/Funafuti	11:56:52 -	LMT	1901
 # We have no better information, so for now, assume this has been true
 # indefinitely into the past.
 #
-Link Pacific/Honolulu Pacific/Johnston
+# See 'northamerica' for Pacific/Johnston.
 
 # Kingman
 # uninhabited

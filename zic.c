@@ -1760,7 +1760,6 @@ writezone(const char *const name, const char *const string)
 		fprintf(fp, "name=%s%c", name, 0);
 	for (i = 0; i < genoptions; i++) {
 		register char const *v = genoption[i];
-		register int namelen = strchr(v, '=') - v;
 		fprintf(fp, "%s%c", v, 0);
 	}
 	fprintf(fp, "%c\n%s\n", 0, string);

@@ -600,6 +600,8 @@ Zone Pacific/Honolulu	-10:31:26 -	LMT	1896 Jan 13 12:00 #Schmitt&Cox
 			-10:30	-	HST	1947 Jun  8 2:00 #Schmitt&Cox+2
 			-10:00	-	HST
 
+Link Pacific/Honolulu Pacific/Johnston
+
 # Now we turn to US areas that have diverged from the consensus since 1970.
 
 # Arizona mostly uses MST.
@@ -2547,7 +2549,7 @@ Zone America/Santa_Isabel	-7:39:28 -	LMT	1922 Jan  1  0:20:32
 ###############################################################################
 
 # Anguilla
-Link America/Port_of_Spain America/Anguilla
+# See 'southamerica'.
 
 # Antigua and Barbuda
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -2869,7 +2871,7 @@ Zone	America/Havana	-5:29:28 -	LMT	1890
 			-5:00	Cuba	C%sT
 
 # Dominica
-Link America/Port_of_Spain America/Dominica
+# See 'southamerica'.
 
 # Dominican Republic
 
@@ -2918,13 +2920,10 @@ Zone America/El_Salvador -5:56:48 -	LMT	1921		# San Salvador
 			-6:00	Salv	C%sT
 
 # Grenada
-Link America/Port_of_Spain America/Grenada
 # Guadeloupe
-Link America/Port_of_Spain America/Guadeloupe
 # St Barthelemy
-Link America/Port_of_Spain America/St_Barthelemy
 # St Martin (French part)
-Link America/Port_of_Spain America/Marigot
+# See 'southamerica'.
 
 # Guatemala
 #
@@ -3086,7 +3085,7 @@ Zone America/Martinique	-4:04:20 -      LMT	1890		# Fort-de-France
 			-4:00	-	AST
 
 # Montserrat
-Link America/Port_of_Spain America/Montserrat
+# See 'southamerica'.
 
 # Nicaragua
 #
@@ -3168,10 +3167,8 @@ Zone America/Puerto_Rico -4:24:25 -	LMT	1899 Mar 28 12:00    # San Juan
 			-4:00	-	AST
 
 # St Kitts-Nevis
-Link America/Port_of_Spain America/St_Kitts
-
 # St Lucia
-Link America/Port_of_Spain America/St_Lucia
+# See 'southamerica'.
 
 # St Pierre and Miquelon
 # There are too many St Pierres elsewhere, so we'll use 'Miquelon'.
@@ -3182,7 +3179,7 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15	# St Pierre
 			-3:00	Canada	PM%sT
 
 # St Vincent and the Grenadines
-Link America/Port_of_Spain America/St_Vincent
+# See 'southamerica'.
 
 # Turks and Caicos
 #
@@ -3216,7 +3213,5 @@ Zone America/Grand_Turk	-4:44:32 -	LMT	1890
 			-5:00	TC	E%sT
 
 # British Virgin Is
-Link America/Port_of_Spain America/Tortola
-
 # Virgin Is
-Link America/Port_of_Spain America/St_Thomas
+# See 'southamerica'.

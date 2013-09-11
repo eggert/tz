@@ -360,5 +360,5 @@ Zone Antarctica/Palmer	0	-	zzz	1965
 # makes all of the clocks run fast.  So every couple of days,
 # we have to go around and set them back 5 minutes or so.
 # Maybe if we let them run fast all of the time, we'd get to leave here sooner!!
-
-Link Pacific/Auckland Antarctica/McMurdo
+#
+# See 'australasia' for Antarctica/McMurdo.

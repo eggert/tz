@@ -89,12 +89,6 @@ struct tzhead {
 ** Second, its DST start time may be January 1 at 00:00 and its stop
 ** time December 31 at 24:00 plus the difference between DST and
 ** standard time, indicating DST all year.
-** Third, the newline-enclosed TZ string is preceded by a new section
-** consisting of another copy of the string, followed by a four-byte
-** integer size value, followed by zero or more NUL-terminated
-** name=value byte strings, followed by an additional NUL.  The size
-** value gives the total size of the name=value byte strings,
-** including their terminating NUL bytes, but excluding the additional NUL.
 */
 
 /*

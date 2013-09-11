@@ -15,11 +15,6 @@ zic \- time zone compiler
 .B \-l
 .I localtime
 ] [
-.B \-n
-] [
-.B \-o
-.IB name = value
-] [
 .B \-p
 .I posixrules
 ] [
@@ -66,15 +61,6 @@ will act as if the input contained a link line of the form
 .sp
 .ti +.5i
 Link	\fItimezone\fP		localtime
-.TP
-.B "\-n"
-Store each zone's name into its generated file, as meta-information
-with the name "name" and value the zone's name.
-.TP
-.BI "\-o " name = value
-Store the given name-value pair into the generated file, as
-meta-information.  This option can be repeated, once for each distinct
-name.
 .TP
 .BI "\-p " timezone
 Use the given time zone's rules when handling POSIX-format

@@ -357,13 +357,9 @@ in decreasing order of importance:
 The file 'zone.tab' lists geographical locations used to name time
 zone rule files.  It is intended to be an exhaustive list of names
 for geographic regions as described above; this is a subset of the
-Zone entries in the data.  The file 'time.tab' is a simplified
-version of 'zone.tab', the intent being that entries are coalesced
-if their time stamps agree after 1970, which means the entries are
-distinct in 'zone.tab' only because of the abovementioned political
-constraints.  Although a 'zone.tab' location's longitude corresponds
-to its LMT offset with one hour for every 15 degrees east longitude,
-this relationship is not exact and is not true for 'time.tab'.
+names in the data.  Although a 'zone.tab' location's longitude
+corresponds to its LMT offset with one hour for every 15 degrees east
+longitude, this relationship is not exact.
 
 Older versions of this package used a different naming scheme,
 and these older names are still supported.

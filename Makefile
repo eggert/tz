@@ -40,15 +40,6 @@ LOCALTIME=	GMT
 
 POSIXRULES=	America/New_York
 
-# Default time zone table type for 'tzselect'.  See tzselect.8 for details.
-# Possible values are:
-# 'time' - for a smaller time zone table
-# 'zone' - for a backward compatible time zone table; it contains
-#   alternative TZ values present for compatibility with older versions of
-#   this software.
-
-ZONETABTYPE=	zone
-
 # Also see TZDEFRULESTRING below, which takes effect only
 # if the time zone files cannot be accessed.
 
@@ -329,11 +320,11 @@ YDATA=		$(PRIMARY_YDATA) pacificnew etcetera backward
 NDATA=		systemv factory
 SDATA=		solar87 solar88 solar89
 TDATA=		$(YDATA) $(NDATA) $(SDATA)
-TABDATA=	iso3166.tab time.tab zone.tab
+TABDATA=	iso3166.tab zone.tab
 DATA=		$(YDATA) $(NDATA) $(SDATA) $(TABDATA) \
 			leap-seconds.list yearistype.sh
 WEB_PAGES=	tz-art.htm tz-link.htm
-AWK_SCRIPTS=	checktab.awk leapseconds.awk zone-time.awk
+AWK_SCRIPTS=	checktab.awk leapseconds.awk
 MISC=		usno1988 usno1989 usno1989a usno1995 usno1997 usno1998 \
 			$(WEB_PAGES) $(AWK_SCRIPTS) workman.sh \
 			zoneinfo2tdf.pl
@@ -352,8 +343,8 @@ install:	all $(DATA) $(REDO) $(DESTDIR)$(TZLIB) $(MANS)
 		$(ZIC) -y $(YEARISTYPE) \
 			-d $(DESTDIR)$(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
 		-rm -f $(DESTDIR)$(TZDIR)/iso3166.tab \
-			$(DESTDIR)$(TZDIR)/time.tab $(DESTDIR)$(TZDIR)/zone.tab
-		cp iso3166.tab time.tab zone.tab $(DESTDIR)$(TZDIR)/.
+			$(DESTDIR)$(TZDIR)/zone.tab
+		cp iso3166.tab zone.tab $(DESTDIR)$(TZDIR)/.
 		-mkdir $(DESTDIR)$(TOPDIR) $(DESTDIR)$(ETCDIR)
 		cp tzselect zic zdump $(DESTDIR)$(ETCDIR)/.
 		-mkdir $(DESTDIR)$(TOPDIR) $(DESTDIR)$(MANDIR) \
@@ -430,9 +421,6 @@ posix_right:	posix_only leapseconds
 
 zones:		$(REDO)
 
-time.tab:	$(YDATA) zone.tab zone-time.awk
-		$(AWK) -f zone-time.awk $(YDATA) >$@
-
 $(DESTDIR)$(TZLIB): $(LIBOBJS)
 		-mkdir -p $(DESTDIR)$(TOPDIR) $(DESTDIR)$(LIBDIR)
 		ar ru $@ $(LIBOBJS)
@@ -450,7 +438,6 @@ tzselect:	tzselect.ksh
 			-e 's|\(REPORT_BUGS_TO\)=.*|\1=$(BUGEMAIL)|' \
 			-e 's|TZDIR=[^}]*|TZDIR=$(TZDIR)|' \
 			-e 's|\(TZVERSION\)=.*|\1=$(VERSION)|' \
-			-e 's|^\(ZONETABTYPE\)=.*|\1=$(ZONETABTYPE)|' \
 			<$? >$@
 		chmod +x $@
 
@@ -467,7 +454,6 @@ check_web:	$(WEB_PAGES)
 
 clean_misc:
 		rm -f core *.o *.out \
-		  time.tab \
 		  date leapseconds tzselect version.h zdump zic yearistype
 clean:		clean_misc
 		rm -f -r tzpublic

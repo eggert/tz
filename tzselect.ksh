@@ -3,7 +3,6 @@
 PKGVERSION='(tzcode) '
 TZVERSION=see_Makefile
 REPORT_BUGS_TO=tz@iana.org
-ZONETABTYPE=zone
 
 # Ask the user about the time zone, and output the resulting TZ value to stdout.
 # Interact with the user via stderr and stdin.
@@ -44,7 +43,7 @@ ZONETABTYPE=zone
 coord=
 location_limit=10
 
-usage="Usage: tzselect [--version] [--help] [-c COORD] [-n LIMIT] [-t ZONETABTYPE]
+usage="Usage: tzselect [--version] [--help] [-c COORD] [-n LIMIT]
 Select a time zone interactively.
 
 Options:
@@ -60,10 +59,6 @@ Options:
   -n LIMIT
     Display at most LIMIT locations when -c is used (default $location_limit).
 
-  -t ZONETABTYPE
-    Use time zone table ZONETABTYPE.  ZONETABTYPE should be one of
-    'time' or 'zone'.
-
   --version
     Output version information.
 
@@ -72,15 +67,13 @@ Options:
 
 Report bugs to $REPORT_BUGS_TO."
 
-while getopts c:n:t:-: opt
+while getopts c:n:-: opt
 do
     case $opt$OPTARG in
     c*)
 	coord=$OPTARG ;;
     n*)
 	location_limit=$OPTARG ;;
-    t*)
-	ZONETABTYPE=$OPTARG ;;
     -help)
 	exec echo "$usage" ;;
     -version)
@@ -100,7 +93,7 @@ esac
 
 # Make sure the tables are readable.
 TZ_COUNTRY_TABLE=$TZDIR/iso3166.tab
-TZ_ZONE_TABLE=$TZDIR/$ZONETABTYPE.tab
+TZ_ZONE_TABLE=$TZDIR/zone.tab
 for f in $TZ_COUNTRY_TABLE $TZ_ZONE_TABLE
 do
 	<$f || {

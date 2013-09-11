@@ -10,9 +10,6 @@ tzselect \- select a time zone
 .B \-n
 .I limit
 ] [
-.B \-t
-.I zonetabtype
-] [
 .B \-\-help
 ] [
 .B \-\-version
@@ -73,52 +70,8 @@ When
 is used, display the closest
 .I limit
 locations (default 10).
-.TP
-.BI "\-t " zonetabtype
-Make selections from the time zone table of type
-.I zonetabtype.
-Possible
-.I zonetabtype
-values include:
-.RS
-.TP
-.B time
-A time zone table with a smaller set of zone names.
-.TP
-.B zone
-A time zone table that also contains alternative zone names, for
-backward compatibility with older versions of this software.  The
-alternative names are not needed for proper operation of time stamps;
-they are present only to avoid surprises with people who are
-accustomed to the old names.  These alternative names arose from
-political issues that are outside the scope of
-.BR tzselect .
 .PP
-For example, both tables have entries for countries like
-Bosnia, Croatia, and Serbia, which are in a zone where the clocks
-have all agreed since 1970.  Although the
-.B time
-table lists "Europe/Belgrade" for this zone wherever it occurs, the
-.B zone
-table instead lists the names "Europe/Sarajevo", "Europe/Zagreb",
-etc. under Bosnia, Croatia, etc.  This means that the
-.B "\-t\ time"
-option causes
-.B tzselect
-to generate "Europe/Belgrade" for this zone, whereas
-.B "\-t\ zone"
-causes it to generate different names depending on the country,
-names that are equivalent in effect to "Europe/Belgrade".
-.PP
-The default
-.I zonetabtype
-is system-dependent, so applications that care about the set of
-names that
-.B tzselect
-generates should use the
-.B "\-t"
-option.  Regardless of what options are used, applications should not
-assume that
+Applications should not assume that
 .BR tzselect 's
 output matches the user's political preferences.
 .RE
@@ -143,8 +96,6 @@ Name of the directory containing time zone data files (default:
 .TP
 \f2TZDIR\fP\f3/iso3166.tab\fP
 Table of ISO 3166 2-letter country codes and country names.
-.TP
-\f2TZDIR\fP\f3/time.tab\fP
 .TP
 \f2TZDIR\fP\f3/zone.tab\fP
 Tables of country codes, latitude and longitude, zone names, and

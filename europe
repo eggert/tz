@@ -2650,32 +2650,36 @@ Zone Europe/Stockholm	1:12:12 -	LMT	1879 Jan  1
 # The 1940 rules must be deleted.
 #
 # One further detail for Switzerland, which is probably out of scope for
-# most users of tzdata:
-# The zone file
-# Zone    Europe/Zurich   0:34:08 -       LMT     1848 Sep 12
-#                          0:29:44 -       BMT     1894 Jun #Bern Mean Time
-#                          1:00    Swiss   CE%sT   1981
-#                          1:00    EU      CE%sT
+# most users of tzdata: The [Europe/Zurich zone] ...
 # describes all of Switzerland correctly, with the exception of
 # the Cantone Geneve (Geneva, Genf). Between 1848 and 1894 Geneve did not
 # follow Bern Mean Time but kept its own local mean time.
 # To represent this, an extra zone would be needed.
+#
+# From Alois Treindl (2013-09-11):
+# The Federal regulations say
+# http://www.admin.ch/opc/de/classified-compilation/20071096/index.html
+# ... the meridian for Bern mean time ... is 7 degrees 26'22.50".
+# Expressed in time, it is 0h29m45.5s.
 
-# From Paul Eggert (2013-09-09):
+# From Paul Eggert (2013-09-11):
+# Round to the nearest even second, 0:29:46.
+#
 # We can find no reliable source for Shanks's claim that all of Switzerland
 # except Geneva switched to Bern Mean Time at 00:00 on 1848-09-12.  On the
 # contrary, a more-reliable source talks about "the gradual introduction of a
 # national time (from the 1850s)" (Google translation) with a switch to CET in
 # 1894; see Speich's review of Messerli's thesis, Traverse 1997/3, 131-3
 # <http://www.tg.ethz.ch/dokumente/pdf_files/rez_messerli.pdf>.  For now, model
-# this messy process as a transition in 1855.  The "0:29:44" is also suspect.
+# this messy process as a transition in 1855.  Shanks's 1894 transition is more
+# plausible for Zurich but has not been checked.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Swiss	1941	1942	-	May	Mon>=1	1:00	1:00	S
 Rule	Swiss	1941	1942	-	Oct	Mon>=1	2:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Zurich	0:34:08 -	LMT	1855 # See above comment.
-			0:29:44	-	BMT	1894 Jun # Bern Mean Time
+			0:29:46	-	BMT	1894 Jun # Bern Mean Time
 			1:00	Swiss	CE%sT	1981
 			1:00	EU	CE%sT
 

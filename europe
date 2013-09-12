@@ -2687,7 +2687,7 @@ Zone Europe/Stockholm	1:12:12 -	LMT	1879 Jan  1
 # (Bundesblatt 1853, Bd. II, S. 859).  On p 72 Messerli writes that in
 # practice since July 1853 Bernese time was used in "all postal and telegraph
 # offices in Switzerland from Geneva to St. Gallen and Basel to Chiasso"
-# (Google translation).  For now, model this transition as occuring on
+# (Google translation).  For now, model this transition as occurring on
 # 1853-07-16, though it probably occurred at some other date in Zurich, and
 # legal civil time probably changed at still some other transition date.
 

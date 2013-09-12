@@ -2662,23 +2662,40 @@ Zone Europe/Stockholm	1:12:12 -	LMT	1879 Jan  1
 # ... the meridian for Bern mean time ... is 7 degrees 26'22.50".
 # Expressed in time, it is 0h29m45.5s.
 
+# From Pierre-Yves Berger (2013-09-11):
+# the "Circulaire du conseil federal" (December 11 1893)
+# <http://www.amtsdruckschriften.bar.admin.ch/viewOrigDoc.do?id=10071353> ...
+# clearly states that the [1894-06-01] change should be done at midnight
+# but if no one is present after 11 at night, could be postponed until one
+# hour before the beginning of service.
+
 # From Paul Eggert (2013-09-11):
-# Round to the nearest even second, 0:29:46.
+# Round BMT to the nearest even second, 0:29:46.
 #
-# We can find no reliable source for Shanks's claim that all of Switzerland
-# except Geneva switched to Bern Mean Time at 00:00 on 1848-09-12.  On the
-# contrary, a more-reliable source talks about "the gradual introduction of a
-# national time (from the 1850s)" (Google translation) with a switch to CET in
-# 1894; see Speich's review of Messerli's thesis, Traverse 1997/3, 131-3
-# <http://www.tg.ethz.ch/dokumente/pdf_files/rez_messerli.pdf>.  For now, model
-# this messy process as a transition in 1855.  Shanks's 1894 transition is more
-# plausible for Zurich but has not been checked.
+# We can find no reliable source for Shanks's assertion that all of Switzerland
+# except Geneva switched to Bern Mean Time at 00:00 on 1848-09-12.  This book:
+#
+#	Jakob Messerli. Gleichmassig, punktlich, schnell: Zeiteinteilung und
+#	Zeitgebrauch in der Schweiz im 19. Jahrhundert. Chronos, Zurich 1995,
+#	ISBN 3-905311-68-2, OCLC 717570797.
+#
+# suggests that the transition was more gradual, and that the Swiss did not
+# agree about civil time during the transition.  The timekeeping it gives the
+# most detail for is postal and telegraph time: here, federal legislation (the
+# "Bundesgesetz uber die Erstellung von elektrischen Telegraphen") passed on
+# 1851-11-23, and an official implementation notice was published 1853-07-16
+# (Bundesblatt 1853, Bd. II, S. 859).  On p 72 Messerli writes that in
+# practice since July 1853 Bernese time was used in "all postal and telegraph
+# offices in Switzerland from Geneva to St. Gallen and Basel to Chiasso"
+# (Google translation).  For now, model this transition as occuring on
+# 1853-07-16, though it probably occurred at some other date in Zurich, and
+# legal civil time probably changed at still some other transition date.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Swiss	1941	1942	-	May	Mon>=1	1:00	1:00	S
 Rule	Swiss	1941	1942	-	Oct	Mon>=1	2:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Zurich	0:34:08 -	LMT	1855 # See above comment.
+Zone	Europe/Zurich	0:34:08 -	LMT	1853 Jul 16 # See above comment.
 			0:29:46	-	BMT	1894 Jun # Bern Mean Time
 			1:00	Swiss	CE%sT	1981
 			1:00	EU	CE%sT

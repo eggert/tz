@@ -468,7 +468,7 @@ Rule	EU	1996	max	-	Oct	lastSun	1:00u	0	-
 .sp
 .ta \w'# Zone\0\0'u +\w'Europe/Zurich\0\0'u +\w'GMTOFF\0\0'u +\w'RULES/SAVE\0\0'u +\w'FORMAT\0\0'u
 # Zone	NAME	GMTOFF	RULES/SAVE	FORMAT	UNTIL
-Zone	Europe/Zurich	0:34:08	-	LMT	1855
+Zone	Europe/Zurich	0:34:08	-	LMT	1853 Jul 16
 		0:29:46	-	BMT	1894 Jun
 		1:00	Swiss	CE%sT	1981
 		1:00	EU	CE%sT
@@ -480,9 +480,9 @@ Link	Europe/Zurich	Switzerland
 In this example, the zone is named Europe/Zurich but it has an alias
 
 as Switzerland.  This example says that Zurich was 34 minutes and 8
-seconds west of UT until 1855-01-01 at 00:00, when the legal offset
+seconds west of UT until 1853-07-16 at 00:00, when the legal offset
 was changed to 7\(de\|26\(fm\|22.50\(sd; although this works out to
-0:29.45.50, the input format cannot represent fractional seconds so it
+0:29:45.50, the input format cannot represent fractional seconds so it
 is rounded here.  After 1894-06-01 at 00:00 Swiss daylight saving rules
 (defined with lines beginning with "Rule Swiss") apply, and the UT offset
 became one hour.  From 1981 to the present, EU daylight saving rules have

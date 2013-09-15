@@ -284,10 +284,10 @@ Errors in the tz database arise from many sources:
 
  * The tz database does not record the earliest time for which a
    zone's data is thereafter valid for every location in the region.
-   For example, Europe/London is valid for all locations in the its
+   For example, Europe/London is valid for all locations in its
    region after GMT was made the standard time, but the date of
    standardization (1880-08-02) is not in the tz database, other than
-   in commentary.  For many zones the earlist time of validity is
+   in commentary.  For many zones the earliest time of validity is
    unknown.
 
  * The tz database does not record a region's boundaries, and in many

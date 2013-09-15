@@ -216,7 +216,10 @@ data, the world is partitioned into regions whose clocks all agree
 about time stamps that occur after the somewhat-arbitrary cutoff point
 of the POSIX Epoch (1970-01-01 00:00:00 UTC).  For each such region,
 the database records all known clock transitions, and labels the region
-with a notable location.
+with a notable location.  Although 1970 is a somewhat-arbitrary
+cutoff, there are significant challenges to moving the cutoff earlier
+even by a decade or two, due to the wide variety of local practices
+before computer timekeeping became prevalent.
 
 Clock transitions before 1970 are recorded for each such location,
 because most POSIX-compatible systems support negative time stamps and
@@ -224,38 +227,135 @@ could misbehave if data were omitted for pre-1970 transitions.
 However, the database is not designed for and does not suffice for
 applications requiring accurate handling of all past times everywhere,
 as it would take far too much effort and guesswork to record all
-details of pre-1970 civil timekeeping.  The pre-1970 data in this
-database covers only a tiny sliver of how clocks actually behaved;
-the vast majority of the necessary information was lost or never
-recorded, and much of what little remains is fabricated.
-Although 1970 is a somewhat-arbitrary cutoff, there are significant
-challenges to moving the cutoff back even by a decade or two, due to
-the wide variety of local practices before computer timekeeping
-became prevalent.
+details of pre-1970 civil timekeeping.
 
-Local mean time (LMT) offsets are recorded in the database only
-because the format requires an offset.  They should not be considered
-meaningful, and should not prompt creation of zones merely because two
-locations differ in LMT.  Historically, not only did different
-locations in the same zone typically use different LMT offsets, often
-different people in the same location maintained mean-time clocks that
-differed significantly, many people used solar or some other time
-instead of mean time, and standard time often replaced LMT only
-gradually at each location.  As for leap seconds, civil time was not
-based on atomic time before 1972, and we don't know the history of
-earth's rotation accurately enough to map SI seconds to historical
-solar time to more than about one-hour accuracy.  See: Morrison LV,
-Stephenson FR. Historical values of the Earth's clock error Delta T
-and the calculation of eclipses. J Hist Astron. 2004;35:327-36
-<http://adsabs.harvard.edu/full/2004JHA....35..327M>; Historical
-values of the Earth's clock error. J Hist Astron. 2005;36:339
-<http://adsabs.harvard.edu/full/2005JHA....36..339M>.
 
-As noted in the README file, the tz database is not authoritative
-(particularly not for pre-1970 time stamps), and it surely has errors.
+----- Accuracy of the tz database -----
+
+The tz database is not authoritative, and it surely has errors.
 Corrections are welcome and encouraged.  Users requiring authoritative
 data should consult national standards bodies and the references cited
 in the database's comments.
+
+Errors in the tz database arise from many sources:
+
+ * The tz database predicts future time stamps, and current predictions
+   will be incorrect after future governments change the rules.
+   For example, if today someone schedules a meeting for 13:00 next
+   October 1, Casablanca time, and tomorrow Morocco changes its
+   daylight saving rules, software can mess up after the rule change
+   if it blithely relies on conversions made before the change.
+
+ * The pre-1970 data in this database cover only a tiny sliver of how
+   clocks actually behaved; the vast majority of the necessary
+   information was lost or never recorded.  Thousands more zones would
+   be needed if the tz database's scope were extended to cover even
+   just the known or guessed history of standard time; for example,
+   the current single entry for France would need to split into dozens
+   of entries, perhaps hundreds.
+
+ * Most of the pre-1970 data comes from unreliable sources, often
+   astrology books that lack citations and whose compilers evidently
+   invented entries when the true facts were unknown, without
+   reporting which entries were known and which were invented.
+   These books often contradict each other or give implausible entries,
+   and on the rare occasions when their old data are checked they are
+   typically found to be incorrect.
+
+ * For the UK the tz database relies on years of first-class work done by
+   Joseph Myers and others; see <http://www.polyomino.org.uk/british-time/>.
+   Other countries are not done nearly as well.
+
+ * Sometimes, different people in the same city would maintain clocks
+   that differed significantly.  Railway time was used by railroad
+   companies (which did not always agree with each other),
+   church-clock time was used for birth certificates, etc.
+   Often this was merely common practice, but sometimes it was set by law.
+   For example, from 1891 to 1911 the UT offset in France was legally
+   0:09:21 outside train stations and 0:04:21 inside.
+
+ * Although a named location in the tz database stands for the
+   containing region, its pre-1970 data entries are often accurate for
+   only a small subset of that region.  For example, Europe/London
+   stands for the United Kingdom, but its pre-1847 times are valid
+   only for locations that have London's exact meridian, and its 1847
+   transition to GMT is known to be valid only for the L&NW and the
+   Caledonian railways.
+
+ * The tz database does not record the earliest time for which a
+   zone's data is thereafter valid for every location in the region.
+   For example, Europe/London is valid for all locations in the its
+   region after GMT was made the standard time, but the date of
+   standardization (1880-08-02) is not in the tz database, other than
+   in commentary.  For many zones the earlist time of validity is
+   unknown.
+
+ * The tz database does not record a region's boundaries, and in many
+   cases the boundaries are not known.  For example, the zone
+   America/Kentucky/Louisville represents a region around the city of
+   Louisville, the boundaries of which are unclear.
+
+ * Changes that are modeled as instantaneous transitions in the tz
+   database were often spread out over hours, days, or even decades.
+
+ * Even if the time is specified by law, locations sometimes
+   deliberately flout the law.
+
+ * Early timekeeping practices, even assuming perfect clocks, were
+   often not specified to the accuracy that the tz database requires.
+
+ * Sometimes historical timekeeping was specified more precisely
+   than what the tz database can handle.  For example, from 1909 to
+   1937 Netherlands clocks were legally UT+00:19:32.13, but the tz
+   database cannot represent the fractional second.
+
+ * Even when all the timestamp transitions recorded by the tz database
+   are correct, the tz rules that generate them may not faithfully
+   reflect the historical rules.  For example, from 1922 until World
+   War II the UK moved clocks forward the day following the third
+   Saturday in April unless that was Easter, in which case it moved
+   clocks forward the previous Sunday.  Because the tz database has no
+   way to specify Easter, these exceptional years are entered as
+   separate tz Rule lines, even though the legal rules did not change.
+
+ * The tz database models pre-standard time using the Gregorian
+   calendar and local mean time (LMT), but many people used other
+   calendars and other timescales.  For example, the Roman Empire used
+   the Julian calendar, and had 12 varying-length daytime hours with a
+   non-hour-based system at night.
+
+ * Early clocks were less reliable, and the data do not represent this
+   unreliability.
+
+ * As for leap seconds, civil time was not based on atomic time before
+   1972, and we don't know the history of earth's rotation accurately
+   enough to map SI seconds to historical solar time to more than
+   about one-hour accuracy.  See: Morrison LV, Stephenson FR.
+   Historical values of the Earth's clock error Delta T and the
+   calculation of eclipses. J Hist Astron. 2004;35:327-36
+   <http://adsabs.harvard.edu/full/2004JHA....35..327M>;
+   Historical values of the Earth's clock error. J Hist Astron. 2005;36:339
+   <http://adsabs.harvard.edu/full/2005JHA....36..339M>.
+
+ * The relationship between POSIX time (that is, UTC but ignoring leap
+   seconds) and UTC is not agreed upon after 1972.  Although the POSIX
+   clock officially stops during an inserted leap second, at least one
+   proposed standard has it jumping back a second instead; and in
+   practice POSIX clocks more typically either progress glacially during
+   a leap second, or are slightly slowed while near a leap second.
+
+ * The tz database does not represent how uncertain its information is.
+   Ideally it would contain information about when the data are
+   incomplete or dicey.  Partial temporal knowledge is a field of
+   active research, though, and it's not clear how to apply it here.
+
+In short, many, perhaps most, of the tz database's pre-1970 and future
+time stamps are either wrong or misleading.  Any attempt to pass the
+tz database off as the definition of time should be unacceptable to
+anybody who cares about the facts.  In particular, the tz database's
+LMT offsets should not be considered meaningful, and should not prompt
+creation of zones merely because two locations differ in LMT or
+transitioned to standard time at different dates.
 
 
 ----- Names of time zone rule files -----

@@ -10,6 +10,7 @@
 
 #include <stdarg.h>
 
+#define	ZIC_VERSION_PRE_2013 '2'
 #define	ZIC_VERSION	'3'
 
 typedef int_fast64_t	zic_t;
@@ -1386,7 +1387,7 @@ is32(const zic_t x)
 }
 
 static void
-writezone(const char *const name, const char *const string)
+writezone(const char *const name, const char *const string, char version)
 {
 	register FILE *			fp;
 	register int			i, j;
@@ -1639,7 +1640,7 @@ writezone(const char *const name, const char *const string)
 #define DO(field)	((void) fwrite(tzh.field, sizeof tzh.field, 1, fp))
 		tzh = tzh0;
 		(void) strncpy(tzh.tzh_magic, TZ_MAGIC, sizeof tzh.tzh_magic);
-		tzh.tzh_version[0] = ZIC_VERSION;
+		tzh.tzh_version[0] = version;
 		convert(thistypecnt, tzh.tzh_ttisgmtcnt);
 		convert(thistypecnt, tzh.tzh_ttisstdcnt);
 		convert(thisleapcnt, tzh.tzh_leapcnt);
@@ -2009,6 +2010,7 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 	register int			prodstic; /* all rules are min to max */
 	register int			compat;
 	register int			do_extend;
+	register char			version;
 
 	max_abbr_len = 2 + max_format_len + max_abbrvar_len;
 	max_envvar_len = 2 * max_abbr_len + 5 * 9;
@@ -2058,6 +2060,7 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 	** Generate lots of data if a rule can't cover all future times.
 	*/
 	compat = stringzone(envvar, zpfirst, zonecount);
+	version = compat < 2013 ? ZIC_VERSION_PRE_2013 : ZIC_VERSION;
 	do_extend = compat < 0 || compat == YEAR_BY_YEAR_ZONE;
 	if (noise && compat != 0 && compat != YEAR_BY_YEAR_ZONE) {
 		if (compat < 0)
@@ -2307,7 +2310,7 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 			addtt(rpytime(&xr, max_year + 1), typecnt-1);
 		}
 	}
-	writezone(zpfirst->z_name, envvar);
+	writezone(zpfirst->z_name, envvar, version);
 	free(startbuf);
 	free(ab);
 	free(envvar);

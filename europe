@@ -1564,11 +1564,22 @@ Zone	Europe/Riga	1:36:24	-	LMT	1880
 			2:00	EU	EE%sT
 
 # Liechtenstein
+
 # From Paul Eggert (2013-09-09):
 # Shanks & Pottenger say Vaduz is like Zurich.
-# Given the close ties between Liechtenstein and Switzerland during WWII,
-# assume our circa-1941 corrections to Zurich apply also to Vaduz.
+
+# From Alois Treindl (2013-09-18):
+# http://www.eliechtensteinensia.li/LIJ/1978/1938-1978/1941.pdf
+# ... confirms on p. 6 that Liechtenstein followed Switzerland in 1941 and 1942.
+# I ... translate only the last two paragraphs:
+#    ... during second world war, in the years 1941 and 1942, Liechtenstein
+#    introduced daylight saving time, adapting to Switzerland.  From 1943 on
+#    central European time was in force throughout the year.
+#    From a report of the duke's government to the high council,
+#    regarding the introduction of a time law, of 31 May 1977.
+
 Link Europe/Zurich Europe/Vaduz
+
 
 # Lithuania
 

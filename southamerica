@@ -845,6 +845,12 @@ Zone	America/La_Paz	-4:32:36 -	LMT	1890
 # Tocantins state will have DST.
 # http://noticias.terra.com.br/brasil/noticias/0,,OI6232536-EI306.html
 
+# From Steffen Thorsen (2013-09-20):
+# Tocantins in Brazil is very likely not to observe DST from October....
+# http://conexaoto.com.br/2013/09/18/ministerio-confirma-que-tocantins-esta-fora-do-horario-de-verao-em-2013-mas-falta-publicacao-de-decreto
+# We will keep this article updated when this is confirmed:
+# http://www.timeanddate.com/news/time/brazil-starts-dst-2013.html
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 # Decree <a href="http://pcdsh01.on.br/HV20466.htm">20,466</a> (1931-10-01)
 # Decree <a href="http://pcdsh01.on.br/HV21896.htm">21,896</a> (1932-01-10)
@@ -1064,7 +1070,8 @@ Zone America/Araguaina	-3:12:48 -	LMT	1914
 			-3:00	-	BRT	1995 Sep 14
 			-3:00	Brazil	BR%sT	2003 Sep 24
 			-3:00	-	BRT	2012 Oct 21
-			-3:00	Brazil	BR%sT
+			-3:00	Brazil	BR%sT	2013 Sep
+			-3:00	-	BRT
 #
 # Alagoas (AL), Sergipe (SE)
 Zone America/Maceio	-2:22:52 -	LMT	1914

@@ -1512,10 +1512,16 @@ Zone	America/Guyana	-3:52:40 -	LMT	1915 Mar	# Georgetown
 			-4:00	-	GYT
 
 # Paraguay
+#
 # From Paul Eggert (2006-03-22):
 # Shanks & Pottenger say that spring transitions are from 01:00 -> 02:00,
 # and autumn transitions are from 00:00 -> 23:00.  Go with pre-1999
 # editions of Shanks, and with the IATA, who say transitions occur at 00:00.
+#
+# From Waldemar Villamayor-Venialbo (2013-09-20):
+# No time of the day is established for the adjustment, so people normally
+# adjust their clocks at 0 hour of the given dates.
+#
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Para	1975	1988	-	Oct	 1	0:00	1:00	S
 Rule	Para	1975	1978	-	Mar	 1	0:00	0	-

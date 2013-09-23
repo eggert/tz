@@ -503,7 +503,7 @@ Release 2012e - 2012-08-02 20:44:55 -0700
   * Remove trailing white space.
 
 
-Release code2012c+data2012d - 2012-07-19 16:35:33 -0700
+Release code2012c-data2012d - 2012-07-19 16:35:33 -0700
 
   Changes for Morocco's time stamps, which take effect in a couple of
   hours, along with infrastructure changes to accommodate how the tz
@@ -523,7 +523,7 @@ Release data2012c - 2012-03-27 12:17:25 -0400
 	for now anyway, for the future).
 
 
-Release 2012b - 2012-03-02 05:29:15 -0000
+Release 2012b - 2012-03-02 12:29:15 +0700
 
   There is just one change to tzcode2012b (compared with 2012a):
   the Makefile that was accidentally included with 2012a has been
@@ -541,7 +541,7 @@ Release 2012b - 2012-03-02 05:29:15 -0000
   in 2012a has been removed.
 
 
-Release 2012a - 2012-03-01 11:28:10 -0000
+Release 2012a - 2012-03-01 18:28:10 +0700
 
   The changes in tzcode2012a (compared to the previous version, 2011i)
   are entirely to the README and tz-art.htm and tz-link.htm files, if
@@ -567,7 +567,7 @@ Release 2012a - 2012-03-01 11:28:10 -0000
 	A few typos in Le Corre's list of free French place names (comments)
 
 
-Release data2011n - 2011-10-30 07:57:54 -0000
+Release data2011n - 2011-10-30 14:57:54 +0700
 
   There are three changes of note - most urgently, Cuba (America/Havana)
   has extended summer time by two weeks, now to end on Nov 13, rather than
@@ -584,7 +584,7 @@ Release data2011n - 2011-10-30 07:57:54 -0000
   change not happened - that's the "missing" sccs version id).
 
 
-Release data2011m - 2011-10-24 14:42:16 -0000
+Release data2011m - 2011-10-24 21:42:16 +0700
 
   In particular, the typos in comments in the data (2011-11-17 should have
   been 2011-10-17 as Alan Barrett noted, and spelling of Tiraspol that
@@ -599,7 +599,7 @@ Release data2011m - 2011-10-24 14:42:16 -0000
   version numbers there...)
 
 
-Release data2011l - 2011-10-10 04:15:43 -0000
+Release data2011l -  2011-10-10 11:15:43 +0700
 
   There are just 2 changes that cause different generated tzdata files from
   zic, to Asia/Hebron and Pacific/Fiji - the possible change for Bahia, Brazil
@@ -1452,14 +1452,14 @@ Release 2000a - 2000-01-18 09:21:26 -0500
   The two hypertext documents have also been renamed.
 
 
-Release code1999i+data1999j - 1999-11-15 18:43:22 -0500
+Release code1999i-data1999j - 1999-11-15 18:43:22 -0500
 
   Paul Eggert's changes
 
   additions to the "zic" manual page and the "Arts.htm" file
 
 
-Release code1999h+data1999i - 1999-11-08 14:55:21 -0500
+Release code1999h-data1999i - 1999-11-08 14:55:21 -0500
 
   [not summarized]
 
@@ -1528,14 +1528,14 @@ Release 1999a - 1999-01-19 16:20:29 -0500
   to whom thanks!)
 
 
-Release code1998h+data1998i - 1998-10-01 09:56:10 -0400
+Release code1998h-data1998i - 1998-10-01 09:56:10 -0400
 
   changes for Brazil, Chile, and Germany
 
   support for use of "24:00" in the input files for the time zone compiler
 
 
-Release code1998g+data1998h - 1998-09-24 10:50:28 -0400
+Release code1998g-data1998h - 1998-09-24 10:50:28 -0400
 
   changes by Paul Eggert
 
@@ -1604,13 +1604,13 @@ Release 1998a - 1998-01-13 12:37:35 -0500
   changes by Paul Eggert
 
 
-Release code1997i+data1997k - 1997-12-29 09:53:41 -0500
+Release code1997i-data1997k - 1997-12-29 09:53:41 -0500
 
   changes by Paul Eggert, with minor modifications from Arthur David
   Olson to make the files more browser friendly
 
 
-Release code1997h+data1997j - 1997-12-18 17:47:35 -0500
+Release code1997h-data1997j - 1997-12-18 17:47:35 -0500
 
   minor changes to put "TZif" at the start of each time zone information file
 
@@ -1625,7 +1625,7 @@ Release data1997i - 1997-10-07 08:45:38 -0400
   changes to Africa by Paul Eggert
 
 
-Release code1997g+data1997h - 1997-09-04 16:56:54 -0400
+Release code1997g-data1997h - 1997-09-04 16:56:54 -0400
 
   corrections for Uruguay (and other locations)
 
@@ -1634,7 +1634,7 @@ Release code1997g+data1997h - 1997-09-04 16:56:54 -0400
   upon which arithmetic has been performed.
 
 
-Release code1997f+data1997g - 1997-07-19 13:15:02 -0400
+Release code1997f-data1997g - 1997-07-19 13:15:02 -0400
 
   Paul Eggert's updates
 
@@ -1644,7 +1644,7 @@ Release code1997f+data1997g - 1997-07-19 13:15:02 -0400
   include information on Around the World in Eighty Days.
 
 
-Release code1997e+data1997f - 1997-05-03 18:52:34 -0400
+Release code1997e-data1997f - 1997-05-03 18:52:34 -0400
 
   fixes to zic's error handling
 
@@ -1656,12 +1656,12 @@ Release code1997e+data1997f - 1997-05-03 18:52:34 -0400
   A new piece of tz-related music has been added to the "Music" file.
 
 
-Release code1997d+data1997e - 1997-03-29 12:48:52 -0500
+Release code1997d-data1997e - 1997-03-29 12:48:52 -0500
 
   Paul Eggert's latest suggestions
 
 
-Release code1997c+data1997d - 1997-03-07 20:37:54 -0500
+Release code1997c-data1997d - 1997-03-07 20:37:54 -0500
 
   changes to "zic.c" to correct performance of the "-s" option
 
@@ -1690,7 +1690,7 @@ Release 1997a - 1997-01-21 09:11:10 -0500
   is returned while SunOS 5.5's manual says EOF is returned).
 
 
-Release code1996o+data1996n - 1996-12-27 21:42:05 -0500
+Release code1996o-data1996n - 1996-12-27 21:42:05 -0500
 
   Paul Eggert's latest changes
 
@@ -1706,7 +1706,7 @@ Release data1996m - 1996-11-24 02:37:34 -0000
   Paul Eggert's batch of changes
 
 
-Release code1996m+data1996l - 1996-11-05 14:00:12 -0500
+Release code1996m-data1996l - 1996-11-05 14:00:12 -0500
 
   No functional changes here; the files have simply been changed to
   make more use of ISO style dates in comments. The names of the above
@@ -1757,7 +1757,7 @@ Release data96h - 1996-05-09 17:40:51-0400
   changes by Paul Eggert
 
 
-Release code96f+data96g - 1996-05-03 03:09:59 -0000
+Release code96f-data96g - 1996-05-03 03:09:59 -0000
   [tzcode96f.tar.gz + tzdata96g.tar.gz are both missing!]
 
   The changes get us some of the way to fixing the problems noted in Paul
@@ -1791,11 +1791,12 @@ Release data96d - 1996-03-18 20:49:39 -0500
 
 
 Release code96e -  1996-02-29 15:43:27 -0000
+  [tzcode96e.tar.gz is missing!]
 
   internationalization changes and the fix to the documentation for strftime
 
 
-Release code96d+data96c - 1996-02-12 11:05:27 -0500
+Release code96d-data96c - 1996-02-12 11:05:27 -0500
 
   The "code" file simply updates Bob Kridle's electronic address.
 
@@ -1830,21 +1831,21 @@ Release 96a - 1996-01-06 09:08:24 -0500
   numbers (which are not necessarily the same as calendar year numbers)
 
 
-Release code95i+data95m - 1995-12-21 12:46:47 -0500
+Release code95i-data95m - 1995-12-21 12:46:47 -0500
 
   The latest revisions from Paul Eggert are included, the usno1995
   file has been updated, and a new file ("WWW") covering useful URLs
   has been added.
 
 
-Release code95h+data95l - 1995-12-19 18:10:12 -0500
+Release code95h-data95l - 1995-12-19 18:10:12 -0500
 
   A simplification of a macro definition, a change to data for Sudan,
   and (for last minute shoppers) notes in the "Music" file on the CD
   "Old Man Time".
 
 
-Release code95g+data95k - 1995-10-30 10:32:47 -0500
+Release code95g-data95k - 1995-10-30 10:32:47 -0500
 
   (slightly reformatted) 8-bit-clean proposed patch
 
@@ -1855,7 +1856,7 @@ Release code95g+data95k - 1995-10-30 10:32:47 -0500
   some other minor cleanups
 
 
-Release code95f+data95j - 1995-10-28 21:01:34 -0000
+Release code95f-data95j - 1995-10-28 21:01:34 -0000
   [tzcode95f.tar.gz + tzdata95j.tar.gz are both missing!]
 
   European cleanups
@@ -2083,13 +2084,14 @@ adapted and reformatted for the purposes of this file.
 Typically a release R consists of a pair of tarball files,
 tzcodeR.tar.gz and tzdataR.tar.gz.  However, some releases (e.g.,
 code2010a, data2012c) consist of just one or the other tarball, and a
-few (e.g., code2012c+data2012d) have tarballs with mixed version
+few (e.g., code2012c-data2012d) have tarballs with mixed version
 numbers.
 
 Release time stamps are taken from the release's commit (for newer,
 git releases), from the newest file in the tarball (for older
 releases, where this info is available) or from the email announcing
-the release (if all else fails).
+the release (if all else fails; these are marked with a timezone of
+-0000 and an "is missing!" comment).
 
 Earlier versions of the code and data were not announced on the tz
 list and are not summarized here.

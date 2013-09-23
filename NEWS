@@ -28,6 +28,8 @@ Unreleased, experimental changes
     done differently, and tags would either not have a simple name or
     not exactly match what was released.
 
+    'make set-timestamps' is now simpler and a bit more portable.
+
 
 Release 2013e - 2013-09-19 23:50:04 -0700
 

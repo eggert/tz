@@ -13,10 +13,20 @@ Unreleased, experimental changes
 
   Changes affecting documentation and commentary
 
+    New file 'NEWS' that contains release notes like this one.
+
     Paraguay's law does not specify DST transition time; 00:00 is customary.
     (Thanks to Waldemar Villamayor-Venialbo.)
 
     Minor capitalization fixes.
+
+  Changes affecting version-control only
+
+    The experimental github repository now contains annotated and
+    signed tags for recent releases, e.g., '2013e' for Release 2013e.
+    Releases are tagged starting with 2012e; earlier releases were
+    done differently, and tags would either not have a simple name or
+    not exactly match what was released.
 
 
 Release 2013e - 2013-09-19 23:50:04 -0700

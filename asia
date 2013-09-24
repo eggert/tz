@@ -2299,9 +2299,18 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # http://www.samanews.com/index.php?act=Show&id=154120
 # http://safa.ps/details/news/99844/%D8%B1%D8%A7%D9%85-%D8%A7%D9%84%D9%84%D9%87-%D8%A8%D8%AF%D8%A1-%D8%A7%D9%84%D8%AA%D9%88%D9%82%D9%8A%D8%AA-%D8%A7%D9%84%D8%B5%D9%8A%D9%81%D9%8A-29-%D8%A7%D9%84%D8%AC%D8%A7%D8%B1%D9%8A.html
 
-# From Paul Eggert (2013-04-15):
+# From Steffen Thorsen (2013-09-24):
+# The Gaza and West Bank are ending DST Thursday at midnight
+# (2013-09-27 00:00:00) (one hour earlier than last year...).
+# This source in English, says "that winter time will go into effect
+# at midnight on Thursday in the West Bank and Gaza Strip":
+# http://english.wafa.ps/index.php?action=detail&id=23246
+# official source...:
+# http://www.palestinecabinet.gov.ps/ar/Views/ViewDetails.aspx?pid=1252
+
+# From Paul Eggert (2013-09-24):
 # For future dates, guess the last Thursday in March at 24:00 through
-# the first Friday on or after September 21 at 01:00.  This is consistent with
+# the first Friday on or after September 21 at 00:00.  This is consistent with
 # the predictions in today's editions of the following URLs,
 # which are for Gaza and Hebron respectively:
 # http://www.timeanddate.com/worldclock/timezone.html?n=702
@@ -2332,7 +2341,8 @@ Rule Palestine	2011	only	-	Aug	 1	0:00	0	-
 Rule Palestine	2011	only	-	Aug	30	0:00	1:00	S
 Rule Palestine	2011	only	-	Sep	30	0:00	0	-
 Rule Palestine	2012	max	-	Mar	lastThu	24:00	1:00	S
-Rule Palestine	2012	max	-	Sep	Fri>=21	1:00	0	-
+Rule Palestine	2012	only	-	Sep	21	1:00	0	-
+Rule Palestine	2013	max	-	Sep	Fri>=21	0:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct

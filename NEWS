@@ -11,6 +11,8 @@ Unreleased, experimental changes
     Jordan will likely stay at UTC+3 indefinitely, and will not fall
     back this fall.
 
+    Palestine will fall back at 00:00, not 01:00.  (Thanks to Steffen Thorsen.)
+
   Changes affecting the build procedure
 
     Avoid long strings in leapseconds.awk to work around a mawk bug.

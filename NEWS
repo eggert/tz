@@ -11,6 +11,11 @@ Unreleased, experimental changes
     Jordan will likely stay at UTC+3 indefinitely, and will not fall
     back this fall.
 
+  Changes affecting the build procedure
+
+    Avoid long strings in leapseconds.awk to work around a mawk bug.
+    (Thanks to Cyril Baurand.)
+
   Changes affecting documentation and commentary
 
     New file 'NEWS' that contains release notes like this one.

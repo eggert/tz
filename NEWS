@@ -1,7 +1,7 @@
 News for the tz database
 
 
-Unreleased, experimental changes
+Release 2013f - 2013-09-24 23:37:36 -0700
 
   Changes affecting near-future time stamps
 
@@ -330,7 +330,7 @@ Release 2013c - 2013-04-19 16:17:40 -0700
 
     Assume that the recent change to Paraguay's DST rules is permanent,
     by moving the end of DST to the 4th Sunday in March every year.
-    (Thanks to Carlos Raúl Perasso.)
+    (Thanks to Carlos Raul Perasso.)
 
   Changes affecting past time stamps:
 

@@ -311,8 +311,8 @@ NEWUCBSRCS=	date.c strftime.c
 SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS) tzselect.ksh
 MANS=		newctime.3 newstrftime.3 newtzset.3 time2posix.3 \
 			tzfile.5 tzselect.8 zic.8 zdump.8
-COMMON=		Makefile
-DOCS=		NEWS README Theory $(MANS) date.1
+COMMON=		Makefile README
+DOCS=		NEWS Theory $(MANS) date.1
 PRIMARY_YDATA=	africa antarctica asia australasia \
 		europe northamerica southamerica
 YDATA=		$(PRIMARY_YDATA) pacificnew etcetera backward

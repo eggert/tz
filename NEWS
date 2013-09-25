@@ -1,6 +1,16 @@
 News for the tz database
 
 
+Unreleased, experimental changes
+
+  Changes affecting documentation and commentary
+
+    The README file is now part of the data tarball as well as the code.
+    It now states that files are public domain unless otherwise specified.
+    Its details about the 1989 release moved to a place of honor near
+    the end of NEWS.
+
+
 Release 2013f - 2013-09-24 23:37:36 -0700
 
   Changes affecting near-future time stamps
@@ -2103,6 +2113,37 @@ Release 92 - 1992-04-25 18:17:03 -0000
   By popular demand (well, at any rate, following a request by kre at munnari)
 
 
+The 1989 update of the time zone package featured:
+
+  *	POSIXization (including interpretation of POSIX-style TZ environment
+	variables, provided by Guy Harris),
+  *	ANSIfication (including versions of "mktime" and "difftime"),
+  *	SVIDulation (an "altzone" variable)
+  *	MACHination (the "gtime" function)
+  *	corrections to some time zone data (including corrections to the rules
+	for Great Britain and New Zealand)
+  *	reference data from the United States Naval Observatory for folks who
+	want to do additional time zones
+  *	and the 1989 data for Saudi Arabia.
+
+  (Since this code will be treated as "part of the implementation" in some
+  places and as "part of the application" in others, there's no good way to
+  name functions, such as timegm, that are not part of the proposed ANSI C
+  standard; such functions have kept their old, underscore-free names in this
+  update.)
+
+  And the "dysize" function has disappeared; it was present to allow
+  compilation of the "date" command on old BSD systems, and a version of "date"
+  is now provided in the package.  The "date" command is not created when you
+  "make all" since it may lack options provided by the version distributed with
+  your operating system, or may not interact with the system in the same way
+  the native version does.
+
+  Since POSIX frowns on correct leap second handling, the default behavior of
+  the "zic" command (in the absence of a "-L" option) has been changed to omit
+  leap second information from its output files.
+
+
 -----
 Notes
 
@@ -2124,3 +2165,5 @@ the release (if all else fails; these are marked with a timezone of
 
 Earlier versions of the code and data were not announced on the tz
 list and are not summarized here.
+
+This file is in the public domain.

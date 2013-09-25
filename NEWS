@@ -13,6 +13,16 @@ Unreleased, experimental changes
 
     Palestine will fall back at 00:00, not 01:00.  (Thanks to Steffen Thorsen.)
 
+  Changes affecting API
+
+    The types of the global variables 'timezone' and 'altzone' (if present)
+    have been changed back to 'long'.  This is required for 'timezone'
+    by POSIX, and for 'altzone' by common practice, e.g., Solaris 11.
+    These variables were originally 'long' in the tz code, but were
+    mistakenly changed to 'time_t' in 1987; nobody reported the
+    incompatibility until now.  The difference matters on x32, where
+    'long' is 32 bits and 'time_t' is 64.  (Thanks to Elliott Hughes.)
+
   Changes affecting the build procedure
 
     Avoid long strings in leapseconds.awk to work around a mawk bug.

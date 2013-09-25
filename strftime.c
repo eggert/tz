@@ -492,7 +492,7 @@ label:
 				continue;
 			case 'z':
 				{
-				int		diff;
+				long		diff;
 				char const *	sign;
 
 				if (t->tm_isdst < 0)

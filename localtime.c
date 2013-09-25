@@ -215,12 +215,12 @@ char *			tzname[2] = {
 static struct tm	tm;
 
 #ifdef USG_COMPAT
-time_t			timezone = 0;
+long			timezone = 0;
 int			daylight = 0;
 #endif /* defined USG_COMPAT */
 
 #ifdef ALTZONE
-time_t			altzone = 0;
+long			altzone = 0;
 #endif /* defined ALTZONE */
 
 static int_fast32_t

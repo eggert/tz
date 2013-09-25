@@ -3,6 +3,13 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting the build procedure
+
+    The 'leapseconds' file is again put into the tzdata tarball.
+    Also, 'leapseconds.awk', so tzdata is self-contained.  (Thanks to
+    Matt Burgess and Ian Abbott.)  The timestamps of these and other
+    dependent files in tarballs are adjusted more consistently.
+
   Changes affecting documentation and commentary
 
     The README file is now part of the data tarball as well as the code.

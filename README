@@ -12,7 +12,7 @@ and daylight-saving rules.
 
 Unless otherwise specified, all files in the tz code and data are in
 the public domain, so clarified as of 2009-05-17 by Arthur David Olson.
-The few exceptions are code derived from BSD and use the BSD license.
+The few exceptions are code derived from BSD, which uses the BSD license.
 
 Here is a recipe for acquiring, building, installing, and testing the
 tz distribution on a GNU/Linux or similar host.

@@ -107,6 +107,7 @@ LDLIBS=
 #  -DHAVE_INCOMPATIBLE_CTIME_R=1 if your system's time.h declares
 #	ctime_r and asctime_r incompatibly with the POSIX standard (Solaris 8).
 #  -DHAVE_INTTYPES_H=1 if you have a pre-C99 compiler with "inttypes.h"
+#  -DHAVE_LINK=0 if your system lacks a link function
 #  -DHAVE_SETTIMEOFDAY=0 if settimeofday does not exist (SVR0?)
 #  -DHAVE_SETTIMEOFDAY=1 if settimeofday has just 1 arg (SVR4)
 #  -DHAVE_SETTIMEOFDAY=2 if settimeofday uses 2nd arg (4.3BSD)
@@ -299,8 +300,8 @@ CC=		$(cc) -DTZDIR=\"$(TZDIR)\"
 
 TZCSRCS=	zic.c localtime.c asctime.c scheck.c ialloc.c
 TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o
-TZDSRCS=	zdump.c localtime.c ialloc.c
-TZDOBJS=	zdump.o localtime.o ialloc.o
+TZDSRCS=	zdump.c localtime.c ialloc.c asctime.o
+TZDOBJS=	zdump.o localtime.o ialloc.o asctime.c
 DATESRCS=	date.c localtime.c strftime.c asctime.c
 DATEOBJS=	date.o localtime.o strftime.o asctime.o
 LIBSRCS=	localtime.c asctime.c difftime.c

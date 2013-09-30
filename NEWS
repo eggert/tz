@@ -3,6 +3,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting current and near-future time stamps
+
+    Morocco changed their rules, and now falls back the first Sunday
+    in October, not September.  (Thanks to Steffen Thorsen.)
+
   Changes affecting 'zic'
 
     'zic' now runs on platforms that lack both hard links and symlinks.

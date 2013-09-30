@@ -858,6 +858,16 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 # transitions would be 2013-07-07 and 2013-08-10; see:
 # http://www.maroc.ma/en/news/morocco-suspends-daylight-saving-time-july-7-aug10
 
+# From Steffen Thorsen (2013-09-28):
+# Morocco extends DST by one month, on very short notice, just 1 day
+# before it was going to end.  There is a new decree (2.13.781) for
+# this, where DST from now on goes from last Sunday of March at 02:00
+# to last Sunday of October at 03:00, similar to EU rules.  Official
+# source (French):
+# http://www.maroc.gov.ma/fr/actualites/lhoraire-dete-gmt1-maintenu-jusquau-27-octobre-2013
+# Another source (specifying the time for start and end in the decree):
+# http://www.lemag.ma/Heure-d-ete-au-Maroc-jusqu-au-27-octobre_a75620.html
+
 # From Paul Eggert (2013-07-03):
 # To estimate what the Moroccan government will do in future years,
 # transition dates for 2014 through 2021 were determined by running
@@ -913,11 +923,12 @@ Rule	Morocco	2010	only	-	Aug	 8	 0:00	0	-
 Rule	Morocco	2011	only	-	Apr	 3	 0:00	1:00	S
 Rule	Morocco	2011	only	-	Jul	 31	 0	0	-
 Rule	Morocco	2012	2019	-	Apr	 lastSun 2:00	1:00	S
-Rule	Morocco	2012	max	-	Sep	 lastSun 3:00	0	-
+Rule	Morocco	2012	only	-	Sep	 30	 3:00	0	-
 Rule	Morocco	2012	only	-	Jul	 20	 3:00	0	-
 Rule	Morocco	2012	only	-	Aug	 20	 2:00	1:00	S
 Rule	Morocco	2013	only	-	Jul	  7	 3:00	0	-
 Rule	Morocco	2013	only	-	Aug	 10	 2:00	1:00	S
+Rule	Morocco	2013	max	-	Oct	 lastSun 3:00	0	-
 Rule	Morocco	2014	only	-	Jun	 29	 3:00	0	-
 Rule	Morocco	2014	only	-	Jul	 29	 2:00	1:00	S
 Rule	Morocco	2015	only	-	Jun	 18	 3:00	0	-

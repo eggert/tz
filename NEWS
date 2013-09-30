@@ -25,6 +25,7 @@ Unreleased, experimental changes
 
     The README file is now part of the data tarball as well as the code.
     It now states that files are public domain unless otherwise specified.
+    (Thanks to Andrew Main (Zefram) for asking for clarifications.)
     Its details about the 1989 release moved to a place of honor near
     the end of NEWS.
 

@@ -890,9 +890,9 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 #     (setq islamic-year (+ 1 islamic-year))))
 #
 # with the results hand-edited for 2020-2022, when the normal spring-forward
-# date falls during the estimated Ramadan; with results removed for 2023-2034,
+# date falls during the estimated Ramadan; with results removed for 2023-2035,
 # where the estimated Ramadan falls entirely outside daylight-saving time,
-# and the results hand-edited again for 2035-2037, where the normal fall-back
+# and the results hand-edited again for 2036-2037, where the normal fall-back
 # date falls during the estimated Ramadan.  Problems continue after that,
 # but 32-bit time_t values roll around in 2038 so for now do not worry
 # about dates after 2037.

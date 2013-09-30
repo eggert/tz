@@ -868,13 +868,13 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 # Another source (specifying the time for start and end in the decree):
 # http://www.lemag.ma/Heure-d-ete-au-Maroc-jusqu-au-27-octobre_a75620.html
 
-# From Paul Eggert (2013-07-03):
+# From Paul Eggert (2013-09-29):
 # To estimate what the Moroccan government will do in future years,
-# transition dates for 2014 through 2021 were determined by running
+# transition dates for 2014 through 2037 were determined by running
 # the following program under GNU Emacs 24.3:
 #
 # (let ((islamic-year 1435))
-#   (while (< islamic-year 1444)
+#   (while (< islamic-year 1460)
 #     (let ((a
 #	     (calendar-gregorian-from-absolute
 #	      (calendar-islamic-to-absolute (list 9 1 islamic-year))))
@@ -890,12 +890,12 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 #     (setq islamic-year (+ 1 islamic-year))))
 #
 # with the results hand-edited for 2020-2022, when the normal spring-forward
-# date falls during the estimated Ramadan.
-#
-# From 2023 through 2038 Ramadan is not predicted to overlap with
-# daylight saving time.  Starting in 2039 there will be overlap again,
+# date falls during the estimated Ramadan; with results removed for 2023-2034,
+# where the estimated Ramadan falls entirely outside daylight-saving time,
+# and the results hand-edited again for 2035-2037, where the normal fall-back
+# date falls during the estimated Ramadan.  Problems continue after that,
 # but 32-bit time_t values roll around in 2038 so for now do not worry
-# about dates after 2038.
+# about dates after 2037.
 
 # RULE	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 
@@ -928,7 +928,7 @@ Rule	Morocco	2012	only	-	Jul	 20	 3:00	0	-
 Rule	Morocco	2012	only	-	Aug	 20	 2:00	1:00	S
 Rule	Morocco	2013	only	-	Jul	  7	 3:00	0	-
 Rule	Morocco	2013	only	-	Aug	 10	 2:00	1:00	S
-Rule	Morocco	2013	max	-	Oct	 lastSun 3:00	0	-
+Rule	Morocco	2013	2035	-	Oct	 lastSun 3:00	0	-
 Rule	Morocco	2014	only	-	Jun	 29	 3:00	0	-
 Rule	Morocco	2014	only	-	Jul	 29	 2:00	1:00	S
 Rule	Morocco	2015	only	-	Jun	 18	 3:00	0	-
@@ -945,6 +945,8 @@ Rule	Morocco	2020	only	-	May	 24	 2:00	1:00	S
 Rule	Morocco	2021	only	-	May	 13	 2:00	1:00	S
 Rule	Morocco	2022	only	-	May	  3	 2:00	1:00	S
 Rule	Morocco	2023	max	-	Apr	 lastSun 2:00	1:00	S
+Rule	Morocco	2036	only	-	Oct	 21	 3:00	0	-
+Rule	Morocco	2037	only	-	Oct	 11	 3:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Africa/Casablanca	-0:30:20 -	LMT	1913 Oct 26

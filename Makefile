@@ -518,7 +518,7 @@ set-timestamps.out: $(ENCHILADA)
 
 check_public:	$(ENCHILADA)
 		make maintainer-clean
-		make "CFLAGS=$(GCC_DEBUG_FLAGS)"
+		make "CFLAGS=$(GCC_DEBUG_FLAGS)" $(ENCHILADA) all
 		mkdir tzpublic
 		for i in $(TDATA) ; do \
 		  $(zic) -v -d tzpublic $$i 2>&1 || exit; \

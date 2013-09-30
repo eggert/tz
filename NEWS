@@ -5,8 +5,9 @@ Unreleased, experimental changes
 
   Changes affecting current and near-future time stamps
 
-    Morocco changed their rules, and now falls back the first Sunday
-    in October, not September.  (Thanks to Steffen Thorsen.)
+    Morocco now observes DST from the last Sunday in March to the last
+    Sunday in October, not April to September respectively.  (Thanks
+    to Steffen Thorsen.)
 
   Changes affecting 'zic'
 

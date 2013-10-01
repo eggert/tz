@@ -1,5 +1,12 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting documentation and commentary
+
+    tz-link.htm now mentions TC TIMEZONE's draft timezone service protocol.
+    (Thanks to Mike Douglass.)
+  
 
 Release 2013g - 2013-09-30 21:08:26 -0700
 

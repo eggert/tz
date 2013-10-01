@@ -15,6 +15,9 @@ Unreleased, experimental changes
     (Thanks to Theo Veenker for reporting the problem, for MinGW.)
     Also, fix some bugs on platforms that lack hard links but have symlinks.
 
+    'zic -v' again warns that Asia/Tehran has no POSIX environment variable
+    to predict the far future, fixing a bug introduced in 2013e.
+
   Changes affecting the build procedure
 
     The 'leapseconds' file is again put into the tzdata tarball.

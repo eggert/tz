@@ -2099,12 +2099,12 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 	compat = stringzone(envvar, zpfirst, zonecount);
 	version = compat < 2013 ? ZIC_VERSION_PRE_2013 : ZIC_VERSION;
 	do_extend = compat < 0 || compat == YEAR_BY_YEAR_ZONE;
-	if (noise && compat != 0 && compat != YEAR_BY_YEAR_ZONE) {
-		if (compat < 0)
+	if (noise) {
+		if (!*envvar)
 			warning("%s %s",
 				_("no POSIX environment variable for zone"),
 				zpfirst->z_name);
-		else {
+		else if (compat != 0 && compat != YEAR_BY_YEAR_ZONE) {
 			/* Circa-COMPAT clients, and earlier clients, might
 			   not work for this zone when given dates before
 			   1970 or after 2038.  */

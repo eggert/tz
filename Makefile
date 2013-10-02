@@ -297,6 +297,7 @@ GZIPFLAGS=	-9n
 
 cc=		cc
 CC=		$(cc) -DTZDIR=\"$(TZDIR)\"
+AR=		ar
 
 TZCSRCS=	zic.c localtime.c asctime.c scheck.c ialloc.c
 TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o
@@ -428,7 +429,7 @@ zones:		$(REDO)
 
 $(DESTDIR)$(TZLIB): $(LIBOBJS)
 		-mkdir -p $(DESTDIR)$(TOPDIR) $(DESTDIR)$(LIBDIR)
-		ar ru $@ $(LIBOBJS)
+		$(AR) ru $@ $(LIBOBJS)
 		if [ -x /usr/ucb/ranlib ] || [ -x /usr/bin/ranlib ]; \
 			then ranlib $@ ; fi
 

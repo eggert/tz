@@ -72,7 +72,6 @@ MANDIR=		$(TOPDIR)/man
 # Library functions are put in an archive in LIBDIR.
 
 LIBDIR=		$(TOPDIR)/lib
-TZLIB=		$(LIBDIR)/libtz.a
 
 # If you always want time values interpreted as "seconds since the epoch
 # (not counting leap seconds)", use
@@ -297,6 +296,7 @@ GZIPFLAGS=	-9n
 
 cc=		cc
 CC=		$(cc) -DTZDIR=\"$(TZDIR)\"
+AR=		ar
 
 TZCSRCS=	zic.c localtime.c asctime.c scheck.c ialloc.c
 TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o
@@ -340,21 +340,23 @@ ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC)
 
 SHELL=		/bin/sh
 
-all:		tzselect zic zdump $(LIBOBJS) $(TABDATA)
+all:		tzselect zic zdump libtz.a $(TABDATA)
 
 ALL:		all date
 
-install:	all $(DATA) $(REDO) $(DESTDIR)$(TZLIB) $(MANS)
+install:	all $(DATA) $(REDO) $(MANS)
 		$(ZIC) -y $(YEARISTYPE) \
 			-d $(DESTDIR)$(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
 		-rm -f $(DESTDIR)$(TZDIR)/iso3166.tab \
 			$(DESTDIR)$(TZDIR)/zone.tab
 		cp iso3166.tab zone.tab $(DESTDIR)$(TZDIR)/.
-		-mkdir $(DESTDIR)$(TOPDIR) $(DESTDIR)$(ETCDIR)
+		mkdir -p $(DESTDIR)$(TOPDIR)
+		mkdir -p $(DESTDIR)$(ETCDIR)
 		cp tzselect zic zdump $(DESTDIR)$(ETCDIR)/.
-		-mkdir $(DESTDIR)$(TOPDIR) $(DESTDIR)$(MANDIR) \
-			$(DESTDIR)$(MANDIR)/man3 $(DESTDIR)$(MANDIR)/man5 \
-			$(DESTDIR)$(MANDIR)/man8
+		mkdir -p $(DESTDIR)$(LIBDIR)
+		cp libtz.a $(DESTDIR)$(LIBDIR)/.
+		mkdir -p $(DESTDIR)$(MANDIR) $(DESTDIR)$(MANDIR)/man3 \
+			$(DESTDIR)$(MANDIR)/man5 $(DESTDIR)$(MANDIR)/man8
 		-rm -f $(DESTDIR)$(MANDIR)/man3/newctime.3 \
 			$(DESTDIR)$(MANDIR)/man3/newtzset.3 \
 			$(DESTDIR)$(MANDIR)/man5/tzfile.5 \
@@ -426,9 +428,8 @@ posix_right:	posix_only leapseconds
 
 zones:		$(REDO)
 
-$(DESTDIR)$(TZLIB): $(LIBOBJS)
-		-mkdir -p $(DESTDIR)$(TOPDIR) $(DESTDIR)$(LIBDIR)
-		ar ru $@ $(LIBOBJS)
+libtz.a:	$(LIBOBJS)
+		$(AR) ru $@ $(LIBOBJS)
 		if [ -x /usr/ucb/ranlib ] || [ -x /usr/bin/ranlib ]; \
 			then ranlib $@ ; fi
 

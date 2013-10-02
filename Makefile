@@ -300,8 +300,8 @@ CC=		$(cc) -DTZDIR=\"$(TZDIR)\"
 
 TZCSRCS=	zic.c localtime.c asctime.c scheck.c ialloc.c
 TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o
-TZDSRCS=	zdump.c localtime.c ialloc.c asctime.o
-TZDOBJS=	zdump.o localtime.o ialloc.o asctime.c
+TZDSRCS=	zdump.c localtime.c ialloc.c asctime.c
+TZDOBJS=	zdump.o localtime.o ialloc.o asctime.o
 DATESRCS=	date.c localtime.c strftime.c asctime.c
 DATEOBJS=	date.o localtime.o strftime.o asctime.o
 LIBSRCS=	localtime.c asctime.c difftime.c

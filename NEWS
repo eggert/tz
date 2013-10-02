@@ -4,8 +4,18 @@ Unreleased, experimental changes
 
   Changes affecting the build procedure
 
+    The builder can specify which programs to use, if any, instead of
+    'ar' and 'ranlib', and libtz.a is now built locally before being
+    installed.  (Thanks to Michael Forney.)
+
     A dependency typo in the 'zdump' rule has been fixed.
     (Thanks to Andrew Paprocki.)
+
+    The Makefile has been simplified by assuming that 'mkdir -p' and 'cp -f'
+    work as specified by POSIX.2-1992 or later; this is portable nowadays.
+
+    'make clean' no longer removes 'leapseconds', since it's
+    host-independent and is part of the distribution.
 
     The unused makefile macros TZCSRCS, TZDSRCS, DATESRCS have been removed.
 

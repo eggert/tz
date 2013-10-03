@@ -868,13 +868,13 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 # Another source (specifying the time for start and end in the decree):
 # http://www.lemag.ma/Heure-d-ete-au-Maroc-jusqu-au-27-octobre_a75620.html
 
-# From Paul Eggert (2013-09-30):
+# From Paul Eggert (2013-10-02):
 # To estimate what the Moroccan government will do in future years,
 # transition dates for 2014 through 2037 were determined by running
 # the following program under GNU Emacs 24.3:
 #
 # (let ((islamic-year 1435))
-#   (while (< islamic-year 1460)
+#   (while (< islamic-year 1461)
 #     (let ((a
 #	     (calendar-gregorian-from-absolute
 #	      (calendar-islamic-to-absolute (list 9 1 islamic-year))))
@@ -894,9 +894,13 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 # all transitions removed for 2026-2035, where the estimated Ramadan
 # falls entirely outside daylight-saving time; and with fall-back
 # transitions removed for 2036-2037, where the normal fall-back
-# date falls during the estimated Ramadan.  Problems continue after that,
-# but 32-bit time_t values roll around in 2038 so for now do not worry
-# about dates after 2037.
+# date falls during the estimated Ramadan.  Normally, the table would
+# stop after 2037 because 32-bit time_t values roll around early in 2038,
+# but that would imply a prediction of perpetual DST after March 2038
+# due to the year-2037 glitches.  So, this table instead stops after
+# 2038, the first non-glitchy year after the 32-bit rollover.
+# An advantage of stopping after 2038 is that it lets zic guess
+# TZ='WET0WEST,M3.5.0,M10.5.0/3' for time stamps far in the future.
 
 # RULE	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 
@@ -955,6 +959,9 @@ Rule	Morocco	2025	only	-	Mar	 31	 2:00	1:00	S
 Rule	Morocco	2026	max	-	Mar	 lastSun 2:00	1:00	S
 Rule	Morocco	2036	only	-	Oct	 21	 3:00	0	-
 Rule	Morocco	2037	only	-	Oct	 11	 3:00	0	-
+Rule	Morocco	2038	only	-	Sep	 30	 3:00	0	-
+Rule	Morocco	2038	only	-	Oct	 30	 2:00	1:00	S
+Rule	Morocco	2038	max	-	Oct	 lastSun 3:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Africa/Casablanca	-0:30:20 -	LMT	1913 Oct 26

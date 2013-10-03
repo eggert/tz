@@ -2,6 +2,12 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting future time stamps:
+
+    Add entries for DST transitions in Morocco in the year 2038.
+    This avoids some year-2038 glitches introduced in 2013g.
+    (Thanks to Yoshito Umaoka for reporting the problem.)
+
   Changes affecting the build procedure
 
     The builder can specify which programs to use, if any, instead of

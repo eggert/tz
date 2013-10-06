@@ -119,7 +119,7 @@ else
 	for select_word
 	do
 	  select_i=`expr $select_i + 1`
-	  printf "%${select_width}d) %s\\n" $select_i "$select_word"
+	  printf >&2 "%${select_width}d) %s\\n" $select_i "$select_word"
 	done ;;
       *[!0-9]*)
 	echo >&2 'Please enter a number in range.' ;;
@@ -133,7 +133,7 @@ else
       esac
 
       # Prompt and read input.
-      printf %s >&2 "${PS3-#? }"
+      printf >&2 %s "${PS3-#? }"
       read select_i || exit
     done
   }

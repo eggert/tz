@@ -246,8 +246,12 @@ ZFLAGS=
 # The name of a Posix-compliant `awk' on your system.
 AWK=		awk
 
-# The full path name of a Posix-compliant shell that supports the Korn shell's
-# 'select' statement, as an extension.  These days, Bash is the most popular.
+# The full path name of a Posix-compliant shell, preferably one that supports
+# the Korn shell's 'select' statement as an extension.
+# These days, Bash is the most popular.
+# It should be OK to set this to /bin/sh, on platforms where /bin/sh
+# lacks 'select' or doesn't completely conform to Posix, but /bin/bash
+# is typically nicer if it works.
 KSHELL=		/bin/bash
 
 # The path where SGML DTDs are kept.

@@ -11,7 +11,7 @@ REPORT_BUGS_TO=tz@iana.org
 
 # Porting notes:
 #
-# This script requires a Posix-like shell with the extension of a
+# This script requires a Posix-like shell and prefers the extension of a
 # 'select' statement.  The 'select' statement was introduced in the
 # Korn shell and is available in Bash and other shell implementations.
 # If your host lacks both Bash and the Korn shell, you can get their
@@ -20,6 +20,10 @@ REPORT_BUGS_TO=tz@iana.org
 #	Bash <http://www.gnu.org/software/bash/bash.html>
 #	Korn Shell <http://www.kornshell.com/>
 #	Public Domain Korn Shell <http://www.cs.mun.ca/~michael/pdksh/>
+#
+# For portability to Solaris 9 /bin/sh this script avoids some POSIX
+# features and common extensions, such as $(...) (which works sometimes
+# but not others), $((...)), and $10.
 #
 # This script also uses several features of modern awk programs.
 # If your host lacks awk, or has an old awk that does not conform to Posix,
@@ -31,7 +35,7 @@ REPORT_BUGS_TO=tz@iana.org
 
 # Specify default values for environment variables if they are unset.
 : ${AWK=awk}
-: ${TZDIR=$(pwd)}
+: ${TZDIR=`pwd`}
 
 # Check for awk Posix compliance.
 ($AWK -v x=y 'BEGIN { exit 123 }') </dev/null >/dev/null 2>&1
@@ -67,6 +71,74 @@ Options:
 
 Report bugs to $REPORT_BUGS_TO."
 
+# Ask the user to select from the function's arguments,
+# and assign the selected argument to the variable 'select_result'.
+# Exit on EOF or I/O error.  Use the shell's 'select' builtin if available,
+# falling back on a less-nice but portable substitute otherwise.
+if
+  case $BASH_VERSION in
+  ?*) : ;;
+  '')
+    # '; exit' should be redundant, but Dash doesn't properly fail without it.
+    (eval 'set --; select x; do break; done; exit') 2>/dev/null
+  esac
+then
+  # Do this inside 'eval', as otherwise the shell might exit when parsing it
+  # even though it is never executed.
+  eval '
+    doselect() {
+      select select_result
+      do
+	case $select_result in
+	"") echo >&2 "Please enter a number in range." ;;
+	?*) break
+	esac
+      done || exit
+    }
+
+    # Work around a bug in bash 1.14.7 and earlier, where $PS3 is sent to stdout.
+    case $BASH_VERSION in
+    [01].*)
+      case `echo 1 | (select x in x; do break; done) 2>/dev/null` in
+      ?*) PS3=
+      esac
+    esac
+  '
+else
+  doselect() {
+    # Field width of the prompt numbers.
+    select_width=`expr $# : '.*'`
+
+    select_i=
+
+    while :
+    do
+      case $select_i in
+      '')
+	select_i=0
+	for select_word
+	do
+	  select_i=`expr $select_i + 1`
+	  printf "%${select_width}d) %s\\n" $select_i "$select_word"
+	done ;;
+      *[!0-9]*)
+	echo >&2 'Please enter a number in range.' ;;
+      *)
+	if test 1 -le $select_i && test $select_i -le $#; then
+	  shift `expr $select_i - 1`
+	  select_result=$1
+	  break
+	fi
+	echo >&2 'Please enter a number in range.'
+      esac
+
+      # Prompt and read input.
+      printf %s >&2 "${PS3-#? }"
+      read select_i || exit
+    done
+  }
+fi
+
 while getopts c:n:-: opt
 do
     case $opt$OPTARG in
@@ -85,7 +157,7 @@ do
     esac
 done
 
-shift $((OPTIND-1))
+shift `expr $OPTIND - 1`
 case $# in
 0) ;;
 *) echo >&2 "$0: $1: unknown argument"; exit 1 ;;
@@ -106,11 +178,6 @@ newline='
 '
 IFS=$newline
 
-
-# Work around a bug in bash 1.14.7 and earlier, where $PS3 is sent to stdout.
-case $(echo 1 | (select x in x; do break; done) 2>/dev/null) in
-?*) PS3=
-esac
 
 # Awk script to read a time zone table and output the same table,
 # with each column preceded by its distance from 'here'.
@@ -191,7 +258,7 @@ while
 
 	echo >&2 'Please select a continent, ocean, "coord", or "TZ".'
 
-        quoted_continents=$(
+        quoted_continents=`
 	  $AWK -F'\t' '
 	    /^[^#]/ {
               entry = substr($3, 1, index($3, "/") - 1)
@@ -205,30 +272,21 @@ while
 	  sort -u |
 	  tr '\n' ' '
 	  echo ''
-	)
+	`
 
 	eval '
-	    select continent in '"$quoted_continents"' \
+	    doselect '"$quoted_continents"' \
 		"coord - I want to use geographical coordinates." \
 		"TZ - I want to specify the time zone using the Posix TZ format."
-	    do
-		case $continent in
-		"")
-		    echo >&2 "Please enter a number in range.";;
-		?*)
-		    case $continent in
-		    Americas) continent=America;;
-		    *" "*) continent=$(expr "$continent" : '\''\([^ ]*\)'\'')
-		    esac
-		    break
-		esac
-	    done
+	    continent=$select_result
+	    case $continent in
+	    Americas) continent=America;;
+	    *" "*) continent=`expr "$continent" : '\''\([^ ]*\)'\''`
+	    esac
 	'
 	esac
 
 	case $continent in
-	'')
-		exit 1;;
 	TZ)
 		# Ask the user for a Posix TZ string.  Check that it conforms.
 		while
@@ -265,36 +323,31 @@ while
 				'74 degrees 3 minutes west.'
 			read coord;;
 		    esac
-		    distance_table=$($AWK \
+		    distance_table=`$AWK \
 			    -v coord="$coord" \
 			    -v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
 			    "$output_distances" <$TZ_ZONE_TABLE |
 		      sort -n |
 		      sed "${location_limit}q"
-		    )
-		    regions=$(echo "$distance_table" | $AWK '
+		    `
+		    regions=`echo "$distance_table" | $AWK '
 		      BEGIN { FS = "\t" }
 		      { print $NF }
-		    ')
+		    '`
 		    echo >&2 'Please select one of the following' \
 			    'time zone regions,'
 		    echo >&2 'listed roughly in increasing order' \
 			    "of distance from $coord".
-		    select region in $regions
-		    do
-			case $region in
-			'') echo >&2 'Please enter a number in range.';;
-			?*) break;;
-			esac
-		    done
-		    TZ=$(echo "$distance_table" | $AWK -v region="$region" '
+		    doselect $regions
+		    region=$select_result
+		    TZ=`echo "$distance_table" | $AWK -v region="$region" '
 		      BEGIN { FS="\t" }
 		      $NF == region { print $4 }
-		    ')
+		    '`
 		    ;;
 		*)
 		# Get list of names of countries in the continent or ocean.
-		countries=$($AWK -F'\t' \
+		countries=`$AWK -F'\t' \
 			-v continent="$continent" \
 			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
 		'
@@ -314,7 +367,7 @@ while
 					print country
 				}
 			}
-		' <$TZ_ZONE_TABLE | sort -f)
+		' <$TZ_ZONE_TABLE | sort -f`
 
 
 		# If there's more than one country, ask the user which one.
@@ -322,24 +375,15 @@ while
 		*"$newline"*)
 			echo >&2 'Please select a country' \
 				'whose clocks agree with yours.'
-			select country in $countries
-			do
-			    case $country in
-			    '') echo >&2 'Please enter a number in range.';;
-			    ?*) break
-			    esac
-			done
-
-			case $country in
-			'') exit 1
-			esac;;
+			doselect $countries
+			country=$select_result;;
 		*)
 			country=$countries
 		esac
 
 
 		# Get list of names of time zone rule regions in the country.
-		regions=$($AWK -F'\t' \
+		regions=`$AWK -F'\t' \
 			-v country="$country" \
 			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
 		'
@@ -353,7 +397,7 @@ while
 				}
 			}
 			$1 == cc { print $4 }
-		' <$TZ_ZONE_TABLE)
+		' <$TZ_ZONE_TABLE`
 
 
 		# If there's more than one region, ask the user which one.
@@ -361,22 +405,14 @@ while
 		*"$newline"*)
 			echo >&2 'Please select one of the following' \
 				'time zone regions.'
-			select region in $regions
-			do
-				case $region in
-				'') echo >&2 'Please enter a number in range.';;
-				?*) break
-				esac
-			done
-			case $region in
-			'') exit 1
-			esac;;
+			doselect $regions
+			region=$select_result;;
 		*)
 			region=$regions
 		esac
 
 		# Determine TZ from country and region.
-		TZ=$($AWK -F'\t' \
+		TZ=`$AWK -F'\t' \
 			-v country="$country" \
 			-v region="$region" \
 			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
@@ -391,7 +427,7 @@ while
 				}
 			}
 			$1 == cc && $4 == region { print $3 }
-		' <$TZ_ZONE_TABLE)
+		' <$TZ_ZONE_TABLE`
 		esac
 
 		# Make sure the corresponding zoneinfo file exists.
@@ -410,10 +446,10 @@ while
 	extra_info=
 	for i in 1 2 3 4 5 6 7 8
 	do
-		TZdate=$(LANG=C TZ="$TZ_for_date" date)
-		UTdate=$(LANG=C TZ=UTC0 date)
-		TZsec=$(expr "$TZdate" : '.*:\([0-5][0-9]\)')
-		UTsec=$(expr "$UTdate" : '.*:\([0-5][0-9]\)')
+		TZdate=`LANG=C TZ="$TZ_for_date" date`
+		UTdate=`LANG=C TZ=UTC0 date`
+		TZsec=`expr "$TZdate" : '.*:\([0-5][0-9]\)'`
+		UTsec=`expr "$UTdate" : '.*:\([0-5][0-9]\)'`
 		case $TZsec in
 		$UTsec)
 			extra_info="
@@ -440,16 +476,9 @@ Universal Time is now:	$UTdate."
 	echo >&2 "Therefore TZ='$TZ' will be used.$extra_info"
 	echo >&2 "Is the above information OK?"
 
-	ok=
-	select ok in Yes No
-	do
-	    case $ok in
-	    '') echo >&2 'Please enter 1 for Yes, or 2 for No.';;
-	    ?*) break
-	    esac
-	done
+	doselect Yes No
+	ok=$select_result
 	case $ok in
-	'') exit 1;;
 	Yes) break
 	esac
 do coord=

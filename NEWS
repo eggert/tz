@@ -11,8 +11,9 @@ Unreleased, experimental changes
   Changes affecting API
 
     The 'tzselect' command no longer requires the 'select' command,
-    and should now work with /bin/sh on more platforms.  (Thanks to
-    Patrick 'P. J.' McDermott for reporting the problem.)
+    and should now work with /bin/sh on more platforms.  It also works
+    around a bug in BusyBox awk before version 1.21.0.  (Thanks to
+    Patrick 'P. J.' McDermott.)
 
   Changes affecting the build procedure
 

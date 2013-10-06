@@ -259,7 +259,8 @@ while
 	echo >&2 'Please select a continent, ocean, "coord", or "TZ".'
 
         quoted_continents=`
-	  $AWK -F'\t' '
+	  $AWK '
+	    BEGIN { FS = "\t" }
 	    /^[^#]/ {
               entry = substr($3, 1, index($3, "/") - 1)
               if (entry == "America")
@@ -347,10 +348,11 @@ while
 		    ;;
 		*)
 		# Get list of names of countries in the continent or ocean.
-		countries=`$AWK -F'\t' \
+		countries=`$AWK \
 			-v continent="$continent" \
 			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
 		'
+			BEGIN { FS = "\t" }
 			/^#/ { next }
 			$3 ~ ("^" continent "/") {
 				if (!cc_seen[$1]++) cc_list[++ccs] = $1
@@ -383,11 +385,12 @@ while
 
 
 		# Get list of names of time zone rule regions in the country.
-		regions=`$AWK -F'\t' \
+		regions=`$AWK \
 			-v country="$country" \
 			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
 		'
 			BEGIN {
+				FS = "\t"
 				cc = country
 				while (getline <TZ_COUNTRY_TABLE) {
 					if ($0 !~ /^#/  &&  country == $2) {
@@ -412,12 +415,13 @@ while
 		esac
 
 		# Determine TZ from country and region.
-		TZ=`$AWK -F'\t' \
+		TZ=`$AWK \
 			-v country="$country" \
 			-v region="$region" \
 			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
 		'
 			BEGIN {
+				FS = "\t"
 				cc = country
 				while (getline <TZ_COUNTRY_TABLE) {
 					if ($0 !~ /^#/  &&  country == $2) {

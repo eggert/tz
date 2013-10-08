@@ -8,7 +8,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="US-ASCII"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2013-10-01">
+<meta name="DC.Date" content="2013-10-08">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -244,12 +244,19 @@ has a compiler from <code>tz</code> source
 into an <abbr>ICU</abbr>-specific format.
 <abbr>ICU</abbr> is freely available under a
 <abbr title="Berkeley Software Distribution">BSD</abbr>-style license.</li>
-<li><a href="http://joda-time.sourceforge.net/">Joda Time - Java date
+<li><a href="http://www.joda.org/joda-time/">Joda Time - Java date
 and time <abbr title="Application Program Interface">API</abbr></a>
 contains a class
 <code>org.joda.time.tz.ZoneInfoCompiler</code> that compiles
 <code>tz</code> source into a Joda-specific binary format. Joda Time
 is freely available under a <abbr>BSD</abbr>-style license.</li>
+<li><a href="https://github.com/mde/timezone-js">TimezoneJS.Date</a>
+is a <a href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a>
+library that parses <code>tz</code> source files and interprets time
+stamps using an API that is upward compatible with standard JavaScript
+Dates.  It is freely available under
+the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache
+License</a>.</li>
 <li><a href="http://pytz.sourceforge.net">pytz - World Timezone
 Definitions for Python</a> compiles <code>tz</code> source into
 <a href="http://python.org/">Python</a>.
@@ -298,7 +305,7 @@ It is freely available under the same terms as Perl
 public-domain <a href="https://github.com/dbaron/tz.js">tz.js</a>
 library contains a Python tool that converts <code>tz</code> binary data into
 <a href="http://www.json.org/">JSON</a>-format data suitable for use
-in its <a href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a> library for time zone conversion. Dates before 1970
+in its JavaScript library for time zone conversion. Dates before 1970
 are not supported.</li>
 </ul>
 <h2>Other <code>tz</code>-based time zone software</h2>

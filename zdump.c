@@ -59,6 +59,7 @@ typedef int int_fast32_t;
 #ifndef INTMAX_MAX
 # if defined LLONG_MAX || defined __LONG_LONG_MAX__
 typedef long long intmax_t;
+#  define strtoimax strtoll
 #  define PRIdMAX "lld"
 #  ifdef LLONG_MAX
 #   define INTMAX_MAX LLONG_MAX
@@ -67,12 +68,10 @@ typedef long long intmax_t;
 #  endif
 # else
 typedef long intmax_t;
+#  define strtoimax strtol
 #  define PRIdMAX "ld"
 #  define INTMAX_MAX LONG_MAX
 # endif
-#endif
-#ifndef SCNdMAX
-# define SCNdMAX PRIdMAX
 #endif
 
 
@@ -368,16 +367,19 @@ main(int argc, char *argv[])
 	if (vflag | Vflag) {
 		intmax_t	lo;
 		intmax_t	hi;
-		char		dummy;
+		char *loend, *hiend;
 		register intmax_t cutloyear = ZDUMP_LO_YEAR;
 		register intmax_t cuthiyear = ZDUMP_HI_YEAR;
 		if (cutarg != NULL) {
-			if (sscanf(cutarg, "%"SCNdMAX"%c", &hi, &dummy) == 1) {
+			lo = strtoimax(cutarg, &loend, 10);
+			if (cutarg != loend && !*loend) {
+				hi = lo;
 				cuthiyear = hi;
-			} else if (sscanf(cutarg, "%"SCNdMAX",%"SCNdMAX"%c",
-				&lo, &hi, &dummy) == 2) {
-					cutloyear = lo;
-					cuthiyear = hi;
+			} else if (cutarg != loend && *loend == ','
+				   && (hi = strtoimax(loend + 1, &hiend, 10),
+				       loend + 1 != hiend && !*hiend)) {
+				cutloyear = lo;
+				cuthiyear = hi;
 			} else {
 (void) fprintf(stderr, _("%s: wild -c argument %s\n"),
 					progname, cutarg);
@@ -389,14 +391,17 @@ main(int argc, char *argv[])
 			cuthitime = yeartot(cuthiyear);
 		}
 		if (cuttimes != NULL) {
-			if (sscanf(cuttimes, "%"SCNdMAX"%c", &hi, &dummy) == 1) {
+			lo = strtoimax(cuttimes, &loend, 10);
+			if (cuttimes != loend && !*loend) {
+				hi = lo;
 				if (hi < cuthitime) {
 					if (hi < absolute_min_time)
 						hi = absolute_min_time;
 					cuthitime = hi;
 				}
-			} else if (sscanf(cuttimes, "%"SCNdMAX",%"SCNdMAX"%c",
-					  &lo, &hi, &dummy) == 2) {
+			} else if (cuttimes != loend && *loend == ','
+				   && (hi = strtoimax(loend + 1, &hiend, 10),
+				       loend + 1 != hiend && !*hiend)) {
 				if (cutlotime < lo) {
 					if (absolute_max_time < lo)
 						lo = absolute_max_time;

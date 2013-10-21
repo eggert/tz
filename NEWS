@@ -47,6 +47,9 @@ Unreleased, experimental changes
     tz-link.htm now mentions TC TIMEZONE's draft timezone service protocol
     (thanks to Mike Douglass) and TimezoneJS.Date (thanks to Jim Fehrle).
 
+    Update URLs in tz-link page.  Add URLs for Microsoft Windows, since
+    8.1 introduces tz support.  Remove URLs for Tru64 and UnixWare (no
+    longer maintained) and for old advisories.  SOFA now does C.
 
 Release 2013g - 2013-09-30 21:08:26 -0700
 

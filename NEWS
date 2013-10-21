@@ -19,6 +19,12 @@ Unreleased, experimental changes
     around a bug in BusyBox awk before version 1.21.0.  (Thanks to
     Patrick 'P. J.' McDermott.)
 
+  Changes affecting code
+
+    Fix localtime overflow bugs with 32-bit unsigned time_t.
+
+    zdump no longer assumes sscanf returns maximal values on overflow.
+
   Changes affecting the build procedure
 
     The builder can specify which programs to use, if any, instead of

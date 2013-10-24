@@ -684,15 +684,6 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 # http://www.google.com/search?hl=en&q=Conseil+de+gouvernement+maroc+heure+avance&btnG=Search
 # </a>
 
-# From Alex Krivenyshev (2008-05-09):
-# Is Western Sahara (part which administrated by Morocco) going to follow
-# Morocco DST changes?  Any information?  What about other part of
-# Western Sahara - under administration of POLISARIO Front (also named
-# SADR Saharawi Arab Democratic Republic)?
-
-# From Arthur David Olson (2008-05-09):
-# XXX--guess that it is only Morocco for now; guess only 2008 for now.
-
 # From Steffen Thorsen (2008-08-27):
 # Morocco will change the clocks back on the midnight between August 31
 # and September 1. They originally planned to observe DST to near the end
@@ -968,10 +959,21 @@ Zone Africa/Casablanca	-0:30:20 -	LMT	1913 Oct 26
 			 0:00	Morocco	WE%sT	1984 Mar 16
 			 1:00	-	CET	1986
 			 0:00	Morocco	WE%sT
+
 # Western Sahara
+#
+# From Gwillim Law (2013-10-22):
+# A correspondent who is usually well informed about time zone matters
+# ... says that Western Sahara observes daylight saving time, just as
+# Morocco does.
+#
+# From Paul Eggert (2013-10-23):
+# Assume that this has been true since Western Sahara switched to GMT,
+# since most of it was then controlled by Morocco.
+
 Zone Africa/El_Aaiun	-0:52:48 -	LMT	1934 Jan
 			-1:00	-	WAT	1976 Apr 14
-			 0:00	-	WET
+			 0:00	Morocco	WE%sT
 
 # Mozambique
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

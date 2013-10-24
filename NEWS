@@ -2,6 +2,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting current and future time stamps:
+
+    Western Sahara (Africa/El_Aaiun) uses Morocco's DST rules.
+    (Thanks to Gwillim Law.)
+
   Changes affecting future time stamps:
 
     Acre and (we guess) western Amazonas will switch from UTC-4 to UTC-5

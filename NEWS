@@ -4,6 +4,9 @@ Unreleased, experimental changes
 
   Changes affecting current and future time stamps:
 
+    Libya has switched its time zone back to UTC+2 without DST,
+    instead of UTC+1 with DST.  (Thanks to Even Scharning.)
+
     Western Sahara (Africa/El_Aaiun) uses Morocco's DST rules.
     (Thanks to Gwillim Law.)
 

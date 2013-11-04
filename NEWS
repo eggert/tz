@@ -4,6 +4,12 @@ Unreleased, experimental changes
 
   Changes affecting documentation and commentary
 
+    The files solar87, solar88, and solar89 are no longer distributed.
+    They were a negative experiment -- that is, a demonstration that
+    tz data can represent solar time only with some difficulty and error.
+    Their presence in the distribution caused confusion, as Riyadh
+    civil time was generally not solar time in those years.
+
     tz-link.htm now mentions Noda Time.  (Thanks to Matt Johnson.)
 
 Release 2013h - 2013-10-25 15:32:32 -0700

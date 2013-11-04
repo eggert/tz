@@ -196,14 +196,6 @@ GCC_DEBUG_FLAGS = -Dlint -g3 -O3 -fno-common -fstrict-aliasing \
 # These functions may well disappear in future releases of the time
 # conversion package.
 #
-# If you'll never want to handle solar-time-based time zones, add
-#	-DNOSOLAR
-# to the end of the "CFLAGS=" line
-# (and comment out the "SDATA=" line below).
-# This reduces (slightly) the run-time data-space requirements of
-# the time conversion functions; it may reduce the acceptability of your system
-# to folks in oil- and cash-rich places.
-#
 # If you want to allocate state structures in localtime, add
 #	-DALL_STATE
 # to the end of the "CFLAGS=" line.  Storage is obtained by calling malloc.

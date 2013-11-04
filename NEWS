@@ -2,6 +2,12 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting code
+
+    The compile-time flag NOSOLAR has been removed, as nowadays the
+    benefit of slightly shrinking runtime table size is outweighed by the
+    cost of disallowing potential future updates that exceed old limits.
+
   Changes affecting documentation and commentary
 
     The files solar87, solar88, and solar89 are no longer distributed.

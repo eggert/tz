@@ -101,16 +101,8 @@ struct tzhead {
 #endif /* !defined TZ_MAX_TIMES */
 
 #ifndef TZ_MAX_TYPES
-#ifndef NOSOLAR
+/* This must be at least 17 for Europe/Samara and Europe/Vilnius.  */
 #define TZ_MAX_TYPES	256 /* Limited by what (unsigned char)'s can hold */
-#endif /* !defined NOSOLAR */
-#ifdef NOSOLAR
-/*
-** Must be at least 14 for Europe/Riga as of Jan 12 1995,
-** as noted by Earl Chew.
-*/
-#define TZ_MAX_TYPES	20	/* Maximum number of local time types */
-#endif /* !defined NOSOLAR */
 #endif /* !defined TZ_MAX_TYPES */
 
 #ifndef TZ_MAX_CHARS

@@ -2,6 +2,13 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting near-future time stamps:
+
+    Jordan switches back to standard time on December 20 of this year.
+    (Thanks to Steffen Thorsen.)  Guess that this transition is at 01:00
+    (i.e., midnight standard time), and that the 2006-2011 transition
+    schedule will resume next year.
+
   Changes affecting past time stamps:
 
     In 2004, Cuba began DST on March 28, not April 4.

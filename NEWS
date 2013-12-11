@@ -4,10 +4,9 @@ Unreleased, experimental changes
 
   Changes affecting near-future time stamps:
 
-    Jordan switches back to standard time on December 20 of this year.
-    (Thanks to Steffen Thorsen.)  Guess that this transition is at 01:00
-    (i.e., midnight standard time), and that the 2006-2011 transition
-    schedule will resume next year.
+    Jordan switches back to standard time at 00:00 on December 20, 2013.
+    The 2006-2011 transition schedule is planned to resume in 2014.
+    (Thanks to Steffen Thorsen.)
 
   Changes affecting past time stamps:
 

@@ -1389,12 +1389,13 @@ Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
 # http://www.petra.gov.jo/public_news/Nws_NewsDetails.aspx?Menu_ID=&Site_Id=2&lang=1&NewsID=133230&CatID=14
 # ... Our background/permalink about it
 # http://www.timeanddate.com/news/time/jordan-reverses-dst-decision.html
+# ...
+# http://www.petra.gov.jo/Public_News/Nws_NewsDetails.aspx?lang=2&site_id=1&NewsID=133313&Type=P
+# ... says midnight for the coming one and 1:00 for the ones in the future
+# (and they will use DST again next year, using the normal schedule).
 
 # From Paul Eggert (2013-12-11):
-# Assume that this month's transition is at midnight standard time,
-# since that's been the recent pattern for fall-back transitions.
-# Also, guess that the schedule for 2014 on will be the same as 2006-2011.
-# And as Steffen suggested, consider the past 21-month experiment to be DST.
+# As Steffen suggested, consider the past 21-month experiment to be DST.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Jordan	1973	only	-	Jun	6	0:00	1:00	S
@@ -1425,7 +1426,7 @@ Rule	Jordan	2003	only	-	Oct	24	0:00s	0	-
 Rule	Jordan	2004	only	-	Oct	15	0:00s	0	-
 Rule	Jordan	2005	only	-	Sep	lastFri	0:00s	0	-
 Rule	Jordan	2006	2011	-	Oct	lastFri	0:00s	0	-
-Rule	Jordan	2013	only	-	Dec	20	0:00s	0	-
+Rule	Jordan	2013	only	-	Dec	20	0:00	0	-
 Rule	Jordan	2014	max	-	Mar	lastThu	24:00	1:00	S
 Rule	Jordan	2014	max	-	Oct	lastFri	0:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

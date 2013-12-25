@@ -1,5 +1,12 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting commentary
+
+    The boundary of the US Pacific time zone is given more accurately.
+    (Thanks to Alan Mintz.)
+
 Release 2013i - 2013-12-17 07:25:23 -0800
 
   Changes affecting near-future time stamps:

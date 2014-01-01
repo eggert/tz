@@ -1013,6 +1013,7 @@ tzparse(const char *name, register struct state *const sp,
 			sp->ttis[1].tt_gmtoff = -stdoffset;
 			sp->ttis[1].tt_isdst = 0;
 			sp->ttis[1].tt_abbrind = 0;
+			sp->defaulttype = 0;
 			timecnt = 0;
 			janfirst = 0;
 			yearlim = EPOCH_YEAR + YEARSPERREPEAT;
@@ -1138,6 +1139,7 @@ tzparse(const char *name, register struct state *const sp,
 			sp->ttis[1].tt_isdst = TRUE;
 			sp->ttis[1].tt_abbrind = stdlen + 1;
 			sp->typecnt = 2;
+			sp->defaulttype = 0;
 		}
 	} else {
 		dstlen = 0;
@@ -1147,6 +1149,7 @@ tzparse(const char *name, register struct state *const sp,
 		sp->ttis[0].tt_gmtoff = -stdoffset;
 		sp->ttis[0].tt_isdst = 0;
 		sp->ttis[0].tt_abbrind = 0;
+		sp->defaulttype = 0;
 	}
 	sp->charcnt = stdlen + 1;
 	if (dstlen != 0)

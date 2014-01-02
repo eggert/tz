@@ -2,6 +2,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting code
+
+    A uninitialized-storage bug in 'localtime' has been fixed.
+    (Thanks to Logan Chien.)
+
   Changes affecting commentary
 
     The boundary of the US Pacific time zone is given more accurately.

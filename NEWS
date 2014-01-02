@@ -7,6 +7,10 @@ Unreleased, experimental changes
     A uninitialized-storage bug in 'localtime' has been fixed.
     (Thanks to Logan Chien.)
 
+  Changes affecting the build procedure
+
+    The settings for 'make check_web' now default to Ubuntu 13.10.
+
   Changes affecting commentary
 
     The boundary of the US Pacific time zone is given more accurately.

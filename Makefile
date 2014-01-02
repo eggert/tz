@@ -246,14 +246,13 @@ AWK=		awk
 # is typically nicer if it works.
 KSHELL=		/bin/bash
 
-# The path where SGML DTDs are kept.
-# The default is appropriate for Ubuntu 12.10.
+# The path where SGML DTDs are kept and the catalog file(s) to use when
+# validating.  The default is appropriate for Ubuntu 13.10.
 SGML_TOPDIR= /usr
 SGML_DTDDIR= $(SGML_TOPDIR)/share/xml/w3c-sgml-lib/schema/dtd
 SGML_SEARCH_PATH= $(SGML_DTDDIR)/REC-html401-19991224
-
-# The catalog file(s) to use when validating.
-SGML_CATALOG_FILES= HTML4.cat
+SGML_CATALOG_FILES= \
+  $(SGML_TOPDIR)/share/doc/w3-recs/html/www.w3.org/TR/1999/REC-html401-19991224/HTML4.cat
 
 # The name, arguments and environment of a program to validate your web pages.
 # See <http://www.jclark.com/sp/> for a validator, and

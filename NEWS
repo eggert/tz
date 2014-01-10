@@ -2,6 +2,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting near-future time stamps
+
+    Fiji ends DST on 2014-01-19 at 02:00, not the previously-scheduled 03:00.
+    (Thanks to Steffen Thorsen.)
+
   Changes affecting code
 
     A uninitialized-storage bug in 'localtime' has been fixed.

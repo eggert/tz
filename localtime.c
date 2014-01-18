@@ -61,7 +61,7 @@
 #define WILDABBR	"   "
 #endif /* !defined WILDABBR */
 
-static char		wildabbr[] = WILDABBR;
+static const char	wildabbr[] = WILDABBR;
 
 static const char	gmt[] = "GMT";
 
@@ -201,8 +201,8 @@ static int		lcl_is_set;
 static int		gmt_is_set;
 
 char *			tzname[2] = {
-	wildabbr,
-	wildabbr
+	(char *) wildabbr,
+	(char *) wildabbr
 };
 
 /*
@@ -254,8 +254,7 @@ settzname(void)
 	register struct state * const	sp = lclptr;
 	register int			i;
 
-	tzname[0] = wildabbr;
-	tzname[1] = wildabbr;
+	tzname[0] = tzname[1] = (char *) wildabbr;
 #ifdef USG_COMPAT
 	daylight = 0;
 	timezone = 0;
@@ -263,12 +262,10 @@ settzname(void)
 #ifdef ALTZONE
 	altzone = 0;
 #endif /* defined ALTZONE */
-#ifdef ALL_STATE
 	if (sp == NULL) {
-		tzname[0] = tzname[1] = gmt;
+		tzname[0] = tzname[1] = (char *) gmt;
 		return;
 	}
-#endif /* defined ALL_STATE */
 	/*
 	** And to get the latest zone names into tzname. . .
 	*/
@@ -347,10 +344,8 @@ tzload(register const char *name, register struct state *const sp,
 
 	sp->goback = sp->goahead = FALSE;
 
-#ifdef ALL_STATE
 	if (up == NULL)
 		return -1;
-#endif
 
 	if (name == NULL && (name = TZDEFAULT) == NULL)
 		goto oops;
@@ -1268,10 +1263,8 @@ localsub(const time_t *const timep, const int_fast32_t offset,
 	const time_t			t = *timep;
 
 	sp = lclptr;
-#ifdef ALL_STATE
 	if (sp == NULL)
 		return gmtsub(timep, offset, tmp);
-#endif /* defined ALL_STATE */
 	if ((sp->goback && t < sp->ats[0]) ||
 		(sp->goahead && t > sp->ats[sp->timecnt - 1])) {
 			time_t			newt = t;
@@ -1366,8 +1359,8 @@ gmtsub(const time_t *const timep, const int_fast32_t offset,
 		gmt_is_set = TRUE;
 #ifdef ALL_STATE
 		gmtptr = malloc(sizeof *gmtptr);
-		if (gmtptr != NULL)
 #endif /* defined ALL_STATE */
+		if (gmtptr != NULL)
 			gmtload(gmtptr);
 	}
 	result = timesub(timep, offset, gmtptr, tmp);
@@ -1377,18 +1370,7 @@ gmtsub(const time_t *const timep, const int_fast32_t offset,
 	** "UT+xxxx" or "UT-xxxx" if offset is non-zero,
 	** but this is no time for a treasure hunt.
 	*/
-	if (offset != 0)
-		tmp->TM_ZONE = wildabbr;
-	else {
-#ifdef ALL_STATE
-		if (gmtptr == NULL)
-			tmp->TM_ZONE = gmt;
-		else	tmp->TM_ZONE = gmtptr->chars;
-#endif /* defined ALL_STATE */
-#ifndef ALL_STATE
-		tmp->TM_ZONE = gmtptr->chars;
-#endif /* State Farm */
-	}
+	tmp->TM_ZONE = offset ? wildabbr : gmtptr ? gmtptr->chars : gmt;
 #endif /* defined TM_ZONE */
 	return result;
 }
@@ -1448,12 +1430,7 @@ timesub(const time_t *const timep, const int_fast32_t offset,
 
 	corr = 0;
 	hit = 0;
-#ifdef ALL_STATE
 	i = (sp == NULL) ? 0 : sp->leapcnt;
-#endif /* defined ALL_STATE */
-#ifndef ALL_STATE
-	i = sp->leapcnt;
-#endif /* State Farm */
 	while (--i >= 0) {
 		lp = &sp->lsis[i];
 		if (*timep >= lp->ls_trans) {
@@ -1827,10 +1804,8 @@ time2sub(struct tm *const tmp,
 		*/
 		sp = (const struct state *)
 			((funcp == localsub) ? lclptr : gmtptr);
-#ifdef ALL_STATE
 		if (sp == NULL)
 			return WRONG;
-#endif /* defined ALL_STATE */
 		for (i = sp->typecnt - 1; i >= 0; --i) {
 			if (sp->ttis[i].tt_isdst != yourtm.tm_isdst)
 				continue;
@@ -1903,17 +1878,15 @@ time1(struct tm *const tmp,
 	if (tmp->tm_isdst > 1)
 		tmp->tm_isdst = 1;
 	t = time2(tmp, funcp, offset, &okay);
-#ifdef PCTS
-	/*
-	** PCTS code courtesy Grant Sullivan.
-	*/
 	if (okay)
 		return t;
 	if (tmp->tm_isdst < 0)
+#ifdef PCTS
+		/*
+		** POSIX Conformance Test Suite code courtesy Grant Sullivan.
+		*/
 		tmp->tm_isdst = 0;	/* reset to std and try again */
-#endif /* defined PCTS */
-#ifndef PCTS
-	if (okay || tmp->tm_isdst < 0)
+#else
 		return t;
 #endif /* !defined PCTS */
 	/*
@@ -1923,10 +1896,8 @@ time1(struct tm *const tmp,
 	** type they need.
 	*/
 	sp = (const struct state *) ((funcp == localsub) ?  lclptr : gmtptr);
-#ifdef ALL_STATE
 	if (sp == NULL)
 		return WRONG;
-#endif /* defined ALL_STATE */
 	for (i = 0; i < sp->typecnt; ++i)
 		seen[i] = FALSE;
 	nseen = 0;

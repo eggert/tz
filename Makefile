@@ -136,7 +136,7 @@ GCC_DEBUG_FLAGS = -Dlint -g3 -O3 -fno-common -fstrict-aliasing \
 	-Wbad-function-cast -Wcast-align -Wcast-qual \
 	-Wformat=2 -Winit-self \
 	-Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes \
-	-Wnested-externs \
+	-Wnested-externs -Wno-address -Wno-cast-qual \
 	-Wno-format-nonliteral -Wno-sign-compare -Wno-sign-conversion \
 	-Wno-type-limits \
 	-Wno-unused-parameter -Woverlength-strings -Wpointer-arith \

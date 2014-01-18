@@ -362,7 +362,7 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # Fiji will end DST on 2014-01-19 02:00:
 # http://www.fiji.gov.fj/Media-Center/Press-Releases/DAYLIGHT-SAVINGS-TO-END-THIS-MONTH-%281%29.aspx
 
-# From Paul Eggert (2014-10-10):
+# From Paul Eggert (2014-01-10):
 # For now, guess that Fiji springs forward the Sunday before the fourth
 # Monday in October, and springs back the penultimate Sunday in January.
 # This is ad hoc, but matches recent practice.

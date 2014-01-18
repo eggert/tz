@@ -8,7 +8,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="US-ASCII"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2013-10-21">
+<meta name="DC.Date" content="2014-01-17">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -49,6 +49,7 @@ title="Berkeley Software Distribution">BSD</abbr></a>,
 <a href="http://cygwin.com/">Cygwin</a>,
 <a href="http://www.delorie.com/djgpp/"><abbr
 title="DJ's GNU Programming Platform">DJGPP</abbr></a>,
+<a href="http://en.wikipedia.org/wiki/Symbian">Symbian</a>,
 <a href="http://en.wikipedia.org/wiki/WebOS"><abbr
 title="Web Operating System">webOS</abbr></a>,
 <a href="http://ibm.com/aix"><abbr
@@ -106,10 +107,8 @@ see the downloaded
 <code>README</code> file for what to do next.</p>
 <pre style="margin-left: 2em"><code>mkdir tz
 cd tz
-<a href="http://www.gnu.org/software/wget/">wget</a> --retr-symlinks
-'ftp://ftp.iana.org/tz/tz*-latest.tar.gz'
-<a href="http://www.gnu.org/software/gzip/">gzip</a> -dc tzcode-latest.tar.gz |
-<a href="http://www.gnu.org/software/tar/">tar</a> -xf -
+<a href="http://www.gnu.org/software/wget/">wget</a> --retr-symlinks 'ftp://ftp.iana.org/tz/tz*-latest.tar.gz'
+<a href="http://www.gnu.org/software/gzip/">gzip</a> -dc tzcode-latest.tar.gz | <a href="http://www.gnu.org/software/tar/">tar</a> -xf -
 gzip -dc tzdata-latest.tar.gz | tar -xf -
 </code></pre>
 <p>

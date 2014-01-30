@@ -1,5 +1,6 @@
 News for the tz database
 
+
 Unreleased, experimental changes
 
   Changes affecting near-future time stamps
@@ -16,10 +17,24 @@ Unreleased, experimental changes
 
     The settings for 'make check_web' now default to Ubuntu 13.10.
 
-  Changes affecting commentary
+  Changes affecting commentary and documentation
 
     The boundary of the US Pacific time zone is given more accurately.
     (Thanks to Alan Mintz.)
+
+    Several changes affect tz-link.htm, the main web page.
+
+      Mention xCal (Internet RFC 6321) and jCal.
+
+      Microsoft Windows 8.1 and later support tz database names.
+
+      CLDR data is available in both XML and JSON form.
+
+      Update two links.  (Thanks to Oscar van Vlijmen.)
+
+      Fix some formatting glitches, e.g., remove random newlines from
+      abbr elements' title attributes.
+
 
 Release 2013i - 2013-12-17 07:25:23 -0800
 
@@ -49,6 +64,7 @@ Release 2013i - 2013-12-17 07:25:23 -0800
     civil time was generally not solar time in those years.
 
     tz-link.htm now mentions Noda Time.  (Thanks to Matt Johnson.)
+
 
 Release 2013h - 2013-10-25 15:32:32 -0700
 

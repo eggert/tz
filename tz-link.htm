@@ -8,7 +8,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="US-ASCII"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2014-01-17">
+<meta name="DC.Date" content="2014-01-30">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -93,8 +93,10 @@ the code is in the file <code>tzcode<var>C</var>.tar.gz</code>,
 where <code><var>C</var></code> is the code's version;
 similarly, the data are in <code>tzdata<var>D</var>.tar.gz</code>,
 where <code><var>D</var></code> is the data's version.
-Each version is a four-digit year followed by lower-case letters
-(a through z, then za through zz, then zza through zzz, and so on).
+Since 1996, each version has been a four-digit year followed by
+lower-case letter (<samp>a</samp> through <samp>z</samp>,
+then <samp>za</samp> through <samp>zz</samp>, then <samp>zza</samp>
+through <samp>zzz</samp>, and so on).
 Convenience links to
 the <a href="ftp://ftp.iana.org/tz/tzcode-latest.tar.gz">latest
 code</a> and
@@ -137,8 +139,8 @@ and browse the <a
 href="http://mm.icann.org/pipermail/tz/">archive of old
 messages</a>. For further information about updates, please see
 <a href="http://tools.ietf.org/html/rfc6557">Procedures for
-Maintaining the Time Zone Database</a> (Internet <abbr title="Request
-For Comments">RFC</abbr> 6557).</p>
+Maintaining the Time Zone Database</a> (Internet <abbr
+title="Request For Comments">RFC</abbr> 6557).</p>
 <p>
 The Web has several other sources for time zone and daylight saving time data.
 Here are some links that may be of interest.
@@ -149,7 +151,8 @@ Here are some links that may be of interest.
 <a href="http://en.wikipedia.org/wiki/Tz_database">tz database</a> is
 an encyclopedic summary.</li>
 <li><a href="http://www.cstdbill.com/tzdb/tz-how-to.html">How to Read the
-tz Database Source Files</a> explains the tz database format.</li>
+tz Database Source Files</a> explains the <code><abbr>tz</abbr></code>
+database format.</li>
 <li><a
 href="http://blog.jonudell.net/2009/10/23/a-literary-appreciation-of-the-olsonzoneinfotz-database/">A
 literary appreciation of the Olson/Zoneinfo/tz database</a> comments on the
@@ -169,7 +172,7 @@ Time in 1000 Places</a> uses descriptions of the values.</li>
 <li><a href="http://www.timezoneconverter.com/cgi-bin/tzc.tzc">Time Zone
 Converter</a>
 uses a pulldown menu.</li>
-<li><a href="http://home.telfort.nl/~t876506/TZworld.html">Complete
+<li><a href="http://home.kpn.nl/vanadovv/time/TZworld.html">Complete
 timezone information for all countries</a> displays tables of DST rules.
 <li><a href="http://timeanddate.com/worldclock/">The World Clock &ndash;
 Time Zones</a> lets you sort zone names and convert times.</li>
@@ -184,15 +187,23 @@ also contains data about time zone boundaries; it supports queries via place
 names and shows location maps.</li>
 <li><a href="http://simpletimerclocks.mozdev.org/">Simple Timer + Clocks</a>
 is a Firefox add-on which uses a timezone data file generated from the
-tz data files.</li>
+<code><abbr>tz</abbr></code> data files.</li>
 </ul>
 <h2>Other time zone database formats</h2>
 <ul>
 <li>The <a href="http://tools.ietf.org/html/rfc5545">
 Internet Calendaring and Scheduling Core Object Specification
-(iCalendar)</a>, Internet <abbr>RFC</abbr> 5445
+(iCalendar)</a> (Internet <abbr>RFC</abbr> 5445)
 covers time zone
 data; see its VTIMEZONE calendar component.
+The iCalendar format requires specialized parsers and generators; a
+variant <a href="http://tools.ietf.org/html/rfc6321">xCal</a>
+(Internet RFC 6321) uses
+<a href="http://www.w3.org/XML/"><abbr
+title="Extensible Markup Language">XML</abbr></a> format, and a draft variant
+<a href="http://datatracker.ietf.org/doc/draft-ietf-jcardcal-jcal/">jCal</a>
+uses <a href="http://www.json.org/"><abbr
+title="JavaScript Object Notation">JSON</abbr></a> format.
 <a href="http://calconnect.org/">CalConnect, The Calendaring and Scheduling
 Consortium</a> is promoting further work in this area. <a
 href="http://calconnect.org/publications/icalendartimezoneproblemsandrecommendationsv1.0.pdf">iCalendar
@@ -249,6 +260,8 @@ Unicode (<abbr>ICU</abbr>)</a> contains C/C++ and <a
 href="http://en.wikipedia.org/wiki/Java_%28programming_language%29">Java</a>
 libraries for internationalization that
 has a compiler from <code><abbr>tz</abbr></code> source
+and from <abbr title="Common Locale Data Repository">CLDR</abbr> data
+(mentioned below)
 into an <abbr>ICU</abbr>-specific format.
 <abbr>ICU</abbr> is freely available under a
 <abbr>BSD</abbr>-style license.</li>
@@ -282,8 +295,7 @@ Library</a> is
 a <a href="http://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a> class
 library that compiles <code><abbr>tz</abbr></code> source into a time
 zone repository whose format
-is either proprietary or an <a href="http://www.w3.org/XML/"><abbr
-title="Extensible Markup Language">XML</abbr></a>-encoded
+is either proprietary or an <abbr>XML</abbr>-encoded
 representation.</li>
 <li>Starting with version 8.5, <a href="http://tcl.tk/">Tcl</a>
 contains a developer-oriented parser that compiles <code><abbr>tz</abbr></code>
@@ -317,8 +329,7 @@ It is freely available under the same terms as Perl
 public-domain <a href="https://github.com/dbaron/tz.js">tz.js</a>
 library contains a Python tool that
 converts <code><abbr>tz</abbr></code> binary data into
-<a href="http://www.json.org/"><abbr title="JavaScript Object
-Notation">JSON</abbr></a>-format data suitable for use
+<abbr>JSON</abbr>-format data suitable for use
 in its JavaScript library for time zone conversion. Dates before 1970
 are not supported.</li>
 </ul>
@@ -388,12 +399,13 @@ Schedules Information Manual</a> of the
 <a href="http://iata.org/index.htm">International Air Transport
 Association</a>
 gives current time zone rules for airports served by commercial aviation.</li>
-<li>Some Microsoft Windows versions contain time zone information in
-an undocumented format, with <abbr>ID</abbr>s that can be mapped to
+<li>Although Microsoft Windows 8.1 and later supports
+the <code><abbr>tz</abbr></code> database names directly, many of its
+applications use time zone information in an undocumented format
+from earlier releases, with <abbr>ID</abbr>s that can be mapped to
 <code><abbr>TZ</abbr></code> values using the <a
 href="http://unicode.org/cldr/charts/supplemental/zone_tzid.html">Zone
-&rarr; Tzid table</a> maintained by the <abbr
-title="Common Locale Data Repository">CLDR</abbr> data mentioned
+&rarr; Tzid table</a> in the <abbr>CLDR</abbr> data mentioned
 below.</li>
 </ul>
 <h2>Maps</h2>
@@ -430,7 +442,7 @@ geospatial query operators to shapefiles' data.</li>
 <li><a href="http://statoids.com/statoids.html">Administrative
 Divisions of Countries ("Statoids")</a> contains lists of
 political subdivision data related to time zones.</li>
-<li><a href="http://home.telfort.nl/~t876506/Multizones.html">Time
+<li><a href="http://home.kpn.nl/vanadovv/time/Multizones.html">Time
 zone boundaries for multizone countries</a> summarizes legal
 boundaries between time zones within countries.</li>
 <li>Manifold.net's <a
@@ -626,6 +638,16 @@ contentious issue.</li>
 </ul>
 <h2>Time notation</h2>
 <ul>
+<li>The <a href="http://unicode.org/cldr/">Unicode Common Locale Data
+Repository (<abbr>CLDR</abbr>) Project</a> has localizations for time
+zone names, abbreviations, identifiers, and formats. For example, it
+contains French translations for "Eastern European Summer Time",
+"<abbr title="Eastern European Summer Time">EEST</abbr>", and
+"Bucharest". Its
+<a href="http://unicode.org/cldr/charts/by_type/index.html">by-type
+charts</a> show these values for many locales. Data are available in
+both <abbr title="Locale Data Markup Language">LDML</abbr>
+(an <abbr>XML</abbr> format) and <abbr>JSON</abbr>.
 <li>
 <a href="http://www.cl.cam.ac.uk/~mgk25/iso-time.html">A summary of
 the international standard date and time notation</a> is a good
@@ -659,16 +681,6 @@ formats.</li>
 <a href="http://exit109.com/~ghealton/y2k/yrexamples.html">The
 Best of Dates, the Worst of Dates</a> covers many problems encountered
 by software developers when handling dates and time stamps.</li>
-<li>The <a
-href="http://unicode.org/cldr/">Unicode Common Locale Data Repository
-(<abbr>CLDR</abbr>) Project</a> has localizations for time zone names,
-abbreviations, identifiers, and formats. For example, it contains
-French translations for "Eastern European Summer Time", "<abbr
-title="Eastern European Summer Time">EEST</abbr>", and
-"Bucharest". <a
-href="http://unicode.org/cldr/charts/by_type/index.html">By-Type
-Chart</a> shows these values for many locales.
-<abbr>ICU</abbr> contains a mechanism for using this data.</li>
 <li>Alphabetic time zone abbreviations should not be used as unique
 identifiers for <abbr>UTC</abbr> offsets as they are ambiguous in
 practice. For example, "<abbr>EST</abbr>" denotes 5 hours behind
@@ -686,8 +698,8 @@ maintainers.</li>
 <code><abbr>TZ</abbr></code> environment variable uses the opposite convention.
 For example, one might use <code><abbr>TZ</abbr>="<abbr
 title="Japan Standard Time">JST</abbr>-9"</code> and
-<code><abbr>TZ</abbr>="<abbr title="Hawaii Standard
-Time">HST</abbr>10"</code> for Japan and Hawaii, respectively. If the
+<code><abbr>TZ</abbr>="<abbr title="Hawaii Standard Time">HST</abbr>10"</code>
+for Japan and Hawaii, respectively. If the
 <code><abbr>tz</abbr></code> database is available, it is usually better to use
 settings like <code><abbr>TZ</abbr>="Asia/Tokyo"</code> and
 <code><abbr>TZ</abbr>="Pacific/Honolulu"</code> instead, as this should avoid

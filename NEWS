@@ -30,6 +30,9 @@ Unreleased, experimental changes
 
       CLDR data is available in both XML and JSON form.
 
+      Mention Maggiolo's map of solar vs standard time.
+      (Thanks to Arthur David Olson.)
+
       Update two links.  (Thanks to Oscar van Vlijmen.)
 
       Fix some formatting glitches, e.g., remove random newlines from

@@ -5,7 +5,11 @@ Unreleased, experimental changes
 
   Changes affecting near-future time stamps
 
-    Fiji ends DST on 2014-01-19 at 02:00, not the previously-scheduled 03:00.
+    Turkey begins DST on 2014-03-31, not 03-30.  (Thanks to Faruk Pasin.)
+
+  Changes affecting recent time stamps
+
+    Fiji ended DST on 2014-01-19 at 02:00, not the previously-scheduled 03:00.
     (Thanks to Steffen Thorsen.)
 
   Changes affecting code

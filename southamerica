@@ -1275,6 +1275,13 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # start date is 2013-09-08 00:00....
 # http://www.gob.cl/informa/2013/02/15/gobierno-anuncia-fechas-de-cambio-de-hora-para-el-ano-2013.htm
 
+# From Jose Miguel Garrido (2014-02-19):
+# Today appeared in the Diario Oficial a decree amending the time change
+# dates to 2014.
+# DST End: last Saturday of April 2014 (Sun 27 Apr 2014 03:00 UTC)
+# DST Start: first Saturday of September 2014 (Sun 07 Sep 2014 04:00 UTC)
+# http://www.diariooficial.interior.gob.cl//media/2014/02/19/do-20140219.pdf
+
 # NOTE: ChileAQ rules for Antarctic bases are stored separately in the
 # 'antarctica' file.
 

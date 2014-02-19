@@ -40,6 +40,12 @@ Unreleased, experimental changes
       Mention Maggiolo's map of solar vs standard time.
       (Thanks to Arthur David Olson.)
 
+      Mention the timezone-olson Haskell package.
+
+      Mention zeitverschiebung.net.  (Thanks to Martin Jaeger.)
+
+      Remove moribund link to daylight-savings-time.info.
+
       Update two links.  (Thanks to Oscar van Vlijmen.)
 
       Fix some formatting glitches, e.g., remove random newlines from

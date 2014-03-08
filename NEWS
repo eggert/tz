@@ -43,6 +43,9 @@ Unreleased, experimental changes
 
     Several changes affect tz-link.htm, the main web page.
 
+      Mention Time.is (thanks to Even Scharning) and WX-now (thanks to
+      David Braverman).
+
       Mention xCal (Internet RFC 6321) and jCal.
 
       Microsoft Windows 8.1 and later support tz database names.
@@ -52,11 +55,14 @@ Unreleased, experimental changes
       Mention Maggiolo's map of solar vs standard time.
       (Thanks to Arthur David Olson.)
 
+      Mention TZ4Net.  (Thanks to Matt Johnson.)
+
       Mention the timezone-olson Haskell package.
 
       Mention zeitverschiebung.net.  (Thanks to Martin Jaeger.)
 
-      Remove moribund link to daylight-savings-time.info.
+      Remove moribund links to daylight-savings-time.info and to
+      Simple Timer + Clocks.
 
       Update two links.  (Thanks to Oscar van Vlijmen.)
 

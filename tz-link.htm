@@ -163,6 +163,8 @@ database's style.</li>
 These are listed roughly in ascending order of complexity and fanciness.
 </p>
 <ul>
+<li><a href="http://time.is/">Time.is</a> shows locations'
+time and zones in a simple format.</li>
 <li><a
 href="http://twiki.org/cgi-bin/xtra/tzdatepick.html">Date and Time Gateway</a>
 lets you see the <code><abbr>TZ</abbr></code> values directly.</li>
@@ -181,12 +183,10 @@ links that refer to a particular point in time and can be displayed in
 multiple timezones.</li>
 <li><a href="http://www.zeitverschiebung.net/en/">Time Difference</a>
 calculates the current time difference between locations.</li>
+<li><a href="http://www.wx-now.com/">Weather Now</a> lists the weather too.</li>
 <li><a href="http://worldtime.io/">worldtime.io</a>
 also contains data about time zone boundaries; it supports queries via place
 names and shows location maps.</li>
-<li><a href="http://simpletimerclocks.mozdev.org/">Simple Timer + Clocks</a>
-is a Firefox add-on which uses a timezone data file generated from the
-<code><abbr>tz</abbr></code> data files.</li>
 </ul>
 <h2>Other time zone database formats</h2>
 <ul>
@@ -270,10 +270,12 @@ contains a class
 <code>org.joda.time.tz.ZoneInfoCompiler</code> that compiles
 <code><abbr>tz</abbr></code> source into a Joda-specific binary format. Joda Time
 is freely available under a <abbr>BSD</abbr>-style license.</li>
-<li><a href="http://nodatime.org/">Noda Time &ndash; Date and time API
-for .NET</a> is similar to Joda Time, but for the .NET framework
-instead of Java. It is freely available under the
-<a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License</a>.</li>
+<li><a href="http://nodatime.org/">Noda Time &ndash; Date and time API for
+.NET</a> and <a href="http://www.babiej.demon.nl/Tz4Net/main.htm">TZ4Net</a>
+are similar to Joda Time, but for the .NET framework instead of
+Java. They are freely available under the
+<a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License</a>
+and a <abbr>BSD</abbr>-style license, respectively.</li>
 <li><a href="https://github.com/mde/timezone-js">TimezoneJS.Date</a>
 is a <a href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a>
 library that parses <code><abbr>tz</abbr></code> source files and interprets time

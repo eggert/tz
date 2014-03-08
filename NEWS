@@ -8,10 +8,13 @@ Unreleased, experimental changes
     Turkey begins DST on 2014-03-31, not 03-30.  (Thanks to Faruk Pasin for
     the heads-up, and to Tim Parenti for simplifying the update.)
 
-  Changes affecting recent time stamps
+  Changes affecting past time stamps
 
     Fiji ended DST on 2014-01-19 at 02:00, not the previously-scheduled 03:00.
     (Thanks to Steffen Thorsen.)
+
+    In 1988 Israel observed DST from 04-10 to 09-04, not 04-09 to 09-03.
+    (Thanks to Avigdor Finkelstein.)
 
   Changes affecting code
 

@@ -38,6 +38,9 @@ Unreleased, experimental changes
 
     Paraguay's 2014 DST will be as predicted.  (Thanks to Carlos Raul Perasso.)
 
+    Better descriptions of countries with same time zone history as
+    Trinidad and Tobago since 1970.  (Thanks to Alan Barrett for suggestion.)
+
     Several changes affect tz-link.htm, the main web page.
 
       Mention xCal (Internet RFC 6321) and jCal.

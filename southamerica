@@ -1676,18 +1676,19 @@ Zone America/Paramaribo	-3:40:40 -	LMT	1911
 Zone America/Port_of_Spain -4:06:04 -	LMT	1912 Mar 2
 			-4:00	-	AST
 
+# These all agree with Trinidad and Tobago since 1970.
 Link America/Port_of_Spain America/Anguilla
 Link America/Port_of_Spain America/Dominica
 Link America/Port_of_Spain America/Grenada
 Link America/Port_of_Spain America/Guadeloupe
-Link America/Port_of_Spain America/Marigot
+Link America/Port_of_Spain America/Marigot	# St Martin (French part)
 Link America/Port_of_Spain America/Montserrat
 Link America/Port_of_Spain America/St_Barthelemy
-Link America/Port_of_Spain America/St_Kitts
+Link America/Port_of_Spain America/St_Kitts	# St Kitts & Nevis
 Link America/Port_of_Spain America/St_Lucia
-Link America/Port_of_Spain America/St_Thomas
+Link America/Port_of_Spain America/St_Thomas	# Virgin Islands (US)
 Link America/Port_of_Spain America/St_Vincent
-Link America/Port_of_Spain America/Tortola
+Link America/Port_of_Spain America/Tortola	# Virgin Islands (UK)
 
 # Uruguay
 # From Paul Eggert (1993-11-18):

@@ -1615,6 +1615,9 @@ Rule	Para	2010	2012	-	Apr	Sun>=8	0:00	0	-
 # From Carlos Raul Perasso (2013-03-15):
 # The change in Paraguay is now final.  Decree number 10780
 # http://www.presidencia.gov.py/uploads/pdf/presidencia-3b86ff4b691c79d4f5927ca964922ec74772ce857c02ca054a52a37b49afc7fb.pdf
+# From Carlos Raul Perasso (2014-02-28):
+# Decree 1264 can be found at:
+# http://www.presidencia.gov.py/archivos/documentos/DECRETO1264_ey9r8zai.pdf
 Rule	Para	2013	max	-	Mar	Sun>=22	0:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

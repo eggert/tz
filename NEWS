@@ -1,6 +1,15 @@
 News for the tz database
 
 
+Unreleased, experimental changes
+
+  Changes affecting commentary and documentation
+
+    Microsoft Windows 8.1 doesn't support tz database names.  (Thanks
+    to Donald MacQueen.)  Instead, the Microsoft Windows Store app
+    library supports them.
+
+
 Release 2014a - 2014-03-07 23:30:29 -0800
 
   Changes affecting near-future time stamps
@@ -48,7 +57,7 @@ Release 2014a - 2014-03-07 23:30:29 -0800
 
       Mention xCal (Internet RFC 6321) and jCal.
 
-      Microsoft Windows 8.1 and later support tz database names.
+      Microsoft has some support for tz database names.
 
       CLDR data is available in both XML and JSON form.
 

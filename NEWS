@@ -5,6 +5,9 @@ Unreleased, experimental changes
 
   Changes affecting commentary and documentation
 
+    Fix Tuesday/Thursday typo in description of time in Israel.
+    (Thanks to Mike Frysinger.)
+
     Microsoft Windows 8.1 doesn't support tz database names.  (Thanks
     to Donald MacQueen.)  Instead, the Microsoft Windows Store app
     library supports them.

@@ -3,6 +3,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting near-future time stamps
+
+    Crimea switches to Moscow time on 2014-03-30 at 02:00 local time.
+    (Thanks to Alexander Krivenyshev.)  Move its zone.tab entry from UA to RU.
+
   Changes affecting commentary and documentation
 
     Fix Tuesday/Thursday typo in description of time in Israel.

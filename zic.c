@@ -1539,7 +1539,7 @@ writezone(const char *const name, const char *const string, char version)
 		register int	thistimei, thistimecnt;
 		register int	thisleapi, thisleapcnt;
 		register int	thistimelim, thisleaplim;
-		int		writetype[TZ_MAX_TIMES];
+		int		writetype[TZ_MAX_TYPES];
 		int		typemap[TZ_MAX_TYPES];
 		register int	thistypecnt;
 		char		thischars[TZ_MAX_CHARS];

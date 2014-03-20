@@ -8,6 +8,11 @@ Unreleased, experimental changes
     Crimea switches to Moscow time on 2014-03-30 at 02:00 local time.
     (Thanks to Alexander Krivenyshev.)  Move its zone.tab entry from UA to RU.
 
+  Changes affecting 'zic'
+
+    'zic' now is smarter about allocating memory.
+    (Thanks to Andrew Main (Zefram).)
+
   Changes affecting commentary and documentation
 
     Fix Tuesday/Thursday typo in description of time in Israel.

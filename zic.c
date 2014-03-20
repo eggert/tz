@@ -247,9 +247,11 @@ static int		typecnt;
 
 static struct rule *	rules;
 static int		nrules;	/* number of rules */
+static int		nrules_alloc;
 
 static struct zone *	zones;
 static int		nzones;	/* number of zones */
+static int		nzones_alloc;
 
 struct link {
 	const char *	l_filename;
@@ -260,6 +262,7 @@ struct link {
 
 static struct link *	links;
 static int		nlinks;
+static int		nlinks_alloc;
 
 struct lookup {
 	const char *	l_word;
@@ -361,16 +364,26 @@ static char		roll[TZ_MAX_LEAPS];
 ** Memory allocation.
 */
 
+static _Noreturn void
+memory_exhausted(const char *msg)
+{
+	fprintf(stderr, _("%s: Memory exhausted: %s\n"), progname, msg);
+	exit(EXIT_FAILURE);
+}
+
+static ATTRIBUTE_PURE size_t
+size_product(size_t nitems, size_t itemsize)
+{
+	if (SIZE_MAX / itemsize < nitems)
+		memory_exhausted("size overflow");
+	return nitems * itemsize;
+}
+
 static ATTRIBUTE_PURE void *
 memcheck(void *const ptr)
 {
-	if (ptr == NULL) {
-		const char *e = strerror(errno);
-
-		(void) fprintf(stderr, _("%s: Memory exhausted: %s\n"),
-			progname, e);
-		exit(EXIT_FAILURE);
-	}
+	if (ptr == NULL)
+		memory_exhausted(strerror(errno));
 	return ptr;
 }
 
@@ -378,6 +391,20 @@ memcheck(void *const ptr)
 #define erealloc(ptr, size)	memcheck(realloc(ptr, size))
 #define ecpyalloc(ptr)		memcheck(icpyalloc(ptr))
 #define ecatalloc(oldp, newp)	memcheck(icatalloc((oldp), (newp)))
+
+static void *
+growalloc(void *ptr, size_t itemsize, int nitems, int *nitems_alloc)
+{
+	if (nitems < *nitems_alloc)
+		return ptr;
+	else {
+		int amax = INT_MAX < SIZE_MAX ? INT_MAX : SIZE_MAX;
+		if ((amax - 1) / 2 < *nitems_alloc)
+			memory_exhausted("int ooverflow");
+		*nitems_alloc = *nitems_alloc + (*nitems_alloc >> 1) + 1;
+		return erealloc(ptr, size_product(*nitems_alloc, itemsize));
+	}
+}
 
 /*
 ** Error handling.
@@ -965,7 +992,7 @@ inrule(register char **const fields, const int nfields)
 	r.r_abbrvar = ecpyalloc(fields[RF_ABBRVAR]);
 	if (max_abbrvar_len < strlen(r.r_abbrvar))
 		max_abbrvar_len = strlen(r.r_abbrvar);
-	rules = erealloc(rules, (nrules + 1) * sizeof *rules);
+	rules = growalloc(rules, sizeof *rules, nrules, &nrules_alloc);
 	rules[nrules++] = r;
 }
 
@@ -1081,7 +1108,7 @@ inzsub(register char **const fields, const int nfields, const int iscont)
 				return FALSE;
 		}
 	}
-	zones = erealloc(zones, (nzones + 1) * sizeof *zones);
+	zones = growalloc(zones, sizeof *zones, nzones, &nzones_alloc);
 	zones[nzones++] = z;
 	/*
 	** If there was an UNTIL field on this line,
@@ -1214,7 +1241,7 @@ inlink(register char **const fields, const int nfields)
 	l.l_linenum = linenum;
 	l.l_from = ecpyalloc(fields[LF_FROM]);
 	l.l_to = ecpyalloc(fields[LF_TO]);
-	links = erealloc(links, (nlinks + 1) * sizeof *links);
+	links = growalloc(links, sizeof *links, nlinks, &nlinks_alloc);
 	links[nlinks++] = l;
 }
 
@@ -2572,7 +2599,7 @@ getfields(register char *cp)
 
 	if (cp == NULL)
 		return NULL;
-	array = emalloc((strlen(cp) + 1) * sizeof *array);
+	array = emalloc(size_product(strlen(cp) + 1, sizeof *array));
 	nsubs = 0;
 	for ( ; ; ) {
 		while (isascii((unsigned char) *cp) &&

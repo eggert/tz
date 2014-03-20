@@ -205,6 +205,10 @@ typedef unsigned long uintmax_t;
 #define INT32_MIN (-1 - INT32_MAX)
 #endif /* !defined INT32_MIN */
 
+#ifndef SIZE_MAX
+#define SIZE_MAX ((size_t) -1)
+#endif
+
 #if 2 < __GNUC__ + (96 <= __GNUC_MINOR__)
 # define ATTRIBUTE_CONST __attribute__ ((const))
 # define ATTRIBUTE_PURE __attribute__ ((__pure__))

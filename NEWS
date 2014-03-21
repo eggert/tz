@@ -8,12 +8,11 @@ Unreleased, experimental changes
     Crimea switches to Moscow time on 2014-03-30 at 02:00 local time.
     (Thanks to Alexander Krivenyshev.)  Move its zone.tab entry from UA to RU.
 
-  Changes affecting 'zic'
+  Changes affecting code
 
-    'zic' no longer rejects locations needing four transitions per
-    year for the forseeable future, such as Troll station, Antarctica.
-    (Thanks to Andrew Main (Zefram).)  Also, it avoids some unlikely
-    failures due to integer overflow.
+    'zic' and 'localtime' no longer reject locations needing four transitions
+    per year for the forseeable future.  (Thanks to Andrew Main (Zefram).)
+    Also, 'zic' avoids some unlikely failures due to integer overflow.
 
   Changes affecting commentary and documentation
 

@@ -10,8 +10,10 @@ Unreleased, experimental changes
 
   Changes affecting 'zic'
 
-    'zic' now is smarter about allocating memory.
-    (Thanks to Andrew Main (Zefram).)
+    'zic' no longer rejects locations needing four transitions per
+    year for the forseeable future, such as Troll station, Antarctica.
+    (Thanks to Andrew Main (Zefram).)  Also, it avoids some unlikely
+    failures due to integer overflow.
 
   Changes affecting commentary and documentation
 

@@ -162,6 +162,7 @@ static const char *	rfilename;
 static int		rlinenum;
 static const char *	progname;
 static int		timecnt;
+static int		timecnt_alloc;
 static int		typecnt;
 
 /*
@@ -349,7 +350,7 @@ static const int	len_years[2] = {
 static struct attype {
 	zic_t		at;
 	unsigned char	type;
-}			attypes[TZ_MAX_TIMES];
+} *			attypes;
 static zic_t		gmtoffs[TZ_MAX_TYPES];
 static char		isdsts[TZ_MAX_TYPES];
 static unsigned char	abbrinds[TZ_MAX_TYPES];
@@ -1461,8 +1462,9 @@ writezone(const char *const name, const char *const string, char version)
 	static char *			fullname;
 	static const struct tzhead	tzh0;
 	static struct tzhead		tzh;
-	zic_t				ats[TZ_MAX_TIMES];
-	unsigned char			types[TZ_MAX_TIMES];
+	zic_t *ats = emalloc(size_product(timecnt, sizeof *ats + 1));
+	void *typesptr = ats + timecnt;
+	unsigned char *types = typesptr;
 
 	/*
 	** Sort.
@@ -1778,6 +1780,7 @@ writezone(const char *const name, const char *const string, char version)
 			progname, fullname);
 		exit(EXIT_FAILURE);
 	}
+	free(ats);
 }
 
 static void
@@ -2397,10 +2400,7 @@ addtt(const zic_t starttime, int type)
 		timecnt = 0;
 		type = 0;
 	}
-	if (timecnt >= TZ_MAX_TIMES) {
-		error(_("too many transitions?!"));
-		exit(EXIT_FAILURE);
-	}
+	attypes = growalloc(attypes, sizeof *attypes, timecnt, &timecnt_alloc);
 	attypes[timecnt].at = starttime;
 	attypes[timecnt].type = type;
 	++timecnt;

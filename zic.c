@@ -400,8 +400,8 @@ growalloc(void *ptr, size_t itemsize, int nitems, int *nitems_alloc)
 		return ptr;
 	else {
 		int amax = INT_MAX < SIZE_MAX ? INT_MAX : SIZE_MAX;
-		if ((amax - 1) / 2 < *nitems_alloc)
-			memory_exhausted("int ooverflow");
+		if ((amax - 1) / 3 * 2 < *nitems_alloc)
+			memory_exhausted("int overflow");
 		*nitems_alloc = *nitems_alloc + (*nitems_alloc >> 1) + 1;
 		return erealloc(ptr, size_product(*nitems_alloc, itemsize));
 	}

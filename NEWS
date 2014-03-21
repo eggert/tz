@@ -16,6 +16,11 @@ Unreleased, experimental changes
 
   Changes affecting commentary and documentation
 
+    Add a commented-out entry for Troll station, Antarctica.
+    (Thanks to Paul-Inge Flakstad.)  It requires the 'zic' and 'localtime'
+    fixes mentioned above, so the plan is to wait for a while until these
+    fixes propagate.
+
     Fix Tuesday/Thursday typo in description of time in Israel.
     (Thanks to Bert Katz via Pavel Kharitonov and Mike Frysinger.)
 

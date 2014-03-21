@@ -8,6 +8,11 @@ Unreleased, experimental changes
     Crimea switches to Moscow time on 2014-03-30 at 02:00 local time.
     (Thanks to Alexander Krivenyshev.)  Move its zone.tab entry from UA to RU.
 
+    New entry for Troll station, Antarctica.  (Thanks to Paul-Inge Flakstad and
+    Bengt-Inge Larsson.)  This is currently an approximation; a better version
+    will require the zic and localtime fixes mentioned below, and the plan is
+    to wait for a while until at least the zic fixes propagate.
+
   Changes affecting code
 
     'zic' and 'localtime' no longer reject locations needing four transitions
@@ -20,11 +25,6 @@ Unreleased, experimental changes
     The NZAQ rules, an instance of this problem, have been removed.
 
   Changes affecting commentary and documentation
-
-    Add a commented-out entry for Troll station, Antarctica.
-    (Thanks to Paul-Inge Flakstad.)  It requires the 'zic' and 'localtime'
-    fixes mentioned above, so the plan is to wait for a while until these
-    fixes propagate.
 
     Fix Tuesday/Thursday typo in description of time in Israel.
     (Thanks to Bert Katz via Pavel Kharitonov and Mike Frysinger.)

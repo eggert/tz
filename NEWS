@@ -14,6 +14,11 @@ Unreleased, experimental changes
     per year for the forseeable future.  (Thanks to Andrew Main (Zefram).)
     Also, 'zic' avoids some unlikely failures due to integer overflow.
 
+  Changes affecting build procedure
+
+    'make check' now detects Rule lines defined but never used.
+    The NZAQ rules, an instance of this problem, have been removed.
+
   Changes affecting commentary and documentation
 
     Add a commented-out entry for Troll station, Antarctica.

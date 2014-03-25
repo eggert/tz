@@ -763,7 +763,7 @@ Zone Pacific/Funafuti	11:56:52 -	LMT	1901
 
 # Johnston
 #
-# From Paul Eggert (2013-03-11):
+# From Paul Eggert (2014-03-11):
 # Sometimes Johnston kept Hawaii time, and sometimes it was an hour behind.
 # Details are uncertain.  We have no data for Johnston after 1970, so
 # treat it like Hawaii for now.

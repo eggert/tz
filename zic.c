@@ -962,8 +962,6 @@ gethms(const char *string, const char *const errstring, const int signable)
 		error(_("time overflow"));
 		return 0;
 	}
-	if (noise && hh == HOURSPERDAY && mm == 0 && ss == 0)
-		warning(_("24:00 not handled by pre-1998 versions of zic"));
 	if (noise && (hh > HOURSPERDAY ||
 		(hh == HOURSPERDAY && (mm != 0 || ss != 0))))
 warning(_("values over 24 hours not handled by pre-2007 versions of zic"));
@@ -1503,6 +1501,9 @@ writezone(const char *const name, const char *const string, char version)
 		}
 		timecnt = toi;
 	}
+	if (noise && timecnt > 1200)
+		warning(_("pre-2014 clients may mishandle"
+			  " more than 1200 transition times"));
 	/*
 	** Transfer.
 	*/

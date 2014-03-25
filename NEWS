@@ -1,7 +1,7 @@
 News for the tz database
 
 
-Unreleased, experimental changes
+Release 2014b - 2014-03-24 21:28:50 -0700
 
   Changes affecting near-future time stamps
 
@@ -38,6 +38,7 @@ Unreleased, experimental changes
 
     Morocco's 2014 DST start will be as predicted.
     (Thanks to Sebastien Willemijns.)
+
 
 Release 2014a - 2014-03-07 23:30:29 -0800
 

@@ -1,6 +1,13 @@
 News for the tz database
 
 
+Unreleased, experimental changes
+
+  Changes affecting code
+
+    Port to Cygwin sans glibc.  (Thanks to Arthur David Olson.)
+
+
 Release 2014b - 2014-03-24 21:28:50 -0700
 
   Changes affecting near-future time stamps

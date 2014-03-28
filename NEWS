@@ -7,6 +7,10 @@ Unreleased, experimental changes
 
     Port to Cygwin sans glibc.  (Thanks to Arthur David Olson.)
 
+  Changes affecting commentary and documentation
+
+    Remove now-confusing comment about Jordan.  (Thanks to Oleksii Nochovnyi.)
+
 
 Release 2014b - 2014-03-24 21:28:50 -0700
 

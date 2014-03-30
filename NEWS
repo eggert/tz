@@ -3,11 +3,6 @@ News for the tz database
 
 Unreleased, experimental changes
 
-  Changes affecting near-future time stamps
-
-    Crimea switches to Moscow time on 2014-03-29 at 22:00 local time.
-    (Thanks to Alexander Krivenyshev.)
-
   Changes affecting code
 
     Port to Cygwin sans glibc.  (Thanks to Arthur David Olson.)

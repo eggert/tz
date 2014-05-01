@@ -1480,11 +1480,8 @@ writezone(const char *const name, const char *const string, char version)
 		fromi = 0;
 		while (fromi < timecnt && attypes[fromi].at < min_time)
 			++fromi;
-		/*
-		** Remember that type 0 is reserved.
-		*/
-		if (isdsts[1] == 0)
-			while (fromi < timecnt && attypes[fromi].type == 1)
+		if (isdsts[0] == 0)
+			while (fromi < timecnt && attypes[fromi].type == 0)
 				++fromi;	/* handled by default rule */
 		for ( ; fromi < timecnt; ++fromi) {
 			if (toi != 0 && ((attypes[fromi].at +
@@ -1589,11 +1586,7 @@ writezone(const char *const name, const char *const string, char version)
 		}
 		thistimelim = thistimei + thistimecnt;
 		thisleaplim = thisleapi + thisleapcnt;
-		/*
-		** Remember that type 0 is reserved.
-		*/
-		writetype[0] = FALSE;
-		for (i = 1; i < typecnt; ++i)
+		for (i = 0; i < typecnt; ++i)
 			writetype[i] = thistimecnt == timecnt;
 		if (thistimecnt == 0) {
 			/*
@@ -1609,11 +1602,8 @@ writezone(const char *const name, const char *const string, char version)
 			/*
 			** For America/Godthab and Antarctica/Palmer
 			*/
-			/*
-			** Remember that type 0 is reserved.
-			*/
 			if (thistimei == 0)
-				writetype[1] = TRUE;
+				writetype[0] = TRUE;
 		}
 #ifndef LEAVE_SOME_PRE_2011_SYSTEMS_IN_THE_LURCH
 		/*
@@ -1663,26 +1653,8 @@ writezone(const char *const name, const char *const string, char version)
 		}
 #endif /* !defined LEAVE_SOME_PRE_2011_SYSTEMS_IN_THE_LURCH */
 		thistypecnt = 0;
-		/*
-		** Potentially, set type 0 to that of lowest-valued time.
-		*/
-		if (thistimei > 0) {
-			for (i = 1; i < typecnt; ++i)
-				if (writetype[i] && !isdsts[i])
-					break;
-			if (i != types[thistimei - 1]) {
-				i = types[thistimei - 1];
-				gmtoffs[0] = gmtoffs[i];
-				isdsts[0] = isdsts[i];
-				ttisstds[0] = ttisstds[i];
-				ttisgmts[0] = ttisgmts[i];
-				abbrinds[0] = abbrinds[i];
-				writetype[0] = TRUE;
-				writetype[i] = FALSE;
-			}
-		}
 		for (i = 0; i < typecnt; ++i)
-			typemap[i] = writetype[i] ?  thistypecnt++ : 0;
+			typemap[i] = writetype[i] ?  thistypecnt++ : -1;
 		for (i = 0; i < sizeof indmap / sizeof indmap[0]; ++i)
 			indmap[i] = -1;
 		thischarcnt = 0;
@@ -2105,11 +2077,6 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 		updateminmax(leapminyear);
 		updateminmax(leapmaxyear + (leapmaxyear < ZIC_MAX));
 	}
-	/*
-	** Reserve type 0.
-	*/
-	gmtoffs[0] = isdsts[0] = ttisstds[0] = ttisgmts[0] = abbrinds[0] = -1;
-	typecnt = 1;
 	for (i = 0; i < zonecount; ++i) {
 		zp = &zpfirst[i];
 		if (i < zonecount - 1)

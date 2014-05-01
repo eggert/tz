@@ -5,6 +5,9 @@ Unreleased, experimental changes
 
   Changes affecting code
 
+    zic now generates transitions for minimum time values, eliminating guesswork
+    when handling low-valued time stamps.  (Thanks to Arthur David Olson.)
+
     Port to Cygwin sans glibc.  (Thanks to Arthur David Olson.)
 
   Changes affecting commentary and documentation

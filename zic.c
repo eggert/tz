@@ -1480,14 +1480,11 @@ writezone(const char *const name, const char *const string, char version)
 		fromi = 0;
 		while (fromi < timecnt && attypes[fromi].at < min_time)
 			++fromi;
-		if (isdsts[0] == 0)
-			while (fromi < timecnt && attypes[fromi].type == 0)
-				++fromi;	/* handled by default rule */
 		for ( ; fromi < timecnt; ++fromi) {
-			if (toi != 0 && ((attypes[fromi].at +
+			if (toi > 1 && ((attypes[fromi].at +
 				gmtoffs[attypes[toi - 1].type]) <=
-				(attypes[toi - 1].at + gmtoffs[toi == 1 ? 0
-				: attypes[toi - 2].type]))) {
+				(attypes[toi - 1].at +
+				gmtoffs[attypes[toi - 2].type]))) {
 					attypes[toi - 1].type =
 						attypes[fromi].type;
 					continue;
@@ -1531,6 +1528,13 @@ writezone(const char *const name, const char *const string, char version)
 	while (timecnt32 > 0 && !is32(ats[timei32])) {
 		--timecnt32;
 		++timei32;
+	}
+	/*
+	** Output an INT32_MIN "transition" if appropriate--see below.
+	*/
+	if (timei32 > 0 && ats[timei32] > INT32_MIN) {
+		--timei32;
+		++timecnt32;
 	}
 	while (leapcnt32 > 0 && !is32(trans[leapcnt32 - 1]))
 		--leapcnt32;
@@ -1698,7 +1702,12 @@ writezone(const char *const name, const char *const string, char version)
 #undef DO
 		for (i = thistimei; i < thistimelim; ++i)
 			if (pass == 1)
-				puttzcode(ats[i], fp);
+				/*
+				** Output an INT32_MIN "transition"
+				** if appropriate--see above.
+				*/
+				puttzcode(((ats[i] < INT32_MIN) ?
+					INT32_MIN : ats[i]), fp);
 			else	puttzcode64(ats[i], fp);
 		for (i = thistimei; i < thistimelim; ++i) {
 			unsigned char	uc;
@@ -2176,8 +2185,7 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 			if (usestart) {
 				addtt(starttime, type);
 				usestart = FALSE;
-			} else if (stdoff != 0)
-				addtt(min_time, type);
+			} else	addtt(min_time, type);
 		} else for (year = min_year; year <= max_year; ++year) {
 			if (useuntil && year > zp->z_untilrule.r_hiyear)
 				break;

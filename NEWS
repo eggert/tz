@@ -3,6 +3,16 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting near-future time stamps
+
+    Egypt observes DST starting May 15.  (Thanks to Ahmad El-Dardiry.)
+    Details have not been announced, except that DST will not be observed
+    during Ramadan.  Guess that DST will stop during the same Ramadan dates as
+    Morocco, and that Egypt's future spring and fall transitions will be the
+    same as 2010 when it last observed DST, namely April's last Friday at
+    00:00 to September's last Thursday at 23:00 standard time.  Also, guess
+    that Ramadan transitions will be at 00:00 standard time.
+
   Changes affecting code
 
     zic now generates transitions for minimum time values, eliminating guesswork

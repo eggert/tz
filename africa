@@ -339,7 +339,10 @@ Rule	Egypt	2007	only	-	Sep	Thu>=1	23:00s	0	-
 # Egypt is to change back to Daylight system on May 15
 # http://english.ahram.org.eg/NewsContent/1/64/100735/Egypt/Politics-/Egypts-government-to-reapply-daylight-saving-time-.aspx
 
-# From Paul Eggert (2014-05-07):
+# From Gunther Vermier (2015-05-13):
+# our Egypt office confirms that the change will be at 15 May "midnight" (24:00)
+
+# From Paul Eggert (2014-05-13):
 # Sarah El Deeb and Lee Keath of AP report that the Egyptian government says
 # the change is because of blackouts in Cairo, even though Ahram Online (cited
 # above) says DST had no affect on electricity consumption.  The AP story says
@@ -347,8 +350,7 @@ Rule	Egypt	2007	only	-	Sep	Thu>=1	23:00s	0	-
 # DST will end.  See:
 # http://abcnews.go.com/International/wireStory/el-sissi-pushes-egyptians-line-23614833
 #
-# For now, assume DST will start at 00:00 on May 15, and guess that in future
-# years DST will start and end using the same rules as 2010, and guess that
+# For now, guess that later transitions will use 2010's rules, and that
 # Egypt will agree with Morocco (see below) about the date Ramadan starts and
 # ends, though (unlike Morocco) it will switch at 00:00 standard time.  In
 # Egypt the spring-forward transitions are removed for 2020-2022, when the
@@ -362,7 +364,7 @@ Rule	Egypt	2009	only	-	Aug	20	23:00s	0	-
 Rule	Egypt	2010	only	-	Aug	11	0:00	0	-
 Rule	Egypt	2010	only	-	Sep	10	0:00	1:00	S
 Rule	Egypt	2010	only	-	Sep	lastThu	23:00s	0	-
-Rule	Egypt	2014	only	-	May	15	 0:00s	1:00	S
+Rule	Egypt	2014	only	-	May	15	24:00	1:00	S
 Rule	Egypt	2014	only	-	Jun	29	 0:00s	0	-
 Rule	Egypt	2014	only	-	Jul	29	 0:00s	1:00	S
 Rule	Egypt	2014	max	-	Sep	lastThu	23:00s	0	-

@@ -723,6 +723,34 @@ warning(_("hard link failed, symbolic link used"));
 static const zic_t min_time = (zic_t) -1 << (TIME_T_BITS_IN_FILE - 1);
 static const zic_t max_time = -1 - ((zic_t) -1 << (TIME_T_BITS_IN_FILE - 1));
 
+/* Estimated time of the Big Bang, in seconds since the POSIX epoch.
+   zic does not output time stamps before this, partly because they
+   are physically suspect, and partly because GNOME mishandles them; see
+   GNOME bug 730332 <https://bugzilla.gnome.org/show_bug.cgi?id=730332>.
+
+   The following estimate for the Big Bang time is taken from:
+
+   Ade PAR, Aghanim N, Armitage-Caplan C et al.  Planck 2013 results.
+   I. Overview of products and scientific results.
+   arXiv:1303.5062 2013-03-20 20:10:01 UTC
+   <http://arxiv.org/pdf/1303.5062v1> [PDF]
+
+   Page 36, Table 9, row Age/Gyr, column Planck+WP+highL+BAO best fit,
+   gives the value 13.7965.  Multiplying this by 1000000000 and then
+   by 31557600 (the number of seconds in an astronomical year), yields
+   435384428400000000.  This estimate intentionally ignores the
+   difference between the POSIX epoch and the paper's publication
+   date, as being beneath the paper's precision.
+
+   This estimate is approximate, and may change in future versions.
+   Please do not rely on its exact value.  */
+
+#ifndef BIG_BANG
+#define BIG_BANG (-435384428400000000LL)
+#endif
+
+static const zic_t big_bang_time = BIG_BANG;
+
 static int
 itsdir(const char *const name)
 {
@@ -1478,7 +1506,7 @@ writezone(const char *const name, const char *const string, char version)
 
 		toi = 0;
 		fromi = 0;
-		while (fromi < timecnt && attypes[fromi].at < min_time)
+		while (fromi < timecnt && attypes[fromi].at < big_bang_time)
 			++fromi;
 		for ( ; fromi < timecnt; ++fromi) {
 			if (toi > 1 && ((attypes[fromi].at +
@@ -2167,9 +2195,9 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 		*/
 		stdoff = 0;
 		zp = &zpfirst[i];
-		usestart = i > 0 && (zp - 1)->z_untiltime > min_time;
+		usestart = i > 0 && (zp - 1)->z_untiltime > big_bang_time;
 		useuntil = i < (zonecount - 1);
-		if (useuntil && zp->z_untiltime <= min_time)
+		if (useuntil && zp->z_untiltime <= big_bang_time)
 			continue;
 		gmtoff = zp->z_gmtoff;
 		eat(zp->z_filename, zp->z_linenum);
@@ -2185,7 +2213,7 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 			if (usestart) {
 				addtt(starttime, type);
 				usestart = FALSE;
-			} else	addtt(min_time, type);
+			} else	addtt(big_bang_time, type);
 		} else for (year = min_year; year <= max_year; ++year) {
 			if (useuntil && year > zp->z_untilrule.r_hiyear)
 				break;
@@ -2362,8 +2390,8 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 static void
 addtt(const zic_t starttime, int type)
 {
-	if (starttime <= min_time ||
-		(timecnt == 1 && attypes[0].at < min_time)) {
+	if (starttime <= big_bang_time ||
+		(timecnt == 1 && attypes[0].at < big_bang_time)) {
 		gmtoffs[0] = gmtoffs[type];
 		isdsts[0] = isdsts[type];
 		ttisstds[0] = ttisstds[type];

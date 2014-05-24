@@ -519,6 +519,12 @@ produces a single transition to daylight saving at the new UT offset
 To get separate transitions
 use multiple zone continuation lines
 specifying transition instants using universal time.
+.PP
+Time stamps before the Big Bang are silently omitted from the output.
+This works around bugs in software that mishandles large negative time
+stamps.  Call it sour grapes, but pre-Big-Bang time stamps are
+physically suspect anyway.  The estimated time of the Big Bang is
+approximate and may change in future versions.
 .SH FILE
 /usr/local/etc/zoneinfo	standard directory used for created files
 .SH "SEE ALSO"

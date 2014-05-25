@@ -1202,10 +1202,6 @@ inleap(register char ** const fields, const int nfields)
 			return;
 	}
 	dayoff = oadd(dayoff, day - 1);
-	if (dayoff < 0 && !TYPE_SIGNED(zic_t)) {
-		error(_("time before zero"));
-		return;
-	}
 	if (dayoff < min_time / SECSPERDAY) {
 		error(_("time too small"));
 		return;
@@ -1214,7 +1210,7 @@ inleap(register char ** const fields, const int nfields)
 		error(_("time too large"));
 		return;
 	}
-	t = (zic_t) dayoff * SECSPERDAY;
+	t = dayoff * SECSPERDAY;
 	tod = gethms(fields[LP_TIME], _("invalid time of day"), FALSE);
 	cp = fields[LP_CORR];
 	{
@@ -1243,7 +1239,12 @@ inleap(register char ** const fields, const int nfields)
 				));
 			return;
 		}
-		leapadd(tadd(t, tod), positive, lp->l_value, count);
+		t = tadd(t, tod);
+		if (t < big_bang_time) {
+			error(_("leap second precedes Big Bang"));
+			return;
+		}
+		leapadd(t, positive, lp->l_value, count);
 	}
 }
 

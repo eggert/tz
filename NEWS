@@ -8,6 +8,8 @@ Unreleased, experimental changes
     zic no longer generates files containing time stamps before the Big Bang.
     This works around GNOME bug 730332
     <https://bugzilla.gnome.org/show_bug.cgi?id=730332>.
+    (Thanks to Leonardo Chiquitto for reporting the bug, and to
+    Arthur David Olson for suggesting an improvement to the fix.)
 
 
 Release 2014c - 2014-05-13 07:44:13 -0700

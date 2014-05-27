@@ -11,6 +11,10 @@ Unreleased, experimental changes
     (Thanks to Leonardo Chiquitto for reporting the bug, and to
     Arthur David Olson and James Cloos for suggesting improvements to the fix.)
 
+  Changes affecting documentation
+
+    tz-link.htm now mentions GNOME.
+
 
 Release 2014c - 2014-05-13 07:44:13 -0700
 

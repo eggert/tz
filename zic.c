@@ -724,29 +724,31 @@ static const zic_t min_time = (zic_t) -1 << (TIME_T_BITS_IN_FILE - 1);
 static const zic_t max_time = -1 - ((zic_t) -1 << (TIME_T_BITS_IN_FILE - 1));
 
 /* Estimated time of the Big Bang, in seconds since the POSIX epoch.
+   rounded downward to the negation of a power of two that is
+   comfortably outside the error bounds.
+
    zic does not output time stamps before this, partly because they
    are physically suspect, and partly because GNOME mishandles them; see
    GNOME bug 730332 <https://bugzilla.gnome.org/show_bug.cgi?id=730332>.
 
-   The following estimate for the Big Bang time is taken from:
+   For the time of the Big Bang, see:
 
    Ade PAR, Aghanim N, Armitage-Caplan C et al.  Planck 2013 results.
    I. Overview of products and scientific results.
    arXiv:1303.5062 2013-03-20 20:10:01 UTC
    <http://arxiv.org/pdf/1303.5062v1> [PDF]
 
-   Page 36, Table 9, row Age/Gyr, column Planck+WP+highL+BAO best fit,
-   gives the value 13.7965.  Multiplying this by 1000000000 and then
-   by 31557600 (the number of seconds in an astronomical year), yields
-   435384428400000000.  This estimate intentionally ignores the
-   difference between the POSIX epoch and the paper's publication
-   date, as being beneath the paper's precision.
+   Page 36, Table 9, row Age/Gyr, column Planck+WP+highL+BAO 68% limits
+   gives the value 13.798 plus-or-minus 0.037 billion years.
+   Multiplying this by 1000000000 and then by 31557600 (the number of
+   seconds in an astronomical year) gives a value that is comfortably
+   less than 2**59, so BIG_BANG is - 2**59.
 
-   This estimate is approximate, and may change in future versions.
+   BIG_BANG is approximate, and may change in future versions.
    Please do not rely on its exact value.  */
 
 #ifndef BIG_BANG
-#define BIG_BANG (-435384428400000000LL)
+#define BIG_BANG (- (1LL << 59))
 #endif
 
 static const zic_t big_bang_time = BIG_BANG;

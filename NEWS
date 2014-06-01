@@ -5,8 +5,9 @@ Unreleased, experimental changes
   Changes affecting past time stamps
 
     The abbreviation "MSM" (Moscow Midsummer Time) is now used instead of
-    "MSD" for Moscow's double daylight time in summer 1921.
-    (Thanks to Hank W. for reporting the problem.)
+    "MSD" for Moscow's double daylight time in summer 1921.  Also, a typo
+    "VLASST" has been repaired to be "VLAST" for Vladivostok summer time
+    in 1991.  (Thanks to Hank W. for reporting the problems.)
 
 
 Release 2014d - 2014-05-27 21:34:40 -0700

@@ -2376,7 +2376,7 @@ Zone Asia/Yakutsk	 8:38:40 -	LMT	1919 Dec 15
 Zone Asia/Vladivostok	 8:47:44 -	LMT	1922 Nov 15
 			 9:00	-	VLAT	1930 Jun 21 # Vladivostok Time
 			10:00	Russia	VLA%sT	1991 Mar 31 2:00s
-			 9:00	Russia	VLA%sST	1992 Jan 19 2:00s
+			 9:00	Russia	VLA%sT	1992 Jan 19 2:00s
 			10:00	Russia	VLA%sT	2011 Mar 27 2:00s
 			11:00	-	VLAT
 

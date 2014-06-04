@@ -342,46 +342,79 @@ Rule	Egypt	2007	only	-	Sep	Thu>=1	23:00s	0	-
 # From Gunther Vermier (2015-05-13):
 # our Egypt office confirms that the change will be at 15 May "midnight" (24:00)
 
-# From Paul Eggert (2014-05-13):
+# From Imed Chihi (2014-06-04):
+# We have finally "located" a precise official reference about the DST changes
+# in Egypt.  The Ministers Cabinet decision is explained at
+# http://www.cabinet.gov.eg/Media/CabinetMeetingsDetails.aspx?id=347 ...
+# [T]his (Arabic) site is not accessible outside Egypt, but the page ...
+# translates into: "With regard to daylight saving time, it is scheduled to
+# take effect at exactly twelve o'clock this evening, Thursday, 15 MAY 2014,
+# to be suspended by twelve o'clock on the evening of Thursday, 26 JUN 2014,
+# and re-established again at the end of the month of Ramadan, at twelve
+# o'clock on the evening of Thursday, 31 JUL 2014."  This statement has been
+# reproduced by other (more accessible) sites[, e.g.,]...
+# http://elgornal.net/news/news.aspx?id=4699258
+
+# From Paul Eggert (2014-06-04):
 # Sarah El Deeb and Lee Keath of AP report that the Egyptian government says
 # the change is because of blackouts in Cairo, even though Ahram Online (cited
-# above) says DST had no affect on electricity consumption.  The AP story says
-# DST will not be observed during Ramadan.  There is no information about when
-# DST will end.  See:
+# above) says DST had no affect on electricity consumption.  There is
+
+# no information about when DST will end this fall.  See:
 # http://abcnews.go.com/International/wireStory/el-sissi-pushes-egyptians-line-23614833
 #
 # For now, guess that later transitions will use 2010's rules, and that
 # Egypt will agree with Morocco (see below) about the date Ramadan starts and
-# ends, though (unlike Morocco) it will switch at 00:00 standard time.  In
-# Egypt the spring-forward transitions are removed for 2020-2022, when the
-# guessed spring-forward date falls during the estimated Ramadan, and all
-# transitions removed for 2023-2038, where the estimated Ramadan falls entirely
-# outside the guessed daylight-saving time.  Ramadan intrudes on the guessed
-# DST starting in 2039, but that's beyond our somewhat-arbitrary cutoff.
-
+# ends, though (unlike Morocco) it will switch at 24:00 the last Thursday before
+# Ramadan, and at 00:00 the first Friday after Ramadan.
+# To estimate what the Egyptian government will do in future years,
+# transition dates for 2015 through 2037 were determined by running
+# the following program under GNU Emacs 24.3, with the results integrated
+# by hand into the table below.  Ramadan again intrudes on the guessed
+# DST starting in 2038, but that's beyond our somewhat-arbitrary cutoff.
+# (let ((islamic-year 1436))
+#   (while (< islamic-year 1460)
+#     (let ((a (calendar-islamic-to-absolute (list 9 1 islamic-year)))
+#           (b (calendar-islamic-to-absolute (list 10 1 islamic-year)))
+#           (friday 5))
+#       (while (/= friday (mod a 7))
+#         (setq a (1- a)))
+#       (while (/= friday (mod b 7))
+#         (setq b (1+ b)))
+#       (setq a (1- a))
+#       (setq b (1- b))
+#       (setq a (calendar-gregorian-from-absolute a))
+#       (setq b (calendar-gregorian-from-absolute b))
+#       (insert
+#        (format
+#         (concat "Rule\tEgypt\t%d\tonly\t-\t%s\t%2d\t24:00\t0\t-\n"
+#                 "Rule\tEgypt\t%d\tonly\t-\t%s\t%2d\t24:00\t1:00\tS\n")
+#         (car (cdr (cdr a))) (calendar-month-name (car a) t) (car (cdr a))
+#         (car (cdr (cdr b))) (calendar-month-name (car b) t) (car (cdr b)))))
+#     (setq islamic-year (+ 1 islamic-year))))
 Rule	Egypt	2008	only	-	Aug	lastThu	23:00s	0	-
 Rule	Egypt	2009	only	-	Aug	20	23:00s	0	-
 Rule	Egypt	2010	only	-	Aug	11	0:00	0	-
 Rule	Egypt	2010	only	-	Sep	10	0:00	1:00	S
 Rule	Egypt	2010	only	-	Sep	lastThu	23:00s	0	-
 Rule	Egypt	2014	only	-	May	15	24:00	1:00	S
-Rule	Egypt	2014	only	-	Jun	29	 0:00s	0	-
-Rule	Egypt	2014	only	-	Jul	29	 0:00s	1:00	S
+Rule	Egypt	2014	only	-	Jun	26	24:00	0	-
+Rule	Egypt	2014	only	-	Jul	31	24:00	1:00	S
 Rule	Egypt	2014	max	-	Sep	lastThu	23:00s	0	-
 Rule	Egypt	2015	2019	-	Apr	lastFri	 0:00s	1:00	S
-Rule	Egypt	2015	only	-	Jun	18	 0:00s	0	-
-Rule	Egypt	2015	only	-	Jul	18	 0:00s	1:00	S
-Rule	Egypt	2016	only	-	Jun	 7	 0:00s	0	-
-Rule	Egypt	2016	only	-	Jul	 7	 0:00s	1:00	S
-Rule	Egypt	2017	only	-	May	27	 0:00s	0	-
-Rule	Egypt	2017	only	-	Jun	26	 0:00s	1:00	S
-Rule	Egypt	2018	only	-	May	16	 0:00s	0	-
-Rule	Egypt	2018	only	-	Jun	15	 0:00s	1:00	S
-Rule	Egypt	2019	only	-	May	 6	 0:00s	0	-
-Rule	Egypt	2019	only	-	Jun	 5	 0:00s	1:00	S
-Rule	Egypt	2020	only	-	May	24	 0:00s	1:00	S
-Rule	Egypt	2021	only	-	May	13	 0:00s	1:00	S
-Rule	Egypt	2022	only	-	May	 3	 0:00s	1:00	S
+Rule	Egypt	2015	only	-	Jun	11	24:00	0	-
+Rule	Egypt	2015	only	-	Jul	23	24:00	1:00	S
+Rule	Egypt	2016	only	-	Jun	 2	24:00	0	-
+Rule	Egypt	2016	only	-	Jul	 7	24:00	1:00	S
+Rule	Egypt	2017	only	-	May	25	24:00	0	-
+Rule	Egypt	2017	only	-	Jun	29	24:00	1:00	S
+Rule	Egypt	2018	only	-	May	10	24:00	0	-
+Rule	Egypt	2018	only	-	Jun	14	24:00	1:00	S
+Rule	Egypt	2019	only	-	May	 2	24:00	0	-
+Rule	Egypt	2019	only	-	Jun	 6	24:00	1:00	S
+Rule	Egypt	2020	only	-	May	28	24:00	1:00	S
+Rule	Egypt	2021	only	-	May	13	24:00	1:00	S
+Rule	Egypt	2022	only	-	May	 5	24:00	1:00	S
 Rule	Egypt	2023	max	-	Apr	lastFri	 0:00s	1:00	S
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

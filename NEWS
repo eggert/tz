@@ -2,6 +2,12 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting near-future time stamps
+
+    Egypt's 2014 Ramadan-based transitions are June 25 and July 31 at 24:00.
+    (Thanks to Imed Chihi.)  Guess that transitions in future years
+    will follow a similar pattern.
+
   Changes affecting past time stamps
 
     The abbreviation "MSM" (Moscow Midsummer Time) is now used instead of

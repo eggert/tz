@@ -239,13 +239,13 @@ Rule	Egypt	1990	1994	-	May	 1	1:00	1:00	S
 # http://www.worldtimezone.com/dst_news/dst_news_egypt04.html
 # </a>
 Rule	Egypt	1995	2010	-	Apr	lastFri	 0:00s	1:00	S
-Rule	Egypt	1995	2005	-	Sep	lastThu	23:00s	0	-
+Rule	Egypt	1995	2005	-	Sep	lastThu	24:00	0	-
 # From Steffen Thorsen (2006-09-19):
 # The Egyptian Gazette, issue 41,090 (2006-09-18), page 1, reports:
 # Egypt will turn back clocks by one hour at the midnight of Thursday
 # after observing the daylight saving time since May.
 # http://news.gom.com.eg/gazette/pdf/2006/09/18/01.pdf
-Rule	Egypt	2006	only	-	Sep	21	23:00s	0	-
+Rule	Egypt	2006	only	-	Sep	21	24:00	0	-
 # From Dirk Losch (2007-08-14):
 # I received a mail from an airline which says that the daylight
 # saving time in Egypt will end in the night of 2007-09-06 to 2007-09-07.
@@ -254,7 +254,7 @@ Rule	Egypt	2006	only	-	Sep	21	23:00s	0	-
 # http://www.timeanddate.com/worldclock/city.html?n=53
 # From Steffen Thorsen (2007-09-04): The official information...:
 # http://www.sis.gov.eg/En/EgyptOnline/Miscellaneous/000002/0207000000000000001580.htm
-Rule	Egypt	2007	only	-	Sep	Thu>=1	23:00s	0	-
+Rule	Egypt	2007	only	-	Sep	Thu>=1	24:00	0	-
 # From Abdelrahman Hassan (2007-09-06):
 # Due to the Hijri (lunar Islamic calendar) year being 11 days shorter
 # than the year of the Gregorian calendar, Ramadan shifts earlier each
@@ -392,15 +392,15 @@ Rule	Egypt	2007	only	-	Sep	Thu>=1	23:00s	0	-
 #         (car (cdr (cdr a))) (calendar-month-name (car a) t) (car (cdr a))
 #         (car (cdr (cdr b))) (calendar-month-name (car b) t) (car (cdr b)))))
 #     (setq islamic-year (+ 1 islamic-year))))
-Rule	Egypt	2008	only	-	Aug	lastThu	23:00s	0	-
-Rule	Egypt	2009	only	-	Aug	20	23:00s	0	-
-Rule	Egypt	2010	only	-	Aug	11	0:00	0	-
-Rule	Egypt	2010	only	-	Sep	10	0:00	1:00	S
-Rule	Egypt	2010	only	-	Sep	lastThu	23:00s	0	-
+Rule	Egypt	2008	only	-	Aug	lastThu	24:00	0	-
+Rule	Egypt	2009	only	-	Aug	20	24:00	0	-
+Rule	Egypt	2010	only	-	Aug	10	24:00	0	-
+Rule	Egypt	2010	only	-	Sep	 9	24:00	1:00	S
+Rule	Egypt	2010	only	-	Sep	lastThu	24:00	0	-
 Rule	Egypt	2014	only	-	May	15	24:00	1:00	S
 Rule	Egypt	2014	only	-	Jun	26	24:00	0	-
 Rule	Egypt	2014	only	-	Jul	31	24:00	1:00	S
-Rule	Egypt	2014	max	-	Sep	lastThu	23:00s	0	-
+Rule	Egypt	2014	max	-	Sep	lastThu	24:00	0	-
 Rule	Egypt	2015	2019	-	Apr	lastFri	 0:00s	1:00	S
 Rule	Egypt	2015	only	-	Jun	11	24:00	0	-
 Rule	Egypt	2015	only	-	Jul	23	24:00	1:00	S

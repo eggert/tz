@@ -15,6 +15,12 @@ Unreleased, experimental changes
     "VLASST" has been repaired to be "VLAST" for Vladivostok summer time
     in 1991.  (Thanks to Hank W. for reporting the problems.)
 
+  Changes affecting commentary
+
+    tz-link.htm now cites RFC 7265 for jCal, mentions PTP and the
+    draft CalDAV extension, updates URLs for TSP, TZInfo, IATA, and
+    removes stale pointers to World Time Explorer and WORLDTIME.
+
 
 Release 2014d - 2014-05-27 21:34:40 -0700
 

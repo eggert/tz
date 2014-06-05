@@ -8,7 +8,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="US-ASCII"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2014-05-27">
+<meta name="DC.Date" content="2014-06-04">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -196,10 +196,11 @@ covers time zone
 data; see its VTIMEZONE calendar component.
 The iCalendar format requires specialized parsers and generators; a
 variant <a href="http://tools.ietf.org/html/rfc6321">xCal</a>
-(Internet RFC 6321) uses
+(Internet <abbr>RFC</abbr> 6321) uses
 <a href="http://www.w3.org/XML/"><abbr
-title="Extensible Markup Language">XML</abbr></a> format, and a draft variant
-<a href="http://datatracker.ietf.org/doc/draft-ietf-jcardcal-jcal/">jCal</a>
+title="Extensible Markup Language">XML</abbr></a> format, and a variant
+<a href="http://tools.ietf.org/html/rfc7265">jCal</a>
+(Internet <abbr>RFC</abbr> 7265)
 uses <a href="http://www.json.org/"><abbr
 title="JavaScript Object Notation">JSON</abbr></a> format.
 <a href="http://calconnect.org/">CalConnect, The Calendaring and Scheduling
@@ -209,8 +210,12 @@ TIMEZONE Problems and Recommendations</a> offers guidelines and
 recommendations for the use of VTIMEZONE and <code><abbr>tz</abbr></code>.</li>
 <li>CalConnect's <a href="http://calconnect.org/tc-timezone.shtml">TIMEZONE
 Technical Committee</a> has developed
-a <a href="http://tools.ietf.org/html/draft-douglass-timezone-service-08">draft
-timezone service protocol</a>. The committee's earlier <a
+a <a href="http://tools.ietf.org/html/draft-douglass-timezone-service-11">draft
+timezone service protocol</a> along with a <a
+href="http://tools.ietf.org/html/draft-daboo-caldav-timezone-ref-01">draft
+extension</a> to the <a href="http://caldav.calconnect.org/">CalDAV
+calendar access protocol</a> to allow time zone information to be exchanged
+by reference. The committee's earlier <a
 href="http://calconnect.org/publications/timezoneregistryandservicerecommendationsv1.0.pdf">Timezone
 Registry and Service Recommendations</a> discusses a
 strategy for defining and deploying a time zone
@@ -284,7 +289,7 @@ Dates. It is freely available under the Apache License.</li>
 Definitions for Python</a> compiles <code><abbr>tz</abbr></code> source into
 <a href="http://python.org/">Python</a>.
 It is freely available under a <abbr>BSD</abbr>-style license.</li>
-<li><a href="http://tzinfo.rubyforge.org/">TZInfo &ndash;
+<li><a href="http://tzinfo.github.io/">TZInfo &ndash;
 Ruby Timezone Library</a>
 compiles <code><abbr>tz</abbr></code> source into
 <a href="http://www.ruby-lang.org/en/">Ruby</a>.
@@ -375,9 +380,6 @@ href="http://veladg.com/velaterra.html">VelaTerra</a> is
 a Mac <abbr>OS X</abbr> program. Its developers
 <a href="http://veladg.com/tzoffer.html">offer free
 licenses</a> to <code><abbr>tz</abbr></code> contributors.</li>
-<li><a
-href="http://worldtimeexplorer.com/">World Time Explorer</a> is a
-Microsoft Windows program.</li>
 </ul>
 <h2>Other time zone databases</h2>
 <ul>
@@ -391,10 +393,6 @@ for the U.S.</a>, and <a
 href="http://www.astrocom.com/astrology/books/international-atlas">one for
 other locations</a>) by <a
 href="http://astrocom.com/">Astro Computing Services</a>.</li>
-<li><a href="http://worldtime.com/">WORLDTIME: interactive atlas,
-time info, public holidays</a>
-contains information on local time, sunrise and sunset,
-and public holidays in several hundred cities around the world.</li>
 <li><a href="http://worldtimeserver.com/">World Time Server</a>
 is another time zone database.</li>
 <li><a href="http://tycho.usno.navy.mil/tzones.html">World Time Zones</a>
@@ -404,7 +402,7 @@ for the <code><abbr>usno</abbr>*</code> files in
 the <code><abbr>tz</abbr></code> distribution.</li>
 <li>The <a href="http://www.iata.org/publications/Pages/ssim.aspx">Standard
 Schedules Information Manual</a> of the
-<a href="http://iata.org/index.htm">International Air Transport
+<a href="http://iata.org/">International Air Transport
 Association</a>
 gives current time zone rules for airports served by commercial aviation.</li>
 <li>Some Microsoft Windows versions contain time zone information in
@@ -482,7 +480,7 @@ common.</li>
 </ul>
 <h2>Civil time concepts and history</h2>
 <ul>
-<li><a href="http://physics.nist.gov/GenInt/Time/time.html">A
+<li><a href="http://www.nist.gov/pml/general/time/index.cfm">A
 Walk through Time</a>
 surveys the evolution of timekeeping.</li>
 <li><a href="http://webexhibits.org/daylightsaving/">About Daylight
@@ -584,6 +582,9 @@ title="Network Time Protocol">NTP</abbr>: The Network
 Time Protocol</a>
 discusses how to synchronize clocks of
 Internet hosts.</li>
+<li>The <a href="http://www.nist.gov/el/isd/ieee/ieee1588.cfm">Precision
+Time Protocol</a> (IEEE 1588) can achieve submicrosecond clock
+accuracy on a local area network.</li>
 <li><a
 href="http://tools.ietf.org/html/rfc4833">Timezone
 Options for <abbr title="Dynamic Host Configuration Protocol">DHCP</abbr></a>

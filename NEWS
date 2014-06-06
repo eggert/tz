@@ -5,8 +5,14 @@ Unreleased, experimental changes
   Changes affecting near-future time stamps
 
     Egypt's 2014 Ramadan-based transitions are June 26 and July 31 at 24:00.
-    (Thanks to Imed Chihi.)  Guess that transitions in future years
-    will follow a similar pattern.
+    (Thanks to Imed Chihi.)  Guess that from 2015 on Egypt will temporarily
+    switch to standard time at 24:00 the last Thursday before Ramadan, and
+    back to DST at 00:00 the first Friday after Ramadan.
+
+    Similarly, Morocco's are June 28 at 03:00 and August 2 at 02:00.  (Thanks
+    to Milamber Space Network.)  Guess that from 2015 on Morocco will
+    temporarily switch to standard time at 03:00 the last Saturday before
+    Ramadan, and back to DST at 02:00 the first Saturday after Ramadan.
 
   Changes affecting past time stamps
 

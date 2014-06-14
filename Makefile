@@ -266,16 +266,27 @@ VALIDATE_ENV = \
   SP_CHARSET_FIXED=YES \
   SP_ENCODING=UTF-8
 
-# INVALID_CHAR is a regular expression that matches invalid characters in
-# distributed files.  For now, stick to a safe subset of ASCII.
+# SAFE_CHAR is a regular expression that matches a safe character.
+# Some parts of this distribution are limited to safe characters;
+# others can use any UTF-8 character.
+# For now, the safe characters are a safe subset of ASCII.
 # The caller must set the shell variable 'sharp' to the character '#',
 # since Makefile macros cannot contain '#'.
 # TAB_CHAR is a single tab character, in single quotes.
 TAB_CHAR=	'	'
-INVALID_CHAR1=	$(TAB_CHAR)' !\"'$$sharp'$$%&'\''()*+,./0123456789:;<=>?@'
-INVALID_CHAR2=	'ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\^_`'
-INVALID_CHAR3=	'abcdefghijklmnopqrstuvwxyz{|}~'
-INVALID_CHAR=	'[^]'$(INVALID_CHAR1)$(INVALID_CHAR2)$(INVALID_CHAR3)'-]'
+SAFE_CHARSET1=	$(TAB_CHAR)' !\"'$$sharp'$$%&'\''()*+,./0123456789:;<=>?@'
+SAFE_CHARSET2=	'ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\^_`'
+SAFE_CHARSET3=	'abcdefghijklmnopqrstuvwxyz{|}~'
+SAFE_CHARSET=	]$(SAFE_CHARSET1)$(SAFE_CHARSET2)$(SAFE_CHARSET3)-
+SAFE_CHAR=	'['$(SAFE_CHARSET)']'
+
+# SAFE_LINE matches a line of safe characters.
+# SAFE_SHARP_LINE is similar, except any character can follow '#';
+# this is so that comments can contain non-ASCII characters.
+# VALID_LINE matches a line of any validly-encoded characters.
+SAFE_LINE=	'^'$(SAFE_CHAR)'*$$'
+SAFE_SHARP_LINE='^'$(SAFE_CHAR)'*('$$sharp'.*)?$$'
+VALID_LINE=	'^.*$$'
 
 # Flags to give 'tar' when making a distribution.
 # Try to use flags appropriate for GNU tar.
@@ -434,7 +445,11 @@ tzselect:	tzselect.ksh
 check:		check_character_set check_tables check_web
 
 check_character_set: $(ENCHILADA)
-		sharp='#'; ! grep -n $(INVALID_CHAR) $(ENCHILADA)
+		LC_ALL=en_US.utf8 && export LC_ALL && \
+		sharp='#' && \
+		! grep -Env $(SAFE_LINE) $(MANS) date.1 $(MISC) $(SOURCES) && \
+		! grep -Env $(SAFE_SHARP_LINE) Makefile $(DATA) && \
+		! grep -Env $(VALID_LINE) $(ENCHILADA)
 
 check_tables:	checktab.awk $(PRIMARY_YDATA)
 		$(AWK) -f checktab.awk $(PRIMARY_YDATA)

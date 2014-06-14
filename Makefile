@@ -585,3 +585,10 @@ zdump.o:	version.h
 zic.o:		private.h tzfile.h version.h
 
 .KEEP_STATE:
+
+.PHONY: ALL INSTALL all
+.PHONY: check check_character_set check_public check_tables
+.PHONY: check_time_t_alternatives check_web clean clean_misc
+.PHONY: install maintainer-clean names posix_only posix_right
+.PHONY: public right_only right_posix signatures tarballs typecheck
+.PHONY: zonenames zones

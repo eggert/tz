@@ -1098,9 +1098,21 @@ Zone	Europe/Tallinn	1:39:00	-	LMT	1880
 # The news clip from 1981 says that "the time between 2 and 3 o'clock does not
 # exist tonight."
 
+# From Konstantin Hyppönen (2014-06-13):
+# [Heikki Oja's book Aikakirja 2013]
+# http://almanakka.helsinki.fi/images/aikakirja/Aikakirja2013kokonaan.pdf
+# pages 104-105, including a scan from a newspaper published on Apr 2 1942
+# say that ... [o]n Apr 2 1942, 24 o'clock (which means Apr 3 1942,
+# 00:00), clocks were moved one hour forward. The newspaper
+# mentions "on the night from Thursday to Friday"....
+# On Oct 4 1942, clocks were moved at 1:00 one hour backwards.
+#
+# From Paul Eggert (2014-06-14):
+# Go with Oja over Shanks.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Finland	1942	only	-	Apr	3	0:00	1:00	S
-Rule	Finland	1942	only	-	Oct	3	0:00	0	-
+Rule	Finland	1942	only	-	Apr	2	24:00	1:00	S
+Rule	Finland	1942	only	-	Oct	4	1:00	0	-
 Rule	Finland	1981	1982	-	Mar	lastSun	2:00	1:00	S
 Rule	Finland	1981	1982	-	Sep	lastSun	3:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

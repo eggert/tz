@@ -7,6 +7,10 @@ Unreleased, experimental changes
     Finland's 1942 fall-back transition was October 4 at 01:00, not
     October 3 at 00:00.  (Thanks to Konstantin Hyppönen.)
 
+  Changes affecting code
+
+    A stack-overrun bug has been fixed in 'mktime' and similar functions.
+
   Changes affecting commentary
 
     Commentary now uses UTF-8 instead of US-ASCII, allowing the use of

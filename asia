@@ -32,7 +32,7 @@
 # A reliable and entertaining source about time zones is
 # Derek Howse, Greenwich time and longitude, Philip Wilson Publishers (1997).
 #
-# I invented the abbreviations marked `*' in the following table;
+# I invented the abbreviations marked '*' in the following table;
 # the rest are from earlier versions of this file, or from other sources.
 # Corrections are welcome!
 #	     std  dst
@@ -53,7 +53,7 @@
 #	9:00 KST  KDT	Korea
 #	9:30 CST	(Australian) Central Standard Time
 #
-# See the `europe' file for Russia and Turkey in Asia.
+# See the 'europe' file for Russia and Turkey in Asia.
 
 # From Guy Harris:
 # Incorporates data for Singapore from Robert Elz' asia 1.1, as well as
@@ -63,7 +63,7 @@
 
 ###############################################################################
 
-# These rules are stolen from the `europe' file.
+# These rules are stolen from the 'europe' file.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	EUAsia	1981	max	-	Mar	lastSun	 1:00u	1:00	S
 Rule	EUAsia	1979	1995	-	Sep	lastSun	 1:00u	0	-
@@ -1014,7 +1014,7 @@ Rule	Iraq	1983	only	-	Mar	31	0:00	1:00	D
 Rule	Iraq	1984	1985	-	Apr	1	0:00	1:00	D
 Rule	Iraq	1985	1990	-	Sep	lastSun	1:00s	0	S
 Rule	Iraq	1986	1990	-	Mar	lastSun	1:00s	1:00	D
-# IATA SSIM (1991/1996) says Apr 1 12:01am UTC; guess the `:01' is a typo.
+# IATA SSIM (1991/1996) says Apr 1 12:01am UTC; guess the ':01' is a typo.
 # Shanks & Pottenger say Iraq did not observe DST 1992/1997; ignore this.
 #
 Rule	Iraq	1991	2007	-	Apr	 1	3:00s	1:00	D
@@ -1258,12 +1258,12 @@ Zone	Asia/Jerusalem	2:20:54 -	LMT	1880
 
 # Japan
 
-# `9:00' and `JST' is from Guy Harris.
+# '9:00' and 'JST' is from Guy Harris.
 
 # From Paul Eggert (1995-03-06):
 # Today's _Asahi Evening News_ (page 4) reports that Japan had
-# daylight saving between 1948 and 1951, but ``the system was discontinued
-# because the public believed it would lead to longer working hours.''
+# daylight saving between 1948 and 1951, but "the system was discontinued
+# because the public believed it would lead to longer working hours."
 
 # From Mayumi Negishi in the 2005-08-10 Japan Times
 # <http://www.japantimes.co.jp/cgi-bin/getarticle.pl5?nn20050810f2.htm>:
@@ -2264,7 +2264,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # <a href="http://www.worldtimezone.com/dst_news/dst_news_gazastrip05.html">
 # http://www.worldtimezone.com/dst_news/dst_news_gazastrip05.html
 # </a>
-# The rules for Egypt are stolen from the `africa' file.
+# The rules for Egypt are stolen from the 'africa' file.
 
 # From Steffen Thorsen (2011-09-30):
 # West Bank did end Daylight Saving Time this morning/midnight (2011-09-30
@@ -2444,8 +2444,8 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 # "Sri Lanka advances clock by an hour to avoid blackout"
 # (www.virtual-pc.com/lankaweb/news/items/240596-2.html, 1996-05-24,
 # no longer available as of 1999-08-17)
-# reported ``the country's standard time will be put forward by one hour at
-# midnight Friday (1830 GMT) `in the light of the present power crisis'.''
+# reported "the country's standard time will be put forward by one hour at
+# midnight Friday (1830 GMT) 'in the light of the present power crisis'."
 #
 # From Dharmasiri Senanayake, Sri Lanka Media Minister (1996-10-24), as quoted
 # by Shamindra in

@@ -12,11 +12,11 @@ Unreleased, experimental changes
     'localtime', 'mktime', etc. now use much less stack space if ALL_STATE
     is defined.  (Thanks to Elliott Hughes for reporting the problem.)
 
-  Changes affecting commentary
+  Changes affecting documentation and commentary
 
-    Commentary now uses UTF-8 instead of US-ASCII, allowing the use of
-    proper accents in foreign words and names.  Code and data have not
-    changed.
+    Documentation and commentary now prefer UTF-8 to US-ASCII,
+    allowing the use of proper accents in foreign words and names.
+    Code and data have not changed.
 
 
 Release 2014e - 2014-06-12 21:53:52 -0700
@@ -2219,8 +2219,8 @@ Release code95e - 1995-10-13 13:23:57 -0400
 
 Release data95i - 1995-09-26 10:43:26 -0400
 
-  For Canada/Central, guess that the Sun customer's ``one week too
-  early'' was just a approximation, and the true error is one month
+  For Canada/Central, guess that the Sun customer's "one week too
+  early" was just a approximation, and the true error is one month
   too early.  This is consistent with the rest of Canada.
 
 
@@ -2343,7 +2343,7 @@ Release 94b - 1994-02-07 10:04:33 -0500
   as extensive as Shanks but has a few goodies of its own.  I used it
   to update the tables.  I also fixed some more as a result of
   correspondence with Adam David and Peter Ilieve, and move some stray
-  links from `europe' to `backward'.  I corrected some scanning errors
+  links from 'europe' to 'backward'.  I corrected some scanning errors
   in usno1989.
 
   As far as the code goes, I fixed zic to allow years in the range

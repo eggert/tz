@@ -28,6 +28,13 @@ minutes-west
 \fR[\fIyyyy\fR]\fImmddhhmm\fR[\fIyy\fR][\fB.\fIss\fR]
 ]
 .SH DESCRIPTION
+.ie '\(lq'' .ds lq \&"\"
+.el .ds lq \(lq\"
+.ie '\(rq'' .ds rq \&"\"
+.el .ds rq \(rq\"
+.de q
+\\$3\*(lq\\$1\*(rq\\$2
+..
 .I Date
 without arguments writes the date and time to the standard output in
 the form
@@ -42,13 +49,13 @@ replaced by the local time zone's abbreviation
 environment variable if set).
 The exact output format depends on the locale.
 .PP
-If a command-line argument starts with a plus sign
-.RB (` + '),
+If a command-line argument starts with a plus sign (\c
+.q "\fB+\fP" ),
 the rest of the argument is used as a
 .I format
 that controls what appears in the output.
-In the format, when a percent sign
-.RB (` % ')
+In the format, when a percent sign (\c
+.q "\fB%\fP"
 appears,
 it and the character after it are not output,
 but rather identify part of the date or time
@@ -106,7 +113,8 @@ a newline character is always added at the end of the output.
 .PP
 In Sunday-based week numbering,
 the first Sunday of the year begins week 1;
-days preceding it are part of ``week 0.''
+days preceding it are part of
+.q "week 0" .
 In Monday-based week numbering,
 the first Monday of the year begins week 1.
 .PP
@@ -149,12 +157,18 @@ Do not notify other networked systems of the time change.
 .TP
 .BI "\-d " dsttype
 Set the kernel-stored Daylight Saving Time type to the given value.
-(The kernel-stored DST type is used mostly by ``old'' binaries.)
+(The kernel-stored DST type is used mostly by
+.q "old"
+binaries.)
 .TP
 .BI "\-t " minutes-west
-Set the kernel-stored ``minutes west of UTC'' value to the one given on the
+Set the kernel-stored
+.q "minutes west of UTC"
+value to the one given on the
 command line.
-(The kernel-stored DST type is used mostly by ``old'' binaries.)
+(The kernel-stored DST type is used mostly by
+.q "old"
+binaries.)
 .TP
 .BI "\-a " adjustment
 Change the time forward (or backward) by the number of seconds

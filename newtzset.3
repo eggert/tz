@@ -8,6 +8,15 @@ tzset \- initialize time conversion information
 .B cc ... -ltz
 .fi
 .SH DESCRIPTION
+.ie '\(en'' .ds en \-
+.el .ds en \(en
+.ie '\(lq'' .ds lq \&"\"
+.el .ds lq \(lq\"
+.ie '\(rq'' .ds rq \&"\"
+.el .ds rq \(rq\"
+.de q
+\\$3\*(lq\\$1\*(rq\\$2
+..
 .I Tzset
 uses the value of the environment variable
 .B TZ
@@ -75,9 +84,9 @@ except a leading colon
 .RB ( : ),
 digits, comma
 .RB ( , ),
-minus
+ASCII minus
 .RB ( \(mi ),
-plus
+ASCII plus
 .RB ( \(pl ),
 and ASCII NUL are allowed.
 .TP
@@ -108,11 +117,11 @@ follows
 summer time is assumed to be one hour ahead of standard time.  One or
 more digits may be used; the value is always interpreted as a decimal
 number.  The hour must be between zero and 24, and the minutes (and
-seconds) \(em if present \(em between zero and 59.  If preceded by a
-.RB `` \(mi '',
+seconds) \*(en if present \*(en between zero and 59.  If preceded by a
+.q "\fB-\fP" ,
 the time zone shall be east of the Prime Meridian; otherwise it shall be
 west (which may be indicated by an optional preceding
-.RB `` \(pl '').
+.q "\fB+\fP" .
 .TP
 .I rule
 Indicates when to change to and back from summer time.  The
@@ -146,8 +155,8 @@ is one of the following:
 The Julian day
 .I n
 .RI "(1\ \(<=" "\ n\ " "\(<=\ 365).
-Leap days are not counted; that is, in all years \(em including leap
-years \(em February 28 is day 59 and March 1 is day 60.  It is
+Leap days are not counted; that is, in all years \*(en including leap
+years \*(en February 28 is day 59 and March 1 is day 60.  It is
 impossible to explicitly refer to the occasional February 29.
 .TP
 .I n
@@ -167,10 +176,8 @@ of month
 of the year
 .RI "(1\ \(<=" "\ n\ " "\(<=\ 5,
 .RI "1\ \(<=" "\ m\ " "\(<=\ 12,
-where week 5 means ``the last
-.I d
-day in month
-.IR m ''
+where week 5 means
+.q "the last \fId\fP day in month \fIm\fP"
 which may occur in either the fourth or the fifth week).  Week 1 is the
 first week in which the
 .IR d' th
@@ -181,14 +188,16 @@ The
 .I time
 has the same format as
 .I offset
-except that POSIX does not allow a leading sign
-.RB (`` \(mi ''
+except that POSIX does not allow a leading sign (\c
+.q "\fB-\fP"
 or
-.RB `` \(pl '').
+.q "\fB+\fP" ).
 As an extension to POSIX, the hours part of
 .I time
 can range from \(mi167 through 167; this allows for unusual rules such
-as "the Saturday before the first Sunday of March".  The default, if
+as
+.q "the Saturday before the first Sunday of March" .
+The default, if
 .I time
 is not given, is
 .BR 02:00:00 .
@@ -203,14 +212,14 @@ extensions to POSIX.
 stands for US Eastern Standard
 Time (EST), 5 hours behind UTC, without daylight saving.
 .TP
-.B FJT\(mi12FJST,M10.3.1/146,M1.3.4/75
+.B FJT-12FJST,M10.3.1/146,M1.3.4/75
 stands for Fiji Time (FJT) and Fiji Summer Time (FJST), 12 hours ahead
 of UTC, springing forward on October's third Monday at
 146:00 (i.e., 02:00 on the first Sunday on or after October 21), and
 falling back on January's third Thursday at 75:00 (i.e., 03:00 on the
 first Sunday on or after January 18).
 .TP
-.B IST\(mi2IDT,M3.4.4/26,M10.5.0
+.B IST-2IDT,M3.4.4/26,M10.5.0
 stands for Israel Standard Time (IST) and Israel Daylight Time (IDT),
 2 hours ahead of UTC, springing forward on March's fourth
 Thursday at 26:00 (i.e., 02:00 on the first Friday on or after March
@@ -226,7 +235,7 @@ all year and the initial
 .B WART
 is a placeholder.
 .TP
-.B WGT3WGST,M3.5.0/\(mi2,M10.5.0/\(mi1
+.B WGT3WGST,M3.5.0/-2,M10.5.0/-1
 stands for Western Greenland Time (WGT) and Western Greenland Summer
 Time (WGST), 3 hours behind UTC, where clocks follow the EU rules of
 springing forward on March's last Sunday at 01:00 UTC (\(mi02:00 local

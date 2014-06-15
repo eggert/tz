@@ -19,7 +19,7 @@
 ** by the University of California, Berkeley. The name of the
 ** University may not be used to endorse or promote products derived
 ** from this software without specific prior written permission.
-** THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+** THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
 ** IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
 ** WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 */
@@ -713,9 +713,9 @@ _loc(void)
 	if (oldsun) {
 		/*
 		** SunOS 4 used an obsolescent format; see localdtconv(3).
-		** c_fmt had the ``short format for dates and times together''
+		** c_fmt had the "short format for dates and times together"
 		** (SunOS 4 date, "%a %b %e %T %Z %Y" in the C locale);
-		** date_fmt had the ``long format for dates''
+		** date_fmt had the "long format for dates"
 		** (SunOS 4 strftime %C, "%A, %B %e, %Y" in the C locale).
 		** Discard the latter in favor of the former.
 		*/

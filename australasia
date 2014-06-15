@@ -872,7 +872,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # A reliable and entertaining source about time zones is
 # Derek Howse, Greenwich time and longitude, Philip Wilson Publishers (1997).
 #
-# I invented the abbreviations marked `*' in the following table;
+# I invented the abbreviations marked '*' in the following table;
 # the rest are from earlier versions of this file, or from other sources.
 # Corrections are welcome!
 #		std dst
@@ -891,8 +891,8 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 #	-10:00	HST	Hawaii
 #	- 8:00	PST	Pitcairn*
 #
-# See the `northamerica' file for Hawaii.
-# See the `southamerica' file for Easter I and the Galapagos Is.
+# See the 'northamerica' file for Hawaii.
+# See the 'southamerica' file for Easter I and the Galapagos Is.
 
 ###############################################################################
 
@@ -909,21 +909,21 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # </a> covers New South Wales in particular.
 
 # From John Mackin (1991-03-06):
-# We in Australia have _never_ referred to DST as `daylight' time.
-# It is called `summer' time.  Now by a happy coincidence, `summer'
-# and `standard' happen to start with the same letter; hence, the
+# We in Australia have _never_ referred to DST as 'daylight' time.
+# It is called 'summer' time.  Now by a happy coincidence, 'summer'
+# and 'standard' happen to start with the same letter; hence, the
 # abbreviation does _not_ change...
 # The legislation does not actually define abbreviations, at least
 # in this State, but the abbreviation is just commonly taken to be the
 # initials of the phrase, and the legislation here uniformly uses
-# the phrase `summer time' and does not use the phrase `daylight
+# the phrase 'summer time' and does not use the phrase 'daylight
 # time'.
 # Announcers on the Commonwealth radio network, the ABC (for Australian
-# Broadcasting Commission), use the phrases `Eastern Standard Time'
-# or `Eastern Summer Time'.  (Note, though, that as I say in the
+# Broadcasting Commission), use the phrases 'Eastern Standard Time'
+# or 'Eastern Summer Time'.  (Note, though, that as I say in the
 # current australasia file, there is really no such thing.)  Announcers
 # on its overseas service, Radio Australia, use the same phrases
-# prefixed by the word `Australian' when referring to local times;
+# prefixed by the word 'Australian' when referring to local times;
 # time announcements on that service, naturally enough, are made in UTC.
 
 # From Arthur David Olson (1992-03-08):
@@ -1024,7 +1024,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # Mark Prior writes that his newspaper
 # reports that NSW's fall 1995 change will occur at 2:00,
 # but Robert Elz says it's been 3:00 in Victoria since 1970
-# and perhaps the newspaper's `2:00' is referring to standard time.
+# and perhaps the newspaper's '2:00' is referring to standard time.
 # For now we'll continue to assume 2:00s for changes since 1960.
 
 # From Eric Ulevik (1998-01-05):
@@ -1316,7 +1316,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # Based on law library research by John Mackin,
 # who notes:
 #	In Australia, time is not legislated federally, but rather by the
-#	individual states.  Thus, while such terms as ``Eastern Standard Time''
+#	individual states.  Thus, while such terms as "Eastern Standard Time"
 #	[I mean, of course, Australian EST, not any other kind] are in common
 #	use, _they have NO REAL MEANING_, as they are not defined in the
 #	legislation.  This is very important to understand.
@@ -1356,11 +1356,11 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # <a href="http://abc.net.au/news/olympics/1999/06/item19990601114608_1.htm">
 # Qld says no to daylight savings for Olympics
 # </a> (1999-06-01), which quotes Queensland Premier Peter Beattie as saying
-# ``Look you've got to remember in my family when this came up last time
+# "Look you've got to remember in my family when this came up last time
 # I voted for it, my wife voted against it and she said to me it's all very
 # well for you, you don't have to worry about getting the children out of
 # bed, getting them to school, getting them to sleep at night.
-# I've been through all this argument domestically...my wife rules.''
+# I've been through all this argument domestically...my wife rules."
 #
 # Broken Hill will stick with South Australian time in 2000.  See:
 # <a href="http://abc.net.au/news/regionals/brokenh/monthly/regbrok-21jul1999-6.htm">
@@ -1381,7 +1381,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # Yancowinna
 
 # From John Mackin (1989-01-04):
-# `Broken Hill' means the County of Yancowinna.
+# 'Broken Hill' means the County of Yancowinna.
 
 # From George Shepherd via Simon Woodhead via Robert Elz (1991-03-06):
 # # YANCOWINNA..  [ Confirmation courtesy of Broken Hill Postmaster ]
@@ -1539,7 +1539,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 # From Paul Eggert (1996-01-22):
 # Today's _Wall Street Journal_ (page 1) reports that Kiribati
-# ``declared it the same day [throughout] the country as of Jan. 1, 1995''
+# "declared it the same day [throughout] the country as of Jan. 1, 1995"
 # as part of the competition to be first into the 21st century.
 
 
@@ -1554,8 +1554,8 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 # N Mariana Is, Guam
 
-# Howse writes (p 153) ``The Spaniards, on the other hand, reached the
-# Philippines and the Ladrones from America,'' and implies that the Ladrones
+# Howse writes (p 153) "The Spaniards, on the other hand, reached the
+# Philippines and the Ladrones from America," and implies that the Ladrones
 # (now called the Marianas) kept American date for quite some time.
 # For now, we assume the Ladrones switched at the same time as the Philippines;
 # see Asia/Manila.
@@ -1569,8 +1569,8 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # Micronesia
 
 # Alan Eugene Davis writes (1996-03-16),
-# ``I am certain, having lived there for the past decade, that "Truk"
-# (now properly known as Chuuk) ... is in the time zone GMT+10.''
+# "I am certain, having lived there for the past decade, that 'Truk'
+# (now properly known as Chuuk) ... is in the time zone GMT+10."
 #
 # Shanks & Pottenger write that Truk switched from UTC+10 to UTC+11
 # on 1978-10-01; ignore this for now.
@@ -1629,21 +1629,21 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 # Howse writes (p 153, citing p 10 of the 1883-11-18 New York Herald)
 # that in 1879 the King of Samoa decided to change
-# ``the date in his kingdom from the Antipodean to the American system,
+# "the date in his kingdom from the Antipodean to the American system,
 # ordaining -- by a masterpiece of diplomatic flattery -- that
-# the Fourth of July should be celebrated twice in that year.''
+# the Fourth of July should be celebrated twice in that year."
 
 
 # Tonga
 
 # From Paul Eggert (1996-01-22):
-# Today's _Wall Street Journal_ (p 1) reports that ``Tonga has been plotting
-# to sneak ahead of [New Zealanders] by introducing daylight-saving time.''
+# Today's _Wall Street Journal_ (p 1) reports that "Tonga has been plotting
+# to sneak ahead of [New Zealanders] by introducing daylight-saving time."
 # Since Kiribati has moved the Date Line it's not clear what Tonga will do.
 
 # Don Mundell writes in the 1997-02-20 Tonga Chronicle
 # <a href="http://www.tongatapu.net.to/tonga/homeland/timebegins.htm">
-# How Tonga became `The Land where Time Begins'
+# How Tonga became 'The Land where Time Begins'
 # </a>:
 
 # Until 1941 Tonga maintained a standard time 50 minutes ahead of NZST

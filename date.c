@@ -10,7 +10,7 @@
  * by the University of California, Berkeley.  The name of the
  * University may not be used to endorse or promote products derived
  * from this software without specific prior written permission.
- * THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
  * WARRANTIES OF MERCHANT[A]BILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
@@ -394,7 +394,7 @@ reset(const time_t newt, const int nflag)
 	(void) strcpy(sx.after.ut_line, NTIME_MSG);
 #if !SUPPRESS_WTMPX_FILE_UPDATE
 	/* In Solaris 2.5 (and presumably other systems),
-	   `date' does not update /var/adm/wtmpx.
+	   'date' does not update /var/adm/wtmpx.
 	   This must be a bug.  If you'd like to reproduce the bug,
 	   define SUPPRESS_WTMPX_FILE_UPDATE to be nonzero.  */
 	fid = open(WTMPX_FILE, O_WRONLY | O_APPEND);

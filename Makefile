@@ -96,14 +96,14 @@ REDO=		posix_right
 YEARISTYPE=	./yearistype
 
 # Non-default libraries needed to link.
-# Add -lintl if you want to use `gettext' on Solaris.
+# Add -lintl if you want to use 'gettext' on Solaris.
 LDLIBS=
 
 # Add the following to the end of the "CFLAGS=" line as needed.
 #  -DBIG_BANG=-9999999LL if the Big Bang occurred at time -9999999 (see zic.c)
-#  -DHAVE_ADJTIME=0 if `adjtime' does not exist (SVR0?)
+#  -DHAVE_ADJTIME=0 if 'adjtime' does not exist (SVR0?)
 #  -DHAVE_DOS_FILE_NAMES if file names have drive specifiers etc. (MS-DOS)
-#  -DHAVE_GETTEXT=1 if `gettext' works (GNU, Linux, Solaris); also see LDLIBS
+#  -DHAVE_GETTEXT=1 if 'gettext' works (GNU, Linux, Solaris); also see LDLIBS
 #  -DHAVE_INCOMPATIBLE_CTIME_R=1 if your system's time.h declares
 #	ctime_r and asctime_r incompatibly with the POSIX standard (Solaris 8).
 #  -DHAVE_INTTYPES_H=1 if you have a pre-C99 compiler with "inttypes.h"
@@ -236,7 +236,7 @@ ZIC=		$(zic) $(ZFLAGS)
 
 ZFLAGS=
 
-# The name of a Posix-compliant `awk' on your system.
+# The name of a Posix-compliant 'awk' on your system.
 AWK=		awk
 
 # The full path name of a Posix-compliant shell, preferably one that supports
@@ -485,7 +485,7 @@ zdump.8.txt:	zdump.8
 zic.8.txt:	zic.8
 
 $(MANTXTS):	workman.sh
-		LC_ALL=C sh workman.sh `expr $@ : '\(.*\)\.txt$$'` >$@
+		LC_ALL=en_US.utf8 sh workman.sh `expr $@ : '\(.*\)\.txt$$'` >$@
 
 # Set the time stamps to those of the git repository, if available,
 # and if the files have not changed since then.

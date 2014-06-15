@@ -729,10 +729,10 @@ getsecs(register const char *strp, int_fast32_t *const secsp)
 	int	num;
 
 	/*
-	** `HOURSPERDAY * DAYSPERWEEK - 1' allows quasi-Posix rules like
+	** 'HOURSPERDAY * DAYSPERWEEK - 1' allows quasi-Posix rules like
 	** "M10.4.6/26", which does not conform to Posix,
 	** but which specifies the equivalent of
-	** ``02:00 on the first Sunday on or after 23 Oct''.
+	** "02:00 on the first Sunday on or after 23 Oct".
 	*/
 	strp = getnum(strp, &num, 0, HOURSPERDAY * DAYSPERWEEK - 1);
 	if (strp == NULL)
@@ -746,7 +746,7 @@ getsecs(register const char *strp, int_fast32_t *const secsp)
 		*secsp += num * SECSPERMIN;
 		if (*strp == ':') {
 			++strp;
-			/* `SECSPERMIN' allows for leap seconds. */
+			/* 'SECSPERMIN' allows for leap seconds.  */
 			strp = getnum(strp, &num, 0, SECSPERMIN);
 			if (strp == NULL)
 				return NULL;

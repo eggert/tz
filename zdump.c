@@ -185,7 +185,7 @@ enum { SECSPER400YEARS_FITS = SECSPERLYEAR <= INTMAX_MAX / 400 };
 
 /*
 ** For the benefit of GNU folk...
-** `_(MSGID)' uses the current locale's message library string for MSGID.
+** '_(MSGID)' uses the current locale's message library string for MSGID.
 ** The default is to use gettext if available, and use MSGID otherwise.
 */
 

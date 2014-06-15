@@ -14,6 +14,8 @@ echo ".am TH
 ..
 .rm }H
 .rm }F" | nroff -man - ${1+"$@"} | perl -ne '
+	binmode STDIN, '\'':encoding(utf8)'\'';
+	binmode STDOUT, '\'':encoding(utf8)'\'';
 	chomp;
 	s/.\010//g;
 	s/\s*$//;

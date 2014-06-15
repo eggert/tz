@@ -40,7 +40,7 @@ REPORT_BUGS_TO=tz@iana.org
 # Check for awk Posix compliance.
 ($AWK -v x=y 'BEGIN { exit 123 }') </dev/null >/dev/null 2>&1
 [ $? = 123 ] || {
-	echo >&2 "$0: Sorry, your \`$AWK' program is not Posix compatible."
+	echo >&2 "$0: Sorry, your '$AWK' program is not Posix compatible."
 	exit 1
 }
 
@@ -308,7 +308,7 @@ while
 				exit 0
 			}'
 		do
-			echo >&2 "\`$TZ' is not a conforming" \
+			echo >&2 "'$TZ' is not a conforming" \
 				'Posix time zone string.'
 		done
 		TZ_for_date=$TZ;;

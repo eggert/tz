@@ -35,13 +35,13 @@
 # Previous editions of this database used WAT, CAT, SAT, and EAT
 # for +0:00 through +3:00, respectively,
 # but Mark R V Murray reports that
-# `SAST' is the official abbreviation for +2:00 in the country of South Africa,
-# `CAT' is commonly used for +2:00 in countries north of South Africa, and
-# `WAT' is probably the best name for +1:00, as the common phrase for
-# the area that includes Nigeria is ``West Africa''.
-# He has heard of ``Western Sahara Time'' for +0:00 but can find no reference.
+# 'SAST' is the official abbreviation for +2:00 in the country of South Africa,
+# 'CAT' is commonly used for +2:00 in countries north of South Africa, and
+# 'WAT' is probably the best name for +1:00, as the common phrase for
+# the area that includes Nigeria is "West Africa".
+# He has heard of "Western Sahara Time" for +0:00 but can find no reference.
 #
-# To make things confusing, `WAT' seems to have been used for -1:00 long ago;
+# To make things confusing, 'WAT' seems to have been used for -1:00 long ago;
 # I'd guess that this was because people needed _some_ name for -1:00,
 # and at the time, far west Africa was the only major land area in -1:00.
 # This usage is now obsolete, as the last use of -1:00 on the African
@@ -54,7 +54,7 @@
 #	 2:00	SAST	South Africa Standard Time
 # and Murray suggests the following abbreviation:
 #	 1:00	WAT	West Africa Time
-# I realize that this leads to `WAT' being used for both -1:00 and 1:00
+# I realize that this leads to 'WAT' being used for both -1:00 and 1:00
 # for times before 1976, but this is the best I can think of
 # until we get more information.
 #
@@ -456,7 +456,7 @@ Zone	Africa/Banjul	-1:06:36 -	LMT	1912
 
 # Ghana
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-# Whitman says DST was observed from 1931 to ``the present'';
+# Whitman says DST was observed from 1931 to "the present";
 # go with Shanks & Pottenger.
 Rule	Ghana	1936	1942	-	Sep	 1	0:00	0:20	GHST
 Rule	Ghana	1936	1942	-	Dec	31	0:00	0	GMT
@@ -704,7 +704,7 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 			3:00	-	EAT
 
 # Morocco
-# See the `europe' file for Spanish Morocco (Africa/Ceuta).
+# See the 'europe' file for Spanish Morocco (Africa/Ceuta).
 
 # From Alex Krivenyshev (2008-05-09):
 # Here is an article that Morocco plan to introduce Daylight Saving Time between

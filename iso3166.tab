@@ -16,7 +16,7 @@
 # Columns are separated by a single tab.
 # The table is sorted by country code.
 #
-# Lines beginning with `#' are comments.
+# Lines beginning with '#' are comments.
 #
 # This table is intended as an aid for users, to help them select time
 # zone data appropriate for their practical needs.  It is not intended

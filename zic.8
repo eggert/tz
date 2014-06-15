@@ -29,10 +29,10 @@ zic \- time zone compiler
 .I filename
 \&... ]
 .SH DESCRIPTION
-.if t .ds lq ``
-.if t .ds rq ''
-.if n .ds lq \&"\"
-.if n .ds rq \&"\"
+.ie '\(lq'' .ds lq \&"\"
+.el .ds lq \(lq\"
+.ie '\(rq'' .ds rq \&"\"
+.el .ds rq \(rq\"
 .de q
 \\$3\*(lq\\$1\*(rq\\$2
 ..
@@ -256,7 +256,7 @@ if the given time is local
 time,
 .B s
 if the given time is local
-.q standard
+.q "standard"
 time, or
 .B u
 (or
@@ -283,13 +283,13 @@ suffixes are not used).
 Gives the
 .q "variable part"
 (for example, the
-.q S
+.q "S"
 or
-.q D
+.q "D"
 in
-.q EST
+.q "EST"
 or
-.q EDT )
+.q "EDT" )
 of time zone abbreviations to be used when this rule is in effect.
 If this field is
 .BR \- ,
@@ -353,16 +353,16 @@ fields of a rule; trailing fields can be omitted, and default to the
 earliest possible value for the missing fields.
 .IP
 The next line must be a
-.q continuation
+.q "continuation"
 line; this has the same form as a zone line except that the
 string
-.q Zone
+.q "Zone"
 and the name are omitted, as the continuation line will
 place information starting at the time specified as the
-.q until
+.q "until"
 information in the previous line in the file used by the previous line.
 Continuation lines may contain
-.q until
+.q "until"
 information, just as zone lines do, indicating that the next line is a further
 continuation.
 .PP
@@ -418,10 +418,10 @@ The
 .B CORR
 field
 should be
-.q +
+.q "+"
 if a second was added
 or
-.q -
+.q "-"
 if a second was skipped.
 .\" There's no need to document the following, since it's impossible for more
 .\" than one leap second to be inserted or deleted at a time.
@@ -438,11 +438,11 @@ The
 .B R/S
 field
 should be (an abbreviation of)
-.q Stationary
+.q "Stationary"
 if the leap second time given by the other fields should be interpreted as UTC
 or
 (an abbreviation of)
-.q Rolling
+.q "Rolling"
 if the leap second time given by the other fields should be interpreted as
 local wall clock time.
 .SH "EXTENDED EXAMPLE"

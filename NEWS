@@ -9,8 +9,6 @@ Unreleased, experimental changes
 
   Changes affecting code
 
-    A stack-overrun bug has been fixed in 'mktime' and similar functions.
-
     'localtime', 'mktime', etc. now use much less stack space if ALL_STATE
     is defined.  (Thanks to Elliott Hughes for reporting the problem.)
 

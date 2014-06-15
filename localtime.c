@@ -1880,7 +1880,7 @@ time1(struct tm *const tmp,
 	register int			i;
 	register int			nseen;
 	char				seen[TZ_MAX_TYPES];
-	unsigned char			types[TZ_MAX_TIMES];
+	unsigned char			types[TZ_MAX_TYPES];
 	int				okay;
 
 	if (tmp == NULL) {

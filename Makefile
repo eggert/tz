@@ -325,7 +325,8 @@ MANTXTS=	newctime.3.txt newstrftime.3.txt newtzset.3.txt \
 			tzfile.5.txt tzselect.8.txt zic.8.txt zdump.8.txt \
 			date.1.txt
 COMMON=		Makefile README
-DOCS=		NEWS Theory $(MANS) date.1 $(MANTXTS)
+WEB_PAGES=	tz-art.htm tz-link.htm
+DOCS=		NEWS Theory $(MANS) date.1 $(MANTXTS) $(WEB_PAGES)
 PRIMARY_YDATA=	africa antarctica asia australasia \
 		europe northamerica southamerica
 YDATA=		$(PRIMARY_YDATA) pacificnew etcetera backward
@@ -335,10 +336,9 @@ TABDATA=	iso3166.tab zone.tab leapseconds
 LEAP_DEPS=	leapseconds.awk leap-seconds.list
 DATA=		$(YDATA) $(NDATA) $(TABDATA) \
 			$(LEAP_DEPS) yearistype.sh
-WEB_PAGES=	tz-art.htm tz-link.htm
 AWK_SCRIPTS=	checktab.awk leapseconds.awk
 MISC=		usno1988 usno1989 usno1989a usno1995 usno1997 usno1998 \
-			$(WEB_PAGES) $(AWK_SCRIPTS) workman.sh \
+			$(AWK_SCRIPTS) workman.sh \
 			zoneinfo2tdf.pl
 ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC)
 

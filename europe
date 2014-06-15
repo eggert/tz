@@ -1117,14 +1117,14 @@ Link	Europe/Helsinki	Europe/Mariehamn
 
 # From Ciro Discepolo (2000-12-20):
 #
-# Henri Le Corre, Regimes Horaires pour le monde entier, Editions
+# Henri Le Corre, Régimes horaires pour le monde entier, Éditions
 # Traditionnelles - Paris 2 books, 1993
 #
-# Gabriel, Traite de l'heure dans le monde, Guy Tredaniel editeur,
+# Gabriel, Traité de l'heure dans le monde, Guy Trédaniel,
 # Paris, 1991
 #
-# Francoise Gauquelin, Problemes de l'heure resolus en astrologie,
-# Guy tredaniel, Paris 1987
+# Françoise Gauquelin, Problèmes de l'heure résolus en astrologie,
+# Guy Trédaniel, Paris 1987
 
 
 #
@@ -1165,16 +1165,16 @@ Rule	France	1939	only	-	Nov	18	23:00s	0	-
 Rule	France	1940	only	-	Feb	25	 2:00	1:00	S
 # The French rules for 1941-1944 were not used in Paris, but Shanks & Pottenger
 # write that they were used in Monaco and in many French locations.
-# Le Corre writes that the upper limit of the free zone was Arneguy, Orthez,
-# Mont-de-Marsan, Bazas, Langon, Lamotte-Montravel, Marouil, La
-# Rochefoucault, Champagne-Mouton, La Roche-Posay, La Haye-Descartes,
+# Le Corre writes that the upper limit of the free zone was Arnéguy, Orthez,
+# Mont-de-Marsan, Bazas, Langon, Lamothe-Montravel, Maroeuil, La
+# Rochefoucauld, Champagne-Mouton, La Roche-Posay, La Haye-Descartes,
 # Loches, Montrichard, Vierzon, Bourges, Moulins, Digoin,
-# Paray-le-Monial, Montceau-les-Mines, Chalons-sur-Saone, Arbois,
+# Paray-le-Monial, Montceau-les-Mines, Chalon-sur-Saône, Arbois,
 # Dole, Morez, St-Claude, and Collonges (Haute-Savoie).
 Rule	France	1941	only	-	May	 5	 0:00	2:00	M # Midsummer
 # Shanks & Pottenger say this transition occurred at Oct 6 1:00,
 # but go with Denis Excoffier (1997-12-12),
-# who quotes the Ephemerides Astronomiques for 1998 from Bureau des Longitudes
+# who quotes the Ephémérides astronomiques for 1998 from Bureau des Longitudes
 # as saying 5/10/41 22hUT.
 Rule	France	1941	only	-	Oct	 6	 0:00	1:00	S
 Rule	France	1942	only	-	Mar	 9	 0:00	2:00	M
@@ -1251,13 +1251,13 @@ Zone	Europe/Berlin	0:53:28 -	LMT	1893 Apr
 			1:00	EU	CE%sT
 
 # From Tobias Conradi (2011-09-12):
-# Busingen <http://www.buesingen.de>, surrounded by the Swiss canton
+# Büsingen <http://www.buesingen.de>, surrounded by the Swiss canton
 # Schaffhausen, did not start observing DST in 1980 as the rest of DE
 # (West Germany at that time) and DD (East Germany at that time) did.
 # DD merged into DE, the area is currently covered by code DE in ISO 3166-1,
 # which in turn is covered by the zone Europe/Berlin.
 #
-# Source for the time in Busingen 1980:
+# Source for the time in Büsingen 1980:
 # http://www.srf.ch/player/video?id=c012c029-03b7-4c2b-9164-aa5902cd58d3
 
 # From Arthur David Olson (2012-03-03):
@@ -1916,7 +1916,7 @@ Rule	Poland	1945	only	-	Nov	 1	0:00	0	-
 # For 1946 on the source is Kazimierz Borkowski,
 # Torun Center for Astronomy, Dept. of Radio Astronomy, Nicolaus Copernicus U.,
 # <http://www.astro.uni.torun.pl/~kb/Artykuly/U-PA/Czas2.htm#tth_tAb1>
-# Thanks to Przemyslaw Augustyniak (2005-05-28) for this reference.
+# Thanks to Przemysław Augustyniak (2005-05-28) for this reference.
 # He also gives these further references:
 # Mon Pol nr 13, poz 162 (1995) <http://www.abc.com.pl/serwis/mp/1995/0162.htm>
 # Druk nr 2180 (2003) <http://www.senat.gov.pl/k5/dok/sejm/053/2180.pdf>
@@ -2468,9 +2468,9 @@ Zone	Europe/Belgrade	1:22:00	-	LMT	1884
 			1:00	C-Eur	CE%sT	1945
 			1:00	-	CET	1945 May 8 2:00s
 			1:00	1:00	CEST	1945 Sep 16  2:00s
-# Metod Kozelj reports that the legal date of
+# Metod Koželj reports that the legal date of
 # transition to EU rules was 1982-11-27, for all of Yugoslavia at the time.
-# Shanks & Pottenger don't give as much detail, so go with Kozelj.
+# Shanks & Pottenger don't give as much detail, so go with Koželj.
 			1:00	-	CET	1982 Nov 27
 			1:00	EU	CE%sT
 Link Europe/Belgrade Europe/Ljubljana	# Slovenia
@@ -2561,18 +2561,18 @@ Zone	Atlantic/Canary	-1:01:36 -	LMT	1922 Mar # Las Palmas de Gran C.
 
 # From Ivan Nilsson (2001-04-13), superseding Shanks & Pottenger:
 #
-# The law "Svensk forfattningssamling 1878, no 14" about standard time in 1879:
+# The law "Svensk författningssamling 1878, no 14" about standard time in 1879:
 # From the beginning of 1879 (that is 01-01 00:00) the time for all
 # places in the country is "the mean solar time for the meridian at
 # three degrees, or twelve minutes of time, to the west of the
 # meridian of the Observatory of Stockholm".  The law is dated 1878-05-31.
 #
-# The observatory at that time had the meridian 18 degrees 03' 30"
+# The observatory at that time had the meridian 18° 03′ 30″
 # eastern longitude = 01:12:14 in time.  Less 12 minutes gives the
 # national standard time as 01:00:14 ahead of GMT....
 #
 # About the beginning of CET in Sweden. The lawtext ("Svensk
-# forfattningssamling 1899, no 44") states, that "from the beginning
+# författningssamling 1899, no 44") states, that "from the beginning
 # of 1900... ... the same as the mean solar time for the meridian at
 # the distance of one hour of time from the meridian of the English
 # observatory at Greenwich, or at 12 minutes 14 seconds to the west
@@ -2580,7 +2580,7 @@ Zone	Atlantic/Canary	-1:01:36 -	LMT	1922 Mar # Las Palmas de Gran C.
 # 1899-06-16.  In short: At 1900-01-01 00:00:00 the new standard time
 # in Sweden is 01:00:00 ahead of GMT.
 #
-# 1916: The lawtext ("Svensk forfattningssamling 1916, no 124") states
+# 1916: The lawtext ("Svensk författningssamling 1916, no 124") states
 # that "1916-05-15 is considered to begin one hour earlier". It is
 # pretty obvious that at 05-14 23:00 the clocks are set to 05-15 00:00....
 # Further the law says, that "1916-09-30 is considered to end one hour later".
@@ -2590,7 +2590,7 @@ Zone	Atlantic/Canary	-1:01:36 -	LMT	1922 Mar # Las Palmas de Gran C.
 # not available on the site (to my knowledge they are only available
 # in Swedish): <http://www.riksdagen.se/english/work/sfst.asp> (type
 # "sommartid" without the quotes in the field "Fritext" and then click
-# the Sok-button).
+# the Sök-button).
 #
 # (2001-05-13):
 #
@@ -2631,7 +2631,7 @@ Zone Europe/Stockholm	1:12:12 -	LMT	1879 Jan  1
 # to be wrong. This is now verified.
 #
 # I have found copies of the original ruling by the Swiss Federal
-# government, in 'Eidgen[o]ssische Gesetzessammlung 1941 and 1942' (Swiss
+# government, in 'Eidgenössische Gesetzessammlung 1941 and 1942' (Swiss
 # federal law collection)...
 #
 # DST began on Monday 5 May 1941, 1:00 am by shifting the clocks to 2:00 am
@@ -2664,18 +2664,18 @@ Zone Europe/Stockholm	1:12:12 -	LMT	1879 Jan  1
 # One further detail for Switzerland, which is probably out of scope for
 # most users of tzdata: The [Europe/Zurich zone] ...
 # describes all of Switzerland correctly, with the exception of
-# the Cantone Geneve (Geneva, Genf). Between 1848 and 1894 Geneve did not
+# the Canton de Genève (Geneva, Genf). Between 1848 and 1894 Geneva did not
 # follow Bern Mean Time but kept its own local mean time.
 # To represent this, an extra zone would be needed.
 #
 # From Alois Treindl (2013-09-11):
 # The Federal regulations say
 # http://www.admin.ch/opc/de/classified-compilation/20071096/index.html
-# ... the meridian for Bern mean time ... is 7 degrees 26'22.50".
+# ... the meridian for Bern mean time ... is 7° 26′ 22.50″.
 # Expressed in time, it is 0h29m45.5s.
 
 # From Pierre-Yves Berger (2013-09-11):
-# the "Circulaire du conseil federal" (December 11 1893)
+# the "Circulaire du conseil fédéral" (December 11 1893)
 # <http://www.amtsdruckschriften.bar.admin.ch/viewOrigDoc.do?id=10071353> ...
 # clearly states that the [1894-06-01] change should be done at midnight
 # but if no one is present after 11 at night, could be postponed until one
@@ -2687,14 +2687,14 @@ Zone Europe/Stockholm	1:12:12 -	LMT	1879 Jan  1
 # We can find no reliable source for Shanks's assertion that all of Switzerland
 # except Geneva switched to Bern Mean Time at 00:00 on 1848-09-12.  This book:
 #
-#	Jakob Messerli. Gleichmassig, punktlich, schnell: Zeiteinteilung und
+#	Jakob Messerli. Gleichmässig, pünktlich, schnell. Zeiteinteilung und
 #	Zeitgebrauch in der Schweiz im 19. Jahrhundert. Chronos, Zurich 1995,
 #	ISBN 3-905311-68-2, OCLC 717570797.
 #
 # suggests that the transition was more gradual, and that the Swiss did not
 # agree about civil time during the transition.  The timekeeping it gives the
 # most detail for is postal and telegraph time: here, federal legislation (the
-# "Bundesgesetz uber die Erstellung von elektrischen Telegraphen") passed on
+# "Bundesgesetz über die Erstellung von elektrischen Telegraphen") passed on
 # 1851-11-23, and an official implementation notice was published 1853-07-16
 # (Bundesblatt 1853, Bd. II, S. 859).  On p 72 Messerli writes that in
 # practice since July 1853 Bernese time was used in "all postal and telegraph
@@ -2741,8 +2741,7 @@ Zone	Europe/Zurich	0:34:08 -	LMT	1853 Jul 16 # See above comment.
 # (on a non-government server though) describing dates between 2002 and 2006:
 # http://www.alomaliye.com/bkk_2002_3769.htm
 
-# From G&ouml;kdeniz Karada&#x011f; (2011-03-10):
-#
+# From Gökdeniz Karadağ (2011-03-10):
 # According to the articles linked below, Turkey will change into summer
 # time zone (GMT+3) on March 28, 2011 at 3:00 a.m. instead of March 27.
 # This change is due to a nationwide exam on 27th.

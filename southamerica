@@ -436,7 +436,7 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	S
 # after April 11, 2010--will continue to have same time as rest of
 # Argentina (UTC-3) (no DST).
 #
-# Confirmaron la pr&oacute;rroga del huso horario de verano (Spanish)
+# Confirmaron la prórroga del huso horario de verano (Spanish)
 # <a href="http://www.eldiariodelarepublica.com/index.php?option=com_content&task=view&id=29383&Itemid=9">
 # http://www.eldiariodelarepublica.com/index.php?option=com_content&task=view&id=29383&Itemid=9
 # </a>
@@ -1203,7 +1203,7 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # http://www.horaoficial.cl/cambio.htm
 # </a>.
 
-# From Jose Miguel Garrido (2008-03-05):
+# From José Miguel Garrido (2008-03-05):
 # ...
 # You could see the announces of the change on
 # <a href="http://www.shoa.cl/noticias/2008/04hora/hora.htm">
@@ -1275,7 +1275,7 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # start date is 2013-09-08 00:00....
 # http://www.gob.cl/informa/2013/02/15/gobierno-anuncia-fechas-de-cambio-de-hora-para-el-ano-2013.htm
 
-# From Jose Miguel Garrido (2014-02-19):
+# From José Miguel Garrido (2014-02-19):
 # Today appeared in the Diario Oficial a decree amending the time change
 # dates to 2014.
 # DST End: last Saturday of April 2014 (Sun 27 Apr 2014 03:00 UTC)
@@ -1587,11 +1587,11 @@ Rule	Para	2002	2003	-	Sep	Sun>=1	0:00	1:00	S
 # a timezone rule change in autumn 2004.
 # From Steffen Thorsen (2005-01-05):
 # Decree 1,867 (2004-03-05)
-# From Carlos Raul Perasso via Jesper Norgaard Welen (2006-10-13)
+# From Carlos Raúl Perasso via Jesper Norgaard Welen (2006-10-13)
 # <http://www.presidencia.gov.py/decretos/D1867.pdf>
 Rule	Para	2004	2009	-	Oct	Sun>=15	0:00	1:00	S
 Rule	Para	2005	2009	-	Mar	Sun>=8	0:00	0	-
-# From Carlos Raul Perasso (2010-02-18):
+# From Carlos Raúl Perasso (2010-02-18):
 # By decree number 3958 issued yesterday (
 # <a href="http://www.presidencia.gov.py/v1/wp-content/uploads/2010/02/decreto3958.pdf">
 # http://www.presidencia.gov.py/v1/wp-content/uploads/2010/02/decreto3958.pdf
@@ -1612,10 +1612,10 @@ Rule	Para	2010	2012	-	Apr	Sun>=8	0:00	0	-
 # Paraguay will end DST on 2013-03-24 00:00....
 # http://www.ande.gov.py/interna.php?id=1075
 #
-# From Carlos Raul Perasso (2013-03-15):
+# From Carlos Raúl Perasso (2013-03-15):
 # The change in Paraguay is now final.  Decree number 10780
 # http://www.presidencia.gov.py/uploads/pdf/presidencia-3b86ff4b691c79d4f5927ca964922ec74772ce857c02ca054a52a37b49afc7fb.pdf
-# From Carlos Raul Perasso (2014-02-28):
+# From Carlos Raúl Perasso (2014-02-28):
 # Decree 1264 can be found at:
 # http://www.presidencia.gov.py/archivos/documentos/DECRETO1264_ey9r8zai.pdf
 Rule	Para	2013	max	-	Mar	Sun>=22	0:00	0	-

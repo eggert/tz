@@ -431,7 +431,7 @@ in decreasing order of importance:
 		locations into different time zones.  E.g. prefer 'Paris'
 		to 'France', since France has had multiple time zones.
 	Use mainstream English spelling, e.g. prefer 'Rome' to 'Roma', and
-		prefer 'Athens' to the true name (which uses Greek letters).
+		prefer 'Athens' to the Greek 'Αθήνα' or the Romanized 'Athína'.
 		The POSIX file name restrictions encourage this rule.
 	Use the most populous among locations in a zone,
 		e.g. prefer 'Shanghai' to 'Beijing'.  Among locations with
@@ -606,9 +606,9 @@ Then in 1753, Sweden made the transition to Gregorian in the usual manner,
 getting there only 13 years behind the original schedule.
 
 (A previous posting of this story was challenged, and Swedish readers
-produced the following references to support it: "Tiderakning och historia"
-by Natanael Beckman (1924) and "Tid, en bok om tiderakning och
-kalendervasen" by Lars-Olof Lode'n (no date was given).)
+produced the following references to support it: "Tideräkning och historia"
+by Natanael Beckman (1924) and "Tid, en bok om tideräkning och
+kalenderävsen" by Lars-Olof Lodén (1968).
 
 
 Grotefend's data
@@ -629,19 +629,19 @@ Gregorian calendar:
 
 21 Dec 1582/
    01 Jan 1583 - Holland, Brabant, Flanders, Hennegau
-10/21 Feb 1583 - bishopric of Liege (L"uttich)
+10/21 Feb 1583 - bishopric of Liege (Lüttich)
 13/24 Feb 1583 - bishopric of Augsburg
 04/15 Oct 1583 - electorate of Trier
 05/16 Oct 1583 - Bavaria, bishoprics of Freising, Eichstedt, Regensburg,
                  Salzburg, Brixen
 13/24 Oct 1583 - Austrian Oberelsass and Breisgau
 20/31 Oct 1583 - bishopric of Basel
-02/13 Nov 1583 - duchy of J"ulich-Berg
-02/13 Nov 1583 - electorate and city of K"oln
-04/15 Nov 1583 - bishopric of W"urzburg
+02/13 Nov 1583 - duchy of Jülich-Berg
+02/13 Nov 1583 - electorate and city of Köln
+04/15 Nov 1583 - bishopric of Würzburg
 11/22 Nov 1583 - electorate of Mainz
 16/27 Nov 1583 - bishopric of Strassburg and the margraviate of Baden
-17/28 Nov 1583 - bishopric of M"unster and duchy of Cleve
+17/28 Nov 1583 - bishopric of Münster and duchy of Cleve
 14/25 Dec 1583 - Steiermark
 
 06/17 Jan 1584 - Austria and Bohemia
@@ -664,7 +664,7 @@ Gregorian calendar:
           1617 - duchy of Kurland (reverted to the Julian calendar in
                  1796)
 
-          1624 - bishopric of Osnabr"uck
+          1624 - bishopric of Osnabrück
 
           1630 - bishopric of Minden
 
@@ -683,7 +683,7 @@ Gregorian calendar:
    12 Dec 1700 - Utrecht, Overijssel
 
 31 Dec 1700/
-   12 Jan 1701 - Friesland, Groningen, Z"urich, Bern, Basel, Geneva,
+   12 Jan 1701 - Friesland, Groningen, Zürich, Bern, Basel, Geneva,
                  Turgau, and Schaffhausen
 
           1724 - Glarus, Appenzell, and the city of St. Gallen
@@ -695,7 +695,7 @@ Gregorian calendar:
 17 Feb/
    01 Mar 1753 - Sweden
 
-1760-1812      - Graub"unden
+1760-1812      - Graubünden
 
 The Russian empire (including Finland and the Baltic states) did not
 convert to the Gregorian calendar until the Soviet revolution of 1917.

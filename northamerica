@@ -2337,17 +2337,17 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # </a>
 # includes this text:
 # En los municipios fronterizos de Tijuana y Mexicali en Baja California;
-# Ju&aacute;rez y Ojinaga en Chihuahua; Acu&ntilde;a y Piedras Negras en Coahuila;
-# An&aacute;huac en Nuevo Le&oacute;n; y Nuevo Laredo, Reynosa y Matamoros en
-# Tamaulipas, la aplicaci&oacute;n de este horario estacional surtir&aacute; efecto
-# desde las dos horas del segundo domingo de marzo y concluir&aacute; a las dos
+# Juárez y Ojinaga en Chihuahua; Acuña y Piedras Negras en Coahuila;
+# Anáhuac en Nuevo León; y Nuevo Laredo, Reynosa y Matamoros en
+# Tamaulipas, la aplicación de este horario estacional surtirá efecto
+# desde las dos horas del segundo domingo de marzo y concluirá a las dos
 # horas del primer domingo de noviembre.
 # En los municipios fronterizos que se encuentren ubicados en la franja
-# fronteriza norte en el territorio comprendido entre la l&iacute;nea
-# internacional y la l&iacute;nea paralela ubicada a una distancia de veinte
-# kil&oacute;metros, as&iacute; como la Ciudad de Ensenada, Baja California, hacia el
-# interior del pa&iacute;s, la aplicaci&oacute;n de este horario estacional surtir&aacute;
-# efecto desde las dos horas del segundo domingo de marzo y concluir&aacute; a
+# fronteriza norte en el territorio comprendido entre la línea
+# internacional y la línea paralela ubicada a una distancia de veinte
+# kilómetros, así como la Ciudad de Ensenada, Baja California, hacia el
+# interior del país, la aplicación de este horario estacional surtirá
+# efecto desde las dos horas del segundo domingo de marzo y concluirá a
 # las dos horas del primer domingo de noviembre.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
@@ -2434,25 +2434,25 @@ Zone America/Hermosillo	-7:23:52 -	LMT	1921 Dec 31 23:36:08
 			-7:00	-	MST
 
 # From Alexander Krivenyshev (2010-04-21):
-# According to news, Bah&iacute;a de Banderas (Mexican state of Nayarit)
+# According to news, Bahía de Banderas (Mexican state of Nayarit)
 # changed time zone UTC-7 to new time zone UTC-6 on April 4, 2010 (to
 # share the same time zone as nearby city Puerto Vallarta, Jalisco).
 #
 # (Spanish)
-# Bah&iacute;a de Banderas homologa su horario al del centro del
-# pa&iacute;s, a partir de este domingo
+# Bahía de Banderas homologa su horario al del centro del
+# país, a partir de este domingo
 # <a href="http://www.nayarit.gob.mx/notes.asp?id=20748">
 # http://www.nayarit.gob.mx/notes.asp?id=20748
 # </a>
 #
-# Bah&iacute;a de Banderas homologa su horario con el del Centro del
-# Pa&iacute;s
+# Bahía de Banderas homologa su horario con el del Centro del
+# País
 # <a href="http://www.bahiadebanderas.gob.mx/principal/index.php?option=com_content&view=article&id=261:bahia-de-banderas-homologa-su-horario-con-el-del-centro-del-pais&catid=42:comunicacion-social&Itemid=50">
 # http://www.bahiadebanderas.gob.mx/principal/index.php?option=com_content&view=article&id=261:bahia-de-banderas-homologa-su-horario-con-el-del-centro-del-pais&catid=42:comunicacion-social&Itemid=50"
 # </a>
 #
 # (English)
-# Puerto Vallarta and Bah&iacute;a de Banderas: One Time Zone
+# Puerto Vallarta and Bahía de Banderas: One Time Zone
 # <a href="http://virtualvallarta.com/puertovallarta/puertovallarta/localnews/2009-12-03-Puerto-Vallarta-and-Bahia-de-Banderas-One-Time-Zone.shtml">
 # http://virtualvallarta.com/puertovallarta/puertovallarta/localnews/2009-12-03-Puerto-Vallarta-and-Bahia-de-Banderas-One-Time-Zone.shtml
 # </a>
@@ -2463,7 +2463,7 @@ Zone America/Hermosillo	-7:23:52 -	LMT	1921 Dec 31 23:36:08
 # </a>
 #
 # "Mexico's Senate approved the amendments to the Mexican Schedule System that
-# will allow Bah&iacute;a de Banderas and Puerto Vallarta to share the same time
+# will allow Bahía de Banderas and Puerto Vallarta to share the same time
 # zone ..."
 # Baja California Sur, Nayarit, Sinaloa
 

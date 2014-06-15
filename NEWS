@@ -1,5 +1,14 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting commentary
+
+    Commentary now uses UTF-8 instead of US-ASCII, allowing the use of
+    proper accents in foreign words and names.  Code and data have not
+    changed.
+
+
 Release 2014e - 2014-06-12 21:53:52 -0700
 
   Changes affecting near-future time stamps
@@ -140,9 +149,9 @@ Release 2014a - 2014-03-07 23:30:29 -0800
     The boundary of the US Pacific time zone is given more accurately.
     (Thanks to Alan Mintz.)
 
-    Chile's 2014 DST will be as predicted.  (Thanks to Jose Miguel Garrido.)
+    Chile's 2014 DST will be as predicted.  (Thanks to José Miguel Garrido.)
 
-    Paraguay's 2014 DST will be as predicted.  (Thanks to Carlos Raul Perasso.)
+    Paraguay's 2014 DST will be as predicted.  (Thanks to Carlos Raúl Perasso.)
 
     Better descriptions of countries with same time zone history as
     Trinidad and Tobago since 1970.  (Thanks to Alan Barrett for suggestion.)
@@ -165,7 +174,7 @@ Release 2014a - 2014-03-07 23:30:29 -0800
 
       Mention the timezone-olson Haskell package.
 
-      Mention zeitverschiebung.net.  (Thanks to Martin Jaeger.)
+      Mention zeitverschiebung.net.  (Thanks to Martin Jäger.)
 
       Remove moribund links to daylight-savings-time.info and to
       Simple Timer + Clocks.
@@ -627,7 +636,7 @@ Release 2013c - 2013-04-19 16:17:40 -0700
 
     Assume that the recent change to Paraguay's DST rules is permanent,
     by moving the end of DST to the 4th Sunday in March every year.
-    (Thanks to Carlos Raul Perasso.)
+    (Thanks to Carlos Raúl Perasso.)
 
   Changes affecting past time stamps:
 

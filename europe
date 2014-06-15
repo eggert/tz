@@ -2766,9 +2766,16 @@ Zone	Europe/Zurich	0:34:08 -	LMT	1853 Jul 16 # See above comment.
 # Turkish Local election....
 # http://www.sabah.com.tr/Ekonomi/2014/02/12/yaz-saatinde-onemli-degisiklik
 # ... so Turkey will move clocks forward one hour on March 31 at 3:00 a.m.
-# From Paul Eggert (2014-02-17):
-# Here is an English-language source:
-# http://www.worldbulletin.net/turkey/129016/turkey-switches-to-daylight-saving-time-march-31
+# From Randal L. Schwartz (2014-04-15):
+# Having landed on a flight from the states to Istanbul (via AMS) on March 31,
+# I can tell you that NOBODY (even the airlines) respected this timezone DST
+# change delay.  Maybe the word just didn't get out in time.
+# From Paul Eggert (2014-06-15):
+# The press reported massive confusion, as election officials obeyed the rule
+# change but cell phones (and airline baggage systems) did not.  See:
+# Kostidis M. Eventful elections in Turkey. Balkan News Agency
+# http://www.balkaneu.com/eventful-elections-turkey/ 2014-03-30.
+# I guess the best we can do is document the official time.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Turkey	1916	only	-	May	 1	0:00	1:00	S

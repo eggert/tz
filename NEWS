@@ -11,6 +11,9 @@ Unreleased, experimental changes
 
     A stack-overrun bug has been fixed in 'mktime' and similar functions.
 
+    'localtime', 'mktime', etc. now use much less stack space if ALL_STATE
+    is defined.  (Thanks to Elliott Hughes for reporting the problem.)
+
   Changes affecting commentary
 
     Commentary now uses UTF-8 instead of US-ASCII, allowing the use of

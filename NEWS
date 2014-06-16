@@ -18,6 +18,9 @@ Unreleased, experimental changes
     allowing the use of proper accents in foreign words and names.
     Code and data have not changed.
 
+    Non-HTML documentation and commentary now use plain-text URLs instead of
+    HTML insertions.  (Thanks to a suggestion by Steffen "Daode" Nurpmeso.)
+
 
 Release 2014e - 2014-06-12 21:53:52 -0700
 

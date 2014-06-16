@@ -542,10 +542,9 @@ Calendrical issues are a bit out of scope for a time zone database,
 but they indicate the sort of problems that we would run into if we
 extended the time zone database further into the past.  An excellent
 resource in this area is Nachum Dershowitz and Edward M. Reingold,
-<a href="http://emr.cs.iit.edu/home/reingold/calendar-book/third-edition/">
-Calendrical Calculations: Third Edition
-</a>, Cambridge University Press (2008).  Other information and
-sources are given below.  They sometimes disagree.
+Calendrical Calculations: Third Edition, Cambridge University Press (2008)
+<http://emr.cs.iit.edu/home/reingold/calendar-book/third-edition/>.
+Other information and sources are given below.  They sometimes disagree.
 
 
 France
@@ -586,9 +585,8 @@ Executive Committee of the Supreme Soviet, if you like.
 Sweden (and Finland)
 
 From: Mark Brader
-<a href="news:1996Jul6.012937.29190@sq.com">
 Subject: Re: Gregorian reform -- a part of locale?
-</a>
+<news:1996Jul6.012937.29190@sq.com>
 Date: 1996-07-06
 
 In 1700, Denmark made the transition from Julian to Gregorian.  Sweden

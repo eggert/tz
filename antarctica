@@ -1,16 +1,13 @@
-# <pre>
 # This file is in the public domain, so clarified as of
 # 2009-05-17 by Arthur David Olson.
 
 # From Paul Eggert (1999-11-15):
 # To keep things manageable, we list only locations occupied year-round; see
-# <a href="http://www.comnap.aq/comnap/comnap.nsf/P/Stations/">
 # COMNAP - Stations and Bases
-# </a>
+# <http://www.comnap.aq/comnap/comnap.nsf/P/Stations/>
 # and
-# <a href="http://www.spri.cam.ac.uk/bob/periant.htm">
 # Summary of the Peri-Antarctic Islands (1998-07-23)
-# </a>
+# <http://www.spri.cam.ac.uk/bob/periant.htm>
 # for information.
 # Unless otherwise specified, we have no time zone information.
 #
@@ -65,9 +62,9 @@ Rule	ChileAQ	2012	max	-	Sep	Sun>=2	4:00u	1:00	S
 # Australia - territories
 # Heard Island, McDonald Islands (uninhabited)
 #	previously sealers and scientific personnel wintered
-#	<a href="http://web.archive.org/web/20021204222245/http://www.dstc.qut.edu.au/DST/marg/daylight.html">
 #	Margaret Turner reports
-#	</a> (1999-09-30) that they're UTC+5, with no DST;
+#	<http://web.archive.org/web/20021204222245/http://www.dstc.qut.edu.au/DST/marg/daylight.html>
+#	(1999-09-30) that they're UTC+5, with no DST;
 #	presumably this is when they have visitors.
 #
 # year-round bases
@@ -84,14 +81,10 @@ Rule	ChileAQ	2012	max	-	Sep	Sun>=2	4:00u	1:00	S
 # The changes occurred on 2009-10-18 at 02:00 (local times).
 #
 # Government source: (Australian Antarctic Division)
-# <a href="http://www.aad.gov.au/default.asp?casid=37079">
 # http://www.aad.gov.au/default.asp?casid=37079
-# </a>
 #
 # We have more background information here:
-# <a href="http://www.timeanddate.com/news/time/antarctica-new-times.html">
 # http://www.timeanddate.com/news/time/antarctica-new-times.html
-# </a>
 
 # From Steffen Thorsen (2010-03-10):
 # We got these changes from the Australian Antarctic Division: ...
@@ -106,9 +99,7 @@ Rule	ChileAQ	2012	max	-	Sep	Sun>=2	4:00u	1:00	S
 # - Mawson station stays on UTC+5.
 #
 # Background:
-# <a href="http://www.timeanddate.com/news/time/antartica-time-changes-2010.html">
 # http://www.timeanddate.com/news/time/antartica-time-changes-2010.html
-# </a>
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Antarctica/Casey	0	-	zzz	1969
@@ -132,15 +123,12 @@ Zone Antarctica/Mawson	0	-	zzz	1954 Feb 13
 						# Mawson Time
 			5:00	-	MAWT
 # References:
-# <a href="http://www.antdiv.gov.au/aad/exop/sfo/casey/casey_aws.html">
 # Casey Weather (1998-02-26)
-# </a>
-# <a href="http://www.antdiv.gov.au/aad/exop/sfo/davis/video.html">
+# <http://www.antdiv.gov.au/aad/exop/sfo/casey/casey_aws.html>
 # Davis Station, Antarctica (1998-02-26)
-# </a>
-# <a href="http://www.antdiv.gov.au/aad/exop/sfo/mawson/video.html">
+# <http://www.antdiv.gov.au/aad/exop/sfo/davis/video.html>
 # Mawson Station, Antarctica (1998-02-25)
-# </a>
+# <http://www.antdiv.gov.au/aad/exop/sfo/mawson/video.html>
 
 # Brazil - year-round base
 # Comandante Ferraz, King George Island, -6205+05824, since 1983/4
@@ -192,9 +180,8 @@ Zone Antarctica/DumontDUrville 0 -	zzz	1947
 			0	-	zzz	1956 Nov
 			10:00	-	DDUT	# Dumont-d'Urville Time
 # Reference:
-# <a href="http://en.wikipedia.org/wiki/Dumont_d'Urville_Station">
 # Dumont d'Urville Station (2005-12-05)
-# </a>
+# <http://en.wikipedia.org/wiki/Dumont_d'Urville_Station>
 
 # Germany - year-round base
 # Georg von Neumayer, -7039-00815
@@ -216,9 +203,8 @@ Zone Antarctica/DumontDUrville 0 -	zzz	1947
 Zone Antarctica/Syowa	0	-	zzz	1957 Jan 29
 			3:00	-	SYOT	# Syowa Time
 # See:
-# <a href="http://www.nipr.ac.jp/english/ara01.html">
 # NIPR Antarctic Research Activities (1999-08-17)
-# </a>
+# <http://www.nipr.ac.jp/english/ara01.html>
 
 # S Korea - year-round base
 # King Sejong, King George Island, -6213-05847, since 1988
@@ -278,8 +264,8 @@ Zone Antarctica/Troll	0	-	zzz	2005 Feb 12
 #	year-round from 1960/61 to 1992
 
 # Vostok, since 1957-12-16, temporarily closed 1994-02/1994-11
-# <a href="http://quest.arc.nasa.gov/antarctica/QA/computers/Directions,Time,ZIP">
-# From Craig Mundell (1994-12-15)</a>:
+# From Craig Mundell (1994-12-15)
+# <http://quest.arc.nasa.gov/antarctica/QA/computers/Directions,Time,ZIP>:
 # Vostok, which is one of the Russian stations, is set on the same
 # time as Moscow, Russia.
 #

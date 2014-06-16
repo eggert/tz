@@ -1,4 +1,3 @@
-# <pre>
 # This file is in the public domain, so clarified as of
 # 2009-05-17 by Arthur David Olson.
 
@@ -151,13 +150,8 @@ Zone	Asia/Bahrain	3:22:20 -	LMT	1920		# Al Manamah
 # Daylight Saving Time from June 16 to Sept 30
 #
 # Bangladesh to introduce daylight saving time likely from June 16
-# <a href="http://www.asiantribune.com/?q=node/17288">
 # http://www.asiantribune.com/?q=node/17288
-# </a>
-# or
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_bangladesh02.html">
 # http://www.worldtimezone.com/dst_news/dst_news_bangladesh02.html
-# </a>
 #
 # "... Bangladesh government has decided to switch daylight saving time from
 # June
@@ -172,17 +166,11 @@ Zone	Asia/Bahrain	3:22:20 -	LMT	1920		# Al Manamah
 # the 19th and 20th, and they have not set the end date yet.
 #
 # Some sources:
-# <a href="http://in.reuters.com/article/southAsiaNews/idINIndia-40017620090601">
 # http://in.reuters.com/article/southAsiaNews/idINIndia-40017620090601
-# </a>
-# <a href="http://bdnews24.com/details.php?id=85889&cid=2">
 # http://bdnews24.com/details.php?id=85889&cid=2
-# </a>
 #
 # Our wrap-up:
-# <a href="http://www.timeanddate.com/news/time/bangladesh-daylight-saving-2009.html">
 # http://www.timeanddate.com/news/time/bangladesh-daylight-saving-2009.html
-# </a>
 
 # From A. N. M. Kamrus Saadat (2009-06-15):
 # Finally we've got the official mail regarding DST start time where DST start
@@ -197,13 +185,8 @@ Zone	Asia/Bahrain	3:22:20 -	LMT	1920		# Al Manamah
 #
 # Following report by same newspaper-"The Daily Star Friday":
 # "DST change awaits cabinet decision-Clock won't go back by 1-hr from Oct 1"
-# <a href="http://www.thedailystar.net/newDesign/news-details.php?nid=107021">
 # http://www.thedailystar.net/newDesign/news-details.php?nid=107021
-# </a>
-# or
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_bangladesh04.html">
 # http://www.worldtimezone.com/dst_news/dst_news_bangladesh04.html
-# </a>
 
 # From Steffen Thorsen (2009-10-13):
 # IANS (Indo-Asian News Service) now reports:
@@ -212,22 +195,15 @@ Zone	Asia/Bahrain	3:22:20 -	LMT	1920		# Al Manamah
 # "continue for an indefinite period."
 #
 # One of many places where it is published:
-# <a href="http://www.thaindian.com/newsportal/business/bangladesh-to-continue-indefinitely-with-advanced-time_100259987.html">
 # http://www.thaindian.com/newsportal/business/bangladesh-to-continue-indefinitely-with-advanced-time_100259987.html
-# </a>
 
 # From Alexander Krivenyshev (2009-12-24):
 # According to Bangladesh newspaper "The Daily Star,"
 # Bangladesh will change its clock back to Standard Time on Dec 31, 2009.
 #
 # Clock goes back 1-hr on Dec 31 night.
-# <a href="http://www.thedailystar.net/newDesign/news-details.php?nid=119228">
 # http://www.thedailystar.net/newDesign/news-details.php?nid=119228
-# </a>
-# and
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_bangladesh05.html">
 # http://www.worldtimezone.com/dst_news/dst_news_bangladesh05.html
-# </a>
 #
 # "...The government yesterday decided to put the clock back by one hour
 # on December 31 midnight and the new time will continue until March 31,
@@ -237,13 +213,8 @@ Zone	Asia/Bahrain	3:22:20 -	LMT	1920		# Al Manamah
 # From Alexander Krivenyshev (2010-03-22):
 # According to Bangladesh newspaper "The Daily Star,"
 # Cabinet cancels Daylight Saving Time
-# <a href="http://www.thedailystar.net/newDesign/latest_news.php?nid=22817">
 # http://www.thedailystar.net/newDesign/latest_news.php?nid=22817
-# </a>
-# or
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_bangladesh06.html">
 # http://www.worldtimezone.com/dst_news/dst_news_bangladesh06.html
-# </a>
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Dhaka	2009	only	-	Jun	19	23:00	1:00	S
@@ -450,9 +421,7 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928 # or Urumchi
 # ...an example of an official website using of Urumqi time.
 #
 # The first few lines of the Google translation of
-# <a href="http://www.fjysgl.gov.cn/show.aspx?id=2379&cid=39">
 # http://www.fjysgl.gov.cn/show.aspx?id=2379&cid=39
-# </a>
 # (retrieved 2009-10-13)
 # > Urumqi fire seven people are missing the alleged losses of at least
 # > 500 million yuan
@@ -501,15 +470,11 @@ Zone	Asia/Kashgar	5:03:56	-	LMT	1928 # or Kashi or Kaxgar
 # and incorrect rules. Although the exact switch over time is missing, I
 # think 3:30 is correct. The official DST record for Hong Kong can be
 # obtained from
-# <a href="http://www.hko.gov.hk/gts/time/Summertime.htm">
 # http://www.hko.gov.hk/gts/time/Summertime.htm
-# </a>.
 
 # From Arthur David Olson (2009-10-28):
 # Here are the dates given at
-# <a href="http://www.hko.gov.hk/gts/time/Summertime.htm">
 # http://www.hko.gov.hk/gts/time/Summertime.htm
-# </a>
 # as of 2009-10-28:
 # Year        Period
 # 1941        1 Apr to 30 Sep
@@ -595,9 +560,7 @@ Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
 
 # From smallufo (2010-04-03):
 # According to Taiwan's CWB,
-# <a href="http://www.cwb.gov.tw/V6/astronomy/cdata/summert.htm">
 # http://www.cwb.gov.tw/V6/astronomy/cdata/summert.htm
-# </a>
 # Taipei has DST in 1979 between July 1st and Sep 30.
 
 # From Arthur David Olson (2010-04-07):
@@ -731,9 +694,8 @@ Zone	Asia/Tbilisi	2:59:16 -	LMT	1880
 # See Indonesia for the 1945 transition.
 
 # From Joao Carrascalao, brother of the former governor of East Timor, in
-# <a href="http://etan.org/et99c/december/26-31/30ETMAY.htm">
 # East Timor may be late for its millennium
-# </a> (1999-12-26/31):
+# <http://etan.org/et99c/december/26-31/30ETMAY.htm> (1999-12-26/31):
 # Portugal tried to change the time forward in 1974 because the sun
 # rises too early but the suggestion raised a lot of problems with the
 # Timorese and I still don't think it would work today because it
@@ -743,9 +705,9 @@ Zone	Asia/Tbilisi	2:59:16 -	LMT	1880
 # We don't have any record of the above attempt.
 # Most likely our records are incomplete, but we have no better data.
 
-# <a href="http://www.hri.org/news/world/undh/last/00-08-16.undh.html">
 # From Manoel de Almeida e Silva, Deputy Spokesman for the UN Secretary-General
-# (2000-08-16)</a>:
+# <http://www.hri.org/news/world/undh/last/00-08-16.undh.html>
+# (2000-08-16):
 # The Cabinet of the East Timor Transition Administration decided
 # today to advance East Timor's time by one hour.  The time change,
 # which will be permanent, with no seasonal adjustment, will happen at
@@ -995,17 +957,11 @@ Zone	Asia/Tehran	3:25:44	-	LMT	1916
 # From Steffen Thorsen (2008-03-10):
 # The cabinet in Iraq abolished DST last week, according to the following
 # news sources (in Arabic):
-# <a href="http://www.aljeeran.net/wesima_articles/news-20080305-98602.html">
 # http://www.aljeeran.net/wesima_articles/news-20080305-98602.html
-# </a>
-# <a href="http://www.aswataliraq.info/look/article.tpl?id=2047&IdLanguage=17&IdPublication=4&NrArticle=71743&NrIssue=1&NrSection=10">
 # http://www.aswataliraq.info/look/article.tpl?id=2047&IdLanguage=17&IdPublication=4&NrArticle=71743&NrIssue=1&NrSection=10
-# </a>
 #
 # We have published a short article in English about the change:
-# <a href="http://www.timeanddate.com/news/time/iraq-dumps-daylight-saving.html">
 # http://www.timeanddate.com/news/time/iraq-dumps-daylight-saving.html
-# </a>
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Iraq	1982	only	-	May	1	0:00	1:00	D
@@ -1322,14 +1278,14 @@ Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
 
 # Jordan
 #
-# From <a href="http://star.arabia.com/990701/JO9.html">
-# Jordan Week (1999-07-01) </a> via Steffen Thorsen (1999-09-09):
+# From <http://star.arabia.com/990701/JO9.html>
+# Jordan Week (1999-07-01) via Steffen Thorsen (1999-09-09):
 # Clocks in Jordan were forwarded one hour on Wednesday at midnight,
 # in accordance with the government's decision to implement summer time
 # all year round.
 #
-# From <a href="http://star.arabia.com/990930/JO9.html">
-# Jordan Week (1999-09-30) </a> via Steffen Thorsen (1999-11-09):
+# From <http://star.arabia.com/990930/JO9.html>
+# Jordan Week (1999-09-30) via Steffen Thorsen (1999-11-09):
 # Winter time starts today Thursday, 30 September. Clocks will be turned back
 # by one hour.  This is the latest government decision and it's final!
 # The decision was taken because of the increase in working hours in
@@ -1349,9 +1305,7 @@ Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
 
 # From Steffen Thorsen (2009-04-02):
 # This single one might be good enough, (2009-03-24, Arabic):
-# <a href="http://petra.gov.jo/Artical.aspx?Lng=2&Section=8&Artical=95279">
 # http://petra.gov.jo/Artical.aspx?Lng=2&Section=8&Artical=95279
-# </a>
 #
 # Google's translation:
 #
@@ -1442,9 +1396,8 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # - Qyzylorda switched from +5:00 to +6:00 on 1992-01-19 02:00.
 # - Oral switched from +5:00 to +4:00 in spring 1989.
 
-# <a href="http://www.kazsociety.org.uk/news/2005/03/30.htm">
-# From Kazakhstan Embassy's News Bulletin #11 (2005-03-21):
-# </a>
+# From Kazakhstan Embassy's News Bulletin #11
+# <http://www.kazsociety.org.uk/news/2005/03/30.htm> (2005-03-21):
 # The Government of Kazakhstan passed a resolution March 15 abolishing
 # daylight saving time citing lack of economic benefits and health
 # complications coupled with a decrease in productivity.
@@ -1671,9 +1624,8 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # both say that it has just one.
 
 # From Oscar van Vlijmen (1999-12-11):
-# <a href="http://www.mongoliatourism.gov.mn/general.htm">
 # General Information Mongolia
-# </a> (1999-09)
+# <http://www.mongoliatourism.gov.mn/general.htm> (1999-09)
 # "Time: Mongolia has two time zones. Three westernmost provinces of
 # Bayan-Ulgii, Uvs, and Hovd are one hour earlier than the capital city, and
 # the rest of the country follows the Ulaanbaatar time, which is UTC/GMT plus
@@ -1745,21 +1697,15 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # +08:00 instead. Different sources appear to disagree with the tz
 # database on this, e.g.:
 #
-# <a href="http://www.timeanddate.com/worldclock/city.html?n=1026">
 # http://www.timeanddate.com/worldclock/city.html?n=1026
-# </a>
-# <a href="http://www.worldtimeserver.com/current_time_in_MN.aspx">
 # http://www.worldtimeserver.com/current_time_in_MN.aspx
-# </a>
 #
 # both say GMT+08:00.
 
 # From Steffen Thorsen (2008-03-31):
 # eznis airways, which operates several domestic flights, has a flight
 # schedule here:
-# <a href="http://www.eznis.com/Container.jsp?id=112">
 # http://www.eznis.com/Container.jsp?id=112
-# </a>
 # (click the English flag for English)
 #
 # There it appears that flights between Choibalsan and Ulaanbatar arrive
@@ -1874,13 +1820,8 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 # moving clocks forward by one hour for the next three months.
 # ...."
 #
-# <a href="http://www.worldtimezone.net/dst_news/dst_news_pakistan01.html">
 # http://www.worldtimezone.net/dst_news/dst_news_pakistan01.html
-# </a>
-# OR
-# <a href="http://www.dailytimes.com.pk/default.asp?page=2008%5C05%5C15%5Cstory_15-5-2008_pg1_4">
 # http://www.dailytimes.com.pk/default.asp?page=2008%5C05%5C15%5Cstory_15-5-2008_pg1_4
-# </a>
 
 # From Arthur David Olson (2008-05-19):
 # XXX--midnight transitions is a guess; 2008 only is a guess.
@@ -1890,22 +1831,15 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 # for another 2 months--plan to return to Standard Time on October 31
 # instead of August 31.
 #
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_pakistan02.html">
 # http://www.worldtimezone.com/dst_news/dst_news_pakistan02.html
-# </a>
-# OR
-# <a href="http://dailymailnews.com/200808/28/news/dmbrn03.html">
 # http://dailymailnews.com/200808/28/news/dmbrn03.html
-# </a>
 
 # From Alexander Krivenyshev (2009-04-08):
 # Based on previous media reports that "... proposed plan to
 # advance clocks by one hour from May 1 will cause disturbance
 # to the working schedules rather than bringing discipline in
 # official working."
-# <a href="http://www.thenews.com.pk/daily_detail.asp?id=171280">
 # http://www.thenews.com.pk/daily_detail.asp?id=171280
-# </a>
 #
 # recent news that instead of May 2009 - Pakistan plan to
 # introduce DST from April 15, 2009
@@ -1913,15 +1847,8 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 # FYI: Associated Press Of Pakistan
 # April 08, 2009
 # Cabinet okays proposal to advance clocks by one hour from April 15
-# <a href="http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=73043&Itemid=1">
 # http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=73043&Itemid=1
-# </a>
-#
-# or
-#
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_pakistan05.html">
 # http://www.worldtimezone.com/dst_news/dst_news_pakistan05.html
-# </a>
 #
 # ....
 # The Federal Cabinet on Wednesday approved the proposal to
@@ -1934,9 +1861,7 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 # clocks backward by one hour from October 1. A formal announcement to
 # this effect will be made after the Prime Minister grants approval in
 # this regard."
-# <a href="http://www.thenews.com.pk/updates.asp?id=87168">
 # http://www.thenews.com.pk/updates.asp?id=87168
-# </a>
 
 # From Alexander Krivenyshev (2009-09-28):
 # According to Associated Press Of Pakistan, it is confirmed that
@@ -1944,13 +1869,8 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 # 1, 2009.
 #
 # "Clocks to go back one hour from 1 Oct"
-# <a href="http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=86715&Itemid=2">
 # http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=86715&Itemid=2
-# </a>
-# or
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_pakistan07.htm">
 # http://www.worldtimezone.com/dst_news/dst_news_pakistan07.htm
-# </a>
 
 # From Steffen Thorsen (2009-09-29):
 # Alexander Krivenyshev wrote:
@@ -1959,9 +1879,7 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 # > 1, 2009.
 #
 # Now they seem to have changed their mind, November 1 is the new date:
-# <a href="http://www.thenews.com.pk/top_story_detail.asp?Id=24742">
 # http://www.thenews.com.pk/top_story_detail.asp?Id=24742
-# </a>
 # "The country's clocks will be reversed by one hour on November 1.
 # Officials of Federal Ministry for Interior told this to Geo News on
 # Monday."
@@ -1973,9 +1891,7 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 #
 # We have confirmed this year's end date with both with the Ministry of
 # Water and Power and the Pakistan Electric Power Company:
-# <a href="http://www.timeanddate.com/news/time/pakistan-ends-dst09.html">
 # http://www.timeanddate.com/news/time/pakistan-ends-dst09.html
-# </a>
 
 # From Christoph Goehre (2009-10-01):
 # [T]he German Consulate General in Karachi reported me today that Pakistan
@@ -1993,14 +1909,10 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 # Now, it seems that the decision to not observe DST in final:
 #
 # "Govt Withdraws Plan To Advance Clocks"
-# <a href="http://www.apakistannews.com/govt-withdraws-plan-to-advance-clocks-172041">
 # http://www.apakistannews.com/govt-withdraws-plan-to-advance-clocks-172041
-# </a>
 #
 # "People laud PM's announcement to end DST"
-# <a href="http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=99374&Itemid=2">
 # http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=99374&Itemid=2
-# </a>
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule Pakistan	2002	only	-	Apr	Sun>=2	0:01	1:00	S
@@ -2082,10 +1994,9 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # the PA has decided to implement DST in April.
 
 # From Paul Eggert (1999-09-20):
-# Daoud Kuttab writes in
-# <a href="http://www.jpost.com/com/Archive/22.Apr.1999/Opinion/Article-2.html">
-# Holiday havoc
-# </a> (Jerusalem Post, 1999-04-22) that
+# Daoud Kuttab writes in Holiday havoc
+# <http://www.jpost.com/com/Archive/22.Apr.1999/Opinion/Article-2.html>
+# (Jerusalem Post, 1999-04-22) that
 # the Palestinian National Authority changed to DST on 1999-04-15.
 # I vaguely recall that they switch back in October (sorry, forgot the source).
 # For now, let's assume that the spring switch was at 24:00,
@@ -2134,16 +2045,9 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # Gaza Strip (as Egypt) ended DST at midnight Thursday (Aug 28, 2008), while
 # the West Bank will end Daylight Saving Time at midnight Sunday (Aug 31, 2008).
 #
-# <a href="http://www.guardian.co.uk/world/feedarticle/7759001">
 # http://www.guardian.co.uk/world/feedarticle/7759001
-# </a>
-# <a href="http://www.abcnews.go.com/International/wireStory?id=5676087">
 # http://www.abcnews.go.com/International/wireStory?id=5676087
-# </a>
-# or
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_gazastrip01.html">
 # http://www.worldtimezone.com/dst_news/dst_news_gazastrip01.html
-# </a>
 
 # From Alexander Krivenyshev (2009-03-26):
 # According to the Palestine News Network (arabic.pnn.ps), Palestinian
@@ -2151,24 +2055,17 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # 26 and continue until the night of 27 September 2009.
 #
 # (in Arabic)
-# <a href="http://arabic.pnn.ps/index.php?option=com_content&task=view&id=50850">
 # http://arabic.pnn.ps/index.php?option=com_content&task=view&id=50850
-# </a>
 #
-# or
 # (English translation)
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_westbank01.html">
 # http://www.worldtimezone.com/dst_news/dst_news_westbank01.html
-# </a>
 
 # From Steffen Thorsen (2009-08-31):
 # Palestine's Council of Ministers announced that they will revert back to
 # winter time on Friday, 2009-09-04.
 #
 # One news source:
-# <a href="http://www.safa.ps/ara/?action=showdetail&seid=4158">
 # http://www.safa.ps/ara/?action=showdetail&seid=4158
-# </a>
 # (Palestinian press agency, Arabic),
 # Google translate: "Decided that the Palestinian government in Ramallah
 # headed by Salam Fayyad, the start of work in time for the winter of
@@ -2177,9 +2074,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 #
 # We are not sure if Gaza will do the same, last year they had a different
 # end date, we will keep this page updated:
-# <a href="http://www.timeanddate.com/news/time/westbank-gaza-dst-2009.html">
 # http://www.timeanddate.com/news/time/westbank-gaza-dst-2009.html
-# </a>
 
 # From Alexander Krivenyshev (2009-09-02):
 # Seems that Gaza Strip will go back to Winter Time same date as West Bank.
@@ -2189,51 +2084,35 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 #
 # "Winter time unite the West Bank and Gaza"
 # (from Palestinian National Authority):
-# <a href="http://www.moi.gov.ps/en/?page=633167343250594025&nid=11505
 # http://www.moi.gov.ps/en/?page=633167343250594025&nid=11505
-# </a>
-# or
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_gazastrip02.html>
 # http://www.worldtimezone.com/dst_news/dst_news_gazastrip02.html
-# </a>
 
 # From Alexander Krivenyshev (2010-03-19):
 # According to Voice of Palestine DST will last for 191 days, from March
 # 26, 2010 till "the last Sunday before the tenth day of Tishri
 # (October), each year" (October 03, 2010?)
 #
-# <a href="http://palvoice.org/forums/showthread.php?t=245697">
 # http://palvoice.org/forums/showthread.php?t=245697
-# </a>
 # (in Arabic)
-# or
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_westbank03.html">
 # http://www.worldtimezone.com/dst_news/dst_news_westbank03.html
-# </a>
 
 # From Steffen Thorsen (2010-03-24):
 # ...Ma'an News Agency reports that Hamas cabinet has decided it will
 # start one day later, at 12:01am. Not sure if they really mean 12:01am or
 # noon though:
 #
-# <a href="http://www.maannews.net/eng/ViewDetails.aspx?ID=271178">
 # http://www.maannews.net/eng/ViewDetails.aspx?ID=271178
-# </a>
 # (Ma'an News Agency)
 # "At 12:01am Friday, clocks in Israel and the West Bank will change to
 # 1:01am, while Gaza clocks will change at 12:01am Saturday morning."
 
 # From Steffen Thorsen (2010-08-11):
 # According to several sources, including
-# <a href="http://www.maannews.net/eng/ViewDetails.aspx?ID=306795">
 # http://www.maannews.net/eng/ViewDetails.aspx?ID=306795
-# </a>
 # the clocks were set back one hour at 2010-08-11 00:00:00 local time in
 # Gaza and the West Bank.
 # Some more background info:
-# <a href="http://www.timeanddate.com/news/time/westbank-gaza-end-dst-2010.html">
 # http://www.timeanddate.com/news/time/westbank-gaza-end-dst-2010.html
-# </a>
 
 # From Steffen Thorsen (2011-08-26):
 # Gaza and the West Bank did go back to standard time in the beginning of
@@ -2241,13 +2120,9 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # 00:00 (so two periods of DST in 2011). The pause was because of
 # Ramadan.
 #
-# <a href="http://www.maannews.net/eng/ViewDetails.aspx?ID=416217">
 # http://www.maannews.net/eng/ViewDetails.aspx?ID=416217
-# </a>
 # Additional info:
-# <a href="http://www.timeanddate.com/news/time/palestine-dst-2011.html">
 # http://www.timeanddate.com/news/time/palestine-dst-2011.html
-# </a>
 
 # From Alexander Krivenyshev (2011-08-27):
 # According to the article in The Jerusalem Post:
@@ -2257,13 +2132,8 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # The Hamas government said on Saturday that it won't observe summertime after
 # the Muslim feast of Id al-Fitr, which begins on Tuesday..."
 # ...
-# <a href="http://www.jpost.com/MiddleEast/Article.aspx?id=235650">
 # http://www.jpost.com/MiddleEast/Article.aspx?id=235650
-# </a>
-# or
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_gazastrip05.html">
 # http://www.worldtimezone.com/dst_news/dst_news_gazastrip05.html
-# </a>
 # The rules for Egypt are stolen from the 'africa' file.
 
 # From Steffen Thorsen (2011-09-30):
@@ -2272,26 +2142,18 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # So West Bank and Gaza now have the same time again.
 #
 # Many sources, including:
-# <a href="http://www.maannews.net/eng/ViewDetails.aspx?ID=424808">
 # http://www.maannews.net/eng/ViewDetails.aspx?ID=424808
-# </a>
 
 # From Steffen Thorsen (2012-03-26):
 # Palestinian news sources tell that both Gaza and West Bank will start DST
 # on Friday (Thursday midnight, 2012-03-29 24:00).
 # Some of many sources in Arabic:
-# <a href="http://www.samanews.com/index.php?act=Show&id=122638">
 # http://www.samanews.com/index.php?act=Show&id=122638
-# </a>
 #
-# <a href="http://safa.ps/details/news/74352/%D8%A8%D8%AF%D8%A1-%D8%A7%D9%84%D8%AA%D9%88%D9%82%D9%8A%D8%AA-%D8%A7%D9%84%D8%B5%D9%8A%D9%81%D9%8A-%D8%A8%D8%A7%D9%84%D8%B6%D9%81%D8%A9-%D9%88%D8%BA%D8%B2%D8%A9-%D9%84%D9%8A%D9%84%D8%A9-%D8%A7%D9%84%D8%AC%D9%85%D8%B9%D8%A9.html">
 # http://safa.ps/details/news/74352/%D8%A8%D8%AF%D8%A1-%D8%A7%D9%84%D8%AA%D9%88%D9%82%D9%8A%D8%AA-%D8%A7%D9%84%D8%B5%D9%8A%D9%81%D9%8A-%D8%A8%D8%A7%D9%84%D8%B6%D9%81%D8%A9-%D9%88%D8%BA%D8%B2%D8%A9-%D9%84%D9%8A%D9%84%D8%A9-%D8%A7%D9%84%D8%AC%D9%85%D8%B9%D8%A9.html
-# </a>
 #
 # Our brief summary:
-# <a href="http://www.timeanddate.com/news/time/gaza-west-bank-dst-2012.html">
 # http://www.timeanddate.com/news/time/gaza-west-bank-dst-2012.html
-# </a>
 
 # From Steffen Thorsen (2013-03-26):
 # The following news sources tells that Palestine will "start daylight saving
@@ -2448,10 +2310,8 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 # midnight Friday (1830 GMT) 'in the light of the present power crisis'."
 #
 # From Dharmasiri Senanayake, Sri Lanka Media Minister (1996-10-24), as quoted
-# by Shamindra in
-# <a href="news:54rka5$m5h@mtinsc01-mgt.ops.worldnet.att.net">
-# Daily News - Hot News Section (1996-10-26)
-# </a>:
+# by Shamindra in Daily News - Hot News Section
+# <news:54rka5$m5h@mtinsc01-mgt.ops.worldnet.att.net> (1996-10-26):
 # With effect from 12.30 a.m. on 26th October 1996
 # Sri Lanka will be six (06) hours ahead of GMT.
 
@@ -2595,9 +2455,8 @@ Rule	Syria	2007	only	-	Nov	 Fri>=1	0:00	0	-
 # From Arthur David Olson (2008-03-17):
 # Here's a link to English-language coverage by the Syrian Arab News
 # Agency (SANA)...
-# <a href="http://www.sana.sy/eng/21/2008/03/11/165173.htm">
 # http://www.sana.sy/eng/21/2008/03/11/165173.htm
-# </a>...which reads (in part) "The Cabinet approved the suggestion of the
+# ...which reads (in part) "The Cabinet approved the suggestion of the
 # Ministry of Electricity to begin daylight savings time on Friday April
 # 4th, advancing clocks one hour ahead on midnight of Thursday April 3rd."
 # Since Syria is two hours east of UTC, the 2200 and 2100 transition times
@@ -2617,37 +2476,27 @@ Rule	Syria	2007	only	-	Nov	 Fri>=1	0:00	0	-
 # winter time on 2008-11-01 at 00:00 local daylight time (delaying/setting
 # clocks back 60 minutes).
 #
-# <a href="http://sana.sy/ara/2/2008/10/07/195459.htm">
 # http://sana.sy/ara/2/2008/10/07/195459.htm
-# </a>
 
 # From Steffen Thorsen (2009-03-19):
 # Syria will start DST on 2009-03-27 00:00 this year according to many sources,
 # two examples:
 #
-# <a href="http://www.sana.sy/eng/21/2009/03/17/217563.htm">
 # http://www.sana.sy/eng/21/2009/03/17/217563.htm
-# </a>
 # (English, Syrian Arab News # Agency)
-# <a href="http://thawra.alwehda.gov.sy/_View_news2.asp?FileName=94459258720090318012209">
 # http://thawra.alwehda.gov.sy/_View_news2.asp?FileName=94459258720090318012209
-# </a>
 # (Arabic, gov-site)
 #
 # We have not found any sources saying anything about when DST ends this year.
 #
 # Our summary
-# <a href="http://www.timeanddate.com/news/time/syria-dst-starts-march-27-2009.html">
 # http://www.timeanddate.com/news/time/syria-dst-starts-march-27-2009.html
-# </a>
 
 # From Steffen Thorsen (2009-10-27):
 # The Syrian Arab News Network on 2009-09-29 reported that Syria will
 # revert back to winter (standard) time on midnight between Thursday
 # 2009-10-29 and Friday 2009-10-30:
-# <a href="http://www.sana.sy/ara/2/2009/09/29/247012.htm">
 # http://www.sana.sy/ara/2/2009/09/29/247012.htm (Arabic)
-# </a>
 
 # From Arthur David Olson (2009-10-28):
 # We'll see if future DST switching times turn out to be end of the last
@@ -2658,23 +2507,17 @@ Rule	Syria	2007	only	-	Nov	 Fri>=1	0:00	0	-
 # The "Syrian News Station" reported on 2010-03-16 that the Council of
 # Ministers has decided that Syria will start DST on midnight Thursday
 # 2010-04-01: (midnight between Thursday and Friday):
-# <a href="http://sns.sy/sns/?path=news/read/11421">
 # http://sns.sy/sns/?path=news/read/11421 (Arabic)
-# </a>
 
 # From Steffen Thorsen (2012-03-26):
 # Today, Syria's government announced that they will start DST early on Friday
 # (00:00). This is a bit earlier than the past two years.
 #
 # From Syrian Arab News Agency, in Arabic:
-# <a href="http://www.sana.sy/ara/2/2012/03/26/408215.htm">
 # http://www.sana.sy/ara/2/2012/03/26/408215.htm
-# </a>
 #
 # Our brief summary:
-# <a href="http://www.timeanddate.com/news/time/syria-dst-2012.html">
 # http://www.timeanddate.com/news/time/syria-dst-2012.html
-# </a>
 
 # From Arthur David Olson (2012-03-27):
 # Assume last Friday in March going forward XXX.

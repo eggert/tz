@@ -1,4 +1,3 @@
-# <pre>
 # This file is in the public domain, so clarified as of
 # 2009-05-17 by Arthur David Olson.
 
@@ -267,20 +266,13 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # from November 29th 2009  to April 25th 2010.
 #
 # "Daylight savings to commence this month"
-# <a href="http://www.radiofiji.com.fj/fullstory.php?id=23719">
 # http://www.radiofiji.com.fj/fullstory.php?id=23719
-# </a>
-# or
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_fiji01.html">
 # http://www.worldtimezone.com/dst_news/dst_news_fiji01.html
-# </a>
 
 # From Steffen Thorsen (2009-11-10):
 # The Fiji Government has posted some more details about the approved
 # amendments:
-# <a href="http://www.fiji.gov.fj/publish/page_16198.shtml">
 # http://www.fiji.gov.fj/publish/page_16198.shtml
-# </a>
 
 # From Steffen Thorsen (2010-03-03):
 # The Cabinet in Fiji has decided to end DST about a month early, on
@@ -289,35 +281,24 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # 2011 (last Sunday a good guess?).
 #
 # Official source:
-# <a href="http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=1096:3310-cabinet-approves-change-in-daylight-savings-dates&catid=49:cabinet-releases&Itemid=166">
 # http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=1096:3310-cabinet-approves-change-in-daylight-savings-dates&catid=49:cabinet-releases&Itemid=166
-# </a>
 #
 # A bit more background info here:
-# <a href="http://www.timeanddate.com/news/time/fiji-dst-ends-march-2010.html">
 # http://www.timeanddate.com/news/time/fiji-dst-ends-march-2010.html
-# </a>
 
 # From Alexander Krivenyshev (2010-10-24):
 # According to Radio Fiji and Fiji Times online, Fiji will end DST 3
 # weeks earlier than expected - on March 6, 2011, not March 27, 2011...
 # Here is confirmation from Government of the Republic of the Fiji Islands,
 # Ministry of Information (fiji.gov.fj) web site:
-# <a href="http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=2608:daylight-savings&catid=71:press-releases&Itemid=155">
 # http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=2608:daylight-savings&catid=71:press-releases&Itemid=155
-# </a>
-# or
-# <a href="http://www.worldtimezone.com/dst_news/dst_news_fiji04.html">
 # http://www.worldtimezone.com/dst_news/dst_news_fiji04.html
-# </a>
 
 # From Steffen Thorsen (2011-10-03):
 # Now the dates have been confirmed, and at least our start date
 # assumption was correct (end date was one week wrong).
 #
-# <a href="http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=4966:daylight-saving-starts-in-fiji&catid=71:press-releases&Itemid=155">
 # www.fiji.gov.fj/index.php?option=com_content&view=article&id=4966:daylight-saving-starts-in-fiji&catid=71:press-releases&Itemid=155
-# </a>
 # which says
 # Members of the public are reminded to change their time to one hour in
 # advance at 2am to 3am on October 23, 2011 and one hour back at 3am to
@@ -327,9 +308,7 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # Another change to the Fiji DST end date. In the TZ database the end date for
 # Fiji DST 2012, is currently Feb 26. This has been changed to Jan 22.
 #
-# <a href="http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=5017:amendments-to-daylight-savings&catid=71:press-releases&Itemid=155">
 # http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=5017:amendments-to-daylight-savings&catid=71:press-releases&Itemid=155
-# </a>
 # states:
 #
 # The end of daylight saving scheduled initially for the 26th of February 2012
@@ -565,21 +544,15 @@ Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1879 Jul  5
 # Sunday of April 2011."
 #
 # Background info:
-# <a href="http://www.timeanddate.com/news/time/samoa-dst-plan-2009.html">
 # http://www.timeanddate.com/news/time/samoa-dst-plan-2009.html
-# </a>
 #
 # Samoa's Daylight Saving Time Act 2009 is available here, but does not
 # contain any dates:
-# <a href="http://www.parliament.gov.ws/documents/acts/Daylight%20Saving%20Act%20%202009%20%28English%29%20-%20Final%207-7-091.pdf">
 # http://www.parliament.gov.ws/documents/acts/Daylight%20Saving%20Act%20%202009%20%28English%29%20-%20Final%207-7-091.pdf
-# </a>
 
 # From Laupue Raymond Hughes (2010-10-07):
 # Please see
-# <a href="http://www.mcil.gov.ws">
 # http://www.mcil.gov.ws
-# </a>,
 # the Ministry of Commerce, Industry and Labour (sideframe) "Last Sunday
 # September 2010 (26/09/10) - adjust clocks forward from 12:00 midnight
 # to 01:00am and First Sunday April 2011 (03/04/11) - adjust clocks
@@ -587,9 +560,7 @@ Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1879 Jul  5
 
 # From Laupue Raymond Hughes (2011-03-07):
 # I believe this will be posted shortly on the website
-# <a href="http://www.mcil.gov.ws">
 # www.mcil.gov.ws
-# </a>
 #
 # PUBLIC NOTICE ON DAYLIGHT SAVING TIME
 #
@@ -608,9 +579,7 @@ Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1879 Jul  5
 # From David Zuelke (2011-05-09):
 # Subject: Samoa to move timezone from east to west of international date line
 #
-# <a href="http://www.morningstar.co.uk/uk/markets/newsfeeditem.aspx?id=138501958347963">
 # http://www.morningstar.co.uk/uk/markets/newsfeeditem.aspx?id=138501958347963
-# </a>
 
 # From Mark Sim-Smith (2011-08-17):
 # I have been in contact with Leilani Tuala Warren from the Samoa Law
@@ -650,9 +619,7 @@ Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1879 Jul  5
 # it defines Samoa standard time....
 
 # From Laupue Raymond Hughes (2011-09-02):
-# <a href="http://www.mcil.gov.ws/mcil_publications.html">
 # http://www.mcil.gov.ws/mcil_publications.html
-# </a>
 #
 # here is the official website publication for Samoa DST and dateline change
 #
@@ -899,14 +866,14 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # Australia
 
 # From Paul Eggert (2005-12-08):
-# <a href="http://www.bom.gov.au/climate/averages/tables/dst_times.shtml">
 # Implementation Dates of Daylight Saving Time within Australia
-# </a> summarizes daylight saving issues in Australia.
+# <http://www.bom.gov.au/climate/averages/tables/dst_times.shtml>
+# summarizes daylight saving issues in Australia.
 
 # From Arthur David Olson (2005-12-12):
-# <a href="http://www.lawlink.nsw.gov.au/lawlink/Corporate/ll_agdinfo.nsf/pages/community_relations_daylight_saving">
 # Lawlink NSW:Daylight Saving in New South Wales
-# </a> covers New South Wales in particular.
+# <http://www.lawlink.nsw.gov.au/lawlink/Corporate/ll_agdinfo.nsf/pages/community_relations_daylight_saving>
+# covers New South Wales in particular.
 
 # From John Mackin (1991-03-06):
 # We in Australia have _never_ referred to DST as 'daylight' time.
@@ -1034,17 +1001,14 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # relevant entries in this database.
 #
 # NSW (including LHI and Broken Hill):
-# <a href="http://www.austlii.edu.au/au/legis/nsw/consol_act/sta1987137/index.html">
 # Standard Time Act 1987 (updated 1995-04-04)
-# </a>
+# <http://www.austlii.edu.au/au/legis/nsw/consol_act/sta1987137/index.html>
 # ACT
-# <a href="http://www.austlii.edu.au/au/legis/act/consol_act/stasta1972279/index.html">
 # Standard Time and Summer Time Act 1972
-# </a>
+# <http://www.austlii.edu.au/au/legis/act/consol_act/stasta1972279/index.html>
 # SA
-# <a href="http://www.austlii.edu.au/au/legis/sa/consol_act/sta1898137/index.html">
 # Standard Time Act, 1898
-# </a>
+# <http://www.austlii.edu.au/au/legis/sa/consol_act/sta1898137/index.html>
 
 # From David Grosz (2005-06-13):
 # It was announced last week that Daylight Saving would be extended by
@@ -1109,9 +1073,9 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # The 1992 ending date used in the rules is a best guess;
 # it matches what was used in the past.
 
-# <a href="http://www.bom.gov.au/faq/faqgen.htm">
 # The Australian Bureau of Meteorology FAQ
-# </a> (1999-09-27) writes that Giles Meteorological Station uses
+# <http://www.bom.gov.au/faq/faqgen.htm>
+# (1999-09-27) writes that Giles Meteorological Station uses
 # South Australian time even though it's located in Western Australia.
 
 # Queensland
@@ -1325,37 +1289,33 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # From Eric Ulevik (1999-05-26):
 # DST will start in NSW on the last Sunday of August, rather than the usual
 # October in 2000.  [See: Matthew Moore,
-# <a href="http://www.smh.com.au/news/9905/26/pageone/pageone4.html">
 # Two months more daylight saving
-# </a>
-# Sydney Morning Herald (1999-05-26).]
+# Sydney Morning Herald (1999-05-26)
+# <http://www.smh.com.au/news/9905/26/pageone/pageone4.html>]
 
 # From Paul Eggert (1999-09-27):
 # See the following official NSW source:
-# <a href="http://dir.gis.nsw.gov.au/cgi-bin/genobject/document/other/daylightsaving/tigGmZ">
 # Daylight Saving in New South Wales.
-# </a>
+# <http://dir.gis.nsw.gov.au/cgi-bin/genobject/document/other/daylightsaving/tigGmZ>
 #
 # Narrabri Shire (NSW) council has announced it will ignore the extension of
 # daylight saving next year.  See:
-# <a href="http://abc.net.au/news/regionals/neweng/monthly/regeng-22jul1999-1.htm">
 # Narrabri Council to ignore daylight saving
-# </a> (1999-07-22).  For now, we'll wait to see if this really happens.
+# <http://abc.net.au/news/regionals/neweng/monthly/regeng-22jul1999-1.htm>
+# (1999-07-22).  For now, we'll wait to see if this really happens.
 #
 # Victoria will following NSW.  See:
-# <a href="http://abc.net.au/local/news/olympics/1999/07/item19990728112314_1.htm">
-# Vic to extend daylight saving
-# </a> (1999-07-28).
+# Vic to extend daylight saving (1999-07-28)
+# <http://abc.net.au/local/news/olympics/1999/07/item19990728112314_1.htm>
 #
 # However, South Australia rejected the DST request.  See:
-# <a href="http://abc.net.au/news/olympics/1999/07/item19990719151754_1.htm">
-# South Australia rejects Olympics daylight savings request
-# </a> (1999-07-19).
+# South Australia rejects Olympics daylight savings request (1999-07-19)
+# <http://abc.net.au/news/olympics/1999/07/item19990719151754_1.htm>
 #
 # Queensland also will not observe DST for the Olympics.  See:
-# <a href="http://abc.net.au/news/olympics/1999/06/item19990601114608_1.htm">
 # Qld says no to daylight savings for Olympics
-# </a> (1999-06-01), which quotes Queensland Premier Peter Beattie as saying
+# <http://abc.net.au/news/olympics/1999/06/item19990601114608_1.htm>
+# (1999-06-01), which quotes Queensland Premier Peter Beattie as saying
 # "Look you've got to remember in my family when this came up last time
 # I voted for it, my wife voted against it and she said to me it's all very
 # well for you, you don't have to worry about getting the children out of
@@ -1363,9 +1323,8 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # I've been through all this argument domestically...my wife rules."
 #
 # Broken Hill will stick with South Australian time in 2000.  See:
-# <a href="http://abc.net.au/news/regionals/brokenh/monthly/regbrok-21jul1999-6.htm">
-# Broken Hill to be behind the times
-# </a> (1999-07-21).
+# Broken Hill to be behind the times (1999-07-21)
+# <http://abc.net.au/news/regionals/brokenh/monthly/regbrok-21jul1999-6.htm>
 
 # IATA SSIM (1998-09) says that the spring 2000 change for Australian
 # Capital Territory, New South Wales except Lord Howe Island and Broken
@@ -1438,9 +1397,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # summer (southern hemisphere).
 #
 # From
-# <a href="http://www.safework.sa.gov.au/uploaded_files/DaylightDatesSet.pdf">
 # http://www.safework.sa.gov.au/uploaded_files/DaylightDatesSet.pdf
-# </a>
 # The extended daylight saving period that South Australia has been trialling
 # for over the last year is now set to be ongoing.
 # Daylight saving will continue to start on the first Sunday in October each
@@ -1450,9 +1407,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # the ACT for all 52 weeks of the year...
 #
 # We have a wrap-up here:
-# <a href="http://www.timeanddate.com/news/time/south-australia-extends-dst.html">
 # http://www.timeanddate.com/news/time/south-australia-extends-dst.html
-# </a>
 ###############################################################################
 
 # New Zealand
@@ -1577,9 +1532,8 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 # From Paul Eggert (1999-10-29):
 # The Federated States of Micronesia Visitors Board writes in
-# <a href="http://www.fsmgov.org/info/clocks.html">
-# The Federated States of Micronesia - Visitor Information
-# </a> (1999-01-26)
+# The Federated States of Micronesia - Visitor Information (1999-01-26)
+# <http://www.fsmgov.org/info/clocks.html>
 # that Truk and Yap are UTC+10, and Ponape and Kosrae are UTC+11.
 # We don't know when Kosrae switched from UTC+12; assume January 1 for now.
 
@@ -1642,9 +1596,8 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # Since Kiribati has moved the Date Line it's not clear what Tonga will do.
 
 # Don Mundell writes in the 1997-02-20 Tonga Chronicle
-# <a href="http://www.tongatapu.net.to/tonga/homeland/timebegins.htm">
 # How Tonga became 'The Land where Time Begins'
-# </a>:
+# <http://www.tongatapu.net.to/tonga/homeland/timebegins.htm>:
 
 # Until 1941 Tonga maintained a standard time 50 minutes ahead of NZST
 # 12 hours and 20 minutes ahead of GMT.  When New Zealand adjusted its
@@ -1680,9 +1633,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # * Tonga will introduce DST in November
 #
 # I was given this link by John Letts:
-# <a href="http://news.bbc.co.uk/hi/english/world/asia-pacific/newsid_424000/424764.stm">
 # http://news.bbc.co.uk/hi/english/world/asia-pacific/newsid_424000/424764.stm
-# </a>
 #
 # I have not been able to find exact dates for the transition in November
 # yet. By reading this article it seems like Fiji will be 14 hours ahead
@@ -1690,9 +1641,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # (12 + 1 hour DST).
 
 # From Arthur David Olson (1999-09-20):
-# According to <a href="http://www.tongaonline.com/news/sept1799.html">
-# http://www.tongaonline.com/news/sept1799.html
-# </a>:
+# According to <http://www.tongaonline.com/news/sept1799.html>:
 # "Daylight Savings Time will take effect on Oct. 2 through April 15, 2000
 # and annually thereafter from the first Saturday in October through the
 # third Saturday of April.  Under the system approved by Privy Council on

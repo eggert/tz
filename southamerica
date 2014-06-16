@@ -34,7 +34,7 @@
 #
 # Earlier editions of these tables also used the North American style
 # for time zones in Brazil, but this was incorrect, as Brazilians say
-# "summer time".  Reinaldo Goulart, a Sao Paulo businessman active in
+# "summer time".  Reinaldo Goulart, a São Paulo businessman active in
 # the railroad sector, writes (1999-07-06):
 #	The subject of time zones is currently a matter of discussion/debate in
 #	Brazil.  Let's say that "the Brasilia time" is considered the
@@ -94,7 +94,7 @@ Rule	Arg	1988	only	-	Dec	 1	0:00	1:00	S
 # From Hernan G. Otero (1995-06-26):
 # These corrections were contributed by InterSoft Argentina S.A.,
 # obtaining the data from the:
-# Talleres de Hidrografia Naval Argentina
+# Talleres de Hidrografía Naval Argentina
 # (Argentine Naval Hydrography Institute)
 Rule	Arg	1989	1993	-	Mar	Sun>=1	0:00	0	-
 Rule	Arg	1989	1992	-	Oct	Sun>=15	0:00	1:00	S
@@ -116,13 +116,13 @@ Rule	Arg	1999	only	-	Oct	Sun>=1	0:00	1:00	S
 Rule	Arg	2000	only	-	Mar	3	0:00	0	-
 #
 # From Peter Gradelski via Steffen Thorsen (2000-03-01):
-# We just checked with our Sao Paulo office and they say the government of
+# We just checked with our São Paulo office and they say the government of
 # Argentina decided not to become one of the countries that go on or off DST.
 # So Buenos Aires should be -3 hours from GMT at all times.
 #
-# From Fabian L. Arce Jofre (2000-04-04):
+# From Fabián L. Arce Jofré (2000-04-04):
 # The law that claimed DST for Argentina was derogated by President Fernando
-# de la Rua on March 2, 2000, because it would make people spend more energy
+# de la Rúa on March 2, 2000, because it would make people spend more energy
 # in the winter time, rather than less.  The change took effect on March 3.
 #
 # From Mariano Absatz (2001-06-06):
@@ -191,9 +191,10 @@ Rule	Arg	2000	only	-	Mar	3	0:00	0	-
 # From 2008-10-19 until 2009-03-15
 # http://www.boletinoficial.gov.ar/Bora.Portal/CustomControls/PdfContent.aspx?fp=16102008&pi=3&pf=4&s=0&sec=01
 #
-# Decree 1705/2008 excepting 12 Provinces from applying DST in the summer 2008/2009:
-# Catamarca, La Rioja, Mendoza, Salta, San Juan, San Luis, La Pampa, Neuquen, Rio Negro, Chubut, Santa Cruz
-# and Tierra del Fuego
+
+# Decree 1705/2008 excepting 12 Provinces from applying DST in the summer
+# 2008/2009: Catamarca, La Rioja, Mendoza, Salta, San Juan, San Luis, La
+# Pampa, Neuquén, Rio Negro, Chubut, Santa Cruz and Tierra del Fuego
 # http://www.boletinoficial.gov.ar/Bora.Portal/CustomControls/PdfContent.aspx?fp=17102008&pi=1&pf=1&s=0&sec=01
 #
 # Press release 235 dated Saturday October 18th, from the Government of the Province of Jujuy saying
@@ -242,10 +243,10 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	S
 # time in October 17th.
 #
 # Catamarca, Chubut, La Rioja, San Juan, San Luis, Santa Cruz,
-# Tierra del Fuego, Tucuman.
+# Tierra del Fuego, Tucumán.
 #
 # From Mariano Absatz (2004-06-14):
-# ... this weekend, the Province of Tucuman decided it'd go back to UTC-03:00
+# ... this weekend, the Province of Tucumán decided it'd go back to UTC-03:00
 # yesterday midnight (that is, at 24:00 Saturday 12th), since the people's
 # annoyance with the change is much higher than the power savings obtained....
 #
@@ -421,20 +422,20 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	S
 # setting for time stamps past 2038.
 
 # From Paul Eggert (2013-02-21):
-# Milne says Cordoba time was -4:16:48.2.  Round to the nearest second.
+# Milne says Córdoba time was -4:16:48.2.  Round to the nearest second.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 #
 # Buenos Aires (BA), Capital Federal (CF),
 Zone America/Argentina/Buenos_Aires -3:53:48 - LMT 1894 Oct 31
-			-4:16:48 -	CMT	1920 May # Cordoba Mean Time
+			-4:16:48 -	CMT	1920 May # Córdoba Mean Time
 			-4:00	-	ART	1930 Dec
 			-4:00	Arg	AR%sT	1969 Oct  5
 			-3:00	Arg	AR%sT	1999 Oct  3
 			-4:00	Arg	AR%sT	2000 Mar  3
 			-3:00	Arg	AR%sT
 #
-# Cordoba (CB), Santa Fe (SF), Entre Rios (ER), Corrientes (CN), Misiones (MN),
+# Córdoba (CB), Santa Fe (SF), Entre Ríos (ER), Corrientes (CN), Misiones (MN),
 # Chaco (CC), Formosa (FM), Santiago del Estero (SE)
 #
 # Shanks & Pottenger also make the following claims, which we haven't verified:
@@ -454,7 +455,7 @@ Zone America/Argentina/Cordoba -4:16:48 - LMT	1894 Oct 31
 			-4:00	Arg	AR%sT	2000 Mar  3
 			-3:00	Arg	AR%sT
 #
-# Salta (SA), La Pampa (LP), Neuquen (NQ), Rio Negro (RN)
+# Salta (SA), La Pampa (LP), Neuquén (NQ), Rio Negro (RN)
 Zone America/Argentina/Salta -4:21:40 - LMT	1894 Oct 31
 			-4:16:48 -	CMT	1920 May
 			-4:00	-	ART	1930 Dec
@@ -466,7 +467,7 @@ Zone America/Argentina/Salta -4:21:40 - LMT	1894 Oct 31
 			-3:00	Arg	AR%sT	2008 Oct 18
 			-3:00	-	ART
 #
-# Tucuman (TM)
+# Tucumán (TM)
 Zone America/Argentina/Tucuman -4:20:52 - LMT	1894 Oct 31
 			-4:16:48 -	CMT	1920 May
 			-4:00	-	ART	1930 Dec
@@ -578,7 +579,7 @@ Zone America/Argentina/San_Luis -4:25:24 - LMT	1894 Oct 31
 #
 # Santa Cruz (SC)
 Zone America/Argentina/Rio_Gallegos -4:36:52 - LMT 1894 Oct 31
-			-4:16:48 -	CMT	1920 May # Cordoba Mean Time
+			-4:16:48 -	CMT	1920 May # Córdoba Mean Time
 			-4:00	-	ART	1930 Dec
 			-4:00	Arg	AR%sT	1969 Oct  5
 			-3:00	Arg	AR%sT	1999 Oct  3
@@ -590,7 +591,7 @@ Zone America/Argentina/Rio_Gallegos -4:36:52 - LMT 1894 Oct 31
 #
 # Tierra del Fuego, Antartida e Islas del Atlantico Sur (TF)
 Zone America/Argentina/Ushuaia -4:33:12 - LMT 1894 Oct 31
-			-4:16:48 -	CMT	1920 May # Cordoba Mean Time
+			-4:16:48 -	CMT	1920 May # Córdoba Mean Time
 			-4:00	-	ART	1930 Dec
 			-4:00	Arg	AR%sT	1969 Oct  5
 			-3:00	Arg	AR%sT	1999 Oct  3
@@ -621,13 +622,13 @@ Zone	America/La_Paz	-4:32:36 -	LMT	1890
 
 # From IATA SSIM (1996-02):
 # _Only_ the following states in BR1 observe DST: Rio Grande do Sul (RS),
-# Santa Catarina (SC), Parana (PR), Sao Paulo (SP), Rio de Janeiro (RJ),
-# Espirito Santo (ES), Minas Gerais (MG), Bahia (BA), Goias (GO),
+# Santa Catarina (SC), Paraná (PR), São Paulo (SP), Rio de Janeiro (RJ),
+# Espírito Santo (ES), Minas Gerais (MG), Bahia (BA), Goiás (GO),
 # Distrito Federal (DF), Tocantins (TO), Sergipe [SE] and Alagoas [AL].
 # [The last three states are new to this issue of the IATA SSIM.]
 
 # From Gwillim Law (1996-10-07):
-# Geography, history (Tocantins was part of Goias until 1989), and other
+# Geography, history (Tocantins was part of Goiás until 1989), and other
 # sources of time zone information lead me to believe that AL, SE, and TO were
 # always in BR1, and so the only change was whether or not they observed DST....
 # The earliest issue of the SSIM I have is 2/91.  Each issue from then until
@@ -641,9 +642,9 @@ Zone	America/La_Paz	-4:32:36 -	LMT	1890
 # However, some conclusions can be drawn from another IATA manual: the Airline
 # Coding Directory, which lists close to 400 airports in Brazil.  For each
 # airport it gives a time zone which is coded to the SSIM.  From that
-# information, I'm led to conclude that the states of Amapa (AP), Ceara (CE),
-# Maranhao (MA), Paraiba (PR), Pernambuco (PE), Piaui (PI), and Rio Grande do
-# Norte (RN), and the eastern part of Para (PA) are all in BR1 without DST.
+# information, I'm led to conclude that the states of Amapá (AP), Ceará (CE),
+# Maranhão (MA), Paraíba (PR), Pernambuco (PE), Piauí (PI), and Rio Grande do
+# Norte (RN), and the eastern part of Pará (PA) are all in BR1 without DST.
 
 # From Marcos Tadeu (1998-09-27):
 # Brazilian official page <http://pcdsh01.on.br/verao1.html>
@@ -687,7 +688,7 @@ Zone	America/La_Paz	-4:32:36 -	LMT	1890
 # a) The timezone UTC+5 is e[x]tinguished, with all the Acre state and the
 # part of the Amazonas state that had this timezone now being put to the
 # timezone UTC+4
-# b) The whole Para state now is put at timezone UTC+3, instead of just
+# b) The whole Pará state now is put at timezone UTC+3, instead of just
 # part of it, as was before.
 #
 # This change follows a proposal of senator Tiao Viana of Acre state, that
@@ -704,7 +705,7 @@ Zone	America/La_Paz	-4:32:36 -	LMT	1890
 #
 # As a result of the above Decree I believe the America/Rio_Branco
 # timezone shall be modified from UTC-5 to UTC-4 and a new timezone shall
-# be created to represent the...west side of the Para State. I
+# be created to represent the...west side of the Pará State. I
 # suggest this new timezone be called Santarem as the most
 # important/populated city in the affected area.
 #
@@ -967,29 +968,29 @@ Zone America/Noronha	-2:09:40 -	LMT	1914
 			-2:00	Brazil	FN%sT	2002 Oct  1
 			-2:00	-	FNT
 # Other Atlantic islands have no permanent settlement.
-# These include Trindade and Martin Vaz (administratively part of ES),
-# Atol das Rocas (RN), and Penedos de Sao Pedro e Sao Paulo (PE).
+# These include Trindade and Martim Vaz (administratively part of ES),
+# Rocas Atoll (RN), and the St Peter and St Paul Archipelago (PE).
 # Fernando de Noronha was a separate territory from 1942-09-02 to 1989-01-01;
 # it also included the Penedos.
 #
-# Amapa (AP), east Para (PA)
-# East Para includes Belem, Maraba, Serra Norte, and Sao Felix do Xingu.
-# The division between east and west Para is the river Xingu.
+# Amapá (AP), east Pará (PA)
+# East Pará includes Belém, Marabá, Serra Norte, and São Félix do Xingu.
+# The division between east and west Pará is the river Xingu.
 # In the north a very small part from the river Javary (now Jari I guess,
-# the border with Amapa) to the Amazon, then to the Xingu.
+# the border with Amapá) to the Amazon, then to the Xingu.
 Zone America/Belem	-3:13:56 -	LMT	1914
 			-3:00	Brazil	BR%sT	1988 Sep 12
 			-3:00	-	BRT
 #
-# west Para (PA)
-# West Para includes Altamira, Oribidos, Prainha, Oriximina, and Santarem.
+# west Pará (PA)
+# West Pará includes Altamira, Óbidos, Prainha, Oriximiná, and Santarém.
 Zone America/Santarem	-3:38:48 -	LMT	1914
 			-4:00	Brazil	AM%sT	1988 Sep 12
 			-4:00	-	AMT	2008 Jun 24 00:00
 			-3:00	-	BRT
 #
-# Maranhao (MA), Piaui (PI), Ceara (CE), Rio Grande do Norte (RN),
-# Paraiba (PB)
+# Maranhão (MA), Piauí (PI), Ceará (CE), Rio Grande do Norte (RN),
+# Paraíba (PB)
 Zone America/Fortaleza	-2:34:00 -	LMT	1914
 			-3:00	Brazil	BR%sT	1990 Sep 17
 			-3:00	-	BRT	1999 Sep 30
@@ -1036,8 +1037,8 @@ Zone America/Bahia	-2:34:04 -	LMT	1914
 			-3:00	Brazil	BR%sT	2012 Oct 21
 			-3:00	-	BRT
 #
-# Goias (GO), Distrito Federal (DF), Minas Gerais (MG),
-# Espirito Santo (ES), Rio de Janeiro (RJ), Sao Paulo (SP), Parana (PR),
+# Goiás (GO), Distrito Federal (DF), Minas Gerais (MG),
+# Espírito Santo (ES), Rio de Janeiro (RJ), São Paulo (SP), Paraná (PR),
 # Santa Catarina (SC), Rio Grande do Sul (RS)
 Zone America/Sao_Paulo	-3:06:28 -	LMT	1914
 			-3:00	Brazil	BR%sT	1963 Oct 23 00:00
@@ -1054,7 +1055,7 @@ Zone America/Cuiaba	-3:44:20 -	LMT	1914
 			-4:00	-	AMT	2004 Oct  1
 			-4:00	Brazil	AM%sT
 #
-# Rondonia (RO)
+# Rondônia (RO)
 Zone America/Porto_Velho -4:15:36 -	LMT	1914
 			-4:00	Brazil	AM%sT	1988 Sep 12
 			-4:00	-	AMT
@@ -1066,7 +1067,7 @@ Zone America/Boa_Vista	-4:02:40 -	LMT	1914
 			-4:00	Brazil	AM%sT	2000 Oct 15
 			-4:00	-	AMT
 #
-# east Amazonas (AM): Boca do Acre, Jutai, Manaus, Floriano Peixoto
+# east Amazonas (AM): Boca do Acre, Jutaí, Manaus, Floriano Peixoto
 # The great circle line from Tabatinga to Porto Acre divides
 # east from west Amazonas.
 Zone America/Manaus	-4:00:04 -	LMT	1914
@@ -1076,7 +1077,7 @@ Zone America/Manaus	-4:00:04 -	LMT	1914
 			-4:00	-	AMT
 #
 # west Amazonas (AM): Atalaia do Norte, Boca do Maoco, Benjamin Constant,
-#	Eirunepe, Envira, Ipixuna
+#	Eirunepé, Envira, Ipixuna
 Zone America/Eirunepe	-4:39:28 -	LMT	1914
 			-5:00	Brazil	AC%sT	1988 Sep 12
 			-5:00	-	ACT	1993 Sep 28
@@ -1124,7 +1125,7 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # America/Santiago.  The pre-1980 Pacific/Easter data are dubious,
 # but we have no other source.
 
-# From German Poo-Caaman~o (2008-03-03):
+# From Germán Poo-Caamaño (2008-03-03):
 # Due to drought, Chile extends Daylight Time in three weeks.  This
 # is one-time change (Saturday 3/29 at 24:00 for America/Santiago
 # and Saturday 3/29 at 22:00 for Pacific/Easter)
@@ -1261,13 +1262,13 @@ Zone Pacific/Easter	-7:17:44 -	LMT	1890
 			-7:00	Chile	EAS%sT	1982 Mar 13 21:00 # Easter I Time
 			-6:00	Chile	EAS%sT
 #
-# Sala y Gomez Island is like Pacific/Easter.
-# Other Chilean locations, including Juan Fernandez Is, San Ambrosio,
-# San Felix, and Antarctic bases, are like America/Santiago.
+# Salas y Gómez Island is uninhabited.
+# Other Chilean locations, including Juan Fernández Is, Desventuradas Is,
+# and Antarctic bases, are like America/Santiago.
 
 # Colombia
 
-# Milne gives 4:56:16.4 for Bogota time in 1899; round to nearest.  He writes,
+# Milne gives 4:56:16.4 for Bogotá time in 1899; round to nearest.  He writes,
 # "A variation of fifteen minutes in the public clocks of Bogota is not rare."
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
@@ -1275,24 +1276,24 @@ Rule	CO	1992	only	-	May	 3	0:00	1:00	S
 Rule	CO	1993	only	-	Apr	 4	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Bogota	-4:56:16 -	LMT	1884 Mar 13
-			-4:56:16 -	BMT	1914 Nov 23 # Bogota Mean Time
+			-4:56:16 -	BMT	1914 Nov 23 # Bogotá Mean Time
 			-5:00	CO	CO%sT	# Colombia Time
 # Malpelo, Providencia, San Andres
 # no information; probably like America/Bogota
 
-# Curacao
+# Curaçao
 
-# Milne gives 4:35:46.9 for Curacao mean time; round to nearest.
+# Milne gives 4:35:46.9 for Curaçao mean time; round to nearest.
 #
 # From Paul Eggert (2006-03-22):
 # Shanks & Pottenger say that The Bottom and Philipsburg have been at
 # -4:00 since standard time was introduced on 1912-03-02; and that
 # Kralendijk and Rincon used Kralendijk Mean Time (-4:33:08) from
 # 1912-02-02 to 1965-01-01.  The former is dubious, since S&P also say
-# Saba Island has been like Curacao.
+# Saba Island has been like Curaçao.
 # This all predates our 1970 cutoff, though.
 #
-# By July 2007 Curacao and St Maarten are planned to become
+# By July 2007 Curaçao and St Maarten are planned to become
 # associated states within the Netherlands, much like Aruba;
 # Bonaire, Saba and St Eustatius would become directly part of the
 # Netherlands as Kingdom Islands.  This won't affect their time zones
@@ -1477,7 +1478,7 @@ Rule	Para	1996	only	-	Mar	 1	0:00	0	-
 # (10-01).
 #
 # Translated by Gwillim Law (2001-02-27) from
-# Noticias, a daily paper in Asuncion, Paraguay (2000-10-01)
+# Noticias, a daily paper in Asunción, Paraguay (2000-10-01)
 # <http://www.diarionoticias.com.py/011000/nacional/naciona1.htm>:
 # Starting at 0:00 today, the clock will be set forward 60 minutes, in
 # fulfillment of Decree No. 7,273 of the Executive Power....  The time change
@@ -1536,7 +1537,7 @@ Rule	Para	2013	max	-	Mar	Sun>=22	0:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Asuncion	-3:50:40 -	LMT	1890
-			-3:50:40 -	AMT	1931 Oct 10 # Asuncion Mean Time
+			-3:50:40 -	AMT	1931 Oct 10 # Asunción Mean Time
 			-4:00	-	PYT	1972 Oct # Paraguay Time
 			-3:00	-	PYT	1974 Apr
 			-4:00	Para	PY%sT
@@ -1685,8 +1686,8 @@ Zone America/Montevideo	-3:44:44 -	LMT	1898 Jun 28
 # From John Stainforth (2007-11-28):
 # ... the change for Venezuela originally expected for 2007-12-31 has
 # been brought forward to 2007-12-09.  The official announcement was
-# published today in the "Gaceta Oficial de la Republica Bolivariana
-# de Venezuela, numero 38.819" (official document for all laws or
+# published today in the "Gaceta Oficial de la República Bolivariana
+# de Venezuela, número 38.819" (official document for all laws or
 # resolution publication)
 # http://www.globovision.com/news.php?nid=72208
 

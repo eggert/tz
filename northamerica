@@ -1015,11 +1015,11 @@ Zone America/Menominee	-5:50:27 -	LMT	1885 Sep 18 12:00
 
 # Canada
 
-# From Alain LaBont<e'> (1994-11-14):
+# From Alain LaBonté (1994-11-14):
 # I post here the time zone abbreviations standardized in Canada
 # for both English and French in the CAN/CSA-Z234.4-89 standard....
 #
-#	UTC	Standard time	Daylight savings time
+#	UTC	Standard time	Daylight saving time
 #	offset	French	English	French	English
 #	-2:30	-	-	HAT	NDT
 #	-3	-	-	HAA	ADT
@@ -1032,7 +1032,7 @@ Zone America/Menominee	-5:50:27 -	LMT	1885 Sep 18 12:00
 #	-9	HNY	YST	-	-
 #
 #	HN: Heure Normale	ST: Standard Time
-#	HA: Heure Avanc<e'>e	DT: Daylight saving Time
+#	HA: Heure Avancée	DT: Daylight saving Time
 #
 #	A: de l'Atlantique	Atlantic
 #	C: du Centre		Central
@@ -1337,7 +1337,7 @@ Zone America/Moncton	-4:19:08 -	LMT	1883 Dec  9
 # meridian is supposed to observe AST, but residents as far east as
 # Natashquan use EST/EDT, and residents east of Natashquan use AST.
 # The Quebec department of justice writes in
-# "The situation in Minganie and Basse-Cote-Nord"
+# "The situation in Minganie and Basse-Côte-Nord"
 # http://www.justice.gouv.qc.ca/english/publications/generale/temps-minganie-a.htm
 # that the coastal strip from just east of Natashquan to Blanc-Sablon
 # observes Atlantic standard time all year round.
@@ -1514,16 +1514,16 @@ Zone America/Montreal	-4:54:16 -	LMT	1884
 # Quebec		In the following places:
 # 			Montreal	Lachine
 # 			Quebec		Mont-Royal
-# 			Levis		Iberville
-# 			St. Lambert	Cap de la Madeleine
+# 			Lévis		Iberville
+# 			St. Lambert	Cap de la Madelèine
 # 			Verdun		Loretteville
 # 			Westmount	Richmond
-# 			Outremont	St. Jerome
+# 			Outremont	St. Jérôme
 # 			Longueuil	Greenfield Park
 # 			Arvida		Waterloo
 # 			Chambly-Canton	Beaulieu
 # 			Melbourne	La Tuque
-# 			St. Theophile	Buckingham
+# 			St. Théophile	Buckingham
 # Ontario		Used generally in the cities and towns along
 # 			the southerly part of the province. Not
 # 			used in the northwesterlhy part.
@@ -2211,9 +2211,9 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # The 2001-01-24 traditional Washington Post contained the page one
 # story "Timely Issue Divides Mexicans."...
 # http://www.washingtonpost.com/wp-dyn/articles/A37383-2001Jan23.html
-# ... Mexico City Mayor Lopez Obrador "...is threatening to keep
+# ... Mexico City Mayor López Obrador "...is threatening to keep
 # Mexico City and its 20 million residents on a different time than
-# the rest of the country..." In particular, Lopez Obrador would abolish
+# the rest of the country..." In particular, López Obrador would abolish
 # observation of Daylight Saving Time.
 
 # Official statute published by the Energy Department
@@ -2226,7 +2226,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # <http://www.latimes.com/news/nation/20010303/t000018766.html>
 # James F. Smith writes in today's LA Times
 # * Sonora will continue to observe standard time.
-# * Last week Mexico City's mayor Andres Manuel Lopez Obrador decreed that
+# * Last week Mexico City's mayor Andrés Manuel López Obrador decreed that
 #   the Federal District will not adopt DST.
 # * 4 of 16 district leaders announced they'll ignore the decree.
 # * The decree does not affect federal-controlled facilities including
@@ -2652,7 +2652,7 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San Jose
 # From Alex Kryvenishev (2007-10-25):
 # Here is also article from Granma (Cuba):
 #
-# [Regira] el Horario Normal desde el [proximo] domingo 28 de octubre
+# Regirá el Horario Normal desde el próximo domingo 28 de octubre
 # http://www.granma.cubaweb.cu/2007/10/24/nacional/artic07.html
 #
 # http://www.worldtimezone.com/dst_news/dst_news_cuba03.html
@@ -2877,7 +2877,7 @@ Zone America/Guatemala	-6:02:04 -	LMT	1918 Oct 5
 
 # Haiti
 # From Gwillim Law (2005-04-15):
-# Risto O. Nykanen wrote me that Haiti is now on DST.
+# Risto O. Nykänen wrote me that Haiti is now on DST.
 # I searched for confirmation, and I found a press release
 # on the Web page of the Haitian Consulate in Chicago (2005-03-31),
 # <http://www.haitianconsulate.org/time.doc>.  Translated from French, it says:
@@ -3032,7 +3032,7 @@ Zone America/Martinique	-4:04:20 -      LMT	1890		# Fort-de-France
 # http://www.lapalmainteractivo.com/guias/content/gen/ap/America_Latina/AMC_GEN_NICARAGUA_HORA.html
 # and elsewhere, says (fifth paragraph, translated from Spanish):  "The last
 # time that a change of clocks was applied to save energy was in the year 2000
-# during the Arnoldo Aleman administration."...
+# during the Arnoldo Alemán administration."...
 # The northamerica file says that Nicaragua has been on UTC-6 continuously
 # since December 1998.  I wasn't able to find any details of Nicaraguan time
 # changes in 2000.  Perhaps a note could be added to the northamerica file, to
@@ -3046,9 +3046,9 @@ Zone America/Martinique	-4:04:20 -      LMT	1890		# Fort-de-France
 # From Jesper Norgaard Welen (2006-05-05):
 # http://www.elnuevodiario.com.ni/2006/05/01/nacionales/18410
 # (my informal translation)
-# By order of the president of the republic, Enrique Bolanos, Nicaragua
+# By order of the president of the republic, Enrique Bolaños, Nicaragua
 # advanced by sixty minutes their official time, yesterday at 2 in the
-# morning, and will stay that way until 30.th. of september.
+# morning, and will stay that way until 30th of September.
 #
 # From Jesper Norgaard Welen (2006-09-30):
 # http://www.presidencia.gob.ni/buscador_gaceta/BD/DECRETOS/2006/D-063-2006P-PRN-Cambio-Hora.pdf

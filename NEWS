@@ -21,6 +21,9 @@ Unreleased, experimental changes
     Non-HTML documentation and commentary now use plain-text URLs instead of
     HTML insertions.  (Thanks to a suggestion by Steffen "Daode" Nurpmeso.)
 
+    In zone.tab, Pacific/Easter no longer mentions Salas y Gómez, as it
+    is uninhabited.
+
 
 Release 2014e - 2014-06-12 21:53:52 -0700
 
@@ -977,7 +980,7 @@ Release 2011i - 2011-08-29 05:56:32 -0400
 
 Release data2011h - 2011-06-15 18:41:48 -0400
 
-  Russia and Curacao changes
+  Russia and Curaçao changes
 
 
 Release 2011g - 2011-04-25 09:07:22 -0400

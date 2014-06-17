@@ -2305,7 +2305,7 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 
 # From Paul Eggert (1996-09-03):
 # "Sri Lanka advances clock by an hour to avoid blackout"
-# (www.virtual-pc.com/lankaweb/news/items/240596-2.html, 1996-05-24,
+# (<http://www.virtual-pc.com/lankaweb/news/items/240596-2.html>, 1996-05-24,
 # no longer available as of 1999-08-17)
 # reported "the country's standard time will be put forward by one hour at
 # midnight Friday (1830 GMT) 'in the light of the present power crisis'."

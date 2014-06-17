@@ -19,7 +19,9 @@ Unreleased, experimental changes
     Code and data have not changed.
 
     Non-HTML documentation and commentary now use plain-text URLs instead of
-    HTML insertions.  (Thanks to a suggestion by Steffen "Daode" Nurpmeso.)
+    HTML insertions, and are more consistent about bracketing URLs when they
+    are not already surrounded by white space.  (Thanks to suggestions by
+    Steffen Nurpmeso.)
 
     In zone.tab, Pacific/Easter no longer mentions Salas y Gómez, as it
     is uninhabited.

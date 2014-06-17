@@ -263,8 +263,8 @@
 #   -- James Joyce, Ulysses
 
 # From Joseph S. Myers (2005-01-26):
-# Irish laws are available online at www.irishstatutebook.ie.  These include
-# various relating to legal time, for example:
+# Irish laws are available online at <http://www.irishstatutebook.ie>.
+# These include various relating to legal time, for example:
 #
 # ZZA13Y1923.html ZZA12Y1924.html ZZA8Y1925.html ZZSIV20PG1267.html
 #
@@ -1834,12 +1834,12 @@ Zone	Europe/Oslo	0:43:00 -	LMT	1895 Jan  1
 # time they were declared as parts of Norway.  Svalbard was declared
 # as a part of Norway by law of 1925-07-17 no 11, section 4 and Jan
 # Mayen by law of 1930-02-27 no 2, section 2. (From
-# http://www.lovdata.no/all/nl-19250717-011.html and
-# http://www.lovdata.no/all/nl-19300227-002.html).  The law/regulation
+# <http://www.lovdata.no/all/nl-19250717-011.html> and
+# <http://www.lovdata.no/all/nl-19300227-002.html>).  The law/regulation
 # for normal/standard time in Norway is from 1894-06-29 no 1 (came
 # into operation on 1895-01-01) and Svalbard/Jan Mayen seem to be a
 # part of this law since 1925/1930. (From
-# http://www.lovdata.no/all/nl-18940629-001.html ) I have not been
+# <http://www.lovdata.no/all/nl-18940629-001.html>) I have not been
 # able to find if Jan Mayen used a different time zone (e.g. -0100)
 # before 1930. Jan Mayen has only been "inhabitated" since 1921 by
 # Norwegian meteorologists and maybe used the same time as Norway ever

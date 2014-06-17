@@ -692,9 +692,7 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 # From Patrice Scattolin (2008-05-09):
 # According to this article:
 # http://www.avmaroc.com/actualite/heure-dete-comment-a127896.html
-# (and republished here:
-# http://www.actu.ma/heure-dete-comment_i127896_0.html
-# )
+# (and republished here: <http://www.actu.ma/heure-dete-comment_i127896_0.html>)
 # the changes occurs at midnight:
 #
 # saturday night may 31st at midnight (which in french is to be
@@ -776,8 +774,7 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 # They said that the decision was already taken.
 #
 # More articles in the press
-# http://www.yabiladi.com/articles/details/5058/secret-l-heure-d-ete-maroc-lev
-# e.html
+# http://www.yabiladi.com/articles/details/5058/secret-l-heure-d-ete-maroc-leve.html
 # http://www.lematin.ma/Actualite/Express/Article.asp?id=148923
 # http://www.lavieeco.com/actualite/Le-Maroc-passe-sur-GMT%2B1-a-partir-de-dim
 
@@ -1019,8 +1016,8 @@ Zone	Indian/Reunion	3:41:52 -	LMT	1911 Jun	# Saint-Denis
 #
 # Scattered Islands (Îles Éparses) administered from Réunion are as follows.
 # The following information about them is taken from
-# Îles Éparses (www.outre-mer.gouv.fr/domtom/ile.htm, 1997-07-22, in French;
-# no longer available as of 1999-08-17).
+# Îles Éparses (<http://www.outre-mer.gouv.fr/domtom/ile.htm>, 1997-07-22,
+# in French; no longer available as of 1999-08-17).
 # We have no info about their time zone histories.
 #
 # Bassas da India - uninhabited
@@ -1184,11 +1181,12 @@ Zone	Africa/Lome	0:04:52 -	LMT	1893
 # (in Arabic)
 # http://www.tap.info.tn/ar/index.php?option=com_content&task=view&id=61240&Itemid=1
 
-# From Arthur David Olson (2009--3-18):
-# The Tunis Afrique Presse News Agency notice contains this: "This measure is due to the fact
-# that the fasting month of ramadan coincides with the period concerned by summer time.
-# Therefore, the standard time will be kept unchanged the whole year long."
-# So foregoing DST seems to be an exception (albeit one that may be repeated in the  future).
+# From Arthur David Olson (2009-03-18):
+# The Tunis Afrique Presse News Agency notice contains this: "This measure is
+# due to the fact that the fasting month of Ramadan coincides with the period
+# concerned by summer time.  Therefore, the standard time will be kept
+# unchanged the whole year long."  So foregoing DST seems to be an exception
+# (albeit one that may be repeated in the future).
 
 # From Alexander Krivenyshev (2010-03-27):
 # According to some news reports Tunis confirmed not to use DST in 2010

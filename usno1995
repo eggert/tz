@@ -1,7 +1,7 @@
 # From Arthur David Olson (1995-12-21):
 #
 # Here's time zone information from the United States Naval Observatory
-# via http://tycho.usno.navy.mil/tzones.html. See USNO's note at the end.
+# via <http://tycho.usno.navy.mil/tzones.html>. See USNO's note at the end.
 World Time Zones
 For selected countries, the local standard time offset from UTC is given,
 with daylight savings time where observed.

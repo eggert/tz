@@ -298,7 +298,7 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # Now the dates have been confirmed, and at least our start date
 # assumption was correct (end date was one week wrong).
 #
-# www.fiji.gov.fj/index.php?option=com_content&view=article&id=4966:daylight-saving-starts-in-fiji&catid=71:press-releases&Itemid=155
+# http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=4966:daylight-saving-starts-in-fiji&catid=71:press-releases&Itemid=155
 # which says
 # Members of the public are reminded to change their time to one hour in
 # advance at 2am to 3am on October 23, 2011 and one hour back at 3am to
@@ -1026,7 +1026,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # Victoria: I wasn't able to find anything separate, but the other articles
 # allude to it.
 # But not Queensland
-# http://www.news.com.au/story/0,10117,15564030-1248,00.html.
+# http://www.news.com.au/story/0,10117,15564030-1248,00.html
 
 # Northern Territory
 
@@ -1659,7 +1659,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # instead of the original reported date April 16. Unfortunately, the article
 # is no longer available on the site, and I did not make a copy of the
 # text, and I have forgotten to report it here.
-# (Original URL was: http://www.tongaonline.com/news/march162000.htm )
+# (Original URL was <http://www.tongaonline.com/news/march162000.htm>)
 
 # From Rives McDow (2000-12-01):
 # Tonga is observing DST as of 2000-11-04 and will stop on 2001-01-27.

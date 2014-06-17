@@ -2243,7 +2243,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # saving all year) will follow the original decree of president
 # Vicente Fox, starting daylight saving May 6, 2001 and ending
 # September 30, 2001.
-# References: "Diario de Monterrey" <www.diariodemonterrey.com/index.asp>
+# References: "Diario de Monterrey" <http://www.diariodemonterrey.com/index.asp>
 # Palabra <http://palabra.infosel.com/010331/primera/ppri3101.pdf> (2001-03-31)
 
 # From Reuters (2001-09-04):
@@ -2396,7 +2396,7 @@ Zone America/Hermosillo	-7:23:52 -	LMT	1921 Dec 31 23:36:08
 #
 # Bahía de Banderas homologa su horario con el del Centro del
 # País
-# http://www.bahiadebanderas.gob.mx/principal/index.php?option=com_content&view=article&id=261:bahia-de-banderas-homologa-su-horario-con-el-del-centro-del-pais&catid=42:comunicacion-social&Itemid=50"
+# http://www.bahiadebanderas.gob.mx/principal/index.php?option=com_content&view=article&id=261:bahia-de-banderas-homologa-su-horario-con-el-del-centro-del-pais&catid=42:comunicacion-social&Itemid=50
 #
 # (English)
 # Puerto Vallarta and Bahía de Banderas: One Time Zone
@@ -2635,7 +2635,7 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
 # to the normal schedule....
 
 # From Paul Eggert (2007-03-02):
-# http://www.granma.cubaweb.cu/english/news/art89.html, dated yesterday,
+# <http://www.granma.cubaweb.cu/english/news/art89.html>, dated yesterday,
 # says Cuban clocks will advance at midnight on March 10.
 # For lack of better information, assume Cuba will use US rules,
 # except that it switches at midnight standard time as usual.
@@ -2852,7 +2852,7 @@ Zone America/El_Salvador -5:56:48 -	LMT	1921		# San Salvador
 #
 # From Gwillim Law (2006-04-22), after a heads-up from Oscar van Vlijmen:
 # Diario Co Latino, at
-# http://www.diariocolatino.com/internacionales/detalles.asp?NewsID=8079,
+# <http://www.diariocolatino.com/internacionales/detalles.asp?NewsID=8079>,
 # says in an article dated 2006-04-19 that the Guatemalan government had
 # decided on that date to advance official time by 60 minutes, to lessen the
 # impact of the elevated cost of oil....  Daylight saving time will last from

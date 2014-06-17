@@ -1012,14 +1012,14 @@ Zone	Africa/Niamey	 0:08:28 -	LMT	1912
 Zone	Africa/Lagos	0:13:36 -	LMT	1919 Sep
 			1:00	-	WAT
 
-# Reunion
+# Réunion
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Indian/Reunion	3:41:52 -	LMT	1911 Jun	# Saint-Denis
-			4:00	-	RET	# Reunion Time
+			4:00	-	RET	# Réunion Time
 #
-# Scattered Islands (Iles Eparses) administered from Reunion are as follows.
+# Scattered Islands (Îles Éparses) administered from Réunion are as follows.
 # The following information about them is taken from
-# Iles Eparses (www.outre-mer.gouv.fr/domtom/ile.htm, 1997-07-22, in French;
+# Îles Éparses (www.outre-mer.gouv.fr/domtom/ile.htm, 1997-07-22, in French;
 # no longer available as of 1999-08-17).
 # We have no info about their time zone histories.
 #
@@ -1044,7 +1044,7 @@ Zone Atlantic/St_Helena	-0:22:48 -	LMT	1890		# Jamestown
 #	Ascension: on GMT, says usno1995 and the CIA
 #	Gough (scientific station since 1955; sealers wintered previously):
 #		on GMT, says the CIA
-#	Inaccessible, Nightingale: no information, but probably GMT
+#	Inaccessible, Nightingale: uninhabited
 
 # São Tomé and Príncipe
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1105,7 +1105,7 @@ Zone Africa/Johannesburg 1:52:00 -	LMT	1892 Feb 8
 #
 # From <http://www.sunanews.net/sn13jane.html>
 # Sudan News Agency (2000-01-13),
-# also reported by Michael De Beukelaer-Dossche via Steffen Thorsen:
+# also reported by Michaël De Beukelaer-Dossche via Steffen Thorsen:
 # Clocks will be moved ahead for 60 minutes all over the Sudan as of noon
 # Saturday....  This was announced Thursday by Caretaker State Minister for
 # Manpower Abdul-Rahman Nur-Eddin.
@@ -1143,7 +1143,7 @@ Zone	Africa/Lome	0:04:52 -	LMT	1893
 # Tunisia
 
 # From Gwillim Law (2005-04-30):
-# My correspondent, Risto Nykanen, has alerted me to another adoption of DST,
+# My correspondent, Risto Nykänen, has alerted me to another adoption of DST,
 # this time in Tunisia.  According to Yahoo France News
 # <http://fr.news.yahoo.com/050426/5/4dumk.html>, in a story attributed to AP
 # and dated 2005-04-26, "Tunisia has decided to advance its official time by
@@ -1152,7 +1152,7 @@ Zone	Africa/Lome	0:04:52 -	LMT	1893
 # Saturday."  (My translation)
 #
 # From Oscar van Vlijmen (2005-05-02):
-# LaPresse, the first national daily newspaper ...
+# La Presse, the first national daily newspaper ...
 # <http://www.lapresse.tn/archives/archives280405/actualites/lheure.html>
 # ... DST for 2005: on: Sun May 1 0h standard time, off: Fri Sept. 30,
 # 1h standard time.

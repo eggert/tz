@@ -424,7 +424,7 @@ in decreasing order of importance:
 		even if subregions' clocks disagreed before 1970.
 		Otherwise these tables would become annoyingly large.
 	If a name is ambiguous, use a less ambiguous alternative;
-		e.g. many cities are named San Jose and Georgetown, so
+		e.g. many cities are named San José and Georgetown, so
 		prefer 'Costa_Rica' to 'San_Jose' and 'Guyana' to 'Georgetown'.
 	Keep locations compact.  Use cities or small islands, not countries
 		or regions, so that any future time zone changes do not split

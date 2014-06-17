@@ -2571,7 +2571,7 @@ Zone	America/Cayman	-5:25:32 -	LMT	1890		# Georgetown
 
 # Costa Rica
 
-# Milne gives -5:36:13.3 as San Jose mean time; round to nearest.
+# Milne gives -5:36:13.3 as San José mean time; round to nearest.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	CR	1979	1980	-	Feb	lastSun	0:00	1:00	D
@@ -2581,10 +2581,10 @@ Rule	CR	1991	1992	-	Jan	Sat>=15	0:00	1:00	D
 # go with Shanks & Pottenger.
 Rule	CR	1991	only	-	Jul	 1	0:00	0	S
 Rule	CR	1992	only	-	Mar	15	0:00	0	S
-# There are too many San Joses elsewhere, so we'll use 'Costa Rica'.
+# There are too many San Josés elsewhere, so we'll use 'Costa Rica'.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San Jose
-			-5:36:13 -	SJMT	1921 Jan 15 # San Jose Mean Time
+Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
+			-5:36:13 -	SJMT	1921 Jan 15 # San José Mean Time
 			-6:00	CR	C%sT
 # Coco
 # no information; probably like America/Costa_Rica

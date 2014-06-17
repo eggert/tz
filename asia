@@ -140,7 +140,7 @@ Zone	Asia/Baku	3:19:24 -	LMT	1924 May  2
 
 # Bahrain
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Bahrain	3:22:20 -	LMT	1920		# Al Manamah
+Zone	Asia/Bahrain	3:22:20 -	LMT	1920		# Manamah
 			4:00	-	GST	1972 Jun
 			3:00	-	AST
 
@@ -285,7 +285,7 @@ Zone	Asia/Phnom_Penh	6:59:40 -	LMT	1906 Jun  9
 # the Xinjiang Uyghur Autonomous Region).  I don't know about DST for it.
 #
 # . . .I just deleted the DST table and this editor makes it too
-# painful to suck in another copy..  So, here is what I have for
+# painful to suck in another copy.  So, here is what I have for
 # DST start/end dates for Peking's time zone (info from AP):
 #
 #     1986 May 4 - Sept 14
@@ -693,7 +693,7 @@ Zone	Asia/Tbilisi	2:59:16 -	LMT	1880
 
 # See Indonesia for the 1945 transition.
 
-# From Joao Carrascalao, brother of the former governor of East Timor, in
+# From João Carrascalão, brother of the former governor of East Timor, in
 # East Timor may be late for its millennium
 # <http://etan.org/et99c/december/26-31/30ETMAY.htm> (1999-12-26/31):
 # Portugal tried to change the time forward in 1974 because the sun
@@ -749,7 +749,7 @@ Zone	Asia/Kolkata	5:53:28 -	LMT	1880	# Kolkata
 # other formal surrender ceremonies were September 9, 11, and 13, plus
 # September 12 for the regional surrender to Mountbatten in Singapore.
 # These would be the earliest possible times for a change.
-# Regimes horaires pour le monde entier, by Henri Le Corre, (Editions
+# Régimes horaires pour le monde entier, by Henri Le Corre, (Éditions
 # Traditionnelles, 1987, Paris) says that Java and Madura switched
 # from JST to UTC+07:30 on 1945-09-23, and gives 1944-09-01 for Jayapura
 # (Hollandia).  For now, assume all Indonesian locations other than Jayapura
@@ -1627,7 +1627,7 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # General Information Mongolia
 # <http://www.mongoliatourism.gov.mn/general.htm> (1999-09)
 # "Time: Mongolia has two time zones. Three westernmost provinces of
-# Bayan-Ulgii, Uvs, and Hovd are one hour earlier than the capital city, and
+# Bayan-Ölgii, Uvs, and Hovd are one hour earlier than the capital city, and
 # the rest of the country follows the Ulaanbaatar time, which is UTC/GMT plus
 # eight hours."
 
@@ -1638,7 +1638,7 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # of implementation may have been different....
 # Some maps in the past have indicated that there was an additional time
 # zone in the eastern part of Mongolia, including the provinces of Dornod,
-# Suhbaatar, and possibly Khentij.
+# Sükhbaatar, and possibly Khentii.
 
 # From Paul Eggert (1999-12-15):
 # Naming and spelling is tricky in Mongolia.
@@ -1652,10 +1652,10 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # (adopted DST on 2001-04-27 02:00 local time, ending 2001-09-28),
 # there are three time zones.
 #
-# Provinces [at 7:00]: Bayan-ulgii, Uvs, Khovd, Zavkhan, Govi-Altai
-# Provinces [at 8:00]: Khovsgol, Bulgan, Arkhangai, Khentii, Tov,
-#	Bayankhongor, Ovorkhangai, Dundgovi, Dornogovi, Omnogovi
-# Provinces [at 9:00]: Dornod, Sukhbaatar
+# Provinces [at 7:00]: Bayan-Ölgii, Uvs, Khovd, Zavkhan, Govi-Altai
+# Provinces [at 8:00]: Khövsgöl, Bulgan, Arkhangai, Khentii, Töv,
+#	Bayankhongor, Övörkhangai, Dundgovi, Dornogovi, Ömnögovi
+# Provinces [at 9:00]: Dornod, Sükhbaatar
 #
 # [The province of Selenge is omitted from the above lists.]
 
@@ -1672,7 +1672,7 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # We have wildly conflicting information about Mongolia's time zones.
 # Bill Bonnet (2005-05-19) reports that the US Embassy in Ulaanbaatar says
 # there is only one time zone and that DST is observed, citing Microsoft
-# Windows XP as the source.  Risto Nykanen (2005-05-16) reports that
+# Windows XP as the source.  Risto Nykänen (2005-05-16) reports that
 # travelmongolia.org says there are two time zones (UTC+7, UTC+8) with no DST.
 # Oscar van Vlijmen (2005-05-20) reports that the Mongolian Embassy in
 # Washington, DC says there are two time zones, with DST observed.
@@ -1681,7 +1681,7 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # which also says that there is DST, and which has a comment by "Toddius"
 # (2005-03-31 06:05 +0700) saying "Mongolia actually has 3.5 time zones.
 # The West (OLGII) is +7 GMT, most of the country is ULAT is +8 GMT
-# and some Eastern provinces are +9 GMT but Sukhbaatar Aimag is SUHK +8.5 GMT.
+# and some Eastern provinces are +9 GMT but Sükhbaatar Aimag is SUHK +8.5 GMT.
 # The SUKH timezone is new this year, it is one of the few things the
 # parliament passed during the tumultuous winter session."
 # For now, let's ignore this information, until we have more confirmation.
@@ -1729,7 +1729,7 @@ Rule	Mongol	1983	only	-	Oct	1	0:00	0	-
 # (1996-09) says 1996-10-25.  Go with Shanks & Pottenger through 1998.
 #
 # Shanks & Pottenger say that the Sept. 1984 through Sept. 1990 switches
-# in Choibalsan (more precisely, in Dornod and Sukhbaatar) took place
+# in Choibalsan (more precisely, in Dornod and Sükhbaatar) took place
 # at 02:00 standard time, not at 00:00 local time as in the rest of
 # the country.  That would be odd, and possibly is a result of their
 # correction of 02:00 (in the previous edition) not being done correctly
@@ -2232,10 +2232,11 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 # no information
 
 # Philippines
-# On 1844-08-16, Narciso Claveria, governor-general of the
+# On 1844-08-16, Narciso Clavería, governor-general of the
 # Philippines, issued a proclamation announcing that 1844-12-30 was to
-# be immediately followed by 1845-01-01.  Robert H. van Gent has a
-# transcript of the decree in <http://www.phys.uu.nl/~vgent/idl/idl.htm>.
+# be immediately followed by 1845-01-01; see R.H. van Gent's
+# History of the International Date Line
+# <http://www.staff.science.uu.nl/~gent0113/idl/idl_philippines.htm>.
 # The rest of the data are from Shanks & Pottenger.
 
 # From Paul Eggert (2006-04-25):
@@ -2589,8 +2590,8 @@ Zone	Asia/Tashkent	4:37:12 -	LMT	1924 May  2
 # and Pottenger.
 
 # From Arthur David Olson (2008-03-18):
-# The English-language name of Vietnam's most populous city is "Ho Chi Min City";
-# we use Ho_Chi_Minh below to avoid a name of more than 14 characters.
+# The English-language name of Vietnam's most populous city is "Ho Chi Minh
+# City"; use Ho_Chi_Minh below to avoid a name of more than 14 characters.
 
 # From Shanks & Pottenger:
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

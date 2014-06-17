@@ -52,11 +52,11 @@ Rule	ChileAQ	2012	max	-	Sep	Sun>=2	4:00u	1:00	S
 
 # Argentina - year-round bases
 # Belgrano II, Confin Coast, -770227-0343737, since 1972-02-05
-# Esperanza, San Martin Land, -6323-05659, since 1952-12-17
-# Jubany, Potter Peninsula, King George Island, -6414-0602320, since 1982-01
-# Marambio, Seymour I, -6414-05637, since 1969-10-29
+# Carlini, Potter Cove, King George Island, -6414-0602320, since 1982-01
+# Esperanza, Hope Bay, -6323-05659, since 1952-12-17
+# Marambio, -6414-05637, since 1969-10-29
 # Orcadas, Laurie I, -6016-04444, since 1904-02-22
-# San Martin, Debenham I, -6807-06708, since 1951-03-21
+# San Martín, Barry I, -6808-06706, since 1951-03-21
 #	(except 1960-03 / 1976-03-21)
 
 # Australia - territories
@@ -130,14 +130,20 @@ Zone Antarctica/Mawson	0	-	zzz	1954 Feb 13
 # Mawson Station, Antarctica (1998-02-25)
 # <http://www.antdiv.gov.au/aad/exop/sfo/mawson/video.html>
 
+# Belgium - year-round base
+# Princess Elisabeth, Queen Maud Land, -713412+0231200, since 2007
+
 # Brazil - year-round base
-# Comandante Ferraz, King George Island, -6205+05824, since 1983/4
+# Ferraz, King George Island, -6205+05824, since 1983/4
+
+# Bulgaria - year-round base
+# St. Kliment Ohridski, Livingston Island, -623829-0602153, since 1988
 
 # Chile - year-round bases and towns
 # Escudero, South Shetland Is, -621157-0585735, since 1994
-# Presidente Eduadro Frei, King George Island, -6214-05848, since 1969-03-07
-# General Bernardo O'Higgins, Antarctic Peninsula, -6319-05704, since 1948-02
-# Capitan Arturo Prat, -6230-05941
+# Frei Montalva, King George Island, -6214-05848, since 1969-03-07
+# O'Higgins, Antarctic Peninsula, -6319-05704, since 1948-02
+# Prat, -6230-05941
 # Villa Las Estrellas (a town), around the Frei base, since 1984-04-09
 # These locations have always used Santiago time; use TZ='America/Santiago'.
 
@@ -145,20 +151,20 @@ Zone Antarctica/Mawson	0	-	zzz	1954 Feb 13
 # Great Wall, King George Island, -6213-05858, since 1985-02-20
 # Zhongshan, Larsemann Hills, Prydz Bay, -6922+07623, since 1989-02-26
 
-# France - year-round bases
+# France - year-round bases (also see "France & Italy")
 #
 # From Antoine Leca (1997-01-20):
 # Time data are from Nicole Pailleau at the IFRTP
 # (French Institute for Polar Research and Technology).
-# She confirms that French Southern Territories and Terre Adelie bases
-# don't observe daylight saving time, even if Terre Adelie supplies came
+# She confirms that French Southern Territories and Terre Adélie bases
+# don't observe daylight saving time, even if Terre Adélie supplies came
 # from Tasmania.
 #
 # French Southern Territories with year-round inhabitants
 #
-# Martin-de-Vivies Base, Amsterdam Island, -374105+0773155, since 1950
-# Alfred-Faure Base, Crozet Islands, -462551+0515152, since 1964
-# Port-aux-Francais, Kerguelen Islands, -492110+0701303, since 1951;
+# Martin-de-Viviès, Amsterdam Island, -374105+0773155, since 1950
+# Alfred-Faure, Crozet Islands, -462551+0515152, since 1964
+# Port-aux-Français, Kerguelen Islands, -492110+0701303, since 1951;
 #	whaling & sealing station operated 1908/1914, 1920/1929, and 1951/1956
 #
 # St Paul Island - near Amsterdam, uninhabited
@@ -169,7 +175,8 @@ Zone Indian/Kerguelen	0	-	zzz	1950	# Port-aux-Francais
 			5:00	-	TFT	# ISO code TF Time
 #
 # year-round base in the main continent
-# Dumont-d'Urville, Ile des Petrels, -6640+14001, since 1956-11
+# Dumont d'Urville, Île des Pétrels, -6640+14001, since 1956-11
+# <http://en.wikipedia.org/wiki/Dumont_d'Urville_Station> (2005-12-05)
 #
 # Another base at Port-Martin, 50km east, began operation in 1947.
 # It was destroyed by fire on 1952-01-14.
@@ -179,19 +186,22 @@ Zone Antarctica/DumontDUrville 0 -	zzz	1947
 			10:00	-	PMT	1952 Jan 14 # Port-Martin Time
 			0	-	zzz	1956 Nov
 			10:00	-	DDUT	# Dumont-d'Urville Time
-# Reference:
-# Dumont d'Urville Station (2005-12-05)
-# <http://en.wikipedia.org/wiki/Dumont_d'Urville_Station>
+
+# France & Italy - year-round base
+# Concordia, -750600+1232000, since 2005
 
 # Germany - year-round base
-# Georg von Neumayer, -7039-00815
+# Neumayer III, -704080-0081602, since 2009
 
-# India - year-round base
-# Dakshin Gangotri, -7005+01200
+# India - year-round bases
+# Bharati, -692428+0761114, since 2012
+# Maitri, -704558+0114356, since 1989
+
+# Italy - year-round base (also see "France & Italy")
+# Zuchelli, Terra Nova Bay, -744140+1640647, since 1986
 
 # Japan - year-round bases
-# Dome Fuji, -7719+03942
-# Syowa, -690022+0393524
+# Syowa (also known as Showa), -690022+0393524, since 1957
 #
 # From Hideyuki Suzuki (1999-02-06):
 # In all Japanese stations, +0300 is used as the standard time.
@@ -207,6 +217,7 @@ Zone Antarctica/Syowa	0	-	zzz	1957 Jan 29
 # <http://www.nipr.ac.jp/english/ara01.html>
 
 # S Korea - year-round base
+# Jang Bogo, Terra Nova Bay, -743700+1641205 since 2014
 # King Sejong, King George Island, -6213-05847, since 1988
 
 # New Zealand - claims
@@ -255,6 +266,9 @@ Zone Antarctica/Troll	0	-	zzz	2005 Feb 12
 # Poland - year-round base
 # Arctowski, King George Island, -620945-0582745, since 1977
 
+# Romania - year-bound base
+# Law-Racoviţă, Larsemann Hills, -692319+0762251, since 1986
+
 # Russia - year-round bases
 # Bellingshausen, King George Island, -621159-0585337, since 1968-02-22
 # Mirny, Davis coast, -6633+09301, since 1956-02
@@ -292,9 +306,12 @@ Zone Antarctica/Vostok	0	-	zzz	1957 Dec 16
 
 # S Africa - year-round bases
 # Marion Island, -4653+03752
-# Sanae, -7141-00250
+# SANAE IV, Vesleskarvet, Queen Maud Land, -714022-0025026, since 1997
 
-# UK
+# Ukraine - year-round base
+# Vernadsky (formerly Faraday), Galindez Island, -651445-0641526, since 1954
+
+# United Kingdom
 #
 # British Antarctic Territories (BAT) claims
 # South Orkney Islands

@@ -96,7 +96,7 @@ POSIX has the following properties and limitations.
 
 *	POSIX requires that systems ignore leap seconds.
 
-*	The tz code attempts attempts to support all the time_t implementations
+*	The tz code attempts to support all the time_t implementations
 	allowed by POSIX.  The time_t type represents a nonnegative count of
 	seconds since 1970-01-01 00:00:00 UTC, ignoring leap seconds.
 	In practice, time_t is usually a signed 64- or 32-bit integer; 32-bit

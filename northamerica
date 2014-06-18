@@ -548,7 +548,7 @@ Zone America/Adak	 12:13:21 -	LMT	1867 Oct 18
 # Hawaii
 
 # From Arthur David Olson (2010-12-09):
-# "Hawaiian Time" by Robert C. Schmitt and Doak C. Cox appears on pages 207-225
+# "Hawaiian Time" by Robert C. Schmitt and Doak C. Cox appears on pages 207–225
 # of volume 26 of The Hawaiian Journal of History (1992). As of 2010-12-09,
 # the article is available at
 # http://evols.library.manoa.hawaii.edu/bitstream/10524/239/2/JL26215.pdf
@@ -1008,7 +1008,7 @@ Zone America/Menominee	-5:50:27 -	LMT	1885 Sep 18 12:00
 #	<http://cs.ucla.edu/~eggert/The-Waste-of-Daylight-19th.pdf>
 #	[PDF] (1914-03)
 #
-#	Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94
+#	Milne J. Civil time. Geogr J. 1899 Feb;13(2):173–94
 #	<http://www.jstor.org/stable/1774359>.
 #
 # See the 'europe' file for Greenland.
@@ -1630,7 +1630,7 @@ Zone America/Atikokan	-6:06:28 -	LMT	1895
 # the first Sunday of April of each year and two o'clock Central
 # Standard Time in the morning of the last Sunday of October next
 # following, one hour in advance of Central Standard Time."...
-# I believe that the English legislation [of the old time act] had =
+# I believe that the English legislation [of the old time act] had
 # been assented to (March 22, 1967)....
 # Also, as far as I can tell, there was no order-in-council varying
 # the time of Daylight Saving Time for 2005 and so the provisions of
@@ -2322,18 +2322,18 @@ Zone America/Cancun	-5:47:04 -	LMT	1922 Jan  1  0:12:56
 			-6:00	-	CST	1981 Dec 23
 			-5:00	Mexico	E%sT	1998 Aug  2  2:00
 			-6:00	Mexico	C%sT
-# Campeche, Yucatan
+# Campeche, Yucatán
 Zone America/Merida	-5:58:28 -	LMT	1922 Jan  1  0:01:32
 			-6:00	-	CST	1981 Dec 23
 			-5:00	-	EST	1982 Dec  2
 			-6:00	Mexico	C%sT
-# Coahuila, Durango, Nuevo Leon, Tamaulipas (near US border)
+# Coahuila, Durango, Nuevo León, Tamaulipas (near US border)
 Zone America/Matamoros	-6:40:00 -	LMT	1921 Dec 31 23:20:00
 			-6:00	-	CST	1988
 			-6:00	US	C%sT	1989
 			-6:00	Mexico	C%sT	2010
 			-6:00	US	C%sT
-# Coahuila, Durango, Nuevo Leon, Tamaulipas (away from US border)
+# Coahuila, Durango, Nuevo León, Tamaulipas (away from US border)
 Zone America/Monterrey	-6:41:16 -	LMT	1921 Dec 31 23:18:44
 			-6:00	-	CST	1988
 			-6:00	US	C%sT	1989
@@ -2478,7 +2478,7 @@ Zone America/Santa_Isabel	-7:39:28 -	LMT	1922 Jan  1  0:20:32
 # America/Tijuana only in that it did not observe DST from 1976
 # through 1995.  This was as per Shanks (1999).  But Shanks & Pottenger say
 # Ensenada did not observe DST from 1948 through 1975.  Guy Harris reports
-# that the 1987 OAG says "Only Ensenada, Mexicale, San Felipe and
+# that the 1987 OAG says "Only Ensenada, Mexicali, San Felipe and
 # Tijuana observe DST," which agrees with Shanks & Pottenger but implies that
 # DST-observance was a town-by-town matter back then.  This concerns
 # data after 1970 so most likely there should be at least one Zone
@@ -2844,7 +2844,7 @@ Zone America/El_Salvador -5:56:48 -	LMT	1921		# San Salvador
 
 # Grenada
 # Guadeloupe
-# St Barthelemy
+# St Barthélemy
 # St Martin (French part)
 # See 'southamerica'.
 
@@ -3077,7 +3077,7 @@ Zone	America/Managua	-5:45:08 -	LMT	1890
 # Panama
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Panama	-5:18:08 -	LMT	1890
-			-5:19:36 -	CMT	1908 Apr 22   # Colon Mean Time
+			-5:19:36 -	CMT	1908 Apr 22   # Colón Mean Time
 			-5:00	-	EST
 
 # Puerto Rico

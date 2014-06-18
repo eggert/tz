@@ -32,13 +32,13 @@
 #	<http://cs.ucla.edu/~eggert/The-Waste-of-Daylight-19th.pdf>
 #	[PDF] (1914-03)
 #
-#	Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94
+#	Milne J. Civil time. Geogr J. 1899 Feb;13(2):173–94
 #	<http://www.jstor.org/stable/1774359>.  He writes:
 #	"It is requested that corrections and additions to these tables
 #	may be sent to Mr. John Milne, Royal Geographical Society,
 #	Savile Row, London."  Nowadays please email them to tz@iana.org.
 #
-#	Brazil's Departamento Servico da Hora (DSH),
+#	Brazil's Divisão Serviço da Hora (DSHO),
 #	History of Summer Time
 #	<http://pcdsh01.on.br/HISTHV.htm>
 #	(1998-09-21, in Portuguese)
@@ -159,7 +159,7 @@
 # between 160 and 170 hours more daylight leisure, to a war which
 # plunged Europe into darkness for four years, and shook the
 # foundations of civilization throughout the world.
-#	— <http://www.winstonchurchill.org/fh114willett.htm>
+#	— <http://www.winstonchurchill.org/images/finesthour/Vol.01%20No.114.pdf>
 #	"A Silent Toast to William Willett", Pictorial Weekly
 
 # From Paul Eggert (1996-09-03):
@@ -169,7 +169,6 @@
 # proponents (who eventually won the argument) are quoted as using "Summer".
 
 # From Arthur David Olson (1989-01-19):
-#
 # A source at the British Information Office in New York avers that it's
 # known as "British" Summer Time in all parts of the United Kingdom.
 
@@ -718,7 +717,7 @@ Zone	Europe/Minsk	1:50:16 -	LMT	1880
 #	Annuaire de L'Observatoire Royal de Belgique,
 #	Avenue Circulaire, 3, B-1180 BRUXELLES, CLVIIe annee, 1991
 #	(Imprimerie HAYEZ, s.p.r.l., Rue Fin, 4, 1080 BRUXELLES, MCMXC),
-#	pp 8-9.
+#	pp 8–9.
 # LMT before 1892 was 0:17:30, according to the official journal of Belgium:
 #	Moniteur Belge, Samedi 30 Avril 1892, N.121.
 # Thanks to Pascal Delmoitie for these references.
@@ -893,7 +892,7 @@ Zone Atlantic/Faroe	-0:27:04 -	LMT	1908 Jan 11	# Torshavn
 # From Paul Eggert (2006-03-22):
 # Greenland joined the EU as part of Denmark, obtained home rule on 1979-05-01,
 # and left the EU on 1985-02-01.  It therefore should have been using EU
-# rules at least through 1984.  Shanks & Pottenger say Scoresbysund and Godthab
+# rules at least through 1984.  Shanks & Pottenger say Scoresbysund and Godthåb
 # used C-Eur rules after 1980, but IATA SSIM (1991/1996) says they use EU
 # rules since at least 1991.  Assume EU rules since 1980.
 
@@ -932,16 +931,16 @@ Zone Atlantic/Faroe	-0:27:04 -	LMT	1908 Jan 11	# Torshavn
 # DPC research station at Zackenberg.
 #
 # Scoresbysund and two small villages nearby keep time UTC−1 and use
-# the same daylight savings time period as in West Greenland (Godthab).
+# the same daylight savings time period as in West Greenland (Godthåb).
 #
-# The rest of Greenland, including Godthab (this area, although it
+# The rest of Greenland, including Godthåb (this area, although it
 # includes central Greenland, is known as west Greenland), keeps time
 # UTC−3, with daylight savings methods according to European rules.
 #
 # It is common procedure to use UTC 0 in the wilderness of East and
 # North Greenland, because it is mainly Icelandic aircraft operators
 # maintaining traffic in these areas.  However, the official status of
-# this area is that it sticks with Godthab time.  This area might be
+# this area is that it sticks with Godthåb time.  This area might be
 # considered a dual time zone in some respects because of this.
 
 # From Rives McDow (2001-11-19):
@@ -950,8 +949,8 @@ Zone Atlantic/Faroe	-0:27:04 -	LMT	1908 Jan 11	# Torshavn
 
 # From Paul Eggert (2006-03-22):
 # From 1997 on the CIA map shows Danmarkshavn on GMT;
-# the 1995 map as like Godthab.
-# For lack of better info, assume they were like Godthab before 1996.
+# the 1995 map as like Godthåb.
+# For lack of better info, assume they were like Godthåb before 1996.
 # startkart.no says Thule does not observe DST, but this is clearly an error,
 # so go with Shanks & Pottenger for Thule transitions until this year.
 # For 2007 on assume Thule will stay in sync with US DST rules.

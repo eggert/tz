@@ -11,7 +11,7 @@
 # San Diego: ACS Publications, Inc. (2003).
 #
 # For data circa 1899, a common source is:
-# Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94
+# Milne J. Civil time. Geogr J. 1899 Feb;13(2):173–94
 # <http://www.jstor.org/stable/1774359>.
 #
 # Gwillim Law writes that a good source
@@ -589,7 +589,7 @@ Zone America/Argentina/Rio_Gallegos -4:36:52 - LMT 1894 Oct 31
 			-3:00	Arg	AR%sT	2008 Oct 18
 			-3:00	-	ART
 #
-# Tierra del Fuego, Antartida e Islas del Atlantico Sur (TF)
+# Tierra del Fuego, Antártida e Islas del Atlántico Sur (TF)
 Zone America/Argentina/Ushuaia -4:33:12 - LMT 1894 Oct 31
 			-4:16:48 -	CMT	1920 May # Córdoba Mean Time
 			-4:00	-	ART	1930 Dec
@@ -722,7 +722,7 @@ Zone	America/La_Paz	-4:32:36 -	LMT	1890
 
 # From Paul Eggert (2002-10-10):
 # The official decrees referenced below are mostly taken from
-# Decretos sobre o Horario de Verao no Brasil
+# Decretos sobre o Horário de Verão no Brasil
 # <http://pcdsh01.on.br/DecHV.html>.
 
 # From Steffen Thorsen (2008-08-29):
@@ -1328,7 +1328,7 @@ Zone America/Guayaquil	-5:19:20 -	LMT	1890
 			-5:00	-	ECT	     # Ecuador Time
 Zone Pacific/Galapagos	-5:58:24 -	LMT	1931 # Puerto Baquerizo Moreno
 			-5:00	-	ECT	1986
-			-6:00	-	GALT	     # Galapagos Time
+			-6:00	-	GALT	     # Galápagos Time
 
 # Falklands
 
@@ -1598,7 +1598,7 @@ Link America/Port_of_Spain America/Grenada
 Link America/Port_of_Spain America/Guadeloupe
 Link America/Port_of_Spain America/Marigot	# St Martin (French part)
 Link America/Port_of_Spain America/Montserrat
-Link America/Port_of_Spain America/St_Barthelemy
+Link America/Port_of_Spain America/St_Barthelemy # St Barthélemy
 Link America/Port_of_Spain America/St_Kitts	# St Kitts & Nevis
 Link America/Port_of_Spain America/St_Lucia
 Link America/Port_of_Spain America/St_Thomas	# Virgin Islands (US)

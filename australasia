@@ -833,7 +833,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # I found in the UCLA library.
 #
 # For data circa 1899, a common source is:
-# Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94
+# Milne J. Civil time. Geogr J. 1899 Feb;13(2):173–94
 # <http://www.jstor.org/stable/1774359>.
 #
 # A reliable and entertaining source about time zones is
@@ -859,7 +859,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 #	− 8:00	PST	Pitcairn*
 #
 # See the 'northamerica' file for Hawaii.
-# See the 'southamerica' file for Easter I and the Galapagos Is.
+# See the 'southamerica' file for Easter I and the Galápagos Is.
 
 ###############################################################################
 

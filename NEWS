@@ -398,7 +398,7 @@ Release 2013e – 2013-09-19 23:50:04 −0700
     Use ART (UTC−3, standard time), rather than WARST (also UTC−3, but
     daylight saving time) for San Luis, Argentina since 2009.
 
-  Changes affecting Godthab time stamps after 2037 if version mismatch
+  Changes affecting Godthåb time stamps after 2037 if version mismatch
 
     Allow POSIX-like TZ strings where the transition time's hour can
     range from −167 through 167, instead of the POSIX-required 0
@@ -734,7 +734,7 @@ Release 2013a – 2013-02-27 09:20:35 −0800
 
   Many changes affect historical time stamps before 1940.
   These were deduced from: Milne J. Civil time. Geogr J. 1899
-  Feb;13(2):173-94 <http://www.jstor.org/stable/1774359>.
+  Feb;13(2):173–94 <http://www.jstor.org/stable/1774359>.
 
   Changes affecting the code:
 

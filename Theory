@@ -43,7 +43,7 @@ POSIX has the following properties and limitations.
 		"+" and "-" in the names.
 	offset
 		is of the form '[±]hh:[mm[:ss]]' and specifies the
-		offset west of UT.  'hh' may be a single digit; 0<=hh<=24.
+		offset west of UT.  'hh' may be a single digit; 0≤hh≤24.
 		The default DST offset is one hour ahead of standard time.
 	date[/time],date[/time]
 		specifies the beginning and end of DST.  If this is absent,
@@ -55,11 +55,11 @@ POSIX has the following properties and limitations.
 		leading '+' or '-' is not allowed.
 	date
 		takes one of the following forms:
-		Jn (1<=n<=365)
+		Jn (1≤n≤365)
 			origin-1 day number not counting February 29
-		n (0<=n<=365)
+		n (0≤n≤365)
 			origin-0 day number counting February 29 if present
-		Mm.n.d (0[Sunday]<=d<=6[Saturday], 1<=n<=5, 1<=m<=12)
+		Mm.n.d (0[Sunday]≤d≤6[Saturday], 1≤n≤5, 1≤m≤12)
 			for the dth day of week n of month m of the year,
 			where week 1 is the first week in which day d appears,
 			and '5' stands for the last week in which day d appears

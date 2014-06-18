@@ -1561,7 +1561,7 @@ writezone(const char *const name, const char *const string, char version)
 		++timei32;
 	}
 	/*
-	** Output an INT32_MIN "transition" if appropriate--see below.
+	** Output an INT32_MIN "transition" if appropriate; see below.
 	*/
 	if (timei32 > 0 && ats[timei32] > INT32_MIN) {
 		--timei32;
@@ -1735,7 +1735,7 @@ writezone(const char *const name, const char *const string, char version)
 			if (pass == 1)
 				/*
 				** Output an INT32_MIN "transition"
-				** if appropriate--see above.
+				** if appropriate; see above.
 				*/
 				puttzcode(((ats[i] < INT32_MIN) ?
 					INT32_MIN : ats[i]), fp);
@@ -2420,15 +2420,15 @@ addtype(const zic_t gmtoff, const char *const abbr, const int isdst,
 	register int	i, j;
 
 	if (isdst != TRUE && isdst != FALSE) {
-		error(_("internal error - addtype called with bad isdst"));
+		error(_("internal error: addtype called with bad isdst"));
 		exit(EXIT_FAILURE);
 	}
 	if (ttisstd != TRUE && ttisstd != FALSE) {
-		error(_("internal error - addtype called with bad ttisstd"));
+		error(_("internal error: addtype called with bad ttisstd"));
 		exit(EXIT_FAILURE);
 	}
 	if (ttisgmt != TRUE && ttisgmt != FALSE) {
-		error(_("internal error - addtype called with bad ttisgmt"));
+		error(_("internal error: addtype called with bad ttisgmt"));
 		exit(EXIT_FAILURE);
 	}
 	/*
@@ -2662,8 +2662,8 @@ tadd(const zic_t t1, const zic_t t2)
 }
 
 /*
-** Given a rule, and a year, compute the date - in seconds since January 1,
-** 1970, 00:00 LOCAL time - in that year that the rule refers to.
+** Given a rule, and a year, compute the date (in seconds since January 1,
+** 1970, 00:00 LOCAL time) in that year that the rule refers to.
 */
 
 static zic_t
@@ -2735,7 +2735,7 @@ rpytime(register const struct rule *const rp, register const zic_t wantedy)
 			}
 		if (i < 0 || i >= len_months[isleap(y)][m]) {
 			if (noise)
-				warning(_("rule goes past start/end of month--\
+				warning(_("rule goes past start/end of month; \
 will not work with pre-2004 versions of zic"));
 		}
 	}

@@ -6,8 +6,8 @@ use strict;
 
 #This file released to the public domain.
 
-#Note: error checking is poor --- only trust the output if the input
-#has been checked by zic.
+# Note: error checking is poor; trust the output only if the input
+# has been checked by zic.
 
 my $contZone = '';
 while (<>) {

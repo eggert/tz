@@ -754,13 +754,13 @@ checkfinal(const char * const	value,
 ** summer or standard (as Hawaii, the United Kingdom, and Saudi Arabia
 ** have done), routine checks for iffy times may not work.
 ** So we perform this final check, deferring it until after the time has
-** been set--it may take a while, and we don't want to introduce an unnecessary
+** been set; it may take a while, and we don't want to introduce an unnecessary
 ** lag between the time the user enters their command and the time that
 ** stime/settimeofday is called.
 **
 ** We just check nearby times to see if any have the same representation
 ** as the time that convert returned.  We work our way out from the center
-** for quick response in solar time situations.  We only handle common cases--
+** for quick response in solar time situations.  We only handle common cases:
 ** offsets of at most a minute, and offsets of exact numbers of minutes
 ** and at most an hour.
 */

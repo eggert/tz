@@ -115,16 +115,16 @@ struct state {
 };
 
 struct rule {
-	int		r_type;		/* type of rule--see below */
+	int		r_type;		/* type of rule; see below */
 	int		r_day;		/* day number of rule */
 	int		r_week;		/* week number of rule */
 	int		r_mon;		/* month number of rule */
 	int_fast32_t	r_time;		/* transition time of rule */
 };
 
-#define JULIAN_DAY		0	/* Jn - Julian day */
-#define DAY_OF_YEAR		1	/* n - day of year */
-#define MONTH_NTH_DAY_OF_WEEK	2	/* Mm.n.d - month, week, day of week */
+#define JULIAN_DAY		0	/* Jn = Julian day */
+#define DAY_OF_YEAR		1	/* n = day of year */
+#define MONTH_NTH_DAY_OF_WEEK	2	/* Mm.n.d = month, week, day of week */
 
 /*
 ** Prototypes for static functions.
@@ -1256,8 +1256,8 @@ tzset(void)
 
 /*
 ** The easy way to behave "as if no library function calls" localtime
-** is to not call it--so we drop its guts into "localsub", which can be
-** freely called. (And no, the PANS doesn't require the above behavior--
+** is to not call it, so we drop its guts into "localsub", which can be
+** freely called. (And no, the PANS doesn't require the above behavior,
 ** but it *is* desirable.)
 **
 ** The unused offset argument is for the benefit of mktime variants.

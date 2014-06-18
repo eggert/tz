@@ -40,20 +40,20 @@
 # the area that includes Nigeria is "West Africa".
 # He has heard of "Western Sahara Time" for +0:00 but can find no reference.
 #
-# To make things confusing, 'WAT' seems to have been used for -1:00 long ago;
-# I'd guess that this was because people needed _some_ name for -1:00,
-# and at the time, far west Africa was the only major land area in -1:00.
-# This usage is now obsolete, as the last use of -1:00 on the African
+# To make things confusing, 'WAT' seems to have been used for −1:00 long ago;
+# I'd guess that this was because people needed _some_ name for −1:00,
+# and at the time, far west Africa was the only major land area in −1:00.
+# This usage is now obsolete, as the last use of −1:00 on the African
 # mainland seems to have been 1976 in Western Sahara.
 #
 # To summarize, the following abbreviations seem to have some currency:
-#	-1:00	WAT	West Africa Time (no longer used)
+#	−1:00	WAT	West Africa Time (no longer used)
 #	 0:00	GMT	Greenwich Mean Time
 #	 2:00	CAT	Central Africa Time
 #	 2:00	SAST	South Africa Standard Time
 # and Murray suggests the following abbreviation:
 #	 1:00	WAT	West Africa Time
-# I realize that this leads to 'WAT' being used for both -1:00 and 1:00
+# I realize that this leads to 'WAT' being used for both −1:00 and 1:00
 # for times before 1976, but this is the best I can think of
 # until we get more information.
 #
@@ -306,12 +306,12 @@ Rule	Egypt	2007	only	-	Sep	Thu>=1	24:00	0	-
 # (at least today).
 
 # From Alexander Krivenyshev (2010-07-20):
-# According to News from Egypt -  Al-Masry Al-Youm Egypt's cabinet has
+# According to News from Egypt – Al-Masry Al-Youm Egypt's cabinet has
 # decided that Daylight Saving Time will not be used in Egypt during
 # Ramadan.
 #
 # Arabic translation:
-# "Clocks to go back during Ramadan--and then forward again"
+# "Clocks to go back during Ramadan – and then forward again"
 # http://www.almasryalyoum.com/en/news/clocks-go-back-during-ramadan-and-then-forward-again
 # http://www.worldtimezone.com/dst_news/dst_news_egypt02.html
 
@@ -479,8 +479,8 @@ Zone	Africa/Maseru	1:50:00 -	LMT	1903 Mar
 # Howse reports that it was in honor of their president's birthday.
 # Shank & Pottenger report the date as May 1, whereas Howse reports Jan;
 # go with Shanks & Pottenger.
-# For Liberia before 1972, Shanks & Pottenger report -0:44, whereas Howse and
-# Whitman each report -0:44:30; go with the more precise figure.
+# For Liberia before 1972, Shanks & Pottenger report −0:44, whereas Howse and
+# Whitman each report −0:44:30; go with the more precise figure.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Monrovia	-0:43:08 -	LMT	1882
 			-0:43:08 -	MMT	1919 Mar # Monrovia Mean Time
@@ -627,7 +627,7 @@ Zone Africa/Nouakchott	-1:03:48 -	LMT	1912
 # States of America. It will start at two o'clock in the morning on the
 # last Sunday of October and will end at two o'clock in the morning on
 # the last Sunday of March the following year. The summer time for the
-# year 2008 - 2009 will, therefore, be effective as from 26 October 2008
+# year 2008–2009 will, therefore, be effective as from 26 October 2008
 # and end on 29 March 2009.
 
 # From Ed Maste (2008-10-07):
@@ -1020,11 +1020,11 @@ Zone	Indian/Reunion	3:41:52 -	LMT	1911 Jun	# Saint-Denis
 # in French; no longer available as of 1999-08-17).
 # We have no info about their time zone histories.
 #
-# Bassas da India - uninhabited
-# Europa Island - inhabited from 1905 to 1910 by two families
-# Glorioso Is - inhabited until at least 1958
-# Juan de Nova - uninhabited
-# Tromelin - inhabited until at least 1958
+# Bassas da India – uninhabited
+# Europa Island – inhabited from 1905 to 1910 by two families
+# Glorioso Is – inhabited until at least 1958
+# Juan de Nova – uninhabited
+# Tromelin – inhabited until at least 1958
 
 # Rwanda
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1068,7 +1068,7 @@ Zone	Indian/Mahe	3:41:48 -	LMT	1906 Jun	# Victoria
 
 # Sierra Leone
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-# Whitman gives Mar 31 - Aug 31 for 1931 on; go with Shanks & Pottenger.
+# Whitman gives Mar 31 – Aug 31 for 1931 on; go with Shanks & Pottenger.
 Rule	SL	1935	1942	-	Jun	 1	0:00	0:40	SLST
 Rule	SL	1935	1942	-	Oct	 1	0:00	0	WAT
 Rule	SL	1957	1962	-	Jun	 1	0:00	1:00	SLST

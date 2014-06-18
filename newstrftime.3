@@ -51,9 +51,11 @@ strftime \- format date and time
 .B const char *format;
 .B const struct tm *timeptr
 .PP
-.B cc ... -ltz
+.B cc ... \-ltz
 .fi
 .SH DESCRIPTION
+.ie '\(en'' .ds en \-
+.el .ds en \(en
 The
 .I strftime\^
 function formats the information from
@@ -100,7 +102,7 @@ is replaced by the locale's abbreviated month name.
 .TP
 %C
 is replaced by the century (a year divided by 100 and truncated to an integer)
-as a decimal number (00-99).
+as a decimal number (00\*(en99).
 .TP
 %c
 is replaced by the locale's appropriate date and time representation.
@@ -109,10 +111,10 @@ is replaced by the locale's appropriate date and time representation.
 is replaced by the date in the format %m/%d/%y.
 .TP
 %d
-is replaced by the day of the month as a decimal number (01-31).
+is replaced by the day of the month as a decimal number (01\*(en31).
 .TP
 %e
-is replaced by the day of month as a decimal number (1-31);
+is replaced by the day of month as a decimal number (1\*(en31);
 single digits are preceded by a blank.
 .TP
 %F
@@ -122,30 +124,30 @@ is replaced by the date in the format %Y-%m-%d.
 is replaced by the ISO 8601 year with century as a decimal number.
 .TP
 %g
-is replaced by the ISO 8601 year without century as a decimal number (00-99).
+is replaced by the ISO 8601 year without century as a decimal number (00\*(en99).
 .TP
 %H
-is replaced by the hour (24-hour clock) as a decimal number (00-23).
+is replaced by the hour (24-hour clock) as a decimal number (00\*(en23).
 .TP
 %I
-is replaced by the hour (12-hour clock) as a decimal number (01-12).
+is replaced by the hour (12-hour clock) as a decimal number (01\*(en12).
 .TP
 %j
-is replaced by the day of the year as a decimal number (001-366).
+is replaced by the day of the year as a decimal number (001\*(en366).
 .TP
 %k
-is replaced by the hour (24-hour clock) as a decimal number (0-23);
+is replaced by the hour (24-hour clock) as a decimal number (0\*(en23);
 single digits are preceded by a blank.
 .TP
 %l
-is replaced by the hour (12-hour clock) as a decimal number (1-12);
+is replaced by the hour (12-hour clock) as a decimal number (1\*(en12);
 single digits are preceded by a blank.
 .TP
 %M
-is replaced by the minute as a decimal number (00-59).
+is replaced by the minute as a decimal number (00\*(en59).
 .TP
 %m
-is replaced by the month as a decimal number (01-12).
+is replaced by the month as a decimal number (01\*(en12).
 .TP
 %n
 is replaced by a newline.
@@ -161,7 +163,7 @@ is replaced by the locale's representation of 12-hour clock time
 using AM/PM notation.
 .TP
 %S
-is replaced by the second as a decimal number (00-60).
+is replaced by the second as a decimal number (00\*(en60).
 .TP
 %s
 is replaced by the number of seconds since the Epoch (see newctime(3)).
@@ -174,25 +176,25 @@ is replaced by a tab.
 .TP
 %U
 is replaced by the week number of the year (Sunday as the first day of
-the week) as a decimal number (00-53).
+the week) as a decimal number (00\*(en53).
 .TP
 %u
 is replaced by the weekday (Monday as the first day of the week)
-as a decimal number (1-7).
+as a decimal number (1\*(en7).
 .TP
 %V
 is replaced by the week number of the year (Monday as the first day of
-the week) as a decimal number (01-53).  If the week containing January
+the week) as a decimal number (01\*(en53).  If the week containing January
 1 has four or more days in the new year, then it is week 1; otherwise
 it is week 53 of the previous year, and the next week is week 1.
 .TP
 %W
 is replaced by the week number of the year (Monday as the first day of
-the week) as a decimal number (00-53).
+the week) as a decimal number (00\*(en53).
 .TP
 %w
 is replaced by the weekday (Sunday as the first day of the week)
-as a decimal number (0-6).
+as a decimal number (0\*(en6).
 .TP
 %X
 is replaced by the locale's appropriate time representation.
@@ -204,7 +206,7 @@ is replaced by the locale's appropriate date representation.
 is replaced by the year with century as a decimal number.
 .TP
 %y
-is replaced by the year without century as a decimal number (00-99).
+is replaced by the year without century as a decimal number (00\*(en99).
 .TP
 %Z
 is replaced by the time zone name,

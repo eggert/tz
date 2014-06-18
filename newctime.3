@@ -157,8 +157,7 @@ are determined.
 .I Mktime\^
 returns the specified calendar time;
 If the calendar time cannot be represented,
-it returns
-.BR -1 .
+it returns \(mi1.
 .PP
 .I Difftime\^
 returns the difference between two calendar times,
@@ -250,7 +249,7 @@ and
 .I ctime\^
 behave strangely for years before 1000 or after 9999.
 The 1989 and 1999 editions of the C Standard say
-that years from \-99 through 999 are converted without
+that years from \(mi99 through 999 are converted without
 extra spaces, but this conflicts with longstanding
 tradition and with this implementation.
 Traditional implementations of these two functions are

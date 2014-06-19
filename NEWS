@@ -723,7 +723,7 @@ Release 2013a – 2013-02-27 09:20:35 −0800
   Change affecting binary data format:
 
     The zone offset at the end of version-2-format zone files is now
-    allowed to be 24:00, as per POSIX.1-2008.  (Thanks to Arthor David Olson.)
+    allowed to be 24:00, as per POSIX.1-2008.  (Thanks to Arthur David Olson.)
 
   Changes affecting current and future time stamps:
 

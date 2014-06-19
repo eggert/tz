@@ -959,7 +959,7 @@ Zone Africa/Casablanca	-0:30:20 -	LMT	1913 Oct 26
 # Assume that this has been true since Western Sahara switched to GMT,
 # since most of it was then controlled by Morocco.
 
-Zone Africa/El_Aaiun	-0:52:48 -	LMT	1934 Jan
+Zone Africa/El_Aaiun	-0:52:48 -	LMT	1934 Jan # El Aaiún
 			-1:00	-	WAT	1976 Apr 14
 			 0:00	Morocco	WE%sT
 

@@ -379,12 +379,12 @@ Zone	Asia/Chongqing	7:06:20	-	LMT	1928 # or Chungking
 # the Guangdong counties  Xuwen, Haikang, Suixi, Lianjiang,
 # Zhanjiang, Wuchuan, Huazhou, Gaozhou, Maoming, Dianbai, and Xinyi;
 # east Tibet, including Lhasa, Chamdo, Shigaise, Jimsar, Shawan and Hutubi;
-# east Xinjiang, including Urumqi, Turpan, Karamay, Korla, Minfeng, Jinghe,
+# east Xinjiang, including Ürümqi, Turpan, Karamay, Korla, Minfeng, Jinghe,
 # Wusu, Qiemo, Xinyan, Wulanwusu, Jinghe, Yumin, Tacheng, Tuoli, Emin,
 # Shihezi, Changji, Yanqi, Heshuo, Tuokexun, Tulufan, Shanshan, Hami,
 # Fukang, Kuitun, Kumukuli, Miquan, Qitai, and Turfan.
-Zone	Asia/Urumqi	5:50:20	-	LMT	1928 # or Urumchi
-			6:00	-	URUT	1980 May # Urumqi Time
+Zone	Asia/Urumqi	5:50:20	-	LMT	1928 # Ürümqi or Urumchi
+			6:00	-	URUT	1980 May # Ürümqi Time
 			8:00	PRC	C%sT
 # Kunlun Time
 # West Tibet, including Pulan, Aheqi, Shufu, Shule;

@@ -15,6 +15,8 @@ Unreleased, experimental changes
     Error diagnostics of 'zic' and 'yearistype' have been reworded so that
     they no longer use ASCII '-' as if it were a dash.
 
+    Some lint has been removed when using GCC_DEBUG_FLAGS with GCC 4.9.0.
+
   Changes affecting documentation and commentary
 
     Documentation and commentary now prefer UTF-8 to US-ASCII,

@@ -944,7 +944,6 @@ tzparse(const char *name, register struct state *const sp,
 	register int			load_result;
 	static struct ttinfo		zttinfo;
 
-	INITIALIZE(dstname);
 	stdname = name;
 	if (lastditch) {
 		stdlen = strlen(name);	/* length of standard zone name */
@@ -1368,11 +1367,13 @@ gmtsub(const time_t *const timep, const int_fast32_t offset,
 	register struct tm *	result;
 
 	if (!gmt_is_set) {
-		gmt_is_set = TRUE;
 #ifdef ALL_STATE
 		gmtptr = malloc(sizeof *gmtptr);
+		gmt_is_set = gmtptr != NULL;
+#else
+		gmt_is_set = TRUE;
 #endif /* defined ALL_STATE */
-		if (gmtptr != NULL)
+		if (gmt_is_set)
 			gmtload(gmtptr);
 	}
 	result = timesub(timep, offset, gmtptr, tmp);

@@ -15,16 +15,6 @@
  * WARRANTIES OF MERCHANT[A]BILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifndef lint
-char copyright[] =
-"@(#) Copyright (c) 1985, 1987, 1988 The Regents of the University of California.\n\
- All rights reserved.\n";
-#endif /* not lint */
-
-#ifndef lint
-static char sccsid[] = "@(#)date.c	4.23 (Berkeley) 9/20/88";
-#endif /* not lint */
-
 #include "private.h"
 #if HAVE_ADJTIME || HAVE_SETTIMEOFDAY
 #include "sys/time.h"	/* for struct timeval, struct timezone */
@@ -99,10 +89,6 @@ main(const int argc, char *argv[])
 	char *			endarg;
 
 	INITIALIZE(dousg);
-	INITIALIZE(minuteswest);
-	INITIALIZE(dsttime);
-	INITIALIZE(adjust);
-	INITIALIZE(t);
 #ifdef LC_ALL
 	(void) setlocale(LC_ALL, "");
 #endif /* defined(LC_ALL) */

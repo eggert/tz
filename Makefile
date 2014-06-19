@@ -134,14 +134,16 @@ LDLIBS=
 GCC_DEBUG_FLAGS = -Dlint -g3 -O3 -fno-common -fstrict-aliasing \
 	-Wall -Wextra \
 	-Wbad-function-cast -Wcast-align -Wcast-qual \
-	-Wformat=2 -Winit-self \
+	-Wdeclaration-after-statement \
+	-Wformat=2 -Winit-self -Wjump-misses-init \
 	-Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes \
 	-Wnested-externs -Wno-address -Wno-cast-qual \
 	-Wno-format-nonliteral -Wno-sign-compare -Wno-sign-conversion \
 	-Wno-type-limits \
 	-Wno-unused-parameter -Woverlength-strings -Wpointer-arith \
 	-Wshadow -Wstrict-prototypes -Wsuggest-attribute=const \
-	-Wsuggest-attribute=noreturn -Wsuggest-attribute=pure -Wtrampolines \
+	-Wsuggest-attribute=format -Wsuggest-attribute=noreturn \
+	-Wsuggest-attribute=pure -Wtrampolines \
 	-Wwrite-strings
 #
 # If you want to use System V compatibility code, add

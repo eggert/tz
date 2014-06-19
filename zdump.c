@@ -167,16 +167,6 @@ enum { SECSPER400YEARS_FITS = SECSPERLYEAR <= INTMAX_MAX / 400 };
 #include "libintl.h"
 #endif /* HAVE_GETTEXT */
 
-#ifndef GNUC_or_lint
-#ifdef lint
-#define GNUC_or_lint
-#else /* !defined lint */
-#ifdef __GNUC__
-#define GNUC_or_lint
-#endif /* defined __GNUC__ */
-#endif /* !defined lint */
-#endif /* !defined GNUC_or_lint */
-
 #if 2 < __GNUC__ || (__GNUC__ == 2 && 96 <= __GNUC_MINOR__)
 # define ATTRIBUTE_PURE __attribute__ ((__pure__))
 #else
@@ -197,9 +187,9 @@ enum { SECSPER400YEARS_FITS = SECSPERLYEAR <= INTMAX_MAX / 400 };
 #endif /* !HAVE_GETTEXT */
 #endif /* !defined _ */
 
-#ifndef TZ_DOMAIN
-#define TZ_DOMAIN "tz"
-#endif /* !defined TZ_DOMAIN */
+#if !defined TZ_DOMAIN && defined TZ_DOMAINDIR
+# define TZ_DOMAIN "tz"
+#endif
 
 extern char **	environ;
 extern int	getopt(int argc, char * const argv[],

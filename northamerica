@@ -16,8 +16,8 @@
 # United States
 
 # From Paul Eggert (1999-03-31):
-# Howse writes (pp 121–125) that time zones were invented by
-# Professor Charles Ferdinand Dowd (1825–1904),
+# Howse writes (pp 121-125) that time zones were invented by
+# Professor Charles Ferdinand Dowd (1825-1904),
 # Principal of Temple Grove Ladies' Seminary (Saratoga Springs, NY).
 # His pamphlet "A System of National Time for Railroads" (1870)
 # was the result of his proposals at the Convention of Railroad Trunk Lines
@@ -54,7 +54,7 @@
 #	to push people into bed earlier, and get them up earlier, to make
 #	them healthy, wealthy and wise in spite of themselves.
 #
-#	 — Robertson Davies, The diary of Samuel Marchbanks,
+#	 -- Robertson Davies, The diary of Samuel Marchbanks,
 #	   Clarke, Irwin (1947), XIX, Sunday
 #
 # For more about the first ten years of DST in the United States, see
@@ -158,7 +158,7 @@ Zone	PST8PDT		 -8:00	US	P%sT
 #    old			 new
 #    Pacific Standard Time(PST)  -same-
 #    Yukon Standard Time(YST)    -same-
-#    Central Alaska S.T. (CAT)   Alaska–Hawaii St[an]dard Time (AHST)
+#    Central Alaska S.T. (CAT)   Alaska-Hawaii St[an]dard Time (AHST)
 #    Nome Standard Time (NT)     Bering Standard Time (BST)
 #
 # ...Alaska's timezone lines were redrawn in 1983 to give only 2 tz.
@@ -171,17 +171,17 @@ Zone	PST8PDT		 -8:00	US	P%sT
 
 # From U. S. Naval Observatory (1989-01-19):
 # USA  EASTERN       5 H  BEHIND UTC    NEW YORK, WASHINGTON
-# USA  EASTERN       4 H  BEHIND UTC    APR 3 – OCT 30
+# USA  EASTERN       4 H  BEHIND UTC    APR 3 - OCT 30
 # USA  CENTRAL       6 H  BEHIND UTC    CHICAGO, HOUSTON
-# USA  CENTRAL       5 H  BEHIND UTC    APR 3 – OCT 30
+# USA  CENTRAL       5 H  BEHIND UTC    APR 3 - OCT 30
 # USA  MOUNTAIN      7 H  BEHIND UTC    DENVER
-# USA  MOUNTAIN      6 H  BEHIND UTC    APR 3 – OCT 30
+# USA  MOUNTAIN      6 H  BEHIND UTC    APR 3 - OCT 30
 # USA  PACIFIC       8 H  BEHIND UTC    L.A., SAN FRANCISCO
-# USA  PACIFIC       7 H  BEHIND UTC    APR 3 – OCT 30
+# USA  PACIFIC       7 H  BEHIND UTC    APR 3 - OCT 30
 # USA  ALASKA STD    9 H  BEHIND UTC    MOST OF ALASKA     (AKST)
-# USA  ALASKA STD    8 H  BEHIND UTC    APR 3 – OCT 30 (AKDT)
+# USA  ALASKA STD    8 H  BEHIND UTC    APR 3 - OCT 30 (AKDT)
 # USA  ALEUTIAN     10 H  BEHIND UTC    ISLANDS WEST OF 170W
-# USA    "           9 H  BEHIND UTC    APR 3 – OCT 30
+# USA    "           9 H  BEHIND UTC    APR 3 - OCT 30
 # USA  HAWAII       10 H  BEHIND UTC
 # USA  BERING       11 H  BEHIND UTC    SAMOA, MIDWAY
 
@@ -212,7 +212,7 @@ Zone	PST8PDT		 -8:00	US	P%sT
 #	mountain standard time
 #	Pacific standard time
 #	Yukon standard time
-#	Alaska–Hawaii standard time
+#	Alaska-Hawaii standard time
 #	Bering standard time
 # And after 1983-11-30:
 #	Atlantic standard time
@@ -221,7 +221,7 @@ Zone	PST8PDT		 -8:00	US	P%sT
 #	mountain standard time
 #	Pacific standard time
 #	Alaska standard time
-#	Hawaii–Aleutian standard time
+#	Hawaii-Aleutian standard time
 #	Samoa standard time
 # The law doesn't give abbreviations.
 #
@@ -234,19 +234,19 @@ Zone	PST8PDT		 -8:00	US	P%sT
 # The following was signed into law on 2005-08-08.
 #
 # H.R. 6, Energy Policy Act of 2005, SEC. 110. DAYLIGHT SAVINGS.
-#   (a) Amendment.—Section 3(a) of the Uniform Time Act of 1966 (15
-#   U.S.C. 260a(a)) is amended—
+#   (a) Amendment.--Section 3(a) of the Uniform Time Act of 1966 (15
+#   U.S.C. 260a(a)) is amended--
 #     (1) by striking "first Sunday of April" and inserting "second
 #     Sunday of March"; and
 #     (2) by striking "last Sunday of October" and inserting "first
 #     Sunday of November'.
-#   (b) Effective Date.—Subsection (a) shall take effect 1 year after the
+#   (b) Effective Date.--Subsection (a) shall take effect 1 year after the
 #   date of enactment of this Act or March 1, 2007, whichever is later.
-#   (c) Report to Congress.—Not later than 9 months after the effective
+#   (c) Report to Congress.--Not later than 9 months after the effective
 #   date stated in subsection (b), the Secretary shall report to Congress
 #   on the impact of this section on energy consumption in the United
 #   States.
-#   (d) Right to Revert.—Congress retains the right to revert the
+#   (d) Right to Revert.--Congress retains the right to revert the
 #   Daylight Saving Time back to the 2005 time schedules once the
 #   Department study is complete.
 
@@ -355,7 +355,8 @@ Zone America/North_Dakota/New_Salem -6:45:39 - LMT 1883 Nov 18 12:14:21
 # ...according to the Census Bureau, the largest city is Beulah (although
 # it's commonly referred to as Beulah-Hazen, with Hazen being the next
 # largest city in Mercer County).  Google Maps places Beulah's city hall
-# at 47° 15′ 51″ N, 101° 46′ 40″ W, which yields an offset of 6h47′07″.
+# at 47 degrees 15' 51" N, 101 degrees 46' 40" W, which yields an offset
+# of 6h47'07".
 
 Zone America/North_Dakota/Beulah -6:47:07 - LMT 1883 Nov 18 12:12:53
 			-7:00	US	M%sT	2010 Nov  7 2:00
@@ -404,7 +405,7 @@ Zone America/Los_Angeles -7:52:58 -	LMT	1883 Nov 18 12:07:02
 			-8:00	US	P%sT
 
 # Alaska
-# AK%sT is the modern abbreviation for −9:00 per USNO.
+# AK%sT is the modern abbreviation for -9:00 per USNO.
 #
 # From Paul Eggert (2001-05-30):
 # Howse writes that Alaska switched from the Julian to the Gregorian calendar,
@@ -455,7 +456,7 @@ Zone America/Los_Angeles -7:52:58 -	LMT	1883 Nov 18 12:07:02
 # http://www.commerce.state.ak.us/dca/commdb/CIS.cfm?Comm_Boro_name=Metlakatla
 # It's shortly after 1:00 here on the east coast of the United States;
 # the staffer said it was shortly after 10:00 there. When I asked whether
-# that meant they were on Pacific time, they said no – they were on their
+# that meant they were on Pacific time, they said no - they were on their
 # own time. I asked about daylight saving; they said it wasn't used. I
 # did not inquire about practices in the past.
 
@@ -527,7 +528,7 @@ Zone America/Adak	 12:13:21 -	LMT	1867 Oct 18
 # The following switches don't quite make our 1970 cutoff.
 #
 # Shanks writes that part of southwest Alaska (e.g. Aniak)
-# switched from −11:00 to −10:00 on 1968-09-22 at 02:00,
+# switched from -11:00 to -10:00 on 1968-09-22 at 02:00,
 # and another part (e.g. Akiak) made the same switch five weeks later.
 #
 # From David Flater (2004-11-09):
@@ -548,7 +549,7 @@ Zone America/Adak	 12:13:21 -	LMT	1867 Oct 18
 # Hawaii
 
 # From Arthur David Olson (2010-12-09):
-# "Hawaiian Time" by Robert C. Schmitt and Doak C. Cox appears on pages 207–225
+# "Hawaiian Time" by Robert C. Schmitt and Doak C. Cox appears on pages 207-225
 # of volume 26 of The Hawaiian Journal of History (1992). As of 2010-12-09,
 # the article is available at
 # http://evols.library.manoa.hawaii.edu/bitstream/10524/239/2/JL26215.pdf
@@ -657,15 +658,15 @@ Zone America/Boise	-7:44:49 -	LMT	1883 Nov 18 12:15:11
 # Since 1970, most of Indiana has been like America/Indiana/Indianapolis,
 # with the following exceptions:
 #
-# – Gibson, Jasper, Lake, LaPorte, Newton, Porter, Posey, Spencer,
+# - Gibson, Jasper, Lake, LaPorte, Newton, Porter, Posey, Spencer,
 #   Vandenburgh, and Warrick counties have been like America/Chicago.
 #
-# – Dearborn and Ohio counties have been like America/New_York.
+# - Dearborn and Ohio counties have been like America/New_York.
 #
-# – Clark, Floyd, and Harrison counties have been like
+# - Clark, Floyd, and Harrison counties have been like
 #   America/Kentucky/Louisville.
 #
-# – Crawford, Daviess, Dubois, Knox, Martin, Perry, Pike, Pulaski, Starke,
+# - Crawford, Daviess, Dubois, Knox, Martin, Perry, Pike, Pulaski, Starke,
 #   and Switzerland counties have their own time zone histories as noted below.
 #
 # Shanks partitioned Indiana into 345 regions, each with its own time history,
@@ -877,13 +878,13 @@ Zone America/Kentucky/Louisville -5:43:02 -	LMT	1883 Nov 18 12:16:58
 #
 # From Rich Wales (2000-08-29):
 # After prolonged debate, and despite continuing deep differences of opinion,
-# Wayne County (central Kentucky) is switching from Central (−0600) to Eastern
-# (−0500) time.  They won't "fall back" this year.  See Sara Shipley,
-# The difference an hour makes, Nando Times (2000-08-29 15:33 −0400).
+# Wayne County (central Kentucky) is switching from Central (-0600) to Eastern
+# (-0500) time.  They won't "fall back" this year.  See Sara Shipley,
+# The difference an hour makes, Nando Times (2000-08-29 15:33 -0400).
 #
 # From Paul Eggert (2001-07-16):
 # The final rule was published in the
-# Federal Register 65, 160 (2000-08-17), pp 50154–50158.
+# Federal Register 65, 160 (2000-08-17), pp 50154-50158.
 # <http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=2000_register&docid=fr17au00-22>
 #
 Zone America/Kentucky/Monticello -5:39:24 - LMT	1883 Nov 18 12:20:36
@@ -909,7 +910,7 @@ Zone America/Kentucky/Monticello -5:39:24 - LMT	1883 Nov 18 12:20:36
 # See America/North_Dakota/Center for the Oliver County, ND change.
 # West Wendover, NV officially switched from Pacific to mountain time on
 # 1999-10-31.  See the
-# Federal Register 64, 203 (1999-10-21), pp 56705–56707.
+# Federal Register 64, 203 (1999-10-21), pp 56705-56707.
 # <http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=1999_register&docid=fr21oc99-15>
 # However, the Federal Register says that West Wendover already operated
 # on mountain time, and the rule merely made this official;
@@ -922,7 +923,7 @@ Zone America/Kentucky/Monticello -5:39:24 - LMT	1883 Nov 18 12:20:36
 #
 # From Paul Eggert (1999-03-31):
 # Shanks writes that Michigan started using standard time on 1885-09-18,
-# but Howse writes (pp 124–125, referring to Popular Astronomy, 1901-01)
+# but Howse writes (pp 124-125, referring to Popular Astronomy, 1901-01)
 # that Detroit kept
 #
 #	local time until 1900 when the City Council decreed that clocks should
@@ -1008,7 +1009,7 @@ Zone America/Menominee	-5:50:27 -	LMT	1885 Sep 18 12:00
 #	<http://cs.ucla.edu/~eggert/The-Waste-of-Daylight-19th.pdf>
 #	[PDF] (1914-03)
 #
-#	Milne J. Civil time. Geogr J. 1899 Feb;13(2):173–94
+#	Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94
 #	<http://www.jstor.org/stable/1774359>.
 #
 # See the 'europe' file for Greenland.
@@ -1021,15 +1022,15 @@ Zone America/Menominee	-5:50:27 -	LMT	1885 Sep 18 12:00
 #
 #	UTC	Standard time	Daylight saving time
 #	offset	French	English	French	English
-#	−2:30	–	–	HAT	NDT
-#	−3	–	–	HAA	ADT
-#	−3:30	HNT	NST	–	–
-#	−4	HNA	AST	HAE	EDT
-#	−5	HNE	EST	HAC	CDT
-#	−6	HNC	CST	HAR	MDT
-#	−7	HNR	MST	HAP	PDT
-#	−8	HNP	PST	HAY	YDT
-#	−9	HNY	YST	–	–
+#	-2:30	-	-	HAT	NDT
+#	-3	-	-	HAA	ADT
+#	-3:30	HNT	NST	-	-
+#	-4	HNA	AST	HAE	EDT
+#	-5	HNE	EST	HAC	CDT
+#	-6	HNC	CST	HAR	MDT
+#	-7	HNR	MST	HAP	PDT
+#	-8	HNP	PST	HAY	YDT
+#	-9	HNY	YST	-	-
 #
 #	HN: Heure Normale	ST: Standard Time
 #	HA: Heure Avancée	DT: Daylight saving Time
@@ -1153,18 +1154,18 @@ Rule	StJohns	1917	only	-	Sep	17	2:00	0	S
 # Whitman gives 1919 Apr 5 and 1920 Apr 5; go with Shanks & Pottenger.
 Rule	StJohns	1919	only	-	May	 5	23:00	1:00	D
 Rule	StJohns	1919	only	-	Aug	12	23:00	0	S
-# For 1931–1935 Whitman gives Apr same date; go with Shanks & Pottenger.
+# For 1931-1935 Whitman gives Apr same date; go with Shanks & Pottenger.
 Rule	StJohns	1920	1935	-	May	Sun>=1	23:00	1:00	D
 Rule	StJohns	1920	1935	-	Oct	lastSun	23:00	0	S
-# For 1936–1941 Whitman gives May Sun>=8 and Oct Sun>=1; go with Shanks &
+# For 1936-1941 Whitman gives May Sun>=8 and Oct Sun>=1; go with Shanks &
 # Pottenger.
 Rule	StJohns	1936	1941	-	May	Mon>=9	0:00	1:00	D
 Rule	StJohns	1936	1941	-	Oct	Mon>=2	0:00	0	S
 # Whitman gives the following transitions:
 # 1942 03-01/12-31, 1943 05-30/09-05, 1944 07-10/09-02, 1945 01-01/10-07
 # but go with Shanks & Pottenger and assume they used Canadian rules.
-# For 1946–9 Whitman gives May 5,4,9,1 – Oct 1,5,3,2, and for 1950 he gives
-# Apr 30 – Sep 24; go with Shanks & Pottenger.
+# For 1946-9 Whitman gives May 5,4,9,1 - Oct 1,5,3,2, and for 1950 he gives
+# Apr 30 - Sep 24; go with Shanks & Pottenger.
 Rule	StJohns	1946	1950	-	May	Sun>=8	2:00	1:00	D
 Rule	StJohns	1946	1950	-	Oct	Sun>=2	2:00	0	S
 Rule	StJohns	1951	1986	-	Apr	lastSun	2:00	1:00	D
@@ -1183,7 +1184,7 @@ Rule	StJohns	1960	1986	-	Oct	lastSun	2:00	0	S
 # ...
 # http://www.assembly.nl.ca/legislation/sr/annualstatutes/2011/1106.chp.htm
 # ...
-# MICHAEL PELLEY  |  Manager of Enterprise Architecture – Solution Delivery
+# MICHAEL PELLEY  |  Manager of Enterprise Architecture - Solution Delivery
 # Office of the Chief Information Officer
 # Executive Council
 # Government of Newfoundland & Labrador
@@ -1406,7 +1407,7 @@ Zone America/Montreal	-4:54:16 -	LMT	1884
 # have already done so.  In Orillia DST was to run until Saturday,
 # 1912-08-31 (no time mentioned), but it was met with considerable
 # hostility from certain segments of the public, and was revoked after
-# only two weeks – I copied it as Saturday, 1912-07-07, 22:00, but
+# only two weeks - I copied it as Saturday, 1912-07-07, 22:00, but
 # presumably that should be -07-06.  (1912-06-19, -07-12; also letters
 # earlier in June).
 #
@@ -1624,7 +1625,7 @@ Zone America/Atikokan	-6:06:28 -	LMT	1895
 # Manitoba
 
 # From Rob Douglas (2006-04-06):
-# the old Manitoba Time Act – as amended by Bill 2, assented to
+# the old Manitoba Time Act - as amended by Bill 2, assented to
 # March 27, 1987 ... said ...
 # "between two o'clock Central Standard Time in the morning of
 # the first Sunday of April of each year and two o'clock Central
@@ -1634,7 +1635,7 @@ Zone America/Atikokan	-6:06:28 -	LMT	1895
 # been assented to (March 22, 1967)....
 # Also, as far as I can tell, there was no order-in-council varying
 # the time of Daylight Saving Time for 2005 and so the provisions of
-# the 1987 version would apply – the changeover was at 2:00 Central
+# the 1987 version would apply - the changeover was at 2:00 Central
 # Standard Time (i.e. not until 3:00 Central Daylight Time).
 
 # From Paul Eggert (2006-04-10):
@@ -1810,7 +1811,7 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # manager of the Creston & District Museum. The article was written in May 2009.
 # http://www.ilovecreston.com/?p=articles&t=spec&ar=260
 # According to the article, Creston has not changed its clocks since June 1918.
-# i.e. Creston has been stuck on UTC−7 for 93 years.
+# i.e. Creston has been stuck on UTC-7 for 93 years.
 # Dawson Creek, on the other hand, changed its clocks as recently as April 1972.
 
 # Unfortunately the exact date for the time change in June 1918 remains
@@ -1822,11 +1823,11 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # http://www.creston.museum.bc.ca/index.php?module=comments&uop=view_comment&cm+id=56
 
 # Here is a summary of the three clock change events in Creston's history:
-# 1. 1884 or 1885: adoption of Mountain Standard Time (GMT−7)
+# 1. 1884 or 1885: adoption of Mountain Standard Time (GMT-7)
 # Exact date unknown
-# 2. Oct 1916: switch to Pacific Standard Time (GMT−8)
+# 2. Oct 1916: switch to Pacific Standard Time (GMT-8)
 # Exact date in October unknown;  Sunday October 1 is a reasonable guess.
-# 3. June 1918: switch to Pacific Daylight Time (GMT−7)
+# 3. June 1918: switch to Pacific Daylight Time (GMT-7)
 # Exact date in June unknown; Sunday June 2 is a reasonable guess.
 # note#1:
 # On Oct 27/1918 when daylight saving ended in the rest of Canada,
@@ -1836,13 +1837,13 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # Creston did not oblige.
 # note#3:
 # There is no guarantee that Creston will remain on Mountain Standard Time
-# (UTC−7) forever.
+# (UTC-7) forever.
 # The subject was debated at least once this year by the town Council.
 # http://www.bclocalnews.com/kootenay_rockies/crestonvalleyadvance/news/116760809.html
 
 # During a period WWII, summer time (Daylight saying) was mandatory in Canada.
-# In Creston, that was handled by shifting the area to PST (−8:00) then applying
-# summer time to cause the offset to be −7:00, the same as it had been before
+# In Creston, that was handled by shifting the area to PST (-8:00) then applying
+# summer time to cause the offset to be -7:00, the same as it had been before
 # the change.  It can be argued that the timezone abbreviation during this
 # period should be PDT rather than MST, but that doesn't seem important enough
 # (to anyone) to further complicate the rules.
@@ -1878,7 +1879,7 @@ Zone America/Creston	-7:46:04 -	LMT	1884
 # Dawson switched to PST in 1973.  Inuvik switched to MST in 1979.
 # Mathew Englander (1996-10-07) gives the following refs:
 #	* 1967. Paragraph 28(34)(g) of the Interpretation Act, S.C. 1967-68,
-#	c. 7 defines Yukon standard time as UTC−9.  This is still valid;
+#	c. 7 defines Yukon standard time as UTC-9.  This is still valid;
 #	see Interpretation Act, R.S.C. 1985, c. I-21, s. 35(1).
 #	* C.O. 1973/214 switched Yukon to PST on 1973-10-28 00:00.
 #	* O.I.C. 1980/02 established DST.
@@ -1933,7 +1934,7 @@ Zone America/Creston	-7:46:04 -	LMT	1884
 # Nunatsiaq News (1999-11-19)
 # <http://www.nunatsiaq.com/archives/nunavut991130/nvt91119_17.html>:
 # Clyde River, Pangnirtung and Sanikiluaq now operate with two time zones,
-# central – or Nunavut time – for government offices, and eastern time
+# central - or Nunavut time - for government offices, and eastern time
 # for municipal offices and schools....  Igloolik [was similar but then]
 # made the switch to central time on Saturday, Nov. 6.
 
@@ -1984,7 +1985,7 @@ Zone America/Creston	-7:46:04 -	LMT	1884
 # (both dated 2003), and
 # http://www.canadiangeographic.ca/Magazine/SO98/geomap.asp
 # (from a 1998 Canadian Geographic article), the de facto and de jure time
-# for Southampton Island (at the north end of Hudson Bay) is UTC−5 all year
+# for Southampton Island (at the north end of Hudson Bay) is UTC-5 all year
 # round.  Using Google, it's easy to find other websites that confirm this.
 # I wasn't able to find how far back this time regimen goes, but since it
 # predates the creation of Nunavut, it probably goes back many years....
@@ -2005,15 +2006,15 @@ Zone America/Creston	-7:46:04 -	LMT	1884
 # Back in 2007 I initiated the creation of a new "zone file" for Resolute
 # Bay. Resolute Bay is a small community located about 900km north of
 # the Arctic Circle. The zone file was required because Resolute Bay had
-# decided to use UTC−5 instead of UTC−6 for the winter of 2006–2007.
+# decided to use UTC-5 instead of UTC-6 for the winter of 2006-2007.
 #
 # According to new information which I received last week, Resolute Bay
-# went back to using UTC−6 in the winter of 2007–2008...
+# went back to using UTC-6 in the winter of 2007-2008...
 #
 # On March 11/2007 most of Canada went onto daylight saving. On March
 # 14/2007 I phoned the Resolute Bay hamlet office to do a "time check." I
 # talked to somebody that was both knowledgeable and helpful. I was able
-# to confirm that Resolute Bay was still operating on UTC−5. It was
+# to confirm that Resolute Bay was still operating on UTC-5. It was
 # explained to me that Resolute Bay had been on the Eastern Time zone
 # (EST) in the winter, and was now back on the Central Time zone (CDT).
 # i.e. the time zone had changed twice in the last year but the clocks
@@ -2030,7 +2031,7 @@ Zone America/Creston	-7:46:04 -	LMT	1884
 #
 # On March 14/2011 I phoned the hamlet office again. I was told that
 # Resolute Bay had been using Central Standard Time over the winter of
-# 2010–2011 and that the clocks had therefore been moved one hour ahead
+# 2010-2011 and that the clocks had therefore been moved one hour ahead
 # on March 13/2011. The person I talked to was aware that Resolute Bay
 # had previously experimented with Eastern Standard Time but he could not
 # tell me when the practice had stopped.
@@ -2048,7 +2049,7 @@ Zone America/Creston	-7:46:04 -	LMT	1884
 #
 # Aziz responded quickly with this: "hi, The time was not changed for the
 # 1 year only, the following year, the community went back to the old way
-# of "spring ahead–fall behind" currently we are zulu plus 5 hrs and in
+# of "spring ahead-fall behind" currently we are zulu plus 5 hrs and in
 # the winter Zulu plus 6 hrs"
 #
 # This of course conflicted with everything I had ascertained in November 2008.
@@ -2136,7 +2137,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 #
 # Here are the discrepancies between Shanks & Pottenger (S&P) and the MLoC.
 # (In all cases we go with the MLoC.)
-# S&P report that Baja was at −8:00 in 1922/1923.
+# S&P report that Baja was at -8:00 in 1922/1923.
 # S&P say the 1930 transition in Baja was 1930-11-16.
 # S&P report no DST during summer 1931.
 # S&P report a transition at 1932-03-30 23:00, not 1932-04-01.
@@ -2157,9 +2158,9 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # rules for the DST changes. The rules are:
 #
 # 1. The country is divided in 3 timezones:
-#    – Baja California Norte (the Mexico/BajaNorte TZ)
-#    – Baja California Sur, Nayarit, Sinaloa and Sonora (the Mexico/BajaSur TZ)
-#    – The rest of the country (the Mexico/General TZ)
+#    - Baja California Norte (the Mexico/BajaNorte TZ)
+#    - Baja California Sur, Nayarit, Sinaloa and Sonora (the Mexico/BajaSur TZ)
+#    - The rest of the country (the Mexico/General TZ)
 #
 # 2. From the first Sunday in April at 2:00 AM to the last Sunday in October
 #    at 2:00 AM, the times in each zone are as follows:
@@ -2182,7 +2183,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 
 # From Rives McDow (1998-10-08):
 # The State of Quintana Roo has reverted back to central STD and DST times
-# (i.e. UTC −0600 and −0500 as of 1998-08-02).
+# (i.e. UTC -0600 and -0500 as of 1998-08-02).
 
 # From Rives McDow (2000-01-10):
 # Effective April 4, 1999 at 2:00 AM local time, Sonora changed to the time
@@ -2200,7 +2201,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # From Gwillim Law (2001-01-19):
 # <http://www.reforma.com/negocios_y_dinero/articulo/064481/> ... says
 # (translated):...
-# January 17, 2000 – The Energy Secretary, Ernesto Martens, announced
+# January 17, 2000 - The Energy Secretary, Ernesto Martens, announced
 # that Summer Time will be reduced from seven to five months, starting
 # this year....
 # <http://www.publico.com.mx/scripts/texto3.asp?action=pagina&pag=21&pos=p&secc=naci&date=01/17/2001>
@@ -2386,7 +2387,7 @@ Zone America/Hermosillo	-7:23:52 -	LMT	1921 Dec 31 23:36:08
 
 # From Alexander Krivenyshev (2010-04-21):
 # According to news, Bahía de Banderas (Mexican state of Nayarit)
-# changed time zone UTC−7 to new time zone UTC−6 on April 4, 2010 (to
+# changed time zone UTC-7 to new time zone UTC-6 on April 4, 2010 (to
 # share the same time zone as nearby city Puerto Vallarta, Jalisco).
 #
 # (Spanish)
@@ -2501,7 +2502,7 @@ Zone	America/Antigua	-4:07:12 -	LMT	1912 Mar 2
 
 # Bahamas
 #
-# For 1899 Milne gives −5:09:29.5; round that.
+# For 1899 Milne gives -5:09:29.5; round that.
 #
 # From Sue Williams (2006-12-07):
 # The Bahamas announced about a month ago that they plan to change their DST
@@ -2518,7 +2519,7 @@ Zone	America/Nassau	-5:09:30 -	LMT	1912 Mar 2
 
 # Barbados
 
-# For 1899 Milne gives −3:58:29.2; round that.
+# For 1899 Milne gives -3:58:29.2; round that.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Barb	1977	only	-	Jun	12	2:00	1:00	D
@@ -2546,7 +2547,7 @@ Zone	America/Belize	-5:52:48 -	LMT	1912 Apr
 
 # Bermuda
 
-# For 1899 Milne gives −4:19:18.3 as the meridian of the clock tower,
+# For 1899 Milne gives -4:19:18.3 as the meridian of the clock tower,
 # Bermuda dockyard, Ireland I; round that.
 
 # From Dan Jones, reporting in The Royal Gazette (2006-06-26):
@@ -2571,7 +2572,7 @@ Zone	America/Cayman	-5:25:32 -	LMT	1890		# Georgetown
 
 # Costa Rica
 
-# Milne gives −5:36:13.3 as San José mean time; round to nearest.
+# Milne gives -5:36:13.3 as San José mean time; round to nearest.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	CR	1979	1980	-	Feb	lastSun	0:00	1:00	D
@@ -2592,8 +2593,8 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
 # Cuba
 
 # From Paul Eggert (2013-02-21):
-# Milne gives −5:28:50.45 for the observatory at Havana, −5:29:23.57
-# for the port, and −5:30 for meteorological observations.
+# Milne gives -5:28:50.45 for the observatory at Havana, -5:29:23.57
+# for the port, and -5:30 for meteorological observations.
 # For now, stick with Shanks & Pottenger.
 
 # From Arthur David Olson (1999-03-29):
@@ -2603,8 +2604,8 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
 # During the game, play-by-play announcer Jim Hunter noted that
 # "We'll be losing two hours of sleep...Cuba switched to Daylight Saving
 # Time today."  (The "two hour" remark referred to losing one hour of
-# sleep on 1999-03-28 – when the announcers were in Cuba as it switched
-# to DST – and one more hour on 1999-04-04 – when the announcers will have
+# sleep on 1999-03-28 - when the announcers were in Cuba as it switched
+# to DST - and one more hour on 1999-04-04 - when the announcers will have
 # returned to Baltimore, which switches on that date.)
 
 # From Steffen Thorsen (2013-11-11):
@@ -2622,7 +2623,7 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
 # For now, let's assume that it's a temporary measure.
 
 # From Carlos A. Carnero Delgado (2005-11-12):
-# This year (just like in 2004–2005) there's no change in time zone
+# This year (just like in 2004-2005) there's no change in time zone
 # adjustment in Cuba.  We will stay in daylight saving time:
 # http://www.granma.cu/espanol/2005/noviembre/mier9/horario.html
 
@@ -2631,7 +2632,7 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
 # the 3 years of permanent DST next weekend, see
 # http://www.granma.cu/ingles/2006/octubre/lun16/43horario.html
 # "On Saturday night, October 28 going into Sunday, October 29, at 01:00,
-# watches should be set back one hour – going back to 00:00 hours – returning
+# watches should be set back one hour - going back to 00:00 hours - returning
 # to the normal schedule....
 
 # From Paul Eggert (2007-03-02):
@@ -2642,7 +2643,7 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
 #
 # From Steffen Thorsen (2007-10-25):
 # Carlos Alberto Fonseca Arauz informed me that Cuba will end DST one week
-# earlier – on the last Sunday of October, just like in 2006.
+# earlier - on the last Sunday of October, just like in 2006.
 #
 # He supplied these references:
 #
@@ -2676,7 +2677,7 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
 # The article also says that Cuba has been observing DST since 1963,
 # while Shanks (and tzdata) has 1965 as the first date (except in the
 # 1940's). Many other web pages in Cuba also claim that it has been
-# observed since 1963, but with the exception of 1970 – an exception
+# observed since 1963, but with the exception of 1970 - an exception
 # which is not present in tzdata/Shanks. So there is a chance we need to
 # change some historic records as well.
 #
@@ -2695,7 +2696,7 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
 # Assume Sun>=15 (third Sunday) going forward.
 
 # From Alexander Krivenyshev (2009-03-04)
-# According to the Radio Reloj – Cuba will start Daylight Saving Time on
+# According to the Radio Reloj - Cuba will start Daylight Saving Time on
 # midnight between Saturday, March 07, 2009 and Sunday, March 08, 2009-
 # not on midnight March 14 / March 15 as previously thought.
 #
@@ -2706,7 +2707,7 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
 # I listened over the Internet to
 # http://media.enet.cu/readioreloj
 # this morning; when it was 10:05 a. m. here in Bethesda, Maryland the
-# the time was announced as "diez cinco" – the same time as here, indicating
+# the time was announced as "diez cinco" - the same time as here, indicating
 # that has indeed switched to DST. Assume second Sunday from 2009 forward.
 
 # From Steffen Thorsen (2011-03-08):
@@ -2988,7 +2989,7 @@ Zone America/Tegucigalpa -5:48:52 -	LMT	1921 Apr
 # Great Swan I ceded by US to Honduras in 1972
 
 # Jamaica
-# Shanks & Pottenger give −5:07:12, but Milne records −5:07:10.41 from an
+# Shanks & Pottenger give -5:07:12, but Milne records -5:07:10.41 from an
 # unspecified official document, and says "This time is used throughout the
 # island".  Go with Milne.  Round to the nearest second as required by zic.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -3033,7 +3034,7 @@ Zone America/Martinique	-4:04:20 -      LMT	1890		# Fort-de-France
 # and elsewhere, says (fifth paragraph, translated from Spanish):  "The last
 # time that a change of clocks was applied to save energy was in the year 2000
 # during the Arnoldo Alemán administration."...
-# The northamerica file says that Nicaragua has been on UTC−6 continuously
+# The northamerica file says that Nicaragua has been on UTC-6 continuously
 # since December 1998.  I wasn't able to find any details of Nicaraguan time
 # changes in 2000.  Perhaps a note could be added to the northamerica file, to
 # the effect that we have indirect evidence that DST was observed in 2000.

@@ -20,9 +20,8 @@ Unreleased, experimental changes
   Changes affecting documentation and commentary
 
     Documentation and commentary now prefer UTF-8 to US-ASCII,
-    allowing the use of proper accents in foreign words and names,
-    and distinguishing among hyphen '-', minus sign '−', en dash '–',
-    and em dash '—'.  Code and data have not changed because of this.
+    allowing the use of proper accents in foreign words and names.
+    Code and data have not changed because of this.
 
     Non-HTML documentation and commentary now use plain-text URLs instead of
     HTML insertions, and are more consistent about bracketing URLs when they
@@ -35,7 +34,7 @@ Unreleased, experimental changes
     Commentary about permanent Antarctic bases has been updated.
 
 
-Release 2014e – 2014-06-12 21:53:52 −0700
+Release 2014e - 2014-06-12 21:53:52 -0700
 
   Changes affecting near-future time stamps
 
@@ -63,7 +62,7 @@ Release 2014e – 2014-06-12 21:53:52 −0700
     removes stale pointers to World Time Explorer and WORLDTIME.
 
 
-Release 2014d – 2014-05-27 21:34:40 −0700
+Release 2014d - 2014-05-27 21:34:40 -0700
 
   Changes affecting code
 
@@ -78,7 +77,7 @@ Release 2014d – 2014-05-27 21:34:40 −0700
     tz-link.htm now mentions GNOME.
 
 
-Release 2014c – 2014-05-13 07:44:13 −0700
+Release 2014c - 2014-05-13 07:44:13 -0700
 
   Changes affecting near-future time stamps
 
@@ -103,7 +102,7 @@ Release 2014c – 2014-05-13 07:44:13 −0700
     Remove now-confusing comment about Jordan.  (Thanks to Oleksii Nochovnyi.)
 
 
-Release 2014b – 2014-03-24 21:28:50 −0700
+Release 2014b - 2014-03-24 21:28:50 -0700
 
   Changes affecting near-future time stamps
 
@@ -142,7 +141,7 @@ Release 2014b – 2014-03-24 21:28:50 −0700
     (Thanks to Sebastien Willemijns.)
 
 
-Release 2014a – 2014-03-07 23:30:29 −0800
+Release 2014a - 2014-03-07 23:30:29 -0800
 
   Changes affecting near-future time stamps
 
@@ -211,12 +210,12 @@ Release 2014a – 2014-03-07 23:30:29 −0800
       abbr elements' title attributes.
 
 
-Release 2013i – 2013-12-17 07:25:23 −0800
+Release 2013i - 2013-12-17 07:25:23 -0800
 
   Changes affecting near-future time stamps:
 
     Jordan switches back to standard time at 00:00 on December 20, 2013.
-    The 2006–2011 transition schedule is planned to resume in 2014.
+    The 2006-2011 transition schedule is planned to resume in 2014.
     (Thanks to Steffen Thorsen.)
 
   Changes affecting past time stamps:
@@ -233,7 +232,7 @@ Release 2013i – 2013-12-17 07:25:23 −0800
   Changes affecting documentation and commentary
 
     The files solar87, solar88, and solar89 are no longer distributed.
-    They were a negative experiment – that is, a demonstration that
+    They were a negative experiment - that is, a demonstration that
     tz data can represent solar time only with some difficulty and error.
     Their presence in the distribution caused confusion, as Riyadh
     civil time was generally not solar time in those years.
@@ -241,7 +240,7 @@ Release 2013i – 2013-12-17 07:25:23 −0800
     tz-link.htm now mentions Noda Time.  (Thanks to Matt Johnson.)
 
 
-Release 2013h – 2013-10-25 15:32:32 −0700
+Release 2013h - 2013-10-25 15:32:32 -0700
 
   Changes affecting current and future time stamps:
 
@@ -253,7 +252,7 @@ Release 2013h – 2013-10-25 15:32:32 −0700
 
   Changes affecting future time stamps:
 
-    Acre and (we guess) western Amazonas will switch from UTC−4 to UTC−5
+    Acre and (we guess) western Amazonas will switch from UTC-4 to UTC-5
     on 2013-11-10.  This affects America/Rio_Branco and America/Eirunepe.
     (Thanks to Steffen Thorsen.)
 
@@ -300,7 +299,7 @@ Release 2013h – 2013-10-25 15:32:32 −0700
     8.1 introduces tz support.  Remove URLs for Tru64 and UnixWare (no
     longer maintained) and for old advisories.  SOFA now does C.
 
-Release 2013g – 2013-09-30 21:08:26 −0700
+Release 2013g - 2013-09-30 21:08:26 -0700
 
   Changes affecting current and near-future time stamps
 
@@ -333,7 +332,7 @@ Release 2013g – 2013-09-30 21:08:26 −0700
     the end of NEWS.
 
 
-Release 2013f – 2013-09-24 23:37:36 −0700
+Release 2013f - 2013-09-24 23:37:36 -0700
 
   Changes affecting near-future time stamps
 
@@ -380,7 +379,7 @@ Release 2013f – 2013-09-24 23:37:36 −0700
     'make set-timestamps' is now simpler and a bit more portable.
 
 
-Release 2013e – 2013-09-19 23:50:04 −0700
+Release 2013e - 2013-09-19 23:50:04 -0700
 
   Changes affecting near-future time stamps
 
@@ -397,13 +396,13 @@ Release 2013e – 2013-09-19 23:50:04 −0700
     Benny Lin.)  This affects Asia/Dili, Asia/Jakarta, Asia/Jayapura,
     Asia/Makassar, and Asia/Pontianak.
 
-    Use ART (UTC−3, standard time), rather than WARST (also UTC−3, but
+    Use ART (UTC-3, standard time), rather than WARST (also UTC-3, but
     daylight saving time) for San Luis, Argentina since 2009.
 
   Changes affecting Godthåb time stamps after 2037 if version mismatch
 
     Allow POSIX-like TZ strings where the transition time's hour can
-    range from −167 through 167, instead of the POSIX-required 0
+    range from -167 through 167, instead of the POSIX-required 0
     through 24.  E.g., TZ='FJT-12FJST,M10.3.1/146,M1.3.4/75' for the
     new Fiji rules.  This is a more-compact way to represent
     far-future time stamps for America/Godthab, America/Santiago,
@@ -446,7 +445,7 @@ Release 2013e – 2013-09-19 23:50:04 −0700
     confirming that the old Europe/Vaduz zone was wrong and the new
     link is better for WWII-era times.)
 
-    Change Kingston Mean Time from −5:07:12 to −5:07:11.  This affects
+    Change Kingston Mean Time from -5:07:12 to -5:07:11.  This affects
     America/Cayman, America/Jamaica and America/Grand_Turk time stamps
     from 1890 to 1912.
 
@@ -605,7 +604,7 @@ Release 2013e – 2013-09-19 23:50:04 −0700
     Update shapefile citations in tz-link.htm.  (Thanks to Guy Harris.)
 
 
-Release 2013d – 2013-07-05 07:38:01 −0700
+Release 2013d - 2013-07-05 07:38:01 -0700
 
   Changes affecting future time stamps:
 
@@ -648,10 +647,10 @@ Release 2013d – 2013-07-05 07:38:01 −0700
 
     Spelling fixes (thanks to Kevin Lyda and Jonathan Leffler).
 
-    Update URL for CLDR Zone→Tzid table (thanks to Yoshito Umaoka).
+    Update URL for CLDR Zone->Tzid table (thanks to Yoshito Umaoka).
 
 
-Release 2013c – 2013-04-19 16:17:40 −0700
+Release 2013c - 2013-04-19 16:17:40 -0700
 
   Changes affecting current and future time stamps:
 
@@ -685,7 +684,7 @@ Release 2013c – 2013-04-19 16:17:40 −0700
 
     Fix times of habitation for Macquarie to agree with the Tasmania
     Parks & Wildlife Service history, which indicates that permanent
-    habitation was 1899–1919 and 1948 on.
+    habitation was 1899-1919 and 1948 on.
 
   Changing affecting metadata only:
 
@@ -696,7 +695,7 @@ Release 2013c – 2013-04-19 16:17:40 −0700
     (Thanks to Tim Parenti.)
 
 
-Release 2013b – 2013-03-10 22:33:40 −0700
+Release 2013b - 2013-03-10 22:33:40 -0700
 
   Changes affecting current and future time stamps:
 
@@ -714,11 +713,11 @@ Release 2013b – 2013-03-10 22:33:40 −0700
 
     Update URLs in tz-link page.  Add URLs for webOS, BB10, iOS.
     Update URL for Solaris.  Mention Internet RFC 6557.
-    Update Internet RFCs 2445→5545, 2822→5322.
+    Update Internet RFCs 2445->5545, 2822->5322.
     Switch from FTP to HTTP for Internet RFCs.
 
 
-Release 2013a – 2013-02-27 09:20:35 −0800
+Release 2013a - 2013-02-27 09:20:35 -0800
 
   Change affecting binary data format:
 
@@ -736,7 +735,7 @@ Release 2013a – 2013-02-27 09:20:35 −0800
 
   Many changes affect historical time stamps before 1940.
   These were deduced from: Milne J. Civil time. Geogr J. 1899
-  Feb;13(2):173–94 <http://www.jstor.org/stable/1774359>.
+  Feb;13(2):173-94 <http://www.jstor.org/stable/1774359>.
 
   Changes affecting the code:
 
@@ -769,7 +768,7 @@ Release 2013a – 2013-02-27 09:20:35 −0800
     Add "Run by the Monkeys" to tz-art.  (Thanks to Arthur David Olson.)
 
 
-Release 2012j – 2012-11-12 18:34:49 −0800
+Release 2012j - 2012-11-12 18:34:49 -0800
 
   Libya moved to CET this weekend, but with DST planned next year.
   (Thanks to Even Scharning, Steffen Thorsen, and Tim Parenti.)
@@ -794,7 +793,7 @@ Release 2012j – 2012-11-12 18:34:49 −0800
   Various fixes to documentation and commentary.
 
 
-Release 2012i – 2012-11-03 12:57:09 −0700
+Release 2012i - 2012-11-03 12:57:09 -0700
 
   Cuba switches from DST tomorrow at 01:00.  (Thanks to Steffen Thorsen.)
 
@@ -813,7 +812,7 @@ Release 2012i – 2012-11-03 12:57:09 −0700
   The main web page now lists the canonical IANA URL.
 
 
-Release 2012h – 2012-10-26 22:49:10 −0700
+Release 2012h - 2012-10-26 22:49:10 -0700
 
   Bahia no longer has DST.  (Thanks to Kelley Cook.)
 
@@ -829,7 +828,7 @@ Release 2012h – 2012-10-26 22:49:10 −0700
   the instances of 'register' were kept.
 
 
-Release 2012g – 2012-10-17 20:59:45 −0700
+Release 2012g - 2012-10-17 20:59:45 -0700
 
   Samoa fall 2012 and later.  (Thanks to Nicholas Pereira and Robert Elz.)
 
@@ -846,13 +845,13 @@ Release 2012g – 2012-10-17 20:59:45 −0700
   virtue of not adding more files.
 
 
-Release 2012f – 2012-09-12 23:17:03 −0700
+Release 2012f - 2012-09-12 23:17:03 -0700
 
   * australasia (Pacific/Fiji): Fiji DST is October 21 through January
     20 this year.  (Thanks to Steffen Thorsen.)
 
 
-Release 2012e – 2012-08-02 20:44:55 −0700
+Release 2012e - 2012-08-02 20:44:55 -0700
 
   * australasia (Pacific/Fakaofo): Tokelau is UTC+13, not UTC+14.
     (Thanks to Steffen Thorsen.)
@@ -864,14 +863,14 @@ Release 2012e – 2012-08-02 20:44:55 −0700
   * Remove trailing white space.
 
 
-Release code2012c-data2012d – 2012-07-19 16:35:33 −0700
+Release code2012c-data2012d - 2012-07-19 16:35:33 -0700
 
   Changes for Morocco's time stamps, which take effect in a couple of
   hours, along with infrastructure changes to accommodate how the tz
   code and data are released on IANA.
 
 
-Release data2012c – 2012-03-27 12:17:25 −0400
+Release data2012c - 2012-03-27 12:17:25 -0400
 
   africa
 	Summer time changes for Morocco (to start late April 2012)
@@ -884,7 +883,7 @@ Release data2012c – 2012-03-27 12:17:25 −0400
 	for now anyway, for the future).
 
 
-Release 2012b – 2012-03-02 12:29:15 +0700
+Release 2012b - 2012-03-02 12:29:15 +0700
 
   There is just one change to tzcode2012b (compared with 2012a):
   the Makefile that was accidentally included with 2012a has been
@@ -902,7 +901,7 @@ Release 2012b – 2012-03-02 12:29:15 +0700
   in 2012a has been removed.
 
 
-Release 2012a – 2012-03-01 18:28:10 +0700
+Release 2012a - 2012-03-01 18:28:10 +0700
 
   The changes in tzcode2012a (compared to the previous version, 2011i)
   are entirely to the README and tz-art.htm and tz-link.htm files, if
@@ -928,9 +927,9 @@ Release 2012a – 2012-03-01 18:28:10 +0700
 	A few typos in Le Corre's list of free French place names (comments)
 
 
-Release data2011n – 2011-10-30 14:57:54 +0700
+Release data2011n - 2011-10-30 14:57:54 +0700
 
-  There are three changes of note – most urgently, Cuba (America/Havana)
+  There are three changes of note - most urgently, Cuba (America/Havana)
   has extended summer time by two weeks, now to end on Nov 13, rather than
   the (already past) Oct 30.   Second, the Pridnestrovian Moldavian Republic
   (Europe/Tiraspol) decided not to split from the rest of Moldova after
@@ -941,11 +940,11 @@ Release data2011n – 2011-10-30 14:57:54 +0700
 
   Apart from that, Moldova (MD) returns to a single entry in zone.tab
   (and the incorrect syntax that was in the 2011m version of that file
-  is so fixed – it would have been fixed in a different way had this
-  change not happened – that's the "missing" sccs version id).
+  is so fixed - it would have been fixed in a different way had this
+  change not happened - that's the "missing" sccs version id).
 
 
-Release data2011m – 2011-10-24 21:42:16 +0700
+Release data2011m - 2011-10-24 21:42:16 +0700
 
   In particular, the typos in comments in the data (2011-11-17 should have
   been 2011-10-17 as Alan Barrett noted, and spelling of Tiraspol that
@@ -960,10 +959,10 @@ Release data2011m – 2011-10-24 21:42:16 +0700
   version numbers there...)
 
 
-Release data2011l – 2011-10-10 11:15:43 +0700
+Release data2011l - 2011-10-10 11:15:43 +0700
 
   There are just 2 changes that cause different generated tzdata files from
-  zic, to Asia/Hebron and Pacific/Fiji – the possible change for Bahia, Brazil
+  zic, to Asia/Hebron and Pacific/Fiji - the possible change for Bahia, Brazil
   is included, but commented out.  Compared with the diff I sent out last week,
   this version also includes attributions for the sources for the changes
   (in much the same format as ado used, but the html tags have not been
@@ -971,307 +970,307 @@ Release data2011l – 2011-10-10 11:15:43 +0700
   please let me know.)
 
 
-Release data2011k – 2011-09-20 17:54:03 −0400
+Release data2011k - 2011-09-20 17:54:03 -0400
 
   [not summarized]
 
 
-Release data2011j – 2011-09-12 09:22:49 −0400
+Release data2011j - 2011-09-12 09:22:49 -0400
 
   (contemporary changes for Samoa; past changes for Kenya, Uganda, and
   Tanzania); there are also two spelling corrections to comments in
   the australasia file (with thanks to Christos Zoulas).
 
 
-Release 2011i – 2011-08-29 05:56:32 −0400
+Release 2011i - 2011-08-29 05:56:32 -0400
 
   [not summarized]
 
 
-Release data2011h – 2011-06-15 18:41:48 −0400
+Release data2011h - 2011-06-15 18:41:48 -0400
 
   Russia and Curaçao changes
 
 
-Release 2011g – 2011-04-25 09:07:22 −0400
+Release 2011g - 2011-04-25 09:07:22 -0400
 
   update the rules for Egypt to reflect its abandonment of DST this year
 
 
-Release 2011f – 2011-04-06 17:14:53 −0400
+Release 2011f - 2011-04-06 17:14:53 -0400
 
   [not summarized]
 
 
-Release 2011e – 2011-03-31 16:04:38 −0400
+Release 2011e - 2011-03-31 16:04:38 -0400
 
   Morocco, Chile, and tz-link changes
 
 
-Release 2011d – 2011-03-14 09:18:01 −0400
+Release 2011d - 2011-03-14 09:18:01 -0400
 
   changes that impact present-day time stamps in Cuba, Samoa, and Turkey
 
 
-Release 2011c – 2011-03-07 09:30:09 −0500
+Release 2011c - 2011-03-07 09:30:09 -0500
 
   These do affect current time stamps in Chile and Annette Island, Canada.
 
 
-Release 2011b – 2011-02-07 08:44:50 −0500
+Release 2011b - 2011-02-07 08:44:50 -0500
 
   [not summarized]
 
 
-Release 2011a – 2011-01-24 10:30:16 −0500
+Release 2011a - 2011-01-24 10:30:16 -0500
 
   [not summarized]
 
 
-Release data2010o – 2010-11-01 09:18:23 −0400
+Release data2010o - 2010-11-01 09:18:23 -0400
 
   change to the end of DST in Fiji in 2011
 
 
-Release 2010n – 2010-10-25 08:19:17 −0400
+Release 2010n - 2010-10-25 08:19:17 -0400
 
   [not summarized]
 
 
-Release 2010m – 2010-09-27 09:24:48 −0400
+Release 2010m - 2010-09-27 09:24:48 -0400
 
   Hong Kong, Vostok, and zic.c changes
 
 
-Release 2010l – 2010-08-16 06:57:25 −0400
+Release 2010l - 2010-08-16 06:57:25 -0400
 
   [not summarized]
 
 
-Release 2010k – 2010-07-26 10:42:27 −0400
+Release 2010k - 2010-07-26 10:42:27 -0400
 
   [not summarized]
 
 
-Release 2010j – 2010-05-10 09:07:48 −0400
+Release 2010j - 2010-05-10 09:07:48 -0400
 
   changes for Bahía de Banderas and for version naming
 
 
-Release data2010i – 2010-04-16 18:50:45 −0400
+Release data2010i - 2010-04-16 18:50:45 -0400
 
   the end of DST in Morocco on 2010-08-08
 
 
-Release data2010h – 2010-04-05 09:58:56 −0400
+Release data2010h - 2010-04-05 09:58:56 -0400
 
   [not summarized]
 
 
-Release data2010g – 2010-03-24 11:14:53 −0400
+Release data2010g - 2010-03-24 11:14:53 -0400
 
   [not summarized]
 
 
-Release 2010f – 2010-03-22 09:45:46 −0400
+Release 2010f - 2010-03-22 09:45:46 -0400
 
   [not summarized]
 
 
-Release data2010e – 2010-03-08 14:24:27 −0500
+Release data2010e - 2010-03-08 14:24:27 -0500
 
   corrects the Dhaka bug found by Danvin Ruangchan
 
 
-Release data2010d – 2010-03-06 07:26:01 −0500
+Release data2010d - 2010-03-06 07:26:01 -0500
 
   [not summarized]
 
 
-Release 2010c – 2010-03-01 09:20:58 −0500
+Release 2010c - 2010-03-01 09:20:58 -0500
 
   changes including KRE's suggestion for earlier initialization of
   "goahead" and "goback" structure elements
 
 
-Release code2010a – 2010-02-16 10:40:04 −0500
+Release code2010a - 2010-02-16 10:40:04 -0500
 
   [not summarized]
 
 
-Release data2010b – 2010-01-20 12:37:01 −0500
+Release data2010b - 2010-01-20 12:37:01 -0500
 
   Mexico changes
 
 
-Release data2010a – 2010-01-18 08:30:04 −0500
+Release data2010a - 2010-01-18 08:30:04 -0500
 
   changes to Dhaka
 
 
-Release data2009u – 2009-12-26 08:32:28 −0500
+Release data2009u - 2009-12-26 08:32:28 -0500
 
   changes to DST in Bangladesh
 
 
-Release 2009t – 2009-12-21 13:24:27 −0500
+Release 2009t - 2009-12-21 13:24:27 -0500
 
   [not summarized]
 
 
-Release data2009s – 2009-11-14 10:26:32 −0500
+Release data2009s - 2009-11-14 10:26:32 -0500
 
   (cosmetic) Antarctica change and the DST-in-Fiji-in-2009-and-2010 change
 
 
-Release 2009r – 2009-11-09 10:10:31 −0500
+Release 2009r - 2009-11-09 10:10:31 -0500
 
   "antarctica" and "tz-link.htm" changes
 
 
-Release 2009q – 2009-11-02 09:12:40 −0500
+Release 2009q - 2009-11-02 09:12:40 -0500
 
   with two corrections as reported by Eric Muller and Philip Newton
 
 
-Release data2009p – 2009-10-23 15:05:27 −0400
+Release data2009p - 2009-10-23 15:05:27 -0400
 
   Argentina (including San Luis) changes (with the correction from
   Mariano Absatz)
 
 
-Release data2009o – 2009-10-14 16:49:38 −0400
+Release data2009o - 2009-10-14 16:49:38 -0400
 
   Samoa (commentary only), Pakistan, and Bangladesh changes
 
 
-Release data2009n – 2009-09-22 15:13:38 −0400
+Release data2009n - 2009-09-22 15:13:38 -0400
 
   added commentary for Argentina and a change to the end of DST in
   2009 in Pakistan
 
 
-Release data2009m – 2009-09-03 10:23:43 −0400
+Release data2009m - 2009-09-03 10:23:43 -0400
 
   Samoa and Palestine changes
 
 
-Release data2009l – 2009-08-14 09:13:07 −0400
+Release data2009l - 2009-08-14 09:13:07 -0400
 
   Samao (comments only) and Egypt
 
 
-Release 2009k – 2009-07-20 09:46:08 −0400
+Release 2009k - 2009-07-20 09:46:08 -0400
 
   [not summarized]
 
 
-Release data2009j – 2009-06-15 06:43:59 −0400
+Release data2009j - 2009-06-15 06:43:59 -0400
 
   Bangladesh change (with a short turnaround since the DST change is
   impending)
 
 
-Release 2009i – 2009-06-08 09:21:22 −0400
+Release 2009i - 2009-06-08 09:21:22 -0400
 
   updating for DST in Bangladesh this year
 
 
-Release 2009h – 2009-05-26 09:19:14 −0400
+Release 2009h - 2009-05-26 09:19:14 -0400
 
   [not summarized]
 
 
-Release data2009g – 2009-04-20 16:34:07 −0400
+Release data2009g - 2009-04-20 16:34:07 -0400
 
   Cairo
 
 
-Release data2009f – 2009-04-10 11:00:52 −0400
+Release data2009f - 2009-04-10 11:00:52 -0400
 
   correct DST in Pakistan
 
 
-Release 2009e – 2009-04-06 09:08:11 −0400
+Release 2009e - 2009-04-06 09:08:11 -0400
 
   [not summarized]
 
 
-Release 2009d – 2009-03-23 09:38:12 −0400
+Release 2009d - 2009-03-23 09:38:12 -0400
 
   Morocco, Tunisia, Argentina, and American Astronomical Society changes
 
 
-Release data2009c – 2009-03-16 09:47:51 −0400
+Release data2009c - 2009-03-16 09:47:51 -0400
 
   change to the start of Cuban DST
 
 
-Release 2009b – 2009-02-09 11:15:22 −0500
+Release 2009b - 2009-02-09 11:15:22 -0500
 
   [not summarized]
 
 
-Release 2009a – 2009-01-21 10:09:39 −0500
+Release 2009a - 2009-01-21 10:09:39 -0500
 
   [not summarized]
 
 
-Release data2008i – 2008-10-21 12:10:25 −0400
+Release data2008i - 2008-10-21 12:10:25 -0400
 
   southamerica and zone.tab files, with Argentina DST rule changes and
   United States zone reordering and recommenting
 
 
-Release 2008h – 2008-10-13 07:33:56 −0400
+Release 2008h - 2008-10-13 07:33:56 -0400
 
   [not summarized]
 
 
-Release 2008g – 2008-10-06 09:03:18 −0400
+Release 2008g - 2008-10-06 09:03:18 -0400
 
   Fix a broken HTML anchor and update Brazil's DST transitions;
   there's also a slight reordering of information in tz-art.htm.
 
 
-Release data2008f – 2008-09-09 22:33:26 −0400
+Release data2008f - 2008-09-09 22:33:26 -0400
 
   [not summarized]
 
 
-Release 2008e – 2008-07-28 14:11:17 −0400
+Release 2008e - 2008-07-28 14:11:17 -0400
 
   changes by Arthur David Olson and Jesper Norgaard Welen
 
 
-Release data2008d – 2008-07-07 09:51:38 −0400
+Release data2008d - 2008-07-07 09:51:38 -0400
 
   changes by Arthur David Olson, Paul Eggert, and Rodrigo Severo
 
 
-Release data2008c – 2008-05-19 17:48:03 −0400
+Release data2008c - 2008-05-19 17:48:03 -0400
 
   Pakistan, Morocco, and Mongolia
 
 
-Release data2008b – 2008-03-24 08:30:59 −0400
+Release data2008b - 2008-03-24 08:30:59 -0400
 
   including renaming Asia/Calcutta to Asia/Kolkata, with a backward
   link provided
 
 
-Release 2008a – 2008-03-08 05:42:16 −0500
+Release 2008a - 2008-03-08 05:42:16 -0500
 
   [not summarized]
 
 
-Release 2007k – 2007-12-31 10:25:22 −0500
+Release 2007k - 2007-12-31 10:25:22 -0500
 
   most importantly, changes to the "southamerica" file based on
   Argentina's readoption of daylight saving time
 
 
-Release 2007j – 2007-12-03 09:51:01 −0500
+Release 2007j - 2007-12-03 09:51:01 -0500
 
   1. eliminate the "P" (parameter) macro;
 
@@ -1284,18 +1283,18 @@ Release 2007j – 2007-12-03 09:51:01 −0500
   4. changes by Paul Eggert (including updated information for Venezuela).
 
 
-Release data2007i – 2007-10-30 10:28:11 −0400
+Release data2007i - 2007-10-30 10:28:11 -0400
 
   changes for Cuba and Syria
 
 
-Release 2007h – 2007-10-01 10:05:51 −0400
+Release 2007h - 2007-10-01 10:05:51 -0400
 
   changes by Paul Eggert, as well as an updated link to the ICU
   project in tz-link.htm
 
 
-Release 2007g – 2007-08-20 10:47:59 −0400
+Release 2007g - 2007-08-20 10:47:59 -0400
 
   changes by Paul Eggert
 
@@ -1306,7 +1305,7 @@ Release 2007g – 2007-08-20 10:47:59 −0400
   There's an addition to tz-art.htm regarding the television show "Medium".
 
 
-Release 2007f – 2007-05-07 10:46:46 −0400
+Release 2007f - 2007-05-07 10:46:46 -0400
 
   changes by Paul Eggert (including Haiti, Turks and Caicos, and New
   Zealand)
@@ -1315,26 +1314,26 @@ Release 2007f – 2007-05-07 10:46:46 −0400
   Paul's improved time value overflow checking)
 
 
-Release 2007e – 2007-04-02 10:11:52 −0400
+Release 2007e - 2007-04-02 10:11:52 -0400
 
   Syria and Honduras changes by Paul Eggert
 
   zic.c variable renaming changes by Arthur David Olson
 
 
-Release 2007d – 2007-03-20 08:48:30 −0400
+Release 2007d - 2007-03-20 08:48:30 -0400
 
   changes by Paul Eggert
 
   the elimination of white space at the ends of lines
 
 
-Release 2007c – 2007-02-26 09:09:37 −0500
+Release 2007c - 2007-02-26 09:09:37 -0500
 
   changes by Paul Eggert
 
 
-Release 2007b – 2007-02-12 09:34:20 −0500
+Release 2007b - 2007-02-12 09:34:20 -0500
 
   Paul Eggert's proposed change to the quotation handling logic in zic.c.
 
@@ -1343,7 +1342,7 @@ Release 2007b – 2007-02-12 09:34:20 −0500
   of June 2007.
 
 
-Release 2007a – 2007-01-08 12:28:29 −0500
+Release 2007a - 2007-01-08 12:28:29 -0500
 
   changes by Paul Eggert
 
@@ -1354,51 +1353,51 @@ Release 2007a – 2007-01-08 12:28:29 −0500
   symbolic link changes
 
 
-Release 2006p – 2006-11-27 08:54:27 −0500
+Release 2006p - 2006-11-27 08:54:27 -0500
 
   changes by Paul Eggert
 
 
-Release 2006o – 2006-11-06 09:18:07 −0500
+Release 2006o - 2006-11-06 09:18:07 -0500
 
   changes by Paul Eggert
 
 
-Release 2006n – 2006-10-10 11:32:06 −0400
+Release 2006n - 2006-10-10 11:32:06 -0400
 
   changes by Paul Eggert
 
 
-Release 2006m – 2006-10-02 15:32:35 −0400
+Release 2006m - 2006-10-02 15:32:35 -0400
 
   changes for Uruguay, Palestine, and Egypt by Paul Eggert
 
   (minimalist) changes to zic.8 to clarify "until" information
 
 
-Release data2006l – 2006-09-18 12:58:11 −0400
+Release data2006l - 2006-09-18 12:58:11 -0400
 
   Paul's best-effort work on this coming weekend's Egypt time change
 
 
-Release 2006k – 2006-08-28 12:19:09 −0400
+Release 2006k - 2006-08-28 12:19:09 -0400
 
   changes by Paul Eggert
 
 
-Release 2006j – 2006-08-21 09:56:32 −0400
+Release 2006j - 2006-08-21 09:56:32 -0400
 
   changes by Paul Eggert
 
 
-Release code2006i – 2006-08-07 12:30:55 −0400
+Release code2006i - 2006-08-07 12:30:55 -0400
 
   localtime.c fixes
 
   Ken Pizzini's conversion script
 
 
-Release code2006h – 2006-07-24 09:19:37 −0400
+Release code2006h - 2006-07-24 09:19:37 -0400
 
   adds public domain notices to four files
 
@@ -1407,25 +1406,25 @@ Release code2006h – 2006-07-24 09:19:37 −0400
   adds a new recording to the "arts" file (information courtesy Colin Bowern)
 
 
-Release 2006g – 2006-05-08 17:18:09 −0400
+Release 2006g - 2006-05-08 17:18:09 -0400
 
   northamerica changes by Paul Eggert
 
 
-Release 2006f – 2006-05-01 11:46:00 −0400
+Release 2006f - 2006-05-01 11:46:00 -0400
 
   a missing version number problem is fixed (with thanks to Bradley
   White for catching the problem)
 
 
-Release 2006d – 2006-04-17 14:33:43 −0400
+Release 2006d - 2006-04-17 14:33:43 -0400
 
   changes by Paul Eggert
 
   added new items to tz-arts.htm that were found by Paul
 
 
-Release 2006c – 2006-04-03 10:09:32 −0400
+Release 2006c - 2006-04-03 10:09:32 -0400
 
   two sets of data changes by Paul Eggert
 
@@ -1436,7 +1435,7 @@ Release 2006c – 2006-04-03 10:09:32 −0400
   version
 
 
-Release 2006b – 2006-02-20 10:08:18 −0500
+Release 2006b - 2006-02-20 10:08:18 -0500
   [tz32code2006b + tz64code2006b + tzdata2006b]
 
   64-bit code
@@ -1444,7 +1443,7 @@ Release 2006b – 2006-02-20 10:08:18 −0500
   All SCCS IDs were bumped to "8.1" for this release.
 
 
-Release 2006a – 2006-01-30 08:59:31 −0500
+Release 2006a - 2006-01-30 08:59:31 -0500
 
   changes by Paul Eggert (in particular, Indiana time zone moves)
 
@@ -1452,7 +1451,7 @@ Release 2006a – 2006-01-30 08:59:31 −0500
   transitions are handled
 
 
-Release 2005r – 2005-12-27 09:27:13 −0500
+Release 2005r - 2005-12-27 09:27:13 -0500
 
   Canadian changes by Paul Eggert
 
@@ -1461,7 +1460,7 @@ Release 2005r – 2005-12-27 09:27:13 −0500
   "gettext" kept unbundled at the suggestion of Ken Pizzini).
 
 
-Release 2005q – 2005-12-13 09:17:09 −0500
+Release 2005q - 2005-12-13 09:17:09 -0500
 
   Nothing earth-shaking here:
 	1.  Electronic mail addresses have been removed.
@@ -1471,33 +1470,33 @@ Release 2005q – 2005-12-13 09:17:09 −0500
 	5.  References to dead URLs in the data files have been dealt with.
 
 
-Release 2005p – 2005-12-05 10:30:53 −0500
+Release 2005p - 2005-12-05 10:30:53 -0500
 
   "systemv", "tz-link.htm", and "zdump.c" changes
   (less the casts of arguments to the is* macros)
 
 
-Release 2005o – 2005-11-28 10:55:26 −0500
+Release 2005o - 2005-11-28 10:55:26 -0500
 
   Georgia, Cuba, Nicaragua, and Jordan changes by Paul Eggert
 
   zdump.c lint fixes by Arthur David Olson
 
 
-Release 2005n – 2005-10-03 09:44:09 −0400
+Release 2005n - 2005-10-03 09:44:09 -0400
 
   changes by Paul Eggert (both the Uruguary changes and the Kyrgyzstan
   et al. changes)
 
 
-Release 2005m – 2005-08-29 12:15:40 −0400
+Release 2005m - 2005-08-29 12:15:40 -0400
 
   changes by Paul Eggert (with a small tweak to the tz-art change)
 
   a declaration of an unused variable has been removed from zdump.c
 
 
-Release 2005l – 2005-08-22 12:06:39 −0400
+Release 2005l - 2005-08-22 12:06:39 -0400
 
   changes by Paul Eggert
 
@@ -1508,7 +1507,7 @@ Release 2005l – 2005-08-22 12:06:39 −0400
   less than a doubling in size by my local Sun's reckoning)
 
 
-Release 2005k – 2005-07-14 14:14:24 −0400
+Release 2005k - 2005-07-14 14:14:24 -0400
 
   The "leapseconds" file has been edited to reflect the recently
   announced leap second at the end of 2005.
@@ -1517,7 +1516,7 @@ Release 2005k – 2005-07-14 14:14:24 −0400
   anti-spam measure.
 
 
-Release 2005j – 2005-06-13 14:34:13 −0400
+Release 2005j - 2005-06-13 14:34:13 -0400
 
   These reflect changes to limit the length of time zone abbreviations
   and the characters used in those abbreviations.
@@ -1530,12 +1529,12 @@ Release 2005j – 2005-06-13 14:34:13 −0400
   abbreviation checks.
 
 
-Release data2005i – 2005-04-21 15:04:16 −0400
+Release data2005i - 2005-04-21 15:04:16 -0400
 
   changes (most importantly to Nicaragua and Haiti) by Paul Eggert
 
 
-Release 2005h – 2005-04-04 11:24:47 −0400
+Release 2005h - 2005-04-04 11:24:47 -0400
 
   changes by Paul Eggert
 
@@ -1543,23 +1542,23 @@ Release 2005h – 2005-04-04 11:24:47 −0400
   when doing a "make typecheck"
 
 
-Release 2005g – 2005-03-14 10:11:21 −0500
+Release 2005g - 2005-03-14 10:11:21 -0500
 
   changes by Paul Eggert (a change to current DST rules in Uruguay and
   an update to a link to time zone software)
 
 
-Release 2005f – 2005-03-01 08:45:32 −0500
+Release 2005f - 2005-03-01 08:45:32 -0500
 
   data and documentation changes by Paul Eggert
 
 
-Release 2005e – 2005-02-10 15:59:44 −0500
+Release 2005e - 2005-02-10 15:59:44 -0500
 
   [not summarized]
 
 
-Release code2005d – 2005-01-31 09:21:47 −0500
+Release code2005d - 2005-01-31 09:21:47 -0500
 
   make zic complain about links to links if the -v flag is used
 
@@ -1568,36 +1567,36 @@ Release code2005d – 2005-01-31 09:21:47 −0500
   add an include to "localtime.c" for the benefit of gcc systems
 
 
-Release 2005c – 2005-01-17 18:36:29 −0500
+Release 2005c - 2005-01-17 18:36:29 -0500
 
   get better results when mktime runs on a system where time_t is double
 
   changes to the data files (most importantly to Paraguay)
 
 
-Release 2005b – 2005-01-10 09:19:54 −0500
+Release 2005b - 2005-01-10 09:19:54 -0500
 
   Get localtime and gmtime working on systems with exotic time_t types.
 
   Update the leap second commentary in the "leapseconds" file.
 
 
-Release 2005a – 2005-01-01 13:13:44 −0500
+Release 2005a - 2005-01-01 13:13:44 -0500
 
   [not summarized]
 
 
-Release code2004i – 2004-12-14 13:42:58 −0500
+Release code2004i - 2004-12-14 13:42:58 -0500
 
   Deal with systems where time_t is unsigned.
 
 
-Release code2004h – 2004-12-07 11:40:18 −0500
+Release code2004h - 2004-12-07 11:40:18 -0500
 
   64-bit-time_t changes
 
 
-Release 2004g – 2004-11-02 09:06:01 −0500
+Release 2004g - 2004-11-02 09:06:01 -0500
 
   update to Cuba (taking effect this weekend)
 
@@ -1608,12 +1607,12 @@ Release 2004g – 2004-11-02 09:06:01 −0500
   changed versions of difftime.c and private.h
 
 
-Release code2004f – 2004-10-21 10:25:22 −0400
+Release code2004f - 2004-10-21 10:25:22 -0400
 
   Cope with wide-ranging tm_year values.
 
 
-Release 2004e – 2004-10-11 14:47:21 −0400
+Release 2004e - 2004-10-11 14:47:21 -0400
 
   Brazil/Argentina/Israel changes by Paul Eggert
 
@@ -1622,24 +1621,24 @@ Release 2004e – 2004-10-11 14:47:21 −0400
   one small fix to Makefile
 
 
-Release 2004d – 2004-09-22 08:27:29 −0400
+Release 2004d - 2004-09-22 08:27:29 -0400
 
   Avoid overflow problems when TM_YEAR_BASE is added to an integer.
 
 
-Release 2004c – 2004-08-11 12:06:26 −0400
+Release 2004c - 2004-08-11 12:06:26 -0400
 
   asctime-related changes
 
   (variants of) some of the documentation changes suggested by Paul Eggert
 
 
-Release 2004b – 2004-07-19 14:33:35 −0400
+Release 2004b - 2004-07-19 14:33:35 -0400
 
-  data changes by Paul Eggert – most importantly, updates for Argentina
+  data changes by Paul Eggert - most importantly, updates for Argentina
 
 
-Release 2004a – 2004-05-27 12:00:47 −0400
+Release 2004a - 2004-05-27 12:00:47 -0400
 
   changes by Paul Eggert
 
@@ -1650,7 +1649,7 @@ Release 2004a – 2004-05-27 12:00:47 −0400
   DST in the Navajo Nation.
 
 
-Release 2003e – 2003-12-15 09:36:47 −0500
+Release 2003e - 2003-12-15 09:36:47 -0500
 
   changes by Arthur David Olson (primarily code changes)
 
@@ -1660,18 +1659,18 @@ Release 2003e – 2003-12-15 09:36:47 −0500
   optimization of the "Toronto" rules)
 
 
-Release 2003d – 2003-10-06 09:34:44 −0400
+Release 2003d - 2003-10-06 09:34:44 -0400
 
   changes by Paul Eggert
 
 
-Release 2003c – 2003-09-16 10:47:05 −0400
+Release 2003c - 2003-09-16 10:47:05 -0400
 
   Fix bad returns in zic.c's inleap function.
   Thanks to Bradley White for catching the problem!
 
 
-Release 2003b – 2003-09-16 07:13:44 −0400
+Release 2003b - 2003-09-16 07:13:44 -0400
 
   Add a "--version" option (and documentation) to the zic and zdump commands.
 
@@ -1682,28 +1681,28 @@ Release 2003b – 2003-09-16 07:13:44 −0400
   Update the leapseconds and tz-art.htm files.
 
 
-Release 2003a – 2003-03-24 09:30:54 −0500
+Release 2003a - 2003-03-24 09:30:54 -0500
 
   changes by Paul Eggert
 
   a few additions and modifications to the tz-art.htm file
 
 
-Release 2002d – 2002-10-15 13:12:42 −0400
+Release 2002d - 2002-10-15 13:12:42 -0400
 
   changes by Paul Eggert, less the "Britain (UK)" change in iso3166.tab
 
   There's also a new time zone quote in "tz-art.htm".
 
 
-Release 2002c – 2002-04-04 11:55:20 −0500
+Release 2002c - 2002-04-04 11:55:20 -0500
 
   changes by Paul Eggert
 
   Change zic.c to avoid creating symlinks to files that don't exist.
 
 
-Release 2002b – 2002-01-28 12:56:03 −0500
+Release 2002b - 2002-01-28 12:56:03 -0500
 
   [These change notes are for Release 2002a, which was corrupted.
   2002b was a corrected version of 2002a.]
@@ -1718,24 +1717,24 @@ Release 2002b – 2002-01-28 12:56:03 −0500
   Change to "difftime.c" to avoid sizeof problems.
 
 
-Release 2001d – 2001-10-09 13:31:32 −0400
+Release 2001d - 2001-10-09 13:31:32 -0400
 
   changes by Paul Eggert
 
 
-Release 2001c – 2001-06-05 13:59:55 −0400
+Release 2001c - 2001-06-05 13:59:55 -0400
 
   changes by Paul Eggert and Andrew Brown
 
 
-Release 2001b – 2001-04-05 16:44:38 −0400
+Release 2001b - 2001-04-05 16:44:38 -0400
 
   changes by Paul Eggert (modulo jnorgard's typo fix)
 
   tz-art.htm has been htmlified.
 
 
-Release 2001a – 2001-03-13 12:57:44 −0500
+Release 2001a - 2001-03-13 12:57:44 -0500
 
   changes by Paul Eggert
 
@@ -1747,7 +1746,7 @@ Release 2001a – 2001-03-13 12:57:44 −0500
   converted to tabs.
 
 
-Release 2000h – 2000-12-14 15:33:38 −0500
+Release 2000h - 2000-12-14 15:33:38 -0500
 
   changes by Paul Eggert
 
@@ -1756,7 +1755,7 @@ Release 2000h – 2000-12-14 15:33:38 −0500
   With providence, this is the last update of the millenium.
 
 
-Release 2000g – 2000-10-10 11:35:22 −0400
+Release 2000g - 2000-10-10 11:35:22 -0400
 
   changes by Paul Eggert
 
@@ -1766,7 +1765,7 @@ Release 2000g – 2000-10-10 11:35:22 −0400
   Emmy Awards broadcast.
 
 
-Release 2000f – 2000-08-10 09:31:58 −0400
+Release 2000f - 2000-08-10 09:31:58 -0400
 
   changes by Paul Eggert
 
@@ -1776,7 +1775,7 @@ Release 2000f – 2000-08-10 09:31:58 −0400
   improved.
 
 
-Release 2000e – 2000-07-31 09:27:54 −0400
+Release 2000e - 2000-07-31 09:27:54 -0400
 
   data changes by Paul Eggert
 
@@ -1785,7 +1784,7 @@ Release 2000e – 2000-07-31 09:27:54 −0400
   the addition of a Dave Barry quote on DST to the tz-arts file
 
 
-Release 2000d – 2000-04-20 15:43:04 −0400
+Release 2000d - 2000-04-20 15:43:04 -0400
 
   changes to the documentation and code of strftime for C99 conformance
 
@@ -1794,44 +1793,44 @@ Release 2000d – 2000-04-20 15:43:04 −0400
   These are based on (though modified from) changes by Paul Eggert.
 
 
-Release 2000c – 2000-03-04 10:31:43 −0500
+Release 2000c - 2000-03-04 10:31:43 -0500
 
   changes by Paul Eggert
 
 
-Release 2000b – 2000-02-21 12:16:29 −0500
+Release 2000b - 2000-02-21 12:16:29 -0500
 
   changes by Paul Eggert and Joseph Myers
 
   modest tweaks to the tz-art.htm and tz-link.htm files
 
 
-Release 2000a – 2000-01-18 09:21:26 −0500
+Release 2000a - 2000-01-18 09:21:26 -0500
 
   changes by Paul Eggert
 
   The two hypertext documents have also been renamed.
 
 
-Release code1999i-data1999j – 1999-11-15 18:43:22 −0500
+Release code1999i-data1999j - 1999-11-15 18:43:22 -0500
 
   Paul Eggert's changes
 
   additions to the "zic" manual page and the "Arts.htm" file
 
 
-Release code1999h-data1999i – 1999-11-08 14:55:21 −0500
+Release code1999h-data1999i - 1999-11-08 14:55:21 -0500
 
   [not summarized]
 
 
-Release data1999h – 1999-10-07 03:50:29 −0400
+Release data1999h - 1999-10-07 03:50:29 -0400
 
   changes by Paul Eggert to "europe" (most importantly, fixing
   Lithuania and Estonia)
 
 
-Release 1999g – 1999-09-28 11:06:18 −0400
+Release 1999g - 1999-09-28 11:06:18 -0400
 
   data changes by Paul Eggert (most importantly, the change for
   Lebanon that buys correctness for this coming Sunday)
@@ -1840,12 +1839,12 @@ Release 1999g – 1999-09-28 11:06:18 −0400
   allow better checking of time zone files before they are published.
 
 
-Release 1999f – 1999-09-23 09:48:14 −0400
+Release 1999f - 1999-09-23 09:48:14 -0400
 
   changes by Arthur David Olson and Paul Eggert
 
 
-Release 1999e – 1999-08-17 15:20:54 −0400
+Release 1999e - 1999-08-17 15:20:54 -0400
 
   changes circulated by Paul Eggert, although the change to handling
   of DST-specifying time zone names has been commented out for now
@@ -1856,7 +1855,7 @@ Release 1999e – 1999-08-17 15:20:54 −0400
   cleanups of URLs.
 
 
-Release 1999d – 1999-03-30 11:31:07 −0500
+Release 1999d - 1999-03-30 11:31:07 -0500
 
   changes by Paul Eggert
 
@@ -1865,12 +1864,12 @@ Release 1999d – 1999-03-30 11:31:07 −0500
   avoid problems such as the one we had with Nicosia).
 
 
-Release 1999c – 1999-03-25 09:47:47 −0500
+Release 1999c - 1999-03-25 09:47:47 -0500
 
   changes by Paul Eggert, most importantly the change for Chile.
 
 
-Release 1999b – 1999-02-01 17:51:44 −0500
+Release 1999b - 1999-02-01 17:51:44 -0500
 
   changes by Paul Eggert
 
@@ -1882,28 +1881,28 @@ Release 1999b – 1999-02-01 17:51:44 −0500
   updates to the URLs in Arts.htm
 
 
-Release 1999a – 1999-01-19 16:20:29 −0500
+Release 1999a - 1999-01-19 16:20:29 -0500
 
   error message internationalizations and corrections in zic.c and
   zdump.c (as suggested by Vladimir Michl, vladimir.michl at upol.cz,
   to whom thanks!)
 
 
-Release code1998h-data1998i – 1998-10-01 09:56:10 −0400
+Release code1998h-data1998i - 1998-10-01 09:56:10 -0400
 
   changes for Brazil, Chile, and Germany
 
   support for use of "24:00" in the input files for the time zone compiler
 
 
-Release code1998g-data1998h – 1998-09-24 10:50:28 −0400
+Release code1998g-data1998h - 1998-09-24 10:50:28 -0400
 
   changes by Paul Eggert
 
   correction to a define in the "private.h" file
 
 
-Release data1998g – 1998-08-11 03:28:35 −0000
+Release data1998g - 1998-08-11 03:28:35 -0000
   [tzdata1998g.tar.gz is missing!]
 
   Lithuanian change provided by mgedmin at pub.osf.it
@@ -1913,19 +1912,19 @@ Release data1998g – 1998-08-11 03:28:35 −0000
   don't want the "backward" links (as suggested by Paul Eggert).
 
 
-Release data1998f – 1998-07-20 13:50:00 −0000
+Release data1998f - 1998-07-20 13:50:00 -0000
   [tzdata1998f.tar.gz is missing!]
 
   Update the "leapseconds" file to include the newly-announced
   insertion at the end of 1998.
 
 
-Release code1998f – 1998-06-01 10:18:31 −0400
+Release code1998f - 1998-06-01 10:18:31 -0400
 
   addition to localtime.c by Guy Harris
 
 
-Release 1998e – 1998-05-28 09:56:26 −0400
+Release 1998e - 1998-05-28 09:56:26 -0400
 
   The Makefile is changed to produce zoneinfo-posix rather than
   zoneinfo/posix, and to produce zoneinfo-leaps rather than
@@ -1938,14 +1937,14 @@ Release 1998e – 1998-05-28 09:56:26 −0400
   A usno1998 file (substantially identical to usno1997) has been added.
 
 
-Release 1998d – 1998-05-14 11:58:34 −0400
+Release 1998d - 1998-05-14 11:58:34 -0400
 
   changes to comments (in particular, elimination of references to CIA maps).
   "Arts.htm", "WWW.htm", "asia", and "australasia" are the only places
   where changes occur.
 
 
-Release 1998c – 1998-02-28 12:32:26 −0500
+Release 1998c - 1998-02-28 12:32:26 -0500
 
   changes by Paul Eggert (save the "French correction," on which I'll
   wait for the dust to settle)
@@ -1955,23 +1954,23 @@ Release 1998c – 1998-02-28 12:32:26 −0500
   changes and additions to Arts.htm
 
 
-Release 1998b – 1998-01-17 14:31:51 −0500
+Release 1998b - 1998-01-17 14:31:51 -0500
 
   URL cleanups and additions
 
 
-Release 1998a – 1998-01-13 12:37:35 −0500
+Release 1998a - 1998-01-13 12:37:35 -0500
 
   changes by Paul Eggert
 
 
-Release code1997i-data1997k – 1997-12-29 09:53:41 −0500
+Release code1997i-data1997k - 1997-12-29 09:53:41 -0500
 
   changes by Paul Eggert, with minor modifications from Arthur David
   Olson to make the files more browser friendly
 
 
-Release code1997h-data1997j – 1997-12-18 17:47:35 −0500
+Release code1997h-data1997j - 1997-12-18 17:47:35 -0500
 
   minor changes to put "TZif" at the start of each time zone information file
 
@@ -1981,12 +1980,12 @@ Release code1997h-data1997j – 1997-12-18 17:47:35 −0500
   full "make install" with its other effects).
 
 
-Release data1997i – 1997-10-07 08:45:38 −0400
+Release data1997i - 1997-10-07 08:45:38 -0400
 
   changes to Africa by Paul Eggert
 
 
-Release code1997g-data1997h – 1997-09-04 16:56:54 −0400
+Release code1997g-data1997h - 1997-09-04 16:56:54 -0400
 
   corrections for Uruguay (and other locations)
 
@@ -1995,7 +1994,7 @@ Release code1997g-data1997h – 1997-09-04 16:56:54 −0400
   upon which arithmetic has been performed.
 
 
-Release code1997f-data1997g – 1997-07-19 13:15:02 −0400
+Release code1997f-data1997g - 1997-07-19 13:15:02 -0400
 
   Paul Eggert's updates
 
@@ -2005,7 +2004,7 @@ Release code1997f-data1997g – 1997-07-19 13:15:02 −0400
   include information on Around the World in Eighty Days.
 
 
-Release code1997e-data1997f – 1997-05-03 18:52:34 −0400
+Release code1997e-data1997f - 1997-05-03 18:52:34 -0400
 
   fixes to zic's error handling
 
@@ -2017,24 +2016,24 @@ Release code1997e-data1997f – 1997-05-03 18:52:34 −0400
   A new piece of tz-related music has been added to the "Music" file.
 
 
-Release code1997d-data1997e – 1997-03-29 12:48:52 −0500
+Release code1997d-data1997e - 1997-03-29 12:48:52 -0500
 
   Paul Eggert's latest suggestions
 
 
-Release code1997c-data1997d – 1997-03-07 20:37:54 −0500
+Release code1997c-data1997d - 1997-03-07 20:37:54 -0500
 
   changes to "zic.c" to correct performance of the "-s" option
 
   a new file "usno1997"
 
 
-Release data1997c – 1997-03-04 09:58:18 −0500
+Release data1997c - 1997-03-04 09:58:18 -0500
 
   changes in Israel
 
 
-Release 1997b – 1997-02-27 18:34:19 −0500
+Release 1997b - 1997-02-27 18:34:19 -0500
 
   The data file incorporates the 1997 leap second.
 
@@ -2042,83 +2041,83 @@ Release 1997b – 1997-02-27 18:34:19 −0500
   zic/multiprocessor/directory-creation situation.
 
 
-Release 1997a – 1997-01-21 09:11:10 −0500
+Release 1997a - 1997-01-21 09:11:10 -0500
 
   Paul Eggert's Antarctica (and other changes)
 
   Arthur David Olson finessed the "getopt" issue by checking against
-  both −1 and EOF (regardless of POSIX, SunOS 4.1.1's manual says −1
+  both -1 and EOF (regardless of POSIX, SunOS 4.1.1's manual says -1
   is returned while SunOS 5.5's manual says EOF is returned).
 
 
-Release code1996o-data1996n – 1996-12-27 21:42:05 −0500
+Release code1996o-data1996n - 1996-12-27 21:42:05 -0500
 
   Paul Eggert's latest changes
 
 
-Release code1996n – 1996-12-16 09:42:02 −0500
+Release code1996n - 1996-12-16 09:42:02 -0500
 
   link snapping fix from Bruce Evans (via Garrett Wollman)
 
 
-Release data1996m – 1996-11-24 02:37:34 −0000
+Release data1996m - 1996-11-24 02:37:34 -0000
   [tzdata1996m.tar.gz is missing!]
 
   Paul Eggert's batch of changes
 
 
-Release code1996m-data1996l – 1996-11-05 14:00:12 −0500
+Release code1996m-data1996l - 1996-11-05 14:00:12 -0500
 
   No functional changes here; the files have simply been changed to
   make more use of ISO style dates in comments. The names of the above
   files now include the year in full.
 
 
-Release code96l – 1996-09-08 17:12:20 −0400
+Release code96l - 1996-09-08 17:12:20 -0400
 
   tzcode96k was missing a couple of pieces.
 
 
-Release 96k – 1996-09-08 16:06:22 −0400
+Release 96k - 1996-09-08 16:06:22 -0400
 
   the latest round of changes from Paul Eggert
 
   the recent Year 2000 material
 
 
-Release code96j – 1996-07-30 13:18:53 −0400
+Release code96j - 1996-07-30 13:18:53 -0400
 
   Set sp->typecnt as suggested by Timothy Patrick Murphy.
 
 
-Release code96i – 1996-07-27 20:11:35 −0400
+Release code96i - 1996-07-27 20:11:35 -0400
 
   Paul's suggested patch for strftime %V week numbers
 
 
-Release data96i – 1996-07-01 18:13:04 −0400
+Release data96i - 1996-07-01 18:13:04 -0400
 
   "northamerica" and "europe" changes by Paul Eggert
 
 
-Release code96h – 1996-06-05 08:02:21 −0400
+Release code96h - 1996-06-05 08:02:21 -0400
 
   fix for handling transitions specified in Universal Time
 
   Some "public domain" notices have also been added.
 
 
-Release code96g – 1996-05-16 14:00:26 −0400
+Release code96g - 1996-05-16 14:00:26 -0400
 
   fix for the simultaneous-DST-and-zone-change challenge
 
 
-Release data96h – 1996-05-09 17:40:51 −0400
+Release data96h - 1996-05-09 17:40:51 -0400
 
   changes by Paul Eggert
 
 
-Release code96f-data96g – 1996-05-03 03:09:59 −0000
+Release code96f-data96g - 1996-05-03 03:09:59 -0000
   [tzcode96f.tar.gz + tzdata96g.tar.gz are both missing!]
 
   The changes get us some of the way to fixing the problems noted in Paul
@@ -2132,7 +2131,7 @@ Release code96f-data96g – 1996-05-03 03:09:59 −0000
   should ease maintenance.)
 
 
-Release data96f – 1996-04-19 19:20:03 −0000
+Release data96f - 1996-04-19 19:20:03 -0000
   [tzdata96f.tar.gz is missing!]
 
   The only changes are to the "northamerica" file; the time zone
@@ -2140,50 +2139,50 @@ Release data96f – 1996-04-19 19:20:03 −0000
   comments for Mexico have been updated.
 
 
-Release data96e – 1996-03-19 17:37:26 −0500
+Release data96e - 1996-03-19 17:37:26 -0500
 
   Proposals by Paul Eggert, in particular the Portugal change that
   comes into play at the end of this month.
 
 
-Release data96d – 1996-03-18 20:49:39 −0500
+Release data96d - 1996-03-18 20:49:39 -0500
 
   [not summarized]
 
 
-Release code96e – 1996-02-29 15:43:27 −0000
+Release code96e - 1996-02-29 15:43:27 -0000
   [tzcode96e.tar.gz is missing!]
 
   internationalization changes and the fix to the documentation for strftime
 
 
-Release code96d-data96c – 1996-02-12 11:05:27 −0500
+Release code96d-data96c - 1996-02-12 11:05:27 -0500
 
   The "code" file simply updates Bob Kridle's electronic address.
 
   The "data" file updates rules for Mexico.
 
 
-Release data96b – 1996-01-27 15:44:42 −0500
+Release data96b - 1996-01-27 15:44:42 -0500
 
   Kiribati change
 
 
-Release code96c – 1996-01-16 16:58:15 −0500
+Release code96c - 1996-01-16 16:58:15 -0500
 
   leap-year streamlining and binary-search changes
 
   fix to newctime.3
 
 
-Release code96b – 1996-01-10 20:42:39 −0500
+Release code96b - 1996-01-10 20:42:39 -0500
 
   fixes and enhancements from Paul Eggert, including code that
   emulates the behavior of recent versions of the SunOS "date"
   command.
 
 
-Release 96a – 1996-01-06 09:08:24 −0500
+Release 96a - 1996-01-06 09:08:24 -0500
 
   Israel updates
 
@@ -2192,32 +2191,32 @@ Release 96a – 1996-01-06 09:08:24 −0500
   numbers (which are not necessarily the same as calendar year numbers)
 
 
-Release code95i-data95m – 1995-12-21 12:46:47 −0500
+Release code95i-data95m - 1995-12-21 12:46:47 -0500
 
   The latest revisions from Paul Eggert are included, the usno1995
   file has been updated, and a new file ("WWW") covering useful URLs
   has been added.
 
 
-Release code95h-data95l – 1995-12-19 18:10:12 −0500
+Release code95h-data95l - 1995-12-19 18:10:12 -0500
 
   A simplification of a macro definition, a change to data for Sudan,
   and (for last minute shoppers) notes in the "Music" file on the CD
   "Old Man Time".
 
 
-Release code95g-data95k – 1995-10-30 10:32:47 −0500
+Release code95g-data95k - 1995-10-30 10:32:47 -0500
 
   (slightly reformatted) 8-bit-clean proposed patch
 
-  minor patch: US/Eastern → America/New_York
+  minor patch: US/Eastern -> America/New_York
 
   snapshot of the USNO's latest data ("usno1995")
 
   some other minor cleanups
 
 
-Release code95f-data95j – 1995-10-28 21:01:34 −0000
+Release code95f-data95j - 1995-10-28 21:01:34 -0000
   [tzcode95f.tar.gz + tzdata95j.tar.gz are both missing!]
 
   European cleanups
@@ -2227,63 +2226,63 @@ Release code95f-data95j – 1995-10-28 21:01:34 −0000
   optimization in localtime.c
 
 
-Release code95e – 1995-10-13 13:23:57 −0400
+Release code95e - 1995-10-13 13:23:57 -0400
 
   the mktime change to scan from future to past when trying to find time zone
   offsets
 
 
-Release data95i – 1995-09-26 10:43:26 −0400
+Release data95i - 1995-09-26 10:43:26 -0400
 
   For Canada/Central, guess that the Sun customer's "one week too
   early" was just a approximation, and the true error is one month
   too early.  This is consistent with the rest of Canada.
 
 
-Release data95h – 1995-09-21 11:26:48 −0400
+Release data95h - 1995-09-21 11:26:48 -0400
 
   latest changes from Paul Eggert
 
 
-Release code95d – 1995-09-14 11:14:45 −0400
+Release code95d - 1995-09-14 11:14:45 -0400
 
   the addition of a "Music" file, which documents four recorded
   versions of the tune "Save That Time".
 
 
-Release data95g – 1995-09-01 17:21:36 −0400
+Release data95g - 1995-09-01 17:21:36 -0400
 
   "yearistype" correction
 
 
-Release data95f – 1995-08-28 20:46:56 −0400
+Release data95f - 1995-08-28 20:46:56 -0400
 
   Paul Eggert's change to the australasia file
 
 
-Release data95e – 1995-07-08 18:02:34 −0400
+Release data95e - 1995-07-08 18:02:34 -0400
 
   The only change is a leap second at the end of this year.
   Thanks to Bradley White for forwarding news on the leap second.
 
 
-Release data95d – 1995-07-03 13:26:22 −0400
+Release data95d - 1995-07-03 13:26:22 -0400
 
   Paul Eggert's changes
 
 
-Release data95c – 1995-07-02 19:19:28 −0400
+Release data95c - 1995-07-02 19:19:28 -0400
 
   changes to "asia", "backward", "europe", and "southamerica"
   (read: northamericacentrics need not apply)
 
 
-Release code95c – 1995-03-13 14:00:46 −0500
+Release code95c - 1995-03-13 14:00:46 -0500
 
   one-line fix for sign extension problems in detzcode
 
 
-Release 95b – 1995-03-04 11:22:38 −0500
+Release 95b - 1995-03-04 11:22:38 -0500
 
   Minor changes in both:
 
@@ -2293,7 +2292,7 @@ Release 95b – 1995-03-04 11:22:38 −0500
   The "data" file contains a fixed "Link" for America/Shiprock.
 
 
-Release 94h – 1994-12-10 12:51:14 −0500
+Release 94h - 1994-12-10 12:51:14 -0500
 
   The files:
 
@@ -2303,55 +2302,55 @@ Release 94h – 1994-12-10 12:51:14 −0500
   *	incorporate the table changes by Paul Eggert;
 
   *	include (and document) support for universal time specifications in
-	data files – but do not (yet) include use of this feature in the
+	data files - but do not (yet) include use of this feature in the
 	data files.
 
-  Think of this as "TZ Classic" – the software has been set up not to break if
+  Think of this as "TZ Classic" - the software has been set up not to break if
   universal time shows up in its input, and the data has been left as is so as
   not to break existing implementations.
 
 
-Release data94f – 1994-08-20 12:56:09 −0400
+Release data94f - 1994-08-20 12:56:09 -0400
 
   (with thanks!) the latest data updates from Paul Eggert
 
 
-Release data94e – 1994-06-04 13:13:53 −0400
+Release data94e - 1994-06-04 13:13:53 -0400
 
   [not summarized]
 
 
-Release code94g – 1994-05-05 12:14:07 −0400
+Release code94g - 1994-05-05 12:14:07 -0400
 
   fix missing "optind.c" and a reference to it in the Makefile
 
 
-Release code94f – 1994-05-05 13:00:33 −0000
+Release code94f - 1994-05-05 13:00:33 -0000
   [tzcode94f.tar.gz is missing!]
 
   changes to avoid overflow in difftime, as well as changes to cope
   with the 52/53 challenge in strftime
 
 
-Release code94e – 1994-03-30 23:32:59 −0500
+Release code94e - 1994-03-30 23:32:59 -0500
 
   change for the benefit of PCTS
 
 
-Release 94d – 1994-02-24 15:42:25 −0500
+Release 94d - 1994-02-24 15:42:25 -0500
 
   Avoid clashes with POSIX semantics for zones such as GMT+4.
 
   Some other very minor housekeeping is also present.
 
 
-Release code94c – 1994-02-10 08:52:40 −0500
+Release code94c - 1994-02-10 08:52:40 -0500
 
   Fix bug where mkdirs was broken unless you compile with
   -fwritable-strings (which is generally losing to do).
 
 
-Release 94b – 1994-02-07 10:04:33 −0500
+Release 94b - 1994-02-07 10:04:33 -0500
 
   work by Paul Eggert who notes:
 
@@ -2367,49 +2366,49 @@ Release 94b – 1994-02-07 10:04:33 −0500
   And I cleaned up the zic documentation a little bit.
 
 
-Release data94a – 1994-02-03 08:58:54 −0500
+Release data94a - 1994-02-03 08:58:54 -0500
 
   It simply incorporates the recently announced leap second into the
   "leapseconds" file.
 
 
-Release 93g – 1993-11-22 17:28:27 −0500
+Release 93g - 1993-11-22 17:28:27 -0500
 
   Paul Eggert has provided a good deal of historic information (based
   on Shanks), and there are some code changes to deal with the buglets
   that crawled out in dealing with the new information.
 
 
-Release 93f – 1993-10-15 12:27:46 −0400
+Release 93f - 1993-10-15 12:27:46 -0400
 
   Paul Eggert's changes
 
 
-Release 93e – 1993-09-05 21:21:44 −0400
+Release 93e - 1993-09-05 21:21:44 -0400
 
   There's updated data for Israel, England, and Kwajalein; there's
   also an update to "zdump" to cope with Kwajalein's 24-hour jump.
   Thanks to Paul Eggert and Peter Ilieve for the changes.
 
 
-Release 93d – 1993-06-17 23:34:17 −0400
+Release 93d - 1993-06-17 23:34:17 -0400
 
   new fix and new data on Israel
 
 
-Release 93c – 1993-06-06 19:31:55 −0400
+Release 93c - 1993-06-06 19:31:55 -0400
 
   [not summarized]
 
 
-Release 93b – 1993-02-02 14:53:58 −0500
+Release 93b - 1993-02-02 14:53:58 -0500
 
   updated "leapseconds" file
 
 
-Release 93 – 1993-01-08 07:01:06 −0500
+Release 93 - 1993-01-08 07:01:06 -0500
 
-  At kre's suggestion, the package has been split in two – a code piece
+  At kre's suggestion, the package has been split in two - a code piece
   (which also includes documentation) that's only of use to folks who
   want to recompile things and a data piece useful to anyone who can
   run "zic".
@@ -2420,7 +2419,7 @@ Release 93 – 1993-01-08 07:01:06 −0500
   solution).
 
 
-Release 92c – 1992-11-21 17:35:36 −0000
+Release 92c - 1992-11-21 17:35:36 -0000
   [tz92c.tar.Z is missing!]
 
   The fallout from the latest round of DST transitions.
@@ -2429,7 +2428,7 @@ Release 92c – 1992-11-21 17:35:36 −0000
   there's also a change to "zic.c" that makes it portable to more systems.
 
 
-Release 92 – 1992-04-25 18:17:03 −0000
+Release 92 - 1992-04-25 18:17:03 -0000
   [tz92.tar.Z is missing!]
 
   By popular demand (well, at any rate, following a request by kre at munnari)
@@ -2483,7 +2482,7 @@ Release time stamps are taken from the release's commit (for newer,
 git releases), from the newest file in the tarball (for older
 releases, where this info is available) or from the email announcing
 the release (if all else fails; these are marked with a timezone of
-−0000 and an "is missing!" comment).
+-0000 and an "is missing!" comment).
 
 Earlier versions of the code and data were not announced on the tz
 list and are not summarized here.

@@ -25,7 +25,7 @@
 # I found in the UCLA library.
 #
 # For data circa 1899, a common source is:
-# Milne J. Civil time. Geogr J. 1899 Feb;13(2):173–94
+# Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94
 # <http://www.jstor.org/stable/1774359>.
 #
 # A reliable and entertaining source about time zones is
@@ -57,7 +57,7 @@
 # From Guy Harris:
 # Incorporates data for Singapore from Robert Elz' asia 1.1, as well as
 # additional information from Tom Yap, Sun Microsystems Intercontinental
-# Technical Support (including a page from the Official Airline Guide –
+# Technical Support (including a page from the Official Airline Guide -
 # Worldwide Edition).  The names for time zones are guesses.
 
 ###############################################################################
@@ -281,19 +281,19 @@ Zone	Asia/Phnom_Penh	6:59:40 -	LMT	1906 Jun  9
 # No they don't.  See TIME mag, 1986-02-17 p.52.  Even though
 # China is across 4 physical time zones, before Feb 1, 1986 only the
 # Peking (Bejing) time zone was recognized.  Since that date, China
-# has two of 'em – Peking's and Urumqi (named after the capital of
+# has two of 'em - Peking's and Urumqi (named after the capital of
 # the Xinjiang Uyghur Autonomous Region).  I don't know about DST for it.
 #
 # . . .I just deleted the DST table and this editor makes it too
 # painful to suck in another copy.  So, here is what I have for
 # DST start/end dates for Peking's time zone (info from AP):
 #
-#     1986 May 4 – Sept 14
-#     1987 mid-April – ??
+#     1986 May 4 - Sept 14
+#     1987 mid-April - ??
 
 # From U. S. Naval Observatory (1989-01-19):
 # CHINA               8 H  AHEAD OF UTC  ALL OF CHINA, INCL TAIWAN
-# CHINA               9 H  AHEAD OF UTC  APR 17 – SEP 10
+# CHINA               9 H  AHEAD OF UTC  APR 17 - SEP 10
 
 # From Paul Eggert (2006-03-22):
 # Shanks & Pottenger write that China (except for Hong Kong and Macau)
@@ -333,7 +333,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=10	0:00	1:00	D
 # about China's single time zone, and couldn't find anything before 1986
 # talking about China being in one time zone.  (That article was: Jim
 # Mann, "A clumsy embrace for another western custom: China on daylight
-# time – sort of", Los Angeles Times, 1986-05-05.  By the way, this
+# time - sort of", Los Angeles Times, 1986-05-05.  By the way, this
 # article confirms the tz database's data claiming that China began
 # observing daylight saving time in 1986.
 #
@@ -566,15 +566,15 @@ Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
 # From Arthur David Olson (2010-04-07):
 # Here's Google's translation of the table at the bottom of the "summert.htm" page:
 # Decade 	                                                    Name                      Start and end date
-# Republic of China 34 years to 40 years (AD 1945–1951 years) Summer Time               May 1 to September 30
+# Republic of China 34 years to 40 years (AD 1945-1951 years) Summer Time               May 1 to September 30
 # 41 years of the Republic of China (AD 1952)                 Daylight Saving Time      March 1 to October 31
-# Republic of China 42 years to 43 years (AD 1953–1954 years) Daylight Saving Time      April 1 to October 31
-# In the 44 years to 45 years (AD 1955–1956 years)            Daylight Saving Time      April 1 to September 30
-# Republic of China 46 years to 48 years (AD 1957–1959)       Summer Time               April 1 to September 30
-# Republic of China 49 years to 50 years (AD 1960–1961)       Summer Time               June 1 to September 30
-# Republic of China 51 years to 62 years (AD 1962–1973 years) Stop Summer Time
-# Republic of China 63 years to 64 years (1974–1975 AD)       Daylight Saving Time      April 1 to September 30
-# Republic of China 65 years to 67 years (1976–1978 AD)       Stop Daylight Saving Time
+# Republic of China 42 years to 43 years (AD 1953-1954 years) Daylight Saving Time      April 1 to October 31
+# In the 44 years to 45 years (AD 1955-1956 years)            Daylight Saving Time      April 1 to September 30
+# Republic of China 46 years to 48 years (AD 1957-1959)       Summer Time               April 1 to September 30
+# Republic of China 49 years to 50 years (AD 1960-1961)       Summer Time               June 1 to September 30
+# Republic of China 51 years to 62 years (AD 1962-1973 years) Stop Summer Time
+# Republic of China 63 years to 64 years (1974-1975 AD)       Daylight Saving Time      April 1 to September 30
+# Republic of China 65 years to 67 years (1976-1978 AD)       Stop Daylight Saving Time
 # Republic of China 68 years (AD 1979)                        Daylight Saving Time      July 1 to September 30
 # Republic of China since 69 years (AD 1980)                  Stop Daylight Saving Time
 
@@ -764,9 +764,9 @@ Zone	Asia/Kolkata	5:53:28 -	LMT	1880	# Kolkata
 # Indonesia, <http://time.kim.lipi.go.id/time-eng.php> (2006-09-29).
 # The abbreviations are:
 #
-# WIB  – UTC+7 – Waktu Indonesia Barat (Indonesia western time)
-# WITA – UTC+8 – Waktu Indonesia Tengah (Indonesia central time)
-# WIT  – UTC+9 – Waktu Indonesia Timur (Indonesia eastern time)
+# WIB  - UTC+7 - Waktu Indonesia Barat (Indonesia western time)
+# WITA - UTC+8 - Waktu Indonesia Tengah (Indonesia central time)
+# WIT  - UTC+9 - Waktu Indonesia Timur (Indonesia eastern time)
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 # Java, Sumatra
@@ -826,7 +826,7 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 #	to its previous state at the 24[:00] hours of the 30th day of
 #	Shahrivar.
 #
-#	First Deputy to the President – Hassan Habibi
+#	First Deputy to the President - Hassan Habibi
 #
 # From personal experience, that agrees with what has been followed
 # for at least the last 5 years.  Before that, for a few years, the
@@ -1061,7 +1061,7 @@ Rule	Zion	1988	only	-	Sep	 4	0:00	0	S
 # According to the Office of the Secretary General of the Ministry of
 # Interior, there is NO set rule for Daylight-Savings/Standard time changes.
 # One thing is entrenched in law, however: that there must be at least 150
-# days of daylight savings time annually.  From 1993–1998, the change to
+# days of daylight savings time annually.  From 1993-1998, the change to
 # daylight savings time was on a Friday morning from midnight IST to
 # 1 a.m IDT; up until 1998, the change back to standard time was on a
 # Saturday night from midnight daylight savings time to 11 p.m. standard
@@ -1093,7 +1093,7 @@ Rule	Zion	1992	only	-	Sep	 6	0:00	0	S
 Rule	Zion	1993	only	-	Apr	 2	0:00	1:00	D
 Rule	Zion	1993	only	-	Sep	 5	0:00	0	S
 
-# The dates for 1994–1995 were obtained from Office of the Spokeswoman for the
+# The dates for 1994-1995 were obtained from Office of the Spokeswoman for the
 # Ministry of Interior, Jerusalem, Israel.  The spokeswoman can be reached by
 # calling the office directly at 972-2-6701447 or 972-2-6701448.
 
@@ -1104,14 +1104,14 @@ Rule	Zion	1995	only	-	Mar	31	0:00	1:00	D
 Rule	Zion	1995	only	-	Sep	 3	0:00	0	S
 
 # The dates for 1996 were determined by the Minister of Interior of the
-# time, Haim Ramon.  The official announcement regarding 1996–1998
-# (with the dates for 1997–1998 no longer being relevant) can be viewed at:
+# time, Haim Ramon.  The official announcement regarding 1996-1998
+# (with the dates for 1997-1998 no longer being relevant) can be viewed at:
 #
 #   ftp://ftp.cs.huji.ac.il/pub/tz/announcements/1996-1998.ramon.ps.gz
 #
-# The dates for 1997–1998 were altered by his successor, Rabbi Eli Suissa.
+# The dates for 1997-1998 were altered by his successor, Rabbi Eli Suissa.
 #
-# The official announcements for the years 1997–1999 can be viewed at:
+# The official announcements for the years 1997-1999 can be viewed at:
 #
 #   ftp://ftp.cs.huji.ac.il/pub/tz/announcements/YYYY.ps.gz
 #
@@ -1129,14 +1129,14 @@ Rule	Zion	1999	only	-	Sep	 3	2:00	0	S
 
 # The Knesset Interior Committee has changed the dates for 2000 for
 # the third time in just over a year and have set new dates for the
-# years 2001–2004 as well.
+# years 2001-2004 as well.
 #
 # The official announcement for the start date of 2000 can be viewed at:
 #
 #	ftp://ftp.cs.huji.ac.il/pub/tz/announcements/2000-start.ps.gz
 #
 # The official announcement for the end date of 2000 and the dates
-# for the years 2001–2004 can be viewed at:
+# for the years 2001-2004 can be viewed at:
 #
 #	ftp://ftp.cs.huji.ac.il/pub/tz/announcements/2000-2004.ps.gz
 
@@ -1246,7 +1246,7 @@ Rule	Japan	1950	1951	-	May	Sun>=1	2:00	1:00	D
 
 # From Hideyuki Suzuki (1998-11-09):
 # 'Tokyo' usually stands for the former location of Tokyo Astronomical
-# Observatory: 139° 44′ 40.90″ E (9h 18m 58.727s), 35° 39′ 16.0″ N.
+# Observatory: 139 degrees 44' 40.90" E (9h 18m 58.727s), 35 degrees 39' 16.0" N.
 # This data is from 'Rika Nenpyou (Chronological Scientific Tables) 1996'
 # edited by National Astronomical Observatory of Japan....
 # JST (Japan Standard Time) has been used since 1888-01-01 00:00 (JST).
@@ -1254,10 +1254,10 @@ Rule	Japan	1950	1951	-	May	Sun>=1	2:00	1:00	D
 
 # From Hideyuki Suzuki (1998-11-16):
 # The ordinance No. 51 (1886) established "standard time" in Japan,
-# which stands for the time on 135° E.
+# which stands for the time on 135 degrees E.
 # In the ordinance No. 167 (1895), "standard time" was renamed to "central
 # standard time".  And the same ordinance also established "western standard
-# time", which stands for the time on 120° E....  But "western standard
+# time", which stands for the time on 120 degrees E....  But "western standard
 # time" was abolished in the ordinance No. 529 (1937).  In the ordinance No.
 # 167, there is no mention regarding for what place western standard time is
 # standard....
@@ -1313,7 +1313,7 @@ Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
 # > submission of the summer at 60 minutes as of midnight on the last Thursday
 # > of the month of March of each year.
 #
-# So – this means the midnight between Thursday and Friday since 2002.
+# So - this means the midnight between Thursday and Friday since 2002.
 
 # From Arthur David Olson (2009-04-06):
 # We still have Jordan switching to DST on Thursdays in 2000 and 2001.
@@ -1392,9 +1392,9 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # Go with Shanks & Pottenger, who have them always using RussiaAsia rules.
 # Also go with the following claims of Shanks & Pottenger:
 #
-# – Kazakhstan did not observe DST in 1991.
-# – Qyzylorda switched from +5:00 to +6:00 on 1992-01-19 02:00.
-# – Oral switched from +5:00 to +4:00 in spring 1989.
+# - Kazakhstan did not observe DST in 1991.
+# - Qyzylorda switched from +5:00 to +6:00 on 1992-01-19 02:00.
+# - Oral switched from +5:00 to +4:00 in spring 1989.
 
 # From Kazakhstan Embassy's News Bulletin #11
 # <http://www.kazsociety.org.uk/news/2005/03/30.htm> (2005-03-21):
@@ -1709,7 +1709,7 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # (click the English flag for English)
 #
 # There it appears that flights between Choibalsan and Ulaanbatar arrive
-# about 1:35 – 1:50 hours later in local clock time, no matter the
+# about 1:35 - 1:50 hours later in local clock time, no matter the
 # direction, while Ulaanbaatar-Khvod takes 2 hours in the Eastern
 # direction and 3:35 back, which indicates that Ulaanbatar and Khvod are
 # in different time zones (like we know about), while Choibalsan and
@@ -1828,7 +1828,7 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 
 # From Alexander Krivenyshev (2008-08-28):
 # Pakistan government has decided to keep the watches one-hour advanced
-# for another 2 months – plan to return to Standard Time on October 31
+# for another 2 months - plan to return to Standard Time on October 31
 # instead of August 31.
 #
 # http://www.worldtimezone.com/dst_news/dst_news_pakistan02.html
@@ -1841,7 +1841,7 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 # official working."
 # http://www.thenews.com.pk/daily_detail.asp?id=171280
 #
-# recent news that instead of May 2009 – Pakistan plan to
+# recent news that instead of May 2009 - Pakistan plan to
 # introduce DST from April 15, 2009
 #
 # FYI: Associated Press Of Pakistan
@@ -1904,7 +1904,7 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 # >
 # > Then today, the president said that they might have to revert the
 # > decision if it is not supported by the parliament. So at the time
-# > being, it seems unclear if DST will be actually observed or not – but
+# > being, it seems unclear if DST will be actually observed or not - but
 # > April 1 could be a more likely date than April 15.
 # Now, it seems that the decision to not observe DST in final:
 #
@@ -1965,7 +1965,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 #
 # To summarize, the table should probably look something like that:
 #
-# Area \ when | 1918–1947 | 1948–1967 | 1967–1995 | 1996–
+# Area \ when | 1918-1947 | 1948-1967 | 1967-1995 | 1996-
 # ------------+-----------+-----------+-----------+-----------
 # Israel      | Zion      | Zion      | Zion      | Zion
 # West bank   | Zion      | Jordan    | Zion      | Jordan
@@ -1985,7 +1985,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # for parts of the West Bank as they transitioned from Israel's rules
 # to Palestine's rules.
 
-# From IINS News Service – Israel – 1998-03-23 10:38:07 Israel time,
+# From IINS News Service - Israel - 1998-03-23 10:38:07 Israel time,
 # forwarded by Ephraim Silverberg:
 #
 # Despite the fact that Israel changed over to daylight savings time
@@ -2009,7 +2009,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # A user from Gaza reported that Gaza made the change early because of
 # the Ramadan.  Next year Ramadan will be even earlier, so I think
 # there is a good chance next year's end date will be around two weeks
-# earlier – the same goes for Jordan.
+# earlier - the same goes for Jordan.
 
 # From Steffen Thorsen (2006-08-17):
 # I was informed by a user in Bethlehem that in Bethlehem it started the
@@ -2311,7 +2311,7 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 # midnight Friday (1830 GMT) 'in the light of the present power crisis'."
 #
 # From Dharmasiri Senanayake, Sri Lanka Media Minister (1996-10-24), as quoted
-# by Shamindra in Daily News – Hot News Section
+# by Shamindra in Daily News - Hot News Section
 # <news:54rka5$m5h@mtinsc01-mgt.ops.worldnet.att.net> (1996-10-26):
 # With effect from 12.30 a.m. on 26th October 1996
 # Sri Lanka will be six (06) hours ahead of GMT.
@@ -2348,7 +2348,7 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 # Within Sri Lanka I think LKT is well known among computer users and
 # adminsitrators.  In my opinion SLT may not be a good choice because the
 # nation's largest telcom / internet operator Sri Lanka Telcom is well
-# known by that abbreviation – simply as SLT (there IP domains are
+# known by that abbreviation - simply as SLT (there IP domains are
 # slt.lk and sltnet.lk).
 #
 # But if indeed our government has adopted SLT as standard abbreviation

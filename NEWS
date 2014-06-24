@@ -22,6 +22,7 @@ Unreleased, experimental changes
     Documentation and commentary now prefer UTF-8 to US-ASCII,
     allowing the use of proper accents in foreign words and names.
     Code and data have not changed because of this.
+    (Thanks to Garrett Wollman for helping to debug this.)
 
     Non-HTML documentation and commentary now use plain-text URLs instead of
     HTML insertions, and are more consistent about bracketing URLs when they
@@ -2488,3 +2489,7 @@ Earlier versions of the code and data were not announced on the tz
 list and are not summarized here.
 
 This file is in the public domain.
+
+Local Variables:
+coding: utf-8
+End:

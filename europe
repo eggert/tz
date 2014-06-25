@@ -491,7 +491,7 @@ Rule	C-Eur	1944	only	-	Oct	 2	 2:00s	0	-
 #
 # I found what is probably a typo of 2:00 which should perhaps be 2:00s
 # in the C-Eur rule from tz database version 2008d (this part was
-# corrected in version 2008d). The circumstancial evidence is simply the
+# corrected in version 2008d). The circumstantial evidence is simply the
 # tz database itself, as seen below:
 #
 # Zone Europe/Paris 0:09:21 - LMT 1891 Mar 15  0:01
@@ -596,10 +596,10 @@ Zone	EET		2:00	EU	EE%sT
 # From Markus Kuhn (1996-07-12):
 # The official German names ... are
 #
-#	Mitteleuropaeische Zeit (MEZ)         = UTC+01:00
-#	Mitteleuropaeische Sommerzeit (MESZ)  = UTC+02:00
+#	Mitteleuropäische Zeit (MEZ)         = UTC+01:00
+#	Mitteleuropäische Sommerzeit (MESZ)  = UTC+02:00
 #
-# as defined in the German Time Act (Gesetz ueber die Zeitbestimmung (ZeitG),
+# as defined in the German Time Act (Gesetz über die Zeitbestimmung (ZeitG),
 # 1978-07-25, Bundesgesetzblatt, Jahrgang 1978, Teil I, S. 1110-1111)....
 # I wrote ... to the German Federal Physical-Technical Institution
 #
@@ -715,7 +715,7 @@ Zone	Europe/Minsk	1:50:16 -	LMT	1880
 # From Paul Eggert (1997-07-02):
 # Entries from 1918 through 1991 are taken from:
 #	Annuaire de L'Observatoire Royal de Belgique,
-#	Avenue Circulaire, 3, B-1180 BRUXELLES, CLVIIe annee, 1991
+#	Avenue Circulaire, 3, B-1180 BRUXELLES, CLVIIe année, 1991
 #	(Imprimerie HAYEZ, s.p.r.l., Rue Fin, 4, 1080 BRUXELLES, MCMXC),
 #	pp 8-9.
 # LMT before 1892 was 0:17:30, according to the official journal of Belgium:

@@ -294,7 +294,7 @@ Zone Antarctica/Troll	0	-	zzz	2005 Feb 12
 #
 # From Paul Eggert (2001-05-04):
 # This seems to be hopelessly confusing, so I asked Lee Hotz about it
-# in person.  He said that some Antartic locations set their local
+# in person.  He said that some Antarctic locations set their local
 # time so that noon is the warmest part of the day, and that this
 # changes during the year and does not necessarily correspond to mean
 # solar noon.  So the Vostok time might have been whatever the clocks

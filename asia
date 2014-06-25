@@ -280,7 +280,7 @@ Zone	Asia/Phnom_Penh	6:59:40 -	LMT	1906 Jun  9
 # From Bob Devine (1988-01-28):
 # No they don't.  See TIME mag, 1986-02-17 p.52.  Even though
 # China is across 4 physical time zones, before Feb 1, 1986 only the
-# Peking (Bejing) time zone was recognized.  Since that date, China
+# Peking (Beijing) time zone was recognized.  Since that date, China
 # has two of 'em - Peking's and Urumqi (named after the capital of
 # the Xinjiang Uyghur Autonomous Region).  I don't know about DST for it.
 #
@@ -2336,7 +2336,7 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 # twice in 1996 and probably SL Government or its standardization
 # agencies never declared an abbreviation as a national standard.
 #
-# I recollect before the recent change the government annoucemments
+# I recollect before the recent change the government announcements
 # mentioning it as simply changing Sri Lanka Standard Time or Sri Lanka
 # Time and no mention was made about the abbreviation.
 #
@@ -2346,7 +2346,7 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 # item....
 #
 # Within Sri Lanka I think LKT is well known among computer users and
-# adminsitrators.  In my opinion SLT may not be a good choice because the
+# administrators.  In my opinion SLT may not be a good choice because the
 # nation's largest telcom / internet operator Sri Lanka Telcom is well
 # known by that abbreviation - simply as SLT (there IP domains are
 # slt.lk and sltnet.lk).
@@ -2464,7 +2464,7 @@ Rule	Syria	2007	only	-	Nov	 Fri>=1	0:00	0	-
 # shown above match up with midnight in Syria.
 
 # From Arthur David Olson (2008-03-18):
-# My buest guess at a Syrian rule is "the Friday nearest April 1";
+# My best guess at a Syrian rule is "the Friday nearest April 1";
 # coding that involves either using a "Mar Fri>=29" construct that old time zone
 # compilers can't handle  or having multiple Rules (a la Israel).
 # For now, use "Apr Fri>=1", and go with IATA on a uniform Sep 30 end.

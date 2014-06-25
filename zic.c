@@ -122,7 +122,7 @@ static void	adjleap(void);
 static void	associate(void);
 static void	dolink(const char * fromfield, const char * tofield);
 static char **	getfields(char * buf);
-static zic_t	gethms(const char * string, const char * errstrng,
+static zic_t	gethms(const char * string, const char * errstring,
 		       int signable);
 static void	infile(const char * filename);
 static void	inleap(char ** fields, int nfields);

@@ -171,7 +171,7 @@ Zone Antarctica/Mawson	0	-	zzz	1954 Feb 13
 #	fishing stations operated variously 1819/1931
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Indian/Kerguelen	0	-	zzz	1950	# Port-aux-Francais
+Zone Indian/Kerguelen	0	-	zzz	1950	# Port-aux-Français
 			5:00	-	TFT	# ISO code TF Time
 #
 # year-round base in the main continent

@@ -22,7 +22,7 @@ Unreleased, experimental changes
     Documentation and commentary now prefer UTF-8 to US-ASCII,
     allowing the use of proper accents in foreign words and names.
     Code and data have not changed because of this.
-    (Thanks to Garrett Wollman for helping to debug this.)
+    (Thanks to Garrett Wollman and Ian Abbott for helping to debug this.)
 
     Non-HTML documentation and commentary now use plain-text URLs instead of
     HTML insertions, and are more consistent about bracketing URLs when they
@@ -1735,7 +1735,7 @@ Release 2001b - 2001-04-05 16:44:38 -0400
 
   changes by Paul Eggert (modulo jnorgard's typo fix)
 
-  tz-art.htm has been htmlified.
+  tz-art.htm has been HTMLified.
 
 
 Release 2001a - 2001-03-13 12:57:44 -0500
@@ -1756,7 +1756,7 @@ Release 2000h - 2000-12-14 15:33:38 -0500
 
   one typo fix in the "art" file
 
-  With providence, this is the last update of the millenium.
+  With providence, this is the last update of the millennium.
 
 
 Release 2000g - 2000-10-10 11:35:22 -0400
@@ -2004,7 +2004,7 @@ Release code1997f-data1997g - 1997-07-19 13:15:02 -0400
 
   a small change to a function prototype;
 
-  "Music" has been renamed "Arts.htm", htmlified, and augmented to
+  "Music" has been renamed "Arts.htm", HTMLified, and augmented to
   include information on Around the World in Eighty Days.
 
 
@@ -2014,7 +2014,7 @@ Release code1997e-data1997f - 1997-05-03 18:52:34 -0400
 
   changes inspired by the item circulated on Slovenia
 
-  The description of Web resources has been htmlified for browsing
+  The description of Web resources has been HTMLified for browsing
   convenience.
 
   A new piece of tz-related music has been added to the "Music" file.

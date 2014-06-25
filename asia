@@ -661,7 +661,7 @@ Link	Asia/Nicosia	Europe/Nicosia
 # republic has changed its time zone back to that of Moscow.  As a result it
 # is now just four hours ahead of Greenwich Mean Time, rather than five hours
 # ahead.  The switch was decreed by the pro-Western president of Georgia,
-# Mikhail Saakashvili, who said the change was partly prompted by the process
+# Mikheil Saakashvili, who said the change was partly prompted by the process
 # of integration into Europe.
 
 # From Teimuraz Abashidze (2005-11-07):
@@ -706,7 +706,7 @@ Zone	Asia/Tbilisi	2:59:16 -	LMT	1880
 # Most likely our records are incomplete, but we have no better data.
 
 # From Manoel de Almeida e Silva, Deputy Spokesman for the UN Secretary-General
-# <http://www.hri.org/news/world/undh/last/00-08-16.undh.html>
+# http://www.hri.org/news/world/undh/2000/00-08-16.undh.html
 # (2000-08-16):
 # The Cabinet of the East Timor Transition Administration decided
 # today to advance East Timor's time by one hour.  The time change,
@@ -1708,12 +1708,12 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # http://www.eznis.com/Container.jsp?id=112
 # (click the English flag for English)
 #
-# There it appears that flights between Choibalsan and Ulaanbatar arrive
+# There it appears that flights between Choibalsan and Ulaanbaatar arrive
 # about 1:35 - 1:50 hours later in local clock time, no matter the
-# direction, while Ulaanbaatar-Khvod takes 2 hours in the Eastern
-# direction and 3:35 back, which indicates that Ulaanbatar and Khvod are
+# direction, while Ulaanbaatar-Khovd takes 2 hours in the Eastern
+# direction and 3:35 back, which indicates that Ulaanbaatar and Khovd are
 # in different time zones (like we know about), while Choibalsan and
-# Ulaanbatar are in the same time zone (correction needed).
+# Ulaanbaatar are in the same time zone (correction needed).
 
 # From Arthur David Olson (2008-05-19):
 # Assume that Choibalsan is indeed offset by 8:00.
@@ -1893,7 +1893,7 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 # Water and Power and the Pakistan Electric Power Company:
 # http://www.timeanddate.com/news/time/pakistan-ends-dst09.html
 
-# From Christoph Goehre (2009-10-01):
+# From Christoph Göhre (2009-10-01):
 # [T]he German Consulate General in Karachi reported me today that Pakistan
 # will go back to standard time on 1st of November.
 

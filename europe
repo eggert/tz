@@ -837,7 +837,7 @@ Zone	Europe/Prague	0:57:44 -	LMT	1850
 # http://www.retsinfo.dk/_GETDOCI_/ACCN/A19722110030-REGL
 #
 # This provoked a new law from 1974 to make possible summer time changes
-# in subsequenet decrees with the law
+# in subsequent decrees with the law
 # http://www.retsinfo.dk/_GETDOCI_/ACCN/A19740022330-REGL
 #
 # It seems however that no decree was set forward until 1980.  I have
@@ -896,7 +896,7 @@ Zone Atlantic/Faroe	-0:27:04 -	LMT	1908 Jan 11	# Torshavn
 # used C-Eur rules after 1980, but IATA SSIM (1991/1996) says they use EU
 # rules since at least 1991.  Assume EU rules since 1980.
 
-# From Gwillin Law (2001-06-06), citing
+# From Gwillim Law (2001-06-06), citing
 # <http://www.statkart.no/efs/efshefter/2001/efs5-2001.pdf> (2001-03-15),
 # and with translations corrected by Steffen Thorsen:
 #
@@ -1022,7 +1022,7 @@ Zone America/Thule	-4:35:08 -	LMT	1916 Jul 28 # Pituffik air base
 # The Estonian government has changed once again timezone politics.
 # Now we are using again EU rules.
 #
-# From Urmet Jaanes (2002-03-28):
+# From Urmet Jänes (2002-03-28):
 # The legislative reference is Government decree No. 84 on 2002-02-21.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1090,7 +1090,7 @@ Zone	Europe/Helsinki	1:39:52 -	LMT	1878 May 31
 			2:00	Finland	EE%sT	1983
 			2:00	EU	EE%sT
 
-# Aaland Is
+# Åland Is
 Link	Europe/Helsinki	Europe/Mariehamn
 
 
@@ -1193,7 +1193,7 @@ Zone	Europe/Paris	0:09:21 -	LMT	1891 Mar 15  0:01
 # Bundesanstalt contains DST information back to 1916.
 # [See tz-link.htm for the URL.]
 
-# From Joerg Schilling (2002-10-23):
+# From Jörg Schilling (2002-10-23):
 # In 1945, Berlin was switched to Moscow Summer time (GMT+4) by
 # <http://www.dhm.de/lemo/html/biografien/BersarinNikolai/>
 # General [Nikolai] Bersarin.
@@ -1840,7 +1840,7 @@ Zone	Europe/Oslo	0:43:00 -	LMT	1895 Jan  1
 # part of this law since 1925/1930. (From
 # <http://www.lovdata.no/all/nl-18940629-001.html>) I have not been
 # able to find if Jan Mayen used a different time zone (e.g. -0100)
-# before 1930. Jan Mayen has only been "inhabitated" since 1921 by
+# before 1930. Jan Mayen has only been "inhabited" since 1921 by
 # Norwegian meteorologists and maybe used the same time as Norway ever
 # since 1921.  Svalbard (Arctic/Longyearbyen) has been inhabited since
 # before 1895, and therefore probably changed the local time somewhere

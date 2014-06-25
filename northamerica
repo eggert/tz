@@ -2318,12 +2318,12 @@ Rule	Mexico	2001	only	-	Sep	lastSun	2:00	0	S
 Rule	Mexico	2002	max	-	Apr	Sun>=1	2:00	1:00	D
 Rule	Mexico	2002	max	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-# Quintana Roo
+# Quintana Roo; represented by Cancún
 Zone America/Cancun	-5:47:04 -	LMT	1922 Jan  1  0:12:56
 			-6:00	-	CST	1981 Dec 23
 			-5:00	Mexico	E%sT	1998 Aug  2  2:00
 			-6:00	Mexico	C%sT
-# Campeche, Yucatán
+# Campeche, Yucatán; represented by Mérida
 Zone America/Merida	-5:58:28 -	LMT	1922 Jan  1  0:01:32
 			-6:00	-	CST	1981 Dec 23
 			-5:00	-	EST	1982 Dec  2
@@ -2412,6 +2412,7 @@ Zone America/Hermosillo	-7:23:52 -	LMT	1921 Dec 31 23:36:08
 # From Arthur David Olson (2010-05-01):
 # Use "Bahia_Banderas" to keep the name to fourteen characters.
 
+# Mazatlán
 Zone America/Mazatlan	-7:05:40 -	LMT	1921 Dec 31 23:54:20
 			-7:00	-	MST	1927 Jun 10 23:00
 			-6:00	-	CST	1930 Nov 15
@@ -2423,6 +2424,7 @@ Zone America/Mazatlan	-7:05:40 -	LMT	1921 Dec 31 23:54:20
 			-8:00	-	PST	1970
 			-7:00	Mexico	M%sT
 
+# Bahía de Banderas
 Zone America/Bahia_Banderas	-7:01:00 -	LMT	1921 Dec 31 23:59:00
 			-7:00	-	MST	1927 Jun 10 23:00
 			-6:00	-	CST	1930 Nov 15
@@ -2650,7 +2652,7 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
 # http://www.prensalatina.com.mx/article.asp?ID=%7B4CC32C1B-A9F7-42FB-8A07-8631AFC923AF%7D&language=ES
 # http://actualidad.terra.es/sociedad/articulo/cuba_llama_ahorrar_energia_cambio_1957044.htm
 #
-# From Alex Kryvenishev (2007-10-25):
+# From Alex Krivenyshev (2007-10-25):
 # Here is also article from Granma (Cuba):
 #
 # Regirá el Horario Normal desde el próximo domingo 28 de octubre

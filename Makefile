@@ -280,13 +280,20 @@ SAFE_CHARSET2=	'ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\^_`'
 SAFE_CHARSET3=	'abcdefghijklmnopqrstuvwxyz{|}~'
 SAFE_CHARSET=	]$(SAFE_CHARSET1)$(SAFE_CHARSET2)$(SAFE_CHARSET3)-
 SAFE_CHAR=	'['$(SAFE_CHARSET)']'
+# NONSYM_CHAR is a regular expression that matches any character
+# except for a small number of symbols, where we prefer to stick with
+# ASCII renderings for the convenience of maintainers whose text editors
+# mishandle UTF-8 by default (e.g., XEmacs 21.4.22).
+NONSYM_CHAR=	'[^–—°′″≈≠≤≥±−×÷∞←→↔·•§¶«»‘’‚‛“”„‟‹›「」『』〝〞〟]'
 
 # SAFE_LINE matches a line of safe characters.
 # SAFE_SHARP_LINE is similar, except any character can follow '#';
 # this is so that comments can contain non-ASCII characters.
+# NONSYM_LINE matches a line of non-symbols.
 # VALID_LINE matches a line of any validly-encoded characters.
 SAFE_LINE=	'^'$(SAFE_CHAR)'*$$'
-SAFE_SHARP_LINE='^'$(SAFE_CHAR)'*('$$sharp'.*)?$$'
+SAFE_SHARP_LINE='^'$(SAFE_CHAR)'*('$$sharp$(NONSYM_CHAR)'*)?$$'
+NONSYM_LINE=	'^'$(NONSYM_CHAR)'*$$'
 VALID_LINE=	'^.*$$'
 
 # Flags to give 'tar' when making a distribution.
@@ -448,8 +455,11 @@ check:		check_character_set check_tables check_web
 check_character_set: $(ENCHILADA)
 		LC_ALL=en_US.utf8 && export LC_ALL && \
 		sharp='#' && \
-		! grep -Env $(SAFE_LINE) $(MANS) date.1 $(MISC) $(SOURCES) && \
-		! grep -Env $(SAFE_SHARP_LINE) Makefile $(DATA) && \
+		! grep -Env $(SAFE_LINE) $(MANS) date.1 \
+			$(MISC) $(SOURCES) $(WEB_PAGES) && \
+		! grep -Env $(SAFE_SHARP_LINE) $(DATA) && \
+		test $$(grep -Ecv $(SAFE_SHARP_LINE) Makefile) -eq 1 && \
+		! grep -Env $(NONSYM_LINE) README NEWS Theory $(MANS) date.1 && \
 		! grep -Env $(VALID_LINE) $(ENCHILADA)
 
 check_tables:	checktab.awk $(PRIMARY_YDATA)

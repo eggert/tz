@@ -487,7 +487,7 @@ Rule	C-Eur	1943	only	-	Oct	 4	 2:00s	0	-
 Rule	C-Eur	1944	1945	-	Apr	Mon>=1	 2:00s	1:00	S
 # Whitman gives 1944 Oct 7; go with Shanks & Pottenger.
 Rule	C-Eur	1944	only	-	Oct	 2	 2:00s	0	-
-# From Jesper Norgaard Welen (2008-07-13):
+# From Jesper Nørgaard Welen (2008-07-13):
 #
 # I found what is probably a typo of 2:00 which should perhaps be 2:00s
 # in the C-Eur rule from tz database version 2008d (this part was
@@ -827,7 +827,7 @@ Zone	Europe/Prague	0:57:44 -	LMT	1850
 
 # Denmark, Faroe Islands, and Greenland
 
-# From Jesper Norgaard Welen (2005-04-26):
+# From Jesper Nørgaard Welen (2005-04-26):
 # http://www.hum.aau.dk/~poe/tid/tine/DanskTid.htm says that the law
 # [introducing standard time] was in effect from 1894-01-01....
 # The page http://www.retsinfo.dk/_GETDOCI_/ACCN/A18930008330-REGL
@@ -852,7 +852,7 @@ Zone	Europe/Prague	0:57:44 -	LMT	1850
 # was suspended on that night):
 # http://www.retsinfo.dk/_GETDOCI_/ACCN/C19801120554-REGL
 
-# From Jesper Norgaard Welen (2005-06-11):
+# From Jesper Nørgaard Welen (2005-06-11):
 # The Herning Folkeblad (1980-09-26) reported that the night between
 # Saturday and Sunday the clock is set back from three to two.
 
@@ -1147,7 +1147,7 @@ Rule	France	1940	only	-	Feb	25	 2:00	1:00	S
 # The French rules for 1941-1944 were not used in Paris, but Shanks & Pottenger
 # write that they were used in Monaco and in many French locations.
 # Le Corre writes that the upper limit of the free zone was Arnéguy, Orthez,
-# Mont-de-Marsan, Bazas, Langon, Lamothe-Montravel, Maroeuil, La
+# Mont-de-Marsan, Bazas, Langon, Lamothe-Montravel, Marœuil, La
 # Rochefoucauld, Champagne-Mouton, La Roche-Posay, La Haye-Descartes,
 # Loches, Montrichard, Vierzon, Bourges, Moulins, Digoin,
 # Paray-le-Monial, Montceau-les-Mines, Chalon-sur-Saône, Arbois,
@@ -1674,7 +1674,7 @@ Zone	Europe/Malta	0:58:04 -	LMT	1893 Nov  2 0:00s # Valletta
 # In early 1992 there was large-scale interethnic violence in the area
 # and it's possible that some Russophones continued to observe Moscow time.
 # But [two people] separately reported via
-# Jesper Norgaard that as of 2001-01-24 Tiraspol was like Chisinau.
+# Jesper Nørgaard that as of 2001-01-24 Tiraspol was like Chisinau.
 # The Tiraspol entry has therefore been removed for now.
 #
 # From Alexander Krivenyshev (2011-10-17):

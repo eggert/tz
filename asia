@@ -317,7 +317,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=10	0:00	1:00	D
 # historic timezones from some Taiwan websites.  And yes, there are official
 # Chinese names for these locales (before 1949).
 #
-# From Jesper Norgaard Welen (2006-07-14):
+# From Jesper Nørgaard Welen (2006-07-14):
 # I have investigated the timezones around 1970 on the
 # http://www.astro.com/atlas site [with provinces and county
 # boundaries summarized below]....  A few other exceptions were two
@@ -866,7 +866,7 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # Several of my users have reported that Iran will not observe DST anymore:
 # http://www.irna.ir/en/news/view/line-17/0603193812164948.htm
 #
-# From Reuters (2007-09-16), with a heads-up from Jesper Norgaard Welen:
+# From Reuters (2007-09-16), with a heads-up from Jesper Nørgaard Welen:
 # ... the Guardian Council ... approved a law on Sunday to re-introduce
 # daylight saving time ...
 # http://uk.reuters.com/article/oilRpt/idUKBLA65048420070916
@@ -1783,7 +1783,7 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 # 00:01 was to make it clear which day it was on.
 
 # From Paul Eggert (2002-03-15):
-# Jesper Norgaard found this URL:
+# Jesper Nørgaard found this URL:
 # http://www.pak.gov.pk/public/news/app/app06_dec.htm
 # (dated 2001-12-06) which says that the Cabinet adopted a scheme "to
 # advance the clocks by one hour on the night between the first
@@ -2028,7 +2028,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # I guess it is likely that next year's date will be moved as well,
 # because of the Ramadan.
 
-# From Jesper Norgaard Welen (2007-09-18):
+# From Jesper Nørgaard Welen (2007-09-18):
 # According to Steffen Thorsen's web site the Gaza Strip and the rest of the
 # Palestinian territories left DST early on 13.th. of September at 2:00.
 
@@ -2246,7 +2246,7 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 # <http://www.manilastandardtoday.com/?page=politics02_april26_2006>.
 # For now, we'll ignore this, since it's not definite and we lack details.
 #
-# From Jesper Norgaard Welen (2006-04-26):
+# From Jesper Nørgaard Welen (2006-04-26):
 # ... claims that Philippines had DST last time in 1990:
 # http://story.philippinetimes.com/p.x/ct/9/id/145be20cc6b121c0/cid/3e5bbccc730d258c/
 # [a story dated 2006-04-25 by Cris Larano of Dow Jones Newswires,
@@ -2316,7 +2316,7 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 # With effect from 12.30 a.m. on 26th October 1996
 # Sri Lanka will be six (06) hours ahead of GMT.
 
-# From Jesper Norgaard Welen (2006-04-14), quoting Sri Lanka News Online
+# From Jesper Nørgaard Welen (2006-04-14), quoting Sri Lanka News Online
 # <http://news.sinhalaya.com/wmview.php?ArtID=11002> (2006-04-13):
 # 0030 hrs on April 15, 2006 (midnight of April 14, 2006 +30 minutes)
 # at present, become 2400 hours of April 14, 2006 (midnight of April 14, 2006).
@@ -2418,7 +2418,7 @@ Rule	Syria	2006	only	-	Sep	22	0:00	0	-
 # Today the AP reported "Syria will switch to summertime at midnight Thursday."
 # http://www.iht.com/articles/ap/2007/03/29/africa/ME-GEN-Syria-Time-Change.php
 Rule	Syria	2007	only	-	Mar	lastFri	0:00	1:00	S
-# From Jesper Norgard (2007-10-27):
+# From Jesper Nørgaard (2007-10-27):
 # The sister center ICARDA of my work CIMMYT is confirming that Syria DST will
 # not take place 1st November at 0:00 o'clock but 1st November at 24:00 or
 # rather Midnight between Thursday and Friday. This does make more sense than
@@ -2427,7 +2427,7 @@ Rule	Syria	2007	only	-	Mar	lastFri	0:00	1:00	S
 # it is implemented at midnight of the last workday before weekend...
 #
 # From Steffen Thorsen (2007-10-27):
-# Jesper Norgaard Welen wrote:
+# Jesper Nørgaard Welen wrote:
 #
 # > "Winter local time in Syria will be observed at midnight of Thursday 1
 # > November 2007, and the clock will be put back 1 hour."

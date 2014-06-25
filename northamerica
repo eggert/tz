@@ -2191,7 +2191,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # savings time so as to stay on the same time zone as the southern part of
 # Arizona year round.
 
-# From Jesper Norgaard, translating
+# From Jesper Nørgaard, translating
 # <http://www.reforma.com/nacional/articulo/064327/> (2001-01-17):
 # In Oaxaca, the 55.000 teachers from the Section 22 of the National
 # Syndicate of Education Workers, refuse to apply daylight saving each
@@ -2220,7 +2220,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # Official statute published by the Energy Department
 # <http://www.conae.gob.mx/ahorro/decretohorver2001.html#decre>
 # (2001-02-01) shows Baja and Chihauhua as still using US DST rules,
-# and Sonora with no DST.  This was reported by Jesper Norgaard (2001-02-03).
+# and Sonora with no DST.  This was reported by Jesper Nørgaard (2001-02-03).
 
 # From Paul Eggert (2001-03-03):
 #
@@ -2235,7 +2235,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 #
 # For now we'll assume that the Federal District will bow to federal rules.
 
-# From Jesper Norgaard (2001-04-01):
+# From Jesper Nørgaard (2001-04-01):
 # I found some references to the Mexican application of daylight
 # saving, which modifies what I had already sent you, stating earlier
 # that a number of northern Mexican states would go on daylight
@@ -2256,7 +2256,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # standard time. "This is so residents of the Federal District are not
 # subject to unexpected time changes," a statement from the court said.
 
-# From Jesper Norgaard Welen (2002-03-12):
+# From Jesper Nørgaard Welen (2002-03-12):
 # ... consulting my local grocery store(!) and my coworkers, they all insisted
 # that a new decision had been made to reinstate US style DST in Mexico....
 # http://www.conae.gob.mx/ahorro/horaver2001_m1_2002.html (2002-02-20)
@@ -2627,7 +2627,7 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
 # adjustment in Cuba.  We will stay in daylight saving time:
 # http://www.granma.cu/espanol/2005/noviembre/mier9/horario.html
 
-# From Jesper Norgaard Welen (2006-10-21):
+# From Jesper Nørgaard Welen (2006-10-21):
 # An article in GRANMA INTERNACIONAL claims that Cuba will end
 # the 3 years of permanent DST next weekend, see
 # http://www.granma.cu/ingles/2006/octubre/lun16/43horario.html
@@ -2684,7 +2684,7 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
 # One example:
 # http://www.radiohc.cu/espanol/noticias/mar07/11mar/hor.htm
 
-# From Jesper Norgaard Welen (2008-03-13):
+# From Jesper Nørgaard Welen (2008-03-13):
 # The Cuban time change has just been confirmed on the most authoritative
 # web site, the Granma.  Please check out
 # http://www.granma.cubaweb.cu/2008/03/13/nacional/artic10.html
@@ -2958,7 +2958,7 @@ Zone America/Port-au-Prince -4:49:20 -	LMT	1890
 # <http://www.latribuna.hn/99299.html> that Manuel Zelaya, the president
 # of Honduras, refused to back down on this.
 
-# From Jesper Norgaard Welen (2006-08-08):
+# From Jesper Nørgaard Welen (2006-08-08):
 # It seems that Honduras has returned from DST to standard time this Monday at
 # 00:00 hours (prolonging Sunday to 25 hours duration).
 # http://www.worldtimezone.com/dst_news/dst_news_honduras04.html
@@ -3039,19 +3039,19 @@ Zone America/Martinique	-4:04:20 -      LMT	1890		# Fort-de-France
 # changes in 2000.  Perhaps a note could be added to the northamerica file, to
 # the effect that we have indirect evidence that DST was observed in 2000.
 #
-# From Jesper Norgaard Welen (2005-11-02):
+# From Jesper Nørgaard Welen (2005-11-02):
 # Nicaragua left DST the 2005-10-02 at 00:00 (local time).
 # http://www.presidencia.gob.ni/presidencia/files_index/secretaria/comunicados/2005/septiembre/26septiembre-cambio-hora.htm
 # (2005-09-26)
 #
-# From Jesper Norgaard Welen (2006-05-05):
+# From Jesper Nørgaard Welen (2006-05-05):
 # http://www.elnuevodiario.com.ni/2006/05/01/nacionales/18410
 # (my informal translation)
 # By order of the president of the republic, Enrique Bolaños, Nicaragua
 # advanced by sixty minutes their official time, yesterday at 2 in the
 # morning, and will stay that way until 30th of September.
 #
-# From Jesper Norgaard Welen (2006-09-30):
+# From Jesper Nørgaard Welen (2006-09-30):
 # http://www.presidencia.gob.ni/buscador_gaceta/BD/DECRETOS/2006/D-063-2006P-PRN-Cambio-Hora.pdf
 # My informal translation runs:
 # The natural sun time is restored in all the national territory, in that the

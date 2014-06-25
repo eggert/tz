@@ -345,9 +345,7 @@ LEAP_DEPS=	leapseconds.awk leap-seconds.list
 DATA=		$(YDATA) $(NDATA) $(TABDATA) \
 			$(LEAP_DEPS) yearistype.sh
 AWK_SCRIPTS=	checktab.awk leapseconds.awk
-MISC=		usno1988 usno1989 usno1989a usno1995 usno1997 usno1998 \
-			$(AWK_SCRIPTS) workman.sh \
-			zoneinfo2tdf.pl
+MISC=		$(AWK_SCRIPTS) workman.sh zoneinfo2tdf.pl
 ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC)
 
 # And for the benefit of csh users on systems that assume the user

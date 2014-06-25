@@ -37,6 +37,10 @@ Unreleased, experimental changes
     Several typos have been corrected.  (Thanks to Tim Parenti for
     contributing some of these fixes.)
 
+    The files usno1988, usno1989, usno1989a, usno1995, usno1997, and usno1998
+    have been removed.  These obsolescent US Naval Observatory entries were no
+    longer helpful for maintenance.  (Thanks to Tim Parenti for the suggestion.)
+
 
 Release 2014e - 2014-06-12 21:53:52 -0700
 

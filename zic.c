@@ -622,11 +622,58 @@ _("%s: More than one -L option specified\n"),
 }
 
 static void
+componentcheck(char const *name, char const *component,
+	       char const *component_end)
+{
+	enum { component_len_max = 14 };
+	size_t component_len = component_end - component;
+	if (0 < component_len && component[0] == '-')
+		warning(_("file name '%s' component contains leading '-'"),
+			name);
+	if (0 < component_len && component_len <= 2
+	    && component[0] == '.' && component_end[-1] == '.')
+		warning(_("file name '%s' contains '%.*s' component"),
+			name, (int) component_len, component);
+	if (component_len_max < component_len)
+		warning(_("file name '%s' contains overlength component"
+			  " '%.*s...'"),
+			name, component_len_max, component);
+}
+
+static void
+namecheck(const char *name)
+{
+	register char const *cp;
+	static char const benign[] = ("-./_"
+				      "abcdefghijklmnopqrstuvwxyz"
+				      "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	register char const *component = name;
+	if (!noise)
+		return;
+	for (cp = name; *cp; cp++) {
+		unsigned char c = *cp;
+		if (!strchr(benign, c)) {
+			warning((isascii(c) && isprint(c)
+				 ? _("file name '%s' contains byte '%c'")
+				 : _("file name '%s' contains byte '\\%o'")),
+				name, c);
+			return;
+		}
+		if (c == '/') {
+			componentcheck(name, component, cp);
+			component = cp + 1;
+		}
+	}
+	componentcheck(name, component, cp);
+}
+
+static void
 dolink(const char *const fromfield, const char *const tofield)
 {
 	register char *	fromname;
 	register char *	toname;
 
+	namecheck(tofield);
 	if (fromfield[0] == '/')
 		fromname = ecpyalloc(fromfield);
 	else {
@@ -1495,6 +1542,7 @@ writezone(const char *const name, const char *const string, char version)
 	void *typesptr = ats + timecnt;
 	unsigned char *types = typesptr;
 
+	namecheck(name);
 	/*
 	** Sort.
 	*/

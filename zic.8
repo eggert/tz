@@ -112,6 +112,20 @@ before 1970 or after the start of 2038.
 .PP
 A time zone abbreviation has fewer than 3 characters.
 POSIX requires at least 3.
+.PP
+An output file name contains a byte that is not an ASCII letter, digit,
+.q "-" ,
+.q "." ,
+.q "/" ,
+or
+.q "_" ;
+or it contains a file name component that contains more than 14 bytes
+or that starts with
+.q "-"
+or is
+.q "."
+or
+.q ".." .
 .RE
 .TP
 .B \-s

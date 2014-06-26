@@ -405,7 +405,8 @@ in decreasing order of importance:
 		digits, as that might create an ambiguity with POSIX
 		TZ strings.  A file name component must not exceed 14
 		characters or start with '-'.  E.g., prefer 'Brunei'
-		to 'Bandar_Seri_Begawan'.
+		to 'Bandar_Seri_Begawan'.  Exceptions: see the discussion
+		of the 'etcetera' file below.
 	A name must not be empty, or contain '//', or start or end with '/'.
 	Do not use names that differ only in case.  Although the reference
 		implementation is case-sensitive, some other implementations
@@ -464,10 +465,20 @@ longitude, this relationship is not exact.
 Older versions of this package used a different naming scheme,
 and these older names are still supported.
 See the file 'backward' for most of these older names
-(e.g. 'US/Eastern' instead of 'America/New_York');
-excluding 'backward' should not affect the other data.
+(e.g., 'US/Eastern' instead of 'America/New_York').
 The other old-fashioned names still supported are
 'WET', 'CET', 'MET', and 'EET' (see the file 'europe').
+
+Older versions of this package defined names that were
+incompatible with POSIX.  These older names are still supported,
+even though they do not conform to first rule of location names.
+These incompatible names are mostly defined in the file 'etcetera'.
+Also, the file 'backward' defines the incompatible names 'GMT0',
+'GMT-0', 'GMT+0', and 'Canada/East-Saskatchewan'.
+
+Excluding 'backward' should not affect the other data.  If
+'backward' is excluded, excluding 'etcetera' should not affect the
+remaining data.
 
 
 ----- Time zone abbreviations -----

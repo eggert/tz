@@ -630,10 +630,6 @@ componentcheck(char const *name, char const *component,
 	if (0 < component_len && component[0] == '-')
 		warning(_("file name '%s' component contains leading '-'"),
 			name);
-	if (0 < component_len && component_len <= 2
-	    && component[0] == '.' && component_end[-1] == '.')
-		warning(_("file name '%s' contains '%.*s' component"),
-			name, (int) component_len, component);
 	if (component_len_max < component_len)
 		warning(_("file name '%s' contains overlength component"
 			  " '%.*s...'"),
@@ -644,7 +640,7 @@ static void
 namecheck(const char *name)
 {
 	register char const *cp;
-	static char const benign[] = ("-./_"
+	static char const benign[] = ("-/_"
 				      "abcdefghijklmnopqrstuvwxyz"
 				      "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 	register char const *component = name;

@@ -2838,7 +2838,3 @@ _("%s: Can't create directory %s: %s\n"),
 	free(name);
 	return 0;
 }
-
-/*
-** UNIX was a registered trademark of The Open Group in 2003.
-*/

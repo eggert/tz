@@ -403,8 +403,4 @@ char *ctime_r(time_t const *, char *);
 #define SECSPERREPEAT_BITS	34	/* ceil(log2(SECSPERREPEAT)) */
 #endif /* !defined SECSPERREPEAT_BITS */
 
-/*
-** UNIX was a registered trademark of The Open Group in 2003.
-*/
-
 #endif /* !defined PRIVATE_H */

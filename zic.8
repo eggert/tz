@@ -113,7 +113,7 @@ before 1970 or after the start of 2038.
 A time zone abbreviation has fewer than 3 characters.
 POSIX requires at least 3.
 .PP
-An output file name contains a byte that is not an ASCII letter, digit,
+An output file name contains a byte that is not an ASCII letter,
 .q "-" ,
 .q "/" ,
 or
@@ -135,8 +135,24 @@ rather than
 .B yearistype
 when checking year types (see below).
 .PP
+Input files should be text files, that is, they should be a series of
+zero or more lines, each ending in a newline byte and containing at
+most 511 bytes, and without any NUL bytes.  The input text's encoding
+is typically UTF-8 or ASCII; it should have a unibyte representation
+for the POSIX Portable Character Set (PPCS)
+<http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap06.html>
+and the encoding's non-unibyte characters should consist entirely of
+non-PPCS bytes.  Non-PPCS characters typically occur only in comments:
+although output file names and time zone abbreviations can contain
+nearly any character, other software will work better if these are
+limited to the restricted syntax described under the
+.B \-v
+option.
+.PP
 Input lines are made up of fields.
 Fields are separated from one another by one or more white space characters.
+The white space characters are space, form feed, carriage return, newline,
+tab, and vertical tab.
 Leading and trailing white space on input lines is ignored.
 An unquoted sharp character (#) in the input introduces a comment which extends
 to the end of the line the sharp character appears on.

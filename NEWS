@@ -28,8 +28,9 @@ Unreleased, experimental changes
 
     Documentation and commentary now prefer UTF-8 to US-ASCII,
     allowing the use of proper accents in foreign words and names.
-    Code and data have not changed because of this.
-    (Thanks to Garrett Wollman and Ian Abbott for helping to debug this.)
+    Code and data have not changed because of this.  (Thanks to
+    Garrett Wollman, Ian Abbott, and Guy Harris for helping to debug
+    this.)
 
     Non-HTML documentation and commentary now use plain-text URLs instead of
     HTML insertions, and are more consistent about bracketing URLs when they

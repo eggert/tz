@@ -453,7 +453,7 @@ check:		check_character_set check_tables check_web
 check_character_set: $(ENCHILADA)
 		LC_ALL=en_US.utf8 && export LC_ALL && \
 		sharp='#' && \
-		! grep -Env $(SAFE_LINE) $(MANS) date.1 \
+		! grep -Env $(SAFE_LINE) $(MANS) date.1 $(MANTXTS) \
 			$(MISC) $(SOURCES) $(WEB_PAGES) && \
 		! grep -Env $(SAFE_SHARP_LINE) $(DATA) && \
 		test $$(grep -Ecv $(SAFE_SHARP_LINE) Makefile) -eq 1 && \
@@ -494,7 +494,7 @@ zdump.8.txt:	zdump.8
 zic.8.txt:	zic.8
 
 $(MANTXTS):	workman.sh
-		LC_ALL=en_US.utf8 sh workman.sh `expr $@ : '\(.*\)\.txt$$'` >$@
+		LC_ALL=C sh workman.sh `expr $@ : '\(.*\)\.txt$$'` >$@
 
 # Set the time stamps to those of the git repository, if available,
 # and if the files have not changed since then.

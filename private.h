@@ -372,7 +372,7 @@ static time_t const time_t_max =
 #endif /* !HAVE_GETTEXT */
 #endif /* !defined _ */
 
-#if !defined TZ_DOMAIN && defined TZ_DOMAINDIR
+#if !defined TZ_DOMAIN && defined HAVE_GETTEXT
 # define TZ_DOMAIN "tz"
 #endif
 

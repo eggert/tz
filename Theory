@@ -406,7 +406,7 @@ in decreasing order of importance:
 		TZ strings.  A file name component must not exceed 14
 		characters or start with '-'.  E.g., prefer 'Brunei'
 		to 'Bandar_Seri_Begawan'.  Exceptions: see the discussion
-		of the 'etcetera' file below.
+		of legacy names below.
 	A name must not be empty, or contain '//', or start or end with '/'.
 	Do not use names that differ only in case.  Although the reference
 		implementation is case-sensitive, some other implementations
@@ -469,12 +469,13 @@ See the file 'backward' for most of these older names
 The other old-fashioned names still supported are
 'WET', 'CET', 'MET', and 'EET' (see the file 'europe').
 
-Older versions of this package defined names that were
-incompatible with POSIX.  These older names are still supported,
-even though they do not conform to first rule of location names.
-These incompatible names are mostly defined in the file 'etcetera'.
-Also, the file 'backward' defines the incompatible names 'GMT0',
-'GMT-0', 'GMT+0', and 'Canada/East-Saskatchewan'.
+Older versions of this package defined legacy names that are
+incompatible with the first rule of location names, but which are
+still supported.  These legacy names are mostly defined in the file
+'etcetera'.  Also, the file 'backward' defines the legacy names
+'GMT0', 'GMT-0', 'GMT+0' and 'Canada/East-Saskatchewan', and the file
+'northamerica' defines the legacy names 'EST5EDT', 'CST6CDT',
+'MST7MDT', and 'PST8PDT'.
 
 Excluding 'backward' should not affect the other data.  If
 'backward' is excluded, excluding 'etcetera' should not affect the

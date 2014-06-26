@@ -681,19 +681,16 @@ Zone America/Boise	-7:44:49 -	LMT	1883 Nov 18 12:15:11
 # From Paul Eggert (2005-08-16):
 # http://www.mccsc.edu/time.html says that Indiana will use DST starting 2006.
 
-# From Nathan Stratton Treadway (2006-03-30):
-# http://www.dot.gov/affairs/dot0406.htm [3705 B]
-# From Deborah Goldsmith (2006-01-18):
-# http://dmses.dot.gov/docimages/pdf95/382329_web.pdf [2.9 MB]
-# From Paul Eggert (2006-01-20):
-# It says "DOT is relocating the time zone boundary in Indiana to move Starke,
+# From Paul Eggert (2014-06-26):
+# https://www.federalregister.gov/articles/2006/01/20/06-563/standard-time-zone-boundary-in-the-state-of-indiana
+# says "DOT is relocating the time zone boundary in Indiana to move Starke,
 # Pulaski, Knox, Daviess, Martin, Pike, Dubois, and Perry Counties from the
 # Eastern Time Zone to the Central Time Zone.... The effective date of
-# this rule is 2:OO a.m. EST Sunday, April 2, 2006, which is the
+# this rule is 2 a.m. EST Sunday, April 2, 2006, which is the
 # changeover date from standard time to Daylight Saving Time."
-# Strictly speaking, this means the affected counties will change their
-# clocks twice that night, but this obviously is in error.  The intent
-# is that 01:59:59 EST be followed by 02:00:00 CDT.
+# Strictly speaking, this meant the affected counties changed their
+# clocks twice that night, but this obviously was in error.  The intent
+# was that 01:59:59 EST be followed by 02:00:00 CDT.
 
 # From Gwillim Law (2007-02-10):
 # The Associated Press has been reporting that Pulaski County, Indiana is
@@ -1527,7 +1524,7 @@ Zone America/Montreal	-4:54:16 -	LMT	1884
 # 			St. Théophile	Buckingham
 # Ontario		Used generally in the cities and towns along
 # 			the southerly part of the province. Not
-# 			used in the northwesterlhy part.
+# 			used in the northwesterly part.
 # Manitoba		Not used.
 # Saskatchewan		In Regina only.
 # Alberta		Not used.

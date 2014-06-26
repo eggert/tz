@@ -160,7 +160,7 @@ Zone	Africa/Bangui	1:14:20	-	LMT	1912
 
 # Chad
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Africa/Ndjamena	1:00:12 -	LMT	1912
+Zone	Africa/Ndjamena	1:00:12 -	LMT	1912 # N'Djamena
 			1:00	-	WAT	1979 Oct 14
 			1:00	1:00	WAST	1980 Mar  8
 			1:00	-	WAT

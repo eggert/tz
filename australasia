@@ -425,7 +425,7 @@ Rule	NC	1996	only	-	Dec	 1	2:00s	1:00	S
 # Shanks & Pottenger say the following was at 2:00; go with IATA.
 Rule	NC	1997	only	-	Mar	 2	2:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Pacific/Noumea	11:05:48 -	LMT	1912 Jan 13
+Zone	Pacific/Noumea	11:05:48 -	LMT	1912 Jan 13 # Nouméa
 			11:00	NC	NC%sT
 
 
@@ -559,22 +559,12 @@ Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1879 Jul  5
 # backwards from 1:00am to 12:00am"
 
 # From Laupue Raymond Hughes (2011-03-07):
-# I believe this will be posted shortly on the website
-# www.mcil.gov.ws
+# [http://www.mcil.gov.ws/ftcd/daylight_saving_2011.pdf]
 #
-# PUBLIC NOTICE ON DAYLIGHT SAVING TIME
-#
-# Pursuant to the Daylight Saving Act 2009 and Cabinets decision,
-# businesses and the general public are hereby advised that daylight
-# saving time is on the first Saturday of April 2011 (02/04/11).
-#
-# The public is therefore advised that when the standard time strikes
-# the hour of four oclock (4.00am or 0400 Hours) on the 2nd April 2011,
-# then all instruments used to measure standard time are to be
-# adjusted/changed to three oclock (3:00am or 0300Hrs).
-#
-# Margaret Fruean ACTING CHIEF EXECUTIVE OFFICER MINISTRY OF COMMERCE,
-# INDUSTRY AND LABOUR 28th February 2011
+# ... when the standard time strikes the hour of four o'clock (4.00am
+# or 0400 Hours) on the 2nd April 2011, then all instruments used to
+# measure standard time are to be adjusted/changed to three o'clock
+# (3:00am or 0300Hrs).
 
 # From David Zülke (2011-05-09):
 # Subject: Samoa to move timezone from east to west of international date line

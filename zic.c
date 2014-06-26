@@ -2413,7 +2413,7 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 		if (lastat->at < rpytime(&xr, max_year - 1)) {
 			/*
 			** Create new type code for the redundant entry,
-			** to prevent it being optimised away.
+			** to prevent it being optimized away.
 			*/
 			if (typecnt >= TZ_MAX_TYPES) {
 				error(_("too many local time types"));

@@ -12,6 +12,10 @@ Unreleased, experimental changes
     'localtime', 'mktime', etc. now use much less stack space if ALL_STATE
     is defined.  (Thanks to Elliott Hughes for reporting the problem.)
 
+    'zic' no longer mishandles input when ignoring case in locales that
+    are not compatible with English, e.g., unibyte Turkish locales when
+    compiled with HAVE_GETTEXT.
+
     Error diagnostics of 'zic' and 'yearistype' have been reworded so that
     they no longer use ASCII '-' as if it were a dash.
 

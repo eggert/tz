@@ -31,19 +31,6 @@ typedef int_fast64_t	zic_t;
 #define MKDIR_UMASK 0755
 #endif
 
-/*
-** On some ancient hosts, predicates like 'isspace(C)' are defined
-** only if isascii(C) || C == EOF. Modern hosts obey the C Standard,
-** which says they are defined only if C == ((unsigned char) C) || C == EOF.
-** Neither the C Standard nor Posix require that 'isascii' exist.
-** For portability, we check both ancient and modern requirements.
-** If isascii is not defined, the isascii check succeeds trivially.
-*/
-#include "ctype.h"
-#ifndef isascii
-#define isascii(x) 1
-#endif
-
 #define end(cp)	(strchr((cp), '\0'))
 
 struct rule {
@@ -132,7 +119,8 @@ static int	inzcont(char ** fields, int nfields);
 static int	inzone(char ** fields, int nfields);
 static int	inzsub(char ** fields, int nfields, int iscont);
 static int	itsdir(const char * name);
-static int	lowerit(int c);
+static int	is_alpha(char a);
+static char	lowerit(char);
 static int	mkdirs(char * filename);
 static void	newabbr(const char * abbr);
 static zic_t	oadd(zic_t t1, zic_t t2);
@@ -640,16 +628,25 @@ static void
 namecheck(const char *name)
 {
 	register char const *cp;
-	static char const benign[] = ("-/_"
-				      "abcdefghijklmnopqrstuvwxyz"
-				      "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+	/* Benign characters in a portable file name.  */
+	static char const benign[] =
+	  "-/_"
+	  "abcdefghijklmnopqrstuvwxyz"
+	  "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+	/* Non-control chars in the POSIX portable character set,
+	   excluding the benign characters.  */
+	static char const printable_and_not_benign[] =
+	  " !\"#$%&'()*+,.0123456789:;<=>?@[\\]^`{|}~";
+
 	register char const *component = name;
 	if (!noise)
 		return;
 	for (cp = name; *cp; cp++) {
 		unsigned char c = *cp;
 		if (!strchr(benign, c)) {
-			warning((isascii(c) && isprint(c)
+			warning((strchr(printable_and_not_benign, c)
 				 ? _("file name '%s' contains byte '%c'")
 				 : _("file name '%s' contains byte '\\%o'")),
 				name, c);
@@ -1862,10 +1859,8 @@ doabbr(char *const abbr, const char *const format, const char *const letters,
 	}
 	if (!doquotes)
 		return;
-	for (cp = abbr; *cp != '\0'; ++cp)
-		if (strchr("ABCDEFGHIJKLMNOPQRSTUVWXYZ", *cp) == NULL &&
-			strchr("abcdefghijklmnopqrstuvwxyz", *cp) == NULL)
-				break;
+	for (cp = abbr; is_alpha(*cp); cp++)
+		continue;
 	len = strlen(abbr);
 	if (len > 0 && *cp == '\0')
 		return;
@@ -2582,11 +2577,54 @@ yearistype(const int year, const char *const type)
 		exit(EXIT_FAILURE);
 }
 
+/* Is A a space character in the C locale?  */
 static int
-lowerit(int a)
+is_space(char a)
 {
-	a = (unsigned char) a;
-	return (isascii(a) && isupper(a)) ? tolower(a) : a;
+	switch (a) {
+	  default:
+		return 0;
+	  case ' ': case '\f': case '\n': case '\r': case '\t': case '\v':
+	  	return 1;
+	}
+}
+
+/* Is A an alphabetic character in the C locale?  */
+static int
+is_alpha(char a)
+{
+	switch (a) {
+	  default:
+		return 0;
+	  case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G':
+	  case 'H': case 'I': case 'J': case 'K': case 'L': case 'M': case 'N':
+	  case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T': case 'U':
+	  case 'V': case 'W': case 'X': case 'Y': case 'Z':
+	  case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g':
+	  case 'h': case 'i': case 'j': case 'k': case 'l': case 'm': case 'n':
+	  case 'o': case 'p': case 'q': case 'r': case 's': case 't': case 'u':
+	  case 'v': case 'w': case 'x': case 'y': case 'z':
+	  	return 1;
+	}
+}
+
+/* If A is an uppercase character in the C locale, return its lowercase
+   counterpart.  Otherwise, return A.  */
+static char
+lowerit(char a)
+{
+	switch (a) {
+	  default: return a;
+	  case 'A': return 'a'; case 'B': return 'b'; case 'C': return 'c';
+	  case 'D': return 'd'; case 'E': return 'e'; case 'F': return 'f';
+	  case 'G': return 'g'; case 'H': return 'h'; case 'I': return 'i';
+	  case 'J': return 'j'; case 'K': return 'k'; case 'L': return 'l';
+	  case 'M': return 'm'; case 'N': return 'n'; case 'O': return 'o';
+	  case 'P': return 'p'; case 'Q': return 'q'; case 'R': return 'r';
+	  case 'S': return 's'; case 'T': return 't'; case 'U': return 'u';
+	  case 'V': return 'v'; case 'W': return 'w'; case 'X': return 'x';
+	  case 'Y': return 'y'; case 'Z': return 'z';
+	}
 }
 
 /* case-insensitive equality */
@@ -2653,8 +2691,7 @@ getfields(register char *cp)
 	array = emalloc(size_product(strlen(cp) + 1, sizeof *array));
 	nsubs = 0;
 	for ( ; ; ) {
-		while (isascii((unsigned char) *cp) &&
-			isspace((unsigned char) *cp))
+		while (is_space(*cp))
 				++cp;
 		if (*cp == '\0' || *cp == '#')
 			break;
@@ -2671,9 +2708,8 @@ getfields(register char *cp)
 						));
 					exit(1);
 				}
-		} while (*cp != '\0' && *cp != '#' &&
-			(!isascii(*cp) || !isspace((unsigned char) *cp)));
-		if (isascii(*cp) && isspace((unsigned char) *cp))
+		} while (*cp && *cp != '#' && !is_space(*cp));
+		if (is_space(*cp))
 			++cp;
 		*dp = '\0';
 	}
@@ -2806,8 +2842,7 @@ newabbr(const char *const string)
 		*/
 		cp = string;
 		mp = NULL;
-		while (isascii((unsigned char) *cp) &&
-			isalpha((unsigned char) *cp))
+		while (is_alpha(*cp))
 				++cp;
 		if (cp - string == 0)
 mp = _("time zone abbreviation lacks alphabetic at start");
@@ -2817,8 +2852,7 @@ mp = _("time zone abbreviation has fewer than 3 alphabetics");
 mp = _("time zone abbreviation has too many alphabetics");
 		if (mp == NULL && (*cp == '+' || *cp == '-')) {
 			++cp;
-			if (isascii((unsigned char) *cp) &&
-				isdigit((unsigned char) *cp))
+			if (is_digit(*cp))
 					if (*cp++ == '1' &&
 						*cp >= '0' && *cp <= '4')
 							++cp;
@@ -2852,8 +2886,7 @@ mkdirs(char *argname)
 		/*
 		** DOS drive specifier?
 		*/
-		if (isalpha((unsigned char) name[0]) &&
-			name[1] == ':' && name[2] == '\0') {
+		if (is_alpha(name[0]) && name[1] == ':' && name[2] == '\0') {
 				*cp = '/';
 				continue;
 		}

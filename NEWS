@@ -17,6 +17,7 @@ Unreleased, experimental changes
 
     'zic -v' now warns about output file names that do not follow POSIX rules,
     or that contain a digit or a file name component of '.' or '..'.
+    (Thanks to Arthur David Olson for starting the ball rolling on this.)
 
     Some lint has been removed when using GCC_DEBUG_FLAGS with GCC 4.9.0.
 

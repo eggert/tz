@@ -23,7 +23,7 @@ typedef int_fast64_t	zic_t;
 #endif /* !defined ZIC_MAX_ABBR_LEN_WO_WARN */
 
 #if HAVE_SYS_STAT_H
-#include "sys/stat.h"
+#include <sys/stat.h>
 #endif
 #ifdef S_IRUSR
 #define MKDIR_UMASK (S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH)
@@ -665,6 +665,7 @@ dolink(const char *const fromfield, const char *const tofield)
 {
 	register char *	fromname;
 	register char *	toname;
+	register int fromisdir;
 
 	namecheck(tofield);
 	if (fromfield[0] == '/')
@@ -685,10 +686,16 @@ dolink(const char *const fromfield, const char *const tofield)
 	** We get to be careful here since
 	** there's a fair chance of root running us.
 	*/
-	if (!itsdir(toname))
+	fromisdir = itsdir(fromname);
+	if (fromisdir) {
+		int err = fromisdir < 0 ? errno : EPERM;
+		fprintf(stderr, _("%s: link from %s failed: %s"),
+			progname, fromname, strerror(err));
+		exit(EXIT_FAILURE);
+	}
+	if (itsdir(toname) <= 0)
 		(void) remove(toname);
-	if (link(fromname, toname) != 0
-	    && access(fromname, F_OK) == 0 && !itsdir(fromname)) {
+	if (link(fromname, toname) != 0) {
 		int	result;
 
 		if (mkdirs(toname) != 0)
@@ -793,17 +800,24 @@ static const zic_t max_time = -1 - ((zic_t) -1 << (TIME_T_BITS_IN_FILE - 1));
 
 static const zic_t big_bang_time = BIG_BANG;
 
+/* Return 1 if NAME is a directory, 0 if it's something else, -1 if trouble.  */
 static int
 itsdir(const char *const name)
 {
-	register char *	myname;
-	register int	accres;
-
-	myname = ecpyalloc(name);
-	myname = ecatalloc(myname, "/.");
-	accres = access(myname, F_OK);
-	free(myname);
-	return accres == 0;
+	struct stat st;
+	int res = stat(name, &st);
+	if (res != 0)
+		return res;
+#ifdef S_ISDIR
+	return S_ISDIR(st.st_mode) != 0;
+#else
+	{
+		char *nameslashdot = ecatalloc(ecpyalloc(name), "/.");
+		res = stat(nameslashdot, &st);
+		free(nameslashdot);
+		return res == 0;
+	}
+#endif
 }
 
 /*
@@ -1620,7 +1634,7 @@ writezone(const char *const name, const char *const string, char version)
 	/*
 	** Remove old file, if any, to snap links.
 	*/
-	if (!itsdir(fullname) && remove(fullname) != 0 && errno != ENOENT) {
+	if (itsdir(fullname) <= 0 && remove(fullname) != 0 && errno != ENOENT) {
 		const char *e = strerror(errno);
 
 		(void) fprintf(stderr, _("%s: Can't remove %s: %s\n"),
@@ -2891,23 +2905,20 @@ mkdirs(char *argname)
 				continue;
 		}
 #endif
-		if (!itsdir(name)) {
-			/*
-			** It doesn't seem to exist, so we try to create it.
-			** Creation may fail because of the directory being
-			** created by some other multiprocessor, so we get
-			** to do extra checking.
-			*/
-			if (mkdir(name, MKDIR_UMASK) != 0) {
-				const char *e = strerror(errno);
-
-				if (errno != EEXIST || !itsdir(name)) {
-					(void) fprintf(stderr,
-_("%s: Can't create directory %s: %s\n"),
-						progname, name, e);
-					free(name);
-					return -1;
-				}
+		/*
+		** Try to create it.  It's OK if creation fails because
+		** the directory already exists, perhaps because some
+		** other process just created it.
+		*/
+		if (mkdir(name, MKDIR_UMASK) != 0) {
+			int err = errno;
+			if (itsdir(name) <= 0) {
+				(void) fprintf(stderr,
+					       _("%s: Can't create directory"
+						 " %s: %s\n"),
+					       progname, name, strerror(err));
+				free(name);
+				return -1;
 			}
 		}
 		*cp = '/';

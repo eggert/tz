@@ -281,7 +281,7 @@ Zone	Asia/Phnom_Penh	6:59:40 -	LMT	1906 Jun  9
 # No they don't.  See TIME mag, 1986-02-17 p.52.  Even though
 # China is across 4 physical time zones, before Feb 1, 1986 only the
 # Peking (Beijing) time zone was recognized.  Since that date, China
-# has two of 'em - Peking's and Urumqi (named after the capital of
+# has two of 'em - Peking's and Ürümqi (named after the capital of
 # the Xinjiang Uyghur Autonomous Region).  I don't know about DST for it.
 #
 # . . .I just deleted the DST table and this editor makes it too
@@ -342,7 +342,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=10	0:00	1:00	D
 # separately: daylight savings (which, you're correct, wasn't
 # implemented until the 1980s) and the unified time zone centered near
 # Beijing (which was implemented in 1949). Briefly, there was also a
-# "Lhasa Time" in Tibet and "Urumqi Time" in Xinjiang. The first was
+# "Lhasa Time" in Tibet and "Ürümqi Time" in Xinjiang. The first was
 # ceased, and the second eventually recognized (again, in the 1980s).
 #
 # From Paul Eggert (2008-06-30):
@@ -383,7 +383,7 @@ Zone	Asia/Chongqing	7:06:20	-	LMT	1928 # or Chungking
 # Wusu, Qiemo, Xinyan, Wulanwusu, Jinghe, Yumin, Tacheng, Tuoli, Emin,
 # Shihezi, Changji, Yanqi, Heshuo, Tuokexun, Tulufan, Shanshan, Hami,
 # Fukang, Kuitun, Kumukuli, Miquan, Qitai, and Turfan.
-Zone	Asia/Urumqi	5:50:20	-	LMT	1928 # Ürümqi or Urumchi
+Zone	Asia/Urumqi	5:50:20	-	LMT	1928 # Ürümqi or Ürümchi
 			6:00	-	URUT	1980 May # Ürümqi Time
 			8:00	PRC	C%sT
 # Kunlun Time
@@ -403,9 +403,9 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928 # Ürümqi or Urumchi
 # population of Xinjiang, typically use "Xinjiang time" which is two
 # hours behind Beijing time, or UTC +0600. The government of the Xinjiang
 # Uyghur Autonomous Region, (XAUR, or just Xinjiang for short) as well as
-# local governments such as the Urumqi city government use both times in
+# local governments such as the Ürümqi city government use both times in
 # publications, referring to what is popularly called Xinjiang time as
-# "Urumqi time." When Uyghurs make an appointment in the Uyghur language
+# "Ürümqi time." When Uyghurs make an appointment in the Uyghur language
 # they almost invariably use Xinjiang time.
 #
 # (Their ethnic Han compatriots would typically have no clue of its
@@ -418,17 +418,17 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928 # Ürümqi or Urumchi
 # time. Some areas remained on standard Xinjiang time or Beijing time and
 # others moving their clocks ahead.)
 #
-# ...an example of an official website using of Urumqi time.
+# ...an example of an official website using of Ürümqi time.
 #
 # The first few lines of the Google translation of
 # http://www.fjysgl.gov.cn/show.aspx?id=2379&cid=39
 # (retrieved 2009-10-13)
-# > Urumqi fire seven people are missing the alleged losses of at least
+# > Ürümqi fire seven people are missing the alleged losses of at least
 # > 500 million yuan
 # >
-# > (Reporter Dong Liu) the day before 20:20 or so (Urumqi Time 18:20),
-# > Urumqi City Department of International Plaza Luther Qiantang River
-# > burst fire. As of yesterday, 18:30, Urumqi City Fire officers and men
+# > (Reporter Dong Liu) the day before 20:20 or so (Ürümqi Time 18:20),
+# > Ürümqi City Department of International Plaza Luther Qiantang River
+# > burst fire. As of yesterday, 18:30, Ürümqi City Fire officers and men
 # > have worked continuously for 22 hours...
 
 # From Luther Ma (2009-11-19):
@@ -440,7 +440,7 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928 # Ürümqi or Urumchi
 # 3. Urumqi...
 # 4. Kashgar...
 # ...
-# 5. It seems that Uyghurs in Urumqi has been using Xinjiang since at least the
+# 5. It seems that Uyghurs in Ürümqi has been using Xinjiang since at least the
 # 1960's. I know of one Han, now over 50, who grew up in the surrounding
 # countryside and used Xinjiang time as a child.
 #

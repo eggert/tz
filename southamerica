@@ -682,7 +682,7 @@ Zone	America/La_Paz	-4:32:36 -	LMT	1890
 
 # From Paul Schulze (2008-06-24):
 # ...by law number 11.662 of April 24, 2008 (published in the "Diario
-# Oficial da Uniao"...) in Brazil there are changes in the timezones,
+# Oficial da União"...) in Brazil there are changes in the timezones,
 # effective today (00:00am at June 24, 2008) as follows:
 #
 # a) The timezone UTC+5 is e[x]tinguished, with all the Acre state and the
@@ -1314,7 +1314,7 @@ Link	America/Curacao	America/Kralendijk	# Caribbean Netherlands
 
 # Ecuador
 #
-# Milne says the Sentral and South American Telegraph Company used -5:24:15.
+# Milne says the Central and South American Telegraph Company used -5:24:15.
 #
 # From Paul Eggert (2007-03-04):
 # Apparently Ecuador had a failed experiment with DST in 1992.

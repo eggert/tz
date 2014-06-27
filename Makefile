@@ -123,7 +123,7 @@ LDLIBS=
 #	year 2000 grief
 #  -Dtime_tz=\"T\" to use T as the time_t type, rather than the system time_t
 #  -DTZ_DOMAIN=\"foo\" to use "foo" for gettext domain name; default is "tz"
-#  -TTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
+#  -DTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
 #	the default is system-supplied, typically "/usr/lib/locale"
 #  -DTZDEFRULESTRING=\",date/time,date/time\" to default to the specified
 #	DST transitions if the time zone files cannot be accessed

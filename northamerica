@@ -659,7 +659,7 @@ Zone America/Boise	-7:44:49 -	LMT	1883 Nov 18 12:15:11
 # with the following exceptions:
 #
 # - Gibson, Jasper, Lake, LaPorte, Newton, Porter, Posey, Spencer,
-#   Vandenburgh, and Warrick counties have been like America/Chicago.
+#   Vanderburgh, and Warrick counties have been like America/Chicago.
 #
 # - Dearborn and Ohio counties have been like America/New_York.
 #
@@ -2688,7 +2688,7 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890		# San José
 # web site, the Granma.  Please check out
 # http://www.granma.cubaweb.cu/2008/03/13/nacional/artic10.html
 #
-# Basically as expected after Steffen Thorsens information, the change
+# Basically as expected after Steffen Thorsen's information, the change
 # will take place midnight between Saturday and Sunday.
 
 # From Arthur David Olson (2008-03-12):

@@ -8,7 +8,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="UTF-8"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2014-06-25">
+<meta name="DC.Date" content="2014-06-27">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -280,11 +280,21 @@ are similar to Joda Time, but for the .NET framework instead of
 Java. They are freely available under the
 <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License</a>
 and a <abbr>BSD</abbr>-style license, respectively.</li>
-<li><a href="https://github.com/mde/timezone-js">TimezoneJS.Date</a>
-is a <a href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a>
-library that parses <code><abbr>tz</abbr></code> source files and interprets time
-stamps using an API that is upward compatible with standard JavaScript
-Dates. It is freely available under the Apache License.</li>
+<li><a href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a>-based
+compilers and libraries include:
+<ul>
+<li><a href="http://momentjs.com/timezone/">Moment Timezone</a> is a
+plugin for the <a href="http://momentjs.com/">Moment.js</a> date
+manipulation library. It is freely available under
+the <abbr title="Massachusetts Institute of Technology">MIT</abbr>
+license.</li>
+<li><a href="https://github.com/mde/timezone-js">TimezoneJS.Date</a>'s
+API is upward compatible with standard JavaScript Dates. It is freely
+available under the Apache License.</li>
+<li><a href="https://github.com/sproutsocial/walltime-js">Walltime-js</a>
+translates UTC to local time. It is freely available under the <abbr>MIT</abbr>
+license.</li>
+</ul>
 <li><a href="http://pytz.sourceforge.net">pytz &ndash; World Timezone
 Definitions for Python</a> compiles <code><abbr>tz</abbr></code> source into
 <a href="http://python.org/">Python</a>.
@@ -293,8 +303,7 @@ It is freely available under a <abbr>BSD</abbr>-style license.</li>
 Ruby Timezone Library</a>
 compiles <code><abbr>tz</abbr></code> source into
 <a href="http://www.ruby-lang.org/en/">Ruby</a>.
-It is freely available under the <abbr
-title="Massachusetts Institute of Technology">MIT</abbr> license.</li>
+It is freely available under the <abbr>MIT</abbr> license.</li>
 <li>The <a href="http://www.squeaksource.com/Chronos/">Chronos Date/Time
 Library</a> is
 a <a href="http://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a> class
@@ -327,6 +336,9 @@ It is freely available under the <abbr>LGPL</abbr>.</li>
 <li><a href="http://bmsi.com/java/#TZ">ZoneInfo.java</a>
 is a <code><abbr>tz</abbr></code> binary file reader written in Java.
 It is freely available under the <abbr>LGPL</abbr>.</li>
+<li><a href="https://github.com/bigeasy/timezone">Timezone</a> is a
+JavaScript library that supports date arithmetic that is time zone
+aware. It is freely available under the <abbr>MIT</abbr> license.</li>
 <li>Tcl, mentioned above, also contains a
 <code><abbr>tz</abbr></code> binary file reader.</li>
 <li><a href="http://search.cpan.org/perldoc?DateTime::TimeZone::Tzfile">
@@ -344,7 +356,8 @@ are not supported.</li>
 <li>The <a
 href="http://hackage.haskell.org/package/timezone-olson">timezone-olson</a>
 package contains <a href="http://haskell.org">Haskell</a> code that
-parses and uses <code><abbr>tz</abbr></code> binary data.</li>
+parses and uses <code><abbr>tz</abbr></code> binary data. It is freely
+available under a BSD-style license.</li>
 </ul>
 <h2>Other <code><abbr>tz</abbr></code>-based time zone software</h2>
 <ul>
@@ -377,7 +390,7 @@ download, compile and use the <code>tzdata<var>D</var>.tar.gz</code>
 files as they are released. The Basic version is free.</li>
 <li><a
 href="http://veladg.com/velaterra.html">VelaTerra</a> is
-a Mac <abbr>OS X</abbr> program. Its developers
+an <abbr>OS X</abbr> program. Its developers
 <a href="http://veladg.com/tzoffer.html">offer free
 licenses</a> to <code><abbr>tz</abbr></code> contributors.</li>
 </ul>

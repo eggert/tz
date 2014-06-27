@@ -36,6 +36,12 @@ zic \- time zone compiler
 .de q
 \\$3\*(lq\\$1\*(rq\\$2
 ..
+.ie '\(la'' .ds < <
+.el .ds < \(la
+.ie '\(ra'' .ds > >
+.el .ds > \(ra
+.ie \n(.g .ds : \:
+.el .ds :
 .I Zic
 reads text from the file(s) named on the command line
 and creates the time conversion information files specified in this input.
@@ -140,7 +146,7 @@ zero or more lines, each ending in a newline byte and containing at
 most 511 bytes, and without any NUL bytes.  The input text's encoding
 is typically UTF-8 or ASCII; it should have a unibyte representation
 for the POSIX Portable Character Set (PPCS)
-<http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap06.html>
+\*<http://pubs\*:.opengroup\*:.org/\*:onlinepubs/\*:9699919799/\*:basedefs/\*:V1_chap06\*:.html\*>
 and the encoding's non-unibyte characters should consist entirely of
 non-PPCS bytes.  Non-PPCS characters typically occur only in comments:
 although output file names and time zone abbreviations can contain

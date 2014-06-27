@@ -339,6 +339,12 @@ The fields that make up a zone line are:
 The name of the time zone.
 This is the name used in creating the time conversion information file for the
 zone.
+It should not contain a file name component
+.q ".\&"
+or
+.q ".." ;
+a file name component is a maximal substring that does not contain
+.q "/" .
 .TP
 .B GMTOFF
 The amount of time to add to UT to get standard time in this zone.
@@ -408,10 +414,13 @@ The
 .B LINK-FROM
 field should appear as the
 .B NAME
-field in some zone line;
-the
+field in some zone line.
+The
 .B LINK-TO
-field is used as an alternate name for that zone.
+field is used as an alternate name for that zone;
+it has the same syntax as a zone line's
+.B NAME
+field.
 .PP
 Except for continuation lines,
 lines may appear in any order in the input.

@@ -19,6 +19,9 @@ Unreleased, experimental changes
     Error diagnostics of 'zic' and 'yearistype' have been reworded so that
     they no longer use ASCII '-' as if it were a dash.
 
+    'zic' now rejects output file names that contain '.' or '..' components.
+    (Thanks to Tim Parenti for reporting the problem.)
+
     'zic -v' now warns about output file names that do not follow
     POSIX rules, or that contain a digit or '.'.  (Thanks to Arthur
     David Olson for starting the ball rolling on this.)

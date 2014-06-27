@@ -615,6 +615,15 @@ componentcheck(char const *name, char const *component,
 {
 	enum { component_len_max = 14 };
 	size_t component_len = component_end - component;
+	if (0 < component_len && component_len <= 2
+	    && component[0] == '.' && component_end[-1] == '.') {
+		fprintf(stderr, _("%s: file name '%s' contains"
+				  " '%.*s' component"),
+			progname, name, (int) component_len, component);
+		exit(EXIT_FAILURE);
+	}
+	if (!noise)
+		return;
 	if (0 < component_len && component[0] == '-')
 		warning(_("file name '%s' component contains leading '-'"),
 			name);
@@ -641,11 +650,9 @@ namecheck(const char *name)
 	  " !\"#$%&'()*+,.0123456789:;<=>?@[\\]^`{|}~";
 
 	register char const *component = name;
-	if (!noise)
-		return;
 	for (cp = name; *cp; cp++) {
 		unsigned char c = *cp;
-		if (!strchr(benign, c)) {
+		if (noise && !strchr(benign, c)) {
 			warning((strchr(printable_and_not_benign, c)
 				 ? _("file name '%s' contains byte '%c'")
 				 : _("file name '%s' contains byte '\\%o'")),

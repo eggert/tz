@@ -15,12 +15,17 @@
 #	are transmitted by almost all time services.
 #
 #	The first column shows an epoch as a number of seconds
-#	since 1900.0 and the second column shows the number of
-#	seconds that must be added to UTC to compute TAI for
-#	any timestamp at or after that epoch. The value on 
-#	each line is valid from the indicated initial instant
-#	until the epoch given on the next one or indefinitely 
-#	into the future if there is no next line.
+#	since 1 January 1900, 00:00:00 (1900.0 is also used to
+#	indicate the same epoch.) Both of these time stamp formats
+#	ignore the complexities of the time scales that were
+#	used before the current definition of UTC at the start
+#	of 1972. (See note 3 below.)
+#	The second column shows the number of seconds that 
+#	must be added to UTC to compute TAI for any timestamp 
+#	at or after that epoch. The value on each line is 
+#	valid from the indicated initial instant until the 
+#	epoch given on the next one or indefinitely into the
+#	future if there is no next line.
 #	(The comment on each line shows the representation of
 #	the corresponding initial epoch in the usual 
 #	day-month-year format. The epoch always begins at
@@ -44,9 +49,9 @@
 #	by the International Bureau of Weights and Measures
 #	(BIPM). See www.bipm.fr for more information.
 #
-#	3. The current defintion of the relationship between UTC 
+#	3. The current definition of the relationship between UTC 
 #	and TAI dates from 1 January 1972. A number of different 
-#	time scales were in use before than epoch, and it can be 
+#	time scales were in use before that epoch, and it can be 
 #	quite difficult to compute precise timestamps and time 
 #	intervals in those "prehistoric" days. For more information,
 #	consult:
@@ -59,16 +64,11 @@
 #		July, 1991.
 #
 #	4.  The insertion of leap seconds into UTC is currently the
-#	responsibility of the International Earth Rotation Service,
-#	which is located at the Paris Observatory: 
-#
-#	Central Bureau of IERS
-#	61, Avenue de l'Observatoire
-#	75014 Paris, France.
+#	responsibility of the International Earth Rotation Service.
 #
 #	Leap seconds are announced by the IERS in its Bulletin C
 #
-#	See hpiers.obspm.fr or www.iers.org for more details.
+#	See www.iers.org for more details.
 #
 #	All national laboratories and timing centers use the
 #	data from the BIPM and the IERS to construct their
@@ -126,7 +126,7 @@
 #		Time and Frequency Division
 #		NIST
 #		Boulder, Colorado
-#		jlevine@boulder.nist.gov
+#		Judah.Levine@nist.gov
 #
 #	Last Update of leap second values:   11 January 2012
 #
@@ -139,18 +139,19 @@
 #$	 3535228800
 #
 #	The NTP timestamps are in units of seconds since the NTP epoch,
-#	which is 1900.0. The Modified Julian Day number corresponding
-#	to the NTP time stamp, X, can be computed as 
+#	which is 1 January 1900, 00:00:00. The Modified Julian Day number 
+#	corresponding to the NTP time stamp, X, can be computed as 
 #
 #	X/86400 + 15020
 #
 #	where the first term converts seconds to days and the second 
-#	term adds the MJD corresponding to 1900.0. The integer portion
-#	of the result is the integer MJD for that day, and any remainder
-#	is the time of day, expressed as the fraction of the day since 0 
-#	hours UTC. The conversion from day fraction to seconds or to
-#	hours, minutes, and seconds may involve rounding or truncation,
-#	depending on the method used in the computation.
+#	term adds the MJD corresponding to the time origin defined above. 
+#	The integer portion of the result is the integer MJD for that 
+#	day, and any remainder is the time of day, expressed as the 
+#	fraction of the day since 0 hours UTC. The conversion from day 
+#	fraction to seconds or to hours, minutes, and seconds may involve 
+#	rounding or truncation, depending on the method used in the 
+#	computation.
 #
 #	The data in this file will be updated periodically as new leap 
 #	seconds are announced. In addition to being entered on the line
@@ -163,10 +164,11 @@
 #	is announced. 
 #
 #	The following entry specifies the expiration date of the data
-#	in this file in units of seconds since 1900.0.  This expiration date 
-#	will be changed at least twice per year whether or not a new leap 
-#	second is announced. These semi-annual changes will be made no
-#	later than 1 June and 1 December of each year to indicate what
+#	in this file in units of seconds since the origin at the instant
+#	1 January 1900, 00:00:00.  This expiration date will be changed 
+#	at least twice per year whether or not a new leap second is
+#	announced. These semi-annual changes will be made no later
+#	than 1 June and 1 December of each year to indicate what
 #	action (if any) is to be taken on 30 June and 31 December, 
 #	respectively. (These are the customary effective dates for new
 #	leap seconds.) This expiration date will be identified by a
@@ -182,10 +184,10 @@
 #	current -- the update time stamp, the data and the name of the file 
 #	will not change.
 #
-#	Updated through IERS Bulletin C46
-#	File expires on:  28 June 2014
+#	Updated through IERS Bulletin C47
+#	File expires on:  28 December 2014
 #
-#@	3612902400
+#@	3628713600
 #
 2272060800	10	# 1 Jan 1972
 2287785600	11	# 1 Jul 1972
@@ -228,4 +230,4 @@
 #	the hash line is also ignored in the
 #	computation.
 #
-#h	1151a8f e85a5069 9000fcdb 3d5e5365 1d505b37
+#h	9195bac3 a050810e e85fc815 e752446a 76ade206

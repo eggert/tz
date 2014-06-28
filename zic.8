@@ -4,28 +4,8 @@ zic \- time zone compiler
 .SH SYNOPSIS
 .B zic
 [
-.B \-\-version
-]
-[
-.B \-v
-] [
-.B \-d
-.I directory
-] [
-.B \-l
-.I localtime
-] [
-.B \-p
-.I posixrules
-] [
-.B \-L
-.I leapsecondfilename
-] [
-.B \-s
-] [
-.B \-y
-.I command
-] [
+.I option
+\&... ] [
 .I filename
 \&... ]
 .SH DESCRIPTION
@@ -40,27 +20,33 @@ zic \- time zone compiler
 .el .ds < \(la
 .ie '\(ra'' .ds > >
 .el .ds > \(ra
-.ie \n(.g .ds : \:
-.el .ds :
+.ie \n(.g \{\
+.  ds : \:
+.  ds - \f(CW-\fP
+.\}
+.el \{\
+.  ds :
+.  el ds - \-
+.\}
 .I Zic
 reads text from the file(s) named on the command line
 and creates the time conversion information files specified in this input.
 If a
 .I filename
 is
-.BR \- ,
+.q "\*-" ,
 the standard input is read.
 .PP
 These options are available:
 .TP
-.BI "\-\-version"
+.BI "\*-\*-version"
 Output version information and exit.
 .TP
-.BI "\-d " directory
+.BI "\*-d " directory
 Create time conversion information files in the named directory rather than
 in the standard directory named below.
 .TP
-.BI "\-l " timezone
+.BI "\*-l " timezone
 Use the given time zone as local time.
 .I Zic
 will act as if the input contained a link line of the form
@@ -68,7 +54,7 @@ will act as if the input contained a link line of the form
 .ti +.5i
 Link	\fItimezone\fP		localtime
 .TP
-.BI "\-p " timezone
+.BI "\*-p " timezone
 Use the given time zone's rules when handling POSIX-format
 time zone environment variables.
 .I Zic
@@ -77,12 +63,12 @@ will act as if the input contained a link line of the form
 .ti +.5i
 Link	\fItimezone\fP		posixrules
 .TP
-.BI "\-L " leapsecondfilename
+.BI "\*-L " leapsecondfilename
 Read leap second information from the file with the given name.
 If this option is not used,
 no leap second information appears in output files.
 .TP
-.B \-v
+.B \*-v
 Be more verbose, and complain about the following situations:
 .RS
 .PP
@@ -120,21 +106,21 @@ A time zone abbreviation has fewer than 3 characters.
 POSIX requires at least 3.
 .PP
 An output file name contains a byte that is not an ASCII letter,
-.q "-" ,
+.q "\*-" ,
 .q "/" ,
 or
 .q "_" ;
 or it contains a file name component that contains more than 14 bytes
 or that starts with
-.q "-" .
+.q "\*-" .
 .RE
 .TP
-.B \-s
+.B \*-s
 Limit time values stored in output files to values that are the same
 whether they're taken to be signed or unsigned.
 You can use this option to generate SVVS-compatible files.
 .TP
-.BI "\-y " command
+.BI "\*-y " command
 Use the given
 .I command
 rather than
@@ -152,7 +138,7 @@ non-PPCS bytes.  Non-PPCS characters typically occur only in comments:
 although output file names and time zone abbreviations can contain
 nearly any character, other software will work better if these are
 limited to the restricted syntax described under the
-.B \-v
+.B \*-v
 option.
 .PP
 Input lines are made up of fields.
@@ -181,7 +167,7 @@ Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 For example:
 .ti +.5i
 .sp
-Rule	US	1967	1973	\-	Apr	lastSun	2:00	1:00	D
+Rule	US	1967	1973	\*-	Apr	lastSun	2:00	1:00	D
 .sp
 .fi
 The fields that make up a rule line are:
@@ -221,7 +207,7 @@ Gives the type of year in which the rule applies.
 If
 .B TYPE
 is
-.B \-
+.q \*-
 then the rule applies in all years between
 .B FROM
 and
@@ -274,7 +260,7 @@ Recognized forms include:
 2:00	time in hours and minutes
 15:00	24-hour format time (for times after noon)
 1:28:14	time in hours, minutes, and seconds
-\-	equivalent to 0
+\*-	equivalent to 0
 .fi
 .in -.5i
 .sp
@@ -323,7 +309,7 @@ or
 .q "EDT" )
 of time zone abbreviations to be used when this rule is in effect.
 If this field is
-.BR \- ,
+.q \*- ,
 the variable part is null.
 .PP
 A zone line has the form
@@ -365,7 +351,7 @@ begin the field with a minus sign if time must be subtracted from UT.
 The name of the rule(s) that apply in the time zone or,
 alternately, an amount of time to add to local standard time.
 If this field is
-.B \-
+.B \*-
 then standard time always applies in the time zone.
 .TP
 .B FORMAT
@@ -461,7 +447,7 @@ should be
 .q "+"
 if a second was added
 or
-.q "-"
+.q "\*-"
 if a second was skipped.
 .\" There's no need to document the following, since it's impossible for more
 .\" than one leap second to be inserted or deleted at a time.
@@ -496,20 +482,20 @@ input, intended to illustrate many of its features.
 .ta \w'# Rule\0\0'u +\w'NAME\0\0'u +\w'FROM\0\0'u +\w'1973\0\0'u +\w'TYPE\0\0'u +\w'Apr\0\0'u +\w'lastSun\0\0'u +\w'2:00\0\0'u +\w'SAVE\0\0'u
 .sp
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Swiss	1941	1942	-	May	Mon>=1	1:00	1:00	S
-Rule	Swiss	1941	1942	-	Oct	Mon>=1	2:00	0	-
+Rule	Swiss	1941	1942	\*-	May	Mon>=1	1:00	1:00	S
+Rule	Swiss	1941	1942	\*-	Oct	Mon>=1	2:00	0	\*-
 .sp .5
-Rule	EU	1977	1980	-	Apr	Sun>=1	1:00u	1:00	S
-Rule	EU	1977	only	-	Sep	lastSun	1:00u	0	-
-Rule	EU	1978	only	-	Oct	 1	1:00u	0	-
-Rule	EU	1979	1995	-	Sep	lastSun	1:00u	0	-
-Rule	EU	1981	max	-	Mar	lastSun	1:00u	1:00	S
-Rule	EU	1996	max	-	Oct	lastSun	1:00u	0	-
+Rule	EU	1977	1980	\*-	Apr	Sun>=1	1:00u	1:00	S
+Rule	EU	1977	only	\*-	Sep	lastSun	1:00u	0	\*-
+Rule	EU	1978	only	\*-	Oct	 1	1:00u	0	\*-
+Rule	EU	1979	1995	\*-	Sep	lastSun	1:00u	0	\*-
+Rule	EU	1981	max	\*-	Mar	lastSun	1:00u	1:00	S
+Rule	EU	1996	max	\*-	Oct	lastSun	1:00u	0	\*-
 .sp
 .ta \w'# Zone\0\0'u +\w'Europe/Zurich\0\0'u +\w'GMTOFF\0\0'u +\w'RULES/SAVE\0\0'u +\w'FORMAT\0\0'u
 # Zone	NAME	GMTOFF	RULES/SAVE	FORMAT	UNTIL
-Zone	Europe/Zurich	0:34:08	-	LMT	1853 Jul 16
-		0:29:46	-	BMT	1894 Jun
+Zone	Europe/Zurich	0:34:08	\*-	LMT	1853 Jul 16
+		0:29:46	\*-	BMT	1894 Jun
 		1:00	Swiss	CE%sT	1981
 		1:00	EU	CE%sT
 .sp

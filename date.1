@@ -4,24 +4,26 @@ date \- show and set date and time
 .SH SYNOPSIS
 .if n .nh
 .if n .na
+.ie \n(.g .ds - \f(CW-\fP
+.el ds - \-
 .B date
 [
-.B \-u
+.B \*-u
 ] [
-.B \-c
+.B \*-c
 ] [
-.B \-r
-seconds
+.B \*-r
+.I seconds
 ] [
-.B \-n
+.B \*-n
 ] [
-.B \-d
-dsttype
+.B \*-d
+.I dsttype
 ] [
-.B \-t
-minutes-west
+.B \*-t
+.I minutes-west
 ] [
-\fB\-a \fR[\fB+\fR|\fB-]\fIsss\fB.\fIfff\fR
+\fB\*-a \fR[\fB+\fR|\fB\*-]\fIsss\fB.\fIfff\fR
 ] [
 .BI + format
 ] [
@@ -141,10 +143,10 @@ the seconds part of the new time; if no seconds are given, zero is assumed.
 .PP
 These options are available:
 .TP
-.BR \-u " or " \-c
+.BR \*-u " or " \*-c
 Use Universal Time when setting and showing the date and time.
 .TP
-.BI "\-r " seconds
+.BI "\*-r " seconds
 Output the date that corresponds to
 .I seconds
 past the epoch of 1970-01-01 00:00:00 UTC, where
@@ -152,16 +154,16 @@ past the epoch of 1970-01-01 00:00:00 UTC, where
 should be an integer, either decimal, octal (leading 0), or
 hexadecimal (leading 0x), preceded by an optional sign.
 .TP
-.B \-n
+.B \*-n
 Do not notify other networked systems of the time change.
 .TP
-.BI "\-d " dsttype
+.BI "\*-d " dsttype
 Set the kernel-stored Daylight Saving Time type to the given value.
 (The kernel-stored DST type is used mostly by
 .q "old"
 binaries.)
 .TP
-.BI "\-t " minutes-west
+.BI "\*-t " minutes-west
 Set the kernel-stored
 .q "minutes west of UTC"
 value to the one given on the
@@ -170,10 +172,10 @@ command line.
 .q "old"
 binaries.)
 .TP
-.BI "\-a " adjustment
+.BI "\*-a " adjustment
 Change the time forward (or backward) by the number of seconds
 (and fractions thereof) specified in the
-.I adjustment\^
+.I adjustment
 argument.
 Either the seconds part or the fractions part of the argument (but not both)
 may be omitted.

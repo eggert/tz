@@ -3,6 +3,8 @@
 asctime, ctime, difftime, gmtime, localtime, mktime \- convert date and time
 .SH SYNOPSIS
 .nf
+.ie \n(.g .ds - \f(CW-\fP
+.el ds - \-
 .B extern char *tzname[2];
 .PP
 .B void tzset()
@@ -30,7 +32,7 @@ asctime, ctime, difftime, gmtime, localtime, mktime \- convert date and time
 .B time_t mktime(tm)
 .B struct tm *tm;
 .PP
-.B cc ... -ltz
+.B cc ... \*-ltz
 .fi
 .SH DESCRIPTION
 .ie '\(en'' .ds en \-
@@ -42,7 +44,7 @@ asctime, ctime, difftime, gmtime, localtime, mktime \- convert date and time
 .de q
 \\$3\*(lq\\$1\*(rq\\$2
 ..
-.I Ctime\^
+.I Ctime
 converts a long integer, pointed to by
 .IR clock ,
 and returns a pointer to a
@@ -77,13 +79,13 @@ and can therefore represent time stamps that predate the
 introduction of UTC and are some other flavor of Universal Time (UT).
 Some implementations support leap seconds, in contradiction to POSIX.
 .PP
-.I Localtime\^
+.I Localtime
 and
-.I gmtime\^
+.I gmtime
 return pointers to
 .q "tm"
 structures, described below.
-.I Localtime\^
+.I Localtime
 corrects for the time zone and any time zone adjustments
 (such as Daylight Saving Time in the United States).
 After filling in the
@@ -98,17 +100,17 @@ to a pointer to a string that's the time zone abbreviation to be used with
 .IR localtime 's
 return value.
 .PP
-.I Gmtime\^
+.I Gmtime
 converts to Coordinated Universal Time.
 .PP
-.I Asctime\^
+.I Asctime
 converts a time value contained in a
 .q "tm"
 structure to a string,
 as shown in the above example,
 and returns a pointer to the string.
 .PP
-.I Mktime\^
+.I Mktime
 converts the broken-down time,
 expressed as local time,
 in the structure pointed to by
@@ -153,15 +155,15 @@ is not set until
 and
 .B tm_year
 are determined.
-.I Mktime\^
+.I Mktime
 returns the specified calendar time;
 If the calendar time cannot be represented,
-it returns \(mi1.
+it returns \-1.
 .PP
-.I Difftime\^
+.I Difftime
 returns the difference between two calendar times,
 .RI ( time1
--
+\-
 .IR time0 ),
 expressed in seconds.
 .PP
@@ -169,7 +171,7 @@ Declarations of all the functions and externals, and the
 .q "tm"
 structure,
 are in the
-.B <time.h>\^
+.B <time.h>
 header file.
 The structure (of type)
 .B struct tm
@@ -183,7 +185,7 @@ includes the following fields:
 	int tm_hour;	/\(** hours (0\*(en23) \(**/
 	int tm_mday;	/\(** day of month (1\*(en31) \(**/
 	int tm_mon;	/\(** month of year (0\*(en11) \(**/
-	int tm_year;	/\(** year \(mi 1900 \(**/
+	int tm_year;	/\(** year \- 1900 \(**/
 	int tm_wday;	/\(** day of week (Sunday = 0) \(**/
 	int tm_yday;	/\(** day of year (0\*(en365) \(**/
 	int tm_isdst;	/\(** is summer time in effect? \(**/
@@ -202,7 +204,7 @@ created.
 There is no guarantee that these fields will continue to exist
 in this form in future releases of this code.
 .PP
-.I Tm_isdst\^
+.I Tm_isdst
 is non-zero if summer time is in effect.
 .PP
 .I Tm_gmtoff
@@ -243,18 +245,18 @@ will also be overwritten at the next call
 (and by calls to
 .IR tzset ).
 .PP
-.I Asctime\^
+.I Asctime
 and
-.I ctime\^
+.I ctime
 behave strangely for years before 1000 or after 9999.
 The 1989 and 1999 editions of the C Standard say
-that years from \(mi99 through 999 are converted without
+that years from \-99 through 999 are converted without
 extra spaces, but this conflicts with longstanding
 tradition and with this implementation.
 Traditional implementations of these two functions are
 restricted to years in the range 1900 through 2099.
 To avoid this portability mess, new programs should use
-.I strftime\^
+.I strftime
 instead.
 .\" This file is in the public domain, so clarified as of
 .\" 2009-05-17 by Arthur David Olson.

@@ -12,13 +12,13 @@
 # Please see the notes below for the controversy about "EST" versus "AEST" etc.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Aus	1917	only	-	Jan	 1	0:01	1:00	-
-Rule	Aus	1917	only	-	Mar	25	2:00	0	-
-Rule	Aus	1942	only	-	Jan	 1	2:00	1:00	-
-Rule	Aus	1942	only	-	Mar	29	2:00	0	-
-Rule	Aus	1942	only	-	Sep	27	2:00	1:00	-
-Rule	Aus	1943	1944	-	Mar	lastSun	2:00	0	-
-Rule	Aus	1943	only	-	Oct	 3	2:00	1:00	-
+Rule	Aus	1917	only	-	Jan	 1	0:01	1:00	D
+Rule	Aus	1917	only	-	Mar	25	2:00	0	S
+Rule	Aus	1942	only	-	Jan	 1	2:00	1:00	D
+Rule	Aus	1942	only	-	Mar	29	2:00	0	S
+Rule	Aus	1942	only	-	Sep	27	2:00	1:00	D
+Rule	Aus	1943	1944	-	Mar	lastSun	2:00	0	S
+Rule	Aus	1943	only	-	Oct	 3	2:00	1:00	D
 # Go with Whitman and the Australian National Standards Commission, which
 # says W Australia didn't use DST in 1943/1944.  Ignore Whitman's claim that
 # 1944/1945 was just like 1943/1944.
@@ -27,25 +27,25 @@ Rule	Aus	1943	only	-	Oct	 3	2:00	1:00	-
 # Northern Territory
 Zone Australia/Darwin	 8:43:20 -	LMT	1895 Feb
 			 9:00	-	CST	1899 May
-			 9:30	Aus	CST
+			 9:30	Aus	C%sT
 # Western Australia
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	AW	1974	only	-	Oct	lastSun	2:00s	1:00	-
-Rule	AW	1975	only	-	Mar	Sun>=1	2:00s	0	-
-Rule	AW	1983	only	-	Oct	lastSun	2:00s	1:00	-
-Rule	AW	1984	only	-	Mar	Sun>=1	2:00s	0	-
-Rule	AW	1991	only	-	Nov	17	2:00s	1:00	-
-Rule	AW	1992	only	-	Mar	Sun>=1	2:00s	0	-
-Rule	AW	2006	only	-	Dec	 3	2:00s	1:00	-
-Rule	AW	2007	2009	-	Mar	lastSun	2:00s	0	-
-Rule	AW	2007	2008	-	Oct	lastSun	2:00s	1:00	-
+Rule	AW	1974	only	-	Oct	lastSun	2:00s	1:00	D
+Rule	AW	1975	only	-	Mar	Sun>=1	2:00s	0	S
+Rule	AW	1983	only	-	Oct	lastSun	2:00s	1:00	D
+Rule	AW	1984	only	-	Mar	Sun>=1	2:00s	0	S
+Rule	AW	1991	only	-	Nov	17	2:00s	1:00	D
+Rule	AW	1992	only	-	Mar	Sun>=1	2:00s	0	S
+Rule	AW	2006	only	-	Dec	 3	2:00s	1:00	D
+Rule	AW	2007	2009	-	Mar	lastSun	2:00s	0	S
+Rule	AW	2007	2008	-	Oct	lastSun	2:00s	1:00	D
 Zone Australia/Perth	 7:43:24 -	LMT	1895 Dec
-			 8:00	Aus	WST	1943 Jul
-			 8:00	AW	WST
+			 8:00	Aus	W%sT	1943 Jul
+			 8:00	AW	W%sT
 Zone Australia/Eucla	 8:35:28 -	LMT	1895 Dec
-			 8:45	Aus	CWST	1943 Jul
-			 8:45	AW	CWST
+			 8:45	Aus	CW%sT	1943 Jul
+			 8:45	AW	CW%sT
 
 # Queensland
 #
@@ -61,42 +61,42 @@ Zone Australia/Eucla	 8:35:28 -	LMT	1895 Dec
 # so use Lindeman.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	AQ	1971	only	-	Oct	lastSun	2:00s	1:00	-
-Rule	AQ	1972	only	-	Feb	lastSun	2:00s	0	-
-Rule	AQ	1989	1991	-	Oct	lastSun	2:00s	1:00	-
-Rule	AQ	1990	1992	-	Mar	Sun>=1	2:00s	0	-
-Rule	Holiday	1992	1993	-	Oct	lastSun	2:00s	1:00	-
-Rule	Holiday	1993	1994	-	Mar	Sun>=1	2:00s	0	-
+Rule	AQ	1971	only	-	Oct	lastSun	2:00s	1:00	D
+Rule	AQ	1972	only	-	Feb	lastSun	2:00s	0	S
+Rule	AQ	1989	1991	-	Oct	lastSun	2:00s	1:00	D
+Rule	AQ	1990	1992	-	Mar	Sun>=1	2:00s	0	S
+Rule	Holiday	1992	1993	-	Oct	lastSun	2:00s	1:00	D
+Rule	Holiday	1993	1994	-	Mar	Sun>=1	2:00s	0	S
 Zone Australia/Brisbane	10:12:08 -	LMT	1895
-			10:00	Aus	EST	1971
-			10:00	AQ	EST
+			10:00	Aus	E%sT	1971
+			10:00	AQ	E%sT
 Zone Australia/Lindeman  9:55:56 -	LMT	1895
-			10:00	Aus	EST	1971
-			10:00	AQ	EST	1992 Jul
-			10:00	Holiday	EST
+			10:00	Aus	E%sT	1971
+			10:00	AQ	E%sT	1992 Jul
+			10:00	Holiday	E%sT
 
 # South Australia
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	AS	1971	1985	-	Oct	lastSun	2:00s	1:00	-
-Rule	AS	1986	only	-	Oct	19	2:00s	1:00	-
-Rule	AS	1987	2007	-	Oct	lastSun	2:00s	1:00	-
-Rule	AS	1972	only	-	Feb	27	2:00s	0	-
-Rule	AS	1973	1985	-	Mar	Sun>=1	2:00s	0	-
-Rule	AS	1986	1990	-	Mar	Sun>=15	2:00s	0	-
-Rule	AS	1991	only	-	Mar	3	2:00s	0	-
-Rule	AS	1992	only	-	Mar	22	2:00s	0	-
-Rule	AS	1993	only	-	Mar	7	2:00s	0	-
-Rule	AS	1994	only	-	Mar	20	2:00s	0	-
-Rule	AS	1995	2005	-	Mar	lastSun	2:00s	0	-
-Rule	AS	2006	only	-	Apr	2	2:00s	0	-
-Rule	AS	2007	only	-	Mar	lastSun	2:00s	0	-
-Rule	AS	2008	max	-	Apr	Sun>=1	2:00s	0	-
-Rule	AS	2008	max	-	Oct	Sun>=1	2:00s	1:00	-
+Rule	AS	1971	1985	-	Oct	lastSun	2:00s	1:00	D
+Rule	AS	1986	only	-	Oct	19	2:00s	1:00	D
+Rule	AS	1987	2007	-	Oct	lastSun	2:00s	1:00	D
+Rule	AS	1972	only	-	Feb	27	2:00s	0	S
+Rule	AS	1973	1985	-	Mar	Sun>=1	2:00s	0	S
+Rule	AS	1986	1990	-	Mar	Sun>=15	2:00s	0	S
+Rule	AS	1991	only	-	Mar	3	2:00s	0	S
+Rule	AS	1992	only	-	Mar	22	2:00s	0	S
+Rule	AS	1993	only	-	Mar	7	2:00s	0	S
+Rule	AS	1994	only	-	Mar	20	2:00s	0	S
+Rule	AS	1995	2005	-	Mar	lastSun	2:00s	0	S
+Rule	AS	2006	only	-	Apr	2	2:00s	0	S
+Rule	AS	2007	only	-	Mar	lastSun	2:00s	0	S
+Rule	AS	2008	max	-	Apr	Sun>=1	2:00s	0	S
+Rule	AS	2008	max	-	Oct	Sun>=1	2:00s	1:00	D
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Australia/Adelaide	9:14:20 -	LMT	1895 Feb
 			9:00	-	CST	1899 May
-			9:30	Aus	CST	1971
-			9:30	AS	CST
+			9:30	Aus	C%sT	1971
+			9:30	AS	C%sT
 
 # Tasmania
 #
@@ -105,106 +105,106 @@ Zone Australia/Adelaide	9:14:20 -	LMT	1895 Feb
 # says King Island didn't observe DST from WWII until late 1971.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	AT	1967	only	-	Oct	Sun>=1	2:00s	1:00	-
-Rule	AT	1968	only	-	Mar	lastSun	2:00s	0	-
-Rule	AT	1968	1985	-	Oct	lastSun	2:00s	1:00	-
-Rule	AT	1969	1971	-	Mar	Sun>=8	2:00s	0	-
-Rule	AT	1972	only	-	Feb	lastSun	2:00s	0	-
-Rule	AT	1973	1981	-	Mar	Sun>=1	2:00s	0	-
-Rule	AT	1982	1983	-	Mar	lastSun	2:00s	0	-
-Rule	AT	1984	1986	-	Mar	Sun>=1	2:00s	0	-
-Rule	AT	1986	only	-	Oct	Sun>=15	2:00s	1:00	-
-Rule	AT	1987	1990	-	Mar	Sun>=15	2:00s	0	-
-Rule	AT	1987	only	-	Oct	Sun>=22	2:00s	1:00	-
-Rule	AT	1988	1990	-	Oct	lastSun	2:00s	1:00	-
-Rule	AT	1991	1999	-	Oct	Sun>=1	2:00s	1:00	-
-Rule	AT	1991	2005	-	Mar	lastSun	2:00s	0	-
-Rule	AT	2000	only	-	Aug	lastSun	2:00s	1:00	-
-Rule	AT	2001	max	-	Oct	Sun>=1	2:00s	1:00	-
-Rule	AT	2006	only	-	Apr	Sun>=1	2:00s	0	-
-Rule	AT	2007	only	-	Mar	lastSun	2:00s	0	-
-Rule	AT	2008	max	-	Apr	Sun>=1	2:00s	0	-
+Rule	AT	1967	only	-	Oct	Sun>=1	2:00s	1:00	D
+Rule	AT	1968	only	-	Mar	lastSun	2:00s	0	S
+Rule	AT	1968	1985	-	Oct	lastSun	2:00s	1:00	D
+Rule	AT	1969	1971	-	Mar	Sun>=8	2:00s	0	S
+Rule	AT	1972	only	-	Feb	lastSun	2:00s	0	S
+Rule	AT	1973	1981	-	Mar	Sun>=1	2:00s	0	S
+Rule	AT	1982	1983	-	Mar	lastSun	2:00s	0	S
+Rule	AT	1984	1986	-	Mar	Sun>=1	2:00s	0	S
+Rule	AT	1986	only	-	Oct	Sun>=15	2:00s	1:00	D
+Rule	AT	1987	1990	-	Mar	Sun>=15	2:00s	0	S
+Rule	AT	1987	only	-	Oct	Sun>=22	2:00s	1:00	D
+Rule	AT	1988	1990	-	Oct	lastSun	2:00s	1:00	D
+Rule	AT	1991	1999	-	Oct	Sun>=1	2:00s	1:00	D
+Rule	AT	1991	2005	-	Mar	lastSun	2:00s	0	S
+Rule	AT	2000	only	-	Aug	lastSun	2:00s	1:00	D
+Rule	AT	2001	max	-	Oct	Sun>=1	2:00s	1:00	D
+Rule	AT	2006	only	-	Apr	Sun>=1	2:00s	0	S
+Rule	AT	2007	only	-	Mar	lastSun	2:00s	0	S
+Rule	AT	2008	max	-	Apr	Sun>=1	2:00s	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Australia/Hobart	9:49:16	-	LMT	1895 Sep
 			10:00	-	EST	1916 Oct 1 2:00
 			10:00	1:00	EST	1917 Feb
-			10:00	Aus	EST	1967
-			10:00	AT	EST
+			10:00	Aus	E%sT	1967
+			10:00	AT	E%sT
 Zone Australia/Currie	9:35:28	-	LMT	1895 Sep
 			10:00	-	EST	1916 Oct 1 2:00
 			10:00	1:00	EST	1917 Feb
-			10:00	Aus	EST	1971 Jul
-			10:00	AT	EST
+			10:00	Aus	E%sT	1971 Jul
+			10:00	AT	E%sT
 
 # Victoria
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	AV	1971	1985	-	Oct	lastSun	2:00s	1:00	-
-Rule	AV	1972	only	-	Feb	lastSun	2:00s	0	-
-Rule	AV	1973	1985	-	Mar	Sun>=1	2:00s	0	-
-Rule	AV	1986	1990	-	Mar	Sun>=15	2:00s	0	-
-Rule	AV	1986	1987	-	Oct	Sun>=15	2:00s	1:00	-
-Rule	AV	1988	1999	-	Oct	lastSun	2:00s	1:00	-
-Rule	AV	1991	1994	-	Mar	Sun>=1	2:00s	0	-
-Rule	AV	1995	2005	-	Mar	lastSun	2:00s	0	-
-Rule	AV	2000	only	-	Aug	lastSun	2:00s	1:00	-
-Rule	AV	2001	2007	-	Oct	lastSun	2:00s	1:00	-
-Rule	AV	2006	only	-	Apr	Sun>=1	2:00s	0	-
-Rule	AV	2007	only	-	Mar	lastSun	2:00s	0	-
-Rule	AV	2008	max	-	Apr	Sun>=1	2:00s	0	-
-Rule	AV	2008	max	-	Oct	Sun>=1	2:00s	1:00	-
+Rule	AV	1971	1985	-	Oct	lastSun	2:00s	1:00	D
+Rule	AV	1972	only	-	Feb	lastSun	2:00s	0	S
+Rule	AV	1973	1985	-	Mar	Sun>=1	2:00s	0	S
+Rule	AV	1986	1990	-	Mar	Sun>=15	2:00s	0	S
+Rule	AV	1986	1987	-	Oct	Sun>=15	2:00s	1:00	D
+Rule	AV	1988	1999	-	Oct	lastSun	2:00s	1:00	D
+Rule	AV	1991	1994	-	Mar	Sun>=1	2:00s	0	S
+Rule	AV	1995	2005	-	Mar	lastSun	2:00s	0	S
+Rule	AV	2000	only	-	Aug	lastSun	2:00s	1:00	D
+Rule	AV	2001	2007	-	Oct	lastSun	2:00s	1:00	D
+Rule	AV	2006	only	-	Apr	Sun>=1	2:00s	0	S
+Rule	AV	2007	only	-	Mar	lastSun	2:00s	0	S
+Rule	AV	2008	max	-	Apr	Sun>=1	2:00s	0	S
+Rule	AV	2008	max	-	Oct	Sun>=1	2:00s	1:00	D
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Australia/Melbourne 9:39:52 -	LMT	1895 Feb
-			10:00	Aus	EST	1971
-			10:00	AV	EST
+			10:00	Aus	E%sT	1971
+			10:00	AV	E%sT
 
 # New South Wales
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	AN	1971	1985	-	Oct	lastSun	2:00s	1:00	-
-Rule	AN	1972	only	-	Feb	27	2:00s	0	-
-Rule	AN	1973	1981	-	Mar	Sun>=1	2:00s	0	-
-Rule	AN	1982	only	-	Apr	Sun>=1	2:00s	0	-
-Rule	AN	1983	1985	-	Mar	Sun>=1	2:00s	0	-
-Rule	AN	1986	1989	-	Mar	Sun>=15	2:00s	0	-
-Rule	AN	1986	only	-	Oct	19	2:00s	1:00	-
-Rule	AN	1987	1999	-	Oct	lastSun	2:00s	1:00	-
-Rule	AN	1990	1995	-	Mar	Sun>=1	2:00s	0	-
-Rule	AN	1996	2005	-	Mar	lastSun	2:00s	0	-
-Rule	AN	2000	only	-	Aug	lastSun	2:00s	1:00	-
-Rule	AN	2001	2007	-	Oct	lastSun	2:00s	1:00	-
-Rule	AN	2006	only	-	Apr	Sun>=1	2:00s	0	-
-Rule	AN	2007	only	-	Mar	lastSun	2:00s	0	-
-Rule	AN	2008	max	-	Apr	Sun>=1	2:00s	0	-
-Rule	AN	2008	max	-	Oct	Sun>=1	2:00s	1:00	-
+Rule	AN	1971	1985	-	Oct	lastSun	2:00s	1:00	D
+Rule	AN	1972	only	-	Feb	27	2:00s	0	S
+Rule	AN	1973	1981	-	Mar	Sun>=1	2:00s	0	S
+Rule	AN	1982	only	-	Apr	Sun>=1	2:00s	0	S
+Rule	AN	1983	1985	-	Mar	Sun>=1	2:00s	0	S
+Rule	AN	1986	1989	-	Mar	Sun>=15	2:00s	0	S
+Rule	AN	1986	only	-	Oct	19	2:00s	1:00	D
+Rule	AN	1987	1999	-	Oct	lastSun	2:00s	1:00	D
+Rule	AN	1990	1995	-	Mar	Sun>=1	2:00s	0	S
+Rule	AN	1996	2005	-	Mar	lastSun	2:00s	0	S
+Rule	AN	2000	only	-	Aug	lastSun	2:00s	1:00	D
+Rule	AN	2001	2007	-	Oct	lastSun	2:00s	1:00	D
+Rule	AN	2006	only	-	Apr	Sun>=1	2:00s	0	S
+Rule	AN	2007	only	-	Mar	lastSun	2:00s	0	S
+Rule	AN	2008	max	-	Apr	Sun>=1	2:00s	0	S
+Rule	AN	2008	max	-	Oct	Sun>=1	2:00s	1:00	D
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Australia/Sydney	10:04:52 -	LMT	1895 Feb
-			10:00	Aus	EST	1971
-			10:00	AN	EST
+			10:00	Aus	E%sT	1971
+			10:00	AN	E%sT
 Zone Australia/Broken_Hill 9:25:48 -	LMT	1895 Feb
 			10:00	-	EST	1896 Aug 23
 			9:00	-	CST	1899 May
-			9:30	Aus	CST	1971
-			9:30	AN	CST	2000
-			9:30	AS	CST
+			9:30	Aus	C%sT	1971
+			9:30	AN	C%sT	2000
+			9:30	AS	C%sT
 
 # Lord Howe Island
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	LH	1981	1984	-	Oct	lastSun	2:00	1:00	-
-Rule	LH	1982	1985	-	Mar	Sun>=1	2:00	0	-
-Rule	LH	1985	only	-	Oct	lastSun	2:00	0:30	-
-Rule	LH	1986	1989	-	Mar	Sun>=15	2:00	0	-
-Rule	LH	1986	only	-	Oct	19	2:00	0:30	-
-Rule	LH	1987	1999	-	Oct	lastSun	2:00	0:30	-
-Rule	LH	1990	1995	-	Mar	Sun>=1	2:00	0	-
-Rule	LH	1996	2005	-	Mar	lastSun	2:00	0	-
-Rule	LH	2000	only	-	Aug	lastSun	2:00	0:30	-
-Rule	LH	2001	2007	-	Oct	lastSun	2:00	0:30	-
-Rule	LH	2006	only	-	Apr	Sun>=1	2:00	0	-
-Rule	LH	2007	only	-	Mar	lastSun	2:00	0	-
-Rule	LH	2008	max	-	Apr	Sun>=1	2:00	0	-
-Rule	LH	2008	max	-	Oct	Sun>=1	2:00	0:30	-
+Rule	LH	1981	1984	-	Oct	lastSun	2:00	1:00	D
+Rule	LH	1982	1985	-	Mar	Sun>=1	2:00	0	S
+Rule	LH	1985	only	-	Oct	lastSun	2:00	0:30	D
+Rule	LH	1986	1989	-	Mar	Sun>=15	2:00	0	S
+Rule	LH	1986	only	-	Oct	19	2:00	0:30	D
+Rule	LH	1987	1999	-	Oct	lastSun	2:00	0:30	D
+Rule	LH	1990	1995	-	Mar	Sun>=1	2:00	0	S
+Rule	LH	1996	2005	-	Mar	lastSun	2:00	0	S
+Rule	LH	2000	only	-	Aug	lastSun	2:00	0:30	D
+Rule	LH	2001	2007	-	Oct	lastSun	2:00	0:30	D
+Rule	LH	2006	only	-	Apr	Sun>=1	2:00	0	S
+Rule	LH	2007	only	-	Mar	lastSun	2:00	0	S
+Rule	LH	2008	max	-	Apr	Sun>=1	2:00	0	S
+Rule	LH	2008	max	-	Oct	Sun>=1	2:00	0:30	D
 Zone Australia/Lord_Howe 10:36:20 -	LMT	1895 Feb
 			10:00	-	EST	1981 Mar
-			10:30	LH	LHST
+			10:30	LH	LH%sT
 
 # Australian miscellany
 #
@@ -238,10 +238,10 @@ Zone Australia/Lord_Howe 10:36:20 -	LMT	1895 Feb
 Zone Antarctica/Macquarie 0	-	zzz	1899 Nov
 			10:00	-	EST	1916 Oct 1 2:00
 			10:00	1:00	EST	1917 Feb
-			10:00	Aus	EST	1919 Apr 1 0:00s
+			10:00	Aus	E%sT	1919 Apr 1 0:00s
 			0	-	zzz	1948 Mar 25
-			10:00	Aus	EST	1967
-			10:00	AT	EST	2010 Apr 4 3:00
+			10:00	Aus	E%sT	1967
+			10:00	AT	E%sT	2010 Apr 4 3:00
 			11:00	-	MIST	# Macquarie I Standard Time
 
 # Christmas

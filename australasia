@@ -12,13 +12,13 @@
 # Please see the notes below for the controversy about "EST" versus "AEST" etc.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Aus	1917	only	-	Jan	 1	0:01	1:00	-
-Rule	Aus	1917	only	-	Mar	25	2:00	0	-
-Rule	Aus	1942	only	-	Jan	 1	2:00	1:00	-
-Rule	Aus	1942	only	-	Mar	29	2:00	0	-
-Rule	Aus	1942	only	-	Sep	27	2:00	1:00	-
-Rule	Aus	1943	1944	-	Mar	lastSun	2:00	0	-
-Rule	Aus	1943	only	-	Oct	 3	2:00	1:00	-
+Rule	Aus	1917	only	-	Jan	 1	0:01	1:00	D
+Rule	Aus	1917	only	-	Mar	25	2:00	0	S
+Rule	Aus	1942	only	-	Jan	 1	2:00	1:00	D
+Rule	Aus	1942	only	-	Mar	29	2:00	0	S
+Rule	Aus	1942	only	-	Sep	27	2:00	1:00	D
+Rule	Aus	1943	1944	-	Mar	lastSun	2:00	0	S
+Rule	Aus	1943	only	-	Oct	 3	2:00	1:00	D
 # Go with Whitman and the Australian National Standards Commission, which
 # says W Australia didn't use DST in 1943/1944.  Ignore Whitman's claim that
 # 1944/1945 was just like 1943/1944.
@@ -26,26 +26,26 @@ Rule	Aus	1943	only	-	Oct	 3	2:00	1:00	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 # Northern Territory
 Zone Australia/Darwin	 8:43:20 -	LMT	1895 Feb
-			 9:00	-	CST	1899 May
-			 9:30	Aus	CST
+			 9:00	-	ACST	1899 May
+			 9:30	Aus	AC%sT
 # Western Australia
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	AW	1974	only	-	Oct	lastSun	2:00s	1:00	-
-Rule	AW	1975	only	-	Mar	Sun>=1	2:00s	0	-
-Rule	AW	1983	only	-	Oct	lastSun	2:00s	1:00	-
-Rule	AW	1984	only	-	Mar	Sun>=1	2:00s	0	-
-Rule	AW	1991	only	-	Nov	17	2:00s	1:00	-
-Rule	AW	1992	only	-	Mar	Sun>=1	2:00s	0	-
-Rule	AW	2006	only	-	Dec	 3	2:00s	1:00	-
-Rule	AW	2007	2009	-	Mar	lastSun	2:00s	0	-
-Rule	AW	2007	2008	-	Oct	lastSun	2:00s	1:00	-
+Rule	AW	1974	only	-	Oct	lastSun	2:00s	1:00	D
+Rule	AW	1975	only	-	Mar	Sun>=1	2:00s	0	S
+Rule	AW	1983	only	-	Oct	lastSun	2:00s	1:00	D
+Rule	AW	1984	only	-	Mar	Sun>=1	2:00s	0	S
+Rule	AW	1991	only	-	Nov	17	2:00s	1:00	D
+Rule	AW	1992	only	-	Mar	Sun>=1	2:00s	0	S
+Rule	AW	2006	only	-	Dec	 3	2:00s	1:00	D
+Rule	AW	2007	2009	-	Mar	lastSun	2:00s	0	S
+Rule	AW	2007	2008	-	Oct	lastSun	2:00s	1:00	D
 Zone Australia/Perth	 7:43:24 -	LMT	1895 Dec
-			 8:00	Aus	WST	1943 Jul
-			 8:00	AW	WST
+			 8:00	Aus	AW%sT	1943 Jul
+			 8:00	AW	AW%sT
 Zone Australia/Eucla	 8:35:28 -	LMT	1895 Dec
-			 8:45	Aus	CWST	1943 Jul
-			 8:45	AW	CWST
+			 8:45	Aus	ACW%sT	1943 Jul
+			 8:45	AW	ACW%sT
 
 # Queensland
 #
@@ -61,42 +61,42 @@ Zone Australia/Eucla	 8:35:28 -	LMT	1895 Dec
 # so use Lindeman.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	AQ	1971	only	-	Oct	lastSun	2:00s	1:00	-
-Rule	AQ	1972	only	-	Feb	lastSun	2:00s	0	-
-Rule	AQ	1989	1991	-	Oct	lastSun	2:00s	1:00	-
-Rule	AQ	1990	1992	-	Mar	Sun>=1	2:00s	0	-
-Rule	Holiday	1992	1993	-	Oct	lastSun	2:00s	1:00	-
-Rule	Holiday	1993	1994	-	Mar	Sun>=1	2:00s	0	-
+Rule	AQ	1971	only	-	Oct	lastSun	2:00s	1:00	D
+Rule	AQ	1972	only	-	Feb	lastSun	2:00s	0	S
+Rule	AQ	1989	1991	-	Oct	lastSun	2:00s	1:00	D
+Rule	AQ	1990	1992	-	Mar	Sun>=1	2:00s	0	S
+Rule	Holiday	1992	1993	-	Oct	lastSun	2:00s	1:00	D
+Rule	Holiday	1993	1994	-	Mar	Sun>=1	2:00s	0	S
 Zone Australia/Brisbane	10:12:08 -	LMT	1895
-			10:00	Aus	EST	1971
-			10:00	AQ	EST
+			10:00	Aus	AE%sT	1971
+			10:00	AQ	AE%sT
 Zone Australia/Lindeman  9:55:56 -	LMT	1895
-			10:00	Aus	EST	1971
-			10:00	AQ	EST	1992 Jul
-			10:00	Holiday	EST
+			10:00	Aus	AE%sT	1971
+			10:00	AQ	AE%sT	1992 Jul
+			10:00	Holiday	AE%sT
 
 # South Australia
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	AS	1971	1985	-	Oct	lastSun	2:00s	1:00	-
-Rule	AS	1986	only	-	Oct	19	2:00s	1:00	-
-Rule	AS	1987	2007	-	Oct	lastSun	2:00s	1:00	-
-Rule	AS	1972	only	-	Feb	27	2:00s	0	-
-Rule	AS	1973	1985	-	Mar	Sun>=1	2:00s	0	-
-Rule	AS	1986	1990	-	Mar	Sun>=15	2:00s	0	-
-Rule	AS	1991	only	-	Mar	3	2:00s	0	-
-Rule	AS	1992	only	-	Mar	22	2:00s	0	-
-Rule	AS	1993	only	-	Mar	7	2:00s	0	-
-Rule	AS	1994	only	-	Mar	20	2:00s	0	-
-Rule	AS	1995	2005	-	Mar	lastSun	2:00s	0	-
-Rule	AS	2006	only	-	Apr	2	2:00s	0	-
-Rule	AS	2007	only	-	Mar	lastSun	2:00s	0	-
-Rule	AS	2008	max	-	Apr	Sun>=1	2:00s	0	-
-Rule	AS	2008	max	-	Oct	Sun>=1	2:00s	1:00	-
+Rule	AS	1971	1985	-	Oct	lastSun	2:00s	1:00	D
+Rule	AS	1986	only	-	Oct	19	2:00s	1:00	D
+Rule	AS	1987	2007	-	Oct	lastSun	2:00s	1:00	D
+Rule	AS	1972	only	-	Feb	27	2:00s	0	S
+Rule	AS	1973	1985	-	Mar	Sun>=1	2:00s	0	S
+Rule	AS	1986	1990	-	Mar	Sun>=15	2:00s	0	S
+Rule	AS	1991	only	-	Mar	3	2:00s	0	S
+Rule	AS	1992	only	-	Mar	22	2:00s	0	S
+Rule	AS	1993	only	-	Mar	7	2:00s	0	S
+Rule	AS	1994	only	-	Mar	20	2:00s	0	S
+Rule	AS	1995	2005	-	Mar	lastSun	2:00s	0	S
+Rule	AS	2006	only	-	Apr	2	2:00s	0	S
+Rule	AS	2007	only	-	Mar	lastSun	2:00s	0	S
+Rule	AS	2008	max	-	Apr	Sun>=1	2:00s	0	S
+Rule	AS	2008	max	-	Oct	Sun>=1	2:00s	1:00	D
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Australia/Adelaide	9:14:20 -	LMT	1895 Feb
-			9:00	-	CST	1899 May
-			9:30	Aus	CST	1971
-			9:30	AS	CST
+			9:00	-	ACST	1899 May
+			9:30	Aus	AC%sT	1971
+			9:30	AS	AC%sT
 
 # Tasmania
 #
@@ -105,106 +105,106 @@ Zone Australia/Adelaide	9:14:20 -	LMT	1895 Feb
 # says King Island didn't observe DST from WWII until late 1971.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	AT	1967	only	-	Oct	Sun>=1	2:00s	1:00	-
-Rule	AT	1968	only	-	Mar	lastSun	2:00s	0	-
-Rule	AT	1968	1985	-	Oct	lastSun	2:00s	1:00	-
-Rule	AT	1969	1971	-	Mar	Sun>=8	2:00s	0	-
-Rule	AT	1972	only	-	Feb	lastSun	2:00s	0	-
-Rule	AT	1973	1981	-	Mar	Sun>=1	2:00s	0	-
-Rule	AT	1982	1983	-	Mar	lastSun	2:00s	0	-
-Rule	AT	1984	1986	-	Mar	Sun>=1	2:00s	0	-
-Rule	AT	1986	only	-	Oct	Sun>=15	2:00s	1:00	-
-Rule	AT	1987	1990	-	Mar	Sun>=15	2:00s	0	-
-Rule	AT	1987	only	-	Oct	Sun>=22	2:00s	1:00	-
-Rule	AT	1988	1990	-	Oct	lastSun	2:00s	1:00	-
-Rule	AT	1991	1999	-	Oct	Sun>=1	2:00s	1:00	-
-Rule	AT	1991	2005	-	Mar	lastSun	2:00s	0	-
-Rule	AT	2000	only	-	Aug	lastSun	2:00s	1:00	-
-Rule	AT	2001	max	-	Oct	Sun>=1	2:00s	1:00	-
-Rule	AT	2006	only	-	Apr	Sun>=1	2:00s	0	-
-Rule	AT	2007	only	-	Mar	lastSun	2:00s	0	-
-Rule	AT	2008	max	-	Apr	Sun>=1	2:00s	0	-
+Rule	AT	1967	only	-	Oct	Sun>=1	2:00s	1:00	D
+Rule	AT	1968	only	-	Mar	lastSun	2:00s	0	S
+Rule	AT	1968	1985	-	Oct	lastSun	2:00s	1:00	D
+Rule	AT	1969	1971	-	Mar	Sun>=8	2:00s	0	S
+Rule	AT	1972	only	-	Feb	lastSun	2:00s	0	S
+Rule	AT	1973	1981	-	Mar	Sun>=1	2:00s	0	S
+Rule	AT	1982	1983	-	Mar	lastSun	2:00s	0	S
+Rule	AT	1984	1986	-	Mar	Sun>=1	2:00s	0	S
+Rule	AT	1986	only	-	Oct	Sun>=15	2:00s	1:00	D
+Rule	AT	1987	1990	-	Mar	Sun>=15	2:00s	0	S
+Rule	AT	1987	only	-	Oct	Sun>=22	2:00s	1:00	D
+Rule	AT	1988	1990	-	Oct	lastSun	2:00s	1:00	D
+Rule	AT	1991	1999	-	Oct	Sun>=1	2:00s	1:00	D
+Rule	AT	1991	2005	-	Mar	lastSun	2:00s	0	S
+Rule	AT	2000	only	-	Aug	lastSun	2:00s	1:00	D
+Rule	AT	2001	max	-	Oct	Sun>=1	2:00s	1:00	D
+Rule	AT	2006	only	-	Apr	Sun>=1	2:00s	0	S
+Rule	AT	2007	only	-	Mar	lastSun	2:00s	0	S
+Rule	AT	2008	max	-	Apr	Sun>=1	2:00s	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Australia/Hobart	9:49:16	-	LMT	1895 Sep
-			10:00	-	EST	1916 Oct 1 2:00
-			10:00	1:00	EST	1917 Feb
-			10:00	Aus	EST	1967
-			10:00	AT	EST
+			10:00	-	AEST	1916 Oct 1 2:00
+			10:00	1:00	AEDT	1917 Feb
+			10:00	Aus	AE%sT	1967
+			10:00	AT	AE%sT
 Zone Australia/Currie	9:35:28	-	LMT	1895 Sep
-			10:00	-	EST	1916 Oct 1 2:00
-			10:00	1:00	EST	1917 Feb
-			10:00	Aus	EST	1971 Jul
-			10:00	AT	EST
+			10:00	-	AEST	1916 Oct 1 2:00
+			10:00	1:00	AEDT	1917 Feb
+			10:00	Aus	AE%sT	1971 Jul
+			10:00	AT	AE%sT
 
 # Victoria
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	AV	1971	1985	-	Oct	lastSun	2:00s	1:00	-
-Rule	AV	1972	only	-	Feb	lastSun	2:00s	0	-
-Rule	AV	1973	1985	-	Mar	Sun>=1	2:00s	0	-
-Rule	AV	1986	1990	-	Mar	Sun>=15	2:00s	0	-
-Rule	AV	1986	1987	-	Oct	Sun>=15	2:00s	1:00	-
-Rule	AV	1988	1999	-	Oct	lastSun	2:00s	1:00	-
-Rule	AV	1991	1994	-	Mar	Sun>=1	2:00s	0	-
-Rule	AV	1995	2005	-	Mar	lastSun	2:00s	0	-
-Rule	AV	2000	only	-	Aug	lastSun	2:00s	1:00	-
-Rule	AV	2001	2007	-	Oct	lastSun	2:00s	1:00	-
-Rule	AV	2006	only	-	Apr	Sun>=1	2:00s	0	-
-Rule	AV	2007	only	-	Mar	lastSun	2:00s	0	-
-Rule	AV	2008	max	-	Apr	Sun>=1	2:00s	0	-
-Rule	AV	2008	max	-	Oct	Sun>=1	2:00s	1:00	-
+Rule	AV	1971	1985	-	Oct	lastSun	2:00s	1:00	D
+Rule	AV	1972	only	-	Feb	lastSun	2:00s	0	S
+Rule	AV	1973	1985	-	Mar	Sun>=1	2:00s	0	S
+Rule	AV	1986	1990	-	Mar	Sun>=15	2:00s	0	S
+Rule	AV	1986	1987	-	Oct	Sun>=15	2:00s	1:00	D
+Rule	AV	1988	1999	-	Oct	lastSun	2:00s	1:00	D
+Rule	AV	1991	1994	-	Mar	Sun>=1	2:00s	0	S
+Rule	AV	1995	2005	-	Mar	lastSun	2:00s	0	S
+Rule	AV	2000	only	-	Aug	lastSun	2:00s	1:00	D
+Rule	AV	2001	2007	-	Oct	lastSun	2:00s	1:00	D
+Rule	AV	2006	only	-	Apr	Sun>=1	2:00s	0	S
+Rule	AV	2007	only	-	Mar	lastSun	2:00s	0	S
+Rule	AV	2008	max	-	Apr	Sun>=1	2:00s	0	S
+Rule	AV	2008	max	-	Oct	Sun>=1	2:00s	1:00	D
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Australia/Melbourne 9:39:52 -	LMT	1895 Feb
-			10:00	Aus	EST	1971
-			10:00	AV	EST
+			10:00	Aus	AE%sT	1971
+			10:00	AV	AE%sT
 
 # New South Wales
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	AN	1971	1985	-	Oct	lastSun	2:00s	1:00	-
-Rule	AN	1972	only	-	Feb	27	2:00s	0	-
-Rule	AN	1973	1981	-	Mar	Sun>=1	2:00s	0	-
-Rule	AN	1982	only	-	Apr	Sun>=1	2:00s	0	-
-Rule	AN	1983	1985	-	Mar	Sun>=1	2:00s	0	-
-Rule	AN	1986	1989	-	Mar	Sun>=15	2:00s	0	-
-Rule	AN	1986	only	-	Oct	19	2:00s	1:00	-
-Rule	AN	1987	1999	-	Oct	lastSun	2:00s	1:00	-
-Rule	AN	1990	1995	-	Mar	Sun>=1	2:00s	0	-
-Rule	AN	1996	2005	-	Mar	lastSun	2:00s	0	-
-Rule	AN	2000	only	-	Aug	lastSun	2:00s	1:00	-
-Rule	AN	2001	2007	-	Oct	lastSun	2:00s	1:00	-
-Rule	AN	2006	only	-	Apr	Sun>=1	2:00s	0	-
-Rule	AN	2007	only	-	Mar	lastSun	2:00s	0	-
-Rule	AN	2008	max	-	Apr	Sun>=1	2:00s	0	-
-Rule	AN	2008	max	-	Oct	Sun>=1	2:00s	1:00	-
+Rule	AN	1971	1985	-	Oct	lastSun	2:00s	1:00	D
+Rule	AN	1972	only	-	Feb	27	2:00s	0	S
+Rule	AN	1973	1981	-	Mar	Sun>=1	2:00s	0	S
+Rule	AN	1982	only	-	Apr	Sun>=1	2:00s	0	S
+Rule	AN	1983	1985	-	Mar	Sun>=1	2:00s	0	S
+Rule	AN	1986	1989	-	Mar	Sun>=15	2:00s	0	S
+Rule	AN	1986	only	-	Oct	19	2:00s	1:00	D
+Rule	AN	1987	1999	-	Oct	lastSun	2:00s	1:00	D
+Rule	AN	1990	1995	-	Mar	Sun>=1	2:00s	0	S
+Rule	AN	1996	2005	-	Mar	lastSun	2:00s	0	S
+Rule	AN	2000	only	-	Aug	lastSun	2:00s	1:00	D
+Rule	AN	2001	2007	-	Oct	lastSun	2:00s	1:00	D
+Rule	AN	2006	only	-	Apr	Sun>=1	2:00s	0	S
+Rule	AN	2007	only	-	Mar	lastSun	2:00s	0	S
+Rule	AN	2008	max	-	Apr	Sun>=1	2:00s	0	S
+Rule	AN	2008	max	-	Oct	Sun>=1	2:00s	1:00	D
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Australia/Sydney	10:04:52 -	LMT	1895 Feb
-			10:00	Aus	EST	1971
-			10:00	AN	EST
+			10:00	Aus	AE%sT	1971
+			10:00	AN	AE%sT
 Zone Australia/Broken_Hill 9:25:48 -	LMT	1895 Feb
-			10:00	-	EST	1896 Aug 23
-			9:00	-	CST	1899 May
-			9:30	Aus	CST	1971
-			9:30	AN	CST	2000
-			9:30	AS	CST
+			10:00	-	AEST	1896 Aug 23
+			9:00	-	ACST	1899 May
+			9:30	Aus	AC%sT	1971
+			9:30	AN	AC%sT	2000
+			9:30	AS	AC%sT
 
 # Lord Howe Island
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	LH	1981	1984	-	Oct	lastSun	2:00	1:00	-
-Rule	LH	1982	1985	-	Mar	Sun>=1	2:00	0	-
-Rule	LH	1985	only	-	Oct	lastSun	2:00	0:30	-
-Rule	LH	1986	1989	-	Mar	Sun>=15	2:00	0	-
-Rule	LH	1986	only	-	Oct	19	2:00	0:30	-
-Rule	LH	1987	1999	-	Oct	lastSun	2:00	0:30	-
-Rule	LH	1990	1995	-	Mar	Sun>=1	2:00	0	-
-Rule	LH	1996	2005	-	Mar	lastSun	2:00	0	-
-Rule	LH	2000	only	-	Aug	lastSun	2:00	0:30	-
-Rule	LH	2001	2007	-	Oct	lastSun	2:00	0:30	-
-Rule	LH	2006	only	-	Apr	Sun>=1	2:00	0	-
-Rule	LH	2007	only	-	Mar	lastSun	2:00	0	-
-Rule	LH	2008	max	-	Apr	Sun>=1	2:00	0	-
-Rule	LH	2008	max	-	Oct	Sun>=1	2:00	0:30	-
+Rule	LH	1981	1984	-	Oct	lastSun	2:00	1:00	D
+Rule	LH	1982	1985	-	Mar	Sun>=1	2:00	0	S
+Rule	LH	1985	only	-	Oct	lastSun	2:00	0:30	D
+Rule	LH	1986	1989	-	Mar	Sun>=15	2:00	0	S
+Rule	LH	1986	only	-	Oct	19	2:00	0:30	D
+Rule	LH	1987	1999	-	Oct	lastSun	2:00	0:30	D
+Rule	LH	1990	1995	-	Mar	Sun>=1	2:00	0	S
+Rule	LH	1996	2005	-	Mar	lastSun	2:00	0	S
+Rule	LH	2000	only	-	Aug	lastSun	2:00	0:30	D
+Rule	LH	2001	2007	-	Oct	lastSun	2:00	0:30	D
+Rule	LH	2006	only	-	Apr	Sun>=1	2:00	0	S
+Rule	LH	2007	only	-	Mar	lastSun	2:00	0	S
+Rule	LH	2008	max	-	Apr	Sun>=1	2:00	0	S
+Rule	LH	2008	max	-	Oct	Sun>=1	2:00	0:30	D
 Zone Australia/Lord_Howe 10:36:20 -	LMT	1895 Feb
-			10:00	-	EST	1981 Mar
-			10:30	LH	LHST
+			10:00	-	AEST	1981 Mar
+			10:30	LH	LH%sT
 
 # Australian miscellany
 #
@@ -236,12 +236,12 @@ Zone Australia/Lord_Howe 10:36:20 -	LMT	1895 Feb
 # this is required for correct handling of times before 1916 by
 # pre-2013 versions of localtime.
 Zone Antarctica/Macquarie 0	-	zzz	1899 Nov
-			10:00	-	EST	1916 Oct 1 2:00
-			10:00	1:00	EST	1917 Feb
-			10:00	Aus	EST	1919 Apr 1 0:00s
+			10:00	-	AEST	1916 Oct 1 2:00
+			10:00	1:00	AEDT	1917 Feb
+			10:00	Aus	AE%sT	1919 Apr 1 0:00s
 			0	-	zzz	1948 Mar 25
-			10:00	Aus	EST	1967
-			10:00	AT	EST	2010 Apr 4 3:00
+			10:00	Aus	AE%sT	1967
+			10:00	AT	AE%sT	2010 Apr 4 3:00
 			11:00	-	MIST	# Macquarie I Standard Time
 
 # Christmas
@@ -802,21 +802,21 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # I invented the abbreviations marked '*' in the following table;
 # the rest are from earlier versions of this file, or from other sources.
 # Corrections are welcome!
-#		std dst
-#		LMT	Local Mean Time
-#	  8:00	WST WST	Western Australia
-#	  8:45	CWST CWST Central Western Australia*
-#	  9:00	JST	Japan
-#	  9:30	CST CST	Central Australia
-#	 10:00	EST EST	Eastern Australia
-#	 10:00	ChST	Chamorro
-#	 10:30	LHST LHST Lord Howe*
-#	 11:30	NZMT NZST New Zealand through 1945
-#	 12:00	NZST NZDT New Zealand 1946-present
-#	 12:45	CHAST CHADT Chatham*
-#	-11:00	SST	Samoa
-#	-10:00	HST	Hawaii
-#	- 8:00	PST	Pitcairn*
+#		std	dst
+#		LMT		Local Mean Time
+#	  8:00	AWST	AWDT	Western Australia
+#	  8:45	ACWST	ACWDT	Central Western Australia*
+#	  9:00	JST		Japan
+#	  9:30	ACST	ACDT	Central Australia
+#	 10:00	AEST	AEDT	Eastern Australia
+#	 10:00	ChST		Chamorro
+#	 10:30	LHST	LHDT	Lord Howe*
+#	 11:30	NZMT	NZST	New Zealand through 1945
+#	 12:00	NZST	NZDT	New Zealand 1946-present
+#	 12:45	CHAST	CHADT	Chatham*
+#	-11:00	SST		Samoa
+#	-10:00	HST		Hawaii
+#	- 8:00	PST		Pitcairn*
 #
 # See the 'northamerica' file for Hawaii.
 # See the 'southamerica' file for Easter I and the Galápagos Is.
@@ -824,6 +824,19 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 ###############################################################################
 
 # Australia
+
+# From Paul Eggert (2014-06-30):
+# Daylight saving time has long been controversial in Australia, pitting
+# region against region, rural against urban, and local against global.
+# For example, in her review of Graeme Davison's _The Unforgiving
+# Minute: how Australians learned to tell the time_ (1993), Perth native
+# Phillipa J Martyr wrote, "The section entitled 'Saving Daylight' was
+# very informative, but was (as can, sadly, only be expected from a
+# Melbourne-based study) replete with the usual chuckleheaded
+# Queenslanders and straw-chewing yokels from the West prattling fables
+# about fading curtains and crazed farm animals."
+# Electronic Journal of Australian and New Zealand History (1997-03-03)
+# http://www.jcu.edu.au/aff/history/reviews/davison.htm
 
 # From Paul Eggert (2005-12-08):
 # Implementation Dates of Daylight Saving Time within Australia
@@ -853,98 +866,105 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # prefixed by the word 'Australian' when referring to local times;
 # time announcements on that service, naturally enough, are made in UTC.
 
-# From Arthur David Olson (1992-03-08):
-# Given the above, what's chosen for year-round use is:
-#	CST	for any place operating at a GMTOFF of 9:30
-#	WST	for any place operating at a GMTOFF of 8:00
-#	EST	for any place operating at a GMTOFF of 10:00
-
-# From Chuck Soper (2006-06-01):
-# I recently found this Australian government web page on time zones:
-# <http://www.australia.gov.au/about-australia-13time>
-# And this government web page lists time zone names and abbreviations:
-# <http://www.bom.gov.au/climate/averages/tables/daysavtm.shtml>
-
-# From Paul Eggert (2001-04-05), summarizing a long discussion about "EST"
-# versus "AEST" etc.:
+# From Paul Eggert (2014-06-30):
 #
-# I see the following points of dispute:
+# Inspired by Mackin's remarks quoted above, earlier versions of this
+# file used "EST" for both Eastern Standard Time and Eastern Summer
+# Time in Australia, and similarly for "CST", "CWST", and "WST".
+# However, these abbreviations were confusing and were not common
+# practice among Australians, and there were justifiable complaints
+# about them, so I attempted to survey current Australian usage.
+# For the tz database, the full English phrase is not that important;
+# what matters is the abbreviation.  It's difficult to survey the web
+# directly for abbreviation usage, as there are so many false hits for
+# strings like "EST" and "EDT", so I looked for pages that defined an
+# abbreviation for eastern or central DST in Australia, and got the
+# following numbers of unique hits for the listed Google queries:
 #
-# * How important are unique time zone abbreviations?
+#   10 "Eastern Daylight Time AEST" site:au [some are false hits]
+#   10 "Eastern Summer Time AEST" site:au
+#   10 "Summer Time AEDT" site:au
+#   13 "EDST Eastern Daylight Saving Time" site:au
+#   18 "Summer Time ESST" site:au
+#   28 "Eastern Daylight Saving Time EDST" site:au
+#   39 "EDT Eastern Daylight Time" site:au [some are false hits]
+#   53 "Eastern Daylight Time EDT" site:au [some are false hits]
+#   54 "AEDT Australian Eastern Daylight Time" site:au
+#  182 "Eastern Daylight Time AEDT" site:au
 #
-#   Here I tend to agree with the point (most recently made by Chris
-#   Newman) that unique abbreviations should not be essential for proper
-#   operation of software.  We have other instances of ambiguity
-#   (e.g. "IST" denoting both "Israel Standard Time" and "Indian
-#   Standard Time"), and they are not likely to go away any time soon.
-#   In the old days, some software mistakenly relied on unique
-#   abbreviations, but this is becoming less true with time, and I don't
-#   think it's that important to cater to such software these days.
+#   17 "Central Daylight Time CDT" site:au [some are false hits]
+#   46 "Central Daylight Time ACDT" site:au
 #
-#   On the other hand, there is another motivation for unambiguous
-#   abbreviations: it cuts down on human confusion.  This is
-#   particularly true for Australia, where "EST" can mean one thing for
-#   time T and a different thing for time T plus 1 second.
+# I tried several other variants (e.g., "Eastern Summer Time EST") but
+# they all returned fewer than 10 unique hits.  I also looked for pages
+# mentioning both "western standard time" and an abbreviation, since
+# there is no WST in the US to generate false hits, and found:
 #
-# * Does the relevant legislation indicate which abbreviations should be used?
+#  156 "western standard time" AWST site:au
+#  226 "western standard time" WST site:au
 #
-#   Here I tend to think that things are a mess, just as they are in
-#   many other countries.  We Americans are currently disagreeing about
-#   which abbreviation to use for the newly legislated Chamorro Standard
-#   Time, for example.
+# I then surveyed the top ten newspapers in Australia by circulation as
+# listed in Wikipedia, using Google queries like "AEDT site:heraldsun.com.au"
+# and obtaining estimated counts from the initial page of search results.
+# All ten papers greatly preferred "AEDT" to "EDT".  The papers
+# surveyed were the Herald Sun, The Daily Telegraph, The Courier-Mail,
+# The Sydney Morning Herald, The West Australian, The Age, The Advertiser,
+# The Australian, The Financial Review, and The Herald (Newcastle).
 #
-#   Personally, I would prefer to use common practice; I would like to
-#   refer to legislation only for examples of common practice, or as a
-#   tiebreaker.
+# I also searched for historical usage, to see whether abbreviations
+# like "AEDT" are new.  A Trove search <http://trove.nla.gov.au/>
+# found only one newspaper (The Canberra Times) with a house style
+# dating back to the 1970s, I expect because other newspapers weren't
+# fully indexed.  The Canberra Times strongly preferred abbreviations
+# like "AEDT".  The first occurrence of "AEDT" was a World Weather
+# column (1971-11-17, page 24), and of "ACDT" was a Scoreboard column
+# (1993-01-24, p 16).  The style was the typical usage but was not
+# strictly enforced; for example, "Welcome to the twilight zones ..."
+# (1994-10-29, p 1) uses the abbreviations AEST/AEDT, CST/CDT, and
+# WST, and goes on to say, "The confusion and frustration some feel
+# about the lack of uniformity among Australia's six states and two
+# territories has prompted one group to form its very own political
+# party -- the Sydney-based Daylight Saving Extension Party."
 #
-# * Do Australians more often use "Eastern Daylight Time" or "Eastern
-#   Summer Time"?  Do they typically prefix the time zone names with
-#   the word "Australian"?
+# I also surveyed federal government sources.  They did not agree:
 #
-#   My own impression is that both "Daylight Time" and "Summer Time" are
-#   common and are widely understood, but that "Summer Time" is more
-#   popular; and that the leading "A" is also common but is omitted more
-#   often than not.  I just used AltaVista advanced search and got the
-#   following count of page hits:
+#   The Australian Government (2014-03-26)
+#   http://australia.gov.au/about-australia/our-country/time
+#   (This document was produced by the Department of Finance.)
+#   AEST ACST AWST AEDT ACDT
 #
-#     1,103 "Eastern Summer Time" AND domain:au
-#       971 "Australian Eastern Summer Time" AND domain:au
-#       613 "Eastern Daylight Time" AND domain:au
-#       127 "Australian Eastern Daylight Time" AND domain:au
+#   Bureau of Meteorology (2012-11-08)
+#   http://www.bom.gov.au/climate/averages/tables/daysavtm.shtml
+#   EST CST WST EDT CDT
 #
-#   Here "Summer" seems quite a bit more popular than "Daylight",
-#   particularly when we know the time zone is Australian and not US,
-#   say.  The "Australian" prefix seems to be popular for Eastern Summer
-#   Time, but unpopular for Eastern Daylight Time.
+#   Civil Aviation Safety Authority (undated)
+#   http://services.casa.gov.au/outnback/inc/pages/episode3/episode-3_time_zones.shtml
+#   EST CST WST (no abbreviations given for DST)
 #
-#   For abbreviations, tools like AltaVista are less useful because of
-#   ambiguity.  Many hits are not really time zones, unfortunately, and
-#   many hits denote US time zones and not Australian ones.  But here
-#   are the hit counts anyway:
+#   Geoscience Australia (2011-11-24)
+#   http://www.ga.gov.au/geodesy/astro/sunrise.jsp
+#   AEST ACST AWST AEDT ACDT
 #
-#     161,304 "EST" and domain:au
-#      25,156 "EDT" and domain:au
-#      18,263 "AEST" and domain:au
-#      10,416 "AEDT" and domain:au
+#   Parliamentary Library (2008-11-10)
+#   http://www.aph.gov.au/binaries/library/pubs/rp/2008-09/09rp14.pdf
+#   EST CST WST preferred for standard time; AEST AEDT ACST ACDT also used
 #
-#      14,538 "CST" and domain:au
-#       5,728 "CDT" and domain:au
-#         176 "ACST" and domain:au
-#          29 "ACDT" and domain:au
+#   The Transport Safety Bureau has an extensive series of accident reports,
+#   and investigators seem to use whatever abbreviation they like.
+#   Googling site:atsb.gov.au found the following number of unique hits:
+#   311 "ESuT", 195 "EDT", 26 "AEDT", 83 "CSuT", 46 "CDT".
+#   "_SuT" tended to appear in older reports, and "A_DT" tended to
+#   appear in reports of events with international implications.
 #
-#       7,539 "WST" and domain:au
-#          68 "AWST" and domain:au
-#
-#   This data suggest that Australians tend to omit the "A" prefix in
-#   practice.  The situation for "ST" versus "DT" is less clear, given
-#   the ambiguities involved.
-#
-# * How do Australians feel about the abbreviations in the tz database?
-#
-#   If you just count Australians on this list, I count 2 in favor and 3
-#   against.  One of the "against" votes (David Keegel) counseled delay,
-#   saying that both AEST/AEDT and EST/EST are widely used and
-#   understood in Australia.
+# From the above it appears that there is a working consensus in
+# Australia to use trailing "DT" for daylight saving time; although
+# some sources use trailing "SST" or "ST" or "SuT" they are by far in
+# the minority.  The case for leading "A" is weaker, but since it
+# seems to be preferred in the overall web and is preferred in all
+# the leading newspaper websites and in many government departments,
+# it has a stronger case than omitting the leading "A".  The current
+# version of the database therefore uses abbreviations like "AEST" and
+# "AEDT" for Australian time zones.
 
 # From Paul Eggert (1995-12-19):
 # Shanks & Pottenger report 2:00 for all autumn changes in Australia and NZ.

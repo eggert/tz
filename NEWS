@@ -2,6 +2,16 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting time zone abbreviations
+
+    Australian eastern time zone abbreviations are now AEST/AEDT not EST,
+    and similarly for the other Australian zones.  That is, for eastern
+    standard and daylight saving time the abbreviations are AEST and AEDT
+    instead of the former EST for both; similarly, ACST/ACDT, ACWST/ACWDT,
+    and AWST/AWDT are now used instead of the former CST, CWST, and WST.
+    This change does not affect UTC offsets, only time zone abbreviations.
+    (Thanks to Rich Tibbett and many others.)
+
   Changes affecting past time stamps
 
     Finland's 1942 fall-back transition was October 4 at 01:00, not

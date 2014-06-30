@@ -103,13 +103,13 @@ Rule	ChileAQ	2012	max	-	Sep	Sun>=2	4:00u	1:00	S
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Antarctica/Casey	0	-	zzz	1969
-			8:00	-	WST	2009 Oct 18 2:00
-						# Western (Aus) Standard Time
+			8:00	-	AWST	2009 Oct 18 2:00
+						# western Australia time
 			11:00	-	CAST	2010 Mar 5 2:00
 						# Casey Time
-			8:00	-	WST	2011 Oct 28 2:00
+			8:00	-	AWST	2011 Oct 28 2:00
 			11:00	-	CAST	2012 Feb 21 17:00u
-			8:00	-	WST
+			8:00	-	AWST
 Zone Antarctica/Davis	0	-	zzz	1957 Jan 13
 			7:00	-	DAVT	1964 Nov # Davis Time
 			0	-	zzz	1969 Feb

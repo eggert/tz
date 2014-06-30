@@ -542,10 +542,10 @@ in decreasing order of importance:
 		in some sense, asleep.
 
 Application writers should note that these abbreviations are ambiguous
-in practice: e.g. 'EST' has a different meaning in Australia than
+in practice: e.g. 'CST' has a different meaning in China than
 it does in the United States.  In new applications, it's often better
-to use numeric UT offsets like '-0500' instead of time zone
-abbreviations like 'EST'; this avoids the ambiguity.
+to use numeric UT offsets like '-0600' instead of time zone
+abbreviations like 'CST'; this avoids the ambiguity.
 
 
 ----- Calendrical issues -----

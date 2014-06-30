@@ -232,7 +232,7 @@ Zone Australia/Lord_Howe 10:36:20 -	LMT	1895 Feb
 #
 # From Arthur David Olson (2013-05-23):
 # The 1919 transition is overspecified below so pre-2013 zics
-# will produce a binary file with an EST-type as the first 32-bit type;
+# will produce a binary file with an [A]EST-type as the first 32-bit type;
 # this is required for correct handling of times before 1916 by
 # pre-2013 versions of localtime.
 Zone Antarctica/Macquarie 0	-	zzz	1899 Nov

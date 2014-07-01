@@ -12,7 +12,23 @@ Unreleased, experimental changes
     This change does not affect UTC offsets, only time zone abbreviations.
     (Thanks to Rich Tibbett and many others.)
 
+    The time zone abbreviation for Xinjiang Time (observed in Ürümqi)
+    has been changed from URUT to XJT.  (Thanks to Luther Ma.)
+
   Changes affecting past time stamps
+
+    China's five zones have been simplified to two, since the post-1970
+    differences in the other three seem to have been imaginary.  The
+    zones Asia/Harbin, Asia/Chongqing, and Asia/Kashgar have been
+    removed; backwards-compatibility links still work, albeit with
+    different behaviors for time stamps before May 1980.  Asia/Urumqi's
+    1980 transition to UTC+8 has been removed, so that it is now at
+    UTC+6 and not UTC+8.  (Thanks to Luther Ma and to Alois Treindl;
+    Treindl sent helpful translations of two papers by Guo Qingsheng.)
+
+    Asia/Shanghai's pre-standard-time UT offset has been changed from
+    8:05:57 to 8:05:43, the location of Xujiahui Observatory.  Its
+    transition to standard time has been changed from 1928 to 1901.
 
     Finland's 1942 fall-back transition was October 4 at 01:00, not
     October 3 at 00:00.  (Thanks to Konstantin Hyppönen.)
@@ -53,6 +69,11 @@ Unreleased, experimental changes
     HTML insertions, and are more consistent about bracketing URLs when they
     are not already surrounded by white space.  (Thanks to suggestions by
     Steffen Nurpmeso.)
+
+    There is new commentary about Xujiahui Observatory, the five timezone
+    project in China from 1918 to 1949, timekeeping in Japanese-occupied
+    Shanghai, and Tibet Time in the 1950s.  The sharp-eyed can spot the
+    warlord Jin Shuren in the data.
 
     In zone.tab, Pacific/Easter no longer mentions Salas y Gómez, as it
     is uninhabited.

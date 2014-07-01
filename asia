@@ -295,15 +295,16 @@ Zone	Asia/Phnom_Penh	6:59:40 -	LMT	1906 Jun  9
 # CHINA               8 H  AHEAD OF UTC  ALL OF CHINA, INCL TAIWAN
 # CHINA               9 H  AHEAD OF UTC  APR 17 - SEP 10
 
-# From Paul Eggert (2006-03-22):
-# Shanks & Pottenger write that China (except for Hong Kong and Macau)
-# has had a single time zone since 1980 May 1, observing summer DST
-# from 1986 through 1991; this contradicts Devine's
-# note about Time magazine, though apparently _something_ happened in 1986.
-# Go with Shanks & Pottenger for now.  I made up names for the other
-# pre-1980 time zones.
+# From Paul Eggert (2008-02-11):
+# Jim Mann, "A clumsy embrace for another western custom: China on daylight
+# time - sort of", Los Angeles Times, 1986-05-05 ... [says] that China began
+# observing daylight saving time in 1986.
 
-# From Shanks & Pottenger:
+# From Paul Eggert (2014-06-30):
+# Shanks & Pottenger have China switching to a single time zone in 1980, but
+# this doesn't seem to be correct.  They also write that China observed summer
+# DST from 1986 through 1991, which seems to match the above commentary, so
+# go with them for DST rules as follows:
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Shang	1940	only	-	Jun	 3	0:00	1:00	D
 Rule	Shang	1940	1941	-	Oct	 1	0:00	0	S
@@ -328,53 +329,86 @@ Rule	PRC	1987	1991	-	Apr	Sun>=10	0:00	1:00	D
 # (could be true), for the moment I am assuming that those two
 # counties are mistakes in the astro.com data.
 
-# From Paul Eggert (2008-02-11):
-# I just now checked Google News for western news sources that talk
-# about China's single time zone, and couldn't find anything before 1986
-# talking about China being in one time zone.  (That article was: Jim
-# Mann, "A clumsy embrace for another western custom: China on daylight
-# time - sort of", Los Angeles Times, 1986-05-05.  By the way, this
-# article confirms the tz database's data claiming that China began
-# observing daylight saving time in 1986.
+# From Paul Eggert (2014-06-30):
+# Alois Treindl kindly sent me translations of the following two sources:
 #
-# From Thomas S. Mullaney (2008-02-11):
-# I think you're combining two subjects that need to treated
-# separately: daylight savings (which, you're correct, wasn't
-# implemented until the 1980s) and the unified time zone centered near
-# Beijing (which was implemented in 1949). Briefly, there was also a
-# "Lhasa Time" in Tibet and "Ürümqi Time" in Xinjiang. The first was
-# ceased, and the second eventually recognized (again, in the 1980s).
+# (1)
+# Guo Qingsheng (National Time-Service Center, CAS, Xi'an 710600, China)
+# Beijing Time at the Beginning of the PRC
+# China Historical Materials of Science and Technology
+# (Zhongguo ke ji shi liao, 中国科技史料), Vol. 24, No. 1 (2003)
+# It gives evidence that at the beginning of the PRC, Beijing time was
+# officially apparent solar time!  However, Guo also says that the
+# evidence is dubious, as the relevant institute of astronomy had not
+# been taken over by the PRC yet.  It's plausible that apparent solar
+# time was announced but never implemented, and that people continued
+# to use UT+8.  As the Shanghai radio station (and I presume the
+# observatory) was still under control of French missionaries, it
+# could well have ignored any such mandate.
 #
-# From Paul Eggert (2008-06-30):
-# There seems to be a good chance China switched to a single time zone in 1949
-# rather than in 1980 as Shanks & Pottenger have it, but we don't have a
-# reliable documentary source saying so yet, so for now we still go with
-# Shanks & Pottenger.
-
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-# Changbai Time ("Long-white Time", Long-white = Heilongjiang area)
+# (2)
+# Guo Qing-sheng (Shaanxi Astronomical Observatory, CAS, Xi'an 710600, China)
+# A Study on the Standard Time Changes for the Past 100 Years in China
+# [undated and unknown publication location]
+# It says several things:
+#   * The Qing dynasty used local apparent solar time throughout China.
+#   * The Republic of China instituted Beijing mean solar time effective
+#     the official calendar book of 1914.
+#   * The French Concession in Shanghai set up signal stations in
+#     French docks in the 1890s, controled by Xujiahui (Zikawei)
+#     Obervatory and set to local mean time.
+#   * "From the end of the 19th century" it changed to UT+8.
+#   * Chinese Customs (by then reduced to a tool of foreign powers)
+#     eventually standardized on this time for all ports, and it
+#     became used by railways as well.
+#   * In 1918 the Central Observatory proposed dividing China into
+#     five time zones (see below for details).  This caught on
+#     at first only in coastal areas observing UT+8.
+#   * During WWII all of China was in theory was at UT+7.  In practice
+#     this was ignored in the west, and I presume was ignored in
+#     Japanese-occupied territory.
+#   * Japanese-occupied Manchuria was at UT+9, i.e., Japan time.
+#   * The five-zone plan was resurrected after WWII and officially put into
+#     place (with some modifications) in March 1948.  It's not clear
+#     how well it was observed in areas under Nationalist control.
+#   * The People's Liberation Army used UT+8 during the civil war.
+#
+# An AP article "Shanghai Internat'l Area Little Changed" in the
+# Lewiston (ME) Daily Sun (1939-05-29), p 17, said "Even the time is
+# different - the occupied districts going by Tokyo time, an hour
+# ahead of that prevailing in the rest of Shanghai."  Guess that the
+# Xujiahui Observatory was under French control and stuck with UT+8.
+#
+# In earlier versions of this file, China had many separate Zone entries, but
+# this was based on what was apparently incorrect data in Shanks & Pottenger.
+# This has now been simplified to the two entries Asia/Shanghai and
+# Asia/Urumqi, with the others being links for backward compatibility.
+# Proposed in 1918 and theoretically in effect until 1949 (although in practice
+# mainly observed in coastal areas), the five zones were:
+#
+# Changbai Time ("Long-white Time", Long-white = Heilongjiang area) UT+8.5
+# Asia/Harbin (currently a link to Asia/Shanghai)
 # Heilongjiang (except Mohe county), Jilin
-Zone	Asia/Harbin	8:26:44	-	LMT	1928 # or Haerbin
-			8:30	-	CHAT	1932 Mar # Changbai Time
-			8:00	-	CST	1940
-			9:00	-	CHAT	1966 May
-			8:30	-	CHAT	1980 May
-			8:00	PRC	C%sT
-# Zhongyuan Time ("Central plain Time")
+#
+# Zhongyuan Time ("Central plain Time") UT+8
+# Asia/Shanghai
 # most of China
-# Milne gives 8:05:56.7; round to nearest.
-Zone	Asia/Shanghai	8:05:57	-	LMT	1928
-			8:00	Shang	C%sT	1949
-			8:00	PRC	C%sT
-# Long-shu Time (probably due to Long and Shu being two names of that area)
+# This currently represents most other zones as well,
+# as apparently these regions have been the same since 1970.
+# Milne gives 8:05:43.2 for Xujiahui Observatory time; round to nearest.
+# Guo says Shanghai switched to UT+8 "from the end of the 19th century".
+#
+# Long-shu Time (probably due to Long and Shu being two names of that area) UT+7
+# Asia/Chongqing (currently a link to Asia/Shanghai)
 # Guangxi, Guizhou, Hainan, Ningxia, Sichuan, Shaanxi, and Yunnan;
 # most of Gansu; west Inner Mongolia; west Qinghai; and the Guangdong
 # counties Deqing, Enping, Kaiping, Luoding, Taishan, Xinxing,
 # Yangchun, Yangjiang, Yu'nan, and Yunfu.
-Zone	Asia/Chongqing	7:06:20	-	LMT	1928 # or Chungking
-			7:00	-	LONT	1980 May # Long-shu Time
-			8:00	PRC	C%sT
-# Xin-zang Time ("Xinjiang-Tibet Time")
+#
+# Xin-zang Time ("Xinjiang-Tibet Time") UT+6
+# Asia/Urumqi
+# This currently represents Kunlun Time as well,
+# as apparently the two regions have been the same since 1970.
 # The Gansu counties Aksay, Anxi, Dunhuang, Subei; west Qinghai;
 # the Guangdong counties  Xuwen, Haikang, Suixi, Lianjiang,
 # Zhanjiang, Wuchuan, Huazhou, Gaozhou, Maoming, Dianbai, and Xinyi;
@@ -383,10 +417,9 @@ Zone	Asia/Chongqing	7:06:20	-	LMT	1928 # or Chungking
 # Wusu, Qiemo, Xinyan, Wulanwusu, Jinghe, Yumin, Tacheng, Tuoli, Emin,
 # Shihezi, Changji, Yanqi, Heshuo, Tuokexun, Tulufan, Shanshan, Hami,
 # Fukang, Kuitun, Kumukuli, Miquan, Qitai, and Turfan.
-Zone	Asia/Urumqi	5:50:20	-	LMT	1928 # Ürümqi or Ürümchi
-			6:00	-	URUT	1980 May # Ürümqi Time
-			8:00	PRC	C%sT
-# Kunlun Time
+#
+# Kunlun Time UT+5.5
+# Asia/Kashgar (currently a link to Asia/Urumqi)
 # West Tibet, including Pulan, Aheqi, Shufu, Shule;
 # West Xinjiang, including Aksu, Atushi, Yining, Hetian, Cele, Luopu, Nileke,
 # Zhaosu, Tekesi, Gongliu, Chabuchaer, Huocheng, Bole, Pishan, Suiding,
@@ -417,19 +450,6 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928 # Ürümqi or Ürümchi
 # the province not having dual times but four times in use at the same
 # time. Some areas remained on standard Xinjiang time or Beijing time and
 # others moving their clocks ahead.)
-#
-# ...an example of an official website using of Ürümqi time.
-#
-# The first few lines of the Google translation of
-# http://www.fjysgl.gov.cn/show.aspx?id=2379&cid=39
-# (retrieved 2009-10-13)
-# > Ürümqi fire seven people are missing the alleged losses of at least
-# > 500 million yuan
-# >
-# > (Reporter Dong Liu) the day before 20:20 or so (Ürümqi Time 18:20),
-# > Ürümqi City Department of International Plaza Luther Qiantang River
-# > burst fire. As of yesterday, 18:30, Ürümqi City Fire officers and men
-# > have worked continuously for 22 hours...
 
 # From Luther Ma (2009-11-19):
 # With the risk of being redundant to previous answers these are the most common
@@ -452,10 +472,55 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928 # Ürümqi or Ürümchi
 # Autonomous Region under the PRC. (Before that Uyghurs, of course, would also
 # not be using Beijing time, but some local time.)
 
-Zone	Asia/Kashgar	5:03:56	-	LMT	1928 # or Kashi or Kaxgar
-			5:30	-	KAST	1940	 # Kashgar Time
-			5:00	-	KAST	1980 May
+# From David Cochrane (2014-03-26):
+# Just a confirmation that Ürümqi time was implemented in Ürümqi on 1 Feb 1986:
+# http://content.time.com/time/magazine/article/0,9171,960684,00.html
+
+# From Luther Ma (2014-04-22):
+# I have interviewed numerous people of various nationalities and from
+# different localities in Xinjiang and can confirm the information in Guo's
+# report regarding Xinjiang, as well as the Time article reference by David
+# Cochrane.  Whether officially recognized or not (and both are officially
+# recognized), two separate times have been in use in Xinjiang since at least
+# the Cultural Revolution: Xinjiang Time (XJT), aka Urumqi Time or local time;
+# and Beijing Time.  There is no confusion in Xinjiang as to which name refers
+# to which time. Both are widely used in the province, although in some
+# population groups might be use one to the exclusion of the other.  The only
+# problem is that computers and smart phones list Urumqi (or Kashgar) as
+# having the same time as Beijing.
+
+# From Paul Eggert (2014-06-30):
+# In the early days of the PRC, Tibet was given its own time zone (UT+6) but
+# this was withdrawn in 1959 and never reinstated; see Tubten Khétsun,
+# Memories of life in Lhasa under Chinese Rule, Columbia U Press, ISBN
+# 978-0231142861 (2008), translator's introduction by Matthew Akester, p x.
+# As this is before our 1970 cutoff, Tibet doesn't need a separate zone.
+#
+# Xinjiang Time is well-documented as being officially recognized.  E.g., see
+# "The Working-Calendar for The Xinjiang Uygur Autonomous Region Government"
+# <http://www.sinkiang.gov.cn/service/ourworking/> (2014-04-22).
+# Unfortunately, we have no good records of time in Xinjiang before 1986.
+# During the 20th century parts of Xinjiang were ruled by the Qing dyansty,
+# the Republic of China, various warlords, the First and Second East Turkestan
+# Republics, the Soviet Union, the Kuomintang, and the People's Republic of
+# China, and tracking down all these organizations' timekeeping rules would be
+# quite a trick.  Approximate this lost history by a transition from LMT to
+# XJT at the start of 1928, the year of accession of the warlord Jin Shuren,
+# which happens to be the date given by Shanks & Pottenger (no doubt as a
+# guess) as the transition from LMT.  Ignore the usage of UT+8 before
+# 1986-02-01 under the theory that the transition date to UT+8 is unknown and
+# that the sort of users who prefer Asia/Urumqi now typically ignored the
+# UT+8 mandate back then.
+
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+# Beijing time, used throughout China; represented by Shanghai.
+Zone	Asia/Shanghai	8:05:43	-	LMT	1901
+			8:00	Shang	C%sT	1949
 			8:00	PRC	C%sT
+# Xinjiang time, used by many in western China; represented by Ürümqi / Ürümchi
+# / Wulumuqi.  (Please use Asia/Shanghai if you prefer Beijing time.)
+Zone	Asia/Urumqi	5:50:20	-	LMT	1928
+			6:00	-	XJT
 
 
 # Hong Kong (Xianggang)

@@ -8,7 +8,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="UTF-8"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2014-06-27">
+<meta name="DC.Date" content="2014-06-30">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -708,12 +708,12 @@ Best of Dates, the Worst of Dates</a> covers many problems encountered
 by software developers when handling dates and time stamps.</li>
 <li>Alphabetic time zone abbreviations should not be used as unique
 identifiers for <abbr>UTC</abbr> offsets as they are ambiguous in
-practice. For example, "<abbr>CST</abbr>" denotes 6 hours behind
-<abbr>UTC</abbr> in English-speaking North America, but it denotes
-8 hours ahead of <abbr>UTC</abbr> in China.
-Further, French-speaking North Americans prefer
-"<abbr title="Heure Normale de l'Est">HNE</abbr>" to
-"<abbr>EST</abbr>". For <abbr>POSIX</abbr> the <code><abbr>tz</abbr></code>
+practice. For example, in English-speaking North America
+"<abbr>CST</abbr>" denotes 6 hours behind <abbr>UTC</abbr>,
+but in China it denotes 8 hours ahead of <abbr>UTC</abbr>,
+and French-speaking North Americans prefer
+"<abbr title="Heure Normale du Centre">HNC</abbr>" to
+"<abbr>CST</abbr>". For <abbr>POSIX</abbr> the <code><abbr>tz</abbr></code>
 database contains English abbreviations for all time stamps but in
 many cases these are merely inventions of the database
 maintainers.</li>

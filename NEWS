@@ -2,6 +2,14 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting future time stamps
+
+    Russia will subtract an hour from many of its time zones on 2014-10-26
+    at 02:00 Moscow time.  (Thanks to Alexander Krivenyshev.)
+    The affected zones are Europe/Kaliningrad, Europe/Moscow,
+    Europe/Simferopol, Europe/Volgograd, Asia/Yekaterinburg, Asia/Omsk,
+    Asia/Novosibirsk, Asia/Irkutsk, Asia/Yakutsk, and Asia/Vladivostok.
+
   Changes affecting time zone abbreviations
 
     Australian eastern time zone abbreviations are now AEST/AEDT not EST,

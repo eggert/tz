@@ -1368,9 +1368,15 @@ Rule	Japan	1950	1951	-	May	Sun>=1	2:00	1:00	D
 # I wrote "ordinance" above, but I don't know how to translate.
 # In Japanese it's "chokurei", which means ordinance from emperor.
 
-# Shanks & Pottenger claim JST in use since 1896, and that a few
-# places (e.g. Ishigaki) use +0800; go with Suzuki.  Guess that all
-# ordinances took effect on Jan 1.
+# From Yu-Cheng Chuang (2013-07-12):
+# ...the Meiji Emperor announced Ordinance No. 167 of Meiji Year 28 "The clause
+# about standard time" ... The adoption began from Jan 1, 1896.
+# http://ja.wikisource.org/wiki/標準時ニ關スル件_(公布時)
+#
+# ...the Showa Emperor announced Ordinance No. 529 of Showa Year 12 ... which
+# means the whole Japan territory, including later occupations, adopt Japan
+# Central Time (UTC+9). The adoption began on Oct 1, 1937.
+# http://ja.wikisource.org/wiki/明治二十八年勅令第百六十七號標準時ニ關スル件中改正ノ件
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u

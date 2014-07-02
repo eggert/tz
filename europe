@@ -2108,8 +2108,12 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # http://en.itar-tass.com/russia/738562
 # the State Duma has approved ... the draft bill on returning to
 # winter time standard and return Russia 11 time zones.  The new
-# regulations will come into effect on October 26, 2014 at 02:00
-# Moscow time.
+# regulations will come into effect on October 26, 2014 at 02:00 ...
+# http://asozd2.duma.gov.ru/main.nsf/%28Spravka%29?OpenAgent&RN=431985-6&02
+# Here is a link where we put together table (based on approved Bill N
+# 431985-6) with proposed 11 Russian time zones and corresponding
+# areas/cities/administrative centers in the Russian Federation (in English):
+# http://www.worldtimezone.com/dst_news/dst_news_russia65.html
 
 # From Paul Eggert (2006-03-22):
 # Except for Moscow after 1919-07-01, I invented the time zone abbreviations.
@@ -2159,7 +2163,7 @@ Zone Europe/Kaliningrad	 1:22:00 -	LMT	1893 Apr
 			 2:00	Poland	CE%sT	1946
 			 3:00	Russia	MSK/MSD	1991 Mar 31 2:00s
 			 2:00	Russia	EE%sT	2011 Mar 27 2:00s
-			 3:00	-	FET	2014 Oct 26 1:00
+			 3:00	-	FET	2014 Oct 26 2:00s
 			 2:00	-	EET
 #
 # From Oscar van Vlijmen (2001-08-25): [This region consists of]
@@ -2191,7 +2195,7 @@ Zone Europe/Moscow	 2:30:20 -	LMT	1880
 			 3:00	Russia	MSK/MSD	1991 Mar 31 2:00s
 			 2:00	Russia	EE%sT	1992 Jan 19 2:00s
 			 3:00	Russia	MSK/MSD	2011 Mar 27 2:00s
-			 4:00	-	MSK	2014 Oct 26 2:00
+			 4:00	-	MSK	2014 Oct 26 2:00s
 			 3:00	-	MSK
 #
 # Central Crimea used Moscow time 1994/1997.
@@ -2226,7 +2230,7 @@ Zone Europe/Simferopol	 2:16:24 -	LMT	1880
 # late the previous day, but this appears to have been ceremonial
 # and the discrepancies are small enough to not worry about.
 			 2:00	EU	EE%sT	2014 Mar 30 2:00
-			 4:00	-	MSK	2014 Oct 26 2:00
+			 4:00	-	MSK	2014 Oct 26 2:00s
 			 3:00	-	MSK
 #
 # Astrakhanskaya oblast', Kirovskaya oblast', Saratovskaya oblast',
@@ -2241,7 +2245,7 @@ Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 			 3:00	Russia	VOL%sT	1991 Mar 31 2:00s
 			 4:00	-	VOLT	1992 Mar 29 2:00s
 			 3:00	Russia	VOL%sT	2011 Mar 27 2:00s
-			 4:00	-	VOLT	2014 Oct 26 2:00
+			 4:00	-	VOLT	2014 Oct 26 2:00s
 			 3:00	-	VOLT
 #
 # From Oscar van Vlijmen (2001-08-25): [This region consists of]
@@ -2269,7 +2273,7 @@ Zone Asia/Yekaterinburg	 4:02:24 -	LMT	1919 Jul 15 4:00
 			 5:00	Russia	SVE%sT	1991 Mar 31 2:00s
 			 4:00	Russia	SVE%sT	1992 Jan 19 2:00s
 			 5:00	Russia	YEK%sT	2011 Mar 27 2:00s
-			 6:00	-	YEKT	2014 Oct 26 4:00
+			 6:00	-	YEKT	2014 Oct 26 2:00s
 			 5:00	-	YEKT
 #
 # From Oscar van Vlijmen (2001-08-25): [This region consists of]
@@ -2279,7 +2283,7 @@ Zone Asia/Omsk		 4:53:36 -	LMT	1919 Nov 14
 			 6:00	Russia	OMS%sT	1991 Mar 31 2:00s
 			 5:00	Russia	OMS%sT	1992 Jan 19 2:00s
 			 6:00	Russia	OMS%sT	2011 Mar 27 2:00s
-			 7:00	-	OMST	2014 Oct 26 5:00
+			 7:00	-	OMST	2014 Oct 26 2:00s
 			 6:00	-	OMST
 #
 # From Paul Eggert (2006-08-19): I'm guessing about Tomsk here; it's
@@ -2291,7 +2295,7 @@ Zone Asia/Novosibirsk	 5:31:40 -	LMT	1919 Dec 14 6:00
 			 6:00	Russia	NOV%sT	1992 Jan 19 2:00s
 			 7:00	Russia	NOV%sT	1993 May 23 # say Shanks & P.
 			 6:00	Russia	NOV%sT	2011 Mar 27 2:00s
-			 7:00	-	NOVT	2014 Oct 26 5:00
+			 7:00	-	NOVT	2014 Oct 26 2:00s
 			 6:00	-	NOVT
 
 # From Alexander Krivenyshev (2009-10-13):
@@ -2345,7 +2349,7 @@ Zone Asia/Irkutsk	 6:57:20 -	LMT	1880
 			 8:00	Russia	IRK%sT	1991 Mar 31 2:00s
 			 7:00	Russia	IRK%sT	1992 Jan 19 2:00s
 			 8:00	Russia	IRK%sT	2011 Mar 27 2:00s
-			 9:00	-	IRKT	2014 Oct 26 7:00
+			 9:00	-	IRKT	2014 Oct 26 2:00s
 			 8:00	-	IRKT
 #
 # From Oscar van Vlijmen (2003-10-18): [This region consists of]
@@ -2375,7 +2379,7 @@ Zone Asia/Yakutsk	 8:38:40 -	LMT	1919 Dec 15
 			 9:00	Russia	YAK%sT	1991 Mar 31 2:00s
 			 8:00	Russia	YAK%sT	1992 Jan 19 2:00s
 			 9:00	Russia	YAK%sT	2011 Mar 27 2:00s
-			10:00	-	YAKT	2014 Oct 26 8:00
+			10:00	-	YAKT	2014 Oct 26 2:00s
 			 9:00	-	YAKT
 #
 # From Oscar van Vlijmen (2003-10-18): [This region consists of]
@@ -2389,7 +2393,7 @@ Zone Asia/Vladivostok	 8:47:44 -	LMT	1922 Nov 15
 			10:00	Russia	VLA%sT	1991 Mar 31 2:00s
 			 9:00	Russia	VLA%sT	1992 Jan 19 2:00s
 			10:00	Russia	VLA%sT	2011 Mar 27 2:00s
-			11:00	-	VLAT	2014 Oct 26 9:00
+			11:00	-	VLAT	2014 Oct 26 2:00s
 			10:00	-	VLAT
 
 # From Arthur David Olson (2012-05-09):

@@ -2416,9 +2416,9 @@ Zone Asia/Khandyga	 9:02:13 -	LMT	1919 Dec 15
 
 #
 # Sakhalinskaya oblast'.
-# The Zone name should be Yuzhno-Sakhalinsk, but that's too long.
+# The Zone name should be Asia/Yuzhno-Sakhalinsk, but that's too long.
 Zone Asia/Sakhalin	 9:30:48 -	LMT	1905 Aug 23
-			 9:00	-	CJT	1938
+			 9:00	-	JCST	1937 Oct  1
 			 9:00	-	JST	1945 Aug 25
 			11:00	Russia	SAK%sT	1991 Mar 31 2:00s # Sakhalin T.
 			10:00	Russia	SAK%sT	1992 Jan 19 2:00s

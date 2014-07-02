@@ -26,8 +26,8 @@ Unreleased, experimental changes
     Time zone abbreviations have been updated for Japan's two time
     zones used 1896-1937.  JWST now stands for Western Standard
     Time, and JCST for Central Standard Time (formerly this was CJT).
-    These abbreviations are now used for time in Korea and Taiwan
-    while controlled by Japan.
+    These abbreviations are now used for time in Korea, Taiwan,
+    and Sakhalin while controlled by Japan.
 
   Changes affecting past time stamps
 

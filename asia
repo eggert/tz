@@ -678,9 +678,35 @@ Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
 # As per Yu-Cheng Chuang, say that Taiwan was at UT+9 from 1937-10-01
 # until 1945-10-25, overriding Shanks & Pottenger.
 
+# From Yu-Cheng Chuang (2014-07-02):
+# In 1946, DST in Taiwan was from May 15 and ended on Sep 30. The info from
+# Central Weather Bureau website was not correct.
+#
+# Original Bulletin:
+# <http://subtpg.tpg.gov.tw/og/image2.asp?f=03502F0AKM1AF>
+# <http://subtpg.tpg.gov.tw/og/image2.asp?f=0350300AKM1B0> (cont.)
+#
+# In 1947, DST in Taiwan was expanded to Oct 31. There is a backup of that
+# telegram announcement from Taiwan Province Government:
+#
+# <http://subtpg.tpg.gov.tw/og/image2.asp?f=0360310AKZ431>
+#
+# Here is a brief translation:
+#
+#   The Summer Time this year is adopted from midnight Apr 15 until Sep 20
+#   midnight. To save (energy?) consumption, we're expanding Summer Time
+#   adption till Oct 31 midnight.
+#
+# The Central Weather Bureau website didn't mention that, however it can
+# be found from historical government announcement database.
+ 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Taiwan	1946	1951	-	May	1	0:00	1:00	D
-Rule	Taiwan	1946	1951	-	Oct	1	0:00	0	S
+Rule	Taiwan	1946	only	-	May	15	0:00	1:00	D
+Rule	Taiwan	1946	only	-	Oct	1	0:00	0	S
+Rule	Taiwan	1947	only	-	Apr	15	0:00	1:00	D
+Rule	Taiwan	1947	only	-	Nov	1	0:00	0	S
+Rule	Taiwan	1948	1951	-	May	1	0:00	1:00	D
+Rule	Taiwan	1948	1951	-	Oct	1	0:00	0	S
 Rule	Taiwan	1952	only	-	Mar	1	0:00	1:00	D
 Rule	Taiwan	1952	1954	-	Nov	1	0:00	0	S
 Rule	Taiwan	1953	1959	-	Apr	1	0:00	1:00	D
@@ -688,8 +714,8 @@ Rule	Taiwan	1955	1961	-	Oct	1	0:00	0	S
 Rule	Taiwan	1960	1961	-	Jun	1	0:00	1:00	D
 Rule	Taiwan	1974	1975	-	Apr	1	0:00	1:00	D
 Rule	Taiwan	1974	1975	-	Oct	1	0:00	0	S
-Rule	Taiwan	1979	only	-	Jun	30	0:00	1:00	D
-Rule	Taiwan	1979	only	-	Sep	30	0:00	0	S
+Rule	Taiwan	1979	only	-	Jul	1	0:00	1:00	D
+Rule	Taiwan	1979	only	-	Oct	1	0:00	0	S
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 # Taipei or Taibei or T'ai-pei

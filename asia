@@ -46,7 +46,8 @@
 #	7:00 WIB	west Indonesia (Waktu Indonesia Barat)
 #	8:00 WITA	central Indonesia (Waktu Indonesia Tengah)
 #	8:00 CST	China
-#	9:00 CJT	Central Japanese Time (1896/1937)*
+#	8:00 JWST	Western Standard Time (Japan, 1896/1937)*
+#	9:00 JCST	Central Standard Time (Japan, 1896/1937)
 #	9:00 WIT	east Indonesia (Waktu Indonesia Timur)
 #	9:00 JST  JDT	Japan
 #	9:00 KST  KDT	Korea
@@ -643,9 +644,43 @@ Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
 # Republic of China 68 years (AD 1979)                        Daylight Saving Time      July 1 to September 30
 # Republic of China since 69 years (AD 1980)                  Stop Daylight Saving Time
 
+# From Yu-Cheng Chuang (2013-07-12):
+# On Dec 28, 1895, the Meiji Emperor announced Ordinance No. 167 of
+# Meiji Year 28 "The clause about standard time", mentioned that
+# Taiwan and Penghu Islands, as well as Yaeyama and Miyako Islands
+# (both in Okinawa) adopt the Western Standard Time which is based on
+# 120E. The adoption began from Jan 1, 1896. The original text can be
+# found on Wikisource:
+# http://ja.wikisource.org/wiki/標準時ニ關スル件_(公布時)
+# ... This could be the first adoption of time zone in Taiwan, because
+# during the Qing Dynasty, it seems that there was no time zone
+# declared officially.
+#
+# Later, in the beginning of World War II, on Sep 25, 1937, the Showa
+# Emperor announced Ordinance No. 529 of Showa Year 12 "The clause of
+# revision in the ordinance No. 167 of Meiji year 28 about standard
+# time", in which abolished the adoption of Western Standard Time in
+# western islands (listed above), which means the whole Japan
+# territory, including later occupations, adopt Japan Central Time
+# (UTC+9). The adoption began on Oct 1, 1937. The original text can
+# be found on Wikisource:
+# http://ja.wikisource.org/wiki/明治二十八年勅令第百六十七號標準時ニ關スル件中改正ノ件
+#
+# That is, the time zone of Taipei switched to UTC+9 on Oct 1, 1937.
+#
+# Of course, after the surrender of Japan, time zone of Taiwan
+# switched back to UTC+8. However I can't find enough evidence to tell
+# when the switch happened. The only thing I know is that the official
+# surrender ceremony is on Oct 25, 1945. From then, Taiwan and Penghu
+# islands are territories of the Republic of China, until now.
+
+# From Paul Eggert (2014-07-01):
+# As per Yu-Cheng Chuang, say that Taiwan was at UT+9 from 1937-10-01
+# until 1945-10-25, overriding Shanks & Pottenger.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Taiwan	1945	1951	-	May	1	0:00	1:00	D
-Rule	Taiwan	1945	1951	-	Oct	1	0:00	0	S
+Rule	Taiwan	1946	1951	-	May	1	0:00	1:00	D
+Rule	Taiwan	1946	1951	-	Oct	1	0:00	0	S
 Rule	Taiwan	1952	only	-	Mar	1	0:00	1:00	D
 Rule	Taiwan	1952	1954	-	Nov	1	0:00	0	S
 Rule	Taiwan	1953	1959	-	Apr	1	0:00	1:00	D
@@ -657,7 +692,10 @@ Rule	Taiwan	1979	only	-	Jun	30	0:00	1:00	D
 Rule	Taiwan	1979	only	-	Sep	30	0:00	0	S
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Taipei	8:06:00 -	LMT	1896 # or Taibei or T'ai-pei
+# Taipei or Taibei or T'ai-pei
+Zone	Asia/Taipei	8:06:00 -	LMT	1896 Jan  1
+			8:00	-	JWST	1937 Oct  1
+			9:00	-	JST	1945 Oct 25
 			8:00	Taiwan	C%sT
 
 # Macau (Macao, Aomen)
@@ -1336,8 +1374,8 @@ Rule	Japan	1950	1951	-	May	Sun>=1	2:00	1:00	D
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
-			9:00	-	JST	1896
-			9:00	-	CJT	1938
+			9:00	-	JST	1896 Jan  1
+			9:00	-	JCST	1937 Oct  1
 			9:00	Japan	J%sT
 # Since 1938, all Japanese possessions have been like Asia/Tokyo.
 
@@ -1576,19 +1614,29 @@ Rule	ROK	1960	only	-	Sep	13	0:00	0	S
 Rule	ROK	1987	1988	-	May	Sun>=8	0:00	1:00	D
 Rule	ROK	1987	1988	-	Oct	Sun>=8	0:00	0	S
 
+# From Paul Eggert (2014-07-01):
+# The following entries are from Shanks & Pottenger, except that I
+# guessed that time zone abbreviations through 1945 followed the same
+# rules as discussed under Taiwan, with nominal switches from JST to KST
+# when the respective cities were taken over by the Allies after WWII.
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Seoul	8:27:52	-	LMT	1890
 			8:30	-	KST	1904 Dec
-			9:00	-	KST	1928
+			9:00	-	JCST	1928
 			8:30	-	KST	1932
+			9:00	-	JCST	1937 Oct  1
+			9:00	-	JST	1945 Sep  8
 			9:00	-	KST	1954 Mar 21
 			8:00	ROK	K%sT	1961 Aug 10
 			8:30	-	KST	1968 Oct
 			9:00	ROK	K%sT
 Zone	Asia/Pyongyang	8:23:00 -	LMT	1890
 			8:30	-	KST	1904 Dec
-			9:00	-	KST	1928
+			9:00	-	JCST	1928
 			8:30	-	KST	1932
+			9:00	-	JCST	1937 Oct  1
+			9:00	-	JST	1945 Aug 24
 			9:00	-	KST	1954 Mar 21
 			8:00	-	KST	1961 Aug 10
 			9:00	-	KST

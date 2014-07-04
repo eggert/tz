@@ -620,29 +620,10 @@ Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
 
 # Taiwan
 
-# Shanks & Pottenger write that Taiwan observed DST during 1945, when it
-# was still controlled by Japan.  This is hard to believe, but we don't
-# have any other information.
-
 # From smallufo (2010-04-03):
-# According to Taiwan's CWB,
+# According to Taiwan's CWB [Central Weather Bureau],
 # http://www.cwb.gov.tw/V6/astronomy/cdata/summert.htm
 # Taipei has DST in 1979 between July 1st and Sep 30.
-
-# From Arthur David Olson (2010-04-07):
-# Here's Google's translation of the table at the bottom of the "summert.htm" page:
-# Decade 	                                                    Name                      Start and end date
-# Republic of China 34 years to 40 years (AD 1945-1951 years) Summer Time               May 1 to September 30
-# 41 years of the Republic of China (AD 1952)                 Daylight Saving Time      March 1 to October 31
-# Republic of China 42 years to 43 years (AD 1953-1954 years) Daylight Saving Time      April 1 to October 31
-# In the 44 years to 45 years (AD 1955-1956 years)            Daylight Saving Time      April 1 to September 30
-# Republic of China 46 years to 48 years (AD 1957-1959)       Summer Time               April 1 to September 30
-# Republic of China 49 years to 50 years (AD 1960-1961)       Summer Time               June 1 to September 30
-# Republic of China 51 years to 62 years (AD 1962-1973 years) Stop Summer Time
-# Republic of China 63 years to 64 years (1974-1975 AD)       Daylight Saving Time      April 1 to September 30
-# Republic of China 65 years to 67 years (1976-1978 AD)       Stop Daylight Saving Time
-# Republic of China 68 years (AD 1979)                        Daylight Saving Time      July 1 to September 30
-# Republic of China since 69 years (AD 1980)                  Stop Daylight Saving Time
 
 # From Yu-Cheng Chuang (2013-07-12):
 # On Dec 28, 1895, the Meiji Emperor announced Ordinance No. 167 of
@@ -667,16 +648,50 @@ Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
 # http://ja.wikisource.org/wiki/明治二十八年勅令第百六十七號標準時ニ關スル件中改正ノ件
 #
 # That is, the time zone of Taipei switched to UTC+9 on Oct 1, 1937.
-#
-# Of course, after the surrender of Japan, time zone of Taiwan
-# switched back to UTC+8. However I can't find enough evidence to tell
-# when the switch happened. The only thing I know is that the official
-# surrender ceremony is on Oct 25, 1945. From then, Taiwan and Penghu
-# islands are territories of the Republic of China, until now.
 
-# From Paul Eggert (2014-07-01):
-# As per Yu-Cheng Chuang, say that Taiwan was at UT+9 from 1937-10-01
-# until 1945-10-25, overriding Shanks & Pottenger.
+# From Yu-Cheng Chuang (2014-07-02):
+# I've found more evidence about when the time zone was switched from UTC+9
+# back to UTC+8 after WW2.  I believe it was on Sep 21, 1945.  In a document
+# during Japanese era [1] in which the officer told the staff to change time
+# zone back to Western Standard Time (UTC+8) on Sep 21.  And in another
+# history page of National Cheng Kung University [2], on Sep 21 there is a
+# note "from today, switch back to Western Standard Time".  From these two
+# materials, I believe that the time zone change happened on Sep 21.  And
+# today I have found another monthly journal called "The Astronomical Herald"
+# from The Astronomical Society of Japan [3] in which it mentioned the fact
+# that:
+#
+# 1. Standard Time of the Country (Japan) was adopted on Jan 1, 1888, using
+# the time at 135E (GMT+9)
+#
+# 2. Standard Time of the Country was renamed to Central Standard Time, on Jan
+# 1, 1898, and on the same day, the new territories Taiwan and Penghu islands,
+# as well as Yaeyama and Miyako islands, adopted a new time zone called
+# Western Standard Time, which is in GMT+8.
+#
+# 3. Western Standard Time was deprecated on Sep 30, 1937. From then all the
+# territories of Japan adopted the same time zone, which is Central Standard
+# Time.
+#
+# [1] Academica Historica, Taiwan:
+# http://163.29.208.22:8080/govsaleShowImage/connect_img.php?s=00101738900090036&e=00101738900090037
+# [2] Nat'l Cheng Kung University 70th Anniversary Special Site:
+# http://www.ncku.edu.tw/~ncku70/menu/001/01_01.htm
+# [3] Yukio Niimi, The Standard Time in Japan (1997), p.475:
+# http://www.asj.or.jp/geppou/archive_open/1997/pdf/19971001c.pdf
+
+# Yu-Cheng Chuang (2014-07-03):
+# I finally have found the real official gazette about changing back to
+# Western Standard Time on Sep 21 in Taiwan.  It's Taiwan Governor-General
+# Bulletin No. 386 in Showa 20 years (1945), published on Sep 19, 1945. [1] ...
+# [It] abolishes Bulletin No. 207 in Showa 12 years (1937), which is a local
+# bulletin in Taiwan for that Ordinance No. 529. It also mentioned that 1am on
+# Sep 21, 1945 will be 12am on Sep 21.  I think this bulletin is much more
+# official than the one I mentioned in my first mail, because it's from the
+# top-level government in Taiwan. If you’re going to quote any resource, this
+# would be a good one.
+# [1] Taiwan Governor-General Gazette, No. 1018, Sep 19, 1945:
+# http://db2.th.gov.tw/db2/view/viewImg.php?imgcode=0072031018a&num=19&bgn=019&end=019&otherImg=&type=gener
 
 # From Yu-Cheng Chuang (2014-07-02):
 # In 1946, DST in Taiwan was from May 15 and ended on Sep 30. The info from
@@ -699,7 +714,12 @@ Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
 #
 # The Central Weather Bureau website didn't mention that, however it can
 # be found from historical government announcement database.
- 
+
+# From Paul Eggert (2014-07-03):
+# As per Yu-Cheng Chuang, say that Taiwan was at UT+9 from 1937-10-01
+# until 1945-09-21 at 01:00, overriding Shanks & Pottenger.
+# Likewise, use Yu-Cheng Chuang's data for DST in Taiwan.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Taiwan	1946	only	-	May	15	0:00	1:00	D
 Rule	Taiwan	1946	only	-	Oct	1	0:00	0	S
@@ -721,7 +741,7 @@ Rule	Taiwan	1979	only	-	Oct	1	0:00	0	S
 # Taipei or Taibei or T'ai-pei
 Zone	Asia/Taipei	8:06:00 -	LMT	1896 Jan  1
 			8:00	-	JWST	1937 Oct  1
-			9:00	-	JST	1945 Oct 25
+			9:00	-	JST	1945 Sep 21 01:00
 			8:00	Taiwan	C%sT
 
 # Macau (Macao, Aomen)

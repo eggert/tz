@@ -45,7 +45,9 @@ Unreleased, experimental changes
     transition to standard time has been changed from 1928 to 1901.
 
     Asia/Taipei switched to JWST on 1896-01-01, then to JST on 1937-10-01,
-    then to CST on 1945-10-25, and did not observe DST in 1945.
+    then to CST on 1945-09-21 at 01:00, and did not observe DST in 1945.
+    In 1946 it observed DST from 05-15 through 09-30; in 1947
+    from 04-15 through 10-31; and in 1979 from 07-01 through 09-30.
     (Thanks to Yu-Cheng Chuang.)
 
     Finland's 1942 fall-back transition was October 4 at 01:00, not

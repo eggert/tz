@@ -29,6 +29,9 @@ Unreleased, experimental changes
     The time zone abbreviation for Xinjiang Time (observed in Ürümqi)
     has been changed from URUT to XJT.  (Thanks to Luther Ma.)
 
+    Prefer MSK/MSD for Moscow time in Russia, even in other cities.
+    Similarly, prefer EET/EEST for eastern European time in Russia.
+
     Time zone abbreviations have been updated for Japan's two time
     zones used 1896-1937.  JWST now stands for Western Standard
     Time, and JCST for Central Standard Time (formerly this was CJT).

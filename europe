@@ -2247,9 +2247,9 @@ Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 			 4:00	Russia	VOL%sT	1989 Mar 26 2:00s # Volgograd T
 			 3:00	Russia	VOL%sT	1991 Mar 31 2:00s
 			 4:00	-	VOLT	1992 Mar 29 2:00s
-			 3:00	Russia	VOL%sT	2011 Mar 27 2:00s
-			 4:00	-	VOLT	2014 Oct 26 2:00s
-			 3:00	-	VOLT
+			 3:00	Russia	MSK	2011 Mar 27 2:00s
+			 4:00	-	MSK	2014 Oct 26 2:00s
+			 3:00	-	MSK
 #
 # From Oscar van Vlijmen (2001-08-25): [This region consists of]
 # Samarskaya oblast', Udmyrtskaya respublika
@@ -2332,10 +2332,9 @@ Zone Asia/Novokuznetsk	 5:48:48 -	NMT	1920 Jan  6
 			 7:00	Russia	KRA%sT	1991 Mar 31 2:00s
 			 6:00	Russia	KRA%sT	1992 Jan 19 2:00s
 			 7:00	Russia	KRA%sT	2010 Mar 28 2:00s
-			 6:00	Russia	NOV%sT	2011 Mar 27 2:00s
+			 6:00	Russia	NOV%sT	2011 Mar 27 2:00s # Novosibirsk T
 			 7:00	-	NOVT	2014 Oct 26 2:00s
-						# Novosibirsk Time
-			 7:00	-	KRAT
+			 7:00	-	KRAT	# Krasnoyarsk Time
 
 #
 # From Oscar van Vlijmen (2001-08-25): [This region consists of]
@@ -2427,6 +2426,7 @@ Zone Asia/Khandyga	 9:02:13 -	LMT	1919 Dec 15
 
 #
 # Sakhalinskaya oblast'.
+#
 # The Zone name should be Asia/Yuzhno-Sakhalinsk, but that's too long.
 Zone Asia/Sakhalin	 9:30:48 -	LMT	1905 Aug 23
 			 9:00	-	JCST	1937 Oct  1
@@ -2469,7 +2469,8 @@ Zone Asia/Ust-Nera	 9:32:54 -	LMT	1919 Dec 15
 # From Oscar van Vlijmen (2001-08-25): [This region consists of]
 # Kamchatskaya oblast', Koryakskij avtonomnyj okrug.
 #
-# The Zone name should be Asia/Petropavlovsk-Kamchatski, but that's too long.
+# The Zone name should be Asia/Petropavlovsk-Kamchatski or perhaps
+# Asia/Petropavlovsk-Kamchatsky, but these are too long.
 Zone Asia/Kamchatka	10:34:36 -	LMT	1922 Nov 10
 			11:00	-	PETT	1930 Jun 21 # P-K Time
 			12:00	Russia	PET%sT	1991 Mar 31 2:00s

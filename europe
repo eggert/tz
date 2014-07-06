@@ -2156,10 +2156,24 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # since September 1997....  Although the Kuril Islands are
 # administratively part of Sakhalin oblast', they appear to have
 # remained on UTC+11 along with Magadan.
-#
+
+# From Tim Parenti (2014-07-06):
+# The comments detailing the coverage of each Russian zone are meant to assist
+# with maintenance only and represent our best guesses as to which regions
+# are covered by each zone.  They are not meant to be taken as an authoritative
+# listing.  The region codes listed come from
+# http://en.wikipedia.org/w/?title=Federal_subjects_of_Russia&oldid=611810498
+# and are used for convenience only; no guarantees are made regarding their
+# future stability.  ISO 3166-2:RU codes are also listed for first-level
+# divisions where available.
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-#
-# Kaliningradskaya oblast'.
+
+
+# From Tim Parenti (2014-07-03):
+# Europe/Kaliningrad covers...
+# 39	RU-KGD 	Kaliningrad Oblast
+
 Zone Europe/Kaliningrad	 1:22:00 -	LMT	1893 Apr
 			 1:00	C-Eur	CE%sT	1945
 			 2:00	Poland	CE%sT	1946
@@ -2167,27 +2181,57 @@ Zone Europe/Kaliningrad	 1:22:00 -	LMT	1893 Apr
 			 2:00	Russia	EE%sT	2011 Mar 27 2:00s
 			 3:00	-	FET	2014 Oct 26 2:00s
 			 2:00	-	EET
-#
-# From Oscar van Vlijmen (2001-08-25): [This region consists of]
-# Respublika Adygeya, Arkhangel'skaya oblast',
-# Belgorodskaya oblast', Bryanskaya oblast', Vladimirskaya oblast',
-# Vologodskaya oblast', Voronezhskaya oblast',
-# Respublika Dagestan, Ivanovskaya oblast', Respublika Ingushetiya,
-# Kabarbino-Balkarskaya Respublika, Respublika Kalmykiya,
-# Kalyzhskaya oblast', Respublika Karachaevo-Cherkessiya,
-# Respublika Kareliya, Respublika Komi,
-# Kostromskaya oblast', Krasnodarskij kraj, Kurskaya oblast',
-# Leningradskaya oblast', Lipetskaya oblast', Respublika Marij El,
-# Respublika Mordoviya, Moskva, Moskovskaya oblast',
-# Murmanskaya oblast', Nenetskij avtonomnyj okrug,
-# Nizhegorodskaya oblast', Novgorodskaya oblast', Orlovskaya oblast',
-# Penzenskaya oblast', Pskovskaya oblast', Rostovskaya oblast',
-# Ryazanskaya oblast', Sankt-Peterburg,
-# Respublika Severnaya Osetiya, Smolenskaya oblast',
-# Stavropol'skij kraj, Tambovskaya oblast', Respublika Tatarstan,
-# Tverskaya oblast', Tyl'skaya oblast', Ul'yanovskaya oblast',
-# Chechenskaya Respublika, Chuvashskaya oblast',
-# Yaroslavskaya oblast'
+
+
+# From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2001-08-25):
+# Europe/Moscow covers...
+# 01	RU-AD 	Adygea, Republic of
+# 05	RU-DA 	Dagestan, Republic of
+# 06	RU-IN 	Ingushetia, Republic of
+# 07	RU-KB 	Kabardino-Balkar Republic
+# 08	RU-KL 	Kalmykia, Republic of
+# 09	RU-KC 	Karachay-Cherkess Republic
+# 10	RU-KR 	Karelia, Republic of
+# 11	RU-KO 	Komi Republic
+# 12	RU-ME 	Mari El Republic
+# 13	RU-MO 	Mordovia, Republic of
+# 15	RU-SE 	North Ossetia-Alania, Republic of
+# 16	RU-TA 	Tatarstan, Republic of
+# 20	RU-CE 	Chechen Republic
+# 21	RU-CU 	Chuvash Republic
+# 23	RU-KDA 	Krasnodar Krai
+# 26 	RU-STA 	Stavropol Krai
+# 29	RU-ARK 	Arkhangelsk Oblast
+# 31	RU-BEL 	Belgorod Oblast
+# 32	RU-BRY 	Bryansk Oblast
+# 33	RU-VLA 	Vladimir Oblast
+# 35	RU-VLG 	Vologda Oblast
+# 36	RU-VOR 	Voronezh Oblast
+# 37	RU-IVA 	Ivanovo Oblast
+# 40	RU-KLU 	Kaluga Oblast
+# 44	RU-KOS 	Kostroma Oblast
+# 46	RU-KRS 	Kursk Oblast
+# 47	RU-LEN 	Leningrad Oblast
+# 48	RU-LIP 	Lipetsk Oblast
+# 50	RU-MOS 	Moscow Oblast
+# 51	RU-MUR 	Murmansk Oblast
+# 52	RU-NIZ 	Nizhny Novgorod Oblast
+# 53	RU-NGR 	Novgorod Oblast
+# 57	RU-ORL 	Oryol Oblast
+# 58	RU-PNZ 	Penza Oblast
+# 60	RU-PSK 	Pskov Oblast
+# 61	RU-ROS 	Rostov Oblast
+# 62	RU-RYA 	Ryazan Oblast
+# 67	RU-SMO 	Smolensk Oblast
+# 68	RU-TAM 	Tambov Oblast
+# 69	RU-TVE 	Tver Oblast
+# 71	RU-TUL 	Tula Oblast
+# 73	RU-ULY 	Ulyanovsk Oblast
+# 76	RU-YAR 	Yaroslavl Oblast
+# 77	RU-MOW 	Moscow
+# 78	RU-SPE 	Saint Petersburg
+# 83	RU-NEN 	Nenets Autonomous Okrug
+
 Zone Europe/Moscow	 2:30:20 -	LMT	1880
 			 2:30	-	MMT	1916 Jul  3 # Moscow Mean Time
 			 2:30:48 Russia	%s	1919 Jul  1 2:00
@@ -2199,6 +2243,12 @@ Zone Europe/Moscow	 2:30:20 -	LMT	1880
 			 3:00	Russia	MSK/MSD	2011 Mar 27 2:00s
 			 4:00	-	MSK	2014 Oct 26 2:00s
 			 3:00	-	MSK
+
+
+# From Tim Parenti (2014-07-03):
+# Europe/Simferopol covers...
+# **	****	Crimea, Republic of
+# **	****	Sevastopol
 
 Zone Europe/Simferopol	 2:16:24 -	LMT	1880
 			 2:16	-	SMT	1924 May  2 # Simferopol Mean T
@@ -2235,11 +2285,19 @@ Zone Europe/Simferopol	 2:16:24 -	LMT	1880
 			 2:00	EU	EE%sT	2014 Mar 30 2:00
 			 4:00	-	MSK	2014 Oct 26 2:00s
 			 3:00	-	MSK
-#
-# Astrakhanskaya oblast', Kirovskaya oblast', Saratovskaya oblast',
-# Volgogradskaya oblast'.  Shanks & Pottenger say Kirov is still at +0400
-# but Wikipedia (2006-05-09) says +0300.  Perhaps it switched after the
-# others?  But we have no data.
+
+
+# From Tim Parenti (2014-07-03):
+# Europe/Volgograd covers...
+# 30	RU-AST 	Astrakhan Oblast
+# 34	RU-VGG 	Volgograd Oblast
+# 43	RU-KIR 	Kirov Oblast
+# 64	RU-SAR 	Saratov Oblast
+
+# From Paul Eggert (2006-05-09):
+# Shanks & Pottenger say Kirov is still at +0400 but Wikipedia says +0300.
+# Perhaps it switched after the others?  But we have no data.
+
 Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 			 3:00	-	TSAT	1925 Apr  6 # Tsaritsyn Time
 			 3:00	-	STAT	1930 Jun 21 # Stalingrad Time
@@ -2250,9 +2308,13 @@ Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 			 3:00	Russia	MSK	2011 Mar 27 2:00s
 			 4:00	-	MSK	2014 Oct 26 2:00s
 			 3:00	-	MSK
-#
-# From Oscar van Vlijmen (2001-08-25): [This region consists of]
-# Samarskaya oblast', Udmyrtskaya respublika
+
+
+# From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2001-08-25):
+# Europe/Samara covers...
+# 18	RU-UD 	Udmurt Republic
+# 63	RU-SAM 	Samara Oblast
+
 Zone Europe/Samara	 3:20:36 -	LMT	1919 Jul  1 2:00
 			 3:00	-	SAMT	1930 Jun 21
 			 4:00	-	SAMT	1935 Jan 27
@@ -2264,13 +2326,22 @@ Zone Europe/Samara	 3:20:36 -	LMT	1919 Jul  1 2:00
 			 3:00	Russia	SAM%sT	2011 Mar 27 2:00s
 			 4:00	-	SAMT
 
+
+# From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2001-08-25):
+# Asia/Yekaterinburg covers...
+# 02	RU-BA 	Bashkortostan, Republic of
+# 90	RU-PER 	Perm Krai
+# 45	RU-KGN 	Kurgan Oblast
+# 56	RU-ORE 	Orenburg Oblast
+# 66	RU-SVE 	Sverdlovsk Oblast
+# 72	RU-TYU 	Tyumen Oblast
+# 74	RU-CHE 	Chelyabinsk Oblast
+# 86	RU-KHM 	Khanty–Mansi Autonomous Okrug – Yugra
+# 89	RU-YAN 	Yamalo-Nenets Autonomous Okrug
 #
-# From Oscar van Vlijmen (2001-08-25): [This region consists of]
-# Respublika Bashkortostan, Komi-Permyatskij avtonomnyj okrug,
-# Kurganskaya oblast', Orenburgskaya oblast', Permskaya oblast',
-# Sverdlovskaya oblast', Tyumenskaya oblast',
-# Khanty-Manskijskij avtonomnyj okrug, Chelyabinskaya oblast',
-# Yamalo-Nenetskij avtonomnyj okrug.
+# Note: Effective 2005-12-01, (59) Perm Oblast and (81) Komi-Permyak
+# Autonomous Okrug merged to form (90, RU-PER) Perm Krai.
+
 Zone Asia/Yekaterinburg	 4:02:24 -	LMT	1919 Jul 15 4:00
 			 4:00	-	SVET	1930 Jun 21 # Sverdlovsk Time
 			 5:00	Russia	SVE%sT	1991 Mar 31 2:00s
@@ -2278,9 +2349,14 @@ Zone Asia/Yekaterinburg	 4:02:24 -	LMT	1919 Jul 15 4:00
 			 5:00	Russia	YEK%sT	2011 Mar 27 2:00s
 			 6:00	-	YEKT	2014 Oct 26 2:00s
 			 5:00	-	YEKT
-#
-# From Oscar van Vlijmen (2001-08-25): [This region consists of]
-# Respublika Altaj, Altajskij kraj, Omskaya oblast'.
+
+
+# From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2001-08-025):
+# Asia/Omsk covers...
+# 04	RU-AL 	Altai Republic
+# 22	RU-ALT 	Altai Krai
+# 55	RU-OMS 	Omsk Oblast
+
 Zone Asia/Omsk		 4:53:36 -	LMT	1919 Nov 14
 			 5:00	-	OMST	1930 Jun 21 # Omsk TIme
 			 6:00	Russia	OMS%sT	1991 Mar 31 2:00s
@@ -2288,10 +2364,16 @@ Zone Asia/Omsk		 4:53:36 -	LMT	1919 Nov 14
 			 6:00	Russia	OMS%sT	2011 Mar 27 2:00s
 			 7:00	-	OMST	2014 Oct 26 2:00s
 			 6:00	-	OMST
-#
+
+
+# From Tim Parenti (2014-07-03):
+# Asia/Novosibirsk covers...
+# 54	RU-NVS 	Novosibirsk Oblast
+# 70	RU-TOM 	Tomsk Oblast
+
 # From Paul Eggert (2006-08-19): I'm guessing about Tomsk here; it's
 # not clear when it switched from +7 to +6.
-# Novosibirskaya oblast', Tomskaya oblast'.
+
 Zone Asia/Novosibirsk	 5:31:40 -	LMT	1919 Dec 14 6:00
 			 6:00	-	NOVT	1930 Jun 21 # Novosibirsk Time
 			 7:00	Russia	NOV%sT	1991 Mar 31 2:00s
@@ -2300,6 +2382,11 @@ Zone Asia/Novosibirsk	 5:31:40 -	LMT	1919 Dec 14 6:00
 			 6:00	Russia	NOV%sT	2011 Mar 27 2:00s
 			 7:00	-	NOVT	2014 Oct 26 2:00s
 			 6:00	-	NOVT
+
+
+# From Tim Parenti (2014-07-03):
+# Asia/Novokuznetsk covers...
+# 42	RU-KEM 	Kemerovo Oblast
 
 # From Alexander Krivenyshev (2009-10-13):
 # Kemerovo oblast' (Kemerovo region) in Russia will change current time zone on
@@ -2336,11 +2423,16 @@ Zone Asia/Novokuznetsk	 5:48:48 -	NMT	1920 Jan  6
 			 7:00	-	NOVT	2014 Oct 26 2:00s
 			 7:00	-	KRAT	# Krasnoyarsk Time
 
+
+# From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2001-08-25):
+# Asia/Krasnoyarsk covers...
+# 17	RU-TY 	Tuva Republic
+# 19	RU-KK 	Khakassia, Republic of
+# 24	RU-KYA 	Krasnoyarsk Krai
 #
-# From Oscar van Vlijmen (2001-08-25): [This region consists of]
-# Krasnoyarskij kraj,
-# Tajmyrskij (Dolgano-Nenetskij) avtonomnyj okrug,
-# Respublika Tuva, Respublika Khakasiya, Evenkijskij avtonomnyj okrug.
+# Note: Effective 2007-01-01, (88) Evenk Autonomous Okrug and (84) Taymyr
+# Autonomous Okrug were merged into (24, RU-KYA) Krasnoyarsk Krai.
+
 Zone Asia/Krasnoyarsk	 6:11:20 -	LMT	1920 Jan  6
 			 6:00	-	KRAT	1930 Jun 21 # Krasnoyarsk Time
 			 7:00	Russia	KRA%sT	1991 Mar 31 2:00s
@@ -2348,10 +2440,16 @@ Zone Asia/Krasnoyarsk	 6:11:20 -	LMT	1920 Jan  6
 			 7:00	Russia	KRA%sT	2011 Mar 27 2:00s
 			 8:00	-	KRAT	2014 Oct 26 2:00s
 			 7:00	-	KRAT
+
+
+# From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2001-08-25):
+# Asia/Irkutsk covers...
+# 03	RU-BU 	Buryatia, Republic of
+# 38	RU-IRK 	Irkutsk Oblast
 #
-# From Oscar van Vlijmen (2001-08-25): [This region consists of]
-# Respublika Buryatiya, Irkutskaya oblast',
-# Ust'-Ordynskij Buryatskij avtonomnyj okrug.
+# Note: Effective 2008-01-01, (85) Ust-Orda Buryat Autonomous Okrug was
+# merged into (38, RU-IRK) Irkutsk Oblast.
+
 Zone Asia/Irkutsk	 6:57:20 -	LMT	1880
 			 6:57:20 -	IMT	1920 Jan 25 # Irkutsk Mean Time
 			 7:00	-	IRKT	1930 Jun 21 # Irkutsk Time
@@ -2360,28 +2458,49 @@ Zone Asia/Irkutsk	 6:57:20 -	LMT	1880
 			 8:00	Russia	IRK%sT	2011 Mar 27 2:00s
 			 9:00	-	IRKT	2014 Oct 26 2:00s
 			 8:00	-	IRKT
-#
-# From Oscar van Vlijmen (2003-10-18): [This region consists of]
-# Aginskij Buryatskij avtonomnyj okrug, Amurskaya oblast',
-# [parts of] Respublika Sakha (Yakutiya), Chitinskaya oblast'.
 
-# From Oscar van Vlijmen (2009-11-29):
-# ...some regions of [Russia] were merged with others since 2005...
-# Some names were changed, no big deal, except for one instance: a new name.
-# YAK/YAKST: UTC+9 Zabajkal'skij kraj.
+
+# From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2009-11-29):
+# Asia/Yakutsk covers...
+# 28	RU-AMU 	Amur Oblast
+# 92	RU-ZAB 	Zabaykalsky Krai
 #
+# ...and parts of (14, RU-SA) Sakha (Yakutia) Republic:
+# 14-02	****	Aldansky District
+# 14-04	****	Amginsky District
+# 14-05	****	Anabarsky District
+# 14-07	****	Verkhnevilyuysky District
+# 14-10	****	Vilyuysky District
+# 14-11	****	Gorny District
+# 14-12	****	Zhigansky District
+# 14-13	****	Kobyaysky District
+# 14-14	****	Lensky District
+# 14-15	****	Megino-Kangalassky District
+# 14-16	****	Mirninsky District
+# 14-18	****	Namsky District
+# 14-19	****	Neryungrinsky District
+# 14-21	****	Nyurbinsky District
+# 14-23	****	Olenyoksky District
+# 14-24	****	Olyokminsky District
+# 14-26	****	Suntarsky District
+# 14-27	****	Tattinsky District
+# 14-29	****	Ust-Aldansky District
+# 14-32	****	Khangalassky District
+# 14-33	****	Churapchinsky District
+# 14-34	****	Eveno-Bytantaysky National District
+#
+# Note: Effective 2008-03-01, (75) Chita Oblast and (80) Agin-Buryat
+# Autonomous Okrug merged to form (92, RU-ZAB) Zabaykalsky Krai.
+
+# From Tim Parenti (2014-07-03):
+# Our commentary seems to have lost mention of (14-19) Neryungrinsky District.
+# Since the surrounding districts of Sakha are all YAKT, assume this is, too.
+# Also assume its history has been the same as the rest of Asia/Yakutsk.
+
 # From Paul Eggert (2014-07-01):
 # Perhaps Zabajkal'skij kraj needs a separate entry?
 # http://en.itar-tass.com/russia/738562 implies it will move to UTC+8
 # on 2014-10-26.
-
-# From Oscar van Vlijmen (2009-11-29):
-# The Sakha districts are: Aldanskij, Amginskij, Anabarskij,
-# Verkhnevilyujskij, Vilyujskij, Gornyj,
-# Zhiganskij, Kobyajskij, Lenskij, Megino-Kangalasskij, Mirninskij,
-# Namskij, Nyurbinskij, Olenyokskij, Olyokminskij,
-# Suntarskij, Tattinskij, Ust'-Aldanskij, Khangalasskij,
-# Churapchinskij, Eveno-Bytantajskij Natsional'nij.
 
 Zone Asia/Yakutsk	 8:38:40 -	LMT	1919 Dec 15
 			 8:00	-	YAKT	1930 Jun 21 # Yakutsk Time
@@ -2390,13 +2509,26 @@ Zone Asia/Yakutsk	 8:38:40 -	LMT	1919 Dec 15
 			 9:00	Russia	YAK%sT	2011 Mar 27 2:00s
 			10:00	-	YAKT	2014 Oct 26 2:00s
 			 9:00	-	YAKT
-#
-# From Oscar van Vlijmen (2003-10-18): [This region consists of]
-# Evrejskaya avtonomnaya oblast', Khabarovskij kraj, Primorskij kraj,
-# [parts of] Respublika Sakha (Yakutiya).
 
-# From Oscar van Vlijmen (2009-11-29):
-# The Sakha districts are: Bulunskij, Verkhoyanskij, ... Ust'-Yanskij.
+
+# From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2009-11-29):
+# Asia/Vladivostok covers...
+# 25	RU-PRI 	Primorsky Krai
+# 27	RU-KHA 	Khabarovsk Krai
+# 79	RU-YEV 	Jewish Autonomous Oblast
+#
+# ...and parts of (14, RU-SA) Sakha (Yakutia) Republic:
+# 14-06	****	Bulunsky District
+# 14-09	****	Verkhoyansky District
+# 14-31	****	Ust-Yansky District
+
+# From Tim Parenti (2014-07-06), per Alexander Krivenyshev (2014-07-02):
+# Bulunsky District will be moving from UTC+10 to UTC+9 on 2014-10-26.
+# However, we had used Asia/Vladivostok to cover this region, which has been
+# on UTC+11 and is moving to UTC+10.  It is likely that Bulunsky District has
+# been on UTC+10 since the 2011-03-27 changes.  It will need its own zone to
+# reflect this history.
+
 Zone Asia/Vladivostok	 8:47:44 -	LMT	1922 Nov 15
 			 9:00	-	VLAT	1930 Jun 21 # Vladivostok Time
 			10:00	Russia	VLA%sT	1991 Mar 31 2:00s
@@ -2405,15 +2537,21 @@ Zone Asia/Vladivostok	 8:47:44 -	LMT	1922 Nov 15
 			11:00	-	VLAT	2014 Oct 26 2:00s
 			10:00	-	VLAT
 
+
+# From Tim Parenti (2014-07-03):
+# Asia/Khandyga covers parts of (14, RU-SA) Sakha (Yakutia) Republic:
+# 14-28	****	Tomponsky District
+# 14-30	****	Ust-Maysky District
+
 # From Arthur David Olson (2012-05-09):
 # Tomponskij and Ust'-Majskij switched from Vladivostok time to Yakutsk time
 # in 2011.
-#
+
 # From Paul Eggert (2012-11-25):
 # Shanks and Pottenger (2003) has Khandyga on Yakutsk time.
 # Make a wild guess that it switched to Vladivostok time in 2004.
 # This transition is no doubt wrong, but we have no better info.
-#
+
 Zone Asia/Khandyga	 9:02:13 -	LMT	1919 Dec 15
 			 8:00	-	YAKT	1930 Jun 21 # Yakutsk Time
 			 9:00	Russia	YAK%sT	1991 Mar 31 2:00s
@@ -2424,9 +2562,13 @@ Zone Asia/Khandyga	 9:02:13 -	LMT	1919 Dec 15
 			10:00	-	YAKT	2014 Oct 26 2:00s
 			 9:00	-	YAKT
 
-#
-# Sakhalinskaya oblast'.
-#
+
+# From Tim Parenti (2014-07-03):
+# Asia/Sakhalin covers...
+# 65	RU-SAK 	Sakhalin Oblast
+# ...with the exception of:
+# 65-11	****	Severo-Kurilsky District (North Kuril Islands)
+
 # The Zone name should be Asia/Yuzhno-Sakhalinsk, but that's too long.
 Zone Asia/Sakhalin	 9:30:48 -	LMT	1905 Aug 23
 			 9:00	-	JCST	1937 Oct  1
@@ -2437,14 +2579,30 @@ Zone Asia/Sakhalin	 9:30:48 -	LMT	1905 Aug 23
 			10:00	Russia	SAK%sT	2011 Mar 27 2:00s
 			11:00	-	SAKT	2014 Oct 26 2:00s
 			10:00	-	SAKT
-#
-# From Oscar van Vlijmen (2003-10-18): [This region consists of]
-# Magadanskaya oblast', Respublika Sakha (Yakutiya).
-# Probably also: Kuril Islands.
 
-# From Oscar van Vlijmen (2009-11-29):
-# The Sakha districts are: Abyjskij, Allaikhovskij, Verkhhhnekolymskij, Momskij,
-# Nizhnekolymskij, ... Srednekolymskij.
+
+# From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2009-11-29):
+# Asia/Magadan covers...
+# 49	RU-MAG 	Magadan Oblast
+#
+# ...and parts of (14, RU-SA) Sakha (Yakutia) Republic:
+# 14-01	****	Abyysky District
+# 14-03	****	Allaikhovsky District
+# 14-08	****	Verkhnekolymsky District
+# 14-17	****	Momsky District
+# 14-20	****	Nizhnekolymsky District
+# 14-25	****	Srednekolymsky District
+#
+# ...and parts of (65, RU-SAK) Sakhalin Oblast:
+# 65-11	****	Severo-Kurilsky District (North Kuril Islands)
+
+# From Tim Parenti (2014-07-06), per Alexander Krivenyshev (2014-07-02):
+# Magadan Oblast is moving from UTC+12 to UTC+10 on 2014-10-26; however,
+# several districts of Sakha Republic as well as Severo-Kurilsky District of
+# the Sakhalin Oblast (also known as the North Kuril Islands), represented
+# until now by Asia/Magadan, will instead move to UTC+11.  These regions will
+# need their own zone.
+
 Zone Asia/Magadan	10:03:12 -	LMT	1924 May  2
 			10:00	-	MAGT	1930 Jun 21 # Magadan Time
 			11:00	Russia	MAG%sT	1991 Mar 31 2:00s
@@ -2453,9 +2611,21 @@ Zone Asia/Magadan	10:03:12 -	LMT	1924 May  2
 			12:00	-	MAGT	2014 Oct 26 2:00s
 			10:00	-	MAGT
 
+
+# From Tim Parenti (2014-07-03):
+# Asia/Ust-Nera covers parts of (14, RU-SA) Sakha (Yakutia) Republic:
+# 14-22	****	Oymyakonsky District
+
 # From Arthur David Olson (2012-05-09):
-# Ojmyakonskij and the Kuril Islands switched from
+# Ojmyakonskij [and the Kuril Islands] switched from
 # Magadan time to Vladivostok time in 2011.
+#
+# From Tim Parenti (2014-07-06), per Alexander Krivenyshev (2014-07-02):
+# It's unlikely that any of the Kuril Islands were involved in such a switch,
+# as the South and Middle Kurils have been on UTC+11 (SAKT) with the rest of
+# Sakhalin Oblast since at least 2011-09, and the North Kurils have been on
+# UTC+12 since at least then, too.
+
 Zone Asia/Ust-Nera	 9:32:54 -	LMT	1919 Dec 15
 			 8:00	-	YAKT	1930 Jun 21 # Yakutsk Time
 			 9:00	Russia	YAKT	1981 Apr  1
@@ -2466,9 +2636,14 @@ Zone Asia/Ust-Nera	 9:32:54 -	LMT	1919 Dec 15
 			11:00	-	VLAT	2014 Oct 26 2:00s
 			10:00	-	VLAT
 
-# From Oscar van Vlijmen (2001-08-25): [This region consists of]
-# Kamchatskaya oblast', Koryakskij avtonomnyj okrug.
+
+# From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2001-08-25):
+# Asia/Kamchatka covers...
+# 91	RU-KAM 	Kamchatka Krai
 #
+# Note: Effective 2007-07-01, (41) Kamchatka Oblast and (82) Koryak
+# Autonomous Okrug merged to form (91, RU-KAM) Kamchatka Krai.
+
 # The Zone name should be Asia/Petropavlovsk-Kamchatski or perhaps
 # Asia/Petropavlovsk-Kamchatsky, but these are too long.
 Zone Asia/Kamchatka	10:34:36 -	LMT	1922 Nov 10
@@ -2478,8 +2653,12 @@ Zone Asia/Kamchatka	10:34:36 -	LMT	1922 Nov 10
 			12:00	Russia	PET%sT	2010 Mar 28 2:00s
 			11:00	Russia	PET%sT	2011 Mar 27 2:00s
 			12:00	-	PETT
-#
-# Chukotskij avtonomnyj okrug
+
+
+# From Tim Parenti (2014-07-03):
+# Asia/Anadyr covers...
+# 87	RU-CHU 	Chukotka Autonomous Okrug
+
 Zone Asia/Anadyr	11:49:56 -	LMT	1924 May  2
 			12:00	-	ANAT	1930 Jun 21 # Anadyr Time
 			13:00	Russia	ANA%sT	1982 Apr  1 0:00s

@@ -4,11 +4,14 @@ Unreleased, experimental changes
 
   Changes affecting future time stamps
 
-    Russia will subtract an hour from many of its time zones on 2014-10-26
-    at 02:00 Moscow time.  (Thanks to Alexander Krivenyshev.)
+    Russia most likely will subtract an hour from many of its time zones on
+    2014-10-26 at 02:00 local time.  (Thanks to Alexander Krivenyshev.)
     The affected zones are Europe/Kaliningrad, Europe/Moscow,
     Europe/Simferopol, Europe/Volgograd, Asia/Yekaterinburg, Asia/Omsk,
-    Asia/Novosibirsk, Asia/Irkutsk, Asia/Yakutsk, and Asia/Vladivostok.
+    Asia/Novosibirsk, Asia/Krasnoyarsk, Asia/Irkutsk, Asia/Yakutsk,
+    Asia/Vladivostok, Asia/Khandyga, Asia/Sakhalin, and Asia/Ust-Nera.
+    Asia/Magadan will have two hours subtracted.  Asia/Novokuznetsk's time
+    zone abbreviation is affected, but not its UTC offset.
 
   Changes affecting time zone abbreviations
 
@@ -19,6 +22,9 @@ Unreleased, experimental changes
     and AWST/AWDT are now used instead of the former CST, CWST, and WST.
     This change does not affect UTC offsets, only time zone abbreviations.
     (Thanks to Rich Tibbett and many others.)
+
+    Asia/Novokuznetsk shifts from NOVT to KRAT (remaining on UTC+7)
+    effective 2014-10-26 at 02:00 local time.
 
     The time zone abbreviation for Xinjiang Time (observed in Ürümqi)
     has been changed from URUT to XJT.  (Thanks to Luther Ma.)

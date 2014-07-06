@@ -2050,6 +2050,7 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 			2:00	E-Eur	EE%sT	1997
 			2:00	EU	EE%sT
 
+
 # Russia
 
 # From Alexander Krivenyshev (2011-09-15):
@@ -2096,8 +2097,9 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 #
 # Tobias Conradi combines Wikipedia's
 # "as of after 7 days following the day of the official publication"
-# with www.rg.ru's "Date of first official publication: September 6, 2011" to get
-# September 13, 2011 as the cutover date (unusually, a Tuesday, as Tobias Conradi notes).
+# with www.rg.ru's "Date of first official publication: September 6, 2011" to
+# get September 13, 2011 as the cutover date (unusually, a Tuesday, as Tobias
+# Conradi notes).
 #
 # None of the sources indicates a time of day for changing clocks.
 #
@@ -2197,8 +2199,7 @@ Zone Europe/Moscow	 2:30:20 -	LMT	1880
 			 3:00	Russia	MSK/MSD	2011 Mar 27 2:00s
 			 4:00	-	MSK	2014 Oct 26 2:00s
 			 3:00	-	MSK
-#
-# Central Crimea used Moscow time 1994/1997.
+
 Zone Europe/Simferopol	 2:16:24 -	LMT	1880
 			 2:16	-	SMT	1924 May  2 # Simferopol Mean T
 			 2:00	-	EET	1930 Jun 21
@@ -2207,6 +2208,8 @@ Zone Europe/Simferopol	 2:16:24 -	LMT	1880
 			 3:00	Russia	MSK/MSD	1990
 			 3:00	-	MSK	1990 Jul  1 2:00
 			 2:00	-	EET	1992
+# Central Crimea used Moscow time 1994/1997.
+#
 # From Paul Eggert (2006-03-22):
 # The _Economist_ (1994-05-28, p 45) reports that central Crimea switched
 # from Kiev to Moscow time sometime after the January 1994 elections.
@@ -2320,13 +2323,19 @@ Zone Asia/Novosibirsk	 5:31:40 -	LMT	1919 Dec 14 6:00
 # As a result, Kemerovo oblast' will be in the same time zone as
 # Novosibirsk, Omsk, Tomsk, Barnaul and Altai Republic.
 
+# From Tim Parenti (2014-07-02), per Alexander Krivenyshev (2014-07-02):
+# The Kemerovo region will remain at UTC+7 through the 2014-10-26 change, thus
+# realigning itself with KRAT.
+
 Zone Asia/Novokuznetsk	 5:48:48 -	NMT	1920 Jan  6
 			 6:00	-	KRAT	1930 Jun 21 # Krasnoyarsk Time
 			 7:00	Russia	KRA%sT	1991 Mar 31 2:00s
 			 6:00	Russia	KRA%sT	1992 Jan 19 2:00s
 			 7:00	Russia	KRA%sT	2010 Mar 28 2:00s
 			 6:00	Russia	NOV%sT	2011 Mar 27 2:00s
-			 7:00	-	NOVT # Novosibirsk/Novokuznetsk Time
+			 7:00	-	NOVT	2014 Oct 26 2:00s
+						# Novosibirsk Time
+			 7:00	-	KRAT
 
 #
 # From Oscar van Vlijmen (2001-08-25): [This region consists of]
@@ -2338,7 +2347,8 @@ Zone Asia/Krasnoyarsk	 6:11:20 -	LMT	1920 Jan  6
 			 7:00	Russia	KRA%sT	1991 Mar 31 2:00s
 			 6:00	Russia	KRA%sT	1992 Jan 19 2:00s
 			 7:00	Russia	KRA%sT	2011 Mar 27 2:00s
-			 8:00	-	KRAT
+			 8:00	-	KRAT	2014 Oct 26 2:00s
+			 7:00	-	KRAT
 #
 # From Oscar van Vlijmen (2001-08-25): [This region consists of]
 # Respublika Buryatiya, Irkutskaya oblast',
@@ -2412,7 +2422,8 @@ Zone Asia/Khandyga	 9:02:13 -	LMT	1919 Dec 15
 			 9:00	Russia	YAK%sT	2004
 			10:00	Russia	VLA%sT	2011 Mar 27 2:00s
 			11:00	-	VLAT	2011 Sep 13 0:00s # Decree 725?
-			10:00	-	YAKT
+			10:00	-	YAKT	2014 Oct 26 2:00s
+			 9:00	-	YAKT
 
 #
 # Sakhalinskaya oblast'.
@@ -2424,7 +2435,8 @@ Zone Asia/Sakhalin	 9:30:48 -	LMT	1905 Aug 23
 			10:00	Russia	SAK%sT	1992 Jan 19 2:00s
 			11:00	Russia	SAK%sT	1997 Mar lastSun 2:00s
 			10:00	Russia	SAK%sT	2011 Mar 27 2:00s
-			11:00	-	SAKT
+			11:00	-	SAKT	2014 Oct 26 2:00s
+			10:00	-	SAKT
 #
 # From Oscar van Vlijmen (2003-10-18): [This region consists of]
 # Magadanskaya oblast', Respublika Sakha (Yakutiya).
@@ -2438,7 +2450,8 @@ Zone Asia/Magadan	10:03:12 -	LMT	1924 May  2
 			11:00	Russia	MAG%sT	1991 Mar 31 2:00s
 			10:00	Russia	MAG%sT	1992 Jan 19 2:00s
 			11:00	Russia	MAG%sT	2011 Mar 27 2:00s
-			12:00	-	MAGT
+			12:00	-	MAGT	2014 Oct 26 2:00s
+			10:00	-	MAGT
 
 # From Arthur David Olson (2012-05-09):
 # Ojmyakonskij and the Kuril Islands switched from
@@ -2450,7 +2463,8 @@ Zone Asia/Ust-Nera	 9:32:54 -	LMT	1919 Dec 15
 			10:00	Russia	MAG%sT	1992 Jan 19 2:00s
 			11:00	Russia	MAG%sT	2011 Mar 27 2:00s
 			12:00	-	MAGT	2011 Sep 13 0:00s # Decree 725?
-			11:00	-	VLAT
+			11:00	-	VLAT	2014 Oct 26 2:00s
+			10:00	-	VLAT
 
 # From Oscar van Vlijmen (2001-08-25): [This region consists of]
 # Kamchatskaya oblast', Koryakskij avtonomnyj okrug.
@@ -2473,6 +2487,7 @@ Zone Asia/Anadyr	11:49:56 -	LMT	1924 May  2
 			12:00	Russia	ANA%sT	2010 Mar 28 2:00s
 			11:00	Russia	ANA%sT	2011 Mar 27 2:00s
 			12:00	-	ANAT
+
 
 # San Marino
 # See Europe/Rome.

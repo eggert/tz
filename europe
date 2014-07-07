@@ -2460,10 +2460,33 @@ Zone Asia/Irkutsk	 6:57:20 -	LMT	1880
 			 8:00	-	IRKT
 
 
+# From Tim Parenti (2014-07-06):
+# Asia/Chita covers...
+# 92	RU-ZAB 	Zabaykalsky Krai
+#
+# Note: Effective 2008-03-01, (75) Chita Oblast and (80) Agin-Buryat
+# Autonomous Okrug merged to form (92, RU-ZAB) Zabaykalsky Krai.
+
+# From Paul Eggert (2014-07-01):
+# http://en.itar-tass.com/russia/738562 implies [Zabaykalsky Krai] will move to
+# UTC+8 on 2014-10-26.
+
+# [This zone is commented out for now, as the 2014 change is not yet official;
+# use Asia/Yakutsk in the meantime.]
+# The zone.tab line will be:
+# RU	+5203+11328	Asia/Chita	Moscow+05 - Zabaykalsky
+#Zone Asia/Chita	 7:33:52 -	LMT	1919 Dec 15
+#			 8:00	-	YAKT	1930 Jun 21 # Yakutsk Time
+#			 9:00	Russia	YAK%sT	1991 Mar 31 2:00s
+#			 8:00	Russia	YAK%sT	1992 Jan 19 2:00s
+#			 9:00	Russia	YAK%sT	2011 Mar 27 2:00s
+#			10:00	-	YAKT	2014 Oct 26 2:00s
+#			 8:00	-	IRKT
+
+
 # From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2009-11-29):
 # Asia/Yakutsk covers...
 # 28	RU-AMU 	Amur Oblast
-# 92	RU-ZAB 	Zabaykalsky Krai
 #
 # ...and parts of (14, RU-SA) Sakha (Yakutia) Republic:
 # 14-02	****	Aldansky District
@@ -2488,19 +2511,11 @@ Zone Asia/Irkutsk	 6:57:20 -	LMT	1880
 # 14-32	****	Khangalassky District
 # 14-33	****	Churapchinsky District
 # 14-34	****	Eveno-Bytantaysky National District
-#
-# Note: Effective 2008-03-01, (75) Chita Oblast and (80) Agin-Buryat
-# Autonomous Okrug merged to form (92, RU-ZAB) Zabaykalsky Krai.
 
 # From Tim Parenti (2014-07-03):
 # Our commentary seems to have lost mention of (14-19) Neryungrinsky District.
 # Since the surrounding districts of Sakha are all YAKT, assume this is, too.
 # Also assume its history has been the same as the rest of Asia/Yakutsk.
-
-# From Paul Eggert (2014-07-01):
-# Perhaps Zabajkal'skij kraj needs a separate entry?
-# http://en.itar-tass.com/russia/738562 implies it will move to UTC+8
-# on 2014-10-26.
 
 Zone Asia/Yakutsk	 8:38:40 -	LMT	1919 Dec 15
 			 8:00	-	YAKT	1930 Jun 21 # Yakutsk Time
@@ -2518,16 +2533,8 @@ Zone Asia/Yakutsk	 8:38:40 -	LMT	1919 Dec 15
 # 79	RU-YEV 	Jewish Autonomous Oblast
 #
 # ...and parts of (14, RU-SA) Sakha (Yakutia) Republic:
-# 14-06	****	Bulunsky District
 # 14-09	****	Verkhoyansky District
 # 14-31	****	Ust-Yansky District
-
-# From Tim Parenti (2014-07-06), per Alexander Krivenyshev (2014-07-02):
-# Bulunsky District will be moving from UTC+10 to UTC+9 on 2014-10-26.
-# However, we had used Asia/Vladivostok to cover this region, which has been
-# on UTC+11 and is moving to UTC+10.  It is likely that Bulunsky District has
-# been on UTC+10 since the 2011-03-27 changes.  It will need its own zone to
-# reflect this history.
 
 Zone Asia/Vladivostok	 8:47:44 -	LMT	1922 Nov 15
 			 9:00	-	VLAT	1930 Jun 21 # Vladivostok Time
@@ -2536,6 +2543,32 @@ Zone Asia/Vladivostok	 8:47:44 -	LMT	1922 Nov 15
 			10:00	Russia	VLA%sT	2011 Mar 27 2:00s
 			11:00	-	VLAT	2014 Oct 26 2:00s
 			10:00	-	VLAT
+
+
+# From Tim Parenti (2014-07-06):
+# Asia/Tiksi covers parts of (14, RU-SA) Sakha (Yakutia) Republic:
+# 14-06	****	Bulunsky District
+
+# From Tim Parenti (2014-07-06), per Alexander Krivenyshev (2014-07-02):
+# Bulunsky District will be moving from UTC+10 to UTC+9 on 2014-10-26.
+# However, we had used Asia/Vladivostok to cover this region, which has been
+# on UTC+11 and is moving to UTC+10.  It is likely that Bulunsky District has
+# been on UTC+10 since the 2011-03-27 changes.
+#
+# Assume Bulunsky District was like Asia/Vladivostok until 2011-03-27, and
+# has been like Asia/Yakutsk since.
+
+# [This zone is commented out for now until it can be better verified; use
+# Asia/Yakutsk for current timestamps in the meantime.]
+# The zone.tab line will be:
+# RU	+7138+12852	Asia/Tiksi	Moscow+06 - Bulunsky
+#Zone Asia/Tiksi	 8:35:28 -	LMT	1922 Nov 15
+#			 9:00	-	VLAT	1930 Jun 21 # Vladivostok Time
+#			10:00	Russia	VLA%sT	1991 Mar 31 2:00s
+#			 9:00	Russia	VLA%sT	1992 Jan 19 2:00s
+#			10:00	Russia	VLA%sT	2011 Mar 27 2:00s
+#			10:00	-	YAKT	2014 Oct 26 2:00s
+#			 9:00	-	YAKT
 
 
 # From Tim Parenti (2014-07-03):
@@ -2584,17 +2617,6 @@ Zone Asia/Sakhalin	 9:30:48 -	LMT	1905 Aug 23
 # From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2009-11-29):
 # Asia/Magadan covers...
 # 49	RU-MAG 	Magadan Oblast
-#
-# ...and parts of (14, RU-SA) Sakha (Yakutia) Republic:
-# 14-01	****	Abyysky District
-# 14-03	****	Allaikhovsky District
-# 14-08	****	Verkhnekolymsky District
-# 14-17	****	Momsky District
-# 14-20	****	Nizhnekolymsky District
-# 14-25	****	Srednekolymsky District
-#
-# ...and parts of (65, RU-SAK) Sakhalin Oblast:
-# 65-11	****	Severo-Kurilsky District (North Kuril Islands)
 
 # From Tim Parenti (2014-07-06), per Alexander Krivenyshev (2014-07-02):
 # Magadan Oblast is moving from UTC+12 to UTC+10 on 2014-10-26; however,
@@ -2610,6 +2632,63 @@ Zone Asia/Magadan	10:03:12 -	LMT	1924 May  2
 			11:00	Russia	MAG%sT	2011 Mar 27 2:00s
 			12:00	-	MAGT	2014 Oct 26 2:00s
 			10:00	-	MAGT
+
+
+# From Tim Parenti (2014-07-06):
+# Asia/Srednekolymsk covers parts of (14, RU-SA) Sakha (Yakutia) Republic:
+# 14-01	****	Abyysky District
+# 14-03	****	Allaikhovsky District
+# 14-08	****	Verkhnekolymsky District
+# 14-17	****	Momsky District
+# 14-20	****	Nizhnekolymsky District
+# 14-25	****	Srednekolymsky District
+#
+# ...and parts of (65, RU-SAK) Sakhalin Oblast:
+# 65-11	****	Severo-Kurilsky District (North Kuril Islands)
+
+# From Tim Parenti (2014-07-02):
+# Oymyakonsky District of Sakha Republic (represented by Ust-Nera), along with
+# most of Sakhalin Oblast (represented by Sakhalin) will be moving to UTC+10 on
+# 2014-10-26 to stay aligned with VLAT/SAKT; however, Severo-Kurilsky District
+# of the Sakhalin Oblast (also known as the North Kuril Islands, represented by
+# Severo-Kurilsk) will remain on UTC+11.
+
+# From Tim Parenti (2014-07-06):
+# Assume North Kuril Islands have history like Magadan before 2011-03-27.
+# There is a decent chance this is wrong, in which case a new zone
+# Asia/Severo-Kurilsk would become necessary.
+#
+# Srednekolymsk and Zyryanka are the most populous places amongst these
+# districts, but have very similar populations.  In fact, Wikipedia currently
+# lists them both as having 3528 people, exactly 1668 males and 1860 females
+# each!  (Yikes!)
+# http://en.wikipedia.org/w/?title=Verkhnekolymsky_District&oldid=594378493
+# http://en.wikipedia.org/w/?title=Nizhnekolymsky_District&oldid=588796422
+# Assume this is a mistake, albeit an amusing one.
+#
+# Looking at censuses, the populations of the two municipalities seem to have
+# fluctuated recently.  Zyryanka was more populous than Srednekolymsk in the
+# 1989 and 2002 censuses, but Srednekolymsk was more populous in the most
+# recent (2010) census, 3525 to 3170.  (See pages 195 and 197 of
+# http://www.gks.ru/free_doc/new_site/perepis2010/croc/Documents/Vol1/pub-01-05.pdf
+# in Russian.)  In addition, Srednekolymsk appears to be a much older
+# settlement and the population of Zyryanka seems to be declining.
+# Go with Srednekolymsk.
+#
+# Since Magadan Oblast moves to UTC+10 on 2014-10-26, we cannot keep using MAGT
+# as the abbreviation.  Use SRET instead.
+
+# [This zone is commented out for now, as the 2014 change is not yet official;
+# use Asia/Magadan in the meantime.]
+# The zone.tab line will be:
+# RU	+6728+15343	Asia/Srednekolymsk	Moscow+08 - Srednekolymsk, North Kuril Islands
+#Zone Asia/Srednekolymsk	10:14:52 -	LMT	1924 May  2
+#			10:00	-	MAGT	1930 Jun 21 # Magadan Time
+#			11:00	Russia	MAG%sT	1991 Mar 31 2:00s
+#			10:00	Russia	MAG%sT	1992 Jan 19 2:00s
+#			11:00	Russia	MAG%sT	2011 Mar 27 2:00s
+#			12:00	-	MAGT	2014 Oct 26 2:00s
+#			11:00	-	SRET # Srednekolymsk Time
 
 
 # From Tim Parenti (2014-07-03):

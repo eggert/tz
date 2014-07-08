@@ -102,6 +102,9 @@ Unreleased, experimental changes
     The 'Theory' file documents legacy names, the longstanding
     exceptions to the POSIX-inspired file name rules.
 
+    The 'zic' documentation clarifies the role of time types when
+    interpreting dates.  (Thanks to Arthur David Olson.)
+
     Documentation and commentary now prefer UTF-8 to US-ASCII,
     allowing the use of proper accents in foreign words and names.
     Code and data have not changed because of this.  (Thanks to

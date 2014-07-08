@@ -71,6 +71,11 @@ Unreleased, experimental changes
     Finland's 1942 fall-back transition was October 4 at 01:00, not
     October 3 at 00:00.  (Thanks to Konstantin Hyppönen.)
 
+  New link name
+
+    New link Indian/Alfred_Faure for the Crozet Islands and the
+    Scattered Islands.  (Thanks to Tobias Conradi and Antoine Leca.)
+
   Changes affecting code
 
     'localtime', 'mktime', etc. now use much less stack space if ALL_STATE

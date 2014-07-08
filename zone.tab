@@ -384,7 +384,8 @@ SY	+3330+03618	Asia/Damascus
 SZ	-2618+03106	Africa/Mbabane
 TC	+2128-07108	America/Grand_Turk
 TD	+1207+01503	Africa/Ndjamena
-TF	-492110+0701303	Indian/Kerguelen
+TF	-492110+0701303	Indian/Kerguelen	Kerguelen, St Paul I, Amsterdam I
+TF	-462551+0515125	Indian/Alfred_Faure	Crozet Is, Scattered Is
 TG	+0608+00113	Africa/Lome
 TH	+1345+10031	Asia/Bangkok
 TJ	+3835+06848	Asia/Dushanbe

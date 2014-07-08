@@ -533,7 +533,7 @@ Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1879 Jul  5
 			-11:00	-	BST	1983 Nov 30	# B=Bering
 			-11:00	-	SST			# S=Samoa
 
-# Samoa
+# Samoa (formerly and also known as Western Samoa)
 
 # From Steffen Thorsen (2009-10-16):
 # We have been in contact with the government of Samoa again, and received
@@ -592,35 +592,26 @@ Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1879 Jul  5
 # Thursday 29th December 2011	23:59:59 Hours
 # Saturday 31st December 2011	00:00:00 Hours
 #
-# Clarification by Tim Parenti (2012-01-03):
-# Although Samoa has used Daylight Saving Time in the 2010-2011 and 2011-2012
-# seasons, there is not yet any indication that this trend will continue on
-# a regular basis. For now, we have explicitly listed the transitions below.
-#
-# From Nicky (2012-09-10):
+# From Nicholas Pereira (2012-09-10):
 # Daylight Saving Time commences on Sunday 30th September 2012 and
-# ends on Sunday 7th of April 2013.
-#
-# Please find link below for more information.
+# ends on Sunday 7th of April 2013....
 # http://www.mcil.gov.ws/mcil_publications.html
 #
-# That publication also includes dates for Summer of 2013/4 as well
-# which give the impression of a pattern in selecting dates for the
-# future, so for now, we will guess this will continue.
+# From Paul Eggert (2014-07-08):
+# That web page currently lists transitions for 2012/3 and 2013/4.
+# Assume the pattern instituted in 2012 will continue indefinitely.
 
-# Western Samoa
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	WS	2012	max	-	Sep	lastSun	3:00	1	D
+Rule	WS	2010	only	-	Sep	lastSun	0:00	1	D
+Rule	WS	2011	only	-	Apr	Sat>=1	4:00	0	-
+Rule	WS	2011	only	-	Sep	lastSat	3:00	1	D
 Rule	WS	2012	max	-	Apr	Sun>=1	4:00	0	-
+Rule	WS	2012	max	-	Sep	lastSun	3:00	1	D
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Pacific/Apia	 12:33:04 -	LMT	1879 Jul  5
 			-11:26:56 -	LMT	1911
 			-11:30	-	SAMT	1950		# Samoa Time
-			-11:00	-	WST	2010 Sep 26
-			-11:00	1:00	WSDT	2011 Apr 2 4:00
-			-11:00	-	WST	2011 Sep 24 3:00
-			-11:00	1:00	WSDT	2011 Dec 29 24:00
-			 13:00	1:00	WSDT	2012 Apr Sun>=1 4:00
+			-11:00	WS	WS%sT	2011 Dec 29 24:00
 			 13:00	WS	WS%sT
 
 # Solomon Is

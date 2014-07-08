@@ -2473,8 +2473,6 @@ Zone Asia/Irkutsk	 6:57:20 -	LMT	1880
 
 # [This zone is commented out for now, as the 2014 change is not yet official;
 # use Asia/Yakutsk in the meantime.]
-# The zone.tab line will be:
-# RU	+5203+11328	Asia/Chita	Moscow+05 - Zabaykalsky
 #Zone Asia/Chita	 7:33:52 -	LMT	1919 Dec 15
 #			 8:00	-	YAKT	1930 Jun 21 # Yakutsk Time
 #			 9:00	Russia	YAK%sT	1991 Mar 31 2:00s
@@ -2492,6 +2490,7 @@ Zone Asia/Irkutsk	 6:57:20 -	LMT	1880
 # 14-02	****	Aldansky District
 # 14-04	****	Amginsky District
 # 14-05	****	Anabarsky District
+# 14-06	****	Bulunsky District
 # 14-07	****	Verkhnevilyuysky District
 # 14-10	****	Vilyuysky District
 # 14-11	****	Gorny District
@@ -2543,32 +2542,6 @@ Zone Asia/Vladivostok	 8:47:44 -	LMT	1922 Nov 15
 			10:00	Russia	VLA%sT	2011 Mar 27 2:00s
 			11:00	-	VLAT	2014 Oct 26 2:00s
 			10:00	-	VLAT
-
-
-# From Tim Parenti (2014-07-06):
-# Asia/Tiksi covers parts of (14, RU-SA) Sakha (Yakutia) Republic:
-# 14-06	****	Bulunsky District
-
-# From Tim Parenti (2014-07-06), per Alexander Krivenyshev (2014-07-02):
-# Bulunsky District will be moving from UTC+10 to UTC+9 on 2014-10-26.
-# However, we had used Asia/Vladivostok to cover this region, which has been
-# on UTC+11 and is moving to UTC+10.  It is likely that Bulunsky District has
-# been on UTC+10 since the 2011-03-27 changes.
-#
-# Assume Bulunsky District was like Asia/Vladivostok until 2011-03-27, and
-# has been like Asia/Yakutsk since.
-
-# [This zone is commented out for now until it can be better verified; use
-# Asia/Yakutsk for current timestamps in the meantime.]
-# The zone.tab line will be:
-# RU	+7138+12852	Asia/Tiksi	Moscow+06 - Bulunsky
-#Zone Asia/Tiksi	 8:35:28 -	LMT	1922 Nov 15
-#			 9:00	-	VLAT	1930 Jun 21 # Vladivostok Time
-#			10:00	Russia	VLA%sT	1991 Mar 31 2:00s
-#			 9:00	Russia	VLA%sT	1992 Jan 19 2:00s
-#			10:00	Russia	VLA%sT	2011 Mar 27 2:00s
-#			10:00	-	YAKT	2014 Oct 26 2:00s
-#			 9:00	-	YAKT
 
 
 # From Tim Parenti (2014-07-03):
@@ -2680,8 +2653,6 @@ Zone Asia/Magadan	10:03:12 -	LMT	1924 May  2
 
 # [This zone is commented out for now, as the 2014 change is not yet official;
 # use Asia/Magadan in the meantime.]
-# The zone.tab line will be:
-# RU	+6728+15343	Asia/Srednekolymsk	Moscow+08 - Srednekolymsk, North Kuril Islands
 #Zone Asia/Srednekolymsk	10:14:52 -	LMT	1924 May  2
 #			10:00	-	MAGT	1930 Jun 21 # Magadan Time
 #			11:00	Russia	MAG%sT	1991 Mar 31 2:00s

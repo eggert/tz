@@ -1085,9 +1085,13 @@ Rule	Finland	1942	only	-	Apr	2	24:00	1:00	S
 Rule	Finland	1942	only	-	Oct	4	1:00	0	-
 Rule	Finland	1981	1982	-	Mar	lastSun	2:00	1:00	S
 Rule	Finland	1981	1982	-	Sep	lastSun	3:00	0	-
+
+# Milne says Helsinki (Helsingfors) time was 1:39:49.2 (official document);
+# round to nearest.
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Helsinki	1:39:52 -	LMT	1878 May 31
-			1:39:52	-	HMT	1921 May    # Helsinki Mean Time
+Zone	Europe/Helsinki	1:39:49 -	LMT	1878 May 31
+			1:39:49	-	HMT	1921 May    # Helsinki Mean Time
 			2:00	Finland	EE%sT	1983
 			2:00	EU	EE%sT
 
@@ -1525,13 +1529,16 @@ Link	Europe/Rome	Europe/San_Marino
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Latvia	1989	1996	-	Mar	lastSun	 2:00s	1:00	S
 Rule	Latvia	1989	1996	-	Sep	lastSun	 2:00s	0	-
+
+# Milne says Riga time was 1:36:28 (Polytechnique House time).
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Riga	1:36:24	-	LMT	1880
-			1:36:24	-	RMT	1918 Apr 15 2:00 #Riga Mean Time
-			1:36:24	1:00	LST	1918 Sep 16 3:00 #Latvian Summer
-			1:36:24	-	RMT	1919 Apr  1 2:00
-			1:36:24	1:00	LST	1919 May 22 3:00
-			1:36:24	-	RMT	1926 May 11
+Zone	Europe/Riga	1:36:28	-	LMT	1880
+			1:36:28	-	RMT	1918 Apr 15 2:00 #Riga Mean Time
+			1:36:28	1:00	LST	1918 Sep 16 3:00 #Latvian Summer
+			1:36:28	-	RMT	1919 Apr  1 2:00
+			1:36:28	1:00	LST	1919 May 22 3:00
+			1:36:28	-	RMT	1926 May 11
 			2:00	-	EET	1940 Aug  5
 			3:00	-	MSK	1941 Jul
 			1:00	C-Eur	CE%sT	1944 Oct 13
@@ -2232,9 +2239,27 @@ Zone Europe/Kaliningrad	 1:22:00 -	LMT	1893 Apr
 # 78	RU-SPE 	Saint Petersburg
 # 83	RU-NEN 	Nenets Autonomous Okrug
 
-Zone Europe/Moscow	 2:30:20 -	LMT	1880
-			 2:30	-	MMT	1916 Jul  3 # Moscow Mean Time
-			 2:30:48 Russia	%s	1919 Jul  1 2:00
+# From Vladimir Karpinsky (2017-07-08):
+# LMT in Moscow (before Jul 3, 1916) is 2:30:17, that was defined by Moscow
+# Observatory (coordinates: 55 deg. 45'29.70", 37 deg. 34'05.30")....
+# LMT in Moscow since Jul 3, 1916 is 2:31:01 as a result of new standard.
+# (The info is from the book by Byalokoz E.L. New Counting of Time in Russia
+# since July 1, 1919, p. 18.)  The time in St. Petersburg as capital of Russia
+# was defined by Pulkov observatory, near St. Petersburg.  In 1916 LMT Moscow
+# was synchronized with LMT St. Petersburg (+30 minutes), (Pulkov observatory
+# coordinates: 59 deg. 46'18.70", 30 deg. 19'40.70") so 30 deg. 19'40.70" >
+# 2h01m18.7s = 2:01:19.  LMT Moscow = LMT St.Petersburg + 30m 2:01:19 + 0:30 =
+# 2:31:19 ...
+#
+# From Paul Eggert (2017-07-08):
+# Milne does not list Moscow, but suggests that its time might be listed in
+# Résumés mensuels et annuels des observations météorologiques (1895).
+# Presumably this is OCLC 85825704, a journal published with parallel text in
+# Russian and French.  This source has not been located; go with Karpinsky.
+
+Zone Europe/Moscow	 2:30:17 -	LMT	1880
+			 2:30:17 -	MMT	1916 Jul  3 # Moscow Mean Time
+			 2:31:19 Russia	%s	1919 Jul  1 2:00
 			 3:00	Russia	%s	1921 Oct
 			 3:00	Russia	MSK/MSD	1922 Oct
 			 2:00	-	EET	1930 Jun 21
@@ -2342,7 +2367,9 @@ Zone Europe/Samara	 3:20:36 -	LMT	1919 Jul  1 2:00
 # Note: Effective 2005-12-01, (59) Perm Oblast and (81) Komi-Permyak
 # Autonomous Okrug merged to form (90, RU-PER) Perm Krai.
 
-Zone Asia/Yekaterinburg	 4:02:24 -	LMT	1919 Jul 15 4:00
+# Milne says Yekaterinburg time was 4:02:32.9; round to nearest.
+
+Zone Asia/Yekaterinburg	 4:02:33 -	LMT	1919 Jul 15 4:00
 			 4:00	-	SVET	1930 Jun 21 # Sverdlovsk Time
 			 5:00	Russia	SVE%sT	1991 Mar 31 2:00s
 			 4:00	Russia	SVE%sT	1992 Jan 19 2:00s
@@ -2450,8 +2477,10 @@ Zone Asia/Krasnoyarsk	 6:11:20 -	LMT	1920 Jan  6
 # Note: Effective 2008-01-01, (85) Ust-Orda Buryat Autonomous Okrug was
 # merged into (38, RU-IRK) Irkutsk Oblast.
 
-Zone Asia/Irkutsk	 6:57:20 -	LMT	1880
-			 6:57:20 -	IMT	1920 Jan 25 # Irkutsk Mean Time
+# Milne says Irkutsk time was 6:57:15.
+
+Zone Asia/Irkutsk	 6:57:15 -	LMT	1880
+			 6:57:15 -	IMT	1920 Jan 25 # Irkutsk Mean Time
 			 7:00	-	IRKT	1930 Jun 21 # Irkutsk Time
 			 8:00	Russia	IRK%sT	1991 Mar 31 2:00s
 			 7:00	Russia	IRK%sT	1992 Jan 19 2:00s
@@ -2535,7 +2564,9 @@ Zone Asia/Yakutsk	 8:38:40 -	LMT	1919 Dec 15
 # 14-09	****	Verkhoyansky District
 # 14-31	****	Ust-Yansky District
 
-Zone Asia/Vladivostok	 8:47:44 -	LMT	1922 Nov 15
+# Milne says Vladivostok time was 8:47:33.5; round to nearest.
+
+Zone Asia/Vladivostok	 8:47:34 -	LMT	1922 Nov 15
 			 9:00	-	VLAT	1930 Jun 21 # Vladivostok Time
 			10:00	Russia	VLA%sT	1991 Mar 31 2:00s
 			 9:00	Russia	VLA%sT	1992 Jan 19 2:00s

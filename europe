@@ -2239,7 +2239,7 @@ Zone Europe/Kaliningrad	 1:22:00 -	LMT	1893 Apr
 # 78	RU-SPE 	Saint Petersburg
 # 83	RU-NEN 	Nenets Autonomous Okrug
 
-# From Vladimir Karpinsky (2017-07-08):
+# From Vladimir Karpinsky (2014-07-08):
 # LMT in Moscow (before Jul 3, 1916) is 2:30:17, that was defined by Moscow
 # Observatory (coordinates: 55 deg. 45'29.70", 37 deg. 34'05.30")....
 # LMT in Moscow since Jul 3, 1916 is 2:31:01 as a result of new standard.
@@ -2251,7 +2251,7 @@ Zone Europe/Kaliningrad	 1:22:00 -	LMT	1893 Apr
 # 2h01m18.7s = 2:01:19.  LMT Moscow = LMT St.Petersburg + 30m 2:01:19 + 0:30 =
 # 2:31:19 ...
 #
-# From Paul Eggert (2017-07-08):
+# From Paul Eggert (2014-07-08):
 # Milne does not list Moscow, but suggests that its time might be listed in
 # Résumés mensuels et annuels des observations météorologiques (1895).
 # Presumably this is OCLC 85825704, a journal published with parallel text in

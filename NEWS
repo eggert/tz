@@ -61,11 +61,21 @@ Unreleased, experimental changes
     Some zones have been turned into links, when they differed from existing
     zones only for older UTC offsets where the data were likely invented.
     These changes affect UTC offsets in pre-1970 time stamps only.  This is
-    similar to the change in release 2013e, except this time for the Pacific.
-    The affected zones are: Antarctica/DumontDUrville, Pacific/Chuuk,
-    Pacific/Funafuti, Pacific/Majuro, Pacific/Midway, Pacific/Palau,
-    Pacific/Pohnpei, Pacific/Saipan, Pacific/Tahiti, Pacific/Wake, and
-    Pacific/Wallis.
+    similar to the change in release 2013e, except this time for Africa and
+    the Pacific.  The affected zones are: Africa/Accra, Africa/Addis_Ababa,
+    Africa/Asmara, Africa/Bamako, Africa/Bangui, Africa/Banjul,
+    Africa/Blantyre, Africa/Brazzaville, Africa/Bujumbura, Africa/Conakry,
+    Africa/Dakar, Africa/Dar_es_Salaam, Africa/Djibouti, Africa/Douala,
+    Africa/Freetown, Africa/Gaborone, Africa/Harare, Africa/Kampala,
+    Africa/Kigali, Africa/Kinshasa, Africa/Libreville, Africa/Lome,
+    Africa/Luanda, Africa/Lubumbashi, Africa/Lusaka, Africa/Malabo,
+    Africa/Maputo, Africa/Maseru, Africa/Mbabane, Africa/Mogadishu,
+    Africa/Niamey, Africa/Nouakchott, Africa/Ouagadougou, Africa/Porto-Novo,
+    Africa/Sao_Tome, Antarctica/DumontDUrville, Antarctica/Syowa,
+    Atlantic/St_Helena, Indian/Antananarivo, Indian/Comoro, Indian/Mayotte,
+    Pacific/Chuuk, Pacific/Funafuti, Pacific/Majuro, Pacific/Midway,
+    Pacific/Palau, Pacific/Pohnpei, Pacific/Saipan, Pacific/Tahiti,
+    Pacific/Wake, and Pacific/Wallis.
 
     Asia/Shanghai's pre-standard-time UT offset has been changed from
     8:05:57 to 8:05:43, the location of Xujiahui Observatory.  Its

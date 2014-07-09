@@ -1432,6 +1432,9 @@ Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
 			9:00	Japan	J%sT
 # Since 1938, all Japanese possessions have been like Asia/Tokyo.
 
+# The following region has been like Asia/Tokyo since at least 1970.
+Link Asia/Tokyo Pacific/Palau
+
 # Jordan
 #
 # From <http://star.arabia.com/990701/JO9.html>

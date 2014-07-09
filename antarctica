@@ -180,15 +180,10 @@ Zone Indian/Kerguelen	0	-	zzz	1950	# Port-aux-Français
 # year-round base in the main continent
 # Dumont d'Urville, Île des Pétrels, -6640+14001, since 1956-11
 # <http://en.wikipedia.org/wiki/Dumont_d'Urville_Station> (2005-12-05)
+# See Pacific/Port_Moresby.
 #
 # Another base at Port-Martin, 50km east, began operation in 1947.
 # It was destroyed by fire on 1952-01-14.
-#
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Antarctica/DumontDUrville 0 -	zzz	1947
-			10:00	-	PMT	1952 Jan 14 # Port-Martin Time
-			0	-	zzz	1956 Nov
-			10:00	-	DDUT	# Dumont-d'Urville Time
 
 # France & Italy - year-round base
 # Concordia, -750600+1232000, since 2005

@@ -592,6 +592,7 @@ Zone Pacific/Honolulu	-10:31:26 -	LMT	1896 Jan 13 12:00 #Schmitt&Cox
 			-10:00	-	HST
 
 Link Pacific/Honolulu Pacific/Johnston
+Link Pacific/Honolulu Pacific/Tahiti # in French Polynesia
 
 # Now we turn to US areas that have diverged from the consensus since 1970.
 

@@ -183,7 +183,8 @@ Unreleased, experimental changes
 
     tz-link.htm now mentions the JavaScript libraries Moment Timezone,
     TimezoneJS.Date, Walltime-js, and Timezone.  (Thanks to a heads-up
-    from Matt Johnson.)
+    from Matt Johnson.)  Also, it mentions the Go 'latlong' package.
+    (Thanks to a heads-up from Dirkjan Ochtman.)
 
     The files usno1988, usno1989, usno1989a, usno1995, usno1997, and usno1998
     have been removed.  These obsolescent US Naval Observatory entries were no

@@ -109,13 +109,13 @@ Zone	Africa/Algiers	0:12:12 -	LMT	1891 Mar 15 0:01
 
 # Botswana
 # Milne says they were regulated by the Cape Town Signal in 1899.
-# See Africa/Johannesburg.
+# See Africa/Maputo.
 
 # Burkina Faso
 # See Africa/Abidjan.
 
 # Burundi
-# See Africa/Johannesburg.
+# See Africa/Maputo.
 
 # Cameroon
 # See Africa/Lagos.
@@ -143,7 +143,7 @@ Zone	Africa/Ndjamena	1:00:12 -	LMT	1912 # N'Djamena
 
 # Democratic Republic of Congo
 # See Africa/Lagos for the western part of the country.
-# See Africa/Johannesburg for the eastern part of the country.
+# See Africa/Maputo for the eastern part of the country.
 
 # Republic of the Congo
 # See Africa/Lagos.
@@ -152,7 +152,6 @@ Zone	Africa/Ndjamena	1:00:12 -	LMT	1912 # N'Djamena
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Abidjan	-0:16:08 -	LMT	1912
 			 0:00	-	GMT
-Link Africa/Abidjan Africa/Accra	# Ghana
 Link Africa/Abidjan Africa/Bamako	# Mali
 Link Africa/Abidjan Africa/Banjul	# Gambia
 Link Africa/Abidjan Africa/Conakry	# Guinea
@@ -398,7 +397,22 @@ Zone	Africa/Cairo	2:05:09 -	LMT	1900 Oct
 # See Africa/Lagos.
 
 # Gambia
+# See Africa/Abidjan.
+
 # Ghana
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+# Whitman says DST was observed from 1931 to "the present";
+# Shanks & Pottenger say 1936 to 1942;
+# and September 1 to January 1 is given by:
+# Scott Keltie J, Epstein M (eds), The Statesman's Year-Book,
+# 57th ed. Macmillan, London (1920), OCLC 609408015, pp xxviii.
+# For lack of better info, assume DST was observed from 1920 to 1942.
+Rule	Ghana	1920	1942	-	Sep	 1	0:00	0:20	GHST
+Rule	Ghana	1920	1942	-	Dec	31	0:00	0	GMT
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	Africa/Accra	-0:00:52 -	LMT	1918
+			 0:00	Ghana	%s
+
 # Guinea
 # See Africa/Abidjan.
 
@@ -421,7 +435,6 @@ Link Africa/Nairobi Africa/Dar_es_Salaam # Tanzania
 Link Africa/Nairobi Africa/Djibouti
 Link Africa/Nairobi Africa/Kampala	 # Uganda
 Link Africa/Nairobi Africa/Mogadishu	 # Somalia
-Link Africa/Nairobi Antarctica/Syowa
 Link Africa/Nairobi Indian/Antananarivo	 # Madagascar
 Link Africa/Nairobi Indian/Comoro
 Link Africa/Nairobi Indian/Mayotte
@@ -505,7 +518,7 @@ Zone	Africa/Tripoli	0:52:44 -	LMT	1920
 # See Africa/Nairobi.
 
 # Malawi
-# See Africa/Johannesburg.
+# See Africa/Maputo.
 
 # Mali
 # Mauritania
@@ -904,7 +917,16 @@ Zone Africa/El_Aaiun	-0:52:48 -	LMT	1934 Jan # El Aaiún
 			 0:00	Morocco	WE%sT
 
 # Mozambique
-# See Africa/Johannesburg.
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	Africa/Maputo	2:10:20 -	LMT	1903 Mar
+			2:00	-	CAT
+Link Africa/Maputo Africa/Blantyre	# Malawi
+Link Africa/Maputo Africa/Bujumbura	# Burundi
+Link Africa/Maputo Africa/Gaborone	# Botswana
+Link Africa/Maputo Africa/Harare	# Zimbabwe
+Link Africa/Maputo Africa/Kigali	# Rwanda
+Link Africa/Maputo Africa/Lubumbashi	# E Dem. Rep. of Congo
+Link Africa/Maputo Africa/Lusaka	# Zambia
 
 # Namibia
 # The 1994-04-03 transition is from Shanks & Pottenger.
@@ -971,7 +993,7 @@ Link Indian/Reunion Indian/Alfred_Faure
 # Tromelin - inhabited until at least 1958
 
 # Rwanda
-# See Africa/Johannesburg.
+# See Africa/Maputo.
 
 # St Helena
 # See Africa/Abidjan.
@@ -1011,14 +1033,6 @@ Rule	SA	1943	1944	-	Mar	Sun>=15	2:00	0	-
 Zone Africa/Johannesburg 1:52:00 -	LMT	1892 Feb 8
 			1:30	-	SAST	1903 Mar
 			2:00	SA	SAST
-Link Africa/Johannesburg Africa/Blantyre   # Malawi
-Link Africa/Johannesburg Africa/Bujumbura  # Burundi
-Link Africa/Johannesburg Africa/Gaborone   # Botswana
-Link Africa/Johannesburg Africa/Harare	   # Zimbabwe
-Link Africa/Johannesburg Africa/Kigali	   # Rwanda
-Link Africa/Johannesburg Africa/Lubumbashi # E Dem. Rep. of Congo
-Link Africa/Johannesburg Africa/Lusaka	   # Zambia
-Link Africa/Johannesburg Africa/Maputo	   # Mozambique
 Link Africa/Johannesburg Africa/Maseru	   # Lesotho
 Link Africa/Johannesburg Africa/Mbabane    # Swaziland
 #
@@ -1162,4 +1176,4 @@ Zone	Africa/Tunis	0:40:44 -	LMT	1881 May 12
 
 # Zambia
 # Zimbabwe
-# See Africa/Johannesburg.
+# See Africa/Maputo.

@@ -592,7 +592,6 @@ Zone Pacific/Honolulu	-10:31:26 -	LMT	1896 Jan 13 12:00 #Schmitt&Cox
 			-10:00	-	HST
 
 Link Pacific/Honolulu Pacific/Johnston
-Link Pacific/Honolulu Pacific/Tahiti # in French Polynesia
 
 # Now we turn to US areas that have diverged from the consensus since 1970.
 
@@ -1344,7 +1343,6 @@ Zone America/Moncton	-4:19:08 -	LMT	1883 Dec  9
 # says this common practice was codified into law as of 2007.
 # For lack of better info, guess this practice began around 1970, contra to
 # Shanks & Pottenger who have this region observing AST/ADT.
-# for post-1970 data America/Puerto_Rico.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Mont	1917	only	-	Mar	25	2:00	1:00	D
@@ -2492,13 +2490,8 @@ Zone America/Santa_Isabel	-7:39:28 -	LMT	1922 Jan  1  0:20:32
 ###############################################################################
 
 # Anguilla
-# See 'southamerica'.
-
 # Antigua and Barbuda
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Antigua	-4:07:12 -	LMT	1912 Mar 2
-			-5:00	-	EST	1951
-			-4:00	-	AST
+# See America/Port_of_Spain.
 
 # Bahamas
 #
@@ -2565,10 +2558,7 @@ Zone Atlantic/Bermuda	-4:19:18 -	LMT	1930 Jan  1 2:00    # Hamilton
 			-4:00	US	A%sT
 
 # Cayman Is
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Cayman	-5:25:32 -	LMT	1890		# Georgetown
-			-5:07:11 -	KMT	1912 Feb    # Kingston Mean Time
-			-5:00	-	EST
+Link America/Panama America/Cayman
 
 # Costa Rica
 
@@ -2795,7 +2785,7 @@ Zone	America/Havana	-5:29:28 -	LMT	1890
 			-5:00	Cuba	C%sT
 
 # Dominica
-# See 'southamerica'.
+# See America/Port_of_Spain.
 
 # Dominican Republic
 
@@ -2847,7 +2837,7 @@ Zone America/El_Salvador -5:56:48 -	LMT	1921		# San Salvador
 # Guadeloupe
 # St Barthélemy
 # St Martin (French part)
-# See 'southamerica'.
+# See America/Port_of_Spain.
 
 # Guatemala
 #
@@ -3008,7 +2998,7 @@ Zone America/Martinique	-4:04:20 -      LMT	1890		# Fort-de-France
 			-4:00	-	AST
 
 # Montserrat
-# See 'southamerica'.
+# See America/Port_of_Spain.
 
 # Nicaragua
 #
@@ -3091,7 +3081,7 @@ Zone America/Puerto_Rico -4:24:25 -	LMT	1899 Mar 28 12:00    # San Juan
 
 # St Kitts-Nevis
 # St Lucia
-# See 'southamerica'.
+# See America/Port_of_Spain.
 
 # St Pierre and Miquelon
 # There are too many St Pierres elsewhere, so we'll use 'Miquelon'.
@@ -3102,7 +3092,7 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15	# St Pierre
 			-3:00	Canada	PM%sT
 
 # St Vincent and the Grenadines
-# See 'southamerica'.
+# See America/Port_of_Spain.
 
 # Turks and Caicos
 #
@@ -3137,7 +3127,7 @@ Zone America/Grand_Turk	-4:44:32 -	LMT	1890
 
 # British Virgin Is
 # Virgin Is
-# See 'southamerica'.
+# See America/Port_of_Spain.
 
 
 # Local Variables:

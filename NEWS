@@ -41,6 +41,11 @@ Unreleased, experimental changes
     Prefer MSK/MSD for Moscow time in Russia, even in other cities.
     Similarly, prefer EET/EEST for eastern European time in Russia.
 
+    Change time zone abbreviations in (western) Samoa to use "ST" and
+    "DT" suffixes, as this is more likely to match common practice.
+    Prefix "W" to (western) Samoa time when its standard-time offset
+    disagrees with that of American Samoa.
+
     Time zone abbreviations have been updated for Japan's two time
     zones used 1896-1937.  JWST now stands for Western Standard
     Time, and JCST for Central Standard Time (formerly this was CJT).
@@ -61,21 +66,22 @@ Unreleased, experimental changes
     Some zones have been turned into links, when they differed from existing
     zones only for older UTC offsets where the data were likely invented.
     These changes affect UTC offsets in pre-1970 time stamps only.  This is
-    similar to the change in release 2013e, except this time for Africa and
-    the Pacific.  The affected zones are: Africa/Accra, Africa/Addis_Ababa,
+    similar to the change in release 2013e, except this time for Africa, Asia,
+    and a few other locations.  The affected zones are: Africa/Addis_Ababa,
     Africa/Asmara, Africa/Bamako, Africa/Bangui, Africa/Banjul,
     Africa/Blantyre, Africa/Brazzaville, Africa/Bujumbura, Africa/Conakry,
     Africa/Dakar, Africa/Dar_es_Salaam, Africa/Djibouti, Africa/Douala,
     Africa/Freetown, Africa/Gaborone, Africa/Harare, Africa/Kampala,
     Africa/Kigali, Africa/Kinshasa, Africa/Libreville, Africa/Lome,
     Africa/Luanda, Africa/Lubumbashi, Africa/Lusaka, Africa/Malabo,
-    Africa/Maputo, Africa/Maseru, Africa/Mbabane, Africa/Mogadishu,
-    Africa/Niamey, Africa/Nouakchott, Africa/Ouagadougou, Africa/Porto-Novo,
-    Africa/Sao_Tome, Antarctica/DumontDUrville, Antarctica/Syowa,
-    Atlantic/St_Helena, Indian/Antananarivo, Indian/Comoro, Indian/Mayotte,
-    Pacific/Chuuk, Pacific/Funafuti, Pacific/Majuro, Pacific/Midway,
-    Pacific/Palau, Pacific/Pohnpei, Pacific/Saipan, Pacific/Tahiti,
-    Pacific/Wake, and Pacific/Wallis.
+    Africa/Maseru, Africa/Mbabane, Africa/Mogadishu, Africa/Niamey,
+    Africa/Nouakchott, Africa/Ouagadougou, Africa/Porto-Novo, Africa/Sao_Tome,
+    America/Antigua, America/Cayman, Asia/Aden, Asia/Bahrain,
+    Asia/Ho_Chi_Minh, Asia/Kuwait, Asia/Muscat, Asia/Phnom_Penh,
+    Asia/Vientiane, Atlantic/St_Helena, Indian/Antananarivo, Indian/Comoro,
+    Indian/Mayotte, Pacific/Midway, and Pacific/Saipan.  (Thanks to Alan
+    Barrett, Tim Parenti, and David Patte for reporting bugs in earlier
+    versions of this change.)
 
     Asia/Shanghai's pre-standard-time UT offset has been changed from
     8:05:57 to 8:05:43, the location of Xujiahui Observatory.  Its
@@ -87,8 +93,24 @@ Unreleased, experimental changes
     from 04-15 through 10-31; and in 1979 from 07-01 through 09-30.
     (Thanks to Yu-Cheng Chuang.)
 
-    Finland's 1942 fall-back transition was October 4 at 01:00, not
+    Asia/Riyadh's transition to standard time is now 1947-03-14, not 1950.
+
+    Europe/Helsinki's 1942 fall-back transition was October 4 at 01:00, not
     October 3 at 00:00.  (Thanks to Konstantin Hyppönen.)
+
+    Pacific/Apia and Pacific/Pago_Pago have been changed from UTC-11:30 to
+    UTC-11 for the period from 1911 to 1950.
+
+    Pacific/Chatham has been changed to New Zealand standard time plus
+    45 minutes for the period before 1957, reflecting a 1956 remark in
+    the New Zealand parliament.
+
+    Europe/Budapest has several pre-1946 corrections: in 1918 the transition
+    out of DST was on 09-16, not 09-29; in 1919 it was on 11-24, not 09-15; in
+    1945 it was on 11-01, not 11-03; in 1941 the transition to DST was 04-08
+    not 04-06 at 02:00; and there was no DST in 1920.
+
+    Africa/Accra is now assumed to have observed DST from 1920 through 1935.
 
     Time in Russia before 1927 or so has been corrected by a few seconds in
     the following zones: Europe/Moscow, Asia/Irkutsk, Asia/Tbilisi,
@@ -148,6 +170,8 @@ Unreleased, experimental changes
 
     Commentary about the coverage of each Russian zone has been standardized.
     (Thanks to Tim Parenti).
+
+    There is new commentary about time in Poland in 1919.
 
     In zone.tab, Pacific/Easter no longer mentions Salas y Gómez, as it
     is uninhabited.

@@ -455,10 +455,10 @@ in decreasing order of importance:
 	If a name is changed, put its old spelling in the 'backward' file.
 		This means old spellings will continue to work.
 
-The file 'zone.tab' lists geographical locations used to name time
+The file 'time.tab' lists geographical locations used to name time
 zone rule files.  It is intended to be an exhaustive list of names
 for geographic regions as described above; this is a subset of the
-names in the data.  Although a 'zone.tab' location's longitude
+names in the data.  Although a 'time.tab' location's longitude
 corresponds to its LMT offset with one hour for every 15 degrees east
 longitude, this relationship is not exact.
 

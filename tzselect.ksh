@@ -46,6 +46,7 @@ REPORT_BUGS_TO=tz@iana.org
 
 coord=
 location_limit=10
+zonetabtype=time
 
 usage="Usage: tzselect [--version] [--help] [-c COORD] [-n LIMIT]
 Select a time zone interactively.
@@ -146,6 +147,8 @@ do
 	coord=$OPTARG ;;
     n*)
 	location_limit=$OPTARG ;;
+    t*) # Undocumented option, used for developer testing.
+	zonetabtype=$OPTARG ;;
     -help)
 	exec echo "$usage" ;;
     -version)
@@ -165,10 +168,10 @@ esac
 
 # Make sure the tables are readable.
 TZ_COUNTRY_TABLE=$TZDIR/iso3166.tab
-TZ_ZONE_TABLE=$TZDIR/zone.tab
+TZ_ZONE_TABLE=$TZDIR/$zonetabtype.tab
 for f in $TZ_COUNTRY_TABLE $TZ_ZONE_TABLE
 do
-	<$f || {
+	<"$f" || {
 		echo >&2 "$0: time zone files are not set up correctly"
 		exit 1
 	}
@@ -232,7 +235,13 @@ output_distances='
   /^[^#]/ {
     here_lat = convert_latitude($2)
     here_long = convert_longitude($2)
-    line = $1 "\t" $2 "\t" $3 "\t" country[$1]
+    line = $1 "\t" $2 "\t" $3
+    sep = "\t"
+    ncc = split($1, cc, /,/)
+    for (i = 1; i <= ncc; i++) {
+      line = line sep country[cc[i]]
+      sep = ", "
+    }
     if (NF == 4)
       line = line " - " $4
     printf "%g\t%s\n", dist(coord_lat, coord_long, here_lat, here_long), line
@@ -269,7 +278,7 @@ while
 		entry = entry " Ocean"
               printf "'\''%s'\''\n", entry
             }
-          ' $TZ_ZONE_TABLE |
+          ' <"$TZ_ZONE_TABLE" |
 	  sort -u |
 	  tr '\n' ' '
 	  echo ''
@@ -327,7 +336,7 @@ while
 		    distance_table=`$AWK \
 			    -v coord="$coord" \
 			    -v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
-			    "$output_distances" <$TZ_ZONE_TABLE |
+			    "$output_distances" <"$TZ_ZONE_TABLE" |
 		      sort -n |
 		      sed "${location_limit}q"
 		    `
@@ -355,7 +364,9 @@ while
 			BEGIN { FS = "\t" }
 			/^#/ { next }
 			$3 ~ ("^" continent "/") {
-				if (!cc_seen[$1]++) cc_list[++ccs] = $1
+			    ncc = split($1, cc, /,/)
+			    for (i = 1; i <= ncc; i++)
+				if (!cc_seen[cc[i]]++) cc_list[++ccs] = cc[i]
 			}
 			END {
 				while (getline <TZ_COUNTRY_TABLE) {
@@ -369,7 +380,7 @@ while
 					print country
 				}
 			}
-		' <$TZ_ZONE_TABLE | sort -f`
+		' <"$TZ_ZONE_TABLE" | sort -f`
 
 
 		# If there's more than one country, ask the user which one.
@@ -399,8 +410,8 @@ while
 					}
 				}
 			}
-			$1 == cc { print $4 }
-		' <$TZ_ZONE_TABLE`
+			$1 ~ cc { print $4 }
+		' <"$TZ_ZONE_TABLE"`
 
 
 		# If there's more than one region, ask the user which one.
@@ -430,13 +441,13 @@ while
 					}
 				}
 			}
-			$1 == cc && $4 == region { print $3 }
-		' <$TZ_ZONE_TABLE`
+			$1 ~ cc && $4 == region { print $3 }
+		' <"$TZ_ZONE_TABLE"`
 		esac
 
 		# Make sure the corresponding zoneinfo file exists.
 		TZ_for_date=$TZDIR/$TZ
-		<$TZ_for_date || {
+		<"$TZ_for_date" || {
 			echo >&2 "$0: time zone files are not set up correctly"
 			exit 1
 		}

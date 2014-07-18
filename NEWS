@@ -120,10 +120,21 @@ Unreleased, experimental changes
     Europe/Riga.  Also, Moscow's location has been changed to its Kilometer 0
     point.  (Thanks to Vladimir Karpinsky for the Moscow changes.)
 
-  New link name
+  Changes affecting data format
 
-    New link Indian/Alfred_Faure for the Crozet Islands and the
+    A new file 'time.tab' supersedes 'zone.tab' in the installed data.
+    The new file's extended format allows multiple country codes per zone.
+    The older file is still installed but is deprecated; its format is
+    not changing and it will still be distributed for a while, but new
+    applications should use the new file.
+
+    The new file format simplifies maintenance of obscure locations.
+    To test this, it adds coverage for the Crozet Islands and the
     Scattered Islands.  (Thanks to Tobias Conradi and Antoine Leca.)
+
+    The file 'iso3166.tab' is planned to switch from ASCII to UTF-8.
+    It is still ASCII now, but commentary about the switch has been added.
+    The new file 'time.tab' already uses UTF-8.
 
   Changes affecting code
 

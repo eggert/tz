@@ -978,7 +978,8 @@ Link Africa/Lagos Africa/Porto-Novo  # Benin
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Indian/Reunion	3:41:52 -	LMT	1911 Jun	# Saint-Denis
 			4:00	-	RET	# Réunion Time
-Link Indian/Reunion Indian/Alfred_Faure
+#
+# Crozet Islands also observes Réunion time; see the 'antarctica' file.
 #
 # Scattered Islands (Îles Éparses) administered from Réunion are as follows.
 # The following information about them is taken from

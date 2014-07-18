@@ -340,7 +340,8 @@ PRIMARY_YDATA=	africa antarctica asia australasia \
 YDATA=		$(PRIMARY_YDATA) pacificnew etcetera backward
 NDATA=		systemv factory
 TDATA=		$(YDATA) $(NDATA)
-TABDATA=	iso3166.tab zone.tab leapseconds
+TIMETABLES=	time.tab zone.tab
+TABDATA=	iso3166.tab $(TIMETABLES) leapseconds
 LEAP_DEPS=	leapseconds.awk leap-seconds.list
 DATA=		$(YDATA) $(NDATA) $(TABDATA) \
 			$(LEAP_DEPS) yearistype.sh
@@ -364,7 +365,7 @@ install:	all $(DATA) $(REDO) $(MANS)
 			$(DESTDIR)$(MANDIR)/man8
 		$(ZIC) -y $(YEARISTYPE) \
 			-d $(DESTDIR)$(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
-		cp -f iso3166.tab zone.tab $(DESTDIR)$(TZDIR)/.
+		cp -f iso3166.tab $(TIMETABLES) $(DESTDIR)$(TZDIR)/.
 		cp tzselect zic zdump $(DESTDIR)$(ETCDIR)/.
 		cp libtz.a $(DESTDIR)$(LIBDIR)/.
 		$(RANLIB) $(DESTDIR)$(LIBDIR)/libtz.a
@@ -455,13 +456,18 @@ check_character_set: $(ENCHILADA)
 		sharp='#' && \
 		! grep -Env $(SAFE_LINE) $(MANS) date.1 $(MANTXTS) \
 			$(MISC) $(SOURCES) $(WEB_PAGES) && \
-		! grep -Env $(SAFE_SHARP_LINE) $(DATA) && \
+		! grep -Env $(SAFE_SHARP_LINE) $(YDATA) $(NDATA) iso3166.tab \
+			zone.tab leapseconds $(LEAP_DEPS) yearistype.sh && \
 		test $$(grep -Ecv $(SAFE_SHARP_LINE) Makefile) -eq 1 && \
-		! grep -Env $(NONSYM_LINE) README NEWS Theory $(MANS) date.1 && \
+		! grep -Env $(NONSYM_LINE) README NEWS Theory $(MANS) date.1 \
+			time.tab && \
 		! grep -Env $(VALID_LINE) $(ENCHILADA)
 
-check_tables:	checktab.awk $(PRIMARY_YDATA)
-		$(AWK) -f checktab.awk $(PRIMARY_YDATA)
+check_tables:	checktab.awk $(PRIMARY_YDATA) $(TIMETABLES)
+		for tab in $(TIMETABLES); do \
+		  $(AWK) -f checktab.awk -v zone_table=$$tab $(PRIMARY_YDATA) \
+		    || exit; \
+		done
 
 check_web:	$(WEB_PAGES)
 		$(VALIDATE_ENV) $(VALIDATE) $(VALIDATE_FLAGS) $(WEB_PAGES)
@@ -540,7 +546,7 @@ check_public:	$(ENCHILADA)
 # Check that the code works under various alternative
 # implementations of time_t.
 check_time_t_alternatives:
-		zones=`$(AWK) '/^[^#]/ { print $$3 }' <zone.tab` && \
+		zones=`$(AWK) '/^[^#]/ { print $$3 }' <time.tab` && \
 		for type in $(TIME_T_ALTERNATIVES); do \
 		  mkdir -p tzpublic/$$type && \
 		  make clean_misc && \

@@ -421,13 +421,18 @@ Zone America/Los_Angeles -7:52:58 -	LMT	1883 Nov 18 12:07:02
 # was destroyed in 1805 by a Yakutat-kon war party.)  However, there
 # were nearby inhabitants in some cases and for our purposes perhaps
 # it's best to simply use the official transition.
-#
 
-# From Steve Ferguson (2011-01-31):
-# The author lives in Alaska and many of the references listed are only
-# available to Alaskan residents.
+# From Paul Eggert (2014-07-18):
+# One opinion of the early-1980s turmoil in Alaska over time zones and
+# daylight saving time appeared as graffiti on a Juneau airport wall:
+# "Welcome to Juneau.  Please turn your watch back to the 19th century."
+# See: Turner W. Alaska's four time zones now two. NY Times 1983-11-01.
+# http://www.nytimes.com/1983/11/01/us/alaska-s-four-time-zones-now-two.html
 #
-# http://www.alaskahistoricalsociety.org/index.cfm?section=discover%20alaska&page=Glimpses%20of%20the%20Past&viewpost=2&ContentId=98
+# Steve Ferguson (2011-01-31) referred to the following source:
+# Norris F. Keeping time in Alaska: national directives, local response.
+# Alaska History 2001;16(1-2).
+# http://alaskahistoricalsociety.org/discover-alaska/glimpses-of-the-past/keeping-time-in-alaska/
 
 # From Arthur David Olson (2011-02-01):
 # Here's database-relevant material from the 2001 "Alaska History" article:
@@ -489,7 +494,7 @@ Zone America/Metlakatla	 15:13:42 -	LMT	1867 Oct 18
 			 -8:00	US	P%sT	1946
 			 -8:00	-	PST	1969
 			 -8:00	US	P%sT	1983 Oct 30 2:00
-			 -8:00	-	MeST
+			 -8:00	-	PST
 Zone America/Yakutat	 14:41:05 -	LMT	1867 Oct 18
 			 -9:18:55 -	LMT	1900 Aug 20 12:00
 			 -9:00	-	YST	1942

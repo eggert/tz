@@ -72,13 +72,13 @@ BEGIN {
 			status = 1
 		}
 		cc0 = cc
+		tztab[tz] = 1
+		tz2comments[tz] = comments
+		tz2NR[tz] = zone_NR
 		for (i in cca) {
 		    cc = cca[i]
 		    cctz = cc tz
 		    cctztab[cctz] = 1
-		    tztab[tz] = 1
-		    tz2comments[tz] = comments
-		    tz2NR[tz] = zone_NR
 		    if (cc2name[cc]) {
 			cc_used[cc]++
 		    } else {
@@ -158,14 +158,13 @@ END {
 			status = 1
 		}
 	}
-	for (tz in tz2cc) {
+	for (tz in tztab) {
 		if (!zoneSeen[tz]) {
 			printf "%s:%d: no Zone table for '%s'\n", \
 				zone_table, tz2NR[tz], tz >>"/dev/stderr"
 			status = 1
 		}
 	}
-
 	if (0 < want_warnings) {
 		for (cc in cc2name) {
 			if (!cc_used[cc]) {

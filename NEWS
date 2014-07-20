@@ -157,6 +157,11 @@ Unreleased, experimental changes
 
     Some lint has been removed when using GCC_DEBUG_FLAGS with GCC 4.9.0.
 
+  Changes affecting build procedure
+
+    'zic' no longer links in localtime.o and asctime.o, as they're not needed.
+    (Thanks to John Cochran.)
+
   Changes affecting documentation and commentary
 
     The 'Theory' file documents legacy names, the longstanding

@@ -317,7 +317,7 @@ AR=		ar
 # ':' on typical hosts; 'ranlib' on the ancient hosts that still need ranlib.
 RANLIB=		:
 
-TZCOBJS=	zic.o localtime.o asctime.o scheck.o ialloc.o
+TZCOBJS=	zic.o scheck.o ialloc.o
 TZDOBJS=	zdump.o localtime.o ialloc.o asctime.o
 DATEOBJS=	date.o localtime.o strftime.o asctime.o
 LIBSRCS=	localtime.c asctime.c difftime.c

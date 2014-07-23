@@ -81,7 +81,7 @@ if
   ?*) : ;;
   '')
     # '; exit' should be redundant, but Dash doesn't properly fail without it.
-    (eval 'set --; select x; do break; done; exit') 2>/dev/null
+    (eval 'set --; select x; do break; done; exit') </dev/null 2>/dev/null
   esac
 then
   # Do this inside 'eval', as otherwise the shell might exit when parsing it

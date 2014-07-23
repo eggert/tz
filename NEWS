@@ -445,7 +445,7 @@ Release 2013h - 2013-10-25 15:32:32 -0700
     The 'tzselect' command no longer requires the 'select' command,
     and should now work with /bin/sh on more platforms.  It also works
     around a bug in BusyBox awk before version 1.21.0.  (Thanks to
-    Patrick 'P. J.' McDermott.)
+    Patrick 'P. J.' McDermott and Alan Barrett.)
 
   Changes affecting code
 

@@ -16,11 +16,10 @@ Unreleased, experimental changes
     Asia/Irkutsk, Asia/Yakutsk, Asia/Vladivostok, Asia/Khandyga,
     Asia/Sakhalin, and Asia/Ust-Nera; Asia/Magadan will have two hours
     subtracted; and Asia/Novokuznetsk's time zone abbreviation is affected,
-    but not its UTC offset.  Two new zones will be needed: Asia/Chita (split
+    but not its UTC offset.  Two zones are added: Asia/Chita (split
     from Asia/Yakutsk, and also with two hours subtracted) and
     Asia/Srednekolymsk (split from Asia/Magadan, but with only one hour
-    subtracted).  (Thanks to Tim Parenti for much of the above.)  New zones
-    will be deferred until the change is official, and are commented out for now.
+    subtracted).  (Thanks to Tim Parenti for much of the above.)
 
   Changes affecting time zone abbreviations
 

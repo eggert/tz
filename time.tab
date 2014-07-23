@@ -293,16 +293,14 @@ RU	+5502+08255	Asia/Novosibirsk	Moscow+03 - Novosibirsk
 RU	+5345+08707	Asia/Novokuznetsk	Moscow+03 (Moscow+04 after 2014-10-26) - Kemerovo
 RU	+5601+09250	Asia/Krasnoyarsk	Moscow+04 - Yenisei River
 RU	+5216+10420	Asia/Irkutsk	Moscow+05 - Lake Baikal
-# Add this once the 2014-10-26 Russian change becomes official:
-#RU	+5203+11328	Asia/Chita	Moscow+06 (Moscow+05 after 2014-10-26) - Zabaykalsky
+RU	+5203+11328	Asia/Chita	Moscow+06 (Moscow+05 after 2014-10-26) - Zabaykalsky
 RU	+6200+12940	Asia/Yakutsk	Moscow+06 - Lena River
 RU	+623923+1353314	Asia/Khandyga	Moscow+06 - Tomponsky, Ust-Maysky
 RU	+4310+13156	Asia/Vladivostok	Moscow+07 - Amur River
 RU	+4658+14242	Asia/Sakhalin	Moscow+07 - Sakhalin Island
 RU	+643337+1431336	Asia/Ust-Nera	Moscow+07 - Oymyakonsky
 RU	+5934+15048	Asia/Magadan	Moscow+08 (Moscow+07 after 2014-10-26) - Magadan
-# Add this once the 2014-10-26 Russian change becomes official:
-#RU	+6728+15343	Asia/Srednekolymsk	Moscow+08 - E Sakha, N Kuril Is
+RU	+6728+15343	Asia/Srednekolymsk	Moscow+08 - E Sakha, N Kuril Is
 RU	+5301+15839	Asia/Kamchatka	Moscow+08 (Moscow+09 after 2014-10-26) - Kamchatka
 RU	+6445+17729	Asia/Anadyr	Moscow+08 (Moscow+09 after 2014-10-26) - Bering Sea
 SA,KW,YE	+2438+04643	Asia/Riyadh

@@ -2146,6 +2146,14 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # 431985-6) with proposed 11 Russian time zones and corresponding
 # areas/cities/administrative centers in the Russian Federation (in English):
 # http://www.worldtimezone.com/dst_news/dst_news_russia65.html
+#
+# From Alexander Krivenyshev (2014-07-22):
+# Putin signed the Federal Law 431985-6 ... (in Russian)
+# http://itar-tass.com/obschestvo/1333711
+# http://www.pravo.gov.ru:8080/page.aspx?111660
+# http://www.kremlin.ru/acts/46279
+# From October 26, 2014 the new Russian time zone map will looks like this:
+# http://www.worldtimezone.com/dst_news/dst_news_russia-map-2014-07.html
 
 # From Paul Eggert (2006-03-22):
 # Except for Moscow after 1919-07-01, I invented the time zone abbreviations.
@@ -2519,19 +2527,13 @@ Zone Asia/Irkutsk	 6:57:15 -	LMT	1880
 # Note: Effective 2008-03-01, (75) Chita Oblast and (80) Agin-Buryat
 # Autonomous Okrug merged to form (92, RU-ZAB) Zabaykalsky Krai.
 
-# From Paul Eggert (2014-07-01):
-# http://en.itar-tass.com/russia/738562 implies [Zabaykalsky Krai] will move to
-# UTC+8 on 2014-10-26.
-
-# [This zone is commented out for now, as the 2014 change is not yet official;
-# use Asia/Yakutsk in the meantime.]
-#Zone Asia/Chita	 7:33:52 -	LMT	1919 Dec 15
-#			 8:00	-	YAKT	1930 Jun 21 # Yakutsk Time
-#			 9:00	Russia	YAK%sT	1991 Mar 31 2:00s
-#			 8:00	Russia	YAK%sT	1992 Jan 19 2:00s
-#			 9:00	Russia	YAK%sT	2011 Mar 27 2:00s
-#			10:00	-	YAKT	2014 Oct 26 2:00s
-#			 8:00	-	IRKT
+Zone Asia/Chita	 7:33:52 -	LMT	1919 Dec 15
+			 8:00	-	YAKT	1930 Jun 21 # Yakutsk Time
+			 9:00	Russia	YAK%sT	1991 Mar 31 2:00s
+			 8:00	Russia	YAK%sT	1992 Jan 19 2:00s
+			 9:00	Russia	YAK%sT	2011 Mar 27 2:00s
+			10:00	-	YAKT	2014 Oct 26 2:00s
+			 8:00	-	IRKT
 
 
 # From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2009-11-29):
@@ -2705,15 +2707,13 @@ Zone Asia/Magadan	10:03:12 -	LMT	1924 May  2
 # Since Magadan Oblast moves to UTC+10 on 2014-10-26, we cannot keep using MAGT
 # as the abbreviation.  Use SRET instead.
 
-# [This zone is commented out for now, as the 2014 change is not yet official;
-# use Asia/Magadan in the meantime.]
-#Zone Asia/Srednekolymsk	10:14:52 -	LMT	1924 May  2
-#			10:00	-	MAGT	1930 Jun 21 # Magadan Time
-#			11:00	Russia	MAG%sT	1991 Mar 31 2:00s
-#			10:00	Russia	MAG%sT	1992 Jan 19 2:00s
-#			11:00	Russia	MAG%sT	2011 Mar 27 2:00s
-#			12:00	-	MAGT	2014 Oct 26 2:00s
-#			11:00	-	SRET # Srednekolymsk Time
+Zone Asia/Srednekolymsk	10:14:52 -	LMT	1924 May  2
+			10:00	-	MAGT	1930 Jun 21 # Magadan Time
+			11:00	Russia	MAG%sT	1991 Mar 31 2:00s
+			10:00	Russia	MAG%sT	1992 Jan 19 2:00s
+			11:00	Russia	MAG%sT	2011 Mar 27 2:00s
+			12:00	-	MAGT	2014 Oct 26 2:00s
+			11:00	-	SRET # Srednekolymsk Time
 
 
 # From Tim Parenti (2014-07-03):

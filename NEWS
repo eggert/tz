@@ -4,8 +4,8 @@ Unreleased, experimental changes
 
   Changes affecting future time stamps
 
-    Russia most likely will subtract an hour from most of its time zones on
-    2014-10-26 at 02:00 local time.  (Thanks to Alexander Krivenyshev.)
+    Russia will subtract an hour from most of its time zones on 2014-10-26
+    at 02:00 local time.  (Thanks to Alexander Krivenyshev.)
     There are a few exceptions: Magadan Oblast (Asia/Magadan) and Zabaykalsky
     Krai are subtracting two hours; conversely, Chukotka Autonomous Okrug
     (Asia/Anadyr), Kamchatka Krai (Asia/Kamchatka), Kemerovo Oblast

@@ -2409,14 +2409,14 @@ Zone Asia/Yekaterinburg	 4:02:33 -	LMT	1919 Jul 15 4:00
 			 5:00	-	YEKT
 
 
-# From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2001-08-025):
+# From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2001-08-25):
 # Asia/Omsk covers...
 # 04	RU-AL 	Altai Republic
 # 22	RU-ALT 	Altai Krai
 # 55	RU-OMS 	Omsk Oblast
 
 Zone Asia/Omsk		 4:53:36 -	LMT	1919 Nov 14
-			 5:00	-	OMST	1930 Jun 21 # Omsk TIme
+			 5:00	-	OMST	1930 Jun 21 # Omsk Time
 			 6:00	Russia	OMS%sT	1991 Mar 31 2:00s
 			 5:00	Russia	OMS%sT	1992 Jan 19 2:00s
 			 6:00	Russia	OMS%sT	2011 Mar 27 2:00s

@@ -121,7 +121,7 @@ Unreleased, experimental changes
 
   Changes affecting data format
 
-    A new file 'time.tab' supersedes 'zone.tab' in the installed data.
+    A new file 'zone1970.tab' supersedes 'zone.tab' in the installed data.
     The new file's extended format allows multiple country codes per zone.
     The older file is still installed but is deprecated; its format is
     not changing and it will still be distributed for a while, but new
@@ -133,7 +133,7 @@ Unreleased, experimental changes
 
     The file 'iso3166.tab' is planned to switch from ASCII to UTF-8.
     It is still ASCII now, but commentary about the switch has been added.
-    The new file 'time.tab' already uses UTF-8.
+    The new file 'zone1970.tab' already uses UTF-8.
 
   Changes affecting code
 

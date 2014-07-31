@@ -3,10 +3,10 @@
 # This file is in the public domain, so clarified as of
 # 2009-05-17 by Arthur David Olson.
 #
-# From Paul Eggert (2014-07-18):
+# From Paul Eggert (2014-07-31):
 # This file is intended as a backward-compatibility aid for older programs.
-# New programs should use time.tab.  This file is like time.tab (see
-# time.tab's comments), but with the following additional restrictions:
+# New programs should use zone1970.tab.  This file is like zone1970.tab (see
+# zone1970.tab's comments), but with the following additional restrictions:
 #
 # 1.  This file contains only ASCII characters.
 # 2.  The first data column contains exactly one country code.
@@ -14,7 +14,7 @@
 # Because of (2), each row stands for an area that is the intersection
 # of a region identified by a country code and of a zone where civil
 # clocks have agreed since 1970; this is a narrower definition than
-# that of time.tab.
+# that of zone1970.tab.
 #
 # This table is intended as an aid for users, to help them select time
 # zone data appropriate for their practical needs.  It is not intended

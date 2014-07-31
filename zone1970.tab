@@ -2,7 +2,7 @@
 #
 # This file is in the public domain.
 #
-# From Paul Eggert (2014-07-18):
+# From Paul Eggert (2014-07-31):
 # This file contains a table where each row stands for a zone where
 # civil time stamps have agreed since 1970.  Columns are separated by
 # a single tab.  Lines beginning with '#' are comments.  All text uses

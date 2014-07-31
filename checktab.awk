@@ -6,7 +6,7 @@ BEGIN {
 	FS = "\t"
 
 	if (!iso_table) iso_table = "iso3166.tab"
-	if (!zone_table) zone_table = "time.tab"
+	if (!zone_table) zone_table = "zone1970.tab"
 	if (!want_warnings) want_warnings = -1
 
 	# A special (and we hope temporary) case.

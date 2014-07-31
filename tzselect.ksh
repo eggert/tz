@@ -46,7 +46,7 @@ REPORT_BUGS_TO=tz@iana.org
 
 coord=
 location_limit=10
-zonetabtype=time
+zonetabtype=zone1970
 
 usage="Usage: tzselect [--version] [--help] [-c COORD] [-n LIMIT]
 Select a time zone interactively.

@@ -67,21 +67,12 @@ Unreleased, experimental changes
     Some zones have been turned into links, when they differed from existing
     zones only for older UTC offsets where the data were likely invented.
     These changes affect UTC offsets in pre-1970 time stamps only.  This is
-    similar to the change in release 2013e, except this time for Africa, Asia,
-    and a few other locations.  The affected zones are: Africa/Addis_Ababa,
-    Africa/Asmara, Africa/Bamako, Africa/Bangui, Africa/Banjul,
-    Africa/Blantyre, Africa/Brazzaville, Africa/Bujumbura, Africa/Conakry,
-    Africa/Dakar, Africa/Dar_es_Salaam, Africa/Djibouti, Africa/Douala,
-    Africa/Freetown, Africa/Gaborone, Africa/Harare, Africa/Kampala,
-    Africa/Kigali, Africa/Kinshasa, Africa/Libreville, Africa/Lome,
-    Africa/Luanda, Africa/Lubumbashi, Africa/Lusaka, Africa/Malabo,
-    Africa/Maseru, Africa/Mbabane, Africa/Mogadishu, Africa/Niamey,
-    Africa/Nouakchott, Africa/Ouagadougou, Africa/Porto-Novo, Africa/Sao_Tome,
-    America/Antigua, America/Cayman, Asia/Aden, Asia/Bahrain,
-    Asia/Ho_Chi_Minh, Asia/Kuwait, Asia/Muscat, Asia/Phnom_Penh,
-    Asia/Vientiane, Atlantic/St_Helena, Indian/Antananarivo, Indian/Comoro,
-    Indian/Mayotte, Pacific/Midway, and Pacific/Saipan.  (Thanks to Alan
-    Barrett, Tim Parenti, and David Patte for reporting bugs in earlier
+    similar to the change in release 2013e, except this time for western
+    Africa.  The affected zones are: Africa/Bamako, Africa/Banjul,
+    Africa/Conakry, Africa/Dakar, Africa/Freetown, Africa/Lome,
+    Africa/Nouakchott, Africa/Ouagadougou, Africa/Sao_Tome, and
+    Atlantic/St_Helena.  (Thanks to Alan Barrett, Stephen Colebourne,
+    Tim Parenti, and David Patte for reporting problems in earlier
     versions of this change.)
 
     Asia/Shanghai's pre-standard-time UT offset has been changed from

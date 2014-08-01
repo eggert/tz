@@ -1593,7 +1593,6 @@ Zone America/Port_of_Spain -4:06:04 -	LMT	1912 Mar 2
 
 # These all agree with Trinidad and Tobago since 1970.
 Link America/Port_of_Spain America/Anguilla
-Link America/Port_of_Spain America/Antigua
 Link America/Port_of_Spain America/Dominica
 Link America/Port_of_Spain America/Grenada
 Link America/Port_of_Spain America/Guadeloupe

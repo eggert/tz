@@ -140,7 +140,10 @@ Zone	Asia/Baku	3:19:24 -	LMT	1924 May  2
 			4:00	Azer	AZ%sT
 
 # Bahrain
-# See Asia/Qatar.
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	Asia/Bahrain	3:22:20 -	LMT	1920		# Manamah
+			4:00	-	GST	1972 Jun
+			3:00	-	AST
 
 # Bangladesh
 # From Alexander Krivenyshev (2009-05-13):
@@ -263,8 +266,12 @@ Zone	Asia/Rangoon	6:24:40 -	LMT	1880		# or Yangon
 			6:30	-	MMT		   # Myanmar Time
 
 # Cambodia
-# See Asia/Bangkok.
-
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	Asia/Phnom_Penh	6:59:40 -	LMT	1906 Jun  9
+			7:06:20	-	SMT	1911 Mar 11 0:01 # Saigon MT?
+			7:00	-	ICT	1912 May
+			8:00	-	ICT	1931 May
+			7:00	-	ICT
 
 # China
 
@@ -1690,10 +1697,17 @@ Zone	Asia/Pyongyang	8:23:00 -	LMT	1890
 ###############################################################################
 
 # Kuwait
-# See Asia/Riyadh.
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	Asia/Kuwait	3:11:56 -	LMT	1950
+			3:00	-	AST
 
 # Laos
-# See Asia/Bangkok.
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	Asia/Vientiane	6:50:24 -	LMT	1906 Jun  9 # or Viangchan
+			7:06:20	-	SMT	1911 Mar 11 0:01 # Saigon MT?
+			7:00	-	ICT	1912 May
+			8:00	-	ICT	1931 May
+			7:00	-	ICT
 
 # Lebanon
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
@@ -1910,7 +1924,12 @@ Zone	Asia/Kathmandu	5:41:16 -	LMT	1920
 			5:45	-	NPT	# Nepal Time
 
 # Oman
-# See Asia/Dubai.
+
+# Milne says 3:54:24 was the meridian of the Muscat Tidal Observatory.
+
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	Asia/Muscat	3:54:24 -	LMT	1920
+			4:00	-	GST
 
 # Pakistan
 
@@ -2410,7 +2429,6 @@ Zone	Asia/Manila	-15:56:00 -	LMT	1844 Dec 31
 Zone	Asia/Qatar	3:26:08 -	LMT	1920	# Al Dawhah / Doha
 			4:00	-	GST	1972 Jun
 			3:00	-	AST
-Link Asia/Qatar Asia/Bahrain
 
 # Saudi Arabia
 #
@@ -2437,8 +2455,6 @@ Link Asia/Qatar Asia/Bahrain
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Riyadh	3:06:52 -	LMT	1947 Mar 14
 			3:00	-	AST
-Link Asia/Riyadh Asia/Aden   # Yemen
-Link Asia/Riyadh Asia/Kuwait
 
 # Singapore
 # The data here are taken from Mok Ly Yng (2003-10-30)
@@ -2711,12 +2727,6 @@ Zone	Asia/Dushanbe	4:35:12 -	LMT	1924 May  2
 Zone	Asia/Bangkok	6:42:04	-	LMT	1880
 			6:42:04	-	BMT	1920 Apr # Bangkok Mean Time
 			7:00	-	ICT
-# From Arthur David Olson (2008-03-18):
-# The English-language name of Vietnam's most populous city is "Ho Chi Minh
-# City"; use Ho_Chi_Minh below to avoid a name of more than 14 characters.
-Link Asia/Bangkok Asia/Ho_Chi_Minh	# Vietnam
-Link Asia/Bangkok Asia/Phnom_Penh	# Cambodia
-Link Asia/Bangkok Asia/Vientiane	# Laos
 
 # Turkmenistan
 # From Shanks & Pottenger.
@@ -2732,7 +2742,6 @@ Zone	Asia/Ashgabat	3:53:32 -	LMT	1924 May  2 # or Ashkhabad
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Dubai	3:41:12 -	LMT	1920
 			4:00	-	GST
-Link Asia/Dubai Asia/Muscat		# Oman
 
 # Uzbekistan
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -2753,8 +2762,30 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 			5:00	-	UZT
 
 # Vietnam
-# See Asia/Bangkok.
 
+# From Paul Eggert (2013-02-21):
+# Milne gives 7:16:56 for the meridian of Saigon in 1899, as being
+# used in Lower Laos, Cambodia, and Annam.  But this is quite a ways
+# from Saigon's location.  For now, ignore this and stick with Shanks
+# and Pottenger.
+
+# From Arthur David Olson (2008-03-18):
+# The English-language name of Vietnam's most populous city is "Ho Chi Minh
+# City"; use Ho_Chi_Minh below to avoid a name of more than 14 characters.
+
+# From Shanks & Pottenger:
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	Asia/Ho_Chi_Minh	7:06:40 -	LMT	1906 Jun  9
+			7:06:20	-	SMT	1911 Mar 11 0:01 # Saigon MT?
+			7:00	-	ICT	1912 May
+			8:00	-	ICT	1931 May
+			7:00	-	ICT
 
 # Yemen
-# See Asia/Riyadh.
+
+# Milne says 2:59:54 was the meridian of the saluting battery at Aden,
+# and that Yemen was at 1:55:56, the meridian of the Hagia Sophia.
+
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+Zone	Asia/Aden	2:59:54	-	LMT	1950
+			3:00	-	AST

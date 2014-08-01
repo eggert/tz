@@ -96,11 +96,11 @@ Unreleased, experimental changes
 
     Asia/Riyadh's transition to standard time is now 1947-03-14, not 1950.
 
-    Europe/Helsinki's 1942 fall-back transition was October 4 at 01:00, not
-    October 3 at 00:00.  (Thanks to Konstantin Hyppönen.)
+    Europe/Helsinki's 1942 fall-back transition was 10-04 at 01:00, not
+    10-03 at 00:00.  (Thanks to Konstantin Hyppönen.)
 
-    Pacific/Apia and Pacific/Pago_Pago have been changed from UTC-11:30 to
-    UTC-11 for the period from 1911 to 1950.
+    Pacific/Pago_Pago has been changed from UTC-11:30 to UTC-11 for the period
+    from 1911 to 1950.
 
     Pacific/Chatham has been changed to New Zealand standard time plus
     45 minutes for the period before 1957, reflecting a 1956 remark in
@@ -187,6 +187,10 @@ Unreleased, experimental changes
 
     Commentary about the coverage of each Russian zone has been standardized.
     (Thanks to Tim Parenti).
+
+    There is new commentary about contemporary timekeeping in Ethiopia.
+
+    Obsolete comments about a 2007 proposal for DST in Kuwait has been removed.
 
     There is new commentary about time in Poland in 1919.
 

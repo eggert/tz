@@ -1424,7 +1424,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # that DST will begin on 2007-09-30 2008-04-06.
 # http://www.dia.govt.nz/diawebsite.nsf/wpg_URL/Services-Daylight-Saving-Daylight-saving-to-be-extended
 
-# From Paul Eggert (2017-07-14):
+# From Paul Eggert (2014-07-14):
 # Chatham Island time was formally standardized on 1957-01-01 by
 # New Zealand's Standard Time Amendment Act 1956 (1956-10-26)
 # <http://www.austlii.edu.au/nz/legis/hist_act/staa19561956n100244.pdf>.
@@ -1567,7 +1567,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # for American Samoa, e.g., the US National Bureau of Standards
 # circular "Standard Time Throughout the World", 1932.
 # Assume American Samoa switched to UTC-11 in 1911, not 1950,
-# and that after 1950 they agreed until (western) Samoa subtracted a
+# and that after 1950 they agreed until (western) Samoa skipped a
 # day in 2011.  Assume also that the Samoas follow the US and New
 # Zealand's "ST"/"DT" style of daylight-saving abbreviations.
 

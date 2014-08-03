@@ -71,7 +71,8 @@ Unreleased, experimental changes
     Africa.  The affected zones are: Africa/Bamako, Africa/Banjul,
     Africa/Conakry, Africa/Dakar, Africa/Freetown, Africa/Lome,
     Africa/Nouakchott, Africa/Ouagadougou, Africa/Sao_Tome, and
-    Atlantic/St_Helena.  (Thanks to Alan Barrett, Stephen Colebourne,
+    Atlantic/St_Helena.  This also affects the backwards-compatibility
+    link Africa/Timbuktu.  (Thanks to Alan Barrett, Stephen Colebourne,
     Tim Parenti, and David Patte for reporting problems in earlier
     versions of this change.)
 

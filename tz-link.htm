@@ -8,7 +8,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="UTF-8"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2014-07-15">
+<meta name="DC.Date" content="2014-08-05">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -247,7 +247,8 @@ General Public License (<abbr
 title="General Public License">GPL</abbr>)</a>.</li>
 <li><a href="http://sourceforge.net/projects/tzical">tziCal &ndash; tz
 database conversion utility</a> is like Vzic, except for the <a
-href="http://msdn.microsoft.com/netframework">.NET framework</a>.</li>
+href="http://msdn.microsoft.com/netframework">.NET framework</a>
+and with a <abbr>BSD</abbr>-style license.</li>
 <li><a
 href="http://search.cpan.org/dist/DateTime-TimeZone/">DateTime::TimeZone</a>
 contains a script <code>parse_olson</code> that compiles
@@ -268,7 +269,7 @@ and from <abbr title="Common Locale Data Repository">CLDR</abbr> data
 into an <abbr>ICU</abbr>-specific format.
 <abbr>ICU</abbr> is freely available under a
 <abbr>BSD</abbr>-style license.</li>
-<li><a href="http://www.joda.org/joda-time/">Joda Time &ndash; Java date
+<li><a href="http://www.joda.org/joda-time/">Joda-Time &ndash; Java date
 and time <abbr title="Application Program Interface">API</abbr></a>
 contains a class
 <code>org.joda.time.tz.ZoneInfoCompiler</code> that compiles
@@ -311,7 +312,7 @@ library that compiles <code><abbr>tz</abbr></code> source into a time
 zone repository whose format
 is either proprietary or an <abbr>XML</abbr>-encoded
 representation.</li>
-<li>Starting with version 8.5, <a href="http://tcl.tk/">Tcl</a>
+<li><a href="http://tcl.tk/">Tcl</a>
 contains a developer-oriented parser that compiles <code><abbr>tz</abbr></code>
 source into text files, along with a runtime that can read those
 files. Tcl is freely available under a <abbr>BSD</abbr>-style
@@ -371,6 +372,10 @@ href="http://mozilla.com/thunderbird">Thunderbird</a>.
 It displays multiple clocks in the application window, and has a mapping
 interface to <a href="http://earth.google.com/">Google Earth</a>.
 It is freely available under the <abbr>GPL</abbr>.</li>
+<li><a href="http://golang.org/">Go programming language</a>
+implementations contain a copy of a 32-bit subset of a recent
+<code><abbr>tz</abbr></code> database in a
+Go-specific format.</li>
 <li><a
 href="http://users.skynet.be/Peter.Verthez/projects/intclock/">International
 clock (intclock)</a> is a multi-timezone clock for
@@ -378,8 +383,8 @@ clock (intclock)</a> is a multi-timezone clock for
 under the <abbr>GPL</abbr>.</li>
 <li><a
 href="http://www.oracle.com/us/technologies/java/overview/index.html">Oracle
-Java</a> releases since 1.4
-contain a copy of a subset of a recent <code><abbr>tz</abbr></code> database in a
+Java</a> contains a copy of a subset of a recent
+<code><abbr>tz</abbr></code> database in a
 Java-specific format.</li>
 <li><a href="http://kimmo.suominen.com/sw/timezone/">Time Zone</a> is
 a <a href="http://wordpress.org/">WordPress</a> plugin. It is freely
@@ -459,8 +464,7 @@ href="http://en.wikipedia.org/wiki/Shapefile">shapefiles</a> of
 sets of <code><abbr>tz</abbr></code> regions.</li>
 <li>The <a href="https://github.com/bradfitz/latlong">latlong package</a>
 maps geographical coordinates to a <code><abbr>tz</abbr></code> region.
-It is written in <a href="http://golang.org/">Go</a> and is freely available
-under the Apache License.</li>
+It is written in Go and is freely available under the Apache License.</li>
 <li><a href="http://derickrethans.nl/what-time-is-it.html">What Time
 is It Here?</a> applies <a href="http://www.mongodb.org/">MongoDB</a>
 geospatial query operators to shapefiles' data.</li>
@@ -627,7 +631,8 @@ Scales</a> goes into more detail, particularly for historical variants.</li>
 title="International Astronomical Union">IAU</abbr></a>'s <a
 href="http://www.iausofa.org/"><abbr
 title="Standards Of Fundamental Astronomy">SOFA</abbr></a>
-initiative publishes C and Fortran
+collection contains C and <a
+href="http://en.wikipedia.org/wiki/Fortran">Fortran</a>
 code for converting among time scales like
 <abbr title="International Atomic Time">TAI</abbr>,
 <abbr>TDB</abbr>, <abbr>TDT</abbr> and
@@ -694,7 +699,7 @@ Schema: Datatypes &ndash; dateTime</a> specifies a format inspired by
 <a href="http://tools.ietf.org/html/rfc5322">Internet
 Message Format</a> (Internet <abbr>RFC</abbr> 5322) &sect;3.3
 specifies the time notation used in email and <a
-href="http://tools.ietf.org/html/rfc2616"><abbr>HTTP</abbr></a>
+href="http://www.w3.org/Protocols/"><abbr>HTTP</abbr></a>
 headers.</li>
 <li>
 <a href="http://tools.ietf.org/html/rfc3339">Date and Time

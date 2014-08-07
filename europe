@@ -1259,7 +1259,7 @@ Zone	Europe/Berlin	0:53:28 -	LMT	1893 Apr
 # http://www.srf.ch/player/video?id=c012c029-03b7-4c2b-9164-aa5902cd58d3
 
 # From Arthur David Olson (2012-03-03):
-# Busingen and Zurich have shared clocks since 1970.
+# Büsingen and Zurich have shared clocks since 1970.
 
 Link	Europe/Zurich	Europe/Busingen
 
@@ -1538,7 +1538,7 @@ Link	Europe/Rome	Europe/San_Marino
 # institute daylight-saving time this spring, LETA reported.
 # Last February the three Baltic states decided not to turn back their
 # clocks one hour in the spring....
-# Minister of Economy Aigars Kalvitis noted that Latvia had too few
+# Minister of Economy Aigars Kalvītis noted that Latvia had too few
 # daylight hours and thus decided to comply with a draft European
 # Commission directive that provides for instituting daylight-saving
 # time in EU countries between 2002 and 2006. The Latvian government
@@ -3284,7 +3284,7 @@ Zone Europe/Zaporozhye	2:20:40 -	LMT	1880
 # ...
 #
 # ...the European time rules are...standardized since 1981, when
-# most European coun[tr]ies started DST.  Before that year, only
+# most European countries started DST.  Before that year, only
 # a few countries (UK, France, Italy) had DST, each according
 # to own national rules.  In 1981, however, DST started on
 # 'Apr firstSun', and not on 'Mar lastSun' as in the following

@@ -180,7 +180,7 @@ Zone Africa/Lubumbashi	1:49:52 -	LMT	1897 Nov 9
 Zone Africa/Brazzaville	1:01:08 -	LMT	1912
 			1:00	-	WAT
 
-# Côte D'Ivoire / Ivory Coast
+# Côte d'Ivoire / Ivory Coast
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Abidjan	-0:16:08 -	LMT	1912
 			 0:00	-	GMT

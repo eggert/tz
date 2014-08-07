@@ -356,7 +356,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=10	0:00	1:00	D
 #   * The Republic of China instituted Beijing mean solar time effective
 #     the official calendar book of 1914.
 #   * The French Concession in Shanghai set up signal stations in
-#     French docks in the 1890s, controled by Xujiahui (Zikawei)
+#     French docks in the 1890s, controlled by Xujiahui (Zikawei)
 #     Obervatory and set to local mean time.
 #   * "From the end of the 19th century" it changed to UT+8.
 #   * Chinese Customs (by then reduced to a tool of foreign powers)
@@ -501,7 +501,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=10	0:00	1:00	D
 # "The Working-Calendar for The Xinjiang Uygur Autonomous Region Government"
 # <http://www.sinkiang.gov.cn/service/ourworking/> (2014-04-22).
 # Unfortunately, we have no good records of time in Xinjiang before 1986.
-# During the 20th century parts of Xinjiang were ruled by the Qing dyansty,
+# During the 20th century parts of Xinjiang were ruled by the Qing dynasty,
 # the Republic of China, various warlords, the First and Second East Turkestan
 # Republics, the Soviet Union, the Kuomintang, and the People's Republic of
 # China, and tracking down all these organizations' timekeeping rules would be
@@ -710,7 +710,7 @@ Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
 #
 #   The Summer Time this year is adopted from midnight Apr 15 until Sep 20
 #   midnight. To save (energy?) consumption, we're expanding Summer Time
-#   adption till Oct 31 midnight.
+#   adoption till Oct 31 midnight.
 #
 # The Central Weather Bureau website didn't mention that, however it can
 # be found from historical government announcement database.
@@ -1589,7 +1589,7 @@ Zone	Asia/Qyzylorda	4:21:52 -	LMT	1924 May  2
 			5:00	-	QYZT	1992 Jan 19 2:00
 			6:00 RussiaAsia	QYZ%sT	2005 Mar 15
 			6:00	-	QYZT
-# Aqtobe (aka Aktobe, formerly Akt'ubinsk)
+# Aqtobe (aka Aktobe, formerly Aktyubinsk)
 Zone	Asia/Aqtobe	3:48:40	-	LMT	1924 May  2
 			4:00	-	AKTT	1930 Jun 21 # Aktyubinsk Time
 			5:00	-	AKTT	1981 Apr  1

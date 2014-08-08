@@ -28,6 +28,10 @@
 # Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94
 # <http://www.jstor.org/stable/1774359>.
 #
+# For Russian data circa 1919, a source is:
+# Byalokoz EL. New Counting of Time in Russia since July 1, 1919.
+# (See the 'europe' file for a fuller citation.)
+#
 # A reliable and entertaining source about time zones is
 # Derek Howse, Greenwich time and longitude, Philip Wilson Publishers (1997).
 #
@@ -823,11 +827,13 @@ Link	Asia/Nicosia	Europe/Nicosia
 # I don't know what can be done, especially knowing that some years ago our
 # DST rules where changed THREE TIMES during one month.
 
-# Milne says Tbilisi (Tiflis) time was 2:59:05.7; round to nearest.)
+# Milne 1899 says Tbilisi (Tiflis) time was 2:59:05.7.
+# Byalokoz 1919 says Georgia was 2:59:11.
+# Go with Byalokoz.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Tbilisi	2:59:06 -	LMT	1880
-			2:59:06	-	TBMT	1924 May  2 # Tbilisi Mean Time
+Zone	Asia/Tbilisi	2:59:11 -	LMT	1880
+			2:59:11	-	TBMT	1924 May  2 # Tbilisi Mean Time
 			3:00	-	TBIT	1957 Mar    # Tbilisi Time
 			4:00 RussiaAsia TBI%sT	1991 Mar 31 2:00s
 			3:00	1:00	TBIST	1991 Apr  9 # independence
@@ -2744,8 +2750,9 @@ Zone	Asia/Dubai	3:41:12 -	LMT	1920
 			4:00	-	GST
 
 # Uzbekistan
+# Byalokoz 1919 says Uzbekistan was 4:27:53.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Samarkand	4:27:12 -	LMT	1924 May  2
+Zone	Asia/Samarkand	4:27:53 -	LMT	1924 May  2
 			4:00	-	SAMT	1930 Jun 21 # Samarkand Time
 			5:00	-	SAMT	1981 Apr  1
 			5:00	1:00	SAMST	1981 Oct  1

@@ -187,8 +187,8 @@ Rule	Arg	2000	only	-	Mar	3	0:00	0	-
 # So there is no summer time in Argentina for now.
 
 # From Mariano Absatz (2008-10-20):
-# Decree 1693/2008 applies Law 26.350 for the summer 2008/2009 establishing DST in Argentina
-# From 2008-10-19 until 2009-03-15
+# Decree 1693/2008 applies Law 26.350 for the summer 2008/2009 establishing DST
+# in Argentina from 2008-10-19 until 2009-03-15.
 # http://www.boletinoficial.gov.ar/Bora.Portal/CustomControls/PdfContent.aspx?fp=16102008&pi=3&pf=4&s=0&sec=01
 #
 
@@ -197,14 +197,16 @@ Rule	Arg	2000	only	-	Mar	3	0:00	0	-
 # Pampa, Neuquén, Rio Negro, Chubut, Santa Cruz and Tierra del Fuego
 # http://www.boletinoficial.gov.ar/Bora.Portal/CustomControls/PdfContent.aspx?fp=17102008&pi=1&pf=1&s=0&sec=01
 #
-# Press release 235 dated Saturday October 18th, from the Government of the Province of Jujuy saying
-# it will not apply DST either (even when it was not included in Decree 1705/2008)
+# Press release 235 dated Saturday October 18th, from the Government of the
+# Province of Jujuy saying it will not apply DST either (even when it was not
+# included in Decree 1705/2008).
 # http://www.jujuy.gov.ar/index2/partes_prensa/18_10_08/235-181008.doc
 
 # From fullinet (2009-10-18):
 # As announced in
 # http://www.argentina.gob.ar/argentina/portal/paginas.dhtml?pagina=356
-# (an official .gob.ar) under title: "Sin Cambio de Hora" (english: "No hour change")
+# (an official .gob.ar) under title: "Sin Cambio de Hora"
+# (English: "No hour change").
 #
 # "Por el momento, el Gobierno Nacional resolvió no modificar la hora
 # oficial, decisión que estaba en estudio para su implementación el
@@ -300,7 +302,7 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	S
 # confirms that upon request the provinces San Juan and Mendoza
 # refused to follow San Luis in this change.
 #
-# The change is supposed to take place Monday the 21.st at 0:00
+# The change is supposed to take place Monday the 21st at 0:00
 # hours. As far as I understand it if this goes ahead, we need
 # a new timezone for San Luis (although there are also documented
 # independent changes in the southamerica file of San Luis in

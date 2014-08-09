@@ -682,7 +682,8 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 # http://en.afrik.com/news11892.html
 
 # From Alex Krivenyshev (2008-05-09):
-# The Morocco time change can be confirmed on Morocco web site Maghreb Arabe Presse:
+# The Morocco time change can be confirmed on Morocco web site Maghreb Arabe
+# Presse:
 # http://www.map.ma/eng/sections/box3/morocco_shifts_to_da/view
 #
 # Morocco shifts to daylight time on June 1st through September 27, Govt.
@@ -760,8 +761,8 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 
 # From Dan Abitol (2011-03-30):
 # ...Rules for Africa/Casablanca are the following (24h format)
-# The 3rd april 2011 at 00:00:00, [it] will be 3rd april 1:00:00
-# The 31th july 2011 at 00:59:59,  [it] will be 31th July 00:00:00
+# The 3rd April 2011 at 00:00:00, [it] will be 3rd April 01:00:00
+# The 31st July 2011 at 00:59:59, [it] will be 31st July 00:00:00
 # ...Official links of change in morocco
 # The change was broadcast on the FM Radio
 # I ve called ANRT (telecom regulations in Morocco) at

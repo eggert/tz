@@ -1402,7 +1402,8 @@ Rule	Japan	1950	1951	-	May	Sun>=1	2:00	1:00	D
 
 # From Hideyuki Suzuki (1998-11-09):
 # 'Tokyo' usually stands for the former location of Tokyo Astronomical
-# Observatory: 139 degrees 44' 40.90" E (9h 18m 58.727s), 35 degrees 39' 16.0" N.
+# Observatory: 139 degrees 44' 40.90" E (9h 18m 58.727s),
+# 35 degrees 39' 16.0" N.
 # This data is from 'Rika Nenpyou (Chronological Scientific Tables) 1996'
 # edited by National Astronomical Observatory of Japan....
 # JST (Japan Standard Time) has been used since 1888-01-01 00:00 (JST).
@@ -1979,10 +1980,9 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 # Here is an article that Pakistan plan to introduce Daylight Saving Time
 # on June 1, 2008 for 3 months.
 #
-# "... The federal cabinet on Wednesday announced a new conservation plan to help
-# reduce load shedding by approving the closure of commercial centres at 9pm and
-# moving clocks forward by one hour for the next three months.
-# ...."
+# "... The federal cabinet on Wednesday announced a new conservation plan to
+# help reduce load shedding by approving the closure of commercial centres at
+# 9pm and moving clocks forward by one hour for the next three months. ...."
 #
 # http://www.worldtimezone.net/dst_news/dst_news_pakistan01.html
 # http://www.dailytimes.com.pk/default.asp?page=2008%5C05%5C15%5Cstory_15-5-2008_pg1_4
@@ -2029,19 +2029,14 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 
 # From Alexander Krivenyshev (2009-09-28):
 # According to Associated Press Of Pakistan, it is confirmed that
-# Pakistan clocks across the country would be turned back by an hour from October
-# 1, 2009.
+# Pakistan clocks across the country would be turned back by an hour from
+# October 1, 2009.
 #
 # "Clocks to go back one hour from 1 Oct"
 # http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=86715&Itemid=2
 # http://www.worldtimezone.com/dst_news/dst_news_pakistan07.htm
-
-# From Steffen Thorsen (2009-09-29):
-# Alexander Krivenyshev wrote:
-# > According to Associated Press Of Pakistan, it is confirmed that
-# > Pakistan clocks across the country would be turned back by an hour from October
-# > 1, 2009.
 #
+# From Steffen Thorsen (2009-09-29):
 # Now they seem to have changed their mind, November 1 is the new date:
 # http://www.thenews.com.pk/top_story_detail.asp?Id=24742
 # "The country's clocks will be reversed by one hour on November 1.

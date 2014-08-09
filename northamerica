@@ -323,15 +323,15 @@ Rule	Chicago	1955	1966	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Chicago	-5:50:36 -	LMT	1883 Nov 18 12:09:24
 			-6:00	US	C%sT	1920
-			-6:00	Chicago	C%sT	1936 Mar  1 2:00
-			-5:00	-	EST	1936 Nov 15 2:00
+			-6:00	Chicago	C%sT	1936 Mar  1  2:00
+			-5:00	-	EST	1936 Nov 15  2:00
 			-6:00	Chicago	C%sT	1942
 			-6:00	US	C%sT	1946
 			-6:00	Chicago	C%sT	1967
 			-6:00	US	C%sT
 # Oliver County, ND switched from mountain to central time on 1992-10-25.
 Zone America/North_Dakota/Center -6:45:12 - LMT	1883 Nov 18 12:14:48
-			-7:00	US	M%sT	1992 Oct 25 02:00
+			-7:00	US	M%sT	1992 Oct 25  2:00
 			-6:00	US	C%sT
 # Morton County, ND, switched from mountain to central time on
 # 2003-10-26, except for the area around Mandan which was already central time.
@@ -341,7 +341,7 @@ Zone America/North_Dakota/Center -6:45:12 - LMT	1883 Nov 18 12:14:48
 # but in practice these other counties were already observing central time.
 # See <http://www.epa.gov/fedrgstr/EPA-IMPACT/2003/October/Day-28/i27056.htm>.
 Zone America/North_Dakota/New_Salem -6:45:39 - LMT 1883 Nov 18 12:14:21
-			-7:00	US	M%sT	2003 Oct 26 02:00
+			-7:00	US	M%sT	2003 Oct 26  2:00
 			-6:00	US	C%sT
 
 # From Josh Findley (2011-01-21):
@@ -359,7 +359,7 @@ Zone America/North_Dakota/New_Salem -6:45:39 - LMT 1883 Nov 18 12:14:21
 # of 6h47'07".
 
 Zone America/North_Dakota/Beulah -6:47:07 - LMT 1883 Nov 18 12:12:53
-			-7:00	US	M%sT	2010 Nov  7 2:00
+			-7:00	US	M%sT	2010 Nov  7  2:00
 			-6:00	US	C%sT
 
 # US mountain time, represented by Denver
@@ -475,9 +475,9 @@ Zone America/Juneau	 15:02:19 -	LMT	1867 Oct 18
 			 -8:00	-	PST	1942
 			 -8:00	US	P%sT	1946
 			 -8:00	-	PST	1969
-			 -8:00	US	P%sT	1980 Apr 27 2:00
-			 -9:00	US	Y%sT	1980 Oct 26 2:00
-			 -8:00	US	P%sT	1983 Oct 30 2:00
+			 -8:00	US	P%sT	1980 Apr 27  2:00
+			 -9:00	US	Y%sT	1980 Oct 26  2:00
+			 -8:00	US	P%sT	1983 Oct 30  2:00
 			 -9:00	US	Y%sT	1983 Nov 30
 			 -9:00	US	AK%sT
 Zone America/Sitka	 14:58:47 -	LMT	1867 Oct 18
@@ -485,7 +485,7 @@ Zone America/Sitka	 14:58:47 -	LMT	1867 Oct 18
 			 -8:00	-	PST	1942
 			 -8:00	US	P%sT	1946
 			 -8:00	-	PST	1969
-			 -8:00	US	P%sT	1983 Oct 30 2:00
+			 -8:00	US	P%sT	1983 Oct 30  2:00
 			 -9:00	US	Y%sT	1983 Nov 30
 			 -9:00	US	AK%sT
 Zone America/Metlakatla	 15:13:42 -	LMT	1867 Oct 18
@@ -493,7 +493,7 @@ Zone America/Metlakatla	 15:13:42 -	LMT	1867 Oct 18
 			 -8:00	-	PST	1942
 			 -8:00	US	P%sT	1946
 			 -8:00	-	PST	1969
-			 -8:00	US	P%sT	1983 Oct 30 2:00
+			 -8:00	US	P%sT	1983 Oct 30  2:00
 			 -8:00	-	PST
 Zone America/Yakutat	 14:41:05 -	LMT	1867 Oct 18
 			 -9:18:55 -	LMT	1900 Aug 20 12:00
@@ -509,7 +509,7 @@ Zone America/Anchorage	 14:00:24 -	LMT	1867 Oct 18
 			-10:00	US	CAT/CAPT 1946 # Peace
 			-10:00	-	CAT	1967 Apr
 			-10:00	-	AHST	1969
-			-10:00	US	AH%sT	1983 Oct 30 2:00
+			-10:00	US	AH%sT	1983 Oct 30  2:00
 			 -9:00	US	Y%sT	1983 Nov 30
 			 -9:00	US	AK%sT
 Zone America/Nome	 12:58:21 -	LMT	1867 Oct 18
@@ -518,7 +518,7 @@ Zone America/Nome	 12:58:21 -	LMT	1867 Oct 18
 			-11:00	US	N%sT	1946
 			-11:00	-	NST	1967 Apr
 			-11:00	-	BST	1969
-			-11:00	US	B%sT	1983 Oct 30 2:00
+			-11:00	US	B%sT	1983 Oct 30  2:00
 			 -9:00	US	Y%sT	1983 Nov 30
 			 -9:00	US	AK%sT
 Zone America/Adak	 12:13:21 -	LMT	1867 Oct 18
@@ -527,7 +527,7 @@ Zone America/Adak	 12:13:21 -	LMT	1867 Oct 18
 			-11:00	US	N%sT	1946
 			-11:00	-	NST	1967 Apr
 			-11:00	-	BST	1969
-			-11:00	US	B%sT	1983 Oct 30 2:00
+			-11:00	US	B%sT	1983 Oct 30  2:00
 			-10:00	US	AH%sT	1983 Nov 30
 			-10:00	US	HA%sT
 # The following switches don't quite make our 1970 cutoff.
@@ -589,11 +589,11 @@ Zone America/Adak	 12:13:21 -	LMT	1867 Oct 18
 # We're left to guess the time of day when Act 163 was approved; guess noon.
 
 Zone Pacific/Honolulu	-10:31:26 -	LMT	1896 Jan 13 12:00 #Schmitt&Cox
-			-10:30	-	HST	1933 Apr 30 2:00 #Laws 1933
+			-10:30	-	HST	1933 Apr 30  2:00 #Laws 1933
 			-10:30	1:00	HDT	1933 May 21 12:00 #Laws 1933+12
-			-10:30	-	HST	1942 Feb 09 2:00 #Schmitt&Cox+2
-			-10:30	1:00	HDT	1945 Sep 30 2:00 #Schmitt&Cox+2
-			-10:30	-	HST	1947 Jun  8 2:00 #Schmitt&Cox+2
+			-10:30	-	HST	1942 Feb  9  2:00 #Schmitt&Cox+2
+			-10:30	1:00	HDT	1945 Sep 30  2:00 #Schmitt&Cox+2
+			-10:30	-	HST	1947 Jun  8  2:00 #Schmitt&Cox+2
 			-10:00	-	HST
 
 Link Pacific/Honolulu Pacific/Johnston
@@ -622,9 +622,9 @@ Link Pacific/Honolulu Pacific/Johnston
 # Go with the Arizona State Library instead.
 
 Zone America/Phoenix	-7:28:18 -	LMT	1883 Nov 18 11:31:42
-			-7:00	US	M%sT	1944 Jan  1 00:01
-			-7:00	-	MST	1944 Apr  1 00:01
-			-7:00	US	M%sT	1944 Oct  1 00:01
+			-7:00	US	M%sT	1944 Jan  1  0:01
+			-7:00	-	MST	1944 Apr  1  0:01
+			-7:00	US	M%sT	1944 Oct  1  0:01
 			-7:00	-	MST	1967
 			-7:00	US	M%sT	1968 Mar 21
 			-7:00	-	MST
@@ -648,9 +648,9 @@ Zone America/Phoenix	-7:28:18 -	LMT	1883 Nov 18 11:31:42
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Boise	-7:44:49 -	LMT	1883 Nov 18 12:15:11
-			-8:00	US	P%sT	1923 May 13 2:00
+			-8:00	US	P%sT	1923 May 13  2:00
 			-7:00	US	M%sT	1974
-			-7:00	-	MST	1974 Feb  3 2:00
+			-7:00	-	MST	1974 Feb  3  2:00
 			-7:00	US	M%sT
 
 # Indiana
@@ -711,9 +711,9 @@ Zone America/Indiana/Indianapolis -5:44:38 - LMT 1883 Nov 18 12:15:22
 			-6:00	US	C%sT	1920
 			-6:00 Indianapolis C%sT	1942
 			-6:00	US	C%sT	1946
-			-6:00 Indianapolis C%sT	1955 Apr 24 2:00
-			-5:00	-	EST	1957 Sep 29 2:00
-			-6:00	-	CST	1958 Apr 27 2:00
+			-6:00 Indianapolis C%sT	1955 Apr 24  2:00
+			-5:00	-	EST	1957 Sep 29  2:00
+			-6:00	-	CST	1958 Apr 27  2:00
 			-5:00	-	EST	1969
 			-5:00	US	E%sT	1971
 			-5:00	-	EST	2006
@@ -729,10 +729,10 @@ Rule	Marengo	1954	1960	-	Sep	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Indiana/Marengo -5:45:23 -	LMT	1883 Nov 18 12:14:37
 			-6:00	US	C%sT	1951
-			-6:00	Marengo	C%sT	1961 Apr 30 2:00
+			-6:00	Marengo	C%sT	1961 Apr 30  2:00
 			-5:00	-	EST	1969
-			-5:00	US	E%sT	1974 Jan  6 2:00
-			-6:00	1:00	CDT	1974 Oct 27 2:00
+			-5:00	US	E%sT	1974 Jan  6  2:00
+			-6:00	1:00	CDT	1974 Oct 27  2:00
 			-5:00	US	E%sT	1976
 			-5:00	-	EST	2006
 			-5:00	US	E%sT
@@ -753,11 +753,11 @@ Rule Vincennes	1962	1963	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Indiana/Vincennes -5:50:07 - LMT	1883 Nov 18 12:09:53
 			-6:00	US	C%sT	1946
-			-6:00 Vincennes	C%sT	1964 Apr 26 2:00
+			-6:00 Vincennes	C%sT	1964 Apr 26  2:00
 			-5:00	-	EST	1969
 			-5:00	US	E%sT	1971
-			-5:00	-	EST	2006 Apr  2 2:00
-			-6:00	US	C%sT	2007 Nov  4 2:00
+			-5:00	-	EST	2006 Apr  2  2:00
+			-6:00	US	C%sT	2007 Nov  4  2:00
 			-5:00	US	E%sT
 #
 # Perry County, Indiana, switched from eastern to central time in April 2006.
@@ -774,10 +774,10 @@ Rule Perry	1962	1963	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Indiana/Tell_City -5:47:03 - LMT	1883 Nov 18 12:12:57
 			-6:00	US	C%sT	1946
-			-6:00 Perry	C%sT	1964 Apr 26 2:00
+			-6:00 Perry	C%sT	1964 Apr 26  2:00
 			-5:00	-	EST	1969
 			-5:00	US	E%sT	1971
-			-5:00	-	EST	2006 Apr  2 2:00
+			-5:00	-	EST	2006 Apr  2  2:00
 			-6:00	US	C%sT
 #
 # Pike County, Indiana moved from central to eastern time in 1977,
@@ -790,11 +790,11 @@ Rule	Pike	1961	1964	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Indiana/Petersburg -5:49:07 - LMT	1883 Nov 18 12:10:53
 			-6:00	US	C%sT	1955
-			-6:00	Pike	C%sT	1965 Apr 25 2:00
-			-5:00	-	EST	1966 Oct 30 2:00
-			-6:00	US	C%sT	1977 Oct 30 2:00
-			-5:00	-	EST	2006 Apr  2 2:00
-			-6:00	US	C%sT	2007 Nov  4 2:00
+			-6:00	Pike	C%sT	1965 Apr 25  2:00
+			-5:00	-	EST	1966 Oct 30  2:00
+			-6:00	US	C%sT	1977 Oct 30  2:00
+			-5:00	-	EST	2006 Apr  2  2:00
+			-6:00	US	C%sT	2007 Nov  4  2:00
 			-5:00	US	E%sT
 #
 # Starke County, Indiana moved from central to eastern time in 1991,
@@ -812,10 +812,10 @@ Rule	Starke	1959	1961	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Indiana/Knox -5:46:30 -	LMT	1883 Nov 18 12:13:30
 			-6:00	US	C%sT	1947
-			-6:00	Starke	C%sT	1962 Apr 29 2:00
-			-5:00	-	EST	1963 Oct 27 2:00
-			-6:00	US	C%sT	1991 Oct 27 2:00
-			-5:00	-	EST	2006 Apr  2 2:00
+			-6:00	Starke	C%sT	1962 Apr 29  2:00
+			-5:00	-	EST	1963 Oct 27  2:00
+			-6:00	US	C%sT	1991 Oct 27  2:00
+			-5:00	-	EST	2006 Apr  2  2:00
 			-6:00	US	C%sT
 #
 # Pulaski County, Indiana, switched from eastern to central time in
@@ -828,17 +828,17 @@ Rule	Pulaski	1957	1960	-	Sep	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Indiana/Winamac -5:46:25 - LMT	1883 Nov 18 12:13:35
 			-6:00	US	C%sT	1946
-			-6:00	Pulaski	C%sT	1961 Apr 30 2:00
+			-6:00	Pulaski	C%sT	1961 Apr 30  2:00
 			-5:00	-	EST	1969
 			-5:00	US	E%sT	1971
-			-5:00	-	EST	2006 Apr  2 2:00
-			-6:00	US	C%sT	2007 Mar 11 2:00
+			-5:00	-	EST	2006 Apr  2  2:00
+			-6:00	US	C%sT	2007 Mar 11  2:00
 			-5:00	US	E%sT
 #
 # Switzerland County, Indiana, did not observe DST from 1973 through 2005.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Indiana/Vevay -5:40:16 -	LMT	1883 Nov 18 12:19:44
-			-6:00	US	C%sT	1954 Apr 25 2:00
+			-6:00	US	C%sT	1954 Apr 25  2:00
 			-5:00	-	EST	1969
 			-5:00	US	E%sT	1973
 			-5:00	-	EST	2006
@@ -859,10 +859,10 @@ Zone America/Kentucky/Louisville -5:43:02 -	LMT	1883 Nov 18 12:16:58
 			-6:00	US	C%sT	1921
 			-6:00 Louisville C%sT	1942
 			-6:00	US	C%sT	1946
-			-6:00 Louisville C%sT	1961 Jul 23 2:00
+			-6:00 Louisville C%sT	1961 Jul 23  2:00
 			-5:00	-	EST	1968
-			-5:00	US	E%sT	1974 Jan  6 2:00
-			-6:00	1:00	CDT	1974 Oct 27 2:00
+			-5:00	US	E%sT	1974 Jan  6  2:00
+			-6:00	1:00	CDT	1974 Oct 27  2:00
 			-5:00	US	E%sT
 #
 # Wayne County, Kentucky
@@ -951,12 +951,12 @@ Rule	Detroit	1967	only	-	Jun	14	2:00	1:00	D
 Rule	Detroit	1967	only	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Detroit	-5:32:11 -	LMT	1905
-			-6:00	-	CST	1915 May 15 2:00
+			-6:00	-	CST	1915 May 15  2:00
 			-5:00	-	EST	1942
 			-5:00	US	E%sT	1946
 			-5:00	Detroit	E%sT	1973
 			-5:00	US	E%sT	1975
-			-5:00	-	EST	1975 Apr 27 2:00
+			-5:00	-	EST	1975 Apr 27  2:00
 			-5:00	US	E%sT
 #
 # Dickinson, Gogebic, Iron, and Menominee Counties, Michigan,
@@ -969,8 +969,8 @@ Rule Menominee	1966	only	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Menominee	-5:50:27 -	LMT	1885 Sep 18 12:00
 			-6:00	US	C%sT	1946
-			-6:00 Menominee	C%sT	1969 Apr 27 2:00
-			-5:00	-	EST	1973 Apr 29 2:00
+			-6:00 Menominee	C%sT	1969 Apr 27  2:00
+			-5:00	-	EST	1973 Apr 29  2:00
 			-6:00	US	C%sT
 
 # Navassa
@@ -1220,7 +1220,7 @@ Zone America/Goose_Bay	-4:01:40 -	LMT	1884 # Happy Valley-Goose Bay
 			-3:30	-	NST	1936
 			-3:30	StJohns	N%sT	1942 May 11
 			-3:30	Canada	N%sT	1946
-			-3:30	StJohns	N%sT	1966 Mar 15 2:00
+			-3:30	StJohns	N%sT	1966 Mar 15  2:00
 			-4:00	StJohns	A%sT	2011 Nov
 			-4:00	Canada	A%sT
 
@@ -1281,7 +1281,7 @@ Rule	Halifax	1962	1973	-	Oct	lastSun	2:00	0	S
 Zone America/Halifax	-4:14:24 -	LMT	1902 Jun 15
 			-4:00	Halifax	A%sT	1918
 			-4:00	Canada	A%sT	1919
-			-4:00	Halifax	A%sT	1942 Feb  9 2:00s
+			-4:00	Halifax	A%sT	1942 Feb  9  2:00s
 			-4:00	Canada	A%sT	1946
 			-4:00	Halifax	A%sT	1974
 			-4:00	Canada	A%sT
@@ -1378,7 +1378,7 @@ Zone America/Blanc-Sablon -3:48:28 -	LMT	1884
 Zone America/Montreal	-4:54:16 -	LMT	1884
 			-5:00	Mont	E%sT	1918
 			-5:00	Canada	E%sT	1919
-			-5:00	Mont	E%sT	1942 Feb  9 2:00s
+			-5:00	Mont	E%sT	1942 Feb  9  2:00s
 			-5:00	Canada	E%sT	1946
 			-5:00	Mont	E%sT	1974
 			-5:00	Canada	E%sT
@@ -1589,7 +1589,7 @@ Rule	Toronto	1957	1973	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Toronto	-5:17:32 -	LMT	1895
 			-5:00	Canada	E%sT	1919
-			-5:00	Toronto	E%sT	1942 Feb  9 2:00s
+			-5:00	Toronto	E%sT	1942 Feb  9  2:00s
 			-5:00	Canada	E%sT	1946
 			-5:00	Toronto	E%sT	1974
 			-5:00	Canada	E%sT
@@ -1602,16 +1602,16 @@ Zone America/Thunder_Bay -5:57:00 -	LMT	1895
 			-5:00	Canada	E%sT
 Zone America/Nipigon	-5:53:04 -	LMT	1895
 			-5:00	Canada	E%sT	1940 Sep 29
-			-5:00	1:00	EDT	1942 Feb  9 2:00s
+			-5:00	1:00	EDT	1942 Feb  9  2:00s
 			-5:00	Canada	E%sT
 Zone America/Rainy_River -6:18:16 -	LMT	1895
 			-6:00	Canada	C%sT	1940 Sep 29
-			-6:00	1:00	CDT	1942 Feb  9 2:00s
+			-6:00	1:00	CDT	1942 Feb  9  2:00s
 			-6:00	Canada	C%sT
 Zone America/Atikokan	-6:06:28 -	LMT	1895
 			-6:00	Canada	C%sT	1940 Sep 29
-			-6:00	1:00	CDT	1942 Feb  9 2:00s
-			-6:00	Canada	C%sT	1945 Sep 30 2:00
+			-6:00	1:00	CDT	1942 Feb  9  2:00s
+			-6:00	Canada	C%sT	1945 Sep 30  2:00
 			-5:00	-	EST
 
 
@@ -1747,12 +1747,12 @@ Rule	Swift	1959	only	-	Oct	lastSun	2:00	0	S
 Rule	Swift	1960	1961	-	Sep	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Regina	-6:58:36 -	LMT	1905 Sep
-			-7:00	Regina	M%sT	1960 Apr lastSun 2:00
+			-7:00	Regina	M%sT	1960 Apr lastSun  2:00
 			-6:00	-	CST
 Zone America/Swift_Current -7:11:20 -	LMT	1905 Sep
-			-7:00	Canada	M%sT	1946 Apr lastSun 2:00
+			-7:00	Canada	M%sT	1946 Apr lastSun  2:00
 			-7:00	Regina	M%sT	1950
-			-7:00	Swift	M%sT	1972 Apr lastSun 2:00
+			-7:00	Swift	M%sT	1972 Apr lastSun  2:00
 			-6:00	-	CST
 
 
@@ -1859,7 +1859,7 @@ Zone America/Vancouver	-8:12:28 -	LMT	1884
 			-8:00	Canada	P%sT
 Zone America/Dawson_Creek -8:00:56 -	LMT	1884
 			-8:00	Canada	P%sT	1947
-			-8:00	Vanc	P%sT	1972 Aug 30 2:00
+			-8:00	Vanc	P%sT	1972 Aug 30  2:00
 			-7:00	-	MST
 Zone America/Creston	-7:46:04 -	LMT	1884
 			-7:00	-	MST	1916 Oct 1
@@ -2073,47 +2073,47 @@ Rule	NT_YK	1987	2006	-	Apr	Sun>=1	2:00	1:00	D
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 # aka Panniqtuuq
 Zone America/Pangnirtung 0	-	zzz	1921 # trading post est.
-			-4:00	NT_YK	A%sT	1995 Apr Sun>=1 2:00
-			-5:00	Canada	E%sT	1999 Oct 31 2:00
-			-6:00	Canada	C%sT	2000 Oct 29 2:00
+			-4:00	NT_YK	A%sT	1995 Apr Sun>=1  2:00
+			-5:00	Canada	E%sT	1999 Oct 31  2:00
+			-6:00	Canada	C%sT	2000 Oct 29  2:00
 			-5:00	Canada	E%sT
 # formerly Frobisher Bay
 Zone America/Iqaluit	0	-	zzz	1942 Aug # Frobisher Bay est.
-			-5:00	NT_YK	E%sT	1999 Oct 31 2:00
-			-6:00	Canada	C%sT	2000 Oct 29 2:00
+			-5:00	NT_YK	E%sT	1999 Oct 31  2:00
+			-6:00	Canada	C%sT	2000 Oct 29  2:00
 			-5:00	Canada	E%sT
 # aka Qausuittuq
 Zone America/Resolute	0	-	zzz	1947 Aug 31 # Resolute founded
-			-6:00	NT_YK	C%sT	2000 Oct 29 2:00
-			-5:00	-	EST	2001 Apr  1 3:00
-			-6:00	Canada	C%sT	2006 Oct 29 2:00
-			-5:00	-	EST	2007 Mar 11 3:00
+			-6:00	NT_YK	C%sT	2000 Oct 29  2:00
+			-5:00	-	EST	2001 Apr  1  3:00
+			-6:00	Canada	C%sT	2006 Oct 29  2:00
+			-5:00	-	EST	2007 Mar 11  3:00
 			-6:00	Canada	C%sT
 # aka Kangiqiniq
 Zone America/Rankin_Inlet 0	-	zzz	1957 # Rankin Inlet founded
-			-6:00	NT_YK	C%sT	2000 Oct 29 2:00
-			-5:00	-	EST	2001 Apr  1 3:00
+			-6:00	NT_YK	C%sT	2000 Oct 29  2:00
+			-5:00	-	EST	2001 Apr  1  3:00
 			-6:00	Canada	C%sT
 # aka Iqaluktuuttiaq
 Zone America/Cambridge_Bay 0	-	zzz	1920 # trading post est.?
-			-7:00	NT_YK	M%sT	1999 Oct 31 2:00
-			-6:00	Canada	C%sT	2000 Oct 29 2:00
-			-5:00	-	EST	2000 Nov  5 0:00
-			-6:00	-	CST	2001 Apr  1 3:00
+			-7:00	NT_YK	M%sT	1999 Oct 31  2:00
+			-6:00	Canada	C%sT	2000 Oct 29  2:00
+			-5:00	-	EST	2000 Nov  5  0:00
+			-6:00	-	CST	2001 Apr  1  3:00
 			-7:00	Canada	M%sT
 Zone America/Yellowknife 0	-	zzz	1935 # Yellowknife founded?
 			-7:00	NT_YK	M%sT	1980
 			-7:00	Canada	M%sT
 Zone America/Inuvik	0	-	zzz	1953 # Inuvik founded
-			-8:00	NT_YK	P%sT	1979 Apr lastSun 2:00
+			-8:00	NT_YK	P%sT	1979 Apr lastSun  2:00
 			-7:00	NT_YK	M%sT	1980
 			-7:00	Canada	M%sT
 Zone America/Whitehorse	-9:00:12 -	LMT	1900 Aug 20
-			-9:00	NT_YK	Y%sT	1966 Jul 1 2:00
+			-9:00	NT_YK	Y%sT	1966 Jul  1  2:00
 			-8:00	NT_YK	P%sT	1980
 			-8:00	Canada	P%sT
 Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
-			-9:00	NT_YK	Y%sT	1973 Oct 28 0:00
+			-9:00	NT_YK	Y%sT	1973 Oct 28  0:00
 			-8:00	NT_YK	P%sT	1980
 			-8:00	Canada	P%sT
 
@@ -2339,7 +2339,7 @@ Zone America/Mexico_City -6:36:36 -	LMT	1922 Jan  1 0:23:24
 			-7:00	-	MST	1931 May  1 23:00
 			-6:00	-	CST	1931 Oct
 			-7:00	-	MST	1932 Apr  1
-			-6:00	Mexico	C%sT	2001 Sep 30 02:00
+			-6:00	Mexico	C%sT	2001 Sep 30  2:00
 			-6:00	-	CST	2002 Feb 20
 			-6:00	Mexico	C%sT
 # Chihuahua (near US border)
@@ -2351,7 +2351,7 @@ Zone America/Ojinaga	-6:57:40 -	LMT	1922 Jan 1 0:02:20
 			-7:00	-	MST	1932 Apr  1
 			-6:00	-	CST	1996
 			-6:00	Mexico	C%sT	1998
-			-6:00	-	CST	1998 Apr Sun>=1 3:00
+			-6:00	-	CST	1998 Apr Sun>=1  3:00
 			-7:00	Mexico	M%sT	2010
 			-7:00	US	M%sT
 # Chihuahua (away from US border)
@@ -2363,7 +2363,7 @@ Zone America/Chihuahua	-7:04:20 -	LMT	1921 Dec 31 23:55:40
 			-7:00	-	MST	1932 Apr  1
 			-6:00	-	CST	1996
 			-6:00	Mexico	C%sT	1998
-			-6:00	-	CST	1998 Apr Sun>=1 3:00
+			-6:00	-	CST	1998 Apr Sun>=1  3:00
 			-7:00	Mexico	M%sT
 # Sonora
 Zone America/Hermosillo	-7:23:52 -	LMT	1921 Dec 31 23:36:08
@@ -2427,7 +2427,7 @@ Zone America/Bahia_Banderas	-7:01:00 -	LMT	1921 Dec 31 23:59:00
 			-6:00	-	CST	1942 Apr 24
 			-7:00	-	MST	1949 Jan 14
 			-8:00	-	PST	1970
-			-7:00	Mexico	M%sT	2010 Apr 4 2:00
+			-7:00	Mexico	M%sT	2010 Apr  4  2:00
 			-6:00	Mexico	C%sT
 
 # Baja California (near US border)
@@ -2554,8 +2554,8 @@ Zone	America/Belize	-5:52:48 -	LMT	1912 Apr
 # http://www.theroyalgazette.com/apps/pbcs.dll/article?AID=/20060529/NEWS/105290135
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Atlantic/Bermuda	-4:19:18 -	LMT	1930 Jan  1 2:00    # Hamilton
-			-4:00	-	AST	1974 Apr 28 2:00
+Zone Atlantic/Bermuda	-4:19:18 -	LMT	1930 Jan  1  2:00    # Hamilton
+			-4:00	-	AST	1974 Apr 28  2:00
 			-4:00	Canada	A%sT	1976
 			-4:00	US	A%sT
 
@@ -2823,8 +2823,8 @@ Rule	DR	1972	1974	-	Jan	21	0:00	0	S
 Zone America/Santo_Domingo -4:39:36 -	LMT	1890
 			-4:40	-	SDMT	1933 Apr  1 12:00 # S. Dom. MT
 			-5:00	DR	E%sT	1974 Oct 27
-			-4:00	-	AST	2000 Oct 29 02:00
-			-5:00	US	E%sT	2000 Dec  3 01:00
+			-4:00	-	AST	2000 Oct 29  2:00
+			-5:00	US	E%sT	2000 Dec  3  1:00
 			-4:00	-	AST
 
 # El Salvador
@@ -2990,7 +2990,7 @@ Zone America/Tegucigalpa -5:48:52 -	LMT	1921 Apr
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Jamaica	-5:07:11 -	LMT	1890		# Kingston
 			-5:07:11 -	KMT	1912 Feb    # Kingston Mean Time
-			-5:00	-	EST	1974 Apr 28 2:00
+			-5:00	-	EST	1974 Apr 28  2:00
 			-5:00	US	E%sT	1984
 			-5:00	-	EST
 
@@ -3064,7 +3064,7 @@ Zone	America/Managua	-5:45:08 -	LMT	1890
 			-5:45:12 -	MMT	1934 Jun 23 # Managua Mean Time?
 			-6:00	-	CST	1973 May
 			-5:00	-	EST	1975 Feb 16
-			-6:00	Nic	C%sT	1992 Jan  1 4:00
+			-6:00	Nic	C%sT	1992 Jan  1  4:00
 			-5:00	-	EST	1992 Sep 24
 			-6:00	-	CST	1993
 			-5:00	-	EST	1997

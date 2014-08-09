@@ -119,11 +119,11 @@ Zone	Asia/Kabul	4:36:48 -	LMT	1890
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Yerevan	2:58:00 -	LMT	1924 May  2
 			3:00	-	YERT	1957 Mar    # Yerevan Time
-			4:00 RussiaAsia YER%sT	1991 Mar 31 2:00s
+			4:00 RussiaAsia YER%sT	1991 Mar 31  2:00s
 			3:00	1:00	YERST	1991 Sep 23 # independence
-			3:00 RussiaAsia	AM%sT	1995 Sep 24 2:00s
+			3:00 RussiaAsia	AM%sT	1995 Sep 24  2:00s
 			4:00	-	AMT	1997
-			4:00 RussiaAsia	AM%sT	2012 Mar 25 2:00s
+			4:00 RussiaAsia	AM%sT	2012 Mar 25  2:00s
 			4:00	-	AMT
 
 # Azerbaijan
@@ -136,7 +136,7 @@ Rule	Azer	1997	max	-	Oct	lastSun	 5:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Baku	3:19:24 -	LMT	1924 May  2
 			3:00	-	BAKT	1957 Mar    # Baku Time
-			4:00 RussiaAsia BAK%sT	1991 Mar 31 2:00s
+			4:00 RussiaAsia BAK%sT	1991 Mar 31  2:00s
 			3:00	1:00	BAKST	1991 Aug 30 # independence
 			3:00 RussiaAsia	AZ%sT	1992 Sep lastSat 23:00
 			4:00	-	AZT	1996 # Azerbaijan time
@@ -272,7 +272,7 @@ Zone	Asia/Rangoon	6:24:40 -	LMT	1880		# or Yangon
 # Cambodia
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Phnom_Penh	6:59:40 -	LMT	1906 Jun  9
-			7:06:20	-	SMT	1911 Mar 11 0:01 # Saigon MT?
+			7:06:20	-	SMT	1911 Mar 11  0:01 # Saigon MT?
 			7:00	-	ICT	1912 May
 			8:00	-	ICT	1931 May
 			7:00	-	ICT
@@ -745,7 +745,7 @@ Rule	Taiwan	1979	only	-	Oct	1	0:00	0	S
 # Taipei or Taibei or T'ai-pei
 Zone	Asia/Taipei	8:06:00 -	LMT	1896 Jan  1
 			8:00	-	JWST	1937 Oct  1
-			9:00	-	JST	1945 Sep 21 01:00
+			9:00	-	JST	1945 Sep 21  1:00
 			8:00	Taiwan	C%sT
 
 # Macau (Macao, Aomen)
@@ -835,14 +835,14 @@ Link	Asia/Nicosia	Europe/Nicosia
 Zone	Asia/Tbilisi	2:59:11 -	LMT	1880
 			2:59:11	-	TBMT	1924 May  2 # Tbilisi Mean Time
 			3:00	-	TBIT	1957 Mar    # Tbilisi Time
-			4:00 RussiaAsia TBI%sT	1991 Mar 31 2:00s
+			4:00 RussiaAsia TBI%sT	1991 Mar 31  2:00s
 			3:00	1:00	TBIST	1991 Apr  9 # independence
 			3:00 RussiaAsia GE%sT	1992 # Georgia Time
 			3:00 E-EurAsia	GE%sT	1994 Sep lastSun
 			4:00 E-EurAsia	GE%sT	1996 Oct lastSun
 			4:00	1:00	GEST	1997 Mar lastSun
 			4:00 E-EurAsia	GE%sT	2004 Jun 27
-			3:00 RussiaAsia	GE%sT	2005 Mar lastSun 2:00
+			3:00 RussiaAsia	GE%sT	2005 Mar lastSun  2:00
 			4:00	-	GET
 
 # East Timor
@@ -874,7 +874,7 @@ Zone	Asia/Dili	8:22:20 -	LMT	1912
 			8:00	-	TLT	1942 Feb 21 23:00 # E Timor Time
 			9:00	-	JST	1945 Sep 23
 			9:00	-	TLT	1976 May  3
-			8:00	-	WITA	2000 Sep 17 00:00
+			8:00	-	WITA	2000 Sep 17  0:00
 			9:00	-	TLT
 
 # India
@@ -1592,7 +1592,7 @@ Zone	Asia/Qyzylorda	4:21:52 -	LMT	1924 May  2
 			6:00	-	KIZT	1982 Apr  1
 			5:00 RussiaAsia	KIZ%sT	1991
 			5:00	-	KIZT	1991 Dec 16 # independence
-			5:00	-	QYZT	1992 Jan 19 2:00
+			5:00	-	QYZT	1992 Jan 19  2:00
 			6:00 RussiaAsia	QYZ%sT	2005 Mar 15
 			6:00	-	QYZT
 # Aqtobe (aka Aktobe, formerly Aktyubinsk)
@@ -1615,7 +1615,7 @@ Zone	Asia/Aqtau	3:21:04	-	LMT	1924 May  2
 			6:00	-	SHET	1982 Apr  1
 			5:00 RussiaAsia	SHE%sT	1991
 			5:00	-	SHET	1991 Dec 16 # independence
-			5:00 RussiaAsia	AQT%sT	1995 Mar lastSun 2:00 # Aqtau Time
+			5:00 RussiaAsia	AQT%sT	1995 Mar lastSun  2:00 # Aqtau Time
 			4:00 RussiaAsia	AQT%sT	2005 Mar 15
 			5:00	-	AQTT
 # West Kazakhstan
@@ -1624,7 +1624,7 @@ Zone	Asia/Oral	3:25:24	-	LMT	1924 May  2 # or Ural'sk
 			5:00	-	URAT	1981 Apr  1
 			5:00	1:00	URAST	1981 Oct  1
 			6:00	-	URAT	1982 Apr  1
-			5:00 RussiaAsia	URA%sT	1989 Mar 26 2:00
+			5:00 RussiaAsia	URA%sT	1989 Mar 26  2:00
 			4:00 RussiaAsia	URA%sT	1991
 			4:00	-	URAT	1991 Dec 16 # independence
 			4:00 RussiaAsia	ORA%sT	2005 Mar 15 # Oral Time
@@ -1650,8 +1650,8 @@ Rule	Kyrgyz	1997	2004	-	Oct	lastSun	2:30	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Bishkek	4:58:24 -	LMT	1924 May  2
 			5:00	-	FRUT	1930 Jun 21 # Frunze Time
-			6:00 RussiaAsia FRU%sT	1991 Mar 31 2:00s
-			5:00	1:00	FRUST	1991 Aug 31 2:00 # independence
+			6:00 RussiaAsia FRU%sT	1991 Mar 31  2:00s
+			5:00	1:00	FRUST	1991 Aug 31  2:00 # independence
 			5:00	Kyrgyz	KG%sT	2005 Aug 12    # Kyrgyzstan Time
 			6:00	-	KGT
 
@@ -1710,7 +1710,7 @@ Zone	Asia/Kuwait	3:11:56 -	LMT	1950
 # Laos
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Vientiane	6:50:24 -	LMT	1906 Jun  9 # or Viangchan
-			7:06:20	-	SMT	1911 Mar 11 0:01 # Saigon MT?
+			7:06:20	-	SMT	1911 Mar 11  0:01 # Saigon MT?
 			7:00	-	ICT	1912 May
 			8:00	-	ICT	1931 May
 			7:00	-	ICT
@@ -2376,10 +2376,10 @@ Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct
 			2:00 EgyptAsia	EE%sT	1967 Jun  5
 			2:00	Zion	I%sT	1996
 			2:00	Jordan	EE%sT	1999
-			2:00 Palestine	EE%sT	2008 Aug 29 0:00
+			2:00 Palestine	EE%sT	2008 Aug 29  0:00
 			2:00	-	EET	2008 Sep
 			2:00 Palestine	EE%sT	2010
-			2:00	-	EET	2010 Mar 27 0:01
+			2:00	-	EET	2010 Mar 27  0:01
 			2:00 Palestine	EE%sT	2011 Aug  1
 			2:00	-	EET	2012
 			2:00 Palestine	EE%sT
@@ -2548,10 +2548,10 @@ Zone	Asia/Colombo	5:19:24 -	LMT	1880
 			5:19:32	-	MMT	1906	# Moratuwa Mean Time
 			5:30	-	IST	1942 Jan  5
 			5:30	0:30	IHST	1942 Sep
-			5:30	1:00	IST	1945 Oct 16 2:00
-			5:30	-	IST	1996 May 25 0:00
-			6:30	-	LKT	1996 Oct 26 0:30
-			6:00	-	LKT	2006 Apr 15 0:30
+			5:30	1:00	IST	1945 Oct 16  2:00
+			5:30	-	IST	1996 May 25  0:00
+			6:30	-	LKT	1996 Oct 26  0:30
+			6:00	-	LKT	2006 Apr 15  0:30
 			5:30	-	IST
 
 # Syria
@@ -2723,8 +2723,8 @@ Zone	Asia/Damascus	2:25:12 -	LMT	1920	# Dimashq
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Dushanbe	4:35:12 -	LMT	1924 May  2
 			5:00	-	DUST	1930 Jun 21 # Dushanbe Time
-			6:00 RussiaAsia DUS%sT	1991 Mar 31 2:00s
-			5:00	1:00	DUSST	1991 Sep  9 2:00s
+			6:00 RussiaAsia DUS%sT	1991 Mar 31  2:00s
+			5:00	1:00	DUSST	1991 Sep  9  2:00s
 			5:00	-	TJT		    # Tajikistan Time
 
 # Thailand
@@ -2738,9 +2738,9 @@ Zone	Asia/Bangkok	6:42:04	-	LMT	1880
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Ashgabat	3:53:32 -	LMT	1924 May  2 # or Ashkhabad
 			4:00	-	ASHT	1930 Jun 21 # Ashkhabad Time
-			5:00 RussiaAsia	ASH%sT	1991 Mar 31 2:00
+			5:00 RussiaAsia	ASH%sT	1991 Mar 31  2:00
 			4:00 RussiaAsia	ASH%sT	1991 Oct 27 # independence
-			4:00 RussiaAsia	TM%sT	1992 Jan 19 2:00
+			4:00 RussiaAsia	TM%sT	1992 Jan 19  2:00
 			5:00	-	TMT
 
 # United Arab Emirates
@@ -2762,7 +2762,7 @@ Zone	Asia/Samarkand	4:27:53 -	LMT	1924 May  2
 # Milne says Tashkent was 4:37:10.8; round to nearest.
 Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 			5:00	-	TAST	1930 Jun 21 # Tashkent Time
-			6:00 RussiaAsia	TAS%sT	1991 Mar 31 2:00
+			6:00 RussiaAsia	TAS%sT	1991 Mar 31  2:00
 			5:00 RussiaAsia	TAS%sT	1991 Sep  1 # independence
 			5:00 RussiaAsia	UZ%sT	1992
 			5:00	-	UZT
@@ -2782,7 +2782,7 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # From Shanks & Pottenger:
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Ho_Chi_Minh	7:06:40 -	LMT	1906 Jun  9
-			7:06:20	-	SMT	1911 Mar 11 0:01 # Saigon MT?
+			7:06:20	-	SMT	1911 Mar 11  0:01 # Saigon MT?
 			7:00	-	ICT	1912 May
 			8:00	-	ICT	1931 May
 			7:00	-	ICT

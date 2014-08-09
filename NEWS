@@ -184,7 +184,7 @@ Release 2014f - 2014-08-05 17:42:36 -0700
     are not already surrounded by white space.  (Thanks to suggestions by
     Steffen Nurpmeso.)
 
-    There is new commentary about Xujiahui Observatory, the five timezone
+    There is new commentary about Xujiahui Observatory, the five time-zone
     project in China from 1918 to 1949, timekeeping in Japanese-occupied
     Shanghai, and Tibet Time in the 1950s.  The sharp-eyed can spot the
     warlord Jin Shuren in the data.
@@ -479,7 +479,7 @@ Release 2013h - 2013-10-25 15:32:32 -0700
 
   Changes affecting documentation and commentary
 
-    tz-link.htm now mentions TC TIMEZONE's draft timezone service protocol
+    tz-link.htm now mentions TC TIMEZONE's draft time zone service protocol
     (thanks to Mike Douglass) and TimezoneJS.Date (thanks to Jim Fehrle).
 
     Update URLs in tz-link page.  Add URLs for Microsoft Windows, since
@@ -679,7 +679,7 @@ Release 2013e - 2013-09-19 23:50:04 -0700
     The signatures of 'offtime', 'timeoff', and 'gtime' have been
     changed back to the old practice of using 'long' to represent UT
     offsets.  This had been inadvertently and mistakenly changed to
-    'int_fast32_t'.  (Thanks to Christos Zoulos.)
+    'int_fast32_t'.  (Thanks to Christos Zoulas.)
 
     The code avoids undefined behavior on integer overflow in some
     more places, including gmtime, localtime, mktime and zdump.
@@ -1110,7 +1110,7 @@ Release 2012a - 2012-03-01 18:28:10 +0700
 
   Other minor changes are:
 	Corrections to 1918 Canadian summer time end dates.
-	Updated URL for UK timezone history (in comments)
+	Updated URL for UK time zone history (in comments)
 	A few typos in Le Corre's list of free French place names (comments)
 
 
@@ -2668,7 +2668,7 @@ numbers.
 Release time stamps are taken from the release's commit (for newer,
 git releases), from the newest file in the tarball (for older
 releases, where this info is available) or from the email announcing
-the release (if all else fails; these are marked with a timezone of
+the release (if all else fails; these are marked with a time zone of
 -0000 and an "is missing!" comment).
 
 Earlier versions of the code and data were not announced on the tz

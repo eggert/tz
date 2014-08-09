@@ -127,7 +127,7 @@ These are the extensions that have been made to the POSIX functions:
 	consideration was given to using some other environment variable
 	(for example, "TIMEZONE") to hold the string used to generate the
 	time zone information file name.  In the end, however, it was decided
-	to continue using "TZ":  it is widely used for time zone purposes;
+	to continue using "TZ": it is widely used for time zone purposes;
 	separately maintaining both "TZ" and "TIMEZONE" seemed a nuisance;
 	and systems where "new" forms of "TZ" might cause problems can simply
 	use TZ values such as "EST5EDT" which can be used both by
@@ -710,9 +710,9 @@ Gregorian calendar:
 The Russian empire (including Finland and the Baltic states) did not
 convert to the Gregorian calendar until the Soviet revolution of 1917.
 
-Source:  H. Grotefend, _Taschenbuch der Zeitrechnung des deutschen
+Source: H. Grotefend, _Taschenbuch der Zeitrechnung des deutschen
 Mittelalters und der Neuzeit_, herausgegeben von Dr. O. Grotefend
-(Hannover:  Hahnsche Buchhandlung, 1941), pp. 26-28.
+(Hannover: Hahnsche Buchhandlung, 1941), pp. 26-28.
 
 
 ----- Time and time zones on Mars -----

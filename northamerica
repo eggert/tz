@@ -545,7 +545,7 @@ Zone America/Adak	 12:13:21 -	LMT	1867 Oct 18
 #  Minutes of the Unalaska City Council Meeting, January 10, 1967:
 #  "Except for St. Paul and Akutan, Unalaska is the only important
 #  location not on Alaska Standard Time.  The following resolution was
-#  made by William Robinson and seconded by Henry Swanson:  Be it
+#  made by William Robinson and seconded by Henry Swanson: Be it
 #  resolved that the City of Unalaska hereby goes to Alaska Standard
 #  Time as of midnight Friday, January 13, 1967 (1 A.M. Saturday,
 #  January 14, Alaska Standard Time.)  This resolution was passed with
@@ -578,7 +578,7 @@ Zone America/Adak	 12:13:21 -	LMT	1867 Oct 18
 # year, the standard time of this Territory shall be advanced one
 # hour...This Act shall take effect upon its approval. Approved this 26th
 # day of April, A. D. 1933. LAWRENCE M JUDD, Governor of the Territory of
-# Hawaii." Page 172:  "Act 163...Act 90 of the Session Laws of 1933 is
+# Hawaii." Page 172: "Act 163...Act 90 of the Session Laws of 1933 is
 # hereby repealed...This Act shall take effect upon its approval, upon
 # which date the standard time of this Territory shall be restored to
 # that existing immediately prior to the taking effect of said Act 90.
@@ -1827,7 +1827,7 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # 1. 1884 or 1885: adoption of Mountain Standard Time (GMT-7)
 # Exact date unknown
 # 2. Oct 1916: switch to Pacific Standard Time (GMT-8)
-# Exact date in October unknown;  Sunday October 1 is a reasonable guess.
+# Exact date in October unknown; Sunday October 1 is a reasonable guess.
 # 3. June 1918: switch to Pacific Daylight Time (GMT-7)
 # Exact date in June unknown; Sunday June 2 is a reasonable guess.
 # note#1:
@@ -3034,7 +3034,7 @@ Zone America/Martinique	-4:04:20 -      LMT	1890		# Fort-de-France
 # From Gwillim Law (2005-04-21):
 # The Associated Press story on the time change, which can be found at
 # http://www.lapalmainteractivo.com/guias/content/gen/ap/America_Latina/AMC_GEN_NICARAGUA_HORA.html
-# and elsewhere, says (fifth paragraph, translated from Spanish):  "The last
+# and elsewhere, says (fifth paragraph, translated from Spanish): "The last
 # time that a change of clocks was applied to save energy was in the year 2000
 # during the Arnoldo Alemán administration."...
 # The northamerica file says that Nicaragua has been on UTC-6 continuously

@@ -1915,7 +1915,7 @@ Zone	Asia/Hovd	6:06:36 -	LMT	1905 Aug
 Zone	Asia/Ulaanbaatar 7:07:32 -	LMT	1905 Aug
 			7:00	-	ULAT	1978	# Ulaanbaatar Time
 			8:00	Mongol	ULA%sT
-# Choibalsan, a.k.a. Bajan Tuemen, Bajan Tumen, Chojbalsan,
+# Choibalsan, a.k.a. Bajan Tümen, Bajan Tumen, Chojbalsan,
 # Choybalsan, Sanbejse, Tchoibalsan
 Zone	Asia/Choibalsan	7:38:00 -	LMT	1905 Aug
 			7:00	-	ULAT	1978

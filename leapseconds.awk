@@ -3,7 +3,7 @@
 # This file is in the public domain.
 
 BEGIN {
-  print "# Allowance for leapseconds added to each timezone file."
+  print "# Allowance for leap seconds added to each time zone file."
   print ""
   print "# This file is in the public domain."
   print ""

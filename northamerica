@@ -1361,18 +1361,10 @@ Rule	Mont	1922	only	-	Apr	30	2:00	1:00	D
 Rule	Mont	1924	only	-	May	17	2:00	1:00	D
 Rule	Mont	1924	1926	-	Sep	lastSun	2:30	0	S
 Rule	Mont	1925	1926	-	May	Sun>=1	2:00	1:00	D
-# The 1927-to-1937 rules can be expressed more simply as
-# Rule	Mont	1927	1937	-	Apr	lastSat	24:00	1:00	D
-# Rule	Mont	1927	1937	-	Sep	lastSat	24:00	0	S
-# The rules below avoid use of 24:00
-# (which pre-1998 versions of zic cannot handle).
-Rule	Mont	1927	only	-	May	1	0:00	1:00	D
-Rule	Mont	1927	1932	-	Sep	lastSun	0:00	0	S
-Rule	Mont	1928	1931	-	Apr	lastSun	0:00	1:00	D
-Rule	Mont	1932	only	-	May	1	0:00	1:00	D
-Rule	Mont	1933	1940	-	Apr	lastSun	0:00	1:00	D
-Rule	Mont	1933	only	-	Oct	1	0:00	0	S
-Rule	Mont	1934	1939	-	Sep	lastSun	0:00	0	S
+Rule	Mont	1927	1937	-	Apr	lastSat	24:00	1:00	D
+Rule	Mont	1927	1937	-	Sep	lastSat	24:00	0	S
+Rule	Mont	1938	1940	-	Apr	lastSun	0:00	1:00	D
+Rule	Mont	1938	1939	-	Sep	lastSun	0:00	0	S
 Rule	Mont	1946	1973	-	Apr	lastSun	2:00	1:00	D
 Rule	Mont	1945	1948	-	Sep	lastSun	2:00	0	S
 Rule	Mont	1949	1950	-	Oct	lastSun	2:00	0	S

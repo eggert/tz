@@ -344,7 +344,7 @@ ZONETABLES=	zone1970.tab zone.tab
 TABDATA=	iso3166.tab leapseconds $(ZONETABLES)
 LEAP_DEPS=	leapseconds.awk leap-seconds.list
 DATA=		$(YDATA) $(NDATA) $(TABDATA) \
-			$(LEAP_DEPS) yearistype.sh
+			leap-seconds.list yearistype.sh
 AWK_SCRIPTS=	checktab.awk leapseconds.awk
 MISC=		$(AWK_SCRIPTS) workman.sh zoneinfo2tdf.pl
 ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC)
@@ -457,7 +457,7 @@ check_character_set: $(ENCHILADA)
 		! grep -Env $(SAFE_LINE) $(MANS) date.1 $(MANTXTS) \
 			$(MISC) $(SOURCES) $(WEB_PAGES) && \
 		! grep -Env $(SAFE_SHARP_LINE) $(YDATA) $(NDATA) iso3166.tab \
-			zone.tab leapseconds $(LEAP_DEPS) yearistype.sh && \
+			zone.tab leapseconds yearistype.sh && \
 		test $$(grep -Ecv $(SAFE_SHARP_LINE) Makefile) -eq 1 && \
 		! grep -Env $(NONSYM_LINE) README NEWS Theory $(MANS) date.1 \
 			zone1970.tab && \

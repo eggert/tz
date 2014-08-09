@@ -304,7 +304,7 @@ Release 2014b - 2014-03-24 21:28:50 -0700
   Changes affecting code
 
     'zic' and 'localtime' no longer reject locations needing four transitions
-    per year for the forseeable future.  (Thanks to Andrew Main (Zefram).)
+    per year for the foreseeable future.  (Thanks to Andrew Main (Zefram).)
     Also, 'zic' avoids some unlikely failures due to integer overflow.
 
   Changes affecting build procedure

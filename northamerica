@@ -59,8 +59,8 @@
 #
 # For more about the first ten years of DST in the United States, see
 # Robert Garland, Ten years of daylight saving from the Pittsburgh standpoint
-# (Carnegie Library of Pittsburgh, 1927)
-# <http://www.clpgh.org/exhibit/dst.html>.
+# (Carnegie Library of Pittsburgh, 1927).
+# http://www.clpgh.org/exhibit/dst.html
 #
 # Shanks says that DST was called "War Time" in the US in 1918 and 1919.
 # However, DST was imposed by the Standard Time Act of 1918, which
@@ -79,8 +79,8 @@
 # From Arthur David Olson (2000-09-25):
 # Last night I heard part of a rebroadcast of a 1945 Arch Oboler radio drama.
 # In the introduction, Oboler spoke of "Eastern Peace Time."
-# An AltaVista search turned up
-# <http://rowayton.org/rhs/hstaug45.html>:
+# An AltaVista search turned up:
+# http://rowayton.org/rhs/hstaug45.html
 # "When the time is announced over the radio now, it is 'Eastern Peace
 # Time' instead of the old familiar 'Eastern War Time.'  Peace is wonderful."
 # (August 1945) by way of confirmation.
@@ -268,7 +268,7 @@ Zone	PST8PDT		 -8:00	US	P%sT
 
 # From Paul Eggert (2005-08-26):
 # According to today's Huntsville Times
-# <http://www.al.com/news/huntsvilletimes/index.ssf?/base/news/1125047783228320.xml&coll=1>
+# http://www.al.com/news/huntsvilletimes/index.ssf?/base/news/1125047783228320.xml&coll=1
 # a few towns on Alabama's "eastern border with Georgia, such as Phenix City
 # in Russell County, Lanett in Chambers County and some towns in Lee County,
 # set their watches and clocks on Eastern time."  It quotes H.H. "Bubba"
@@ -657,7 +657,7 @@ Zone America/Boise	-7:44:49 -	LMT	1883 Nov 18 12:15:11
 #
 # For a map of Indiana's time zone regions, see:
 # What time is it in Indiana? (2006-03-01)
-# <http://www.mccsc.edu/time.html>
+# http://www.mccsc.edu/time.html
 #
 # From Paul Eggert (2007-08-17):
 # Since 1970, most of Indiana has been like America/Indiana/Indianapolis,
@@ -868,7 +868,7 @@ Zone America/Kentucky/Louisville -5:43:02 -	LMT	1883 Nov 18 12:16:58
 # Wayne County, Kentucky
 #
 # From Lake Cumberland LIFE
-# <http://www.lake-cumberland.com/life/archive/news990129time.shtml>
+# http://www.lake-cumberland.com/life/archive/news990129time.shtml
 # (1999-01-29) via WKYM-101.7:
 # Clinton County has joined Wayne County in asking the DoT to change from
 # the Central to the Eastern time zone....  The Wayne County government made
@@ -887,7 +887,7 @@ Zone America/Kentucky/Louisville -5:43:02 -	LMT	1883 Nov 18 12:16:58
 # From Paul Eggert (2001-07-16):
 # The final rule was published in the
 # Federal Register 65, 160 (2000-08-17), pp 50154-50158.
-# <http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=2000_register&docid=fr17au00-22>
+# http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=2000_register&docid=fr17au00-22
 #
 Zone America/Kentucky/Monticello -5:39:24 - LMT	1883 Nov 18 12:20:36
 			-6:00	US	C%sT	1946
@@ -913,7 +913,7 @@ Zone America/Kentucky/Monticello -5:39:24 - LMT	1883 Nov 18 12:20:36
 # West Wendover, NV officially switched from Pacific to mountain time on
 # 1999-10-31.  See the
 # Federal Register 64, 203 (1999-10-21), pp 56705-56707.
-# <http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=1999_register&docid=fr21oc99-15>
+# http://frwebgate.access.gpo.gov/cgi-bin/getdoc.cgi?dbname=1999_register&docid=fr21oc99-15
 # However, the Federal Register says that West Wendover already operated
 # on mountain time, and the rule merely made this official;
 # hence a separate tz entry is not needed.
@@ -1100,13 +1100,13 @@ Zone America/Menominee	-5:50:27 -	LMT	1885 Sep 18 12:00
 # From Paul Eggert (2006-04-25):
 # H. David Matthews and Mary Vincent's map
 # "It's about TIME", _Canadian Geographic_ (September-October 1998)
-# <http://www.canadiangeographic.ca/Magazine/SO98/geomap.asp>
+# http://www.canadiangeographic.ca/Magazine/SO98/geomap.asp
 # contains detailed boundaries for regions observing nonstandard
 # time and daylight saving time arrangements in Canada circa 1998.
 #
 # INMS, the Institute for National Measurement Standards in Ottawa, has
 # information about standard and daylight saving time zones in Canada.
-# <http://inms-ienm.nrc-cnrc.gc.ca/en/time_services/daylight_saving_e.php>
+# http://inms-ienm.nrc-cnrc.gc.ca/en/time_services/daylight_saving_e.php
 # (updated periodically).
 # Its unofficial information is often taken from Matthews and Vincent.
 
@@ -1411,7 +1411,7 @@ Zone America/Montreal	-4:54:16 -	LMT	1884
 # says that Atikokan, Ontario currently does not observe DST,
 # but will vote on 11-10 whether to use EST/EDT.
 # He also writes that the Ontario Time Act (1990, Chapter T.9)
-# <http://www.gov.on.ca/MBS/english/publications/statregs/conttext.html>
+# http://www.gov.on.ca/MBS/english/publications/statregs/conttext.html
 # says that Ontario east of 90W uses EST/EDT, and west of 90W uses CST/CDT.
 # Officially Atikokan is therefore on CST/CDT, and most likely this report
 # concerns a non-official time observed as a matter of local practice.
@@ -1887,7 +1887,7 @@ Zone America/Creston	-7:46:04 -	LMT	1884
 # From Rives McDow (1999-09-04):
 # Nunavut ... moved ... to incorporate the whole territory into one time zone.
 # Nunavut moves to single time zone Oct. 31
-# <http://www.nunatsiaq.com/nunavut/nvt90903_13.html>
+# http://www.nunatsiaq.com/nunavut/nvt90903_13.html
 #
 # From Antoine Leca (1999-09-06):
 # We then need to create a new timezone for the Kitikmeot region of Nunavut
@@ -1895,7 +1895,7 @@ Zone America/Creston	-7:46:04 -	LMT	1884
 
 # From Paul Eggert (1999-09-20):
 # Basic Facts: The New Territory
-# <http://www.nunavut.com/basicfacts/english/basicfacts_1territory.html>
+# http://www.nunavut.com/basicfacts/english/basicfacts_1territory.html
 # (1999) reports that Pangnirtung operates on eastern time,
 # and that Coral Harbour does not observe DST.  We don't know when
 # Pangnirtung switched to eastern time; we'll guess 1995.
@@ -1924,8 +1924,8 @@ Zone America/Creston	-7:46:04 -	LMT	1884
 # the current state of affairs.
 
 # From Michaela Rodrigue, writing in the
-# Nunatsiaq News (1999-11-19)
-# <http://www.nunatsiaq.com/archives/nunavut991130/nvt91119_17.html>:
+# Nunatsiaq News (1999-11-19):
+# http://www.nunatsiaq.com/archives/nunavut991130/nvt91119_17.html
 # Clyde River, Pangnirtung and Sanikiluaq now operate with two time zones,
 # central - or Nunavut time - for government offices, and eastern time
 # for municipal offices and schools....  Igloolik [was similar but then]
@@ -2126,7 +2126,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # The Investigation and Analysis Service of the
 # Mexican Library of Congress (MLoC) has published a
 # history of Mexican local time (in Spanish)
-# <http://www.cddhcu.gob.mx/bibliot/publica/inveyana/polisoc/horver/>.
+# http://www.cddhcu.gob.mx/bibliot/publica/inveyana/polisoc/horver/
 #
 # Here are the discrepancies between Shanks & Pottenger (S&P) and the MLoC.
 # (In all cases we go with the MLoC.)
@@ -2171,8 +2171,8 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # -------------- End Forwarded Message --------------
 # From Paul Eggert (1996-06-12):
 # For an English translation of the decree, see
-# "Diario Oficial: Time Zone Changeover" (1996-01-04)
-# <http://mexico-travel.com/extra/timezone_eng.html>.
+# "Diario Oficial: Time Zone Changeover" (1996-01-04).
+# http://mexico-travel.com/extra/timezone_eng.html
 
 # From Rives McDow (1998-10-08):
 # The State of Quintana Roo has reverted back to central STD and DST times
@@ -2197,7 +2197,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # January 17, 2000 - The Energy Secretary, Ernesto Martens, announced
 # that Summer Time will be reduced from seven to five months, starting
 # this year....
-# <http://www.publico.com.mx/scripts/texto3.asp?action=pagina&pag=21&pos=p&secc=naci&date=01/17/2001>
+# http://www.publico.com.mx/scripts/texto3.asp?action=pagina&pag=21&pos=p&secc=naci&date=01/17/2001
 # [translated], says "summer time will ... take effect on the first Sunday
 # in May, and end on the last Sunday of September.
 
@@ -2211,13 +2211,13 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # observation of Daylight Saving Time.
 
 # Official statute published by the Energy Department
-# <http://www.conae.gob.mx/ahorro/decretohorver2001.html#decre>
+# http://www.conae.gob.mx/ahorro/decretohorver2001.html#decre
 # (2001-02-01) shows Baja and Chihauhua as still using US DST rules,
 # and Sonora with no DST.  This was reported by Jesper Nørgaard (2001-02-03).
 
 # From Paul Eggert (2001-03-03):
 #
-# <http://www.latimes.com/news/nation/20010303/t000018766.html>
+# http://www.latimes.com/news/nation/20010303/t000018766.html
 # James F. Smith writes in today's LA Times
 # * Sonora will continue to observe standard time.
 # * Last week Mexico City's mayor Andrés Manuel López Obrador decreed that
@@ -2856,7 +2856,7 @@ Zone America/El_Salvador -5:56:48 -	LMT	1921		# San Salvador
 # From Paul Eggert (2006-06-22):
 # The Ministry of Energy and Mines, press release CP-15/2006
 # (2006-04-19), says DST ends at 24:00.  See
-# <http://www.sieca.org.gt/Sitio_publico/Energeticos/Doc/Medidas/Cambio_Horario_Nac_190406.pdf>.
+# http://www.sieca.org.gt/Sitio_publico/Energeticos/Doc/Medidas/Cambio_Horario_Nac_190406.pdf
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Guat	1973	only	-	Nov	25	0:00	1:00	D
@@ -2959,8 +2959,8 @@ Zone America/Port-au-Prince -4:49:20 -	LMT	1890
 # http://www.worldtimezone.com/dst_news/dst_news_honduras04.html
 
 # From Paul Eggert (2006-08-08):
-# Also see Diario El Heraldo, The country returns to standard time (2006-08-08)
-# <http://www.elheraldo.hn/nota.php?nid=54941&sec=12>.
+# Also see Diario El Heraldo, The country returns to standard time (2006-08-08).
+# http://www.elheraldo.hn/nota.php?nid=54941&sec=12
 # It mentions executive decree 18-2006.
 
 # From Steffen Thorsen (2006-08-17):
@@ -3102,7 +3102,7 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15	# St Pierre
 # Turks and Caicos
 #
 # From Chris Dunn in
-# <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=415007>
+# http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=415007
 # (2007-03-15): In the Turks & Caicos Islands (America/Grand_Turk) the
 # daylight saving dates for time changes have been adjusted to match
 # the recent U.S. change of dates.

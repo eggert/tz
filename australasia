@@ -101,7 +101,7 @@ Zone Australia/Adelaide	9:14:20 -	LMT	1895 Feb
 # Tasmania
 #
 # From Paul Eggert (2005-08-16):
-# <http://www.bom.gov.au/climate/averages/tables/dst_times.shtml>
+# http://www.bom.gov.au/climate/averages/tables/dst_times.shtml
 # says King Island didn't observe DST from WWII until late 1971.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
@@ -220,8 +220,8 @@ Zone Australia/Lord_Howe 10:36:20 -	LMT	1895 Feb
 # Permanent occupation (scientific station) 1911-1915 and since 25 March 1948;
 # sealing and penguin oil station operated Nov 1899 to Apr 1919.  See the
 # Tasmania Parks & Wildlife Service history of sealing at Macquarie Island
-# <http://www.parks.tas.gov.au/index.aspx?base=1828>
-# <http://www.parks.tas.gov.au/index.aspx?base=1831>.
+# http://www.parks.tas.gov.au/index.aspx?base=1828
+# http://www.parks.tas.gov.au/index.aspx?base=1831
 # Guess that it was like Australia/Hobart while inhabited before 2010.
 #
 # From Steffen Thorsen (2010-03-10):
@@ -701,8 +701,8 @@ Zone Pacific/Funafuti	11:56:52 -	LMT	1901
 # time from Operation Newsreel (Hardtack I/Teak shot, 1958-08-01) to the last
 # Operation Fishbowl shot (Tightrope, 1962-11-04).... [See] Herman Hoerlin,
 # "The United States High-Altitude Test Experience: A Review Emphasizing the
-# Impact on the Environment", Los Alamos LA-6405, Oct 1976
-# <http://www.fas.org/sgp/othergov/doe/lanl/docs1/00322994.pdf>.
+# Impact on the Environment", Los Alamos LA-6405, Oct 1976.
+# http://www.fas.org/sgp/othergov/doe/lanl/docs1/00322994.pdf
 # See the table on page 4 where he lists GMT and local times for the tests; a
 # footnote for the JI tests reads that local time is "JI time = Hawaii Time
 # Minus One Hour".
@@ -784,8 +784,8 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # I found in the UCLA library.
 #
 # For data circa 1899, a common source is:
-# Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94
-# <http://www.jstor.org/stable/1774359>.
+# Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94.
+# http://www.jstor.org/stable/1774359
 #
 # A reliable and entertaining source about time zones is
 # Derek Howse, Greenwich time and longitude, Philip Wilson Publishers (1997).
@@ -834,12 +834,12 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 # From Paul Eggert (2005-12-08):
 # Implementation Dates of Daylight Saving Time within Australia
-# <http://www.bom.gov.au/climate/averages/tables/dst_times.shtml>
+# http://www.bom.gov.au/climate/averages/tables/dst_times.shtml
 # summarizes daylight saving issues in Australia.
 
 # From Arthur David Olson (2005-12-12):
 # Lawlink NSW:Daylight Saving in New South Wales
-# <http://www.lawlink.nsw.gov.au/lawlink/Corporate/ll_agdinfo.nsf/pages/community_relations_daylight_saving>
+# http://www.lawlink.nsw.gov.au/lawlink/Corporate/ll_agdinfo.nsf/pages/community_relations_daylight_saving
 # covers New South Wales in particular.
 
 # From John Mackin (1991-03-06):
@@ -976,13 +976,13 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 #
 # NSW (including LHI and Broken Hill):
 # Standard Time Act 1987 (updated 1995-04-04)
-# <http://www.austlii.edu.au/au/legis/nsw/consol_act/sta1987137/index.html>
+# http://www.austlii.edu.au/au/legis/nsw/consol_act/sta1987137/index.html
 # ACT
 # Standard Time and Summer Time Act 1972
-# <http://www.austlii.edu.au/au/legis/act/consol_act/stasta1972279/index.html>
+# http://www.austlii.edu.au/au/legis/act/consol_act/stasta1972279/index.html
 # SA
 # Standard Time Act, 1898
-# <http://www.austlii.edu.au/au/legis/sa/consol_act/sta1898137/index.html>
+# http://www.austlii.edu.au/au/legis/sa/consol_act/sta1898137/index.html
 
 # From David Grosz (2005-06-13):
 # It was announced last week that Daylight Saving would be extended by
@@ -1048,7 +1048,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # it matches what was used in the past.
 
 # The Australian Bureau of Meteorology FAQ
-# <http://www.bom.gov.au/faq/faqgen.htm>
+# http://www.bom.gov.au/faq/faqgen.htm
 # (1999-09-27) writes that Giles Meteorological Station uses
 # South Australian time even though it's located in Western Australia.
 
@@ -1092,7 +1092,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # From Christopher Hunt (2006-11-21), after an advance warning
 # from Jesper Nørgaard Welen (2006-11-01):
 # WA are trialing DST for three years.
-# <http://www.parliament.wa.gov.au/parliament/bills.nsf/9A1B183144403DA54825721200088DF1/$File/Bill175-1B.pdf>
+# http://www.parliament.wa.gov.au/parliament/bills.nsf/9A1B183144403DA54825721200088DF1/$File/Bill175-1B.pdf
 
 # From Rives McDow (2002-04-09):
 # The most interesting region I have found consists of three towns on the
@@ -1106,7 +1106,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # From Paul Eggert (2002-04-09):
 # This is confirmed by the section entitled
 # "What's the deal with time zones???" in
-# <http://www.earthsci.unimelb.edu.au/~awatkins/null.html>.
+# http://www.earthsci.unimelb.edu.au/~awatkins/null.html
 #
 # From Alex Livingston (2006-12-07):
 # ... it was just on four years ago that I drove along the Eyre Highway,
@@ -1262,33 +1262,32 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 # From Eric Ulevik (1999-05-26):
 # DST will start in NSW on the last Sunday of August, rather than the usual
-# October in 2000.  [See: Matthew Moore,
-# Two months more daylight saving
-# Sydney Morning Herald (1999-05-26)
-# <http://www.smh.com.au/news/9905/26/pageone/pageone4.html>]
+# October in 2000.  See: Matthew Moore,
+# Two months more daylight saving, Sydney Morning Herald (1999-05-26).
+# http://www.smh.com.au/news/9905/26/pageone/pageone4.html
 
 # From Paul Eggert (1999-09-27):
 # See the following official NSW source:
 # Daylight Saving in New South Wales.
-# <http://dir.gis.nsw.gov.au/cgi-bin/genobject/document/other/daylightsaving/tigGmZ>
+# http://dir.gis.nsw.gov.au/cgi-bin/genobject/document/other/daylightsaving/tigGmZ
 #
 # Narrabri Shire (NSW) council has announced it will ignore the extension of
 # daylight saving next year.  See:
 # Narrabri Council to ignore daylight saving
-# <http://abc.net.au/news/regionals/neweng/monthly/regeng-22jul1999-1.htm>
+# http://abc.net.au/news/regionals/neweng/monthly/regeng-22jul1999-1.htm
 # (1999-07-22).  For now, we'll wait to see if this really happens.
 #
 # Victoria will following NSW.  See:
 # Vic to extend daylight saving (1999-07-28)
-# <http://abc.net.au/local/news/olympics/1999/07/item19990728112314_1.htm>
+# http://abc.net.au/local/news/olympics/1999/07/item19990728112314_1.htm
 #
 # However, South Australia rejected the DST request.  See:
 # South Australia rejects Olympics daylight savings request (1999-07-19)
-# <http://abc.net.au/news/olympics/1999/07/item19990719151754_1.htm>
+# http://abc.net.au/news/olympics/1999/07/item19990719151754_1.htm
 #
 # Queensland also will not observe DST for the Olympics.  See:
 # Qld says no to daylight savings for Olympics
-# <http://abc.net.au/news/olympics/1999/06/item19990601114608_1.htm>
+# http://abc.net.au/news/olympics/1999/06/item19990601114608_1.htm
 # (1999-06-01), which quotes Queensland Premier Peter Beattie as saying
 # "Look you've got to remember in my family when this came up last time
 # I voted for it, my wife voted against it and she said to me it's all very
@@ -1298,7 +1297,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 #
 # Broken Hill will stick with South Australian time in 2000.  See:
 # Broken Hill to be behind the times (1999-07-21)
-# <http://abc.net.au/news/regionals/brokenh/monthly/regbrok-21jul1999-6.htm>
+# http://abc.net.au/news/regionals/brokenh/monthly/regbrok-21jul1999-6.htm
 
 # IATA SSIM (1998-09) says that the spring 2000 change for Australian
 # Capital Territory, New South Wales except Lord Howe Island and Broken
@@ -1434,8 +1433,8 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 # From Paul Eggert (2014-07-14):
 # Chatham Island time was formally standardized on 1957-01-01 by
-# New Zealand's Standard Time Amendment Act 1956 (1956-10-26)
-# <http://www.austlii.edu.au/nz/legis/hist_act/staa19561956n100244.pdf>.
+# New Zealand's Standard Time Amendment Act 1956 (1956-10-26).
+# http://www.austlii.edu.au/nz/legis/hist_act/staa19561956n100244.pdf
 # According to Google Books snippet view, a speaker in the New Zealand
 # parliamentary debates in 1956 said "Clause 78 makes provision for standard
 # time in the Chatham Islands.  The time there is 45 minutes in advance of New
@@ -1516,7 +1515,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # From Paul Eggert (1999-10-29):
 # The Federated States of Micronesia Visitors Board writes in
 # The Federated States of Micronesia - Visitor Information (1999-01-26)
-# <http://www.fsmgov.org/info/clocks.html>
+# http://www.fsmgov.org/info/clocks.html
 # that Truk and Yap are UTC+10, and Ponape and Kosrae are UTC+11.
 # We don't know when Kosrae switched from UTC+12; assume January 1 for now.
 
@@ -1587,9 +1586,9 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # Since Kiribati has moved the Date Line it's not clear what Tonga will do.
 
 # Don Mundell writes in the 1997-02-20 Tonga Chronicle
-# How Tonga became 'The Land where Time Begins'
-# <http://www.tongatapu.net.to/tonga/homeland/timebegins.htm>:
-
+# How Tonga became 'The Land where Time Begins':
+# http://www.tongatapu.net.to/tonga/homeland/timebegins.htm
+#
 # Until 1941 Tonga maintained a standard time 50 minutes ahead of NZST
 # 12 hours and 20 minutes ahead of GMT.  When New Zealand adjusted its
 # standard time in 1940s, Tonga had the choice of subtracting from its
@@ -1723,6 +1722,6 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # (2005-03-20):
 #
 # The American Practical Navigator (2002)
-# <http://pollux.nss.nima.mil/pubs/pubs_j_apn_sections.html?rid=187>
+# http://pollux.nss.nima.mil/pubs/pubs_j_apn_sections.html?rid=187
 # talks only about the 180-degree meridian with respect to ships in
 # international waters; it ignores the international date line.

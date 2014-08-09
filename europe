@@ -246,7 +246,7 @@
 #
 # The legal time in the UK outside of summer time is definitely GMT, not UTC;
 # see Lord Tanlaw's speech
-# <http://www.parliament.the-stationery-office.co.uk/pa/ld199697/ldhansrd/pdvn/lds97/text/70611-20.htm#70611-20_head0>
+# http://www.parliament.the-stationery-office.co.uk/pa/ld199697/ldhansrd/pdvn/lds97/text/70611-20.htm#70611-20_head0
 # (Lords Hansard 11 June 1997 columns 964 to 976).
 
 # From Paul Eggert (2006-03-22):
@@ -489,7 +489,7 @@ Rule	EU	1996	max	-	Oct	lastSun	 1:00u	0	-
 # The most recent directive covers the years starting in 2002.  See:
 # Directive 2000/84/EC of the European Parliament and of the Council
 # of 19 January 2001 on summer-time arrangements.
-# <http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=CELEX:32000L0084:EN:NOT>
+# http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=CELEX:32000L0084:EN:NOT
 
 # W-Eur differs from EU only in that W-Eur uses standard time.
 Rule	W-Eur	1977	1980	-	Apr	Sun>=1	 1:00s	1:00	S
@@ -1021,7 +1021,7 @@ Zone America/Thule	-4:35:08 -	LMT	1916 Jul 28 # Pituffik air base
 
 # From Peter Ilieve (1998-11-04), heavily edited:
 # The 1998-09-22 Estonian time law
-# <http://trip.rk.ee/cgi-bin/thw?${BASE}=akt&${OOHTML}=rtd&TA=1998&TO=1&AN=1390>
+# http://trip.rk.ee/cgi-bin/thw?${BASE}=akt&${OOHTML}=rtd&TA=1998&TO=1&AN=1390
 # refers to the Eighth Directive and cites the association agreement between
 # the EU and Estonia, ratified by the Estonian law (RT II 1995, 22-27, 120).
 #
@@ -1224,7 +1224,7 @@ Zone	Europe/Paris	0:09:21 -	LMT	1891 Mar 15  0:01
 
 # From Jörg Schilling (2002-10-23):
 # In 1945, Berlin was switched to Moscow Summer time (GMT+4) by
-# <http://www.dhm.de/lemo/html/biografien/BersarinNikolai/>
+# http://www.dhm.de/lemo/html/biografien/BersarinNikolai/
 # General [Nikolai] Bersarin.
 
 # From Paul Eggert (2003-03-08):
@@ -1429,7 +1429,7 @@ Zone Atlantic/Reykjavik	-1:27:24 -	LMT	1837
 # For Italian DST we have three sources: Shanks & Pottenger, Whitman, and
 # F. Pollastri
 # Day-light Saving Time in Italy (2006-02-03)
-# <http://toi.iriti.cnr.it/uk/ienitlt.html>
+# http://toi.iriti.cnr.it/uk/ienitlt.html
 # ('FP' below), taken from an Italian National Electrotechnical Institute
 # publication. When the three sources disagree, guess who's right, as follows:
 #
@@ -1542,7 +1542,7 @@ Link	Europe/Rome	Europe/San_Marino
 # in Latvian for subscribers only).
 
 # From RFE/RL Newsline
-# <http://www.rferl.org/newsline/2001/01/3-CEE/cee-030101.html>
+# http://www.rferl.org/newsline/2001/01/3-CEE/cee-030101.html
 # (2001-01-03), noted after a heads-up by Rives McDow:
 # The Latvian government on 2 January decided that the country will
 # institute daylight-saving time this spring, LETA reported.
@@ -1810,7 +1810,7 @@ Zone	Europe/Monaco	0:29:32 -	LMT	1891 Mar 15
 # Amsterdam mean time.
 
 # The data before 1945 are taken from
-# <http://www.phys.uu.nl/~vgent/wettijd/wettijd.htm>.
+# http://www.phys.uu.nl/~vgent/wettijd/wettijd.htm
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Neth	1916	only	-	May	 1	0:00	1:00	NST	# Netherlands Summer Time
@@ -1905,7 +1905,7 @@ Zone	Europe/Oslo	0:43:00 -	LMT	1895 Jan  1
 # <http://www.svalbard.com/SvalbardFAQ.html> says that the Germans were
 # expelled on 1942-05-14.  However, small parties of Germans did return,
 # and according to Wilhelm Dege's book "War North of 80" (1954)
-# <http://www.ucalgary.ca/UofC/departments/UP/1-55238/1-55238-110-2.html>
+# http://www.ucalgary.ca/UofC/departments/UP/1-55238/1-55238-110-2.html
 # the German armed forces at the Svalbard weather station code-named
 # Haudegen did not surrender to the Allies until September 1945.
 #
@@ -1929,7 +1929,7 @@ Rule	Poland	1945	only	-	Apr	29	0:00	1:00	S
 Rule	Poland	1945	only	-	Nov	 1	0:00	0	-
 # For 1946 on the source is Kazimierz Borkowski,
 # Toruń Center for Astronomy, Dept. of Radio Astronomy, Nicolaus Copernicus U.,
-# <http://www.astro.uni.torun.pl/~kb/Artykuly/U-PA/Czas2.htm#tth_tAb1>
+# http://www.astro.uni.torun.pl/~kb/Artykuly/U-PA/Czas2.htm#tth_tAb1
 # Thanks to Przemysław Augustyniak (2005-05-28) for this reference.
 # He also gives these further references:
 # Mon Pol nr 13, poz 162 (1995) <http://www.abc.com.pl/serwis/mp/1995/0162.htm>
@@ -3019,7 +3019,7 @@ Zone Europe/Stockholm	1:12:12 -	LMT	1879 Jan  1
 
 # From Pierre-Yves Berger (2013-09-11):
 # the "Circulaire du conseil fédéral" (December 11 1893)
-# <http://www.amtsdruckschriften.bar.admin.ch/viewOrigDoc.do?id=10071353> ...
+# http://www.amtsdruckschriften.bar.admin.ch/viewOrigDoc.do?id=10071353
 # clearly states that the [1894-06-01] change should be done at midnight
 # but if no one is present after 11 at night, could be postponed until one
 # hour before the beginning of service.

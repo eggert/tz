@@ -25,8 +25,8 @@
 # I found in the UCLA library.
 #
 # For data circa 1899, a common source is:
-# Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94
-# <http://www.jstor.org/stable/1774359>.
+# Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94.
+# http://www.jstor.org/stable/1774359
 #
 # A reliable and entertaining source about time zones is
 # Derek Howse, Greenwich time and longitude, Philip Wilson Publishers (1997).
@@ -831,7 +831,7 @@ Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
 # announced a bit in advance.  On 2012-07-11 the Moroccan government
 # announced that year's Ramadan daylight-saving transitions would be
 # 2012-07-20 and 2012-08-20; see
-# <http://www.mmsp.gov.ma/fr/actualites.aspx?id=288>.
+# http://www.mmsp.gov.ma/fr/actualites.aspx?id=288
 
 # From Andrew Paprocki (2013-07-02):
 # Morocco announced that the year's Ramadan daylight-savings
@@ -971,8 +971,8 @@ Zone	Africa/Maputo	2:10:20 -	LMT	1903 Mar
 # The 1994-04-03 transition is from Shanks & Pottenger.
 # Shanks & Pottenger report no DST after 1998-04; go with IATA.
 
-# From Petronella Sibeene (2007-03-30) in
-# <http://allafrica.com/stories/200703300178.html>:
+# From Petronella Sibeene (2007-03-30):
+# http://allafrica.com/stories/200703300178.html
 # While the entire country changes its time, Katima Mulilo and other
 # settlements in Caprivi unofficially will not because the sun there
 # rises and sets earlier compared to other regions.  Chief of
@@ -1128,7 +1128,7 @@ Zone Africa/Dar_es_Salaam 2:37:08 -	LMT	1931
 #
 # From Oscar van Vlijmen (2005-05-02):
 # La Presse, the first national daily newspaper ...
-# <http://www.lapresse.tn/archives/archives280405/actualites/lheure.html>
+# http://www.lapresse.tn/archives/archives280405/actualites/lheure.html
 # ... DST for 2005: on: Sun May 1 0h standard time, off: Fri Sept. 30,
 # 1h standard time.
 #

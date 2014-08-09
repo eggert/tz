@@ -13,7 +13,7 @@ BEGIN {
   print "# you should be able to pick up leap-seconds.list from a secondary NIST server."
   print "# For more about leap-seconds.list, please see"
   print "# The NTP Timescale and Leap Seconds"
-  print "# <http://www.eecis.udel.edu/~mills/leap.html>."
+  print "# http://www.eecis.udel.edu/~mills/leap.html"
   print ""
   print "# The International Earth Rotation Service periodically uses leap seconds"
   print "# to keep UTC to within 0.9 s of UT1"

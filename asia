@@ -25,8 +25,8 @@
 # I found in the UCLA library.
 #
 # For data circa 1899, a common source is:
-# Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94
-# <http://www.jstor.org/stable/1774359>.
+# Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94.
+# http://www.jstor.org/stable/1774359
 #
 # For Russian data circa 1919, a source is:
 # Byalokoz EL. New Counting of Time in Russia since July 1, 1919.
@@ -702,13 +702,13 @@ Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
 # Central Weather Bureau website was not correct.
 #
 # Original Bulletin:
-# <http://subtpg.tpg.gov.tw/og/image2.asp?f=03502F0AKM1AF>
-# <http://subtpg.tpg.gov.tw/og/image2.asp?f=0350300AKM1B0> (cont.)
+# http://subtpg.tpg.gov.tw/og/image2.asp?f=03502F0AKM1AF
+# http://subtpg.tpg.gov.tw/og/image2.asp?f=0350300AKM1B0 (cont.)
 #
 # In 1947, DST in Taiwan was expanded to Oct 31. There is a backup of that
 # telegram announcement from Taiwan Province Government:
 #
-# <http://subtpg.tpg.gov.tw/og/image2.asp?f=0360310AKZ431>
+# http://subtpg.tpg.gov.tw/og/image2.asp?f=0360310AKZ431
 #
 # Here is a brief translation:
 #
@@ -893,7 +893,7 @@ Zone	Asia/Kolkata	5:53:28 -	LMT	1880	# Kolkata
 # Indonesia
 #
 # From Gwillim Law (2001-05-28), overriding Shanks & Pottenger:
-# <http://www.sumatera-inc.com/go_to_invest/about_indonesia.asp#standtime>
+# http://www.sumatera-inc.com/go_to_invest/about_indonesia.asp#standtime
 # says that Indonesia's time zones changed on 1988-01-01.  Looking at some
 # time zone maps, I think that must refer to Western Borneo (Kalimantan Barat
 # and Kalimantan Tengah) switching from UTC+8 to UTC+7.
@@ -1377,8 +1377,8 @@ Zone	Asia/Jerusalem	2:20:54 -	LMT	1880
 # daylight saving between 1948 and 1951, but "the system was discontinued
 # because the public believed it would lead to longer working hours."
 
-# From Mayumi Negishi in the 2005-08-10 Japan Times
-# <http://www.japantimes.co.jp/cgi-bin/getarticle.pl5?nn20050810f2.htm>:
+# From Mayumi Negishi in the 2005-08-10 Japan Times:
+# http://www.japantimes.co.jp/cgi-bin/getarticle.pl5?nn20050810f2.htm
 # Occupation authorities imposed daylight-saving time on Japan on
 # [1948-05-01]....  But lack of prior debate and the execution of
 # daylight-saving time just three days after the bill was passed generated
@@ -1635,7 +1635,7 @@ Zone	Asia/Oral	3:25:24	-	LMT	1924 May  2 # or Ural'sk
 
 # From Paul Eggert (2005-08-15):
 # According to an article dated today in the Kyrgyzstan Development Gateway
-# <http://eng.gateway.kg/cgi-bin/page.pl?id=1&story_name=doc9979.shtml>
+# http://eng.gateway.kg/cgi-bin/page.pl?id=1&story_name=doc9979.shtml
 # Kyrgyzstan is canceling the daylight saving time system.  I take the article
 # to mean that they will leave their clocks at 6 hours ahead of UTC.
 # From Malik Abdugaliev (2005-09-21):
@@ -1659,8 +1659,8 @@ Zone	Asia/Bishkek	4:58:24 -	LMT	1924 May  2
 
 # Korea (North and South)
 
-# From Annie I. Bang (2006-07-10) in
-# <http://www.koreaherald.co.kr/SITE/data/html_dir/2006/07/10/200607100012.asp>:
+# From Annie I. Bang (2006-07-10):
+# http://www.koreaherald.co.kr/SITE/data/html_dir/2006/07/10/200607100012.asp
 # The Ministry of Commerce, Industry and Energy has already
 # commissioned a research project [to reintroduce DST] and has said
 # the system may begin as early as 2008....  Korea ran a daylight
@@ -1752,7 +1752,7 @@ Rule	NBorneo	1935	1941	-	Dec	14	0:00	0	-
 #
 # peninsular Malaysia
 # The data here are taken from Mok Ly Yng (2003-10-30)
-# <http://www.math.nus.edu.sg/aslaksen/teaching/timezone.html>.
+# http://www.math.nus.edu.sg/aslaksen/teaching/timezone.html
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Asia/Kuala_Lumpur	6:46:46 -	LMT	1901 Jan  1
 			6:55:25	-	SMT	1905 Jun  1 # Singapore M.T.
@@ -1841,7 +1841,7 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880	# Male
 # Oscar van Vlijmen (2005-05-20) reports that the Mongolian Embassy in
 # Washington, DC says there are two time zones, with DST observed.
 # He also found
-# <http://ubpost.mongolnews.mn/index.php?subaction=showcomments&id=1111634894&archive=&start_from=&ucat=1&>
+# http://ubpost.mongolnews.mn/index.php?subaction=showcomments&id=1111634894&archive=&start_from=&ucat=1&
 # which also says that there is DST, and which has a comment by "Toddius"
 # (2005-03-31 06:05 +0700) saying "Mongolia actually has 3.5 time zones.
 # The West (OLGII) is +7 GMT, most of the country is ULAT is +8 GMT
@@ -2158,7 +2158,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 
 # From Paul Eggert (1999-09-20):
 # Daoud Kuttab writes in Holiday havoc
-# <http://www.jpost.com/com/Archive/22.Apr.1999/Opinion/Article-2.html>
+# http://www.jpost.com/com/Archive/22.Apr.1999/Opinion/Article-2.html
 # (Jerusalem Post, 1999-04-22) that
 # the Palestinian National Authority changed to DST on 1999-04-15.
 # I vaguely recall that they switch back in October (sorry, forgot the source).
@@ -2399,14 +2399,14 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 # Philippines, issued a proclamation announcing that 1844-12-30 was to
 # be immediately followed by 1845-01-01; see R.H. van Gent's
 # History of the International Date Line
-# <http://www.staff.science.uu.nl/~gent0113/idl/idl_philippines.htm>.
+# http://www.staff.science.uu.nl/~gent0113/idl/idl_philippines.htm
 # The rest of the data are from Shanks & Pottenger.
 
 # From Paul Eggert (2006-04-25):
 # Tomorrow's Manila Standard reports that the Philippines Department of
 # Trade and Industry is considering adopting DST this June when the
 # rainy season begins.  See
-# <http://www.manilastandardtoday.com/?page=politics02_april26_2006>.
+# http://www.manilastandardtoday.com/?page=politics02_april26_2006
 # For now, we'll ignore this, since it's not definite and we lack details.
 #
 # From Jesper Nørgaard Welen (2006-04-26):
@@ -2463,7 +2463,7 @@ Zone	Asia/Riyadh	3:06:52 -	LMT	1947 Mar 14
 
 # Singapore
 # The data here are taken from Mok Ly Yng (2003-10-30)
-# <http://www.math.nus.edu.sg/aslaksen/teaching/timezone.html>.
+# http://www.math.nus.edu.sg/aslaksen/teaching/timezone.html
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 			6:55:25	-	SMT	1905 Jun  1 # Singapore M.T.
@@ -2506,7 +2506,7 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 # at present, become 2400 hours of April 14, 2006 (midnight of April 14, 2006).
 
 # From Peter Apps and Ranga Sirila of Reuters (2006-04-12) in:
-# <http://today.reuters.co.uk/news/newsArticle.aspx?type=scienceNews&storyID=2006-04-12T172228Z_01_COL295762_RTRIDST_0_SCIENCE-SRILANKA-TIME-DC.XML>
+# http://today.reuters.co.uk/news/newsArticle.aspx?type=scienceNews&storyID=2006-04-12T172228Z_01_COL295762_RTRIDST_0_SCIENCE-SRILANKA-TIME-DC.XML
 # [The Tamil Tigers] never accepted the original 1996 time change and simply
 # kept their clocks set five and a half hours ahead of Greenwich Mean
 # Time (GMT), in line with neighbor India.

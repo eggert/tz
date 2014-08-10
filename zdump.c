@@ -231,7 +231,7 @@ is_alpha(char a)
 	  case 'h': case 'i': case 'j': case 'k': case 'l': case 'm': case 'n':
 	  case 'o': case 'p': case 'q': case 'r': case 's': case 't': case 'u':
 	  case 'v': case 'w': case 'x': case 'y': case 'z':
-	  	return 1;
+		return 1;
 	}
 }
 

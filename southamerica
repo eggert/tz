@@ -1252,7 +1252,7 @@ Rule	Chile	2012	max	-	Sep	Sun>=2	4:00u	1:00	S
 # (1996-09) says 1998-03-08.  Ignore these.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Santiago	-4:42:46 -	LMT	1890
-			-4:42:46 -	SMT	1910 	    # Santiago Mean Time
+			-4:42:46 -	SMT	1910	    # Santiago Mean Time
 			-5:00	-	CLT	1916 Jul  1 # Chile Time
 			-4:42:46 -	SMT	1918 Sep  1 # Santiago Mean Time
 			-4:00	-	CLT	1919 Jul  1 # Chile Time

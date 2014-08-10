@@ -264,7 +264,7 @@ Rule	Troll	2005	max	-	Mar	lastSun	1:00u	2:00	CEST
 Rule	Troll	2004	max	-	Oct	lastSun	1:00u	0:00	UTC
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Antarctica/Troll	0	-	zzz	2005 Feb 12
-     			0:00	Troll	%s
+			0:00	Troll	%s
 
 # Poland - year-round base
 # Arctowski, King George Island, -620945-0582745, since 1977

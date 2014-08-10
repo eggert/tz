@@ -449,7 +449,7 @@ tzselect:	tzselect.ksh
 			<$? >$@
 		chmod +x $@
 
-check:		check_character_set check_tables check_web
+check:		check_character_set check_tabs check_tables check_web
 
 check_character_set: $(ENCHILADA)
 		LC_ALL=en_US.utf8 && export LC_ALL && \
@@ -462,6 +462,9 @@ check_character_set: $(ENCHILADA)
 		! grep -Env $(NONSYM_LINE) README NEWS Theory $(MANS) date.1 \
 			zone1970.tab && \
 		! grep -Env $(VALID_LINE) $(ENCHILADA)
+
+check_tabs: $(ENCHILADA)
+		! grep -n ' '$(TAB_CHAR) $(ENCHILADA)
 
 check_tables:	checktab.awk $(PRIMARY_YDATA) $(ZONETABLES)
 		for tab in $(ZONETABLES); do \

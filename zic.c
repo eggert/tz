@@ -1668,7 +1668,7 @@ writezone(const char *const name, const char *const string, char version)
 		register int	thistypecnt;
 		char		thischars[TZ_MAX_CHARS];
 		char		thischarcnt;
-		int 		indmap[TZ_MAX_CHARS];
+		int		indmap[TZ_MAX_CHARS];
 
 		if (pass == 1) {
 			thistimei = timei32;
@@ -2606,7 +2606,7 @@ is_space(char a)
 	  default:
 		return 0;
 	  case ' ': case '\f': case '\n': case '\r': case '\t': case '\v':
-	  	return 1;
+		return 1;
 	}
 }
 
@@ -2625,7 +2625,7 @@ is_alpha(char a)
 	  case 'h': case 'i': case 'j': case 'k': case 'l': case 'm': case 'n':
 	  case 'o': case 'p': case 'q': case 'r': case 's': case 't': case 'u':
 	  case 'v': case 'w': case 'x': case 'y': case 'z':
-	  	return 1;
+		return 1;
 	}
 }
 

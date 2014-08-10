@@ -1501,26 +1501,26 @@ Zone America/Montreal	-4:54:16 -	LMT	1884
 # ing in 1930. The information for the province of Quebec is definite,
 # for the other provinces only approximate:
 #
-# 	Province	Daylight saving time used
+#	Province	Daylight saving time used
 # Prince Edward Island	Not used.
 # Nova Scotia		In Halifax only.
 # New Brunswick		In St. John only.
 # Quebec		In the following places:
-# 			Montreal	Lachine
-# 			Quebec		Mont-Royal
-# 			Lévis		Iberville
-# 			St. Lambert	Cap de la Madelèine
-# 			Verdun		Loretteville
-# 			Westmount	Richmond
-# 			Outremont	St. Jérôme
-# 			Longueuil	Greenfield Park
-# 			Arvida		Waterloo
-# 			Chambly-Canton	Beaulieu
-# 			Melbourne	La Tuque
-# 			St. Théophile	Buckingham
+#			Montreal	Lachine
+#			Quebec		Mont-Royal
+#			Lévis		Iberville
+#			St. Lambert	Cap de la Madelèine
+#			Verdun		Loretteville
+#			Westmount	Richmond
+#			Outremont	St. Jérôme
+#			Longueuil	Greenfield Park
+#			Arvida		Waterloo
+#			Chambly-Canton	Beaulieu
+#			Melbourne	La Tuque
+#			St. Théophile	Buckingham
 # Ontario		Used generally in the cities and towns along
-# 			the southerly part of the province. Not
-# 			used in the northwesterly part.
+#			the southerly part of the province. Not
+#			used in the northwesterly part.
 # Manitoba		Not used.
 # Saskatchewan		In Regina only.
 # Alberta		Not used.

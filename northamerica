@@ -682,9 +682,6 @@ Zone America/Boise	-7:44:49 -	LMT	1883 Nov 18 12:15:11
 # that they would be ambiguous if we left them at the 'America' level.
 # So we reluctantly put them all in a subdirectory 'America/Indiana'.
 
-# From Paul Eggert (2005-08-16):
-# http://www.mccsc.edu/time.html says that Indiana will use DST starting 2006.
-
 # From Paul Eggert (2014-06-26):
 # https://www.federalregister.gov/articles/2006/01/20/06-563/standard-time-zone-boundary-in-the-state-of-indiana
 # says "DOT is relocating the time zone boundary in Indiana to move Starke,

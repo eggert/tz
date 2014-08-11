@@ -32,7 +32,8 @@ Unreleased, experimental changes
 
   Changes affecting documentation and commentary
 
-    tz-link.htm describes Windows Runtime etc.  (Thanks to Matt Johnson.)
+    tz-link.htm mentions Windows Runtime etc. (thanks to Matt Johnson)
+    and HP-UX's tztab.
 
     Some broken URLs have been fixed in the commentary.  (Thanks to
     Lester Caine.)

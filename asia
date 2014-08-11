@@ -765,7 +765,7 @@ Rule	Macau	1975	1977	-	Apr	Sun>=15	3:30	1:00	S
 Rule	Macau	1978	1980	-	Apr	Sun>=15	0:00	1:00	S
 Rule	Macau	1978	1980	-	Oct	Sun>=15	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Macau	7:34:20 -	LMT	1912
+Zone	Asia/Macau	7:34:20 -	LMT	1912 Jan  1
 			8:00	Macau	MO%sT	1999 Dec 20 # return to China
 			8:00	PRC	C%sT
 
@@ -870,7 +870,7 @@ Zone	Asia/Tbilisi	2:59:11 -	LMT	1880
 # midnight on Saturday, September 16.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Dili	8:22:20 -	LMT	1912
+Zone	Asia/Dili	8:22:20 -	LMT	1912 Jan  1
 			8:00	-	TLT	1942 Feb 21 23:00 # E Timor Time
 			9:00	-	JST	1945 Sep 23
 			9:00	-	TLT	1976 May  3
@@ -878,6 +878,13 @@ Zone	Asia/Dili	8:22:20 -	LMT	1912
 			9:00	-	TLT
 
 # India
+
+# From Paul Eggert (2014-08-11), after a heads-up from Stephen Colebourne:
+# According to a Portuguese decree (1911-05-26)
+# http://dre.pt/pdf1sdip/1911/05/12500/23132313.pdf
+# Portuguese India switched to GMT+5 on 1912-01-01.
+# Ignore this as it predates our 1970 cutoff.
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Kolkata	5:53:28 -	LMT	1880	# Kolkata
 			5:53:20	-	HMT	1941 Oct    # Howrah Mean Time?

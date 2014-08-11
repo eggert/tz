@@ -1961,6 +1961,14 @@ Zone	Europe/Warsaw	1:24:00 -	LMT	1880
 
 # Portugal
 #
+# From Paul Eggert (2014-08-11), after a heads-up from Stephen Colebourne:
+# According to a Portuguese decree (1911-05-26)
+# http://dre.pt/pdf1sdip/1911/05/12500/23132313.pdf
+# Lisbon was at -0:36:44.68, but switched to GMT on 1912-01-01 at 00:00.
+# Round the old offset to -0:36:45.  This agrees with Willett but disagrees
+# with Shanks, who says the transition occurred on 1911-05-24 at 00:00 for
+# Europe/Lisbon, Atlantic/Azores, and Atlantic/Madeira.
+#
 # From Rui Pedro Salgueiro (1992-11-12):
 # Portugal has recently (September, 27) changed timezone
 # (from WET to MET or CET) to harmonize with EEC.
@@ -2040,11 +2048,10 @@ Rule	Port	1979	1982	-	Sep	lastSun	 1:00s	0	-
 Rule	Port	1980	only	-	Mar	lastSun	 0:00s	1:00	S
 Rule	Port	1981	1982	-	Mar	lastSun	 1:00s	1:00	S
 Rule	Port	1983	only	-	Mar	lastSun	 2:00s	1:00	S
+#
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-# Shanks & Pottenger say the transition from LMT to WET occurred 1911-05-24;
-# Willett says 1912-01-01.  Go with Willett.
-Zone	Europe/Lisbon	-0:36:32 -	LMT	1884
-			-0:36:32 -	LMT	1912 Jan  1  # Lisbon Mean Time
+Zone	Europe/Lisbon	-0:36:45 -	LMT	1884
+			-0:36:45 -	LMT	1912 Jan  1  # Lisbon Mean Time
 			 0:00	Port	WE%sT	1966 Apr  3  2:00
 			 1:00	-	CET	1976 Sep 26  1:00
 			 0:00	Port	WE%sT	1983 Sep 25  1:00s
@@ -2052,14 +2059,14 @@ Zone	Europe/Lisbon	-0:36:32 -	LMT	1884
 			 1:00	EU	CE%sT	1996 Mar 31  1:00u
 			 0:00	EU	WE%sT
 Zone Atlantic/Azores	-1:42:40 -	LMT	1884		# Ponta Delgada
-			-1:54:32 -	HMT	1911 May 24  # Horta Mean Time
+			-1:54:32 -	HMT	1912 Jan  1  # Horta Mean Time
 			-2:00	Port	AZO%sT	1966 Apr  3  2:00 # Azores Time
 			-1:00	Port	AZO%sT	1983 Sep 25  1:00s
 			-1:00	W-Eur	AZO%sT	1992 Sep 27  1:00s
 			 0:00	EU	WE%sT	1993 Mar 28  1:00u
 			-1:00	EU	AZO%sT
 Zone Atlantic/Madeira	-1:07:36 -	LMT	1884		# Funchal
-			-1:07:36 -	FMT	1911 May 24  # Funchal Mean Time
+			-1:07:36 -	FMT	1912 Jan  1  # Funchal Mean Time
 			-1:00	Port	MAD%sT	1966 Apr  3  2:00 # Madeira Time
 			 0:00	Port	WE%sT	1983 Sep 25  1:00s
 			 0:00	EU	WE%sT

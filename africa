@@ -105,16 +105,22 @@ Zone	Africa/Algiers	0:12:12 -	LMT	1891 Mar 15  0:01
 			1:00	-	CET
 
 # Angola
+#
+# Shanks gives 1911-05-26 for the transition to WAT,
+# evidently confusing the date of the Portuguese decree
+# http://dre.pt/pdf1sdip/1911/05/12500/23132313.pdf
+# with the date that it took effect, namely 1912-01-01.
+#
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Luanda	0:52:56	-	LMT	1892
-			0:52:04	-	AOT	1911 May 26 # Angola Time
+			0:52:04	-	AOT	1912 Jan  1 # Angola Time
 			1:00	-	WAT
 
 # Benin
 # Whitman says they switched to 1:00 in 1946, not 1934;
 # go with Shanks & Pottenger.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Africa/Porto-Novo	0:10:28	-	LMT	1912
+Zone Africa/Porto-Novo	0:10:28	-	LMT	1912 Jan  1
 			0:00	-	GMT	1934 Feb 26
 			1:00	-	WAT
 
@@ -144,6 +150,12 @@ Zone	Africa/Douala	0:38:48	-	LMT	1912
 			1:00	-	WAT
 
 # Cape Verde
+#
+# Shanks gives 1907 for the transition to CVT.
+# Perhaps the 1911-05-26 Portuguese decree
+# http://dre.pt/pdf1sdip/1911/05/12500/23132313.pdf
+# merely made it official?
+#
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Atlantic/Cape_Verde -1:34:04 -	LMT	1907			# Praia
 			-2:00	-	CVT	1942 Sep
@@ -461,8 +473,14 @@ Zone	Africa/Accra	-0:00:52 -	LMT	1918
 # See Africa/Abidjan.
 
 # Guinea-Bissau
+#
+# Shanks gives 1911-05-26 for the transition to WAT,
+# evidently confusing the date of the Portuguese decree
+# http://dre.pt/pdf1sdip/1911/05/12500/23132313.pdf
+# with the date that it took effect, namely 1912-01-01.
+#
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Africa/Bissau	-1:02:20 -	LMT	1911 May 26
+Zone	Africa/Bissau	-1:02:20 -	LMT	1912 Jan  1
 			-1:00	-	WAT	1975
 			 0:00	-	GMT
 
@@ -964,6 +982,12 @@ Zone Africa/El_Aaiun	-0:52:48 -	LMT	1934 Jan # El Aaiún
 			 0:00	Morocco	WE%sT
 
 # Mozambique
+#
+# Shanks gives 1903-03-01 for the transition to CAT.
+# Perhaps the 1911-05-26 Portuguese decree
+# http://dre.pt/pdf1sdip/1911/05/12500/23132313.pdf
+# merely made it official?
+#
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Maputo	2:10:20 -	LMT	1903 Mar
 			2:00	-	CAT

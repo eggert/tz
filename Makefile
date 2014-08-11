@@ -325,16 +325,17 @@ LIBOBJS=	localtime.o asctime.o difftime.o
 HEADERS=	tzfile.h private.h
 NONLIBSRCS=	zic.c zdump.c scheck.c ialloc.c
 NEWUCBSRCS=	date.c strftime.c
-SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS) tzselect.ksh
+SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS) \
+			tzselect.ksh workman.sh
 MANS=		newctime.3 newstrftime.3 newtzset.3 time2posix.3 \
 			tzfile.5 tzselect.8 zic.8 zdump.8
 MANTXTS=	newctime.3.txt newstrftime.3.txt newtzset.3.txt \
 			time2posix.3.txt \
 			tzfile.5.txt tzselect.8.txt zic.8.txt zdump.8.txt \
 			date.1.txt
-COMMON=		Makefile README
+COMMON=		Makefile README NEWS
 WEB_PAGES=	tz-art.htm tz-link.htm
-DOCS=		NEWS Theory $(MANS) date.1 $(MANTXTS) $(WEB_PAGES)
+DOCS=		Theory $(MANS) date.1 $(MANTXTS) $(WEB_PAGES)
 PRIMARY_YDATA=	africa antarctica asia australasia \
 		europe northamerica southamerica
 YDATA=		$(PRIMARY_YDATA) pacificnew etcetera backward
@@ -346,7 +347,7 @@ LEAP_DEPS=	leapseconds.awk leap-seconds.list
 DATA=		$(YDATA) $(NDATA) $(TABDATA) \
 			leap-seconds.list yearistype.sh
 AWK_SCRIPTS=	checktab.awk leapseconds.awk
-MISC=		$(AWK_SCRIPTS) workman.sh zoneinfo2tdf.pl
+MISC=		$(AWK_SCRIPTS) zoneinfo2tdf.pl
 ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC)
 
 # And for the benefit of csh users on systems that assume the user
@@ -581,12 +582,12 @@ tarballs:	tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz
 tzcode$(VERSION).tar.gz: set-timestamps.out
 		LC_ALL=C && export LC_ALL && \
 		tar $(TARFLAGS) -cf - \
-		    $(COMMON) $(DOCS) $(SOURCES) $(MISC) | \
+		    $(COMMON) $(DOCS) $(SOURCES) | \
 		  gzip $(GZIPFLAGS) > $@
 
 tzdata$(VERSION).tar.gz: set-timestamps.out
 		LC_ALL=C && export LC_ALL && \
-		tar $(TARFLAGS) -cf - $(COMMON) $(DATA) | \
+		tar $(TARFLAGS) -cf - $(COMMON) $(DATA) $(MISC) | \
 		  gzip $(GZIPFLAGS) > $@
 
 signatures:	tzcode$(VERSION).tar.gz.asc tzdata$(VERSION).tar.gz.asc

@@ -19,6 +19,17 @@ Unreleased, experimental changes
 
     Asia/Dakha ended DST on 2009-12-31 at 24:00, not 23:59.
 
+  Changes affecting distribution tarballs
+
+    The files checktab.awk and zoneinfo2tdf.pl are now distributed in
+    the tzdata tarball instead of the tzcode tarball, since they help
+    maintain the data.  The NEWS file is now also distributed in the
+    tzdata tarball, since it contains news for data too.  (Thanks to
+    Alan Barrett for pointing this out.)  Also, the leapseconds.awk
+    file is no longer distributed in the tzcode tarball, since it
+    belongs in the tzdata tarball (where 2014f inadvertently also
+    distributed it).
+
   Changes affecting documentation and commentary
 
     tz-link.htm describes Windows Runtime etc.  (Thanks to Matt Johnson.)

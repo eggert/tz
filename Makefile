@@ -449,7 +449,7 @@ tzselect:	tzselect.ksh
 			<$? >$@
 		chmod +x $@
 
-check:		check_character_set check_tabs check_tables check_web
+check:		check_character_set check_white_space check_tables check_web
 
 check_character_set: $(ENCHILADA)
 		LC_ALL=en_US.utf8 && export LC_ALL && \
@@ -463,8 +463,10 @@ check_character_set: $(ENCHILADA)
 			zone1970.tab && \
 		! grep -Env $(VALID_LINE) $(ENCHILADA)
 
-check_tabs: $(ENCHILADA)
+check_white_space: $(ENCHILADA)
 		! grep -n ' '$(TAB_CHAR) $(ENCHILADA)
+		! grep -n '[[:space:]]$$' $(ENCHILADA)
+		! grep -n "$$(printf '[\f\r\v]\n')" $(ENCHILADA)
 
 check_tables:	checktab.awk $(PRIMARY_YDATA) $(ZONETABLES)
 		for tab in $(ZONETABLES); do \

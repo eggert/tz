@@ -19,6 +19,10 @@ Unreleased, experimental changes
 
     Asia/Dakha ended DST on 2009-12-31 at 24:00, not 23:59.
 
+  Changes affecting documentation and commentary
+
+    tz-link.htm describes Windows Runtime etc.  (Thanks to Matt Johnson.)
+
 
 Release 2014f - 2014-08-05 17:42:36 -0700
 

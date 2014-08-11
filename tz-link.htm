@@ -8,7 +8,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="UTF-8"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2014-08-05">
+<meta name="DC.Date" content="2014-08-11">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -232,16 +232,6 @@ and group scheduling systems, and has a <a
 href="http://www.w3.org/2002/12/cal/#tzd">workspace on time zone
 data</a> converted from <code><abbr>tz</abbr></code>. An earlier <a
 href="http://www.w3.org/2000/01/foo">schema</a> was sketched out.</li>
-<li>Starting with Windows 8.1, Microsoft includes <code><abbr>tz</abbr></code>
-and <abbr>CLDR</abbr> data in <abbr>XML</abbr> formatted files,
-found under <code>%WINDIR%\Globalization\Time Zone</code>.  This data is not
-currently used by the Windows operating system itself.  However, it
-is used to support the use of <code><abbr>tz</abbr></code> identifiers in the
-<a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.globalization.calendar.aspx"><code>Calendar</code></a>
-and <a href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.globalization.datetimeformatting.datetimeformatter.aspx"><code>DateTimeFormatter</code></a>
-classes of the Windows Runtime.  This enables <code><abbr>tz</abbr></code>
-zones to be used in Windows Store applications and Windows Phone applications
-that target the Windows Runtime.</li>
 </ul>
 <h2>Other <code><abbr>tz</abbr></code> compilers</h2>
 <ul>
@@ -390,6 +380,24 @@ href="http://users.skynet.be/Peter.Verthez/projects/intclock/">International
 clock (intclock)</a> is a clock that displays multiple time zones on
 <abbr>GNU</abbr>/Linux and similar systems. It is freely available
 under the <abbr>GPL</abbr>.</li>
+<li><a href="http://windows.microsoft.com/">Microsoft Windows</a> 8.1
+and later has <code><abbr>tz</abbr></code> data and <abbr>CLDR</abbr>
+data (mentioned below) used by
+<a href="http://en.wikipedia.org/wiki/Windows_Runtime">Windows Runtime</a>
+classes such as <a
+href="http://msdn.microsoft.com/en-us/library/windows/apps/windows.globalization.datetimeformatting.datetimeformatter.aspx"><code>DateTimeFormatter</code></a>.
+<a
+href="http://blogs.msdn.com/b/bclteam/archive/2007/06/07/exploring-windows-time-zones-with-system-timezoneinfo-josh-free.aspx">Exploring
+Windows Time Zones with <code>System.TimeZoneInfo</code></a> describes
+the older, proprietary method of Microsoft Windows 2000 and later,
+which stores time zone data in the
+<a href="http://en.wikipedia.org/wiki/Windows_Registry">Windows Registry</a>. The
+<a
+href="http://unicode.org/cldr/charts/supplemental/zone_tzid.html">Zone &rarr;
+Tzid table</a> or <a
+href="http://unicode.org/repos/cldr/trunk/common/supplemental/windowsZones.xml"><abbr>XML</abbr>
+file</a> of the <abbr>CLDR</abbr> data maps proprietary zone IDs
+to <code><abbr>tz</abbr></code> names.
 <li><a
 href="http://www.oracle.com/us/technologies/java/overview/index.html">Oracle
 Java</a> contains a copy of a subset of a recent
@@ -430,25 +438,6 @@ Schedules Information Manual</a> of the
 <a href="http://iata.org/">International Air Transport
 Association</a>
 gives current time zone rules for airports served by commercial aviation.</li>
-<li>Since Windows 2000, Microsoft has provided its own time zone data for
-Windows, which is stored in the Windows registry.  Beginning with Windows
-Vista, it was expanded to provide a limited history for some of the zones.
-It is updated periodically by Windows Update, and via hotfixes posted on the
-<a href="http://support.microsoft.com/gp/cp_dst">Microsoft DST support web
-site</a>.  The format for this data is documented with the <a
-href="http://msdn.microsoft.com/en-us/library/ms725481.aspx"><code>TIME_ZONE_INFORMATION</code></a>
-and <a
-href="http://msdn.microsoft.com/en-us/library/ms724253.aspx"><code>DYNAMIC_TIME_ZONE_INFORMTION</code></a>
-structures of the Win32 API.  The data is also exposed by the <a
-href="http://msdn.microsoft.com/en-us/library/system.timezoneinfo.aspx"><code>TimeZoneInfo</code></a>
-class of the .NET Framework.  A detailed description of the time zone data
-is provided in <a 
-href="http://blogs.msdn.com/b/bclteam/archive/2007/06/07/exploring-windows-time-zones-with-system-timezoneinfo-josh-free.aspx">this
-MSDN article</a>.  The identifiers of these Windows time zones can be
-mapped back to <code><abbr>tz</abbr></code> values using the
-<a href="http://unicode.org/cldr/charts/supplemental/zone_tzid.html">Zone &rarr; Tzid table</a>,
-or <a href="http://unicode.org/repos/cldr/trunk/common/supplemental/windowsZones.xml"><abbr>XML</abbr>
-file</a> from the <abbr>CLDR</abbr> data mentioned below.</li>
 </ul>
 <h2>Maps</h2>
 <ul>

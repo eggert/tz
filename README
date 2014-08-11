@@ -44,11 +44,8 @@ Historical local time information has been included here to:
 	system.
 
 The information in the time zone data files is by no means authoritative;
-the files currently do not even attempt to cover all time stamps before
-1970, and there are undoubtedly errors even for time stamps since 1970.
-If you know that the rules are different from those in a file, by all means
-feel free to change a file (and please send the changed version to
-tz@iana.org for use in the future).  Europeans take note!
+fixes and enhancements are welcome.  Please see the file CONTRIBUTING
+for details.
 
 Thanks to these Time Zone Caballeros who've made major contributions to the
 time conversion package: Keith Bostic; Bob Devine; Paul Eggert; Robert Elz;

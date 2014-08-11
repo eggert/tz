@@ -32,6 +32,9 @@ Unreleased, experimental changes
 
   Changes affecting documentation and commentary
 
+    A new file CONTRIBUTING is distributed.  (Thanks to Tim Parenti
+    for suggesting a CONTRIBUTING file.)
+
     tz-link.htm mentions Windows Runtime etc. (thanks to Matt Johnson)
     and HP-UX's tztab.
 

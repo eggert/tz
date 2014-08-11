@@ -233,9 +233,9 @@ details of pre-1970 civil timekeeping.
 ----- Accuracy of the tz database -----
 
 The tz database is not authoritative, and it surely has errors.
-Corrections are welcome and encouraged.  Users requiring authoritative
-data should consult national standards bodies and the references cited
-in the database's comments.
+Corrections are welcome and encouraged; see the file CONTRIBUTING.
+Users requiring authoritative data should consult national standards
+bodies and the references cited in the database's comments.
 
 Errors in the tz database arise from many sources:
 

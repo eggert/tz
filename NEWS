@@ -19,6 +19,13 @@ Unreleased, experimental changes
 
     Asia/Dakha ended DST on 2009-12-31 at 24:00, not 23:59.
 
+    A new file 'backzone' contains data which may appeal to
+    connoisseurs of old time stamps, although it is out of scope for
+    the tz database and is often poorly sourced.  The new file is not
+    recommended for ordinary use and its entries are not installed by
+    default.  (Thanks to Lester Caine for the Guernsey, Jersey, and
+    Isle of Man entries in 'backzone'.)
+
   Changes affecting code
 
     tzselect -c now uses a hybrid distance measure that works better

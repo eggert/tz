@@ -192,7 +192,13 @@ output_distances='
         country[$1] = $2
     country["US"] = "US" # Otherwise the strings get too long.
   }
-  function convert_coord(coord, deg, min, ilen, sign, sec) {
+  function abs(x) {
+    return x < 0 ? -x : x;
+  }
+  function min(x, y) {
+    return x < y ? x : y;
+  }
+  function convert_coord(coord, deg, minute, ilen, sign, sec) {
     if (coord ~ /^[-+]?[0-9]?[0-9][0-9][0-9][0-9][0-9][0-9]([^0-9]|$)/) {
       degminsec = coord
       intdeg = degminsec < 0 ? -int(-degminsec / 10000) : int(degminsec / 10000)
@@ -203,8 +209,8 @@ output_distances='
     } else if (coord ~ /^[-+]?[0-9]?[0-9][0-9][0-9][0-9]([^0-9]|$)/) {
       degmin = coord
       intdeg = degmin < 0 ? -int(-degmin / 100) : int(degmin / 100)
-      min = degmin - intdeg * 100
-      deg = (intdeg * 60 + min) / 60
+      minute = degmin - intdeg * 100
+      deg = (intdeg * 60 + minute) / 60
     } else
       deg = coord
     return deg * 0.017453292519943296
@@ -220,13 +226,26 @@ output_distances='
   # Great-circle distance between points with given latitude and longitude.
   # Inputs and output are in radians.  This uses the great-circle special
   # case of the Vicenty formula for distances on ellipsoids.
-  function dist(lat1, long1, lat2, long2, dlong, x, y, num, denom) {
+  function gcdist(lat1, long1, lat2, long2, dlong, x, y, num, denom) {
     dlong = long2 - long1
     x = cos (lat2) * sin (dlong)
     y = cos (lat1) * sin (lat2) - sin (lat1) * cos (lat2) * cos (dlong)
     num = sqrt (x * x + y * y)
     denom = sin (lat1) * sin (lat2) + cos (lat1) * cos (lat2) * cos (dlong)
     return atan2(num, denom)
+  }
+  # Parallel distance between points with given latitude and longitude.
+  # This is the product of the longitude difference and the cosine
+  # of the latitude of the point that is further from the equator.
+  # I.e., it considers longitudes to be further apart if they are
+  # nearer the equator.
+  function pardist(lat1, long1, lat2, long2) {
+    return abs (long1 - long2) * min (cos (lat1), cos (lat2))
+  }
+  # The distance function is the sum of the great-circle distance and
+  # the parallel distance.  It could be weighted.
+  function dist(lat1, long1, lat2, long2) {
+    return gcdist (lat1, long1, lat2, long2) + pardist (lat1, long1, lat2, long2)
   }
   BEGIN {
     coord_lat = convert_latitude(coord)

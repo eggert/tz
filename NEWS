@@ -19,6 +19,11 @@ Unreleased, experimental changes
 
     Asia/Dakha ended DST on 2009-12-31 at 24:00, not 23:59.
 
+  Changes affecting code
+
+    tzselect -c now uses a hybrid distance measure that works better
+    in Africa.  (Thanks to Alana Barrett for noting the problem.)
+
   Changes affecting distribution tarballs
 
     The files checktab.awk and zoneinfo2tdf.pl are now distributed in

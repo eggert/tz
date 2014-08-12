@@ -140,7 +140,7 @@ else
   }
 fi
 
-while getopts c:n:-: opt
+while getopts c:n:t:-: opt
 do
     case $opt$OPTARG in
     c*)

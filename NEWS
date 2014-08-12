@@ -28,12 +28,12 @@ Unreleased, experimental changes
 
     The files checktab.awk and zoneinfo2tdf.pl are now distributed in
     the tzdata tarball instead of the tzcode tarball, since they help
-    maintain the data.  The NEWS file is now also distributed in the
-    tzdata tarball, since it contains news for data too.  (Thanks to
-    Alan Barrett for pointing this out.)  Also, the leapseconds.awk
-    file is no longer distributed in the tzcode tarball, since it
-    belongs in the tzdata tarball (where 2014f inadvertently also
-    distributed it).
+    maintain the data.  The NEWS and Theory files are now also
+    distributed in the tzdata tarball, as they're relevant for data.
+    (Thanks to Alan Barrett for pointing this out.)  Also, the
+    leapseconds.awk file is no longer distributed in the tzcode
+    tarball, since it belongs in the tzdata tarball (where 2014f
+    inadvertently also distributed it).
 
   Changes affecting documentation and commentary
 

@@ -333,9 +333,9 @@ MANTXTS=	newctime.3.txt newstrftime.3.txt newtzset.3.txt \
 			time2posix.3.txt \
 			tzfile.5.txt tzselect.8.txt zic.8.txt zdump.8.txt \
 			date.1.txt
-COMMON=		CONTRIBUTING Makefile README NEWS
+COMMON=		CONTRIBUTING Makefile README NEWS Theory
 WEB_PAGES=	tz-art.htm tz-link.htm
-DOCS=		Theory $(MANS) date.1 $(MANTXTS) $(WEB_PAGES)
+DOCS=		$(MANS) date.1 $(MANTXTS) $(WEB_PAGES)
 PRIMARY_YDATA=	africa antarctica asia australasia \
 		europe northamerica southamerica
 YDATA=		$(PRIMARY_YDATA) pacificnew etcetera backward

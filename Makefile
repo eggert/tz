@@ -333,7 +333,7 @@ MANTXTS=	newctime.3.txt newstrftime.3.txt newtzset.3.txt \
 			time2posix.3.txt \
 			tzfile.5.txt tzselect.8.txt zic.8.txt zdump.8.txt \
 			date.1.txt
-COMMON=		CONTRIBUTING Makefile README NEWS Theory
+COMMON=		CONTRIBUTING Makefile NEWS README Theory
 WEB_PAGES=	tz-art.htm tz-link.htm
 DOCS=		$(MANS) date.1 $(MANTXTS) $(WEB_PAGES)
 PRIMARY_YDATA=	africa antarctica asia australasia \
@@ -460,8 +460,8 @@ check_character_set: $(ENCHILADA)
 		! grep -Env $(SAFE_SHARP_LINE) $(YDATA) $(NDATA) iso3166.tab \
 			zone.tab leapseconds yearistype.sh && \
 		test $$(grep -Ecv $(SAFE_SHARP_LINE) Makefile) -eq 1 && \
-		! grep -Env $(NONSYM_LINE) README NEWS Theory $(MANS) date.1 \
-			zone1970.tab && \
+		! grep -Env $(NONSYM_LINE) CONTRIBUTING NEWS README Theory \
+			$(MANS) date.1 zone1970.tab && \
 		! grep -Env $(VALID_LINE) $(ENCHILADA)
 
 check_white_space: $(ENCHILADA)

@@ -22,7 +22,7 @@ Unreleased, experimental changes
   Changes affecting code
 
     tzselect -c now uses a hybrid distance measure that works better
-    in Africa.  (Thanks to Alana Barrett for noting the problem.)
+    in Africa.  (Thanks to Alan Barrett for noting the problem.)
 
   Changes affecting distribution tarballs
 

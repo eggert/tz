@@ -26,6 +26,14 @@ Unreleased, experimental changes
     default.  (Thanks to Lester Caine for the Guernsey, Jersey, and
     Isle of Man entries in 'backzone'.)
 
+    Some more zones have been turned into links, when they differed
+    from existing zones only for older time stamps.  As usual,
+    these changes affect UTC offsets in pre-1970 time stamps only.
+    Their old data have been moved to the 'backzone' file.
+    The affected zones are: Africa/Bangui, Africa/Brazzaville,
+    Africa/Douala, Africa/Kinshasa, Africa/Libreville, Africa/Luanda,
+    Africa/Malabo, Africa/Niamey, and Africa/Porto-Novo.
+
   Changes affecting code
 
     tzselect -c now uses a hybrid distance measure that works better

@@ -106,24 +106,8 @@ Zone	Africa/Algiers	0:12:12 -	LMT	1891 Mar 15  0:01
 			1:00	-	CET
 
 # Angola
-#
-# Shanks gives 1911-05-26 for the transition to WAT,
-# evidently confusing the date of the Portuguese decree
-# http://dre.pt/pdf1sdip/1911/05/12500/23132313.pdf
-# with the date that it took effect, namely 1912-01-01.
-#
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Africa/Luanda	0:52:56	-	LMT	1892
-			0:52:04	-	AOT	1912 Jan  1 # Angola Time
-			1:00	-	WAT
-
 # Benin
-# Whitman says they switched to 1:00 in 1946, not 1934;
-# go with Shanks & Pottenger.
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Africa/Porto-Novo	0:10:28	-	LMT	1912 Jan  1
-			0:00	-	GMT	1934 Feb 26
-			1:00	-	WAT
+# See Africa/Lagos.
 
 # Botswana
 # From Paul Eggert (2013-02-21):
@@ -145,10 +129,7 @@ Zone Africa/Bujumbura	1:57:28	-	LMT	1890
 			2:00	-	CAT
 
 # Cameroon
-# Whitman says they switched to 1:00 in 1920; go with Shanks & Pottenger.
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Africa/Douala	0:38:48	-	LMT	1912
-			1:00	-	WAT
+# See Africa/Lagos.
 
 # Cape Verde
 #
@@ -165,9 +146,7 @@ Zone Atlantic/Cape_Verde -1:34:04 -	LMT	1907			# Praia
 			-1:00	-	CVT
 
 # Central African Republic
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Africa/Bangui	1:14:20	-	LMT	1912
-			1:00	-	WAT
+# See Africa/Lagos.
 
 # Chad
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -181,17 +160,14 @@ Zone	Africa/Ndjamena	1:00:12 -	LMT	1912 # N'Djamena
 Zone	Indian/Comoro	2:53:04 -	LMT	1911 Jul   # Moroni, Gran Comoro
 			3:00	-	EAT
 
-# Democratic Republic of Congo
+# Democratic Republic of the Congo
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Africa/Kinshasa	1:01:12 -	LMT	1897 Nov 9
-			1:00	-	WAT
 Zone Africa/Lubumbashi	1:49:52 -	LMT	1897 Nov 9
 			2:00	-	CAT
+# The above is for the eastern part; see Africa/Lagos for the western part.
 
 # Republic of the Congo
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Africa/Brazzaville	1:01:08 -	LMT	1912
-			1:00	-	WAT
+# See Africa/Lagos.
 
 # Côte d'Ivoire / Ivory Coast
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -421,10 +397,7 @@ Zone	Africa/Cairo	2:05:09 -	LMT	1900 Oct
 			2:00	Egypt	EE%sT
 
 # Equatorial Guinea
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Africa/Malabo	0:35:08 -	LMT	1912
-			0:00	-	GMT	1963 Dec 15
-			1:00	-	WAT
+# See Africa/Lagos.
 
 # Eritrea
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -449,9 +422,7 @@ Zone Africa/Addis_Ababa	2:34:48 -	LMT	1870
 			3:00	-	EAT
 
 # Gabon
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Africa/Libreville	0:37:48 -	LMT	1912
-			1:00	-	WAT
+# See Africa/Lagos.
 
 # Gambia
 # See Africa/Abidjan.
@@ -1023,16 +994,21 @@ Zone	Africa/Windhoek	1:08:24 -	LMT	1892 Feb 8
 			1:00	Namibia	WA%sT
 
 # Niger
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Africa/Niamey	 0:08:28 -	LMT	1912
-			-1:00	-	WAT	1934 Feb 26
-			 0:00	-	GMT	1960
-			 1:00	-	WAT
+# See Africa/Lagos.
 
 # Nigeria
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Lagos	0:13:36 -	LMT	1919 Sep
 			1:00	-	WAT
+Link Africa/Lagos Africa/Bangui	     # Central African Republic
+Link Africa/Lagos Africa/Brazzaville # Rep. of the Congo
+Link Africa/Lagos Africa/Douala	     # Cameroon
+Link Africa/Lagos Africa/Kinshasa    # Dem. Rep. of the Congo (west)
+Link Africa/Lagos Africa/Libreville  # Gabon
+Link Africa/Lagos Africa/Luanda	     # Angola
+Link Africa/Lagos Africa/Malabo	     # Equatorial Guinea
+Link Africa/Lagos Africa/Niamey	     # Niger
+Link Africa/Lagos Africa/Porto-Novo  # Benin
 
 # Réunion
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

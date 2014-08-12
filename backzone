@@ -44,11 +44,19 @@ Zone	Africa/Bamako	-0:32:00 -	LMT	1912
 			-1:00	-	WAT	1960 Jun 20
 			 0:00	-	GMT
 
+# Central African Republic
+Zone	Africa/Bangui	1:14:20	-	LMT	1912
+			1:00	-	WAT
+
 # Gambia
 Zone	Africa/Banjul	-1:06:36 -	LMT	1912
 			-1:06:36 -	BMT	1935	# Banjul Mean Time
 			-1:00	-	WAT	1964
 			 0:00	-	GMT
+
+# Republic of the Congo
+Zone Africa/Brazzaville	1:01:08 -	LMT	1912
+			1:00	-	WAT
 
 # Guinea
 Zone	Africa/Conakry	-0:54:52 -	LMT	1912
@@ -61,6 +69,10 @@ Zone	Africa/Dakar	-1:09:44 -	LMT	1912
 			-1:00	-	WAT	1941 Jun
 			 0:00	-	GMT
 
+# Cameroon
+# Whitman says they switched to 1:00 in 1920; go with Shanks & Pottenger.
+Zone	Africa/Douala	0:38:48	-	LMT	1912
+			1:00	-	WAT
 # Sierra Leone
 # From Paul Eggert (2014-08-12):
 # The following table is from Shanks & Pottenger, but it can't be right.
@@ -82,9 +94,45 @@ Zone	Africa/Juba	2:06:24 -	LMT	1931
 			2:00	Sudan	CA%sT	2000 Jan 15 12:00
 			3:00	-	EAT
 
+# Democratic Republic of the Congo (west)
+Zone Africa/Kinshasa	1:01:12 -	LMT	1897 Nov 9
+			1:00	-	WAT
+
+# Gabon
+Zone Africa/Libreville	0:37:48 -	LMT	1912
+			1:00	-	WAT
+
+# Angola
+#
+# Shanks gives 1911-05-26 for the transition to WAT,
+# evidently confusing the date of the Portuguese decree
+# http://dre.pt/pdf1sdip/1911/05/12500/23132313.pdf
+# with the date that it took effect, namely 1912-01-01.
+#
+Zone	Africa/Luanda	0:52:56	-	LMT	1892
+			0:52:04	-	AOT	1912 Jan  1 # Angola Time
+			1:00	-	WAT
+
 # Togo
 Zone	Africa/Lome	0:04:52 -	LMT	1893
 			0:00	-	GMT
+
+# Equatorial Guinea
+#
+# Although Shanks says that Malabo switched from UTC to UTC+1 on 1963-12-15,
+# a Google Books search says that London Calling, Issues 432-465 (1948), p 19,
+# says that Spanish Guinea was at GMT+1 back then.  The Shanks data are most
+# likely wrong, but we have nothing better; use them here for now.
+#
+Zone	Africa/Malabo	0:35:08 -	LMT	1912
+			0:00	-	GMT	1963 Dec 15
+			1:00	-	WAT
+
+# Niger
+Zone	Africa/Niamey	 0:08:28 -	LMT	1912
+			-1:00	-	WAT	1934 Feb 26
+			 0:00	-	GMT	1960
+			 1:00	-	WAT
 
 # Mauritania
 Zone Africa/Nouakchott	-1:03:48 -	LMT	1912
@@ -95,6 +143,13 @@ Zone Africa/Nouakchott	-1:03:48 -	LMT	1912
 # Burkina Faso
 Zone Africa/Ouagadougou	-0:06:04 -	LMT	1912
 			 0:00	-	GMT
+
+# Benin
+# Whitman says they switched to 1:00 in 1946, not 1934;
+# go with Shanks & Pottenger.
+Zone Africa/Porto-Novo	0:10:28	-	LMT	1912 Jan  1
+			0:00	-	GMT	1934 Feb 26
+			1:00	-	WAT
 
 # São Tomé and Príncipe
 Zone	Africa/Sao_Tome	 0:26:56 -	LMT	1884

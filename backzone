@@ -348,7 +348,7 @@ Zone    Europe/Isle_of_Man -0:17:55 -    LMT 1883 March 30 0:00s
 # Data from Joseph S. Myers
 # http://mm.icann.org/pipermail/tz/2013-September/019883.html
 # References to be added
-# LMT Location - 49.187N -2.107E - St. Hellier
+# LMT Location - 49.187N -2.107E - St. Helier
 Zone	Europe/Jersey	-0:08:25 -	LMT	1898 Jun 11 16:00u
 			 0:00	GB-Eire	%s	1940 Jul  2
 			 1:00	C-Eur	CE%sT	1945 May  8

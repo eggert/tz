@@ -254,7 +254,7 @@ Errors in the tz database arise from many sources:
    the current single entry for France would need to split into dozens
    of entries, perhaps hundreds.
 
- * Most of the pre-1970 data comes from unreliable sources, often
+ * Most of the pre-1970 data come from unreliable sources, often
    astrology books that lack citations and whose compilers evidently
    invented entries when the true facts were unknown, without
    reporting which entries were known and which were invented.
@@ -283,7 +283,7 @@ Errors in the tz database arise from many sources:
    Caledonian railways.
 
  * The tz database does not record the earliest time for which a
-   zone's data is thereafter valid for every location in the region.
+   zone's data are thereafter valid for every location in the region.
    For example, Europe/London is valid for all locations in its
    region after GMT was made the standard time, but the date of
    standardization (1880-08-02) is not in the tz database, other than

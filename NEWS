@@ -427,7 +427,7 @@ Release 2014a - 2014-03-07 23:30:29 -0800
 
       Microsoft has some support for tz database names.
 
-      CLDR data is available in both XML and JSON form.
+      CLDR data are available in both XML and JSON form.
 
       Mention Maggiolo's map of solar vs standard time.
       (Thanks to Arthur David Olson.)
@@ -671,8 +671,8 @@ Release 2013e - 2013-09-19 23:50:04 -0700
     some errors before 1947.
 
     Some zones have been turned into links, when they differ from
-    existing zones only in older data that was likely invented or that
-    differs only in LMT or transition from LMT.  These changes affect
+    existing zones only in older data that were likely invented or that
+    differ only in LMT or transitions from LMT.  These changes affect
     only time stamps before 1943.  The affected zones are:
     Africa/Juba, America/Anguilla, America/Aruba, America/Dominica,
     America/Grenada, America/Guadeloupe, America/Marigot,
@@ -2543,7 +2543,7 @@ Release 94h - 1994-12-10 12:51:14 -0500
 	data files.
 
   Think of this as "TZ Classic" - the software has been set up not to break if
-  universal time shows up in its input, and the data has been left as is so as
+  universal time shows up in its input, and the data have been left as is so as
   not to break existing implementations.
 
 
@@ -2623,7 +2623,7 @@ Release 93f - 1993-10-15 12:27:46 -0400
 
 Release 93e - 1993-09-05 21:21:44 -0400
 
-  There's updated data for Israel, England, and Kwajalein; there's
+  There are updated data for Israel, England, and Kwajalein; there's
   also an update to "zdump" to cope with Kwajalein's 24-hour jump.
   Thanks to Paul Eggert and Peter Ilieve for the changes.
 

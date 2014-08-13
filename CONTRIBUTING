@@ -31,7 +31,8 @@ Git repository.  If you use Git the following workflow may be helpful:
       git checkout master
       git pull
 
-  * Switch to a new branch for the changes.
+  * Switch to a new branch for the changes.  Choose a different
+    branch name for each change set.
 
       git checkout -b mybranch
 
@@ -60,7 +61,8 @@ Git repository.  If you use Git the following workflow may be helpful:
 
       git send-email master
 
-  * Start anew by getting current with the master branch again.
+  * Start anew by getting current with the master branch again
+    (the second step above).
 
 Please do not create issues or pull requests on Github, as the
 proper procedure for proposing and distributing patches is via

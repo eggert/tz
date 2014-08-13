@@ -415,7 +415,8 @@ Zone	Africa/Asmara	2:35:32 -	LMT	1870
 # Shanks & Pottenger write that Ethiopia had six narrowly-spaced time
 # zones between 1870 and 1890, that they merged to 38E50 (2:35:20) in
 # 1890, and that they switched to 3:00 on 1936-05-05.  Perhaps 38E50
-# was for Adis Dera.  Quite likely the Shanks data are wrong anyway.
+# was for Adis Dera.  Quite likely the Shanks data entries are wrong
+# anyway.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Africa/Addis_Ababa	2:34:48 -	LMT	1870
 			2:35:20	-	ADMT	1936 May 5    # Adis Dera MT
@@ -536,7 +537,7 @@ Zone	Africa/Tripoli	0:52:44 -	LMT	1920
 			2:00	-	EET	1982
 			1:00	Libya	CE%sT	1990 May  4
 # The 1996 and 1997 entries are from Shanks & Pottenger;
-# the IATA SSIM data contain some obvious errors.
+# the IATA SSIM data entries contain some obvious errors.
 			2:00	-	EET	1996 Sep 30
 			1:00	Libya	CE%sT	1997 Oct  4
 			2:00	-	EET	2012 Nov 10  2:00

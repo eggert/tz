@@ -1760,7 +1760,7 @@ Rule	NBorneo	1935	1941	-	Sep	14	0:00	0:20	TS # one-Third Summer
 Rule	NBorneo	1935	1941	-	Dec	14	0:00	0	-
 #
 # peninsular Malaysia
-# The data here are taken from Mok Ly Yng (2003-10-30)
+# taken from Mok Ly Yng (2003-10-30)
 # http://www.math.nus.edu.sg/aslaksen/teaching/timezone.html
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Asia/Kuala_Lumpur	6:46:46 -	LMT	1901 Jan  1
@@ -1773,9 +1773,9 @@ Zone Asia/Kuala_Lumpur	6:46:46 -	LMT	1901 Jan  1
 			7:30	-	MALT	1982 Jan  1
 			8:00	-	MYT	# Malaysia Time
 # Sabah & Sarawak
-# From Paul Eggert (2006-03-22):
-# The data here are mostly from Shanks & Pottenger, but the 1942, 1945 and 1982
-# transition dates are from Mok Ly Yng.
+# From Paul Eggert (2014-08-12):
+# The data entries here are mostly from Shanks & Pottenger, but the 1942, 1945
+# and 1982 transition dates are from Mok Ly Yng.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Asia/Kuching	7:21:20	-	LMT	1926 Mar
 			7:30	-	BORT	1933	# Borneo Time
@@ -2403,7 +2403,7 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 # be immediately followed by 1845-01-01; see R.H. van Gent's
 # History of the International Date Line
 # http://www.staff.science.uu.nl/~gent0113/idl/idl_philippines.htm
-# The rest of the data are from Shanks & Pottenger.
+# The rest of the data entries are from Shanks & Pottenger.
 
 # From Paul Eggert (2006-04-25):
 # Tomorrow's Manila Standard reports that the Philippines Department of
@@ -2465,7 +2465,7 @@ Zone	Asia/Riyadh	3:06:52 -	LMT	1947 Mar 14
 			3:00	-	AST
 
 # Singapore
-# The data here are taken from Mok Ly Yng (2003-10-30)
+# taken from Mok Ly Yng (2003-10-30)
 # http://www.math.nus.edu.sg/aslaksen/teaching/timezone.html
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1

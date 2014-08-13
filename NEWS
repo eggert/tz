@@ -29,7 +29,7 @@ Unreleased, experimental changes
     Some more zones have been turned into links, when they differed
     from existing zones only for older time stamps.  As usual,
     these changes affect UTC offsets in pre-1970 time stamps only.
-    Their old data have been moved to the 'backzone' file.
+    Their old contents have been moved to the 'backzone' file.
     The affected zones are: Africa/Bangui, Africa/Brazzaville,
     Africa/Douala, Africa/Kinshasa, Africa/Libreville, Africa/Luanda,
     Africa/Malabo, Africa/Niamey, and Africa/Porto-Novo.
@@ -127,7 +127,7 @@ Release 2014f - 2014-08-05 17:42:36 -0700
     Treindl sent helpful translations of two papers by Guo Qingsheng.)
 
     Some zones have been turned into links, when they differed from existing
-    zones only for older UTC offsets where the data were likely invented.
+    zones only for older UTC offsets where data entries were likely invented.
     These changes affect UTC offsets in pre-1970 time stamps only.  This is
     similar to the change in release 2013e, except this time for western
     Africa.  The affected zones are: Africa/Bamako, Africa/Banjul,
@@ -427,7 +427,7 @@ Release 2014a - 2014-03-07 23:30:29 -0800
 
       Microsoft has some support for tz database names.
 
-      CLDR data are available in both XML and JSON form.
+      CLDR data formats include both XML and JSON.
 
       Mention Maggiolo's map of solar vs standard time.
       (Thanks to Arthur David Olson.)
@@ -670,8 +670,8 @@ Release 2013e - 2013-09-19 23:50:04 -0700
     Pacific/Johnston is now a link to Pacific/Honolulu.  This corrects
     some errors before 1947.
 
-    Some zones have been turned into links, when they differ from
-    existing zones only in older data that were likely invented or that
+    Some zones have been turned into links, when they differ from existing
+    zones only in older data entries that were likely invented or that
     differ only in LMT or transitions from LMT.  These changes affect
     only time stamps before 1943.  The affected zones are:
     Africa/Juba, America/Anguilla, America/Aruba, America/Dominica,
@@ -748,7 +748,7 @@ Release 2013e - 2013-09-19 23:50:04 -0700
 
     Remove from zone.tab the names America/Montreal, America/Shiprock,
     and Antarctica/South_Pole, as they are equivalent to existing
-    same-country-code zones for post-1970 time stamps.  The data for
+    same-country-code zones for post-1970 time stamps.  The data entries for
     these names are unchanged, so the names continue to work as before.
 
   Changes affecting code internals
@@ -2543,8 +2543,8 @@ Release 94h - 1994-12-10 12:51:14 -0500
 	data files.
 
   Think of this as "TZ Classic" - the software has been set up not to break if
-  universal time shows up in its input, and the data have been left as is so as
-  not to break existing implementations.
+  universal time shows up in its input, and data entries have been
+  left as is so as not to break existing implementations.
 
 
 Release data94f - 1994-08-20 12:56:09 -0400
@@ -2623,7 +2623,7 @@ Release 93f - 1993-10-15 12:27:46 -0400
 
 Release 93e - 1993-09-05 21:21:44 -0400
 
-  There are updated data for Israel, England, and Kwajalein; there's
+  This has updated data for Israel, England, and Kwajalein.  There's
   also an update to "zdump" to cope with Kwajalein's 24-hour jump.
   Thanks to Paul Eggert and Peter Ilieve for the changes.
 

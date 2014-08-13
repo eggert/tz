@@ -21,7 +21,7 @@
 # most of the era.  Because the zones are out of normal scope for the
 # database, less effort is put into maintaining this file.  Many of
 # the zones were formerly in other source files, but were removed or
-# replaced by links as their data were questionable and/or they
+# replaced by links as their data entries were questionable and/or they
 # differed from other zones only in pre-1970 time stamps.
 
 # Unless otherwise specified, the source for the data is the following,
@@ -121,8 +121,8 @@ Zone	Africa/Lome	0:04:52 -	LMT	1893
 #
 # Although Shanks says that Malabo switched from UTC to UTC+1 on 1963-12-15,
 # a Google Books search says that London Calling, Issues 432-465 (1948), p 19,
-# says that Spanish Guinea was at GMT+1 back then.  The Shanks data are most
-# likely wrong, but we have nothing better; use them here for now.
+# says that Spanish Guinea was at GMT+1 back then.  The Shanks data entries
+# are most likely wrong, but we have nothing better; use them here for now.
 #
 Zone	Africa/Malabo	0:35:08 -	LMT	1912
 			0:00	-	GMT	1963 Dec 15

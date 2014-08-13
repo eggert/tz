@@ -1809,7 +1809,7 @@ Zone	Europe/Monaco	0:29:32 -	LMT	1891 Mar 15
 # was not until 1866 when they were all required by law to observe
 # Amsterdam mean time.
 
-# The data before 1945 are taken from
+# The data entries before 1945 are taken from
 # http://www.phys.uu.nl/~vgent/wettijd/wettijd.htm
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S

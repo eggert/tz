@@ -223,7 +223,7 @@ before computer timekeeping became prevalent.
 
 Clock transitions before 1970 are recorded for each such location,
 because most POSIX-compatible systems support negative time stamps and
-could misbehave if data were omitted for pre-1970 transitions.
+could misbehave if data entries were omitted for pre-1970 transitions.
 However, the database is not designed for and does not suffice for
 applications requiring accurate handling of all past times everywhere,
 as it would take far too much effort and guesswork to record all
@@ -246,7 +246,7 @@ Errors in the tz database arise from many sources:
    daylight saving rules, software can mess up after the rule change
    if it blithely relies on conversions made before the change.
 
- * The pre-1970 data in this database cover only a tiny sliver of how
+ * The pre-1970 entries in this database cover only a tiny sliver of how
    clocks actually behaved; the vast majority of the necessary
    information was lost or never recorded.  Thousands more zones would
    be needed if the tz database's scope were extended to cover even
@@ -254,12 +254,12 @@ Errors in the tz database arise from many sources:
    the current single entry for France would need to split into dozens
    of entries, perhaps hundreds.
 
- * Most of the pre-1970 data come from unreliable sources, often
+ * Most of the pre-1970 data entries come from unreliable sources, often
    astrology books that lack citations and whose compilers evidently
    invented entries when the true facts were unknown, without
    reporting which entries were known and which were invented.
    These books often contradict each other or give implausible entries,
-   and on the rare occasions when their old data are checked they are
+   and on the rare occasions when they are checked they are
    typically found to be incorrect.
 
  * For the UK the tz database relies on years of first-class work done by
@@ -282,8 +282,8 @@ Errors in the tz database arise from many sources:
    transition to GMT is known to be valid only for the L&NW and the
    Caledonian railways.
 
- * The tz database does not record the earliest time for which a
-   zone's data are thereafter valid for every location in the region.
+ * The tz database does not record the earliest time for which a zone's
+   data entries are thereafter valid for every location in the region.
    For example, Europe/London is valid for all locations in its
    region after GMT was made the standard time, but the date of
    standardization (1880-08-02) is not in the tz database, other than
@@ -324,8 +324,8 @@ Errors in the tz database arise from many sources:
    the Julian calendar, and had 12 varying-length daytime hours with a
    non-hour-based system at night.
 
- * Early clocks were less reliable, and the data do not represent this
-   unreliability.
+ * Early clocks were less reliable, and data entries do not represent
+   this unreliability.
 
  * As for leap seconds, civil time was not based on atomic time before
    1972, and we don't know the history of earth's rotation accurately
@@ -345,7 +345,7 @@ Errors in the tz database arise from many sources:
    a leap second, or are slightly slowed while near a leap second.
 
  * The tz database does not represent how uncertain its information is.
-   Ideally it would contain information about when the data are
+   Ideally it would contain information about when data entries are
    incomplete or dicey.  Partial temporal knowledge is a field of
    active research, though, and it's not clear how to apply it here.
 

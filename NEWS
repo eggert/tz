@@ -11,7 +11,7 @@ Unreleased, experimental changes
     Asia/Yekaterinburg the correction is a few minutes.  (Thanks to
     Vladimir Karpinsky.)
 
-    The Portuguese decree of 1911-05-25 took effect on 1912-01-01.
+    The Portuguese decree of 1911-05-26 took effect on 1912-01-01.
     This affects 1911 time stamps in Africa/Bissau, Africa/Luanda,
     Atlantic/Azores, and Atlantic/Madeira.  Also, Lisbon's pre-1912
     GMT offset was -0:36:45 (rounded from -0:36:44.68), not -0:36:32.

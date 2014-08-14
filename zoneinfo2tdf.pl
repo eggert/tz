@@ -40,7 +40,7 @@ while (<>) {
     # Rule  NAME  FROM  TO  TYPE  IN  ON  AT  SAVE  LETTER/S
     @fields == 10 or warn "bad rule line";
   } elsif ($type eq 'link') {
-    # Link  LINK-FROM  LINK-TO
+    # Link  TARGET  LINK-NAME
     @fields == 3 or warn "bad link line";
   } elsif ($type eq 'leap') {
     # Leap  YEAR  MONTH  DAY  HH:MM:SS  CORR  R/S

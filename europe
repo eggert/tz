@@ -458,6 +458,8 @@ Zone	Europe/London	-0:01:15 -	LMT	1847 Dec  1  0:00s
 Link	Europe/London	Europe/Jersey
 Link	Europe/London	Europe/Guernsey
 Link	Europe/London	Europe/Isle_of_Man
+
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
 			-0:25:21 -	DMT	1916 May 21  2:00
 			-0:25:21 1:00	IST	1916 Oct  1  2:00s

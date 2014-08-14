@@ -398,7 +398,7 @@ A link line has the form
 .nf
 .ti +.5i
 .ta \w'Link\0\0'u +\w'Europe/Istanbul\0\0'u
-Link	LINK-FROM	LINK-TO
+Link	TARGET	LINK-NAME
 .sp
 For example:
 .sp
@@ -407,12 +407,12 @@ Link	Europe/Istanbul	Asia/Istanbul
 .sp
 .fi
 The
-.B LINK-FROM
+.B TARGET
 field should appear as the
 .B NAME
 field in some zone line.
 The
-.B LINK-TO
+.B LINK-NAME
 field is used as an alternate name for that zone;
 it has the same syntax as a zone line's
 .B NAME
@@ -508,7 +508,6 @@ Link	Europe/Zurich	Switzerland
 .in
 .fi
 In this example, the zone is named Europe/Zurich but it has an alias
-
 as Switzerland.  This example says that Zurich was 34 minutes and 8
 seconds west of UT until 1853-07-16 at 00:00, when the legal offset
 was changed to 7\(de\|26\(fm\|22.50\(sd; although this works out to

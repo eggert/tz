@@ -589,6 +589,7 @@ Zone America/Adak	 12:13:21 -	LMT	1867 Oct 18
 # Note that 1933-05-21 was a Sunday.
 # We're left to guess the time of day when Act 163 was approved; guess noon.
 
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Pacific/Honolulu	-10:31:26 -	LMT	1896 Jan 13 12:00 #Schmitt&Cox
 			-10:30	-	HST	1933 Apr 30  2:00 #Laws 1933
 			-10:30	1:00	HDT	1933 May 21 12:00 #Laws 1933+12
@@ -596,7 +597,6 @@ Zone Pacific/Honolulu	-10:31:26 -	LMT	1896 Jan 13 12:00 #Schmitt&Cox
 			-10:30	1:00	HDT	1945 Sep 30  2:00 #Schmitt&Cox+2
 			-10:30	-	HST	1947 Jun  8  2:00 #Schmitt&Cox+2
 			-10:00	-	HST
-
 Link Pacific/Honolulu Pacific/Johnston
 
 # Now we turn to US areas that have diverged from the consensus since 1970.
@@ -622,6 +622,7 @@ Link Pacific/Honolulu Pacific/Johnston
 # Shanks says the 1944 experiment came to an end on 1944-03-17.
 # Go with the Arizona State Library instead.
 
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Phoenix	-7:28:18 -	LMT	1883 Nov 18 11:31:42
 			-7:00	US	M%sT	1944 Jan  1  0:01
 			-7:00	-	MST	1944 Apr  1  0:01

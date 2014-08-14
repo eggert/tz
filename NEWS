@@ -55,6 +55,10 @@ Unreleased, experimental changes
     A new file CONTRIBUTING is distributed.  (Thanks to Tim Parenti for
     suggesting a CONTRIBUTING file, and to Walter Harms for debugging it.)
 
+    The fields in Link lines have been renamed to be more descriptive
+    and more like the parameters of 'ln'.  LINK-FROM has become TARGET,
+    and LINK-TO has become LINK-NAME.
+
     tz-link.htm mentions Windows Runtime etc. (thanks to Matt Johnson)
     and HP-UX's tztab.
 

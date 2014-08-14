@@ -2405,18 +2405,19 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 # http://www.staff.science.uu.nl/~gent0113/idl/idl_philippines.htm
 # The rest of the data entries are from Shanks & Pottenger.
 
-# From Paul Eggert (2006-04-25):
-# Tomorrow's Manila Standard reports that the Philippines Department of
-# Trade and Industry is considering adopting DST this June when the
-# rainy season begins.  See
-# http://www.manilastandardtoday.com/?page=politics02_april26_2006
-# For now, we'll ignore this, since it's not definite and we lack details.
-#
 # From Jesper Nørgaard Welen (2006-04-26):
 # ... claims that Philippines had DST last time in 1990:
 # http://story.philippinetimes.com/p.x/ct/9/id/145be20cc6b121c0/cid/3e5bbccc730d258c/
 # [a story dated 2006-04-25 by Cris Larano of Dow Jones Newswires,
 # but no details]
+
+# From Paul Eggert (2014-08-14):
+# The following source says DST may be instituted November-January and again
+# March-June, but this is not definite.  It also says DST was last proclaimed
+# during the Ramos administration (1992-1998); but again, no details.
+# Carcamo D. PNoy urged to declare use of daylight saving time.
+# Philippine Star 2014-08-05
+# http://www.philstar.com/headlines/2014/08/05/1354152/pnoy-urged-declare-use-daylight-saving-time
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Phil	1936	only	-	Nov	1	0:00	1:00	S

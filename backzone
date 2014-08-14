@@ -37,6 +37,9 @@
 # Zones are sorted by zone name.  Each zone is preceded by the
 # name of the country that the zone is in, along with any other
 # commentary and rules associated with the entry.
+#
+# As explained in the zic man page, the zone columns are:
+# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 
 # Mali (southern)
 Zone	Africa/Bamako	-0:32:00 -	LMT	1912

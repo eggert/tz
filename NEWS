@@ -39,6 +39,9 @@ Unreleased, experimental changes
     tzselect -c now uses a hybrid distance measure that works better
     in Africa.  (Thanks to Alan Barrett for noting the problem.)
 
+    The C source code now ports to NetBSD when GCC_DEBUG_FLAGS is used,
+    or when time_tz is defined.
+
     When HAVE_UTMPX_H is set the 'date' command now builds on systems
     whose <utmpx.h> file does not define WTMPX_FILE, and when setting
     the date it updates the wtmpx file if _PATH_WTMPX is defined.

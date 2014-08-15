@@ -237,16 +237,6 @@ typedef unsigned long uintmax_t;
 */
 
 /*
-** Some time.h implementations don't declare asctime_r.
-** Others might define it as a macro.
-** Fix the former without affecting the latter.
-*/
-
-#ifndef asctime_r
-extern char *	asctime_r(struct tm const *, char *);
-#endif
-
-/*
 ** Compile with -Dtime_tz=T to build the tz package with a private
 ** time_t type equivalent to T rather than the system-supplied time_t.
 ** This debugging feature can test unusual design decisions
@@ -272,10 +262,18 @@ static time_t sys_time(time_t *x) { return time(x); }
 # define localtime_r tz_localtime_r
 # undef  mktime
 # define mktime tz_mktime
+# undef  offtime
+# define offtime tz_offtime
+# undef  posix2time
+# define posix2time tz_posix2time
 # undef  time
 # define time tz_time
+# undef  time2posix
+# define time2posix tz_time2posix
 # undef  time_t
 # define time_t tz_time_t
+# undef  timeoff
+# define timeoff tz_timeoff
 
 typedef time_tz time_t;
 
@@ -296,6 +294,39 @@ time(time_t *p)
 		*p = r;
 	return r;
 }
+#endif
+
+/*
+** Some time.h implementations don't declare asctime_r.
+** Others might define it as a macro.
+** Fix the former without affecting the latter.
+*/
+
+#ifndef asctime_r
+extern char *	asctime_r(struct tm const *, char *);
+#endif
+
+/*
+** The STD_INSPIRED functions are similar, but most also need
+** declarations if time_tz is defined.
+*/
+
+#ifdef STD_INSPIRED
+# if !defined tzsetwall
+void tzsetwall(void);
+# endif
+# if !defined offtime || defined time_tz
+struct tm *offtime(time_t const *, long);
+# endif
+# if !defined timeoff || defined time_tz
+time_t timeoff(struct tm *, long);
+# endif
+# if !defined time2posix || defined time_tz
+time_t time2posix(time_t);
+# endif
+# if !defined posix2time || defined time_tz
+time_t posix2time(time_t);
+# endif
 #endif
 
 /*

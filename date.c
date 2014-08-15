@@ -31,6 +31,9 @@
 #ifndef NTIME_MSG
 #define NTIME_MSG "new time"
 #endif
+#if !defined WTMPX_FILE && defined _PATH_WTMPX
+# define WTMPX_FILE _PATH_WTMPX
+#endif
 
 /*
 ** The two things date knows about time are. . .
@@ -378,7 +381,7 @@ reset(const time_t newt, const int nflag)
 	sx.after.ut_type = NEW_TIME;
 	sx.after.ut_tv.tv_sec = newt;
 	(void) strcpy(sx.after.ut_line, NTIME_MSG);
-#if !SUPPRESS_WTMPX_FILE_UPDATE
+#if defined WTMPX_FILE && !SUPPRESS_WTMPX_FILE_UPDATE
 	/* In Solaris 2.5 (and presumably other systems),
 	   'date' does not update /var/adm/wtmpx.
 	   This must be a bug.  If you'd like to reproduce the bug,
@@ -390,7 +393,7 @@ reset(const time_t newt, const int nflag)
 		oops(_("log file write"));
 	if (close(fid) != 0)
 		oops(_("log file close"));
-#endif /* !SUPPRESS_WTMPX_FILE_UPDATE */
+# endif
 	pututxline(&sx.before);
 	pututxline(&sx.after);
 #endif /* HAVE_UTMPX_H */

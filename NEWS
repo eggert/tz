@@ -39,6 +39,11 @@ Unreleased, experimental changes
     tzselect -c now uses a hybrid distance measure that works better
     in Africa.  (Thanks to Alan Barrett for noting the problem.)
 
+    When HAVE_UTMPX_H is set the 'date' command now builds on systems
+    whose <utmpx.h> file does not define WTMPX_FILE, and when setting
+    the date it updates the wtmpx file if _PATH_WTMPX is defined.
+    This affects GNU/Linux and similar systems.
+
   Changes affecting distribution tarballs
 
     The files checktab.awk and zoneinfo2tdf.pl are now distributed in

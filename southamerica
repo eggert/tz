@@ -431,7 +431,7 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	S
 #
 # Buenos Aires (BA), Capital Federal (CF),
 Zone America/Argentina/Buenos_Aires -3:53:48 - LMT	1894 Oct 31
-			-4:16:48 -	CMT	1920 May # Córdoba Mean Time
+			-4:16:48 -	CMT	1920 May    # Córdoba Mean Time
 			-4:00	-	ART	1930 Dec
 			-4:00	Arg	AR%sT	1969 Oct  5
 			-3:00	Arg	AR%sT	1999 Oct  3
@@ -582,7 +582,7 @@ Zone America/Argentina/San_Luis -4:25:24 - LMT	1894 Oct 31
 #
 # Santa Cruz (SC)
 Zone America/Argentina/Rio_Gallegos -4:36:52 - LMT	1894 Oct 31
-			-4:16:48 -	CMT	1920 May # Córdoba Mean Time
+			-4:16:48 -	CMT	1920 May    # Córdoba Mean Time
 			-4:00	-	ART	1930 Dec
 			-4:00	Arg	AR%sT	1969 Oct  5
 			-3:00	Arg	AR%sT	1999 Oct  3
@@ -594,7 +594,7 @@ Zone America/Argentina/Rio_Gallegos -4:36:52 - LMT	1894 Oct 31
 #
 # Tierra del Fuego, Antártida e Islas del Atlántico Sur (TF)
 Zone America/Argentina/Ushuaia -4:33:12 - LMT	1894 Oct 31
-			-4:16:48 -	CMT	1920 May # Córdoba Mean Time
+			-4:16:48 -	CMT	1920 May    # Córdoba Mean Time
 			-4:00	-	ART	1930 Dec
 			-4:00	Arg	AR%sT	1969 Oct  5
 			-3:00	Arg	AR%sT	1999 Oct  3
@@ -1253,7 +1253,7 @@ Rule	Chile	2012	max	-	Sep	Sun>=2	4:00u	1:00	S
 # (1996-09) says 1998-03-08.  Ignore these.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Santiago	-4:42:46 -	LMT	1890
-			-4:42:46 -	SMT	1910	    # Santiago Mean Time
+			-4:42:46 -	SMT	1910        # Santiago Mean Time
 			-5:00	-	CLT	1916 Jul  1 # Chile Time
 			-4:42:46 -	SMT	1918 Sep  1 # Santiago Mean Time
 			-4:00	-	CLT	1919 Jul  1 # Chile Time
@@ -1262,7 +1262,7 @@ Zone America/Santiago	-4:42:46 -	LMT	1890
 			-4:00	Chile	CL%sT
 Zone Pacific/Easter	-7:17:44 -	LMT	1890
 			-7:17:28 -	EMT	1932 Sep    # Easter Mean Time
-			-7:00	Chile	EAS%sT	1982 Mar 13 21:00 # Easter I Time
+			-7:00	Chile	EAS%sT	1982 Mar 13 21:00 # Easter Time
 			-6:00	Chile	EAS%sT
 #
 # Salas y Gómez Island is uninhabited.
@@ -1303,7 +1303,7 @@ Zone	America/Bogota	-4:56:16 -	LMT	1884 Mar 13
 # though, as far as we know.
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Curacao	-4:35:47 -	LMT	1912 Feb 12	# Willemstad
+Zone	America/Curacao	-4:35:47 -	LMT	1912 Feb 12 # Willemstad
 			-4:30	-	ANT	1965 # Netherlands Antilles Time
 			-4:00	-	AST
 
@@ -1328,10 +1328,10 @@ Link	America/Curacao	America/Kralendijk	# Caribbean Netherlands
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Guayaquil	-5:19:20 -	LMT	1890
 			-5:14:00 -	QMT	1931 # Quito Mean Time
-			-5:00	-	ECT	     # Ecuador Time
+			-5:00	-	ECT	# Ecuador Time
 Zone Pacific/Galapagos	-5:58:24 -	LMT	1931 # Puerto Baquerizo Moreno
 			-5:00	-	ECT	1986
-			-6:00	-	GALT	     # Galápagos Time
+			-6:00	-	GALT	# Galápagos Time
 
 # Falklands
 
@@ -1430,8 +1430,8 @@ Rule	Falk	2001	2010	-	Apr	Sun>=15	2:00	0	-
 Rule	Falk	2001	2010	-	Sep	Sun>=1	2:00	1:00	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Atlantic/Stanley	-3:51:24 -	LMT	1890
-			-3:51:24 -	SMT	1912 Mar 12  # Stanley Mean Time
-			-4:00	Falk	FK%sT	1983 May     # Falkland Is Time
+			-3:51:24 -	SMT	1912 Mar 12 # Stanley Mean Time
+			-4:00	Falk	FK%sT	1983 May    # Falkland Is Time
 			-3:00	Falk	FK%sT	1985 Sep 15
 			-4:00	Falk	FK%sT	2010 Sep  5  2:00
 			-3:00	-	FKST
@@ -1444,7 +1444,7 @@ Zone America/Cayenne	-3:29:20 -	LMT	1911 Jul
 
 # Guyana
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Guyana	-3:52:40 -	LMT	1915 Mar	# Georgetown
+Zone	America/Guyana	-3:52:40 -	LMT	1915 Mar    # Georgetown
 			-3:45	-	GBGT	1966 May 26 # Br Guiana Time
 			-3:45	-	GYT	1975 Jul 31 # Guyana Time
 			-3:00	-	GYT	1991
@@ -1541,7 +1541,7 @@ Rule	Para	2013	max	-	Mar	Sun>=22	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Asuncion	-3:50:40 -	LMT	1890
 			-3:50:40 -	AMT	1931 Oct 10 # Asunción Mean Time
-			-4:00	-	PYT	1972 Oct # Paraguay Time
+			-4:00	-	PYT	1972 Oct    # Paraguay Time
 			-3:00	-	PYT	1974 Apr
 			-4:00	Para	PY%sT
 
@@ -1574,7 +1574,7 @@ Zone	America/Lima	-5:08:12 -	LMT	1890
 
 # South Georgia
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Atlantic/South_Georgia -2:26:08 -	LMT	1890		# Grytviken
+Zone Atlantic/South_Georgia -2:26:08 -	LMT	1890 # Grytviken
 			-2:00	-	GST	# South Georgia Time
 
 # South Sandwich Is
@@ -1584,9 +1584,9 @@ Zone Atlantic/South_Georgia -2:26:08 -	LMT	1890		# Grytviken
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Paramaribo	-3:40:40 -	LMT	1911
 			-3:40:52 -	PMT	1935     # Paramaribo Mean Time
-			-3:40:36 -	PMT	1945 Oct # The capital moved?
+			-3:40:36 -	PMT	1945 Oct    # The capital moved?
 			-3:30	-	NEGT	1975 Nov 20 # Dutch Guiana Time
-			-3:30	-	SRT	1984 Oct # Suriname Time
+			-3:30	-	SRT	1984 Oct    # Suriname Time
 			-3:00	-	SRT
 
 # Trinidad and Tobago
@@ -1680,8 +1680,8 @@ Rule	Uruguay	2006	max	-	Oct	Sun>=1	 2:00	1:00	S
 Rule	Uruguay	2007	max	-	Mar	Sun>=8	 2:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Montevideo	-3:44:44 -	LMT	1898 Jun 28
-			-3:44:44 -	MMT	1920 May  1	# Montevideo MT
-			-3:30	Uruguay	UY%sT	1942 Dec 14	# Uruguay Time
+			-3:44:44 -	MMT	1920 May  1 # Montevideo MT
+			-3:30	Uruguay	UY%sT	1942 Dec 14 # Uruguay Time
 			-3:00	Uruguay	UY%sT
 
 # Venezuela
@@ -1697,6 +1697,6 @@ Zone America/Montevideo	-3:44:44 -	LMT	1898 Jun 28
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Caracas	-4:27:44 -	LMT	1890
 			-4:27:40 -	CMT	1912 Feb 12 # Caracas Mean Time?
-			-4:30	-	VET	1965	     # Venezuela Time
+			-4:30	-	VET	1965        # Venezuela Time
 			-4:00	-	VET	2007 Dec  9  3:00
 			-4:30	-	VET

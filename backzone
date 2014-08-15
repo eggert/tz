@@ -53,7 +53,7 @@ Zone	Africa/Bangui	1:14:20	-	LMT	1912
 
 # Gambia
 Zone	Africa/Banjul	-1:06:36 -	LMT	1912
-			-1:06:36 -	BMT	1935	# Banjul Mean Time
+			-1:06:36 -	BMT	1935 # Banjul Mean Time
 			-1:00	-	WAT	1964
 			 0:00	-	GMT
 
@@ -156,7 +156,7 @@ Zone Africa/Porto-Novo	0:10:28	-	LMT	1912 Jan  1
 
 # São Tomé and Príncipe
 Zone	Africa/Sao_Tome	 0:26:56 -	LMT	1884
-			-0:36:32 -	LMT	1912	# Lisbon Mean Time
+			-0:36:32 -	LMT	1912 # Lisbon Mean Time
 			 0:00	-	GMT
 
 # Mali (northern)
@@ -182,7 +182,7 @@ Zone America/Argentina/ComodRivadavia -4:30:00 - LMT	1894 Oct 31
 			-3:00	-	ART
 
 # Aruba
-Zone	America/Aruba	-4:40:24 -	LMT	1912 Feb 12	# Oranjestad
+Zone	America/Aruba	-4:40:24 -	LMT	1912 Feb 12 # Oranjestad
 			-4:30	-	ANT	1965 # Netherlands Antilles Time
 			-4:00	-	AST
 
@@ -206,11 +206,11 @@ Zone America/Ensenada	-7:46:28 -	LMT	1922 Jan  1  0:13:32
 			-8:00	Mexico	P%sT
 
 # Grenada
-Zone	America/Grenada	-4:07:00 -	LMT	1911 Jul	# St George's
+Zone	America/Grenada	-4:07:00 -	LMT	1911 Jul # St George's
 			-4:00	-	AST
 
 # Guadeloupe
-Zone America/Guadeloupe	-4:06:08 -	LMT	1911 Jun  8	# Pointe a Pitre
+Zone America/Guadeloupe	-4:06:08 -	LMT	1911 Jun  8 # Pointe a Pitre
 			-4:00	 -	AST
 
 # Montserrat
@@ -235,25 +235,25 @@ Zone America/Rosario	-4:02:40 -	LMT	1894 Nov
 			-3:00	-	ART
 
 # St Kitts-Nevis
-Zone America/St_Kitts	-4:10:52 -	LMT	1912 Mar  2	# Basseterre
+Zone America/St_Kitts	-4:10:52 -	LMT	1912 Mar  2 # Basseterre
 			-4:00	-	AST
 
 # St Lucia
-Zone America/St_Lucia	-4:04:00 -	LMT	1890		# Castries
-			-4:04:00 -	CMT	1912	    # Castries Mean Time
+Zone America/St_Lucia	-4:04:00 -	LMT	1890 # Castries
+			-4:04:00 -	CMT	1912 # Castries Mean Time
 			-4:00	-	AST
 
 # Virgin Is
-Zone America/St_Thomas	-4:19:44 -	LMT	1911 Jul    # Charlotte Amalie
+Zone America/St_Thomas	-4:19:44 -	LMT	1911 Jul # Charlotte Amalie
 			-4:00	-	AST
 
 # St Vincent and the Grenadines
-Zone America/St_Vincent	-4:04:56 -	LMT	1890		# Kingstown
-			-4:04:56 -	KMT	1912	   # Kingstown Mean Time
+Zone America/St_Vincent	-4:04:56 -	LMT	1890 # Kingstown
+			-4:04:56 -	KMT	1912 # Kingstown Mean Time
 			-4:00	-	AST
 
 # British Virgin Is
-Zone America/Tortola	-4:18:28 -	LMT	1911 Jul    # Road Town
+Zone America/Tortola	-4:18:28 -	LMT	1911 Jul # Road Town
 			-4:00	-	AST
 
 # McMurdo, Ross Island, since 1955-12
@@ -264,7 +264,7 @@ Link Antarctica/McMurdo Antarctica/South_Pole
 # China
 # Changbai Time ("Long-white Time", Long-white = Heilongjiang area)
 # Heilongjiang (except Mohe county), Jilin
-Zone	Asia/Harbin	8:26:44	-	LMT	1928 # or Haerbin
+Zone	Asia/Harbin	8:26:44	-	LMT	1928     # or Haerbin
 			8:30	-	CHAT	1932 Mar # Changbai Time
 			8:00	-	CST	1940
 			9:00	-	CHAT	1966 May
@@ -277,14 +277,14 @@ Zone	Asia/Harbin	8:26:44	-	LMT	1928 # or Haerbin
 # most of Gansu; west Inner Mongolia; west Qinghai; and the Guangdong
 # counties Deqing, Enping, Kaiping, Luoding, Taishan, Xinxing,
 # Yangchun, Yangjiang, Yu'nan, and Yunfu.
-Zone	Asia/Chongqing	7:06:20	-	LMT	1928 # or Chungking
+Zone	Asia/Chongqing	7:06:20	-	LMT	1928     # or Chungking
 			7:00	-	LONT	1980 May # Long-shu Time
 			8:00	PRC	C%sT
 Link Asia/Chongqing Asia/Chungking
 
 # far west China
-Zone	Asia/Kashgar	5:03:56	-	LMT	1928 # or Kashi or Kaxgar
-			5:30	-	KAST	1940	 # Kashgar Time
+Zone	Asia/Kashgar	5:03:56	-	LMT	1928     # or Kashi or Kaxgar
+			5:30	-	KAST	1940     # Kashgar Time
 			5:00	-	KAST	1980 May
 			8:00	PRC	C%sT
 
@@ -298,8 +298,8 @@ Zone	Asia/Tel_Aviv	2:19:04 -	LMT	1880
 Zone Atlantic/Jan_Mayen	-1:00	-	EGT
 
 # St Helena
-Zone Atlantic/St_Helena	-0:22:48 -	LMT	1890		# Jamestown
-			-0:22:48 -	JMT	1951	# Jamestown Mean Time
+Zone Atlantic/St_Helena	-0:22:48 -	LMT	1890 # Jamestown
+			-0:22:48 -	JMT	1951 # Jamestown Mean Time
 			 0:00	-	GMT
 
 # Northern Ireland

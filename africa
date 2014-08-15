@@ -95,7 +95,7 @@ Rule	Algeria	1980	only	-	Oct	31	 2:00	0	-
 # more precise 0:09:21.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Algiers	0:12:12 -	LMT	1891 Mar 15  0:01
-			0:09:21	-	PMT	1911 Mar 11    # Paris Mean Time
+			0:09:21	-	PMT	1911 Mar 11 # Paris Mean Time
 			0:00	Algeria	WE%sT	1940 Feb 25  2:00
 			1:00	Algeria	CE%sT	1946 Oct  7
 			0:00	-	WET	1956 Jan 29
@@ -139,7 +139,7 @@ Zone Africa/Bujumbura	1:57:28	-	LMT	1890
 # merely made it official?
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Atlantic/Cape_Verde -1:34:04 -	LMT	1907			# Praia
+Zone Atlantic/Cape_Verde -1:34:04 -	LMT	1907        # Praia
 			-2:00	-	CVT	1942 Sep
 			-2:00	1:00	CVST	1945 Oct 15
 			-2:00	-	CVT	1975 Nov 25  2:00
@@ -150,14 +150,14 @@ Zone Atlantic/Cape_Verde -1:34:04 -	LMT	1907			# Praia
 
 # Chad
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Africa/Ndjamena	1:00:12 -	LMT	1912 # N'Djamena
+Zone	Africa/Ndjamena	1:00:12 -	LMT	1912        # N'Djamena
 			1:00	-	WAT	1979 Oct 14
 			1:00	1:00	WAST	1980 Mar  8
 			1:00	-	WAT
 
 # Comoros
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Indian/Comoro	2:53:04 -	LMT	1911 Jul   # Moroni, Gran Comoro
+Zone	Indian/Comoro	2:53:04 -	LMT	1911 Jul # Moroni, Gran Comoro
 			3:00	-	EAT
 
 # Democratic Republic of the Congo
@@ -648,14 +648,14 @@ Rule Mauritius	1983	only	-	Mar	21	0:00	0	-
 Rule Mauritius	2008	only	-	Oct	lastSun	2:00	1:00	S
 Rule Mauritius	2009	only	-	Mar	lastSun	2:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Indian/Mauritius	3:50:00 -	LMT	1907		# Port Louis
+Zone Indian/Mauritius	3:50:00 -	LMT	1907 # Port Louis
 			4:00 Mauritius	MU%sT	# Mauritius Time
 # Agalega Is, Rodriguez
 # no information; probably like Indian/Mauritius
 
 # Mayotte
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul	# Mamoutzou
+Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul # Mamoutzou
 			3:00	-	EAT
 
 # Morocco
@@ -987,7 +987,7 @@ Rule	Namibia	1994	max	-	Sep	Sun>=1	2:00	1:00	S
 Rule	Namibia	1995	max	-	Apr	Sun>=1	2:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Windhoek	1:08:24 -	LMT	1892 Feb 8
-			1:30	-	SWAT	1903 Mar	# SW Africa Time
+			1:30	-	SWAT	1903 Mar    # SW Africa Time
 			2:00	-	SAST	1942 Sep 20  2:00
 			2:00	1:00	SAST	1943 Mar 21  2:00
 			2:00	-	SAST	1990 Mar 21 # independence
@@ -1013,7 +1013,7 @@ Link Africa/Lagos Africa/Porto-Novo  # Benin
 
 # Réunion
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Indian/Reunion	3:41:52 -	LMT	1911 Jun	# Saint-Denis
+Zone	Indian/Reunion	3:41:52 -	LMT	1911 Jun # Saint-Denis
 			4:00	-	RET	# Réunion Time
 #
 # Crozet Islands also observes Réunion time; see the 'antarctica' file.
@@ -1050,7 +1050,7 @@ Zone	Africa/Kigali	2:00:16 -	LMT	1935 Jun
 
 # Seychelles
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Indian/Mahe	3:41:48 -	LMT	1906 Jun	# Victoria
+Zone	Indian/Mahe	3:41:48 -	LMT	1906 Jun # Victoria
 			4:00	-	SCT	# Seychelles Time
 # From Paul Eggert (2001-05-30):
 # Aldabra, Farquhar, and Desroches, originally dependencies of the
@@ -1215,7 +1215,7 @@ Rule	Tunisia	2006	2008	-	Oct	lastSun	 2:00s	0	-
 # Shanks & Pottenger say the 1911 switch was on Mar 9; go with Howse's Mar 11.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Tunis	0:40:44 -	LMT	1881 May 12
-			0:09:21	-	PMT	1911 Mar 11    # Paris Mean Time
+			0:09:21	-	PMT	1911 Mar 11 # Paris Mean Time
 			1:00	Tunisia	CE%sT
 
 # Uganda

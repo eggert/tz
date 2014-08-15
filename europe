@@ -569,15 +569,15 @@ Rule	E-Eur	1981	max	-	Mar	lastSun	 0:00	1:00	S
 Rule	E-Eur	1996	max	-	Oct	lastSun	 0:00	0	-
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Russia	1917	only	-	Jul	 1	23:00	1:00	MST	# Moscow Summer Time
-Rule	Russia	1917	only	-	Dec	28	 0:00	0	MMT	# Moscow Mean Time
-Rule	Russia	1918	only	-	May	31	22:00	2:00	MDST	# Moscow Double Summer Time
+Rule	Russia	1917	only	-	Jul	 1	23:00	1:00	MST  # Moscow Summer Time
+Rule	Russia	1917	only	-	Dec	28	 0:00	0	MMT  # Moscow Mean Time
+Rule	Russia	1918	only	-	May	31	22:00	2:00	MDST # Moscow Double Summer Time
 Rule	Russia	1918	only	-	Sep	16	 1:00	1:00	MST
 Rule	Russia	1919	only	-	May	31	23:00	2:00	MDST
 Rule	Russia	1919	only	-	Jul	 1	 2:00	1:00	MSD
 Rule	Russia	1919	only	-	Aug	16	 0:00	0	MSK
 Rule	Russia	1921	only	-	Feb	14	23:00	1:00	MSD
-Rule	Russia	1921	only	-	Mar	20	23:00	2:00	MSM # Midsummer
+Rule	Russia	1921	only	-	Mar	20	23:00	2:00	MSM  # Midsummer
 Rule	Russia	1921	only	-	Sep	 1	 0:00	1:00	MSD
 Rule	Russia	1921	only	-	Oct	 1	 0:00	0	-
 # Act No.925 of the Council of Ministers of the USSR (1980-10-24):
@@ -792,7 +792,7 @@ Rule	Belgium	1946	only	-	May	19	 2:00s	1:00	S
 Rule	Belgium	1946	only	-	Oct	 7	 2:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Brussels	0:17:30 -	LMT	1880
-			0:17:30	-	BMT	1892 May  1 12:00 # Brussels MT
+			0:17:30	-	BMT	1892 May  1 12:00  # Brussels MT
 			0:00	-	WET	1914 Nov  8
 			1:00	-	CET	1916 May  1  0:00
 			1:00	C-Eur	CE%sT	1918 Nov 11 11:00u
@@ -846,7 +846,7 @@ Rule	Czech	1948	only	-	Apr	18	2:00s	1:00	S
 Rule	Czech	1949	only	-	Apr	 9	2:00s	1:00	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Prague	0:57:44 -	LMT	1850
-			0:57:44	-	PMT	1891 Oct     # Prague Mean Time
+			0:57:44	-	PMT	1891 Oct    # Prague Mean Time
 			1:00	C-Eur	CE%sT	1944 Sep 17  2:00s
 			1:00	Czech	CE%sT	1979
 			1:00	EU	CE%sT
@@ -907,7 +907,7 @@ Zone Europe/Copenhagen	 0:50:20 -	LMT	1890
 			 1:00	C-Eur	CE%sT	1945 Apr  2  2:00
 			 1:00	Denmark	CE%sT	1980
 			 1:00	EU	CE%sT
-Zone Atlantic/Faroe	-0:27:04 -	LMT	1908 Jan 11	# Tórshavn
+Zone Atlantic/Faroe	-0:27:04 -	LMT	1908 Jan 11 # Tórshavn
 			 0:00	-	WET	1981
 			 0:00	EU	WE%sT
 #
@@ -1054,7 +1054,7 @@ Zone America/Thule	-4:35:08 -	LMT	1916 Jul 28 # Pituffik air base
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Tallinn	1:39:00	-	LMT	1880
-			1:39:00	-	TMT	1918 Feb # Tallinn Mean Time
+			1:39:00	-	TMT	1918 Feb    # Tallinn Mean Time
 			1:00	C-Eur	CE%sT	1919 Jul
 			1:39:00	-	TMT	1921 May
 			2:00	-	EET	1940 Aug  6
@@ -1207,7 +1207,7 @@ Rule	France	1976	only	-	Sep	26	 1:00	0	-
 # on PMT-0:09:21 until 1978-08-09, when the time base finally switched to UTC.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Paris	0:09:21 -	LMT	1891 Mar 15  0:01
-			0:09:21	-	PMT	1911 Mar 11  0:01  # Paris MT
+			0:09:21	-	PMT	1911 Mar 11  0:01 # Paris MT
 # Shanks & Pottenger give 1940 Jun 14 0:00; go with Excoffier and Le Corre.
 			0:00	France	WE%sT	1940 Jun 14 23:00
 # Le Corre says Paris stuck with occupied-France time after the liberation;
@@ -1314,7 +1314,7 @@ Rule	Greece	1980	only	-	Apr	 1	0:00	1:00	S
 Rule	Greece	1980	only	-	Sep	28	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Athens	1:34:52 -	LMT	1895 Sep 14
-			1:34:52	-	AMT	1916 Jul 28  0:01     # Athens MT
+			1:34:52	-	AMT	1916 Jul 28  0:01 # Athens MT
 			2:00	Greece	EE%sT	1941 Apr 30
 			1:00	Greece	CE%sT	1944 Apr  4
 			2:00	Greece	EE%sT	1981
@@ -1567,8 +1567,8 @@ Rule	Latvia	1989	1996	-	Sep	lastSun	 2:00s	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Riga	1:36:34	-	LMT	1880
-			1:36:34	-	RMT	1918 Apr 15  2:00 #Riga Mean Time
-			1:36:34	1:00	LST	1918 Sep 16  3:00 #Latvian Summer
+			1:36:34	-	RMT	1918 Apr 15  2:00 # Riga MT
+			1:36:34	1:00	LST	1918 Sep 16  3:00 # Latvian ST
 			1:36:34	-	RMT	1919 Apr  1  2:00
 			1:36:34	1:00	LST	1919 May 22  3:00
 			1:36:34	-	RMT	1926 May 11
@@ -1634,7 +1634,7 @@ Link Europe/Zurich Europe/Vaduz
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Vilnius	1:41:16	-	LMT	1880
-			1:24:00	-	WMT	1917	    # Warsaw Mean Time
+			1:24:00	-	WMT	1917        # Warsaw Mean Time
 			1:35:36	-	KMT	1919 Oct 10 # Kaunas Mean Time
 			1:00	-	CET	1920 Jul 12
 			2:00	-	EET	1920 Oct  9
@@ -1766,7 +1766,7 @@ Zone	Europe/Chisinau	1:55:20 -	LMT	1880
 # more precise 0:09:21.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Monaco	0:29:32 -	LMT	1891 Mar 15
-			0:09:21	-	PMT	1911 Mar 11    # Paris Mean Time
+			0:09:21	-	PMT	1911 Mar 11 # Paris Mean Time
 			0:00	France	WE%sT	1945 Sep 16  3:00
 			1:00	France	CE%sT	1977
 			1:00	EU	CE%sT
@@ -1952,7 +1952,7 @@ Rule	Poland	1961	1964	-	May	lastSun	1:00s	1:00	S
 Rule	Poland	1962	1964	-	Sep	lastSun	1:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Warsaw	1:24:00 -	LMT	1880
-			1:24:00	-	WMT	1915 Aug  5   # Warsaw Mean Time
+			1:24:00	-	WMT	1915 Aug  5 # Warsaw Mean Time
 			1:00	C-Eur	CE%sT	1918 Sep 16  3:00
 			2:00	Poland	EE%sT	1922 Jun
 			1:00	Poland	CE%sT	1940 Jun 23  2:00
@@ -2053,22 +2053,22 @@ Rule	Port	1983	only	-	Mar	lastSun	 2:00s	1:00	S
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Lisbon	-0:36:45 -	LMT	1884
-			-0:36:45 -	LMT	1912 Jan  1  # Lisbon Mean Time
+			-0:36:45 -	LMT	1912 Jan  1 # Lisbon Mean Time
 			 0:00	Port	WE%sT	1966 Apr  3  2:00
 			 1:00	-	CET	1976 Sep 26  1:00
 			 0:00	Port	WE%sT	1983 Sep 25  1:00s
 			 0:00	W-Eur	WE%sT	1992 Sep 27  1:00s
 			 1:00	EU	CE%sT	1996 Mar 31  1:00u
 			 0:00	EU	WE%sT
-Zone Atlantic/Azores	-1:42:40 -	LMT	1884		# Ponta Delgada
-			-1:54:32 -	HMT	1912 Jan  1  # Horta Mean Time
-			-2:00	Port	AZO%sT	1966 Apr  3  2:00 # Azores Time
+Zone Atlantic/Azores	-1:42:40 -	LMT	1884        # Ponta Delgada
+			-1:54:32 -	HMT	1912 Jan  1 # Horta Mean Time
+			-2:00	Port	AZO%sT	1966 Apr  3  2:00  # Azores Time
 			-1:00	Port	AZO%sT	1983 Sep 25  1:00s
 			-1:00	W-Eur	AZO%sT	1992 Sep 27  1:00s
 			 0:00	EU	WE%sT	1993 Mar 28  1:00u
 			-1:00	EU	AZO%sT
-Zone Atlantic/Madeira	-1:07:36 -	LMT	1884		# Funchal
-			-1:07:36 -	FMT	1912 Jan  1  # Funchal Mean Time
+Zone Atlantic/Madeira	-1:07:36 -	LMT	1884        # Funchal
+			-1:07:36 -	FMT	1912 Jan  1 # Funchal Mean Time
 			-1:00	Port	MAD%sT	1966 Apr  3  2:00 # Madeira Time
 			 0:00	Port	WE%sT	1983 Sep 25  1:00s
 			 0:00	EU	WE%sT
@@ -2094,7 +2094,7 @@ Rule	Romania	1991	1993	-	Mar	lastSun	 0:00s	1:00	S
 Rule	Romania	1991	1993	-	Sep	lastSun	 0:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
-			1:44:24	-	BMT	1931 Jul 24	# Bucharest MT
+			1:44:24	-	BMT	1931 Jul 24 # Bucharest MT
 			2:00	Romania	EE%sT	1981 Mar 29  2:00s
 			2:00	C-Eur	EE%sT	1991
 			2:00	Romania	EE%sT	1994
@@ -2750,7 +2750,7 @@ Zone Asia/Srednekolymsk	10:14:52 -	LMT	1924 May  2
 			10:00	Russia	MAG%sT	1992 Jan 19  2:00s
 			11:00	Russia	MAG%sT	2011 Mar 27  2:00s
 			12:00	-	MAGT	2014 Oct 26  2:00s
-			11:00	-	SRET # Srednekolymsk Time
+			11:00	-	SRET	# Srednekolymsk Time
 
 
 # From Tim Parenti (2014-07-03):
@@ -2902,7 +2902,7 @@ Zone	Africa/Ceuta	-0:21:16 -	LMT	1901
 			 1:00	-	CET	1986
 			 1:00	EU	CE%sT
 Zone	Atlantic/Canary	-1:01:36 -	LMT	1922 Mar # Las Palmas de Gran C.
-			-1:00	-	CANT	1946 Sep 30  1:00 # Canaries Time
+			-1:00	-	CANT	1946 Sep 30  1:00 # Canaries T
 			 0:00	-	WET	1980 Apr  6  0:00s
 			 0:00	1:00	WEST	1980 Sep 28  0:00s
 			 0:00	EU	WE%sT
@@ -2957,7 +2957,7 @@ Zone	Atlantic/Canary	-1:01:36 -	LMT	1922 Mar # Las Palmas de Gran C.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Europe/Stockholm	1:12:12 -	LMT	1879 Jan  1
-			1:00:14	-	SET	1900 Jan  1	# Swedish Time
+			1:00:14	-	SET	1900 Jan  1 # Swedish Time
 			1:00	-	CET	1916 May 14 23:00
 			1:00	1:00	CEST	1916 Oct  1  1:00
 			1:00	-	CET	1980
@@ -3060,7 +3060,7 @@ Rule	Swiss	1941	1942	-	May	Mon>=1	1:00	1:00	S
 Rule	Swiss	1941	1942	-	Oct	Mon>=1	2:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Zurich	0:34:08 -	LMT	1853 Jul 16 # See above comment.
-			0:29:46	-	BMT	1894 Jun # Bern Mean Time
+			0:29:46	-	BMT	1894 Jun    # Bern Mean Time
 			1:00	Swiss	CE%sT	1981
 			1:00	EU	CE%sT
 

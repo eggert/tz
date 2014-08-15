@@ -105,13 +105,12 @@ Rule	ChileAQ	2012	max	-	Sep	Sun>=2	4:00u	1:00	S
 Zone Antarctica/Casey	0	-	zzz	1969
 			8:00	-	AWST	2009 Oct 18  2:00
 						# Australian Western Std Time
-			11:00	-	CAST	2010 Mar  5  2:00
-						# Casey Time
+			11:00	-	CAST	2010 Mar  5  2:00  # Casey Time
 			8:00	-	AWST	2011 Oct 28  2:00
 			11:00	-	CAST	2012 Feb 21 17:00u
 			8:00	-	AWST
 Zone Antarctica/Davis	0	-	zzz	1957 Jan 13
-			7:00	-	DAVT	1964 Nov # Davis Time
+			7:00	-	DAVT	1964 Nov    # Davis Time
 			0	-	zzz	1969 Feb
 			7:00	-	DAVT	2009 Oct 18  2:00
 			5:00	-	DAVT	2010 Mar 10 20:00u
@@ -119,8 +118,7 @@ Zone Antarctica/Davis	0	-	zzz	1957 Jan 13
 			5:00	-	DAVT	2012 Feb 21 20:00u
 			7:00	-	DAVT
 Zone Antarctica/Mawson	0	-	zzz	1954 Feb 13
-			6:00	-	MAWT	2009 Oct 18  2:00
-						# Mawson Time
+			6:00	-	MAWT	2009 Oct 18  2:00 # Mawson Time
 			5:00	-	MAWT
 # References:
 # Casey Weather (1998-02-26)
@@ -174,7 +172,7 @@ Zone Antarctica/Mawson	0	-	zzz	1954 Feb 13
 #	fishing stations operated variously 1819/1931
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Indian/Kerguelen	0	-	zzz	1950	# Port-aux-Français
+Zone Indian/Kerguelen	0	-	zzz	1950 # Port-aux-Français
 			5:00	-	TFT	# ISO code TF Time
 #
 # year-round base in the main continent

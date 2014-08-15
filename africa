@@ -402,8 +402,8 @@ Zone	Africa/Cairo	2:05:09 -	LMT	1900 Oct
 # Eritrea
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Asmara	2:35:32 -	LMT	1870
-			2:35:32	-	AMT	1890	      # Asmara Mean Time
-			2:35:20	-	ADMT	1936 May 5    # Adis Dera MT
+			2:35:32	-	AMT	1890        # Asmara Mean Time
+			2:35:20	-	ADMT	1936 May  5 # Adis Dera MT
 			3:00	-	EAT
 
 # Ethiopia
@@ -419,7 +419,7 @@ Zone	Africa/Asmara	2:35:32 -	LMT	1870
 # anyway.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Africa/Addis_Ababa	2:34:48 -	LMT	1870
-			2:35:20	-	ADMT	1936 May 5    # Adis Dera MT
+			2:35:20	-	ADMT	1936 May  5 # Adis Dera MT
 			3:00	-	EAT
 
 # Gabon

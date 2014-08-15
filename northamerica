@@ -341,7 +341,7 @@ Zone America/North_Dakota/Center -6:45:12 - LMT	1883 Nov 18 12:14:48
 # Jones, Mellette, and Todd Counties in South Dakota;
 # but in practice these other counties were already observing central time.
 # See <http://www.epa.gov/fedrgstr/EPA-IMPACT/2003/October/Day-28/i27056.htm>.
-Zone America/North_Dakota/New_Salem -6:45:39 - LMT 1883 Nov 18 12:14:21
+Zone America/North_Dakota/New_Salem -6:45:39 - LMT	1883 Nov 18 12:14:21
 			-7:00	US	M%sT	2003 Oct 26  2:00
 			-6:00	US	C%sT
 
@@ -359,7 +359,7 @@ Zone America/North_Dakota/New_Salem -6:45:39 - LMT 1883 Nov 18 12:14:21
 # at 47 degrees 15' 51" N, 101 degrees 46' 40" W, which yields an offset
 # of 6h47'07".
 
-Zone America/North_Dakota/Beulah -6:47:07 - LMT 1883 Nov 18 12:12:53
+Zone America/North_Dakota/Beulah -6:47:07 - LMT	1883 Nov 18 12:12:53
 			-7:00	US	M%sT	2010 Nov  7  2:00
 			-6:00	US	C%sT
 
@@ -705,7 +705,7 @@ Rule Indianapolis 1941	only	-	Jun	22	2:00	1:00	D
 Rule Indianapolis 1941	1954	-	Sep	lastSun	2:00	0	S
 Rule Indianapolis 1946	1954	-	Apr	lastSun	2:00	1:00	D
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone America/Indiana/Indianapolis -5:44:38 - LMT 1883 Nov 18 12:15:22
+Zone America/Indiana/Indianapolis -5:44:38 - LMT	1883 Nov 18 12:15:22
 			-6:00	US	C%sT	1920
 			-6:00 Indianapolis C%sT	1942
 			-6:00	US	C%sT	1946
@@ -2331,7 +2331,7 @@ Zone America/Monterrey	-6:41:16 -	LMT	1921 Dec 31 23:18:44
 			-6:00	US	C%sT	1989
 			-6:00	Mexico	C%sT
 # Central Mexico
-Zone America/Mexico_City -6:36:36 -	LMT	1922 Jan  1 0:23:24
+Zone America/Mexico_City -6:36:36 -	LMT	1922 Jan  1  0:23:24
 			-7:00	-	MST	1927 Jun 10 23:00
 			-6:00	-	CST	1930 Nov 15
 			-7:00	-	MST	1931 May  1 23:00
@@ -2341,7 +2341,7 @@ Zone America/Mexico_City -6:36:36 -	LMT	1922 Jan  1 0:23:24
 			-6:00	-	CST	2002 Feb 20
 			-6:00	Mexico	C%sT
 # Chihuahua (near US border)
-Zone America/Ojinaga	-6:57:40 -	LMT	1922 Jan 1 0:02:20
+Zone America/Ojinaga	-6:57:40 -	LMT	1922 Jan  1  0:02:20
 			-7:00	-	MST	1927 Jun 10 23:00
 			-6:00	-	CST	1930 Nov 15
 			-7:00	-	MST	1931 May  1 23:00

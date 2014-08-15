@@ -98,7 +98,7 @@ Zone	Africa/Juba	2:06:24 -	LMT	1931
 			3:00	-	EAT
 
 # Democratic Republic of the Congo (west)
-Zone Africa/Kinshasa	1:01:12 -	LMT	1897 Nov 9
+Zone Africa/Kinshasa	1:01:12 -	LMT	1897 Nov  9
 			1:00	-	WAT
 
 # Gabon
@@ -192,7 +192,7 @@ Zone America/Coral_Harbour -5:32:40 -	LMT	1884
 			-5:00	-	EST
 
 # Dominica
-Zone America/Dominica	-4:05:36 -	LMT	1911 Jul  1 0:01	# Roseau
+Zone America/Dominica	-4:05:36 -	LMT	1911 Jul  1  0:01 # Roseau
 			-4:00	-	AST
 
 # Baja California
@@ -217,7 +217,7 @@ Zone America/Guadeloupe	-4:06:08 -	LMT	1911 Jun  8	# Pointe a Pitre
 # From Paul Eggert (2006-03-22):
 # In 1995 volcanic eruptions forced evacuation of Plymouth, the capital.
 # world.gazetteer.com says Cork Hill is the most populous location now.
-Zone America/Montserrat	-4:08:52 -	LMT	1911 Jul 1 0:01   # Cork Hill
+Zone America/Montserrat	-4:08:52 -	LMT	1911 Jul  1  0:01 # Cork Hill
 			-4:00	-	AST
 
 # Argentina
@@ -230,8 +230,8 @@ Zone America/Rosario	-4:02:40 -	LMT	1894 Nov
 			-4:00	-	ART	1930 Dec
 			-4:00	Arg	AR%sT	1969 Oct  5
 			-3:00	Arg	AR%sT	1991 Jul
-			-3:00	-	ART	1999 Oct  3 0:00
-			-4:00	Arg	AR%sT	2000 Mar  3 0:00
+			-3:00	-	ART	1999 Oct  3  0:00
+			-4:00	Arg	AR%sT	2000 Mar  3  0:00
 			-3:00	-	ART
 
 # St Kitts-Nevis
@@ -304,12 +304,12 @@ Zone Atlantic/St_Helena	-0:22:48 -	LMT	1890		# Jamestown
 
 # Northern Ireland
 Zone	Europe/Belfast	-0:23:40 -	LMT	1880 Aug  2
-			-0:25:21 -	DMT	1916 May 21 2:00
+			-0:25:21 -	DMT	1916 May 21  2:00
 						# DMT = Dublin/Dunsink MT
-			-0:25:21 1:00	IST	1916 Oct  1 2:00s
+			-0:25:21 1:00	IST	1916 Oct  1  2:00s
 						# IST = Irish Summer Time
 			 0:00	GB-Eire	%s	1968 Oct 27
-			 1:00	-	BST	1971 Oct 31 2:00u
+			 1:00	-	BST	1971 Oct 31  2:00u
 			 0:00	GB-Eire	%s	1996
 			 0:00	EU	GMT/BST
 
@@ -322,7 +322,7 @@ Zone	Europe/Guernsey	-0:09:19 -	LMT	1913 Jun 18
 			 0:00	GB-Eire	%s	1940 Jul  2
 			 1:00	C-Eur	CE%sT	1945 May  8
 			 0:00	GB-Eire	%s	1968 Oct 27
-			 1:00	-	BST	1971 Oct 31 2:00u
+			 1:00	-	BST	1971 Oct 31  2:00u
 			 0:00	GB-Eire	%s	1996
 			 0:00	EU	GMT/BST
 
@@ -341,9 +341,9 @@ Zone	Europe/Guernsey	-0:09:19 -	LMT	1913 Jun 18
 #
 # AT4 of 1883 - The Statutory Time et cetera Act 1883 -
 # LMT Location - 54.1508N -4.4814E - Tynwald Hill ( Manx parliament )
-Zone    Europe/Isle_of_Man -0:17:55 -    LMT 1883 March 30 0:00s
+Zone    Europe/Isle_of_Man -0:17:55 -    LMT 1883 March 30  0:00s
 			 0:00	GB-Eire	%s	1968 Oct 27
-			 1:00	-	BST	1971 Oct 31 2:00u
+			 1:00	-	BST	1971 Oct 31  2:00u
 			 0:00	GB-Eire	%s	1996
 			 0:00	EU	GMT/BST
 
@@ -356,7 +356,7 @@ Zone	Europe/Jersey	-0:08:25 -	LMT	1898 Jun 11 16:00u
 			 0:00	GB-Eire	%s	1940 Jul  2
 			 1:00	C-Eur	CE%sT	1945 May  8
 			 0:00	GB-Eire	%s	1968 Oct 27
-			 1:00	-	BST	1971 Oct 31 2:00u
+			 1:00	-	BST	1971 Oct 31  2:00u
 			 0:00	GB-Eire	%s	1996
 			 0:00	EU	GMT/BST
 

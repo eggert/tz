@@ -430,7 +430,7 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 #
 # Buenos Aires (BA), Capital Federal (CF),
-Zone America/Argentina/Buenos_Aires -3:53:48 - LMT 1894 Oct 31
+Zone America/Argentina/Buenos_Aires -3:53:48 - LMT	1894 Oct 31
 			-4:16:48 -	CMT	1920 May # Córdoba Mean Time
 			-4:00	-	ART	1930 Dec
 			-4:00	Arg	AR%sT	1969 Oct  5
@@ -581,7 +581,7 @@ Zone America/Argentina/San_Luis -4:25:24 - LMT	1894 Oct 31
 			-3:00	-	ART
 #
 # Santa Cruz (SC)
-Zone America/Argentina/Rio_Gallegos -4:36:52 - LMT 1894 Oct 31
+Zone America/Argentina/Rio_Gallegos -4:36:52 - LMT	1894 Oct 31
 			-4:16:48 -	CMT	1920 May # Córdoba Mean Time
 			-4:00	-	ART	1930 Dec
 			-4:00	Arg	AR%sT	1969 Oct  5
@@ -593,7 +593,7 @@ Zone America/Argentina/Rio_Gallegos -4:36:52 - LMT 1894 Oct 31
 			-3:00	-	ART
 #
 # Tierra del Fuego, Antártida e Islas del Atlántico Sur (TF)
-Zone America/Argentina/Ushuaia -4:33:12 - LMT 1894 Oct 31
+Zone America/Argentina/Ushuaia -4:33:12 - LMT	1894 Oct 31
 			-4:16:48 -	CMT	1920 May # Córdoba Mean Time
 			-4:00	-	ART	1930 Dec
 			-4:00	Arg	AR%sT	1969 Oct  5

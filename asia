@@ -264,11 +264,11 @@ Zone	Asia/Brunei	7:39:40 -	LMT	1926 Mar   # Bandar Seri Begawan
 # Milne says 6:24:40 was the meridian of the time ball observatory at Rangoon.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Rangoon	6:24:40 -	LMT	1880		# or Yangon
-			6:24:40	-	RMT	1920	   # Rangoon Mean Time?
-			6:30	-	BURT	1942 May   # Burma Time
-			9:00	-	JST	1945 May 3
-			6:30	-	MMT		   # Myanmar Time
+Zone	Asia/Rangoon	6:24:40 -	LMT	1880        # or Yangon
+			6:24:40	-	RMT	1920        # Rangoon Mean Time?
+			6:30	-	BURT	1942 May    # Burma Time
+			9:00	-	JST	1945 May  3
+			6:30	-	MMT	# Myanmar Time
 
 # Cambodia
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

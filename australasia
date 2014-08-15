@@ -498,9 +498,9 @@ Zone Pacific/Rarotonga	-10:39:04 -	LMT	1901		# Avarua
 
 # Niue
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Pacific/Niue	-11:19:40 -	LMT	1901		# Alofi
-			-11:20	-	NUT	1951	# Niue Time
-			-11:30	-	NUT	1978 Oct 1
+Zone	Pacific/Niue	-11:19:40 -	LMT	1901        # Alofi
+			-11:20	-	NUT	1951        # Niue Time
+			-11:30	-	NUT	1978 Oct  1
 			-11:00	-	NUT
 
 # Norfolk
@@ -641,7 +641,7 @@ Zone Pacific/Guadalcanal 10:39:48 -	LMT	1912 Oct	# Honiara
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Pacific/Fakaofo	-11:24:56 -	LMT	1901
-			-11:00	-	TKT 2011 Dec 30	# Tokelau Time
+			-11:00	-	TKT	2011 Dec 30 # Tokelau Time
 			13:00	-	TKT
 
 # Tonga

@@ -248,7 +248,9 @@ typedef unsigned long uintmax_t;
 ** typical platforms.
 */
 #ifdef time_tz
+# ifdef LOCALTIME_IMPLEMENTATION
 static time_t sys_time(time_t *x) { return time(x); }
+# endif
 
 # undef  ctime
 # define ctime tz_ctime
@@ -289,15 +291,7 @@ struct tm *gmtime_r(time_t const *restrict, struct tm *restrict);
 struct tm *localtime(time_t const *);
 struct tm *localtime_r(time_t const *restrict, struct tm *restrict);
 time_t mktime(struct tm *);
-
-static time_t
-time(time_t *p)
-{
-	time_t r = sys_time(0);
-	if (p)
-		*p = r;
-	return r;
-}
+time_t time(time_t *);
 #endif
 
 /*

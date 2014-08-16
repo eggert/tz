@@ -10,7 +10,9 @@
 
 /*LINTLIBRARY*/
 
+#define LOCALTIME_IMPLEMENTATION
 #include "private.h"
+
 #include "tzfile.h"
 #include "fcntl.h"
 
@@ -2022,3 +2024,19 @@ posix2time(time_t t)
 }
 
 #endif /* defined STD_INSPIRED */
+
+#ifdef time_tz
+
+/* Convert from the underlying system's time_t to the ersatz time_tz,
+   which is called 'time_t' in this file.  */
+
+time_t
+time(time_t *p)
+{
+  time_t r = sys_time(0);
+  if (p)
+    *p = r;
+  return r;
+}
+
+#endif

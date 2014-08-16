@@ -207,14 +207,13 @@ static size_t	longest;
 static char *	progname;
 static int	warned;
 
-static char *	abbr(struct tm * tmp);
-static void	abbrok(const char * abbrp, const char * zone);
-static intmax_t	delta(struct tm * newp, struct tm * oldp) ATTRIBUTE_PURE;
-static void	dumptime(const struct tm * tmp);
-static time_t	hunt(char * name, time_t lot, time_t	hit);
-static void	show(char * zone, time_t t, int v);
-static const char *	tformat(void);
-static time_t	yeartot(intmax_t y) ATTRIBUTE_PURE;
+static char *abbr(struct tm *);
+static intmax_t	delta(struct tm *, struct tm *) ATTRIBUTE_PURE;
+static void dumptime(struct tm const *);
+static time_t hunt(char *, time_t, time_t);
+static void show(char *, time_t, int);
+static const char *tformat(void);
+static time_t yeartot(intmax_t) ATTRIBUTE_PURE;
 
 /* Is A an alphabetic character in the C locale?  */
 static int

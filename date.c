@@ -60,11 +60,9 @@ static void		display(const char *, time_t);
 static void		dogmt(void);
 static void		errensure(void);
 static void		iffy(time_t, time_t, const char *, const char *);
-int			main(int, char**);
 static const char *	nondigit(const char *);
 static void		oops(const char *);
 static void		reset(time_t, int);
-static int		sametm(const struct tm *, const struct tm *);
 static void		timeout(FILE *, const char *, const struct tm *);
 static void		usage(void);
 static void		wildinput(const char *, const char *,

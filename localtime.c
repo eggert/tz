@@ -126,59 +126,14 @@ struct rule {
 #define DAY_OF_YEAR		1	/* n = day of year */
 #define MONTH_NTH_DAY_OF_WEEK	2	/* Mm.n.d = month, week, day of week */
 
-/*
-** Prototypes for static functions.
-*/
-
-static int_fast32_t	detzcode(const char * codep);
-static int_fast64_t	detzcode64(const char * codep);
-static int		differ_by_repeat(time_t t1, time_t t0);
-static const char *	getzname(const char * strp) ATTRIBUTE_PURE;
-static const char *	getqzname(const char * strp, const int delim)
-  ATTRIBUTE_PURE;
-static const char *	getnum(const char * strp, int * nump, int min,
-				int max);
-static const char *	getsecs(const char * strp, int_fast32_t * secsp);
-static const char *	getoffset(const char * strp, int_fast32_t * offsetp);
-static const char *	getrule(const char * strp, struct rule * rulep);
-static void		gmtload(struct state * sp);
-static struct tm *	gmtsub(const time_t * timep, int_fast32_t offset,
-				struct tm * tmp);
-static struct tm *	localsub(const time_t * timep, int_fast32_t offset,
-				struct tm * tmp);
-static int		increment_overflow(int * number, int delta);
-static int		leaps_thru_end_of(int y) ATTRIBUTE_PURE;
-static int		increment_overflow32(int_fast32_t * number, int delta);
-static int		increment_overflow_time(time_t *t, int_fast32_t delta);
-static int		normalize_overflow32(int_fast32_t * tensptr,
-				int * unitsptr, int base);
-static int		normalize_overflow(int * tensptr, int * unitsptr,
-				int base);
-static void		settzname(void);
-static time_t		time1(struct tm * tmp,
-				struct tm * (*funcp)(const time_t *,
-				int_fast32_t, struct tm *),
-				int_fast32_t offset);
-static time_t		time2(struct tm *tmp,
-				struct tm * (*funcp)(const time_t *,
-				int_fast32_t, struct tm*),
-				int_fast32_t offset, int * okayp);
-static time_t		time2sub(struct tm *tmp,
-				struct tm * (*funcp)(const time_t *,
-				int_fast32_t, struct tm*),
-				int_fast32_t offset, int * okayp, int do_norm_secs);
-static struct tm *	timesub(const time_t * timep, int_fast32_t offset,
-				const struct state * sp, struct tm * tmp);
-static int		tmcomp(const struct tm * atmp,
-				const struct tm * btmp);
-static int_fast32_t	transtime(int year, const struct rule * rulep,
-				  int_fast32_t offset)
-  ATTRIBUTE_PURE;
-static int		typesequiv(const struct state * sp, int a, int b);
-static int		tzload(const char * name, struct state * sp,
-				int doextend);
-static int		tzparse(const char * name, struct state * sp,
-				int lastditch);
+static struct tm *gmtsub(time_t const *, int_fast32_t, struct tm *);
+static int increment_overflow(int *, int);
+static int increment_overflow_time(time_t *, int_fast32_t);
+static int normalize_overflow32(int_fast32_t *, int *, int);
+static struct tm *timesub(time_t const *, int_fast32_t, struct state const *,
+			  struct tm *);
+static int typesequiv(struct state const *, int, int);
+static int tzparse(char const *, struct state *, int);
 
 #ifdef ALL_STATE
 static struct state *	lclptr;
@@ -657,7 +612,7 @@ static const int	year_lengths[2] = {
 ** character.
 */
 
-static const char *
+static const char * ATTRIBUTE_PURE
 getzname(register const char *strp)
 {
 	register char	c;
@@ -677,7 +632,7 @@ getzname(register const char *strp)
 ** We don't do any checking here; checking is done later in common-case code.
 */
 
-static const char *
+static const char * ATTRIBUTE_PURE
 getqzname(register const char *strp, const int delim)
 {
 	register int	c;
@@ -839,7 +794,7 @@ getrule(const char *strp, register struct rule *const rulep)
 ** effect, calculate the year-relative time that rule takes effect.
 */
 
-static int_fast32_t
+static int_fast32_t ATTRIBUTE_PURE
 transtime(const int year, register const struct rule *const rulep,
 	  const int_fast32_t offset)
 {
@@ -1419,7 +1374,7 @@ offtime(const time_t *const timep, const long offset)
 ** where, to make the math easy, the answer for year zero is defined as zero.
 */
 
-static int
+static int ATTRIBUTE_PURE
 leaps_thru_end_of(register const int y)
 {
 	return (y >= 0) ? (y / 4 - y / 100 + y / 400) :

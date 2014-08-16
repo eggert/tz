@@ -47,6 +47,8 @@ Unreleased, experimental changes
     the date it updates the wtmpx file if _PATH_WTMPX is defined.
     This affects GNU/Linux and similar systems.
 
+    Some C code has been simplified for easier maintenance later.
+
   Changes affecting distribution tarballs
 
     The files checktab.awk and zoneinfo2tdf.pl are now distributed in

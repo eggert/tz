@@ -278,6 +278,10 @@ static time_t sys_time(time_t *x) { return time(x); }
 # define time2posix tz_time2posix
 # undef  time_t
 # define time_t tz_time_t
+# undef  timegm
+# define timegm tz_timegm
+# undef  timelocal
+# define timelocal tz_timelocal
 # undef  timeoff
 # define timeoff tz_timeoff
 
@@ -315,6 +319,12 @@ void tzsetwall(void);
 # endif
 # if !defined offtime || defined time_tz
 struct tm *offtime(time_t const *, long);
+# endif
+# if !defined timegm || defined time_tz
+time_t timegm(struct tm *);
+# endif
+# if !defined timelocal || defined time_tz
+time_t timelocal(struct tm *);
 # endif
 # if !defined timeoff || defined time_tz
 time_t timeoff(struct tm *, long);

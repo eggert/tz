@@ -36,6 +36,10 @@ Unreleased, experimental changes
 
   Changes affecting code
 
+    The tz library is now thread-safe if compiled with THREAD_SAFE defined.
+    Although not needed for tz's own applications, which are single-threaded,
+    this supports POSIX better if the tz library is used in multithreaded apps.
+
     tzselect -c now uses a hybrid distance measure that works better
     in Africa.  (Thanks to Alan Barrett for noting the problem.)
 

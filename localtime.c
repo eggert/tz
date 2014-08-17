@@ -16,6 +16,18 @@
 #include "tzfile.h"
 #include "fcntl.h"
 
+#if THREAD_SAFE
+# include <pthread.h>
+# define VOLATILE volatile
+static pthread_mutex_t locallock = PTHREAD_MUTEX_INITIALIZER;
+static int lock(void) { return pthread_mutex_lock(&locallock); }
+static void unlock(void) { pthread_mutex_unlock(&locallock); }
+#else
+# define VOLATILE
+static int lock(void) { return 0; }
+static void unlock(void) { }
+#endif
+
 #ifndef TZ_ABBR_MAX_LEN
 #define TZ_ABBR_MAX_LEN	16
 #endif /* !defined TZ_ABBR_MAX_LEN */
@@ -154,8 +166,8 @@ static struct state	gmtmem;
 #endif /* !defined TZ_STRLEN_MAX */
 
 static char		lcl_TZname[TZ_STRLEN_MAX + 1];
-static int		lcl_is_set;
-static int		gmt_is_set;
+static int VOLATILE	lcl_is_set;
+static int VOLATILE	gmt_is_set;
 
 char *			tzname[2] = {
 	(char *) wildabbr,
@@ -1139,6 +1151,21 @@ gmtload(struct state *const sp)
 		(void) tzparse(gmt, sp, TRUE);
 }
 
+static void
+tzsetwall_unlocked(void)
+{
+  if (lcl_is_set < 0)
+    return;
+#ifdef ALL_STATE
+  if (! lclptr)
+    lclptr = malloc(sizeof *lclptr);
+#endif
+  if (lclptr && tzload(NULL, lclptr, TRUE) != 0)
+    gmtload(lclptr);
+  settzname();
+  lcl_is_set = -1;
+}
+
 #ifndef STD_INSPIRED
 /*
 ** A non-static declaration of tzsetwall in a system header file
@@ -1149,65 +1176,71 @@ static
 void
 tzsetwall(void)
 {
-	if (lcl_is_set < 0)
-		return;
-	lcl_is_set = -1;
+  if (lock() != 0)
+    return;
+  tzsetwall_unlocked();
+  unlock();
+}
 
+static void
+tzset_unlocked(void)
+{
+  int shortname;
+  register char const *name = getenv("TZ");
+
+  if (!name) {
+    tzsetwall_unlocked();
+    return;
+  }
+  shortname = strlen(name) < sizeof lcl_TZname;
+  if (0 < lcl_is_set && strcmp(lcl_TZname, name) == 0)
+    return;
+  if (shortname)
+    strcpy(lcl_TZname, name);
 #ifdef ALL_STATE
-	if (lclptr == NULL) {
-		lclptr = malloc(sizeof *lclptr);
-		if (lclptr == NULL) {
-			settzname();	/* all we can do */
-			return;
-		}
-	}
+  if (! lclptr)
+    lclptr = malloc(sizeof *lclptr);
 #endif /* defined ALL_STATE */
-	if (tzload(NULL, lclptr, TRUE) != 0)
-		gmtload(lclptr);
-	settzname();
+  if (lclptr) {
+    if (*name == '\0') {
+      /*
+      ** User wants it fast rather than right.
+      */
+      lclptr->leapcnt = 0;		/* so, we're off a little */
+      lclptr->timecnt = 0;
+      lclptr->typecnt = 0;
+      lclptr->ttis[0].tt_isdst = 0;
+      lclptr->ttis[0].tt_gmtoff = 0;
+      lclptr->ttis[0].tt_abbrind = 0;
+      strcpy(lclptr->chars, gmt);
+    } else if (tzload(name, lclptr, TRUE) != 0)
+      if (name[0] == ':' || tzparse(name, lclptr, FALSE) != 0)
+	gmtload(lclptr);
+  }
+  settzname();
+  lcl_is_set = shortname;
 }
 
 void
 tzset(void)
 {
-	register const char *	name;
+  if (lock() != 0)
+    return;
+  tzset_unlocked();
+  unlock();
+}
 
-	name = getenv("TZ");
-	if (name == NULL) {
-		tzsetwall();
-		return;
-	}
-
-	if (lcl_is_set > 0 && strcmp(lcl_TZname, name) == 0)
-		return;
-	lcl_is_set = strlen(name) < sizeof lcl_TZname;
-	if (lcl_is_set)
-		(void) strcpy(lcl_TZname, name);
-
+static void
+gmtcheck(void)
+{
+  if (gmt_is_set)
+    return;
 #ifdef ALL_STATE
-	if (lclptr == NULL) {
-		lclptr = malloc(sizeof *lclptr);
-		if (lclptr == NULL) {
-			settzname();	/* all we can do */
-			return;
-		}
-	}
-#endif /* defined ALL_STATE */
-	if (*name == '\0') {
-		/*
-		** User wants it fast rather than right.
-		*/
-		lclptr->leapcnt = 0;		/* so, we're off a little */
-		lclptr->timecnt = 0;
-		lclptr->typecnt = 0;
-		lclptr->ttis[0].tt_isdst = 0;
-		lclptr->ttis[0].tt_gmtoff = 0;
-		lclptr->ttis[0].tt_abbrind = 0;
-		(void) strcpy(lclptr->chars, gmt);
-	} else if (tzload(name, lclptr, TRUE) != 0)
-		if (name[0] == ':' || tzparse(name, lclptr, FALSE) != 0)
-			(void) gmtload(lclptr);
-	settzname();
+  gmtptr = malloc(sizeof *gmtptr);
+#endif
+  if (gmtptr)
+    gmtload(gmtptr);
+  gmt_is_set = TRUE;
 }
 
 /*
@@ -1289,18 +1322,31 @@ localsub(const time_t *const timep, const int_fast32_t offset,
 	*/
 	result = timesub(&t, ttisp->tt_gmtoff, sp, tmp);
 	tmp->tm_isdst = ttisp->tt_isdst;
-	tzname[tmp->tm_isdst] = &sp->chars[ttisp->tt_abbrind];
 #ifdef TM_ZONE
 	tmp->TM_ZONE = &sp->chars[ttisp->tt_abbrind];
 #endif /* defined TM_ZONE */
 	return result;
 }
 
+static struct tm *
+localtime_tzset(time_t const *timep, struct tm *tmp, int skip_tzset)
+{
+  int err = lock();
+  if (err) {
+    errno = err;
+    return NULL;
+  }
+  if (!skip_tzset)
+    tzset_unlocked();
+  tmp = localsub(timep, 0, tmp);
+  unlock();
+  return tmp;
+}
+
 struct tm *
 localtime(const time_t *const timep)
 {
-	tzset();
-	return localsub(timep, 0L, &tm);
+  return localtime_tzset(timep, &tm, 0);
 }
 
 /*
@@ -1310,7 +1356,7 @@ localtime(const time_t *const timep)
 struct tm *
 localtime_r(const time_t *const timep, struct tm *tmp)
 {
-	return localsub(timep, 0L, tmp);
+  return localtime_tzset(timep, tmp, lcl_is_set);
 }
 
 /*
@@ -1323,16 +1369,6 @@ gmtsub(const time_t *const timep, const int_fast32_t offset,
 {
 	register struct tm *	result;
 
-	if (!gmt_is_set) {
-#ifdef ALL_STATE
-		gmtptr = malloc(sizeof *gmtptr);
-		gmt_is_set = gmtptr != NULL;
-#else
-		gmt_is_set = TRUE;
-#endif /* defined ALL_STATE */
-		if (gmt_is_set)
-			gmtload(gmtptr);
-	}
 	result = timesub(timep, offset, gmtptr, tmp);
 #ifdef TM_ZONE
 	/*
@@ -1348,7 +1384,7 @@ gmtsub(const time_t *const timep, const int_fast32_t offset,
 struct tm *
 gmtime(const time_t *const timep)
 {
-	return gmtsub(timep, 0L, &tm);
+  return gmtime_r(timep, &tm);
 }
 
 /*
@@ -1358,7 +1394,15 @@ gmtime(const time_t *const timep)
 struct tm *
 gmtime_r(const time_t *const timep, struct tm *tmp)
 {
-	return gmtsub(timep, 0L, tmp);
+  int err = lock();
+  if (err) {
+    errno = err;
+    return NULL;
+  }
+  gmtcheck();
+  tmp = gmtsub(timep, 0, tmp);
+  unlock();
+  return tmp;
 }
 
 #ifdef STD_INSPIRED
@@ -1366,7 +1410,16 @@ gmtime_r(const time_t *const timep, struct tm *tmp)
 struct tm *
 offtime(const time_t *const timep, const long offset)
 {
-	return gmtsub(timep, offset, &tm);
+  struct tm *tmp;
+  int err = lock();
+  if (err) {
+    errno = err;
+    return NULL;
+  }
+  gmtcheck();
+  tmp = gmtsub(timep, offset, &tm);
+  unlock();
+  return tmp;
 }
 
 #endif /* defined STD_INSPIRED */
@@ -1901,8 +1954,16 @@ time1(struct tm *const tmp,
 time_t
 mktime(struct tm *const tmp)
 {
-	tzset();
-	return time1(tmp, localsub, 0L);
+  time_t t;
+  int err = lock();
+  if (err) {
+    errno = err;
+    return -1;
+  }
+  tzset_unlocked();
+  t = time1(tmp, localsub, 0);
+  unlock();
+  return t;
 }
 
 #ifdef STD_INSPIRED
@@ -1918,17 +1979,25 @@ timelocal(struct tm *const tmp)
 time_t
 timegm(struct tm *const tmp)
 {
-	if (tmp != NULL)
-		tmp->tm_isdst = 0;
-	return time1(tmp, gmtsub, 0L);
+  return timeoff(tmp, 0);
 }
 
 time_t
 timeoff(struct tm *const tmp, const long offset)
 {
-	if (tmp != NULL)
-		tmp->tm_isdst = 0;
-	return time1(tmp, gmtsub, offset);
+  time_t t;
+  int err;
+  if (tmp)
+    tmp->tm_isdst = 0;
+  err = lock();
+  if (err) {
+    errno = err;
+    return -1;
+  }
+  gmtcheck();
+  t = time1(tmp, gmtsub, offset);
+  unlock();
+  return t;
 }
 
 #endif /* defined STD_INSPIRED */
@@ -1986,8 +2055,17 @@ leapcorr(time_t *timep)
 time_t
 time2posix(time_t t)
 {
-	tzset();
-	return t - leapcorr(&t);
+  time_t p;
+  int err = lock();
+  if (err) {
+    errno = err;
+    return -1;
+  }
+  if (!lcl_is_set)
+    tzset_unlocked();
+  p = t - leapcorr(&t);
+  unlock();
+  return p;
 }
 
 time_t
@@ -1995,8 +2073,13 @@ posix2time(time_t t)
 {
 	time_t	x;
 	time_t	y;
-
-	tzset();
+	int err = lock();
+	if (err) {
+	  errno = err;
+	  return -1;
+	}
+	if (!lcl_is_set)
+	  tzset_unlocked();
 	/*
 	** For a positive leap second hit, the result
 	** is not unique. For a negative leap second
@@ -2010,16 +2093,15 @@ posix2time(time_t t)
 			x++;
 			y = x - leapcorr(&x);
 		} while (y < t);
-		if (t != y)
-			return x - 1;
+		x -= y != t;
 	} else if (y > t) {
 		do {
 			--x;
 			y = x - leapcorr(&x);
 		} while (y > t);
-		if (t != y)
-			return x + 1;
+		x += y != t;
 	}
+	unlock();
 	return x;
 }
 

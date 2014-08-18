@@ -1166,13 +1166,7 @@ tzsetwall_unlocked(void)
   lcl_is_set = -1;
 }
 
-#ifndef STD_INSPIRED
-/*
-** A non-static declaration of tzsetwall in a system header file
-** may cause a warning about this upcoming static declaration...
-*/
-static
-#endif /* !defined STD_INSPIRED */
+#ifdef STD_INSPIRED
 void
 tzsetwall(void)
 {
@@ -1181,6 +1175,7 @@ tzsetwall(void)
   tzsetwall_unlocked();
   unlock();
 }
+#endif
 
 static void
 tzset_unlocked(void)

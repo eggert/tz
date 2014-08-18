@@ -626,7 +626,7 @@ difftime.o:	private.h
 ialloc.o:	private.h
 localtime.o:	private.h tzfile.h
 scheck.o:	private.h
-strftime.o:	tzfile.h
+strftime.o:	private.h tzfile.h
 zdump.o:	version.h
 zic.o:		private.h tzfile.h version.h
 

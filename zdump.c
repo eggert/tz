@@ -250,20 +250,20 @@ my_localtime(time_t *tp)
 		tm = *tmp;
 		t = mktime(&tm);
 		if (t != *tp) {
-			(void) fflush(stdout);
-			(void) fprintf(stderr, "\n%s: ", progname);
-			(void) fprintf(stderr, tformat(), *tp);
-			(void) fprintf(stderr, " ->");
-			(void) fprintf(stderr, " year=%d", tmp->tm_year);
-			(void) fprintf(stderr, " mon=%d", tmp->tm_mon);
-			(void) fprintf(stderr, " mday=%d", tmp->tm_mday);
-			(void) fprintf(stderr, " hour=%d", tmp->tm_hour);
-			(void) fprintf(stderr, " min=%d", tmp->tm_min);
-			(void) fprintf(stderr, " sec=%d", tmp->tm_sec);
-			(void) fprintf(stderr, " isdst=%d", tmp->tm_isdst);
-			(void) fprintf(stderr, " -> ");
-			(void) fprintf(stderr, tformat(), t);
-			(void) fprintf(stderr, "\n");
+			fflush(stdout);
+			fprintf(stderr, "\n%s: ", progname);
+			fprintf(stderr, tformat(), *tp);
+			fprintf(stderr, " ->");
+			fprintf(stderr, " year=%d", tmp->tm_year);
+			fprintf(stderr, " mon=%d", tmp->tm_mon);
+			fprintf(stderr, " mday=%d", tmp->tm_mday);
+			fprintf(stderr, " hour=%d", tmp->tm_hour);
+			fprintf(stderr, " min=%d", tmp->tm_min);
+			fprintf(stderr, " sec=%d", tmp->tm_sec);
+			fprintf(stderr, " isdst=%d", tmp->tm_isdst);
+			fprintf(stderr, " -> ");
+			fprintf(stderr, tformat(), t);
+			fprintf(stderr, "\n");
 		}
 	}
 	return tmp;
@@ -298,8 +298,8 @@ abbrok(const char *const abbrp, const char *const zone)
 	}
 	if (wp == NULL)
 		return;
-	(void) fflush(stdout);
-	(void) fprintf(stderr,
+	fflush(stdout);
+	fprintf(stderr,
 		_("%s: warning: zone \"%s\" abbreviation \"%s\" %s\n"),
 		progname, zone, abbrp, wp);
 	warned = TRUE;
@@ -308,7 +308,7 @@ abbrok(const char *const abbrp, const char *const zone)
 static void
 usage(FILE * const stream, const int status)
 {
-	(void) fprintf(stream,
+	fprintf(stream,
 _("%s: usage: %s [--version] [--help] [-{vV}] [-{ct} [lo,]hi] zonename ...\n"
   "\n"
   "Report bugs to %s.\n"),
@@ -338,16 +338,16 @@ main(int argc, char *argv[])
 	cutlotime = absolute_min_time;
 	cuthitime = absolute_max_time;
 #if HAVE_GETTEXT
-	(void) setlocale(LC_ALL, "");
+	setlocale(LC_ALL, "");
 #ifdef TZ_DOMAINDIR
-	(void) bindtextdomain(TZ_DOMAIN, TZ_DOMAINDIR);
+	bindtextdomain(TZ_DOMAIN, TZ_DOMAINDIR);
 #endif /* defined TEXTDOMAINDIR */
-	(void) textdomain(TZ_DOMAIN);
+	textdomain(TZ_DOMAIN);
 #endif /* HAVE_GETTEXT */
 	progname = argv[0];
 	for (i = 1; i < argc; ++i)
 		if (strcmp(argv[i], "--version") == 0) {
-			(void) printf("zdump %s%s\n", PKGVERSION, TZVERSION);
+			printf("zdump %s%s\n", PKGVERSION, TZVERSION);
 			exit(EXIT_SUCCESS);
 		} else if (strcmp(argv[i], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
@@ -386,7 +386,7 @@ main(int argc, char *argv[])
 				cutloyear = lo;
 				cuthiyear = hi;
 			} else {
-(void) fprintf(stderr, _("%s: wild -c argument %s\n"),
+				fprintf(stderr, _("%s: wild -c argument %s\n"),
 					progname, cutarg);
 				exit(EXIT_FAILURE);
 			}
@@ -418,14 +418,14 @@ main(int argc, char *argv[])
 					cuthitime = hi;
 				}
 			} else {
-				(void) fprintf(stderr,
+				fprintf(stderr,
 					_("%s: wild -t argument %s\n"),
 					progname, cuttimes);
 				exit(EXIT_FAILURE);
 			}
 		}
 	}
-	(void) time(&now);
+	now = time(NULL);
 	longest = 0;
 	for (i = optind; i < argc; ++i)
 		if (strlen(argv[i]) > longest)
@@ -439,11 +439,11 @@ main(int argc, char *argv[])
 		fakeenv = malloc((i + 2) * sizeof *fakeenv);
 		if (fakeenv == NULL
 		    || (fakeenv[0] = malloc(longest + 4)) == NULL) {
-					(void) perror(progname);
-					exit(EXIT_FAILURE);
+		  perror(progname);
+		  exit(EXIT_FAILURE);
 		}
 		to = 0;
-		(void) strcpy(fakeenv[to++], "TZ=");
+		strcpy(fakeenv[to++], "TZ=");
 		for (from = 0; environ[from] != NULL; ++from)
 			if (strncmp(environ[from], "TZ=", 3) != 0)
 				fakeenv[to++] = environ[from];
@@ -453,7 +453,7 @@ main(int argc, char *argv[])
 	for (i = optind; i < argc; ++i) {
 		static char	buf[MAX_STRING_LENGTH];
 
-		(void) strcpy(&fakeenv[0][3], argv[i]);
+		strcpy(&fakeenv[0][3], argv[i]);
 		if (! (vflag | Vflag)) {
 			show(argv[i], now, FALSE);
 			continue;
@@ -470,7 +470,7 @@ main(int argc, char *argv[])
 		tmp = my_localtime(&t);
 		if (tmp != NULL) {
 			tm = *tmp;
-			(void) strncpy(buf, abbr(&tm), (sizeof buf) - 1);
+			strncpy(buf, abbr(&tm), (sizeof buf) - 1);
 		}
 		for ( ; ; ) {
 			newt = (t < absolute_max_time - SECSPERDAY / 2
@@ -489,7 +489,7 @@ main(int argc, char *argv[])
 					newtmp = localtime(&newt);
 					if (newtmp != NULL) {
 						newtm = *newtmp;
-						(void) strncpy(buf,
+						strncpy(buf,
 							abbr(&newtm),
 							(sizeof buf) - 1);
 					}
@@ -507,8 +507,8 @@ main(int argc, char *argv[])
 		}
 	}
 	if (fflush(stdout) || ferror(stdout)) {
-		(void) fprintf(stderr, "%s: ", progname);
-		(void) perror(_("Error writing to standard output"));
+		fprintf(stderr, "%s: ", progname);
+		perror(_("Error writing to standard output"));
 		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
@@ -572,7 +572,7 @@ hunt(char *name, time_t lot, time_t hit)
 	lotmp = my_localtime(&lot);
 	if (lotmp != NULL) {
 		lotm = *lotmp;
-		(void) strncpy(loab, abbr(&lotm), (sizeof loab) - 1);
+		strncpy(loab, abbr(&lotm), (sizeof loab) - 1);
 	}
 	for ( ; ; ) {
 		time_t diff = hit - lot;
@@ -631,30 +631,30 @@ show(char *zone, time_t t, int v)
 {
 	register struct tm *	tmp;
 
-	(void) printf("%-*s  ", (int) longest, zone);
+	printf("%-*s  ", (int) longest, zone);
 	if (v) {
 		tmp = gmtime(&t);
 		if (tmp == NULL) {
-			(void) printf(tformat(), t);
+			printf(tformat(), t);
 		} else {
 			dumptime(tmp);
-			(void) printf(" UT");
+			printf(" UT");
 		}
-		(void) printf(" = ");
+		printf(" = ");
 	}
 	tmp = my_localtime(&t);
 	dumptime(tmp);
 	if (tmp != NULL) {
 		if (*abbr(tmp) != '\0')
-			(void) printf(" %s", abbr(tmp));
+			printf(" %s", abbr(tmp));
 		if (v) {
-			(void) printf(" isdst=%d", tmp->tm_isdst);
+			printf(" isdst=%d", tmp->tm_isdst);
 #ifdef TM_GMTOFF
-			(void) printf(" gmtoff=%ld", tmp->TM_GMTOFF);
+			printf(" gmtoff=%ld", tmp->TM_GMTOFF);
 #endif /* defined TM_GMTOFF */
 		}
 	}
-	(void) printf("\n");
+	printf("\n");
 	if (tmp != NULL && *abbr(tmp) != '\0')
 		abbrok(abbr(tmp), zone);
 }
@@ -715,7 +715,7 @@ dumptime(register const struct tm *timeptr)
 	register int		trail;
 
 	if (timeptr == NULL) {
-		(void) printf("NULL");
+		printf("NULL");
 		return;
 	}
 	/*
@@ -731,7 +731,7 @@ dumptime(register const struct tm *timeptr)
 		(int) (sizeof mon_name / sizeof mon_name[0]))
 			mn = "???";
 	else		mn = mon_name[timeptr->tm_mon];
-	(void) printf("%.3s %.3s%3d %.2d:%.2d:%.2d ",
+	printf("%.3s %.3s%3d %.2d:%.2d:%.2d ",
 		wn, mn,
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec);
@@ -748,6 +748,6 @@ dumptime(register const struct tm *timeptr)
 		++lead;
 	}
 	if (lead == 0)
-		(void) printf("%d", trail);
-	else	(void) printf("%d%d", lead, ((trail < 0) ? -trail : trail));
+		printf("%d", trail);
+	else	printf("%d%d", lead, ((trail < 0) ? -trail : trail));
 }

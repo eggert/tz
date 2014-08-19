@@ -21,7 +21,7 @@ icatalloc(char *const old, const char *const new)
 	else	oldsize = strlen(old);
 	if ((result = realloc(old, oldsize + newsize + 1)) != NULL)
 		if (new != NULL)
-			(void) strcpy(result + oldsize, new);
+			strcpy(result + oldsize, new);
 	return result;
 }
 

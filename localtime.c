@@ -1134,11 +1134,11 @@ tzparse(const char *name, register struct state *const sp,
 	if ((size_t) sp->charcnt > sizeof sp->chars)
 		return -1;
 	cp = sp->chars;
-	(void) strncpy(cp, stdname, stdlen);
+	strncpy(cp, stdname, stdlen);
 	cp += stdlen;
 	*cp++ = '\0';
 	if (dstlen != 0) {
-		(void) strncpy(cp, dstname, dstlen);
+		strncpy(cp, dstname, dstlen);
 		*(cp + dstlen) = '\0';
 	}
 	return 0;
@@ -1148,7 +1148,7 @@ static void
 gmtload(struct state *const sp)
 {
 	if (tzload(gmt, sp, TRUE) != 0)
-		(void) tzparse(gmt, sp, TRUE);
+		tzparse(gmt, sp, TRUE);
 }
 
 static void

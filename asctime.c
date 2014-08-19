@@ -99,11 +99,11 @@ asctime_r(register const struct tm *timeptr, char *buf)
 	** Assume that strftime is unaffected by other out-of-range members
 	** (e.g., timeptr->tm_mday) when processing "%Y".
 	*/
-	(void) strftime(year, sizeof year, "%Y", timeptr);
+	strftime(year, sizeof year, "%Y", timeptr);
 	/*
 	** We avoid using snprintf since it's not available on all systems.
 	*/
-	(void) sprintf(result,
+	sprintf(result,
 		((strlen(year) <= 4) ? ASCTIME_FMT : ASCTIME_FMT_B),
 		wn, mn,
 		timeptr->tm_mday, timeptr->tm_hour,

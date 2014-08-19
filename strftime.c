@@ -129,18 +129,18 @@ strftime(char * const s, const size_t maxsize, const char *const format,
 	p = _fmt(((format == NULL) ? "%c" : format), t, s, s + maxsize, &warn);
 #ifndef NO_RUN_TIME_WARNINGS_ABOUT_YEAR_2000_PROBLEMS_THANK_YOU
 	if (warn != IN_NONE && getenv(YEAR_2000_NAME) != NULL) {
-		(void) fprintf(stderr, "\n");
+		fprintf(stderr, "\n");
 		if (format == NULL)
-			(void) fprintf(stderr, "NULL strftime format ");
-		else	(void) fprintf(stderr, "strftime format \"%s\" ",
+			fprintf(stderr, "NULL strftime format ");
+		else	fprintf(stderr, "strftime format \"%s\" ",
 				format);
-		(void) fprintf(stderr, "yields only two digits of years in ");
+		fprintf(stderr, "yields only two digits of years in ");
 		if (warn == IN_SOME)
-			(void) fprintf(stderr, "some locales");
+			fprintf(stderr, "some locales");
 		else if (warn == IN_THIS)
-			(void) fprintf(stderr, "the current locale");
-		else	(void) fprintf(stderr, "all locales");
-		(void) fprintf(stderr, "\n");
+			fprintf(stderr, "the current locale");
+		else	fprintf(stderr, "all locales");
+		fprintf(stderr, "\n");
 	}
 #endif /* !defined NO_RUN_TIME_WARNINGS_ABOUT_YEAR_2000_PROBLEMS_THANK_YOU */
 	if (p == s + maxsize)
@@ -311,9 +311,9 @@ label:
 					tm = *t;
 					mkt = mktime(&tm);
 					if (TYPE_SIGNED(time_t))
-						(void) sprintf(buf, "%"PRIdMAX,
+						sprintf(buf, "%"PRIdMAX,
 							(intmax_t) mkt);
-					else	(void) sprintf(buf, "%"PRIuMAX,
+					else	sprintf(buf, "%"PRIuMAX,
 							(uintmax_t) mkt);
 					pt = _add(buf, pt, ptlim);
 				}
@@ -564,7 +564,7 @@ _conv(const int n, const char *const format, char *const pt,
 {
 	char	buf[INT_STRLEN_MAXIMUM(int) + 1];
 
-	(void) sprintf(buf, format, n);
+	sprintf(buf, format, n);
 	return _add(buf, pt, ptlim);
 }
 
@@ -660,14 +660,14 @@ _loc(void)
 		((sizeof locale_home) + namesize + (sizeof lc_time)))
 			goto no_locale;
 	oldsun = 0;
-	(void) sprintf(filename, "%s/%s/%s", locale_home, name, lc_time);
+	sprintf(filename, "%s/%s/%s", locale_home, name, lc_time);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0) {
 		/*
 		** Old Sun systems have a different naming and data convention.
 		*/
 		oldsun = 1;
-		(void) sprintf(filename, "%s/%s/%s", locale_home,
+		sprintf(filename, "%s/%s/%s", locale_home,
 			lc_time, name);
 		fd = open(filename, O_RDONLY);
 		if (fd < 0)
@@ -682,7 +682,7 @@ _loc(void)
 	lbuf = (lbuf == NULL) ? malloc(bufsize) : realloc(lbuf, bufsize);
 	if (lbuf == NULL)
 		goto bad_locale;
-	(void) strcpy(lbuf, name);
+	strcpy(lbuf, name);
 	p = lbuf + namesize;
 	plim = p + st.st_size;
 	if (read(fd, p, st.st_size) != st.st_size)
@@ -725,7 +725,7 @@ _loc(void)
 bad_lbuf:
 	free(lbuf);
 bad_locale:
-	(void) close(fd);
+	close(fd);
 no_locale:
 	localebuf = C_time_locale;
 	locale_buf = NULL;

@@ -41,6 +41,12 @@ Unreleased, experimental changes
 
   Changes affecting code
 
+    Some crashes have been fixed when the tz library is given a
+    compiled time zone file containing invalid or outlandish data.
+
+    The tz library no longer mishandles leap seconds on platforms with
+    unsigned time_t in time zones that lack ordinary transitions after 1970.
+
     The tz library is now thread-safe if compiled with THREAD_SAFE defined.
     Although not needed for tz's own applications, which are single-threaded,
     this supports POSIX better if the tz library is used in multithreaded apps.

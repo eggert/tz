@@ -368,33 +368,33 @@ tzload(register const char *name, register struct state *const sp,
 	if (close(fid) < 0 || nread <= 0)
 		goto oops;
 	for (stored = 4; stored <= 8; stored *= 2) {
-		int		ttisstdcnt;
-		int		ttisgmtcnt;
-		int		timecnt;
-
-		ttisstdcnt = (int) detzcode(up->tzhead.tzh_ttisstdcnt);
-		ttisgmtcnt = (int) detzcode(up->tzhead.tzh_ttisgmtcnt);
-		sp->leapcnt = (int) detzcode(up->tzhead.tzh_leapcnt);
-		sp->timecnt = (int) detzcode(up->tzhead.tzh_timecnt);
-		sp->typecnt = (int) detzcode(up->tzhead.tzh_typecnt);
-		sp->charcnt = (int) detzcode(up->tzhead.tzh_charcnt);
+		int_fast32_t ttisstdcnt = detzcode(up->tzhead.tzh_ttisstdcnt);
+		int_fast32_t ttisgmtcnt = detzcode(up->tzhead.tzh_ttisgmtcnt);
+		int_fast32_t leapcnt = detzcode(up->tzhead.tzh_leapcnt);
+		int_fast32_t timecnt = detzcode(up->tzhead.tzh_timecnt);
+		int_fast32_t typecnt = detzcode(up->tzhead.tzh_typecnt);
+		int_fast32_t charcnt = detzcode(up->tzhead.tzh_charcnt);
 		p = up->tzhead.tzh_charcnt + sizeof up->tzhead.tzh_charcnt;
-		if (sp->leapcnt < 0 || sp->leapcnt > TZ_MAX_LEAPS ||
-			sp->typecnt <= 0 || sp->typecnt > TZ_MAX_TYPES ||
-			sp->timecnt < 0 || sp->timecnt > TZ_MAX_TIMES ||
-			sp->charcnt < 0 || sp->charcnt > TZ_MAX_CHARS ||
-			(ttisstdcnt != sp->typecnt && ttisstdcnt != 0) ||
-			(ttisgmtcnt != sp->typecnt && ttisgmtcnt != 0))
+		if (! (0 <= leapcnt && leapcnt < TZ_MAX_LEAPS
+		       && 0 < typecnt && typecnt < TZ_MAX_TYPES
+		       && 0 <= timecnt && timecnt < TZ_MAX_TIMES
+		       && 0 <= charcnt && charcnt < TZ_MAX_CHARS
+		       && (ttisstdcnt == typecnt || ttisstdcnt == 0)
+		       && (ttisgmtcnt == typecnt || ttisgmtcnt == 0)))
 				goto oops;
-		if (nread - (p - up->buf) <
-			sp->timecnt * stored +		/* ats */
-			sp->timecnt +			/* types */
-			sp->typecnt * 6 +		/* ttinfos */
-			sp->charcnt +			/* chars */
-			sp->leapcnt * (stored + 4) +	/* lsinfos */
-			ttisstdcnt +			/* ttisstds */
-			ttisgmtcnt)			/* ttisgmts */
+		if (nread - (p - up->buf)
+		    < (timecnt * stored		/* ats */
+		       + timecnt		/* types */
+		       + typecnt * 6		/* ttinfos */
+		       + charcnt		/* chars */
+		       + leapcnt * (stored + 4)	/* lsinfos */
+		       + ttisstdcnt		/* ttisstds */
+		       + ttisgmtcnt))		/* ttisgmts */
 				goto oops;
+		sp->leapcnt = leapcnt;
+		sp->timecnt = timecnt;
+		sp->typecnt = typecnt;
+		sp->charcnt = charcnt;
 
 		/* Read transitions, discarding those out of time_t range.
 		   But pretend the last transition before time_t_min
@@ -430,31 +430,46 @@ tzload(register const char *name, register struct state *const sp,
 		sp->timecnt = timecnt;
 		for (i = 0; i < sp->typecnt; ++i) {
 			register struct ttinfo *	ttisp;
+			unsigned char isdst, abbrind;
 
 			ttisp = &sp->ttis[i];
 			ttisp->tt_gmtoff = detzcode(p);
 			p += 4;
-			ttisp->tt_isdst = (unsigned char) *p++;
-			if (ttisp->tt_isdst != 0 && ttisp->tt_isdst != 1)
-				goto oops;
-			ttisp->tt_abbrind = (unsigned char) *p++;
-			if (ttisp->tt_abbrind < 0 ||
-				ttisp->tt_abbrind > sp->charcnt)
-					goto oops;
+			isdst = *p++;
+			if (! (isdst < 2))
+			  goto oops;
+			ttisp->tt_isdst = isdst;
+			abbrind = *p++;
+			if (! (abbrind < sp->charcnt))
+			  goto oops;
+			ttisp->tt_abbrind = abbrind;
 		}
 		for (i = 0; i < sp->charcnt; ++i)
 			sp->chars[i] = *p++;
 		sp->chars[i] = '\0';	/* ensure '\0' at end */
-		for (i = 0; i < sp->leapcnt; ++i) {
-			register struct lsinfo *	lsisp;
 
-			lsisp = &sp->lsis[i];
-			lsisp->ls_trans = (stored == 4) ?
-				detzcode(p) : detzcode64(p);
-			p += stored;
-			lsisp->ls_corr = detzcode(p);
-			p += 4;
+		/* Read leap seconds, discarding those out of time_t range.  */
+		leapcnt = 0;
+		for (i = 0; i < sp->leapcnt; ++i) {
+		  int_fast64_t tr = stored == 4 ? detzcode(p) : detzcode64(p);
+		  int_fast32_t corr = detzcode(p + stored);
+		  p += stored + 4;
+		  if (tr <= time_t_max) {
+		    time_t trans
+		      = ((TYPE_SIGNED(time_t) ? tr < time_t_min : tr < 0)
+			 ? time_t_min : tr);
+		    if (leapcnt && trans <= sp->lsis[leapcnt - 1].ls_trans) {
+		      if (trans < sp->lsis[leapcnt - 1].ls_trans)
+			goto oops;
+		      leapcnt--;
+		    }
+		    sp->lsis[leapcnt].ls_trans = trans;
+		    sp->lsis[leapcnt].ls_corr = corr;
+		    leapcnt++;
+		  }
 		}
+		sp->leapcnt = leapcnt;
+
 		for (i = 0; i < sp->typecnt; ++i) {
 			register struct ttinfo *	ttisp;
 

@@ -4,7 +4,7 @@ Unreleased, experimental changes
 
   Changes affecting future time stamps
 
-    Turks & Caicos is switching from US eastern time to UTC+4 year-round,
+    Turks & Caicos is switching from US eastern time to UTC-4 year-round,
     modeled as a switch from EST/EDT to AST on 2014-11-02 at 02:00.
 
   Changes affecting past time stamps

@@ -408,7 +408,9 @@ tzload(register const char *name, register struct state *const sp,
 			  time_t attime
 			    = ((TYPE_SIGNED(time_t) ? at < time_t_min : at < 0)
 			       ? time_t_min : at);
-			  if (timecnt && sp->ats[timecnt - 1] == attime) {
+			  if (timecnt && attime <= sp->ats[timecnt - 1]) {
+			    if (attime < sp->ats[timecnt - 1])
+			      goto oops;
 			    sp->types[i - 1] = 0;
 			    timecnt--;
 			  }

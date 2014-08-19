@@ -1298,15 +1298,15 @@ localsub(const time_t *const timep, const int_fast32_t offset,
 					return NULL;	/* "cannot happen" */
 			result = localsub(&newt, offset, tmp);
 			if (result == tmp) {
-				register time_t	newy;
+				register int_fast64_t newy;
 
 				newy = tmp->tm_year;
 				if (t < sp->ats[0])
 					newy -= years;
 				else	newy += years;
-				tmp->tm_year = newy;
-				if (tmp->tm_year != newy)
+				if (! (INT_MIN <= newy && newy <= INT_MAX))
 					return NULL;
+				tmp->tm_year = newy;
 			}
 			return result;
 	}
@@ -1762,9 +1762,9 @@ time2sub(struct tm *const tmp,
 	}
 	if (increment_overflow32(&y, -TM_YEAR_BASE))
 		return WRONG;
-	yourtm.tm_year = y;
-	if (yourtm.tm_year != y)
+	if (! (INT_MIN <= y && y <= INT_MAX))
 		return WRONG;
+	yourtm.tm_year = y;
 	if (yourtm.tm_sec >= 0 && yourtm.tm_sec < SECSPERMIN)
 		saved_seconds = 0;
 	else if (y + TM_YEAR_BASE < EPOCH_YEAR) {

@@ -24,6 +24,7 @@
 #include "time.h"	/* for struct tm */
 #include "stdlib.h"	/* for exit, malloc, atoi */
 #include "limits.h"	/* for CHAR_BIT, LLONG_MAX */
+#include <errno.h>
 
 /*
 ** Substitutes for pre-C99 compilers.
@@ -206,6 +207,7 @@ static time_t const absolute_max_time =
 static size_t	longest;
 static char *	progname;
 static int	warned;
+static int	errout;
 
 static char *abbr(struct tm *);
 static intmax_t	delta(struct tm *, struct tm *) ATTRIBUTE_PURE;
@@ -264,6 +266,7 @@ my_localtime(time_t *tp)
 			fprintf(stderr, " -> ");
 			fprintf(stderr, tformat(), t);
 			fprintf(stderr, "\n");
+			errout = TRUE;
 		}
 	}
 	return tmp;
@@ -302,7 +305,19 @@ abbrok(const char *const abbrp, const char *const zone)
 	fprintf(stderr,
 		_("%s: warning: zone \"%s\" abbreviation \"%s\" %s\n"),
 		progname, zone, abbrp, wp);
-	warned = TRUE;
+	warned = errout = TRUE;
+}
+
+static void
+close_file(FILE *stream)
+{
+  char const *e = (ferror(stream) ? _("I/O error")
+		   : fclose(stream) != 0 ? strerror(errno) : NULL);
+  if (e) {
+    fprintf(stderr, "%s: ", progname);
+    fprintf(stderr, "%s\n", e);
+    exit(EXIT_FAILURE);
+  }
 }
 
 static void
@@ -313,6 +328,8 @@ _("%s: usage: %s [--version] [--help] [-{vV}] [-{ct} [lo,]hi] zonename ...\n"
   "\n"
   "Report bugs to %s.\n"),
 		       progname, progname, REPORT_BUGS_TO);
+	if (status == EXIT_SUCCESS)
+	  close_file(stream);
 	exit(status);
 }
 
@@ -348,7 +365,7 @@ main(int argc, char *argv[])
 	for (i = 1; i < argc; ++i)
 		if (strcmp(argv[i], "--version") == 0) {
 			printf("zdump %s%s\n", PKGVERSION, TZVERSION);
-			exit(EXIT_SUCCESS);
+			return EXIT_SUCCESS;
 		} else if (strcmp(argv[i], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
 		}
@@ -388,7 +405,7 @@ main(int argc, char *argv[])
 			} else {
 				fprintf(stderr, _("%s: wild -c argument %s\n"),
 					progname, cutarg);
-				exit(EXIT_FAILURE);
+				return EXIT_FAILURE;
 			}
 		}
 		if (cutarg != NULL || cuttimes == NULL) {
@@ -421,7 +438,7 @@ main(int argc, char *argv[])
 				fprintf(stderr,
 					_("%s: wild -t argument %s\n"),
 					progname, cuttimes);
-				exit(EXIT_FAILURE);
+				return EXIT_FAILURE;
 			}
 		}
 	}
@@ -440,7 +457,7 @@ main(int argc, char *argv[])
 		if (fakeenv == NULL
 		    || (fakeenv[0] = malloc(longest + 4)) == NULL) {
 		  perror(progname);
-		  exit(EXIT_FAILURE);
+		  return EXIT_FAILURE;
 		}
 		to = 0;
 		strcpy(fakeenv[to++], "TZ=");
@@ -506,14 +523,10 @@ main(int argc, char *argv[])
 			show(argv[i], t, TRUE);
 		}
 	}
-	if (fflush(stdout) || ferror(stdout)) {
-		fprintf(stderr, "%s: ", progname);
-		perror(_("Error writing to standard output"));
-		exit(EXIT_FAILURE);
-	}
-	exit(EXIT_SUCCESS);
-	/* If exit fails to exit... */
-	return EXIT_FAILURE;
+	close_file(stdout);
+	if (errout && (ferror(stderr) || fclose(stderr) != 0))
+	  return EXIT_FAILURE;
+	return EXIT_SUCCESS;
 }
 
 static time_t

@@ -3117,16 +3117,22 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15 # St Pierre
 # Shanks & Pottenger say they use US DST rules, but IATA SSIM (1991/1998)
 # says they switch at midnight.  Go with Shanks & Pottenger.
 #
+# From Paul Eggert (2014-08-19):
+# The 2014-08-13 Cabinet meeting decided to stay on UTC-4 year-round.  See:
+# http://tcweeklynews.com/daylight-savings-time-to-be-maintained-p5353-127.htm
+# Model this as a switch from EST/EDT to AST on 2014-11-02 at 02:00.
+#
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	TC	1979	1986	-	Apr	lastSun	2:00	1:00	D
 Rule	TC	1979	2006	-	Oct	lastSun	2:00	0	S
 Rule	TC	1987	2006	-	Apr	Sun>=1	2:00	1:00	D
-Rule	TC	2007	max	-	Mar	Sun>=8	2:00	1:00	D
-Rule	TC	2007	max	-	Nov	Sun>=1	2:00	0	S
+Rule	TC	2007	2014	-	Mar	Sun>=8	2:00	1:00	D
+Rule	TC	2007	2014	-	Nov	Sun>=1	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Grand_Turk	-4:44:32 -	LMT	1890
 			-5:07:11 -	KMT	1912 Feb # Kingston Mean Time
-			-5:00	TC	E%sT
+			-5:00	TC	E%sT	2014 Nov  2  2:00
+			-4:00	-	AST
 
 # British Virgin Is
 # Virgin Is

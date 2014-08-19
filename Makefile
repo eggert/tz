@@ -568,6 +568,7 @@ check_time_t_alternatives:
 		  make clean_misc && \
 		  make TOPDIR=`pwd`/tzpublic/$$type \
 		    CFLAGS='$(CFLAGS) -Dtime_tz='"'$$type'" \
+		    REDO='$(REDO)' \
 		    install && \
 		  diff -qr tzpublic/int64_t/etc/zoneinfo tzpublic/$$type/etc/zoneinfo && \
 		  case $$type in \

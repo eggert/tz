@@ -314,8 +314,7 @@ close_file(FILE *stream)
   char const *e = (ferror(stream) ? _("I/O error")
 		   : fclose(stream) != 0 ? strerror(errno) : NULL);
   if (e) {
-    fprintf(stderr, "%s: ", progname);
-    fprintf(stderr, "%s\n", e);
+    fprintf(stderr, "%s: %s\n", progname, e);
     exit(EXIT_FAILURE);
   }
 }

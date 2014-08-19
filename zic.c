@@ -135,6 +135,7 @@ static int	yearistype(int year, const char * type);
 
 static int		charcnt;
 static int		errors;
+static int		warnings;
 static const char *	filename;
 static int		leapcnt;
 static int		leapseen;
@@ -364,7 +365,7 @@ static ATTRIBUTE_PURE size_t
 size_product(size_t nitems, size_t itemsize)
 {
 	if (SIZE_MAX / itemsize < nitems)
-		memory_exhausted("size overflow");
+		memory_exhausted(_("size overflow"));
 	return nitems * itemsize;
 }
 
@@ -389,7 +390,7 @@ growalloc(void *ptr, size_t itemsize, int nitems, int *nitems_alloc)
 	else {
 		int amax = INT_MAX < SIZE_MAX ? INT_MAX : SIZE_MAX;
 		if ((amax - 1) / 3 * 2 < *nitems_alloc)
-			memory_exhausted("int overflow");
+			memory_exhausted(_("int overflow"));
 		*nitems_alloc = *nitems_alloc + (*nitems_alloc >> 1) + 1;
 		return erealloc(ptr, size_product(*nitems_alloc, itemsize));
 	}
@@ -429,7 +430,6 @@ verror(const char *const string, va_list args)
 		fprintf(stderr, _(" (rule from \"%s\", line %d)"),
 			rfilename, rlinenum);
 	fprintf(stderr, "\n");
-	++errors;
 }
 
 static void ATTRIBUTE_FORMAT((printf, 1, 2))
@@ -439,6 +439,7 @@ error(const char *const string, ...)
 	va_start(args, string);
 	verror(string, args);
 	va_end(args);
+	errors = 1;
 }
 
 static void ATTRIBUTE_FORMAT((printf, 1, 2))
@@ -449,19 +450,35 @@ warning(const char *const string, ...)
 	va_start(args, string);
 	verror(string, args);
 	va_end(args);
-	--errors;
+	warnings = 1;
+}
+
+static void
+close_file(FILE *stream, char const *name)
+{
+  char const *e = (ferror(stream) ? _("I/O error")
+		   : fclose(stream) != 0 ? strerror(errno) : NULL);
+  if (e) {
+    fprintf(stderr, "%s: ", progname);
+    if (name)
+      fprintf(stderr, "%s: ", name);
+    fprintf(stderr, "%s\n", e);
+    exit(EXIT_FAILURE);
+  }
 }
 
 static _Noreturn void
 usage(FILE *stream, int status)
 {
-	fprintf(stream, _("%s: usage is %s \
-[ --version ] [ --help ] [ -v ] [ -l localtime ] [ -p posixrules ] \\\n\
-\t[ -d directory ] [ -L leapseconds ] [ -y yearistype ] [ filename ... ]\n\
-\n\
-Report bugs to %s.\n"),
-		       progname, progname, REPORT_BUGS_TO);
-	exit(status);
+  fprintf(stream,
+	  _("%s: usage is %s [ --version ] [ --help ] [ -v ] \\\n"
+	    "\t[ -l localtime ] [ -p posixrules ] [ -d directory ] \\\n"
+	    "\t[ -L leapseconds ] [ -y yearistype ] [ filename ... ]\n\n"
+	    "Report bugs to %s.\n"),
+	  progname, progname, REPORT_BUGS_TO);
+  if (status == EXIT_SUCCESS)
+    close_file(stream, NULL);
+  exit(status);
 }
 
 static const char *	psxrules;
@@ -491,12 +508,13 @@ main(int argc, char **argv)
 	if (TYPE_BIT(zic_t) < 64) {
 		fprintf(stderr, "%s: %s\n", progname,
 			_("wild compilation-time specification of zic_t"));
-		exit(EXIT_FAILURE);
+		return EXIT_FAILURE;
 	}
 	for (i = 1; i < argc; ++i)
 		if (strcmp(argv[i], "--version") == 0) {
 			printf("zic %s%s\n", PKGVERSION, TZVERSION);
-			exit(EXIT_SUCCESS);
+			close_file(stdout, NULL);
+			return EXIT_SUCCESS;
 		} else if (strcmp(argv[i], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
 		}
@@ -511,7 +529,7 @@ main(int argc, char **argv)
 					fprintf(stderr,
 _("%s: More than one -d option specified\n"),
 						progname);
-					exit(EXIT_FAILURE);
+					return EXIT_FAILURE;
 				}
 				break;
 			case 'l':
@@ -521,7 +539,7 @@ _("%s: More than one -d option specified\n"),
 					fprintf(stderr,
 _("%s: More than one -l option specified\n"),
 						progname);
-					exit(EXIT_FAILURE);
+					return EXIT_FAILURE;
 				}
 				break;
 			case 'p':
@@ -531,7 +549,7 @@ _("%s: More than one -l option specified\n"),
 					fprintf(stderr,
 _("%s: More than one -p option specified\n"),
 						progname);
-					exit(EXIT_FAILURE);
+					return EXIT_FAILURE;
 				}
 				break;
 			case 'y':
@@ -541,7 +559,7 @@ _("%s: More than one -p option specified\n"),
 					fprintf(stderr,
 _("%s: More than one -y option specified\n"),
 						progname);
-					exit(EXIT_FAILURE);
+					return EXIT_FAILURE;
 				}
 				break;
 			case 'L':
@@ -551,14 +569,14 @@ _("%s: More than one -y option specified\n"),
 					fprintf(stderr,
 _("%s: More than one -L option specified\n"),
 						progname);
-					exit(EXIT_FAILURE);
+					return EXIT_FAILURE;
 				}
 				break;
 			case 'v':
 				noise = TRUE;
 				break;
 			case 's':
-				printf("%s: -s ignored\n", progname);
+				warning(_("-s ignored\n"));
 				break;
 		}
 	if (optind == argc - 1 && strcmp(argv[optind], "=") == 0)
@@ -576,7 +594,7 @@ _("%s: More than one -L option specified\n"),
 	for (i = optind; i < argc; ++i)
 		infile(argv[i]);
 	if (errors)
-		exit(EXIT_FAILURE);
+		return EXIT_FAILURE;
 	associate();
 	for (i = 0; i < nzones; i = j) {
 		/*
@@ -599,14 +617,16 @@ _("%s: More than one -L option specified\n"),
 						warning(_("link to link"));
 	}
 	if (lcltime != NULL) {
-		eat("command line", 1);
+		eat(_("command line"), 1);
 		dolink(lcltime, TZDEFAULT);
 	}
 	if (psxrules != NULL) {
-		eat("command line", 1);
+		eat(_("command line"), 1);
 		dolink(psxrules, TZDEFRULES);
 	}
-	return (errors == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
+	if (warnings && (ferror(stderr) || fclose(stderr) != 0))
+	  return EXIT_FAILURE;
+	return errors ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 
 static void
@@ -695,9 +715,9 @@ dolink(const char *const fromfield, const char *const tofield)
 	*/
 	fromisdir = itsdir(fromname);
 	if (fromisdir) {
-		int err = fromisdir < 0 ? errno : EPERM;
+		char const *e = strerror(fromisdir < 0 ? errno : EPERM);
 		fprintf(stderr, _("%s: link from %s failed: %s"),
-			progname, fromname, strerror(err));
+			progname, fromname, e);
 		exit(EXIT_FAILURE);
 	}
 	if (itsdir(toname) <= 0)
@@ -753,18 +773,8 @@ warning(_("hard link failed, symbolic link used"));
 			}
 			while ((c = getc(fp)) != EOF)
 				putc(c, tp);
-			if (ferror(fp) || fclose(fp)) {
-				fprintf(stderr,
-					       _("%s: Error reading %s\n"),
-					       progname, fromname);
-				exit(EXIT_FAILURE);
-			}
-			if (ferror(tp) || fclose(tp)) {
-				fprintf(stderr,
-					       _("%s: Error writing %s\n"),
-					       progname, toname);
-				exit(EXIT_FAILURE);
-			}
+			close_file(fp, fromname);
+			close_file(tp, toname);
 			warning(_("link failed, copy used"));
 		}
 	}
@@ -981,7 +991,7 @@ infile(const char *name)
 					break;
 				case LC_LEAP:
 					if (name != leapsec)
-						fprintf(stderr,
+						warning(
 _("%s: Leap line in non leap seconds file %s\n"),
 							progname, name);
 					else	inleap(fields, nfields);
@@ -996,18 +1006,7 @@ _("%s: panic: Invalid l_value %d\n"),
 		}
 		free(fields);
 	}
-	if (ferror(fp)) {
-		fprintf(stderr, _("%s: Error reading %s\n"),
-			progname, filename);
-		exit(EXIT_FAILURE);
-	}
-	if (fp != stdin && fclose(fp)) {
-		const char *e = strerror(errno);
-
-		fprintf(stderr, _("%s: Error closing %s: %s\n"),
-			progname, filename, e);
-		exit(EXIT_FAILURE);
-	}
+	close_file(fp, filename);
 	if (wantcont)
 		error(_("expected continuation line not found"));
 }
@@ -1850,11 +1849,7 @@ writezone(const char *const name, const char *const string, char version)
 				putc(ttisgmts[i], fp);
 	}
 	fprintf(fp, "\n%s\n", string);
-	if (ferror(fp) || fclose(fp)) {
-		fprintf(stderr, _("%s: Error writing %s\n"),
-			progname, fullname);
-		exit(EXIT_FAILURE);
-	}
+	close_file(fp, fullname);
 	free(ats);
 }
 
@@ -2920,10 +2915,10 @@ mkdirs(char *argname)
 		if (mkdir(name, MKDIR_UMASK) != 0) {
 			int err = errno;
 			if (itsdir(name) <= 0) {
-				fprintf(stderr,
-					       _("%s: Can't create directory"
-						 " %s: %s\n"),
-					       progname, name, strerror(err));
+				char const *e = strerror(err);
+				warning(_("%s: Can't create directory"
+					  " %s: %s\n"),
+					progname, name, e);
 				free(name);
 				return -1;
 			}

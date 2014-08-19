@@ -395,28 +395,28 @@ tzload(register const char *name, register struct state *const sp,
 			ttisstdcnt +			/* ttisstds */
 			ttisgmtcnt)			/* ttisgmts */
 				goto oops;
+
+		/* Read transitions, discarding those out of time_t range.
+		   But pretend the last transition before time_t_min
+		   occurred at time_t_min.  */
 		timecnt = 0;
 		for (i = 0; i < sp->timecnt; ++i) {
 			int_fast64_t at
 			  = stored == 4 ? detzcode(p) : detzcode64(p);
-			sp->types[i] = ((TYPE_SIGNED(time_t)
-					 ? time_t_min <= at
-					 : 0 <= at)
-					&& at <= time_t_max);
+			sp->types[i] = at <= time_t_max;
 			if (sp->types[i]) {
-				if (i && !timecnt && at != time_t_min) {
-					/*
-					** Keep the earlier record, but tweak
-					** it so that it starts with the
-					** minimum time_t value.
-					*/
-					sp->types[i - 1] = 1;
-					sp->ats[timecnt++] = time_t_min;
-				}
-				sp->ats[timecnt++] = at;
+			  time_t attime
+			    = ((TYPE_SIGNED(time_t) ? at < time_t_min : at < 0)
+			       ? time_t_min : at);
+			  if (timecnt && sp->ats[timecnt - 1] == attime) {
+			    sp->types[i - 1] = 0;
+			    timecnt--;
+			  }
+			  sp->ats[timecnt++] = attime;
 			}
 			p += stored;
 		}
+
 		timecnt = 0;
 		for (i = 0; i < sp->timecnt; ++i) {
 			unsigned char typ = *p++;

@@ -144,7 +144,7 @@ typedef long long	int_fast64_t;
 #  define INT_FAST64_MIN LLONG_MIN
 #  define INT_FAST64_MAX LLONG_MAX
 # else
-#  define INT_FAST64_MIN __LONG_LONG_MIN__
+#  define INT_FAST64_MIN (-1 - __LONG_LONG_MAX__)
 #  define INT_FAST64_MAX __LONG_LONG_MAX__
 # endif
 # define SCNdFAST64 "lld"
@@ -182,7 +182,7 @@ typedef long long intmax_t;
 #   define INTMAX_MIN LLONG_MIN
 #  else
 #   define INTMAX_MAX __LONG_LONG_MAX__
-#   define INTMAX_MIN __LONG_LONG_MIN__
+#   define INTMAX_MIN (-1 - __LONG_LONG_MAX__)
 #  endif
 # else
 typedef long intmax_t;

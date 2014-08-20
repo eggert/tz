@@ -161,25 +161,12 @@ GCC_DEBUG_FLAGS = -Dlint -g3 -O3 -fno-common -fstrict-aliasing \
 # (or if you decide to add such a field in your system's "time.h" file),
 # add the name to a define such as
 #	-DTM_GMTOFF=tm_gmtoff
-# or
-#	-DTM_GMTOFF=_tm_gmtoff
-# to the end of the "CFLAGS=" line.
-# Neither tm_gmtoff nor _tm_gmtoff is described in X3J11's work;
-# in its work, use of "tm_gmtoff" is described as non-conforming.
-# Both Linux and BSD have done the equivalent of defining TM_GMTOFF in
-# their recent releases.
-#
-# If your system has a "zone abbreviation" field in its "struct tm"s
-# (or if you decide to add such a field in your system's "time.h" file),
-# add the name to a define such as
+# to the end of the "CFLAGS=" line.  If not defined, the code attempts to
+# guess TM_GMTOFF from other macros; define NO_TM_GMTOFF to suppress this.
+# Similarly, if your system has a "zone abbreviation" field, define
 #	-DTM_ZONE=tm_zone
-# or
-#	-DTM_ZONE=_tm_zone
-# to the end of the "CFLAGS=" line.
-# Neither tm_zone nor _tm_zone is described in X3J11's work;
-# in its work, use of "tm_zone" is described as non-conforming.
-# Both UCB and Sun have done the equivalent of defining TM_ZONE in
-# their recent releases.
+# and define NO_TM_ZONE to suppress any guessing.  These two fields are not
+# required by POSIX, but are widely available on GNU/Linux and BSD systems.
 #
 # If you want functions that were inspired by early versions of X3J11's work,
 # add

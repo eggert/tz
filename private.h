@@ -71,6 +71,9 @@
 #define ctime_r _incompatible_ctime_r
 #endif /* HAVE_INCOMPATIBLE_CTIME_R */
 
+/* Enable tm_gmtoff and tm_zone on GNUish systems.  */
+#define _GNU_SOURCE 1
+
 /*
 ** Nested includes
 */
@@ -334,6 +337,19 @@ time_t time2posix(time_t);
 # endif
 # if !defined posix2time || defined time_tz
 time_t posix2time(time_t);
+# endif
+#endif
+
+/* Infer TM_ZONE on systems where this information is known, but suppress
+   guessing if NO_TM_ZONE is defined.  Similarly for TM_GMTOFF.  */
+#if (defined __GLIBC__ \
+     || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
+     || (defined __APPLE__ && defined __MACH__))
+# if !defined TM_GMTOFF && !defined NO_TM_GMTOFF
+#  define TM_GMTOFF tm_gmtoff
+# endif
+# if !defined TM_ZONE && !defined NO_TM_ZONE
+#  define TM_ZONE tm_zone
 # endif
 #endif
 

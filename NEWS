@@ -51,6 +51,10 @@ Unreleased, experimental changes
     Although not needed for tz's own applications, which are single-threaded,
     this supports POSIX better if the tz library is used in multithreaded apps.
 
+    The tz code now attempts to infer TM_GMTOFF and TM_ZONE if not
+    already defined, to make it easier to configure on common platforms.
+    Define NO_TM_GMTOFF and NO_TM_ZONE to suppress this.
+
     tzselect -c now uses a hybrid distance measure that works better
     in Africa.  (Thanks to Alan Barrett for noting the problem.)
 

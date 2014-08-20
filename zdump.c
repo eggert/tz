@@ -18,6 +18,9 @@
 # include "private.h"
 #endif
 
+/* Enable tm_gmtoff and tm_zone on GNUish systems.  */
+#define _GNU_SOURCE 1
+
 #include "stdio.h"	/* for stdout, stderr, perror */
 #include "string.h"	/* for strcpy */
 #include "sys/types.h"	/* for time_t */
@@ -70,6 +73,19 @@ typedef long intmax_t;
 #  define strtoimax strtol
 #  define PRIdMAX "ld"
 #  define INTMAX_MAX LONG_MAX
+# endif
+#endif
+
+/* Infer TM_ZONE on systems where this information is known, but suppress
+   guessing if NO_TM_ZONE is defined.  Similarly for TM_GMTOFF.  */
+#if (defined __GLIBC__ \
+     || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
+     || (defined __APPLE__ && defined __MACH__))
+# if !defined TM_GMTOFF && !defined NO_TM_GMTOFF
+#  define TM_GMTOFF tm_gmtoff
+# endif
+# if !defined TM_ZONE && !defined NO_TM_ZONE
+#  define TM_ZONE tm_zone
 # endif
 #endif
 

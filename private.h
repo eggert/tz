@@ -365,13 +365,13 @@ const char *	scheck(const char * string, const char * format);
 ** Finally, some convenience items.
 */
 
-#ifndef TRUE
-#define TRUE	1
-#endif /* !defined TRUE */
-
-#ifndef FALSE
-#define FALSE	0
-#endif /* !defined FALSE */
+#if __STDC_VERSION__ < 199901
+# define true 1
+# define false 0
+# define bool int
+#else
+# include <stdbool.h>
+#endif
 
 #ifndef TYPE_BIT
 #define TYPE_BIT(type)	(sizeof (type) * CHAR_BIT)

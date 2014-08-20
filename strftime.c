@@ -101,7 +101,7 @@ static char *	_add(const char *, char *, const char *);
 static char *	_conv(int, const char *, char *, const char *);
 static char *	_fmt(const char *, const struct tm *, char *, const char *,
 			int *);
-static char *	_yconv(int, int, int, int, char *, const char *);
+static char *	_yconv(int, int, bool, bool, char *, char const *);
 
 extern char *	tzname[];
 
@@ -193,8 +193,8 @@ label:
 				** something completely different.
 				** (ado, 1993-05-24)
 				*/
-				pt = _yconv(t->tm_year, TM_YEAR_BASE, 1, 0,
-					pt, ptlim);
+				pt = _yconv(t->tm_year, TM_YEAR_BASE,
+					    true, false, pt, ptlim);
 				continue;
 			case 'c':
 				{
@@ -422,9 +422,11 @@ label:
 							pt, ptlim);
 					else if (*format == 'g') {
 						*warnp = IN_ALL;
-						pt = _yconv(year, base, 0, 1,
+						pt = _yconv(year, base,
+							false, true,
 							pt, ptlim);
-					} else	pt = _yconv(year, base, 1, 1,
+					} else	pt = _yconv(year, base,
+							true, true,
 							pt, ptlim);
 				}
 				continue;
@@ -462,11 +464,13 @@ label:
 				continue;
 			case 'y':
 				*warnp = IN_ALL;
-				pt = _yconv(t->tm_year, TM_YEAR_BASE, 0, 1,
+				pt = _yconv(t->tm_year, TM_YEAR_BASE,
+					false, true,
 					pt, ptlim);
 				continue;
 			case 'Y':
-				pt = _yconv(t->tm_year, TM_YEAR_BASE, 1, 1,
+				pt = _yconv(t->tm_year, TM_YEAR_BASE,
+					true, true,
 					pt, ptlim);
 				continue;
 			case 'Z':
@@ -585,7 +589,7 @@ _add(const char *str, char *pt, const char *const ptlim)
 */
 
 static char *
-_yconv(const int a, const int b, const int convert_top, const int convert_yy,
+_yconv(int a, int b, bool convert_top, bool convert_yy,
        char *pt, const char *const ptlim)
 {
 	register int	lead;
@@ -621,7 +625,7 @@ _loc(void)
 	static char *		locale_buf;
 
 	int			fd;
-	int			oldsun;	/* "...ain't got nothin' to do..." */
+	bool			oldsun;	/* "...ain't got nothin' to do..." */
 	char *			lbuf;
 	char *			name;
 	char *			p;
@@ -659,14 +663,14 @@ _loc(void)
 	if (sizeof filename <
 		((sizeof locale_home) + namesize + (sizeof lc_time)))
 			goto no_locale;
-	oldsun = 0;
+	oldsun = false;
 	sprintf(filename, "%s/%s/%s", locale_home, name, lc_time);
 	fd = open(filename, O_RDONLY);
 	if (fd < 0) {
 		/*
 		** Old Sun systems have a different naming and data convention.
 		*/
-		oldsun = 1;
+		oldsun = true;
 		sprintf(filename, "%s/%s/%s", locale_home,
 			lc_time, name);
 		fd = open(filename, O_RDONLY);

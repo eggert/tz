@@ -102,13 +102,13 @@ typedef long intmax_t;
 #define MAX_STRING_LENGTH	1024
 #endif /* !defined MAX_STRING_LENGTH */
 
-#ifndef TRUE
-#define TRUE		1
-#endif /* !defined TRUE */
-
-#ifndef FALSE
-#define FALSE		0
-#endif /* !defined FALSE */
+#if __STDC_VERSION__ < 199901
+# define true 1
+# define false 0
+# define bool int
+#else
+# include <stdbool.h>
+#endif
 
 #ifndef EXIT_SUCCESS
 #define EXIT_SUCCESS	0
@@ -222,24 +222,24 @@ static time_t const absolute_max_time =
    : -1);
 static size_t	longest;
 static char *	progname;
-static int	warned;
-static int	errout;
+static bool	warned;
+static bool	errout;
 
 static char *abbr(struct tm *);
 static intmax_t	delta(struct tm *, struct tm *) ATTRIBUTE_PURE;
 static void dumptime(struct tm const *);
 static time_t hunt(char *, time_t, time_t);
-static void show(char *, time_t, int);
+static void show(char *, time_t, bool);
 static const char *tformat(void);
 static time_t yeartot(intmax_t) ATTRIBUTE_PURE;
 
 /* Is A an alphabetic character in the C locale?  */
-static int
+static bool
 is_alpha(char a)
 {
 	switch (a) {
 	  default:
-		return 0;
+		return false;
 	  case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G':
 	  case 'H': case 'I': case 'J': case 'K': case 'L': case 'M': case 'N':
 	  case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T': case 'U':
@@ -248,7 +248,7 @@ is_alpha(char a)
 	  case 'h': case 'i': case 'j': case 'k': case 'l': case 'm': case 'n':
 	  case 'o': case 'p': case 'q': case 'r': case 's': case 't': case 'u':
 	  case 'v': case 'w': case 'x': case 'y': case 'z':
-		return 1;
+		return true;
 	}
 }
 
@@ -282,7 +282,7 @@ my_localtime(time_t *tp)
 			fprintf(stderr, " -> ");
 			fprintf(stderr, tformat(), t);
 			fprintf(stderr, "\n");
-			errout = TRUE;
+			errout = true;
 		}
 	}
 	return tmp;
@@ -321,7 +321,7 @@ abbrok(const char *const abbrp, const char *const zone)
 	fprintf(stderr,
 		_("%s: warning: zone \"%s\" abbreviation \"%s\" %s\n"),
 		progname, zone, abbrp, wp);
-	warned = errout = TRUE;
+	warned = errout = true;
 }
 
 static void
@@ -352,8 +352,8 @@ int
 main(int argc, char *argv[])
 {
 	register int		i;
-	register int		vflag;
-	register int		Vflag;
+	register bool		vflag;
+	register bool		Vflag;
 	register char *		cutarg;
 	register char *		cuttimes;
 	register time_t		cutlotime;
@@ -384,14 +384,14 @@ main(int argc, char *argv[])
 		} else if (strcmp(argv[i], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
 		}
-	vflag = Vflag = 0;
+	vflag = Vflag = false;
 	cutarg = cuttimes = NULL;
 	for (;;)
 	  switch (getopt(argc, argv, "c:t:vV")) {
 	  case 'c': cutarg = optarg; break;
 	  case 't': cuttimes = optarg; break;
-	  case 'v': vflag = 1; break;
-	  case 'V': Vflag = 1; break;
+	  case 'v': vflag = true; break;
+	  case 'V': Vflag = true; break;
 	  case -1:
 	    if (! (optind == argc - 1 && strcmp(argv[optind], "=") == 0))
 	      goto arg_processing_done;
@@ -487,15 +487,15 @@ main(int argc, char *argv[])
 
 		strcpy(&fakeenv[0][3], argv[i]);
 		if (! (vflag | Vflag)) {
-			show(argv[i], now, FALSE);
+			show(argv[i], now, false);
 			continue;
 		}
-		warned = FALSE;
+		warned = false;
 		t = absolute_min_time;
 		if (!Vflag) {
-			show(argv[i], t, TRUE);
+			show(argv[i], t, true);
 			t += SECSPERDAY;
-			show(argv[i], t, TRUE);
+			show(argv[i], t, true);
 		}
 		if (t < cutlotime)
 			t = cutlotime;
@@ -533,9 +533,9 @@ main(int argc, char *argv[])
 		if (!Vflag) {
 			t = absolute_max_time;
 			t -= SECSPERDAY;
-			show(argv[i], t, TRUE);
+			show(argv[i], t, true);
 			t += SECSPERDAY;
-			show(argv[i], t, TRUE);
+			show(argv[i], t, true);
 		}
 	}
 	close_file(stdout);
@@ -624,8 +624,8 @@ hunt(char *name, time_t lot, time_t hit)
 				lotmp = tmp;
 		} else	hit = t;
 	}
-	show(name, lot, TRUE);
-	show(name, hit, TRUE);
+	show(name, lot, true);
+	show(name, hit, true);
 	return hit;
 }
 
@@ -655,7 +655,7 @@ delta(struct tm * newp, struct tm *oldp)
 }
 
 static void
-show(char *zone, time_t t, int v)
+show(char *zone, time_t t, bool v)
 {
 	register struct tm *	tmp;
 

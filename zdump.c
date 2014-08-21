@@ -220,7 +220,7 @@ static time_t const absolute_max_time =
   ((time_t) -1 < 0
    ? - (~ 0 < 0) - ((time_t) -1 << (CHAR_BIT * sizeof (time_t) - 1))
    : -1);
-static size_t	longest;
+static int	longest;
 static char *	progname;
 static bool	warned;
 static bool	errout;
@@ -250,6 +250,52 @@ is_alpha(char a)
 	  case 'v': case 'w': case 'x': case 'y': case 'z':
 		return true;
 	}
+}
+
+/* Return A + B, exiting if the result would overflow.  */
+static size_t
+sumsize(size_t a, size_t b)
+{
+  size_t sum = a + b;
+  if (sum < a) {
+    fprintf(stderr, "%s: size overflow\n", progname);
+    exit(EXIT_FAILURE);
+  }
+  return sum;
+}
+
+/* Set the global time zone to VAL, exiting on memory allocation failure.  */
+static void
+settimezone(char const *val)
+{
+  static char **fakeenv;
+  char **env = fakeenv;
+  char *oldstorage = env ? env[0] : 0;
+  char *env0;
+  if (! env) {
+    char **e = environ;
+    int to;
+
+    while (*e++)
+      continue;
+    env = malloc(sumsize(sizeof *environ,
+			 (e - environ) * sizeof *environ));
+    if (! env) {
+      perror(progname);
+      exit(EXIT_FAILURE);
+    }
+    to = 1;
+    for (e = environ; (env[to] = *e); e++)
+      to += strncmp(*e, "TZ=", 3) != 0;
+  }
+  env0 = malloc(sumsize(sizeof "TZ=", strlen(val)));
+  if (! env0) {
+    perror(progname);
+    exit(EXIT_FAILURE);
+  }
+  env[0] = strcat(strcpy(env0, "TZ="), val);
+  environ = fakeenv = env;
+  free(oldstorage);
 }
 
 #ifndef TYPECHECK
@@ -358,7 +404,6 @@ main(int argc, char *argv[])
 	register char *		cuttimes;
 	register time_t		cutlotime;
 	register time_t		cuthitime;
-	register char **	fakeenv;
 	time_t			now;
 	time_t			t;
 	time_t			newt;
@@ -459,33 +504,16 @@ main(int argc, char *argv[])
 	}
 	now = time(NULL);
 	longest = 0;
-	for (i = optind; i < argc; ++i)
-		if (strlen(argv[i]) > longest)
-			longest = strlen(argv[i]);
-	{
-		register int	from;
-		register int	to;
-
-		for (i = 0; environ[i] != NULL; ++i)
-			continue;
-		fakeenv = malloc((i + 2) * sizeof *fakeenv);
-		if (fakeenv == NULL
-		    || (fakeenv[0] = malloc(longest + 4)) == NULL) {
-		  perror(progname);
-		  return EXIT_FAILURE;
-		}
-		to = 0;
-		strcpy(fakeenv[to++], "TZ=");
-		for (from = 0; environ[from] != NULL; ++from)
-			if (strncmp(environ[from], "TZ=", 3) != 0)
-				fakeenv[to++] = environ[from];
-		fakeenv[to] = NULL;
-		environ = fakeenv;
+	for (i = optind; i < argc; i++) {
+	  size_t arglen = strlen(argv[i]);
+	  if (longest < arglen)
+	    longest = arglen < INT_MAX ? arglen : INT_MAX;
 	}
+
 	for (i = optind; i < argc; ++i) {
 		static char	buf[MAX_STRING_LENGTH];
 
-		strcpy(&fakeenv[0][3], argv[i]);
+		settimezone(argv[i]);
 		if (! (vflag | Vflag)) {
 			show(argv[i], now, false);
 			continue;
@@ -659,7 +687,7 @@ show(char *zone, time_t t, bool v)
 {
 	register struct tm *	tmp;
 
-	printf("%-*s  ", (int) longest, zone);
+	printf("%-*s  ", longest, zone);
 	if (v) {
 		tmp = gmtime(&t);
 		if (tmp == NULL) {

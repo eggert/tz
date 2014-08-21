@@ -1868,8 +1868,7 @@ doabbr(char *const abbr, const char *const format, const char *const letters,
 	} else if (isdst) {
 		strcpy(abbr, slashp + 1);
 	} else {
-		if (slashp > format)
-			strncpy(abbr, format, slashp - format);
+		memcpy(abbr, format, slashp - format);
 		abbr[slashp - format] = '\0';
 	}
 	if (!doquotes)

@@ -1148,11 +1148,11 @@ tzparse(const char *name, register struct state *const sp,
 	if ((size_t) sp->charcnt > sizeof sp->chars)
 	  return false;
 	cp = sp->chars;
-	strncpy(cp, stdname, stdlen);
+	memcpy(cp, stdname, stdlen);
 	cp += stdlen;
 	*cp++ = '\0';
 	if (dstlen != 0) {
-		strncpy(cp, dstname, dstlen);
+		memcpy(cp, dstname, dstlen);
 		*(cp + dstlen) = '\0';
 	}
 	return true;

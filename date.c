@@ -819,7 +819,6 @@ netsettime(struct timeval ntv)
 {
 	int s, length, port, timed_ack, found, err, waittime;
 	fd_set ready;
-	char hostname[MAXHOSTNAMELEN];
 	struct timeval tout;
 	struct servent *sp;
 	struct tsp msg;
@@ -858,11 +857,15 @@ netsettime(struct timeval ntv)
 	}
 	msg.tsp_type = TSP_SETDATE;
 	msg.tsp_vers = TSPVERSION;
-	if (gethostname(hostname, sizeof (hostname))) {
+	msg.tsp_name[sizeof msg.tsp_name - 1] = '\0';
+	if (gethostname(msg.tsp_name, sizeof msg.tsp_name) != 0) {
 		perror("gethostname");
 		goto bad;
 	}
-	strncpy(msg.tsp_name, hostname, sizeof (hostname));
+	if (msg.tsp_name[sizeof msg.tsp_name - 1]) {
+		fprintf(stderr, "hostname too long\n");
+		goto bad;
+	}
 	msg.tsp_seq = htons(0);
 	msg.tsp_time.tv_sec = htonl(ntv.tv_sec);
 	msg.tsp_time.tv_usec = htonl(ntv.tv_usec);

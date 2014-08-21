@@ -225,7 +225,7 @@ static char *	progname;
 static bool	warned;
 static bool	errout;
 
-static char *abbr(struct tm *);
+static char *abbr(struct tm const *);
 static intmax_t	delta(struct tm *, struct tm *) ATTRIBUTE_PURE;
 static void dumptime(struct tm const *);
 static time_t hunt(char *, time_t, time_t);
@@ -370,6 +370,29 @@ abbrok(const char *const abbrp, const char *const zone)
 	warned = errout = true;
 }
 
+/* Save into *BUF (of size *BUFALLOC) the time zone abbreviation of TMP.
+   Exit on memory allocation failure.  */
+static void
+saveabbr(char **buf, size_t *bufalloc, struct tm const *tmp)
+{
+  char const *ab = abbr(tmp);
+  size_t ablen = strlen(ab);
+  if (*bufalloc <= ablen) {
+    free(*buf);
+
+    /* Make the new buffer at least twice as long as the old,
+       to avoid O(N**2) behavior on repeated calls.  */
+    *bufalloc = sumsize(*bufalloc, ablen + 1);
+
+    *buf = malloc(*bufalloc);
+    if (! *buf) {
+      perror(progname);
+      exit(EXIT_FAILURE);
+    }
+  }
+  strcpy(*buf, ab);
+}
+
 static void
 close_file(FILE *stream)
 {
@@ -397,6 +420,8 @@ _("%s: usage: %s [--version] [--help] [-{vV}] [-{ct} [lo,]hi] zonename ...\n"
 int
 main(int argc, char *argv[])
 {
+	static char *		abbrev;
+	static size_t		abbrevsize;
 	register int		i;
 	register bool		vflag;
 	register bool		Vflag;
@@ -511,8 +536,6 @@ main(int argc, char *argv[])
 	}
 
 	for (i = optind; i < argc; ++i) {
-		static char	buf[MAX_STRING_LENGTH];
-
 		settimezone(argv[i]);
 		if (! (vflag | Vflag)) {
 			show(argv[i], now, false);
@@ -530,7 +553,7 @@ main(int argc, char *argv[])
 		tmp = my_localtime(&t);
 		if (tmp != NULL) {
 			tm = *tmp;
-			strncpy(buf, abbr(&tm), (sizeof buf) - 1);
+			saveabbr(&abbrev, &abbrevsize, &tm);
 		}
 		for ( ; ; ) {
 			newt = (t < absolute_max_time - SECSPERDAY / 2
@@ -544,14 +567,13 @@ main(int argc, char *argv[])
 			if ((tmp == NULL || newtmp == NULL) ? (tmp != newtmp) :
 				(delta(&newtm, &tm) != (newt - t) ||
 				newtm.tm_isdst != tm.tm_isdst ||
-				strcmp(abbr(&newtm), buf) != 0)) {
+				strcmp(abbr(&newtm), abbrev) != 0)) {
 					newt = hunt(argv[i], t, newt);
 					newtmp = localtime(&newt);
 					if (newtmp != NULL) {
 						newtm = *newtmp;
-						strncpy(buf,
-							abbr(&newtm),
-							(sizeof buf) - 1);
+						saveabbr(&abbrev, &abbrevsize,
+							 &newtm);
 					}
 			}
 			t = newt;
@@ -618,17 +640,18 @@ yeartot(const intmax_t y)
 static time_t
 hunt(char *name, time_t lot, time_t hit)
 {
+	static char *		loab;
+	static size_t		loabsize;
 	time_t			t;
 	struct tm		lotm;
 	register struct tm *	lotmp;
 	struct tm		tm;
 	register struct tm *	tmp;
-	char			loab[MAX_STRING_LENGTH];
 
 	lotmp = my_localtime(&lot);
 	if (lotmp != NULL) {
 		lotm = *lotmp;
-		strncpy(loab, abbr(&lotm), (sizeof loab) - 1);
+		saveabbr(&loab, &loabsize, &lotm);
 	}
 	for ( ; ; ) {
 		time_t diff = hit - lot;
@@ -716,7 +739,7 @@ show(char *zone, time_t t, bool v)
 }
 
 static char *
-abbr(struct tm *tmp)
+abbr(struct tm const *tmp)
 {
 	register char *	result;
 	static char	nada;

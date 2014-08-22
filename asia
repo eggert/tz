@@ -879,13 +879,6 @@ Zone	Asia/Dili	8:22:20 -	LMT	1912 Jan  1
 			9:00	-	TLT
 
 # India
-
-# From Paul Eggert (2014-08-11), after a heads-up from Stephen Colebourne:
-# According to a Portuguese decree (1911-05-26)
-# http://dre.pt/pdf1sdip/1911/05/12500/23132313.pdf
-# Portuguese India switched to GMT+5 on 1912-01-01.
-# Ignore this as it predates our 1970 cutoff.
-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Kolkata	5:53:28 -	LMT	1880        # Kolkata
 			5:53:20	-	HMT	1941 Oct    # Howrah Mean Time?

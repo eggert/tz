@@ -261,6 +261,15 @@ Zone Antarctica/McMurdo	0	-	zzz	1956
 			12:00	NZ	NZ%sT
 Link Antarctica/McMurdo Antarctica/South_Pole
 
+# India
+# From Paul Eggert (2014-08-21):
+# In tomorrow's The Hindu, Nitya Menon reports that India had two civil time
+# zones starting in 1884, one in Bombay and one in Calcutta, and that railways
+# used a third time zone based on Madras time (80 deg. 18'30" E).  Also,
+# in 1881 Bombay briefly switched to Madras time, but switched back.  See:
+# http://www.thehindu.com/news/cities/chennai/madras-375-when-madras-clocked-the-time/article6339393.ece
+#Zone	  Asia/Chennai  [not enough info to complete]
+
 # China
 # Changbai Time ("Long-white Time", Long-white = Heilongjiang area)
 # Heilongjiang (except Mohe county), Jilin
@@ -287,6 +296,13 @@ Zone	Asia/Kashgar	5:03:56	-	LMT	1928     # or Kashi or Kaxgar
 			5:30	-	KAST	1940     # Kashgar Time
 			5:00	-	KAST	1980 May
 			8:00	PRC	C%sT
+
+# India
+# From Paul Eggert (2014-08-11), after a heads-up from Stephen Colebourne:
+# According to a Portuguese decree (1911-05-26)
+# http://dre.pt/pdf1sdip/1911/05/12500/23132313.pdf
+# Portuguese India switched to GMT+5 on 1912-01-01.
+#Zone	Asia/Panaji	[not enough info to complete]
 
 # Israel
 Zone	Asia/Tel_Aviv	2:19:04 -	LMT	1880

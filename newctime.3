@@ -5,32 +5,32 @@ asctime, ctime, difftime, gmtime, localtime, mktime \- convert date and time
 .nf
 .ie \n(.g .ds - \f(CW-\fP
 .el ds - \-
-.B extern char *tzname[2];
-.PP
-.B void tzset()
-.PP
-.B #include <sys/types.h>
-.PP
-.B char *ctime(clock)
-.B const time_t *clock;
-.PP
-.B double difftime(time1, time0)
-.B time_t time1;
-.B time_t time0;
-.PP
 .B #include <time.h>
 .PP
-.B char *asctime(tm)
-.B const struct tm *tm;
+.B extern char *tzname[2];
 .PP
-.B struct tm *localtime(clock)
-.B const time_t *clock;
+.B char *ctime(time_t const *clock);
 .PP
-.B struct tm *gmtime(clock)
-.B const time_t *clock;
+.B char *ctime_r(time_t const *clock, char *buf);
 .PP
-.B time_t mktime(tm)
-.B struct tm *tm;
+.B double difftime(time_t time1, time_t time0);
+.PP
+.B char *asctime(struct tm const *tm);
+.PP
+.B "char *asctime_r(struct tm const *restrict tm,"
+.B "    char *restrict result);"
+.PP
+.B struct tm *localtime(time_t const *clock);
+.PP
+.B "struct tm *localtime_r(time_t const *restrict clock,"
+.B "    struct tm *restrict result);"
+.PP
+.B struct tm *gmtime(time_t const *clock);
+.PP
+.B "struct tm *gmtime_r(time_t const *restrict clock,"
+.B "    struct tm *restrict result);"
+.PP
+.B time_t mktime(struct tm *tm);
 .PP
 .B cc ... \*-ltz
 .fi
@@ -109,6 +109,14 @@ converts a time value contained in a
 structure to a string,
 as shown in the above example,
 and returns a pointer to the string.
+.PP
+.IR Ctime_r ,
+.IR localtime_r ,
+.IR gmtime_r ,
+and
+.I asctime_r
+are like their unsuffixed counterparts, except that they accept an
+additional argument specifying where to store the result if successful.
 .PP
 .I Mktime
 converts the broken-down time,
@@ -234,25 +242,35 @@ newtzset(3),
 time(2),
 tzfile(5)
 .SH NOTES
-The return values point to static data
+The return values of
+.IR asctime ,
+.IR ctime ,
+.IR gmtime ,
+and
+.I localtime
+point to static data
 overwritten by each call.
 The
 .B tm_zone
 field of a returned
 .B "struct tm"
 points to a static array of characters, which
-will also be overwritten at the next call
-(and by calls to
-.IR tzset ).
+can be overwritten by later calls to
+.IR tzset .
+The remaining functions and data are thread-safe.
 .PP
-.I Asctime
+.IR Asctime ,
+.IR asctime_r ,
+.IR ctime ,
 and
-.I ctime
+.I ctime_r
 behave strangely for years before 1000 or after 9999.
 The 1989 and 1999 editions of the C Standard say
 that years from \-99 through 999 are converted without
 extra spaces, but this conflicts with longstanding
 tradition and with this implementation.
+The 2011 edition says that the behavior
+is undefined if the year is before 1000 or after 9999.
 Traditional implementations of these two functions are
 restricted to years in the range 1900 through 2099.
 To avoid this portability mess, new programs should use

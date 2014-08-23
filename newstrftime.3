@@ -44,14 +44,10 @@ strftime \- format date and time
 .nf
 .ie \n(.g .ds - \f(CW-\fP
 .el ds - \-
-.B #include <sys/types.h>
 .B #include <time.h>
 .PP
-.B size_t strftime(buf, maxsize, format, timeptr)
-.B char *buf;
-.B size_t maxsize;
-.B const char *format;
-.B const struct tm *timeptr
+.B "size_t strftime(char *restrict buf, size_t maxsize,"
+.B "    char const *restrict format, struct tm const *restrict timeptr);"
 .PP
 .B cc ... \-ltz
 .fi

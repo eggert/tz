@@ -305,7 +305,7 @@ AR=		ar
 RANLIB=		:
 
 TZCOBJS=	zic.o scheck.o ialloc.o
-TZDOBJS=	zdump.o localtime.o ialloc.o asctime.o
+TZDOBJS=	zdump.o localtime.o asctime.o
 DATEOBJS=	date.o localtime.o strftime.o asctime.o
 LIBSRCS=	localtime.c asctime.c difftime.c
 LIBOBJS=	localtime.o asctime.o difftime.o

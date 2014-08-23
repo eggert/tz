@@ -71,6 +71,10 @@ Unreleased, experimental changes
 
     The long-obsolete 'gtime' function has been removed.
 
+  Changes affecting build procedure
+
+    'zdump' no longer links in ialloc.o, as it's not needed.
+
   Changes affecting distribution tarballs
 
     The files checktab.awk and zoneinfo2tdf.pl are now distributed in

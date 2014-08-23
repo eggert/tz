@@ -1244,12 +1244,15 @@ gmtcheck(void)
 {
   if (gmt_is_set)
     return;
+  if (lock() != 0)
+    return;
 #ifdef ALL_STATE
   gmtptr = malloc(sizeof *gmtptr);
 #endif
   if (gmtptr)
     gmtload(gmtptr);
   gmt_is_set = true;
+  unlock();
 }
 
 /*
@@ -1403,14 +1406,8 @@ gmtime(const time_t *const timep)
 struct tm *
 gmtime_r(const time_t *const timep, struct tm *tmp)
 {
-  int err = lock();
-  if (err) {
-    errno = err;
-    return NULL;
-  }
   gmtcheck();
   tmp = gmtsub(timep, 0, tmp);
-  unlock();
   return tmp;
 }
 
@@ -1420,14 +1417,8 @@ struct tm *
 offtime(const time_t *const timep, const long offset)
 {
   struct tm *tmp;
-  int err = lock();
-  if (err) {
-    errno = err;
-    return NULL;
-  }
   gmtcheck();
   tmp = gmtsub(timep, offset, &tm);
-  unlock();
   return tmp;
 }
 
@@ -1995,17 +1986,10 @@ time_t
 timeoff(struct tm *const tmp, const long offset)
 {
   time_t t;
-  int err;
   if (tmp)
     tmp->tm_isdst = 0;
-  err = lock();
-  if (err) {
-    errno = err;
-    return -1;
-  }
   gmtcheck();
   t = time1(tmp, gmtsub, offset);
-  unlock();
   return t;
 }
 

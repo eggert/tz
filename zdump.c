@@ -225,7 +225,7 @@ static char *	progname;
 static bool	warned;
 static bool	errout;
 
-static char *abbr(struct tm const *);
+static char const *abbr(struct tm const *);
 static intmax_t	delta(struct tm *, struct tm *) ATTRIBUTE_PURE;
 static void dumptime(struct tm const *);
 static time_t hunt(char *, time_t, time_t);
@@ -738,16 +738,17 @@ show(char *zone, time_t t, bool v)
 		abbrok(abbr(tmp), zone);
 }
 
-static char *
+static char const *
 abbr(struct tm const *tmp)
 {
-	register char *	result;
-	static char	nada;
-
-	if (tmp->tm_isdst != 0 && tmp->tm_isdst != 1)
-		return &nada;
-	result = tzname[tmp->tm_isdst];
-	return (result == NULL) ? &nada : result;
+#ifdef TM_ZONE
+	return tmp->TM_ZONE;
+#else
+	return ((0 <= tmp->tm_isdst && tmp->tm_isdst <= 1
+		 && tzname[tmp->tm_isdst])
+		? tzname[tmp->tm_isdst]
+		: "");
+#endif
 }
 
 /*

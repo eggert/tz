@@ -1995,25 +1995,6 @@ timeoff(struct tm *const tmp, const long offset)
 
 #endif /* defined STD_INSPIRED */
 
-#ifdef CMUCS
-
-/*
-** The following is supplied for compatibility with
-** previous versions of the CMUCS runtime library.
-*/
-
-long
-gtime(struct tm *const tmp)
-{
-	const time_t	t = mktime(tmp);
-
-	if (t == WRONG)
-		return -1;
-	return t;
-}
-
-#endif /* defined CMUCS */
-
 /*
 ** XXX--is the below the right way to conditionalize??
 */

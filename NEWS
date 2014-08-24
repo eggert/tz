@@ -67,6 +67,11 @@ Unreleased, experimental changes
     more likely to guess right for ambiguous time stamps near
     transitions where tm_isdst does not change.
 
+    zdump now builds with the tz library unless USE_LTZ is defined to 0,
+    This lets zdump use tz features even if the system library lacks them.
+    To build zdump with the system library, use 'make CFLAGS=-DUSE_LTZ=0
+    TZDOBJS=zdump.o CHECK_TIME_T_ALTERNATIVES='.
+
     tzselect -c now uses a hybrid distance measure that works better
     in Africa.  (Thanks to Alan Barrett for noting the problem.)
 

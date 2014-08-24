@@ -9,12 +9,14 @@
 ** This code has been made independent of the rest of the time
 ** conversion package to increase confidence in the verification it provides.
 ** You can use this code to help in verifying other implementations.
-**
-** However, include private.h when debugging, so that it overrides
-** time_t consistently with the rest of the package.
+** To do this, compile with -DUSE_LTZ=0 and link without the tz library.
 */
 
-#ifdef time_tz
+#ifndef USE_LTZ
+# define USE_LTZ 1
+#endif
+
+#if USE_LTZ
 # include "private.h"
 #endif
 

@@ -136,6 +136,8 @@ LDLIBS=
 #	DST transitions if the time zone files cannot be accessed
 #  -DUNINIT_TRAP=1 if reading uninitialized storage can cause problems
 #	other than simply getting garbage data
+#  -DUSE_LTZ=0 to build zdump with the system time zone library
+#	Also set TZDOBJS=zdump.o and CHECK_TIME_T_ALTERNATIVES= below.
 #  -DZIC_MAX_ABBR_LEN_WO_WARN=3
 #	(or some other number) to set the maximum time zone abbreviation length
 #	that zic will accept without a warning (the default is 6)
@@ -257,6 +259,10 @@ VALIDATE_ENV = \
   SGML_SEARCH_PATH=$(SGML_SEARCH_PATH) \
   SP_CHARSET_FIXED=YES \
   SP_ENCODING=UTF-8
+
+# This expensive test requires USE_LTZ.
+# To suppress it, define this macro to be empty.
+CHECK_TIME_T_ALTERNATIVES = check_time_t_alternatives
 
 # SAFE_CHAR is a regular expression that matches a safe character.
 # Some parts of this distribution are limited to safe characters;
@@ -488,7 +494,7 @@ maintainer-clean: clean
 names:
 		@echo $(ENCHILADA)
 
-public:		check check_public check_time_t_alternatives \
+public:		check check_public $(CHECK_TIME_T_ALTERNATIVES) \
 		tarballs signatures
 
 date.1.txt:	date.1

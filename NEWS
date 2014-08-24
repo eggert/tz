@@ -51,6 +51,10 @@ Unreleased, experimental changes
     Although not needed for tz's own applications, which are single-threaded,
     this supports POSIX better if the tz library is used in multithreaded apps.
 
+    zdump now uses localtime_r and tzset if available, as this is a
+    bit cleaner and faster than plain localtime.  Compile with
+    -DHAVE_LOCALTIME_R=0 and/or -DHAVE_TZSET=0 if your system lacks them.
+
     The tz code now attempts to infer TM_GMTOFF and TM_ZONE if not
     already defined, to make it easier to configure on common platforms.
     Define NO_TM_GMTOFF and NO_TM_ZONE to suppress this.

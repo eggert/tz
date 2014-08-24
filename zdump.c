@@ -89,6 +89,13 @@ typedef long intmax_t;
 # endif
 #endif
 
+#ifndef HAVE_LOCALTIME_R
+# define HAVE_LOCALTIME_R 1
+#endif
+
+#ifndef HAVE_TZSET
+# define HAVE_TZSET 1
+#endif
 
 #ifndef ZDUMP_LO_YEAR
 #define ZDUMP_LO_YEAR	(-500)
@@ -264,6 +271,12 @@ sumsize(size_t a, size_t b)
   return sum;
 }
 
+#if ! HAVE_TZSET
+# undef tzset
+# define tzset zdump_tzset
+static void tzset(void) { }
+#endif
+
 /* Set the global time zone to VAL, exiting on memory allocation failure.  */
 static void
 settimezone(char const *val)
@@ -296,18 +309,32 @@ settimezone(char const *val)
   env[0] = strcat(strcpy(env0, "TZ="), val);
   environ = fakeenv = env;
   free(oldstorage);
+  tzset();
 }
 
+#if ! HAVE_LOCALTIME_R || ! HAVE_TZSET
+# undef localtime_r
+# define localtime_r zdump_localtime_r
+static struct tm *
+localtime_r(time_t *tp, struct tm *tmp)
+{
+  struct tm *r = localtime(tp);
+  if (r) {
+    *tmp = *r;
+    r = tmp;
+  }
+  return r;
+}
+#endif
+
 #ifndef TYPECHECK
-#define my_localtime	localtime
+# define my_localtime_r localtime_r
 #else /* !defined TYPECHECK */
 static struct tm *
-my_localtime(time_t *tp)
+my_localtime_r(time_t *tp, struct tm *tmp)
 {
-	register struct tm *	tmp;
-
-	tmp = localtime(tp);
-	if (tp != NULL && tmp != NULL) {
+	tmp = localtime_r(tp, tmp);
+	if (tmp) {
 		struct tm	tm;
 		register time_t	t;
 
@@ -552,31 +579,25 @@ main(int argc, char *argv[])
 		}
 		if (t < cutlotime)
 			t = cutlotime;
-		tmp = my_localtime(&t);
-		if (tmp != NULL) {
-			tm = *tmp;
+		tmp = my_localtime_r(&t, &tm);
+		if (tmp)
 			saveabbr(&abbrev, &abbrevsize, &tm);
-		}
 		for ( ; ; ) {
 			newt = (t < absolute_max_time - SECSPERDAY / 2
 				? t + SECSPERDAY / 2
 				: absolute_max_time);
 			if (cuthitime <= newt)
 				break;
-			newtmp = localtime(&newt);
-			if (newtmp != NULL)
-				newtm = *newtmp;
+			newtmp = localtime_r(&newt, &newtm);
 			if ((tmp == NULL || newtmp == NULL) ? (tmp != newtmp) :
 				(delta(&newtm, &tm) != (newt - t) ||
 				newtm.tm_isdst != tm.tm_isdst ||
 				strcmp(abbr(&newtm), abbrev) != 0)) {
 					newt = hunt(argv[i], t, newt);
-					newtmp = localtime(&newt);
-					if (newtmp != NULL) {
-						newtm = *newtmp;
+					newtmp = localtime_r(&newt, &newtm);
+					if (newtmp)
 						saveabbr(&abbrev, &abbrevsize,
 							 &newtm);
-					}
 			}
 			t = newt;
 			tm = newtm;
@@ -650,11 +671,9 @@ hunt(char *name, time_t lot, time_t hit)
 	struct tm		tm;
 	register struct tm *	tmp;
 
-	lotmp = my_localtime(&lot);
-	if (lotmp != NULL) {
-		lotm = *lotmp;
+	lotmp = my_localtime_r(&lot, &lotm);
+	if (lotmp)
 		saveabbr(&loab, &loabsize, &lotm);
-	}
 	for ( ; ; ) {
 		time_t diff = hit - lot;
 		if (diff < 2)
@@ -665,9 +684,7 @@ hunt(char *name, time_t lot, time_t hit)
 			++t;
 		else if (t >= hit)
 			--t;
-		tmp = my_localtime(&t);
-		if (tmp != NULL)
-			tm = *tmp;
+		tmp = my_localtime_r(&t, &tm);
 		if ((lotmp == NULL || tmp == NULL) ? (lotmp == tmp) :
 			(delta(&tm, &lotm) == (t - lot) &&
 			tm.tm_isdst == lotm.tm_isdst &&
@@ -711,6 +728,7 @@ static void
 show(char *zone, time_t t, bool v)
 {
 	register struct tm *	tmp;
+	struct tm tm;
 
 	printf("%-*s  ", longest, zone);
 	if (v) {
@@ -723,7 +741,7 @@ show(char *zone, time_t t, bool v)
 		}
 		printf(" = ");
 	}
-	tmp = my_localtime(&t);
+	tmp = my_localtime_r(&t, &tm);
 	dumptime(tmp);
 	if (tmp != NULL) {
 		if (*abbr(tmp) != '\0')
@@ -801,7 +819,7 @@ dumptime(register const struct tm *timeptr)
 		return;
 	}
 	/*
-	** The packaged versions of localtime and gmtime never put out-of-range
+	** The packaged localtime_r and gmtime never put out-of-range
 	** values in tm_wday or tm_mon, but since this code might be compiled
 	** with other (perhaps experimental) versions, paranoia is in order.
 	*/

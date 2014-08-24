@@ -109,6 +109,7 @@ LDLIBS=
 #	ctime_r and asctime_r incompatibly with the POSIX standard (Solaris 8).
 #  -DHAVE_INTTYPES_H=1 if you have a pre-C99 compiler with "inttypes.h"
 #  -DHAVE_LINK=0 if your system lacks a link function
+#  -DHAVE_LOCALTIME_R=0 if your system lacks a localtime_r function
 #  -DHAVE_SETTIMEOFDAY=0 if settimeofday does not exist (SVR0?)
 #  -DHAVE_SETTIMEOFDAY=1 if settimeofday has just 1 arg (SVR4)
 #  -DHAVE_SETTIMEOFDAY=2 if settimeofday uses 2nd arg (4.3BSD)
@@ -117,6 +118,7 @@ LDLIBS=
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
 #  -DHAVE_SYS_STAT_H=0 if your compiler lacks a "sys/stat.h"
 #  -DHAVE_SYS_WAIT_H=0 if your compiler lacks a "sys/wait.h"
+#  -DHAVE_TZSET=0 if your system lacks a tzset function
 #  -DHAVE_UNISTD_H=0 if your compiler lacks a "unistd.h" (Microsoft C++ 7?)
 #  -DHAVE_UTMPX_H=1 if your compiler has a "utmpx.h"
 #  -DLOCALE_HOME=\"path\" if locales are in "path", not "/usr/lib/locale"

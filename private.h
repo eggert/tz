@@ -62,10 +62,6 @@
 #define HAVE_UTMPX_H		0
 #endif /* !defined HAVE_UTMPX_H */
 
-#ifndef LOCALE_HOME
-#define LOCALE_HOME		"/usr/lib/locale"
-#endif /* !defined LOCALE_HOME */
-
 #if HAVE_INCOMPATIBLE_CTIME_R
 #define asctime_r _incompatible_asctime_r
 #define ctime_r _incompatible_ctime_r

@@ -103,6 +103,7 @@ struct lsinfo {				/* leap second information */
 	int_fast64_t	ls_corr;	/* correction to apply */
 };
 
+#define SMALLEST(a, b)	(((a) < (b)) ? (a) : (b))
 #define BIGGEST(a, b)	(((a) > (b)) ? (a) : (b))
 
 #ifdef TZNAME_MAX
@@ -1817,6 +1818,35 @@ time2sub(struct tm *const tmp,
 			else	lo = t;
 			continue;
 		}
+#if defined TM_GMTOFF && ! UNINIT_TRAP
+		if (mytm.TM_GMTOFF != yourtm.TM_GMTOFF
+		    && (yourtm.TM_GMTOFF < 0
+			? (-SECSPERDAY <= yourtm.TM_GMTOFF
+			   && (mytm.TM_GMTOFF <=
+			       (SMALLEST (INT_FAST32_MAX, LONG_MAX)
+				+ yourtm.TM_GMTOFF)))
+			: (yourtm.TM_GMTOFF <= SECSPERDAY
+			   && ((BIGGEST (INT_FAST32_MIN, LONG_MIN)
+				+ yourtm.TM_GMTOFF)
+			       <= mytm.TM_GMTOFF)))) {
+		  /* MYTM matches YOURTM except with the wrong UTC offset.
+		     YOURTM.TM_GMTOFF is plausible, so try it instead.
+		     It's OK if YOURTM.TM_GMTOFF contains uninitialized data,
+		     since the guess gets checked.  */
+		  time_t altt = t;
+		  int_fast32_t diff = mytm.TM_GMTOFF - yourtm.TM_GMTOFF;
+		  if (!increment_overflow_time(&altt, diff)) {
+		    struct tm alttm;
+		    if (funcp(&altt, offset, &alttm)
+			&& alttm.tm_isdst == mytm.tm_isdst
+			&& alttm.TM_GMTOFF == yourtm.TM_GMTOFF
+			&& tmcomp(&alttm, &yourtm) == 0) {
+		      t = altt;
+		      mytm = alttm;
+		    }
+		  }
+		}
+#endif
 		if (yourtm.tm_isdst < 0 || mytm.tm_isdst == yourtm.tm_isdst)
 			break;
 		/*

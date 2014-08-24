@@ -59,6 +59,14 @@ Unreleased, experimental changes
     already defined, to make it easier to configure on common platforms.
     Define NO_TM_GMTOFF and NO_TM_ZONE to suppress this.
 
+    Unless the new macro UNINIT_TRAP is defined to 0, the tz code now
+    assumes that reading uninitialized memory yields garbage values
+    but does not cause other problems such as traps.
+
+    If TM_GMTOFF is defined and UNINIT_TRAP is not 0, mktime is now
+    more likely to guess right for ambiguous time stamps near
+    transitions where tm_isdst does not change.
+
     tzselect -c now uses a hybrid distance measure that works better
     in Africa.  (Thanks to Alan Barrett for noting the problem.)
 

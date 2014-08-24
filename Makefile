@@ -134,6 +134,8 @@ LDLIBS=
 #	the default is system-supplied, typically "/usr/lib/locale"
 #  -DTZDEFRULESTRING=\",date/time,date/time\" to default to the specified
 #	DST transitions if the time zone files cannot be accessed
+#  -DUNINIT_TRAP=1 if reading uninitialized storage can cause problems
+#	other than simply getting garbage data
 #  -DZIC_MAX_ABBR_LEN_WO_WARN=3
 #	(or some other number) to set the maximum time zone abbreviation length
 #	that zic will accept without a warning (the default is 6)

@@ -413,6 +413,10 @@ static time_t const time_t_max =
 # define INITIALIZE(x)
 #endif
 
+#ifndef UNINIT_TRAP
+# define UNINIT_TRAP 0
+#endif
+
 /*
 ** For the benefit of GNU folk...
 ** '_(MSGID)' uses the current locale's message library string for MSGID.

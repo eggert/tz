@@ -41,8 +41,8 @@ Unreleased, experimental changes
 
   Changes affecting code
 
-    Some crashes have been fixed when the tz library is given a
-    compiled time zone file containing invalid or outlandish data.
+    Some crashes have been fixed when zdump or the tz library is given
+    invalid or outlandish input.
 
     The tz library no longer mishandles leap seconds on platforms with
     unsigned time_t in time zones that lack ordinary transitions after 1970.

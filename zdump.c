@@ -420,8 +420,11 @@ _("%s: usage: %s [--version] [--help] [-{vV}] [-{ct} [lo,]hi] zonename ...\n"
 int
 main(int argc, char *argv[])
 {
+	/* These are static so that they're initially zero.  */
 	static char *		abbrev;
 	static size_t		abbrevsize;
+	static struct tm	newtm;
+
 	register int		i;
 	register bool		vflag;
 	register bool		Vflag;
@@ -433,7 +436,6 @@ main(int argc, char *argv[])
 	time_t			t;
 	time_t			newt;
 	struct tm		tm;
-	struct tm		newtm;
 	register struct tm *	tmp;
 	register struct tm *	newtmp;
 

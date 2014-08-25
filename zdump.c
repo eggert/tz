@@ -12,6 +12,9 @@
 ** To do this, compile with -DUSE_LTZ=0 and link without the tz library.
 */
 
+#ifndef NETBSD_INSPIRED
+# define NETBSD_INSPIRED 1
+#endif
 #ifndef USE_LTZ
 # define USE_LTZ 1
 #endif
@@ -93,6 +96,10 @@ typedef long intmax_t;
 
 #ifndef HAVE_LOCALTIME_R
 # define HAVE_LOCALTIME_R 1
+#endif
+
+#ifndef HAVE_LOCALTIME_RZ
+# define HAVE_LOCALTIME_RZ (NETBSD_INSPIRED && USE_LTZ)
 #endif
 
 #ifndef HAVE_TZSET
@@ -213,6 +220,11 @@ enum { SECSPER400YEARS_FITS = SECSPERLYEAR <= INTMAX_MAX / 400 };
 # define TZ_DOMAIN "tz"
 #endif
 
+#if ! HAVE_LOCALTIME_RZ
+# undef  timezone_t
+# define timezone_t char **
+#endif
+
 extern char **	environ;
 extern int	getopt(int argc, char * const argv[],
 			const char * options);
@@ -237,8 +249,8 @@ static bool	errout;
 static char const *abbr(struct tm const *);
 static intmax_t	delta(struct tm *, struct tm *) ATTRIBUTE_PURE;
 static void dumptime(struct tm const *);
-static time_t hunt(char *, time_t, time_t);
-static void show(char *, time_t, bool);
+static time_t hunt(timezone_t, char *, time_t, time_t);
+static void show(timezone_t, char *, time_t, bool);
 static const char *tformat(void);
 static time_t yeartot(intmax_t) ATTRIBUTE_PURE;
 
@@ -279,13 +291,51 @@ sumsize(size_t a, size_t b)
 static void tzset(void) { }
 #endif
 
-/* Set the global time zone to VAL, exiting on memory allocation failure.  */
-static void
-settimezone(char const *val)
+#if ! HAVE_LOCALTIME_RZ
+
+# if ! HAVE_LOCALTIME_R || ! HAVE_TZSET
+#  undef localtime_r
+#  define localtime_r zdump_localtime_r
+static struct tm *
+localtime_r(time_t *tp, struct tm *tmp)
+{
+  struct tm *r = localtime(tp);
+  if (r) {
+    *tmp = *r;
+    r = tmp;
+  }
+  return r;
+}
+# endif
+
+# undef localtime_rz
+# define localtime_rz zdump_localtime_rz
+static struct tm *
+localtime_rz(timezone_t rz, time_t *tp, struct tm *tmp)
+{
+  return localtime_r(tp, tmp);
+}
+
+# ifdef TYPECHECK
+#  undef mktime_z
+#  define mktime_z zdump_mktime_z
+static time_t
+mktime_z(timezone_t tz, struct tm *tmp)
+{
+  return mktime(tmp);
+}
+# endif
+
+# undef tzalloc
+# undef tzfree
+# define tzalloc zdump_tzalloc
+# define tzfree zdump_tzfree
+
+static timezone_t
+tzalloc(char const *val)
 {
   static char **fakeenv;
   char **env = fakeenv;
-  char *oldstorage = env ? env[0] : 0;
   char *env0;
   if (! env) {
     char **e = environ;
@@ -310,38 +360,32 @@ settimezone(char const *val)
   }
   env[0] = strcat(strcpy(env0, "TZ="), val);
   environ = fakeenv = env;
-  free(oldstorage);
   tzset();
+  return env;
 }
 
-#if ! HAVE_LOCALTIME_R || ! HAVE_TZSET
-# undef localtime_r
-# define localtime_r zdump_localtime_r
-static struct tm *
-localtime_r(time_t *tp, struct tm *tmp)
+static void
+tzfree(timezone_t env)
 {
-  struct tm *r = localtime(tp);
-  if (r) {
-    *tmp = *r;
-    r = tmp;
-  }
-  return r;
+  environ = env + 1;
+  free(env[0]);
 }
-#endif
+#endif /* ! HAVE_LOCALTIME_RZ */
 
 #ifndef TYPECHECK
-# define my_localtime_r localtime_r
+# define my_localtime_rz localtime_rz
 #else /* !defined TYPECHECK */
+
 static struct tm *
-my_localtime_r(time_t *tp, struct tm *tmp)
+my_localtime_rz(timezone_t tz, time_t *tp, struct tm *tmp)
 {
-	tmp = localtime_r(tp, tmp);
+	tmp = localtime_rz(tz, tp, tmp);
 	if (tmp) {
 		struct tm	tm;
 		register time_t	t;
 
 		tm = *tmp;
-		t = mktime(&tm);
+		t = mktime_z(tz, &tm);
 		if (t != *tp) {
 			fflush(stdout);
 			fprintf(stderr, "\n%s: ", progname);
@@ -399,27 +443,34 @@ abbrok(const char *const abbrp, const char *const zone)
 	warned = errout = true;
 }
 
-/* Save into *BUF (of size *BUFALLOC) the time zone abbreviation of TMP.
+/* Return a time zone abbreviation.  If the abbreviation needs to be
+   saved, use *BUF (of size *BUFALLOC) to save it, and return the
+   abbreviation in the possibly-reallocated *BUF.  Otherwise, just
+   return the abbreviation.  Get the abbreviation from TMP.
    Exit on memory allocation failure.  */
-static void
+static char const *
 saveabbr(char **buf, size_t *bufalloc, struct tm const *tmp)
 {
   char const *ab = abbr(tmp);
-  size_t ablen = strlen(ab);
-  if (*bufalloc <= ablen) {
-    free(*buf);
+  if (HAVE_LOCALTIME_RZ)
+    return ab;
+  else {
+    size_t ablen = strlen(ab);
+    if (*bufalloc <= ablen) {
+      free(*buf);
 
-    /* Make the new buffer at least twice as long as the old,
-       to avoid O(N**2) behavior on repeated calls.  */
-    *bufalloc = sumsize(*bufalloc, ablen + 1);
+      /* Make the new buffer at least twice as long as the old,
+	 to avoid O(N**2) behavior on repeated calls.  */
+      *bufalloc = sumsize(*bufalloc, ablen + 1);
 
-    *buf = malloc(*bufalloc);
-    if (! *buf) {
-      perror(progname);
-      exit(EXIT_FAILURE);
+      *buf = malloc(*bufalloc);
+      if (! *buf) {
+	perror(progname);
+	exit(EXIT_FAILURE);
+      }
     }
+    return strcpy(*buf, ab);
   }
-  strcpy(*buf, ab);
 }
 
 static void
@@ -567,39 +618,45 @@ main(int argc, char *argv[])
 	}
 
 	for (i = optind; i < argc; ++i) {
-		settimezone(argv[i]);
+		timezone_t tz = tzalloc(argv[i]);
+		char const *ab;
+		if (!tz) {
+		  perror("tzalloc");
+		  return EXIT_FAILURE;
+		}
 		if (! (vflag | Vflag)) {
-			show(argv[i], now, false);
+			show(tz, argv[i], now, false);
+			tzfree(tz);
 			continue;
 		}
 		warned = false;
 		t = absolute_min_time;
 		if (!Vflag) {
-			show(argv[i], t, true);
+			show(tz, argv[i], t, true);
 			t += SECSPERDAY;
-			show(argv[i], t, true);
+			show(tz, argv[i], t, true);
 		}
 		if (t < cutlotime)
 			t = cutlotime;
-		tmp = my_localtime_r(&t, &tm);
+		tmp = my_localtime_rz(tz, &t, &tm);
 		if (tmp)
-			saveabbr(&abbrev, &abbrevsize, &tm);
+		  ab = saveabbr(&abbrev, &abbrevsize, &tm);
 		for ( ; ; ) {
 			newt = (t < absolute_max_time - SECSPERDAY / 2
 				? t + SECSPERDAY / 2
 				: absolute_max_time);
 			if (cuthitime <= newt)
 				break;
-			newtmp = localtime_r(&newt, &newtm);
+			newtmp = localtime_rz(tz, &newt, &newtm);
 			if ((tmp == NULL || newtmp == NULL) ? (tmp != newtmp) :
 				(delta(&newtm, &tm) != (newt - t) ||
 				newtm.tm_isdst != tm.tm_isdst ||
-				strcmp(abbr(&newtm), abbrev) != 0)) {
-					newt = hunt(argv[i], t, newt);
-					newtmp = localtime_r(&newt, &newtm);
+				strcmp(abbr(&newtm), ab) != 0)) {
+					newt = hunt(tz, argv[i], t, newt);
+					newtmp = localtime_rz(tz, &newt, &newtm);
 					if (newtmp)
-						saveabbr(&abbrev, &abbrevsize,
-							 &newtm);
+					  ab = saveabbr(&abbrev, &abbrevsize,
+							&newtm);
 			}
 			t = newt;
 			tm = newtm;
@@ -608,10 +665,11 @@ main(int argc, char *argv[])
 		if (!Vflag) {
 			t = absolute_max_time;
 			t -= SECSPERDAY;
-			show(argv[i], t, true);
+			show(tz, argv[i], t, true);
 			t += SECSPERDAY;
-			show(argv[i], t, true);
+			show(tz, argv[i], t, true);
 		}
+		tzfree(tz);
 	}
 	close_file(stdout);
 	if (errout && (ferror(stderr) || fclose(stderr) != 0))
@@ -663,19 +721,20 @@ yeartot(const intmax_t y)
 }
 
 static time_t
-hunt(char *name, time_t lot, time_t hit)
+hunt(timezone_t tz, char *name, time_t lot, time_t hit)
 {
 	static char *		loab;
 	static size_t		loabsize;
+	char const *		ab;
 	time_t			t;
 	struct tm		lotm;
 	register struct tm *	lotmp;
 	struct tm		tm;
 	register struct tm *	tmp;
 
-	lotmp = my_localtime_r(&lot, &lotm);
+	lotmp = my_localtime_rz(tz, &lot, &lotm);
 	if (lotmp)
-		saveabbr(&loab, &loabsize, &lotm);
+	  ab = saveabbr(&loab, &loabsize, &lotm);
 	for ( ; ; ) {
 		time_t diff = hit - lot;
 		if (diff < 2)
@@ -686,18 +745,18 @@ hunt(char *name, time_t lot, time_t hit)
 			++t;
 		else if (t >= hit)
 			--t;
-		tmp = my_localtime_r(&t, &tm);
+		tmp = my_localtime_rz(tz, &t, &tm);
 		if ((lotmp == NULL || tmp == NULL) ? (lotmp == tmp) :
 			(delta(&tm, &lotm) == (t - lot) &&
 			tm.tm_isdst == lotm.tm_isdst &&
-			strcmp(abbr(&tm), loab) == 0)) {
+			strcmp(abbr(&tm), ab) == 0)) {
 				lot = t;
 				lotm = tm;
 				lotmp = tmp;
 		} else	hit = t;
 	}
-	show(name, lot, true);
-	show(name, hit, true);
+	show(tz, name, lot, true);
+	show(tz, name, hit, true);
 	return hit;
 }
 
@@ -727,7 +786,7 @@ delta(struct tm * newp, struct tm *oldp)
 }
 
 static void
-show(char *zone, time_t t, bool v)
+show(timezone_t tz, char *zone, time_t t, bool v)
 {
 	register struct tm *	tmp;
 	struct tm tm;
@@ -743,7 +802,7 @@ show(char *zone, time_t t, bool v)
 		}
 		printf(" = ");
 	}
-	tmp = my_localtime_r(&t, &tm);
+	tmp = my_localtime_rz(tz, &t, &tm);
 	dumptime(tmp);
 	if (tmp != NULL) {
 		if (*abbr(tmp) != '\0')
@@ -821,7 +880,7 @@ dumptime(register const struct tm *timeptr)
 		return;
 	}
 	/*
-	** The packaged localtime_r and gmtime never put out-of-range
+	** The packaged localtime_rz and gmtime never put out-of-range
 	** values in tm_wday or tm_mon, but since this code might be compiled
 	** with other (perhaps experimental) versions, paranoia is in order.
 	*/

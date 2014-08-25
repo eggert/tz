@@ -101,6 +101,14 @@
 #include "unistd.h"	/* for F_OK, R_OK, and other POSIX goodness */
 #endif /* HAVE_UNISTD_H */
 
+#ifndef HAVE_STRFTIME_L
+# if _POSIX_VERSION < 200809
+#  define HAVE_STRFTIME_L 0
+# else
+#  define HAVE_STRFTIME_L 1
+# endif
+#endif
+
 #ifndef F_OK
 #define F_OK	0
 #endif /* !defined F_OK */

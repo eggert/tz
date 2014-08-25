@@ -67,6 +67,11 @@ Unreleased, experimental changes
     more likely to guess right for ambiguous time stamps near
     transitions where tm_isdst does not change.
 
+    If HAVE_STRFTIME_L is defined to 1, the tz library now defines
+    strftime_l for compatibility with recent versions of POSIX.
+    Only the C locale is supported, though.  HAVE_STRFTIME_L defaults
+    to 1 on recent POSIX versions, and to 0 otherwise.
+
     zdump now builds with the tz library unless USE_LTZ is defined to 0,
     This lets zdump use tz features even if the system library lacks them.
     To build zdump with the system library, use 'make CFLAGS=-DUSE_LTZ=0

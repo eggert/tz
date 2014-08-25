@@ -115,6 +115,8 @@ LDLIBS=
 #  -DHAVE_SETTIMEOFDAY=2 if settimeofday uses 2nd arg (4.3BSD)
 #  -DHAVE_SETTIMEOFDAY=3 if settimeofday ignores 2nd arg (4.4BSD)
 #  -DHAVE_STDINT_H=1 if you have a pre-C99 compiler with "stdint.h"
+#  -DHAVE_STRFTIME_L=1 if <time.h> declares locale_t and strftime_l
+#	This defaults to 0 if _POSIX_VERSION < 200809, 1 otherwise.
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
 #  -DHAVE_SYS_STAT_H=0 if your compiler lacks a "sys/stat.h"
 #  -DHAVE_SYS_WAIT_H=0 if your compiler lacks a "sys/wait.h"

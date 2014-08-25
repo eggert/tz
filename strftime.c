@@ -106,6 +106,16 @@ extern char *	tzname[];
 #define IN_THIS	2
 #define IN_ALL	3
 
+#if HAVE_STRFTIME_L
+size_t
+strftime_l(char *s, size_t maxsize, char const *format, struct tm const *t,
+	   locale_t locale)
+{
+  /* Just call strftime, as only the C locale is supported.  */
+  return strftime(s, maxsize, format, t);
+}
+#endif
+
 size_t
 strftime(char * const s, const size_t maxsize, const char *const format,
 	 const struct tm *const t)

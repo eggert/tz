@@ -112,6 +112,8 @@ Unreleased, experimental changes
 
     'zdump' no longer links in ialloc.o, as it's not needed.
 
+    'make check_time_t_alternatives' no longer assumes GNU diff.
+
   Changes affecting distribution tarballs
 
     The files checktab.awk and zoneinfo2tdf.pl are now distributed in

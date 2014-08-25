@@ -569,6 +569,11 @@ check_public:	$(ENCHILADA)
 # Check that the code works under various alternative
 # implementations of time_t.
 check_time_t_alternatives:
+		if diff -q Makefile Makefile 2>/dev/null; then \
+		  quiet_option='-q'; \
+		else \
+		  quiet_option=''; \
+		fi && \
 		zones=`$(AWK) '/^[^#]/ { print $$3 }' <zone1970.tab` && \
 		for type in $(TIME_T_ALTERNATIVES); do \
 		  mkdir -p tzpublic/$$type && \
@@ -577,7 +582,9 @@ check_time_t_alternatives:
 		    CFLAGS='$(CFLAGS) -Dtime_tz='"'$$type'" \
 		    REDO='$(REDO)' \
 		    install && \
-		  diff -qr tzpublic/int64_t/etc/zoneinfo tzpublic/$$type/etc/zoneinfo && \
+		  diff $$quiet_option -r \
+		    tzpublic/int64_t/etc/zoneinfo \
+		    tzpublic/$$type/etc/zoneinfo && \
 		  case $$type in \
 		  int32_t) range=-2147483648,2147483647;; \
 		  uint32_t) range=0,4294967296;; \

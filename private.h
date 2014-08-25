@@ -73,6 +73,10 @@
 
 /* Enable tm_gmtoff and tm_zone on GNUish systems.  */
 #define _GNU_SOURCE 1
+/* Fix asctime_r on Solaris 10.  */
+#define _POSIX_PTHREAD_SEMANTICS 1
+/* Enable strtoimax on Solaris 10.  */
+#define __EXTENSIONS__ 1
 
 /*
 ** Nested includes
@@ -163,29 +167,39 @@
 # include <inttypes.h>
 #endif
 
-#ifndef INT_FAST64_MAX
 /* Pre-C99 GCC compilers define __LONG_LONG_MAX__ instead of LLONG_MAX.  */
-#if defined LLONG_MAX || defined __LONG_LONG_MAX__
-typedef long long	int_fast64_t;
+#ifdef __LONG_LONG_MAX__
+# ifndef LLONG_MAX
+#  define LLONG_MAX __LONG_LONG_MAX__
+# endif
+# ifndef LLONG_MIN
+#  define LLONG_MIN (-1 - LLONG_MAX)
+# endif
+#endif
+
+#ifndef INT_FAST64_MAX
 # ifdef LLONG_MAX
+typedef long long	int_fast64_t;
 #  define INT_FAST64_MIN LLONG_MIN
 #  define INT_FAST64_MAX LLONG_MAX
 # else
-#  define INT_FAST64_MIN (-1 - __LONG_LONG_MAX__)
-#  define INT_FAST64_MAX __LONG_LONG_MAX__
-# endif
-# define SCNdFAST64 "lld"
-#else /* ! (defined LLONG_MAX || defined __LONG_LONG_MAX__) */
-#if (LONG_MAX >> 31) < 0xffffffff
+#  if (LONG_MAX >> 31) < 0xffffffff
 Please use a compiler that supports a 64-bit integer type (or wider);
 you may need to compile with "-DHAVE_STDINT_H".
-#endif /* (LONG_MAX >> 31) < 0xffffffff */
+#  endif
 typedef long		int_fast64_t;
-# define INT_FAST64_MIN LONG_MIN
-# define INT_FAST64_MAX LONG_MAX
-# define SCNdFAST64 "ld"
-#endif /* ! (defined LLONG_MAX || defined __LONG_LONG_MAX__) */
-#endif /* !defined INT_FAST64_MAX */
+#  define INT_FAST64_MIN LONG_MIN
+#  define INT_FAST64_MAX LONG_MAX
+# endif
+#endif
+
+#ifndef SCNdFAST64
+# if INT_FAST64_MAX == LLONG_MAX
+#  define SCNdFAST64 "lld"
+# else
+#  define SCNdFAST64 "ld"
+# endif
+#endif
 
 #ifndef INT_FAST32_MAX
 # if INT_MAX >> 31 == 0
@@ -200,32 +214,39 @@ typedef int int_fast32_t;
 #endif
 
 #ifndef INTMAX_MAX
-# if defined LLONG_MAX || defined __LONG_LONG_MAX__
+# ifdef LLONG_MAX
 typedef long long intmax_t;
 #  define strtoimax strtoll
-#  define PRIdMAX "lld"
-#  ifdef LLONG_MAX
-#   define INTMAX_MAX LLONG_MAX
-#   define INTMAX_MIN LLONG_MIN
-#  else
-#   define INTMAX_MAX __LONG_LONG_MAX__
-#   define INTMAX_MIN (-1 - __LONG_LONG_MAX__)
-#  endif
+#  define INTMAX_MAX LLONG_MAX
+#  define INTMAX_MIN LLONG_MIN
 # else
 typedef long intmax_t;
 #  define strtoimax strtol
-#  define PRIdMAX "ld"
 #  define INTMAX_MAX LONG_MAX
 #  define INTMAX_MIN LONG_MIN
+# endif
+#endif
+
+#ifndef PRIdMAX
+# if INTMAX_MAX == LLONG_MAX
+#  define PRIdMAX "lld"
+# else
+#  define PRIdMAX "ld"
 # endif
 #endif
 
 #ifndef UINTMAX_MAX
 # if defined ULLONG_MAX || defined __LONG_LONG_MAX__
 typedef unsigned long long uintmax_t;
-#  define PRIuMAX "llu"
 # else
 typedef unsigned long uintmax_t;
+# endif
+#endif
+
+#ifndef PRIuMAX
+# if defined ULLONG_MAX || defined __LONG_LONG_MAX__
+#  define PRIuMAX "llu"
+# else
 #  define PRIuMAX "lu"
 # endif
 #endif

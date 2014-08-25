@@ -25,6 +25,8 @@
 
 /* Enable tm_gmtoff and tm_zone on GNUish systems.  */
 #define _GNU_SOURCE 1
+/* Enable strtoimax on Solaris 10.  */
+#define __EXTENSIONS__ 1
 
 #include "stdio.h"	/* for stdout, stderr, perror */
 #include "string.h"	/* for strcpy */
@@ -63,21 +65,28 @@ typedef int int_fast32_t;
 # endif
 #endif
 
+/* Pre-C99 GCC compilers define __LONG_LONG_MAX__ instead of LLONG_MAX.  */
+#if !defined LLONG_MAX && defined __LONG_LONG_MAX__
+# define LLONG_MAX __LONG_LONG_MAX__
+#endif
+
 #ifndef INTMAX_MAX
-# if defined LLONG_MAX || defined __LONG_LONG_MAX__
+# ifdef LLONG_MAX
 typedef long long intmax_t;
 #  define strtoimax strtoll
-#  define PRIdMAX "lld"
-#  ifdef LLONG_MAX
-#   define INTMAX_MAX LLONG_MAX
-#  else
-#   define INTMAX_MAX __LONG_LONG_MAX__
-#  endif
+#  define INTMAX_MAX LLONG_MAX
 # else
 typedef long intmax_t;
 #  define strtoimax strtol
-#  define PRIdMAX "ld"
 #  define INTMAX_MAX LONG_MAX
+# endif
+#endif
+
+#ifndef PRIdMAX
+# if INTMAX_MAX == LLONG_MAX
+#  define PRIdMAX "lld"
+# else
+#  define PRIdMAX "ld"
 # endif
 #endif
 
@@ -99,7 +108,11 @@ typedef long intmax_t;
 #endif
 
 #ifndef HAVE_LOCALTIME_RZ
-# define HAVE_LOCALTIME_RZ (NETBSD_INSPIRED && USE_LTZ)
+# ifdef TM_ZONE
+#  define HAVE_LOCALTIME_RZ (NETBSD_INSPIRED && USE_LTZ)
+# else
+#  define HAVE_LOCALTIME_RZ 0
+# endif
 #endif
 
 #ifndef HAVE_TZSET

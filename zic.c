@@ -114,11 +114,11 @@ static void	infile(const char * filename);
 static void	inleap(char ** fields, int nfields);
 static void	inlink(char ** fields, int nfields);
 static void	inrule(char ** fields, int nfields);
-static int	inzcont(char ** fields, int nfields);
-static int	inzone(char ** fields, int nfields);
+static bool	inzcont(char ** fields, int nfields);
+static bool	inzone(char ** fields, int nfields);
 static bool	inzsub(char **, int, bool);
 static int	itsdir(const char * name);
-static int	is_alpha(char a);
+static bool	is_alpha(char a);
 static char	lowerit(char);
 static bool	mkdirs(char *);
 static void	newabbr(const char * abbr);
@@ -130,7 +130,7 @@ static void	rulesub(struct rule * rp,
 			const char * typep, const char * monthp,
 			const char * dayp, const char * timep);
 static zic_t	tadd(zic_t t1, zic_t t2);
-static int	yearistype(int year, const char * type);
+static bool	yearistype(int year, const char * type);
 
 static int		charcnt;
 static bool		errors;

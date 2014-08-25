@@ -104,6 +104,8 @@ Unreleased, experimental changes
     For easier maintenance later, some C code has been simplified
     and some lint has been removed.
 
+    The C type 'bool' is now used for boolean values, instead of 'int'.
+
     The long-obsolete LOCALE_HOME code has been removed.
 
     The long-obsolete 'gtime' function has been removed.

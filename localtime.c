@@ -1205,7 +1205,12 @@ static struct state *
 zoneinit(struct state *sp, char const *name)
 {
   if (sp) {
-    if (*name == '\0') {
+    if (! name
+	|| (name[0]
+	    && ! (tzload(name, sp, true)
+		  || (name[0] != ':' && tzparse(name, sp, false)))))
+      gmtload(sp);
+    else if (! name[0]) {
       /*
       ** User wants it fast rather than right.
       */
@@ -1216,9 +1221,7 @@ zoneinit(struct state *sp, char const *name)
       sp->ttis[0].tt_gmtoff = 0;
       sp->ttis[0].tt_abbrind = 0;
       strcpy(sp->chars, gmt);
-    } else if (! tzload(name, sp, true))
-      if (name[0] == ':' || ! tzparse(name, sp, false))
-	gmtload(sp);
+    }
   }
   return sp;
 }
@@ -2029,7 +2032,12 @@ time1(struct tm *const tmp,
 NETBSD_INSPIRED_EXTERN time_t
 mktime_z(struct state *sp, struct tm *tmp)
 {
-  return time1(tmp, localsub, sp, 0);
+  if (sp)
+    return time1(tmp, localsub, sp, 0);
+  else {
+    gmtcheck();
+    return time1(tmp, gmtsub, gmtptr, 0);
+  }
 }
 
 time_t

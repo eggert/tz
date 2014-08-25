@@ -62,6 +62,10 @@
 #define HAVE_UTMPX_H		0
 #endif /* !defined HAVE_UTMPX_H */
 
+#ifndef NETBSD_INSPIRED
+# define NETBSD_INSPIRED 1
+#endif
+
 #if HAVE_INCOMPATIBLE_CTIME_R
 #define asctime_r _incompatible_asctime_r
 #define ctime_r _incompatible_ctime_r
@@ -74,12 +78,28 @@
 ** Nested includes
 */
 
+/* Avoid clashes with NetBSD by renaming NetBSD's declarations.  */
+#define localtime_rz sys_localtime_rz
+#define mktime_z sys_mktime_z
+#define posix2time_z sys_posix2time_z
+#define time2posix_z sys_time2posix_z
+#define timezone_t sys_timezone_t
+#define tzalloc sys_tzalloc
+#define tzfree sys_tzfree
+#include <time.h>
+#undef localtime_rz
+#undef mktime_z
+#undef posix2time_z
+#undef time2posix_z
+#undef timezone_t
+#undef tzalloc
+#undef tzfree
+
 #include "sys/types.h"	/* for time_t */
 #include "stdio.h"
 #include "errno.h"
 #include "string.h"
 #include "limits.h"	/* for CHAR_BIT et al. */
-#include "time.h"
 #include "stdlib.h"
 
 #if HAVE_GETTEXT
@@ -354,6 +374,31 @@ time_t posix2time(time_t);
 # endif
 # if !defined TM_ZONE && !defined NO_TM_ZONE
 #  define TM_ZONE tm_zone
+# endif
+#endif
+
+/*
+** Define functions that are ABI compatible with NetBSD but have
+** better prototypes.  NetBSD 6.1.4 defines a pointer type timezone_t
+** and labors under the misconception that 'const timezone_t' is a
+** pointer to a constant.  This use of 'const' is ineffective, so it
+** is not done here.  What we call 'struct state' NetBSD calls
+** 'struct __state', but this is a private name so it doesn't matter.
+*/
+#if NETBSD_INSPIRED
+typedef struct state *timezone_t;
+struct tm *localtime_rz(timezone_t restrict, time_t const *restrict,
+			struct tm *restrict);
+time_t mktime_z(timezone_t restrict, struct tm *restrict);
+timezone_t tzalloc(char const *);
+void tzfree(timezone_t);
+# ifdef STD_INSPIRED
+#  if !defined posix2time_z || defined time_tz
+time_t posix2time_z(timezone_t, time_t) ATTRIBUTE_PURE;
+#  endif
+#  if !defined time2posix_z || defined time_tz
+time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_PURE;
+#  endif
 # endif
 #endif
 

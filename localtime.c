@@ -28,6 +28,14 @@ static int lock(void) { return 0; }
 static void unlock(void) { }
 #endif
 
+/* NETBSD_INSPIRED_EXTERN functions are exported to callers if
+   NETBSD_INSPIRED is defined, and are private otherwise.  */
+#if NETBSD_INSPIRED
+# define NETBSD_INSPIRED_EXTERN
+#else
+# define NETBSD_INSPIRED_EXTERN static
+#endif
+
 #ifndef TZ_ABBR_MAX_LEN
 #define TZ_ABBR_MAX_LEN	16
 #endif /* !defined TZ_ABBR_MAX_LEN */
@@ -141,7 +149,8 @@ struct rule {
 #define DAY_OF_YEAR		1	/* n = day of year */
 #define MONTH_NTH_DAY_OF_WEEK	2	/* Mm.n.d = month, week, day of week */
 
-static struct tm *gmtsub(time_t const *, int_fast32_t, struct tm *);
+static struct tm *gmtsub(struct state const *, time_t const *, int_fast32_t,
+			 struct tm *);
 static bool increment_overflow(int *, int);
 static bool increment_overflow_time(time_t *, int_fast32_t);
 static bool normalize_overflow32(int_fast32_t *, int *, int);
@@ -1192,6 +1201,28 @@ tzsetwall(void)
 }
 #endif
 
+static struct state *
+zoneinit(struct state *sp, char const *name)
+{
+  if (sp) {
+    if (*name == '\0') {
+      /*
+      ** User wants it fast rather than right.
+      */
+      sp->leapcnt = 0;		/* so, we're off a little */
+      sp->timecnt = 0;
+      sp->typecnt = 0;
+      sp->ttis[0].tt_isdst = 0;
+      sp->ttis[0].tt_gmtoff = 0;
+      sp->ttis[0].tt_abbrind = 0;
+      strcpy(sp->chars, gmt);
+    } else if (! tzload(name, sp, true))
+      if (name[0] == ':' || ! tzparse(name, sp, false))
+	gmtload(sp);
+  }
+  return sp;
+}
+
 static void
 tzset_unlocked(void)
 {
@@ -1211,22 +1242,7 @@ tzset_unlocked(void)
   if (! lclptr)
     lclptr = malloc(sizeof *lclptr);
 #endif /* defined ALL_STATE */
-  if (lclptr) {
-    if (*name == '\0') {
-      /*
-      ** User wants it fast rather than right.
-      */
-      lclptr->leapcnt = 0;		/* so, we're off a little */
-      lclptr->timecnt = 0;
-      lclptr->typecnt = 0;
-      lclptr->ttis[0].tt_isdst = false;
-      lclptr->ttis[0].tt_gmtoff = 0;
-      lclptr->ttis[0].tt_abbrind = 0;
-      strcpy(lclptr->chars, gmt);
-    } else if (! tzload(name, lclptr, true))
-      if (name[0] == ':' || ! tzparse(name, lclptr, false))
-	gmtload(lclptr);
-  }
+  zoneinit(lclptr, name);
   settzname();
   lcl_is_set = shortname;
 }
@@ -1256,6 +1272,33 @@ gmtcheck(void)
   unlock();
 }
 
+#if NETBSD_INSPIRED
+
+timezone_t
+tzalloc(char const *name)
+{
+  timezone_t sp = malloc(sizeof *sp);
+  return zoneinit(sp, name);
+}
+
+void
+tzfree(timezone_t sp)
+{
+  free(sp);
+}
+
+/*
+** NetBSD 6.1.4 has ctime_rz, but omit it because POSIX says ctime and
+** ctime_r are obsolescent and have potential security problems that
+** ctime_rz would share.  Callers can instead use localtime_rz + strftime.
+**
+** NetBSD 6.1.4 has tzgetname, but omit it because it doesn't work
+** in zones with three or more time zone abbreviations.
+** Callers can instead use localtime_rz + strftime.
+*/
+
+#endif
+
 /*
 ** The easy way to behave "as if no library function calls" localtime
 ** is to not call it, so we drop its guts into "localsub", which can be
@@ -1267,18 +1310,16 @@ gmtcheck(void)
 
 /*ARGSUSED*/
 static struct tm *
-localsub(const time_t *const timep, const int_fast32_t offset,
+localsub(struct state const *sp, time_t const *timep, int_fast32_t offset,
 	 struct tm *const tmp)
 {
-	register struct state *		sp;
 	register const struct ttinfo *	ttisp;
 	register int			i;
 	register struct tm *		result;
 	const time_t			t = *timep;
 
-	sp = lclptr;
 	if (sp == NULL)
-		return gmtsub(timep, offset, tmp);
+		return gmtsub(gmtptr, timep, offset, tmp);
 	if ((sp->goback && t < sp->ats[0]) ||
 		(sp->goahead && t > sp->ats[sp->timecnt - 1])) {
 			time_t			newt = t;
@@ -1297,7 +1338,7 @@ localsub(const time_t *const timep, const int_fast32_t offset,
 			if (newt < sp->ats[0] ||
 				newt > sp->ats[sp->timecnt - 1])
 					return NULL;	/* "cannot happen" */
-			result = localsub(&newt, offset, tmp);
+			result = localsub(sp, &newt, offset, tmp);
 			if (result == tmp) {
 				register int_fast64_t newy;
 
@@ -1336,9 +1377,15 @@ localsub(const time_t *const timep, const int_fast32_t offset,
 	result = timesub(&t, ttisp->tt_gmtoff, sp, tmp);
 	tmp->tm_isdst = ttisp->tt_isdst;
 #ifdef TM_ZONE
-	tmp->TM_ZONE = &sp->chars[ttisp->tt_abbrind];
+	tmp->TM_ZONE = (char *) &sp->chars[ttisp->tt_abbrind];
 #endif /* defined TM_ZONE */
 	return result;
+}
+
+NETBSD_INSPIRED_EXTERN struct tm *
+localtime_rz(struct state *sp, time_t const *timep, struct tm *tmp)
+{
+  return localsub(sp, timep, 0, tmp);
 }
 
 static struct tm *
@@ -1351,7 +1398,7 @@ localtime_tzset(time_t const *timep, struct tm *tmp, bool skip_tzset)
   }
   if (!skip_tzset)
     tzset_unlocked();
-  tmp = localsub(timep, 0, tmp);
+  tmp = localtime_rz(lclptr, timep, tmp);
   unlock();
   return tmp;
 }
@@ -1361,10 +1408,6 @@ localtime(const time_t *const timep)
 {
   return localtime_tzset(timep, &tm, 0);
 }
-
-/*
-** Re-entrant version of localtime.
-*/
 
 struct tm *
 localtime_r(const time_t *const timep, struct tm *tmp)
@@ -1377,8 +1420,8 @@ localtime_r(const time_t *const timep, struct tm *tmp)
 */
 
 static struct tm *
-gmtsub(const time_t *const timep, const int_fast32_t offset,
-       struct tm *const tmp)
+gmtsub(struct state const *sp, time_t const *timep, int_fast32_t offset,
+       struct tm *tmp)
 {
 	register struct tm *	result;
 
@@ -1389,7 +1432,8 @@ gmtsub(const time_t *const timep, const int_fast32_t offset,
 	** "UT+xxxx" or "UT-xxxx" if offset is non-zero,
 	** but this is no time for a treasure hunt.
 	*/
-	tmp->TM_ZONE = offset ? wildabbr : gmtptr ? gmtptr->chars : gmt;
+	tmp->TM_ZONE = ((char *)
+			(offset ? wildabbr : gmtptr ? gmtptr->chars : gmt));
 #endif /* defined TM_ZONE */
 	return result;
 }
@@ -1408,7 +1452,7 @@ struct tm *
 gmtime_r(const time_t *const timep, struct tm *tmp)
 {
   gmtcheck();
-  tmp = gmtsub(timep, 0, tmp);
+  tmp = gmtsub(gmtptr, timep, 0, tmp);
   return tmp;
 }
 
@@ -1419,7 +1463,7 @@ offtime(const time_t *const timep, const long offset)
 {
   struct tm *tmp;
   gmtcheck();
-  tmp = gmtsub(timep, offset, &tm);
+  tmp = gmtsub(gmtptr, timep, offset, &tm);
   return tmp;
 }
 
@@ -1689,12 +1733,13 @@ tmcomp(register const struct tm *const atmp,
 
 static time_t
 time2sub(struct tm *const tmp,
-	 struct tm *(*const funcp)(const time_t *, int_fast32_t, struct tm *),
+	 struct tm *(*funcp)(struct state const *, time_t const *,
+			     int_fast32_t, struct tm *),
+	 struct state const *sp,
 	 const int_fast32_t offset,
 	 bool *okayp,
 	 bool do_norm_secs)
 {
-	register const struct state *	sp;
 	register int			dir;
 	register int			i, j;
 	register int			saved_seconds;
@@ -1791,7 +1836,7 @@ time2sub(struct tm *const tmp,
 			t = lo;
 		else if (t > hi)
 			t = hi;
-		if ((*funcp)(&t, offset, &mytm) == NULL) {
+		if (! funcp(sp, &t, offset, &mytm)) {
 			/*
 			** Assume that t is too extreme to be represented in
 			** a struct tm; arrange things so that it is less
@@ -1837,7 +1882,7 @@ time2sub(struct tm *const tmp,
 		  int_fast32_t diff = mytm.TM_GMTOFF - yourtm.TM_GMTOFF;
 		  if (!increment_overflow_time(&altt, diff)) {
 		    struct tm alttm;
-		    if (funcp(&altt, offset, &alttm)
+		    if (funcp(sp, &altt, offset, &alttm)
 			&& alttm.tm_isdst == mytm.tm_isdst
 			&& alttm.TM_GMTOFF == yourtm.TM_GMTOFF
 			&& tmcomp(&alttm, &yourtm) == 0) {
@@ -1855,8 +1900,6 @@ time2sub(struct tm *const tmp,
 		** It's okay to guess wrong since the guess
 		** gets checked.
 		*/
-		sp = (const struct state *)
-			((funcp == localsub) ? lclptr : gmtptr);
 		if (sp == NULL)
 			return WRONG;
 		for (i = sp->typecnt - 1; i >= 0; --i) {
@@ -1867,7 +1910,7 @@ time2sub(struct tm *const tmp,
 					continue;
 				newt = t + sp->ttis[j].tt_gmtoff -
 					sp->ttis[i].tt_gmtoff;
-				if ((*funcp)(&newt, offset, &mytm) == NULL)
+				if (! funcp(sp, &newt, offset, &mytm))
 					continue;
 				if (tmcomp(&mytm, &yourtm) != 0)
 					continue;
@@ -1887,14 +1930,16 @@ label:
 	if ((newt < t) != (saved_seconds < 0))
 		return WRONG;
 	t = newt;
-	if ((*funcp)(&t, offset, tmp))
+	if (funcp(sp, &t, offset, tmp))
 		*okayp = true;
 	return t;
 }
 
 static time_t
 time2(struct tm * const	tmp,
-      struct tm * (*const funcp)(const time_t *, int_fast32_t, struct tm *),
+      struct tm *(*funcp)(struct state const *, time_t const *,
+			  int_fast32_t, struct tm *),
+      struct state const *sp,
       const int_fast32_t offset,
       bool *okayp)
 {
@@ -1905,17 +1950,18 @@ time2(struct tm * const	tmp,
 	** (in case tm_sec contains a value associated with a leap second).
 	** If that fails, try with normalization of seconds.
 	*/
-	t = time2sub(tmp, funcp, offset, okayp, false);
-	return *okayp ? t : time2sub(tmp, funcp, offset, okayp, true);
+	t = time2sub(tmp, funcp, sp, offset, okayp, false);
+	return *okayp ? t : time2sub(tmp, funcp, sp, offset, okayp, true);
 }
 
 static time_t
 time1(struct tm *const tmp,
-      struct tm *(*const funcp) (const time_t *, int_fast32_t, struct tm *),
+      struct tm *(*funcp) (struct state const *, time_t const *,
+			   int_fast32_t, struct tm *),
+      struct state const *sp,
       const int_fast32_t offset)
 {
 	register time_t			t;
-	register const struct state *	sp;
 	register int			samei, otheri;
 	register int			sameind, otherind;
 	register int			i;
@@ -1930,7 +1976,7 @@ time1(struct tm *const tmp,
 	}
 	if (tmp->tm_isdst > 1)
 		tmp->tm_isdst = 1;
-	t = time2(tmp, funcp, offset, &okay);
+	t = time2(tmp, funcp, sp, offset, &okay);
 	if (okay)
 		return t;
 	if (tmp->tm_isdst < 0)
@@ -1948,7 +1994,6 @@ time1(struct tm *const tmp,
 	** We try to divine the type they started from and adjust to the
 	** type they need.
 	*/
-	sp = (const struct state *) ((funcp == localsub) ?  lclptr : gmtptr);
 	if (sp == NULL)
 		return WRONG;
 	for (i = 0; i < sp->typecnt; ++i)
@@ -1970,7 +2015,7 @@ time1(struct tm *const tmp,
 			tmp->tm_sec += sp->ttis[otheri].tt_gmtoff -
 					sp->ttis[samei].tt_gmtoff;
 			tmp->tm_isdst = !tmp->tm_isdst;
-			t = time2(tmp, funcp, offset, &okay);
+			t = time2(tmp, funcp, sp, offset, &okay);
 			if (okay)
 				return t;
 			tmp->tm_sec -= sp->ttis[otheri].tt_gmtoff -
@@ -1979,6 +2024,12 @@ time1(struct tm *const tmp,
 		}
 	}
 	return WRONG;
+}
+
+NETBSD_INSPIRED_EXTERN time_t
+mktime_z(struct state *sp, struct tm *tmp)
+{
+  return time1(tmp, localsub, sp, 0);
 }
 
 time_t
@@ -1991,7 +2042,7 @@ mktime(struct tm *const tmp)
     return -1;
   }
   tzset_unlocked();
-  t = time1(tmp, localsub, 0);
+  t = mktime_z(lclptr, tmp);
   unlock();
   return t;
 }
@@ -2019,7 +2070,7 @@ timeoff(struct tm *const tmp, const long offset)
   if (tmp)
     tmp->tm_isdst = 0;
   gmtcheck();
-  t = time1(tmp, gmtsub, offset);
+  t = time1(tmp, gmtsub, gmtptr, offset);
   return t;
 }
 
@@ -2040,26 +2091,30 @@ timeoff(struct tm *const tmp, const long offset)
 */
 
 static int_fast64_t
-leapcorr(time_t *timep)
+leapcorr(struct state const *sp, time_t t)
 {
-	register struct state *		sp;
-	register struct lsinfo *	lp;
+	register struct lsinfo const *	lp;
 	register int			i;
 
 	sp = lclptr;
 	i = sp->leapcnt;
 	while (--i >= 0) {
 		lp = &sp->lsis[i];
-		if (*timep >= lp->ls_trans)
+		if (t >= lp->ls_trans)
 			return lp->ls_corr;
 	}
 	return 0;
 }
 
+NETBSD_INSPIRED_EXTERN time_t ATTRIBUTE_PURE
+time2posix_z(struct state *sp, time_t t)
+{
+  return t - leapcorr(sp, t);
+}
+
 time_t
 time2posix(time_t t)
 {
-  time_t p;
   int err = lock();
   if (err) {
     errno = err;
@@ -2067,46 +2122,55 @@ time2posix(time_t t)
   }
   if (!lcl_is_set)
     tzset_unlocked();
-  p = t - leapcorr(&t);
+  if (lclptr)
+    t = time2posix_z(lclptr, t);
   unlock();
-  return p;
+  return t;
 }
 
-time_t
-posix2time(time_t t)
+NETBSD_INSPIRED_EXTERN time_t ATTRIBUTE_PURE
+posix2time_z(struct state *sp, time_t t)
 {
 	time_t	x;
 	time_t	y;
-	int err = lock();
-	if (err) {
-	  errno = err;
-	  return -1;
-	}
-	if (!lcl_is_set)
-	  tzset_unlocked();
 	/*
 	** For a positive leap second hit, the result
 	** is not unique. For a negative leap second
 	** hit, the corresponding time doesn't exist,
 	** so we return an adjacent second.
 	*/
-	x = t + leapcorr(&t);
-	y = x - leapcorr(&x);
+	x = t + leapcorr(sp, t);
+	y = x - leapcorr(sp, x);
 	if (y < t) {
 		do {
 			x++;
-			y = x - leapcorr(&x);
+			y = x - leapcorr(sp, x);
 		} while (y < t);
 		x -= y != t;
 	} else if (y > t) {
 		do {
 			--x;
-			y = x - leapcorr(&x);
+			y = x - leapcorr(sp, x);
 		} while (y > t);
 		x += y != t;
 	}
-	unlock();
 	return x;
+}
+
+time_t
+posix2time(time_t t)
+{
+  int err = lock();
+  if (err) {
+    errno = err;
+    return -1;
+  }
+  if (!lcl_is_set)
+    tzset_unlocked();
+  if (lclptr)
+    t = posix2time_z(lclptr, t);
+  unlock();
+  return t;
 }
 
 #endif /* defined STD_INSPIRED */

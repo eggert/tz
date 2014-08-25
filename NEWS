@@ -55,6 +55,14 @@ Unreleased, experimental changes
     bit cleaner and faster than plain localtime.  Compile with
     -DHAVE_LOCALTIME_R=0 and/or -DHAVE_TZSET=0 if your system lacks them.
 
+    Unless NETBSD_INSPIRED is defined to 0, the tz library now supplies
+    functions that let callers create and use objects representing time zones.
+    This is intended for applications that need to deal with many time
+    zones simultaneously, e.g., an application where each thread may be
+    in a different time zone.  The new functions are tzalloc, tzfree,
+    localtime_rz, mktime_z, and (if STD_INSPIRED is also defined)
+    posix2time_z and time2posix_z.
+
     The tz code now attempts to infer TM_GMTOFF and TM_ZONE if not
     already defined, to make it easier to configure on common platforms.
     Define NO_TM_GMTOFF and NO_TM_ZONE to suppress this.

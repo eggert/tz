@@ -197,6 +197,17 @@ GCC_DEBUG_FLAGS = -Dlint -g3 -O3 -fno-common -fstrict-aliasing \
 # These functions may well disappear in future releases of the time
 # conversion package.
 #
+# If you don't want functions that were inspired by NetBSD, add
+#	-DNETBSD_INSPIRED=0
+# to the end of the "CFLAGS=" line.  Otherwise, the functions
+# "localtime_rz", "mktime_z", "tzalloc", and "tzfree" are added to the
+# time library, and if STD_INSPIRED is also defined the functions
+# "posix2time_z" and "time2posix_z" are added as well.
+# The functions ending in "_z" (or "_rz") are like their unsuffixed
+# (or suffixed-by-"_r") counterparts, except with an extra first
+# argument of opaque type timezone_t that specifies the time zone.
+# "tzalloc" allocates a timezone_t value, and "tzfree" frees it.
+#
 # If you want to allocate state structures in localtime, add
 #	-DALL_STATE
 # to the end of the "CFLAGS=" line.  Storage is obtained by calling malloc.

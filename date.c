@@ -55,14 +55,14 @@ extern char *		tzname[2];
 static int		retval = EXIT_SUCCESS;
 
 static void		checkfinal(char const *, bool, time_t, time_t);
-static time_t		convert(const char *, int, time_t);
+static time_t		convert(const char *, bool, time_t);
 static void		display(const char *, time_t);
 static void		dogmt(void);
 static void		errensure(void);
 static void		iffy(time_t, time_t, const char *, const char *);
 static const char *	nondigit(const char *);
 static void		oops(const char *);
-static void		reset(time_t, int);
+static void		reset(time_t, bool);
 static void		timeout(FILE *, const char *, const struct tm *);
 static void		usage(void);
 static void		wildinput(const char *, const char *,

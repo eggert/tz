@@ -81,7 +81,7 @@ Zone	Africa/Douala	0:38:48	-	LMT	1912
 # The following table is from Shanks & Pottenger, but it can't be right.
 # Whitman gives Mar 31 - Aug 31 for 1931 on.
 # The International Hydrographic Bulletin, 1932-33, p 63 says that
-# Sierra Leone would advance its clocks by 20 monutes on 1933-10-01.
+# Sierra Leone would advance its clocks by 20 minutes on 1933-10-01.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	SL	1935	1942	-	Jun	 1	0:00	0:40	SLST
 Rule	SL	1935	1942	-	Oct	 1	0:00	0	WAT
@@ -210,7 +210,7 @@ Zone	America/Grenada	-4:07:00 -	LMT	1911 Jul # St George's
 			-4:00	-	AST
 
 # Guadeloupe
-Zone America/Guadeloupe	-4:06:08 -	LMT	1911 Jun  8 # Pointe a Pitre
+Zone America/Guadeloupe	-4:06:08 -	LMT	1911 Jun  8 # Pointe-à-Pitre
 			-4:00	 -	AST
 
 # Montserrat
@@ -223,7 +223,7 @@ Zone America/Montserrat	-4:08:52 -	LMT	1911 Jul  1  0:01 # Cork Hill
 # Argentina
 # This entry was intended for the following areas, but has been superseded by
 # more detailed zones.
-# Santa Fe (SF), Entre Rios (ER), Corrientes (CN), Misiones (MN), Chaco (CC),
+# Santa Fe (SF), Entre Ríos (ER), Corrientes (CN), Misiones (MN), Chaco (CC),
 # Formosa (FM), La Pampa (LP), Chubut (CH)
 Zone America/Rosario	-4:02:40 -	LMT	1894 Nov
 			-4:16:44 -	CMT	1920 May
@@ -349,9 +349,9 @@ Zone	Europe/Guernsey	-0:09:19 -	LMT	1913 Jun 18
 # <http://www.legislation.gov.im>, starting with the original Statutory
 # Time Act in 1883 and including additional confirmation of some of
 # the dates of the 'Summer Time' orders originating at
-# Westminster.  There is a little uncertinity as to the starting date
+# Westminster.  There is a little uncertainty as to the starting date
 # of the first summer time in 1916 which may have be announced a
-# couple of days late.  There is still a substatial number of
+# couple of days late.  There is still a substantial number of
 # documents to work through, but it is thought that every GB change
 # was also implemented on the island.
 #

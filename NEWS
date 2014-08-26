@@ -83,7 +83,8 @@ Unreleased, experimental changes
     To build zdump with the system library, use 'make CFLAGS=-DUSE_LTZ=0
     TZDOBJS=zdump.o CHECK_TIME_T_ALTERNATIVES='.
 
-    zdump now uses localtime_rz if available, as it's significantly faster.
+    zdump now uses localtime_rz if available, as it's significantly faster,
+    and it can help zdump better diagnose invalid time zone names.
     Define HAVE_LOCALTIME_RZ to 0 to suppress this.  HAVE_LOCALTIME_TZ
     defaults to 1 if NETBSD_INSPIRED && USE_LTZ.  When localtime_rz is
     not available, zdump now uses localtime_r and tzset if available,

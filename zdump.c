@@ -634,7 +634,7 @@ main(int argc, char *argv[])
 		timezone_t tz = tzalloc(argv[i]);
 		char const *ab;
 		if (!tz) {
-		  perror("tzalloc");
+		  perror(argv[i]);
 		  return EXIT_FAILURE;
 		}
 		if (! (vflag | Vflag)) {

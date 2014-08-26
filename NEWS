@@ -22,7 +22,7 @@ Unreleased, experimental changes
     GMT offset was -0:36:45 (rounded from -0:36:44.68), not -0:36:32.
     (Thanks to Stephen Colebourne for pointing to the decree.)
 
-    Asia/Dakha ended DST on 2009-12-31 at 24:00, not 23:59.
+    Asia/Dhaka ended DST on 2009-12-31 at 24:00, not 23:59.
 
     A new file 'backzone' contains data which may appeal to
     connoisseurs of old time stamps, although it is out of scope for

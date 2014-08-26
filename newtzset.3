@@ -7,6 +7,10 @@ tzset \- initialize time conversion information
 .el ds - \-
 .B #include <time.h>
 .PP
+.B timezone_t tzalloc(char const *TZ);
+.PP
+.B void tzfree(timezone_t tz);
+.PP
 .B void tzset(void);
 .PP
 .B cc ... \*-ltz
@@ -21,30 +25,61 @@ tzset \- initialize time conversion information
 .de q
 \\$3\*(lq\\$1\*(rq\\$2
 ..
-.I Tzset
-uses the value of the environment variable
-.B TZ
-to set time conversion information used by
-.IR localtime .
+.I Tzalloc
+allocates and returns a time zone object described by
+.BR TZ .
 If
 .B TZ
-does not appear in the environment,
-the best available approximation to local wall clock time, as specified
-by the
+is not a valid time zone description, or if the object cannot be allocated,
+.I tzalloc
+returns a null pointer and sets
+.BR errno .
+.PP
+.I Tzfree
+frees a time zone object
+.BR tz ,
+which should have been successfully allocated by
+.IR tzalloc .
+This invalidates any
+.B tm_zone
+pointers that
+.B tz
+was used to set.
+.PP
+.I Tzset
+acts like
+.BR tzalloc(getenv("TZ")) ,
+except it saves any resulting time zone object into internal
+storage that is accessed by
+.IR localtime ,
+.IR localtime_r ,
+and
+.IR mktime .
+The anonymous shared time zone object is freed by the next call to
+.IR tzset .
+If the implied call to
+.B tzalloc
+fails,
+.I tzset
+falls back on UTC.
+.PP
+If
+.B TZ
+is null, the best available approximation to local wall
+clock time, as specified by the
 .IR tzfile (5)-format
 file
 .B localtime
-in the system time conversion information directory, is used by
-.IR localtime .
+in the system time conversion information directory, is used.
 If
 .B TZ
-appears in the environment but its value is a null string,
+is the empty string,
 Universal Time (UT) is used, with the abbreviation "UTC"
 and without leap second correction; please see
 .IR newctime (3)
 for more about UT, UTC, and leap seconds.  If
 .B TZ
-appears in the environment and its value is not a null string:
+is nonnull and nonempty:
 .IP
 if the value begins with a colon, it is used as a pathname of a file
 from which to read the time conversion information;
@@ -267,13 +302,6 @@ For compatibility with System V Release 3.1, a semicolon
 may be used to separate the
 .I rule
 from the rest of the specification.
-.PP
-If the
-.B TZ
-environment variable does not specify a
-.IR tzfile (5)-format
-and cannot be interpreted as a direct specification,
-UTC is used.
 .SH FILES
 .ta \w'/usr/local/etc/zoneinfo/posixrules\0\0'u
 /usr/local/etc/zoneinfo	time zone information directory

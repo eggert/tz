@@ -136,8 +136,10 @@ Unreleased, experimental changes
     suggesting a CONTRIBUTING file, and to Tony Finch and Walter Harms
     for debugging it.)
 
-    The man pages have been updated to use function prototypes, and
-    to document thread-safe variants like localtime_r.
+    The man pages have been updated to use function prototypes,
+    to document thread-safe variants like localtime_r, and to document
+    the NetBSD-inspired functions tzalloc, tzfree, localtime_rz, and
+    mktime_z.
 
     The fields in Link lines have been renamed to be more descriptive
     and more like the parameters of 'ln'.  LINK-FROM has become TARGET,

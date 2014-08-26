@@ -25,12 +25,19 @@ asctime, ctime, difftime, gmtime, localtime, mktime \- convert date and time
 .B "struct tm *localtime_r(time_t const *restrict clock,"
 .B "    struct tm *restrict result);"
 .PP
+.B "struct tm *localtime_rz(timezone_t restrict zone,"
+.B "    time_t const *restrict clock,"
+.B "    struct tm *restrict result);"
+.PP
 .B struct tm *gmtime(time_t const *clock);
 .PP
 .B "struct tm *gmtime_r(time_t const *restrict clock,"
 .B "    struct tm *restrict result);"
 .PP
 .B time_t mktime(struct tm *tm);
+.PP
+.B "time_t mktime_z(timezone_t restrict zone,"
+.B "    struct tm *restrict tm);"
 .PP
 .B cc ... \*-ltz
 .fi
@@ -110,14 +117,6 @@ structure to a string,
 as shown in the above example,
 and returns a pointer to the string.
 .PP
-.IR Ctime_r ,
-.IR localtime_r ,
-.IR gmtime_r ,
-and
-.I asctime_r
-are like their unsuffixed counterparts, except that they accept an
-additional argument specifying where to store the result if successful.
-.PP
 .I Mktime
 converts the broken-down time,
 expressed as local time,
@@ -174,6 +173,33 @@ returns the difference between two calendar times,
 \-
 .IR time0 ),
 expressed in seconds.
+.PP
+.IR Ctime_r ,
+.IR localtime_r ,
+.IR gmtime_r ,
+and
+.I asctime_r
+are like their unsuffixed counterparts, except that they accept an
+additional argument specifying where to store the result if successful.
+.PP
+.IR Localtime_rz
+and
+.I mktime_z
+are like their unsuffixed counterparts, except that they accept an
+extra initial
+.B zone
+argument specifying the time zone to be used for conversion.
+If
+.B zone
+is null, UTC is used; otherwise,
+.B zone
+should be have been allocated by
+.I tzalloc
+and should not be freed until after all uses (e.g., by calls to
+.IR strftime )
+of the filled-in
+.B tm_zone
+fields.
 .PP
 Declarations of all the functions and externals, and the
 .q "tm"

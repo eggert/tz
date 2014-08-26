@@ -84,8 +84,8 @@ LIBDIR=		$(TOPDIR)/lib
 # below.  If you want both sets of data available, with leap seconds counted
 # normally, use
 #	REDO=		right_posix
-# below.  If you want just POSIX-compatible time values, but with extra
-# lower-quality data from the file 'backzone', use
+# below.  If you want just POSIX-compatible time values, but with
+# out-of-scope and often-wrong data from the file 'backzone', use
 #	REDO=		posix_packrat
 # POSIX mandates that leap seconds not be counted; for compatibility with it,
 # use "posix_only", "posix_right", or "posix_packrat".

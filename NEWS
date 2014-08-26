@@ -26,10 +26,11 @@ Unreleased, experimental changes
 
     A new file 'backzone' contains data which may appeal to
     connoisseurs of old time stamps, although it is out of scope for
-    the tz database and is often poorly sourced.  The new file is not
-    recommended for ordinary use and its entries are not installed by
-    default.  (Thanks to Lester Caine for the Guernsey, Jersey, and
-    Isle of Man entries in 'backzone'.)
+    the tz database, is often poorly sourced, and contains some data
+    that is known to be incorrect.  The new file is not recommended
+    for ordinary use and its entries are not installed by default.
+    (Thanks to Lester Caine for the high-quality Jersey, Guernsey, and
+    Isle of Man entries.)
 
     Some more zones have been turned into links, when they differed
     from existing zones only for older time stamps.  As usual,

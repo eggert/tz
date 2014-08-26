@@ -58,8 +58,8 @@ Unreleased, experimental changes
     zones simultaneously, e.g., an application where each thread may be
     in a different time zone.  The new functions are tzalloc, tzfree,
     localtime_rz, mktime_z, and (if STD_INSPIRED is also defined)
-    posix2time_z and time2posix_z.  (Thanks to Alan Barrett for
-    helping to debug this.)
+    posix2time_z and time2posix_z.  (Thanks to Alan Barrett and
+    Jonathan Lennox for helping to debug this.)
 
     The tz code now attempts to infer TM_GMTOFF and TM_ZONE if not
     already defined, to make it easier to configure on common platforms.

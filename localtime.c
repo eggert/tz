@@ -1174,42 +1174,11 @@ gmtload(struct state *const sp)
 		tzparse(gmt, sp, true);
 }
 
-static void
-tzsetwall_unlocked(void)
-{
-  if (lcl_is_set < 0)
-    return;
-#ifdef ALL_STATE
-  if (! lclptr)
-    lclptr = malloc(sizeof *lclptr);
-#endif
-  if (lclptr && ! tzload(NULL, lclptr, true))
-    gmtload(lclptr);
-  settzname();
-  lcl_is_set = -1;
-}
-
-#ifdef STD_INSPIRED
-void
-tzsetwall(void)
-{
-  if (lock() != 0)
-    return;
-  tzsetwall_unlocked();
-  unlock();
-}
-#endif
-
 static struct state *
 zoneinit(struct state *sp, char const *name)
 {
   if (sp) {
-    if (! name
-	|| (name[0]
-	    && ! (tzload(name, sp, true)
-		  || (name[0] != ':' && tzparse(name, sp, false)))))
-      gmtload(sp);
-    else if (! name[0]) {
+    if (name && ! name[0]) {
       /*
       ** User wants it fast rather than right.
       */
@@ -1220,25 +1189,22 @@ zoneinit(struct state *sp, char const *name)
       sp->ttis[0].tt_gmtoff = 0;
       sp->ttis[0].tt_abbrind = 0;
       strcpy(sp->chars, gmt);
-    }
+    } else if (! (tzload(name, sp, true)
+		  || (name && name[0] != ':' && tzparse(name, sp, false))))
+      gmtload(sp);
   }
   return sp;
 }
 
 static void
-tzset_unlocked(void)
+tzsetlcl(char const *name)
 {
-  bool shortname;
-  register char const *name = getenv("TZ");
-
-  if (!name) {
-    tzsetwall_unlocked();
+  int lcl = name ? strlen(name) < sizeof lcl_TZname : -1;
+  if (lcl < 0
+      ? lcl_is_set < 0
+      : 0 < lcl_is_set && strcmp(lcl_TZname, name) == 0)
     return;
-  }
-  shortname = strlen(name) < sizeof lcl_TZname;
-  if (0 < lcl_is_set && strcmp(lcl_TZname, name) == 0)
-    return;
-  if (shortname)
+  if (0 < lcl)
     strcpy(lcl_TZname, name);
 #ifdef ALL_STATE
   if (! lclptr)
@@ -1246,7 +1212,24 @@ tzset_unlocked(void)
 #endif /* defined ALL_STATE */
   zoneinit(lclptr, name);
   settzname();
-  lcl_is_set = shortname;
+  lcl_is_set = lcl;
+}
+
+#ifdef STD_INSPIRED
+void
+tzsetwall(void)
+{
+  if (lock() != 0)
+    return;
+  tzsetlcl(NULL);
+  unlock();
+}
+#endif
+
+static void
+tzset_unlocked(void)
+{
+  return tzsetlcl(getenv("TZ"));
 }
 
 void

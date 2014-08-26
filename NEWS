@@ -52,10 +52,6 @@ Unreleased, experimental changes
     Although not needed for tz's own applications, which are single-threaded,
     this supports POSIX better if the tz library is used in multithreaded apps.
 
-    zdump now uses localtime_r and tzset if available, as this is a
-    bit cleaner and faster than plain localtime.  Compile with
-    -DHAVE_LOCALTIME_R=0 and/or -DHAVE_TZSET=0 if your system lacks them.
-
     Unless NETBSD_INSPIRED is defined to 0, the tz library now supplies
     functions that let callers create and use objects representing time zones.
     This is intended for applications that need to deal with many time
@@ -89,7 +85,11 @@ Unreleased, experimental changes
 
     zdump now uses localtime_rz if available, as it's significantly faster.
     Define HAVE_LOCALTIME_RZ to 0 to suppress this.  HAVE_LOCALTIME_TZ
-    defaults to 1 if NETBSD_INSPIRED && USE_LTZ.
+    defaults to 1 if NETBSD_INSPIRED && USE_LTZ.  When localtime_rz is
+    not available, zdump now uses localtime_r and tzset if available,
+    as this is a bit cleaner and faster than plain localtime.  Compile
+    with -DHAVE_LOCALTIME_R=0 and/or -DHAVE_TZSET=0 if your system
+    lacks these two functions.
 
     tzselect -c now uses a hybrid distance measure that works better
     in Africa.  (Thanks to Alan Barrett for noting the problem.)

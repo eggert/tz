@@ -132,7 +132,8 @@ Unreleased, experimental changes
   Changes affecting documentation and commentary
 
     A new file CONTRIBUTING is distributed.  (Thanks to Tim Parenti for
-    suggesting a CONTRIBUTING file, and to Walter Harms for debugging it.)
+    suggesting a CONTRIBUTING file, and to Tony Finch and Walter Harms
+    for debugging it.)
 
     The man pages have been updated to use function prototypes, and
     to document thread-safe variants like localtime_r.
@@ -696,7 +697,7 @@ Release 2013f - 2013-09-24 23:37:36 -0700
 
   Changes affecting version-control only
 
-    The experimental github repository now contains annotated and
+    The experimental GitHub repository now contains annotated and
     signed tags for recent releases, e.g., '2013e' for Release 2013e.
     Releases are tagged starting with 2012e; earlier releases were
     done differently, and tags would either not have a simple name or
@@ -1127,7 +1128,7 @@ Release 2012i - 2012-11-03 12:57:09 -0700
   AWK now defaults to 'awk', not 'nawk'.
   The shell in tzselect now defaults to /bin/bash, but this can
   be overridden by specifying KSHELL.
-  The main web page now mentions the unofficial github repository.
+  The main web page now mentions the unofficial GitHub repository.
   (Thanks to Mike Frysinger.)
 
   Tarball signatures can now be built by running 'make signatures'.

@@ -23,7 +23,7 @@ Git repository.  If you use Git the following workflow may be helpful:
 
   * Copy the experimental repository.
 
-      git clone git@github.com:eggert/tz.git
+      git clone https://github.com/eggert/tz.git
       cd tz
 
   * Get current with the master branch.
@@ -64,6 +64,6 @@ Git repository.  If you use Git the following workflow may be helpful:
   * Start anew by getting current with the master branch again
     (the second step above).
 
-Please do not create issues or pull requests on Github, as the
+Please do not create issues or pull requests on GitHub, as the
 proper procedure for proposing and distributing patches is via
 email as illustrated above.

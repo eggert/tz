@@ -1229,7 +1229,7 @@ tzsetwall(void)
 static void
 tzset_unlocked(void)
 {
-  return tzsetlcl(getenv("TZ"));
+  tzsetlcl(getenv("TZ"));
 }
 
 void

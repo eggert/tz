@@ -8,7 +8,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="UTF-8"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2014-08-11">
+<meta name="DC.Date" content="2014-08-26">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -57,6 +57,7 @@ title="Advanced Interactive eXecutive">AIX</abbr></a>,
 <a href="http://en.wikipedia.org/wiki/BlackBerry_10">BlackBerry 10</a>,
 <a href="http://www.apple.com/ios/"><abbr
 title="iPhone OS">iOS</abbr></a>,
+<a href="http://windows.microsoft.com/">Microsoft Windows</a>,
 <a href="http://h71000.www7.hp.com/">Open<abbr
 title="Virtual Memory System">VMS</abbr></a>,
 <a href="http://oracle.com/database">Oracle Database</a>,
@@ -187,8 +188,17 @@ calculates the current time difference between locations.</li>
 also contains data about time zone boundaries; it supports queries via place
 names and shows location maps.</li>
 </ul>
-<h2>Other time zone database formats</h2>
+<h2>Network protocols for <code><abbr>tz</abbr></code> data</h2>
 <ul>
+<li>The <a href="http://www.ietf.org/">Internet Engineering Task Force</a>'s
+<a href="https://datatracker.ietf.org/wg/tzdist/charter/">Time Zone Data
+Distribution Service (tzdist) working group</a> is developing a scalable
+protocol for distributing time zone data to clients. It has generated a
+a <a href="http://datatracker.ietf.org/doc/draft-ietf-tzdist-service/">draft
+protocol for transferring time zone data</a> and a <a
+href="https://datatracker.ietf.org/doc/draft-ietf-tzdist-caldav-timezone-ref/">draft
+protocol for transferring time zone data by reference</a>. This work is based
+on the iCalendar and CalConnect efforts described below.</li>
 <li>The <a href="http://tools.ietf.org/html/rfc5545">
 Internet Calendaring and Scheduling Core Object Specification
 (iCalendar)</a> (Internet <abbr>RFC</abbr> 5445)
@@ -208,16 +218,11 @@ Consortium</a> is promoting further work in this area. <a
 href="http://calconnect.org/publications/icalendartimezoneproblemsandrecommendationsv1.0.pdf">iCalendar
 TIMEZONE Problems and Recommendations</a> offers guidelines and
 recommendations for the use of VTIMEZONE and <code><abbr>tz</abbr></code>.</li>
-<li>CalConnect's <a href="http://calconnect.org/tc-timezone.shtml">TIMEZONE
-Technical Committee</a> has developed
-a <a href="http://tools.ietf.org/html/draft-douglass-timezone-service-11">draft
-time zone service protocol</a> along with a <a
-href="http://tools.ietf.org/html/draft-daboo-caldav-timezone-ref-01">draft
-extension</a> to the <a href="http://caldav.calconnect.org/">CalDAV
-calendar access protocol</a> to allow time zone information to be exchanged
-by reference. The committee's earlier <a
+<li>The <a
 href="http://calconnect.org/publications/timezoneregistryandservicerecommendationsv1.0.pdf">Timezone
-Registry and Service Recommendations</a> discusses a
+Registry and Service Recommendations</a> of CalConnect's
+<a href="http://calconnect.org/tc-timezone.shtml">TIMEZONE
+Technical Committee</a> discusses a
 strategy for defining and deploying a time zone
 registration process that would establish unique names for each
 version of each <code><abbr>tz</abbr></code> zone, along with a polygonal
@@ -380,7 +385,7 @@ href="http://users.skynet.be/Peter.Verthez/projects/intclock/">International
 clock (intclock)</a> is a clock that displays multiple time zones on
 <abbr>GNU</abbr>/Linux and similar systems. It is freely available
 under the <abbr>GPL</abbr>.</li>
-<li><a href="http://windows.microsoft.com/">Microsoft Windows</a> 8.1
+<li>Microsoft Windows 8.1
 and later has <code><abbr>tz</abbr></code> data and <abbr>CLDR</abbr>
 data (mentioned below) used by
 <a href="http://en.wikipedia.org/wiki/Windows_Runtime">Windows Runtime</a>

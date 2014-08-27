@@ -42,41 +42,15 @@ Unreleased, experimental changes
 
   Changes affecting code
 
-    Some crashes have been fixed when zdump or the tz library is given
-    invalid or outlandish input.
-
-    The tz library no longer mishandles leap seconds on platforms with
-    unsigned time_t in time zones that lack ordinary transitions after 1970.
-
-    The tz library is now thread-safe if compiled with THREAD_SAFE defined.
-    Although not needed for tz's own applications, which are single-threaded,
-    this supports POSIX better if the tz library is used in multithreaded apps.
-
-    Unless NETBSD_INSPIRED is defined to 0, the tz library now supplies
-    functions that let callers create and use objects representing time zones.
-    This is intended for applications that need to deal with many time
-    zones simultaneously, e.g., an application where each thread may be
-    in a different time zone.  The new functions are tzalloc, tzfree,
-    localtime_rz, mktime_z, and (if STD_INSPIRED is also defined)
-    posix2time_z and time2posix_z.  (Thanks to Alan Barrett and
-    Jonathan Lennox for helping to debug this.)
-
-    The tz code now attempts to infer TM_GMTOFF and TM_ZONE if not
-    already defined, to make it easier to configure on common platforms.
-    Define NO_TM_GMTOFF and NO_TM_ZONE to suppress this.
-
-    Unless the new macro UNINIT_TRAP is defined to 0, the tz code now
-    assumes that reading uninitialized memory yields garbage values
-    but does not cause other problems such as traps.
-
-    If TM_GMTOFF is defined and UNINIT_TRAP is not 0, mktime is now
-    more likely to guess right for ambiguous time stamps near
-    transitions where tm_isdst does not change.
-
-    If HAVE_STRFTIME_L is defined to 1, the tz library now defines
-    strftime_l for compatibility with recent versions of POSIX.
-    Only the C locale is supported, though.  HAVE_STRFTIME_L defaults
-    to 1 on recent POSIX versions, and to 0 otherwise.
+    Unless NETBSD_INSPIRED is defined to 0, the tz library now
+    supplies functions for creating and using objects that represent
+    time zones. The new functions are tzalloc, tzfree, localtime_rz,
+    mktime_z, and (if STD_INSPIRED is also defined) posix2time_z and
+    time2posix_z.  They are intended for performance: for example,
+    localtime_rz (unlike localtime_r) is trivially thread-safe without
+    locking.  (Thanks to Christos Zoulas for proposing NetBSD-inspired
+    functions, and to Alan Barrett and Jonathan Lennox for helping to
+    debug the change.)
 
     zdump now builds with the tz library unless USE_LTZ is defined to 0,
     This lets zdump use tz features even if the system library lacks them.
@@ -91,6 +65,33 @@ Unreleased, experimental changes
     as this is a bit cleaner and faster than plain localtime.  Compile
     with -DHAVE_LOCALTIME_R=0 and/or -DHAVE_TZSET=0 if your system
     lacks these two functions.
+
+    If THREAD_SAFE is defined to 1, the tz library is now thread-safe.
+    Although not needed for tz's own applications, which are single-threaded,
+    this supports POSIX better if the tz library is used in multithreaded apps.
+
+    Some crashes have been fixed when zdump or the tz library is given
+    invalid or outlandish input.
+
+    The tz library no longer mishandles leap seconds on platforms with
+    unsigned time_t in time zones that lack ordinary transitions after 1970.
+
+    The tz code now attempts to infer TM_GMTOFF and TM_ZONE if not
+    already defined, to make it easier to configure on common platforms.
+    Define NO_TM_GMTOFF and NO_TM_ZONE to suppress this.
+
+    Unless the new macro UNINIT_TRAP is defined to 1, the tz code now
+    assumes that reading uninitialized memory yields garbage values
+    but does not cause other problems such as traps.
+
+    If TM_GMTOFF is defined and UNINIT_TRAP is 0, mktime is now
+    more likely to guess right for ambiguous time stamps near
+    transitions where tm_isdst does not change.
+
+    If HAVE_STRFTIME_L is defined to 1, the tz library now defines
+    strftime_l for compatibility with recent versions of POSIX.
+    Only the C locale is supported, though.  HAVE_STRFTIME_L defaults
+    to 1 on recent POSIX versions, and to 0 otherwise.
 
     tzselect -c now uses a hybrid distance measure that works better
     in Africa.  (Thanks to Alan Barrett for noting the problem.)
@@ -145,8 +146,8 @@ Unreleased, experimental changes
     and more like the parameters of 'ln'.  LINK-FROM has become TARGET,
     and LINK-TO has become LINK-NAME.
 
-    tz-link.htm mentions Windows Runtime etc. (thanks to Matt Johnson)
-    and HP-UX's tztab.
+    tz-link.htm mentions the IETF's tzdist working group; Windows
+    Runtime etc. (thanks to Matt Johnson); and HP-UX's tztab.
 
     Some broken URLs have been fixed in the commentary.  (Thanks to
     Lester Caine.)

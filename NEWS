@@ -59,7 +59,7 @@ Unreleased, experimental changes
 
     zdump now uses localtime_rz if available, as it's significantly faster,
     and it can help zdump better diagnose invalid time zone names.
-    Define HAVE_LOCALTIME_RZ to 0 to suppress this.  HAVE_LOCALTIME_TZ
+    Define HAVE_LOCALTIME_RZ to 0 to suppress this.  HAVE_LOCALTIME_RZ
     defaults to 1 if NETBSD_INSPIRED && USE_LTZ.  When localtime_rz is
     not available, zdump now uses localtime_r and tzset if available,
     as this is a bit cleaner and faster than plain localtime.  Compile

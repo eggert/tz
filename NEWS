@@ -7,6 +7,11 @@ Unreleased, experimental changes
     Shanks says Asia/Novokuznetsk switched from LMT (not "NMT") on 1924-05-01,
     not 1920-01-06.  The old entry was based on a misinterpretation of Shanks.
 
+  Changes affecting code
+
+    An access to uninitalized data has been fixed.
+    (Thanks to Jörg Richter for reporting the problem.)
+
 
 Release 2014g - 2014-08-28 12:31:23 -0700
 

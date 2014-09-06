@@ -571,10 +571,10 @@ tzload(register const char *name, register struct state *const sp,
 	** If type 0 is is unused in transitions,
 	** it's the type to use for early times.
 	*/
-	for (i = 0; i < sp->typecnt; ++i)
+	for (i = 0; i < sp->timecnt; ++i)
 		if (sp->types[i] == 0)
 			break;
-	i = (i >= sp->typecnt) ? 0 : -1;
+	i = i < sp->timecnt ? -1 : 0;
 	/*
 	** Absent the above,
 	** if there are transition times

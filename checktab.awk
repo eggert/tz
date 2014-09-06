@@ -17,18 +17,9 @@ BEGIN {
 	if (zone_table == "zone1970.tab") {
 	  tztab["Africa/Addis_Ababa"] = 1
 	  tztab["Africa/Asmara"] = 1
-	  tztab["Africa/Blantyre"] = 1
-	  tztab["Africa/Bujumbura"] = 1
 	  tztab["Africa/Dar_es_Salaam"] = 1
 	  tztab["Africa/Djibouti"] = 1
-	  tztab["Africa/Gaborone"] = 1
-	  tztab["Africa/Harare"] = 1
 	  tztab["Africa/Kampala"] = 1
-	  tztab["Africa/Kigali"] = 1
-	  tztab["Africa/Lubumbashi"] = 1
-	  tztab["Africa/Lusaka"] = 1
-	  tztab["Africa/Maseru"] = 1
-	  tztab["Africa/Mbabane"] = 1
 	  tztab["Africa/Mogadishu"] = 1
 	  tztab["America/Antigua"] = 1
 	  tztab["America/Cayman"] = 1

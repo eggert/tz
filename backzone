@@ -57,9 +57,17 @@ Zone	Africa/Banjul	-1:06:36 -	LMT	1912
 			-1:00	-	WAT	1964
 			 0:00	-	GMT
 
+# Malawi
+Zone	Africa/Blantyre	2:20:00 -	LMT	1903 Mar
+			2:00	-	CAT
+
 # Republic of the Congo
 Zone Africa/Brazzaville	1:01:08 -	LMT	1912
 			1:00	-	WAT
+
+# Burundi
+Zone Africa/Bujumbura	1:57:28	-	LMT	1890
+			2:00	-	CAT
 
 # Guinea
 Zone	Africa/Conakry	-0:54:52 -	LMT	1912
@@ -92,10 +100,28 @@ Zone	Africa/Freetown	-0:53:00 -	LMT	1882
 			-1:00	SL	%s	1957
 			 0:00	SL	%s
 
+# Botswana
+# From Paul Eggert (2013-02-21):
+# Milne says they were regulated by the Cape Town Signal in 1899;
+# assume they switched to 2:00 when Cape Town did.
+Zone	Africa/Gaborone	1:43:40 -	LMT	1885
+			1:30	-	SAST	1903 Mar
+			2:00	-	CAT	1943 Sep 19  2:00
+			2:00	1:00	CAST	1944 Mar 19  2:00
+			2:00	-	CAT
+
+# Zimbabwe
+Zone	Africa/Harare	2:04:12 -	LMT	1903 Mar
+			2:00	-	CAT
+
 # South Sudan
 Zone	Africa/Juba	2:06:24 -	LMT	1931
 			2:00	Sudan	CA%sT	2000 Jan 15 12:00
 			3:00	-	EAT
+
+# Rwanda
+Zone	Africa/Kigali	2:00:16 -	LMT	1935 Jun
+			2:00	-	CAT
 
 # Democratic Republic of the Congo (west)
 Zone Africa/Kinshasa	1:01:12 -	LMT	1897 Nov  9
@@ -104,6 +130,10 @@ Zone Africa/Kinshasa	1:01:12 -	LMT	1897 Nov  9
 # Gabon
 Zone Africa/Libreville	0:37:48 -	LMT	1912
 			1:00	-	WAT
+
+# Togo
+Zone	Africa/Lome	0:04:52 -	LMT	1893
+			0:00	-	GMT
 
 # Angola
 #
@@ -116,9 +146,13 @@ Zone	Africa/Luanda	0:52:56	-	LMT	1892
 			0:52:04	-	AOT	1912 Jan  1 # Angola Time
 			1:00	-	WAT
 
-# Togo
-Zone	Africa/Lome	0:04:52 -	LMT	1893
-			0:00	-	GMT
+# Democratic Republic of the Congo (east)
+Zone Africa/Lubumbashi	1:49:52 -	LMT	1897 Nov 9
+			2:00	-	CAT
+
+# Zambia
+Zone	Africa/Lusaka	1:53:08 -	LMT	1903 Mar
+			2:00	-	CAT
 
 # Equatorial Guinea
 #
@@ -130,6 +164,16 @@ Zone	Africa/Lome	0:04:52 -	LMT	1893
 Zone	Africa/Malabo	0:35:08 -	LMT	1912
 			0:00	-	GMT	1963 Dec 15
 			1:00	-	WAT
+
+# Lesotho
+Zone	Africa/Maseru	1:50:00 -	LMT	1903 Mar
+			2:00	-	SAST	1943 Sep 19  2:00
+			2:00	1:00	SAST	1944 Mar 19  2:00
+			2:00	-	SAST
+
+# Swaziland
+Zone	Africa/Mbabane	2:04:24 -	LMT	1903 Mar
+			2:00	-	SAST
 
 # Niger
 Zone	Africa/Niamey	 0:08:28 -	LMT	1912

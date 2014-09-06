@@ -315,16 +315,6 @@ Link Antarctica/McMurdo Antarctica/South_Pole
 #Zone	  Asia/Chennai  [not enough info to complete]
 
 # China
-# Changbai Time ("Long-white Time", Long-white = Heilongjiang area)
-# Heilongjiang (except Mohe county), Jilin
-Zone	Asia/Harbin	8:26:44	-	LMT	1928     # or Haerbin
-			8:30	-	CHAT	1932 Mar # Changbai Time
-			8:00	-	CST	1940
-			9:00	-	CHAT	1966 May
-			8:30	-	CHAT	1980 May
-			8:00	PRC	C%sT
-
-# China
 # Long-shu Time (probably due to Long and Shu being two names of that area)
 # Guangxi, Guizhou, Hainan, Ningxia, Sichuan, Shaanxi, and Yunnan;
 # most of Gansu; west Inner Mongolia; west Qinghai; and the Guangdong
@@ -334,6 +324,16 @@ Zone	Asia/Chongqing	7:06:20	-	LMT	1928     # or Chungking
 			7:00	-	LONT	1980 May # Long-shu Time
 			8:00	PRC	C%sT
 Link Asia/Chongqing Asia/Chungking
+
+# China
+# Changbai Time ("Long-white Time", Long-white = Heilongjiang area)
+# Heilongjiang (except Mohe county), Jilin
+Zone	Asia/Harbin	8:26:44	-	LMT	1928     # or Haerbin
+			8:30	-	CHAT	1932 Mar # Changbai Time
+			8:00	-	CST	1940
+			9:00	-	CHAT	1966 May
+			8:30	-	CHAT	1980 May
+			8:00	PRC	C%sT
 
 # far west China
 Zone	Asia/Kashgar	5:03:56	-	LMT	1928     # or Kashi or Kaxgar

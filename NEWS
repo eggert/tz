@@ -1,5 +1,13 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting past time stamps
+
+    Shanks says Asia/Novokuznetsk switched from LMT (not "NMT") on 1924-05-01,
+    not 1920-01-06.  The old entry was based on a misinterpretation of Shanks.
+
+
 Release 2014g - 2014-08-28 12:31:23 -0700
 
   Changes affecting future time stamps

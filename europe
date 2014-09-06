@@ -2501,7 +2501,7 @@ Zone Asia/Novosibirsk	 5:31:40 -	LMT	1919 Dec 14  6:00
 # The Kemerovo region will remain at UTC+7 through the 2014-10-26 change, thus
 # realigning itself with KRAT.
 
-Zone Asia/Novokuznetsk	 5:48:48 -	NMT	1920 Jan  6
+Zone Asia/Novokuznetsk	 5:48:48 -	LMT	1924 May  1
 			 6:00	-	KRAT	1930 Jun 21 # Krasnoyarsk Time
 			 7:00	Russia	KRA%sT	1991 Mar 31  2:00s
 			 6:00	Russia	KRA%sT	1992 Jan 19  2:00s

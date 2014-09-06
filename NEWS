@@ -17,6 +17,9 @@ Unreleased, experimental changes
 
   Changes affecting code
 
+    zdump -c no longer mishandles transitions near year boundaries.
+    (Thanks to Tim Parenti for reporting the problem.)
+
     An access to uninitalized data has been fixed.
     (Thanks to Jörg Richter for reporting the problem.)
 

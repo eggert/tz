@@ -654,12 +654,11 @@ main(int argc, char *argv[])
 		tmp = my_localtime_rz(tz, &t, &tm);
 		if (tmp)
 		  ab = saveabbr(&abbrev, &abbrevsize, &tm);
-		for ( ; ; ) {
-			newt = (t < absolute_max_time - SECSPERDAY / 2
+		while (t < cuthitime) {
+			newt = ((t < absolute_max_time - SECSPERDAY / 2
+				 && t + SECSPERDAY / 2 < cuthitime)
 				? t + SECSPERDAY / 2
-				: absolute_max_time);
-			if (cuthitime <= newt)
-				break;
+				: cuthitime);
 			newtmp = localtime_rz(tz, &newt, &newtm);
 			if ((tmp == NULL || newtmp == NULL) ? (tmp != newtmp) :
 				(delta(&newtm, &tm) != (newt - t) ||

@@ -487,12 +487,17 @@ check_white_space: $(ENCHILADA)
 		! grep -n '[[:space:]]$$' $(ENCHILADA)
 		! grep -n "$$(printf '[\f\r\v]\n')" $(ENCHILADA)
 
-check_sorted: backward backzone iso3166.tab zone1970.tab
-		$(AWK) '/^Link/ {print $$3}' backward | LC_ALL=C sort -c
-		$(AWK) '/^Zone/ {print $$2}' backzone | LC_ALL=C sort -c
-		$(AWK) '/^[^#]/ {print}' iso3166.tab | LC_ALL=C sort -c
+CHECK_CC_LIST = { n = split($$1,a,/,/); for (i=2; i<=n; i++) print a[1], a[i]; }
+
+check_sorted: backward backzone iso3166.tab zone.tab zone1970.tab
+		$(AWK) '/^Link/ {print $$3}' backward | LC_ALL=C sort -cu
+		$(AWK) '/^Zone/ {print $$2}' backzone | LC_ALL=C sort -cu
+		$(AWK) '/^[^#]/ {print $$1}' iso3166.tab | LC_ALL=C sort -cu
+		$(AWK) '/^[^#]/ {print $$1}' zone.tab | LC_ALL=C sort -c
 		$(AWK) '/^[^#]/ {print substr($$0, 1, 2)}' zone1970.tab | \
 		  LC_ALL=C sort -c
+		$(AWK) '/^[^#]/ $(CHECK_CC_LIST)' zone1970.tab | \
+		  LC_ALL=C sort -cu
 
 check_tables:	checktab.awk $(PRIMARY_YDATA) $(ZONETABLES)
 		for tab in $(ZONETABLES); do \

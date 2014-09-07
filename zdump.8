@@ -45,14 +45,17 @@ This generates output that is easier to compare to that of
 implementations with different time representations.
 .TP
 .BI "\*-c " [loyear,]hiyear
-Cut off verbose output near the start of the given year(s).
+Cut off verbose output at the start of the given year(s).
+Cutoff times are computed using the Gregorian calendar and Universal
+Time (UT) ignoring leap seconds.
 By default,
-the program cuts off verbose output near the starts of the years
+the program cuts off verbose output at the starts of the years
 \-500 and 2500.
 .TP
 .BI "\*-t " [lotime,]hitime
 Cut off verbose output at the start of the given time(s),
-given in decimal seconds since 1970-01-01 00:00:00 UTC.
+given in decimal seconds since 1970-01-01 00:00:00
+Coordinated Universal Time (UTC).
 .SH LIMITATIONS
 Time discontinuities are found by sampling the results returned by localtime
 at twelve-hour intervals.

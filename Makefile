@@ -491,7 +491,7 @@ check_sorted: backward backzone iso3166.tab zone1970.tab
 		$(AWK) '/^Link/ {print $$3}' backward | LC_ALL=C sort -c
 		$(AWK) '/^Zone/ {print $$2}' backzone | LC_ALL=C sort -c
 		$(AWK) '/^[^#]/ {print}' iso3166.tab | LC_ALL=C sort -c
-		$(AWK) '/^[^#]/ {print substr($0, 1, 2)}' zone1970.tab | \
+		$(AWK) '/^[^#]/ {print substr($$0, 1, 2)}' zone1970.tab | \
 		  LC_ALL=C sort -c
 
 check_tables:	checktab.awk $(PRIMARY_YDATA) $(ZONETABLES)

@@ -29,6 +29,9 @@ Unreleased, experimental changes
     Gregorian calendar and Universal Time without leap seconds.
     (Thanks to Arthur David Olson for reporting the problem.)
 
+    Fractional-second GMT offsets have been documented for civil time
+    in 19th-century Chennai, Jakarta, and New York.
+
 
 Release 2014g - 2014-08-28 12:31:23 -0700
 

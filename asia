@@ -893,6 +893,10 @@ Zone	Asia/Kolkata	5:53:28 -	LMT	1880        # Kolkata
 
 # Indonesia
 #
+# From Paul Eggert (2014-09-06):
+# The 1876 Report of the Secretary of the [US] Navy, p 306 says that Batavia
+# civil time was 7:07:12.5; round to even for Jakarta.
+#
 # From Gwillim Law (2001-05-28), overriding Shanks & Pottenger:
 # http://www.sumatera-inc.com/go_to_invest/about_indonesia.asp#standtime
 # says that Indonesia's time zones changed on 1988-01-01.  Looking at some

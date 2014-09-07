@@ -306,6 +306,11 @@ Zone Antarctica/McMurdo	0	-	zzz	1956
 Link Antarctica/McMurdo Antarctica/South_Pole
 
 # India
+#
+# From Paul Eggert (2014-09-06):
+# The 1876 Report of the Secretary of the [US] Navy, p 305 says that Madras
+# civil time was 5:20:57.3.
+#
 # From Paul Eggert (2014-08-21):
 # In tomorrow's The Hindu, Nitya Menon reports that India had two civil time
 # zones starting in 1884, one in Bombay and one in Calcutta, and that railways

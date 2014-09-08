@@ -30,8 +30,9 @@ Unreleased, experimental changes
   Changes affecting documentation and commentary
 
     zdump -c's treatment of years is now documented to use the
-    Gregorian calendar and Universal Time without leap seconds.
-    (Thanks to Arthur David Olson for reporting the problem.)
+    Gregorian calendar and Universal Time without leap seconds,
+    and its behavior at cutoff boundaries is now documented better.
+    (Thanks to Arthur David Olson and Tim Parenti for reporting the problems.)
 
     Fractional-second GMT offsets have been documented for civil time
     in 19th-century Chennai, Jakarta, and New York.

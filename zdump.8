@@ -45,17 +45,27 @@ This generates output that is easier to compare to that of
 implementations with different time representations.
 .TP
 .BI "\*-c " [loyear,]hiyear
-Cut off verbose output at the start of the given year(s).
-Cutoff times are computed using the Gregorian calendar and Universal
-Time (UT) ignoring leap seconds.
-By default,
-the program cuts off verbose output at the starts of the years
-\-500 and 2500.
+Cut off verbose output at the given year(s).
+Cutoff times are computed using the Gregorian calendar with year 0
+and with Universal Time (UT) ignoring leap seconds.
+The lower bound is inclusive and the upper is exclusive; for example, a
+.I loyear
+of 1970 includes a transition occurring at the very start of 1970 but a
+.I hiyear
+of 1970 excludes the transition.
+The default cutoff is
+.BR \*-500,2500 .
 .TP
 .BI "\*-t " [lotime,]hitime
-Cut off verbose output at the start of the given time(s),
+Cut off verbose output at the given time(s),
 given in decimal seconds since 1970-01-01 00:00:00
 Coordinated Universal Time (UTC).
+The
+.I zonename
+determines whether the count includes leap seconds.
+As with
+.BR \*-c ,
+the cutoff's lower bound is inclusive and its upper bound is exclusive.
 .SH LIMITATIONS
 Time discontinuities are found by sampling the results returned by localtime
 at twelve-hour intervals.

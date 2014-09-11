@@ -22,6 +22,8 @@ Unreleased, experimental changes
     on platforms not defining TM_ZONE, fixing a 2014g regression.
     (Thanks to Tim Parenti for reporting the problem.)
 
+    The tz library no longer sets tzname if localtime or mktime fails.
+
     zdump -c no longer mishandles transitions near year boundaries.
     (Thanks to Tim Parenti for reporting the problem.)
 

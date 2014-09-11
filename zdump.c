@@ -304,9 +304,12 @@ sumsize(size_t a, size_t b)
 static void tzset(void) { }
 #endif
 
-#if ! HAVE_LOCALTIME_RZ
+/* Platforms with TM_ZONE don't need tzname, so they can use the
+   faster localtime_rz or localtime_r if available.  */
 
-# if ! HAVE_LOCALTIME_R || ! HAVE_TZSET
+#if !defined TM_ZONE || ! HAVE_LOCALTIME_RZ
+
+# if !defined TM_ZONE || ! HAVE_LOCALTIME_R || ! HAVE_TZSET
 #  undef localtime_r
 #  define localtime_r zdump_localtime_r
 static struct tm *

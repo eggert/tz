@@ -1294,7 +1294,8 @@ tzfree(timezone_t sp)
 ** freely called. (And no, the PANS doesn't require the above behavior,
 ** but it *is* desirable.)
 **
-** The unused offset argument is for the benefit of mktime variants.
+** If OFFSET is nonzero, set tzname if successful.
+** OFFSET's type is intfast32_t for compatibility with gmtsub.
 */
 
 /*ARGSUSED*/
@@ -1307,8 +1308,12 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t offset,
 	register struct tm *		result;
 	const time_t			t = *timep;
 
-	if (sp == NULL)
-		return gmtsub(gmtptr, timep, offset, tmp);
+	if (sp == NULL) {
+	  result = gmtsub(gmtptr, timep, 0, tmp);
+	  if (result && offset)
+	    tzname[0] = gmtptr ? gmtptr->chars : (char *) gmt;
+	  return result;
+	}
 	if ((sp->goback && t < sp->ats[0]) ||
 		(sp->goahead && t > sp->ats[sp->timecnt - 1])) {
 			time_t			newt = t;
@@ -1365,29 +1370,35 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t offset,
 	*/
 	result = timesub(&t, ttisp->tt_gmtoff, sp, tmp);
 	tmp->tm_isdst = ttisp->tt_isdst;
+	if (result && offset)
+	  tzname[tmp->tm_isdst] = (char *) &sp->chars[ttisp->tt_abbrind];
 #ifdef TM_ZONE
 	tmp->TM_ZONE = (char *) &sp->chars[ttisp->tt_abbrind];
 #endif /* defined TM_ZONE */
 	return result;
 }
 
-NETBSD_INSPIRED_EXTERN struct tm *
+#if NETBSD_INSPIRED
+
+struct tm *
 localtime_rz(struct state *sp, time_t const *timep, struct tm *tmp)
 {
   return localsub(sp, timep, 0, tmp);
 }
 
+#endif
+
 static struct tm *
-localtime_tzset(time_t const *timep, struct tm *tmp, bool skip_tzset)
+localtime_tzset(time_t const *timep, struct tm *tmp, bool settz, bool setname)
 {
   int err = lock();
   if (err) {
     errno = err;
     return NULL;
   }
-  if (!skip_tzset)
+  if (settz)
     tzset_unlocked();
-  tmp = localtime_rz(lclptr, timep, tmp);
+  tmp = localsub(lclptr, timep, setname, tmp);
   unlock();
   return tmp;
 }
@@ -1395,13 +1406,13 @@ localtime_tzset(time_t const *timep, struct tm *tmp, bool skip_tzset)
 struct tm *
 localtime(const time_t *const timep)
 {
-  return localtime_tzset(timep, &tm, 0);
+  return localtime_tzset(timep, &tm, true, true);
 }
 
 struct tm *
 localtime_r(const time_t *const timep, struct tm *tmp)
 {
-  return localtime_tzset(timep, tmp, lcl_is_set != 0);
+  return localtime_tzset(timep, tmp, lcl_is_set == 0, false);
 }
 
 /*
@@ -2015,16 +2026,26 @@ time1(struct tm *const tmp,
 	return WRONG;
 }
 
-NETBSD_INSPIRED_EXTERN time_t
-mktime_z(struct state *sp, struct tm *tmp)
+static time_t
+mktime_tzname(struct state *sp, struct tm *tmp, bool setname)
 {
   if (sp)
-    return time1(tmp, localsub, sp, 0);
+    return time1(tmp, localsub, sp, setname);
   else {
     gmtcheck();
     return time1(tmp, gmtsub, gmtptr, 0);
   }
 }
+
+#if NETBSD_INSPIRED
+
+time_t
+mktime_z(struct state *sp, struct tm *tmp)
+{
+  return mktime_tzname(sp, tmp, false);
+}
+
+#endif
 
 time_t
 mktime(struct tm *const tmp)
@@ -2036,7 +2057,7 @@ mktime(struct tm *const tmp)
     return -1;
   }
   tzset_unlocked();
-  t = mktime_z(lclptr, tmp);
+  t = mktime_tzname(lclptr, tmp, true);
   unlock();
   return t;
 }

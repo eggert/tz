@@ -17,6 +17,10 @@ Unreleased, experimental changes
 
   Changes affecting code
 
+    The tz library's localtime and mktime functions now set tzname to a value
+    appropriate for the requested time stamp, fixing a 2014g regression.
+    (Thanks to Tim Parenti for reporting the problem.)
+
     zdump -c no longer mishandles transitions near year boundaries.
     (Thanks to Tim Parenti for reporting the problem.)
 

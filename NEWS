@@ -41,6 +41,9 @@ Unreleased, experimental changes
     and its behavior at cutoff boundaries is now documented better.
     (Thanks to Arthur David Olson and Tim Parenti for reporting the problems.)
 
+    Programs are now documented to use the proleptic Gregorian calendar.
+    (Thanks to Alan Barrett for the suggestion.)
+
     Fractional-second GMT offsets have been documented for civil time
     in 19th-century Chennai, Jakarta, and New York.
 

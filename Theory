@@ -318,7 +318,7 @@ Errors in the tz database arise from many sources:
    way to specify Easter, these exceptional years are entered as
    separate tz Rule lines, even though the legal rules did not change.
 
- * The tz database models pre-standard time using the Gregorian
+ * The tz database models pre-standard time using the proleptic Gregorian
    calendar and local mean time (LMT), but many people used other
    calendars and other timescales.  For example, the Roman Empire used
    the Julian calendar, and had 12 varying-length daytime hours with a

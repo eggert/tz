@@ -48,11 +48,11 @@ implementations with different time representations.
 Cut off verbose output at the given year(s).
 Cutoff times are computed using the Gregorian calendar with year 0
 and with Universal Time (UT) ignoring leap seconds.
-The lower bound is inclusive and the upper is exclusive; for example, a
+The lower bound is exclusive and the upper is inclusive; for example, a
 .I loyear
-of 1970 includes a transition occurring at the very start of 1970 but a
+of 1970 excludes a transition occurring at the very start of 1970 but a
 .I hiyear
-of 1970 excludes the transition.
+of 1970 includes the transition.
 The default cutoff is
 .BR \*-500,2500 .
 .TP
@@ -65,7 +65,7 @@ The
 determines whether the count includes leap seconds.
 As with
 .BR \*-c ,
-the cutoff's lower bound is inclusive and its upper bound is exclusive.
+the cutoff's lower bound is exclusive and its upper bound is inclusive.
 .SH LIMITATIONS
 Time discontinuities are found by sampling the results returned by localtime
 at twelve-hour intervals.

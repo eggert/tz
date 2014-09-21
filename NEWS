@@ -30,6 +30,10 @@ Unreleased, experimental changes
     An access to uninitalized data has been fixed.
     (Thanks to Jörg Richter for reporting the problem.)
 
+    A memory leak has been fixed if ALL_STATE and THREAD_SAFE are defined
+    and two threads race to initialize data used by gmtime-like functions.
+    (Thanks to Andy Heninger for reporting the problem.)
+
   Changes affecting build procedure
 
     'make check' now checks better for properly-sorted data.

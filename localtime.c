@@ -1249,12 +1249,14 @@ gmtcheck(void)
     return;
   if (lock() != 0)
     return;
+  if (! gmt_is_set) {
 #ifdef ALL_STATE
-  gmtptr = malloc(sizeof *gmtptr);
+    gmtptr = malloc(sizeof *gmtptr);
 #endif
-  if (gmtptr)
-    gmtload(gmtptr);
-  gmt_is_set = true;
+    if (gmtptr)
+      gmtload(gmtptr);
+    gmt_is_set = true;
+  }
   unlock();
 }
 

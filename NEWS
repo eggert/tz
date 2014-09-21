@@ -30,9 +30,10 @@ Unreleased, experimental changes
     An access to uninitalized data has been fixed.
     (Thanks to Jörg Richter for reporting the problem.)
 
+    When THREAD_SAFE is defined, the code ports to the C11 memory model.
     A memory leak has been fixed if ALL_STATE and THREAD_SAFE are defined
     and two threads race to initialize data used by gmtime-like functions.
-    (Thanks to Andy Heninger for reporting the problem.)
+    (Thanks to Andy Heninger for reporting the problems.)
 
   Changes affecting build procedure
 

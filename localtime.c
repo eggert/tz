@@ -18,12 +18,10 @@
 
 #if THREAD_SAFE
 # include <pthread.h>
-# define VOLATILE volatile
 static pthread_mutex_t locallock = PTHREAD_MUTEX_INITIALIZER;
 static int lock(void) { return pthread_mutex_lock(&locallock); }
 static void unlock(void) { pthread_mutex_unlock(&locallock); }
 #else
-# define VOLATILE
 static int lock(void) { return 0; }
 static void unlock(void) { }
 #endif
@@ -176,7 +174,7 @@ static struct state	gmtmem;
 #endif /* !defined TZ_STRLEN_MAX */
 
 static char		lcl_TZname[TZ_STRLEN_MAX + 1];
-static int VOLATILE	lcl_is_set;
+static int		lcl_is_set;
 
 char *			tzname[2] = {
 	(char *) wildabbr,
@@ -1244,9 +1242,7 @@ tzset(void)
 static void
 gmtcheck(void)
 {
-  static bool VOLATILE gmt_is_set;
-  if (gmt_is_set)
-    return;
+  static bool gmt_is_set;
   if (lock() != 0)
     return;
   if (! gmt_is_set) {
@@ -1400,7 +1396,7 @@ localtime_tzset(time_t const *timep, struct tm *tmp, bool settz, bool setname)
     errno = err;
     return NULL;
   }
-  if (settz)
+  if (settz || !lcl_is_set)
     tzset_unlocked();
   tmp = localsub(lclptr, timep, setname, tmp);
   unlock();
@@ -1416,7 +1412,7 @@ localtime(const time_t *const timep)
 struct tm *
 localtime_r(const time_t *const timep, struct tm *tmp)
 {
-  return localtime_tzset(timep, tmp, lcl_is_set == 0, false);
+  return localtime_tzset(timep, tmp, false, false);
 }
 
 /*

@@ -304,10 +304,36 @@ sumsize(size_t a, size_t b)
 static void tzset(void) { }
 #endif
 
+/* Assume gmtime_r works if localtime_r does.
+   A replacement localtime_r is defined below if needed.  */
+#if ! HAVE_LOCALTIME_R
+
+# undef gmtime_r
+# define gmtime_r zdump_gmtime_r
+
+static struct tm *
+gmtime_r(time_t *tp, struct tm *tmp)
+{
+  struct tm *r = gmtime(tp);
+  if (r) {
+    *tmp = *r;
+    r = tmp;
+  }
+  return r;
+}
+
+#endif
+
 /* Platforms with TM_ZONE don't need tzname, so they can use the
    faster localtime_rz or localtime_r if available.  */
 
-#if !defined TM_ZONE || ! HAVE_LOCALTIME_RZ
+#if defined TM_ZONE && HAVE_LOCALTIME_RZ
+# define USE_LOCALTIME_RZ true
+#else
+# define USE_LOCALTIME_RZ false
+#endif
+
+#if ! USE_LOCALTIME_RZ
 
 # if !defined TM_ZONE || ! HAVE_LOCALTIME_R || ! HAVE_TZSET
 #  undef localtime_r
@@ -386,7 +412,31 @@ tzfree(timezone_t env)
   environ = env + 1;
   free(env[0]);
 }
-#endif /* ! HAVE_LOCALTIME_RZ */
+#endif /* ! USE_LOCALTIME_RZ */
+
+/* A UTC time zone, and its initializer.  */
+static timezone_t gmtz;
+static void
+gmtzinit(void)
+{
+  if (USE_LOCALTIME_RZ) {
+    static char const utc[] = "UTC0";
+    gmtz = tzalloc(utc);
+    if (!gmtz) {
+      perror(utc);
+      exit(EXIT_FAILURE);
+    }
+  }
+}
+
+/* Convert *TP to UTC, storing the broken-down time into *TMP.
+   Return TMP if successful, NULL otherwise.  This is like gmtime_r(TP, TMP),
+   except typically faster if USE_LOCALTIME_RZ.  */
+static struct tm *
+my_gmtime_r(time_t *tp, struct tm *tmp)
+{
+  return USE_LOCALTIME_RZ ? localtime_rz(gmtz, tp, tmp) : gmtime_r(tp, tmp);
+}
 
 #ifndef TYPECHECK
 # define my_localtime_rz localtime_rz
@@ -625,6 +675,7 @@ main(int argc, char *argv[])
 			}
 		}
 	}
+	gmtzinit();
 	now = time(NULL);
 	longest = 0;
 	for (i = optind; i < argc; i++) {
@@ -808,7 +859,7 @@ show(timezone_t tz, char *zone, time_t t, bool v)
 
 	printf("%-*s  ", longest, zone);
 	if (v) {
-		tmp = gmtime(&t);
+		tmp = my_gmtime_r(&t, &tm);
 		if (tmp == NULL) {
 			printf(tformat(), t);
 		} else {
@@ -895,7 +946,7 @@ dumptime(register const struct tm *timeptr)
 		return;
 	}
 	/*
-	** The packaged localtime_rz and gmtime never put out-of-range
+	** The packaged localtime_rz and gmtime_r never put out-of-range
 	** values in tm_wday or tm_mon, but since this code might be compiled
 	** with other (perhaps experimental) versions, paranoia is in order.
 	*/

@@ -44,6 +44,8 @@ Unreleased, experimental changes
 
   Changes affecting documentation and commentary
 
+    zdump's gmtoff=N output is now documented.
+
     zdump -c's treatment of years is now documented to use the
     Gregorian calendar and Universal Time without leap seconds,
     and its behavior at cutoff boundaries is now documented better.

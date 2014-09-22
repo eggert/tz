@@ -35,7 +35,9 @@ Each line is followed by
 .BI isdst= D
 where
 .I D
-is 1 if the given time is Daylight Saving Time and is 0 otherwise.
+is positive, zero, or negative depending on whether
+the given time is daylight saving time, standard time,
+or an unknown time type, respectively.
 Each line is also followed by
 .BI gmtoff= N
 if the given local time is known to be

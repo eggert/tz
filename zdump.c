@@ -926,9 +926,8 @@ abbr(struct tm const *tmp)
 #ifdef TM_ZONE
 	return tmp->TM_ZONE;
 #else
-	return ((0 <= tmp->tm_isdst && tmp->tm_isdst <= 1
-		 && tzname[tmp->tm_isdst])
-		? tzname[tmp->tm_isdst]
+	return (0 <= tmp->tm_isdst && tzname[0 < tmp->tm_isdst]
+		? tzname[0 < tmp->tm_isdst]
 		: "");
 #endif
 }

@@ -851,19 +851,54 @@ delta(struct tm * newp, struct tm *oldp)
 	return result;
 }
 
+/* Return A->tm_yday, adjusted to compare it fairly to B->tm_yday.
+  Assume A and B differ by at most one year.  */
+static int
+adjusted_yday(struct tm const *a, struct tm const *b)
+{
+  int yday = a->tm_yday;
+  if (b->tm_year < a->tm_year)
+    yday += 365 + isleap_sum(b->tm_year, TM_YEAR_BASE);
+  return yday;
+}
+
+/* If A is the broken-down local time and B the broken-down UTC for
+   the same instant, return A's UTC offset in seconds, where positive
+   offsets are east of Greenwich.  On failure, return LONG_MIN.  */
+static long
+gmtoff(struct tm const *a, struct tm const *b)
+{
+#ifdef TM_GMTOFF
+  return a->TM_GMTOFF;
+#else
+  if (! b)
+    return LONG_MIN;
+  else {
+    int ayday = adjusted_yday(a, b);
+    int byday = adjusted_yday(b, a);
+    int days = ayday - byday;
+    long hours = a->tm_hour - b->tm_hour + 24 * days;
+    long minutes = a->tm_min - b->tm_min + 60 * hours;
+    long seconds = a->tm_sec - b->tm_sec + 60 * minutes;
+    return seconds;
+  }
+#endif
+}
+
 static void
 show(timezone_t tz, char *zone, time_t t, bool v)
 {
 	register struct tm *	tmp;
-	struct tm tm;
+	register struct tm *	gmtmp;
+	struct tm tm, gmtm;
 
 	printf("%-*s  ", longest, zone);
 	if (v) {
-		tmp = my_gmtime_r(&t, &tm);
-		if (tmp == NULL) {
+		gmtmp = my_gmtime_r(&t, &gmtm);
+		if (gmtmp == NULL) {
 			printf(tformat(), t);
 		} else {
-			dumptime(tmp);
+			dumptime(gmtmp);
 			printf(" UT");
 		}
 		printf(" = ");
@@ -874,10 +909,10 @@ show(timezone_t tz, char *zone, time_t t, bool v)
 		if (*abbr(tmp) != '\0')
 			printf(" %s", abbr(tmp));
 		if (v) {
+			long off = gmtoff(tmp, gmtmp);
 			printf(" isdst=%d", tmp->tm_isdst);
-#ifdef TM_GMTOFF
-			printf(" gmtoff=%ld", tmp->TM_GMTOFF);
-#endif /* defined TM_GMTOFF */
+			if (off != LONG_MIN)
+			  printf(" gmtoff=%ld", off);
 		}
 	}
 	printf("\n");

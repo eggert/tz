@@ -17,6 +17,9 @@ Unreleased, experimental changes
 
   Changes affecting code
 
+    zdump -V and -v now output gmtoff= values on all platforms,
+    not merely on platforms defining TM_GMTOFF.
+
     The tz library's localtime and mktime functions now set tzname to a value
     appropriate for the requested time stamp, and zdump now uses this
     on platforms not defining TM_ZONE, fixing a 2014g regression.

@@ -2991,10 +2991,21 @@ Zone America/Tegucigalpa -5:48:52 -	LMT	1921 Apr
 # Shanks & Pottenger give -5:07:12, but Milne records -5:07:10.41 from an
 # unspecified official document, and says "This time is used throughout the
 # island".  Go with Milne.  Round to the nearest second as required by zic.
+#
+# Shanks & Pottenger give April 28 for the 1974 spring-forward transition, but
+# Lance Neita writes that Prime Minister Michael Manley decreed it January 5.
+# Assume Neita meant Jan 6 02:00, the same as the US.  Neita also writes that
+# Manley's supporters associated this act with Manley's nickname "Joshua"
+# (recall that in the Bible the sun stood still at Joshua's request),
+# and with the Rod of Correction which Manley said he had received from
+# Haile Selassie, Emperor of Ethiopia.  See:
+# Neita L. The politician in all of us. Jamaica Observer 2014-09-20
+# http://www.jamaicaobserver.com/columns/The-politician-in-all-of-us_17573647
+#
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Jamaica	-5:07:11 -	LMT	1890        # Kingston
 			-5:07:11 -	KMT	1912 Feb    # Kingston Mean Time
-			-5:00	-	EST	1974 Apr 28  2:00
+			-5:00	-	EST	1974
 			-5:00	US	E%sT	1984
 			-5:00	-	EST
 

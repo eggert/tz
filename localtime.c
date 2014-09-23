@@ -1389,14 +1389,14 @@ localtime_rz(struct state *sp, time_t const *timep, struct tm *tmp)
 #endif
 
 static struct tm *
-localtime_tzset(time_t const *timep, struct tm *tmp, bool settz, bool setname)
+localtime_tzset(time_t const *timep, struct tm *tmp, bool setname)
 {
   int err = lock();
   if (err) {
     errno = err;
     return NULL;
   }
-  if (settz || !lcl_is_set)
+  if (setname || !lcl_is_set)
     tzset_unlocked();
   tmp = localsub(lclptr, timep, setname, tmp);
   unlock();
@@ -1406,13 +1406,13 @@ localtime_tzset(time_t const *timep, struct tm *tmp, bool settz, bool setname)
 struct tm *
 localtime(const time_t *const timep)
 {
-  return localtime_tzset(timep, &tm, true, true);
+  return localtime_tzset(timep, &tm, true);
 }
 
 struct tm *
 localtime_r(const time_t *const timep, struct tm *tmp)
 {
-  return localtime_tzset(timep, tmp, false, false);
+  return localtime_tzset(timep, tmp, false);
 }
 
 /*

@@ -1,5 +1,17 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting code
+
+    If USG_COMPAT is defined and the requested time stamp is standard time,
+    the tz library's localtime and mktime functions now set the extern
+    variable timezone to a value appropriate for that time stamp; and
+    similarly for ALTZONE, daylight saving time, and the altzone variable.
+    This change is a companion to the tzname change in 2014h, and is
+    designed to make timezone and altzone more compatible with tzname.
+
+
 Release 2014h - 2014-09-25 18:59:03 -0700
 
   Changes affecting past time stamps

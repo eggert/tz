@@ -1292,7 +1292,10 @@ tzfree(timezone_t sp)
 ** freely called. (And no, the PANS doesn't require the above behavior,
 ** but it *is* desirable.)
 **
-** If OFFSET is nonzero, set tzname if successful.
+** If successful and OFFSET is nonzero,
+** set the applicable parts of tzname, timezone and altzone;
+** however, it's OK to omit this step if the time zone is POSIX-compatible,
+** since in that case tzset should have already done this step correctly.
 ** OFFSET's type is intfast32_t for compatibility with gmtsub.
 */
 
@@ -1307,10 +1310,8 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t offset,
 	const time_t			t = *timep;
 
 	if (sp == NULL) {
-	  result = gmtsub(gmtptr, timep, 0, tmp);
-	  if (result && offset)
-	    tzname[0] = gmtptr ? gmtptr->chars : (char *) gmt;
-	  return result;
+	  /* Don't bother to set tzname etc.; tzset has already done it.  */
+	  return gmtsub(gmtptr, timep, 0, tmp);
 	}
 	if ((sp->goback && t < sp->ats[0]) ||
 		(sp->goahead && t > sp->ats[sp->timecnt - 1])) {
@@ -1368,12 +1369,26 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t offset,
 	*/
 	result = timesub(&t, ttisp->tt_gmtoff, sp, tmp);
 	if (result) {
-	  result->tm_isdst = ttisp->tt_isdst;
-	  if (offset)
-	    tzname[result->tm_isdst] = (char *) &sp->chars[ttisp->tt_abbrind];
+	  bool tm_isdst = ttisp->tt_isdst;
+	  char *tm_zone = (char *) &sp->chars[ttisp->tt_abbrind];
+	  result->tm_isdst = tm_isdst;
 #ifdef TM_ZONE
-	  result->TM_ZONE = (char *) &sp->chars[ttisp->tt_abbrind];
+	  result->TM_ZONE = tm_zone;
 #endif /* defined TM_ZONE */
+	  if (offset) {
+	    /* Always set the tzname etc. vars whose values can easily
+	       be determined, as it's too much trouble to tell whether
+	       tzset has already done it correctly.  */
+	    tzname[tm_isdst] = tm_zone;
+#ifdef USG_COMPAT
+	    if (!tm_isdst)
+	      timezone = - ttisp->tt_gmtoff;
+#endif
+#ifdef ALTZONE
+	    if (tm_isdst)
+	      altzone = - ttisp->tt_gmtoff;
+#endif
+	  }
 	}
 	return result;
 }

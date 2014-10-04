@@ -271,12 +271,8 @@ Zone	Asia/Rangoon	6:24:40 -	LMT	1880        # or Yangon
 			6:30	-	MMT	# Myanmar Time
 
 # Cambodia
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Phnom_Penh	6:59:40 -	LMT	1906 Jun  9
-			7:06:20	-	SMT	1911 Mar 11  0:01 # Saigon MT?
-			7:00	-	ICT	1912 May
-			8:00	-	ICT	1931 May
-			7:00	-	ICT
+# See Asia/Bangkok.
+
 
 # China
 
@@ -1714,12 +1710,8 @@ Zone	Asia/Kuwait	3:11:56 -	LMT	1950
 			3:00	-	AST
 
 # Laos
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Vientiane	6:50:24 -	LMT	1906 Jun  9       # or Viangchan
-			7:06:20	-	SMT	1911 Mar 11  0:01 # Saigon MT?
-			7:00	-	ICT	1912 May
-			8:00	-	ICT	1931 May
-			7:00	-	ICT
+# See Asia/Bangkok.
+
 
 # Lebanon
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
@@ -2732,6 +2724,8 @@ Zone	Asia/Dushanbe	4:35:12 -	LMT	1924 May  2
 Zone	Asia/Bangkok	6:42:04	-	LMT	1880
 			6:42:04	-	BMT	1920 Apr # Bangkok Mean Time
 			7:00	-	ICT
+Link Asia/Bangkok Asia/Phnom_Penh	# Cambodia
+Link Asia/Bangkok Asia/Vientiane	# Laos
 
 # Turkmenistan
 # From Shanks & Pottenger.

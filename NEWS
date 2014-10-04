@@ -2,6 +2,13 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting past time stamps
+
+    Asia/Phnom_Penh and Asia/Vientiane have been turned into links, as
+    they differed from existing zones only for older time stamps.  As
+    usual, these changes affect pre-1970 time stamps only.  Their old
+    contents have been moved to the 'backzone' file.
+
   Changes affecting code
 
     If USG_COMPAT is defined and the requested time stamp is standard time,

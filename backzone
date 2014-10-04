@@ -353,10 +353,24 @@ Zone	Asia/Kashgar	5:03:56	-	LMT	1928     # or Kashi or Kaxgar
 # Portuguese India switched to GMT+5 on 1912-01-01.
 #Zone	Asia/Panaji	[not enough info to complete]
 
+# Cambodia
+Zone	Asia/Phnom_Penh	6:59:40 -	LMT	1906 Jun  9
+			7:06:20	-	SMT	1911 Mar 11  0:01 # Saigon MT?
+			7:00	-	ICT	1912 May
+			8:00	-	ICT	1931 May
+			7:00	-	ICT
+
 # Israel
 Zone	Asia/Tel_Aviv	2:19:04 -	LMT	1880
 			2:21	-	JMT	1918
 			2:00	Zion	I%sT
+
+# Laos
+Zone	Asia/Vientiane	6:50:24 -	LMT	1906 Jun  9       # or Viangchan
+			7:06:20	-	SMT	1911 Mar 11  0:01 # Saigon MT?
+			7:00	-	ICT	1912 May
+			8:00	-	ICT	1931 May
+			7:00	-	ICT
 
 # Jan Mayen
 # From Whitman:

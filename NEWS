@@ -4,6 +4,14 @@ Unreleased, experimental changes
 
   Changes affecting past time stamps
 
+    Many time stamps have been corrected for Asia/Ho_Chi_Minh before 1976
+    (thanks to Trần Ngọc Quân for an indirect pointer to Trần Tiến Bình's
+    authoritative book).  Asia/Ho_Chi_Minh has been added to
+    zone1970.tab, to give tzselect users in Vietnam two choices,
+    since north and south Vietnam disagreed after our 1970 cutoff.
+    The new abbreviation IDT stands for the pre-1976 use of UT+8 in
+    Indochina, to distinguish it better from ICT (UT+7).
+
     Asia/Phnom_Penh and Asia/Vientiane have been turned into links, as
     they differed from existing zones only for older time stamps.  As
     usual, these changes affect pre-1970 time stamps only.  Their old

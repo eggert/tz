@@ -25,7 +25,6 @@ BEGIN {
 	  tztab["America/Cayman"] = 1
 	  tztab["Asia/Aden"] = 1
 	  tztab["Asia/Bahrain"] = 1
-	  tztab["Asia/Ho_Chi_Minh"] = 1
 	  tztab["Asia/Kuwait"] = 1
 	  tztab["Asia/Muscat"] = 1
 	  tztab["Indian/Antananarivo"] = 1

@@ -200,6 +200,17 @@ int			daylight = 0;
 long			altzone = 0;
 #endif /* defined ALTZONE */
 
+/* Initialize *S to a value based on GMTOFF, ISDST, and ABBRIND.  */
+static void
+init_ttinfo(struct ttinfo *s, int_fast32_t gmtoff, bool isdst, int abbrind)
+{
+  s->tt_gmtoff = gmtoff;
+  s->tt_isdst = isdst;
+  s->tt_abbrind = abbrind;
+  s->tt_ttisstd = false;
+  s->tt_ttisgmt = false;
+}
+
 static int_fast32_t
 detzcode(const char *const codep)
 {
@@ -304,7 +315,7 @@ tzload(register const char *name, register struct state *const sp,
 	register int			i;
 	register int			fid;
 	register int			stored;
-	register int			nread;
+	register ssize_t		nread;
 	typedef union {
 		struct tzhead	tzhead;
 		char		buf[2 * sizeof(struct tzhead) +
@@ -389,8 +400,9 @@ tzload(register const char *name, register struct state *const sp,
 		       && (ttisstdcnt == typecnt || ttisstdcnt == 0)
 		       && (ttisgmtcnt == typecnt || ttisgmtcnt == 0)))
 				goto oops;
-		if (nread - (p - up->buf)
-		    < (timecnt * stored		/* ats */
+		if (nread
+		    < (p - up->buf		/* struct tzhead */
+		       + timecnt * stored	/* ats */
 		       + timecnt		/* types */
 		       + typecnt * 6		/* ttinfos */
 		       + charcnt		/* chars */
@@ -507,8 +519,7 @@ tzload(register const char *name, register struct state *const sp,
 		if (up->tzhead.tzh_version[0] == '\0')
 			break;
 		nread -= p - up->buf;
-		for (i = 0; i < nread; ++i)
-			up->buf[i] = p[i];
+		memmove(up->buf, p, nread);
 		/*
 		** If this is a signed narrow time_t system, we're done.
 		*/
@@ -932,7 +943,6 @@ tzparse(const char *name, register struct state *const sp,
 	int_fast32_t			dstoffset;
 	register char *			cp;
 	register bool			load_ok;
-	static struct ttinfo		zttinfo;
 
 	stdname = name;
 	if (lastditch) {
@@ -1004,13 +1014,8 @@ tzparse(const char *name, register struct state *const sp,
 			/*
 			** Two transitions per year, from EPOCH_YEAR forward.
 			*/
-			sp->ttis[0] = sp->ttis[1] = zttinfo;
-			sp->ttis[0].tt_gmtoff = -dstoffset;
-			sp->ttis[0].tt_isdst = true;
-			sp->ttis[0].tt_abbrind = stdlen + 1;
-			sp->ttis[1].tt_gmtoff = -stdoffset;
-			sp->ttis[1].tt_isdst = false;
-			sp->ttis[1].tt_abbrind = 0;
+			init_ttinfo(&sp->ttis[0], -dstoffset, true, stdlen + 1);
+			init_ttinfo(&sp->ttis[1], -stdoffset, false, 0);
 			sp->defaulttype = 0;
 			timecnt = 0;
 			janfirst = 0;
@@ -1129,13 +1134,8 @@ tzparse(const char *name, register struct state *const sp,
 			/*
 			** Finally, fill in ttis.
 			*/
-			sp->ttis[0] = sp->ttis[1] = zttinfo;
-			sp->ttis[0].tt_gmtoff = -stdoffset;
-			sp->ttis[0].tt_isdst = false;
-			sp->ttis[0].tt_abbrind = 0;
-			sp->ttis[1].tt_gmtoff = -dstoffset;
-			sp->ttis[1].tt_isdst = true;
-			sp->ttis[1].tt_abbrind = stdlen + 1;
+			init_ttinfo(&sp->ttis[0], -stdoffset, false, 0);
+			init_ttinfo(&sp->ttis[1], -dstoffset, true, stdlen + 1);
 			sp->typecnt = 2;
 			sp->defaulttype = 0;
 		}
@@ -1143,10 +1143,7 @@ tzparse(const char *name, register struct state *const sp,
 		dstlen = 0;
 		sp->typecnt = 1;		/* only standard time */
 		sp->timecnt = 0;
-		sp->ttis[0] = zttinfo;
-		sp->ttis[0].tt_gmtoff = -stdoffset;
-		sp->ttis[0].tt_isdst = false;
-		sp->ttis[0].tt_abbrind = 0;
+		init_ttinfo(&sp->ttis[0], -stdoffset, false, 0);
 		sp->defaulttype = 0;
 	}
 	sp->charcnt = stdlen + 1;
@@ -1183,10 +1180,11 @@ zoneinit(struct state *sp, char const *name)
       sp->leapcnt = 0;		/* so, we're off a little */
       sp->timecnt = 0;
       sp->typecnt = 0;
-      sp->ttis[0].tt_isdst = 0;
-      sp->ttis[0].tt_gmtoff = 0;
-      sp->ttis[0].tt_abbrind = 0;
+      sp->charcnt = 0;
+      sp->goback = sp->goahead = false;
+      init_ttinfo(&sp->ttis[0], 0, false, 0);
       strcpy(sp->chars, gmt);
+      sp->defaulttype = 0;
     } else if (! (tzload(name, sp, true)
 		  || (name && name[0] != ':' && tzparse(name, sp, false))))
       return NULL;
@@ -2121,7 +2119,6 @@ leapcorr(struct state const *sp, time_t t)
 	register struct lsinfo const *	lp;
 	register int			i;
 
-	sp = lclptr;
 	i = sp->leapcnt;
 	while (--i >= 0) {
 		lp = &sp->lsis[i];

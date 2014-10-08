@@ -26,6 +26,12 @@ Unreleased, experimental changes
     This change is a companion to the tzname change in 2014h, and is
     designed to make timezone and altzone more compatible with tzname.
 
+    Some bugs associated with the new 2014g functions have been fixed.
+    This includes a bug that largely incapacitated the new functions
+    time2posix_z and posix2time_z.  (Thanks to Christos Zoulas.)
+    It also includes some uses of uninitialized variables after tzalloc.
+    The new code uses the standard type 'ssize_t', which the Makefile
+    now gives porting advice about.
 
 Release 2014h - 2014-09-25 18:59:03 -0700
 

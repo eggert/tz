@@ -1541,13 +1541,13 @@ timesub(const time_t *const timep, const int_fast32_t offset,
 		tdelta = tdays / DAYSPERLYEAR;
 		if (! ((! TYPE_SIGNED(time_t) || INT_MIN <= tdelta)
 		       && tdelta <= INT_MAX))
-			return NULL;
+		  goto out_of_range;
 		idelta = tdelta;
 		if (idelta == 0)
 			idelta = (tdays < 0) ? -1 : 1;
 		newy = y;
 		if (increment_overflow(&newy, idelta))
-			return NULL;
+		  goto out_of_range;
 		leapdays = leaps_thru_end_of(newy - 1) -
 			leaps_thru_end_of(y - 1);
 		tdays -= ((time_t) newy - y) * DAYSPERNYEAR;
@@ -1576,17 +1576,17 @@ timesub(const time_t *const timep, const int_fast32_t offset,
 	}
 	while (idays < 0) {
 		if (increment_overflow(&y, -1))
-			return NULL;
+		  goto out_of_range;
 		idays += year_lengths[isleap(y)];
 	}
 	while (idays >= year_lengths[isleap(y)]) {
 		idays -= year_lengths[isleap(y)];
 		if (increment_overflow(&y, 1))
-			return NULL;
+		  goto out_of_range;
 	}
 	tmp->tm_year = y;
 	if (increment_overflow(&tmp->tm_year, -TM_YEAR_BASE))
-		return NULL;
+	  goto out_of_range;
 	tmp->tm_yday = idays;
 	/*
 	** The "extra" mods below avoid overflow problems.
@@ -1617,6 +1617,10 @@ timesub(const time_t *const timep, const int_fast32_t offset,
 	tmp->TM_GMTOFF = offset;
 #endif /* defined TM_GMTOFF */
 	return tmp;
+
+ out_of_range:
+	errno = EOVERFLOW;
+	return NULL;
 }
 
 char *
@@ -1628,15 +1632,16 @@ ctime(const time_t *const timep)
 **	to local time in the form of a string. It is equivalent to
 **		asctime(localtime(timer))
 */
-	return asctime(localtime(timep));
+  struct tm *tmp = localtime(timep);
+  return tmp ? asctime(tmp) : NULL;
 }
 
 char *
 ctime_r(const time_t *const timep, char *buf)
 {
-	struct tm	mytm;
-
-	return asctime_r(localtime_r(timep, &mytm), buf);
+  struct tm mytm;
+  struct tm *tmp = localtime_r(timep, &mytm);
+  return tmp ? asctime_r(tmp, buf) : NULL;
 }
 
 /*

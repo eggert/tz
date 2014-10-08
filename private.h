@@ -101,10 +101,15 @@
 
 #include "sys/types.h"	/* for time_t */
 #include "stdio.h"
-#include "errno.h"
 #include "string.h"
 #include "limits.h"	/* for CHAR_BIT et al. */
 #include "stdlib.h"
+
+#include "errno.h"
+
+#ifndef EOVERFLOW
+# define EOVERFLOW EINVAL
+#endif
 
 #if HAVE_GETTEXT
 #include "libintl.h"

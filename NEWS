@@ -26,6 +26,11 @@ Unreleased, experimental changes
     This change is a companion to the tzname change in 2014h, and is
     designed to make timezone and altzone more compatible with tzname.
 
+    The tz library's functions now set errno to EOVERFLOW if they fail
+    because the result cannot be represented.  ctime and ctime_r now
+    return NULL and set errno when a time stamp is out of range, rather
+    than having undefined behavior.
+
     Some bugs associated with the new 2014g functions have been fixed.
     This includes a bug that largely incapacitated the new functions
     time2posix_z and posix2time_z.  (Thanks to Christos Zoulas.)

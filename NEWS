@@ -2,6 +2,13 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting future time stamps
+
+    Since Belarus is not changing its clocks even though Moscow is,
+    the time zone abbreviation in Europe/Minsk is changing from FET
+    to its more-traditional value MSK on 2014-10-26 at 01:00.
+    (Thanks to Alexander Bokovoy for the heads-up about Belarus.)
+
   Changes affecting past time stamps
 
     Many time stamps have been corrected for Asia/Ho_Chi_Minh before 1976

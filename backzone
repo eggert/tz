@@ -330,6 +330,20 @@ Zone	Asia/Chongqing	7:06:20	-	LMT	1928     # or Chungking
 			8:00	PRC	C%sT
 Link Asia/Chongqing Asia/Chungking
 
+# Vietnam
+# From Paul Eggert (2014-10-11):
+# See Asia/Ho_Chi_Minh for the source for this data.
+# Trần's book is quoting as saying the 1954-55 transition to 07:00
+# was at the end of October 1954 in Hanoi.
+Zone	Asia/Hanoi	7:03:24 -	LMT	1906 Jul  1
+			7:06:30	-	PLMT	1911 May  1
+			7:00	-	ICT	1942 Dec 31 23:00
+			8:00	-	IDT	1945 Mar 14 23:00
+			9:00	-	JST	1945 Sep  2
+			7:00	-	ICT	1947 Apr  1
+			8:00	-	IDT	1954 Nov  1
+			7:00	-	ICT
+
 # China
 # Changbai Time ("Long-white Time", Long-white = Heilongjiang area)
 # Heilongjiang (except Mohe county), Jilin
@@ -354,10 +368,19 @@ Zone	Asia/Kashgar	5:03:56	-	LMT	1928     # or Kashi or Kaxgar
 #Zone	Asia/Panaji	[not enough info to complete]
 
 # Cambodia
-Zone	Asia/Phnom_Penh	6:59:40 -	LMT	1906 Jun  9
-			7:06:20	-	SMT	1911 Mar 11  0:01 # Saigon MT?
-			7:00	-	ICT	1912 May
-			8:00	-	ICT	1931 May
+# From Paul Eggert (2014-10-11):
+# See Asia/Ho_Chi_Minh for the source for most of this data.  Also, guess
+# (1) Cambodia reverted to UT+7 on 1945-09-02, when Vietnam did, and
+# (2) they also reverted to UT+7 on 1953-11-09, the date of independence.
+# These guesses are probably wrong but they're better than guessing no
+# transitions there.
+Zone	Asia/Phnom_Penh	6:59:40 -	LMT	1906 Jul  1
+			7:06:30	-	PLMT	1911 May  1
+			7:00	-	ICT	1942 Dec 31 23:00
+			8:00	-	IDT	1945 Mar 14 23:00
+			9:00	-	JST	1945 Sep  2
+			7:00	-	ICT	1947 Apr  1
+			8:00	-	IDT	1953 Nov  9
 			7:00	-	ICT
 
 # Israel
@@ -366,10 +389,18 @@ Zone	Asia/Tel_Aviv	2:19:04 -	LMT	1880
 			2:00	Zion	I%sT
 
 # Laos
-Zone	Asia/Vientiane	6:50:24 -	LMT	1906 Jun  9       # or Viangchan
-			7:06:20	-	SMT	1911 Mar 11  0:01 # Saigon MT?
-			7:00	-	ICT	1912 May
-			8:00	-	ICT	1931 May
+# From Paul Eggert (2014-10-11):
+# See Asia/Ho_Chi_Minh for the source for most of this data.
+# Trần's book is quoted as saying that Laos reverted to UT+7 on 1955-04-15.
+# Also, guess that Laos reverted to UT+7 on 1945-09-02, when Vietnam did;
+# this is probably wrong but it's better than guessing no transition.
+Zone	Asia/Vientiane	6:50:24 -	LMT	1906 Jul  1
+			7:06:30	-	PLMT	1911 May  1
+			7:00	-	ICT	1942 Dec 31 23:00
+			8:00	-	IDT	1945 Mar 14 23:00
+			9:00	-	JST	1945 Sep  2
+			7:00	-	ICT	1947 Apr  1
+			8:00	-	IDT	1955 Apr 15
 			7:00	-	ICT
 
 # Jan Mayen

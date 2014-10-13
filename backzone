@@ -331,17 +331,17 @@ Zone	Asia/Chongqing	7:06:20	-	LMT	1928     # or Chungking
 Link Asia/Chongqing Asia/Chungking
 
 # Vietnam
-# From Paul Eggert (2014-10-11):
+# From Paul Eggert (2014-10-13):
 # See Asia/Ho_Chi_Minh for the source for this data.
 # Trần's book is quoting as saying the 1954-55 transition to 07:00
-# was at the end of October 1954 in Hanoi.
+# in Hanoi was in October 1954, with exact date and time unknown.
 Zone	Asia/Hanoi	7:03:24 -	LMT	1906 Jul  1
 			7:06:30	-	PLMT	1911 May  1
 			7:00	-	ICT	1942 Dec 31 23:00
 			8:00	-	IDT	1945 Mar 14 23:00
 			9:00	-	JST	1945 Sep  2
 			7:00	-	ICT	1947 Apr  1
-			8:00	-	IDT	1954 Nov  1
+			8:00	-	IDT	1954 Oct
 			7:00	-	ICT
 
 # China

@@ -4,6 +4,10 @@ Unreleased, experimental changes
 
   Changes affecting future time stamps
 
+    A new Zone Pacific/Bougainville, for the part of Papua New Guinea
+    that plans to switch from UTC+10 to UTC+11 on 2014-12-28 at 02:00.
+    (Thanks to Kiley Walbom for the heads-up.)
+
     Since Belarus is not changing its clocks even though Moscow is,
     the time zone abbreviation in Europe/Minsk is changing from FET
     to its more-traditional value MSK on 2014-10-26 at 01:00.

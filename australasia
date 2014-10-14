@@ -519,6 +519,30 @@ Zone Pacific/Palau	8:57:56 -	LMT	1901 # Koror
 Zone Pacific/Port_Moresby 9:48:40 -	LMT	1880
 			9:48:32	-	PMMT	1895 # Port Moresby Mean Time
 			10:00	-	PGT	# Papua New Guinea Time
+#
+# From Paul Eggert (2014-10-13):
+# Base the Bougainville entry on the Arawa-Kieta region, which appears to have
+# the most people even though it was devastated in the Bougainville Civil War.
+#
+# Although Shanks gives 1942-03-15 / 1943-11-01 for JST, these dates
+# are apparently rough guesswork from the starts of military campaigns.
+# The World War II entries below are instead based on Arawa-Kieta.
+# The Japanese occupied Kieta in July 1942,
+# according to the Pacific War Online Encyclopedia
+# http://pwencycl.kgbudge.com/B/o/Bougainville.htm
+# and seem to have controlled it until their 1945-08-21 surrender.
+#
+# The Autonomous Region of Bougainville plans to switch from UTC+10 to UTC+11
+# on 2014-12-28 at 02:00.  They call UTC+11 "Bougainville Standard Time";
+# abbreviate this as BST.  See:
+# http://www.bougainville24.com/bougainville-issues/bougainville-gets-own-timezone/
+#
+Zone Pacific/Bougainville 10:22:16 -	LMT	1880
+			 9:48:32 -	PMMT	1895
+			10:00	-	PGT	1942 Jul
+			 9:00	-	JST	1945 Aug 21
+			10:00	-	PGT	2014 Dec 28  2:00
+			11:00	-	BST
 
 # Pitcairn
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -803,6 +827,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 #	 10:00	AEST	AEDT	Eastern Australia
 #	 10:00	ChST		Chamorro
 #	 10:30	LHST	LHDT	Lord Howe*
+#	 11:00	BST		Bougainville*
 #	 11:30	NZMT	NZST	New Zealand through 1945
 #	 12:00	NZST	NZDT	New Zealand 1946-present
 #	 12:15	CHAST		Chatham through 1945*

@@ -336,15 +336,18 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # Monday in October, and springs back the penultimate Sunday in January.
 # This is ad hoc, but matches recent practice.
 
+# From Paul Eggert, after a heads-up from Ken Rylander (2014-10-14):
+# Fiji has made no decision about DST this year.  Guess they won't do it.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Fiji	1998	1999	-	Nov	Sun>=1	2:00	1:00	S
 Rule	Fiji	1999	2000	-	Feb	lastSun	3:00	0	-
 Rule	Fiji	2009	only	-	Nov	29	2:00	1:00	S
 Rule	Fiji	2010	only	-	Mar	lastSun	3:00	0	-
-Rule	Fiji	2010	max	-	Oct	Sun>=21	2:00	1:00	S
+Rule	Fiji	2010	2013	-	Oct	Sun>=21	2:00	1:00	S
 Rule	Fiji	2011	only	-	Mar	Sun>=1	3:00	0	-
 Rule	Fiji	2012	2013	-	Jan	Sun>=18	3:00	0	-
-Rule	Fiji	2014	max	-	Jan	Sun>=18	2:00	0	-
+Rule	Fiji	2014	only	-	Jan	Sun>=18	2:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Pacific/Fiji	11:55:44 -	LMT	1915 Oct 26 # Suva
 			12:00	Fiji	FJ%sT	# Fiji Time

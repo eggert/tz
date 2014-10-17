@@ -54,6 +54,10 @@ Unreleased, experimental changes
     The new code uses the standard type 'ssize_t', which the Makefile
     now gives porting advice about.
 
+  Changes affecting commentary
+
+    Updated URLs for NRC Canada (thanks to Matt Johnson).
+
 Release 2014h - 2014-09-25 18:59:03 -0700
 
   Changes affecting past time stamps

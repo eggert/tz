@@ -1183,7 +1183,9 @@ gmtload(struct state *const sp)
 		tzparse(gmt, sp, true);
 }
 
-static bool
+/* Initialize *SP to a value appropriate for the TZ setting NAME.
+   Return 0 on success, an errno value on failure.  */
+static int
 zoneinit(struct state *sp, char const *name)
 {
   if (name && ! name[0]) {
@@ -1198,15 +1200,12 @@ zoneinit(struct state *sp, char const *name)
     init_ttinfo(&sp->ttis[0], 0, false, 0);
     strcpy(sp->chars, gmt);
     sp->defaulttype = 0;
-    return true;
+    return 0;
   } else {
     int err = tzload(name, sp, true);
-    if (err == 0)
-      return true;
-    if (name && name[0] != ':' && tzparse(name, sp, false))
-      return true;
-    errno = err;
-    return false;
+    if (err != 0 && name && name[0] != ':' && tzparse(name, sp, false))
+      return 0;
+    return err;
   }
 }
 
@@ -1224,7 +1223,7 @@ tzsetlcl(char const *name)
     lclptr = sp = malloc(sizeof *lclptr);
 #endif /* defined ALL_STATE */
   if (sp) {
-    if (! zoneinit(sp, name))
+    if (zoneinit(sp, name) != 0)
       zoneinit(sp, "");
     if (0 < lcl)
       strcpy(lcl_TZname, name);
@@ -1282,11 +1281,13 @@ timezone_t
 tzalloc(char const *name)
 {
   timezone_t sp = malloc(sizeof *sp);
-  if (sp && ! zoneinit(sp, name)) {
-    int err = errno;
-    free(sp);
-    errno = err;
-    return NULL;
+  if (sp) {
+    int err = zoneinit(sp, name);
+    if (err != 0) {
+      free(sp);
+      errno = err;
+      return NULL;
+    }
   }
   return sp;
 }

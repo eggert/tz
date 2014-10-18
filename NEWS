@@ -35,6 +35,11 @@ Unreleased, experimental changes
 
   Changes affecting code
 
+    The time-related library functions now set errno on failure, and
+    some crashes in the new tzalloc-related library functions have
+    been fixed.  (Thanks to Christos Zoulas for reporting most of
+    these problems and for suggesting fixes.)
+
     If USG_COMPAT is defined and the requested time stamp is standard time,
     the tz library's localtime and mktime functions now set the extern
     variable timezone to a value appropriate for that time stamp; and

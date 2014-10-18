@@ -107,6 +107,9 @@
 
 #include "errno.h"
 
+#ifndef ENAMETOOLONG
+# define ENAMETOOLONG EINVAL
+#endif
 #ifndef EOVERFLOW
 # define EOVERFLOW EINVAL
 #endif

@@ -307,67 +307,64 @@ differ_by_repeat(const time_t t1, const time_t t0)
 	return t1 - t0 == SECSPERREPEAT;
 }
 
-static bool
-tzload(register const char *name, register struct state *const sp,
-       bool doextend)
+/* Input buffer for data read from a compiled tz file.  */
+union input_buffer {
+  /* The first part of the buffer, interpreted as a header.  */
+  struct tzhead tzhead;
+
+  /* The entire buffer.  */
+  char buf[2 * sizeof(struct tzhead) + 2 * sizeof (struct state)
+	   + 4 * TZ_MAX_TIMES];
+};
+
+/* Local storage needed for 'tzloadbody'.  */
+union local_storage {
+  /* The file name to be opened.  */
+  char fullname[FILENAME_MAX + 1];
+
+  /* The results of analyzing the file's contents after it is opened.  */
+  struct {
+    /* The input buffer.  */
+    union input_buffer u;
+
+    /* A temporary state used for parsing a TZ string in the file.  */
+    struct state st;
+  } u;
+};
+
+/* Load tz data from the file named NAME into *SP.  Read extended
+   format if DOEXTEND.  Use *LSP for temporary storage.  Return 0 on
+   success, an errno value on failure.  */
+static int
+tzloadbody(char const *name, struct state *sp, bool doextend,
+	   union local_storage *lsp)
 {
-	register const char *		p;
 	register int			i;
 	register int			fid;
 	register int			stored;
 	register ssize_t		nread;
-	typedef union {
-		struct tzhead	tzhead;
-		char		buf[2 * sizeof(struct tzhead) +
-					2 * sizeof *sp +
-					4 * TZ_MAX_TIMES];
-	} u_t;
-	union local_storage {
-		/*
-		** Section 4.9.1 of the C standard says that
-		** "FILENAME_MAX expands to an integral constant expression
-		** that is the size needed for an array of char large enough
-		** to hold the longest file name string that the implementation
-		** guarantees can be opened."
-		*/
-		char		fullname[FILENAME_MAX + 1];
-
-		/* The main part of the storage for this function.  */
-		struct {
-			u_t u;
-			struct state st;
-		} u;
-	};
-	register char *fullname;
-	register u_t *up;
 	register bool doaccess;
-	register union local_storage *lsp;
-#ifdef ALL_STATE
-	lsp = malloc(sizeof *lsp);
-	if (!lsp)
-		return false;
-#else /* !defined ALL_STATE */
-	union local_storage ls;
-	lsp = &ls;
-#endif /* !defined ALL_STATE */
-	fullname = lsp->fullname;
-	up = &lsp->u.u;
+	register char *fullname = lsp->fullname;
+	register union input_buffer *up = &lsp->u.u;
+	register int tzheadsize = sizeof (struct tzhead);
 
 	sp->goback = sp->goahead = false;
 
 	if (! name) {
 		name = TZDEFAULT;
 		if (! name)
-			goto oops;
+		  return EINVAL;
 	}
 
 	if (name[0] == ':')
 		++name;
 	doaccess = name[0] == '/';
 	if (!doaccess) {
-		p = TZDIR;
-		if (! p || sizeof lsp->fullname - 1 <= strlen(p) + strlen(name))
-			goto oops;
+		char const *p = TZDIR;
+		if (! p)
+		  return EINVAL;
+		if (sizeof lsp->fullname - 1 <= strlen(p) + strlen(name))
+		  return ENAMETOOLONG;
 		strcpy(fullname, p);
 		strcat(fullname, "/");
 		strcat(fullname, name);
@@ -377,14 +374,19 @@ tzload(register const char *name, register struct state *const sp,
 		name = fullname;
 	}
 	if (doaccess && access(name, R_OK) != 0)
-		goto oops;
+	  return errno;
 	fid = open(name, OPEN_MODE);
 	if (fid < 0)
-		goto oops;
+	  return errno;
 
 	nread = read(fid, up->buf, sizeof up->buf);
-	if (close(fid) < 0 || nread <= 0)
-		goto oops;
+	if (nread < tzheadsize) {
+	  int err = nread < 0 ? errno : EINVAL;
+	  close(fid);
+	  return err;
+	}
+	if (close(fid) < 0)
+	  return errno;
 	for (stored = 4; stored <= 8; stored *= 2) {
 		int_fast32_t ttisstdcnt = detzcode(up->tzhead.tzh_ttisstdcnt);
 		int_fast32_t ttisgmtcnt = detzcode(up->tzhead.tzh_ttisgmtcnt);
@@ -392,16 +394,16 @@ tzload(register const char *name, register struct state *const sp,
 		int_fast32_t timecnt = detzcode(up->tzhead.tzh_timecnt);
 		int_fast32_t typecnt = detzcode(up->tzhead.tzh_typecnt);
 		int_fast32_t charcnt = detzcode(up->tzhead.tzh_charcnt);
-		p = up->tzhead.tzh_charcnt + sizeof up->tzhead.tzh_charcnt;
+		char const *p = up->buf + tzheadsize;
 		if (! (0 <= leapcnt && leapcnt < TZ_MAX_LEAPS
 		       && 0 < typecnt && typecnt < TZ_MAX_TYPES
 		       && 0 <= timecnt && timecnt < TZ_MAX_TIMES
 		       && 0 <= charcnt && charcnt < TZ_MAX_CHARS
 		       && (ttisstdcnt == typecnt || ttisstdcnt == 0)
 		       && (ttisgmtcnt == typecnt || ttisgmtcnt == 0)))
-				goto oops;
+		  return EINVAL;
 		if (nread
-		    < (p - up->buf		/* struct tzhead */
+		    < (tzheadsize		/* struct tzhead */
 		       + timecnt * stored	/* ats */
 		       + timecnt		/* types */
 		       + typecnt * 6		/* ttinfos */
@@ -409,7 +411,7 @@ tzload(register const char *name, register struct state *const sp,
 		       + leapcnt * (stored + 4)	/* lsinfos */
 		       + ttisstdcnt		/* ttisstds */
 		       + ttisgmtcnt))		/* ttisgmts */
-				goto oops;
+		  return EINVAL;
 		sp->leapcnt = leapcnt;
 		sp->timecnt = timecnt;
 		sp->typecnt = typecnt;
@@ -429,7 +431,7 @@ tzload(register const char *name, register struct state *const sp,
 			       ? time_t_min : at);
 			  if (timecnt && attime <= sp->ats[timecnt - 1]) {
 			    if (attime < sp->ats[timecnt - 1])
-			      goto oops;
+			      return EINVAL;
 			    sp->types[i - 1] = 0;
 			    timecnt--;
 			  }
@@ -442,7 +444,7 @@ tzload(register const char *name, register struct state *const sp,
 		for (i = 0; i < sp->timecnt; ++i) {
 			unsigned char typ = *p++;
 			if (sp->typecnt <= typ)
-				goto oops;
+			  return EINVAL;
 			if (sp->types[i])
 				sp->types[timecnt++] = typ;
 		}
@@ -456,11 +458,11 @@ tzload(register const char *name, register struct state *const sp,
 			p += 4;
 			isdst = *p++;
 			if (! (isdst < 2))
-			  goto oops;
+			  return EINVAL;
 			ttisp->tt_isdst = isdst;
 			abbrind = *p++;
 			if (! (abbrind < sp->charcnt))
-			  goto oops;
+			  return EINVAL;
 			ttisp->tt_abbrind = abbrind;
 		}
 		for (i = 0; i < sp->charcnt; ++i)
@@ -479,7 +481,7 @@ tzload(register const char *name, register struct state *const sp,
 			 ? time_t_min : tr);
 		    if (leapcnt && trans <= sp->lsis[leapcnt - 1].ls_trans) {
 		      if (trans < sp->lsis[leapcnt - 1].ls_trans)
-			goto oops;
+			return EINVAL;
 		      leapcnt--;
 		    }
 		    sp->lsis[leapcnt].ls_trans = trans;
@@ -497,7 +499,7 @@ tzload(register const char *name, register struct state *const sp,
 				ttisp->tt_ttisstd = false;
 			else {
 				if (*p != true && *p != false)
-						goto oops;
+				  return EINVAL;
 				ttisp->tt_ttisstd = *p++;
 			}
 		}
@@ -509,7 +511,7 @@ tzload(register const char *name, register struct state *const sp,
 				ttisp->tt_ttisgmt = false;
 			else {
 				if (*p != true && *p != false)
-						goto oops;
+						return EINVAL;
 				ttisp->tt_ttisgmt = *p++;
 			}
 		}
@@ -610,15 +612,27 @@ tzload(register const char *name, register struct state *const sp,
 			}
 	}
 	sp->defaulttype = i;
+	return 0;
+}
+
+/* Load tz data from the file named NAME into *SP.  Read extended
+   format if DOEXTEND.  Return 0 on success, an errno value on failure.  */
+static int
+tzload(char const *name, struct state *sp, bool doextend)
+{
 #ifdef ALL_STATE
-	free(up);
-#endif /* defined ALL_STATE */
-	return true;
-oops:
-#ifdef ALL_STATE
-	free(up);
-#endif /* defined ALL_STATE */
-	return false;
+  union local_storage *lsp = malloc(sizeof *lsp);
+  if (!lsp)
+    return errno;
+  else {
+    int err = tzloadbody(name, sp, doextend, lsp);
+    free(lsp);
+    return err;
+  }
+#else
+  union local_storage ls;
+  return tzloadbody(name, sp, doextend, &ls);
+#endif
 }
 
 static bool
@@ -970,7 +984,7 @@ tzparse(const char *name, register struct state *const sp,
 		if (name == NULL)
 		  return false;
 	}
-	load_ok = tzload(TZDEFRULES, sp, false);
+	load_ok = tzload(TZDEFRULES, sp, false) == 0;
 	if (!load_ok)
 		sp->leapcnt = 0;		/* so, we're off a little */
 	if (*name != '\0') {
@@ -1165,48 +1179,56 @@ tzparse(const char *name, register struct state *const sp,
 static void
 gmtload(struct state *const sp)
 {
-	if (! tzload(gmt, sp, true))
+	if (tzload(gmt, sp, true) != 0)
 		tzparse(gmt, sp, true);
 }
 
-static struct state *
+static bool
 zoneinit(struct state *sp, char const *name)
 {
-  if (sp) {
-    if (name && ! name[0]) {
-      /*
-      ** User wants it fast rather than right.
-      */
-      sp->leapcnt = 0;		/* so, we're off a little */
-      sp->timecnt = 0;
-      sp->typecnt = 0;
-      sp->charcnt = 0;
-      sp->goback = sp->goahead = false;
-      init_ttinfo(&sp->ttis[0], 0, false, 0);
-      strcpy(sp->chars, gmt);
-      sp->defaulttype = 0;
-    } else if (! (tzload(name, sp, true)
-		  || (name && name[0] != ':' && tzparse(name, sp, false))))
-      return NULL;
+  if (name && ! name[0]) {
+    /*
+    ** User wants it fast rather than right.
+    */
+    sp->leapcnt = 0;		/* so, we're off a little */
+    sp->timecnt = 0;
+    sp->typecnt = 0;
+    sp->charcnt = 0;
+    sp->goback = sp->goahead = false;
+    init_ttinfo(&sp->ttis[0], 0, false, 0);
+    strcpy(sp->chars, gmt);
+    sp->defaulttype = 0;
+    return true;
+  } else {
+    int err = tzload(name, sp, true);
+    if (err == 0)
+      return true;
+    if (name && name[0] != ':' && tzparse(name, sp, false))
+      return true;
+    errno = err;
+    return false;
   }
-  return sp;
 }
 
 static void
 tzsetlcl(char const *name)
 {
+  struct state *sp = lclptr;
   int lcl = name ? strlen(name) < sizeof lcl_TZname : -1;
   if (lcl < 0
       ? lcl_is_set < 0
       : 0 < lcl_is_set && strcmp(lcl_TZname, name) == 0)
     return;
-  if (0 < lcl)
-    strcpy(lcl_TZname, name);
 #ifdef ALL_STATE
-  if (! lclptr)
-    lclptr = malloc(sizeof *lclptr);
+  if (! sp)
+    lclptr = sp = malloc(sizeof *lclptr);
 #endif /* defined ALL_STATE */
-  zoneinit(lclptr, name);
+  if (sp) {
+    if (! zoneinit(sp, name))
+      zoneinit(sp, "");
+    if (0 < lcl)
+      strcpy(lcl_TZname, name);
+  }
   settzname();
   lcl_is_set = lcl;
 }
@@ -1260,10 +1282,13 @@ timezone_t
 tzalloc(char const *name)
 {
   timezone_t sp = malloc(sizeof *sp);
-  timezone_t tp = sp ? zoneinit(sp, name) : sp;
-  if (!tp)
+  if (sp && ! zoneinit(sp, name)) {
+    int err = errno;
     free(sp);
-  return tp;
+    errno = err;
+    return NULL;
+  }
+  return sp;
 }
 
 void

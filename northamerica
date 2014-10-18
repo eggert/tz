@@ -1101,7 +1101,7 @@ Zone America/Menominee	-5:50:27 -	LMT	1885 Sep 18 12:00
 # An amendment to the Interpretation Act was registered on February 19/2007....
 # http://action.attavik.ca/home/justice-gn/attach/2007/gaz02part2.pdf
 
-# From Paul Eggert (2014-10-17):
+# From Paul Eggert (2014-10-18):
 # H. David Matthews and Mary Vincent's map
 # "It's about TIME", _Canadian Geographic_ (September-October 1998)
 # http://www.canadiangeographic.ca/Magazine/SO98/alacarte.asp
@@ -1110,6 +1110,7 @@ Zone America/Menominee	-5:50:27 -	LMT	1885 Sep 18 12:00
 #
 # National Research Council Canada maintains info about time zones and DST.
 # http://www.nrc-cnrc.gc.ca/eng/services/time/time_zones.html
+# http://www.nrc-cnrc.gc.ca/eng/services/time/faq/index.html#Q5
 # Its unofficial information is often taken from Matthews and Vincent.
 
 # From Paul Eggert (2006-06-27):

@@ -2774,16 +2774,14 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # The English-language name of Vietnam's most populous city is "Ho Chi Minh
 # City"; use Ho_Chi_Minh below to avoid a name of more than 14 characters.
 
-# From Paul Eggert (2014-10-04) after a heads-up from Trần Ngọc Quân:
+# From Paul Eggert (2014-10-21) after a heads-up from Trần Ngọc Quân:
+# Trần Tiến Bình's authoritative book "Lịch Việt Nam: thế kỷ XX-XXI (1901-2100)"
+# (Nhà xuất bản Văn Hoá - Thông Tin, Hanoi, 2005), pp 49-50,
+# is quoted verbatim in:
 # http://www.thoigian.com.vn/?mPage=P80D01
-# lists helpful info, translated by Brian Inglis in:
+# is translated by Brian Inglis in:
 # http://mm.icann.org/pipermail/tz/2014-October/021654.html
-# The info cites an authoritative book by Trần Tiến Bình; a 2014 edition is
-# "Lịch Việt Nam: thế kỉ XX-XXI (1901-2100) & niên biểu lịch sử Việt Nam"
-# http://bookaholic.vn/lich-viet-nam-the-ki-xx-xxi-1901-2100-va-bien-bieu-lich-su-viet-nam/
-# I have asked my library for its copy of the book (a 2005 edition)
-# and plan to check that.  In the meantime the summary in Thời gian is much
-# better than Shanks, and is the basis for the following info.
+# and is the basis for the information below.
 #
 # The 1906 transition was effective July 1 and standardized Indochina to
 # Phù Liễn Observatory, legally 104 deg. 17'17" east of Paris.
@@ -2803,6 +2801,17 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # To 07:00 on 1955-07-01 in South Vietnam.
 # To 08:00 on 1959-12-31 at 23:00 in South Vietnam.
 # To 07:00 on 1975-06-13 in South Vietnam.
+#
+# Trần cites the following sources; it's unclear which supplied the info above.
+#
+# Hoàng Xuân Hãn: "Lịch và lịch Việt Nam". Tập san Khoa học Xã hội,
+# No. 9, Paris, February 1982.
+#
+# Lê Thành Lân: "Lịch và niên biểu lịch sử hai mươi thế kỷ (0001-2010)",
+# NXB Thống kê, Hanoi, 2000.
+#
+# Lê Thành Lân: "Lịch hai thế kỷ (1802-2010) và các lịch vĩnh cửu",
+# NXB Thuận Hoá, Huế, 1995.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Asia/Ho_Chi_Minh	7:06:40 -	LMT	1906 Jul  1

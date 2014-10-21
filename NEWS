@@ -4,8 +4,9 @@ Unreleased, experimental changes
 
   Changes affecting future time stamps
 
-    Guess that Pacific/Fiji will not observe DST in 2014/2015.
-    (Thanks to Ken Rylander for the heads-up.)
+    Pacific/Fiji will observe DST from 2014-11-02 02:00 to 2015-01-18 03:00.
+    (Thanks to Ken Rylander for the heads-up.)  Guess that future
+    years will use a similar pattern.
 
     A new Zone Pacific/Bougainville, for the part of Papua New Guinea
     that plans to switch from UTC+10 to UTC+11 on 2014-12-28 at 02:00.

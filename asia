@@ -1669,12 +1669,24 @@ Zone	Asia/Bishkek	4:58:24 -	LMT	1924 May  2
 # the system may begin as early as 2008....  Korea ran a daylight
 # saving program from 1949-61 but stopped it during the 1950-53 Korean War.
 
-# From Shanks & Pottenger:
+# From Sanghyuk Jung (2014-10-30):
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	ROK	1960	only	-	May	15	0:00	1:00	D
-Rule	ROK	1960	only	-	Sep	13	0:00	0	S
-Rule	ROK	1987	1988	-	May	Sun>=8	0:00	1:00	D
-Rule	ROK	1987	1988	-	Oct	Sun>=8	0:00	0	S
+Rule	ROK	1948	only	-	June	1	0:00	1:00	D
+Rule	ROK	1948	only	-	Sep	13	0:00	0	S
+Rule	ROK	1949	only	-	Apr	3	0:00	1:00	D
+Rule	ROK	1949	only	-	Sep	11	0:00	0	S
+Rule	ROK	1950	only	-	Apr	1	0:00	1:00	D
+Rule	ROK	1950	only	-	Sep	10	0:00	0	S
+Rule	ROK	1951	only	-	May	6	0:00	1:00	D
+Rule	ROK	1951	only	-	Sep	9	0:00	0	S
+Rule	ROK	1955	only	-	May	5	0:00	1:00	D
+Rule	ROK	1955	only	-	Sep	9	0:00	0	S
+Rule	ROK	1956	only	-	May	20	0:00	1:00	D
+Rule	ROK	1956	only	-	Sep	30	0:00	0	S
+Rule	ROK	1957	1960	-	May	Sun>=1	0:00	1:00	D
+Rule	ROK	1957	1960	-	Sep	Sun>=20	0:00	0	S
+Rule	ROK	1987	1988	-	May	Sun>=8	2:00	1:00	D
+Rule	ROK	1987	1988	-	Oct	Sun>=8	3:00	0	S
 
 # From Paul Eggert (2014-07-01):
 # The following entries are from Shanks & Pottenger, except that I

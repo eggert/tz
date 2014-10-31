@@ -1,5 +1,16 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting past time stamps
+
+    Many pre-1989 time stamps have been corrected for Asia/Seoul and
+    Asia/Pyongyang, based on sources for the Korean-language Wikipedia
+    entry for time in Korea.  (Thanks to Sanghyuk Jung.)  Also, no
+    longer guess that Pyongyang mimicked Seoul time after World War II,
+    as this is politically implausible.
+
+
 Release 2014i - 2014-10-21 22:04:57 -0700
 
   Changes affecting future time stamps

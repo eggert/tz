@@ -6,7 +6,7 @@
 # tz@iana.org for general use in the future).  For more, please see
 # the file CONTRIBUTING in the tz distribution.
 
-# From Paul Eggert (2013-02-21):
+# From Paul Eggert (2014-10-31):
 #
 # Unless otherwise specified, the source for data through 1990 is:
 # Thomas G. Shanks and Rique Pottenger, The International Atlas (6th edition),

@@ -8,7 +8,7 @@
 # the file CONTRIBUTING in the tz distribution.
 
 
-# From Paul Eggert (2014-08-12):
+# From Paul Eggert (2014-10-31):
 
 # This file contains data outside the normal scope of the tz database,
 # in that its zones do not differ from normal tz zones after 1970.

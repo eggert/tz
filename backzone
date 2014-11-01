@@ -24,11 +24,10 @@
 # replaced by links as their data entries were questionable and/or they
 # differed from other zones only in pre-1970 time stamps.
 
-# Unless otherwise specified, the source for the data is the following,
-# which does not itself cite sources and is often wrong:
-#
+# Unless otherwise specified, the source for data through 1990 is:
 # Thomas G. Shanks and Rique Pottenger, The International Atlas (6th edition),
 # San Diego: ACS Publications, Inc. (2003).
+# Unfortunately this book contains many errors and cites no sources.
 
 # This file is not intended to be compiled standalone, as it
 # assumes rules from other files.  In the tz distribution, use

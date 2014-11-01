@@ -8,7 +8,7 @@
 <meta http-equiv="Content-type" content='text/html; charset="UTF-8"'>
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2014-10-21">
+<meta name="DC.Date" content="2014-10-31">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -26,9 +26,7 @@ that represent the history of local time
 for many representative locations around the globe.
 It is updated periodically to reflect changes made by political bodies
 to <a href="http://en.wikipedia.org/wiki/Time_zone">time zone</a>
-boundaries, <a
-href="http://en.wikipedia.org/wiki/Coordinated_Universal_Time"><abbr
-title="Coordinated Universal Time">UTC</abbr></a> offsets, and
+boundaries and
 <a href="http://en.wikipedia.org/wiki/Daylight_saving">daylight-saving</a>
 rules.
 This database (often called <code>zoneinfo</code> or
@@ -65,7 +63,7 @@ title="Virtual Memory System">VMS</abbr></a>,
 X</abbr></a>, and
 <a href="http://oracle.com/solaris">Solaris</a>.</p>
 <p>
-Each location in the database represents a national region where all
+Each location in the database represents a region where all
 clocks keeping local time have agreed since 1970.
 Locations are identified by continent or ocean and then by the name of
 the location, which is typically the largest city within the region.
@@ -85,6 +83,18 @@ title="Portable Operating System Interface">POSIX</abbr></a>
 implementation set the <code><abbr>TZ</abbr></code>
 environment variable to the location's full name,
 e.g., <code><abbr>TZ</abbr>="America/New_York"</code>.</p>
+<p>
+Associated with each region is a history of offsets from
+<a href="http://en.wikipedia.org/wiki/Universal_Time">Universal
+Time</a> (<abbr>UT</abbr>), which is <a
+href="http://en.wikipedia.org/wiki/Greenwich_Mean_Time">Greenwich Mean
+Time</a> (<abbr>GMT</abbr>) with days beginning at midnight;
+for time stamps after 1960 this is more precisely <a
+href="http://en.wikipedia.org/wiki/Coordinated_Universal_Time">Coordinated
+Universal Time</a> (<abbr>UTC</abbr>).
+The database also records when daylight saving time was in use,
+along with alphabetic time zone abbreviations such as <abbr>EST</abbr>
+for Eastern Standard Time in the <abbr>US</abbr>.</p>
 <p>
 In the <code><abbr>tz</abbr></code> database's
 <a href="ftp://ftp.iana.org/tz/releases/"><abbr
@@ -297,8 +307,8 @@ license.</li>
 <abbr>API</abbr> is upward compatible with standard JavaScript
 Dates. It is freely available under the Apache License.</li>
 <li><a href="https://github.com/sproutsocial/walltime-js">Walltime-js</a>
-translates UTC to local time. It is freely available under the <abbr>MIT</abbr>
-license.</li>
+translates <abbr>UT</abbr> to local time. It is freely available under
+the <abbr>MIT</abbr> license.</li>
 </ul>
 <li><a href="http://pytz.sourceforge.net">pytz &ndash; World Timezone
 Definitions for Python</a> compiles <code><abbr>tz</abbr></code> source into
@@ -336,7 +346,8 @@ This library is freely available under the
 and is widely used in <abbr>GNU</abbr>/Linux systems.</li>
 <li><a href="http://www.gnome.org/">GNOME</a>'s Glib has
 a <code><abbr>tz</abbr></code> binary file reader written in C that
-creates a <code>GTimeZone</code> object representing sets of UTC offsets.
+creates a <code>GTimeZone</code> object representing sets
+of <abbr>UT</abbr> offsets.
 It is freely available under the <abbr>LGPL</abbr>.</li>
 <li><a href="http://bmsi.com/java/#TZ">ZoneInfo.java</a>
 is a <code><abbr>tz</abbr></code> binary file reader written in Java.
@@ -432,7 +443,10 @@ href="http://www.astrocom.com/astrology/books/american-atlas">one volume
 for the <abbr>US</abbr></a>, and <a
 href="http://www.astrocom.com/astrology/books/international-atlas">one for
 other locations</a>) by <a
-href="http://astrocom.com/">Astro Computing Services</a>.</li>
+href="http://astrocom.com/">Astro Computing Services</a>.
+These atlases are extensive but unreliable, as Shanks appears to have
+guessed many <abbr>UT</abbr> offsets and transitions. The atlases cite no
+sources and do not indicate which entries are guesswork.</li>
 <li><a href="http://www.hp.com/go/hpux/">HP-UX</a> has a database in
 its own <code>tztab</code>(4) format.</li>
 <li>Microsoft Windows has proprietary data mentioned above.</li>
@@ -626,9 +640,8 @@ specifies a <a
 href="http://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol"><abbr>DHCP</abbr></a>
 option for a server to configure
 a client's time zone and daylight saving settings automatically.</li>
-<li><a href="http://gauss.gge.unb.ca/GMT.UT.and.the.RGO.html">A Few
-Facts Concerning <abbr title="Greenwich Mean Time">GMT</abbr>, <abbr
-title="Universal Time">UT</abbr>, and
+<li><a href="http://gauss.gge.unb.ca/GMT.UT.and.the.RGO.html">A Few Facts
+Concerning <abbr>GMT</abbr>, <abbr>UT</abbr>, and
 the <abbr title="Royal Greenwich Observatory">RGO</abbr></a>
 answers questions like "What is the
 difference between <abbr>GMT</abbr> and <abbr>UTC</abbr>?"</li>

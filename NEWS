@@ -10,6 +10,15 @@ Unreleased, experimental changes
     longer guess that Pyongyang mimicked Seoul time after World War II,
     as this is politically implausible.
 
+    Some more zones have been turned into links, when they differed
+    from existing zones only for older time stamps.  As usual,
+    these changes affect UTC offsets in pre-1970 time stamps only.
+    Their old contents have been moved to the 'backzone' file.
+    The affected zones are: Africa/Addis_Ababa, Africa/Asmara,
+    Africa/Dar_es_Salaam, Africa/Djibouti, Africa/Kampala,
+    Africa/Mogadishu, Indian/Antananarivo, Indian/Comoro, and
+    Indian/Mayotte.
+
   Changes affecting commentary
 
     The commentary is less enthusiastic about Shanks as a source,

@@ -2,6 +2,12 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting current and future time stamps
+
+    Turks & Caicos' switch from US eastern time to UTC-4 year-round
+    did not occur on 2014-11-02 at 02:00.  It's currently scheduled
+    for 2015-11-01 at 02:00.  (Thanks to Chris Walton.)
+
   Changes affecting past time stamps
 
     Many pre-1989 time stamps have been corrected for Asia/Seoul and
@@ -158,6 +164,7 @@ Release 2014g - 2014-08-28 12:31:23 -0700
 
     Turks & Caicos is switching from US eastern time to UTC-4 year-round,
     modeled as a switch from EST/EDT to AST on 2014-11-02 at 02:00.
+    [As noted in 2014j, this switch was later delayed.]
 
   Changes affecting past time stamps
 

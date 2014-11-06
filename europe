@@ -605,6 +605,7 @@ Rule	Russia	1992	only	-	Sep	lastSat	 23:00	0	-
 Rule	Russia	1993	2010	-	Mar	lastSun	 2:00s	1:00	S
 Rule	Russia	1993	1995	-	Sep	lastSun	 2:00s	0	-
 Rule	Russia	1996	2010	-	Oct	lastSun	 2:00s	0	-
+# As described below, Russia's 2014 change affects Zone data, not Rule data.
 
 # From Alexander Krivenyshev (2011-06-14):
 # According to Kremlin press service, Russian President Dmitry Medvedev

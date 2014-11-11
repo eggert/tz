@@ -284,8 +284,13 @@ settzname(void)
 			daylight = 1;
 #endif /* defined USG_COMPAT */
 	}
+}
+
+static void
+scrub_abbrs(struct state *sp)
+{
+	int i;
 	/*
-	** Finally, scrub the abbreviations.
 	** First, replace bogus characters.
 	*/
 	for (i = 0; i < sp->charcnt; ++i)
@@ -1209,7 +1214,9 @@ zoneinit(struct state *sp, char const *name)
   } else {
     int err = tzload(name, sp, true);
     if (err != 0 && name && name[0] != ':' && tzparse(name, sp, false))
-      return 0;
+      err = 0;
+    if (err == 0)
+      scrub_abbrs(sp);
     return err;
   }
 }

@@ -1,5 +1,14 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting code
+
+    tzalloc now scrubs time zone abbreviations compatibly with the way
+    that tzset always has, by replacing invalid bytes with '_' and by
+    shortening too-long abbreviations.
+
+
 Release 2014j - 2014-11-10 17:37:11 -0800
 
   Changes affecting current and future time stamps

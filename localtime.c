@@ -236,6 +236,20 @@ detzcode64(const char *const codep)
 }
 
 static void
+update_tzname_etc(struct state const *sp, struct ttinfo const *ttisp)
+{
+  tzname[ttisp->tt_isdst] = (char *) &sp->chars[ttisp->tt_abbrind];
+#ifdef USG_COMPAT
+  if (!ttisp->tt_isdst)
+    timezone = - ttisp->tt_gmtoff;
+#endif
+#ifdef ALTZONE
+  if (ttisp->tt_isdst)
+    altzone = - ttisp->tt_gmtoff;
+#endif
+}
+
+static void
 settzname(void)
 {
 	register struct state * const	sp = lclptr;
@@ -258,26 +272,17 @@ settzname(void)
 	*/
 	for (i = 0; i < sp->typecnt; ++i) {
 		register const struct ttinfo * const	ttisp = &sp->ttis[i];
-
-		tzname[ttisp->tt_isdst] = &sp->chars[ttisp->tt_abbrind];
+		update_tzname_etc(sp, ttisp);
 	}
 	for (i = 0; i < sp->timecnt; ++i) {
 		register const struct ttinfo * const	ttisp =
 							&sp->ttis[
 								sp->types[i]];
-
-		tzname[ttisp->tt_isdst] =
-			&sp->chars[ttisp->tt_abbrind];
+		update_tzname_etc(sp, ttisp);
 #ifdef USG_COMPAT
 		if (ttisp->tt_isdst)
 			daylight = 1;
-		if (!ttisp->tt_isdst)
-			timezone = -(ttisp->tt_gmtoff);
 #endif /* defined USG_COMPAT */
-#ifdef ALTZONE
-		if (ttisp->tt_isdst)
-			altzone = -(ttisp->tt_gmtoff);
-#endif /* defined ALTZONE */
 	}
 	/*
 	** Finally, scrub the abbreviations.
@@ -1316,16 +1321,17 @@ tzfree(timezone_t sp)
 ** freely called. (And no, the PANS doesn't require the above behavior,
 ** but it *is* desirable.)
 **
-** If successful and OFFSET is nonzero,
+** If successful and SETNAME is nonzero,
 ** set the applicable parts of tzname, timezone and altzone;
 ** however, it's OK to omit this step if the time zone is POSIX-compatible,
 ** since in that case tzset should have already done this step correctly.
-** OFFSET's type is intfast32_t for compatibility with gmtsub.
+** SETNAME's type is intfast32_t for compatibility with gmtsub,
+** but it is actually a boolean and its value should be 0 or 1.
 */
 
 /*ARGSUSED*/
 static struct tm *
-localsub(struct state const *sp, time_t const *timep, int_fast32_t offset,
+localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 	 struct tm *const tmp)
 {
 	register const struct ttinfo *	ttisp;
@@ -1355,7 +1361,7 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t offset,
 			if (newt < sp->ats[0] ||
 				newt > sp->ats[sp->timecnt - 1])
 					return NULL;	/* "cannot happen" */
-			result = localsub(sp, &newt, offset, tmp);
+			result = localsub(sp, &newt, setname, tmp);
 			if (result) {
 				register int_fast64_t newy;
 
@@ -1393,26 +1399,12 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t offset,
 	*/
 	result = timesub(&t, ttisp->tt_gmtoff, sp, tmp);
 	if (result) {
-	  bool tm_isdst = ttisp->tt_isdst;
-	  char *tm_zone = (char *) &sp->chars[ttisp->tt_abbrind];
-	  result->tm_isdst = tm_isdst;
+	  result->tm_isdst = ttisp->tt_isdst;
 #ifdef TM_ZONE
-	  result->TM_ZONE = tm_zone;
+	  result->TM_ZONE = (char *) &sp->chars[ttisp->tt_abbrind];
 #endif /* defined TM_ZONE */
-	  if (offset) {
-	    /* Always set the tzname etc. vars whose values can easily
-	       be determined, as it's too much trouble to tell whether
-	       tzset has already done it correctly.  */
-	    tzname[tm_isdst] = tm_zone;
-#ifdef USG_COMPAT
-	    if (!tm_isdst)
-	      timezone = - ttisp->tt_gmtoff;
-#endif
-#ifdef ALTZONE
-	    if (tm_isdst)
-	      altzone = - ttisp->tt_gmtoff;
-#endif
-	  }
+	  if (setname)
+	    update_tzname_etc(sp, ttisp);
 	}
 	return result;
 }

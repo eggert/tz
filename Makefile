@@ -359,7 +359,7 @@ TABDATA=	iso3166.tab leapseconds $(ZONETABLES)
 LEAP_DEPS=	leapseconds.awk leap-seconds.list
 DATA=		$(YDATA) $(NDATA) backzone $(TABDATA) \
 			leap-seconds.list yearistype.sh
-AWK_SCRIPTS=	checktab.awk leapseconds.awk
+AWK_SCRIPTS=	checklinks.awk checktab.awk leapseconds.awk
 MISC=		$(AWK_SCRIPTS) zoneinfo2tdf.pl
 ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC)
 
@@ -468,7 +468,7 @@ tzselect:	tzselect.ksh
 			<$? >$@
 		chmod +x $@
 
-check:		check_character_set check_white_space check_sorted \
+check:		check_character_set check_white_space check_links check_sorted \
 		  check_tables check_web
 
 check_character_set: $(ENCHILADA)
@@ -499,6 +499,9 @@ check_sorted: backward backzone iso3166.tab zone.tab zone1970.tab
 		  LC_ALL=C sort -c
 		$(AWK) '/^[^#]/ $(CHECK_CC_LIST)' zone1970.tab | \
 		  LC_ALL=C sort -cu
+
+check_links:	checklinks.awk $(TDATA)
+		$(AWK) -f checklinks.awk $(TDATA)
 
 check_tables:	checktab.awk $(PRIMARY_YDATA) $(ZONETABLES)
 		for tab in $(ZONETABLES); do \
@@ -662,7 +665,8 @@ zic.o:		private.h tzfile.h version.h
 .KEEP_STATE:
 
 .PHONY: ALL INSTALL all
-.PHONY: check check_character_set check_public check_sorted check_tables
+.PHONY: check check_character_set check_links
+.PHONY: check_public check_sorted check_tables
 .PHONY: check_time_t_alternatives check_web check_white_space clean clean_misc
 .PHONY: install maintainer-clean names posix_packrat posix_only posix_right
 .PHONY: public right_only right_posix signatures tarballs typecheck

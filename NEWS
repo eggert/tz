@@ -8,6 +8,12 @@ Unreleased, experimental changes
     that tzset always has, by replacing invalid bytes with '_' and by
     shortening too-long abbreviations.
 
+  Changes affecting build procedure
+
+    'make check' now checks for links to links in the data.
+    One such link (for Africa/Asmera) has been fixed.
+    (Thanks to Stephen Colebourne for pointing out the problem.)
+
 
 Release 2014j - 2014-11-10 17:37:11 -0800
 

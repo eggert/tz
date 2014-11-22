@@ -328,7 +328,7 @@ while
 				tzname = "[^-+,0-9][^-+,0-9][^-+,0-9]+"
 				time = "[0-2]?[0-9](:[0-5][0-9](:[0-5][0-9])?)?"
 				offset = "[-+]?" time
-				date = "(J?[0-9]+|M[0-9]+\.[0-9]+\.[0-9]+)"
+				date = "(J?[0-9]+|M[0-9]+\\.[0-9]+\\.[0-9]+)"
 				datetime = "," date "(/" time ")?"
 				tzpattern = "^(:.*|" tzname offset "(" tzname \
 				  "(" offset ")?(" datetime datetime ")?)?)$"

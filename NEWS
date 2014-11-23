@@ -2,6 +2,12 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting past time stamps
+
+    Iceland observed DST in 1919 and 1921, and its 1939 fallbacck
+    transition was Oct. 29, not Nov. 29.  Remove incorrect data from
+    Shanks about time in Iceland between 1837 and 1908.
+
   Changes affecting code
 
     tzalloc now scrubs time zone abbreviations compatibly with the way

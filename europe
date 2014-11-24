@@ -1427,7 +1427,7 @@ Rule	Iceland	1943	1946	-	Mar	Sun>=1	 1:00s	1:00	S
 Rule	Iceland	1942	1948	-	Oct	Sun>=22	 1:00s	0	-
 # 1947-1967 - first Sunday in April until first Sunday in winter
 Rule	Iceland	1947	1967	-	Apr	Sun>=1	 1:00s	1:00	S
-# 1949 and 1969 Oct transitions delayed by 1 week
+# 1949 and 1967 Oct transitions delayed by 1 week
 Rule	Iceland	1949	only	-	Oct	30	 1:00s	0	-
 Rule	Iceland	1950	1966	-	Oct	Sun>=22	 1:00s	0	-
 Rule	Iceland	1967	only	-	Oct	29	 1:00s	0	-

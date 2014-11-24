@@ -4,7 +4,7 @@ Unreleased, experimental changes
 
   Changes affecting past time stamps
 
-    Iceland observed DST in 1919 and 1921, and its 1939 fallbacck
+    Iceland observed DST in 1919 and 1921, and its 1939 fallback
     transition was Oct. 29, not Nov. 29.  Remove incorrect data from
     Shanks about time in Iceland between 1837 and 1908.
 

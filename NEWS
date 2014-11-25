@@ -14,7 +14,8 @@ Unreleased, experimental changes
     that tzset always has, by replacing invalid bytes with '_' and by
     shortening too-long abbreviations.
 
-    tzselect no longer mishandles POSIX TZ settings when GNU awk is used.
+    tzselect ports to POSIX awk implementations, and no longer
+    mishandles POSIX TZ settings when GNU awk is used.
     (Thanks to Stefan Kuhn.)
 
   Changes affecting build procedure

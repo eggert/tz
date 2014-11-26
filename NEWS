@@ -8,6 +8,13 @@ Unreleased, experimental changes
     transition was Oct. 29, not Nov. 29.  Remove incorrect data from
     Shanks about time in Iceland between 1837 and 1908.
 
+    Some more zones have been turned into links, when they differed
+    from existing zones only for older time stamps.  As usual,
+    these changes affect UTC offsets in pre-1970 time stamps only.
+    Their old contents have been moved to the 'backzone' file.
+    The affected zones are: Asia/Aden, Asia/Bahrain, Asia/Kuwait,
+    and Asia/Muscat.
+
   Changes affecting code
 
     tzalloc now scrubs time zone abbreviations compatibly with the way

@@ -349,6 +349,17 @@ Zone Antarctica/McMurdo	0	-	zzz	1956
 			12:00	NZ	NZ%sT
 Link Antarctica/McMurdo Antarctica/South_Pole
 
+# Yemen
+# Milne says 2:59:54 was the meridian of the saluting battery at Aden,
+# and that Yemen was at 1:55:56, the meridian of the Hagia Sophia.
+Zone	Asia/Aden	2:59:54	-	LMT	1950
+			3:00	-	AST
+
+# Bahrain
+Zone	Asia/Bahrain	3:22:20 -	LMT	1920     # Manamah
+			4:00	-	GST	1972 Jun
+			3:00	-	AST
+
 # India
 #
 # From Paul Eggert (2014-09-06):
@@ -403,6 +414,16 @@ Zone	Asia/Kashgar	5:03:56	-	LMT	1928     # or Kashi or Kaxgar
 			5:30	-	KAST	1940     # Kashgar Time
 			5:00	-	KAST	1980 May
 			8:00	PRC	C%sT
+
+# Kuwait
+Zone	Asia/Kuwait	3:11:56 -	LMT	1950
+			3:00	-	AST
+
+
+# Oman
+# Milne says 3:54:24 was the meridian of the Muscat Tidal Observatory.
+Zone	Asia/Muscat	3:54:24 -	LMT	1920
+			4:00	-	GST
 
 # India
 # From Paul Eggert (2014-08-11), after a heads-up from Stephen Colebourne:

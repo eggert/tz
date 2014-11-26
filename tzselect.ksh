@@ -504,7 +504,7 @@ Universal Time is now:	$UTdate."
 	?*%%)	echo >&2 "	$country";;
 	%?*%?*) echo >&2 "	coord $coord$newline	$region";;
 	%%?*)	echo >&2 "	coord $coord";;
-	+)	echo >&2 "	TZ='$TZ'"
+	*)	echo >&2 "	TZ='$TZ'"
 	esac
 	echo >&2 ""
 	echo >&2 "Therefore TZ='$TZ' will be used.$extra_info"

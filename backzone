@@ -516,7 +516,7 @@ Zone	Europe/Guernsey	-0:09:19 -	LMT	1913 Jun 18
 #
 # AT4 of 1883 - The Statutory Time et cetera Act 1883 -
 # LMT Location - 54.1508N -4.4814E - Tynwald Hill ( Manx parliament )
-Zone    Europe/Isle_of_Man -0:17:55 -    LMT 1883 March 30  0:00s
+Zone Europe/Isle_of_Man	-0:17:55 -	LMT	1883 Mar 30  0:00s
 			 0:00	GB-Eire	%s	1968 Oct 27
 			 1:00	-	BST	1971 Oct 31  2:00u
 			 0:00	GB-Eire	%s	1996

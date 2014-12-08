@@ -2124,11 +2124,11 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 
 # Mexico
 
-# From Paul Eggert (2001-03-05):
+# From Paul Eggert (2014-12-07):
 # The Investigation and Analysis Service of the
 # Mexican Library of Congress (MLoC) has published a
 # history of Mexican local time (in Spanish)
-# http://www.cddhcu.gob.mx/bibliot/publica/inveyana/polisoc/horver/
+# http://www.diputados.gob.mx/bibliot/publica/inveyana/polisoc/horver/index.htm
 #
 # Here are the discrepancies between Shanks & Pottenger (S&P) and the MLoC.
 # (In all cases we go with the MLoC.)

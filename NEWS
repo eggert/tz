@@ -33,6 +33,9 @@ Unreleased, experimental changes
 
   Changes affecting commentary
 
+    The leapseconds file commentary now mentions the expiration date.
+    (Problem reported by Martin Burnicki.)
+
     Update Mexican Library of Congress URL.
 
 

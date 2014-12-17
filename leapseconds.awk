@@ -37,6 +37,11 @@ BEGIN {
 }
 
 /^ *$/ { next }
+
+/^#\tUpdated through/ || /^#\tFile expires on:/ {
+    last_lines = last_lines $0 "\n"
+}
+
 /^#/ { next }
 
 {
@@ -63,4 +68,8 @@ BEGIN {
 	printf "Leap\t%s\t%s\t%s\t%s\tS\n", year, month, day, sign
     }
     old_TAI_minus_UTC = TAI_minus_UTC
+}
+
+END {
+    printf "\n%s", last_lines
 }

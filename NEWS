@@ -2,6 +2,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting future time stamps
+
+    New leap second 2015-06-30 23:59:60 UTC as per IERS Bulletin C 49
+    (thanks to Tim Parenti).
+
   Changes affecting past time stamps
 
     Iceland observed DST in 1919 and 1921, and its 1939 fallback

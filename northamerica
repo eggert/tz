@@ -2314,6 +2314,18 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # time..."
 #
 # Also, the new zone will not use DST.
+#
+# From Tim Parenti (2015-01-18):
+# A new zone for Felipe Carrillo Puerto (FCP) is needed which apparently did not
+# switch to Central Time on 1998-08-02 with Cancún and the rest of Quintana Roo state.
+# Assume that the reference to FCP "refus[ing] to change its time zone" since then
+# refers to a refusal to observe DST, putting it out of sync with Cancún during the
+# winter.  Since there are multiple places within Mexico referred to as Felipe
+# Carrillo Puerto or Quintana Roo, use America/FCP_QRoo to refer to the municipio of
+# FCP inside the state of QRoo, abbreviating to stay under 14 characters.
+#
+# Since Cancún is shifting to EST without DST on 2015-02-01, this brings these regions
+# back into synchronicity with each other.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Mexico	1939	only	-	Feb	5	0:00	1:00	D
@@ -2331,11 +2343,16 @@ Rule	Mexico	2001	only	-	Sep	lastSun	2:00	0	S
 Rule	Mexico	2002	max	-	Apr	Sun>=1	2:00	1:00	D
 Rule	Mexico	2002	max	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-# Quintana Roo; represented by Cancún
+# Most of Quintana Roo state; represented by Cancún
 Zone America/Cancun	-5:47:04 -	LMT	1922 Jan  1  0:12:56
 			-6:00	-	CST	1981 Dec 23
 			-5:00	Mexico	E%sT	1998 Aug  2  2:00
 			-6:00	Mexico	C%sT	2015 Feb  1  2:00
+			-5:00	-	EST
+# Felipe Carrillo Puerto municipio (within Quintana Roo state)
+Zone America/FCP_QRoo	-5:52:11 -	LMT	1922 Jan  1  0:07:49
+			-6:00	-	CST	1981 Dec 23
+			-5:00	Mexico	E%sT	1998 Aug  2  2:00
 			-5:00	-	EST
 # Campeche, Yucatán; represented by Mérida
 Zone America/Merida	-5:58:28 -	LMT	1922 Jan  1  0:01:32

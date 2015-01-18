@@ -7,6 +7,10 @@ Unreleased, experimental changes
     New leap second 2015-06-30 23:59:60 UTC as per IERS Bulletin C 49.
     (Thanks to Tim Parenti.)
 
+    The Mexican state of Quintana Roo, represented by America/Cancun,
+    will shift from Central Time with DST to Eastern Time without DST
+    on 2015-02-01 at 02:00.  (Thanks to Steffen Thorsen and Gwillim Law.)
+
   Changes affecting past time stamps
 
     Iceland observed DST in 1919 and 1921, and its 1939 fallback

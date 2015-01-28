@@ -2,24 +2,24 @@ News for the tz database
 
 Unreleased, experimental changes
 
-  Changes affecting future time stamps
-
-    New leap second 2015-06-30 23:59:60 UTC as per IERS Bulletin C 49.
-    (Thanks to Tim Parenti.)
+  Changes affecting current and future time stamps
 
     The Mexican state of Quintana Roo, represented by America/Cancun,
     will shift from Central Time with DST to Eastern Time without DST
     on 2015-02-01 at 02:00.  (Thanks to Steffen Thorsen and Gwillim Law.)
+
+    A new zone America/FCP_QRoo covers portions of Quintana Roo which
+    have observed Eastern Time without DST since 1998.  (Thanks to
+    Gwillim Law and Tim Parenti.)
+
+    New leap second 2015-06-30 23:59:60 UTC as per IERS Bulletin C 49.
+    (Thanks to Tim Parenti.)
 
   Changes affecting past time stamps
 
     Iceland observed DST in 1919 and 1921, and its 1939 fallback
     transition was Oct. 29, not Nov. 29.  Remove incorrect data from
     Shanks about time in Iceland between 1837 and 1908.
-
-    A new zone, America/FCP_QRoo, for portions of the Mexican state of
-    Quintana Roo which have observed Eastern Time without DST since 1998.
-    (Thanks to Gwillim Law and Tim Parenti.)
 
     Some more zones have been turned into links, when they differed
     from existing zones only for older time stamps.  As usual,

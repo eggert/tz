@@ -2317,15 +2317,16 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 #
 # From Tim Parenti (2015-01-18):
 # A new zone for Felipe Carrillo Puerto (FCP) is needed which apparently did not
-# switch to Central Time on 1998-08-02 with Cancún and the rest of Quintana Roo state.
-# Assume that the reference to FCP "refus[ing] to change its time zone" since then
-# refers to a refusal to observe DST, putting it out of sync with Cancún during the
-# winter.  Since there are multiple places within Mexico referred to as Felipe
-# Carrillo Puerto or Quintana Roo, use America/FCP_QRoo to refer to the municipio of
-# FCP inside the state of QRoo, abbreviating to stay under 14 characters.
+# switch to Central Time on 1998-08-02 with Cancún and the rest of Quintana
+# Roo state.  Assume that the reference to FCP "refus[ing] to change its time
+# zone" since then refers to a refusal to observe DST, putting it out of sync
+# with Cancún during the winter.  Since there are multiple places within
+# Mexico referred to as Felipe Carrillo Puerto or Quintana Roo, use
+# America/FCP_QRoo to refer to the municipio of FCP inside the state of QRoo,
+# abbreviating to stay under 14 characters.
 #
-# Since Cancún is shifting to EST without DST on 2015-02-01, this brings these regions
-# back into synchronicity with each other.
+# Since Cancún is shifting to EST without DST on 2015-02-01, this brings these
+# regions back into synchronicity with each other.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Mexico	1939	only	-	Feb	5	0:00	1:00	D

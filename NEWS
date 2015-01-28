@@ -2,15 +2,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
-  Changes affecting current and future time stamps
+  Changes affecting future time stamps
 
     The Mexican state of Quintana Roo, represented by America/Cancun,
     will shift from Central Time with DST to Eastern Time without DST
     on 2015-02-01 at 02:00.  (Thanks to Steffen Thorsen and Gwillim Law.)
-
-    A new zone America/FCP_QRoo covers portions of Quintana Roo which
-    have observed Eastern Time without DST since 1998.  (Thanks to
-    Gwillim Law and Tim Parenti.)
 
     New leap second 2015-06-30 23:59:60 UTC as per IERS Bulletin C 49.
     (Thanks to Tim Parenti.)

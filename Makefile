@@ -485,8 +485,7 @@ check_character_set: $(ENCHILADA)
 
 check_white_space: $(ENCHILADA)
 		! grep -En ' '$(TAB_CHAR)"|$$(printf '[\f\r\v]')" $(ENCHILADA)
-		! grep -n '[[:space:]]$$' \
-			$$(ls $(ENCHILADA) | grep -Fvx leap-seconds.list)
+		! grep -n '[[:space:]]$$' $(ENCHILADA)
 
 CHECK_CC_LIST = { n = split($$1,a,/,/); for (i=2; i<=n; i++) print a[1], a[i]; }
 

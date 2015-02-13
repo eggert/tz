@@ -2592,7 +2592,7 @@ Zone Atlantic/Bermuda	-4:19:18 -	LMT	1930 Jan  1  2:00 # Hamilton
 			-4:00	US	A%sT
 
 # Cayman Is
-Link America/Panama America/Cayman
+# See America/Panama.
 
 # Costa Rica
 
@@ -3115,6 +3115,7 @@ Zone	America/Managua	-5:45:08 -	LMT	1890
 Zone	America/Panama	-5:18:08 -	LMT	1890
 			-5:19:36 -	CMT	1908 Apr 22 # Colón Mean Time
 			-5:00	-	EST
+Link America/Panama America/Cayman
 
 # Puerto Rico
 # There are too many San Juans elsewhere, so we'll use 'Puerto_Rico'.

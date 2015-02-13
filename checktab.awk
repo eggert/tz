@@ -12,15 +12,6 @@ BEGIN {
 	# A special (and we hope temporary) case.
 	tztab["America/Montreal"] = 1
 
-	# Some more special cases; these are zones that should probably
-	# be turned into links.
-	if (zone_table == "zone1970.tab") {
-	  tztab["America/Antigua"] = 1
-	  tztab["America/Cayman"] = 1
-	  tztab["Pacific/Midway"] = 1
-	  tztab["Pacific/Saipan"] = 1
-	}
-
 	while (getline <iso_table) {
 		iso_NR++
 		if ($0 ~ /^#/) continue

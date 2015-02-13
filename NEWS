@@ -2,6 +2,15 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting past time stamps
+
+    Some more zones have been turned into links, when they differed
+    from existing zones only for older time stamps.  As usual,
+    these changes affect UTC offsets in pre-1970 time stamps only.
+    Their old contents have been moved to the 'backzone' file.
+    The affected zones are: America/Antigua, America/Cayman,
+    Pacific/Midway, and Pacific/Saipan.
+
   Changes affecting commentary
 
     Cite the recent Mexican decree changing Quintana Roo's time zone.

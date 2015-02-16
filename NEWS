@@ -4,6 +4,9 @@ Unreleased, experimental changes
 
   Changes affecting past time stamps
 
+    The 1982 zone shift in Pacific/Easter has been corrected, fixing a 2015a
+    regression.  (Thanks to Stuart Bishop for reporting the problem.)
+
     Some more zones have been turned into links, when they differed
     from existing zones only for older time stamps.  As usual,
     these changes affect UTC offsets in pre-1970 time stamps only.

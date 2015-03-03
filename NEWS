@@ -2,6 +2,12 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting future time stamps
+
+    Palestine will start DST on March 28, not March 27.  Also,
+    correct the fall 2014 transition from September 26 to October 24.
+    Adjust future predictions accordingly.  (Thanks to Steffen Thorsen.)
+
   Changes affecting past time stamps
 
     The 1982 zone shift in Pacific/Easter has been corrected, fixing a 2015a

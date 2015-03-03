@@ -1206,11 +1206,13 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # DST Start: first Saturday of September 2014 (Sun 07 Sep 2014 04:00 UTC)
 # http://www.diariooficial.interior.gob.cl//media/2014/02/19/do-20140219.pdf
 
-# From Juan Correa (2015-01-28):
-# ... today the Ministry of Energy announced that Chile will drop DST, will keep
-# "summer time" (UTC -3 / UTC -5) all year round....
-# From Paul Eggert (2015-02-07):
-# http://www.minenergia.cl/ministerio/noticias/generales/gobierno-anuncia-modificaciones-al.html
+# From Eduardo Romero Urra (2015-03-03):
+# Today has been published officially that Chile will use the DST time
+# permanently until March 25 of 2017
+# http://www.diariooficial.interior.gob.cl/media/2015/03/03/1-large.jpg
+#
+# From Paul Eggert (2015-03-03):
+# For now, assume that the extension will persist indefinitely.
 
 # NOTE: ChileAQ rules for Antarctic bases are stored separately in the
 # 'antarctica' file.

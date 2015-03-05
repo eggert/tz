@@ -2350,7 +2350,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # From Paul Eggert (2015-03-03):
 # http://www.timeanddate.com/time/change/west-bank/ramallah?year=2014
 # says that the fall 2014 transition was Oct 23 at 24:00.
-# For future dates, guess the last Friday in March at 00:00 through
+# For future dates, guess the last Friday in March at 24:00 through
 # the first Friday on or after October 21 at 00:00.  This is consistent with
 # the predictions in today's editions of the following URLs:
 # http://www.timeanddate.com/time/change/gaza-strip/gaza

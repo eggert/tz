@@ -20,6 +20,11 @@ Unreleased, experimental changes
     The affected zones are: America/Antigua, America/Cayman,
     Pacific/Midway, and Pacific/Saipan.
 
+  Changes affecting time zone abbreviations
+
+    Correct the 1992-2010 DST abbreviation in Volgograd from "MSK" to "MSD".
+    (Thanks to Hank W.)
+
   Changes affecting commentary
 
     Cite the recent Mexican decree changing Quintana Roo's time zone.

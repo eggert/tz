@@ -4,6 +4,10 @@ Unreleased, experimental changes
 
   Changes affecting future time stamps
 
+    Mongolia will start observing DST again this year, from the last
+    Saturday in March at 02:00 to the last Saturday in September at 00:00.
+    (Thanks to Ganbold Tsagaankhuu.)
+
     Palestine will start DST on March 28, not March 27.  Also,
     correct the fall 2014 transition from September 26 to October 24.
     Adjust future predictions accordingly.  (Thanks to Steffen Thorsen.)

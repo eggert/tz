@@ -1904,6 +1904,13 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880 # Male
 # was at the start of 2008-03-31 (the day of Steffen Thorsen's report);
 # this is almost surely wrong.
 
+# From Ganbold Tsagaankhuu (2015-03-10):
+# It seems like yesterday Mongolian Government meeting has concluded to use
+# daylight saving time in Mongolia....  Starting at 2:00AM of last Saturday of
+# March 2015, daylight saving time starts.  And 00:00AM of last Saturday of
+# September daylight saving time ends.  Source:
+# http://zasag.mn/news/view/8969
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Mongol	1983	1984	-	Apr	1	0:00	1:00	S
 Rule	Mongol	1983	only	-	Oct	1	0:00	0	-
@@ -1924,6 +1931,8 @@ Rule	Mongol	1984	1998	-	Sep	lastSun	0:00	0	-
 Rule	Mongol	2001	only	-	Apr	lastSat	2:00	1:00	S
 Rule	Mongol	2001	2006	-	Sep	lastSat	2:00	0	-
 Rule	Mongol	2002	2006	-	Mar	lastSat	2:00	1:00	S
+Rule	Mongol	2015	max	-	Mar	lastSat	2:00	1:00	S
+Rule	Mongol	2015	max	-	Sep	lastSat	0:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 # Hovd, a.k.a. Chovd, Dund-Us, Dzhargalant, Khovd, Jirgalanta

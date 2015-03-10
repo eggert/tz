@@ -1783,10 +1783,10 @@ time2sub(struct tm *const tmp,
 	register int			dir;
 	register int			i, j;
 	register int			saved_seconds;
-	register int_fast32_t			li;
+	register int_fast32_t		li;
 	register time_t			lo;
 	register time_t			hi;
-	int_fast32_t				y;
+	int_fast32_t			y;
 	time_t				newt;
 	time_t				t;
 	struct tm			yourtm, mytm;
@@ -1861,15 +1861,8 @@ time2sub(struct tm *const tmp,
 	/*
 	** Do a binary search (this works whatever time_t's type is).
 	*/
-	if (!TYPE_SIGNED(time_t)) {
-		lo = 0;
-		hi = lo - 1;
-	} else {
-		lo = 1;
-		for (i = 0; i < (int) TYPE_BIT(time_t) - 1; ++i)
-			lo *= 2;
-		hi = -(lo + 1);
-	}
+	lo = time_t_min;
+	hi = time_t_max;
 	for ( ; ; ) {
 		t = lo / 2 + hi / 2;
 		if (t < lo)

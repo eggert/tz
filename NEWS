@@ -34,7 +34,9 @@ Unreleased, experimental changes
     Fix integer overflow bug in reference 'mktime' implementation.
     (Problem reported by Jörg Richter.)
 
-    Allow -Dtime_tz=time_t compilations.  (Problem reported by Bradley White.)
+    Allow -Dtime_tz=time_t compilations, and allow -Dtime_tz=... libraries
+    to be used in the same executable as standard-library time_t functions.
+    (Problems reported by Bradley White.)
 
   Changes affecting commentary
 

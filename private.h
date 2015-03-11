@@ -308,6 +308,8 @@ typedef unsigned long uintmax_t;
 static time_t sys_time(time_t *x) { return time(x); }
 # endif
 
+typedef time_tz tz_time_t;
+
 # undef  ctime
 # define ctime tz_ctime
 # undef  ctime_r
@@ -340,8 +342,6 @@ static time_t sys_time(time_t *x) { return time(x); }
 # define timelocal tz_timelocal
 # undef  timeoff
 # define timeoff tz_timeoff
-
-typedef time_tz time_t;
 
 char *ctime(time_t const *);
 char *ctime_r(time_t const *, char *);

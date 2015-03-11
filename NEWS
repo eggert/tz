@@ -34,6 +34,8 @@ Unreleased, experimental changes
     Fix integer overflow bug in reference 'mktime' implementation.
     (Problem reported by Jörg Richter.)
 
+    Allow -Dtime_tz=time_t compilations.  (Problem reported by Bradley White.)
+
   Changes affecting commentary
 
     Cite the recent Mexican decree changing Quintana Roo's time zone.

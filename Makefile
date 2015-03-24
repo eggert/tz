@@ -149,18 +149,18 @@ LDLIBS=
 #  $(GCC_DEBUG_FLAGS) if you are using GCC and want lots of checking
 GCC_DEBUG_FLAGS = -Dlint -g3 -O3 -fno-common -fstrict-aliasing \
 	-Wall -Wextra \
-	-Wbad-function-cast -Wcast-align -Wcast-qual \
+	-Wbad-function-cast -Wcast-align -Wdate-time \
 	-Wdeclaration-after-statement \
+	-Wdouble-promotion \
 	-Wformat=2 -Winit-self -Wjump-misses-init \
-	-Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes \
-	-Wnested-externs -Wno-address -Wno-cast-qual \
-	-Wno-format-nonliteral -Wno-sign-compare -Wno-sign-conversion \
-	-Wno-type-limits \
-	-Wno-unused-parameter -Woverlength-strings -Wpointer-arith \
+	-Wlogical-op -Wmissing-prototypes -Wnested-externs \
+	-Wold-style-definition -Woverlength-strings -Wpointer-arith \
 	-Wshadow -Wstrict-prototypes -Wsuggest-attribute=const \
 	-Wsuggest-attribute=format -Wsuggest-attribute=noreturn \
 	-Wsuggest-attribute=pure -Wtrampolines \
-	-Wwrite-strings
+	-Wunused -Wwrite-strings \
+	-Wno-address -Wno-format-nonliteral -Wno-sign-compare \
+	-Wno-type-limits -Wno-unused-parameter
 #
 # If you want to use System V compatibility code, add
 #	-DUSG_COMPAT

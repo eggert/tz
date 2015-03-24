@@ -9,9 +9,6 @@ BEGIN {
 	if (!zone_table) zone_table = "zone1970.tab"
 	if (!want_warnings) want_warnings = -1
 
-	# A special (and we hope temporary) case.
-	tztab["America/Montreal"] = 1
-
 	while (getline <iso_table) {
 		iso_NR++
 		if ($0 ~ /^#/) continue

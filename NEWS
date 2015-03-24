@@ -1,5 +1,16 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting past time stamps
+
+    One more zone has been turned into a link, as it differed
+    from an existing zone only for older time stamps.  As usual,
+    this change affects UTC offsets in pre-1970 time stamps only.
+    The zone's old contents have been moved to the 'backzone' file.
+    The affected zone is America/Montreal.
+
+
 Release 2015b - 2015-03-19 23:28:11 -0700
 
   Changes affecting future time stamps

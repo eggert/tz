@@ -10,6 +10,10 @@ Unreleased, experimental changes
     The zone's old contents have been moved to the 'backzone' file.
     The affected zone is America/Montreal.
 
+  Changes affecting commentary
+
+    Mention the TZUpdater tool.
+
 
 Release 2015b - 2015-03-19 23:28:11 -0700
 

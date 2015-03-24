@@ -1562,7 +1562,6 @@ Zone America/Toronto	-5:17:32 -	LMT	1895
 			-5:00	Canada	E%sT	1946
 			-5:00	Toronto	E%sT	1974
 			-5:00	Canada	E%sT
-Link America/Toronto America/Montreal
 Zone America/Thunder_Bay -5:57:00 -	LMT	1895
 			-6:00	-	CST	1910
 			-5:00	-	EST	1942

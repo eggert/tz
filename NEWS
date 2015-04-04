@@ -4,6 +4,29 @@ Unreleased, experimental changes
 
   Changes affecting past time stamps
 
+    The following changes affect some pre-1991 time stamps in Chile:
+
+      The 1910 transition was January 10, not January 1.
+
+      The 1918 transition was September 10, not September 1.
+
+      The UTC-4 time observed from 1932 to 1942 is now considered to be
+      standard time, not year-round DST.
+
+      Santiago observed DST (UTC-3) from 1946-07-15 through 1946-08-31,
+      then reverted to standard time, then switched its time zone to
+      UTC-5 on 1947-04-01.
+
+      Assume transitions before 1968 were at 00:00, since we have no data
+      saying otherwise.
+
+      The spring 1988 transition was 1988-10-09, not 1988-10-02.
+      The fall 1990 transition was 1990-03-11, not 1990-03-18.
+
+      Assume no UTC offset change for Pacific/Easter on 1890-01-01,
+      and omit all transitions on Pacific/Easter from 1942 through 1946
+      since we have no data suggesting that they existed.
+
     One more zone has been turned into a link, as it differed
     from an existing zone only for older time stamps.  As usual,
     this change affects UTC offsets in pre-1970 time stamps only.

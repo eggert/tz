@@ -2,6 +2,13 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting future time stamps
+
+    Egypt's spring-forward transition is at 24:00 on April's last Thursday,
+    not 00:00 on April's last Friday.  2015's transition will therefore be on
+    Thursday, April 30 at 24:00, not Friday, April 24 at 00:00.  Similar fixes
+    apply to 2026, 2037, 2043, etc.  (Thanks to Steffen Thorsen.)
+
   Changes affecting past time stamps
 
     The following changes affect some pre-1991 Chile-related time stamps

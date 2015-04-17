@@ -227,9 +227,14 @@ Zone	PST8PDT		 -8:00	US	P%sT
 # The law doesn't give abbreviations.
 #
 # From Paul Eggert (2000-01-08), following a heads-up from Rives McDow:
-# Public law 106-564 (2000-12-23) introduced the abbreviation
-# "Chamorro Standard Time" for time in Guam and the Northern Marianas.
-# See the file "australasia".
+# Public law 106-564 (2000-12-23) introduced ... "Chamorro Standard Time"
+# for time in Guam and the Northern Marianas.  See the file "australasia".
+#
+# From Paul Eggert (2015-04-17):
+# HST and HDT are standardized abbreviations for Hawaii-Aleutian
+# standard and daylight times.  See section 9.47 (p 234) of the
+# U.S. Government Printing Office Style Manual (2008)
+# http://www.gpo.gov/fdsys/pkg/GPO-STYLEMANUAL-2008/pdf/GPO-STYLEMANUAL-2008.pdf
 
 # From Arthur David Olson, 2005-08-09
 # The following was signed into law on 2005-08-08.
@@ -536,7 +541,7 @@ Zone America/Adak	 12:13:21 -	LMT	1867 Oct 18
 			-11:00	-	BST	1969
 			-11:00	US	B%sT	1983 Oct 30  2:00
 			-10:00	US	AH%sT	1983 Nov 30
-			-10:00	US	HA%sT
+			-10:00	US	H%sT
 # The following switches don't quite make our 1970 cutoff.
 #
 # Shanks writes that part of southwest Alaska (e.g. Aniak)

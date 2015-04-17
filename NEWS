@@ -1,5 +1,15 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Change affecting past and future time zone abbreviations
+
+    The abbreviations for Hawaii-Aleutian standard and daylight times
+    have been changed from HAST/HADT to HST/HDT, as per US Government
+    Printing Office style.  This affects only America/Adak since 1983,
+    as America/Honolulu was already using the new style.
+
+
 Release 2015c - 2015-04-11 08:55:55 -0700
 
   Changes affecting future time stamps

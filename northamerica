@@ -1842,6 +1842,17 @@ Zone America/Creston	-7:46:04 -	LMT	1884
 
 # Northwest Territories, Nunavut, Yukon
 
+# From Paul Eggert (2006-03-22):
+# Dawson switched to PST in 1973.  Inuvik switched to MST in 1979.
+# Mathew Englander (1996-10-07) gives the following refs:
+#	* 1967. Paragraph 28(34)(g) of the Interpretation Act, S.C. 1967-68,
+#	c. 7 defines Yukon standard time as UTC-9....
+#	see Interpretation Act, R.S.C. 1985, c. I-21, s. 35(1).
+#	[http://canlii.ca/t/7vhg]
+#	* C.O. 1973/214 switched Yukon to PST on 1973-10-28 00:00.
+#	* O.I.C. 1980/02 established DST.
+#	* O.I.C. 1987/056 changed DST to Apr firstSun 2:00 to Oct lastSun 2:00.
+
 # From Brian Inglis (2015-04-14):
 #
 # I tried to trace the history of Yukon time and found the following
@@ -2169,7 +2180,7 @@ Zone America/Inuvik	0	-	zzz	1953 # Inuvik founded
 			-7:00	NT_YK	M%sT	1980
 			-7:00	Canada	M%sT
 Zone America/Whitehorse	-9:00:12 -	LMT	1900 Aug 20
-			-9:00	NT_YK	Y%sT	1966 Jul  1  2:00
+			-9:00	NT_YK	Y%sT	1967 May 28  0:00
 			-8:00	NT_YK	P%sT	1980
 			-8:00	Canada	P%sT
 Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20

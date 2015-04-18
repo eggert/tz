@@ -2,16 +2,18 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting past time stamps
+
+    America/Whitehorse switched from UTC-9 to UTC-8 on 1967-05-28, not
+    1966-07-01.  Also, Yukon's time zone history is documented better.
+    (Thanks to Brian Inglis and Dennis Ferguson.)
+
   Change affecting past and future time zone abbreviations
 
     The abbreviations for Hawaii-Aleutian standard and daylight times
     have been changed from HAST/HADT to HST/HDT, as per US Government
     Printing Office style.  This affects only America/Adak since 1983,
     as America/Honolulu was already using the new style.
-
-  Changes affecting commentary
-
-    Yukon's time zone history is documented better.  (Thanks to Brian Inglis.)
 
 
 Release 2015c - 2015-04-11 08:55:55 -0700

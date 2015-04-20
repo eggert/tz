@@ -31,8 +31,6 @@ typedef int_fast64_t	zic_t;
 #define MKDIR_UMASK 0755
 #endif
 
-#define end(cp)	(strchr((cp), '\0'))
-
 struct rule {
 	const char *	r_filename;
 	int		r_linenum;
@@ -368,18 +366,40 @@ size_product(size_t nitems, size_t itemsize)
 	return nitems * itemsize;
 }
 
+#if !HAVE_STRDUP
+static char *
+strdup(char const *str)
+{
+  char *result = malloc(strlen(str) + 1);
+  return result ? strcpy(result, str) : result;
+}
+#endif
+
 static ATTRIBUTE_PURE void *
-memcheck(void *const ptr)
+memcheck(void *ptr)
 {
 	if (ptr == NULL)
 		memory_exhausted(strerror(errno));
 	return ptr;
 }
 
-#define emalloc(size)		memcheck(malloc(size))
-#define erealloc(ptr, size)	memcheck(realloc(ptr, size))
-#define ecpyalloc(ptr)		memcheck(icpyalloc(ptr))
-#define ecatalloc(oldp, newp)	memcheck(icatalloc((oldp), (newp)))
+static void *
+emalloc(size_t size)
+{
+  return memcheck(malloc(size));
+}
+
+static void *
+erealloc(void *ptr, size_t size)
+{
+  return memcheck(realloc(ptr, size));
+}
+
+static char *
+ecpyalloc (char const *str)
+{
+  return memcheck(strdup(str));
+}
 
 static void *
 growalloc(void *ptr, size_t itemsize, int nitems, int *nitems_alloc)
@@ -634,6 +654,11 @@ componentcheck(char const *name, char const *component,
 {
 	enum { component_len_max = 14 };
 	size_t component_len = component_end - component;
+	if (component_len == 0) {
+		fprintf(stderr, _("%s: file name '%s' contains empty component"),
+			progname, name);
+		exit(EXIT_FAILURE);
+	}
 	if (0 < component_len && component_len <= 2
 	    && component[0] == '.' && component_end[-1] == '.') {
 		fprintf(stderr, _("%s: file name '%s' contains"
@@ -686,6 +711,21 @@ namecheck(const char *name)
 	componentcheck(name, component, cp);
 }
 
+static char *
+relname(char const *dir, char const *base)
+{
+  if (*base == '/')
+    return ecpyalloc(base);
+  else {
+    size_t dir_len = strlen(dir);
+    bool needs_slash = dir_len && dir[dir_len - 1] != '/';
+    char *result = emalloc(dir_len + needs_slash + strlen(base) + 1);
+    result[dir_len] = '/';
+    strcpy(result + dir_len + needs_slash, base);
+    return memcpy(result, dir, dir_len);
+  }
+}
+
 static void
 dolink(const char *const fromfield, const char *const tofield)
 {
@@ -694,20 +734,8 @@ dolink(const char *const fromfield, const char *const tofield)
 	register int fromisdir;
 
 	namecheck(tofield);
-	if (fromfield[0] == '/')
-		fromname = ecpyalloc(fromfield);
-	else {
-		fromname = ecpyalloc(directory);
-		fromname = ecatalloc(fromname, "/");
-		fromname = ecatalloc(fromname, fromfield);
-	}
-	if (tofield[0] == '/')
-		toname = ecpyalloc(tofield);
-	else {
-		toname = ecpyalloc(directory);
-		toname = ecatalloc(toname, "/");
-		toname = ecatalloc(toname, tofield);
-	}
+	fromname = relname(directory, fromfield);
+	toname = relname(directory, tofield);
 	/*
 	** We get to be careful here since
 	** there's a fair chance of root running us.
@@ -731,6 +759,8 @@ dolink(const char *const fromfield, const char *const tofield)
 		if (result != 0) {
 				const char *s = fromfield;
 				const char *t;
+				char *p;
+				size_t dotdots = 0;
 				register char * symlinkcontents = NULL;
 
 				do
@@ -739,13 +769,13 @@ dolink(const char *const fromfield, const char *const tofield)
 				       && ! strncmp (fromfield, tofield,
 						     ++s - fromfield));
 
-				for (s = tofield + (t - fromfield);
-				     (s = strchr(s, '/'));
-				     s++)
-					symlinkcontents =
-						ecatalloc(symlinkcontents,
-						"../");
-				symlinkcontents = ecatalloc(symlinkcontents, t);
+				for (s = tofield + (t - fromfield); *s; s++)
+				  dotdots += *s == '/';
+				symlinkcontents
+				  = emalloc(3 * dotdots + strlen(t) + 1);
+				for (p = symlinkcontents; dotdots-- != 0; p += 3)
+				  memcpy(p, "../", 3);
+				strcpy(p, t);
 				result = symlink(symlinkcontents, toname);
 				if (result == 0)
 warning(_("hard link failed, symbolic link used"));
@@ -828,7 +858,7 @@ itsdir(const char *const name)
 	return S_ISDIR(st.st_mode) != 0;
 #else
 	{
-		char *nameslashdot = ecatalloc(ecpyalloc(name), "/.");
+		char *nameslashdot = relname(name, ".");
 		res = stat(nameslashdot, &st);
 		free(nameslashdot);
 		return res == 0;
@@ -1547,7 +1577,7 @@ writezone(const char *const name, const char *const string, char version)
 	register int			leapcnt32, leapi32;
 	register int			timecnt32, timei32;
 	register int			pass;
-	static char *			fullname;
+	char *				fullname;
 	static const struct tzhead	tzh0;
 	static struct tzhead		tzh;
 	zic_t *ats = emalloc(size_product(timecnt, sizeof *ats + 1));
@@ -1633,9 +1663,7 @@ writezone(const char *const name, const char *const string, char version)
 		--leapcnt32;
 		++leapi32;
 	}
-	fullname = erealloc(fullname,
-			    strlen(directory) + 1 + strlen(name) + 1);
-	sprintf(fullname, "%s/%s", directory, name);
+	fullname = relname(directory, name);
 	/*
 	** Remove old file, if any, to snap links.
 	*/
@@ -1850,15 +1878,16 @@ writezone(const char *const name, const char *const string, char version)
 	fprintf(fp, "\n%s\n", string);
 	close_file(fp, fullname);
 	free(ats);
+	free(fullname);
 }
 
-static void
+static size_t
 doabbr(char *const abbr, const char *const format, const char *const letters,
        bool isdst, bool doquotes)
 {
 	register char *	cp;
 	register char *	slashp;
-	register int	len;
+	register size_t	len;
 
 	slashp = strchr(format, '/');
 	if (slashp == NULL) {
@@ -1871,18 +1900,18 @@ doabbr(char *const abbr, const char *const format, const char *const letters,
 		memcpy(abbr, format, slashp - format);
 		abbr[slashp - format] = '\0';
 	}
+	len = strlen(abbr);
 	if (!doquotes)
-		return;
+		return len;
 	for (cp = abbr; is_alpha(*cp); cp++)
 		continue;
-	len = strlen(abbr);
 	if (len > 0 && *cp == '\0')
-		return;
+		return len;
 	abbr[len + 2] = '\0';
 	abbr[len + 1] = '>';
-	for ( ; len > 0; --len)
-		abbr[len] = abbr[len - 1];
+	memmove(abbr + 1, abbr, len);
 	abbr[0] = '<';
+	return len + 2;
 }
 
 static void
@@ -1894,17 +1923,18 @@ updateminmax(const zic_t x)
 		max_year = x;
 }
 
-static bool
+static int
 stringoffset(char *result, zic_t offset)
 {
 	register int	hours;
 	register int	minutes;
 	register int	seconds;
+	bool negative = offset < 0;
+	int len = negative;
 
-	result[0] = '\0';
-	if (offset < 0) {
-		strcpy(result, "-");
+	if (negative) {
 		offset = -offset;
+		result[0] = '-';
 	}
 	seconds = offset % SECSPERMIN;
 	offset /= SECSPERMIN;
@@ -1913,15 +1943,15 @@ stringoffset(char *result, zic_t offset)
 	hours = offset;
 	if (hours >= HOURSPERDAY * DAYSPERWEEK) {
 		result[0] = '\0';
-		return false;
+		return 0;
 	}
-	sprintf(end(result), "%d", hours);
+	len += sprintf(result + len, "%d", hours);
 	if (minutes != 0 || seconds != 0) {
-		sprintf(end(result), ":%02d", minutes);
+		len += sprintf(result + len, ":%02d", minutes);
 		if (seconds != 0)
-			sprintf(end(result), ":%02d", seconds);
+			len += sprintf(result + len, ":%02d", seconds);
 	}
-	return true;
+	return len;
 }
 
 static int
@@ -1931,7 +1961,6 @@ stringrule(char *result, const struct rule *const rp, const zic_t dstoff,
 	register zic_t	tod = rp->r_tod;
 	register int	compat = 0;
 
-	result = end(result);
 	if (rp->r_dycode == DC_DOM) {
 		register int	month, total;
 
@@ -1942,9 +1971,9 @@ stringrule(char *result, const struct rule *const rp, const zic_t dstoff,
 			total += len_months[0][month];
 		/* Omit the "J" in Jan and Feb, as that's shorter.  */
 		if (rp->r_month <= 1)
-		  sprintf(result, "%d", total + rp->r_dayofmonth - 1);
+		  result += sprintf(result, "%d", total + rp->r_dayofmonth - 1);
 		else
-		  sprintf(result, "J%d", total + rp->r_dayofmonth);
+		  result += sprintf(result, "J%d", total + rp->r_dayofmonth);
 	} else {
 		register int	week;
 		register int	wday = rp->r_wday;
@@ -1971,16 +2000,16 @@ stringrule(char *result, const struct rule *const rp, const zic_t dstoff,
 		} else	return -1;	/* "cannot happen" */
 		if (wday < 0)
 			wday += DAYSPERWEEK;
-		sprintf(result, "M%d.%d.%d",
-			rp->r_month + 1, week, wday);
+		result += sprintf(result, "M%d.%d.%d",
+				  rp->r_month + 1, week, wday);
 	}
 	if (rp->r_todisgmt)
 		tod += gmtoff;
 	if (rp->r_todisstd && rp->r_stdoff == 0)
 		tod += dstoff;
 	if (tod != 2 * SECSPERMIN * MINSPERHOUR) {
-		strcat(result, "/");
-		if (! stringoffset(end(result), tod))
+		*result++ = '/';
+		if (! stringoffset(result, tod))
 			return -1;
 		if (tod < 0) {
 			if (compat < 2013)
@@ -2020,6 +2049,8 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 	register const char *		abbrvar;
 	register int			compat = 0;
 	register int			c;
+	size_t				len;
+	int				offsetlen;
 	struct rule			stdr, dstr;
 
 	result[0] = '\0';
@@ -2087,30 +2118,36 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 	if (stdrp == NULL && (zp->z_nrules != 0 || zp->z_stdoff != 0))
 		return -1;
 	abbrvar = (stdrp == NULL) ? "" : stdrp->r_abbrvar;
-	doabbr(result, zp->z_format, abbrvar, false, true);
-	if (! stringoffset(end(result), -zp->z_gmtoff)) {
+	len = doabbr(result, zp->z_format, abbrvar, false, true);
+	offsetlen = stringoffset(result + len, -zp->z_gmtoff);
+	if (! offsetlen) {
 		result[0] = '\0';
 		return -1;
 	}
+	len += offsetlen;
 	if (dstrp == NULL)
 		return compat;
-	doabbr(end(result), zp->z_format, dstrp->r_abbrvar, true, true);
-	if (dstrp->r_stdoff != SECSPERMIN * MINSPERHOUR)
-		if (! stringoffset(end(result),
-				   -(zp->z_gmtoff + dstrp->r_stdoff))) {
-				result[0] = '\0';
-				return -1;
-		}
-	strcat(result, ",");
-	c = stringrule(result, dstrp, dstrp->r_stdoff, zp->z_gmtoff);
+	len += doabbr(result + len, zp->z_format, dstrp->r_abbrvar, true, true);
+	if (dstrp->r_stdoff != SECSPERMIN * MINSPERHOUR) {
+	  offsetlen = stringoffset(result + len,
+				   -(zp->z_gmtoff + dstrp->r_stdoff));
+	  if (! offsetlen) {
+	    result[0] = '\0';
+	    return -1;
+	  }
+	  len += offsetlen;
+	}
+	result[len++] = ',';
+	c = stringrule(result + len, dstrp, dstrp->r_stdoff, zp->z_gmtoff);
 	if (c < 0) {
 		result[0] = '\0';
 		return -1;
 	}
 	if (compat < c)
 		compat = c;
-	strcat(result, ",");
-	c = stringrule(result, stdrp, dstrp->r_stdoff, zp->z_gmtoff);
+	len += strlen(result + len);
+	result[len++] = ',';
+	c = stringrule(result + len, stdrp, dstrp->r_stdoff, zp->z_gmtoff);
 	if (c < 0) {
 		result[0] = '\0';
 		return -1;

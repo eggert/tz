@@ -1053,6 +1053,7 @@ gethms(char const *string, char const *errstring, bool signable)
 {
 	zic_t	hh;
 	int	mm, ss, sign;
+	char xs;
 
 	if (string == NULL || *string == '\0')
 		return 0;
@@ -1062,12 +1063,12 @@ gethms(char const *string, char const *errstring, bool signable)
 		sign = -1;
 		++string;
 	} else	sign = 1;
-	if (sscanf(string, scheck(string, "%"SCNdZIC), &hh) == 1)
+	if (sscanf(string, "%"SCNdZIC"%c", &hh, &xs) == 1)
 		mm = ss = 0;
-	else if (sscanf(string, scheck(string, "%"SCNdZIC":%d"), &hh, &mm) == 2)
+	else if (sscanf(string, "%"SCNdZIC":%d%c", &hh, &mm, &xs) == 2)
 		ss = 0;
-	else if (sscanf(string, scheck(string, "%"SCNdZIC":%d:%d"),
-		&hh, &mm, &ss) != 3) {
+	else if (sscanf(string, "%"SCNdZIC":%d:%d%c", &hh, &mm, &ss, &xs)
+		 != 3) {
 			error("%s", errstring);
 			return 0;
 	}
@@ -1245,6 +1246,7 @@ inleap(register char ** const fields, const int nfields)
 	int				month, day;
 	zic_t				dayoff, tod;
 	zic_t				t;
+	char xs;
 
 	if (nfields != LEAP_FIELDS) {
 		error(_("wrong number of fields on Leap line"));
@@ -1252,7 +1254,7 @@ inleap(register char ** const fields, const int nfields)
 	}
 	dayoff = 0;
 	cp = fields[LP_YEAR];
-	if (sscanf(cp, scheck(cp, "%"SCNdZIC), &year) != 1) {
+	if (sscanf(cp, "%"SCNdZIC"%c", &year, &xs) != 1) {
 		/*
 		** Leapin' Lizards!
 		*/
@@ -1287,7 +1289,7 @@ inleap(register char ** const fields, const int nfields)
 		++j;
 	}
 	cp = fields[LP_DAY];
-	if (sscanf(cp, scheck(cp, "%d"), &day) != 1 ||
+	if (sscanf(cp, "%d%c", &day, &xs) != 1 ||
 		day <= 0 || day > len_months[isleap(year)][month]) {
 			error(_("invalid day of month"));
 			return;
@@ -1377,6 +1379,7 @@ rulesub(register struct rule *const rp,
 	register const char *		cp;
 	register char *			dp;
 	register char *			ep;
+	char xs;
 
 	if ((lp = byword(monthp, mon_names)) == NULL) {
 		error(_("invalid month name"));
@@ -1428,7 +1431,7 @@ rulesub(register struct rule *const rp,
 				_("%s: panic: Invalid l_value %d\n"),
 				progname, lp->l_value);
 			exit(EXIT_FAILURE);
-	} else if (sscanf(cp, scheck(cp, "%"SCNdZIC), &rp->r_loyear) != 1) {
+	} else if (sscanf(cp, "%"SCNdZIC"%c", &rp->r_loyear, &xs) != 1) {
 		error(_("invalid starting year"));
 		return;
 	}
@@ -1450,7 +1453,7 @@ rulesub(register struct rule *const rp,
 				_("%s: panic: Invalid l_value %d\n"),
 				progname, lp->l_value);
 			exit(EXIT_FAILURE);
-	} else if (sscanf(cp, scheck(cp, "%"SCNdZIC), &rp->r_hiyear) != 1) {
+	} else if (sscanf(cp, "%"SCNdZIC"%c", &rp->r_hiyear, &xs) != 1) {
 		error(_("invalid ending year"));
 		return;
 	}
@@ -1503,7 +1506,7 @@ rulesub(register struct rule *const rp,
 			}
 			rp->r_wday = lp->l_value;
 		}
-		if (sscanf(ep, scheck(ep, "%d"), &rp->r_dayofmonth) != 1 ||
+		if (sscanf(ep, "%d%c", &rp->r_dayofmonth, &xs) != 1 ||
 			rp->r_dayofmonth <= 0 ||
 			(rp->r_dayofmonth > len_months[1][rp->r_month])) {
 				error(_("invalid day of month"));

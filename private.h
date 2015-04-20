@@ -453,12 +453,6 @@ time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_PURE;
 #endif
 
 /*
-** Private function declarations.
-*/
-
-const char *	scheck(const char * string, const char * format);
-
-/*
 ** Finally, some convenience items.
 */
 

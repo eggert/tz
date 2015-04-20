@@ -2758,28 +2758,38 @@ getfields(register char *cp)
 	return array;
 }
 
+static _Noreturn void
+time_overflow(void)
+{
+  error(_("time overflow"));
+  exit(EXIT_FAILURE);
+}
+
 static ATTRIBUTE_PURE zic_t
 oadd(const zic_t t1, const zic_t t2)
 {
-	if (t1 < 0 ? t2 < ZIC_MIN - t1 : ZIC_MAX - t1 < t2) {
-		error(_("time overflow"));
-		exit(EXIT_FAILURE);
-	}
+	if (t1 < 0 ? t2 < ZIC_MIN - t1 : ZIC_MAX - t1 < t2)
+	  time_overflow();
 	return t1 + t2;
 }
 
 static ATTRIBUTE_PURE zic_t
 tadd(const zic_t t1, const zic_t t2)
 {
-	if (t1 == max_time && t2 > 0)
-		return max_time;
-	if (t1 == min_time && t2 < 0)
-		return min_time;
-	if (t1 < 0 ? t2 < min_time - t1 : max_time - t1 < t2) {
-		error(_("time overflow"));
-		exit(EXIT_FAILURE);
-	}
-	return t1 + t2;
+  if (t1 < 0) {
+    if (t2 < min_time - t1) {
+      if (t1 != min_time)
+	time_overflow();
+      return min_time;
+    }
+  } else {
+    if (max_time - t1 < t2) {
+      if (t1 != max_time)
+	time_overflow();
+      return max_time;
+    }
+  }
+  return t1 + t2;
 }
 
 /*

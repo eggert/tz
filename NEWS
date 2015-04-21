@@ -2,6 +2,12 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting future time stamps
+
+    Egypt will not observe DST in 2015 and will consider canceling it
+    permanently.  For now, assume it'll be canceled.
+    (Thanks to Ahmed Nazmy and Tim Parenti.)
+
   Changes affecting past time stamps
 
     America/Whitehorse switched from UTC-9 to UTC-8 on 1967-05-28, not

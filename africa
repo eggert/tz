@@ -338,9 +338,10 @@ Rule	Egypt	2007	only	-	Sep	Thu>=1	24:00	0	-
 # time this summer, and carry out studies on the possibility of canceling the
 # practice altogether in future years."
 #
-# From Paul Eggert (2015-04-20):
-# For now, assume DST will be canceled.  Any resumption would likely
-# use different rules anyway.
+# From Paul Eggert (2015-04-24):
+# Yesterday the office of Egyptian President El-Sisi announced his
+# decision to abandon DST permanently.  See Ahram Online 2015-04-24.
+# http://english.ahram.org.eg/NewsContent/1/64/128509/Egypt/Politics-/Sisi-cancels-daylight-saving-time-in-Egypt.aspx
 
 Rule	Egypt	2008	only	-	Aug	lastThu	24:00	0	-
 Rule	Egypt	2009	only	-	Aug	20	24:00	0	-

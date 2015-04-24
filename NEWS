@@ -1,11 +1,11 @@
 News for the tz database
 
-Unreleased, experimental changes
+Release 2015d - 2015-04-24 08:09:46 -0700
 
   Changes affecting future time stamps
 
     Egypt will not observe DST in 2015 and will consider canceling it
-    permanently.  For now, assume it'll be canceled.
+    permanently.  For now, assume no DST indefinitely.
     (Thanks to Ahmed Nazmy and Tim Parenti.)
 
   Changes affecting past time stamps

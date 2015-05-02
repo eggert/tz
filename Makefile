@@ -292,23 +292,24 @@ TAB_CHAR=	'	'
 SAFE_CHARSET1=	$(TAB_CHAR)' !\"'$$sharp'$$%&'\''()*+,./0123456789:;<=>?@'
 SAFE_CHARSET2=	'ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\^_`'
 SAFE_CHARSET3=	'abcdefghijklmnopqrstuvwxyz{|}~'
-SAFE_CHARSET=	]$(SAFE_CHARSET1)$(SAFE_CHARSET2)$(SAFE_CHARSET3)-
-SAFE_CHAR=	'['$(SAFE_CHARSET)']'
-# NONSYM_CHAR is a regular expression that matches any character
-# except for a small number of symbols, where we prefer to stick with
+SAFE_CHARSET=	$(SAFE_CHARSET1)$(SAFE_CHARSET2)$(SAFE_CHARSET3)
+SAFE_CHAR=	'[]'$(SAFE_CHARSET)'-]'
+
+# OK_CHAR matches any character allowed in the distributed files.
+# This is the same as SAFE_CHAR, except that multibyte letters are
+# also allowed so that commentary can contain people's names and quote
+# non-English sources.  For non-letters the sources are limited to
 # ASCII renderings for the convenience of maintainers whose text editors
 # mishandle UTF-8 by default (e.g., XEmacs 21.4.22).
-NONSYM_CHAR=	'[^–—°′″≈≠≤≥±−×÷∞←→↔·•§¶«»‘’‚‛“”„‟‹›「」『』〝〞〟]'
+OK_CHAR=	'[][:alpha:]'$(SAFE_CHARSET)'-]'
 
 # SAFE_LINE matches a line of safe characters.
-# SAFE_SHARP_LINE is similar, except any character can follow '#';
+# SAFE_SHARP_LINE is similar, except any OK character can follow '#';
 # this is so that comments can contain non-ASCII characters.
-# NONSYM_LINE matches a line of non-symbols.
-# VALID_LINE matches a line of any validly-encoded characters.
+# OK_LINE matches a line of OK characters.
 SAFE_LINE=	'^'$(SAFE_CHAR)'*$$'
-SAFE_SHARP_LINE='^'$(SAFE_CHAR)'*('$$sharp$(NONSYM_CHAR)'*)?$$'
-NONSYM_LINE=	'^'$(NONSYM_CHAR)'*$$'
-VALID_LINE=	'^.*$$'
+SAFE_SHARP_LINE='^'$(SAFE_CHAR)'*('$$sharp$(OK_CHAR)'*)?$$'
+OK_LINE=	'^'$(OK_CHAR)'*$$'
 
 # Flags to give 'tar' when making a distribution.
 # Try to use flags appropriate for GNU tar.
@@ -475,14 +476,11 @@ check:		check_character_set check_white_space check_links check_sorted \
 check_character_set: $(ENCHILADA)
 		LC_ALL=en_US.utf8 && export LC_ALL && \
 		sharp='#' && \
-		! grep -Env $(SAFE_LINE) $(MANS) date.1 $(MANTXTS) \
+		! grep -Env $(SAFE_LINE) Makefile $(MANS) date.1 $(MANTXTS) \
 			$(MISC) $(SOURCES) $(WEB_PAGES) && \
 		! grep -Env $(SAFE_SHARP_LINE) $(TDATA) backzone \
 			iso3166.tab leapseconds yearistype.sh zone.tab && \
-		test $$(grep -Ecv $(SAFE_SHARP_LINE) Makefile) -eq 1 && \
-		! grep -Env $(NONSYM_LINE) CONTRIBUTING NEWS README Theory \
-			$(MANS) date.1 zone1970.tab && \
-		! grep -Env $(VALID_LINE) $(ENCHILADA)
+		! grep -Env $(OK_LINE) $(ENCHILADA)
 
 check_white_space: $(ENCHILADA)
 		! grep -En ' '$(TAB_CHAR)"|$$(printf '[\f\r\v]')" $(ENCHILADA)

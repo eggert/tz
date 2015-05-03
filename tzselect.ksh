@@ -44,6 +44,18 @@ REPORT_BUGS_TO=tz@iana.org
 	exit 1
 }
 
+# Use a UTF-8 locale if available, as the data contain UTF-8,
+# and the shell aligns columns better that way.
+# Check the UTF-8 of U+12345 CUNEIFORM SIGN URU TIMES KI.
+utf8_locale='BEGIN { u12345 = "\360\222\215\205"; exit length(u12345) != 1 }'
+$AWK "$utf8_locale" ||
+    for locale in en_US.utf8 en_US.UTF-8 C.utf8; do
+	(LC_ALL=$locale $AWK "$utf8_locale") 2>/dev/null && {
+	    export LC_ALL=$locale
+	    break
+	}
+    done
+
 coord=
 location_limit=10
 zonetabtype=zone1970

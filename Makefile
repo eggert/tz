@@ -479,7 +479,7 @@ check_character_set: $(ENCHILADA)
 		! grep -Env $(SAFE_LINE) Makefile $(MANS) date.1 $(MANTXTS) \
 			$(MISC) $(SOURCES) $(WEB_PAGES) && \
 		! grep -Env $(SAFE_SHARP_LINE) $(TDATA) backzone \
-			iso3166.tab leapseconds yearistype.sh zone.tab && \
+			leapseconds yearistype.sh zone.tab && \
 		! grep -Env $(OK_LINE) $(ENCHILADA)
 
 check_white_space: $(ENCHILADA)

@@ -1,5 +1,13 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting data format
+
+    The file 'iso3166.tab' now uses UTF-8, so that its entries can better
+    spell the names of Åland Islands, Côte d'Ivoire, and Réunion.
+
+
 Release 2015d - 2015-04-24 08:09:46 -0700
 
   Changes affecting future time stamps

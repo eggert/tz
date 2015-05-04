@@ -50,18 +50,6 @@ say() {
 	exit 1
 }
 
-# Use a UTF-8 locale if available, as the data contain UTF-8,
-# and the shell aligns columns better that way.
-# Check the UTF-8 of U+12345 CUNEIFORM SIGN URU TIMES KI.
-utf8_locale='BEGIN { u12345 = "\360\222\215\205"; exit length(u12345) != 1 }'
-$AWK "$utf8_locale" ||
-    for locale in en_US.utf8 en_US.UTF-8 C.utf8; do
-	(LC_ALL=$locale $AWK "$utf8_locale") 2>/dev/null && {
-	    export LC_ALL=$locale
-	    break
-	}
-    done
-
 coord=
 location_limit=10
 zonetabtype=zone1970
@@ -194,6 +182,21 @@ do
 		exit 1
 	}
 done
+
+# If the current locale does not support UTF-8, convert data to current
+# locale's format if possible, as the shell aligns columns better that way.
+# Check the UTF-8 of U+12345 CUNEIFORM SIGN URU TIMES KI.
+! $AWK 'BEGIN { u12345 = "\360\222\215\205"; exit length(u12345) != 1 }' &&
+    { tmp=`(mktemp -d) 2>/dev/null` || {
+	tmp=${TMPDIR-/tmp}/tzselect.$$ &&
+	(umask 77 && mkdir -- "$tmp")
+    };} &&
+    trap 'status=$?; rm -fr -- "$tmp"; exit $status' 0 1 12 13 15 &&
+    (iconv -f UTF-8 -t //TRANSLIT <"$TZ_COUNTRY_TABLE" >$tmp/iso3166.tab) \
+        2>/dev/null &&
+    TZ_COUNTRY_TABLE=$tmp/iso3166.tab &&
+    iconv -f UTF-8 -t //TRANSLIT <"$TZ_ZONE_TABLE" >$tmp/$zonetabtype.tab &&
+    TZ_ZONE_TABLE=$tmp/$zonetabtype.tab
 
 newline='
 '

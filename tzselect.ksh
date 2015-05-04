@@ -37,10 +37,16 @@ REPORT_BUGS_TO=tz@iana.org
 : ${AWK=awk}
 : ${TZDIR=`pwd`}
 
+# Output one argument as-is to standard output.
+# Safer than 'echo', which can mishandle '\' or leading '-'.
+say() {
+    printf '%s\n' "$1"
+}
+
 # Check for awk Posix compliance.
 ($AWK -v x=y 'BEGIN { exit 123 }') </dev/null >/dev/null 2>&1
 [ $? = 123 ] || {
-	echo >&2 "$0: Sorry, your '$AWK' program is not Posix compatible."
+	say >&2 "$0: Sorry, your '$AWK' program is not Posix compatible."
 	exit 1
 }
 
@@ -166,16 +172,16 @@ do
     -version)
 	exec echo "tzselect $PKGVERSION$TZVERSION" ;;
     -*)
-	echo >&2 "$0: -$opt$OPTARG: unknown option; try '$0 --help'"; exit 1 ;;
+	say >&2 "$0: -$opt$OPTARG: unknown option; try '$0 --help'"; exit 1 ;;
     *)
-	echo >&2 "$0: try '$0 --help'"; exit 1 ;;
+	say >&2 "$0: try '$0 --help'"; exit 1 ;;
     esac
 done
 
 shift `expr $OPTIND - 1`
 case $# in
 0) ;;
-*) echo >&2 "$0: $1: unknown argument"; exit 1 ;;
+*) say >&2 "$0: $1: unknown argument"; exit 1 ;;
 esac
 
 # Make sure the tables are readable.
@@ -184,7 +190,7 @@ TZ_ZONE_TABLE=$TZDIR/$zonetabtype.tab
 for f in $TZ_COUNTRY_TABLE $TZ_ZONE_TABLE
 do
 	<"$f" || {
-		echo >&2 "$0: time zone files are not set up correctly"
+		say >&2 "$0: time zone files are not set up correctly"
 		exit 1
 	}
 done
@@ -348,8 +354,7 @@ while
 				exit 0
 			}'
 		do
-			echo >&2 "'$TZ' is not a conforming" \
-				'Posix time zone string.'
+		    say >&2 "'$TZ' is not a conforming Posix time zone string."
 		done
 		TZ_for_date=$TZ;;
 	*)
@@ -371,7 +376,7 @@ while
 		      sort -n |
 		      sed "${location_limit}q"
 		    `
-		    regions=`echo "$distance_table" | $AWK '
+		    regions=`say "$distance_table" | $AWK '
 		      BEGIN { FS = "\t" }
 		      { print $NF }
 		    '`
@@ -381,7 +386,7 @@ while
 			    "of distance from $coord".
 		    doselect $regions
 		    region=$select_result
-		    TZ=`echo "$distance_table" | $AWK -v region="$region" '
+		    TZ=`say "$distance_table" | $AWK -v region="$region" '
 		      BEGIN { FS="\t" }
 		      $NF == region { print $4 }
 		    '`
@@ -479,7 +484,7 @@ while
 		# Make sure the corresponding zoneinfo file exists.
 		TZ_for_date=$TZDIR/$TZ
 		<"$TZ_for_date" || {
-			echo >&2 "$0: time zone files are not set up correctly"
+			say >&2 "$0: time zone files are not set up correctly"
 			exit 1
 		}
 	esac
@@ -512,15 +517,15 @@ Universal Time is now:	$UTdate."
 	echo >&2 "The following information has been given:"
 	echo >&2 ""
 	case $country%$region%$coord in
-	?*%?*%)	echo >&2 "	$country$newline	$region";;
-	?*%%)	echo >&2 "	$country";;
-	%?*%?*) echo >&2 "	coord $coord$newline	$region";;
-	%%?*)	echo >&2 "	coord $coord";;
-	*)	echo >&2 "	TZ='$TZ'"
+	?*%?*%)	say >&2 "	$country$newline	$region";;
+	?*%%)	say >&2 "	$country";;
+	%?*%?*) say >&2 "	coord $coord$newline	$region";;
+	%%?*)	say >&2 "	coord $coord";;
+	*)	say >&2 "	TZ='$TZ'"
 	esac
-	echo >&2 ""
-	echo >&2 "Therefore TZ='$TZ' will be used.$extra_info"
-	echo >&2 "Is the above information OK?"
+	say >&2 ""
+	say >&2 "Therefore TZ='$TZ' will be used.$extra_info"
+	say >&2 "Is the above information OK?"
 
 	doselect Yes No
 	ok=$select_result
@@ -535,7 +540,7 @@ case $SHELL in
 *) file=.profile line="TZ='$TZ'; export TZ"
 esac
 
-echo >&2 "
+say >&2 "
 You can make this change permanent for yourself by appending the line
 	$line
 to the file '$file' in your home directory; then log out and log in again.
@@ -543,4 +548,4 @@ to the file '$file' in your home directory; then log out and log in again.
 Here is that TZ value again, this time on standard output so that you
 can use the $0 command in shell scripts:"
 
-echo "$TZ"
+say "$TZ"

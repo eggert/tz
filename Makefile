@@ -374,7 +374,7 @@ SHELL=		/bin/sh
 
 all:		tzselect zic zdump libtz.a $(TABDATA)
 
-ALL:		all date
+ALL:		all date $(ENCHILADA)
 
 install:	all $(DATA) $(REDO) $(MANS)
 		mkdir -p $(DESTDIR)$(ETCDIR) $(DESTDIR)$(TZDIR) \
@@ -573,9 +573,9 @@ set-timestamps.out: $(ENCHILADA)
 # The zics below ensure that each data file can stand on its own.
 # We also do an all-files run to catch links to links.
 
-check_public:	$(ENCHILADA)
+check_public:
 		$(MAKE) maintainer-clean
-		$(MAKE) "CFLAGS=$(GCC_DEBUG_FLAGS)" $(ENCHILADA) all
+		$(MAKE) "CFLAGS=$(GCC_DEBUG_FLAGS)" ALL
 		mkdir tzpublic
 		for i in $(TDATA) ; do \
 		  $(zic) -v -d tzpublic $$i 2>&1 || exit; \

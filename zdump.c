@@ -246,13 +246,15 @@ extern int	optind;
 extern char *	tzname[2];
 
 /* The minimum and maximum finite time values.  */
+enum { atime_shift = CHAR_BIT * sizeof (time_t) - 2 };
 static time_t const absolute_min_time =
   ((time_t) -1 < 0
-   ? (time_t) -1 << (CHAR_BIT * sizeof (time_t) - 1)
+   ? (- ((time_t) ~ (time_t) 0 < 0)
+      - (((time_t) 1 << atime_shift) - 1 + ((time_t) 1 << atime_shift)))
    : 0);
 static time_t const absolute_max_time =
   ((time_t) -1 < 0
-   ? - (~ 0 < 0) - ((time_t) -1 << (CHAR_BIT * sizeof (time_t) - 1))
+   ? (((time_t) 1 << atime_shift) - 1 + ((time_t) 1 << atime_shift))
    : -1);
 static int	longest;
 static char *	progname;

@@ -813,8 +813,8 @@ warning(_("hard link failed, symbolic link used"));
 
 #define TIME_T_BITS_IN_FILE	64
 
-static const zic_t min_time = (zic_t) -1 << (TIME_T_BITS_IN_FILE - 1);
-static const zic_t max_time = -1 - ((zic_t) -1 << (TIME_T_BITS_IN_FILE - 1));
+static zic_t const min_time = MINVAL (zic_t, TIME_T_BITS_IN_FILE);
+static zic_t const max_time = MAXVAL (zic_t, TIME_T_BITS_IN_FILE);
 
 /* Estimated time of the Big Bang, in seconds since the POSIX epoch.
    rounded downward to the negation of a power of two that is

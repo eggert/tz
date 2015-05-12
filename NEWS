@@ -12,6 +12,9 @@ Unreleased, experimental changes
     When displaying data, tzselect converts it to the current locale's
     encoding if the iconv command works.  (Problem reported by random832.)
 
+    tzselect no longer mishandles Dominica, fixing a bug introduced
+    in Release 2014f.  (Problem reported by Owen Leibman.)
+
 
 Release 2015d - 2015-04-24 08:09:46 -0700
 

@@ -449,6 +449,7 @@ while
 					}
 				}
 			}
+			/^#/ { next }
 			$1 ~ cc { print $4 }
 		' <"$TZ_ZONE_TABLE"`
 
@@ -480,6 +481,7 @@ while
 					}
 				}
 			}
+			/^#/ { next }
 			$1 ~ cc && $4 == region { print $3 }
 		' <"$TZ_ZONE_TABLE"`
 		esac

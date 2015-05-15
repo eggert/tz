@@ -2,6 +2,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting future time stamps
+
+    Assume Cayman Islands will observe DST starting next year, using US rules.
+    Although it isn't guaranteed, it is the most likely.
+
   Changes affecting data format
 
     The file 'iso3166.tab' now uses UTF-8, so that its entries can better

@@ -20,6 +20,10 @@ Unreleased, experimental changes
     tzselect no longer mishandles Dominica, fixing a bug introduced
     in Release 2014f.  (Problem reported by Owen Leibman.)
 
+    zic -l no longer fails when compiled with -DTZDEFAULT=\"/etc/localtime\".
+    This fixes a bug introduced in Release 2014f.
+    (Problem reported by Leonardo Chiquitto.)
+
 
 Release 2015d - 2015-04-24 08:09:46 -0700
 

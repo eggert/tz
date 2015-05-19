@@ -443,7 +443,8 @@ verror(const char *const string, va_list args)
 	**	zic ... 2>&1 | error -t "*" -v
 	** on BSD systems.
 	*/
-	fprintf(stderr, _("\"%s\", line %d: "), filename, linenum);
+	if (filename)
+	  fprintf(stderr, _("\"%s\", line %d: "), filename, linenum);
 	vfprintf(stderr, string, args);
 	if (rfilename != NULL)
 		fprintf(stderr, _(" (rule from \"%s\", line %d)"),
@@ -595,7 +596,7 @@ _("%s: More than one -L option specified\n"),
 				noise = true;
 				break;
 			case 's':
-				warning(_("-s ignored\n"));
+				warning(_("-s ignored"));
 				break;
 		}
 	if (optind == argc - 1 && strcmp(argv[optind], "=") == 0)
@@ -648,36 +649,43 @@ _("%s: More than one -L option specified\n"),
 	return errors ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 
-static void
+static bool
 componentcheck(char const *name, char const *component,
 	       char const *component_end)
 {
 	enum { component_len_max = 14 };
 	size_t component_len = component_end - component;
 	if (component_len == 0) {
-		fprintf(stderr, _("%s: file name '%s' contains empty component"),
-			progname, name);
-		exit(EXIT_FAILURE);
+	  if (!*name)
+	    error (_("empty file name"));
+	  else
+	    error (_(component == name
+		     ? "file name '%s' begins with '/'"
+		     : *component_end
+		     ? "file name '%s' contains '//'"
+		     : "file name '%s' ends with '/'"),
+		   name);
+	  return false;
 	}
 	if (0 < component_len && component_len <= 2
 	    && component[0] == '.' && component_end[-1] == '.') {
-		fprintf(stderr, _("%s: file name '%s' contains"
-				  " '%.*s' component"),
-			progname, name, (int) component_len, component);
-		exit(EXIT_FAILURE);
+	  error(_("file name '%s' contains '%.*s' component"),
+		name, (int) component_len, component);
+	  return false;
 	}
-	if (!noise)
-		return;
-	if (0 < component_len && component[0] == '-')
-		warning(_("file name '%s' component contains leading '-'"),
-			name);
-	if (component_len_max < component_len)
-		warning(_("file name '%s' contains overlength component"
-			  " '%.*s...'"),
-			name, component_len_max, component);
+	if (noise) {
+	  if (0 < component_len && component[0] == '-')
+	    warning(_("file name '%s' component contains leading '-'"),
+		    name);
+	  if (component_len_max < component_len)
+	    warning(_("file name '%s' contains overlength component"
+		      " '%.*s...'"),
+		    name, component_len_max, component);
+	}
+	return true;
 }
 
-static void
+static bool
 namecheck(const char *name)
 {
 	register char const *cp;
@@ -701,14 +709,14 @@ namecheck(const char *name)
 				 ? _("file name '%s' contains byte '%c'")
 				 : _("file name '%s' contains byte '\\%o'")),
 				name, c);
-			return;
 		}
 		if (c == '/') {
-			componentcheck(name, component, cp);
+			if (!componentcheck(name, component, cp))
+			  return false;
 			component = cp + 1;
 		}
 	}
-	componentcheck(name, component, cp);
+	return componentcheck(name, component, cp);
 }
 
 static char *
@@ -733,7 +741,6 @@ dolink(const char *const fromfield, const char *const tofield)
 	register char *	toname;
 	register int fromisdir;
 
-	namecheck(tofield);
 	fromname = relname(directory, fromfield);
 	toname = relname(directory, tofield);
 	/*
@@ -1020,9 +1027,9 @@ infile(const char *name)
 					break;
 				case LC_LEAP:
 					if (name != leapsec)
-						warning(
-_("%s: Leap line in non leap seconds file %s\n"),
-							progname, name);
+					  warning(_("%s: Leap line in non leap"
+						    " seconds file %s"),
+						  progname, name);
 					else	inleap(fields, nfields);
 					wantcont = false;
 					break;
@@ -1178,7 +1185,9 @@ inzsub(char **fields, int nfields, bool iscont)
 		i_untilday = ZFC_TILDAY;
 		i_untiltime = ZFC_TILTIME;
 		z.z_name = NULL;
-	} else {
+	} else if (!namecheck(fields[ZF_NAME]))
+		return false;
+	else {
 		i_gmtoff = ZF_GMTOFF;
 		i_rule = ZF_RULE;
 		i_format = ZF_FORMAT;
@@ -1354,10 +1363,8 @@ inlink(register char **const fields, const int nfields)
 		error(_("blank FROM field on Link line"));
 		return;
 	}
-	if (*fields[LF_TO] == '\0') {
-		error(_("blank TO field on Link line"));
-		return;
-	}
+	if (! namecheck(fields[LF_TO]))
+	  return;
 	l.l_filename = filename;
 	l.l_linenum = linenum;
 	l.l_from = ecpyalloc(fields[LF_FROM]);
@@ -1587,7 +1594,6 @@ writezone(const char *const name, const char *const string, char version)
 	void *typesptr = ats + timecnt;
 	unsigned char *types = typesptr;
 
-	namecheck(name);
 	/*
 	** Sort.
 	*/
@@ -2952,7 +2958,7 @@ mkdirs(char *argname)
 			if (itsdir(name) <= 0) {
 				char const *e = strerror(err);
 				warning(_("%s: Can't create directory"
-					  " %s: %s\n"),
+					  " %s: %s"),
 					progname, name, e);
 				free(name);
 				return false;

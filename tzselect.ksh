@@ -191,7 +191,7 @@ done
 	tmp=${TMPDIR-/tmp}/tzselect.$$ &&
 	(umask 77 && mkdir -- "$tmp")
     };} &&
-    trap 'status=$?; rm -fr -- "$tmp"; exit $status' 0 1 12 13 15 &&
+    trap 'status=$?; rm -fr -- "$tmp"; exit $status' 0 HUP INT PIPE TERM &&
     (iconv -f UTF-8 -t //TRANSLIT <"$TZ_COUNTRY_TABLE" >$tmp/iso3166.tab) \
         2>/dev/null &&
     TZ_COUNTRY_TABLE=$tmp/iso3166.tab &&

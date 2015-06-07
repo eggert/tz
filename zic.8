@@ -374,7 +374,8 @@ The time at which the UT offset or the rule(s) change for a location.
 It is specified as a year, a month, a day, and a time of day.
 If this is specified,
 the time zone information is generated from the given UT offset
-and rule change until the time specified.
+and rule change until the time specified, which is interpreted using
+the rules in effect just before the transition.
 The month, day, and time of day have the same format as the IN, ON, and AT
 fields of a rule; trailing fields can be omitted, and default to the
 earliest possible value for the missing fields.

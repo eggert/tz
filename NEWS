@@ -4,6 +4,9 @@ Unreleased, experimental changes
 
   Changes affecting future time stamps
 
+    Morocco will suspend DST from 2015-06-14 03:00 through 2015-07-19 02:00,
+    not 06-13 and 07-18 as we had guessed.  (Thanks to Milamber.)
+
     Assume Cayman Islands will observe DST starting next year, using US rules.
     Although it isn't guaranteed, it is the most likely.
 

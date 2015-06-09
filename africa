@@ -788,17 +788,13 @@ Zone Indian/Mauritius	3:50:00 -	LMT	1907 # Port Louis
 # will resume again at 02:00 on Saturday, August 2, 2014....
 # http://www.mmsp.gov.ma/fr/actualites.aspx?id=586
 
-# From Milamber (2015-06-08):
-# (Google Translation) The current time of Morocco (GMT + 1) will be suspended
-# from next Sunday until July 19, announced Monday the Ministry of Civil
-# Service and Modernisation of Administration.  The hour will thus be delayed
-# 60 minutes Sunday, June 14 at 3:00, the ministry said in a statement, adding
-# that the time will be advanced again 60 minutes Sunday, July 19, 2015 at
-# 2:00.  The move comes under 2.12.126 Decree of 26 Jumada I 1433 (18 April
-# 2012) and the decision of the Head of Government of 16 N. 3-29-15 Chaaban
-# 1435 (4 June 2015).
-# Source (french):
-# http://lnt.ma/le-maroc-reculera-dune-heure-le-dimanche-14-juin/
+# From Milamber (2015-06-09):
+# http://www.mmsp.gov.ma/fr/actualites.aspx?id=863
+# (Google Translation): The Ministry of Civil Service and
+# Modernisation of Administration announced the return to the legal
+# time of the Kingdom (GMT). So the time will be delayed for 60
+# minutes from 3:00 am Sunday, June 14, 2015. She will be advanced by
+# 60 minutes (GMT + 1) from 3:00 am Sunday, July 19, 2015.
 
 # From Paul Eggert (2015-06-08):
 # For now, guess that later spring and fall transitions will use 2015's rules,

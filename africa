@@ -800,7 +800,7 @@ Zone Indian/Mauritius	3:50:00 -	LMT	1907 # Port Louis
 # For now, guess that later spring and fall transitions will use 2015's rules,
 # and guess that Morocco will switch to standard time at 03:00 the last
 # Sunday before Ramadan, and back to DST at 02:00 the first Sunday after
-# Ramadan.  To implement this, transition dates for 2015 through 2037 were
+# Ramadan.  To implement this, transition dates for 2016 through 2037 were
 # determined by running the following program under GNU Emacs 24.3, with the
 # results integrated by hand into the table below.
 # (let ((islamic-year 1437))

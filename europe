@@ -2922,7 +2922,7 @@ Zone	Africa/Ceuta	-0:21:16 -	LMT	1901
 Zone	Atlantic/Canary	-1:01:36 -	LMT	1922 Mar # Las Palmas de Gran C.
 			-1:00	-	CANT	1946 Sep 30  1:00 # Canaries T
 			 0:00	-	WET	1980 Apr  6  0:00s
-			 0:00	1:00	WEST	1980 Sep 28  0:00s
+			 0:00	1:00	WEST	1980 Sep 28  1:00s
 			 0:00	EU	WE%sT
 # IATA SSIM (1996-09) says the Canaries switch at 2:00u, not 1:00u.
 # Ignore this for now, as the Canaries are part of the EU.

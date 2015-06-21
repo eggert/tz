@@ -1,5 +1,14 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting installed data files
+
+    Data entries have been simplified for Atlantic/Canary, Europe/Simferopol,
+    Europe/Sofia, and Europe/Tallinn.  This yields slightly smaller
+    installed data files for Europe/Simferopol and Europe/Tallinn.
+    It does not affect timestamps.  (Thanks to Howard Hinnant.)
+
 
 Release 2015e - 2015-06-13 10:56:02 -0700
 

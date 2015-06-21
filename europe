@@ -845,7 +845,7 @@ Zone	Europe/Sofia	1:33:16 -	LMT	1880
 			1:00	C-Eur	CE%sT	1945
 			1:00	-	CET	1945 Apr  2  3:00
 			2:00	-	EET	1979 Mar 31 23:00
-			2:00	Bulg	EE%sT	1982 Sep 26  2:00
+			2:00	Bulg	EE%sT	1982 Sep 26  3:00
 			2:00	C-Eur	EE%sT	1991
 			2:00	E-Eur	EE%sT	1997
 			2:00	EU	EE%sT
@@ -1084,7 +1084,7 @@ Zone	Europe/Tallinn	1:39:00	-	LMT	1880
 			3:00	Russia	MSK/MSD	1989 Mar 26  2:00s
 			2:00	1:00	EEST	1989 Sep 24  2:00s
 			2:00	C-Eur	EE%sT	1998 Sep 22
-			2:00	EU	EE%sT	1999 Nov  1
+			2:00	EU	EE%sT	1999 Oct 31  4:00
 			2:00	-	EET	2002 Feb 21
 			2:00	EU	EE%sT
 
@@ -2364,7 +2364,7 @@ Zone Europe/Simferopol	 2:16:24 -	LMT	1880
 # changed in May.
 			 2:00	E-Eur	EE%sT	1994 May
 # From IATA SSIM (1994/1997), which also says that Kerch is still like Kiev.
-			 3:00	E-Eur	MSK/MSD	1996 Mar 31  3:00s
+			 3:00	E-Eur	MSK/MSD	1996 Mar 31  0:00s
 			 3:00	1:00	MSD	1996 Oct 27  3:00s
 # IATA SSIM (1997-09) says Crimea switched to EET/EEST.
 # Assume it happened in March by not changing the clocks.

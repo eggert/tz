@@ -2,6 +2,10 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting future time stamps
+
+    Uruguay will stop observing DST.  (Thanks to Steffen Thorsen.)
+
   Changes affecting installed data files
 
     Data entries have been simplified for Atlantic/Canary, Europe/Simferopol,

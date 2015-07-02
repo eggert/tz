@@ -6,6 +6,11 @@ Unreleased, experimental changes
 
     Uruguay will stop observing DST.  (Thanks to Steffen Thorsen.)
 
+  Changes affecting past and future time stamps
+
+    Moldova starts and ends DST at 00:00 UTC, not at 01:00 UTC.
+    (Thanks to Roman Tudos.)
+
   Changes affecting installed data files
 
     Data entries have been simplified for Atlantic/Canary, Europe/Simferopol,

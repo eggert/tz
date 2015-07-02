@@ -1763,6 +1763,18 @@ Zone	Europe/Malta	0:58:04 -	LMT	1893 Nov  2  0:00s # Valletta
 # News from Moldova (in russian):
 # http://ru.publika.md/link_317061.html
 
+# From Roman Tudos (2015-07-02):
+# http://lex.justice.md/index.php?action=view&view=doc&lang=1&id=355077
+# From Paul Eggert (2015-07-01):
+# The abovementioned official link to IGO1445-868/2014 states that
+# 2014-10-26's fallback transition occurred at 03:00 local time.  Also,
+# http://www.trm.md/en/social/la-30-martie-vom-trece-la-ora-de-vara
+# says the 2014-03-30 spring-forward transition was at 02:00 local time.
+# Guess that since 1997 Moldova has switched one hour before the EU.
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Moldova	1997	max	-	Mar	lastSun	 2:00	1:00	S
+Rule	Moldova	1997	max	-	Oct	lastSun	 3:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Chisinau	1:55:20 -	LMT	1880
@@ -1777,7 +1789,7 @@ Zone	Europe/Chisinau	1:55:20 -	LMT	1880
 			2:00	Russia	EE%sT	1992
 			2:00	E-Eur	EE%sT	1997
 # See Romania commentary for the guessed 1997 transition to EU rules.
-			2:00	EU	EE%sT
+			2:00	Moldova	EE%sT
 
 # Monaco
 # Shanks & Pottenger give 0:09:20 for Paris Mean Time; go with Howse's

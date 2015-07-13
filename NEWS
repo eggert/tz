@@ -4,7 +4,8 @@ Unreleased, experimental changes
 
   Changes affecting future time stamps
 
-    Uruguay will stop observing DST.  (Thanks to Steffen Thorsen.)
+    Uruguay will stop observing DST.  (Thanks to Steffen Thorsen
+    and Pablo Camargo.)
 
   Changes affecting past and future time stamps
 

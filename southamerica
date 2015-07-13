@@ -1720,7 +1720,10 @@ Rule	Uruguay	2006	only	-	Mar	12	 2:00	0	-
 # http://www.republica.com.uy/este-ano-no-se-modificara-el-huso-horario-en-uruguay/523760/
 # From Paul Eggert (2015-06-30):
 # Apparently restaurateurs complained that DST caused people to go to the beach
-# instead of out to dinner.  For now, assume the change is permanent.
+# instead of out to dinner.
+# From Pablo Camargo (2015-07-13):
+# http://archivo.presidencia.gub.uy/sci/decretos/2015/06/cons_min_201.pdf
+# [dated 2015-06-29; repeals Decree 311/006 dated 2006-09-04]
 Rule	Uruguay	2006	2014	-	Oct	Sun>=1	 2:00	1:00	S
 Rule	Uruguay	2007	2015	-	Mar	Sun>=8	 2:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

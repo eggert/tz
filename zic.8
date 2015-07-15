@@ -299,6 +299,12 @@ field
 and
 .B s
 suffixes are not used).
+Only the sum of standard time and this amount matters; for example,
+.I zic
+does not distinguish a 10:30 standard time plus an 0:30
+.B SAVE
+from a 10:00 standard time plus a 1:00
+.BR SAVE .
 .TP
 .B LETTER/S
 Gives the
@@ -357,6 +363,8 @@ alternately, an amount of time to add to local standard time.
 If this field is
 .B \*-
 then standard time always applies in the time zone.
+When an amount of time is given, only the sum of standard time and
+this amount matters.
 .TP
 .B FORMAT
 The format for time zone abbreviations in this time zone.

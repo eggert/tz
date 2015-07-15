@@ -19,6 +19,10 @@ Unreleased, experimental changes
     installed data files for Europe/Simferopol and Europe/Tallinn.
     It does not affect timestamps.  (Thanks to Howard Hinnant.)
 
+  Changes affecting code
+
+    zic no longer warns about valid time zone abbreviations like '-05'.
+
 
 Release 2015e - 2015-06-13 10:56:02 -0700
 

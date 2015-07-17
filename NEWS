@@ -21,7 +21,8 @@ Unreleased, experimental changes
 
   Changes affecting code
 
-    zic no longer warns about valid time zone abbreviations like '-05'.
+    zdump and zic no longer warn about valid time zone abbreviations
+    like '-05'.
 
 
 Release 2015e - 2015-06-13 10:56:02 -0700

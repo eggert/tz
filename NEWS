@@ -24,6 +24,10 @@ Unreleased, experimental changes
     zdump and zic no longer warn about valid time zone abbreviations
     like '-05'.
 
+  Changes affecting documentation
+
+    tz-link.htm mentions Time Zone Database Parser (thanks to Howard Hinnant).
+
 
 Release 2015e - 2015-06-13 10:56:02 -0700
 

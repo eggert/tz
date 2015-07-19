@@ -381,6 +381,11 @@ Continuation lines may contain
 information, just as zone lines do, indicating that the next line is a further
 continuation.
 .PP
+If a zone changes at the same instant that a rule would otherwise take
+effect in the earlier zone or continuation line, the rule is ignored.
+In a single zone it is an error if two rules take effect at the same
+instant, or if two zone changes take effect at the same instant.
+.PP
 A link line has the form
 .sp
 .nf

@@ -21,6 +21,10 @@ Unreleased, experimental changes
     work in the default installation, they are not used in the data,
     and they are now considered obsolescent.
 
+    zic now checks that two rules don't take effect at the same time.
+    (Thanks to Jon Skeet and Arthur David Olson.)  Constraints on
+    simultaneity are now documented.
+
   Changes affecting installed data files
 
     Data entries have been simplified for Atlantic/Canary, Europe/Simferopol,

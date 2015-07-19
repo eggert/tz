@@ -2375,6 +2375,16 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 					if (k < 0 || jtime < ktime) {
 						k = j;
 						ktime = jtime;
+					} else if (jtime == ktime) {
+					  char const *dup_rules_msg =
+					    _("two rules for same instant");
+					  eats(zp->z_filename, zp->z_linenum,
+					       rp->r_filename, rp->r_linenum);
+					  warning(dup_rules_msg);
+					  rp = &zp->z_rules[k];
+					  eats(zp->z_filename, zp->z_linenum,
+					       rp->r_filename, rp->r_linenum);
+					  error(dup_rules_msg);
 					}
 				}
 				if (k < 0)

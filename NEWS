@@ -12,6 +12,15 @@ Unreleased, experimental changes
     Moldova starts and ends DST at 00:00 UTC, not at 01:00 UTC.
     (Thanks to Roman Tudos.)
 
+  Changes affecting data format and code
+
+    zic's '-y YEARISTYPE' option is no longer documented.  The TYPE
+    field of a Rule line should now be '-'; the old values 'even',
+    'odd', 'uspres', 'nonpres', 'nonuspres' were already undocumented.
+    Although the implementation has not changed, these features do not
+    work in the default installation, they are not used in the data,
+    and they are now considered obsolescent.
+
   Changes affecting installed data files
 
     Data entries have been simplified for Atlantic/Canary, Europe/Simferopol,

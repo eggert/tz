@@ -119,13 +119,6 @@ or that starts with
 Limit time values stored in output files to values that are the same
 whether they're taken to be signed or unsigned.
 You can use this option to generate SVVS-compatible files.
-.TP
-.BI "\*-y " command
-Use the given
-.I command
-rather than
-.B yearistype
-when checking year types (see below).
 .PP
 Input files should be text files, that is, they should be a series of
 zero or more lines, each ending in a newline byte and containing at
@@ -203,27 +196,11 @@ may be used to repeat the value of the
 field.
 .TP
 .B TYPE
-Gives the type of year in which the rule applies.
-If
-.B TYPE
-is
+should be
 .q \*-
-then the rule applies in all years between
-.B FROM
-and
-.B TO
-inclusive.
-If
-.B TYPE
-is something else, then
+and is present for compatibility with older versions of
 .I zic
-executes the command
-.ti +.5i
-\fByearistype\fP \fIyear\fP \fItype\fP
-.br
-to check the type of a year:
-an exit status of zero is taken to mean that the year is of the given type;
-an exit status of one is taken to mean that the year is not of the given type.
+in which it could contain year types.
 .TP
 .B IN
 Names the month in which the rule takes effect.

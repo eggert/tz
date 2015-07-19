@@ -493,7 +493,7 @@ usage(FILE *stream, int status)
   fprintf(stream,
 	  _("%s: usage is %s [ --version ] [ --help ] [ -v ] \\\n"
 	    "\t[ -l localtime ] [ -p posixrules ] [ -d directory ] \\\n"
-	    "\t[ -L leapseconds ] [ -y yearistype ] [ filename ... ]\n\n"
+	    "\t[ -L leapseconds ] [ filename ... ]\n\n"
 	    "Report bugs to %s.\n"),
 	  progname, progname, REPORT_BUGS_TO);
   if (status == EXIT_SUCCESS)

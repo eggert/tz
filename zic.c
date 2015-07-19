@@ -2380,11 +2380,11 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 					    _("two rules for same instant");
 					  eats(zp->z_filename, zp->z_linenum,
 					       rp->r_filename, rp->r_linenum);
-					  warning(dup_rules_msg);
+					  warning("%s", dup_rules_msg);
 					  rp = &zp->z_rules[k];
 					  eats(zp->z_filename, zp->z_linenum,
 					       rp->r_filename, rp->r_linenum);
-					  error(dup_rules_msg);
+					  error("%s", dup_rules_msg);
 					}
 				}
 				if (k < 0)

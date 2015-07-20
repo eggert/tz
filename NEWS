@@ -32,6 +32,9 @@ Unreleased, experimental changes
 
   Changes affecting installed data files
 
+    Comments for America/Halifax and America/Glace_Bay have been improved.
+    (Thanks to Brian Inglis.)
+
     Data entries have been simplified for Atlantic/Canary, Europe/Simferopol,
     Europe/Sofia, and Europe/Tallinn.  This yields slightly smaller
     installed data files for Europe/Simferopol and Europe/Tallinn.

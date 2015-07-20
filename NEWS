@@ -25,6 +25,11 @@ Unreleased, experimental changes
     (Thanks to Jon Skeet and Arthur David Olson.)  Constraints on
     simultaneity are now documented.
 
+    The two characters '%z' in a zone format now stand for the UTC
+    offset, e.g., '-07' for seven hours behind UTC and '+0530' for
+    five hours and thirty minutes ahead.  This better supports time
+    zone abbreviations conforming to POSIX.1-2001 and later.
+
   Changes affecting installed data files
 
     Data entries have been simplified for Atlantic/Canary, Europe/Simferopol,

@@ -350,6 +350,19 @@ The pair of characters
 is used to show where the
 .q "variable part"
 of the time zone abbreviation goes.
+Alternately, a format can use the pair of characters
+.B %z
+to stand for the UTC offset in the form
+.RI \(+- hh ,
+.RI \(+- hhmm ,
+or
+.RI \(+- hhmmss ,
+using the shortest form that does not lose information, where
+.IR hh ,
+.IR mm ,
+and
+.I ss
+are the hours, minutes, and seconds east (+) or west (\(mi) of UTC.
 Alternately,
 a slash (/)
 separates standard and daylight abbreviations.

@@ -76,6 +76,7 @@ struct zone {
 	zic_t		z_gmtoff;
 	const char *	z_rule;
 	const char *	z_format;
+	char		z_format_specifier;
 
 	zic_t		z_stdoff;
 
@@ -130,6 +131,9 @@ static void	rulesub(struct rule * rp,
 static zic_t	tadd(zic_t t1, zic_t t2);
 static bool	yearistype(int year, const char * type);
 
+/* Bound on length of what %z can expand to.  */
+enum { PERCENT_Z_LEN_BOUND = sizeof "+995959" - 1 };
+
 static int		charcnt;
 static bool		errors;
 static bool		warnings;
@@ -139,7 +143,7 @@ static bool		leapseen;
 static zic_t		leapminyear;
 static zic_t		leapmaxyear;
 static int		linenum;
-static int		max_abbrvar_len;
+static int		max_abbrvar_len = PERCENT_Z_LEN_BOUND;
 static int		max_format_len;
 static zic_t		max_year;
 static zic_t		min_year;
@@ -955,7 +959,7 @@ associate(void)
 			** Note, though, that if there's no rule,
 			** a '%s' in the format is a bad thing.
 			*/
-			if (strchr(zp->z_format, '%') != 0)
+			if (zp->z_format_specifier == 's')
 				error("%s", _("%s in ruleless zone"));
 		}
 	}
@@ -1170,6 +1174,7 @@ static bool
 inzsub(char **fields, int nfields, bool iscont)
 {
 	register char *		cp;
+	char *			cp1;
 	static struct zone	z;
 	register int		i_gmtoff, i_rule, i_format;
 	register int		i_untilyear, i_untilmonth;
@@ -1201,13 +1206,21 @@ inzsub(char **fields, int nfields, bool iscont)
 	z.z_linenum = linenum;
 	z.z_gmtoff = gethms(fields[i_gmtoff], _("invalid UT offset"), true);
 	if ((cp = strchr(fields[i_format], '%')) != 0) {
-		if (*++cp != 's' || strchr(cp, '%') != 0) {
+		if ((*++cp != 's' && *cp != 'z') || strchr(cp, '%')
+		    || strchr(fields[i_format], '/')) {
 			error(_("invalid abbreviation format"));
 			return false;
 		}
 	}
 	z.z_rule = ecpyalloc(fields[i_rule]);
-	z.z_format = ecpyalloc(fields[i_format]);
+	z.z_format = cp1 = ecpyalloc(fields[i_format]);
+	z.z_format_specifier = cp ? *cp : '\0';
+	if (z.z_format_specifier == 'z') {
+	  if (noise)
+	    warning(_("format '%s' not handled by pre-2015 versions of zic"),
+		    z.z_format);
+	  cp1[cp - fields[i_format]] = 's';
+	}
 	if (max_format_len < strlen(z.z_format))
 		max_format_len = strlen(z.z_format);
 	hasuntil = nfields > i_untilyear;
@@ -1890,19 +1903,59 @@ writezone(const char *const name, const char *const string, char version)
 	free(fullname);
 }
 
+static char const *
+abbroffset(char *buf, zic_t offset)
+{
+  char sign = '+';
+  int seconds, minutes;
+
+  if (offset < 0) {
+    offset = -offset;
+    sign = '-';
+  }
+
+  seconds = offset % SECSPERMIN;
+  offset /= SECSPERMIN;
+  minutes = offset % MINSPERHOUR;
+  offset /= MINSPERHOUR;
+  if (100 <= offset) {
+    error(_("%%z UTC offset magnitude exceeds 99:59:59"));
+    return "%z";
+  } else {
+    char *p = buf;
+    *p++ = sign;
+    *p++ = '0' + offset / 10;
+    *p++ = '0' + offset % 10;
+    if (minutes | seconds) {
+      *p++ = '0' + minutes / 10;
+      *p++ = '0' + minutes % 10;
+      if (seconds) {
+	*p++ = '0' + seconds / 10;
+	*p++ = '0' + seconds % 10;
+      }
+    }
+    *p = '\0';
+    return buf;
+  }
+}
+
 static size_t
-doabbr(char *const abbr, const char *const format, const char *const letters,
+doabbr(char *abbr, struct zone const *zp, char const *letters,
        bool isdst, bool doquotes)
 {
 	register char *	cp;
 	register char *	slashp;
 	register size_t	len;
+	char const *format = zp->z_format;
 
 	slashp = strchr(format, '/');
 	if (slashp == NULL) {
-		if (letters == NULL)
-			strcpy(abbr, format);
-		else	sprintf(abbr, format, letters);
+	  char letterbuf[PERCENT_Z_LEN_BOUND + 1];
+	  if (zp->z_format_specifier == 'z')
+	    letters = abbroffset(letterbuf, -zp->z_gmtoff);
+	  else if (!letters)
+	    letters = "%s";
+	  sprintf(abbr, format, letters);
 	} else if (isdst) {
 		strcpy(abbr, slashp + 1);
 	} else {
@@ -2127,7 +2180,7 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 	if (stdrp == NULL && (zp->z_nrules != 0 || zp->z_stdoff != 0))
 		return -1;
 	abbrvar = (stdrp == NULL) ? "" : stdrp->r_abbrvar;
-	len = doabbr(result, zp->z_format, abbrvar, false, true);
+	len = doabbr(result, zp, abbrvar, false, true);
 	offsetlen = stringoffset(result + len, -zp->z_gmtoff);
 	if (! offsetlen) {
 		result[0] = '\0';
@@ -2136,7 +2189,7 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 	len += offsetlen;
 	if (dstrp == NULL)
 		return compat;
-	len += doabbr(result + len, zp->z_format, dstrp->r_abbrvar, true, true);
+	len += doabbr(result + len, zp, dstrp->r_abbrvar, true, true);
 	if (dstrp->r_stdoff != SECSPERMIN * MINSPERHOUR) {
 	  offsetlen = stringoffset(result + len,
 				   -(zp->z_gmtoff + dstrp->r_stdoff));
@@ -2307,8 +2360,7 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 		startoff = zp->z_gmtoff;
 		if (zp->z_nrules == 0) {
 			stdoff = zp->z_stdoff;
-			doabbr(startbuf, zp->z_format,
-			       NULL, stdoff != 0, false);
+			doabbr(startbuf, zp, NULL, stdoff != 0, false);
 			type = addtype(oadd(zp->z_gmtoff, stdoff),
 				startbuf, stdoff != 0, startttisstd,
 				startttisgmt);
@@ -2400,7 +2452,7 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 					if (ktime < starttime) {
 						startoff = oadd(zp->z_gmtoff,
 							stdoff);
-						doabbr(startbuf, zp->z_format,
+						doabbr(startbuf, zp,
 							rp->r_abbrvar,
 							rp->r_stdoff != 0,
 							false);
@@ -2410,7 +2462,7 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 						startoff == oadd(zp->z_gmtoff,
 						stdoff)) {
 							doabbr(startbuf,
-								zp->z_format,
+								zp,
 								rp->r_abbrvar,
 								rp->r_stdoff !=
 								false,
@@ -2419,7 +2471,7 @@ outzone(const struct zone * const zpfirst, const int zonecount)
 				}
 				eats(zp->z_filename, zp->z_linenum,
 					rp->r_filename, rp->r_linenum);
-				doabbr(ab, zp->z_format, rp->r_abbrvar,
+				doabbr(ab, zp, rp->r_abbrvar,
 					rp->r_stdoff != 0, false);
 				offset = oadd(zp->z_gmtoff, rp->r_stdoff);
 				type = addtype(offset, ab, rp->r_stdoff != 0,

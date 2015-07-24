@@ -117,8 +117,7 @@ strftime_l(char *s, size_t maxsize, char const *format, struct tm const *t,
 #endif
 
 size_t
-strftime(char * const s, const size_t maxsize, const char *const format,
-	 const struct tm *const t)
+strftime(char *s, size_t maxsize, const char *format, const struct tm *t)
 {
 	char *	p;
 	int	warn;
@@ -149,8 +148,8 @@ strftime(char * const s, const size_t maxsize, const char *const format,
 }
 
 static char *
-_fmt(const char *format, const struct tm *const t, char * pt,
-     const char *const ptlim, int *warnp)
+_fmt(const char *format, const struct tm *t, char *pt,
+     const char *ptlim, int *warnp)
 {
 	for ( ; *format; ++format) {
 		if (*format == '%') {
@@ -562,8 +561,7 @@ label:
 }
 
 static char *
-_conv(const int n, const char *const format, char *const pt,
-      const char *const ptlim)
+_conv(int n, const char *format, char *pt, const char *ptlim)
 {
 	char	buf[INT_STRLEN_MAXIMUM(int) + 1];
 
@@ -572,7 +570,7 @@ _conv(const int n, const char *const format, char *const pt,
 }
 
 static char *
-_add(const char *str, char *pt, const char *const ptlim)
+_add(const char *str, char *pt, const char *ptlim)
 {
 	while (pt < ptlim && (*pt = *str++) != '\0')
 		++pt;

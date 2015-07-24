@@ -1464,13 +1464,13 @@ localtime_tzset(time_t const *timep, struct tm *tmp, bool setname)
 }
 
 struct tm *
-localtime(const time_t *const timep)
+localtime(const time_t *timep)
 {
   return localtime_tzset(timep, &tm, true);
 }
 
 struct tm *
-localtime_r(const time_t *const timep, struct tm *tmp)
+localtime_r(const time_t *timep, struct tm *tmp)
 {
   return localtime_tzset(timep, tmp, false);
 }
@@ -1499,7 +1499,7 @@ gmtsub(struct state const *sp, time_t const *timep, int_fast32_t offset,
 }
 
 struct tm *
-gmtime(const time_t *const timep)
+gmtime(const time_t *timep)
 {
   return gmtime_r(timep, &tm);
 }
@@ -1509,7 +1509,7 @@ gmtime(const time_t *const timep)
 */
 
 struct tm *
-gmtime_r(const time_t *const timep, struct tm *tmp)
+gmtime_r(const time_t *timep, struct tm *tmp)
 {
   gmtcheck();
   return gmtsub(gmtptr, timep, 0, tmp);
@@ -1518,7 +1518,7 @@ gmtime_r(const time_t *const timep, struct tm *tmp)
 #ifdef STD_INSPIRED
 
 struct tm *
-offtime(const time_t *const timep, const long offset)
+offtime(const time_t *timep, long offset)
 {
   gmtcheck();
   return gmtsub(gmtptr, timep, offset, &tm);
@@ -1671,7 +1671,7 @@ timesub(const time_t *const timep, const int_fast32_t offset,
 }
 
 char *
-ctime(const time_t *const timep)
+ctime(const time_t *timep)
 {
 /*
 ** Section 4.12.3.2 of X3.159-1989 requires that
@@ -1684,7 +1684,7 @@ ctime(const time_t *const timep)
 }
 
 char *
-ctime_r(const time_t *const timep, char *buf)
+ctime_r(const time_t *timep, char *buf)
 {
   struct tm mytm;
   struct tm *tmp = localtime_r(timep, &mytm);
@@ -2103,7 +2103,7 @@ mktime_z(struct state *sp, struct tm *tmp)
 #endif
 
 time_t
-mktime(struct tm *const tmp)
+mktime(struct tm *tmp)
 {
   time_t t;
   int err = lock();
@@ -2120,7 +2120,7 @@ mktime(struct tm *const tmp)
 #ifdef STD_INSPIRED
 
 time_t
-timelocal(struct tm *const tmp)
+timelocal(struct tm *tmp)
 {
 	if (tmp != NULL)
 		tmp->tm_isdst = -1;	/* in case it wasn't initialized */
@@ -2128,13 +2128,13 @@ timelocal(struct tm *const tmp)
 }
 
 time_t
-timegm(struct tm *const tmp)
+timegm(struct tm *tmp)
 {
   return timeoff(tmp, 0);
 }
 
 time_t
-timeoff(struct tm *const tmp, const long offset)
+timeoff(struct tm *tmp, long offset)
 {
   if (tmp)
     tmp->tm_isdst = 0;

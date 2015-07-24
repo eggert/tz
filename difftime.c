@@ -8,7 +8,7 @@
 #include "private.h"	/* for time_t and TYPE_SIGNED */
 
 double ATTRIBUTE_CONST
-difftime(const time_t time1, const time_t time0)
+difftime(time_t time1, time_t time0)
 {
 	/*
 	** If (sizeof (double) > sizeof (time_t)) simply convert and subtract

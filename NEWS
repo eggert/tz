@@ -45,6 +45,9 @@ Unreleased, experimental changes
     zdump and zic no longer warn about valid time zone abbreviations
     like '-05'.
 
+    Some Visual Studio 2013 warnings have been suppressed.
+    (Thanks to Kees Dekker.)
+
   Changes affecting documentation
 
     tz-link.htm mentions Time Zone Database Parser (thanks to Howard Hinnant).

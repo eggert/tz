@@ -135,17 +135,19 @@ struct state {
 	int		defaulttype; /* for early times or if no transitions */
 };
 
+enum r_type {
+  JULIAN_DAY,		/* Jn = Julian day */
+  DAY_OF_YEAR,		/* n = day of year */
+  MONTH_NTH_DAY_OF_WEEK	/* Mm.n.d = month, week, day of week */
+};
+
 struct rule {
-	int		r_type;		/* type of rule; see below */
+	enum r_type	r_type;		/* type of rule */
 	int		r_day;		/* day number of rule */
 	int		r_week;		/* week number of rule */
 	int		r_mon;		/* month number of rule */
 	int_fast32_t	r_time;		/* transition time of rule */
 };
-
-#define JULIAN_DAY		0	/* Jn = Julian day */
-#define DAY_OF_YEAR		1	/* n = day of year */
-#define MONTH_NTH_DAY_OF_WEEK	2	/* Mm.n.d = month, week, day of week */
 
 static struct tm *gmtsub(struct state const *, time_t const *, int_fast32_t,
 			 struct tm *);

@@ -587,7 +587,7 @@ _add(const char *str, char *pt, const char *ptlim)
 
 static char *
 _yconv(int a, int b, bool convert_top, bool convert_yy,
-       char *pt, const char *const ptlim)
+       char *pt, const char *ptlim)
 {
 	register int	lead;
 	register int	trail;

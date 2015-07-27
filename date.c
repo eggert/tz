@@ -914,7 +914,7 @@ loop:
 			goto loop;
 
 		case TSP_DATEACK:
-			lose(s);
+			close(s);
 			return true;
 
 		default:
@@ -929,7 +929,7 @@ loop:
 		fputs(_("date: Can't reach time daemon, time set locally.\n"),
 			stderr);
 bad:
-	lose(s);
+	close(s);
 	retval = 2;
 	return false;
 }

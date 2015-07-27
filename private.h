@@ -195,7 +195,7 @@ typedef long long	int_fast64_t;
 #  define INT_FAST64_MIN LLONG_MIN
 #  define INT_FAST64_MAX LLONG_MAX
 # else
-#  if (LONG_MAX >> 31) < 0xffffffff
+#  if LONG_MAX >> 31 < 0xffffffff
 Please use a compiler that supports a 64-bit integer type (or wider);
 you may need to compile with "-DHAVE_STDINT_H".
 #  endif
@@ -244,6 +244,18 @@ typedef long intmax_t;
 #  define PRIdMAX "lld"
 # else
 #  define PRIdMAX "ld"
+# endif
+#endif
+
+#ifndef UINT_FAST64_MAX
+# if defined ULLONG_MAX || defined __LONG_LONG_MAX__
+typedef unsigned long long uint_fast64_t;
+# else
+#  if ULONG_MAX >> 31 >> 1 < 0xffffffff
+Please use a compiler that supports a 64-bit integer type (or wider);
+you may need to compile with "-DHAVE_STDINT_H".
+#  endif
+typedef unsigned long	uint_fast64_t;
 # endif
 #endif
 

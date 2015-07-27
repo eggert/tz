@@ -20,7 +20,7 @@
 #include "sys/time.h"	/* for struct timeval, struct timezone */
 #endif /* HAVE_ADJTIME || HAVE_SETTIMEOFDAY */
 #include "locale.h"
-#include "utmp.h"	/* for OLD_TIME (or its absence) */
+#include "utmp.h"
 #if HAVE_UTMPX_H
 #include "utmpx.h"
 #endif
@@ -62,7 +62,7 @@ static void		errensure(void);
 static void		iffy(time_t, time_t, const char *, const char *);
 static const char *	nondigit(const char *);
 static void		oops(const char *);
-static void		reset(time_t, bool);
+static void		reset(time_t);
 static void		timeout(FILE *, const char *, const struct tm *);
 static void		usage(void);
 static void		wildinput(const char *, const char *,
@@ -78,7 +78,6 @@ main(const int argc, char *argv[])
 	register bool		dousg;
 	register bool		aflag = false;
 	register bool		dflag = false;
-	register bool		nflag = false;
 	register bool		tflag = false;
 	register bool		rflag = false;
 	register int		minuteswest;
@@ -129,8 +128,7 @@ main(const int argc, char *argv[])
 			}
 			t = secs;
 			break;
-		case 'n':		/* don't set network */
-			nflag = true;
+		case 'n':		/* don't set network (ignored) */
 			break;
 		case 'd':		/* daylight saving time */
 			if (dflag) {
@@ -253,7 +251,7 @@ _("date: error: multiple values in command line\n"));
 			oops("adjtime");
 #endif /* HAVE_ADJTIME */
 #if !HAVE_ADJTIME
-		reset(now + adjust, nflag);
+		reset(now + adjust);
 #endif /* !HAVE_ADJTIME */
 		/*
 		** Sun silently ignores everything else; we follow suit.
@@ -283,7 +281,7 @@ _("date: warning: kernel doesn't keep -d/-t information, option ignored\n"));
 	}
 
 	if (value) {
-		reset(t, nflag);
+		reset(t);
 		checkfinal(value, dousg, t, now);
 		t = time(NULL);
 	}
@@ -321,12 +319,9 @@ dogmt(void)
 	}
 }
 
-#ifdef OLD_TIME
-
 /*
-** We assume we're on a System-V-based system,
-** should use stime,
-** should write System-V-format utmp entries,
+** We assume we're on a POSIX-based system,
+** should use stime, should write utmp entries,
 ** and don't have network notification to worry about.
 */
 
@@ -334,7 +329,7 @@ dogmt(void)
 
 /*ARGSUSED*/
 static void
-reset(time_t newt, bool nflag)
+reset(time_t newt)
 {
 	register int		fid;
 	time_t			oldt;
@@ -397,76 +392,6 @@ reset(time_t newt, bool nflag)
 #endif /* HAVE_UTMPX_H */
 }
 
-#endif /* defined OLD_TIME */
-#ifndef OLD_TIME
-
-/*
-** We assume we're on a BSD-based system,
-** should use settimeofday,
-** should write BSD-format utmp entries (using logwtmp),
-** and may get to worry about network notification.
-** The "time name" changes between 4.3-tahoe and 4.4;
-** we include sys/param.h to determine which we should use.
-*/
-
-#ifndef TIME_NAME
-#include "sys/param.h"
-#ifdef BSD4_4
-#define TIME_NAME	"date"
-#endif /* defined BSD4_4 */
-#ifndef BSD4_4
-#define TIME_NAME	""
-#endif /* !defined BSD4_4 */
-#endif /* !defined TIME_NAME */
-
-#include "syslog.h"
-#include "sys/socket.h"
-#include "netinet/in.h"
-#include "netdb.h"
-#define TSPTYPES
-#include "protocols/timed.h"
-
-extern int		logwtmp();
-
-#if HAVE_SETTIMEOFDAY == 1
-#define settimeofday(t, tz) (settimeofday)(t)
-#endif /* HAVE_SETTIMEOFDAY == 1 */
-
-#ifdef TSP_SETDATE
-static bool netsettime(struct timeval);
-#endif
-
-#ifndef TSP_SETDATE
-/*ARGSUSED*/
-#endif /* !defined TSP_SETDATE */
-static void
-reset(time_t newt, bool nflag)
-{
-	register const char *	username;
-	static struct timeval	tv;	/* static so tv_usec is 0 */
-
-	username = getlogin();
-	if (username == NULL || *username == '\0') /* single-user or no tty */
-		username = "root";
-	tv.tv_sec = newt;
-#ifdef TSP_SETDATE
-	if (nflag || !netsettime(tv))
-#endif /* defined TSP_SETDATE */
-	{
-		/*
-		** "old" entry is always written, for compatibility.
-		*/
-		logwtmp("|", TIME_NAME, "");
-		if (settimeofday(&tv, NULL) == 0) {
-			logwtmp("{", TIME_NAME, "");	/* } */
-			syslog(LOG_AUTH | LOG_NOTICE, _("date set by %s"),
-				username);
-		} else	oops("settimeofday");
-	}
-}
-
-#endif /* !defined OLD_TIME */
-
 static void
 wildinput(const char *const item, const char *const value,
 	  const char *const reason)
@@ -496,7 +421,7 @@ static void
 usage(void)
 {
 	fprintf(stderr,
-		       _("date: usage: date [-u] [-c] [-r seconds] [-n]"
+		       _("date: usage: date [-u] [-c] [-r seconds]"
 			 " [-d dst] [-t min-west] [-a sss.fff]"
 			 " [[yyyy]mmddhhmm[yyyy][.ss]] [+format]\n"));
 	errensure();
@@ -801,136 +726,3 @@ iffy(const time_t thist, const time_t thatt,
 	errensure();
 	exit(retval);
 }
-
-#ifdef TSP_SETDATE
-#define WAITACK		2	/* seconds */
-#define WAITDATEACK	5	/* seconds */
-
-/*
- * Set the date in the machines controlled by timedaemons
- * by communicating the new date to the local timedaemon.
- * If the timedaemon is in the master state, it performs the
- * correction on all slaves.  If it is in the slave state, it
- * notifies the master that a correction is needed.
- * Return true on success.
- */
-static bool
-netsettime(struct timeval ntv)
-{
-	int s, length, port, timed_ack, found, err, waittime;
-	fd_set ready;
-	struct timeval tout;
-	struct servent *sp;
-	struct tsp msg;
-	struct sockaddr_in sin, dest, from;
-
-	sp = getservbyname("timed", "udp");
-	if (! sp) {
-		fputs(_("udp/timed: unknown service\n"), stderr);
-		retval = 2;
-		return false;
-	}
-	dest.sin_port = sp->s_port;
-	dest.sin_family = AF_INET;
-	dest.sin_addr.s_addr = htonl(INADDR_ANY);
-	s = socket(AF_INET, SOCK_DGRAM, 0);
-	if (s < 0) {
-		if (errno != EPROTONOSUPPORT)
-			perror("date: socket");
-		goto bad;
-	}
-	bzero((char *)&sin, sizeof (sin));
-	sin.sin_family = AF_INET;
-	for (port = IPPORT_RESERVED - 1; port > IPPORT_RESERVED / 2; port--) {
-		sin.sin_port = htons(port);
-		if (bind(s, (struct sockaddr *)&sin, sizeof (sin)) >= 0)
-			break;
-		if (errno != EADDRINUSE) {
-			if (errno != EADDRNOTAVAIL)
-				perror("date: bind");
-			goto bad;
-		}
-	}
-	if (port == IPPORT_RESERVED / 2) {
-		fputs(_("date: All ports in use\n"), stderr);
-		goto bad;
-	}
-	msg.tsp_type = TSP_SETDATE;
-	msg.tsp_vers = TSPVERSION;
-	msg.tsp_name[sizeof msg.tsp_name - 1] = '\0';
-	if (gethostname(msg.tsp_name, sizeof msg.tsp_name) != 0) {
-		perror("gethostname");
-		goto bad;
-	}
-	if (msg.tsp_name[sizeof msg.tsp_name - 1]) {
-		fprintf(stderr, "hostname too long\n");
-		goto bad;
-	}
-	msg.tsp_seq = htons(0);
-	msg.tsp_time.tv_sec = htonl(ntv.tv_sec);
-	msg.tsp_time.tv_usec = htonl(ntv.tv_usec);
-	length = sizeof (struct sockaddr_in);
-	if (connect(s, &dest, length) < 0) {
-		perror("date: connect");
-		goto bad;
-	}
-	if (send(s, (char *)&msg, sizeof (struct tsp), 0) < 0) {
-		if (errno != ECONNREFUSED)
-			perror("date: send");
-		goto bad;
-	}
-	timed_ack = -1;
-	waittime = WAITACK;
-loop:
-	tout.tv_sec = waittime;
-	tout.tv_usec = 0;
-	FD_ZERO(&ready);
-	FD_SET(s, &ready);
-	found = select(FD_SETSIZE, &ready, NULL, NULL, &tout);
-	length = sizeof err;
-	if (getsockopt(s, SOL_SOCKET, SO_ERROR, (char *)&err, &length) == 0
-	    && err) {
-		errno = err;
-		if (errno != ECONNREFUSED)
-			perror(_("date: send (delayed error)"));
-		goto bad;
-	}
-	if (found > 0 && FD_ISSET(s, &ready)) {
-		length = sizeof (struct sockaddr_in);
-		if (recvfrom(s, (char *)&msg, sizeof (struct tsp), 0, &from,
-		    &length) < 0) {
-			if (errno != ECONNREFUSED)
-				perror("date: recvfrom");
-			goto bad;
-		}
-		msg.tsp_seq = ntohs(msg.tsp_seq);
-		msg.tsp_time.tv_sec = ntohl(msg.tsp_time.tv_sec);
-		msg.tsp_time.tv_usec = ntohl(msg.tsp_time.tv_usec);
-		switch (msg.tsp_type) {
-
-		case TSP_ACK:
-			timed_ack = TSP_ACK;
-			waittime = WAITDATEACK;
-			goto loop;
-
-		case TSP_DATEACK:
-			close(s);
-			return true;
-
-		default:
-			fprintf(stderr,
-				_("date: Wrong ack received from timed: %s\n"),
-				tsptype[msg.tsp_type]);
-			timed_ack = -1;
-			break;
-		}
-	}
-	if (timed_ack == -1)
-		fputs(_("date: Can't reach time daemon, time set locally.\n"),
-			stderr);
-bad:
-	close(s);
-	retval = 2;
-	return false;
-}
-#endif /* defined TSP_SETDATE */

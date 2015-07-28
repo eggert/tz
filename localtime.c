@@ -1581,7 +1581,7 @@ timesub(const time_t *timep, int_fast32_t offset,
 	}
 	y = EPOCH_YEAR;
 	tdays = *timep / SECSPERDAY;
-	rem = *timep - tdays * SECSPERDAY;
+	rem = *timep % SECSPERDAY;
 	while (tdays < 0 || tdays >= year_lengths[isleap(y)]) {
 		int		newy;
 		register time_t	tdelta;
@@ -1603,13 +1603,6 @@ timesub(const time_t *timep, int_fast32_t offset,
 		tdays -= ((time_t) newy - y) * DAYSPERNYEAR;
 		tdays -= leapdays;
 		y = newy;
-	}
-	{
-		register int_fast32_t	seconds;
-
-		seconds = tdays * SECSPERDAY;
-		tdays = seconds / SECSPERDAY;
-		rem += seconds - tdays * SECSPERDAY;
 	}
 	/*
 	** Given the range, we can now fearlessly cast...

@@ -20,7 +20,6 @@
 #include "sys/time.h"	/* for struct timeval, struct timezone */
 #endif /* HAVE_ADJTIME || HAVE_SETTIMEOFDAY */
 #include "locale.h"
-#include "utmp.h"
 #if HAVE_UTMPX_H
 #include "utmpx.h"
 #endif
@@ -321,7 +320,7 @@ dogmt(void)
 
 /*
 ** We assume we're on a POSIX-based system,
-** should use stime, should write utmp entries,
+** should use stime, and should write utmp entries if HAVE_UTMPX_H,
 ** and don't have network notification to worry about.
 */
 
@@ -331,13 +330,11 @@ dogmt(void)
 static void
 reset(time_t newt)
 {
-	register int		fid;
-	time_t			oldt;
-	static struct {
-		struct utmp	before;
-		struct utmp	after;
-	} s;
 #if HAVE_UTMPX_H
+# if defined WTMPX_FILE && !SUPPRESS_WTMPX_FILE_UPDATE
+	register int		fid;
+# endif
+	time_t oldt = time(NULL);
 	static struct {
 		struct utmpx	before;
 		struct utmpx	after;
@@ -347,26 +344,8 @@ reset(time_t newt)
 	/*
 	** Wouldn't it be great if stime returned the old time?
 	*/
-	oldt = time(NULL);
 	if (stime(&newt) != 0)
 		oops("stime");
-	s.before.ut_type = OLD_TIME;
-	s.before.ut_time = oldt;
-	strcpy(s.before.ut_line, OTIME_MSG);
-	s.after.ut_type = NEW_TIME;
-	s.after.ut_time = newt;
-	strcpy(s.after.ut_line, NTIME_MSG);
-	fid = open(WTMP_FILE, O_WRONLY | O_APPEND);
-	if (fid < 0)
-		oops(_("log file open"));
-	if (write(fid, (char *) &s, sizeof s) != sizeof s)
-		oops(_("log file write"));
-	if (close(fid) != 0)
-		oops(_("log file close"));
-#if !HAVE_UTMPX_H
-	pututline(&s.before);
-	pututline(&s.after);
-#endif /* !HAVE_UTMPX_H */
 #if HAVE_UTMPX_H
 	sx.before.ut_type = OLD_TIME;
 	sx.before.ut_tv.tv_sec = oldt;

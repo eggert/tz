@@ -126,7 +126,7 @@ LDLIBS=
 #  -DHAVE_SYS_WAIT_H=0 if your compiler lacks a "sys/wait.h"
 #  -DHAVE_TZSET=0 if your system lacks a tzset function
 #  -DHAVE_UNISTD_H=0 if your compiler lacks a "unistd.h" (Microsoft C++ 7?)
-#  -DHAVE_UTMPX_H=1 if your compiler has a "utmpx.h"
+#  -DHAVE_UTMPX_H=0 if your compiler lacks a "utmpx.h"
 #  -DNO_RUN_TIME_WARNINGS_ABOUT_YEAR_2000_PROBLEMS_THANK_YOU=1
 #	if you do not want run time warnings about formats that may cause
 #	year 2000 grief

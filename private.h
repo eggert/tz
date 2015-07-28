@@ -63,7 +63,7 @@
 #endif /* !defined HAVE_UNISTD_H */
 
 #ifndef HAVE_UTMPX_H
-#define HAVE_UTMPX_H		0
+#define HAVE_UTMPX_H		1
 #endif /* !defined HAVE_UTMPX_H */
 
 #ifndef NETBSD_INSPIRED

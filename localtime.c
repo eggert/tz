@@ -1010,7 +1010,7 @@ tzparse(const char *name, struct state *sp, bool lastditch)
 			name = getzname(name);
 			stdlen = name - stdname;
 		}
-		if (*name == '\0')
+		if (!stdlen)
 		  return false;
 		name = getoffset(name, &stdoffset);
 		if (name == NULL)

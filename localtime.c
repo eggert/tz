@@ -670,7 +670,7 @@ tzload(char const *name, struct state *sp, bool doextend)
 }
 
 static bool
-typesequiv(const struct state *const sp, const int a, const int b)
+typesequiv(const struct state *sp, int a, int b)
 {
 	register bool result;
 
@@ -980,8 +980,7 @@ transtime(const int year, register const struct rule *const rulep,
 */
 
 static bool
-tzparse(const char *name, register struct state *const sp,
-	bool lastditch)
+tzparse(const char *name, struct state *sp, bool lastditch)
 {
 	const char *			stdname;
 	const char *			dstname;
@@ -1541,9 +1540,8 @@ leaps_thru_end_of(register const int y)
 }
 
 static struct tm *
-timesub(const time_t *const timep, const int_fast32_t offset,
-	register const struct state *const sp,
-	register struct tm *const tmp)
+timesub(const time_t *timep, int_fast32_t offset,
+	const struct state *sp, struct tm *tmp)
 {
 	register const struct lsinfo *	lp;
 	register time_t			tdays;
@@ -1711,7 +1709,7 @@ ctime_r(const time_t *timep, char *buf)
 */
 
 static bool
-increment_overflow(int *const ip, int j)
+increment_overflow(int *ip, int j)
 {
 	register int const	i = *ip;
 
@@ -1767,8 +1765,7 @@ normalize_overflow(int *const tensptr, int *const unitsptr, const int base)
 }
 
 static bool
-normalize_overflow32(int_fast32_t *const tensptr, int *const unitsptr,
-		     const int base)
+normalize_overflow32(int_fast32_t *tensptr, int *unitsptr, int base)
 {
 	register int	tensdelta;
 

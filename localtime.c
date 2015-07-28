@@ -986,6 +986,7 @@ tzparse(const char *name, struct state *sp, bool lastditch)
 	const char *			dstname;
 	size_t				stdlen;
 	size_t				dstlen;
+	size_t				charcnt;
 	int_fast32_t			stdoffset;
 	int_fast32_t			dstoffset;
 	register char *			cp;
@@ -993,10 +994,8 @@ tzparse(const char *name, struct state *sp, bool lastditch)
 
 	stdname = name;
 	if (lastditch) {
-		stdlen = strlen(name);	/* length of standard zone name */
+		stdlen = sizeof gmt - 1;
 		name += stdlen;
-		if (stdlen >= sizeof sp->chars)
-			stdlen = (sizeof sp->chars) - 1;
 		stdoffset = 0;
 	} else {
 		if (*name == '<') {
@@ -1017,6 +1016,9 @@ tzparse(const char *name, struct state *sp, bool lastditch)
 		if (name == NULL)
 		  return false;
 	}
+	charcnt = stdlen + 1;
+	if (sizeof sp->chars < charcnt)
+	  return false;
 	load_ok = tzload(TZDEFRULES, sp, false) == 0;
 	if (!load_ok)
 		sp->leapcnt = 0;		/* so, we're off a little */
@@ -1033,6 +1035,11 @@ tzparse(const char *name, struct state *sp, bool lastditch)
 			name = getzname(name);
 			dstlen = name - dstname; /* length of DST zone name */
 		}
+		if (!dstlen)
+		  return false;
+		charcnt += dstlen + 1;
+		if (sizeof sp->chars < charcnt)
+		  return false;
 		if (*name != '\0' && *name != ',' && *name != ';') {
 			name = getoffset(name, &dstoffset);
 			if (name == NULL)
@@ -1193,11 +1200,7 @@ tzparse(const char *name, struct state *sp, bool lastditch)
 		init_ttinfo(&sp->ttis[0], -stdoffset, false, 0);
 		sp->defaulttype = 0;
 	}
-	sp->charcnt = stdlen + 1;
-	if (dstlen != 0)
-		sp->charcnt += dstlen + 1;
-	if ((size_t) sp->charcnt > sizeof sp->chars)
-	  return false;
+	sp->charcnt = charcnt;
 	cp = sp->chars;
 	memcpy(cp, stdname, stdlen);
 	cp += stdlen;

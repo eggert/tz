@@ -740,7 +740,7 @@ main(int argc, char *argv[])
 }
 
 static time_t
-yeartot(const intmax_t y)
+yeartot(intmax_t y)
 {
 	register intmax_t	myy, seconds, years;
 	register time_t		t;

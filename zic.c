@@ -739,7 +739,7 @@ relname(char const *dir, char const *base)
 }
 
 static void
-dolink(const char *const fromfield, const char *const tofield)
+dolink(char const *fromfield, char const *tofield)
 {
 	register char *	fromname;
 	register char *	toname;
@@ -859,7 +859,7 @@ static const zic_t big_bang_time = BIG_BANG;
 
 /* Return 1 if NAME is a directory, 0 if it's something else, -1 if trouble.  */
 static int
-itsdir(const char *const name)
+itsdir(char const *name)
 {
 	struct stat st;
 	int res = stat(name, &st);
@@ -1101,7 +1101,7 @@ warning(_("values over 24 hours not handled by pre-2007 versions of zic"));
 }
 
 static void
-inrule(register char **const fields, const int nfields)
+inrule(char **fields, int nfields)
 {
 	static struct rule	r;
 
@@ -1127,7 +1127,7 @@ inrule(register char **const fields, const int nfields)
 }
 
 static bool
-inzone(register char **const fields, const int nfields)
+inzone(char **fields, int nfields)
 {
 	register int	i;
 
@@ -1161,7 +1161,7 @@ _("duplicate zone name %s (file \"%s\", line %d)"),
 }
 
 static bool
-inzcont(register char **const fields, const int nfields)
+inzcont(char **fields, int nfields)
 {
 	if (nfields < ZONEC_MINFIELDS || nfields > ZONEC_MAXFIELDS) {
 		error(_("wrong number of fields on Zone continuation line"));

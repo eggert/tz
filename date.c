@@ -287,8 +287,7 @@ reset(time_t newt)
 }
 
 static void
-wildinput(const char *const item, const char *const value,
-	  const char *const reason)
+wildinput(char const *item, char const *value, char const *reason)
 {
 	fprintf(stderr,
 		_("date: error: bad command line %s \"%s\", %s\n"),
@@ -314,7 +313,7 @@ usage(void)
 }
 
 static void
-oops(const char *const string)
+oops(char const *string)
 {
 	int		e = errno;
 
@@ -327,7 +326,7 @@ oops(const char *const string)
 }
 
 static void
-display(const char *const format, time_t const now)
+display(char const *format, time_t now)
 {
 	struct tm *tmp;
 
@@ -352,7 +351,7 @@ display(const char *const format, time_t const now)
 #define INCR	1024
 
 static void
-timeout(FILE *const fp, const char *const format, const struct tm *tmp)
+timeout(FILE *fp, char const *format, struct tm const *tmp)
 {
 	char *	cp;
 	size_t	result;
@@ -579,8 +578,7 @@ checkfinal(char const *value, bool didusg, time_t t, time_t oldnow)
 }
 
 static void
-iffy(const time_t thist, const time_t thatt,
-	const char * const value, const char * const reason)
+iffy(time_t thist, time_t thatt, char const *value, char const *reason)
 {
 	struct tm *tmp;
 	bool dst;

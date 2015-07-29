@@ -175,12 +175,8 @@ Rule	Arg	2000	only	-	Mar	3	0:00	0	-
 # http://www.worldtimezone.com/dst_news/dst_news_argentina03.html
 # http://www.impulsobaires.com.ar/nota.php?id=57832 (in spanish)
 
-# From Rodrigo Severo (2008-10-06):
-# Here is some info available at a Gentoo bug related to TZ on Argentina's DST:
-# ...
-# ------- Comment #1 from [jmdocile]  2008-10-06 16:28 0000 -------
-# Hi, there is a problem with timezone-data-2008e and maybe with
-# timezone-data-2008f
+# From Juan Manuel Docile in https://bugs.gentoo.org/240339 (2008-10-07)
+# via Rodrigo Severo:
 # Argentinian law No. 25.155 is no longer valid.
 # http://www.infoleg.gov.ar/infolegInternet/anexos/60000-64999/60036/norma.htm
 # The new one is law No. 26.350

@@ -343,7 +343,7 @@
 
 # From an anonymous contributor (1996-06-02):
 # The law governing time in Ireland is under Statutory Instrument SI 395/94,
-# which gives force to European Union 7th Council Directive # 94/21/EC.
+# which gives force to European Union 7th Council Directive No. 94/21/EC.
 # Under this directive, the Minister for Justice in Ireland makes appropriate
 # regulations. I spoke this morning with the Secretary of the Department of
 # Justice (tel +353 1 678 9711) who confirmed to me that the correct name is
@@ -2135,7 +2135,7 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # Russia
 
 # From Alexander Krivenyshev (2011-09-15):
-# Based on last Russian Government Decree # 725 on August 31, 2011
+# Based on last Russian Government Decree No. 725 on August 31, 2011
 # (Government document
 # http://www.government.ru/gov/results/16355/print/
 # in Russian)
@@ -2511,7 +2511,7 @@ Zone Asia/Novosibirsk	 5:31:40 -	LMT	1919 Dec 14  6:00
 # from current Russia Zone 6 - Krasnoyarsk Time Zone (KRA) UTC +0700
 # to Russia Zone 5 - Novosibirsk Time Zone (NOV) UTC +0600
 #
-# This is according to Government of Russia decree # 740, on September
+# This is according to Government of Russia decree No. 740, on September
 # 14, 2009 "Application in the territory of the Kemerovo region the Fifth
 # time zone." ("Russia Zone 5" or old "USSR Zone 5" is GMT +0600)
 #

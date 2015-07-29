@@ -1734,6 +1734,10 @@ Zone America/Montevideo	-3:44:44 -	LMT	1898 Jun 28
 
 # Venezuela
 #
+# From Paul Eggert (2015-07-28):
+# For the 1965 transition see Gaceta Oficial № 27.619 (1964-12-15), p 205.533
+# http://www.pgr.gob.ve/dmdocuments/1964/27619.pdf
+#
 # From John Stainforth (2007-11-28):
 # ... the change for Venezuela originally expected for 2007-12-31 has
 # been brought forward to 2007-12-09.  The official announcement was
@@ -1745,6 +1749,6 @@ Zone America/Montevideo	-3:44:44 -	LMT	1898 Jun 28
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Caracas	-4:27:44 -	LMT	1890
 			-4:27:40 -	CMT	1912 Feb 12 # Caracas Mean Time?
-			-4:30	-	VET	1965        # Venezuela Time
+			-4:30	-	VET	1965 Jan  1  0:00 # Venezuela T.
 			-4:00	-	VET	2007 Dec  9  3:00
 			-4:30	-	VET

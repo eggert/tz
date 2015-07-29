@@ -16,9 +16,6 @@
  */
 
 #include "private.h"
-#if HAVE_ADJTIME || HAVE_SETTIMEOFDAY
-#include "sys/time.h"	/* for struct timeval, struct timezone */
-#endif /* HAVE_ADJTIME || HAVE_SETTIMEOFDAY */
 #include "locale.h"
 #if HAVE_UTMPX_H
 #include "utmpx.h"
@@ -59,7 +56,6 @@ static void		display(const char *, time_t);
 static void		dogmt(void);
 static void		errensure(void);
 static void		iffy(time_t, time_t, const char *, const char *);
-static const char *	nondigit(const char *);
 static void		oops(const char *);
 static void		reset(time_t);
 static void		timeout(FILE *, const char *, const struct tm *);
@@ -75,13 +71,7 @@ main(const int argc, char *argv[])
 	register const char *	cp;
 	register int		ch;
 	register bool		dousg;
-	register bool		aflag = false;
-	register bool		dflag = false;
-	register bool		tflag = false;
 	register bool		rflag = false;
-	register int		minuteswest;
-	register int		dsttime;
-	register double		adjust;
 	time_t			now;
 	time_t			t;
 	intmax_t		secs;
@@ -99,7 +89,7 @@ main(const int argc, char *argv[])
 #endif /* HAVE_GETTEXT */
 	t = now = time(NULL);
 	format = value = NULL;
-	while ((ch = getopt(argc, argv, "ucr:nd:t:a:")) != EOF && ch != -1) {
+	while ((ch = getopt(argc, argv, "ucr:n")) != EOF && ch != -1) {
 		switch (ch) {
 		default:
 			usage();
@@ -128,55 +118,6 @@ main(const int argc, char *argv[])
 			t = secs;
 			break;
 		case 'n':		/* don't set network (ignored) */
-			break;
-		case 'd':		/* daylight saving time */
-			if (dflag) {
-				fprintf(stderr,
-					_("date: error: multiple -d's used"));
-				usage();
-			}
-			dflag = true;
-			cp = optarg;
-			dsttime = atoi(cp);
-			if (*cp == '\0' || *nondigit(cp) != '\0')
-				wildinput(_("-t value"), optarg,
-					_("must be a non-negative number"));
-			break;
-		case 't':		/* minutes west of UTC */
-			if (tflag) {
-				fprintf(stderr,
-					_("date: error: multiple -t's used"));
-				usage();
-			}
-			tflag = true;
-			cp = optarg;
-			minuteswest = atoi(cp);
-			if (*cp == '+' || *cp == '-')
-				++cp;
-			if (*cp == '\0' || *nondigit(cp) != '\0')
-				wildinput(_("-d value"), optarg,
-					_("must be a number"));
-			break;
-		case 'a':		/* adjustment */
-			if (aflag) {
-				fprintf(stderr,
-					_("date: error: multiple -a's used"));
-				usage();
-			}
-			aflag = true;
-			cp = optarg;
-			adjust = atof(cp);
-			if (*cp == '+' || *cp == '-')
-				++cp;
-			if (*cp == '\0' || strcmp(cp, ".") == 0)
-				wildinput(_("-a value"), optarg,
-					_("must be a number"));
-			cp = nondigit(cp);
-			if (*cp == '.')
-				++cp;
-			if (*nondigit(cp) != '\0')
-				wildinput(_("-a value"), optarg,
-					_("must be a number"));
 			break;
 		}
 	}
@@ -240,44 +181,6 @@ _("date: error: multiple values in command line\n"));
 	/*
 	** Entire command line has now been checked.
 	*/
-	if (aflag) {
-#if HAVE_ADJTIME
-		struct timeval	tv;
-
-		tv.tv_sec = (int) adjust;
-		tv.tv_usec = (int) ((adjust - tv.tv_sec) * 1000000L);
-		if (adjtime(&tv, NULL) != 0)
-			oops("adjtime");
-#endif /* HAVE_ADJTIME */
-#if !HAVE_ADJTIME
-		reset(now + adjust);
-#endif /* !HAVE_ADJTIME */
-		/*
-		** Sun silently ignores everything else; we follow suit.
-		*/
-		exit(retval);
-	}
-	if (dflag || tflag) {
-#if HAVE_SETTIMEOFDAY == 2
-		struct timezone	tz;
-
-		if (!dflag || !tflag)
-			if (gettimeofday(NULL, &tz) != 0)
-				oops("gettimeofday");
-		if (dflag)
-			tz.tz_dsttime = dsttime;
-		if (tflag)
-			tz.tz_minuteswest = minuteswest;
-		if (settimeofday(NULL, &tz) != 0)
-			oops("settimeofday");
-#endif /* HAVE_SETTIMEOFDAY == 2 */
-#if HAVE_SETTIMEOFDAY != 2
-		(void) dsttime;
-		(void) minuteswest;
-		fprintf(stderr,
-_("date: warning: kernel doesn't keep -d/-t information, option ignored\n"));
-#endif /* HAVE_SETTIMEOFDAY != 2 */
-	}
 
 	if (value) {
 		reset(t);
@@ -320,7 +223,8 @@ dogmt(void)
 
 /*
 ** We assume we're on a POSIX-based system,
-** should use stime, and should write utmp entries if HAVE_UTMPX_H,
+** should use clock_settime if CLOCK_REALTIME is defined,
+** and should write utmp entries if HAVE_UTMPX_H,
 ** and don't have network notification to worry about.
 */
 
@@ -342,10 +246,21 @@ reset(time_t newt)
 #endif
 
 	/*
-	** Wouldn't it be great if stime returned the old time?
+	** Wouldn't it be great if clock_settime returned the old time?
 	*/
-	if (stime(&newt) != 0)
-		oops("stime");
+	int clock_settime_result;
+#ifdef CLOCK_REALTIME
+	struct timespec ts;
+	ts.tv_sec = newt;
+	ts.tv_nsec = 0;
+	clock_settime_result = clock_settime(CLOCK_REALTIME, &ts);
+#else
+	clock_settime_result = -1;
+	errno = EPERM;
+#endif
+	if (clock_settime_result != 0)
+	  oops("clock_settime");
+
 #if HAVE_UTMPX_H
 	sx.before.ut_type = OLD_TIME;
 	sx.before.ut_tv.tv_sec = oldt;
@@ -388,20 +303,11 @@ errensure(void)
 		retval = EXIT_FAILURE;
 }
 
-static const char * ATTRIBUTE_PURE
-nondigit(register const char *cp)
-{
-	while (is_digit(*cp))
-		++cp;
-	return cp;
-}
-
 static void
 usage(void)
 {
 	fprintf(stderr,
 		       _("date: usage: date [-u] [-c] [-r seconds]"
-			 " [-d dst] [-t min-west] [-a sss.fff]"
 			 " [[yyyy]mmddhhmm[yyyy][.ss]] [+format]\n"));
 	errensure();
 	exit(retval);
@@ -644,7 +550,7 @@ checkfinal(char const *value, bool didusg, time_t t, time_t oldnow)
 ** So we perform this final check, deferring it until after the time has
 ** been set; it may take a while, and we don't want to introduce an unnecessary
 ** lag between the time the user enters their command and the time that
-** stime/settimeofday is called.
+** clock_settime is called.
 **
 ** We just check nearby times to see if any have the same representation
 ** as the time that convert returned.  We work our way out from the center

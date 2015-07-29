@@ -19,12 +19,8 @@
 
 /*
 ** Defaults for preprocessor symbols.
-** You can override these in your C compiler options, e.g. '-DHAVE_ADJTIME=0'.
+** You can override these in your C compiler options, e.g. '-DHAVE_GETTEXT=1'.
 */
-
-#ifndef HAVE_ADJTIME
-#define HAVE_ADJTIME		1
-#endif /* !defined HAVE_ADJTIME */
 
 #ifndef HAVE_GETTEXT
 #define HAVE_GETTEXT		0
@@ -37,10 +33,6 @@
 #ifndef HAVE_LINK
 #define HAVE_LINK		1
 #endif /* !defined HAVE_LINK */
-
-#ifndef HAVE_SETTIMEOFDAY
-#define HAVE_SETTIMEOFDAY	3
-#endif /* !defined HAVE_SETTIMEOFDAY */
 
 #ifndef HAVE_STRDUP
 #define HAVE_STRDUP 1

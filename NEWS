@@ -48,6 +48,14 @@ Unreleased, experimental changes
     Some Visual Studio 2013 warnings have been suppressed.
     (Thanks to Kees Dekker.)
 
+    date now sets the time of day via the POSIX clock_settime function
+    instead of via the older nonstandard settimeofday function.
+    date's -a, -d, and -t options have been removed.  Long obsolescent,
+    they were usable only by the superuser, and their implementation
+    had porting problems.  Builders no longer need to configure
+    HAVE_ADJTIME and HAVE_SETTIMEOFDAY.  (Thanks to Kees Dekker for
+    pointing out the problem.)
+
     The implementation of date's -n option, which has long been a
     no-op in practice, has been greatly simplified and the -n option
     is no longer documented.  (Thanks to Kees Dekker for pointing out

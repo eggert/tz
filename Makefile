@@ -102,7 +102,6 @@ LDLIBS=
 
 # Add the following to the end of the "CFLAGS=" line as needed.
 #  -DBIG_BANG=-9999999LL if the Big Bang occurred at time -9999999 (see zic.c)
-#  -DHAVE_ADJTIME=0 if 'adjtime' does not exist (SVR0?)
 #  -DHAVE_DOS_FILE_NAMES if file names have drive specifiers etc. (MS-DOS)
 #  -DHAVE_GETTEXT=1 if 'gettext' works (GNU, Linux, Solaris); also see LDLIBS
 #  -DHAVE_INCOMPATIBLE_CTIME_R=1 if your system's time.h declares
@@ -113,10 +112,6 @@ LDLIBS=
 #  -DHAVE_LOCALTIME_RZ=0 if you do not want zdump to use localtime_rz
 #	This defaults to 1 if a working localtime_rz seems to be available.
 #	localtime_rz can make zdump significantly faster, but is nonstandard.
-#  -DHAVE_SETTIMEOFDAY=0 if settimeofday does not exist (SVR0?)
-#  -DHAVE_SETTIMEOFDAY=1 if settimeofday has just 1 arg (SVR4)
-#  -DHAVE_SETTIMEOFDAY=2 if settimeofday uses 2nd arg (4.3BSD)
-#  -DHAVE_SETTIMEOFDAY=3 if settimeofday ignores 2nd arg (4.4BSD)
 #  -DHAVE_STDINT_H=1 if you have a pre-C99 compiler with "stdint.h"
 #  -DHAVE_STRFTIME_L=1 if <time.h> declares locale_t and strftime_l
 #	This defaults to 0 if _POSIX_VERSION < 200809, 1 otherwise.

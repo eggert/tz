@@ -335,7 +335,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=10	0:00	1:00	D
 # Guo Qingsheng (National Time-Service Center, CAS, Xi'an 710600, China)
 # Beijing Time at the Beginning of the PRC
 # China Historical Materials of Science and Technology
-# (Zhongguo ke ji shi liao, 中国科技史料), Vol. 24, № 1 (2003)
+# (Zhongguo ke ji shi liao, 中国科技史料), Vol. 24, No. 1 (2003)
 # It gives evidence that at the beginning of the PRC, Beijing time was
 # officially apparent solar time!  However, Guo also says that the
 # evidence is dubious, as the relevant institute of astronomy had not
@@ -624,7 +624,7 @@ Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
 # Taipei has DST in 1979 between July 1st and Sep 30.
 
 # From Yu-Cheng Chuang (2013-07-12):
-# On Dec 28, 1895, the Meiji Emperor announced Ordinance № 167 of
+# On Dec 28, 1895, the Meiji Emperor announced Ordinance No. 167 of
 # Meiji Year 28 "The clause about standard time", mentioned that
 # Taiwan and Penghu Islands, as well as Yaeyama and Miyako Islands
 # (both in Okinawa) adopt the Western Standard Time which is based on
@@ -636,8 +636,8 @@ Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
 # declared officially.
 #
 # Later, in the beginning of World War II, on Sep 25, 1937, the Showa
-# Emperor announced Ordinance № 529 of Showa Year 12 "The clause of
-# revision in the ordinance № 167 of Meiji year 28 about standard
+# Emperor announced Ordinance No. 529 of Showa Year 12 "The clause of
+# revision in the ordinance No. 167 of Meiji year 28 about standard
 # time", in which abolished the adoption of Western Standard Time in
 # western islands (listed above), which means the whole Japan
 # territory, including later occupations, adopt Japan Central Time
@@ -681,14 +681,14 @@ Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
 # Yu-Cheng Chuang (2014-07-03):
 # I finally have found the real official gazette about changing back to
 # Western Standard Time on Sep 21 in Taiwan.  It's Taiwan Governor-General
-# Bulletin № 386 in Showa 20 years (1945), published on Sep 19, 1945. [1] ...
-# [It] abolishes Bulletin № 207 in Showa 12 years (1937), which is a local
-# bulletin in Taiwan for that Ordinance № 529. It also mentioned that 1am on
+# Bulletin No. 386 in Showa 20 years (1945), published on Sep 19, 1945. [1] ...
+# [It] abolishes Bulletin No. 207 in Showa 12 years (1937), which is a local
+# bulletin in Taiwan for that Ordinance No. 529. It also mentioned that 1am on
 # Sep 21, 1945 will be 12am on Sep 21.  I think this bulletin is much more
 # official than the one I mentioned in my first mail, because it's from the
 # top-level government in Taiwan. If you're going to quote any resource, this
 # would be a good one.
-# [1] Taiwan Governor-General Gazette, № 1018, Sep 19, 1945:
+# [1] Taiwan Governor-General Gazette, No. 1018, Sep 19, 1945:
 # http://db2.th.gov.tw/db2/view/viewImg.php?imgcode=0072031018a&num=19&bgn=019&end=019&otherImg=&type=gener
 
 # From Yu-Cheng Chuang (2014-07-02):
@@ -963,8 +963,8 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # This is an English translation of what I just found (originally in Persian).
 # The Gregorian dates in brackets are mine:
 #
-#	Official Newspaper № 13548-1370/6/25 [1991-09-16]
-#	№ 16760/T233 H					1370/6/10 [1991-09-01]
+#	Official Newspaper No. 13548-1370/6/25 [1991-09-16]
+#	No. 16760/T233 H				1370/6/10 [1991-09-01]
 #
 #	The Rule About Change of the Official Time of the Country
 #
@@ -1027,7 +1027,7 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 #
 # From Roozbeh Pournader (2007-11-05):
 # This is quoted from Official Gazette of the Islamic Republic of
-# Iran, Volume 63, № 18242, dated Tuesday 1386/6/24
+# Iran, Volume 63, No. 18242, dated Tuesday 1386/6/24
 # [2007-10-16]. I am doing the best translation I can:...
 # The official time of the country will be moved forward for one hour
 # on the 24 hours of the first day of the month of Farvardin and will
@@ -1408,12 +1408,12 @@ Rule	Japan	1950	1951	-	May	Sun>=1	2:00	1:00	D
 # The law is enacted on 1886-07-07.
 
 # From Hideyuki Suzuki (1998-11-16):
-# The ordinance № 51 (1886) established "standard time" in Japan,
+# The ordinance No. 51 (1886) established "standard time" in Japan,
 # which stands for the time on 135 degrees E.
-# In the ordinance № 167 (1895), "standard time" was renamed to "central
+# In the ordinance No. 167 (1895), "standard time" was renamed to "central
 # standard time".  And the same ordinance also established "western standard
 # time", which stands for the time on 120 degrees E....  But "western standard
-# time" was abolished in the ordinance № 529 (1937).  In the ordinance №
+# time" was abolished in the ordinance No. 529 (1937).  In the ordinance No.
 # 167, there is no mention regarding for what place western standard time is
 # standard....
 #
@@ -1421,11 +1421,11 @@ Rule	Japan	1950	1951	-	May	Sun>=1	2:00	1:00	D
 # In Japanese it's "chokurei", which means ordinance from emperor.
 
 # From Yu-Cheng Chuang (2013-07-12):
-# ...the Meiji Emperor announced Ordinance № 167 of Meiji Year 28 "The clause
+# ...the Meiji Emperor announced Ordinance No. 167 of Meiji Year 28 "The clause
 # about standard time" ... The adoption began from Jan 1, 1896.
 # http://ja.wikisource.org/wiki/標準時ニ關スル件_(公布時)
 #
-# ...the Showa Emperor announced Ordinance № 529 of Showa Year 12 ... which
+# ...the Showa Emperor announced Ordinance No. 529 of Showa Year 12 ... which
 # means the whole Japan territory, including later occupations, adopt Japan
 # Central Time (UTC+9). The adoption began on Oct 1, 1937.
 # http://ja.wikisource.org/wiki/明治二十八年勅令第百六十七號標準時ニ關スル件中改正ノ件
@@ -1557,7 +1557,7 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # - Qyzylorda switched from +5:00 to +6:00 on 1992-01-19 02:00.
 # - Oral switched from +5:00 to +4:00 in spring 1989.
 
-# From Kazakhstan Embassy's News Bulletin № 11
+# From Kazakhstan Embassy's News Bulletin No. 11
 # <http://www.kazsociety.org.uk/news/2005/03/30.htm> (2005-03-21):
 # The Government of Kazakhstan passed a resolution March 15 abolishing
 # daylight saving time citing lack of economic benefits and health
@@ -1694,12 +1694,12 @@ Rule	ROK	1987	1988	-	Oct	Sun>=8	3:00	0	S
 # From Paul Eggert (2014-10-30):
 # The Korean Wikipedia entry gives the following sources for UT offsets:
 #
-# 1908: Official Journal Article № 3994 (Edict № 5)
-# 1912: Governor-General of Korea Official Gazette Issue № 367
-#       (Announcement № 338)
-# 1954: Presidential Decree № 876 (1954-03-17)
-# 1961: Law № 676 (1961-08-07)
-# 1987: Law № 3919 (1986-12-31)
+# 1908: Official Journal Article No. 3994 (Edict No. 5)
+# 1912: Governor-General of Korea Official Gazette Issue No. 367
+#       (Announcement No. 338)
+# 1954: Presidential Decree No. 876 (1954-03-17)
+# 1961: Law No. 676 (1961-08-07)
+# 1987: Law No. 3919 (1986-12-31)
 #
 # The Wikipedia entry also has confusing information about a change
 # to UT+9 in April 1910, but then what would be the point of the later change
@@ -2841,7 +2841,7 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # Trần cites the following sources; it's unclear which supplied the info above.
 #
 # Hoàng Xuân Hãn: "Lịch và lịch Việt Nam". Tập san Khoa học Xã hội,
-# № 9, Paris, February 1982.
+# No. 9, Paris, February 1982.
 #
 # Lê Thành Lân: "Lịch và niên biểu lịch sử hai mươi thế kỷ (0001-2010)",
 # NXB Thống kê, Hanoi, 2000.

@@ -131,7 +131,7 @@ Rule	Arg	2000	only	-	Mar	3	0:00	0	-
 # Timezone Law (which never was effectively applied) will (would?) be
 # in effect.... The article is at
 # http://ar.clarin.com/diario/2001-06-06/e-01701.htm
-# ... The Law itself is "Ley No 25155", sanctioned on 1999-08-25, enacted
+# ... The Law itself is "Ley № 25155", sanctioned on 1999-08-25, enacted
 # 1999-09-17, and published 1999-09-21.  The official publication is at:
 # http://www.boletin.jus.gov.ar/BON/Primera/1999/09-Septiembre/21/PDF/BO21-09-99LEG.PDF
 # Regretfully, you have to subscribe (and pay) for the on-line version....
@@ -181,9 +181,9 @@ Rule	Arg	2000	only	-	Mar	3	0:00	0	-
 # ------- Comment #1 from [jmdocile]  2008-10-06 16:28 0000 -------
 # Hi, there is a problem with timezone-data-2008e and maybe with
 # timezone-data-2008f
-# Argentinian law [Number] 25.155 is no longer valid.
+# Argentinian law № 25.155 is no longer valid.
 # http://www.infoleg.gov.ar/infolegInternet/anexos/60000-64999/60036/norma.htm
-# The new one is law [Number] 26.350
+# The new one is law № 26.350
 # http://www.infoleg.gov.ar/infolegInternet/anexos/135000-139999/136191/norma.htm
 # So there is no summer time in Argentina for now.
 
@@ -225,7 +225,7 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	S
 # its timezone this winter... starting tomorrow night....
 # http://www.gobernac.mendoza.gov.ar/boletin/pdf/20040521-27158-normas.pdf
 # From Paul Eggert (2004-05-24):
-# It's Law No. 7,210.  This change is due to a public power emergency, so for
+# It's Law № 7,210.  This change is due to a public power emergency, so for
 # now we'll assume it's for this year only.
 #
 # From Paul Eggert (2014-08-09):
@@ -771,7 +771,7 @@ Zone	America/La_Paz	-4:32:36 -	LMT	1890
 #	 [ and in a second message (same day): ]
 # I found the decree.
 #
-# DECRETO No- 7.584, DE 13 DE OUTUBRO DE 2011
+# DECRETO № 7.584, DE 13 DE OUTUBRO DE 2011
 # Link :
 # http://www.in.gov.br/visualiza/index.jsp?data=13/10/2011&jornal=1000&pagina=6&totalArquivos=6
 
@@ -1125,7 +1125,7 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # Conflicts between [1] and [2] were resolved as follows:
 #
 #  - [1] says the 1910 transition was Jan 1, [2] says Jan 10 and cites
-#    Boletín Nº 1, Aviso Nº 1 (1910).  Go with [2].
+#    Boletín № 1, Aviso № 1 (1910).  Go with [2].
 #
 #  - [1] says SMT was -4:42:45, [2] says Chile's official time from
 #    1916 to 1919 was -4:42:46.3, the meridian of Chile's National
@@ -1133,7 +1133,7 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 #    Quinta Normal in Santiago.  Go with [2], rounding it to -4:42:46.
 #
 #  - [1] says the 1918 transition was Sep 1, [2] says Sep 10 and cites
-#    Boletín Nº 22, Aviso Nº 129/1918 (1918-08-23).  Go with [2].
+#    Boletín № 22, Aviso № 129/1918 (1918-08-23).  Go with [2].
 #
 #  - [1] does not give times for transitions; assume they occur
 #    at midnight mainland time, the current common practice.  However,
@@ -1520,7 +1520,7 @@ Rule	Para	1996	only	-	Mar	 1	0:00	0	-
 # Noticias, a daily paper in Asunción, Paraguay (2000-10-01):
 # http://www.diarionoticias.com.py/011000/nacional/naciona1.htm
 # Starting at 0:00 today, the clock will be set forward 60 minutes, in
-# fulfillment of Decree No. 7,273 of the Executive Power....  The time change
+# fulfillment of Decree № 7,273 of the Executive Power....  The time change
 # system has been operating for several years.  Formerly there was a separate
 # decree each year; the new law has the same effect, but permanently.  Every
 # year, the time will change on the first Sunday of October; likewise, the
@@ -1533,7 +1533,7 @@ Rule	Para	1997	only	-	Feb	lastSun	0:00	0	-
 # (1999-09) reports no date; go with above sources and Gerd Knops (2001-02-27).
 Rule	Para	1998	2001	-	Mar	Sun>=1	0:00	0	-
 # From Rives McDow (2002-02-28):
-# A decree was issued in Paraguay (no. 16350) on 2002-02-26 that changed the
+# A decree was issued in Paraguay (№ 16350) on 2002-02-26 that changed the
 # dst method to be from the first Sunday in September to the first Sunday in
 # April.
 Rule	Para	2002	2004	-	Apr	Sun>=1	0:00	0	-

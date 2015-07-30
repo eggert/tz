@@ -56,6 +56,9 @@ Unreleased, experimental changes
 
   Changes affecting documentation
 
+    The Theory file mentions naming issues earlier, as these seem to be
+    poorly publicized (thanks to Gilmore Davidson for reporting the problem).
+
     tz-link.htm mentions Time Zone Database Parser (thanks to Howard Hinnant).
 
 

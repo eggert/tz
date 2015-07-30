@@ -1259,7 +1259,7 @@ inzsub(char **fields, int nfields, bool iscont)
 }
 
 static void
-inleap(register char ** const fields, const int nfields)
+inleap(char **fields, int nfields)
 {
 	register const char *		cp;
 	register const struct lookup *	lp;
@@ -1364,7 +1364,7 @@ inleap(register char ** const fields, const int nfields)
 }
 
 static void
-inlink(register char **const fields, const int nfields)
+inlink(char **fields, int nfields)
 {
 	struct link	l;
 
@@ -1387,13 +1387,9 @@ inlink(register char **const fields, const int nfields)
 }
 
 static void
-rulesub(register struct rule *const rp,
-	const char *const loyearp,
-	const char *const hiyearp,
-	const char *const typep,
-	const char *const monthp,
-	const char *const dayp,
-	const char *const timep)
+rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
+	const char *typep, const char *monthp, const char *dayp,
+	const char *timep)
 {
 	register const struct lookup *	lp;
 	register const char *		cp;
@@ -2220,7 +2216,7 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 }
 
 static void
-outzone(const struct zone * const zpfirst, const int zonecount)
+outzone(const struct zone *zpfirst, int zonecount)
 {
 	register const struct zone *	zp;
 	register struct rule *		rp;
@@ -2552,7 +2548,7 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 }
 
 static void
-addtt(const zic_t starttime, int type)
+addtt(zic_t starttime, int type)
 {
 	if (starttime <= big_bang_time ||
 		(timecnt == 1 && attypes[0].at < big_bang_time)) {
@@ -2663,7 +2659,7 @@ adjleap(void)
 }
 
 static bool
-yearistype(const int year, const char *const type)
+yearistype(int year, const char *type)
 {
 	static char *	buf;
 	int		result;
@@ -2761,8 +2757,7 @@ itsabbr(register const char *abbr, register const char *word)
 }
 
 static ATTRIBUTE_PURE const struct lookup *
-byword(register const char *const word,
-       register const struct lookup *const table)
+byword(const char *word, const struct lookup *table)
 {
 	register const struct lookup *	foundlp;
 	register const struct lookup *	lp;
@@ -2834,7 +2829,7 @@ time_overflow(void)
 }
 
 static ATTRIBUTE_PURE zic_t
-oadd(const zic_t t1, const zic_t t2)
+oadd(zic_t t1, zic_t t2)
 {
 	if (t1 < 0 ? t2 < ZIC_MIN - t1 : ZIC_MAX - t1 < t2)
 	  time_overflow();
@@ -2842,7 +2837,7 @@ oadd(const zic_t t1, const zic_t t2)
 }
 
 static ATTRIBUTE_PURE zic_t
-tadd(const zic_t t1, const zic_t t2)
+tadd(zic_t t1, zic_t t2)
 {
   if (t1 < 0) {
     if (t2 < min_time - t1) {
@@ -2866,7 +2861,7 @@ tadd(const zic_t t1, const zic_t t2)
 */
 
 static zic_t
-rpytime(register const struct rule *const rp, register const zic_t wantedy)
+rpytime(const struct rule *rp, zic_t wantedy)
 {
 	register int	m, i;
 	register zic_t	dayoff;			/* with a nod to Margaret O. */
@@ -2947,7 +2942,7 @@ will not work with pre-2004 versions of zic"));
 }
 
 static void
-newabbr(const char *const string)
+newabbr(const char *string)
 {
 	register int	i;
 

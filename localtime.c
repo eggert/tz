@@ -1502,12 +1502,6 @@ gmtsub(struct state const *sp, time_t const *timep, int_fast32_t offset,
 	return result;
 }
 
-struct tm *
-gmtime(const time_t *timep)
-{
-  return gmtime_r(timep, &tm);
-}
-
 /*
 * Re-entrant version of gmtime.
 */
@@ -1517,6 +1511,12 @@ gmtime_r(const time_t *timep, struct tm *tmp)
 {
   gmtcheck();
   return gmtsub(gmtptr, timep, 0, tmp);
+}
+
+struct tm *
+gmtime(const time_t *timep)
+{
+  return gmtime_r(timep, &tm);
 }
 
 #ifdef STD_INSPIRED

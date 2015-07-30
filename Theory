@@ -50,7 +50,9 @@ Each of the database's time zone rules has a unique name.
 Inexperienced users are not expected to select these names unaided.
 Distributors should provide documentation and/or a simple selection
 interface that explains the names; for one example, see the 'tzselect'
-program in the tz code.
+program in the tz code.  The Unicode Common Locale Data Repository
+<http://cldr.unicode.org/> contains data that may be useful for other
+selection interfaces.
 
 The time zone rule naming conventions attempt to strike a balance
 among the following goals:

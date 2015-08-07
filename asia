@@ -1711,6 +1711,17 @@ Rule	ROK	1987	1988	-	Oct	Sun>=8	3:00	0	S
 #
 # For Pyongyang we have no information; guess no changes since World War II.
 
+# From Steffen Thorsen (2015-08-07):
+# According to many news sources, North Korea is going to change to
+# the 8:30 time zone on August 15, one example:
+# http://www.bbc.com/news/world-asia-33815049
+#
+# From Paul Eggert (2015-08-07):
+# No transition time is specified; assume 00:00.
+# There is no common English-language abbreviation for this time zone.
+# Use %z rather than invent one.  We can't assume %z works everywhere yet,
+# so for now substitute its output manually.
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Seoul	8:27:52	-	LMT	1908 Apr  1
 			8:30	-	KST	1912 Jan  1
@@ -1723,7 +1734,8 @@ Zone	Asia/Pyongyang	8:23:00 -	LMT	1908 Apr  1
 			8:30	-	KST	1912 Jan  1
 			9:00	-	JCST	1937 Oct  1
 			9:00	-	JST	1945 Aug 24
-			9:00	-	KST
+			9:00	-	KST	2015 Aug 15
+			8:30	-	+0830	# %z
 
 ###############################################################################
 

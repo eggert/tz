@@ -4,6 +4,12 @@ Unreleased, experimental changes
 
   Changes affecting future time stamps
 
+    North Korea switches to +0830 on August 15.  (Thanks to Steffen Thorsen.)
+    Its English-language time zone abbreviation is not yet established,
+    so it's '+0830' for now.  This institutes a policy of recording
+    time zone abbreviations rather than inventing them.  The new zic
+    notation '%z' will help implement this policy.
+
     Uruguay will stop observing DST.  (Thanks to Steffen Thorsen
     and Pablo Camargo.)
 

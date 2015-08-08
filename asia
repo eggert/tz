@@ -6,7 +6,7 @@
 # tz@iana.org for general use in the future).  For more, please see
 # the file CONTRIBUTING in the tz distribution.
 
-# From Paul Eggert (2014-10-31):
+# From Paul Eggert (2015-08-08):
 #
 # Unless otherwise specified, the source for data through 1990 is:
 # Thomas G. Shanks and Rique Pottenger, The International Atlas (6th edition),
@@ -43,7 +43,7 @@
 #	2:00 EET  EEST	Eastern European Time
 #	2:00 IST  IDT	Israel
 #	3:00 AST  ADT	Arabia*
-#	3:30 IRST IRDT	Iran
+#	3:30 IRST IRDT	Iran*
 #	4:00 GST	Gulf*
 #	5:30 IST	India
 #	7:00 ICT	Indochina, most times and locations*
@@ -52,10 +52,11 @@
 #	8:00 CST	China
 #	8:00 IDT	Indochina, 1943-45, 1947-55, 1960-75 (some locations)*
 #	8:00 JWST	Western Standard Time (Japan, 1896/1937)*
+#	8:30 KST  KDT	Korea when at +0830*
 #	9:00 JCST	Central Standard Time (Japan, 1896/1937)
 #	9:00 WIT	east Indonesia (Waktu Indonesia Timur)
 #	9:00 JST  JDT	Japan
-#	9:00 KST  KDT	Korea
+#	9:00 KST  KDT	Korea when at +09
 #	9:30 ACST	Australian Central Standard Time
 #
 # See the 'europe' file for Russia and Turkey in Asia.
@@ -1735,7 +1736,7 @@ Zone	Asia/Pyongyang	8:23:00 -	LMT	1908 Apr  1
 			9:00	-	JCST	1937 Oct  1
 			9:00	-	JST	1945 Aug 24
 			9:00	-	KST	2015 Aug 15
-			8:30	-	+0830	# %z
+			8:30	-	KST
 
 ###############################################################################
 

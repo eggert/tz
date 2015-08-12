@@ -1937,7 +1937,7 @@ abbroffset(char *buf, zic_t offset)
 
 static size_t
 doabbr(char *abbr, struct zone const *zp, char const *letters,
-       bool isdst, bool doquotes)
+       zic_t stdoff, bool doquotes)
 {
 	register char *	cp;
 	register char *	slashp;
@@ -1948,11 +1948,11 @@ doabbr(char *abbr, struct zone const *zp, char const *letters,
 	if (slashp == NULL) {
 	  char letterbuf[PERCENT_Z_LEN_BOUND + 1];
 	  if (zp->z_format_specifier == 'z')
-	    letters = abbroffset(letterbuf, -zp->z_gmtoff);
+	    letters = abbroffset(letterbuf, zp->z_gmtoff + stdoff);
 	  else if (!letters)
 	    letters = "%s";
 	  sprintf(abbr, format, letters);
-	} else if (isdst) {
+	} else if (stdoff != 0) {
 		strcpy(abbr, slashp + 1);
 	} else {
 		memcpy(abbr, format, slashp - format);
@@ -2176,7 +2176,7 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 	if (stdrp == NULL && (zp->z_nrules != 0 || zp->z_stdoff != 0))
 		return -1;
 	abbrvar = (stdrp == NULL) ? "" : stdrp->r_abbrvar;
-	len = doabbr(result, zp, abbrvar, false, true);
+	len = doabbr(result, zp, abbrvar, 0, true);
 	offsetlen = stringoffset(result + len, -zp->z_gmtoff);
 	if (! offsetlen) {
 		result[0] = '\0';
@@ -2185,7 +2185,7 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 	len += offsetlen;
 	if (dstrp == NULL)
 		return compat;
-	len += doabbr(result + len, zp, dstrp->r_abbrvar, true, true);
+	len += doabbr(result + len, zp, dstrp->r_abbrvar, dstrp->r_stdoff, true);
 	if (dstrp->r_stdoff != SECSPERMIN * MINSPERHOUR) {
 	  offsetlen = stringoffset(result + len,
 				   -(zp->z_gmtoff + dstrp->r_stdoff));
@@ -2356,7 +2356,7 @@ outzone(const struct zone *zpfirst, int zonecount)
 		startoff = zp->z_gmtoff;
 		if (zp->z_nrules == 0) {
 			stdoff = zp->z_stdoff;
-			doabbr(startbuf, zp, NULL, stdoff != 0, false);
+			doabbr(startbuf, zp, NULL, stdoff, false);
 			type = addtype(oadd(zp->z_gmtoff, stdoff),
 				startbuf, stdoff != 0, startttisstd,
 				startttisgmt);
@@ -2450,7 +2450,7 @@ outzone(const struct zone *zpfirst, int zonecount)
 							stdoff);
 						doabbr(startbuf, zp,
 							rp->r_abbrvar,
-							rp->r_stdoff != 0,
+							rp->r_stdoff,
 							false);
 						continue;
 					}
@@ -2460,15 +2460,14 @@ outzone(const struct zone *zpfirst, int zonecount)
 							doabbr(startbuf,
 								zp,
 								rp->r_abbrvar,
-								rp->r_stdoff !=
-								false,
+								rp->r_stdoff,
 								false);
 					}
 				}
 				eats(zp->z_filename, zp->z_linenum,
 					rp->r_filename, rp->r_linenum);
 				doabbr(ab, zp, rp->r_abbrvar,
-					rp->r_stdoff != 0, false);
+				       rp->r_stdoff, false);
 				offset = oadd(zp->z_gmtoff, rp->r_stdoff);
 				type = addtype(offset, ab, rp->r_stdoff != 0,
 					rp->r_todisstd, rp->r_todisgmt);

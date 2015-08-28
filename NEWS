@@ -1,5 +1,13 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting code
+
+    localtime no longer mishandles America/Anchorage after 2037.
+    (Thanks to Bradley White for reporting the bug.)
+
+
 Release 2015f - 2015-08-10 18:06:56 -0700
 
   Changes affecting future time stamps

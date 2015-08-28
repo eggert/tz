@@ -569,31 +569,52 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 
 			up->buf[nread - 1] = '\0';
 			if (tzparse(&up->buf[1], ts, false)
-			    && ts->typecnt == 2
-			    && sp->charcnt + ts->charcnt <= TZ_MAX_CHARS) {
-					for (i = 0; i < 2; ++i)
-						ts->ttis[i].tt_abbrind +=
-							sp->charcnt;
-					for (i = 0; i < ts->charcnt; ++i)
-						sp->chars[sp->charcnt++] =
-							ts->chars[i];
-					i = 0;
-					while (i < ts->timecnt &&
-						ts->ats[i] <=
-						sp->ats[sp->timecnt - 1])
-							++i;
-					while (i < ts->timecnt &&
-					    sp->timecnt < TZ_MAX_TIMES) {
-						sp->ats[sp->timecnt] =
-							ts->ats[i];
-						sp->types[sp->timecnt] =
-							sp->typecnt +
-							ts->types[i];
-						++sp->timecnt;
-						++i;
-					}
-					sp->ttis[sp->typecnt++] = ts->ttis[0];
-					sp->ttis[sp->typecnt++] = ts->ttis[1];
+			    && ts->typecnt == 2) {
+
+			  /* Attempt to reuse existing abbreviations.
+			     Without this, America/Anchorage would stop
+			     working after 2037 when TZ_MAX_CHARS is 50, as
+			     sp->charcnt equals 42 (for LMT CAT CAWT CAPT AHST
+			     AHDT YST AKDT AKST) and ts->charcnt equals 10
+			     (for AKST AKDT).  Reusing means sp->charcnt can
+			     stay 42 in this example.  */
+			  int gotabbr = 0;
+			  int charcnt = sp->charcnt;
+			  for (i = 0; i < 2; i++) {
+			    char *tsabbr = ts->chars + ts->ttis[i].tt_abbrind;
+			    int j;
+			    for (j = 0; j < charcnt; j++)
+			      if (strcmp(sp->chars + j, tsabbr) == 0) {
+				ts->ttis[i].tt_abbrind = j;
+				gotabbr++;
+				break;
+			      }
+			    if (! (j < charcnt)) {
+			      int tsabbrlen = strlen(tsabbr);
+			      if (j + tsabbrlen < TZ_MAX_CHARS) {
+				strcpy(sp->chars + j, tsabbr);
+				charcnt = j + tsabbrlen + 1;
+				ts->ttis[i].tt_abbrind = j;
+				gotabbr++;
+			      }
+			    }
+			  }
+			  if (gotabbr == 2) {
+			    sp->charcnt = charcnt;
+			    for (i = 0; i < ts->timecnt; i++)
+			      if (sp->ats[sp->timecnt - 1] < ts->ats[i])
+				break;
+			    while (i < ts->timecnt
+				   && sp->timecnt < TZ_MAX_TIMES) {
+			      sp->ats[sp->timecnt] = ts->ats[i];
+			      sp->types[sp->timecnt] = (sp->typecnt
+							+ ts->types[i]);
+			      sp->timecnt++;
+			      i++;
+			    }
+			    sp->ttis[sp->typecnt++] = ts->ttis[0];
+			    sp->ttis[sp->typecnt++] = ts->ttis[1];
+			  }
 			}
 	}
 	if (sp->timecnt > 1) {

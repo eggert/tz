@@ -7,6 +7,9 @@ Unreleased, experimental changes
     localtime no longer mishandles America/Anchorage after 2037.
     (Thanks to Bradley White for reporting the bug.)
 
+    The localtime module allows the variables 'timezone', 'daylight',
+    and 'altzone' to be in common storage shared with other modules.
+
 
 Release 2015f - 2015-08-10 18:06:56 -0700
 

@@ -194,12 +194,12 @@ char *			tzname[2] = {
 static struct tm	tm;
 
 #ifdef USG_COMPAT
-long			timezone = 0;
-int			daylight = 0;
+long			timezone;
+int			daylight;
 #endif /* defined USG_COMPAT */
 
 #ifdef ALTZONE
-long			altzone = 0;
+long			altzone;
 #endif /* defined ALTZONE */
 
 /* Initialize *S to a value based on GMTOFF, ISDST, and ABBRIND.  */

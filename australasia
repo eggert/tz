@@ -335,10 +335,17 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # DST will start Nov. 2 this year.
 # http://www.fiji.gov.fj/Media-Center/Press-Releases/DAYLIGHT-SAVING-STARTS-ON-SUNDAY,-NOVEMBER-2ND.aspx
 
-# From Paul Eggert (2014-10-20):
+# From a government order dated 2015-08-26 and published as Legal Notice No. 77
+# in the Government of Fiji Gazette Supplement No. 24 (2015-08-28),
+# via Ken Rylander (2015-09-02):
+# the daylight saving period is 1 hour in advance of the standard time
+# commencing at 2.00 am on Sunday 1st November, 2015 and ending at
+# 3.00 am on Sunday 17th January, 2016.
+
+# From Paul Eggert (2015-09-01):
 # For now, guess DST from 02:00 the first Sunday in November to
-# 03:00 the first Sunday on or after January 18.  Although ad hoc, it
-# matches this year's plan and seems more likely to match future
+# 03:00 the third Sunday in January.  Although ad hoc, it matches
+# transitions since late 2014 and seems more likely to match future
 # practice than guessing no DST.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
@@ -351,7 +358,7 @@ Rule	Fiji	2011	only	-	Mar	Sun>=1	3:00	0	-
 Rule	Fiji	2012	2013	-	Jan	Sun>=18	3:00	0	-
 Rule	Fiji	2014	only	-	Jan	Sun>=18	2:00	0	-
 Rule	Fiji	2014	max	-	Nov	Sun>=1	2:00	1:00	S
-Rule	Fiji	2015	max	-	Jan	Sun>=18	3:00	0	-
+Rule	Fiji	2015	max	-	Jan	Sun>=15	3:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Pacific/Fiji	11:55:44 -	LMT	1915 Oct 26 # Suva
 			12:00	Fiji	FJ%sT	# Fiji Time

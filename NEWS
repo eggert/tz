@@ -4,7 +4,7 @@ Unreleased, experimental changes
 
   Changes affecting future time stamps
 
-    Fiji's 2016 fall-back transition is scheduled for January 17, not January 24.
+    Fiji's 2016 fall-back transition is scheduled for January 17, not 24.
     (Thanks to Ken Rylander.)
 
   Changes affecting code
@@ -14,6 +14,9 @@ Unreleased, experimental changes
 
     The localtime module allows the variables 'timezone', 'daylight',
     and 'altzone' to be in common storage shared with other modules.
+
+    On platforms with tm_zone, strftime.c now assumes it is not NULL.
+    This simplifies the code and is consistent with zdump.c.
 
 
 Release 2015f - 2015-08-10 18:06:56 -0700

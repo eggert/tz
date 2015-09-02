@@ -473,13 +473,12 @@ label:
 				continue;
 			case 'Z':
 #ifdef TM_ZONE
-				if (t->TM_ZONE != NULL)
-					pt = _add(t->TM_ZONE, pt, ptlim);
-				else
-#endif /* defined TM_ZONE */
+				pt = _add(t->TM_ZONE, pt, ptlim);
+#else
 				if (t->tm_isdst >= 0)
 					pt = _add(tzname[t->tm_isdst != 0],
 						pt, ptlim);
+#endif
 				/*
 				** C99 says that %Z must be replaced by the
 				** empty string if the time zone is not

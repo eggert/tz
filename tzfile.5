@@ -50,7 +50,8 @@ Next come
 .I tzh_timecnt
 one-byte unsigned integer values;
 each one tells which of the different types of local time types
-described in the file is associated with the same-indexed transition time.
+described in the file is associated with the time period
+starting with the same-indexed transition time.
 These values serve as indices into an array of
 .I ttinfo
 structures (with
@@ -99,7 +100,8 @@ the first value of each pair gives the time
 at which a leap second occurs;
 the second gives the
 .I total
-number of leap seconds to be applied after the given time.
+number of leap seconds to be applied during the time period
+starting at the given time.
 The pairs of values are sorted in ascending order by time.
 .PP
 Then there are

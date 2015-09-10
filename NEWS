@@ -18,6 +18,12 @@ Unreleased, experimental changes
     On platforms with tm_zone, strftime.c now assumes it is not NULL.
     This simplifies the code and is consistent with zdump.c.
 
+  Changes affecting documentation
+
+   The tzfile man page now documents that transition times denote the
+   starts (not the ends) of the corresponding time periods.
+   (Ambiguity reported by Bill Seymour.)
+
 
 Release 2015f - 2015-08-10 18:06:56 -0700
 

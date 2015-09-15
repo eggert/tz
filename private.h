@@ -383,10 +383,23 @@ void tzset(void);
 ** Some time.h implementations don't declare asctime_r.
 ** Others might define it as a macro.
 ** Fix the former without affecting the latter.
+** Similarly for timezone, daylight, and altzone.
 */
 
 #ifndef asctime_r
 extern char *	asctime_r(struct tm const *restrict, char *restrict);
+#endif
+
+#ifdef USG_COMPAT
+# ifndef timezone
+extern long timezone;
+# endif
+# ifndef daylight
+extern int daylight;
+# endif
+#endif
+#if defined ALTZONE && !defined altzone
+extern long altzone;
 #endif
 
 /*

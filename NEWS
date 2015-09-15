@@ -13,10 +13,13 @@ Unreleased, experimental changes
     (Thanks to Bradley White for reporting the bug.)
 
     The localtime module allows the variables 'timezone', 'daylight',
-    and 'altzone' to be in common storage shared with other modules.
+    and 'altzone' to be in common storage shared with other modules,
+    and declares them in case the system <time.h> does not.
+    (Problems reported by Kees Dekker.)
 
     On platforms with tm_zone, strftime.c now assumes it is not NULL.
     This simplifies the code and is consistent with zdump.c.
+    (Problem reported by Christos Zoulas.)
 
   Changes affecting documentation
 

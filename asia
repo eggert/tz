@@ -131,7 +131,8 @@ Zone	Asia/Yerevan	2:58:00 -	LMT	1924 May  2
 # Azerbaijan
 # From Rustam Aliyev of the Azerbaijan Internet Forum (2005-10-23):
 # According to the resolution of Cabinet of Ministers, 1997
-# Resolution available at: http://aif.az/docs/daylight_res.pdf
+# From Paul Eggert (2015-09-17): It was Resolution No. 21 (1997-03-17).
+# http://code.az/files/daylight_res.pdf
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Azer	1997	max	-	Mar	lastSun	 4:00	1:00	S
 Rule	Azer	1997	max	-	Oct	lastSun	 5:00	0	-

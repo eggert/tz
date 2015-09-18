@@ -808,7 +808,11 @@ Zone Indian/Mauritius	3:50:00 -	LMT	1907 # Port Louis
 # <http://lnt.ma/le-maroc-reculera-dune-heure-le-dimanche-14-juin/> agrees
 # with the patch.
 
-# From Paul Eggert (2015-06-08):
+# From Paul Eggert (2015-09-18):
+# Yesterday's Morocco World News reports that Morocco will fall back
+# to UTC on 2015-09-27 at 03:00.  See:
+# http://www.moroccoworldnews.com/2015/09/168089/morocco-to-return-to-gmt-on-september-27/
+#
 # For now, guess that later spring and fall transitions will use 2015's rules,
 # and guess that Morocco will switch to standard time at 03:00 the last
 # Sunday before Ramadan, and back to DST at 02:00 the first Sunday after
@@ -865,12 +869,13 @@ Rule	Morocco	2012	only	-	Jul	20	 3:00	0	-
 Rule	Morocco	2012	only	-	Aug	20	 2:00	1:00	S
 Rule	Morocco	2013	only	-	Jul	 7	 3:00	0	-
 Rule	Morocco	2013	only	-	Aug	10	 2:00	1:00	S
-Rule	Morocco	2013	max	-	Oct	lastSun	 3:00	0	-
+Rule	Morocco	2013	2014	-	Oct	lastSun	 3:00	0	-
 Rule	Morocco	2014	2021	-	Mar	lastSun	 2:00	1:00	S
 Rule	Morocco	2014	only	-	Jun	28	 3:00	0	-
 Rule	Morocco	2014	only	-	Aug	 2	 2:00	1:00	S
 Rule	Morocco	2015	only	-	Jun	14	 3:00	0	-
 Rule	Morocco	2015	only	-	Jul	19	 2:00	1:00	S
+Rule	Morocco	2015	max	-	Sep	lastSun	 3:00	0	-
 Rule	Morocco	2016	only	-	Jun	 5	 3:00	0	-
 Rule	Morocco	2016	only	-	Jul	10	 2:00	1:00	S
 Rule	Morocco	2017	only	-	May	21	 3:00	0	-
@@ -888,8 +893,6 @@ Rule	Morocco	2023	only	-	Apr	23	 2:00	1:00	S
 Rule	Morocco	2024	only	-	Apr	14	 2:00	1:00	S
 Rule	Morocco	2025	only	-	Apr	 6	 2:00	1:00	S
 Rule	Morocco	2026	max	-	Mar	lastSun	 2:00	1:00	S
-Rule	Morocco	2036	only	-	Oct	19	 3:00	0	-
-Rule	Morocco	2037	only	-	Oct	 4	 3:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Africa/Casablanca	-0:30:20 -	LMT	1913 Oct 26

@@ -13,6 +13,10 @@ Unreleased, experimental changes
     Fiji's 2016 fall-back transition is scheduled for January 17, not 24.
     (Thanks to Ken Rylander.)
 
+    Fort Nelson, British Columbia will not fall back on 2015-11-01.  It has
+    effectively been on MST (-0700) since it advanced its clocks on 2015-03-08.
+    New zone America/Fort_Nelson.  (Thanks to Matt Johnson.)
+
   Changes affecting past time stamps
 
     Norfolk observed DST from 1974-10-27 02:00 to 1975-03-02 02:00.

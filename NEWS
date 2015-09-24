@@ -7,8 +7,15 @@ Unreleased, experimental changes
     Turkey's 2015 fall-back transition is scheduled for Nov. 8, not Oct. 25.
     (Thanks to Fatih.)
 
+    Norfolk moves from +1130 to +1100 on 2015-10-04 at 02:00 local time.
+    (Thanks to Alexander Krivenyshev.)
+
     Fiji's 2016 fall-back transition is scheduled for January 17, not 24.
     (Thanks to Ken Rylander.)
+
+  Changes affecting past time stamps
+
+    Norfolk observed DST from 1974-10-27 02:00 to 1975-03-02 02:00.
 
   Changes affecting code
 

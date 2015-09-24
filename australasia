@@ -517,7 +517,10 @@ Zone	Pacific/Niue	-11:19:40 -	LMT	1901        # Alofi
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Pacific/Norfolk	11:11:52 -	LMT	1901 # Kingston
 			11:12	-	NMT	1951 # Norfolk Mean Time
-			11:30	-	NFT	# Norfolk Time
+			11:30	-	NFT	1974 Oct 27 02:00 # Norfolk T.
+			11:30	1:00	NFST	1975 Mar  2 02:00
+			11:30	-	NFT	2015 Oct  4 02:00
+			11:00	-	NFT
 
 # Palau (Belau)
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1557,6 +1560,20 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # started DST on June 3.  Possibly DST was observed other years
 # in Midway, but we have no record of it.
 
+# Norfolk
+
+# From Alexander Krivenyshev (2015-09-23):
+# Norfolk Island will change ... from +1130 to +1100:
+# https://www.comlaw.gov.au/Details/F2015L01483/Explanatory%20Statement/Text
+# ... at 12.30 am (by legal time in New South Wales) on 4 October 2015.
+# http://www.norfolkisland.gov.nf/nia/MediaRelease/Media%20Release%20Norfolk%20Island%20Standard%20Time%20Change.pdf
+
+# From Paul Eggert (2015-09-23):
+# Transitions before 2015 are from timeanddate.com, which consulted
+# the Norfolk Island Museum and the Australian Bureau of Meteorology's
+# Norfolk Island station, and found no record of Norfolk observing DST
+# other than in 1974/5.  See:
+# http://www.timeanddate.com/time/australia/norfolk-island.html
 
 # Pitcairn
 

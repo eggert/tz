@@ -3150,13 +3150,10 @@ Zone	Europe/Zurich	0:34:08 -	LMT	1853 Jul 16 # See above comment.
 # http://www.balkaneu.com/eventful-elections-turkey/ 2014-03-30.
 # I guess the best we can do is document the official time.
 
-# From Fatih (2015-09-19):
-# Turkey ... will postpone end of summer time to 8th of November due
-# to the security issues related with the national election ... 1st Nov.
-#
-# From Paul Eggert (2015-09-19):
-# See the following Sözcü article dated 2015-09-08 (in Turkish):
-# http://www.sozcu.com.tr/2015/gunun-icinden/saatler-ne-zaman-geri-alinacak-yaz-saati-uygulamasi-ne-zaman-bitecek-930383/
+# From Fatih (2015-09-29):
+# It's officially announced now by the Ministry of Energy.
+# Turkey delays winter time to 8th of November 04:00
+# http://www.aa.com.tr/tr/turkiye/yaz-saati-uygulamasi-8-kasimda-sona-erecek/362217
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Turkey	1916	only	-	May	 1	0:00	1:00	S

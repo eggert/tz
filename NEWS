@@ -26,6 +26,9 @@ Release 2015g - 2015-10-01 00:39:51 -0700
     localtime no longer mishandles America/Anchorage after 2037.
     (Thanks to Bradley White for reporting the bug.)
 
+    On hosts with signed 32-bit time_t, localtime no longer mishandles
+    Pacific/Fiji after 2038-01-16 14:00 UTC.
+
     The localtime module allows the variables 'timezone', 'daylight',
     and 'altzone' to be in common storage shared with other modules,
     and declares them in case the system <time.h> does not.

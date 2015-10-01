@@ -556,11 +556,6 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 			break;
 		nread -= p - up->buf;
 		memmove(up->buf, p, nread);
-		/*
-		** If this is a signed narrow time_t system, we're done.
-		*/
-		if (TYPE_SIGNED(time_t) && stored >= (int) sizeof(time_t))
-			break;
 	}
 	if (doextend && nread > 2 &&
 		up->buf[0] == '\n' && up->buf[nread - 1] == '\n' &&

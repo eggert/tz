@@ -2587,25 +2587,6 @@ Zone America/Tijuana	-7:48:04 -	LMT	1922 Jan  1  0:11:56
 			-8:00	US	P%sT	2002 Feb 20
 			-8:00	Mexico	P%sT	2010
 			-8:00	US	P%sT
-# Baja California (away from US border)
-Zone America/Santa_Isabel	-7:39:28 -	LMT	1922 Jan  1  0:20:32
-			-7:00	-	MST	1924
-			-8:00	-	PST	1927 Jun 10 23:00
-			-7:00	-	MST	1930 Nov 15
-			-8:00	-	PST	1931 Apr  1
-			-8:00	1:00	PDT	1931 Sep 30
-			-8:00	-	PST	1942 Apr 24
-			-8:00	1:00	PWT	1945 Aug 14 23:00u
-			-8:00	1:00	PPT	1945 Nov 12 # Peace
-			-8:00	-	PST	1948 Apr  5
-			-8:00	1:00	PDT	1949 Jan 14
-			-8:00	-	PST	1954
-			-8:00	CA	P%sT	1961
-			-8:00	-	PST	1976
-			-8:00	US	P%sT	1996
-			-8:00	Mexico	P%sT	2001
-			-8:00	US	P%sT	2002 Feb 20
-			-8:00	Mexico	P%sT
 # From Paul Eggert (2006-03-22):
 # Formerly there was an America/Ensenada zone, which differed from
 # America/Tijuana only in that it did not observe DST from 1976
@@ -2617,6 +2598,13 @@ Zone America/Santa_Isabel	-7:39:28 -	LMT	1922 Jan  1  0:20:32
 # data after 1970 so most likely there should be at least one Zone
 # other than America/Tijuana for Baja, but it's not clear yet what its
 # name or contents should be.
+#
+# From Paul Eggert (2015-10-08):
+# Formerly there was an America/Santa_Isabel zone, but this appears to
+# have come from a misreading of
+# http://dof.gob.mx/nota_detalle.php?codigo=5127480&fecha=06/01/2010
+# It has been moved to the 'backward' file.
+#
 #
 # Revillagigedo Is
 # no information

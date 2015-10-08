@@ -1,5 +1,14 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting past and future time stamps
+
+    America/Santa_Isabel has been removed, and replaced with a
+    backward compatibility link to America/Tijuana.  Its contents were
+    apparently based on a misreading of Mexican legislation.
+
+
 Release 2015g - 2015-10-01 00:39:51 -0700
 
   Changes affecting future time stamps

@@ -38,7 +38,7 @@ BEGIN {
 		}
 		cc0 = cc
 		if (name2cc[name]) {
-			printf "%s:%d: '%s' and '%s' have the sname name\n", \
+			printf "%s:%d: '%s' and '%s' have the same name\n", \
 				iso_table, iso_NR, name2cc[name], cc \
 				>>"/dev/stderr"
 			status = 1

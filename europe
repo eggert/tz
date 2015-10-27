@@ -3154,6 +3154,12 @@ Zone	Europe/Zurich	0:34:08 -	LMT	1853 Jul 16 # See above comment.
 # It's officially announced now by the Ministry of Energy.
 # Turkey delays winter time to 8th of November 04:00
 # http://www.aa.com.tr/tr/turkiye/yaz-saati-uygulamasi-8-kasimda-sona-erecek/362217
+#
+# From BBC News (2015-10-25):
+# Confused Turks are asking "what's the time?" after automatic clocks defied a
+# government decision ... "For the next two weeks #Turkey is on EEST... Erdogan
+# Engineered Standard Time," said Twitter user @aysekarahasan.
+# http://www.bbc.com/news/world-europe-34631326
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Turkey	1916	only	-	May	 1	0:00	1:00	S

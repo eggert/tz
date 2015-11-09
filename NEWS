@@ -8,6 +8,9 @@ Unreleased, experimental changes
     backward compatibility link to America/Tijuana.  Its contents were
     apparently based on a misreading of Mexican legislation.
 
+    America/Metlakatla switched from PST all year to AKST/AKDT on
+    2015-11-01 at 02:00.  (Thanks to Steffen Thorsen.)
+
   Changes affecting documentation
 
     tz-link.htm mentions the BDE library (thanks to Andrew Paprocki).

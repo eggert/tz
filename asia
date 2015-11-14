@@ -1084,8 +1084,15 @@ Rule	Iran	2032	2033	-	Mar	21	0:00	1:00	D
 Rule	Iran	2032	2033	-	Sep	21	0:00	0	S
 Rule	Iran	2034	2035	-	Mar	22	0:00	1:00	D
 Rule	Iran	2034	2035	-	Sep	22	0:00	0	S
-Rule	Iran	2036	2037	-	Mar	21	0:00	1:00	D
-Rule	Iran	2036	2037	-	Sep	21	0:00	0	S
+#
+# The following rules are approximations starting in the year 2038.
+# These are the best post-2037 approximations available, given the
+# restrictions of a single rule using a Gregorian-based data format.
+# At some point this table will need to be extended, though quite
+# possibly Iran will change the rules first.
+Rule	Iran	2036	max	-	Mar	21	0:00	1:00	D
+Rule	Iran	2036	max	-	Sep	21	0:00	0	S
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Tehran	3:25:44	-	LMT	1916
 			3:25:44	-	TMT	1946     # Tehran Mean Time

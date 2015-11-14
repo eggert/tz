@@ -11,6 +11,12 @@ Unreleased, experimental changes
     America/Metlakatla switched from PST all year to AKST/AKDT on
     2015-11-01 at 02:00.  (Thanks to Steffen Thorsen.)
 
+  Changes affecting future time stamps
+
+    Asia/Tehran now has DST predictions for the year 2038 and later,
+    to be March 21 00:00 to September 21 00:00.  This is likely better
+    than predicting no DST, albeit off by a day every now and then.
+
   Changes affecting documentation
 
     tz-link.htm mentions the BDE library (thanks to Andrew Paprocki).

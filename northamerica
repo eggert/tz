@@ -2688,16 +2688,21 @@ Zone Atlantic/Bermuda	-4:19:18 -	LMT	1930 Jan  1  2:00 # Hamilton
 
 # Cayman Is
 
-# From Paul Eggert (2015-05-15):
+# From Paul Eggert (2015-12-08):
 # The Cayman government has decided to introduce DST in 2016, the idea being
-# to keep in sync with New York.  The legislation hasn't passed but the change
-# seems quite likely.  See: Meade B. Cayman 27.
-# http://www.cayman27.com.ky/2015/05/15/clock-ticks-toward-daylight-saving-time-in-cayman
+# to keep in sync with New York.  The enabling legislation has been published,
+# and seems quite likely to be approved.  See Cayman Islands
+# Extraordinary Gazette No. 92 (2015-11-25), Supp. 2, which specifies the
+# abbreviations CIST and CIDST.
+# http://www.gov.ky/portal/pls/portal/docs/1/12274400.PDF
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Cayman	2016	max	-	Mar	Sun>=8	2:00	1:00	D
+Rule	Cayman	2016	max	-	Nov	Sun>=1	2:00	0	-
 
 Zone	America/Cayman	-5:25:32 -	LMT	1890     # Georgetown
 			-5:07:11 -	KMT	1912 Feb # Kingston Mean Time
-			-5:00	-	EST	2016
-			-5:00	US	E%sT
+			-5:00	Cayman	CI%sST
 
 # Costa Rica
 

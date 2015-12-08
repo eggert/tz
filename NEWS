@@ -11,6 +11,9 @@ Unreleased, experimental changes
     America/Metlakatla switched from PST all year to AKST/AKDT on
     2015-11-01 at 02:00.  (Thanks to Steffen Thorsen.)
 
+    Time zone abbreviations for America/Cayman have been changed from
+    EST/EDT to CIST/CIDST, as per the 2015-11-25 daylight-saving bill.
+
   Changes affecting future time stamps
 
     Asia/Tehran now has DST predictions for the year 2038 and later,

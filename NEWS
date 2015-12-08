@@ -22,7 +22,9 @@ Unreleased, experimental changes
 
   Changes affecting documentation
 
-    tz-link.htm mentions the BDE library (thanks to Andrew Paprocki).
+    tz-link.htm mentions the BDE library (thanks to Andrew Paprocki)
+    and CCTZ (thanks to Tim Parenti).
+
 
 Release 2015g - 2015-10-01 00:39:51 -0700
 

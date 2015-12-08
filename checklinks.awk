@@ -1,6 +1,6 @@
 # Check links in tz tables.
 
-# Contributed by Paul Eggert.
+# Contributed by Paul Eggert.  This file is in the public domain.
 
 BEGIN {
     # Special marker indicating that the name is defined as a Zone.

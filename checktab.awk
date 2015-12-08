@@ -1,6 +1,6 @@
 # Check tz tables for consistency.
 
-# Contributed by Paul Eggert.
+# Contributed by Paul Eggert.  This file is in the public domain.
 
 BEGIN {
 	FS = "\t"

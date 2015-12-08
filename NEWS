@@ -22,6 +22,11 @@ Unreleased, experimental changes
 
   Changes affecting documentation
 
+    A new file LICENSE makes it easier to see that the code and data
+    are mostly public-domain.  (Thanks to James Knight.)  The three
+    non-public-domain files now use the current (3-clause) BSD license
+    instead of older versions of that license.
+
     tz-link.htm mentions the BDE library (thanks to Andrew Paprocki)
     and CCTZ (thanks to Tim Parenti).
 

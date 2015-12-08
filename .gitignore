@@ -1,3 +1,5 @@
+# Files intentionally not tracked by Git.
+# This file is in the public domain.
 *.a
 *.asc
 *.o

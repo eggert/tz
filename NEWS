@@ -27,7 +27,7 @@ Unreleased, experimental changes
     non-public-domain files now use the current (3-clause) BSD license
     instead of older versions of that license.
 
-    tz-link.htm mentions the BDE library (thanks to Andrew Paprocki)
+    tz-link.htm mentions the BDE library (thanks to Andrew Paprocki),
     CCTZ (thanks to Tim Parenti), TimeJones.com, and has a new section
     on editing tz source files (with a mention of Sublime zoneinfo,
     thanks to Gilmore Davidson).

@@ -28,9 +28,9 @@ Unreleased, experimental changes
     instead of older versions of that license.
 
     tz-link.htm mentions the BDE library (thanks to Andrew Paprocki)
-    and CCTZ (thanks to Tim Parenti), and has a new section on editing
-    tz source files (with a mention of Sublime zoneinfo, thanks to
-    Gilmore Davidson).
+    CCTZ (thanks to Tim Parenti), TimeJones.com, and has a new section
+    on editing tz source files (with a mention of Sublime zoneinfo,
+    thanks to Gilmore Davidsonw).
 
 
 Release 2015g - 2015-10-01 00:39:51 -0700

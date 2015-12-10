@@ -84,13 +84,17 @@ LIBDIR=		$(TOPDIR)/lib
 # below.  If you want both sets of data available, with leap seconds counted
 # normally, use
 #	REDO=		right_posix
-# below.  If you want just POSIX-compatible time values, but with
-# out-of-scope and often-wrong data from the file 'backzone', use
-#	REDO=		posix_packrat
-# POSIX mandates that leap seconds not be counted; for compatibility with it,
-# use "posix_only", "posix_right", or "posix_packrat".
+# below.  POSIX mandates that leap seconds not be counted; for compatibility
+# with it, use "posix_only" or "posix_right".
 
 REDO=		posix_right
+
+# If you want out-of-scope and often-wrong data from the file 'backzone', use
+#	PACKRATDATA=	backzone
+# To omit this data, use
+#	PACKRATDATA=
+
+PACKRATDATA=
 
 # Since "." may not be in PATH...
 
@@ -236,10 +240,21 @@ CFLAGS=
 
 LDFLAGS=	$(LFLAGS)
 
+# For leap seconds, this Makefile uses LEAPSECONDS='-L leapseconds' in
+# submake command lines.  The default is no leap seconds.
+
+LEAPSECONDS=
+
+# The zic command and its arguments.
+
 zic=		./zic
 ZIC=		$(zic) $(ZFLAGS)
 
 ZFLAGS=
+
+# How to use zic to install tzdata binary files.
+
+ZIC_INSTALL=	$(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR) $(LEAPSECONDS)
 
 # The name of a Posix-compliant 'awk' on your system.
 AWK=		awk
@@ -366,7 +381,7 @@ ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC)
 
 SHELL=		/bin/sh
 
-all:		tzselect zic zdump libtz.a $(TABDATA)
+all:		tzselect yearistype zic zdump libtz.a $(TABDATA)
 
 ALL:		all date $(ENCHILADA)
 
@@ -375,8 +390,7 @@ install:	all $(DATA) $(REDO) $(MANS)
 			$(DESTDIR)$(LIBDIR) \
 			$(DESTDIR)$(MANDIR)/man3 $(DESTDIR)$(MANDIR)/man5 \
 			$(DESTDIR)$(MANDIR)/man8
-		$(ZIC) -y $(YEARISTYPE) \
-			-d $(DESTDIR)$(TZDIR) -l $(LOCALTIME) -p $(POSIXRULES)
+		$(ZIC_INSTALL) -l $(LOCALTIME) -p $(POSIXRULES)
 		cp -f iso3166.tab $(ZONETABLES) $(DESTDIR)$(TZDIR)/.
 		cp tzselect zic zdump $(DESTDIR)$(ETCDIR)/.
 		cp libtz.a $(DESTDIR)$(LIBDIR)/.
@@ -398,7 +412,7 @@ version.h:
 zdump:		$(TZDOBJS)
 		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(TZDOBJS) $(LDLIBS)
 
-zic:		$(TZCOBJS) yearistype
+zic:		$(TZCOBJS)
 		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(TZCOBJS) $(LDLIBS)
 
 yearistype:	yearistype.sh
@@ -408,13 +422,28 @@ yearistype:	yearistype.sh
 leapseconds:	$(LEAP_DEPS)
 		$(AWK) -f leapseconds.awk leap-seconds.list >$@
 
-posix_only:	zic $(TDATA)
-		$(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR) \
-			-L /dev/null $(TDATA)
+# Arguments to pass to submakes of install_data.
+# They can be overridden by later submake arguments.
+INSTALLARGS = \
+ DESTDIR=$(DESTDIR) \
+ LEAPSECONDS='$(LEAPSECONDS)' \
+ PACKRATDATA='$(PACKRATDATA)' \
+ TZDIR=$(TZDIR) \
+ YEARISTYPE=$(YEARISTYPE) \
+ ZIC='$(ZIC)'
 
-right_only:	zic leapseconds $(TDATA)
-		$(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR) \
-			-L leapseconds $(TDATA)
+# 'make install_data' installs one set of tz binary files.
+# It can be tailored by setting LEAPSECONDS, PACKRATDATA, etc.
+install_data:	zic leapseconds yearistype $(PACKRATDATA) $(TDATA)
+		$(ZIC_INSTALL) $(TDATA)
+		$(AWK) '/^Rule/' $(TDATA) | $(ZIC_INSTALL) - $(PACKRATDATA)
+
+posix_only:
+		$(MAKE) $(INSTALLARGS) LEAPSECONDS= install_data
+
+right_only:
+		$(MAKE) $(INSTALLARGS) LEAPSECONDS='-L leapseconds' \
+			install_data
 
 # In earlier versions of this makefile, the other two directories were
 # subdirectories of $(TZDIR).  However, this led to configuration errors.
@@ -425,26 +454,22 @@ right_only:	zic leapseconds $(TDATA)
 # Therefore, the other two directories are now siblings of $(TZDIR).
 # You must replace all of $(TZDIR) to switch from not using leap seconds
 # to using them, or vice versa.
-right_posix:	right_only leapseconds
+right_posix:	right_only
 		rm -fr $(DESTDIR)$(TZDIR)-leaps
 		ln -s $(TZDIR_BASENAME) $(DESTDIR)$(TZDIR)-leaps || \
-		  $(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR)-leaps \
-			-L leapseconds $(TDATA)
-		$(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR)-posix \
-			-L /dev/null $(TDATA)
+		  $(MAKE) $(INSTALLARGS) TZDIR=$(TZDIR)-leaps right_only
+		$(MAKE) $(INSTALLARGS) TZDIR=$(TZDIR)-posix posix_only
 
-posix_right:	posix_only leapseconds
+posix_right:	posix_only
 		rm -fr $(DESTDIR)$(TZDIR)-posix
 		ln -s $(TZDIR_BASENAME) $(DESTDIR)$(TZDIR)-posix || \
-		  $(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR)-posix \
-			-L /dev/null $(TDATA)
-		$(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR)-leaps \
-			-L leapseconds $(TDATA)
+		  $(MAKE) $(INSTALLARGS) TZDIR=$(TZDIR)-posix posix_only
+		$(MAKE) $(INSTALLARGS) TZDIR=$(TZDIR)-leaps right_only
 
-posix_packrat:	posix_only backzone
-		$(AWK) '/^Rule/' $(TDATA) | \
-		  $(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR) \
-			-L /dev/null - backzone
+# This obsolescent rule is present for backwards compatibility with
+# tz releases 2014g through 2015g.  It should go away eventually.
+posix_packrat:
+		$(MAKE) $(INSTALLARGS) PACKRATDATA=backzone posix_only
 
 zones:		$(REDO)
 
@@ -660,6 +685,7 @@ zic.o:		private.h tzfile.h version.h
 .PHONY: check check_character_set check_links
 .PHONY: check_public check_sorted check_tables
 .PHONY: check_time_t_alternatives check_web check_white_space clean clean_misc
-.PHONY: install maintainer-clean names posix_packrat posix_only posix_right
+.PHONY: install install_data maintainer-clean names
+.PHONY: posix_only posix_packrat posix_right
 .PHONY: public right_only right_posix signatures tarballs typecheck
 .PHONY: zonenames zones

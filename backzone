@@ -31,7 +31,7 @@
 
 # This file is not intended to be compiled standalone, as it
 # assumes rules from other files.  In the tz distribution, use
-# 'make posix_packrat' to compile this file.
+# 'make PACKRATDATA=backzone zones' to compile and install this file.
 
 # Zones are sorted by zone name.  Each zone is preceded by the
 # name of the country that the zone is in, along with any other

@@ -325,6 +325,16 @@ Zone America/New_York	-4:56:02 -	LMT	1883 Nov 18 12:03:58
 # Statue 175 closer in synch with the US Congress' intent....
 # http://www.legis.state.wi.us/2007/data/acts/07Act3.pdf
 
+# From an email administrator of the City of Fort Pierre, SD (2015-12-21):
+# Fort Pierre is technically located in the Mountain time zone as is
+# the rest of Stanley County.  Most of Stanley County and Fort Pierre
+# uses the Central time zone due to doing most of their business in
+# Pierre so it simplifies schedules.  I have lived in Stanley County
+# all my life and it has been that way since I can remember.  (43 years!)
+#
+# From Paul Eggert (2015-12-25):
+# Assume this practice predates 1970, so Fort Pierre can use America/Chicago.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER
 Rule	Chicago	1920	only	-	Jun	13	2:00	1:00	D
 Rule	Chicago	1920	1921	-	Oct	lastSun	2:00	0	S

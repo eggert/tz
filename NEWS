@@ -27,7 +27,7 @@ Unreleased, experimental changes
     The old 'make posix_packrat' rule is now marked as obsolescent.
     (Thanks to Ian Abbott for an initial implementation.)
 
-  Changes affecting documentation
+  Changes affecting documentation and commentary
 
     A new file LICENSE makes it easier to see that the code and data
     are mostly public-domain.  (Thanks to James Knight.)  The three
@@ -38,6 +38,10 @@ Unreleased, experimental changes
     CCTZ (thanks to Tim Parenti), TimeJones.com, and has a new section
     on editing tz source files (with a mention of Sublime zoneinfo,
     thanks to Gilmore Davidson).
+
+    The America/Chicago entry now documents the informal use of US
+    central time in Fort Pierre, South Dakota.  (Thanks to Rick
+    McDermid, Matt Johnson, and Steve Jones.)
 
 
 Release 2015g - 2015-10-01 00:39:51 -0700

@@ -14,6 +14,9 @@ Unreleased, experimental changes
     America/Metlakatla switched from PST all year to AKST/AKDT on
     2015-11-01 at 02:00.  (Thanks to Steffen Thorsen.)
 
+    Asia/Karachi's two transition times in 2002 were off by a minute.
+    (Thanks to Matt Johnson.)
+
     Time zone abbreviations for America/Cayman have been changed from
     EST/EDT to CIST/CIDST, as per the 2015-11-25 daylight-saving bill.
 

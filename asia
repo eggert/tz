@@ -2118,8 +2118,8 @@ Zone	Asia/Kathmandu	5:41:16 -	LMT	1920
 # http://www.app.com.pk/en_/index.php?option=com_content&task=view&id=99374&Itemid=2
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule Pakistan	2002	only	-	Apr	Sun>=2	0:01	1:00	S
-Rule Pakistan	2002	only	-	Oct	Sun>=2	0:01	0	-
+Rule Pakistan	2002	only	-	Apr	Sun>=2	0:00	1:00	S
+Rule Pakistan	2002	only	-	Oct	Sun>=2	0:00	0	-
 Rule Pakistan	2008	only	-	Jun	1	0:00	1:00	S
 Rule Pakistan	2008	2009	-	Nov	1	0:00	0	-
 Rule Pakistan	2009	only	-	Apr	15	0:00	1:00	S

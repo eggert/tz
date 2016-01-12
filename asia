@@ -874,6 +874,15 @@ Zone	Asia/Dili	8:22:20 -	LMT	1912 Jan  1
 			9:00	-	TLT
 
 # India
+
+# From Ian P. Beacock, in "A brief history of (modern) time", The Atlantic
+# http://www.theatlantic.com/technology/archive/2015/12/the-creation-of-modern-time/421419/
+# (2015-12-22):
+# In January 1906, several thousand cotton-mill workers rioted on the
+# outskirts of Bombay....  They were protesting the proposed abolition of
+# local time in favor of Indian Standard Time....  Journalists called this
+# dispute the "Battle of the Clocks."  It lasted nearly half a century.
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Kolkata	5:53:28 -	LMT	1880        # Kolkata
 			5:53:20	-	HMT	1941 Oct    # Howrah Mean Time?

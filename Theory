@@ -263,7 +263,15 @@ Errors in the tz database arise from many sources:
    be needed if the tz database's scope were extended to cover even
    just the known or guessed history of standard time; for example,
    the current single entry for France would need to split into dozens
-   of entries, perhaps hundreds.
+   of entries, perhaps hundreds.  And in most of the world even this
+   approach would be misleading due to widespread disagreement or
+   indifference about what times should be observed.  In her 2015 book
+   "The Global Transformation of Time, 1870-1950", Vanessa Ogle writes
+   "Outside of Europe and North America there was no system of time
+   zones at all, often not even a stable landscape of mean times,
+   prior to the middle decades of the twentieth century".  See:
+   Timothy Shenk, Booked: A Global History of Time. Dissent 2015-12-17
+   https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanessa-ogle
 
  * Most of the pre-1970 data entries come from unreliable sources, often
    astrology books that lack citations and whose compilers evidently

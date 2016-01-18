@@ -48,7 +48,7 @@ AQ	-6640+14001	Antarctica/DumontDUrville	Dumont-d'Urville Station, Adélie Land
 AQ	-690022+0393524	Antarctica/Syowa	Syowa Station, E Ongul I
 AQ	-720041+0023206	Antarctica/Troll	Troll Station, Queen Maud Land
 AR	-3436-05827	America/Argentina/Buenos_Aires	Buenos Aires (BA, CF)
-AR	-3124-06411	America/Argentina/Cordoba	most locations (CB, CC, CN, ER, FM, MN, SE, SF)
+AR	-3124-06411	America/Argentina/Cordoba	Argentina - most locations (CB, CC, CN, ER, FM, MN, SE, SF)
 AR	-2447-06525	America/Argentina/Salta	(SA, LP, NQ, RN)
 AR	-2411-06518	America/Argentina/Jujuy	Jujuy (JY)
 AR	-2649-06513	America/Argentina/Tucuman	Tucumán (TM)
@@ -134,7 +134,7 @@ CC	-1210+09655	Indian/Cocos
 CH,DE,LI	+4723+00832	Europe/Zurich	Swiss time
 CI,BF,GM,GN,ML,MR,SH,SL,SN,ST,TG	+0519-00402	Africa/Abidjan
 CK	-2114-15946	Pacific/Rarotonga
-CL	-3327-07040	America/Santiago	most locations
+CL	-3327-07040	America/Santiago	Chile - most locations
 CL	-2709-10926	Pacific/Easter	Easter Island
 CN	+3114+12128	Asia/Shanghai	Beijing Time
 CN	+4348+08735	Asia/Urumqi	Xinjiang Time
@@ -146,7 +146,7 @@ CW,AW,BQ,SX	+1211-06900	America/Curacao
 CX	-1025+10543	Indian/Christmas
 CY	+3510+03322	Asia/Nicosia
 CZ,SK	+5005+01426	Europe/Prague
-DE	+5230+01322	Europe/Berlin	Berlin time
+DE	+5230+01322	Europe/Berlin	Germany - most locations
 DK	+5540+01235	Europe/Copenhagen
 DO	+1828-06954	America/Santo_Domingo
 DZ	+3647+00303	Africa/Algiers
@@ -171,7 +171,7 @@ GE	+4143+04449	Asia/Tbilisi
 GF	+0456-05220	America/Cayenne
 GH	+0533-00013	Africa/Accra
 GI	+3608-00521	Europe/Gibraltar
-GL	+6411-05144	America/Godthab	most locations
+GL	+6411-05144	America/Godthab	Greenland - most locations
 GL	+7646-01840	America/Danmarkshavn	east coast, north of Scoresbysund
 GL	+7029-02158	America/Scoresbysund	Scoresbysund / Ittoqqortoormiit
 GL	+7634-06847	America/Thule	Thule / Pituffik
@@ -207,7 +207,7 @@ KI	-0308-17105	Pacific/Enderbury	Phoenix Islands
 KI	+0152-15720	Pacific/Kiritimati	Line Islands
 KP	+3901+12545	Asia/Pyongyang
 KR	+3733+12658	Asia/Seoul
-KZ	+4315+07657	Asia/Almaty	most locations
+KZ	+4315+07657	Asia/Almaty	Kazakhstan - most locations
 KZ	+4448+06528	Asia/Qyzylorda	Qyzylorda (Kyzylorda, Kzyl-Orda)
 KZ	+5017+05710	Asia/Aqtobe	Aqtobe (Aktobe)
 KZ	+4431+05016	Asia/Aqtau	Atyrau (Atirau, Gur'yev), Mangghystau (Mankistau)
@@ -222,10 +222,10 @@ LY	+3254+01311	Africa/Tripoli
 MA	+3339-00735	Africa/Casablanca
 MC	+4342+00723	Europe/Monaco
 MD	+4700+02850	Europe/Chisinau
-MH	+0709+17112	Pacific/Majuro	most locations
+MH	+0709+17112	Pacific/Majuro	Marshall Islands - most locations
 MH	+0905+16720	Pacific/Kwajalein	Kwajalein
 MM	+1647+09610	Asia/Rangoon
-MN	+4755+10653	Asia/Ulaanbaatar	most locations
+MN	+4755+10653	Asia/Ulaanbaatar	Mongolia - most locations
 MN	+4801+09139	Asia/Hovd	Bayan-Ölgii, Govi-Altai, Hovd, Uvs, Zavkhan
 MN	+4804+11430	Asia/Choibalsan	Dornod, Sükhbaatar
 MO	+2214+11335	Asia/Macau
@@ -233,7 +233,7 @@ MQ	+1436-06105	America/Martinique
 MT	+3554+01431	Europe/Malta
 MU	-2010+05730	Indian/Mauritius
 MV	+0410+07330	Indian/Maldives
-MX	+1924-09909	America/Mexico_City	Central Time - most locations
+MX	+1924-09909	America/Mexico_City	Mexican Central Time - most locations
 MX	+2105-08646	America/Cancun	Eastern Standard Time - Quintana Roo
 MX	+2058-08937	America/Merida	Central Time - Campeche, Yucatán
 MX	+2540-10019	America/Monterrey	Mexican Central Time - Coahuila, Durango, Nuevo León, Tamaulipas away from US border
@@ -264,7 +264,7 @@ PE	-1203-07703	America/Lima
 PF	-1732-14934	Pacific/Tahiti	Society Islands
 PF	-0900-13930	Pacific/Marquesas	Marquesas Islands
 PF	-2308-13457	Pacific/Gambier	Gambier Islands
-PG	-0930+14710	Pacific/Port_Moresby	most locations
+PG	-0930+14710	Pacific/Port_Moresby	Papua New Guinea - most locations
 PG	-0613+15534	Pacific/Bougainville	Bougainville
 PH	+1435+12100	Asia/Manila
 PK	+2452+06703	Asia/Karachi
@@ -316,7 +316,7 @@ SY	+3330+03618	Asia/Damascus
 TC	+2128-07108	America/Grand_Turk
 TD	+1207+01503	Africa/Ndjamena
 TF	-492110+0701303	Indian/Kerguelen	Kerguelen, St Paul I, Amsterdam I
-TH,KH,LA,VN	+1345+10031	Asia/Bangkok	most of Indochina
+TH,KH,LA,VN	+1345+10031	Asia/Bangkok	Indochina - most locations
 TJ	+3835+06848	Asia/Dushanbe
 TK	-0922-17114	Pacific/Fakaofo
 TL	-0833+12535	Asia/Dili
@@ -327,7 +327,7 @@ TR	+4101+02858	Europe/Istanbul
 TT,AG,AI,BL,DM,GD,GP,KN,LC,MF,MS,VC,VG,VI	+1039-06131	America/Port_of_Spain
 TV	-0831+17913	Pacific/Funafuti
 TW	+2503+12130	Asia/Taipei
-UA	+5026+03031	Europe/Kiev	most locations
+UA	+5026+03031	Europe/Kiev	Ukraine - most locations
 UA	+4837+02218	Europe/Uzhgorod	Ruthenia
 UA	+4750+03510	Europe/Zaporozhye	Zaporozh'ye, E Lugansk / Zaporizhia, E Luhansk
 UM	+1917+16637	Pacific/Wake	Wake Island

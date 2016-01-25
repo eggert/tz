@@ -4,6 +4,9 @@ Unreleased, experimental changes
 
   Changes affecting future time stamps
 
+    America/Cayman will not observe daylight saving this year after all.
+    Revert our guess that it would.  (Thanks to Matt Johnson.)
+
     Asia/Chita switches from +0800 to +0900 on 2016-03-27 at 02:00.
     (Thanks to Alexander Krivenyshev.)
 
@@ -15,9 +18,6 @@ Unreleased, experimental changes
 
     America/Metlakatla switched from PST all year to AKST/AKDT on
     2015-11-01 at 02:00.  (Thanks to Steffen Thorsen.)
-
-    Time zone abbreviations for America/Cayman have been changed from
-    EST/EDT to CIST/CIDST, as per the 2015-11-25 daylight-saving bill.
 
     America/Santa_Isabel has been removed, and replaced with a
     backward compatibility link to America/Tijuana.  Its contents were

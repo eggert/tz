@@ -512,7 +512,7 @@ while
 		case $TZsec in
 		$UTsec)
 			extra_info="
-Local time is now:	$TZdate.
+Selected time is now:	$TZdate.
 Universal Time is now:	$UTdate."
 			break
 		esac

@@ -1,5 +1,17 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to code
+
+    tzselect's diagnostics and checking, and checktab.awk's checking,
+    have been improved.  (Thanks to J William Piggott.)
+
+  Changes to commentary
+
+    Comments in zone tables have been improved.  (Thanks to J William Piggott.)
+
+
 Release 2016a - 2016-01-26 23:28:02 -0800
 
   Changes affecting future time stamps

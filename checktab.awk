@@ -112,6 +112,7 @@ BEGIN {
 	    printf "%s:%d: missing comment for %s\n", \
 	      zone_table, tz2NR[tz], comments_needed[tz] \
 	      >>"/dev/stderr"
+	    tz2comments[tz] = 1
 	    status = 1
 	  }
 	}

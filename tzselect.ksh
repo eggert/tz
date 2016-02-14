@@ -548,7 +548,7 @@ case $SHELL in
 *) file=.profile line="TZ='$TZ'; export TZ"
 esac
 
-say >&2 "
+test -t 1 && say >&2 "
 You can make this change permanent for yourself by appending the line
 	$line
 to the file '$file' in your home directory; then log out and log in again.

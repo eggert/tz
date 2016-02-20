@@ -1005,6 +1005,12 @@ Zone Atlantic/Faroe	-0:27:04 -	LMT	1908 Jan 11 # Tórshavn
 # startkart.no says Thule does not observe DST, but this is clearly an error,
 # so go with Shanks & Pottenger for Thule transitions until this year.
 # For 2007 on assume Thule will stay in sync with US DST rules.
+
+# From J William Piggott (2016-02-20):
+# "Greenland north of the community of Scoresbysund" is officially named
+# "National Park" by Executive Order:
+# http://naalakkersuisut.gl/~/media/Nanoq/Files/Attached%20Files/Engelske-tekster/Legislation/Executive%20Order%20National%20Park.rtf
+# It is their only National Park.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Thule	1991	1992	-	Mar	lastSun	2:00	1:00	D

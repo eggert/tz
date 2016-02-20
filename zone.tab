@@ -277,8 +277,8 @@ MW	-1547+03500	Africa/Blantyre
 MX	+1924-09909	America/Mexico_City	Mexican Central Time - most locations
 MX	+2105-08646	America/Cancun	Eastern Standard Time - Quintana Roo
 MX	+2058-08937	America/Merida	Central Time - Campeche, Yucatan
-MX	+2540-10019	America/Monterrey	Mexican Central Time - Coahuila, Durango, Nuevo Leon, Tamaulipas away from US border
-MX	+2550-09730	America/Matamoros	US Central Time - Coahuila, Durango, Nuevo Leon, Tamaulipas near US border
+MX	+2540-10019	America/Monterrey	Central Time - Durango; Coahuila, Nuevo Leon, Tamaulipas (away from US border)
+MX	+2550-09730	America/Matamoros	Central Time US - Coahuila, Nuevo Leon, Tamaulipas (near US border)
 MX	+2313-10625	America/Mazatlan	Mountain Time - S Baja, Nayarit, Sinaloa
 MX	+2838-10605	America/Chihuahua	Mexican Mountain Time - Chihuahua away from US border
 MX	+2934-10425	America/Ojinaga	US Mountain Time - Chihuahua near US border

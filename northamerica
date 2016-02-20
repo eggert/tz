@@ -2475,13 +2475,13 @@ Zone America/Merida	-5:58:28 -	LMT	1922 Jan  1  0:01:32
 			-6:00	-	CST	1981 Dec 23
 			-5:00	-	EST	1982 Dec  2
 			-6:00	Mexico	C%sT
-# Coahuila, Durango, Nuevo León, Tamaulipas (near US border)
+# Coahuila, Nuevo León, Tamaulipas (near US border)
 Zone America/Matamoros	-6:40:00 -	LMT	1921 Dec 31 23:20:00
 			-6:00	-	CST	1988
 			-6:00	US	C%sT	1989
 			-6:00	Mexico	C%sT	2010
 			-6:00	US	C%sT
-# Coahuila, Durango, Nuevo León, Tamaulipas (away from US border)
+# Durango; Coahuila, Nuevo León, Tamaulipas (away from US border)
 Zone America/Monterrey	-6:41:16 -	LMT	1921 Dec 31 23:18:44
 			-6:00	-	CST	1988
 			-6:00	US	C%sT	1989

@@ -2584,7 +2584,7 @@ Zone America/Bahia_Banderas	-7:01:00 -	LMT	1921 Dec 31 23:59:00
 			-7:00	Mexico	M%sT	2010 Apr  4  2:00
 			-6:00	Mexico	C%sT
 
-# Baja California (near US border)
+# Baja California
 Zone America/Tijuana	-7:48:04 -	LMT	1922 Jan  1  0:11:56
 			-7:00	-	MST	1924
 			-8:00	-	PST	1927 Jun 10 23:00

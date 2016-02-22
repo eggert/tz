@@ -11,6 +11,7 @@ BEGIN {
   print "# leap-seconds.list file available from most NIST time servers."
   print "# If the URL <ftp://time.nist.gov/pub/leap-seconds.list> does not work,"
   print "# you should be able to pick up leap-seconds.list from a secondary NIST server."
+  print "# See <http://tf.nist.gov/tf-cgi/servers.cgi> for a list of secondary servers."
   print "# For more about leap-seconds.list, please see"
   print "# The NTP Timescale and Leap Seconds"
   print "# http://www.eecis.udel.edu/~mills/leap.html"

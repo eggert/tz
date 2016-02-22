@@ -2528,10 +2528,13 @@ Zone Asia/Omsk		 4:53:30 -	LMT	1919 Nov 14
 			 7:00	-	OMST	2014 Oct 26  2:00s
 			 6:00	-	OMST
 
-# From Paul Eggert (2016-02-21):
+# From Paul Eggert (2016-02-22):
 # Asia/Barnaul covers:
 # 04	RU-AL	Altai Republic
 # 22	RU-ALT	Altai Krai
+# Data before 1991 are from Shanks & Pottenger.  Guess that Barnaul synchronized
+# with Omsk starting in 1992 (a no-change transition for Barnaul).
+# This may be related to the guess in Asia/Novosibirsk for Tomsk in 1993.
 
 # From Alexander Krivenyshev (2016-02-17):
 # Altai Krai and Altai Republic on their way to change time zones
@@ -2544,8 +2547,8 @@ Zone Asia/Omsk		 4:53:30 -	LMT	1919 Nov 14
 Zone Asia/Barnaul	 5:35:00 -	LMT	1919 Dec 10
 			 6:00	-	+06	1930 Jun 21
 			 7:00	Russia	+07/+08	1991 Mar 31  2:00s
-			 6:00	Russia	+06/+07	1992 Jan 19  2:00s
-			 7:00	Russia	+07/+08	2014 Oct 26  2:00s
+			 6:00	Russia	+06/+07	2011 Mar 27  2:00s
+			 7:00	-	+07	2014 Oct 26  2:00s
 			 6:00	-	+06	2016 Mar 27  2:00s
 			 7:00	-	+07
 

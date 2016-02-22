@@ -2,6 +2,15 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting future time stamps
+
+    New zone Europe/Astrakhan for Astrakhan Oblast, Russia, which will
+    switch from 3 to 4 hours ahead of UTC on 2016-03-27 at 02:00.
+    (Thanks to Alexander Krivenyshev for the heads-up.)
+    As a trial of a new system that needs less information to be made up,
+    the new zone uses numeric time zone abbreviations like "+04"
+    instead of invented abbreviations like "ASTT".
+
   Changes to code
 
     tzselect's diagnostics and checking, and checktab.awk's checking,

@@ -2403,9 +2403,30 @@ Zone Europe/Simferopol	 2:16:24 -	LMT	1880
 			 3:00	-	MSK
 
 
+# From Paul Eggert (2016-02-12):
+# Europe/Astrakhan covers...
+# 30	RU-AST	Astrakhan Oblast
+
+# From Alexander Krivenyshev (2016-01-12):
+# On February 10, 2016 Astrakhan Oblast got approval by the Federation
+# Council to change its time zone to UTC+4 (from current UTC+3 Moscow time)....
+# http://asozd2.duma.gov.ru/work/dz.nsf/ByID/5AEBD1A341D2B41843257F47003949EF/$File/Текст проекта_третье чтение.doc
+# This Federal Law shall enter into force on 27 March 2016 at 02:00.
+
+Zone Europe/Astrakhan	 3:12:12 -	LMT	1924 May
+			 3:00	-	+03	1930 Jun 21
+			 4:00	-	+04	1961 Nov 11
+			 4:00	Russia	+04/+05	1989 Mar 26  2:00s
+			 3:00	Russia	+03/+04	1991 Mar 31  2:00s
+			 4:00	-	+04	1992 Mar 29  2:00s
+			 3:00	Russia	+03/+04	2011 Mar 27  2:00s
+			 4:00	-	+04	2014 Oct 26  2:00s
+			 3:00	-	+03	2016 Mar 27  2:00s
+			 4:00	-	+04
+
 # From Tim Parenti (2014-07-03):
 # Europe/Volgograd covers...
-# 30	RU-AST	Astrakhan Oblast
+# ...
 # 34	RU-VGG	Volgograd Oblast
 # 43	RU-KIR	Kirov Oblast
 # 64	RU-SAR	Saratov Oblast

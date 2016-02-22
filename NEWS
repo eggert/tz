@@ -4,11 +4,16 @@ Unreleased, experimental changes
 
   Changes affecting future time stamps
 
-    New zone Europe/Astrakhan for Astrakhan Oblast, Russia, which will
-    switch from 3 to 4 hours ahead of UTC on 2016-03-27 at 02:00.
+    New zones Europe/Astrakhan and Europe/Ulyanovsk for Astrakhan and
+    Ulyanovsk Oblasts, Russia, both of which will switch from +03 to +04 on
+    2016-03-27 at 02:00 local time.  They need distinct zones since their
+    post-1970 histories disagree.  New zone Asia/Barnaul for Altai Krai and
+    Altai Republic, Russia, which will switch from +06 to +07 on the same date
+    and local time.  The Astrakhan change is already official; the others have
+    passed the first reading in the State Duma and are extremely likely.
     (Thanks to Alexander Krivenyshev for the heads-up.)
     As a trial of a new system that needs less information to be made up,
-    the new zone uses numeric time zone abbreviations like "+04"
+    the new zones use numeric time zone abbreviations like "+04"
     instead of invented abbreviations like "ASTT".
 
   Changes to code

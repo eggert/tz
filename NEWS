@@ -11,8 +11,9 @@ Unreleased, experimental changes
     Altai Republic, Russia, which will switch from +06 to +07 on the same date
     and local time.  The Astrakhan change is already official; the others have
     passed the first reading in the State Duma and are extremely likely.
+    Also, Asia/Sakhalin moves from +10 to +11 on 2016-03-27 at 02:00.
     (Thanks to Alexander Krivenyshev for the heads-up, and to Matt Johnson
-    for corrections.)
+    for followup.)
 
     As a trial of a new system that needs less information to be made up,
     the new zones use numeric time zone abbreviations like "+04"

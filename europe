@@ -2771,6 +2771,11 @@ Zone Asia/Khandyga	 9:02:13 -	LMT	1919 Dec 15
 # ...with the exception of:
 # 65-11	****	Severo-Kurilsky District (North Kuril Islands)
 
+# From Matt Johnson (2016-02-22):
+# Asia/Sakhalin is moving (in entirety) from UTC+10 to UTC+11 ...
+# http://asozd2.duma.gov.ru/main.nsf/(SpravkaNew)?OpenAgent&RN=888645-6
+# Appears to have been approved in both first and second readings
+
 # The Zone name should be Asia/Yuzhno-Sakhalinsk, but that's too long.
 Zone Asia/Sakhalin	 9:30:48 -	LMT	1905 Aug 23
 			 9:00	-	JCST	1937 Oct  1
@@ -2780,7 +2785,8 @@ Zone Asia/Sakhalin	 9:30:48 -	LMT	1905 Aug 23
 			11:00	Russia	SAK%sT	1997 Mar lastSun  2:00s
 			10:00	Russia	SAK%sT	2011 Mar 27  2:00s
 			11:00	-	SAKT	2014 Oct 26  2:00s
-			10:00	-	SAKT
+			10:00	-	SAKT	2016 Mar 27  2:00s
+			11:00	-	SAKT
 
 
 # From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2009-11-29):

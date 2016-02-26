@@ -34,6 +34,10 @@
 #define HAVE_LINK		1
 #endif /* !defined HAVE_LINK */
 
+#ifndef HAVE_POSIX_DECLS
+#define HAVE_POSIX_DECLS 1
+#endif
+
 #ifndef HAVE_STRDUP
 #define HAVE_STRDUP 1
 #endif
@@ -105,6 +109,9 @@
 
 #ifndef ENAMETOOLONG
 # define ENAMETOOLONG EINVAL
+#endif
+#ifndef ENOTSUP
+# define ENOTSUP EINVAL
 #endif
 #ifndef EOVERFLOW
 # define EOVERFLOW EINVAL
@@ -379,6 +386,8 @@ time_t time(time_t *);
 void tzset(void);
 #endif
 
+#if !HAVE_POSIX_DECLS
+
 /*
 ** Some time.h implementations don't declare asctime_r.
 ** Others might define it as a macro.
@@ -400,6 +409,8 @@ extern int daylight;
 #endif
 #if defined ALTZONE && !defined altzone
 extern long altzone;
+#endif
+
 #endif
 
 /*

@@ -22,6 +22,13 @@ typedef int_fast64_t	zic_t;
 #define ZIC_MAX_ABBR_LEN_WO_WARN	6
 #endif /* !defined ZIC_MAX_ABBR_LEN_WO_WARN */
 
+#ifdef HAVE_DIRECT_H
+# include <direct.h>
+# include <io.h>
+# undef mkdir
+# define mkdir(name, mode) _mkdir(name)
+#endif
+
 #if HAVE_SYS_STAT_H
 #include <sys/stat.h>
 #endif
@@ -87,17 +94,19 @@ struct zone {
 	zic_t		z_untiltime;
 };
 
+#if !HAVE_POSIX_DECLS
 extern int	getopt(int argc, char * const argv[],
 			const char * options);
 extern int	link(const char * fromname, const char * toname);
 extern char *	optarg;
 extern int	optind;
+#endif
 
 #if ! HAVE_LINK
-# define link(from, to) (-1)
+# define link(from, to) (errno = ENOTSUP, -1)
 #endif
 #if ! HAVE_SYMLINK
-# define symlink(from, to) (-1)
+# define symlink(from, to) (errno = ENOTSUP, -1)
 #endif
 
 static void	addtt(zic_t starttime, int type);
@@ -758,41 +767,47 @@ dolink(char const *fromfield, char const *tofield)
 			progname, fromname, e);
 		exit(EXIT_FAILURE);
 	}
-	if (itsdir(toname) <= 0)
-		remove(toname);
 	if (link(fromname, toname) != 0) {
-		int	result;
+	  int link_errno = errno;
+	  bool retry_if_link_supported = false;
 
-		if (! mkdirs(toname))
-			exit(EXIT_FAILURE);
+	  if (link_errno == ENOENT || link_errno == ENOTSUP) {
+	    if (! mkdirs(toname))
+	      exit(EXIT_FAILURE);
+	    retry_if_link_supported = true;
+	  }
+	  if ((link_errno == EEXIST || link_errno == ENOTSUP)
+	      && itsdir(toname) == 0
+	      && (remove(toname) == 0 || errno == ENOENT))
+	    retry_if_link_supported = true;
+	  if (retry_if_link_supported && link_errno != ENOTSUP)
+	    link_errno = link(fromname, toname) == 0 ? 0 : errno;
+	  if (link_errno != 0) {
+	    const char *s = fromfield;
+	    const char *t;
+	    char *p;
+	    size_t dotdots = 0;
+	    char *symlinkcontents;
+	    int symlink_result;
 
-		result = link(fromname, toname);
-		if (result != 0) {
-				const char *s = fromfield;
-				const char *t;
-				char *p;
-				size_t dotdots = 0;
-				register char * symlinkcontents = NULL;
+	    do
+	      t = s;
+	    while ((s = strchr(s, '/'))
+		   && strncmp(fromfield, tofield, ++s - fromfield) == 0);
 
-				do
-					 t = s;
-				while ((s = strchr(s, '/'))
-				       && ! strncmp (fromfield, tofield,
-						     ++s - fromfield));
-
-				for (s = tofield + (t - fromfield); *s; s++)
-				  dotdots += *s == '/';
-				symlinkcontents
-				  = emalloc(3 * dotdots + strlen(t) + 1);
-				for (p = symlinkcontents; dotdots-- != 0; p += 3)
-				  memcpy(p, "../", 3);
-				strcpy(p, t);
-				result = symlink(symlinkcontents, toname);
-				if (result == 0)
-warning(_("hard link failed, symbolic link used"));
-				free(symlinkcontents);
-		}
-		if (result != 0) {
+	    for (s = tofield + (t - fromfield); *s; s++)
+	      dotdots += *s == '/';
+	    symlinkcontents = emalloc(3 * dotdots + strlen(t) + 1);
+	    for (p = symlinkcontents; dotdots-- != 0; p += 3)
+	      memcpy(p, "../", 3);
+	    strcpy(p, t);
+	    symlink_result = symlink(symlinkcontents, toname);
+	    free(symlinkcontents);
+	    if (symlink_result == 0) {
+	      if (link_errno != ENOTSUP)
+		warning(_("symbolic link used because hard link failed: %s"),
+			strerror (link_errno));
+	    } else {
 			FILE *fp, *tp;
 			int c;
 			fp = fopen(fromname, "rb");
@@ -815,8 +830,11 @@ warning(_("hard link failed, symbolic link used"));
 				putc(c, tp);
 			close_file(fp, fromname);
 			close_file(tp, toname);
-			warning(_("link failed, copy used"));
-		}
+			if (link_errno != ENOTSUP)
+			  warning(_("copy used because hard link failed: %s"),
+				  strerror (link_errno));
+	    }
+	  }
 	}
 	free(fromname);
 	free(toname);
@@ -863,18 +881,17 @@ itsdir(char const *name)
 {
 	struct stat st;
 	int res = stat(name, &st);
-	if (res != 0)
-		return res;
 #ifdef S_ISDIR
-	return S_ISDIR(st.st_mode) != 0;
-#else
-	{
-		char *nameslashdot = relname(name, ".");
-		res = stat(nameslashdot, &st);
-		free(nameslashdot);
-		return res == 0;
-	}
+	if (res == 0)
+		return S_ISDIR(st.st_mode) != 0;
 #endif
+	if (res == 0 || errno == EOVERFLOW) {
+		char *nameslashdot = relname(name, ".");
+		bool dir = stat(nameslashdot, &st) == 0 || errno == EOVERFLOW;
+		free(nameslashdot);
+		return dir;
+	}
+	return -1;
 }
 
 /*
@@ -1685,7 +1702,7 @@ writezone(const char *const name, const char *const string, char version)
 	/*
 	** Remove old file, if any, to snap links.
 	*/
-	if (itsdir(fullname) <= 0 && remove(fullname) != 0 && errno != ENOENT) {
+	if (itsdir(fullname) == 0 && remove(fullname) != 0 && errno != ENOENT) {
 		const char *e = strerror(errno);
 
 		fprintf(stderr, _("%s: Can't remove %s: %s\n"),

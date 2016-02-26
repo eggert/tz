@@ -106,7 +106,9 @@ static char *	_fmt(const char *, const struct tm *, char *, const char *,
 			int *);
 static char *	_yconv(int, int, bool, bool, char *, char const *);
 
+#if !HAVE_POSIX_DECLS
 extern char *	tzname[];
+#endif
 
 #ifndef YEAR_2000_NAME
 #define YEAR_2000_NAME	"CHECK_STRFTIME_FORMATS_FOR_TWO_DIGIT_YEARS"

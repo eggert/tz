@@ -42,10 +42,12 @@
 #define SECSPERMIN	60
 #endif /* !defined SECSPERMIN */
 
+#if !HAVE_POSIX_DECLS
 extern char **		environ;
 extern char *		optarg;
 extern int		optind;
-extern char *		tzname[2];
+extern char *		tzname[];
+#endif
 
 static int		retval = EXIT_SUCCESS;
 

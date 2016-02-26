@@ -24,6 +24,8 @@ Unreleased, experimental changes
     tzselect's diagnostics and checking, and checktab.awk's checking,
     have been improved.  (Thanks to J William Piggott.)
 
+    tzcode now builds under MinGW.  (Thanks to Ian Abbott and Esben Haabendal.)
+
   Changes to commentary
 
     Comments in zone tables have been improved.  (Thanks to J William Piggott.)

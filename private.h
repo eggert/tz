@@ -386,8 +386,6 @@ time_t time(time_t *);
 void tzset(void);
 #endif
 
-#if !HAVE_POSIX_DECLS
-
 /*
 ** Some time.h implementations don't declare asctime_r.
 ** Others might define it as a macro.
@@ -395,22 +393,22 @@ void tzset(void);
 ** Similarly for timezone, daylight, and altzone.
 */
 
-#ifndef asctime_r
+#if !HAVE_POSIX_DECLS
+# ifndef asctime_r
 extern char *	asctime_r(struct tm const *restrict, char *restrict);
+# endif
+# ifdef USG_COMPAT
+#  ifndef timezone
+extern long timezone;
+#  endif
+#  ifndef daylight
+extern int daylight;
+#  endif
+# endif
 #endif
 
-#ifdef USG_COMPAT
-# ifndef timezone
-extern long timezone;
-# endif
-# ifndef daylight
-extern int daylight;
-# endif
-#endif
 #if defined ALTZONE && !defined altzone
 extern long altzone;
-#endif
-
 #endif
 
 /*

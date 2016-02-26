@@ -178,11 +178,6 @@ static struct state	gmtmem;
 static char		lcl_TZname[TZ_STRLEN_MAX + 1];
 static int		lcl_is_set;
 
-char *			tzname[2] = {
-	(char *) wildabbr,
-	(char *) wildabbr
-};
-
 /*
 ** Section 4.12.3 of X3.159-1989 requires that
 **	Except for the strftime function, these functions [asctime,
@@ -193,10 +188,16 @@ char *			tzname[2] = {
 
 static struct tm	tm;
 
-#ifdef USG_COMPAT
+#if !HAVE_POSIX_DECLS
+char *			tzname[2] = {
+	(char *) wildabbr,
+	(char *) wildabbr
+};
+# ifdef USG_COMPAT
 long			timezone;
 int			daylight;
-#endif /* defined USG_COMPAT */
+# endif
+#endif
 
 #ifdef ALTZONE
 long			altzone;

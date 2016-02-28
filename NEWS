@@ -31,7 +31,7 @@ Unreleased, experimental changes
     Comments in zone tables have been improved.  (Thanks to J William Piggott.)
 
     tzselect again limits its menu comments so that menus fit on a
-    24×80 alphanumeric display.
+    24x80 alphanumeric display.
 
     In the Theory file, the description of possible time zone abbreviations in
     tzdata has been cleaned up, as the old description was unclear and

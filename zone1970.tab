@@ -236,11 +236,11 @@ MV	+0410+07330	Indian/Maldives
 MX	+1924-09909	America/Mexico_City	Central Time
 MX	+2105-08646	America/Cancun	Eastern Standard Time - Quintana Roo
 MX	+2058-08937	America/Merida	Central Time - Campeche, Yucatán
-MX	+2540-10019	America/Monterrey	Central Time - Durango; Coahuila, Nuevo León, Tamaulipas (all far from US)
-MX	+2550-09730	America/Matamoros	Central Time US - Coahuila, Nuevo León, Tamaulipas (all near US)
+MX	+2540-10019	America/Monterrey	Central Time - Durango; Coahuila, Nuevo León, Tamaulipas (most areas)
+MX	+2550-09730	America/Matamoros	Central Time US - Coahuila, Nuevo León, Tamaulipas (US border)
 MX	+2313-10625	America/Mazatlan	Mountain Time - Baja California Sur, Nayarit, Sinaloa
-MX	+2838-10605	America/Chihuahua	Mountain Time - Chihuahua (far from US)
-MX	+2934-10425	America/Ojinaga	Mountain Time US - Chihuahua (near US)
+MX	+2838-10605	America/Chihuahua	Mountain Time - Chihuahua (most areas)
+MX	+2934-10425	America/Ojinaga	Mountain Time US - Chihuahua (US border)
 MX	+2904-11058	America/Hermosillo	Mountain Standard Time - Sonora
 MX	+3232-11701	America/Tijuana	Pacific Time US - Baja California
 MX	+2048-10515	America/Bahia_Banderas	Central Time - Bahía de Banderas

@@ -364,7 +364,7 @@ MANTXTS=	newctime.3.txt newstrftime.3.txt newtzset.3.txt \
 			tzfile.5.txt tzselect.8.txt zic.8.txt zdump.8.txt \
 			date.1.txt
 COMMON=		CONTRIBUTING LICENSE Makefile NEWS README Theory
-WEB_PAGES=	tz-art.htm tz-link.htm
+WEB_PAGES=	tz-art.htm tz-how-to.html tz-link.htm
 DOCS=		$(MANS) date.1 $(MANTXTS) $(WEB_PAGES)
 PRIMARY_YDATA=	africa antarctica asia australasia \
 		europe northamerica southamerica

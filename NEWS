@@ -26,6 +26,9 @@ Unreleased, experimental changes
 
     tzcode now builds under MinGW.  (Thanks to Ian Abbott and Esben Haabendal.)
 
+    tzselect now tests Julian-date TZ settings more accurately.
+    (Thanks to J William Piggott.)
+
   Changes to commentary
 
     Comments in zone tables have been improved.  (Thanks to J William Piggott.)

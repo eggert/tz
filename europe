@@ -1734,6 +1734,16 @@ Zone	Europe/Malta	0:58:04 -	LMT	1893 Nov  2  0:00s # Valletta
 
 # Moldova
 
+# From Stepan Golosunov (2016-03-07):
+# the act of the government of the Republic of Moldova Nr. 132 from 1990-05-04
+# http://lex.justice.md/viewdoc.php?action=view&view=doc&id=298782&lang=2
+# ... says that since 1990-05-06 on the territory of the Moldavian SSR
+# time would be calculated as the standard time of the second time belt
+# plus one hour of the "summer" time. To implement that clocks would be
+# adjusted one hour backwards at 1990-05-06 2:00. After that "summer"
+# time would be cancelled last Sunday of September at 3:00 and
+# reintroduced last Sunday of March at 2:00.
+
 # From Paul Eggert (2006-03-22):
 # A previous version of this database followed Shanks & Pottenger, who write
 # that Tiraspol switched to Moscow time on 1992-01-19 at 02:00.
@@ -1792,9 +1802,7 @@ Zone	Europe/Chisinau	1:55:20 -	LMT	1880
 			2:00	Romania	EE%sT	1940 Aug 15
 			2:00	1:00	EEST	1941 Jul 17
 			1:00	C-Eur	CE%sT	1944 Aug 24
-			3:00	Russia	MSK/MSD	1990
-			3:00	-	MSK	1990 May 6
-			2:00	-	EET	1991
+			3:00	Russia	MSK/MSD	1990 May  6  2:00
 			2:00	Russia	EE%sT	1992
 			2:00	E-Eur	EE%sT	1997
 # See Romania commentary for the guessed 1997 transition to EU rules.
@@ -2415,7 +2423,6 @@ Zone Europe/Simferopol	 2:16:24 -	LMT	1880
 
 Zone Europe/Astrakhan	 3:12:12 -	LMT	1924 May
 			 3:00	-	+03	1930 Jun 21
-			 4:00	-	+04	1961 Nov 11
 			 4:00	Russia	+04/+05	1989 Mar 26  2:00s
 			 3:00	Russia	+03/+04	1991 Mar 31  2:00s
 			 4:00	-	+04	1992 Mar 29  2:00s
@@ -2455,13 +2462,13 @@ Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 # Byalokoz 1919 says Samara was 3:20:20.
 
 Zone Europe/Samara	 3:20:20 -	LMT	1919 Jul  1  2:00
-			 3:00	-	SAMT	1930 Jun 21
+			 3:00	-	SAMT	1930 Jun 21 # Samara Time
 			 4:00	-	SAMT	1935 Jan 27
 			 4:00	Russia	KUY%sT	1989 Mar 26  2:00s # Kuybyshev
 			 3:00	Russia	MSK/MSD	1991 Mar 31  2:00s
 			 2:00	Russia	EE%sT	1991 Sep 29  2:00s
-			 3:00	-	KUYT	1991 Oct 20  3:00
-			 4:00	Russia	SAM%sT	2010 Mar 28  2:00s # Samara Time
+			 3:00	-	SAMT	1991 Oct 20  3:00
+			 4:00	Russia	SAM%sT	2010 Mar 28  2:00s
 			 3:00	Russia	SAM%sT	2011 Mar 27  2:00s
 			 4:00	-	SAMT
 
@@ -2532,9 +2539,21 @@ Zone Asia/Omsk		 4:53:30 -	LMT	1919 Nov 14
 # Asia/Barnaul covers:
 # 04	RU-AL	Altai Republic
 # 22	RU-ALT	Altai Krai
-# Data before 1991 are from Shanks & Pottenger.  Guess that Barnaul synchronized
-# with Omsk starting in 1992 (a no-change transition for Barnaul).
-# This may be related to the guess in Asia/Novosibirsk for Tomsk in 1993.
+# Data before 1991 are from Shanks & Pottenger.
+
+# From Stepan Golosunov (2016-03-07):
+# Letter of Bank of Russia from 1995-05-25
+# http://www.bestpravo.ru/rossijskoje/lj-akty/y3a.htm
+# suggests that Altai Republic transitioned to Moscow+3 on
+# 1995-05-28.
+#
+# http://regnum.ru/news/society/1957270.html
+# has some historical data for Altai Krai:
+# before 1957: west part on UTC+6, east on UTC+7
+# after 1957: UTC+7
+# since 1995: UTC+6
+# http://barnaul.rusplt.ru/index/pochemu_altajskij_kraj_okazalsja_v_neprivychnom_chasovom_pojase-17648.html
+# confirms that and provides more details including 1995-05-28 transition date.
 
 # From Alexander Krivenyshev (2016-02-17):
 # Altai Krai and Altai Republic on their way to change time zones
@@ -2546,7 +2565,7 @@ Zone Asia/Omsk		 4:53:30 -	LMT	1919 Nov 14
 
 Zone Asia/Barnaul	 5:35:00 -	LMT	1919 Dec 10
 			 6:00	-	+06	1930 Jun 21
-			 7:00	Russia	+07/+08	1991 Mar 31  2:00s
+			 7:00	Russia	+07/+08	1995 May 28
 			 6:00	Russia	+06/+07	2011 Mar 27  2:00s
 			 7:00	-	+07	2014 Oct 26  2:00s
 			 6:00	-	+06	2016 Mar 27  2:00s
@@ -2557,15 +2576,16 @@ Zone Asia/Barnaul	 5:35:00 -	LMT	1919 Dec 10
 # 54	RU-NVS	Novosibirsk Oblast
 # 70	RU-TOM	Tomsk Oblast
 
-# From Paul Eggert (2006-08-19): I'm guessing about Tomsk here; it's
-# not clear when it switched from +7 to +6.
+# From Stepan Golosunov (2016-03-07):
+# http://pravo.gov.ru/proxy/ips/?docbody=&nd=102075743
+# transitions Tomsk to the time of the fifth time belt at 2002-05-01 03:00.
 
 Zone Asia/Novosibirsk	 5:31:40 -	LMT	1919 Dec 14  6:00
 			 6:00	-	NOVT	1930 Jun 21 # Novosibirsk Time
 			 7:00	Russia	NOV%sT	1991 Mar 31  2:00s
 			 6:00	Russia	NOV%sT	1992 Jan 19  2:00s
 			 7:00	Russia	NOV%sT	1993 May 23 # say Shanks & P.
-			 6:00	Russia	NOV%sT	2011 Mar 27  2:00s
+			 6:00	Russia	NOV%sT	2002 May  1  3:00
 			 7:00	-	NOVT	2014 Oct 26  2:00s
 			 6:00	-	NOVT
 

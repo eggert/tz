@@ -13,11 +13,23 @@ Unreleased, experimental changes
     passed the first reading in the State Duma and are extremely likely.
     Also, Asia/Sakhalin moves from +10 to +11 on 2016-03-27 at 02:00.
     (Thanks to Alexander Krivenyshev for the heads-up, and to Matt Johnson
-    for followup.)
+    and Stepan Golosunov for followup.)
 
     As a trial of a new system that needs less information to be made up,
     the new zones use numeric time zone abbreviations like "+04"
     instead of invented abbreviations like "ASTT".
+
+  Changes affecting past time stamps
+
+    Asia/Novosibirsk switched from +06 to +07 at 2002-05-01 03:00,
+    not 2011-03-27 02:00.  (Thanks to Stepan Golosunov.)
+
+    Europe/Chisinau observed DST during 1990, and switched from +04 to
+    +03 at 1990-05-06 02:00, instead of switching from +03 to +02.
+    (Thanks to Stepan Golosunov.)
+
+    1991 abbreviations in Europe/Samara should be SAMT/SAMST, not
+    KUYT/KUYST.  (Thanks to Stepan Golosunov.)
 
   Changes to code
 

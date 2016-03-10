@@ -246,11 +246,11 @@ MX	+3232-11701	America/Tijuana	Pacific Time US - Baja California
 MX	+2048-10515	America/Bahia_Banderas	Central Time - Bahía de Banderas
 MY	+0310+10142	Asia/Kuala_Lumpur	Malaysia (peninsula)
 MY	+0133+11020	Asia/Kuching	Sabah, Sarawak
-MZ,BI,BW,CD,MW,RW,ZM,ZW	-2558+03235	Africa/Maputo	+02 - Central Africa Time
+MZ,BI,BW,CD,MW,RW,ZM,ZW	-2558+03235	Africa/Maputo	Central Africa Time
 NA	-2234+01706	Africa/Windhoek
 NC	-2216+16627	Pacific/Noumea
 NF	-2903+16758	Pacific/Norfolk
-NG,AO,BJ,CD,CF,CG,CM,GA,GQ,NE	+0627+00324	Africa/Lagos	+01 - West Africa Time
+NG,AO,BJ,CD,CF,CG,CM,GA,GQ,NE	+0627+00324	Africa/Lagos	West Africa Time
 NI	+1209-08617	America/Managua
 NL	+5222+00454	Europe/Amsterdam
 NO,SJ	+5955+01045	Europe/Oslo

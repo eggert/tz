@@ -2576,16 +2576,15 @@ Zone Asia/Barnaul	 5:35:00 -	LMT	1919 Dec 10
 # 54	RU-NVS	Novosibirsk Oblast
 # 70	RU-TOM	Tomsk Oblast
 
-# From Stepan Golosunov (2016-03-07):
-# http://pravo.gov.ru/proxy/ips/?docbody=&nd=102075743
-# transitions Tomsk to the time of the fifth time belt at 2002-05-01 03:00.
+# From Paul Eggert (2006-08-19): I'm guessing about Tomsk here; it's
+# not clear when it switched from +7 to +6.
 
 Zone Asia/Novosibirsk	 5:31:40 -	LMT	1919 Dec 14  6:00
 			 6:00	-	NOVT	1930 Jun 21 # Novosibirsk Time
 			 7:00	Russia	NOV%sT	1991 Mar 31  2:00s
 			 6:00	Russia	NOV%sT	1992 Jan 19  2:00s
 			 7:00	Russia	NOV%sT	1993 May 23 # say Shanks & P.
-			 6:00	Russia	NOV%sT	2002 May  1  3:00
+			 6:00	Russia	NOV%sT	2011 Mar 27  2:00s
 			 7:00	-	NOVT	2014 Oct 26  2:00s
 			 6:00	-	NOVT
 

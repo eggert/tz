@@ -5,7 +5,7 @@
 PACKAGE=	tzcode
 
 # Version numbers of the code and data distributions.
-VERSION=	2016a
+VERSION=	2016b
 
 # Email address for bug reports.
 BUGEMAIL=	tz@iana.org

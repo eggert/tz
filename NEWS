@@ -6,6 +6,14 @@ Unreleased, experimental changes
 
     Azerbaijan no longer observes DST.  (Thanks to Steffen Thorsen.)
 
+    Chile reverts from permanent to seasonal DST.  (Thanks to Juan
+    Correa for the heads-up, and to Tim Parenti for corrections.)
+    Guess that future America/Santiago and Antarctica/Palmer
+    transitions are August's and May's second Saturdays at 24:00 local
+    time, and that Pacific/Easter stays two hours behind.  Also, call
+    the period from 2014-09-07 through 2016-05-14 daylight saving time
+    instead of standard time, as that seems more appropriate now.
+
 
 Release 2016b - 2016-03-12 17:30:14 -0800
 

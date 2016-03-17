@@ -129,13 +129,22 @@ Zone	Asia/Yerevan	2:58:00 -	LMT	1924 May  2
 			4:00	-	AMT
 
 # Azerbaijan
+
 # From Rustam Aliyev of the Azerbaijan Internet Forum (2005-10-23):
 # According to the resolution of Cabinet of Ministers, 1997
 # From Paul Eggert (2015-09-17): It was Resolution No. 21 (1997-03-17).
 # http://code.az/files/daylight_res.pdf
+
+# From Steffen Thorsen (2016-03-17):
+# ... the Azerbaijani Cabinet of Ministers has cancelled switching to
+# daylight saving time....
+# http://www.azernews.az/azerbaijan/94137.html
+# http://vestnikkavkaza.net/news/Azerbaijani-Cabinet-of-Ministers-cancels-daylight-saving-time.html
+# http://en.apa.az/xeber_azerbaijan_abolishes_daylight_savings_ti_240862.html
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Azer	1997	max	-	Mar	lastSun	 4:00	1:00	S
-Rule	Azer	1997	max	-	Oct	lastSun	 5:00	0	-
+Rule	Azer	1997	2015	-	Mar	lastSun	 4:00	1:00	S
+Rule	Azer	1997	2015	-	Oct	lastSun	 5:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Baku	3:19:24 -	LMT	1924 May  2
 			3:00	-	BAKT	1957 Mar    # Baku Time

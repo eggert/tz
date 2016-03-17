@@ -1,5 +1,12 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting future time stamps
+
+    Azerbaijan no longer observes DST.  (Thanks to Steffen Thorsen.)
+
+
 Release 2016b - 2016-03-12 17:30:14 -0800
 
   Changes affecting future time stamps

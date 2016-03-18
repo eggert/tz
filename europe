@@ -2262,7 +2262,6 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # I do not know why they have decided to make this change;
 # as far as I remember it was done exactly during winter->summer switching
 # so we (Novosibirsk) simply did not switch.
-# Tomsk is still 4 hours ahead of Moscow.
 #
 # From Andrey A. Chernov (1996-10-04):
 # 'MSK' and 'MSD' were born and used initially on Moscow computers with
@@ -2739,21 +2738,30 @@ Zone Asia/Novosibirsk	 5:31:40 -	LMT	1919 Dec 14  6:00
 # 70	RU-TOM	Tomsk Oblast
 #
 # Asia/Tomsk is still in draft form and for now is commented out.
-# Its pre-2002 data were cloned from Asia/Novosibirsk and need to be
+# Its pre-1993 data were cloned from Asia/Novosibirsk and need to be
 # updated for Tomsk.  Also, Tomsk may be changing time zones this year
 # (not decided yet).
 
-# From Stepan Golosunov (2016-03-07):
+# From Stanislaw A. Kuzikowski (1994-06-29):
+# Tomsk is still 4 hours ahead of Moscow.
+
+# From Stepan Golosunov (2016-03-19):
 # http://pravo.gov.ru/proxy/ips/?docbody=&nd=102075743
-# transitions Tomsk to the time of the fifth time belt at 2002-05-01 03:00.
+# (fifth time belt being UTC+5+1(decree time)
+# / UTC+5+1(decree time)+1(summer time)) ...
+# Note that time belts (numbered from 2 (Moscow) to 12 according to their
+# GMT/UTC offset and having too many exceptions like regions formally
+# belonging to one belt but using time from another) were replaced
+# with time zones in 2011 with different numberings (there was a
+# 2-hour gap between second and third zones in 2011-2014).
 
 #Zone Asia/Tomsk	 5:31:40 -	LMT	1919 Dec 14  6:00
 #			 6:00	-	+06	1930 Jun 21
 #			 7:00	Russia	+07/+08	1991 Mar 31  2:00s
 #			 6:00	Russia	+06/+07	1992 Jan 19  2:00s
-#			 7:00	Russia	+07/+08	1993 May 23 # say Shanks & P.
-#			 6:00	Russia	+06/+07	2002 May  1  3:00
-#			 7:00	Russia	+07/+08	2014 Oct 26  2:00s
+#			 7:00	Russia	+07/+08	2002 May  1  3:00
+#			 6:00	Russia	+06/+07	2011 Mar 27  2:00s
+#			 7:00	-	+07	2014 Oct 26  2:00s
 #			 6:00	-	+06
 
 

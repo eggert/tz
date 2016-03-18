@@ -14,6 +14,18 @@ Unreleased, experimental changes
     2014-09-07 through 2016-05-14 daylight saving time instead of
     standard time, as that seems more appropriate now.
 
+  Changes affecting past time stamps
+
+    Europe/Kaliningrad and Europe/Vilnius changed from +03/+04 to
+    +02/+03 on 1989-03-26, not 1991-03-31.  Europe/Volgograd changed
+    from +04/+05 to +03/+04 on 1988-03-27, not 1989-03-26.
+    (Thanks to Stepan Golosunov.)
+
+  Changes to commentary
+
+    Several updates and URLs for historical and proposed Russian changes.
+    (Thanks to Stepan Golosunov, Matt Johnson, and Alexander Krivenyshev.)
+
 
 Release 2016b - 2016-03-12 17:30:14 -0800
 

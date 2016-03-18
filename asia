@@ -1645,6 +1645,8 @@ Zone	Asia/Aqtau	3:21:04	-	LMT	1924 May  2
 			4:00 RussiaAsia	AQT%sT	2005 Mar 15
 			5:00	-	AQTT
 # West Kazakhstan
+# From Paul Eggert (2016-03-18):
+# The 1989 transition is from USSR act No. 227 (1989-03-14).
 Zone	Asia/Oral	3:25:24	-	LMT	1924 May  2 # or Ural'sk
 			4:00	-	URAT	1930 Jun 21 # Ural'sk time
 			5:00	-	URAT	1981 Apr  1

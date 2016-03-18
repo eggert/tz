@@ -1221,20 +1221,19 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # From Paul Eggert (2015-03-03):
 # For now, assume that the extension will persist indefinitely.
 
-# From Juan Correa (2016-03-13):
-# Today the Chilean Ministry of Energy announced that they will go back to a
-# DST scheme this year.  That means clocks will go back 1 hour at 00:00 May
-# 15th (jumping back to May 14th); and will go forward by 1 hour on 00:00,
-# August 14th.  This was decided after a public outcry during winter, when the
-# sunrise for Santiago went as late as 08:45....
-# http://www.soychile.cl/Santiago/Sociedad/2016/03/13/380779/Vuelve-el-horario-de-invierno-a-partir-de-la-segunda-semana-de-mayo.aspx
-# http://www.biobiochile.cl/2016/03/13/gobierno-retrocede-y-decreta-el-regreso-del-horario-de-invierno.shtml
-# http://www.t13.cl/noticia/nacional/chile-volvera-implementar-horario-invierno
+# From Juan Correa (2016-03-18):
+# The decree regarding DST has been published in today's Official Gazette:
+# http://www.diariooficial.interior.gob.cl/versiones-anteriores/do/20160318/
+# http://www.leychile.cl/Navegar?idNorma=1088502
+# It does consider the second Saturday of May and August as the dates
+# for the transition; and it lists DST dates until 2019, but I think
+# this scheme will stick.
 #
-# From Paul Eggert (2016-03-14):
-# For now, guess that future transitions are May's and August's second
-# Saturdays at 24:00 local time, and that Pacific/Easter always stays 2
-# hours behind.
+# From Paul Eggert (2016-03-18):
+# The decree says transitions occur at 24:00 local time, which differs
+# from the 2008 transitions, which were documented to occur at 24:00
+# on the mainland and 22:00 in Easter Island.  Guess that this new
+# practice starts this year and continues indefinitely.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Chile	1927	1931	-	Sep	 1	0:00	1:00	S
@@ -1269,8 +1268,8 @@ Rule	Chile	2011	only	-	May	Sun>=2	3:00u	0	-
 Rule	Chile	2011	only	-	Aug	Sun>=16	4:00u	1:00	S
 Rule	Chile	2012	2014	-	Apr	Sun>=23	3:00u	0	-
 Rule	Chile	2012	2014	-	Sep	Sun>=2	4:00u	1:00	S
-Rule	Chile	2016	max	-	May	Sun>=9	3:00u	0	-
-Rule	Chile	2016	max	-	Aug	Sun>=9	4:00u	1:00	S
+Rule	Chile	2016	max	-	May	Sat>=8	24:00	0	-
+Rule	Chile	2016	max	-	Aug	Sat>=8	24:00	1:00	S
 # IATA SSIM anomalies: (1992-02) says 1992-03-14;
 # (1996-09) says 1998-03-08.  Ignore these.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

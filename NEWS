@@ -1,5 +1,14 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting future time stamps
+
+    Asia/Magadan switches from +10 to +11 on 2016-04-24 at 02:00.
+    (Thanks to Alexander Krivenyshev.)  This change has not yet been
+    approved by the Federation Council but seems more likely than not.
+
+
 Release 2016c - 2016-03-23 00:51:27 -0700
 
   Changes affecting future time stamps

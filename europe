@@ -2994,13 +2994,14 @@ Zone Asia/Sakhalin	 9:30:48 -	LMT	1905 Aug 23
 # until now by Asia/Magadan, will instead move to UTC+11.  These regions will
 # need their own zone.
 
-# From Alexander Krivenyshev (2016-01-03):
-# Magadan Oblast / Magadan (draft bill date of entry 2015-12-08),
-# UTC+10 to UTC+11
-# From Stepan Golosunov (2016-03-17):
-# The bill is currently proposed to be approved in both the second and
-# the third readings on 2016-03-22. It might be in time to be approved
-# by the Federation Council on 2016-03-23.
+# From Alexander Krivenyshev (2016-03-27):
+# ... draft bill 948300-6 to change its time zone from UTC+10 to
+# UTC+11 as of March 23, 2016 passed its 3rd reading by the State Duma
+# and if approved by the Federation Council, will take into effect as
+# the Federal Law on April 24, 2016 at at 2 o'clock 00 minutes.
+#
+# From Paul Eggert (2016-03-26):
+# For now, assume the bill will pass.
 
 Zone Asia/Magadan	10:03:12 -	LMT	1924 May  2
 			10:00	-	MAGT	1930 Jun 21 # Magadan Time
@@ -3008,12 +3009,8 @@ Zone Asia/Magadan	10:03:12 -	LMT	1924 May  2
 			10:00	Russia	MAG%sT	1992 Jan 19  2:00s
 			11:00	Russia	MAG%sT	2011 Mar 27  2:00s
 			12:00	-	MAGT	2014 Oct 26  2:00s
-			10:00	-	MAGT
-# From Paul Eggert (2016-03-18):
-# If the bill passes as-is, replace the previous data line with:
-#			10:00	-	MAGT	2016 Apr 24  2:00s
-#			11:00	-	MAGT
-# and update zone1970.tab and zone.tab to say "MSK+08" for Asia/Magadan.
+			10:00	-	MAGT	2016 Apr 24  2:00s
+			11:00	-	MAGT
 
 
 # From Tim Parenti (2014-07-06):

@@ -8,6 +8,10 @@ Unreleased, experimental changes
     (Thanks to Alexander Krivenyshev.)  This change has not yet been
     approved by the Federation Council but seems more likely than not.
 
+  Changes to commentary
+
+    Mention Internet RFCs 7808 (TZDIST) and 7809 (CalDAV time zone references).
+
 
 Release 2016c - 2016-03-23 00:51:27 -0700
 

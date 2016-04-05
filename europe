@@ -2995,13 +2995,12 @@ Zone Asia/Sakhalin	 9:30:48 -	LMT	1905 Aug 23
 # need their own zone.
 
 # From Alexander Krivenyshev (2016-03-27):
-# ... draft bill 948300-6 to change its time zone from UTC+10 to
-# UTC+11 as of March 23, 2016 passed its 3rd reading by the State Duma
-# and if approved by the Federation Council, will take into effect as
-# the Federal Law on April 24, 2016 at at 2 o'clock 00 minutes.
+# ... draft bill 948300-6 to change its time zone from UTC+10 to UTC+11 ...
+# will take ... effect ... on April 24, 2016 at 2 o'clock
 #
-# From Paul Eggert (2016-03-26):
-# For now, assume the bill will pass.
+# From Matt Johnson (2016-04-05):
+# ... signed by the President today ...
+# http://publication.pravo.gov.ru/Document/View/0001201604050038
 
 Zone Asia/Magadan	10:03:12 -	LMT	1924 May  2
 			10:00	-	MAGT	1930 Jun 21 # Magadan Time

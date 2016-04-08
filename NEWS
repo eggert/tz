@@ -40,6 +40,16 @@ Release 2016c - 2016-03-23 00:51:27 -0700
 
 Release 2016b - 2016-03-12 17:30:14 -0800
 
+  Compatibility note
+
+    Starting with release 2016b, some data entries cause zic implementations
+    derived from tz releases 2005j through 2015e to issue warnings like
+    "time zone abbreviation differs from POSIX standard (+03)".
+    These warnings should not otherwise affect zic's output and can safely be
+    ignored on today's platforms, as the warnings refer to a restriction in
+    POSIX.1-1988 that was removed in POSIX.1-2001.  One way to suppress the
+    warnings is to upgrade to zic derived from tz releases 2015f and later.
+
   Changes affecting future time stamps
 
     New zones Europe/Astrakhan and Europe/Ulyanovsk for Astrakhan and

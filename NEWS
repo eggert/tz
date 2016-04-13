@@ -7,6 +7,17 @@ Unreleased, experimental changes
     Asia/Magadan switches from +10 to +11 on 2016-04-24 at 02:00.
     (Thanks to Alexander Krivenyshev and Matt Johnson.)
 
+    New zone Asia/Tomsk, split off from Asia/Novosibirsk.  It covers
+    Tomsk Oblast, Russia, which switches from +06 to +07 on 2016-05-29
+    at 02:00.  (Thanks to Stepan Golosunov.)
+
+  Changes affecting past time stamps
+
+    New zone Europe/Kirov, split off from Europe/Volgograd.  It covers
+    Kirov Oblast, Russia, which switched from +04/+05 to +03/+04 on
+    1989-03-26 at 02:00, roughly a year after Europe/Volgograd made
+    the same change.  (Thanks to Stepan Golosunov.)
+
   Changes to commentary
 
     Mention Internet RFCs 7808 (TZDIST) and 7809 (CalDAV time zone references).

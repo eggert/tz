@@ -600,13 +600,9 @@ Rule	Russia	1981	1984	-	Apr	 1	 0:00	1:00	S
 Rule	Russia	1981	1983	-	Oct	 1	 0:00	0	-
 # Act No. 967 of the Council of Ministers of the USSR (1984-09-13), repeated in
 # Act No. 227 of the Council of Ministers of the USSR (1989-03-14):
-Rule	Russia	1984	1991	-	Sep	lastSun	 2:00s	0	-
-Rule	Russia	1985	1991	-	Mar	lastSun	 2:00s	1:00	S
+Rule	Russia	1984	1995	-	Sep	lastSun	 2:00s	0	-
+Rule	Russia	1985	2010	-	Mar	lastSun	 2:00s	1:00	S
 #
-Rule	Russia	1992	only	-	Mar	lastSat	 23:00	1:00	S
-Rule	Russia	1992	only	-	Sep	lastSat	 23:00	0	-
-Rule	Russia	1993	2010	-	Mar	lastSun	 2:00s	1:00	S
-Rule	Russia	1993	1995	-	Sep	lastSun	 2:00s	0	-
 Rule	Russia	1996	2010	-	Oct	lastSun	 2:00s	0	-
 # As described below, Russia's 2014 change affects Zone data, not Rule data.
 
@@ -629,6 +625,14 @@ Rule	Russia	1996	2010	-	Oct	lastSun	 2:00s	0	-
 # b) Astrakhan, Kirov, Kuybyshev, Ulyanovsk oblasts: second time belt
 # rules (Moscow time)
 # c) Uralsk oblast: third time belt rules (Moscow+1).
+
+# From Stepan Golosunov (2016-03-27):
+# Unamended version of the act of the
+# Government of the Russian Federation No. 23 from 08.01.1992
+# http://pravo.gov.ru/proxy/ips/?docbody=&nd=102014034&rdk=0
+# says that every year clocks were to be moved forward on last Sunday
+# of March at 2 hours and moved backwards on last Sunday of September
+# at 3 hours.  It was amended in 1996 to replace September with October.
 
 # From Alexander Krivenyshev (2011-06-14):
 # According to Kremlin press service, Russian President Dmitry Medvedev

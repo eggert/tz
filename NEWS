@@ -21,6 +21,15 @@ Unreleased, experimental changes
     1989-03-26 at 02:00, roughly a year after Europe/Volgograd made
     the same change.  (Thanks to Stepan Golosunov.)
 
+    Russia and nearby locations had daylight-saving transitions on
+    1992-03-29 at 02:00 and 1992-09-27 at 03:00, instead of on
+    1992-03-28 at 23:00 and 1992-09-26 at 23:00.  (Thanks to Stepan
+    Golosunov.)
+
+    Many corrections to historical time in Kazakhstan from 1991
+    through 2005.  (Thanks to Stepan Golosunov.)  Replace Kazakhstan's
+    invented time zone abbreviations with numeric abbreviations.
+
   Changes to commentary
 
     Mention Internet RFCs 7808 (TZDIST) and 7809 (CalDAV time zone references).

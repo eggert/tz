@@ -4,6 +4,9 @@ Unreleased, experimental changes
 
   Changes affecting future time stamps
 
+    America/Caracas switches from -0430 to -04 on 2016-05-01 at 02:30.
+    (Thanks to Alexander Krivenyshev for the heads-up.)
+
     Asia/Magadan switches from +10 to +11 on 2016-04-24 at 02:00.
     (Thanks to Alexander Krivenyshev and Matt Johnson.)
 

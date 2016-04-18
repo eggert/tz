@@ -1,5 +1,13 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting past time stamps
+
+    Asia/Baku's 1992-09-27 transition from +04 (DST) to +04 (non-DST) was
+    at 03:00, not 23:00 the previous day.  (Thanks to Michael Deckers.)
+
+
 Release 2016d - 2016-04-17 22:50:29 -0700
 
   Changes affecting future time stamps

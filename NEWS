@@ -7,6 +7,11 @@ Unreleased, experimental changes
     Asia/Baku's 1992-09-27 transition from +04 (DST) to +04 (non-DST) was
     at 03:00, not 23:00 the previous day.  (Thanks to Michael Deckers.)
 
+  Changes affecting documentation and commentary
+
+    tz-link.htm says why governments should give plenty of notice for
+    time zone or DST changes, and refers to Matt Johnson's blog post.
+
 
 Release 2016d - 2016-04-17 22:50:29 -0700
 

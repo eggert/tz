@@ -2513,13 +2513,13 @@ Zone Europe/Simferopol	 2:16:24 -	LMT	1880
 #
 # From Paul Eggert (2006-03-22):
 # The _Economist_ (1994-05-28, p 45) reports that central Crimea switched
-# from Kiev to Moscow time sometime after the January 1994 elections.
+# from Kyiv to Moscow time sometime after the January 1994 elections.
 # Shanks (1999) says "date of change uncertain", but implies that it happened
 # sometime between the 1994 DST switches.  Shanks & Pottenger simply say
 # 1994-09-25 03:00, but that can't be right.  For now, guess it
 # changed in May.
 			 2:00	E-Eur	EE%sT	1994 May
-# From IATA SSIM (1994/1997), which also says that Kerch is still like Kiev.
+# From IATA SSIM (1994/1997), which also says that Kerch is still like Kyiv.
 			 3:00	E-Eur	MSK/MSD	1996 Mar 31  0:00s
 			 3:00	1:00	MSD	1996 Oct 27  3:00s
 # IATA SSIM (1997-09) says Crimea switched to EET/EEST.
@@ -3538,7 +3538,7 @@ Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 # via Garrett Wollman (2003-01-27):
 # BTW, I've found the official document on this matter. It's government
 # regulations No. 509, May 13, 1996. In my poor translation it says:
-# "Time in Ukraine is set to second timezone (Kiev time). Each last Sunday
+# "Time in Ukraine is set to second timezone (Kyiv time). Each last Sunday
 # of March at 3am the time is changing to 4am and each last Sunday of
 # October the time at 4am is changing to 3am"
 
@@ -3565,7 +3565,7 @@ Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 #
 # From Udo Schwedt (2011-10-18):
 # As far as I understand, the recent change to the Ukrainian time zone
-# (Europe/Kiev) to introduce permanent daylight saving time (similar
+# (Europe/Kyiv) to introduce permanent daylight saving time (similar
 # to Russia) was reverted today:
 # http://portal.rada.gov.ua/rada/control/en/publish/article/info_left?art_id=287324&cat_id=105995
 #
@@ -3602,10 +3602,10 @@ Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 # http://www.uazakon.com/documents/date_8u/pg_grcasa.htm
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-# Most of Ukraine since 1970 has been like Kiev.
-# "Kyiv" is the transliteration of the Ukrainian name, but
-# "Kiev" is more common in English.
-Zone Europe/Kiev	2:02:04 -	LMT	1880
+# Most of Ukraine since 1970 has been like Kyiv.
+# "Kyiv" is the transliteration of the Ukrainian name, and
+# "Kiev" is former name in English.
+Zone Europe/Kyiv	2:02:04 -	LMT	1880
 			2:02:04	-	KMT	1924 May  2 # Kiev Mean Time
 			2:00	-	EET	1930 Jun 21
 			3:00	-	MSK	1941 Sep 20
@@ -3615,9 +3615,9 @@ Zone Europe/Kiev	2:02:04 -	LMT	1880
 			2:00	E-Eur	EE%sT	1995
 			2:00	EU	EE%sT
 # Ruthenia used CET 1990/1991.
-# "Uzhhorod" is the transliteration of the Rusyn/Ukrainian pronunciation, but
-# "Uzhgorod" is more common in English.
-Zone Europe/Uzhgorod	1:29:12 -	LMT	1890 Oct
+# "Uzhhorod" is the transliteration of the Ukrainian pronunciation, and
+# "Uzhgorod" is former name in English.
+Zone Europe/Uzhhorod	1:29:12 -	LMT	1890 Oct
 			1:00	-	CET	1940
 			1:00	C-Eur	CE%sT	1944 Oct
 			1:00	1:00	CEST	1944 Oct 26
@@ -3628,12 +3628,12 @@ Zone Europe/Uzhgorod	1:29:12 -	LMT	1890 Oct
 			2:00	-	EET	1992
 			2:00	E-Eur	EE%sT	1995
 			2:00	EU	EE%sT
-# Zaporozh'ye and eastern Lugansk oblasts observed DST 1990/1991.
-# "Zaporizhia" is the transliteration of the Ukrainian name, but
-# "Zaporozh'ye" is more common in English.  Use the common English
+# Zaporizhia and eastern Lugansk oblasts observed DST 1990/1991.
+# "Zaporizhia" is the transliteration of the Ukrainian name, and
+# "Zaporozh'ye" is former name in English.  Use the common English
 # spelling, except omit the apostrophe as it is not allowed in
 # portable Posix file names.
-Zone Europe/Zaporozhye	2:20:40 -	LMT	1880
+Zone Europe/Zaporizhia	2:20:40 -	LMT	1880
 			2:20	-	CUT	1924 May  2 # Central Ukraine T
 			2:00	-	EET	1930 Jun 21
 			3:00	-	MSK	1941 Aug 25

@@ -2,6 +2,13 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting future time stamps
+
+    Africa/Cairo observes DST in 2016 from July 7 to the end of October.
+    Guess October 27 and 24:00 transitions.  (Thanks to Steffen Thorsen.)
+    For future years, guess April's last Thursday to October's last
+    Thursday except for Ramadan.
+
   Changes affecting past time stamps
 
     Asia/Baku's 1992-09-27 transition from +04 (DST) to +04 (non-DST) was

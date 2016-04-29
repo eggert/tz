@@ -834,62 +834,96 @@ Zone Indian/Mauritius	3:50:00 -	LMT	1907 # Port Louis
 #         (car (cdr (cdr b))) (calendar-month-name (car b) t) (car (cdr b)))))
 #     (setq islamic-year (+ 1 islamic-year))))
 
+# From Cory Danielson (2016-04-28):
+# Updated Morocco rules to match http://www.timeanddate.com/time/zone/morocco/casablanca
+# Per http://www.timeanddate.com/news/time/morocco-ends-dst-2013.html
+# The Moroccan government has just announced that the North African country 
+# will observe daylight saving time (DST) until 3:00 a.m. (03:00) local time
+# on Sunday, October 27, 2013. Clocks were originally scheduled to be turned
+# 1 hour back to standard time tomorrow, September 29, 2013.
+# Decree 2.13.781 also stipulates that the country's DST period in future
+# years will run from 2:00 a.m. (02:00) on the last Sunday in March to
+# 3:00 a.m. (03:00) on the last Sunday in October.
+# The rules after 2019 are likely incorrect, but the non-lastSun rules
+# do not appear to be predictable?
+
 # RULE	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 
-Rule	Morocco	1939	only	-	Sep	12	 0:00	1:00	S
-Rule	Morocco	1939	only	-	Nov	19	 0:00	0	-
-Rule	Morocco	1940	only	-	Feb	25	 0:00	1:00	S
-Rule	Morocco	1945	only	-	Nov	18	 0:00	0	-
-Rule	Morocco	1950	only	-	Jun	11	 0:00	1:00	S
-Rule	Morocco	1950	only	-	Oct	29	 0:00	0	-
-Rule	Morocco	1967	only	-	Jun	 3	12:00	1:00	S
-Rule	Morocco	1967	only	-	Oct	 1	 0:00	0	-
-Rule	Morocco	1974	only	-	Jun	24	 0:00	1:00	S
-Rule	Morocco	1974	only	-	Sep	 1	 0:00	0	-
-Rule	Morocco	1976	1977	-	May	 1	 0:00	1:00	S
-Rule	Morocco	1976	only	-	Aug	 1	 0:00	0	-
-Rule	Morocco	1977	only	-	Sep	28	 0:00	0	-
-Rule	Morocco	1978	only	-	Jun	 1	 0:00	1:00	S
-Rule	Morocco	1978	only	-	Aug	 4	 0:00	0	-
-Rule	Morocco	2008	only	-	Jun	 1	 0:00	1:00	S
-Rule	Morocco	2008	only	-	Sep	 1	 0:00	0	-
-Rule	Morocco	2009	only	-	Jun	 1	 0:00	1:00	S
-Rule	Morocco	2009	only	-	Aug	21	 0:00	0	-
-Rule	Morocco	2010	only	-	May	 2	 0:00	1:00	S
-Rule	Morocco	2010	only	-	Aug	 8	 0:00	0	-
-Rule	Morocco	2011	only	-	Apr	 3	 0:00	1:00	S
-Rule	Morocco	2011	only	-	Jul	31	 0	0	-
-Rule	Morocco	2012	2013	-	Apr	lastSun	 2:00	1:00	S
-Rule	Morocco	2012	only	-	Sep	30	 3:00	0	-
-Rule	Morocco	2012	only	-	Jul	20	 3:00	0	-
-Rule	Morocco	2012	only	-	Aug	20	 2:00	1:00	S
-Rule	Morocco	2013	only	-	Jul	 7	 3:00	0	-
-Rule	Morocco	2013	only	-	Aug	10	 2:00	1:00	S
-Rule	Morocco	2013	max	-	Oct	lastSun	 3:00	0	-
-Rule	Morocco	2014	2021	-	Mar	lastSun	 2:00	1:00	S
-Rule	Morocco	2014	only	-	Jun	28	 3:00	0	-
-Rule	Morocco	2014	only	-	Aug	 2	 2:00	1:00	S
-Rule	Morocco	2015	only	-	Jun	14	 3:00	0	-
-Rule	Morocco	2015	only	-	Jul	19	 2:00	1:00	S
-Rule	Morocco	2016	only	-	Jun	 5	 3:00	0	-
-Rule	Morocco	2016	only	-	Jul	10	 2:00	1:00	S
-Rule	Morocco	2017	only	-	May	21	 3:00	0	-
-Rule	Morocco	2017	only	-	Jul	 2	 2:00	1:00	S
-Rule	Morocco	2018	only	-	May	13	 3:00	0	-
-Rule	Morocco	2018	only	-	Jun	17	 2:00	1:00	S
-Rule	Morocco	2019	only	-	May	 5	 3:00	0	-
-Rule	Morocco	2019	only	-	Jun	 9	 2:00	1:00	S
-Rule	Morocco	2020	only	-	Apr	19	 3:00	0	-
-Rule	Morocco	2020	only	-	May	24	 2:00	1:00	S
-Rule	Morocco	2021	only	-	Apr	11	 3:00	0	-
-Rule	Morocco	2021	only	-	May	16	 2:00	1:00	S
-Rule	Morocco	2022	only	-	May	 8	 2:00	1:00	S
-Rule	Morocco	2023	only	-	Apr	23	 2:00	1:00	S
-Rule	Morocco	2024	only	-	Apr	14	 2:00	1:00	S
-Rule	Morocco	2025	only	-	Apr	 6	 2:00	1:00	S
-Rule	Morocco	2026	max	-	Mar	lastSun	 2:00	1:00	S
-Rule	Morocco	2036	only	-	Oct	19	 3:00	0	-
-Rule	Morocco	2037	only	-	Oct	 4	 3:00	0	-
+Rule	Morocco	1939	only	-	Sep	12	0:00	1:00	S
+Rule	Morocco	1939	only	-	Nov	19	0:00	0	-
+Rule	Morocco	1940	only	-	Feb	25	0:00	1:00	S
+Rule	Morocco	1945	only	-	Nov	18	0:00	0	-
+Rule	Morocco	1950	only	-	Jun	11	0:00	1:00	S
+Rule	Morocco	1950	only	-	Oct	29	0:00	0	-
+Rule	Morocco	1967	only	-	Jun	 3	2:00	1:00	S
+Rule	Morocco	1967	only	-	Oct	 1	0:00	0	-
+Rule	Morocco	1974	only	-	Jun	24	0:00	1:00	S
+Rule	Morocco	1974	only	-	Sep	 1	0:00	0	-
+Rule	Morocco	1976	1977	-	May	 1	0:00	1:00	S
+Rule	Morocco	1976	only	-	Aug	 1	0:00	0	-
+Rule	Morocco	1977	only	-	Sep	28	0:00	0	-
+Rule	Morocco	1978	only	-	Jun	 1	0:00	1:00	S
+Rule	Morocco	1978	only	-	Aug	 4	0:00	0	-
+Rule	Morocco	2008	only	-	Jun	 1	0:00	1:00	S
+Rule	Morocco	2008	only	-	Sep	 1	0:00	0	-
+Rule	Morocco	2009	only	-	Jun	 1	0:00	1:00	S
+Rule	Morocco	2009	only	-	Aug	21	0:00	0	-
+Rule	Morocco	2010	only	-	May	 2	0:00	1:00	S
+Rule	Morocco	2010	only	-	Aug	 8	0:00	0	-
+Rule	Morocco	2011	only	-	Apr	 3	0:00	1:00	S
+Rule	Morocco	2011	only	-	Jul	31	0:00	0	-
+Rule	Morocco	2012	only	-	Apr	29	2:00	1:00	S
+Rule	Morocco	2012	only	-	Jul	20	3:00	0	-
+Rule	Morocco	2012	only	-	Aug	20	2:00	1:00	S
+Rule	Morocco	2012	only	-	Sep	30	3:00	0	-
+Rule	Morocco	2013	only	-	Apr	28	2:00	1:00	S
+Rule	Morocco	2013	only	-	Jul	 7	3:00	0	-
+Rule	Morocco	2013	only	-	Aug	10	2:00	1:00	S
+Rule	Morocco	2013	only	-	Oct	27	3:00	0	-
+Rule	Morocco	2014	only	-	Mar	lastSun	2:00	1:00	S
+Rule	Morocco	2014	only	-	Jun	28	3:00	0	-
+Rule	Morocco	2014	only	-	Aug	 2	2:00	1:00	S
+Rule	Morocco	2014	only	-	Oct	lastSun	3:00	0	-
+Rule	Morocco	2015	only	-	Mar	lastSun	2:00	1:00	S
+Rule	Morocco	2015	only	-	Jun	14	3:00	0	-
+Rule	Morocco	2015	only	-	Jul	19	2:00	1:00	S
+Rule	Morocco	2015	only	-	Oct	lastSun	3:00	0	-
+Rule	Morocco	2016	only	-	Mar	lastSun	2:00	1:00	S
+Rule	Morocco	2016	only	-	Jun	 5	3:00	0	-
+Rule	Morocco	2016	only	-	Jul	10	2:00	1:00	S
+Rule	Morocco	2016	only	-	Oct	lastSun	3:00	0	-
+Rule	Morocco	2017	only	-	Mar	lastSun	2:00	1:00	S
+Rule	Morocco	2017	only	-	May	27	3:00	0	-
+Rule	Morocco	2017	only	-	Jul	 1	2:00	1:00	S
+Rule	Morocco	2017	only	-	Oct	lastSun	3:00	0	-
+Rule	Morocco	2018	only	-	Mar	lastSun	2:00	1:00	S
+Rule	Morocco	2018	only	-	May	12	3:00	0	-
+Rule	Morocco	2018	only	-	Jun	16	2:00	1:00	S
+Rule	Morocco	2018	only	-	Oct	lastSun	3:00	0	-
+Rule	Morocco	2019	only	-	Mar	lastSun	2:00	1:00	S
+Rule	Morocco	2019	only	-	May	 4	3:00	0	-
+Rule	Morocco	2019	only	-	Jun	 8	2:00	1:00	S
+Rule	Morocco	2019	only	-	Oct	lastSun	3:00	0	-
+Rule	Morocco	2020	only	-	Mar	29	2:00	1:00	S
+Rule	Morocco	2020	only	-	Oct	25	3:00	0	-
+Rule	Morocco	2021	only	-	Mar	28	2:00	1:00	S
+Rule	Morocco	2021	only	-	Oct	31	3:00	0	-
+Rule	Morocco	2022	only	-	Mar	27	2:00	1:00	S
+Rule	Morocco	2022	only	-	Oct	30	3:00	0	-
+Rule	Morocco	2023	only	-	Mar	26	2:00	1:00	S
+Rule	Morocco	2023	only	-	Oct	29	3:00	0	-
+Rule	Morocco	2024	only	-	Mar	31	2:00	1:00	S
+Rule	Morocco	2024	only	-	Oct	27	3:00	0	-
+Rule	Morocco	2025	only	-	Mar	30	2:00	1:00	S
+Rule	Morocco	2025	only	-	Oct	26	3:00	0	-
+Rule	Morocco	2026	only	-	Mar	29	2:00	1:00	S
+Rule	Morocco	2026	only	-	Oct	25	3:00	0	-
+Rule	Morocco	2027	only	-	Mar	28	2:00	1:00	S
+Rule	Morocco	2027	only	-	Oct	31	3:00	0	-
+Rule	Morocco	2028	only	-	Mar	26	2:00	1:00	S
+Rule	Morocco	2028	only	-	Oct	29	3:00	0	-
+Rule	Morocco	2029	only	-	Mar	25	2:00	1:00	S
+Rule	Morocco	2029	only	-	Oct	28	3:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Africa/Casablanca	-0:30:20 -	LMT	1913 Oct 26

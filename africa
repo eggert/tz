@@ -944,11 +944,11 @@ Rule	Morocco	2009	only	-	Aug	21	 0:00	0	-
 Rule	Morocco	2010	only	-	May	 2	 0:00	1:00	S
 Rule	Morocco	2010	only	-	Aug	 8	 0:00	0	-
 Rule	Morocco	2011	only	-	Apr	 3	 0:00	1:00	S
-Rule	Morocco	2011	only	-	Jul	31	 0	0	-
+Rule	Morocco	2011	only	-	Jul	31	 0:00	0	-
 Rule	Morocco	2012	2013	-	Apr	lastSun	 2:00	1:00	S
-Rule	Morocco	2012	only	-	Sep	30	 3:00	0	-
 Rule	Morocco	2012	only	-	Jul	20	 3:00	0	-
 Rule	Morocco	2012	only	-	Aug	20	 2:00	1:00	S
+Rule	Morocco	2012	only	-	Sep	30	 3:00	0	-
 Rule	Morocco	2013	only	-	Jul	 7	 3:00	0	-
 Rule	Morocco	2013	only	-	Aug	10	 2:00	1:00	S
 Rule	Morocco	2013	max	-	Oct	lastSun	 3:00	0	-

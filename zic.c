@@ -143,6 +143,13 @@ static bool	yearistype(int year, const char * type);
 /* Bound on length of what %z can expand to.  */
 enum { PERCENT_Z_LEN_BOUND = sizeof "+995959" - 1 };
 
+/* If true, work around a bug in Qt 5.6 and earlier, which mishandles
+   tzdata binary files whose POSIX-TZ-style strings contain '<'; see
+   QTBUG-53071 <https://bugreports.qt.io/browse/QTBUG-53071>.  This
+   workaround will no longer be needed when Qt 5.6 is obsolete, say in
+   the year 2021.  */
+enum { WORK_AROUND_QTBUG_53071 = true };
+
 static int		charcnt;
 static bool		errors;
 static bool		warnings;
@@ -420,7 +427,8 @@ growalloc(void *ptr, size_t itemsize, int nitems, int *nitems_alloc)
 	if (nitems < *nitems_alloc)
 		return ptr;
 	else {
-		int amax = INT_MAX < SIZE_MAX ? INT_MAX : SIZE_MAX;
+		int nitems_max = INT_MAX - WORK_AROUND_QTBUG_53071;
+		int amax = nitems_max < SIZE_MAX ? nitems_max : SIZE_MAX;
 		if ((amax - 1) / 3 * 2 < *nitems_alloc)
 			memory_exhausted(_("int overflow"));
 		*nitems_alloc = *nitems_alloc + (*nitems_alloc >> 1) + 1;
@@ -1616,8 +1624,11 @@ writezone(const char *const name, const char *const string, char version)
 	char *				fullname;
 	static const struct tzhead	tzh0;
 	static struct tzhead		tzh;
-	zic_t *ats = emalloc(size_product(timecnt, sizeof *ats + 1));
-	void *typesptr = ats + timecnt;
+	zic_t one = 1;
+	zic_t y2038_boundary = one << 31;
+	int nats = timecnt + WORK_AROUND_QTBUG_53071;
+	zic_t *ats = emalloc(size_product(nats, sizeof *ats + 1));
+	void *typesptr = ats + nats;
 	unsigned char *types = typesptr;
 
 	/*
@@ -1661,6 +1672,19 @@ writezone(const char *const name, const char *const string, char version)
 		ats[i] = attypes[i].at;
 		types[i] = attypes[i].type;
 	}
+
+	/* Work around QTBUG-53071 for time stamps less than y2038_boundary - 1,
+	   by inserting a no-op transition at time y2038_boundary - 1.
+	   This works only for timestamps before the boundary, which
+	   should be good enough in practice as QTBUG-53071 should be
+	   long-dead by 2038.  */
+	if (WORK_AROUND_QTBUG_53071 && timecnt != 0
+	    && ats[timecnt - 1] < y2038_boundary - 1 && strchr(string, '<')) {
+	  ats[timecnt] = y2038_boundary - 1;
+	  types[timecnt] = types[timecnt - 1];
+	  timecnt++;
+	}
+
 	/*
 	** Correct for leap seconds.
 	*/

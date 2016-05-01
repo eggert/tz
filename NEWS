@@ -14,6 +14,13 @@ Unreleased, experimental changes
     Asia/Baku's 1992-09-27 transition from +04 (DST) to +04 (non-DST) was
     at 03:00, not 23:00 the previous day.  (Thanks to Michael Deckers.)
 
+  Changes to code
+
+    zic now outputs a dummy transition at time 2**31 - 1 in zones
+    whose POSIX-style TZ strings contain a '<'.  This mostly works
+    around Qt bug 53071 <https://bugreports.qt.io/browse/QTBUG-53071>.
+    (Thanks to Zhanibek Adilbekov for reporting the Qt bug.)
+
   Changes affecting documentation and commentary
 
     tz-link.htm says why governments should give plenty of notice for

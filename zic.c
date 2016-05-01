@@ -857,10 +857,6 @@ static zic_t const max_time = MAXVAL (zic_t, TIME_T_BITS_IN_FILE);
    rounded downward to the negation of a power of two that is
    comfortably outside the error bounds.
 
-   zic does not output time stamps before this, partly because they
-   are physically suspect, and partly because GNOME mishandles them; see
-   GNOME bug 730332 <https://bugzilla.gnome.org/show_bug.cgi?id=730332>.
-
    For the time of the Big Bang, see:
 
    Ade PAR, Aghanim N, Armitage-Caplan C et al.  Planck 2013 results.
@@ -881,7 +877,15 @@ static zic_t const max_time = MAXVAL (zic_t, TIME_T_BITS_IN_FILE);
 #define BIG_BANG (- (1LL << 59))
 #endif
 
-static const zic_t big_bang_time = BIG_BANG;
+/* If true, work around GNOME bug 730332
+   <https://bugzilla.gnome.org/show_bug.cgi?id=730332>
+   by refusing to output time stamps before BIG_BANG.
+   Such time stamps are physically suspect anyway.  */
+enum { WORK_AROUND_GNOME_BUG_730332 = true };
+
+static const zic_t early_time = (WORK_AROUND_GNOME_BUG_730332
+				 ? BIG_BANG
+				 : MINVAL(zic_t, TIME_T_BITS_IN_FILE));
 
 /* Return 1 if NAME is a directory, 0 if it's something else, -1 if trouble.  */
 static int
@@ -1380,7 +1384,7 @@ inleap(char **fields, int nfields)
 			return;
 		}
 		t = tadd(t, tod);
-		if (t < big_bang_time) {
+		if (t < early_time) {
 			error(_("leap second precedes Big Bang"));
 			return;
 		}
@@ -1645,7 +1649,7 @@ writezone(const char *const name, const char *const string, char version)
 
 		toi = 0;
 		fromi = 0;
-		while (fromi < timecnt && attypes[fromi].at < big_bang_time)
+		while (fromi < timecnt && attypes[fromi].at < early_time)
 			++fromi;
 		for ( ; fromi < timecnt; ++fromi) {
 			if (toi > 1 && ((attypes[fromi].at +
@@ -2387,9 +2391,9 @@ outzone(const struct zone *zpfirst, int zonecount)
 		*/
 		stdoff = 0;
 		zp = &zpfirst[i];
-		usestart = i > 0 && (zp - 1)->z_untiltime > big_bang_time;
+		usestart = i > 0 && (zp - 1)->z_untiltime > early_time;
 		useuntil = i < (zonecount - 1);
-		if (useuntil && zp->z_untiltime <= big_bang_time)
+		if (useuntil && zp->z_untiltime <= early_time)
 			continue;
 		gmtoff = zp->z_gmtoff;
 		eat(zp->z_filename, zp->z_linenum);
@@ -2404,7 +2408,7 @@ outzone(const struct zone *zpfirst, int zonecount)
 			if (usestart) {
 				addtt(starttime, type);
 				usestart = false;
-			} else	addtt(big_bang_time, type);
+			} else	addtt(early_time, type);
 		} else for (year = min_year; year <= max_year; ++year) {
 			if (useuntil && year > zp->z_untilrule.r_hiyear)
 				break;
@@ -2590,8 +2594,8 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 static void
 addtt(zic_t starttime, int type)
 {
-	if (starttime <= big_bang_time ||
-		(timecnt == 1 && attypes[0].at < big_bang_time)) {
+	if (starttime <= early_time
+	    || (timecnt == 1 && attypes[0].at < early_time)) {
 		gmtoffs[0] = gmtoffs[type];
 		isdsts[0] = isdsts[type];
 		ttisstds[0] = ttisstds[type];

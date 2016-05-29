@@ -466,13 +466,11 @@ offset, so the wall clock time during this period was GMT &minus;
 10:30 + 1:00 = GMT &minus; 9:30.</p>
 
 <p>The <code>FORMAT</code> column specifies the usual abbreviation of
-the time zone name. It can have one of four forms:</p>
+the time zone name. It can have one of three forms:</p>
 <ul>
 
-<li>the string, &ldquo;<code>zzz</code>,&rdquo; which is a kind of
-null value (don&rsquo;t ask)</li>
-
-<li>a single alphabetic string other than &ldquo;<code>zzz</code>,&rdquo;
+<li>a string of three or more characters that are either ASCII alphanumerics,
+&ldquo;<code>+</code>&rdquo;, or &ldquo;<code>-</code>&rdquo;,
 in which case that&rsquo;s the abbreviation</li>
 
 <li>a pair of strings separated by a slash
@@ -513,7 +511,7 @@ a <code>SAVE</code> of zero.
 
 </ul>
 
-<p>And two last things about the <code>FORMAT</code> column:</p>
+<p>And three last things about the <code>FORMAT</code> column:</p>
 <ul>
 
 <li>The <a href="https://en.wikipedia.org/wiki/Tz_database">tz
@@ -535,6 +533,12 @@ the abbreviations. They are intended to be the values returned through the
 <a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/strftime.html"><code>strftime</code></a>
 function in the
 <a href="http://www.chemie.fu-berlin.de/chemnet/use/info/libc/libc_19.html#SEC324">&ldquo;C&rdquo; locale</a>.
+
+<li>If there is no generally-accepted abbreviation for a time zone,
+a numeric offset is used instead, e.g., <code>+07</code> for 7 hours
+ahead of Greenwich. By convention, <code>-00</code> stands for an
+zone while uninhabited, where the offset is zero but in some sense
+the true offset is undefined.
 </ul>
 
 <p>As a final example, here&rsquo;s the complete history for Hawaii:</p>

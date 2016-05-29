@@ -11,6 +11,13 @@ Unreleased, experimental changes
 
   Changes affecting past time stamps
 
+    Locations while uninhabited now use '-00', not 'zzz', as a
+    placeholder time zone abbreviation.  This is inspired by Internet
+    RFC 3339 and is more consistent with numeric time zone
+    abbreviations already used elsewhere.  The change affects several
+    arctic and antarctic locations, e.g., America/Cambridge_Bay before
+    1920 and Antarctica/Troll before 2005.
+
     Asia/Baku's 1992-09-27 transition from +04 (DST) to +04 (non-DST) was
     at 03:00, not 23:00 the previous day.  (Thanks to Michael Deckers.)
 

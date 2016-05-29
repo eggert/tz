@@ -1309,7 +1309,7 @@ Zone Pacific/Easter	-7:17:28 -	LMT	1890
 # Palmer used to be supplied from Argentina.
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Antarctica/Palmer	0	-	zzz	1965
+Zone Antarctica/Palmer	0	-	-00	1965
 			-4:00	Arg	AR%sT	1969 Oct  5
 			-3:00	Arg	AR%sT	1982 May
 			-4:00	Chile	CL%sT

@@ -227,9 +227,10 @@ in decreasing order of importance:
 			name identifying each zone and append 'T', 'ST', etc.
 			as before; e.g. 'VLAST' for VLAdivostok Summer Time.
 
-	Use UT (with time zone abbreviation 'zzz') for locations while
-		uninhabited.  The 'zzz' mnemonic is that these locations are,
-		in some sense, asleep.
+	Use UT (with time zone abbreviation '-00') for locations while
+		uninhabited.  The leading '-' is a flag that the time
+		zone is in some sense undefined; this notation is
+		derived from Internet RFC 3339.
 
 Application writers should note that these abbreviations are ambiguous
 in practice: e.g. 'CST' has a different meaning in China than

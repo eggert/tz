@@ -143,11 +143,11 @@ static bool	yearistype(int year, const char * type);
 /* Bound on length of what %z can expand to.  */
 enum { PERCENT_Z_LEN_BOUND = sizeof "+995959" - 1 };
 
-/* If true, work around a bug in Qt 5.6 and earlier, which mishandles
+/* If true, work around a bug in Qt 5.6.1 and earlier, which mishandles
    tzdata binary files whose POSIX-TZ-style strings contain '<'; see
    QTBUG-53071 <https://bugreports.qt.io/browse/QTBUG-53071>.  This
-   workaround will no longer be needed when Qt 5.6 is obsolete, say in
-   the year 2021.  */
+   workaround will no longer be needed when Qt 5.6.1 and earlier are
+   obsolete, say in the year 2021.  */
 enum { WORK_AROUND_QTBUG_53071 = true };
 
 static int		charcnt;
@@ -880,7 +880,11 @@ static zic_t const max_time = MAXVAL (zic_t, TIME_T_BITS_IN_FILE);
 /* If true, work around GNOME bug 730332
    <https://bugzilla.gnome.org/show_bug.cgi?id=730332>
    by refusing to output time stamps before BIG_BANG.
-   Such time stamps are physically suspect anyway.  */
+   Such time stamps are physically suspect anyway.
+
+   The GNOME bug is scheduled to be fixed in GNOME 3.22, and if so
+   this workaround will no longer be needed when GNOME 3.21 and
+   earlier are obsolete, say in the year 2021.  */
 enum { WORK_AROUND_GNOME_BUG_730332 = true };
 
 static const zic_t early_time = (WORK_AROUND_GNOME_BUG_730332

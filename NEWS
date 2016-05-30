@@ -33,6 +33,8 @@ Unreleased, experimental changes
     tz-link.htm says why governments should give plenty of notice for
     time zone or DST changes, and refers to Matt Johnson's blog post.
 
+    tz-link.htm mentions Tzdata for Elixir.  (Thanks to Matt Johnson.)
+
 
 Release 2016d - 2016-04-17 22:50:29 -0700
 

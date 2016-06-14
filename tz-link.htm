@@ -10,7 +10,7 @@
  content="Sources for time zone and daylight saving time data">
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2016-05-29">
+<meta name="DC.Date" content="2016-06-14">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -46,13 +46,14 @@ including
 <abbr title="GNU's Not Unix">GNU</abbr>
 C Library</a> (used in
 <a href="https://en.wikipedia.org/wiki/Linux"><abbr>GNU</abbr>/Linux</a>),
-<a href="http://www.android.com">Android</a>,
-<a href="https://developer.mozilla.org/en-US/Firefox_OS">Firefox
+<a href="https://www.android.com">Android</a>,
+<a href="https://developer.mozilla.org/en-US/docs/Mozilla/B2G_OS">B2G
 <abbr title="Operating System">OS</abbr></a>,
 <a href="https://www.freebsd.org">Free<abbr
 title="Berkeley Software Distribution">BSD</abbr></a>,
 <a href="http://netbsd.org">Net<abbr>BSD</abbr></a>,
 <a href="http://www.openbsd.org">Open<abbr>BSD</abbr></a>,
+<a href="http://www.chromium.org/chromium-os">Chromium OS</a>,
 <a href="https://cygwin.com">Cygwin</a>,
 <a href="http://www.delorie.com/djgpp/"><abbr
 title="DJ's GNU Programming Platform">DJGPP</abbr></a>,
@@ -65,7 +66,7 @@ title="Advanced Interactive eXecutive">AIX</abbr></a>,
 <a href="http://www.apple.com/ios/"><abbr
 title="iPhone OS">iOS</abbr></a>,
 <a href="http://windows.microsoft.com">Microsoft Windows</a>,
-<a href="http://www8.hp.com/us/en/products/servers/openvms/overview.html">Open<abbr
+<a href="http://www.hp.com/go/openvms/">Open<abbr
 title="Virtual Memory System">VMS</abbr></a>,
 <a href="https://www.oracle.com/database/index.html">Oracle Database</a>,
 <a href="http://oracle.com/solaris">Oracle Solaris</a>, and
@@ -176,17 +177,17 @@ title="linefeed">LF</abbr></a>,
 which can be modified by common text editors such
 as <a href="https://www.gnu.org/software/emacs/">GNU Emacs</a>,
 <a href="https://wiki.gnome.org/Apps/Gedit">gedit</a>, and
-<a href="http://www.vim.org/">vim</a>. One
+<a href="http://www.vim.org">vim</a>. One
 editor has a package to simplify editing further:</p>
 <ul>
 <li><a href="https://packagecontrol.io/packages/zoneinfo">Sublime
-zoneinfo</a> is a <a href="http://www.sublimetext.com/">Sublime
+zoneinfo</a> is a <a href="http://www.sublimetext.com">Sublime
 Text</a> package for syntax highlighting <code><abbr>tz</abbr></code>
 source files.</li>
 </ul>
 <p>
 For further information about updates, please see
-<a href="http://tools.ietf.org/html/rfc6557">Procedures for
+<a href="https://tools.ietf.org/html/rfc6557">Procedures for
 Maintaining the Time Zone Database</a> (Internet <abbr
 title="Request For Comments">RFC</abbr> 6557).</p>
 <h2>Commentary on the <code><abbr>tz</abbr></code> database</h2>
@@ -214,7 +215,7 @@ These are listed roughly in ascending order of complexity and fanciness.
 <ul>
 <li><a href="http://time.is">Time.is</a> shows locations'
 time and zones in a simple format.</li>
-<li><a href="https://www.timejones.com/">TimeJones.com</a> is a simple
+<li><a href="https://www.timejones.com">TimeJones.com</a> is a simple
 time zone converter.</li>
 <li><a
 href="http://twiki.org/cgi-bin/xtra/tzdatepick.html">Date and Time Gateway</a>
@@ -233,36 +234,36 @@ Worldwide</a> lets you sort zone names and convert times.</li>
 calculates the current time difference between locations.</li>
 <li><a href="http://www.wx-now.com">Weather Now</a> lists the weather too.</li>
 <li><a href="http://www.thetimenow.com">The Time Now</a> also lists weather.</li>
-<li><a href="http://worldtime.io">worldtime.io</a>
+<li><a href="https://worldtime.io">worldtime.io</a>
 also contains data about time zone boundaries; it supports queries via place
 names and shows location maps.</li>
 </ul>
 <h2>Network protocols for <code><abbr>tz</abbr></code> data</h2>
 <ul>
 <li>The <a href="http://www.ietf.org">Internet Engineering Task Force</a>'s
-<a href="http://datatracker.ietf.org/wg/tzdist/charter/">Time Zone Data
-Distribution Service (tzdist) working group</a> has defined <a
-href="http://tools.ietf.org/html/rfc7808">TZDIST</a>
+<a href="https://datatracker.ietf.org/wg/tzdist/charter/">Time Zone Data
+Distribution Service (tzdist) working group</a> defined <a
+href="https://tools.ietf.org/html/rfc7808">TZDIST</a>
 (Internet <abbr>RFC</abbr> 7808), a time zone data distribution service,
-along with a <a href="http://tools.ietf.org/html/rfc7809">calendar access
+along with a <a href="https://tools.ietf.org/html/rfc7809">calendar access
 protocol for transferring time zone data by reference</a>
-(Internet <abbr>RFC</abbr> 7809). This work is based
+(Internet <abbr>RFC</abbr> 7809). This work was based
 on the iCalendar and CalConnect efforts described below.</li>
-<li>The <a href="http://tools.ietf.org/html/rfc5545">
+<li>The <a href="https://tools.ietf.org/html/rfc5545">
 Internet Calendaring and Scheduling Core Object Specification
 (iCalendar)</a> (Internet <abbr>RFC</abbr> 5445)
 covers time zone
 data; see its VTIMEZONE calendar component.
 The iCalendar format requires specialized parsers and generators; a
-variant <a href="http://tools.ietf.org/html/rfc6321">xCal</a>
+variant <a href="https://tools.ietf.org/html/rfc6321">xCal</a>
 (Internet <abbr>RFC</abbr> 6321) uses
 <a href="http://www.w3.org/XML/"><abbr
 title="Extensible Markup Language">XML</abbr></a> format, and a variant
-<a href="http://tools.ietf.org/html/rfc7265">jCal</a>
+<a href="https://tools.ietf.org/html/rfc7265">jCal</a>
 (Internet <abbr>RFC</abbr> 7265)
 uses <a href="http://www.json.org"><abbr
 title="JavaScript Object Notation">JSON</abbr></a> format.
-<a href="http://calconnect.org">CalConnect, The Calendaring and Scheduling
+<a href="https://www.calconnect.org">CalConnect, The Calendaring and Scheduling
 Consortium</a> is promoting further work in this area. <a
 href="http://calconnect.org/publications/icalendartimezoneproblemsandrecommendationsv1.0.pdf">iCalendar
 TIMEZONE Problems and Recommendations</a> offers guidelines and
@@ -270,7 +271,7 @@ recommendations for the use of VTIMEZONE and <code><abbr>tz</abbr></code>.</li>
 <li>The <a
 href="http://calconnect.org/publications/timezoneregistryandservicerecommendationsv1.0.pdf">Timezone
 Registry and Service Recommendations</a> of CalConnect's
-<a href="http://calconnect.org/tc-timezone.shtml">TIMEZONE
+<a href="https://www.calconnect.org/about/technical-committees/tc-timezone">TIMEZONE
 Technical Committee</a> discusses a
 strategy for defining and deploying a time zone
 registration process that would establish unique names for each
@@ -288,7 +289,7 @@ data</a> converted from <code><abbr>tz</abbr></code>.</li>
 </ul>
 <h2>Other <code><abbr>tz</abbr></code> compilers</h2>
 <ul>
-<li><a href="http://sourceforge.net/projects/vzic/">Vzic</a> is a <a
+<li><a href="https://sourceforge.net/projects/vzic/">Vzic</a> is a <a
 href="https://en.wikipedia.org/wiki/C_%28programming_language%29">C</a>
 program that compiles
 <code><abbr>tz</abbr></code> source into iCalendar-compatible VTIMEZONE files.
@@ -297,21 +298,21 @@ available under the <a
 href="http://www.gnu.org/copyleft/gpl.html"><abbr>GNU</abbr>
 General Public License (<abbr
 title="General Public License">GPL</abbr>)</a>.</li>
-<li><a href="http://sourceforge.net/projects/tzical/">tziCal &ndash; tz
+<li><a href="https://sourceforge.net/projects/tzical/">tziCal &ndash; tz
 database conversion utility</a> is like Vzic, except for the <a
-href="https://msdn.microsoft.com/netframework">.NET framework</a>
+href="https://www.microsoft.com/net">.NET framework</a>
 and with a <abbr>BSD</abbr>-style license.</li>
 <li><a
 href="http://search.cpan.org/dist/DateTime-TimeZone/">DateTime::TimeZone</a>
 contains a script <code>parse_olson</code> that compiles
-<code><abbr>tz</abbr></code> source into <a href="http://www.perl.org">Perl</a>
+<code><abbr>tz</abbr></code> source into <a href="https://www.perl.org">Perl</a>
 modules. It is part of the Perl <a
 href="http://datetime.perl.org">DateTime Project</a>, which is freely
 available under both the <abbr>GPL</abbr> and the Perl Artistic
 License. DateTime::TimeZone also contains a script
 <code>tests_from_zdump</code> that generates test cases for each clock
 transition in the <code><abbr>tz</abbr></code> database.</li>
-<li>The <a href="http://howardhinnant.github.io/tz.html">Time Zone
+<li>The <a href="https://howardhinnant.github.io/date/tz.html">Time Zone
 Database Parser</a> is a
 <a href="https://en.wikipedia.org/wiki/C%2B%2B">C++</a> parser and
 runtime library. It is freely available under the
@@ -328,7 +329,7 @@ into an <abbr>ICU</abbr>-specific format.
 <abbr>ICU</abbr> is freely available under a
 <abbr>BSD</abbr>-style license.</li>
 <li>The <a href="https://github.com/lau/tzdata">Tzdata</a> package for
-the <a href="http://elixir-lang.org/">Elixir</a> language downloads
+the <a href="http://elixir-lang.org">Elixir</a> language downloads
 and compiles tz source and exposes <abbr
 title="Application Program Interface">API</abbr>s for use. It is
 freely available under the <abbr
@@ -432,23 +433,23 @@ in its JavaScript library for time zone conversion. Dates before 1970
 are not supported.</li>
 <li>The <a
 href="http://hackage.haskell.org/package/timezone-olson">timezone-olson</a>
-package contains <a href="http://haskell.org">Haskell</a> code that
+package contains <a href="https://www.haskell.org">Haskell</a> code that
 parses and uses <code><abbr>tz</abbr></code> binary data. It is freely
 available under a <abbr>BSD</abbr>-style license.</li>
 </ul>
 <h2>Other <code><abbr>tz</abbr></code>-based time zone software</h2>
 <ul>
 <li><a href="https://foxclocks.org">FoxClocks</a>
-is an extension for <a href="http://www.google.com/chrome/">Google
+is an extension for <a href="https://www.google.com/chrome/">Google
 Chrome</a> and for <a
 href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Toolkit_API">Mozilla
 Toolkit</a> applications like <a
 href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a> and <a
 href="https://www.mozilla.org/en-US/thunderbird/">Thunderbird</a>.
 It displays multiple clocks in the application window, and has a mapping
-interface to <a href="http://www.google.com/earth/">Google Earth</a>.
+interface to <a href="https://www.google.com/earth/">Google Earth</a>.
 It is freely available under the <abbr>GPL</abbr>.</li>
-<li><a href="http://golang.org">Go programming language</a>
+<li><a href="https://golang.org">Go programming language</a>
 implementations contain a copy of a 32-bit subset of a recent
 <code><abbr>tz</abbr></code> database in a
 Go-specific format.</li>
@@ -464,7 +465,7 @@ data (mentioned below) used by
 classes such as <a
 href="https://msdn.microsoft.com/en-us/library/windows/apps/windows.globalization.datetimeformatting.datetimeformatter.aspx"><code>DateTimeFormatter</code></a>.
 <a
-href="http://blogs.msdn.com/b/bclteam/archive/2007/06/07/exploring-windows-time-zones-with-system-timezoneinfo-josh-free.aspx">Exploring
+href="https://blogs.msdn.microsoft.com/bclteam/2007/06/07/exploring-windows-time-zones-with-system-timezoneinfo-josh-free/">Exploring
 Windows Time Zones with <code>System.TimeZoneInfo</code></a> describes
 the older, proprietary method of Microsoft Windows 2000 and later,
 which stores time zone data in the
@@ -495,7 +496,7 @@ licenses</a> to <code><abbr>tz</abbr></code> contributors.</li>
 </ul>
 <h2>Other time zone databases</h2>
 <ul>
-<li><a href="http://www.astro.com/cgi/aq.cgi">Atlas Query</a>
+<li><a href="http://www.astro.com/atlas">Time-zone Atlas</a>
 is Astrodienst's Web version of Shanks and Pottenger's
 time zone history atlases published in both <a
 href="http://astrocom.com/astrology-products/software/acs-atlas-software">computer</a>
@@ -557,8 +558,8 @@ sets of <code><abbr>tz</abbr></code> regions.</li>
 <li>The <a href="https://github.com/bradfitz/latlong">latlong package</a>
 maps geographical coordinates to a <code><abbr>tz</abbr></code> region.
 It is written in Go and is freely available under the Apache License.</li>
-<li><a href="http://derickrethans.nl/what-time-is-it.html">What Time
-is It Here?</a> applies <a href="http://www.mongodb.org">MongoDB</a>
+<li><a href="https://derickrethans.nl/what-time-is-it.html">What Time
+is It Here?</a> applies <a href="https://www.mongodb.com">MongoDB</a>
 geospatial query operators to shapefiles' data.</li>
 <li><a href="http://statoids.com/statoids.html">Administrative
 Divisions of Countries ("Statoids")</a> contains lists of
@@ -593,7 +594,7 @@ surveys the evolution of timekeeping.</li>
 <li><a href="http://www.webexhibits.org/daylightsaving/">About Daylight
 Saving Time &ndash; History, rationale, laws &amp; dates</a>
 is an overall history of <abbr>DST</abbr>.</li>
-<li><a href="http://www.w3.org/TR/timezone/">Working with Time Zones</a>
+<li><a href="https://www.w3.org/TR/timezone/">Working with Time Zones</a>
 contains guidelines and best practices for software applications that
 deal with civil time.</li>
 <li><a href="http://energy.ca.gov/daylightsaving.html">Saving Time,
@@ -693,7 +694,7 @@ Time Protocol</a> (<abbr
 title="Institute of Electrical and Electronics Engineers">IEEE</abbr> 1588)
 can achieve submicrosecond clock accuracy on a local area network.</li>
 <li><a
-href="http://tools.ietf.org/html/rfc4833">Timezone
+href="https://tools.ietf.org/html/rfc4833">Timezone
 Options for <abbr title="Dynamic Host Configuration Protocol">DHCP</abbr></a>
 (Internet <abbr>RFC</abbr> 4833)
 specifies a <a
@@ -738,7 +739,7 @@ dedicated not only to leap seconds but to precise time and frequency
 in general. It covers the state of the art in amateur timekeeping, and
 how the art has progressed over the past few decades.</li>
 <li><a
-href="http://www.iers.org/IERS/EN/Publications/Bulletins/bulletins.html"><abbr
+href="https://www.iers.org/IERS/EN/Publications/Bulletins/bulletins.html"><abbr
 title="International Earth Rotation and Reference Systems Service">IERS</abbr>
 Bulletins</a> contains official publications of the International
 Earth Rotation and Reference Systems Service, which decides
@@ -778,17 +779,17 @@ title="International Organization for Standardization">ISO</abbr>
 8601:2004 &ndash; Data elements and interchange formats &ndash; Information
 interchange &ndash; Representation of dates and times</a>.</li>
 <li>
-<a href="http://www.w3.org/TR/xmlschema-2/#dateTime"><abbr>XML</abbr>
+<a href="https://www.w3.org/TR/xmlschema-2/#dateTime"><abbr>XML</abbr>
 Schema: Datatypes &ndash; dateTime</a> specifies a format inspired by
 <abbr>ISO</abbr> 8601 that is in common use in <abbr>XML</abbr> data.</li>
 <li>
-<a href="http://tools.ietf.org/html/rfc5322">Internet
+<a href="https://tools.ietf.org/html/rfc5322">Internet
 Message Format</a> (Internet <abbr>RFC</abbr> 5322) &sect;3.3
 specifies the time notation used in email and <a
 href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol"><abbr>HTTP</abbr></a>
 headers.</li>
 <li>
-<a href="http://tools.ietf.org/html/rfc3339">Date and Time
+<a href="https://tools.ietf.org/html/rfc3339">Date and Time
 on the Internet: Timestamps</a> (Internet <abbr>RFC</abbr> 3339)
 specifies an <abbr>ISO</abbr> 8601
 profile for use in new Internet

@@ -1,5 +1,18 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes affecting future time stamps
+
+    Asia/Novosibirsk switches from +06 to +07 on 2016-07-24 at 02:00.
+    (Thanks to Stepan Golosunov.)
+
+  Changes to past and future time stamps
+
+    Asia/Novokuznetsk and Asia/Novosibirsk now use numeric time zone
+    abbreviations instead of invented ones.
+
+
 Release 2016e - 2016-06-14 08:46:16 -0700
 
   Changes affecting future time stamps

@@ -12,6 +12,11 @@ Unreleased, experimental changes
     Asia/Novokuznetsk and Asia/Novosibirsk now use numeric time zone
     abbreviations instead of invented ones.
 
+  Changes affecting past time stamps
+
+    Europe/Minsk's 1992-03-29 spring-forward transition was at 02:00 not 00:00.
+    (Thanks to Stepan Golosunov.)
+
 
 Release 2016e - 2016-06-14 08:46:16 -0700
 

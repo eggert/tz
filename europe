@@ -755,6 +755,14 @@ Zone	Europe/Vienna	1:05:21 -	LMT	1893 Apr
 			1:00	EU	CE%sT
 
 # Belarus
+#
+# From Stepan Golosunov (2016-07-02):
+# http://www.lawbelarus.com/repub/sub30/texf9611.htm
+# (Act of the Cabinet of Ministers of the Republic of Belarus from
+# 1992-03-25 No. 157) ... says clocks were to be moved forward at 2:00
+# on last Sunday of March and backward at 3:00 on last Sunday of September
+# (the same as previous USSR and contemporary Russian regulations).
+#
 # From Yauhen Kharuzhy (2011-09-16):
 # By latest Belarus government act Europe/Minsk timezone was changed to
 # GMT+3 without DST (was GMT+2 with DST).
@@ -778,9 +786,6 @@ Zone	Europe/Minsk	1:50:16 -	LMT	1880
 			1:00	C-Eur	CE%sT	1944 Jul  3
 			3:00	Russia	MSK/MSD	1990
 			3:00	-	MSK	1991 Mar 31  2:00s
-			2:00	1:00	EEST	1991 Sep 29  2:00s
-			2:00	-	EET	1992 Mar 29  0:00s
-			2:00	1:00	EEST	1992 Sep 27  0:00s
 			2:00	Russia	EE%sT	2011 Mar 27  2:00s
 			3:00	-	FET	2014 Oct 26  1:00s
 			3:00	-	MSK

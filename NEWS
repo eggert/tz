@@ -2,6 +2,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes affecting future time stamps
+
+    New leap second 2016-12-31 23:59:60 UTC as per IERS Bulletin C 52.
+    (Thanks to Tim Parenti.)
+
   Changes affecting documentation and commentary
 
     tz-link.htm mentions Time4J.  (Thanks to Meno Hochschild.)

@@ -10,7 +10,7 @@
  content="Sources for time zone and daylight saving time data">
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2016-07-08">
+<meta name="DC.Date" content="2016-07-19">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -334,31 +334,39 @@ and compiles tz source and exposes <abbr
 title="Application Program Interface">API</abbr>s for use. It is
 freely available under the <abbr
 title="Massachusetts Institute of Technology">MIT</abbr> license.</li>
+<li>Java-based compilers and libraries include:
+<ul>
 <li>The <a
 href="http://www.oracle.com/technetwork/java/javase/tzupdater-readme-136440.html">TZUpdater
 tool</a> compiles <code><abbr>tz</abbr></code> source into the format used by
 Oracle Java.</li>
+<li>The <a
+href="http://www.oracle.com/technetwork/articles/java/jf14-date-time-2125367.html">Java
+8 <code>java.time</code> <abbr>API</abbr></a> can be supplemented by <a
+href="http://www.threeten.org/threeten-extra/">ThreeTen-Extra</a>,
+which is freely available under a <abbr>BSD</abbr>-style license.</li>
+<li><a href="http://www.joda.org/joda-time/">Joda-Time &ndash; Java date
+and time <abbr>API</abbr></a> contains a class
+<code>org.joda.time.tz.ZoneInfoCompiler</code> that compiles
+<code><abbr>tz</abbr></code> source into a binary format. It inspired
+Java 8 <code>java.time</code>, which its users should migrate to once
+they can assume Java 8 or later. It is available under the <a
+href="http://www.apache.org/licenses/LICENSE-2.0">Apache License</a>.</li>
 <li><a href="https://github.com/MenoData/Time4J/">Time4J &ndash;
 Advanced date, time and interval library for Java</a> contains a class
 <code>net.time4j.tool.TimezoneRepositoryCompiler</code> that compiles
-<code><abbr>tz</abbr></code> source into a binary format.
-<a href="http://www.joda.org/joda-time/">Joda-Time &ndash; Java date
-and time <abbr>API</abbr></a> contains a similar class
-<code>org.joda.time.tz.ZoneInfoCompiler</code> for a different binary format.
-Time4J supplements Java 8 and earlier; Joda-Time is intended for Java
-7 and earlier, and inspired the <a
-href="http://www.oracle.com/technetwork/articles/java/jf14-date-time-2125367.html">Java
-SE 8 <code>java.time</code> API</a>.
-Time4J and Joda-Time are freely available under the
-<a href="http://www.gnu.org/copyleft/lesser.html"><abbr>GNU</abbr>
-Lesser General Public License
-(<abbr title="Lesser General Public License">LGPL</abbr>)</a>
-and the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache
-License</a>, respectively.
+<code><abbr>tz</abbr></code> source into a binary format. Time4J is
+available under the <a
+href="http://www.gnu.org/copyleft/lesser.html"><abbr>GNU</abbr> Lesser
+General Public License (<abbr title="Lesser General Public
+License">LGPL</abbr>)</a>.</li>
+<li><abbr>ICU</abbr> (mentioned above) contains compilers and
+Java-based libraries.</li>
+</ul>
 <li><a href="http://nodatime.org">Noda Time &ndash; Date and
 time <abbr>API</abbr> for .NET</a>
 and <a href="http://www.babiej.demon.nl/Tz4Net/main.htm">TZ4Net</a>
-are similar to Time4J and Joda-Time, but for the .NET framework instead of
+are similar to Joda-Time and Time4J, but for the .NET framework instead of
 Java. They are freely available under the
 Apache License
 and a <abbr>BSD</abbr>-style license, respectively.</li>

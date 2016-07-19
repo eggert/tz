@@ -9,7 +9,9 @@ Unreleased, experimental changes
 
   Changes affecting documentation and commentary
 
-    tz-link.htm mentions Time4J.  (Thanks to Meno Hochschild.)
+    tz-link.htm mentions Time4J (thanks to Meno Hochschild) and
+    ThreeTen-Extra, and its description of Java 8 has been brought up
+    to date (thanks to Stephen Colebourne).
 
 
 Release 2016f - 2016-07-05 16:26:51 +0200

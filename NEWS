@@ -13,7 +13,8 @@ Unreleased, experimental changes
     strings that disagree with the local time type after the last
     explicit transition in the data.  This fixes a bug with
     Africa/Casablanca and Africa/El_Aaiun in some year-2037 time
-    stamps on the reference platform.
+    stamps on the reference platform.  (Thanks to Alexander Belopolsky
+    for reporting the bug and suggesting a way forward.)
 
   Changes affecting documentation and commentary
 

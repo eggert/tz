@@ -2,6 +2,13 @@
 .SH NAME
 tzfile \- time zone information
 .SH DESCRIPTION
+.ie '\(lq'' .ds lq \&"\"
+.el .ds lq \(lq\"
+.ie '\(rq'' .ds rq \&"\"
+.el .ds rq \(rq\"
+.de q
+\\$3\*(lq\\$1\*(rq\\$2
+..
 The time zone information files used by
 .IR tzset (3)
 begin with the magic characters "TZif" to identify them as
@@ -138,6 +145,13 @@ POSIX-TZ-environment-variable-style string for use in handling instants
 after the last transition time stored in the file
 (with nothing between the newlines if there is no POSIX representation for
 such instants).
+The POSIX-style string must must agree with the local time type after
+both data's last transition times; for example, given the string
+.q "WET0WEST,M3.5.0,M10.5.0/3"
+then if a last transition time is in July, the transition's local time
+type must specify a daylight-saving time abbreviated
+.q "WEST"
+that is one hour east of UT.
 .PP
 For version-3-format time zone files, the POSIX-TZ-style string may
 use two minor extensions to the POSIX TZ format, as described in

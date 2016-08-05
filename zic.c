@@ -355,6 +355,7 @@ static const int	len_years[2] = {
 
 static struct attype {
 	zic_t		at;
+	bool		dontmerge;
 	unsigned char	type;
 } *			attypes;
 static zic_t		gmtoffs[TZ_MAX_TYPES];
@@ -1664,8 +1665,9 @@ writezone(const char *const name, const char *const string, char version)
 						attypes[fromi].type;
 					continue;
 			}
-			if (toi == 0 ||
-				attypes[toi - 1].type != attypes[fromi].type)
+			if (toi == 0
+			    || attypes[fromi].dontmerge
+			    || attypes[toi - 1].type != attypes[fromi].type)
 					attypes[toi++] = attypes[fromi];
 		}
 		timecnt = toi;
@@ -2288,6 +2290,7 @@ outzone(const struct zone *zpfirst, int zonecount)
 	register int			compat;
 	register bool			do_extend;
 	register char			version;
+	struct attype *lastatmax = NULL;
 
 	max_abbr_len = 2 + max_format_len + max_abbrvar_len;
 	max_envvar_len = 2 * max_abbr_len + 5 * 9;
@@ -2520,6 +2523,9 @@ outzone(const struct zone *zpfirst, int zonecount)
 				offset = oadd(zp->z_gmtoff, rp->r_stdoff);
 				type = addtype(offset, ab, rp->r_stdoff != 0,
 					rp->r_todisstd, rp->r_todisgmt);
+				if (rp->r_hiyear == ZIC_MAX
+				    && ! (lastatmax && ktime < lastatmax->at))
+				  lastatmax = &attypes[timecnt];
 				addtt(ktime, type);
 			}
 		}
@@ -2551,6 +2557,8 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 				starttime = tadd(starttime, -gmtoff);
 		}
 	}
+	if (lastatmax)
+	  lastatmax->dontmerge = true;
 	if (do_extend) {
 		/*
 		** If we're extending the explicitly listed observations
@@ -2572,21 +2580,8 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 			if (attypes[i].at > lastat->at)
 				lastat = &attypes[i];
 		if (lastat->at < rpytime(&xr, max_year - 1)) {
-			/*
-			** Create new type code for the redundant entry,
-			** to prevent it being optimized away.
-			*/
-			if (typecnt >= TZ_MAX_TYPES) {
-				error(_("too many local time types"));
-				exit(EXIT_FAILURE);
-			}
-			gmtoffs[typecnt] = gmtoffs[lastat->type];
-			isdsts[typecnt] = isdsts[lastat->type];
-			ttisstds[typecnt] = ttisstds[lastat->type];
-			ttisgmts[typecnt] = ttisgmts[lastat->type];
-			abbrinds[typecnt] = abbrinds[lastat->type];
-			++typecnt;
 			addtt(rpytime(&xr, max_year + 1), typecnt-1);
+			attypes[timecnt - 1].dontmerge = true;
 		}
 	}
 	writezone(zpfirst->z_name, envvar, version);
@@ -2614,6 +2609,7 @@ addtt(zic_t starttime, int type)
 	}
 	attypes = growalloc(attypes, sizeof *attypes, timecnt, &timecnt_alloc);
 	attypes[timecnt].at = starttime;
+	attypes[timecnt].dontmerge = false;
 	attypes[timecnt].type = type;
 	++timecnt;
 }

@@ -7,6 +7,13 @@ Unreleased, experimental changes
     New leap second 2016-12-31 23:59:60 UTC as per IERS Bulletin C 52.
     (Thanks to Tim Parenti.)
 
+  Changes affecting past time stamps
+
+    For America/Los_Angeles, spring-forward transition times have been
+    corrected from 02:00 to 02:01 in 1948, and from 02:00 to 01:00 in
+    1950-1966.  The fall-back transition date for early 1949 has been
+    corrected from 1949-01-01 to 1949-01-16.
+
   Changes affecting code
 
     zic no longer generates binary files containing POSIX TZ-like

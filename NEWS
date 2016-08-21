@@ -32,6 +32,15 @@ Unreleased, experimental changes
     what should be the output of 'zdump -i -c 2050' on primary zones.
     'make check' now checks that zdump generates this output.
 
+    A new distribution format is available in the tarball
+    tzdb-VERSION.tar.gz and the signature tzdb-VERSION.tar.gz.asc.
+    The new tarball has the contents of tzcodeVERSION.tar.gz and
+    tzdataVERSION.tar.gz, in a single top-level directory 'tzdb' with
+    all other files under this directory, as is typical for software
+    distributions.  The new format is intended to replace the old
+    tarball pair.  The old format will continue to be distributed for
+    a while.
+
   Changes to documentation and commentary
 
     tzfile.5 now documents the new restriction on POSIX TZ-like

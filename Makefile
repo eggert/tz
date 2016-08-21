@@ -326,7 +326,7 @@ OK_LINE=	'^'$(OK_CHAR)'*$$'
 
 # Flags to give 'tar' when making a distribution.
 # Try to use flags appropriate for GNU tar.
-GNUTARFLAGS=	--numeric-owner --owner=0 --group=0 --mode=go+u,go-w
+GNUTARFLAGS= --numeric-owner --owner=0 --group=0 --mode=go+u,go-w --sort=name
 TARFLAGS=	`if tar $(GNUTARFLAGS) --version >/dev/null 2>&1; \
 		 then echo $(GNUTARFLAGS); \
 		 else :; \
@@ -568,7 +568,7 @@ clean_misc:
 		rm -f core *.o *.out \
 		  date tzselect version.h zdump zic yearistype libtz.a
 clean:		clean_misc
-		rm -fr *.dir $(TZS_NEW)
+		rm -fr *.dir tzdb $(TZS_NEW)
 
 maintainer-clean: clean
 		@echo 'This command is intended for maintainers to use; it'
@@ -672,7 +672,8 @@ check_time_t_alternatives:
 		done
 		rm -fr time_t.dir
 
-tarballs:	tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz
+tarballs:	tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz \
+		tzdb-$(VERSION).tar.gz
 
 tzcode$(VERSION).tar.gz: set-timestamps.out
 		LC_ALL=C && export LC_ALL && \
@@ -685,12 +686,24 @@ tzdata$(VERSION).tar.gz: set-timestamps.out
 		tar $(TARFLAGS) -cf - $(COMMON) $(DATA) $(MISC) $(TZS) | \
 		  gzip $(GZIPFLAGS) > $@
 
-signatures:	tzcode$(VERSION).tar.gz.asc tzdata$(VERSION).tar.gz.asc
+tzdb-$(VERSION).tar.gz: set-timestamps.out
+		rm -fr tzdb
+		mkdir tzdb
+		ln $(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC) $(TZS) tzdb
+		touch -cmr $$(ls -t tzdb/* | sed 1q) tzdb
+		LC_ALL=C && export LC_ALL && \
+		tar $(TARFLAGS) -cf - tzdb | gzip $(GZIPFLAGS) > $@
+
+signatures:	tzcode$(VERSION).tar.gz.asc tzdata$(VERSION).tar.gz.asc \
+		tzdb-$(VERSION).tar.gz.asc
 
 tzcode$(VERSION).tar.gz.asc: tzcode$(VERSION).tar.gz
 		gpg --armor --detach-sign $?
 
 tzdata$(VERSION).tar.gz.asc: tzdata$(VERSION).tar.gz
+		gpg --armor --detach-sign $?
+
+tzdb-$(VERSION).tar.gz.asc: tzdb-$(VERSION).tar.gz
 		gpg --armor --detach-sign $?
 
 typecheck:

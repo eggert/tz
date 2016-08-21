@@ -139,6 +139,26 @@ typedef long intmax_t;
 # include <stdbool.h>
 #endif
 
+#ifndef TYPE_BIT
+#define TYPE_BIT(type)	(sizeof (type) * CHAR_BIT)
+#endif /* !defined TYPE_BIT */
+
+#ifndef TYPE_SIGNED
+#define TYPE_SIGNED(type) (((type) -1) < 0)
+#endif /* !defined TYPE_SIGNED */
+
+#ifndef INT_STRLEN_MAXIMUM
+/*
+** 302 / 1000 is log10(2.0) rounded up.
+** Subtract one for the sign bit if the type is signed;
+** add one for integer division truncation;
+** add one more for a minus sign if the type is signed.
+*/
+#define INT_STRLEN_MAXIMUM(type) \
+	((TYPE_BIT(type) - TYPE_SIGNED(type)) * 302 / 1000 + \
+	1 + TYPE_SIGNED(type))
+#endif /* !defined INT_STRLEN_MAXIMUM */
+
 #ifndef EXIT_SUCCESS
 #define EXIT_SUCCESS	0
 #endif /* !defined EXIT_SUCCESS */
@@ -268,6 +288,8 @@ static intmax_t	delta(struct tm *, struct tm *) ATTRIBUTE_PURE;
 static void dumptime(struct tm const *);
 static time_t hunt(timezone_t, char *, time_t, time_t);
 static void show(timezone_t, char *, time_t, bool);
+static void showtrans(char const *, struct tm const *, time_t, char const *,
+		      char const *);
 static const char *tformat(void);
 static time_t yeartot(intmax_t) ATTRIBUTE_PURE;
 
@@ -303,6 +325,19 @@ sumsize(size_t a, size_t b)
     exit(EXIT_FAILURE);
   }
   return sum;
+}
+
+/* Return a pointer to a newly allocated buffer of size SIZE, exiting
+   on failure.  SIZE should be nonzero.  */
+static void *
+xmalloc(size_t size)
+{
+  void *p = malloc(size);
+  if (!p) {
+    perror(progname);
+    exit(EXIT_FAILURE);
+  }
+  return p;
 }
 
 #if ! HAVE_TZSET
@@ -392,21 +427,13 @@ tzalloc(char const *val)
 
     while (*e++)
       continue;
-    env = malloc(sumsize(sizeof *environ,
-			 (e - environ) * sizeof *environ));
-    if (! env) {
-      perror(progname);
-      exit(EXIT_FAILURE);
-    }
+    env = xmalloc(sumsize(sizeof *environ,
+			  (e - environ) * sizeof *environ));
     to = 1;
     for (e = environ; (env[to] = *e); e++)
       to += strncmp(*e, "TZ=", 3) != 0;
   }
-  env0 = malloc(sumsize(sizeof "TZ=", strlen(val)));
-  if (! env0) {
-    perror(progname);
-    exit(EXIT_FAILURE);
-  }
+  env0 = xmalloc(sumsize(sizeof "TZ=", strlen(val)));
   env[0] = strcat(strcpy(env0, "TZ="), val);
   environ = fakeenv = env;
   tzset();
@@ -527,11 +554,7 @@ saveabbr(char **buf, size_t *bufalloc, struct tm const *tmp)
 	 to avoid O(N**2) behavior on repeated calls.  */
       *bufalloc = sumsize(*bufalloc, ablen + 1);
 
-      *buf = malloc(*bufalloc);
-      if (! *buf) {
-	perror(progname);
-	exit(EXIT_FAILURE);
-      }
+      *buf = xmalloc(*bufalloc);
     }
     return strcpy(*buf, ab);
   }
@@ -552,10 +575,18 @@ static void
 usage(FILE * const stream, const int status)
 {
 	fprintf(stream,
-_("%s: usage: %s [--version] [--help] [-{vV}] [-{ct} [lo,]hi] zonename ...\n"
+_("%s: usage: %s OPTIONS ZONENAME ...\n"
+  "Options include:\n"
+  "  -c [L,]U   Start at year L (default -500), end before year U (default 2500)\n"
+  "  -t [L,]U   Start at time L, end before time U (in seconds since 1970)\n"
+  "  -i         List transitions briefly (format is experimental)\n" \
+  "  -v         List transitions verbosely\n"
+  "  -V         List transitions a bit less verbosely\n"
+  "  --help     Output this help\n"
+  "  --version  Output version info\n"
   "\n"
   "Report bugs to %s.\n"),
-		       progname, progname, REPORT_BUGS_TO);
+		progname, progname, REPORT_BUGS_TO);
 	if (status == EXIT_SUCCESS)
 	  close_file(stream);
 	exit(status);
@@ -567,7 +598,6 @@ main(int argc, char *argv[])
 	/* These are static so that they're initially zero.  */
 	static char *		abbrev;
 	static size_t		abbrevsize;
-	static struct tm	newtm;
 
 	register int		i;
 	register bool		vflag;
@@ -577,11 +607,7 @@ main(int argc, char *argv[])
 	register time_t		cutlotime;
 	register time_t		cuthitime;
 	time_t			now;
-	time_t			t;
-	time_t			newt;
-	struct tm		tm;
-	register struct tm *	tmp;
-	register struct tm *	newtmp;
+	bool iflag = false;
 
 	cutlotime = absolute_min_time;
 	cuthitime = absolute_max_time;
@@ -603,9 +629,10 @@ main(int argc, char *argv[])
 	vflag = Vflag = false;
 	cutarg = cuttimes = NULL;
 	for (;;)
-	  switch (getopt(argc, argv, "c:t:vV")) {
+	  switch (getopt(argc, argv, "c:it:vV")) {
 	  case 'c': cutarg = optarg; break;
 	  case 't': cuttimes = optarg; break;
+	  case 'i': iflag = true; break;
 	  case 'v': vflag = true; break;
 	  case 'V': Vflag = true; break;
 	  case -1:
@@ -617,7 +644,7 @@ main(int argc, char *argv[])
 	  }
  arg_processing_done:;
 
-	if (vflag | Vflag) {
+	if (iflag | vflag | Vflag) {
 		intmax_t	lo;
 		intmax_t	hi;
 		char *loend, *hiend;
@@ -674,7 +701,9 @@ main(int argc, char *argv[])
 		}
 	}
 	gmtzinit();
-	now = time(NULL);
+	INITIALIZE (now);
+	if (! (iflag | vflag | Vflag))
+	  now = time(NULL);
 	longest = 0;
 	for (i = optind; i < argc; i++) {
 	  size_t arglen = strlen(argv[i]);
@@ -685,48 +714,66 @@ main(int argc, char *argv[])
 	for (i = optind; i < argc; ++i) {
 		timezone_t tz = tzalloc(argv[i]);
 		char const *ab;
+		time_t t;
+		struct tm tm, newtm;
+		bool tm_ok;
 		if (!tz) {
 		  perror(argv[i]);
 		  return EXIT_FAILURE;
 		}
-		if (! (vflag | Vflag)) {
+		if (! (iflag | vflag | Vflag)) {
 			show(tz, argv[i], now, false);
 			tzfree(tz);
 			continue;
 		}
 		warned = false;
 		t = absolute_min_time;
-		if (!Vflag) {
+		if (! (iflag | Vflag)) {
 			show(tz, argv[i], t, true);
 			t += SECSPERDAY;
 			show(tz, argv[i], t, true);
 		}
 		if (t < cutlotime)
 			t = cutlotime;
-		tmp = my_localtime_rz(tz, &t, &tm);
-		if (tmp)
+		tm_ok = my_localtime_rz(tz, &t, &tm) != NULL;
+		if (tm_ok) {
 		  ab = saveabbr(&abbrev, &abbrevsize, &tm);
-		while (t < cuthitime) {
-			newt = ((t < absolute_max_time - SECSPERDAY / 2
-				 && t + SECSPERDAY / 2 < cuthitime)
-				? t + SECSPERDAY / 2
-				: cuthitime);
-			newtmp = localtime_rz(tz, &newt, &newtm);
-			if ((tmp == NULL || newtmp == NULL) ? (tmp != newtmp) :
-				(delta(&newtm, &tm) != (newt - t) ||
-				newtm.tm_isdst != tm.tm_isdst ||
-				strcmp(abbr(&newtm), ab) != 0)) {
-					newt = hunt(tz, argv[i], t, newt);
-					newtmp = localtime_rz(tz, &newt, &newtm);
-					if (newtmp)
-					  ab = saveabbr(&abbrev, &abbrevsize,
-							&newtm);
-			}
-			t = newt;
-			tm = newtm;
-			tmp = newtmp;
+		  if (iflag) {
+		    showtrans(&"\nTZ=%f"[i == optind], &tm, t, ab, argv[i]);
+		    showtrans("- - %o%Q", &tm, t, ab, argv[i]);
+		  }
 		}
-		if (!Vflag) {
+		while (t < cuthitime) {
+		  time_t newt = ((t < absolute_max_time - SECSPERDAY / 2
+				  && t + SECSPERDAY / 2 < cuthitime)
+				 ? t + SECSPERDAY / 2
+				 : cuthitime);
+		  struct tm *newtmp = localtime_rz(tz, &newt, &newtm);
+		  bool newtm_ok = newtmp != NULL;
+		  if (! (tm_ok & newtm_ok
+			 ? (delta(&newtm, &tm) == newt - t
+			    && newtm.tm_isdst == tm.tm_isdst
+			    && strcmp(abbr(&newtm), ab) == 0)
+			 : tm_ok == newtm_ok)) {
+		    newt = hunt(tz, argv[i], t, newt);
+		    newtmp = localtime_rz(tz, &newt, &newtm);
+		    newtm_ok = newtmp != NULL;
+		    if (iflag)
+		      showtrans("%Y-%m-%d %L %o%Q", newtmp, newt,
+				newtm_ok ? abbr(&newtm) : NULL, argv[i]);
+		    else {
+		      show(tz, argv[i], newt - 1, true);
+		      show(tz, argv[i], newt, true);
+		    }
+		  }
+		  t = newt;
+		  tm_ok = newtm_ok;
+		  if (newtm_ok) {
+		    ab = saveabbr(&abbrev, &abbrevsize, &newtm);
+		    tm = newtm;
+		  }
+		}
+		if (! (iflag | Vflag)) {
 			t = absolute_max_time;
 			t -= SECSPERDAY;
 			show(tz, argv[i], t, true);
@@ -792,12 +839,11 @@ hunt(timezone_t tz, char *name, time_t lot, time_t hit)
 	char const *		ab;
 	time_t			t;
 	struct tm		lotm;
-	register struct tm *	lotmp;
 	struct tm		tm;
-	register struct tm *	tmp;
+	bool lotm_ok = my_localtime_rz(tz, &lot, &lotm) != NULL;
+	bool tm_ok;
 
-	lotmp = my_localtime_rz(tz, &lot, &lotm);
-	if (lotmp)
+	if (lotm_ok)
 	  ab = saveabbr(&loab, &loabsize, &lotm);
 	for ( ; ; ) {
 		time_t diff = hit - lot;
@@ -809,18 +855,17 @@ hunt(timezone_t tz, char *name, time_t lot, time_t hit)
 			++t;
 		else if (t >= hit)
 			--t;
-		tmp = my_localtime_rz(tz, &t, &tm);
-		if ((lotmp == NULL || tmp == NULL) ? (lotmp == tmp) :
-			(delta(&tm, &lotm) == (t - lot) &&
-			tm.tm_isdst == lotm.tm_isdst &&
-			strcmp(abbr(&tm), ab) == 0)) {
-				lot = t;
-				lotm = tm;
-				lotmp = tmp;
+		tm_ok = my_localtime_rz(tz, &t, &tm) != NULL;
+		if (lotm_ok & tm_ok
+		    ? (delta(&tm, &lotm) == t - lot
+		       && tm.tm_isdst == lotm.tm_isdst
+		       && strcmp(abbr(&tm), ab) == 0)
+		    : lotm_ok == tm_ok) {
+		  lot = t;
+		  if (tm_ok)
+		    lotm = tm;
 		} else	hit = t;
 	}
-	show(tz, name, lot, true);
-	show(tz, name, hit, true);
 	return hit;
 }
 
@@ -864,13 +909,20 @@ adjusted_yday(struct tm const *a, struct tm const *b)
 
 /* If A is the broken-down local time and B the broken-down UTC for
    the same instant, return A's UTC offset in seconds, where positive
-   offsets are east of Greenwich.  On failure, return LONG_MIN.  */
+   offsets are east of Greenwich.  On failure, return LONG_MIN.
+
+   If T is nonnull, *T is the time stamp that corresponds to A; call
+   my_gmtime_r and use its result instead of B.  Otherwise, B is the
+   possibly nonnull result of an earlier call to my_gmtime_r.  */
 static long
-gmtoff(struct tm const *a, struct tm const *b)
+gmtoff(struct tm const *a, time_t *t, struct tm const *b)
 {
 #ifdef TM_GMTOFF
   return a->TM_GMTOFF;
 #else
+  struct tm tm;
+  if (t)
+    b = my_gmtime_r(t, &tm);
   if (! b)
     return LONG_MIN;
   else {
@@ -909,7 +961,7 @@ show(timezone_t tz, char *zone, time_t t, bool v)
 		if (*abbr(tmp) != '\0')
 			printf(" %s", abbr(tmp));
 		if (v) {
-			long off = gmtoff(tmp, gmtmp);
+			long off = gmtoff(tmp, NULL, gmtmp);
 			printf(" isdst=%d", tmp->tm_isdst);
 			if (off != LONG_MIN)
 			  printf(" gmtoff=%ld", off);
@@ -918,6 +970,204 @@ show(timezone_t tz, char *zone, time_t t, bool v)
 	printf("\n");
 	if (tmp != NULL && *abbr(tmp) != '\0')
 		abbrok(abbr(tmp), zone);
+}
+
+/* Store into BUF, of size SIZE, a formatted local time taken from *TM.
+   Use ISO 8601 format +HH:MM:SS.  Omit :SS if SS is zero, and omit
+   :MM too if MM is also zero.
+
+   Return the length of the resulting string.  If the string does not
+   fit, return the length that the string would have been if it had
+   fit; do not overrun the output buffer.  */
+static int
+format_local_time(char *buf, size_t size, struct tm const *tm)
+{
+  int ss = tm->tm_sec, mm = tm->tm_min, hh = tm->tm_hour;
+  return (ss
+	  ? snprintf(buf, size, "%02d:%02d:%02d", hh, mm, ss)
+	  : mm
+	  ? snprintf(buf, size, "%02d:%02d", hh, mm)
+	  : snprintf(buf, size, "%02d", hh));
+}
+
+/* Store into BUF, of size SIZE, a formatted UTC offset for the
+   localtime *TM corresponding to time T.  Use ISO 8601 format
+   +HHMMSS, or -HHMMSS for time stamps west of Greenwich; if the time
+   stamp represents an unknown UTC offset, use the format -00.  If the
+   hour needs more than two digits to represent, HH contains three or
+   more digits.  Otherwise, omit SS if SS is zero, and omit MM too if
+   MM is also zero.
+
+   Return the length of the resulting string.  If the string does not
+   fit, return the length that the string would have been if it had
+   fit; do not overrun the output buffer.  */
+static int
+format_utc_offset(char *buf, size_t size, struct tm const *tm, time_t t)
+{
+  long off = gmtoff(tm, &t, NULL);
+  char sign = ((off < 0
+		|| (off == 0
+		    && (*abbr(tm) == '-' || strcmp(abbr(tm), "zzz") == 0)))
+	       ? '-' : '+');
+  long hh;
+  int mm, ss;
+  if (off < 0)
+    {
+      if (off == LONG_MIN)
+	return -1;
+      off = -off;
+    }
+  ss = off % 60;
+  mm = off / 60 % 60;
+  hh = off / 60 / 60;
+  return (ss || 100 <= hh
+	  ? snprintf(buf, size, "%c%02ld%02d%02d", sign, hh, mm, ss)
+	  : mm
+	  ? snprintf(buf, size, "%c%02ld%02d", sign, hh, mm)
+	  : snprintf(buf, size, "%c%02ld", sign, hh));
+}
+
+/* Store into BUF (of size SIZE) a quoted string representation of P.
+   If the representation's length is less than SIZE, return the
+   length; the representation is not null terminated.  Otherwise
+   return SIZE, to indicate that BUF is too small.  */
+static size_t
+format_quoted_string(char *buf, size_t size, char const *p)
+{
+  char *b = buf;
+  size_t s = size;
+  if (!s)
+    return size;
+  *b++ = '"', s--;
+  for (;;) {
+    char c = *p++;
+    if (s <= 1)
+      return size;
+    switch (c) {
+    default: *b++ = c, s--; continue;
+    case '\0': *b++ = '"', s--; return size - s;
+    case '"': case '\\': break;
+    case ' ': c = 's'; break;
+    case '\f': c = 'f'; break;
+    case '\n': c = 'n'; break;
+    case '\r': c = 'r'; break;
+    case '\t': c = 't'; break;
+    case '\v': c = 'v'; break;
+    }
+    *b++ = '\\', *b++ = c, s -= 2;
+  }
+}
+
+/* Store into BUF (of size SIZE) a time stamp formatted by TIME_FMT.
+   TM is the broken-down time, T the seconds count, AB the time zone
+   abbreviation, and ZONE_NAME the zone name.  Return true if
+   successful, false if the output would require more than SIZE bytes.
+   TIME_FMT uses the same format that strftime uses, with these
+   additions:
+
+   %f zone name
+   %L local time as per format_local_time
+   %o UTC offset as for format_utc_offset
+   %Q like " %Z D" where D is the isdst flag; except omit " D" if zero,
+      omit " %Z" if %Z=%o, and quote and escape %Z if it contains
+      nonalphabetics.  */
+
+static bool
+istrftime(char *buf, size_t size, char const *time_fmt,
+	  struct tm const *tm, time_t t, char const *ab, char const *zone_name)
+{
+  char *b = buf;
+  size_t s = size;
+  char const *f = time_fmt;
+
+  for (char const *p = f; ; p++)
+    if (*p == '%' && p[1] == '%')
+      p++;
+    else if (!*p
+	     || (*p == '%'
+		 && (p[1] == 'f' || p[1] == 'L'
+		     || p[1] == 'o' || p[1] == 'Q'))) {
+      size_t formatted_len;
+      size_t f_prefix_len = p - f;
+      size_t f_prefix_copy_size = p - f + 2;
+      char fbuf[100];
+      bool oversized = sizeof fbuf <= f_prefix_copy_size;
+      char *f_prefix_copy = oversized ? xmalloc(f_prefix_copy_size) : fbuf;
+      memcpy(f_prefix_copy, f, f_prefix_len);
+      strcpy(f_prefix_copy + f_prefix_len, "X");
+      formatted_len = strftime(b, s, f_prefix_copy, tm);
+      if (oversized)
+	free(f_prefix_copy);
+      if (formatted_len == 0)
+	return false;
+      formatted_len--;
+      b += formatted_len, s -= formatted_len;
+      if (!*p++)
+	break;
+      switch (*p) {
+      case 'f':
+	formatted_len = format_quoted_string(b, s, zone_name);
+	break;
+      case 'L':
+	formatted_len = format_local_time(b, s, tm);
+	break;
+      case 'o':
+	formatted_len = format_utc_offset(b, s, tm, t);
+	break;
+      case 'Q':
+	{
+	  char offbuf[INT_STRLEN_MAXIMUM(long) + sizeof "+mmss"];
+	  format_utc_offset(offbuf, sizeof offbuf, tm, t);
+	  if (strcmp(offbuf, ab) != 0) {
+	    char const *abp;
+	    size_t len;
+	    if (s <= 1)
+	      return false;
+	    *b++ = ' ', s--;
+	    for (abp = ab; is_alpha(*abp); abp++)
+	      continue;
+	    len = (!*abp && *ab
+		   ? snprintf(b, s, "%s", ab)
+		   : format_quoted_string(b, s, ab));
+	    if (s <= len)
+	      return false;
+	    b += len, s -= len;
+	  }
+	  formatted_len
+	    = tm->tm_isdst ? snprintf(b, s, " %d", tm->tm_isdst) : 0;
+	}
+	break;
+      }
+      if (! (0 <= formatted_len && formatted_len < s))
+	return false;
+      b += formatted_len, s -= formatted_len;
+      f = p + 1;
+    }
+  *b = '\0';
+  return true;
+}
+
+/* Show a time transition.  */
+static void
+showtrans(char const *time_fmt, struct tm const *tm, time_t t, char const *ab,
+	  char const *zone_name)
+{
+  if (!tm) {
+    printf(tformat(), t);
+    putchar('\n');
+  } else {
+    char stackbuf[1000];
+    size_t size = sizeof stackbuf;
+    char *buf = stackbuf;
+    char *bufalloc = NULL;
+    while (! istrftime(buf, size, time_fmt, tm, t, ab, zone_name)) {
+      size = sumsize(size, size);
+      free(bufalloc);
+      buf = bufalloc = xmalloc(size);
+    }
+    puts(buf);
+    free(bufalloc);
+  }
 }
 
 static char const *

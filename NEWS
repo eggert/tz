@@ -22,6 +22,10 @@ Unreleased, experimental changes
     stamps on the reference platform.  (Thanks to Alexander Belopolsky
     for reporting the bug and suggesting a way forward.)
 
+    zdump has a new -i option to generate transitions in a
+    more-compact but still human-readable format.  This option is
+    experimental, and the output format may change in future versions.
+
   Changes affecting documentation and commentary
 
     tzfile.5 now documents the new restriction on POSIX TZ-like

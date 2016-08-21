@@ -94,7 +94,8 @@ the cutoff's lower bound is exclusive and its upper bound is inclusive.
 .I "This format is experimental: it may change in future versions."
 .PP
 The interval format is a compact text representation that is intended
-to be both human- and machine-readable.  It consists of a first line
+to be both human- and machine-readable.  It consists of an empty line,
+then a line
 .q "TZ=\fIstring\fP"
 where
 .I string
@@ -104,7 +105,7 @@ describing the time interval before the first transition if any, and
 zero or more following lines
 .q "\fIdate time interval\fP",
 one line for each transition time and following interval.  Fields are
-separated by single spaces.
+separated by single tabs.
 .PP
 Dates are in
 .IR yyyy - mm - dd
@@ -114,7 +115,7 @@ format where
 .IR hh <24.
 Times are in local time immediately after the transition.  A
 time interval description consists of a UT offset in signed
-.RI \(+- hhmmss
+.RI \(+- hh : mm : ss
 format, a time zone abbreviation, and an isdst flag.  An abbreviation
 that equals the UT offset is omitted; other abbreviations are
 double-quoted strings unless they consist of one or more alphabetic
@@ -122,12 +123,12 @@ characters.  An isdst flag is omitted for standard time, and otherwise
 is a decimal integer that is unsigned and positive (typically 1) for
 daylight saving time and negative for unknown.
 .PP
-In times and in UT offsets with absolute value less than 100 hours,
-the seconds are omitted if they are zero, and the minutes are also
-omitted if they are also zero.  Positive UT offsets are east of
-Greenwich.  The UT offset \*-00 denotes a UT placeholder in areas
-where the actual offset is unspecified; by convention, this occurs
-when the UT offset is zero and the time zone abbreviation begins with
+In times and UT offsets, the seconds are omitted if they are zero, and
+the minutes are also omitted if they are also zero.  Positive UT
+offsets are east of Greenwich.  The UT offset \*-00 denotes a UT
+placeholder in areas where the actual offset is unspecified; by
+convention, this occurs when the UT offset is zero and the time zone
+abbreviation begins with
 .q "\*-"
 or is
 .q "zzz".
@@ -140,20 +141,24 @@ programming language.  E.g., the double-quoted string
 "\e\*(rq.\""
 .PP
 .ne 9
-Here is an example:
+Here is an example of the output, with the leading empty line omitted.
+(This example is shown with tab stops set far enough apart so that the
+tabbed columns line up.)
 .nf
 .sp
 .if \n(.g .ft CW
 .if t .in +.5i
 .if n .in +2
+.nr w \w'1896-01-13 'u
+.ta \nwu +\nwu +\nwu +\nwu
 TZ="Pacific/Honolulu"
-- - -103126 LMT
-1896-01-13 12:01:26 -1030 HST
-1933-04-30 03 -0930 HDT 1
-1933-05-21 11 -1030 HST
-1942-02-09 03 -0930 HDT 1
-1945-09-30 01 -1030 HST
-1947-06-08 02:30 -10 HST
+-	-	-10:31:26	LMT
+1896-01-13	12:01:26	-10:30	HST
+1933-04-30	03	-09:30	HDT	1
+1933-05-21	11	-10:30	HST
+1942-02-09	03	-09:30	HDT	1
+1945-09-30	01	-10:30	HST
+1947-06-08	02:30	-10	HST
 .in
 .if \n(.g .ft
 .sp
@@ -177,24 +182,21 @@ Here are excerpts from another example:
 .if t .in +.5i
 .if n .in +2
 TZ="Europe/Astrakhan"
-- - +031212 LMT
-1924-04-30 23:47:48 +03
-1930-06-21 01 +04
-1981-04-01 01 +05 1
-1981-09-30 23 +04
+-	-	+03:12:12	LMT
+1924-04-30	23:47:48	+03
+1930-06-21	01	+04
+1981-04-01	01	+05		1
+1981-09-30	23	+04
 \&...
-2014-10-26 01 +03
-2016-03-27 03 +04
+2014-10-26	01	+03
+2016-03-27	03	+04
 .in
 .if \n(.g .ft
 .sp
 .fi
 This time zone is east of UT, so its UT offsets are positive.  Also,
-many of its time zone abbreviations omitted since they duplicate the
-text of the UT offset.
-.PP
-If multiple zones are present, their representations are separated
-by empty lines.
+many of its time zone abbreviations are omitted since they duplicate
+the text of the UT offset.
 .SH LIMITATIONS
 Time discontinuities are found by sampling the results returned by localtime
 at twelve-hour intervals.

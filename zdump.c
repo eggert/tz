@@ -739,8 +739,8 @@ main(int argc, char *argv[])
 		if (tm_ok) {
 		  ab = saveabbr(&abbrev, &abbrevsize, &tm);
 		  if (iflag) {
-		    showtrans(&"\nTZ=%f"[i == optind], &tm, t, ab, argv[i]);
-		    showtrans("- - %o%Q", &tm, t, ab, argv[i]);
+		    showtrans("\nTZ=%f", &tm, t, ab, argv[i]);
+		    showtrans("-\t-\t%Q", &tm, t, ab, argv[i]);
 		  }
 		}
 		while (t < cuthitime) {
@@ -759,7 +759,7 @@ main(int argc, char *argv[])
 		    newtmp = localtime_rz(tz, &newt, &newtm);
 		    newtm_ok = newtmp != NULL;
 		    if (iflag)
-		      showtrans("%Y-%m-%d %L %o%Q", newtmp, newt,
+		      showtrans("%Y-%m-%d\t%L\t%Q", newtmp, newt,
 				newtm_ok ? abbr(&newtm) : NULL, argv[i]);
 		    else {
 		      show(tz, argv[i], newt - 1, true);
@@ -992,15 +992,14 @@ format_local_time(char *buf, size_t size, struct tm const *tm)
 
 /* Store into BUF, of size SIZE, a formatted UTC offset for the
    localtime *TM corresponding to time T.  Use ISO 8601 format
-   +HHMMSS, or -HHMMSS for time stamps west of Greenwich; if the time
-   stamp represents an unknown UTC offset, use the format -00.  If the
-   hour needs more than two digits to represent, HH contains three or
-   more digits.  Otherwise, omit SS if SS is zero, and omit MM too if
-   MM is also zero.
+   +HH:MM:SS, or -HH:MM:SS for time stamps west of Greenwich.  Omit
+   :SS if :SS is zero, and omit :MM too if :MM is also zero.  If the
+   time stamp represents an unknown UTC offset, use the format -00.
 
-   Return the length of the resulting string.  If the string does not
-   fit, return the length that the string would have been if it had
-   fit; do not overrun the output buffer.  */
+   Return the length of the resulting string, or -1 if the result is
+   not representable as a string.  If the string does not fit, return
+   the length that the string would have been if it had fit; do not
+   overrun the output buffer.  */
 static int
 format_utc_offset(char *buf, size_t size, struct tm const *tm, time_t t)
 {
@@ -1020,10 +1019,10 @@ format_utc_offset(char *buf, size_t size, struct tm const *tm, time_t t)
   ss = off % 60;
   mm = off / 60 % 60;
   hh = off / 60 / 60;
-  return (ss || 100 <= hh
-	  ? snprintf(buf, size, "%c%02ld%02d%02d", sign, hh, mm, ss)
+  return (ss
+	  ? snprintf(buf, size, "%c%02ld:%02d:%02d", sign, hh, mm, ss)
 	  : mm
-	  ? snprintf(buf, size, "%c%02ld%02d", sign, hh, mm)
+	  ? snprintf(buf, size, "%c%02ld:%02d", sign, hh, mm)
 	  : snprintf(buf, size, "%c%02ld", sign, hh));
 }
 
@@ -1067,10 +1066,10 @@ format_quoted_string(char *buf, size_t size, char const *p)
 
    %f zone name
    %L local time as per format_local_time
-   %o UTC offset as for format_utc_offset
-   %Q like " %Z D" where D is the isdst flag; except omit " D" if zero,
-      omit " %Z" if %Z=%o, and quote and escape %Z if it contains
-      nonalphabetics.  */
+   %Q like "U\t%Z\tD" where U is the UTC offset as for format_utc_offset
+      and D is the isdst flag; except omit D if it is zero, omit %Z if
+      it equals U, quote and escape %Z if it contains nonalphabetics,
+      and omit any trailing tabs.  */
 
 static bool
 istrftime(char *buf, size_t size, char const *time_fmt,
@@ -1085,8 +1084,7 @@ istrftime(char *buf, size_t size, char const *time_fmt,
       p++;
     else if (!*p
 	     || (*p == '%'
-		 && (p[1] == 'f' || p[1] == 'L'
-		     || p[1] == 'o' || p[1] == 'Q'))) {
+		 && (p[1] == 'f' || p[1] == 'L' || p[1] == 'Q'))) {
       size_t formatted_len;
       size_t f_prefix_len = p - f;
       size_t f_prefix_copy_size = p - f + 2;
@@ -1111,19 +1109,20 @@ istrftime(char *buf, size_t size, char const *time_fmt,
       case 'L':
 	formatted_len = format_local_time(b, s, tm);
 	break;
-      case 'o':
-	formatted_len = format_utc_offset(b, s, tm, t);
-	break;
       case 'Q':
 	{
-	  char offbuf[INT_STRLEN_MAXIMUM(long) + sizeof "+mmss"];
-	  format_utc_offset(offbuf, sizeof offbuf, tm, t);
-	  if (strcmp(offbuf, ab) != 0) {
+	  bool show_abbr;
+	  int offlen = format_utc_offset(b, s, tm, t);
+	  if (! (0 <= offlen && offlen < s))
+	    return false;
+	  show_abbr = strcmp(b, ab) != 0;
+	  b += offlen, s -= offlen;
+	  if (show_abbr) {
 	    char const *abp;
 	    size_t len;
 	    if (s <= 1)
 	      return false;
-	    *b++ = ' ', s--;
+	    *b++ = '\t', s--;
 	    for (abp = ab; is_alpha(*abp); abp++)
 	      continue;
 	    len = (!*abp && *ab
@@ -1133,8 +1132,9 @@ istrftime(char *buf, size_t size, char const *time_fmt,
 	      return false;
 	    b += len, s -= len;
 	  }
-	  formatted_len
-	    = tm->tm_isdst ? snprintf(b, s, " %d", tm->tm_isdst) : 0;
+	  formatted_len = (tm->tm_isdst
+			   ? snprintf(b, s, &"\t\t%d"[show_abbr], tm->tm_isdst)
+			   : 0);
 	}
 	break;
       }

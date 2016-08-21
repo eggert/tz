@@ -25,6 +25,8 @@ Unreleased, experimental changes
     zdump has a new -i option to generate transitions in a
     more-compact but still human-readable format.  This option is
     experimental, and the output format may change in future versions.
+    (Thanks to Jon Skeet for suggesting that an option was needed,
+    and thanks to Tim Parenti and Chris Rovick for further comments.)
 
   Changes affecting documentation and commentary
 

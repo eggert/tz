@@ -573,7 +573,7 @@ clean:		clean_misc
 maintainer-clean: clean
 		@echo 'This command is intended for maintainers to use; it'
 		@echo 'deletes files that may need special tools to rebuild.'
-		rm -f leapseconds $(MANTXTS) $(TZS) *.asc *.tar.gz
+		rm -f leapseconds $(MANTXTS) $(TZS) *.asc *.tar.[gl]z
 
 names:
 		@echo $(ENCHILADA)
@@ -673,7 +673,7 @@ check_time_t_alternatives:
 		rm -fr time_t.dir
 
 tarballs:	tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz \
-		tzdb-$(VERSION).tar.gz
+		tzdb-$(VERSION).tar.lz
 
 tzcode$(VERSION).tar.gz: set-timestamps.out
 		LC_ALL=C && export LC_ALL && \
@@ -686,16 +686,16 @@ tzdata$(VERSION).tar.gz: set-timestamps.out
 		tar $(TARFLAGS) -cf - $(COMMON) $(DATA) $(MISC) $(TZS) | \
 		  gzip $(GZIPFLAGS) > $@
 
-tzdb-$(VERSION).tar.gz: set-timestamps.out
+tzdb-$(VERSION).tar.lz: set-timestamps.out
 		rm -fr tzdb
 		mkdir tzdb
 		ln $(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC) $(TZS) tzdb
 		touch -cmr $$(ls -t tzdb/* | sed 1q) tzdb
 		LC_ALL=C && export LC_ALL && \
-		tar $(TARFLAGS) -cf - tzdb | gzip $(GZIPFLAGS) > $@
+		tar $(TARFLAGS) -cf - tzdb | lzip -9 > $@
 
 signatures:	tzcode$(VERSION).tar.gz.asc tzdata$(VERSION).tar.gz.asc \
-		tzdb-$(VERSION).tar.gz.asc
+		tzdb-$(VERSION).tar.lz.asc
 
 tzcode$(VERSION).tar.gz.asc: tzcode$(VERSION).tar.gz
 		gpg --armor --detach-sign $?
@@ -703,7 +703,7 @@ tzcode$(VERSION).tar.gz.asc: tzcode$(VERSION).tar.gz
 tzdata$(VERSION).tar.gz.asc: tzdata$(VERSION).tar.gz
 		gpg --armor --detach-sign $?
 
-tzdb-$(VERSION).tar.gz.asc: tzdb-$(VERSION).tar.gz
+tzdb-$(VERSION).tar.lz.asc: tzdb-$(VERSION).tar.lz
 		gpg --armor --detach-sign $?
 
 typecheck:

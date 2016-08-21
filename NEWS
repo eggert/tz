@@ -2,18 +2,18 @@ News for the tz database
 
 Unreleased, experimental changes
 
-  Changes affecting future time stamps
+  Changes to future time stamps
 
     New leap second 2016-12-31 23:59:60 UTC as per IERS Bulletin C 52.
     (Thanks to Tim Parenti.)
 
-  Changes affecting past time stamps
+  Changes to past time stamps
 
     For America/Los_Angeles, spring-forward transition times have been
     corrected from 02:00 to 02:01 in 1948, and from 02:00 to 01:00 in
     1950-1966.
 
-  Changes affecting code
+  Changes to code
 
     zic no longer generates binary files containing POSIX TZ-like
     strings that disagree with the local time type after the last
@@ -28,7 +28,11 @@ Unreleased, experimental changes
     (Thanks to Jon Skeet for suggesting that an option was needed,
     and thanks to Tim Parenti and Chris Rovick for further comments.)
 
-  Changes affecting documentation and commentary
+    The tzdata distribution has a new file to2050.tzs that contains
+    what should be the output of 'zdump -i -c 2050' on primary zones.
+    'make check' now checks that zdump generates this output.
+
+  Changes to documentation and commentary
 
     tzfile.5 now documents the new restriction on POSIX TZ-like
     strings that is now implemented by zic.

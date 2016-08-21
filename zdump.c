@@ -1078,9 +1078,9 @@ istrftime(char *buf, size_t size, char const *time_fmt,
 {
   char *b = buf;
   size_t s = size;
-  char const *f = time_fmt;
+  char const *f = time_fmt, *p;
 
-  for (char const *p = f; ; p++)
+  for (p = f; ; p++)
     if (*p == '%' && p[1] == '%')
       p++;
     else if (!*p

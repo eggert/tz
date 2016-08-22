@@ -61,9 +61,10 @@ Unreleased, experimental changes
     tzfile.5 now documents the new restriction on POSIX TZ-like
     strings that is now implemented by zic.
 
-    tz-link.htm mentions Time4J (thanks to Meno Hochschild) and
-    ThreeTen-Extra, and its description of Java 8 has been brought up
-    to date (thanks to Stephen Colebourne).
+    tz-link.htm mentions JuliaTime (thanks to Curtis Vogt) and Time4J
+    (thanks to Meno Hochschild) and ThreeTen-Extra, and its
+    description of Java 8 has been brought up to date (thanks to
+    Stephen Colebourne).
 
 
 Release 2016f - 2016-07-05 16:26:51 +0200

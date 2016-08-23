@@ -42,6 +42,8 @@ Unreleased, experimental changes
     (Thanks to Jon Skeet for suggesting that an option was needed,
     and thanks to Tim Parenti and Chris Rovick for further comments.)
 
+  Changes to build procedure
+
     The tzdata distribution has a new file to2050.tzs that contains
     what should be the output of 'zdump -i -c 2050' on primary zones.
     'make check' now checks that zdump generates this output.
@@ -56,6 +58,8 @@ Unreleased, experimental changes
     a while.  The new format uses xz compression, which is
     significantly smaller than gzip.  (Thanks to Oscar van Vlijmen for
     comments on the format.)
+
+    'make check_web' now works on Fedora-like distributions.
 
   Changes to documentation and commentary
 

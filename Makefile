@@ -272,16 +272,16 @@ AWK=		awk
 KSHELL=		/bin/bash
 
 # The path where SGML DTDs are kept and the catalog file(s) to use when
-# validating.  The default is appropriate for Ubuntu 13.10.
+# validating.  The default should work on both Debian and Red Hat.
 SGML_TOPDIR= /usr
 SGML_DTDDIR= $(SGML_TOPDIR)/share/xml/w3c-sgml-lib/schema/dtd
 SGML_SEARCH_PATH= $(SGML_DTDDIR)/REC-html401-19991224
 SGML_CATALOG_FILES= \
-  $(SGML_TOPDIR)/share/doc/w3-recs/html/www.w3.org/TR/1999/REC-html401-19991224/HTML4.cat
+  $(SGML_TOPDIR)/share/doc/w3-recs/html/www.w3.org/TR/1999/REC-html401-19991224/HTML4.cat:$(SGML_TOPDIR)/share/sgml/html/4.01/HTML4.cat
 
 # The name, arguments and environment of a program to validate your web pages.
-# See <http://www.jclark.com/sp/> for a validator, and
-# <http://validator.w3.org/source/> for a validation library.
+# See <http://openjade.sourceforge.net/doc/> for a validator, and
+# <https://validator.w3.org/source/> for a validation library.
 VALIDATE = nsgmls
 VALIDATE_FLAGS = -s -B -wall -wno-unused-param
 VALIDATE_ENV = \

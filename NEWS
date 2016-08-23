@@ -15,9 +15,11 @@ Unreleased, experimental changes
 
   Changes to past and future time zone abbreviations
 
-    Several zones in Antarctica and the former Soviet Union now use
-    numeric time zone abbreviations instead of invented ones.  The
-    affected zones are Antarctica/Casey, Antarctica/Davis,
+    Several zones in Antarctica and the former Soviet Union, along
+    with zones intended for ships at sea that cannot use POSIX TZ
+    strings, now use numeric time zone abbreviations instead of
+    invented or obsolete alphanumeric abbreviations.  The affected
+    zones are Antarctica/Casey, Antarctica/Davis,
     Antarctica/DumontDUrville, Antarctica/Mawson, Antarctica/Rothera,
     Antarctica/Syowa, Antarctica/Troll, Antarctica/Vostok,
     Asia/Anadyr, Asia/Ashgabat, Asia/Baku, Asia/Bishkek, Asia/Chita,
@@ -25,10 +27,15 @@ Unreleased, experimental changes
     Asia/Krasnoyarsk, Asia/Magadan, Asia/Omsk, Asia/Sakhalin,
     Asia/Samarkand, Asia/Srednekolymsk, Asia/Tashkent, Asia/Tbilisi,
     Asia/Ust-Nera, Asia/Vladivostok, Asia/Yakutsk, Asia/Yekaterinburg,
-    Asia/Yerevan, Europe/Kaliningrad, Europe/Minsk, Europe/Samara,
-    Europe/Volgograd, and Indian/Kerguelen.  For Europe/Moscow the
-    invented abbreviation MSM was replaced by +05, whereas MSK and MSD
-    were kept as they are not our invention and are widely used.
+    Asia/Yerevan, Etc/GMT-14, Etc/GMT-13, Etc/GMT-12, Etc/GMT-11,
+    Etc/GMT-10, Etc/GMT-9, Etc/GMT-8, Etc/GMT-7, Etc/GMT-6, Etc/GMT-5,
+    Etc/GMT-4, Etc/GMT-3, Etc/GMT-2, Etc/GMT-1, Etc/GMT+1, Etc/GMT+2,
+    Etc/GMT+3, Etc/GMT+4, Etc/GMT+5, Etc/GMT+6, Etc/GMT+7, Etc/GMT+8,
+    Etc/GMT+9, Etc/GMT+10, Etc/GMT+11, Etc/GMT+12, Europe/Kaliningrad,
+    Europe/Minsk, Europe/Samara, Europe/Volgograd, and
+    Indian/Kerguelen.  For Europe/Moscow the invented abbreviation MSM
+    was replaced by +05, whereas MSK and MSD were kept as they are not
+    our invention and are widely used.
 
   Changes to code
 

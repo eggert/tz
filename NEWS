@@ -15,6 +15,10 @@ Unreleased, experimental changes
 
   Changes to past and future time zone abbreviations
 
+    The Factory zone now uses the time zone abbreviation -00 instead
+    of a long English-language string, as -00 is now the normal way to
+    represent an undefined time zone.
+
     Several zones in Antarctica and the former Soviet Union, along
     with zones intended for ships at sea that cannot use POSIX TZ
     strings, now use numeric time zone abbreviations instead of

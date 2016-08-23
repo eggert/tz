@@ -15,17 +15,20 @@ Unreleased, experimental changes
 
   Changes to past and future time zone abbreviations
 
-    Several zones in the former Soviet Union now use numeric time zone
-    abbreviations instead of invented ones.  The affected zones are
+    Several zones in Antarctica and the former Soviet Union now use
+    numeric time zone abbreviations instead of invented ones.  The
+    affected zones are Antarctica/Casey, Antarctica/Davis,
+    Antarctica/DumontDUrville, Antarctica/Mawson, Antarctica/Rothera,
+    Antarctica/Syowa, Antarctica/Troll, Antarctica/Vostok,
     Asia/Anadyr, Asia/Ashgabat, Asia/Baku, Asia/Bishkek, Asia/Chita,
     Asia/Dushanbe, Asia/Irkutsk, Asia/Kamchatka, Asia/Khandyga,
     Asia/Krasnoyarsk, Asia/Magadan, Asia/Omsk, Asia/Sakhalin,
     Asia/Samarkand, Asia/Srednekolymsk, Asia/Tashkent, Asia/Tbilisi,
     Asia/Ust-Nera, Asia/Vladivostok, Asia/Yakutsk, Asia/Yekaterinburg,
-    Asia/Yerevan, Europe/Kaliningrad, Europe/Minsk, Europe/Samara, and
-    Europe/Volgograd.  For Europe/Moscow the invented abbreviation MSM
-    was replaced by +05, whereas MSK and MSD were kept as they are not
-    our invention and are widely used.
+    Asia/Yerevan, Europe/Kaliningrad, Europe/Minsk, Europe/Samara,
+    Europe/Volgograd, and Indian/Kerguelen.  For Europe/Moscow the
+    invented abbreviation MSM was replaced by +05, whereas MSK and MSD
+    were kept as they are not our invention and are widely used.
 
   Changes to code
 

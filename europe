@@ -774,8 +774,6 @@ Zone	Europe/Vienna	1:05:21 -	LMT	1893 Apr
 # From Alexander Bokovoy (2014-10-09):
 # Belarussian government decided against changing to winter time....
 # http://eng.belta.by/all_news/society/Belarus-decides-against-adjusting-time-in-Russias-wake_i_76335.html
-# From Paul Eggert (2014-10-08):
-# Hence Belarus can share time zone abbreviations with Moscow again.
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Minsk	1:50:16 -	LMT	1880
@@ -1294,7 +1292,7 @@ Zone	Europe/Paris	0:09:21 -	LMT	1891 Mar 15  0:01
 # http://www.parlament-berlin.de/pds-fraktion.nsf/727459127c8b66ee8525662300459099/defc77cb784f180ac1256c2b0030274b/$FILE/bersarint.pdf
 # says that Bersarin issued an order to use Moscow time on May 20.
 # However, Moscow did not observe daylight saving in 1945, so
-# this was equivalent to CEMT (GMT+3), not GMT+4.
+# this was equivalent to +03, not +04.
 
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
@@ -2258,7 +2256,6 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # http://www.worldtimezone.com/dst_news/dst_news_russia-map-2014-07.html
 
 # From Paul Eggert (2006-03-22):
-# Except for Moscow after 1919-07-01, I invented the time zone abbreviations.
 # Moscow time zone abbreviations after 1919-07-01, and Moscow rules after 1991,
 # are from Andrey A. Chernov.  The rest is from Shanks & Pottenger,
 # except we follow Chernov's report that 1992 DST transitions were Sat
@@ -3080,9 +3077,6 @@ Zone Asia/Magadan	10:03:12 -	LMT	1924 May  2
 # in Russian.)  In addition, Srednekolymsk appears to be a much older
 # settlement and the population of Zyryanka seems to be declining.
 # Go with Srednekolymsk.
-#
-# Since Magadan Oblast moves to UTC+10 on 2014-10-26, we cannot keep using MAGT
-# as the abbreviation.  Use SRET instead.
 
 Zone Asia/Srednekolymsk	10:14:52 -	LMT	1924 May  2
 			10:00	-	+10	1930 Jun 21

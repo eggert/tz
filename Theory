@@ -323,7 +323,7 @@ Errors in the tz database arise from many sources:
 
  * Sometimes historical timekeeping was specified more precisely
    than what the tz database can handle.  For example, from 1909 to
-   1937 Netherlands clocks were legally UT+00:19:32.13, but the tz
+   1937 Netherlands clocks were legally +00:19:32.13, but the tz
    database cannot represent the fractional second.
 
  * Even when all the timestamp transitions recorded by the tz database

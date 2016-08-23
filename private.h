@@ -15,6 +15,7 @@
 ** Thank you!
 */
 
+/* This string was in the tzdata Factory zone through version 2016f.  */
 #define GRANDPARENTED	"Local time zone must be set--see zic manual page"
 
 /*

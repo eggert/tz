@@ -465,7 +465,7 @@ Release 2015d - 2015-04-24 08:09:46 -0700
 
   Changes affecting past time stamps
 
-    America/Whitehorse switched from UTC-9 to UTC-8 on 1967-05-28, not
+    America/Whitehorse switched from -09 to -08 on 1967-05-28, not
     1966-07-01.  Also, Yukon's time zone history is documented better.
     (Thanks to Brian Inglis and Dennis Ferguson.)
 
@@ -499,12 +499,12 @@ Release 2015c - 2015-04-11 08:55:55 -0700
 
       The 1918 transition was September 10, not September 1.
 
-      The UTC-4 time observed from 1932 to 1942 is now considered to be
+      The -04 time observed from 1932 to 1942 is now considered to be
       standard time, not year-round DST.
 
-      Santiago observed DST (UTC-3) from 1946-07-15 through 1946-08-31,
+      Santiago observed DST (-03) from 1946-07-15 through 1946-08-31,
       then reverted to standard time, then switched its time zone to
-      UTC-5 on 1947-04-01.
+      -05 on 1947-04-01.
 
       Assume transitions before 1968 were at 00:00, since we have no data
       saying otherwise.
@@ -633,7 +633,7 @@ Release 2014j - 2014-11-10 17:37:11 -0800
 
   Changes affecting current and future time stamps
 
-    Turks & Caicos' switch from US eastern time to UTC-4 year-round
+    Turks & Caicos' switch from US eastern time to -04 year-round
     did not occur on 2014-11-02 at 02:00.  It's currently scheduled
     for 2015-11-01 at 02:00.  (Thanks to Chris Walton.)
 
@@ -669,7 +669,7 @@ Release 2014i - 2014-10-21 22:04:57 -0700
     years will use a similar pattern.
 
     A new Zone Pacific/Bougainville, for the part of Papua New Guinea
-    that plans to switch from UTC+10 to UTC+11 on 2014-12-28 at 02:00.
+    that plans to switch from +10 to +11 on 2014-12-28 at 02:00.
     (Thanks to Kiley Walbom for the heads-up.)
 
   Changes affecting time zone abbreviations
@@ -679,8 +679,8 @@ Release 2014i - 2014-10-21 22:04:57 -0700
     to its more-traditional value MSK on 2014-10-26 at 01:00.
     (Thanks to Alexander Bokovoy for the heads-up about Belarus.)
 
-    The new abbreviation IDT stands for the pre-1976 use of UT+8 in
-    Indochina, to distinguish it better from ICT (UT+7).
+    The new abbreviation IDT stands for the pre-1976 use of +08 in
+    Indochina, to distinguish it better from ICT (+07).
 
   Changes affecting past time stamps
 
@@ -791,7 +791,7 @@ Release 2014g - 2014-08-28 12:31:23 -0700
 
   Changes affecting future time stamps
 
-    Turks & Caicos is switching from US eastern time to UTC-4 year-round,
+    Turks & Caicos is switching from US eastern time to -04 year-round,
     modeled as a switch from EST/EDT to AST on 2014-11-02 at 02:00.
     [As noted in 2014j, this switch was later delayed.]
 
@@ -975,7 +975,7 @@ Release 2014f - 2014-08-05 17:42:36 -0700
     This change does not affect UTC offsets, only time zone abbreviations.
     (Thanks to Rich Tibbett and many others.)
 
-    Asia/Novokuznetsk shifts from NOVT to KRAT (remaining on UTC+7)
+    Asia/Novokuznetsk shifts from NOVT to KRAT (remaining on +07)
     effective 2014-10-26 at 02:00 local time.
 
     The time zone abbreviation for Xinjiang Time (observed in Ürümqi)
@@ -1004,8 +1004,8 @@ Release 2014f - 2014-08-05 17:42:36 -0700
     zones Asia/Harbin, Asia/Chongqing, and Asia/Kashgar have been
     removed; backwards-compatibility links still work, albeit with
     different behaviors for time stamps before May 1980.  Asia/Urumqi's
-    1980 transition to UTC+8 has been removed, so that it is now at
-    UTC+6 and not UTC+8.  (Thanks to Luther Ma and to Alois Treindl;
+    1980 transition to +08 has been removed, so that it is now at
+    +06 and not +08.  (Thanks to Luther Ma and to Alois Treindl;
     Treindl sent helpful translations of two papers by Guo Qingsheng.)
 
     Some zones have been turned into links, when they differed from existing
@@ -1035,7 +1035,7 @@ Release 2014f - 2014-08-05 17:42:36 -0700
     Europe/Helsinki's 1942 fall-back transition was 10-04 at 01:00, not
     10-03 at 00:00.  (Thanks to Konstantin Hyppönen.)
 
-    Pacific/Pago_Pago has been changed from UTC-11:30 to UTC-11 for the period
+    Pacific/Pago_Pago has been changed from -11:30 to -11 for the period
     from 1911 to 1950.
 
     Pacific/Chatham has been changed to New Zealand standard time plus
@@ -1363,15 +1363,15 @@ Release 2013h - 2013-10-25 15:32:32 -0700
 
   Changes affecting current and future time stamps:
 
-    Libya has switched its time zone back to UTC+2 without DST,
-    instead of UTC+1 with DST.  (Thanks to Even Scharning.)
+    Libya has switched its time zone back to +02 without DST,
+    instead of +01 with DST.  (Thanks to Even Scharning.)
 
     Western Sahara (Africa/El_Aaiun) uses Morocco's DST rules.
     (Thanks to Gwillim Law.)
 
   Changes affecting future time stamps:
 
-    Acre and (we guess) western Amazonas will switch from UTC-4 to UTC-5
+    Acre and (we guess) western Amazonas will switch from -04 to -05
     on 2013-11-10.  This affects America/Rio_Branco and America/Eirunepe.
     (Thanks to Steffen Thorsen.)
 
@@ -1458,7 +1458,7 @@ Release 2013f - 2013-09-24 23:37:36 -0700
     Tocantins will very likely not observe DST starting this spring.
     (Thanks to Steffen Thorsen.)
 
-    Jordan will likely stay at UTC+3 indefinitely, and will not fall
+    Jordan will likely stay at +03 indefinitely, and will not fall
     back this fall.
 
     Palestine will fall back at 00:00, not 01:00.  (Thanks to Steffen Thorsen.)
@@ -1515,7 +1515,7 @@ Release 2013e - 2013-09-19 23:50:04 -0700
     Benny Lin.)  This affects Asia/Dili, Asia/Jakarta, Asia/Jayapura,
     Asia/Makassar, and Asia/Pontianak.
 
-    Use ART (UTC-3, standard time), rather than WARST (also UTC-3, but
+    Use ART (-03, standard time), rather than WARST (also UTC-3, but
     daylight saving time) for San Luis, Argentina since 2009.
 
   Changes affecting Godthåb time stamps after 2037 if version mismatch
@@ -1972,7 +1972,7 @@ Release 2012f - 2012-09-12 23:17:03 -0700
 
 Release 2012e - 2012-08-02 20:44:55 -0700
 
-  * australasia (Pacific/Fakaofo): Tokelau is UTC+13, not UTC+14.
+  * australasia (Pacific/Fakaofo): Tokelau is +13, not +14.
     (Thanks to Steffen Thorsen.)
 
   * Use a single version number for both code and data.

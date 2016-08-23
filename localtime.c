@@ -1510,7 +1510,7 @@ gmtsub(struct state const *sp, time_t const *timep, int_fast32_t offset,
 #ifdef TM_ZONE
 	/*
 	** Could get fancy here and deliver something such as
-	** "UT+xxxx" or "UT-xxxx" if offset is non-zero,
+	** "+xx" or "-xx" if offset is non-zero,
 	** but this is no time for a treasure hunt.
 	*/
 	tmp->TM_ZONE = ((char *)

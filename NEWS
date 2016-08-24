@@ -13,6 +13,11 @@ Unreleased, experimental changes
     corrected from 02:00 to 02:01 in 1948, and from 02:00 to 01:00 in
     1950-1966.
 
+    For zones using Soviet time on 1919-07-01, transitions to UT-based
+    time were at 00:00 UT, not at 02:00 local time.  The affected
+    zones are Europe/Kirov, Europe/Moscow, Europe/Samara, and
+    Europe/Ulyanovsk.  (Thanks to Alexander Belopolsky.)
+
   Changes to past and future time zone abbreviations
 
     The Factory zone now uses the time zone abbreviation -00 instead

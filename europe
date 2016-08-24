@@ -600,7 +600,7 @@ Rule	Russia	1918	only	-	Sep	16	 1:00	1:00	MST
 # Decree No. 258 (1919-05-29) http://istmat.info/node/37949
 Rule	Russia	1919	only	-	May	31	23:00	2:00	MDST
 #
-Rule	Russia	1919	only	-	Jul	 1	 2:00	1:00	MSD
+Rule	Russia	1919	only	-	Jul	 1	 0:00u	1:00	MSD
 Rule	Russia	1919	only	-	Aug	16	 0:00	0	MSK
 #
 # Decree No. 63 (1921-02-03) http://istmat.info/node/45840
@@ -2401,6 +2401,16 @@ Zone Europe/Kaliningrad	 1:22:00 -	LMT	1893 Apr
 # 78	RU-SPE	Saint Petersburg
 # 83	RU-NEN	Nenets Autonomous Okrug
 
+# From Paul Eggert (2016-08-23):
+# The Soviets switched to UT-based time in 1919.  Decree No. 59
+# (1919-02-08) http://istmat.info/node/35567 established UT-based time
+# zones, and Decree No. 147 (1919-03-29) http://istmat.info/node/35854
+# specified a transition date of 1919-07-01, apparently at 00:00 UT.
+# No doubt only the Soviet-controlled regions switched on that date;
+# later transitions to UT-based time in other parts of Russia are
+# taken from what appear to be guesses by Shanks.
+# (Thanks to Alexander Belopolsky for pointers to the decrees.)
+
 # From Stepan Golosunov (2016-03-07):
 # 11. Regions-violators, 1981-1982.
 # Wikipedia refers to
@@ -2502,7 +2512,7 @@ Zone Europe/Kaliningrad	 1:22:00 -	LMT	1893 Apr
 
 Zone Europe/Moscow	 2:30:17 -	LMT	1880
 			 2:30:17 -	MMT	1916 Jul  3 # Moscow Mean Time
-			 2:31:19 Russia	%s	1919 Jul  1  2:00
+			 2:31:19 Russia	%s	1919 Jul  1  0:00u
 			 3:00	Russia	%s	1921 Oct
 			 3:00	Russia	MSK/MSD	1922 Oct
 			 2:00	-	EET	1930 Jun 21
@@ -2599,7 +2609,7 @@ Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 # 43	RU-KIR	Kirov Oblast
 # The 1989 transition is from USSR act No. 227 (1989-03-14).
 #
-Zone Europe/Kirov	 3:18:48 -	LMT	1919 Jul  1  2:00
+Zone Europe/Kirov	 3:18:48 -	LMT	1919 Jul  1  0:00u
 			 3:00	-	+03	1930 Jun 21
 			 4:00	Russia	+04/+05	1989 Mar 26  2:00s
 			 3:00	Russia	+03/+04	1991 Mar 31  2:00s
@@ -2617,7 +2627,7 @@ Zone Europe/Kirov	 3:18:48 -	LMT	1919 Jul  1  2:00
 # Byalokoz 1919 says Samara was 3:20:20.
 # The 1989 transition is from USSR act No. 227 (1989-03-14).
 
-Zone Europe/Samara	 3:20:20 -	LMT	1919 Jul  1  2:00
+Zone Europe/Samara	 3:20:20 -	LMT	1919 Jul  1  0:00u
 			 3:00	-	+03	1930 Jun 21
 			 4:00	-	+04	1935 Jan 27
 			 4:00	Russia	+04/+05	1989 Mar 26  2:00s
@@ -2641,7 +2651,7 @@ Zone Europe/Samara	 3:20:20 -	LMT	1919 Jul  1  2:00
 # From Matt Johnson (2016-03-09):
 # http://publication.pravo.gov.ru/Document/View/0001201603090051
 
-Zone Europe/Ulyanovsk	 3:13:36 -	LMT	1919 Jul  1  2:00
+Zone Europe/Ulyanovsk	 3:13:36 -	LMT	1919 Jul  1  0:00u
 			 3:00	-	+03	1930 Jun 21
 			 4:00	Russia	+04/+05	1989 Mar 26  2:00s
 			 3:00	Russia	+03/+04	1991 Mar 31  2:00s

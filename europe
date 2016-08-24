@@ -2425,7 +2425,7 @@ Zone Europe/Kaliningrad	 1:22:00 -	LMT	1893 Apr
 # attributes the 1982 changes to the Act of the Council of Ministers
 # of the USSR No. 126 from 18.02.1982.  1980-925.txt also adds
 # Udmurtia to the list of affected territories and lists Khatangsky
-# district separately from Taymyr Autonomous Okurg.  Probably erroneously.
+# district separately from Taymyr Autonomous Okrug.  Probably erroneously.
 #
 # The affected territories are currently listed under Europe/Moscow,
 # Asia/Yekaterinburg and Asia/Krasnoyarsk.
@@ -2756,7 +2756,7 @@ Zone Asia/Novosibirsk	 5:31:40 -	LMT	1919 Dec 14  6:00
 # Note that time belts (numbered from 2 (Moscow) to 12 according to their
 # GMT/UTC offset and having too many exceptions like regions formally
 # belonging to one belt but using time from another) were replaced
-# with time zones in 2011 with different numberings (there was a
+# with time zones in 2011 with different numbering (there was a
 # 2-hour gap between second and third zones in 2011-2014).
 
 # From Stepan Golosunov (2016-04-12):

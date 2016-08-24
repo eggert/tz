@@ -3,8 +3,8 @@
 
 # For distributors who don't want to put time zone specification in
 # their installation procedures.  Users that run 'date' will get the
-# time zone abbrevation "-00", indicating that the actual time zone is
-# unknown.
+# time zone abbreviation "-00", indicating that the actual time zone
+# is unknown.
 
 # Zone	NAME	GMTOFF	RULES	FORMAT
 Zone	Factory	0	-	-00

@@ -582,16 +582,33 @@ Rule	E-Eur	1979	1995	-	Sep	lastSun	 0:00	0	-
 Rule	E-Eur	1981	max	-	Mar	lastSun	 0:00	1:00	S
 Rule	E-Eur	1996	max	-	Oct	lastSun	 0:00	0	-
 
+
+# Daylight saving time for Russia and the Soviet Union
+#
+# The 1917-1921 decree URLs are from Alexander Belopolsky (2016-08-23).
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Russia	1917	only	-	Jul	 1	23:00	1:00	MST  # Moscow Summer Time
+#
+# Decree No. 142 (1917-12-22) http://istmat.info/node/28137
 Rule	Russia	1917	only	-	Dec	28	 0:00	0	MMT  # Moscow Mean Time
+#
+# Decree No. 497 (1918-05-30) http://istmat.info/node/30001
 Rule	Russia	1918	only	-	May	31	22:00	2:00	MDST # Moscow Double Summer Time
 Rule	Russia	1918	only	-	Sep	16	 1:00	1:00	MST
+#
+# Decree No. 258 (1919-05-29) http://istmat.info/node/37949
 Rule	Russia	1919	only	-	May	31	23:00	2:00	MDST
+#
 Rule	Russia	1919	only	-	Jul	 1	 2:00	1:00	MSD
 Rule	Russia	1919	only	-	Aug	16	 0:00	0	MSK
+#
+# Decree No. 63 (1921-02-03) http://istmat.info/node/45840
 Rule	Russia	1921	only	-	Feb	14	23:00	1:00	MSD
+#
+# Decree No. 121 (1921-03-07) http://istmat.info/node/45949
 Rule	Russia	1921	only	-	Mar	20	23:00	2:00	+05
+#
 Rule	Russia	1921	only	-	Sep	 1	 0:00	1:00	MSD
 Rule	Russia	1921	only	-	Oct	 1	 0:00	0	-
 # Act No. 925 of the Council of Ministers of the USSR (1980-10-24):

@@ -3312,7 +3312,7 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15 # St Pierre
 # indicating that the normal ET rules are followed.
 #
 # From Paul Eggert (2014-08-19):
-# The 2014-08-13 Cabinet meeting decided to stay on -04 year-round.  See:
+# The 2014-08-13 Cabinet meeting decided to stay on UT -04 year-round.  See:
 # http://tcweeklynews.com/daylight-savings-time-to-be-maintained-p5353-127.htm
 # Model this as a switch from EST/EDT to AST ...
 # From Chris Walton (2014-11-04):

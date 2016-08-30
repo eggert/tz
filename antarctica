@@ -211,7 +211,7 @@ Zone Antarctica/Syowa	0	-	-00	1957 Jan 29
 # correct, but they should be quite close to the actual dates.
 #
 # From Paul Eggert (2014-03-21):
-# The CET-switching Troll rules require zic from tzcode 2014b or later, so as
+# The CET-switching Troll rules require zic from tz 2014b or later, so as
 # suggested by Bengt-Inge Larsson comment them out for now, and approximate
 # with only UTC and CEST.  Uncomment them when 2014b is more prevalent.
 #

@@ -13,11 +13,8 @@ and daylight-saving rules.
 Here is a recipe for acquiring, building, installing, and testing the
 tz distribution on a GNU/Linux or similar host.
 
-	mkdir tz
-	cd tz
-	wget --retr-symlinks 'ftp://ftp.iana.org/tz/tz*-latest.tar.gz'
-	gzip -dc tzcode-latest.tar.gz | tar -xf -
-	gzip -dc tzdata-latest.tar.gz | tar -xf -
+	wget --retr-symlinks 'ftp://ftp.iana.org/tz/tzdb-latest.tar.lz'
+	lzip -dc tzdb-latest.tar.lz | tar -xf -
 
 Be sure to read the comments in "Makefile" and make any changes needed
 to make things right for your system, especially if you are using some

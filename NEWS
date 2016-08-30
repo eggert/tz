@@ -63,20 +63,20 @@ Unreleased, experimental changes
 
   Changes to build procedure
 
-    The tzdata distribution has a new file to2050.tzs that contains
-    what should be the output of 'zdump -i -c 2050' on primary zones.
+    The tz distribution has a new file to2050.tzs that contains what
+    should be the output of 'zdump -i -c 2050' on primary zones.
     'make check' now checks that zdump generates this output.
 
     A new distribution format is available in the tarball
-    tzdb-VERSION.tar.xz and the signature tzdb-VERSION.tar.xz.asc.
+    tzdb-VERSION.tar.lz and the signature tzdb-VERSION.tar.lz.asc.
     The new tarball has the contents of tzcodeVERSION.tar.gz and
     tzdataVERSION.tar.gz, in a single top-level directory 'tzdb' with
     all other files under this directory, as is typical for software
     distributions.  The new format is intended to replace the old
     tarball pair.  The old format will continue to be distributed for
-    a while.  The new format uses xz compression, which is
-    significantly smaller than gzip.  (Thanks to Oscar van Vlijmen for
-    comments on the format.)
+    a while.  The new format uses lzip compression, which is smaller
+    than gzip; see <http://www.nongnu.org/lzip/lzip.html>.
+    (Thanks to Antonio Diaz Diaz and Oscar van Vlijmen for comments.)
 
     'make check_web' now works on Fedora-like distributions.
 

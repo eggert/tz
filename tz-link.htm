@@ -10,7 +10,7 @@
  content="Sources for time zone and daylight saving time data">
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2016-08-21">
+<meta name="DC.Date" content="2016-08-30">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -106,33 +106,33 @@ The database also records when daylight saving time was in use,
 along with alphabetic time zone abbreviations such as <abbr>EST</abbr>
 for Eastern Standard Time in the <abbr>US</abbr>.</p>
 <p>
-In the <code><abbr>tz</abbr></code> database's
+The following <a
+href="https://en.wikipedia.org/wiki/Unix_shell">shell</a> commands download
+the latest release to a <abbr>GNU</abbr>/Linux or similar host;
+see the downloaded
+<code>README</code> file for what to do next.</p>
+<pre style="margin-left: 2em"><code><a href="http://www.gnu.org/software/wget/">wget</a> --retr-symlinks 'ftp://ftp.iana.org/tz/tzdb-latest.tar.lz'
+<a href="http://www.nongnu.org/lzip/">lzip</a> -dc tzdb-latest.tar.lz | <a href="http://www.gnu.org/software/tar/">tar</a> -xf -
+</code></pre>
+<p>This uses a convenience link to the
+<a href="ftp://ftp.iana.org/tz/tzdb-latest.tar.lz">latest version</a>
+archived in the
 <a href="ftp://ftp.iana.org/tz/releases/"><abbr
 title="File Transfer Protocol">FTP</abbr> releases</a>
-the code is in the file <code>tzcode<var>C</var>.tar.gz</code>,
+of the <code><abbr>tz</abbr></code> database.
+Archived versions are in files named <code>tzdb-<var>V</var>.tar.lz</code>,
+where <code><var>V</var></code> is the version.
+For compatibility with releases before 2016g, a
+<a href="https://www.gnu.org/software/gzip/">gzip</a>-compressed two-tarball
+distribution is also available, where the code is in the
+file <code>tzcode<var>C</var>.tar.gz</code>,
 where <code><var>C</var></code> is the code's version;
 similarly, the data entries are in <code>tzdata<var>D</var>.tar.gz</code>,
 where <code><var>D</var></code> is the data's version.
 Since 1996, each version has been a four-digit year followed by
 lower-case letter (<samp>a</samp> through <samp>z</samp>,
 then <samp>za</samp> through <samp>zz</samp>, then <samp>zza</samp>
-through <samp>zzz</samp>, and so on).
-Convenience links to
-the <a href="ftp://ftp.iana.org/tz/tzcode-latest.tar.gz">latest
-code</a> and
-<a href="ftp://ftp.iana.org/tz/tzdata-latest.tar.gz">latest data</a> revisions
-are also available.
-The following <a
-href="https://en.wikipedia.org/wiki/Unix_shell">shell</a> commands download
-these files to a <abbr>GNU</abbr>/Linux or similar host;
-see the downloaded
-<code>README</code> file for what to do next.</p>
-<pre style="margin-left: 2em"><code>mkdir tz
-cd tz
-<a href="http://www.gnu.org/software/wget/">wget</a> --retr-symlinks 'ftp://ftp.iana.org/tz/tz*-latest.tar.gz'
-<a href="http://www.gnu.org/software/gzip/">gzip</a> -dc tzcode-latest.tar.gz | <a href="http://www.gnu.org/software/tar/">tar</a> -xf -
-gzip -dc tzdata-latest.tar.gz | tar -xf -
-</code></pre>
+through <samp>zzz</samp>, and so on).</p>
 <p>
 The code and data files can also be obtained from the
 <a href="http://www.iana.org/time-zones">Time Zone Database website</a>
@@ -507,8 +507,8 @@ a <a href="https://wordpress.org">WordPress</a> plugin. It is freely
 available under a <abbr>BSD</abbr>-style license.</li>
 <li><a href="http://www.relativedata.com/time-zone-master">Time Zone
 Master</a> is a Microsoft Windows clock program that can automatically
-download, compile and use the <code>tzdata<var>D</var>.tar.gz</code>
-files as they are released. The Basic version is free.</li>
+download, compile and use <code>tz</code> releases. The Basic version
+is free.</li>
 <li><a
 href="http://veladg.com/velaterra.html">VelaTerra</a> is
 an <abbr>OS X</abbr> program. Its developers

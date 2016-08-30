@@ -3,7 +3,7 @@
 *.a
 *.asc
 *.o
-*.tar.gz
+*.tar.*
 *.txt
 *~
 ChangeLog

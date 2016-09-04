@@ -2290,7 +2290,7 @@ outzone(const struct zone *zpfirst, int zonecount)
 	register int			compat;
 	register bool			do_extend;
 	register char			version;
-	struct attype *lastatmax = NULL;
+	int lastatmax = -1;
 
 	max_abbr_len = 2 + max_format_len + max_abbrvar_len;
 	max_envvar_len = 2 * max_abbr_len + 5 * 9;
@@ -2524,8 +2524,9 @@ outzone(const struct zone *zpfirst, int zonecount)
 				type = addtype(offset, ab, rp->r_stdoff != 0,
 					rp->r_todisstd, rp->r_todisgmt);
 				if (rp->r_hiyear == ZIC_MAX
-				    && ! (lastatmax && ktime < lastatmax->at))
-				  lastatmax = &attypes[timecnt];
+				    && ! (0 <= lastatmax
+					  && ktime < attypes[lastatmax].at))
+				  lastatmax = timecnt;
 				addtt(ktime, type);
 			}
 		}
@@ -2557,8 +2558,8 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 				starttime = tadd(starttime, -gmtoff);
 		}
 	}
-	if (lastatmax)
-	  lastatmax->dontmerge = true;
+	if (0 <= lastatmax)
+	  attypes[lastatmax].dontmerge = true;
 	if (do_extend) {
 		/*
 		** If we're extending the explicitly listed observations

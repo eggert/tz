@@ -772,7 +772,7 @@ dolink(char const *fromfield, char const *tofield)
 	fromisdir = itsdir(fromname);
 	if (fromisdir) {
 		char const *e = strerror(fromisdir < 0 ? errno : EPERM);
-		fprintf(stderr, _("%s: link from %s failed: %s"),
+		fprintf(stderr, _("%s: link from %s failed: %s\n"),
 			progname, fromname, e);
 		exit(EXIT_FAILURE);
 	}

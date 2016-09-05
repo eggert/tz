@@ -42,8 +42,9 @@
 #define SECSPERMIN	60
 #endif /* !defined SECSPERMIN */
 
-#if !HAVE_POSIX_DECLS
 extern char **		environ;
+
+#if !HAVE_POSIX_DECLS
 extern char *		optarg;
 extern int		optind;
 extern char *		tzname[];

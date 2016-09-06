@@ -778,11 +778,13 @@ dolink(char const *fromfield, char const *tofield)
 	}
 	if (link(fromname, toname) != 0) {
 	  int link_errno = errno;
+	  bool todirs_made = false;
 	  bool retry_if_link_supported = false;
 
-	  if (link_errno == ENOENT || link_errno == ENOTSUP) {
+	  if (link_errno == ENOENT) {
 	    if (! mkdirs(toname))
 	      exit(EXIT_FAILURE);
+	    todirs_made = true;
 	    retry_if_link_supported = true;
 	  }
 	  if ((link_errno == EEXIST || link_errno == ENOTSUP)
@@ -811,6 +813,11 @@ dolink(char const *fromfield, char const *tofield)
 	      memcpy(p, "../", 3);
 	    strcpy(p, t);
 	    symlink_result = symlink(symlinkcontents, toname);
+	    if (!todirs_made && symlink_result != 0 && errno == ENOENT) {
+	      if (! mkdirs(toname))
+		exit(EXIT_FAILURE);
+	      symlink_result = symlink(symlinkcontents, toname);
+	    }
 	    free(symlinkcontents);
 	    if (symlink_result == 0) {
 	      if (link_errno != ENOTSUP)
@@ -1743,10 +1750,12 @@ writezone(const char *const name, const char *const string, char version)
 			progname, fullname, e);
 		exit(EXIT_FAILURE);
 	}
-	if ((fp = fopen(fullname, "wb")) == NULL) {
+	fp = fopen(fullname, "wb");
+	if (!fp && errno == ENOENT) {
 		if (! mkdirs(fullname))
 			exit(EXIT_FAILURE);
-		if ((fp = fopen(fullname, "wb")) == NULL) {
+		fp = fopen(fullname, "wb");
+		if (!fp) {
 			const char *e = strerror(errno);
 
 			fprintf(stderr, _("%s: Can't create %s: %s\n"),

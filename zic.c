@@ -116,7 +116,7 @@ static int	addtype(zic_t, char const *, bool, bool, bool);
 static void	leapadd(zic_t, bool, int, int);
 static void	adjleap(void);
 static void	associate(void);
-static void	dolink(const char * fromfield, const char * tofield);
+static void	dolink(const char *, const char *, bool);
 static char **	getfields(char * buf);
 static zic_t	gethms(const char * string, const char * errstring,
 		       bool);
@@ -653,7 +653,7 @@ _("%s: More than one -L option specified\n"),
 	*/
 	for (i = 0; i < nlinks; ++i) {
 		eat(links[i].l_filename, links[i].l_linenum);
-		dolink(links[i].l_from, links[i].l_to);
+		dolink(links[i].l_from, links[i].l_to, false);
 		if (noise)
 			for (j = 0; j < nlinks; ++j)
 				if (strcmp(links[i].l_to,
@@ -662,11 +662,11 @@ _("%s: More than one -L option specified\n"),
 	}
 	if (lcltime != NULL) {
 		eat(_("command line"), 1);
-		dolink(lcltime, TZDEFAULT);
+		dolink(lcltime, TZDEFAULT, true);
 	}
 	if (psxrules != NULL) {
 		eat(_("command line"), 1);
-		dolink(psxrules, TZDEFRULES);
+		dolink(psxrules, TZDEFRULES, true);
 	}
 	if (warnings && (ferror(stderr) || fclose(stderr) != 0))
 	  return EXIT_FAILURE;
@@ -759,12 +759,13 @@ relname(char const *dir, char const *base)
 }
 
 static void
-dolink(char const *fromfield, char const *tofield)
+dolink(char const *fromfield, char const *tofield, bool staysymlink)
 {
 	register char *	fromname;
 	register char *	toname;
 	register int fromisdir;
 	int todirs_made = -1;
+	int link_errno;
 
 	fromname = relname(directory, fromfield);
 	toname = relname(directory, tofield);
@@ -779,6 +780,8 @@ dolink(char const *fromfield, char const *tofield)
 			progname, fromname, e);
 		exit(EXIT_FAILURE);
 	}
+	if (staysymlink)
+	  staysymlink = itsdir(toname) == 2;
 	if (remove(toname) == 0)
 	  todirs_made = 0;
 	else if (errno != ENOENT) {
@@ -786,69 +789,67 @@ dolink(char const *fromfield, char const *tofield)
 	  fprintf(stderr, _("%s: Can't remove %s: %s\n"), progname, toname, e);
 	  exit(EXIT_FAILURE);
 	}
-	if (link(fromname, toname) != 0) {
-	  int link_errno = errno;
+	link_errno = (staysymlink ? ENOTSUP
+		      : link(fromname, toname) == 0 ? 0 : errno);
+	if (link_errno == ENOENT && todirs_made < 0) {
+	  todirs_made = mkdirs(toname);
+	  if (todirs_made)
+	    link_errno = link(fromname, toname) == 0 ? 0 : errno;
+	}
+	if (link_errno != 0) {
+	  const char *s = fromfield;
+	  const char *t;
+	  char *p;
+	  size_t dotdots = 0;
+	  char *symlinkcontents;
+	  int symlink_errno;
 
-	  if (link_errno == ENOENT && todirs_made < 0) {
-	    todirs_made = mkdirs(toname);
-	    if (todirs_made)
-	      link_errno = link(fromname, toname) == 0 ? 0 : errno;
-	  }
-	  if (link_errno != 0) {
-	    const char *s = fromfield;
-	    const char *t;
-	    char *p;
-	    size_t dotdots = 0;
-	    char *symlinkcontents;
-	    int symlink_result;
+	  do
+	    t = s;
+	  while ((s = strchr(s, '/'))
+		 && strncmp(fromfield, tofield, ++s - fromfield) == 0);
 
-	    do
-	      t = s;
-	    while ((s = strchr(s, '/'))
-		   && strncmp(fromfield, tofield, ++s - fromfield) == 0);
-
-	    for (s = tofield + (t - fromfield); *s; s++)
-	      dotdots += *s == '/';
-	    symlinkcontents = emalloc(3 * dotdots + strlen(t) + 1);
-	    for (p = symlinkcontents; dotdots-- != 0; p += 3)
-	      memcpy(p, "../", 3);
-	    strcpy(p, t);
-	    symlink_result = symlink(symlinkcontents, toname);
-	    if (symlink_result != 0 && errno == ENOENT
-		&& todirs_made < 0 && mkdirs(toname))
-	      symlink_result = symlink(symlinkcontents, toname);
-	    free(symlinkcontents);
-	    if (symlink_result == 0) {
-	      if (link_errno != ENOTSUP)
-		warning(_("symbolic link used because hard link failed: %s"),
-			strerror (link_errno));
-	    } else {
-			FILE *fp, *tp;
-			int c;
-			fp = fopen(fromname, "rb");
-			if (!fp) {
-				const char *e = strerror(errno);
-				fprintf(stderr,
-					       _("%s: Can't read %s: %s\n"),
-					       progname, fromname, e);
-				exit(EXIT_FAILURE);
-			}
-			tp = fopen(toname, "wb");
-			if (!tp) {
-				const char *e = strerror(errno);
-				fprintf(stderr,
-					       _("%s: Can't create %s: %s\n"),
-					       progname, toname, e);
-				exit(EXIT_FAILURE);
-			}
-			while ((c = getc(fp)) != EOF)
-				putc(c, tp);
-			close_file(fp, fromname);
-			close_file(tp, toname);
-			if (link_errno != ENOTSUP)
-			  warning(_("copy used because hard link failed: %s"),
-				  strerror (link_errno));
+	  for (s = tofield + (t - fromfield); *s; s++)
+	    dotdots += *s == '/';
+	  symlinkcontents = emalloc(3 * dotdots + strlen(t) + 1);
+	  for (p = symlinkcontents; dotdots-- != 0; p += 3)
+	    memcpy(p, "../", 3);
+	  strcpy(p, t);
+	  symlink_errno = symlink(symlinkcontents, toname) == 0 ? 0 : errno;
+	  if (symlink_errno == ENOENT && todirs_made < 0 && mkdirs(toname))
+	    symlink_errno = symlink(symlinkcontents, toname) == 0 ? 0 : errno;
+	  free(symlinkcontents);
+	  if (symlink_errno == 0) {
+	    if (link_errno != ENOTSUP)
+	      warning(_("symbolic link used because hard link failed: %s"),
+		      strerror(link_errno));
+	  } else {
+	    FILE *fp, *tp;
+	    int c;
+	    fp = fopen(fromname, "rb");
+	    if (!fp) {
+	      char const *e = strerror(errno);
+	      fprintf(stderr, _("%s: Can't read %s: %s\n"),
+		      progname, fromname, e);
+	      exit(EXIT_FAILURE);
 	    }
+	    tp = fopen(toname, "wb");
+	    if (!tp) {
+	      char const *e = strerror(errno);
+	      fprintf(stderr, _("%s: Can't create %s: %s\n"),
+		      progname, toname, e);
+	      exit(EXIT_FAILURE);
+	    }
+	    while ((c = getc(fp)) != EOF)
+	      putc(c, tp);
+	    close_file(fp, fromname);
+	    close_file(tp, toname);
+	    if (link_errno != ENOTSUP)
+	      warning(_("copy used because hard link failed: %s"),
+		      strerror(link_errno));
+	    else if (symlink_errno != ENOTSUP)
+	      warning(_("copy used because symbolic link failed: %s"),
+		      strerror(symlink_errno));
 	  }
 	}
 	free(fromname);
@@ -898,7 +899,7 @@ static const zic_t early_time = (WORK_AROUND_GNOME_BUG_730332
 				 ? BIG_BANG
 				 : MINVAL(zic_t, TIME_T_BITS_IN_FILE));
 
-/* Return 1 if NAME is a directory or a symbolic link, 0 if it's
+/* Return 1 if NAME is a directory, 2 if a symbolic link, 0 if
    something else, -1 (setting errno) if trouble.  */
 static int
 itsdir(char const *name)
@@ -907,7 +908,7 @@ itsdir(char const *name)
 	int res = lstat(name, &st);
 	if (res == 0) {
 #ifdef S_ISDIR
-		return S_ISDIR(st.st_mode) || S_ISLNK(st.st_mode);
+		return S_ISDIR(st.st_mode) ? 1 : S_ISLNK(st.st_mode) ? 2 : 0;
 #else
 		char *nameslashdot = relname(name, ".");
 		bool dir = lstat(nameslashdot, &st) == 0;

@@ -55,6 +55,11 @@ Unreleased, experimental changes
     stamps on the reference platform.  (Thanks to Alexander Belopolsky
     for reporting the bug and suggesting a way forward.)
 
+    If the installed localtime and/or posixrules files are symbolic
+    links, zic now keeps them symbolic links when updating them, for
+    compatibility with platforms like OpenSUSE where other programs
+    configure these files as symlinks.
+
     zic now avoids hard linking to symbolic links, and avoids some
     unnecessary mkdir and stat system calls.
 

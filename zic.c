@@ -106,7 +106,9 @@ extern int	optind;
 # define link(from, to) (errno = ENOTSUP, -1)
 #endif
 #if ! HAVE_SYMLINK
+# define lstat(name, st) stat(name, st)
 # define symlink(from, to) (errno = ENOTSUP, -1)
+# define S_ISLNK(m) 0
 #endif
 
 static void	addtt(zic_t starttime, int type);
@@ -762,6 +764,7 @@ dolink(char const *fromfield, char const *tofield)
 	register char *	fromname;
 	register char *	toname;
 	register int fromisdir;
+	int todirs_made = -1;
 
 	fromname = relname(directory, fromfield);
 	toname = relname(directory, tofield);
@@ -776,23 +779,21 @@ dolink(char const *fromfield, char const *tofield)
 			progname, fromname, e);
 		exit(EXIT_FAILURE);
 	}
+	if (remove(toname) == 0)
+	  todirs_made = 0;
+	else if (errno != ENOENT) {
+	  char const *e = strerror(errno);
+	  fprintf(stderr, _("%s: Can't remove %s: %s\n"), progname, toname, e);
+	  exit(EXIT_FAILURE);
+	}
 	if (link(fromname, toname) != 0) {
 	  int link_errno = errno;
-	  bool todirs_made = false;
-	  bool retry_if_link_supported = false;
 
-	  if (link_errno == ENOENT) {
-	    if (! mkdirs(toname))
-	      exit(EXIT_FAILURE);
-	    todirs_made = true;
-	    retry_if_link_supported = true;
+	  if (link_errno == ENOENT && todirs_made < 0) {
+	    todirs_made = mkdirs(toname);
+	    if (todirs_made)
+	      link_errno = link(fromname, toname) == 0 ? 0 : errno;
 	  }
-	  if ((link_errno == EEXIST || link_errno == ENOTSUP)
-	      && itsdir(toname) == 0
-	      && (remove(toname) == 0 || errno == ENOENT))
-	    retry_if_link_supported = true;
-	  if (retry_if_link_supported && link_errno != ENOTSUP)
-	    link_errno = link(fromname, toname) == 0 ? 0 : errno;
 	  if (link_errno != 0) {
 	    const char *s = fromfield;
 	    const char *t;
@@ -813,11 +814,9 @@ dolink(char const *fromfield, char const *tofield)
 	      memcpy(p, "../", 3);
 	    strcpy(p, t);
 	    symlink_result = symlink(symlinkcontents, toname);
-	    if (!todirs_made && symlink_result != 0 && errno == ENOENT) {
-	      if (! mkdirs(toname))
-		exit(EXIT_FAILURE);
+	    if (symlink_result != 0 && errno == ENOENT
+		&& todirs_made < 0 && mkdirs(toname))
 	      symlink_result = symlink(symlinkcontents, toname);
-	    }
 	    free(symlinkcontents);
 	    if (symlink_result == 0) {
 	      if (link_errno != ENOTSUP)
@@ -899,21 +898,22 @@ static const zic_t early_time = (WORK_AROUND_GNOME_BUG_730332
 				 ? BIG_BANG
 				 : MINVAL(zic_t, TIME_T_BITS_IN_FILE));
 
-/* Return 1 if NAME is a directory, 0 if it's something else, -1 if trouble.  */
+/* Return 1 if NAME is a directory or a symbolic link, 0 if it's
+   something else, -1 (setting errno) if trouble.  */
 static int
 itsdir(char const *name)
 {
 	struct stat st;
-	int res = stat(name, &st);
+	int res = lstat(name, &st);
+	if (res == 0) {
 #ifdef S_ISDIR
-	if (res == 0)
-		return S_ISDIR(st.st_mode) != 0;
-#endif
-	if (res == 0 || errno == EOVERFLOW) {
+		return S_ISDIR(st.st_mode) || S_ISLNK(st.st_mode);
+#else
 		char *nameslashdot = relname(name, ".");
-		bool dir = stat(nameslashdot, &st) == 0 || errno == EOVERFLOW;
+		bool dir = lstat(nameslashdot, &st) == 0;
 		free(nameslashdot);
 		return dir;
+#endif
 	}
 	return -1;
 }
@@ -1640,6 +1640,7 @@ writezone(const char *const name, const char *const string, char version)
 	char *				fullname;
 	static const struct tzhead	tzh0;
 	static struct tzhead		tzh;
+	bool dir_checked = false;
 	zic_t one = 1;
 	zic_t y2038_boundary = one << 31;
 	int nats = timecnt + WORK_AROUND_QTBUG_53071;
@@ -1743,7 +1744,9 @@ writezone(const char *const name, const char *const string, char version)
 	/*
 	** Remove old file, if any, to snap links.
 	*/
-	if (itsdir(fullname) == 0 && remove(fullname) != 0 && errno != ENOENT) {
+	if (remove(fullname) == 0)
+		dir_checked = true;
+	else if (errno != ENOENT) {
 		const char *e = strerror(errno);
 
 		fprintf(stderr, _("%s: Can't remove %s: %s\n"),
@@ -1751,17 +1754,18 @@ writezone(const char *const name, const char *const string, char version)
 		exit(EXIT_FAILURE);
 	}
 	fp = fopen(fullname, "wb");
-	if (!fp && errno == ENOENT) {
-		if (! mkdirs(fullname))
-			exit(EXIT_FAILURE);
-		fp = fopen(fullname, "wb");
-		if (!fp) {
-			const char *e = strerror(errno);
-
-			fprintf(stderr, _("%s: Can't create %s: %s\n"),
-				progname, fullname, e);
-			exit(EXIT_FAILURE);
-		}
+	if (!fp) {
+	  int fopen_errno = errno;
+	  if (fopen_errno == ENOENT && !dir_checked && mkdirs(fullname)) {
+	    fp = fopen(fullname, "wb");
+	    fopen_errno = errno;
+	  }
+	  if (!fp) {
+	    char const *e = strerror(fopen_errno);
+	    fprintf(stderr, _("%s: Can't create %s: %s\n"),
+		    progname, fullname, e);
+	    exit(EXIT_FAILURE);
+	  }
 	}
 	for (pass = 1; pass <= 2; ++pass) {
 		register int	thistimei, thistimecnt;
@@ -3027,14 +3031,17 @@ mp = _("time zone abbreviation differs from POSIX standard");
 	charcnt += i;
 }
 
+/* Ensure that the parent directories of ARGNAME exist, by making any
+   missing ones.  Return true if some directories are made (perhaps by
+   some other process), false if the directories already exist, and
+   exit with failure if there is trouble.  */
 static bool
 mkdirs(char *argname)
 {
 	register char *	name;
 	register char *	cp;
+	bool dirs_made = false;
 
-	if (argname == NULL || *argname == '\0')
-		return true;
 	cp = name = ecpyalloc(argname);
 
 	/* Do not mkdir a root directory, as it must exist.  */
@@ -3056,17 +3063,16 @@ mkdirs(char *argname)
 		*/
 		if (mkdir(name, MKDIR_UMASK) != 0) {
 			int err = errno;
-			if (err != EEXIST && itsdir(name) <= 0) {
+			if (err != EEXIST && itsdir(name) < 0) {
 				char const *e = strerror(err);
-				warning(_("%s: Can't create directory"
-					  " %s: %s"),
-					progname, name, e);
-				free(name);
-				return false;
+				error(_("%s: Can't create directory %s: %s"),
+				      progname, name, e);
+				exit(EXIT_FAILURE);
 			}
 		}
 		*cp = '/';
+		dirs_made = true;
 	}
 	free(name);
-	return true;
+	return dirs_made;
 }

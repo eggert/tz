@@ -4,8 +4,8 @@
 # Package name for the code distribution.
 PACKAGE=	tzcode
 
-# Version numbers of the code and data distributions.
-VERSION=	2016f
+# Version number for the distribution, overridden in the 'tarballs' rule below.
+VERSION=	unknown
 
 # Email address for bug reports.
 BUGEMAIL=	tz@iana.org
@@ -356,7 +356,7 @@ HEADERS=	tzfile.h private.h
 NONLIBSRCS=	zic.c zdump.c
 NEWUCBSRCS=	date.c strftime.c
 SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS) \
-			tzselect.ksh workman.sh
+			tzselect.ksh version workman.sh
 MANS=		newctime.3 newstrftime.3 newtzset.3 time2posix.3 \
 			tzfile.5 tzselect.8 zic.8 zdump.8
 MANTXTS=	newctime.3.txt newstrftime.3.txt newtzset.3.txt \
@@ -384,6 +384,26 @@ TZS_NEW=	to$(TZS_YEAR)new.tzs
 TZS_DEPS=	$(PRIMARY_YDATA) asctime.c localtime.c \
 			private.h tzfile.h zdump.c zic.c
 ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC) $(TZS)
+
+# Consult these files when deciding whether to rebuild the 'version' file.
+# This list is not the same as the output of 'git ls-files', since
+# .gitignore is not distributed.
+VERSION_DEPS= \
+		CONTRIBUTING LICENSE Makefile NEWS README Theory \
+		africa antarctica asctime.c asia australasia \
+		backward backzone \
+		checklinks.awk checktab.awk \
+		date.1 date.c difftime.c \
+		etcetera europe factory iso3166.tab \
+		leap-seconds.list leapseconds.awk localtime.c \
+		newctime.3 newstrftime.3 newtzset.3 northamerica \
+		pacificnew private.h \
+		southamerica strftime.c systemv \
+		time2posix.3 tz-art.htm tz-how-to.html tz-link.htm \
+		tzfile.5 tzfile.h tzselect.8 tzselect.ksh \
+		workman.sh yearistype.sh \
+		zdump.8 zdump.c zic.8 zic.c \
+		zone.tab zone1970.tab zoneinfo2tdf.pl
 
 # And for the benefit of csh users on systems that assume the user
 # shell should be used to handle commands in Makefiles. . .
@@ -413,9 +433,16 @@ INSTALL:	ALL install date.1
 		cp date $(DESTDIR)$(BINDIR)/.
 		cp -f date.1 $(DESTDIR)$(MANDIR)/man1/.
 
-version.h:
+version:	$(VERSION_DEPS)
+		{ V=$$(git describe --match '[0-9][0-9][0-9][0-9][a-z]*' \
+				--abbrev=7 --dirty) || \
+		  V=$(VERSION); } && \
+		printf '%s\n' "$$V" >$@
+
+version.h:	version
 		(echo 'static char const PKGVERSION[]="($(PACKAGE)) ";' && \
-		 echo 'static char const TZVERSION[]="$(VERSION)";' && \
+		 printf 'static char const TZVERSION[]="%s";\n' \
+		   "$$(cat version)" && \
 		 echo 'static char const REPORT_BUGS_TO[]="$(BUGEMAIL)";') >$@
 
 zdump:		$(TZDOBJS)
@@ -510,15 +537,15 @@ libtz.a:	$(LIBOBJS)
 date:		$(DATEOBJS)
 		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(DATEOBJS) $(LDLIBS)
 
-tzselect:	tzselect.ksh
+tzselect:	tzselect.ksh version
 		sed \
 			-e 's|#!/bin/bash|#!$(KSHELL)|g' \
 			-e 's|AWK=[^}]*|AWK=$(AWK)|g' \
 			-e 's|\(PKGVERSION\)=.*|\1='\''($(PACKAGE)) '\''|' \
 			-e 's|\(REPORT_BUGS_TO\)=.*|\1=$(BUGEMAIL)|' \
 			-e 's|TZDIR=[^}]*|TZDIR=$(TZDIR)|' \
-			-e 's|\(TZVERSION\)=.*|\1=$(VERSION)|' \
-			<$? >$@
+			-e 's|\(TZVERSION\)=.*|\1='"$$(cat version)"'|' \
+			<$@.ksh >$@
 		chmod +x $@
 
 check:		check_character_set check_white_space check_links check_sorted \
@@ -573,7 +600,7 @@ clean:		clean_misc
 maintainer-clean: clean
 		@echo 'This command is intended for maintainers to use; it'
 		@echo 'deletes files that may need special tools to rebuild.'
-		rm -f leapseconds $(MANTXTS) $(TZS) *.asc *.tar.*
+		rm -f leapseconds version $(MANTXTS) $(TZS) *.asc *.tar.*
 
 names:
 		@echo $(ENCHILADA)
@@ -621,6 +648,7 @@ set-timestamps.out: $(ENCHILADA)
 		    exit; \
 		done
 		touch -cmr $$(ls -t $(TZS_DEPS) | sed 1q) $(TZS)
+		touch -cmr $$(ls -t $(VERSION_DEPS) | sed 1q) version
 		touch $@
 
 # The zics below ensure that each data file can stand on its own.
@@ -672,7 +700,10 @@ check_time_t_alternatives:
 		done
 		rm -fr time_t.dir
 
-tarballs:	tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz \
+tarballs signatures: version
+		$(MAKE) VERSION="$$(cat version)" $@_version
+
+tarballs_version: tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz \
 		tzdb-$(VERSION).tar.lz
 
 tzcode$(VERSION).tar.gz: set-timestamps.out
@@ -689,13 +720,12 @@ tzdata$(VERSION).tar.gz: set-timestamps.out
 tzdb-$(VERSION).tar.lz: set-timestamps.out
 		rm -fr tzdb-$(VERSION)
 		mkdir tzdb-$(VERSION)
-		ln $(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC) $(TZS) \
-		  tzdb-$(VERSION)
+		ln $(ENCHILADA) tzdb-$(VERSION)
 		touch -cmr $$(ls -t tzdb-$(VERSION)/* | sed 1q) tzdb-$(VERSION)
 		LC_ALL=C && export LC_ALL && \
 		tar $(TARFLAGS) -cf - tzdb-$(VERSION) | lzip -9 > $@
 
-signatures:	tzcode$(VERSION).tar.gz.asc tzdata$(VERSION).tar.gz.asc \
+signatures_version: tzcode$(VERSION).tar.gz.asc tzdata$(VERSION).tar.gz.asc \
 		tzdb-$(VERSION).tar.lz.asc
 
 tzcode$(VERSION).tar.gz.asc: tzcode$(VERSION).tar.gz
@@ -736,5 +766,6 @@ zic.o:		private.h tzfile.h version.h
 .PHONY: clean clean_misc force_tzs
 .PHONY: install install_data maintainer-clean names
 .PHONY: posix_only posix_packrat posix_right
-.PHONY: public right_only right_posix signatures tarballs typecheck
+.PHONY: public right_only right_posix signatures signatures_version
+.PHONY: tarballs tarballs_version typecheck
 .PHONY: zonenames zones

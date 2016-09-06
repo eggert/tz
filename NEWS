@@ -63,13 +63,24 @@ Unreleased, experimental changes
 
   Changes to build procedure
 
-    An experimental distribution format is available in the tarball
-    tzdb-VERSION.tar.lz with signature file tzdb-VERSION.tar.lz.asc.
-    It unpacks to a top-level directory containing the code and data
-    of the traditional two-tarball format, along with extra data that
-    may be useful.  The traditional format will continue to be
-    distributed.  (Thanks to Antonio Diaz Diaz, Oscar van Vlijmen, and
-    many others for comments about the experimental format.)
+    An experimental distribution format is available, in addition
+    to the traditional format which will continue to be distributed.
+    The new format is a tarball tzdb-VERSION.tar.lz with signature
+    file tzdb-VERSION.tar.lz.asc.  It unpacks to a top-level directory
+    tzdb-VERSION containing the code and data of the traditional
+    two-tarball format, along with extra data that may be useful.
+    (Thanks to Antonio Diaz Diaz, Oscar van Vlijmen, and many others
+    for comments about the experimental format.)
+
+    The release version number is now more accurate in the usual case
+    where releases are built from a Git repository.  For example, if
+    23 commits and some working-file changes have been made since
+    release 2016g, the version number is now something like
+    '2016g-23-g50556e3-dirty' instead of the misleading '2016g'.
+    Official releases uses the same version number format as before,
+    e.g., '2016g'.  To support the more-accurate version number, its
+    specification has moved from a line in the Makefile to a new
+    source file 'version'.
 
     The experimental distribution contains a file to2050.tzs that
     contains what should be the output of 'zdump -i -c 2050' on

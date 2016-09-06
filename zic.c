@@ -130,7 +130,7 @@ static bool	inzsub(char **, int, bool);
 static int	itsdir(const char * name);
 static bool	is_alpha(char a);
 static char	lowerit(char);
-static bool	mkdirs(char *);
+static void	mkdirs(char const *, bool);
 static void	newabbr(const char * abbr);
 static zic_t	oadd(zic_t t1, zic_t t2);
 static void	outzone(const struct zone * zp, int ntzones);
@@ -498,15 +498,15 @@ warning(const char *const string, ...)
 }
 
 static void
-close_file(FILE *stream, char const *name)
+close_file(FILE *stream, char const *dir, char const *name)
 {
   char const *e = (ferror(stream) ? _("I/O error")
 		   : fclose(stream) != 0 ? strerror(errno) : NULL);
   if (e) {
-    fprintf(stderr, "%s: ", progname);
-    if (name)
-      fprintf(stderr, "%s: ", name);
-    fprintf(stderr, "%s\n", e);
+    fprintf(stderr, "%s: %s%s%s%s%s\n", progname,
+	    dir ? dir : "", dir ? "/" : "",
+	    name ? name : "", name ? ": " : "",
+	    e);
     exit(EXIT_FAILURE);
   }
 }
@@ -521,8 +521,28 @@ usage(FILE *stream, int status)
 	    "Report bugs to %s.\n"),
 	  progname, progname, REPORT_BUGS_TO);
   if (status == EXIT_SUCCESS)
-    close_file(stream, NULL);
+    close_file(stream, NULL, NULL);
   exit(status);
+}
+
+/* Change the working directory to DIR, possibly creating DIR and its
+   ancestors.  After this is done, all files are accessed with names
+   relative to DIR.  */
+static void
+change_directory (char const *dir)
+{
+  if (chdir(dir) != 0) {
+    int chdir_errno = errno;
+    if (chdir_errno == ENOENT) {
+      mkdirs(dir, false);
+      chdir_errno = chdir(dir) == 0 ? 0 : errno;
+    }
+    if (chdir_errno != 0) {
+      fprintf(stderr, _("%s: Can't chdir to %s: %s\n"),
+	      progname, dir, strerror(chdir_errno));
+      exit(EXIT_FAILURE);
+    }
+  }
 }
 
 static const char *	psxrules;
@@ -557,7 +577,7 @@ main(int argc, char **argv)
 	for (i = 1; i < argc; ++i)
 		if (strcmp(argv[i], "--version") == 0) {
 			printf("zic %s%s\n", PKGVERSION, TZVERSION);
-			close_file(stdout, NULL);
+			close_file(stdout, NULL, NULL);
 			return EXIT_SUCCESS;
 		} else if (strcmp(argv[i], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
@@ -640,6 +660,7 @@ _("%s: More than one -L option specified\n"),
 	if (errors)
 		return EXIT_FAILURE;
 	associate();
+	change_directory(directory);
 	for (i = 0; i < nzones; i = j) {
 		/*
 		** Find the next non-continuation zone entry.
@@ -743,58 +764,40 @@ namecheck(const char *name)
 	return componentcheck(name, component, cp);
 }
 
-static char *
-relname(char const *dir, char const *base)
-{
-  if (*base == '/')
-    return ecpyalloc(base);
-  else {
-    size_t dir_len = strlen(dir);
-    bool needs_slash = dir_len && dir[dir_len - 1] != '/';
-    char *result = emalloc(dir_len + needs_slash + strlen(base) + 1);
-    result[dir_len] = '/';
-    strcpy(result + dir_len + needs_slash, base);
-    return memcpy(result, dir, dir_len);
-  }
-}
-
 static void
 dolink(char const *fromfield, char const *tofield, bool staysymlink)
 {
-	register char *	fromname;
-	register char *	toname;
 	register int fromisdir;
-	int todirs_made = -1;
+	bool todirs_made = false;
 	int link_errno;
 
-	fromname = relname(directory, fromfield);
-	toname = relname(directory, tofield);
 	/*
 	** We get to be careful here since
 	** there's a fair chance of root running us.
 	*/
-	fromisdir = itsdir(fromname);
+	fromisdir = itsdir(fromfield);
 	if (fromisdir) {
 		char const *e = strerror(fromisdir < 0 ? errno : EPERM);
-		fprintf(stderr, _("%s: link from %s failed: %s\n"),
-			progname, fromname, e);
+		fprintf(stderr, _("%s: link from %s/%s failed: %s\n"),
+			progname, directory, fromfield, e);
 		exit(EXIT_FAILURE);
 	}
 	if (staysymlink)
-	  staysymlink = itsdir(toname) == 2;
-	if (remove(toname) == 0)
-	  todirs_made = 0;
+	  staysymlink = itsdir(tofield) == 2;
+	if (remove(tofield) == 0)
+	  todirs_made = true;
 	else if (errno != ENOENT) {
 	  char const *e = strerror(errno);
-	  fprintf(stderr, _("%s: Can't remove %s: %s\n"), progname, toname, e);
+	  fprintf(stderr, _("%s: Can't remove %s/%s: %s\n"),
+		  progname, directory, tofield, e);
 	  exit(EXIT_FAILURE);
 	}
 	link_errno = (staysymlink ? ENOTSUP
-		      : link(fromname, toname) == 0 ? 0 : errno);
-	if (link_errno == ENOENT && todirs_made < 0) {
-	  todirs_made = mkdirs(toname);
-	  if (todirs_made)
-	    link_errno = link(fromname, toname) == 0 ? 0 : errno;
+		      : link(fromfield, tofield) == 0 ? 0 : errno);
+	if (link_errno == ENOENT && !todirs_made) {
+	  mkdirs(tofield, true);
+	  todirs_made = true;
+	  link_errno = link(fromfield, tofield) == 0 ? 0 : errno;
 	}
 	if (link_errno != 0) {
 	  const char *s = fromfield;
@@ -815,9 +818,11 @@ dolink(char const *fromfield, char const *tofield, bool staysymlink)
 	  for (p = symlinkcontents; dotdots-- != 0; p += 3)
 	    memcpy(p, "../", 3);
 	  strcpy(p, t);
-	  symlink_errno = symlink(symlinkcontents, toname) == 0 ? 0 : errno;
-	  if (symlink_errno == ENOENT && todirs_made < 0 && mkdirs(toname))
-	    symlink_errno = symlink(symlinkcontents, toname) == 0 ? 0 : errno;
+	  symlink_errno = symlink(symlinkcontents, tofield) == 0 ? 0 : errno;
+	  if (symlink_errno == ENOENT && !todirs_made) {
+	    mkdirs(tofield, true);
+	    symlink_errno = symlink(symlinkcontents, tofield) == 0 ? 0 : errno;
+	  }
 	  free(symlinkcontents);
 	  if (symlink_errno == 0) {
 	    if (link_errno != ENOTSUP)
@@ -826,24 +831,24 @@ dolink(char const *fromfield, char const *tofield, bool staysymlink)
 	  } else {
 	    FILE *fp, *tp;
 	    int c;
-	    fp = fopen(fromname, "rb");
+	    fp = fopen(fromfield, "rb");
 	    if (!fp) {
 	      char const *e = strerror(errno);
-	      fprintf(stderr, _("%s: Can't read %s: %s\n"),
-		      progname, fromname, e);
+	      fprintf(stderr, _("%s: Can't read %s/%s: %s\n"),
+		      progname, directory, fromfield, e);
 	      exit(EXIT_FAILURE);
 	    }
-	    tp = fopen(toname, "wb");
+	    tp = fopen(tofield, "wb");
 	    if (!tp) {
 	      char const *e = strerror(errno);
-	      fprintf(stderr, _("%s: Can't create %s: %s\n"),
-		      progname, toname, e);
+	      fprintf(stderr, _("%s: Can't create %s/%s: %s\n"),
+		      progname, directory, tofield, e);
 	      exit(EXIT_FAILURE);
 	    }
 	    while ((c = getc(fp)) != EOF)
 	      putc(c, tp);
-	    close_file(fp, fromname);
-	    close_file(tp, toname);
+	    close_file(fp, directory, fromfield);
+	    close_file(tp, directory, tofield);
 	    if (link_errno != ENOTSUP)
 	      warning(_("copy used because hard link failed: %s"),
 		      strerror(link_errno));
@@ -852,8 +857,6 @@ dolink(char const *fromfield, char const *tofield, bool staysymlink)
 		      strerror(symlink_errno));
 	  }
 	}
-	free(fromname);
-	free(toname);
 }
 
 #define TIME_T_BITS_IN_FILE	64
@@ -910,8 +913,12 @@ itsdir(char const *name)
 #ifdef S_ISDIR
 		return S_ISDIR(st.st_mode) ? 1 : S_ISLNK(st.st_mode) ? 2 : 0;
 #else
-		char *nameslashdot = relname(name, ".");
-		bool dir = lstat(nameslashdot, &st) == 0;
+		size_t n = strlen(name);
+		char *nameslashdot = emalloc(n + 3);
+		bool dir;
+		memcpy(nameslashdot, name, n);
+		strcpy(&nameslashdot[n], &"/."[! (n && name[n - 1] != '/')]);
+		dir = lstat(nameslashdot, &st) == 0;
 		free(nameslashdot);
 		return dir;
 #endif
@@ -1088,7 +1095,7 @@ _("%s: panic: Invalid l_value %d\n"),
 		}
 		free(fields);
 	}
-	close_file(fp, filename);
+	close_file(fp, NULL, filename);
 	if (wantcont)
 		error(_("expected continuation line not found"));
 }
@@ -1638,7 +1645,6 @@ writezone(const char *const name, const char *const string, char version)
 	register int			leapcnt32, leapi32;
 	register int			timecnt32, timei32;
 	register int			pass;
-	char *				fullname;
 	static const struct tzhead	tzh0;
 	static struct tzhead		tzh;
 	bool dir_checked = false;
@@ -1741,30 +1747,29 @@ writezone(const char *const name, const char *const string, char version)
 		--leapcnt32;
 		++leapi32;
 	}
-	fullname = relname(directory, name);
 	/*
 	** Remove old file, if any, to snap links.
 	*/
-	if (remove(fullname) == 0)
+	if (remove(name) == 0)
 		dir_checked = true;
 	else if (errno != ENOENT) {
 		const char *e = strerror(errno);
 
-		fprintf(stderr, _("%s: Can't remove %s: %s\n"),
-			progname, fullname, e);
+		fprintf(stderr, _("%s: Can't remove %s/%s: %s\n"),
+			progname, directory, name, e);
 		exit(EXIT_FAILURE);
 	}
-	fp = fopen(fullname, "wb");
+	fp = fopen(name, "wb");
 	if (!fp) {
 	  int fopen_errno = errno;
-	  if (fopen_errno == ENOENT && !dir_checked && mkdirs(fullname)) {
-	    fp = fopen(fullname, "wb");
+	  if (fopen_errno == ENOENT && !dir_checked) {
+	    mkdirs(name, true);
+	    fp = fopen(name, "wb");
 	    fopen_errno = errno;
 	  }
 	  if (!fp) {
-	    char const *e = strerror(fopen_errno);
-	    fprintf(stderr, _("%s: Can't create %s: %s\n"),
-		    progname, fullname, e);
+	    fprintf(stderr, _("%s: Can't create %s/%s: %s\n"),
+		    progname, directory, name, strerror(fopen_errno));
 	    exit(EXIT_FAILURE);
 	  }
 	}
@@ -1959,9 +1964,8 @@ writezone(const char *const name, const char *const string, char version)
 				putc(ttisgmts[i], fp);
 	}
 	fprintf(fp, "\n%s\n", string);
-	close_file(fp, fullname);
+	close_file(fp, directory, name);
 	free(ats);
-	free(fullname);
 }
 
 static char const *
@@ -3032,16 +3036,14 @@ mp = _("time zone abbreviation differs from POSIX standard");
 	charcnt += i;
 }
 
-/* Ensure that the parent directories of ARGNAME exist, by making any
-   missing ones.  Return true if some directories are made (perhaps by
-   some other process), false if the directories already exist, and
-   exit with failure if there is trouble.  */
-static bool
-mkdirs(char *argname)
+/* Ensure that the directories of ARGNAME exist, by making any missing
+   ones.  If ANCESTORS, do this only for ARGNAME's ancestors; otherwise,
+   do it for ARGNAME too.  Exit with failure if there is trouble.  */
+static void
+mkdirs(char const *argname, bool ancestors)
 {
 	register char *	name;
 	register char *	cp;
-	bool dirs_made = false;
 
 	cp = name = ecpyalloc(argname);
 
@@ -3053,8 +3055,9 @@ mkdirs(char *argname)
 	while (*cp == '/')
 	  cp++;
 
-	for (; (cp = strchr(cp, '/')) != 0; cp++) {
-		*cp = '\0';
+	while (cp && ((cp = strchr(cp, '/')) || !ancestors)) {
+		if (cp)
+		  *cp = '\0';
 		/*
 		** Try to create it.  It's OK if creation fails because
 		** the directory already exists, perhaps because some
@@ -3065,15 +3068,13 @@ mkdirs(char *argname)
 		if (mkdir(name, MKDIR_UMASK) != 0) {
 			int err = errno;
 			if (err != EEXIST && itsdir(name) < 0) {
-				char const *e = strerror(err);
 				error(_("%s: Can't create directory %s: %s"),
-				      progname, name, e);
+				      progname, name, strerror(err));
 				exit(EXIT_FAILURE);
 			}
 		}
-		*cp = '/';
-		dirs_made = true;
+		if (cp)
+		  *cp++ = '/';
 	}
 	free(name);
-	return dirs_made;
 }

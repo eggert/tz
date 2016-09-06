@@ -60,8 +60,9 @@ Unreleased, experimental changes
     compatibility with platforms like OpenSUSE where other programs
     configure these files as symlinks.
 
-    zic now avoids hard linking to symbolic links, and avoids some
-    unnecessary mkdir and stat system calls.
+    zic now avoids hard linking to symbolic links, avoids some
+    unnecessary mkdir and stat system calls, and uses shorter file
+    names internally.
 
     zdump has a new -i option to generate transitions in a
     more-compact but still human-readable format.  This option is

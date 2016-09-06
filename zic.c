@@ -3027,25 +3027,27 @@ mkdirs(char *argname)
 	if (argname == NULL || *argname == '\0')
 		return true;
 	cp = name = ecpyalloc(argname);
-	while ((cp = strchr(cp + 1, '/')) != 0) {
-		*cp = '\0';
+
+	/* Do not mkdir a root directory, as it must exist.  */
 #ifdef HAVE_DOS_FILE_NAMES
-		/*
-		** DOS drive specifier?
-		*/
-		if (is_alpha(name[0]) && name[1] == ':' && name[2] == '\0') {
-				*cp = '/';
-				continue;
-		}
+	if (is_alpha(name[0]) && name[1] == ':')
+	  cp += 2;
 #endif
+	while (*cp == '/')
+	  cp++;
+
+	for (; (cp = strchr(cp, '/')) != 0; cp++) {
+		*cp = '\0';
 		/*
 		** Try to create it.  It's OK if creation fails because
 		** the directory already exists, perhaps because some
-		** other process just created it.
+		** other process just created it.  For simplicity do
+		** not check first whether it already exists, as that
+		** is checked anyway if the mkdir fails.
 		*/
 		if (mkdir(name, MKDIR_UMASK) != 0) {
 			int err = errno;
-			if (itsdir(name) <= 0) {
+			if (err != EEXIST && itsdir(name) <= 0) {
 				char const *e = strerror(err);
 				warning(_("%s: Can't create directory"
 					  " %s: %s"),

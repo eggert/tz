@@ -10,7 +10,7 @@
  content="Sources for time zone and daylight saving time data">
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2016-08-30">
+<meta name="DC.Date" content="2016-09-05">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -42,7 +42,7 @@ This database (often called <code>zoneinfo</code> or
 <code><abbr>tz</abbr></code>)
 is used by several implementations,
 including
-<a href="http://www.gnu.org/software/libc/">the
+<a href="https://www.gnu.org/software/libc/">the
 <abbr title="GNU's Not Unix">GNU</abbr>
 C Library</a> (used in
 <a href="https://en.wikipedia.org/wiki/Linux"><abbr>GNU</abbr>/Linux</a>),
@@ -108,33 +108,35 @@ for Eastern Standard Time in the <abbr>US</abbr>.</p>
 <p>
 The following <a
 href="https://en.wikipedia.org/wiki/Unix_shell">shell</a> commands download
-the latest release to a <abbr>GNU</abbr>/Linux or similar host;
-see the downloaded
-<code>README</code> file for what to do next.</p>
-<pre style="margin-left: 2em"><code><a href="http://www.gnu.org/software/wget/">wget</a> --retr-symlinks 'ftp://ftp.iana.org/tz/tzdb-latest.tar.lz'
-<a href="http://www.nongnu.org/lzip/">lzip</a> -dc tzdb-latest.tar.lz | <a href="http://www.gnu.org/software/tar/">tar</a> -xf -
+the latest release's two
+<a href="https://en.wikipedia.org/wiki/Tar_(computing)">tarballs</a>
+to a <abbr>GNU</abbr>/Linux or similar host.</p>
+<pre style="margin-left: 2em"><code>mkdir tzdb
+cd tzdb
+<a href="https://www.gnu.org/software/wget/">wget</a> --retr-symlinks 'ftp://ftp.iana.org/tz/tz*-latest.tar.gz'
+<a href="https://www.gnu.org/software/gzip/">gzip</a> -dc tzcode-latest.tar.gz | <a href="https://www.gnu.org/software/tar/">tar</a> -xf -
+gzip -dc tzdata-latest.tar.gz | tar -xf -
 </code></pre>
-<p>This uses a convenience link to the
-<a href="ftp://ftp.iana.org/tz/tzdb-latest.tar.lz">latest version</a>
-archived in the
+<p>Alternatively, the following shell commands download the same
+release in a single-tarball format containing extra data
+useful for regression testing:</p>
+<pre style="margin-left: 2em"><code>wget --retr-symlinks 'ftp://ftp.iana.org/tz/tzdb-latest.tar.lz'
+<a href="http://www.nongnu.org/lzip/">lzip</a> -dc tzdb-latest.tar.lz | tar -xf -
+</code></pre>
+<p>These commands use convenience links to the latest of the
 <a href="ftp://ftp.iana.org/tz/releases/"><abbr
 title="File Transfer Protocol">FTP</abbr> releases</a>
 of the <code><abbr>tz</abbr></code> database.
-Archived versions are in files named <code>tzdb-<var>V</var>.tar.lz</code>,
+Older releases are in files named
+<code>tzcode<var>V</var>.tar.gz</code>,
+<code>tzdata<var>V</var>.tar.gz</code>, and
+<code>tzdb-<var>V</var>.tar.lz</code>,
 where <code><var>V</var></code> is the version.
-For compatibility with releases before 2016g, a
-<a href="https://www.gnu.org/software/gzip/">gzip</a>-compressed two-tarball
-distribution is also available, where the code is in the
-file <code>tzcode<var>C</var>.tar.gz</code>,
-where <code><var>C</var></code> is the code's version;
-similarly, the data entries are in <code>tzdata<var>D</var>.tar.gz</code>,
-where <code><var>D</var></code> is the data's version.
 Since 1996, each version has been a four-digit year followed by
 lower-case letter (<samp>a</samp> through <samp>z</samp>,
 then <samp>za</samp> through <samp>zz</samp>, then <samp>zza</samp>
-through <samp>zzz</samp>, and so on).</p>
-<p>
-The code and data files can also be obtained from the
+through <samp>zzz</samp>, and so on).
+The releases can also be obtained from the
 <a href="http://www.iana.org/time-zones">Time Zone Database website</a>
 of the <a href="http://www.iana.org">Internet Assigned Numbers
 Authority (IANA)</a>.
@@ -144,6 +146,8 @@ in <a href="http://git-scm.com">Git</a> form
 from <a href="https://github.com">GitHub</a>; be careful, as this
 repository is less well tested and probably contains more errors.
 <p>
+After extracting a distribution's files, see its
+<code>README</code> file for what to do next.
 The code lets you compile the <code><abbr>tz</abbr></code> source files into
 machine-readable binary files, one for each location. It also lets
 you read a <code><abbr>tz</abbr></code> binary file and interpret time stamps for that
@@ -295,7 +299,7 @@ program that compiles
 <code><abbr>tz</abbr></code> source into iCalendar-compatible VTIMEZONE files.
 Vzic is freely
 available under the <a
-href="http://www.gnu.org/copyleft/gpl.html"><abbr>GNU</abbr>
+href="https://www.gnu.org/copyleft/gpl.html"><abbr>GNU</abbr>
 General Public License (<abbr
 title="General Public License">GPL</abbr>)</a>.</li>
 <li><a href="https://sourceforge.net/projects/tzical/">tziCal &ndash; tz
@@ -357,7 +361,7 @@ Advanced date, time and interval library for Java</a> contains a class
 <code>net.time4j.tool.TimezoneRepositoryCompiler</code> that compiles
 <code><abbr>tz</abbr></code> source into a binary format. Time4J is
 available under the <a
-href="http://www.gnu.org/copyleft/lesser.html"><abbr>GNU</abbr> Lesser
+href="https://www.gnu.org/copyleft/lesser.html"><abbr>GNU</abbr> Lesser
 General Public License (<abbr title="Lesser General Public
 License">LGPL</abbr>)</a>.</li>
 <li><abbr>ICU</abbr> (mentioned above) contains compilers and
@@ -413,7 +417,7 @@ license.</li>
 <h2>Other <code><abbr>tz</abbr></code> binary file readers</h2>
 <ul>
 <li>The <a
-href="http://www.gnu.org/software/libc/"><abbr>GNU</abbr> C
+href="https://www.gnu.org/software/libc/"><abbr>GNU</abbr> C
 Library</a>
 has an independent, thread-safe implementation of
 a <code><abbr>tz</abbr></code> binary file reader.

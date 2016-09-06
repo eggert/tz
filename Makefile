@@ -683,7 +683,7 @@ tzcode$(VERSION).tar.gz: set-timestamps.out
 
 tzdata$(VERSION).tar.gz: set-timestamps.out
 		LC_ALL=C && export LC_ALL && \
-		tar $(TARFLAGS) -cf - $(COMMON) $(DATA) $(MISC) $(TZS) | \
+		tar $(TARFLAGS) -cf - $(COMMON) $(DATA) $(MISC) | \
 		  gzip $(GZIPFLAGS) > $@
 
 tzdb-$(VERSION).tar.lz: set-timestamps.out

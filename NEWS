@@ -63,20 +63,18 @@ Unreleased, experimental changes
 
   Changes to build procedure
 
-    The tz distribution has a new file to2050.tzs that contains what
-    should be the output of 'zdump -i -c 2050' on primary zones.
-    'make check' now checks that zdump generates this output.
+    An experimental distribution format is available in the tarball
+    tzdb-VERSION.tar.lz with signature file tzdb-VERSION.tar.lz.asc.
+    It unpacks to a top-level directory containing the code and data
+    of the traditional two-tarball format, along with extra data that
+    may be useful.  The traditional format will continue to be
+    distributed.  (Thanks to Antonio Diaz Diaz, Oscar van Vlijmen, and
+    many others for comments about the experimental format.)
 
-    A new distribution format is available in the tarball
-    tzdb-VERSION.tar.lz and the signature tzdb-VERSION.tar.lz.asc.
-    The new tarball has the contents of tzcodeVERSION.tar.gz and
-    tzdataVERSION.tar.gz, in a single top-level directory 'tzdb' with
-    all other files under this directory, as is typical for software
-    distributions.  The new format is intended to replace the old
-    tarball pair.  The old format will continue to be distributed for
-    a while.  The new format uses lzip compression, which is smaller
-    than gzip; see <http://www.nongnu.org/lzip/lzip.html>.
-    (Thanks to Antonio Diaz Diaz and Oscar van Vlijmen for comments.)
+    The experimental distribution contains a file to2050.tzs that
+    contains what should be the output of 'zdump -i -c 2050' on
+    primary zones.  If this file is available, 'make check' now checks
+    that zdump generates this output.
 
     'make check_web' now works on Fedora-like distributions.
 
@@ -3613,14 +3611,15 @@ This file contains copies of the part of each release announcement
 that talks about the changes in that release.  The text has been
 adapted and reformatted for the purposes of this file.
 
-Typically a release R consists of a pair of tarball files,
+Traditionally a release R consists of a pair of tarball files,
 tzcodeR.tar.gz and tzdataR.tar.gz.  However, some releases (e.g.,
 code2010a, data2012c) consist of just one or the other tarball, and a
 few (e.g., code2012c-data2012d) have tarballs with mixed version
-numbers.
+numbers.  Recent releases also come in an experimental format
+consisting of a single tarball tzdb-R.tar.lz with extra data.
 
 Release time stamps are taken from the release's commit (for newer,
-git releases), from the newest file in the tarball (for older
+Git-based releases), from the newest file in the tarball (for older
 releases, where this info is available) or from the email announcing
 the release (if all else fails; these are marked with a time zone of
 -0000 and an "is missing!" comment).

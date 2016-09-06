@@ -13,6 +13,17 @@ and daylight-saving rules.
 Here is a recipe for acquiring, building, installing, and testing the
 tz distribution on a GNU/Linux or similar host.
 
+To acquire the distribution, run the following shell commands:
+
+	mkdir tz
+	cd tz
+	wget --retr-symlinks 'ftp://ftp.iana.org/tz/tz*-latest.tar.gz'
+	gzip -dc tzcode-latest.tar.gz | tar -xf -
+	gzip -dc tzdata-latest.tar.gz | tar -xf -
+
+Alternatively, the following shell commands acquire the same
+distribution, with extra data useful for regression testing:
+
 	wget --retr-symlinks 'ftp://ftp.iana.org/tz/tzdb-latest.tar.lz'
 	lzip -dc tzdb-latest.tar.lz | tar -xf -
 

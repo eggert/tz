@@ -568,7 +568,7 @@ clean_misc:
 		rm -f core *.o *.out \
 		  date tzselect version.h zdump zic yearistype libtz.a
 clean:		clean_misc
-		rm -fr *.dir tzdb $(TZS_NEW)
+		rm -fr *.dir tzdb-*/ $(TZS_NEW)
 
 maintainer-clean: clean
 		@echo 'This command is intended for maintainers to use; it'
@@ -687,12 +687,13 @@ tzdata$(VERSION).tar.gz: set-timestamps.out
 		  gzip $(GZIPFLAGS) > $@
 
 tzdb-$(VERSION).tar.lz: set-timestamps.out
-		rm -fr tzdb
-		mkdir tzdb
-		ln $(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC) $(TZS) tzdb
-		touch -cmr $$(ls -t tzdb/* | sed 1q) tzdb
+		rm -fr tzdb-$(VERSION)
+		mkdir tzdb-$(VERSION)
+		ln $(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC) $(TZS) \
+		  tzdb-$(VERSION)
+		touch -cmr $$(ls -t tzdb-$(VERSION)/* | sed 1q) tzdb-$(VERSION)
 		LC_ALL=C && export LC_ALL && \
-		tar $(TARFLAGS) -cf - tzdb | lzip -9 > $@
+		tar $(TARFLAGS) -cf - tzdb-$(VERSION) | lzip -9 > $@
 
 signatures:	tzcode$(VERSION).tar.gz.asc tzdata$(VERSION).tar.gz.asc \
 		tzdb-$(VERSION).tar.lz.asc

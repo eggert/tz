@@ -4,6 +4,10 @@ Unreleased, experimental changes
 
   Changes to future time stamps
 
+    Turkey switched from EET/EEST (+02/+03) to permanent +03,
+    effective 2016-09-07.  (Thanks to Burak AYDIN.)  Use "+03" rather
+    than an invented abbreviation for the new time.
+
     New leap second 2016-12-31 23:59:60 UTC as per IERS Bulletin C 52.
     (Thanks to Tim Parenti.)
 

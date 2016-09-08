@@ -3489,6 +3489,14 @@ Zone	Europe/Zurich	0:34:08 -	LMT	1853 Jul 16 # See above comment.
 # Engineered Standard Time," said Twitter user @aysekarahasan.
 # http://www.bbc.com/news/world-europe-34631326
 
+# From Burak AYDIN (2016-09-08):
+# Turkey will stay in Daylight Saving Time even in winter....
+# http://www.resmigazete.gov.tr/eskiler/2016/09/20160908-2.pdf
+#
+# From Paul Eggert (2016-09-07):
+# The change is permanent, so this is the new standard time in Turkey.
+# It takes effect today, which is not much notice.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Turkey	1916	only	-	May	 1	0:00	1:00	S
 Rule	Turkey	1916	only	-	Oct	 1	0:00	0	-
@@ -3552,7 +3560,7 @@ Rule	Turkey	1996	2006	-	Oct	lastSun	1:00s	0	-
 Zone	Europe/Istanbul	1:55:52 -	LMT	1880
 			1:56:56	-	IMT	1910 Oct # Istanbul Mean Time?
 			2:00	Turkey	EE%sT	1978 Oct 15
-			3:00	Turkey	TR%sT	1985 Apr 20 # Turkey Time
+			3:00	Turkey	+03/+04	1985 Apr 20 # Turkey Time
 			2:00	Turkey	EE%sT	2007
 			2:00	EU	EE%sT	2011 Mar 27  1:00u
 			2:00	-	EET	2011 Mar 28  1:00u
@@ -3560,7 +3568,8 @@ Zone	Europe/Istanbul	1:55:52 -	LMT	1880
 			2:00	-	EET	2014 Mar 31  1:00u
 			2:00	EU	EE%sT	2015 Oct 25  1:00u
 			2:00	1:00	EEST	2015 Nov  8  1:00u
-			2:00	EU	EE%sT
+			2:00	EU	EE%sT	2016 Sep  7
+			3:00	-	+03
 Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 
 # Ukraine

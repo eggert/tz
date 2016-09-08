@@ -3560,7 +3560,7 @@ Rule	Turkey	1996	2006	-	Oct	lastSun	1:00s	0	-
 Zone	Europe/Istanbul	1:55:52 -	LMT	1880
 			1:56:56	-	IMT	1910 Oct # Istanbul Mean Time?
 			2:00	Turkey	EE%sT	1978 Oct 15
-			3:00	Turkey	+03/+04	1985 Apr 20 # Turkey Time
+			3:00	Turkey	+03/+04	1985 Apr 20
 			2:00	Turkey	EE%sT	2007
 			2:00	EU	EE%sT	2011 Mar 27  1:00u
 			2:00	-	EET	2011 Mar 28  1:00u

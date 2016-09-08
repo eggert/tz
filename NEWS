@@ -50,6 +50,11 @@ Unreleased, experimental changes
     was replaced by +05, whereas MSK and MSD were kept as they are not
     our invention and are widely used.
 
+  Changes to zone names
+
+    Rename Asia/Rangoon to Asia/Yangon, with a backward compatibility link.
+    (Thanks to David Massoud.)
+
   Changes to code
 
     zic no longer generates binary files containing POSIX TZ-like

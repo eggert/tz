@@ -10,7 +10,7 @@
  content="Sources for time zone and daylight saving time data">
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2016-09-05">
+<meta name="DC.Date" content="2016-09-09">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -65,13 +65,13 @@ title="Advanced Interactive eXecutive">AIX</abbr></a>,
 <a href="https://en.wikipedia.org/wiki/BlackBerry_10">BlackBerry 10</a>,
 <a href="http://www.apple.com/ios/"><abbr
 title="iPhone OS">iOS</abbr></a>,
-<a href="http://windows.microsoft.com">Microsoft Windows</a>,
+<a href="http://www.apple.com/macos/"><abbr
+title="Mac Operating System">macOS</abbr></a>,
+<a href="https://www.microsoft.com/en-us/windows">Microsoft Windows</a>,
 <a href="http://www.hp.com/go/openvms/">Open<abbr
 title="Virtual Memory System">VMS</abbr></a>,
-<a href="https://www.oracle.com/database/index.html">Oracle Database</a>,
-<a href="http://oracle.com/solaris">Oracle Solaris</a>, and
-<a href="http://www.apple.com/osx/"><abbr title="Operating System Ten">OS
-X</abbr></a>.</p>
+<a href="https://www.oracle.com/database/index.html">Oracle Database</a>, and
+<a href="https://www.oracle.com/solaris">Oracle Solaris</a>.</p>
 <p>
 Each location in the database represents a region where all
 clocks keeping local time have agreed since 1970.
@@ -103,7 +103,7 @@ for time stamps after 1960 this is more precisely <a
 href="https://en.wikipedia.org/wiki/Coordinated_Universal_Time">Coordinated
 Universal Time</a> (<abbr>UTC</abbr>).
 The database also records when daylight saving time was in use,
-along with alphabetic time zone abbreviations such as <abbr>EST</abbr>
+along with some time zone abbreviations such as <abbr>EST</abbr>
 for Eastern Standard Time in the <abbr>US</abbr>.</p>
 <p>
 The following <a
@@ -142,7 +142,7 @@ of the <a href="http://www.iana.org">Internet Assigned Numbers
 Authority (IANA)</a>.
 An <a href="https://github.com/eggert/tz">unofficial development
 repository</a> of the code and data is available
-in <a href="http://git-scm.com">Git</a> form
+in <a href="https://git-scm.com">Git</a> form
 from <a href="https://github.com">GitHub</a>; be careful, as this
 repository is less well tested and probably contains more errors.
 <p>
@@ -208,7 +208,7 @@ the Timing of Time Zone Changes</a> gives examples of problems caused
 by inadequate notice by governments of time zone and daylight saving
 rule changes.</li>
 <li><a
-href="http://blog.jonudell.net/2009/10/23/a-literary-appreciation-of-the-olsonzoneinfotz-database/">A
+href="https://blog.jonudell.net/2009/10/23/a-literary-appreciation-of-the-olsonzoneinfotz-database/">A
 literary appreciation of the Olson/Zoneinfo/tz database</a> comments on the
 database's style.</li>
 </ul>
@@ -244,15 +244,14 @@ names and shows location maps.</li>
 </ul>
 <h2>Network protocols for <code><abbr>tz</abbr></code> data</h2>
 <ul>
-<li>The <a href="http://www.ietf.org">Internet Engineering Task Force</a>'s
+<li>The <a href="https://www.ietf.org">Internet Engineering Task Force</a>'s
 <a href="https://datatracker.ietf.org/wg/tzdist/charter/">Time Zone Data
 Distribution Service (tzdist) working group</a> defined <a
 href="https://tools.ietf.org/html/rfc7808">TZDIST</a>
 (Internet <abbr>RFC</abbr> 7808), a time zone data distribution service,
 along with a <a href="https://tools.ietf.org/html/rfc7809">calendar access
 protocol for transferring time zone data by reference</a>
-(Internet <abbr>RFC</abbr> 7809). This work was based
-on the iCalendar and CalConnect efforts described below.</li>
+(Internet <abbr>RFC</abbr> 7809).</li>
 <li>The <a href="https://tools.ietf.org/html/rfc5545">
 Internet Calendaring and Scheduling Core Object Specification
 (iCalendar)</a> (Internet <abbr>RFC</abbr> 5445)
@@ -261,35 +260,12 @@ data; see its VTIMEZONE calendar component.
 The iCalendar format requires specialized parsers and generators; a
 variant <a href="https://tools.ietf.org/html/rfc6321">xCal</a>
 (Internet <abbr>RFC</abbr> 6321) uses
-<a href="http://www.w3.org/XML/"><abbr
+<a href="https://www.w3.org/XML/"><abbr
 title="Extensible Markup Language">XML</abbr></a> format, and a variant
 <a href="https://tools.ietf.org/html/rfc7265">jCal</a>
 (Internet <abbr>RFC</abbr> 7265)
 uses <a href="http://www.json.org"><abbr
-title="JavaScript Object Notation">JSON</abbr></a> format.
-<a href="https://www.calconnect.org">CalConnect, The Calendaring and Scheduling
-Consortium</a> is promoting further work in this area. <a
-href="http://calconnect.org/publications/icalendartimezoneproblemsandrecommendationsv1.0.pdf">iCalendar
-TIMEZONE Problems and Recommendations</a> offers guidelines and
-recommendations for the use of VTIMEZONE and <code><abbr>tz</abbr></code>.</li>
-<li>The <a
-href="http://calconnect.org/publications/timezoneregistryandservicerecommendationsv1.0.pdf">Timezone
-Registry and Service Recommendations</a> of CalConnect's
-<a href="https://www.calconnect.org/about/technical-committees/tc-timezone">TIMEZONE
-Technical Committee</a> discusses a
-strategy for defining and deploying a time zone
-registration process that would establish unique names for each
-version of each <code><abbr>tz</abbr></code> zone, along with a polygonal
-representation of the geographical area corresponding to the
-zone.</li>
-<li>The <a
-href="http://lists.w3.org/Archives/Public/www-rdf-calendar/">www-rdf-calendar</a>
-list discusses <a
-href="http://www.w3.org/RDF/"><abbr
-title="Resource Description Framework">RDF</abbr></a>-based calendar
-and group scheduling systems, and has a <a
-href="http://www.w3.org/2002/12/cal/#tzd">workspace on time zone
-data</a> converted from <code><abbr>tz</abbr></code>.</li>
+title="JavaScript Object Notation">JSON</abbr></a> format.</li>
 </ul>
 <h2>Other <code><abbr>tz</abbr></code> compilers</h2>
 <ul>
@@ -423,7 +399,8 @@ has an independent, thread-safe implementation of
 a <code><abbr>tz</abbr></code> binary file reader.
 This library is freely available under the LGPL
 and is widely used in <abbr>GNU</abbr>/Linux systems.</li>
-<li><a href="https://www.gnome.org">GNOME</a>'s Glib has
+<li><a href="https://www.gnome.org">GNOME</a>'s
+<a href="https://developer.gnome.org/glib/">GLib</a> has
 a <code><abbr>tz</abbr></code> binary file reader written in C that
 creates a <code>GTimeZone</code> object representing sets
 of <abbr>UT</abbr> offsets.
@@ -542,7 +519,8 @@ is another time zone database.</li>
 <li><a href="http://tycho.usno.navy.mil/tzones.html">World Time Zones</a>
 contains data from the Time Service Department of the
 <abbr>US</abbr> Naval Observatory.</li>
-<li>The <a href="http://www.iata.org/publications/Pages/ssim.aspx">Standard
+<li>The <a
+href="http://www.iata.org/publications/store/Pages/standard-schedules-information.aspx">Standard
 Schedules Information Manual</a> of the
 International Air Transport Association
 gives current time zone rules for airports served by commercial aviation.</li>
@@ -613,7 +591,7 @@ common.</li>
 </ul>
 <h2>Civil time concepts and history</h2>
 <ul>
-<li><a href="http://www.nist.gov/pml/general/time/index.cfm">A
+<li><a href="http://physics.nist.gov/time">A
 Walk through Time</a>
 surveys the evolution of timekeeping.</li>
 <li><a href="http://www.webexhibits.org/daylightsaving/">About Daylight
@@ -622,8 +600,6 @@ is an overall history of <abbr>DST</abbr>.</li>
 <li><a href="https://www.w3.org/TR/timezone/">Working with Time Zones</a>
 contains guidelines and best practices for software applications that
 deal with civil time.</li>
-<li><a href="http://energy.ca.gov/daylightsaving.html">Saving Time,
-Saving Energy</a> discusses a primary justification for <abbr>DST</abbr>.</li>
 <li><a href="http://seizethedaylight.com/dst/">A Brief
 History of Daylight Saving Time</a> summarizes some of the contentious
 history of <abbr>DST</abbr>.</li>
@@ -681,7 +657,7 @@ hreflang="nl">Legal time in the Netherlands (in Dutch)</a>
 covers the history of local time in the Netherlands from ancient times.</dd>
 <dt>New Zealand</dt>
 <dd>The Department of Internal Affairs maintains a brief <a
-href="http://www.dia.govt.nz/Daylight-Saving-History">History of
+href="https://www.dia.govt.nz/Daylight-Saving-History">History of
 Daylight Saving</a>. The privately-maintained <a
 href="http://astrologyschool.com/nztime.html">History of New Zealand
 time</a> has more details.</dd>
@@ -714,7 +690,8 @@ title="Network Time Protocol">NTP</abbr>: The Network
 Time Protocol</a>
 discusses how to synchronize clocks of
 Internet hosts.</li>
-<li>The <a href="http://www.nist.gov/el/isd/ieee/ieee1588.cfm">Precision
+<li>The <a
+href="https://www.nist.gov/intelligent-systems-division/ieee-1588">Precision
 Time Protocol</a> (<abbr
 title="Institute of Electrical and Electronics Engineers">IEEE</abbr> 1588)
 can achieve submicrosecond clock accuracy on a local area network.</li>
@@ -726,11 +703,6 @@ specifies a <a
 href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol"><abbr>DHCP</abbr></a>
 option for a server to configure
 a client's time zone and daylight saving settings automatically.</li>
-<li><a href="http://gauss.gge.unb.ca/GMT.UT.and.the.RGO.html">A Few Facts
-Concerning <abbr>GMT</abbr>, <abbr>UT</abbr>, and
-the <abbr title="Royal Greenwich Observatory">RGO</abbr></a>
-answers questions like "What is the
-difference between <abbr>GMT</abbr> and <abbr>UTC</abbr>?"</li>
 <li><a
 href="http://www.cv.nrao.edu/~rfisher/Ephemerides/times.html">Astronomical
 Times</a> explains more abstruse astronomical time scales like
@@ -739,7 +711,7 @@ Times</a> explains more abstruse astronomical time scales like
 <abbr title="Barycentric Dynamic Time">TDB</abbr>.
 <a href="http://www.ucolick.org/~sla/leapsecs/timescales.html">Time
 Scales</a> goes into more detail, particularly for historical variants.</li>
-<li>The <a href="http://iau.org"><abbr
+<li>The <a href="http://www.iau.org"><abbr
 title="International Astronomical Union">IAU</abbr></a>'s <a
 href="http://www.iausofa.org"><abbr
 title="Standards Of Fundamental Astronomy">SOFA</abbr></a>
@@ -753,10 +725,8 @@ code for converting among time scales like
 Space Flight &ndash; Reference Systems &ndash; Time Conventions</a>
 briefly explains interplanetary space flight timekeeping.</li>
 <li><a
-href="http://www.giss.nasa.gov/tools/mars24/help/notes.html">Technical
-Notes on Mars Solar Time as Adopted by the Mars24 Sunclock</a> briefly
-describes Mars Coordinated Time (<abbr
-title="Mars Coordinated Time">MTC</abbr>) and the
+href="http://www.giss.nasa.gov/tools/mars24/help/notes.html">Mars24 Sunclock
+&ndash; Time on Mars</a> describes Airy Mean Time (<abbr>AMT</abbr>) and the
 diverse local time
 scales used by each landed mission on Mars.</li>
 <li><a href="http://leapsecond.com">LeapSecond.com</a> is
@@ -772,7 +742,7 @@ when leap seconds occur.</li>
 <li>The <a
 href="https://pairlist6.pair.net/mailman/listinfo/leapsecs">Leap
 Second Discussion List</a> covers <a
-href="http://gauss.gge.unb.ca/papers.pdf/gpsworld.november99.pdf">McCarthy
+href="http://www2.unb.ca/gge/Resources/gpsworld.november99.pdf">McCarthy
 and Klepczynski's proposal to discontinue leap seconds</a>,
 discussed further in
 <a href="http://www.cl.cam.ac.uk/~mgk25/time/metrologia-leapsecond.pdf">The
@@ -790,7 +760,7 @@ zone names, abbreviations, identifiers, and formats. For example, it
 contains French translations for "Eastern European Summer Time",
 "<abbr title="Eastern European Summer Time">EEST</abbr>", and
 "Bucharest". Its
-<a href="http://unicode.org/cldr/charts/by_type/index.html">by-type
+<a href="http://www.unicode.org/cldr/charts/latest/by_type/">by-type
 charts</a> show these values for many locales. Data values are available in
 both <abbr title="Locale Data Markup Language">LDML</abbr>
 (an <abbr>XML</abbr> format) and <abbr>JSON</abbr>.
@@ -834,10 +804,10 @@ practice. For example, in English-speaking North America
 but in China it denotes 8 hours ahead of <abbr>UTC</abbr>,
 and French-speaking North Americans prefer
 "<abbr title="Heure Normale du Centre">HNC</abbr>" to
-"<abbr>CST</abbr>". For <abbr>POSIX</abbr> the <code><abbr>tz</abbr></code>
-database contains English abbreviations for all time stamps but in
-many cases these are merely inventions of the database
-maintainers.</li>
+"<abbr>CST</abbr>". The <code><abbr>tz</abbr></code>
+database contains English abbreviations for many time stamps;
+unfortunately some of these abbreviations were merely the database maintainers'
+inventions, and are gradually being removed.</li>
 <li>Numeric time zone abbreviations typically count hours east of
 <abbr>UTC</abbr>, e.g., +09 for Japan and
 &minus;10 for Hawaii. However, the <abbr>POSIX</abbr>
@@ -852,7 +822,7 @@ settings like <code><abbr>TZ</abbr>="Asia/Tokyo"</code> and
 confusion, handle old time stamps better, and insulate you better from
 any future changes to the rules. One should never set
 <abbr>POSIX</abbr> <code><abbr>TZ</abbr></code> to a value like
-<code>"GMT-9"</code>, though, since this would falsely claim that
+<code>"GMT-9"</code>, though, since this would incorrectly imply that
 local time is nine hours ahead of <abbr>UTC</abbr> and the time zone
 is called "<abbr>GMT</abbr>".</li>
 </ul>

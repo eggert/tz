@@ -137,14 +137,11 @@ strftime(char *s, size_t maxsize, const char *format, const struct tm *t)
 
 	tzset();
 	warn = IN_NONE;
-	p = _fmt(((format == NULL) ? "%c" : format), t, s, s + maxsize, &warn);
+	p = _fmt(format, t, s, s + maxsize, &warn);
 #ifndef NO_RUN_TIME_WARNINGS_ABOUT_YEAR_2000_PROBLEMS_THANK_YOU
 	if (warn != IN_NONE && getenv(YEAR_2000_NAME) != NULL) {
 		fprintf(stderr, "\n");
-		if (format == NULL)
-			fprintf(stderr, "NULL strftime format ");
-		else	fprintf(stderr, "strftime format \"%s\" ",
-				format);
+		fprintf(stderr, "strftime format \"%s\" ", format);
 		fprintf(stderr, "yields only two digits of years in ");
 		if (warn == IN_SOME)
 			fprintf(stderr, "some locales");

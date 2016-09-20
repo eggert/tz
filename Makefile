@@ -700,11 +700,15 @@ check_time_t_alternatives:
 		done
 		rm -fr time_t.dir
 
-tarballs signatures: version
+tarballs traditional_tarballs signatures traditional_signatures: version
 		$(MAKE) VERSION="$$(cat version)" $@_version
 
-tarballs_version: tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz \
-		tzdb-$(VERSION).tar.lz
+tarballs_version: traditional_tarballs_version tzdb-$(VERSION).tar.lz
+traditional_tarballs_version: \
+  tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz
+signatures_version: traditional_signatures_version tzdb-$(VERSION).tar.lz.asc
+traditional_signatures_version: \
+  tzcode$(VERSION).tar.gz.asc tzdata$(VERSION).tar.gz.asc \
 
 tzcode$(VERSION).tar.gz: set-timestamps.out
 		LC_ALL=C && export LC_ALL && \
@@ -724,9 +728,6 @@ tzdb-$(VERSION).tar.lz: set-timestamps.out
 		touch -cmr $$(ls -t tzdb-$(VERSION)/* | sed 1q) tzdb-$(VERSION)
 		LC_ALL=C && export LC_ALL && \
 		tar $(TARFLAGS) -cf - tzdb-$(VERSION) | lzip -9 > $@
-
-signatures_version: tzcode$(VERSION).tar.gz.asc tzdata$(VERSION).tar.gz.asc \
-		tzdb-$(VERSION).tar.lz.asc
 
 tzcode$(VERSION).tar.gz.asc: tzcode$(VERSION).tar.gz
 		gpg --armor --detach-sign $?

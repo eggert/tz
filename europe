@@ -3553,10 +3553,8 @@ Rule	Turkey	1983	only	-	Jul	31	0:00	1:00	S
 Rule	Turkey	1983	only	-	Oct	 2	0:00	0	-
 Rule	Turkey	1985	only	-	Apr	20	0:00	1:00	S
 Rule	Turkey	1985	only	-	Sep	28	0:00	0	-
-Rule	Turkey	1986	1990	-	Mar	lastSun	1:00s	1:00	S
-Rule	Turkey	1986	1990	-	Sep	lastSun	1:00s	0	-
-Rule	Turkey	1991	1993	-	Mar	lastSun	1:00s	1:00	S
-Rule	Turkey	1991	1995	-	Sep	lastSun	1:00s	0	-
+Rule	Turkey	1986	1993	-	Mar	lastSun	1:00s	1:00	S
+Rule	Turkey	1986	1995	-	Sep	lastSun	1:00s	0	-
 Rule	Turkey	1994	only	-	Mar	20	1:00s	1:00	S
 Rule	Turkey	1995	2006	-	Mar	lastSun	1:00s	1:00	S
 Rule	Turkey	1996	2006	-	Oct	lastSun	1:00s	0	-

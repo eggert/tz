@@ -2,6 +2,12 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to past time stamps
+
+    In Turkey, transitions in 1986-1990 were at 01:00 standard time
+    not at 02:00, and the spring 1994 transition was on March 20, not
+    March 27.  (Thanks to Kıvanç Yazan.)
+
   Changes to build procedure
 
     New rules 'traditional_tarballs' and 'traditional_signatures' for

@@ -1908,7 +1908,7 @@ Zone	Europe/Monaco	0:29:32 -	LMT	1891 Mar 15
 # Amsterdam mean time.
 
 # The data entries before 1945 are taken from
-# http://www.phys.uu.nl/~vgent/wettijd/wettijd.htm
+# http://www.staff.science.uu.nl/~gent0113/idl/idl.htm
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Neth	1916	only	-	May	 1	0:00	1:00	NST	# Netherlands Summer Time

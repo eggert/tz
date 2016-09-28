@@ -14,6 +14,9 @@ Unreleased, experimental changes
     building just the traditional-format distribution.  (Requested by
     Deborah Goldsmith.)
 
+    The file 'version' is now put into the tzcode tarball too.
+    (Requested by Howard Hinnant.)
+
   Changes to documentation and commentary
 
     The US commentary now mentions Allen and the "day of two noons".

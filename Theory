@@ -445,6 +445,10 @@ POSIX has the following properties and limitations.
 	rules change (as in the United States in 1987), all programs that
 	do time conversion must be recompiled to ensure proper results.
 
+*	The TZ environment variable is process-global, which makes it hard
+	to write efficient, thread-safe applications that need access
+	to multiple time zones.
+
 *	In POSIX, there's no tamper-proof way for a process to learn the
 	system's best idea of local wall clock.  (This is important for
 	applications that an administrator wants used only at certain times -
@@ -453,6 +457,11 @@ POSIX has the following properties and limitations.
 	around the problem, doing so is inconvenient and precludes handling
 	daylight saving time shifts - as might be required to limit phone
 	calls to off-peak hours.)
+
+*	POSIX provides no convenient and efficient way to determine the UT
+	offset and time zone abbreviation of arbitrary time stamps,
+	particularly for time zone settings that do not fit into the
+	POSIX model.
 
 *	POSIX requires that systems ignore leap seconds.
 
@@ -494,20 +503,23 @@ These are the extensions that have been made to the POSIX functions:
 	"new" programs (a la POSIX) and "old" programs (as zone names and
 	offsets).
 
-*	To handle places where more than two time zone abbreviations are used,
-	the functions "localtime" and "gmtime" set tzname[tmp->tm_isdst]
-	(where "tmp" is the value the function returns) to the time zone
-	abbreviation to be used.  This differs from POSIX, where the elements
-	of tzname are only changed as a result of calls to tzset.
+*	The code supports platforms with a UT offset member in struct tm,
+	e.g., tm_gmtoff.
+
+*	The code supports platforms with a time zone abbreviation member in
+	struct tm, e.g., tm_zone.
 
 *	Since the "TZ" environment variable can now be used to control time
 	conversion, the "daylight" and "timezone" variables are no longer
 	needed.  (These variables are defined and set by "tzset"; however, their
 	values will not be used by "localtime.")
 
-*	The "localtime" function has been set up to deliver correct results
-	for near-minimum or near-maximum time_t values.  (A comment in the
-	source code tells how to get compatibly wrong results).
+*	Functions tzalloc, tzfree, localtime_rz, and mktime_z for
+	more-efficient thread-safe applications that need to use
+	multiple time zones.  The tzalloc and tzfree functions
+	allocate and free objects of type timezone_t, and localtime_rz
+	and mktime_z are like localtime_r and mktime with an extra
+	timezone_t argument.  The functions were inspired by NetBSD.
 
 *	A function "tzsetwall" has been added to arrange for the system's
 	best approximation to local wall clock time to be delivered by
@@ -526,14 +538,15 @@ These are the extensions that have been made to the POSIX functions:
 
 Points of interest to folks with other systems:
 
-*	This package is already part of many POSIX-compliant hosts,
-	including BSD, HP, Linux, Network Appliance, SCO, SGI, and Sun.
+*	Code compatible with this package is already part of many platforms,
+	including GNU/Linux, Android, the BSDs, Chromium OS, Cygwin, AIX, iOS,
+	BlackBery 10, macOS, Microsoft Windows, OpenVMS, and Solaris.
 	On such hosts, the primary use of this package
 	is to update obsolete time zone rule tables.
 	To do this, you may need to compile the time zone compiler
 	'zic' supplied with this package instead of using the system 'zic',
-	since the format of zic's input changed slightly in late 1994,
-	and many vendors still do not support the new input format.
+	since the format of zic's input is occasionally extended,
+	and a platform may still be shipping an older zic.
 
 *	The UNIX Version 7 "timezone" function is not present in this package;
 	it's impossible to reliably map timezone's arguments (a "minutes west
@@ -551,6 +564,8 @@ Points of interest to folks with other systems:
 *	In SVR2, time conversion fails for near-minimum or near-maximum
 	time_t values when doing conversions for places that don't use UT.
 	This package takes care to do these conversions correctly.
+	A comment in the source code tells how to get compatibly wrong
+	results.
 
 The functions that are conditionally compiled if STD_INSPIRED is defined
 should, at this point, be looked on primarily as food for thought.  They are

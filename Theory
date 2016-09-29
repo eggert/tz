@@ -583,6 +583,35 @@ more powerful time conversion functions can be standardized, so much the
 better.
 
 
+----- Interface stability -----
+
+The tz code and data supply the following interfaces:
+
+ * A set of zone names as per "Names of time zone rules" above.
+
+ * Library functions described in "Time and date functions" above.
+
+ * The programs tzselect, zdump, and zic, documented in their man pages.
+
+ * The format of zic input files, documented in the zic man page.
+
+ * The format of zic output files, documented in the tzfile man page.
+
+ * The format of zone table files, documented in zone1970.tab.
+
+ * The format of the country code file, documented in iso3166.tab.
+
+When these interfaces are changed, an effort is made to preserve
+backward compatibility.  For example, tz data files typically do not
+rely on recently-added zic features, so that users can run older zic
+versions to process newer data files.
+
+Interfaces not listed above are less stable.  For example, users
+should not rely on particular UT offsets or abbreviations for time
+stamps, as data entries are often based on guesswork and these guesses
+may be corrected or improved.
+
+
 ----- Calendrical issues -----
 
 Calendrical issues are a bit out of scope for a time zone database,

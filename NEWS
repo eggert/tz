@@ -19,8 +19,10 @@ Unreleased, experimental changes
 
   Changes to documentation and commentary
 
-    The Theory file now mentions features like tm_zone and
-    localtime_rz that have long been supported by the reference code.
+    The 'Theory' file now has a section on interface stability.
+    (Requested by Paul Koning.)  It also mentions features like
+    tm_zone and localtime_rz that have long been supported by the
+    reference code.
 
     The US commentary now mentions Allen and the "day of two noons".
 

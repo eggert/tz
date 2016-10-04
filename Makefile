@@ -438,14 +438,16 @@ version:	$(VERSION_DEPS)
 		  V=`git describe --match '[0-9][0-9][0-9][0-9][a-z]*' \
 				--abbrev=7 --dirty` || \
 		  V=$(VERSION); } && \
-		printf '%s\n' "$$V" >$@
+		printf '%s\n' "$$V" >$@.out
+		mv $@.out $@
 
 version.h:	version
 		VERSION=`cat version` && printf '%s\n' \
 		  'static char const PKGVERSION[]="($(PACKAGE)) ";' \
 		  "static char const TZVERSION[]=\"$$VERSION\";" \
 		  'static char const REPORT_BUGS_TO[]="$(BUGEMAIL)";' \
-		  >$@
+		  >$@.out
+		mv $@.out $@
 
 zdump:		$(TZDOBJS)
 		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(TZDOBJS) $(LDLIBS)
@@ -458,7 +460,8 @@ yearistype:	yearistype.sh
 		chmod +x yearistype
 
 leapseconds:	$(LEAP_DEPS)
-		$(AWK) -f leapseconds.awk leap-seconds.list >$@
+		$(AWK) -f leapseconds.awk leap-seconds.list >$@.out
+		mv $@.out $@
 
 # Arguments to pass to submakes of install_data.
 # They can be overridden by later submake arguments.
@@ -521,8 +524,9 @@ $(TZS_NEW):	$(TDATA) zdump zic
 				'/^Zone/{print wd "/tzs.dir/" $$2}' $(TDATA) \
 			 | LC_ALL=C sort` && \
 		./zdump -i -c $(TZS_YEAR) $$zones >>$@.out
-		sed 's,^TZ=".*tzs\.dir/,TZ=",' $@.out >$@
+		sed 's,^TZ=".*tzs\.dir/,TZ=",' $@.out >$@.sed.out
 		rm -fr tzs.dir $@.out
+		mv $@.sed.out $@
 
 # If $(TZS) does not already exist (e.g., old-format tarballs), create it.
 # If it exists but 'make check_tzs' fails, a maintainer should inspect the
@@ -548,8 +552,9 @@ tzselect:	tzselect.ksh version
 			-e 's|\(REPORT_BUGS_TO\)=.*|\1=$(BUGEMAIL)|' \
 			-e 's|TZDIR=[^}]*|TZDIR=$(TZDIR)|' \
 			-e 's|\(TZVERSION\)=.*|\1='"$$VERSION"'|' \
-			<$@.ksh >$@
-		chmod +x $@
+			<$@.ksh >$@.out
+		chmod +x $@.out
+		mv $@.out $@
 
 check:		check_character_set check_white_space check_links check_sorted \
 		  check_tables check_tzs check_web
@@ -624,7 +629,8 @@ zdump.8.txt:	zdump.8
 zic.8.txt:	zic.8
 
 $(MANTXTS):	workman.sh
-		LC_ALL=C sh workman.sh `expr $@ : '\(.*\)\.txt$$'` >$@
+		LC_ALL=C sh workman.sh `expr $@ : '\(.*\)\.txt$$'` >$@.out
+		mv $@.out $@
 
 # Set the time stamps to those of the git repository, if available,
 # and if the files have not changed since then.
@@ -722,12 +728,14 @@ tzcode$(VERSION).tar.gz: set-timestamps.out
 		LC_ALL=C && export LC_ALL && \
 		tar $(TARFLAGS) -cf - \
 		    $(COMMON) $(DOCS) $(SOURCES) | \
-		  gzip $(GZIPFLAGS) > $@
+		  gzip $(GZIPFLAGS) >$@.out
+		mv $@.out $@
 
 tzdata$(VERSION).tar.gz: set-timestamps.out
 		LC_ALL=C && export LC_ALL && \
 		tar $(TARFLAGS) -cf - $(COMMON) $(DATA) $(MISC) | \
-		  gzip $(GZIPFLAGS) > $@
+		  gzip $(GZIPFLAGS) >$@.out
+		mv $@.out $@
 
 tzdb-$(VERSION).tar.lz: set-timestamps.out
 		rm -fr tzdb-$(VERSION)
@@ -735,7 +743,8 @@ tzdb-$(VERSION).tar.lz: set-timestamps.out
 		ln $(ENCHILADA) tzdb-$(VERSION)
 		touch -cmr `ls -t tzdb-$(VERSION)/* | sed 1q` tzdb-$(VERSION)
 		LC_ALL=C && export LC_ALL && \
-		tar $(TARFLAGS) -cf - tzdb-$(VERSION) | lzip -9 > $@
+		tar $(TARFLAGS) -cf - tzdb-$(VERSION) | lzip -9 >$@.out
+		mv $@.out $@
 
 tzcode$(VERSION).tar.gz.asc: tzcode$(VERSION).tar.gz
 		gpg --armor --detach-sign $?

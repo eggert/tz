@@ -101,7 +101,6 @@ PACKRATDATA=
 YEARISTYPE=	./yearistype
 
 # Non-default libraries needed to link.
-# Add -lintl if you want to use 'gettext' on Solaris.
 LDLIBS=
 
 # Add the following to the end of the "CFLAGS=" line as needed.
@@ -109,9 +108,10 @@ LDLIBS=
 #  -DHAVE_DECL_ASCTIME_R=0 if <time.h> does not declare asctime_r
 #  -DHAVE_DIRECT_H if mkdir needs <direct.h> (MS-Windows)
 #  -DHAVE_DOS_FILE_NAMES if file names have drive specifiers etc. (MS-DOS)
-#  -DHAVE_GETTEXT=1 if 'gettext' works (GNU, Linux, Solaris); also see LDLIBS
+#  -DHAVE_GETTEXT=1 if 'gettext' works (e.g., GNU/Linux, FreeBSD, Solaris)
 #  -DHAVE_INCOMPATIBLE_CTIME_R=1 if your system's time.h declares
-#	ctime_r and asctime_r incompatibly with the POSIX standard (Solaris 8).
+#	ctime_r and asctime_r incompatibly with the POSIX standard
+#	(Solaris when _POSIX_PTHREAD_SEMANTICS is not defined).
 #  -DHAVE_INTTYPES_H=1 if you have a pre-C99 compiler with "inttypes.h"
 #  -DHAVE_LINK=0 if your system lacks a link function
 #  -DHAVE_LOCALTIME_R=0 if your system lacks a localtime_r function
@@ -434,16 +434,18 @@ INSTALL:	ALL install date.1
 		cp -f date.1 $(DESTDIR)$(MANDIR)/man1/.
 
 version:	$(VERSION_DEPS)
-		{ V=$$(git describe --match '[0-9][0-9][0-9][0-9][a-z]*' \
-				--abbrev=7 --dirty) || \
+		{ (type git) >/dev/null 2>&1 && \
+		  V=`git describe --match '[0-9][0-9][0-9][0-9][a-z]*' \
+				--abbrev=7 --dirty` || \
 		  V=$(VERSION); } && \
 		printf '%s\n' "$$V" >$@
 
 version.h:	version
-		(echo 'static char const PKGVERSION[]="($(PACKAGE)) ";' && \
-		 printf 'static char const TZVERSION[]="%s";\n' \
-		   "$$(cat version)" && \
-		 echo 'static char const REPORT_BUGS_TO[]="$(BUGEMAIL)";') >$@
+		VERSION=`cat version` && printf '%s\n' \
+		  'static char const PKGVERSION[]="($(PACKAGE)) ";' \
+		  "static char const TZVERSION[]=\"$$VERSION\";" \
+		  'static char const REPORT_BUGS_TO[]="$(BUGEMAIL)";' \
+		  >$@
 
 zdump:		$(TZDOBJS)
 		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(TZDOBJS) $(LDLIBS)
@@ -514,9 +516,10 @@ $(TZS_NEW):	$(TDATA) zdump zic
 		$(zic) -d tzs.dir $(TDATA)
 		$(AWK) '/^Link/{print $$1 "\t" $$2 "\t" $$3}' \
 		   $(TDATA) | LC_ALL=C sort >$@.out
-		zones=$$($(AWK) -v wd="$$(pwd)" \
+		wd=`pwd` && \
+		zones=`$(AWK) -v wd="$$wd" \
 				'/^Zone/{print wd "/tzs.dir/" $$2}' $(TDATA) \
-			 | LC_ALL=C sort) && \
+			 | LC_ALL=C sort` && \
 		./zdump -i -c $(TZS_YEAR) $$zones >>$@.out
 		sed 's,^TZ=".*tzs\.dir/,TZ=",' $@.out >$@
 		rm -fr tzs.dir $@.out
@@ -538,13 +541,13 @@ date:		$(DATEOBJS)
 		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(DATEOBJS) $(LDLIBS)
 
 tzselect:	tzselect.ksh version
-		sed \
+		VERSION=`cat version` && sed \
 			-e 's|#!/bin/bash|#!$(KSHELL)|g' \
 			-e 's|AWK=[^}]*|AWK=$(AWK)|g' \
 			-e 's|\(PKGVERSION\)=.*|\1='\''($(PACKAGE)) '\''|' \
 			-e 's|\(REPORT_BUGS_TO\)=.*|\1=$(BUGEMAIL)|' \
 			-e 's|TZDIR=[^}]*|TZDIR=$(TZDIR)|' \
-			-e 's|\(TZVERSION\)=.*|\1='"$$(cat version)"'|' \
+			-e 's|\(TZVERSION\)=.*|\1='"$$VERSION"'|' \
 			<$@.ksh >$@
 		chmod +x $@
 
@@ -562,7 +565,8 @@ check_character_set: $(ENCHILADA)
 		! grep -Env $(OK_LINE) $(ENCHILADA)
 
 check_white_space: $(ENCHILADA)
-		! grep -En ' '$(TAB_CHAR)"|$$(printf '[\f\r\v]')" $(ENCHILADA)
+		patfmt=' \t|[\f\r\v]' && pat=`printf "$$patfmt\\n"` && \
+		! grep -En "$$pat" $(ENCHILADA)
 		! grep -n '[[:space:]]$$' $(ENCHILADA)
 
 CHECK_CC_LIST = { n = split($$1,a,/,/); for (i=2; i<=n; i++) print a[1], a[i]; }
@@ -631,7 +635,8 @@ $(MANTXTS):	workman.sh
 # to be the maximum of the files it depends on.
 set-timestamps.out: $(ENCHILADA)
 		rm -f $@
-		if files=`git ls-files $(ENCHILADA)` && \
+		if (type git) >/dev/null 2>&1 && \
+		   files=`git ls-files $(ENCHILADA)` && \
 		   touch -md @1 test.out; then \
 		  rm -f test.out && \
 		  for file in $$files; do \
@@ -648,8 +653,8 @@ set-timestamps.out: $(ENCHILADA)
 		  touch -cmr `ls -t $$file workman.sh | sed 1q` $$file.txt || \
 		    exit; \
 		done
-		touch -cmr $$(ls -t $(TZS_DEPS) | sed 1q) $(TZS)
-		touch -cmr $$(ls -t $(VERSION_DEPS) | sed 1q) version
+		touch -cmr `ls -t $(TZS_DEPS) | sed 1q` $(TZS)
+		touch -cmr `ls -t $(VERSION_DEPS) | sed 1q` version
 		touch $@
 
 # The zics below ensure that each data file can stand on its own.
@@ -673,11 +678,12 @@ check_time_t_alternatives:
 		else \
 		  quiet_option=''; \
 		fi && \
+		wd=`pwd` && \
 		zones=`$(AWK) '/^[^#]/ { print $$3 }' <zone1970.tab` && \
 		for type in $(TIME_T_ALTERNATIVES); do \
 		  mkdir -p time_t.dir/$$type && \
 		  $(MAKE) clean_misc && \
-		  $(MAKE) TOPDIR=$$(pwd)/time_t.dir/$$type \
+		  $(MAKE) TOPDIR="$$wd/time_t.dir/$$type" \
 		    CFLAGS='$(CFLAGS) -Dtime_tz='"'$$type'" \
 		    REDO='$(REDO)' \
 		    install && \
@@ -702,7 +708,8 @@ check_time_t_alternatives:
 		rm -fr time_t.dir
 
 tarballs traditional_tarballs signatures traditional_signatures: version
-		$(MAKE) VERSION="$$(cat version)" $@_version
+		VERSION=`cat version` && \
+		$(MAKE) VERSION="$$VERSION" $@_version
 
 tarballs_version: traditional_tarballs_version tzdb-$(VERSION).tar.lz
 traditional_tarballs_version: \
@@ -726,7 +733,7 @@ tzdb-$(VERSION).tar.lz: set-timestamps.out
 		rm -fr tzdb-$(VERSION)
 		mkdir tzdb-$(VERSION)
 		ln $(ENCHILADA) tzdb-$(VERSION)
-		touch -cmr $$(ls -t tzdb-$(VERSION)/* | sed 1q) tzdb-$(VERSION)
+		touch -cmr `ls -t tzdb-$(VERSION)/* | sed 1q` tzdb-$(VERSION)
 		LC_ALL=C && export LC_ALL && \
 		tar $(TARFLAGS) -cf - tzdb-$(VERSION) | lzip -9 > $@
 

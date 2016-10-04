@@ -78,9 +78,9 @@
 
 /* Enable tm_gmtoff and tm_zone on GNUish systems.  */
 #define _GNU_SOURCE 1
-/* Fix asctime_r on Solaris 10.  */
+/* Fix asctime_r on Solaris 11.  */
 #define _POSIX_PTHREAD_SEMANTICS 1
-/* Enable strtoimax on Solaris 10.  */
+/* Enable strtoimax on pre-C99 Solaris 11.  */
 #define __EXTENSIONS__ 1
 
 /*
@@ -161,15 +161,15 @@
 
 /*
 ** Define HAVE_STDINT_H's default value here, rather than at the
-** start, since __GLIBC__'s value depends on previously-included
-** files.
-** (glibc 2.1 and later have stdint.h, even with pre-C99 compilers.)
+** start, since __GLIBC__ and INTMAX_MAX's values depend on
+** previously-included files.  glibc 2.1 and Solaris 10 and later have
+** stdint.h, even with pre-C99 compilers.
 */
 #ifndef HAVE_STDINT_H
 #define HAVE_STDINT_H \
    (199901 <= __STDC_VERSION__ \
     || 2 < __GLIBC__ + (1 <= __GLIBC_MINOR__)	\
-    || __CYGWIN__)
+    || __CYGWIN__ || INTMAX_MAX)
 #endif /* !defined HAVE_STDINT_H */
 
 #if HAVE_STDINT_H

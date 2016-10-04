@@ -496,15 +496,14 @@ label:
 				*/
 				continue;
 			case 'z':
+#if defined TM_GMTOFF || defined USG_COMPAT || defined ALTZONE
 				{
 				long		diff;
 				char const *	sign;
 
-				if (t->tm_isdst < 0)
-					continue;
-#ifdef TM_GMTOFF
+# ifdef TM_GMTOFF
 				diff = t->TM_GMTOFF;
-#else /* !defined TM_GMTOFF */
+# else
 				/*
 				** C99 says that the UT offset must
 				** be computed by looking only at
@@ -524,19 +523,21 @@ label:
 				** determinable, so output nothing if the
 				** appropriate variables are not available.
 				*/
+				if (t->tm_isdst < 0)
+					continue;
 				if (t->tm_isdst == 0)
-#ifdef USG_COMPAT
+#  ifdef USG_COMPAT
 					diff = -timezone;
-#else /* !defined USG_COMPAT */
+#  else
 					continue;
-#endif /* !defined USG_COMPAT */
+#  endif
 				else
-#ifdef ALTZONE
+#  ifdef ALTZONE
 					diff = -altzone;
-#else /* !defined ALTZONE */
+#  else
 					continue;
-#endif /* !defined ALTZONE */
-#endif /* !defined TM_GMTOFF */
+#  endif
+# endif
 				if (diff < 0) {
 					sign = "-";
 					diff = -diff;
@@ -547,6 +548,7 @@ label:
 					(diff % MINSPERHOUR);
 				pt = _conv(diff, "%04d", pt, ptlim);
 				}
+#endif
 				continue;
 			case '+':
 				pt = _fmt(Locale->date_fmt, t, pt, ptlim,

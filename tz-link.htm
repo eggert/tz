@@ -554,19 +554,69 @@ mean solar and standard time, highlighting areas such as western China
 where the two differ greatly. It's a bit out of date, unfortunately.</li>
 </ul>
 <h2 id="boundaries">Time zone boundaries</h2>
+<p>Geographical boundaries between time zone regions are available
+from several <a href="https://en.wikipedia.org/wiki/Geolocation">geolocation</a>
+services and other sources.</p>
 <ul>
+<li>Databases of time zone boundaries include:
+<ul>
+<li><a href="https://github.com/evansiroky/timezone-boundary-builder">Timezone
+Boundary Builder</a> extracts
+<a href="http://www.openstreetmap.org">Open Street Map</a> data to build
+boundaries of <code><abbr>tz</abbr></code> regions.
+Its code is freely available under the <abbr>MIT</abbr> license, and
+its data entries are freely available under the
+<a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons
+Open Database License</a>. The maps' borders appear to be quite accurate.</li>
 <li><a href="http://efele.net/maps/tz/"><abbr>TZ</abbr> timezones
 maps</a> contains <a
 href="https://en.wikipedia.org/wiki/Shapefile">shapefiles</a> of
-sets of <code><abbr>tz</abbr></code> regions.</li>
+sets of <code><abbr>tz</abbr></code> regions. This includes
+<a href="http://efele.net/maps/tz/world/">tz_world</a>, a shapefile
+for all the world's regions</li>
+<li><a
+href="https://github.com/straup/whereonearth-timezone">Whereonearth-timezone</a>
+is in <a href="http://geojson.org">GeoJSON</a> form, and combines the
+the tz_world shapefiles with the GeoPlanet dataset.</li>
+</ul></li>
+<li>Programmatic interfaces that map geographical coordinates via tz_world to
+<code><abbr>tz</abbr></code> regions include:
+<ul>
+<li><a href="https://github.com/mj1856/GeoTimeZone">GeoTimeZone</a> is
+written in <a
+href="https://en.wikipedia.org/wiki/C_Sharp_(programming_language)">C#</a>
+and is freely available under the <abbr>MIT</abbr> license.</li>
 <li>The <a href="https://github.com/bradfitz/latlong">latlong package</a>
-maps geographical coordinates to a <code><abbr>tz</abbr></code> region.
-It is written in Go and is freely available under the Apache License.</li>
+is written in Go and is freely available under the Apache License.</li>
+<li><a href="https://github.com/drtimcooper/LatLongToTimezone">LatLongToTimezone</a>,
+in both Java and
+<a href="https://en.wikipedia.org/wiki/Swift_(programming_language)">Swift</a>
+form, is freely available under the MIT license.</li>
+<li>The <a
+href="https://github.com/MrMinimal64/timezonefinder">timezonefinder</a>
+library for Python is freely available under the MIT license.
+<li>The <a
+href="https://github.com/gunyarakun/timezone_finder">timezone_finder</a>
+library for Ruby is freely available under the MIT license.</li>
+<li>The <a href="https://www.npmjs.com/package/tz-lookup">tz-lookup module</a>
+for <a href="https://nodejs.org/en/">Node.js</a> is in the public domain.</li>
 <li><a href="https://derickrethans.nl/what-time-is-it.html">What Time
 is It Here?</a> applies <a href="https://www.mongodb.com">MongoDB</a>
 geospatial query operators to shapefiles' data.</li>
+</ul></li>
+<li>Free access via a network API, if you register a key, is provided by
+the <a href="http://www.geonames.org/export/web-services.html#timezone">GeoNames Timezone web service</a>,
+the <a href="https://developers.google.com/maps/documentation/timezone/intro">Google Maps Time Zone API</a>, and
+the <a href="https://timezonedb.com">Time Zone Database &amp; API</a>.
+Commercial network API access is also provided
+by <a href="https://askgeo.com">AskGeo</a>
+and <a href="https://www.geogarage.com/blog/news-1/post/geogarage-time-zone-api-31">GeoGarage</a>.</li>
+<li>"<a
+href="http://stackoverflow.com/questions/16086962/how-to-get-a-time-zone-from-a-location-using-latitude-and-longitude-coordinates/16086964">How
+to get a time zone from a location using latitude and longitude
+coordinates?</a>" discusses other geolocation possibilities.</li>
 <li><a href="http://statoids.com/statoids.html">Administrative
-Divisions of Countries ("Statoids")</a> contains lists of
+Divisions of Countries ("Statoids")</a> lists
 political subdivision data related to time zones.</li>
 <li><a href="http://home.kpn.nl/vanadovv/time/Multizones.html">Time
 zone boundaries for multizone countries</a> summarizes legal

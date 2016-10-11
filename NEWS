@@ -31,6 +31,10 @@ Unreleased, experimental changes
     tm_zone and localtime_rz that have long been supported by the
     reference code.
 
+    tz-link.htm has improved coverage of time zone boundaries suitable
+    for geolocation.  (Thanks to heads-ups from Evan Siroky and Matt
+    Johnson.)
+
     The US commentary now mentions Allen and the "day of two noons".
 
     The Fiji commentary mentions the government's 2016-10-03 press

@@ -10,7 +10,7 @@
  content="Sources for time zone and daylight saving time data">
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2016-09-21">
+<meta name="DC.Date" content="2016-10-11">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -27,7 +27,7 @@ histories and planned futures are often recorded only fitfully. Here
 is a summary of attempts to organize and record relevant data in this
 area.
 </p>
-<h2>The <code><abbr title="time zone">tz</abbr></code> database</h2>
+<h2 id="tzdb">The <code><abbr title="time zone">tz</abbr></code> database</h2>
 <p>
 The <a href="https://en.wikipedia.org/wiki/Public_domain">public-domain</a>
 time zone database contains code and data
@@ -152,7 +152,7 @@ The code lets you compile the <code><abbr>tz</abbr></code> source files into
 machine-readable binary files, one for each location. It also lets
 you read a <code><abbr>tz</abbr></code> binary file and interpret time stamps for that
 location.</p>
-<h2>Changes to the <code><abbr>tz</abbr></code> database</h2>
+<h2 id="changes">Changes to the <code><abbr>tz</abbr></code> database</h2>
 <p>
 The <code><abbr>tz</abbr></code> code and data
 are by no means authoritative. If you find errors, please
@@ -194,7 +194,7 @@ For further information about updates, please see
 <a href="https://tools.ietf.org/html/rfc6557">Procedures for
 Maintaining the Time Zone Database</a> (Internet <abbr
 title="Request For Comments">RFC</abbr> 6557).</p>
-<h2>Commentary on the <code><abbr>tz</abbr></code> database</h2>
+<h2 id="commentary">Commentary on the <code><abbr>tz</abbr></code> database</h2>
 <ul>
 <li>The article
 <a href="https://en.wikipedia.org/wiki/Tz_database">tz database</a> is
@@ -212,7 +212,8 @@ href="https://blog.jonudell.net/2009/10/23/a-literary-appreciation-of-the-olsonz
 literary appreciation of the Olson/Zoneinfo/tz database</a> comments on the
 database's style.</li>
 </ul>
-<h2>Web sites using recent versions of the <code><abbr>tz</abbr></code> database</h2>
+<h2 id="web">Web sites using recent versions of the
+<code><abbr>tz</abbr></code> database</h2>
 <p>
 These are listed roughly in ascending order of complexity and fanciness.
 </p>
@@ -242,7 +243,7 @@ calculates the current time difference between locations.</li>
 also contains data about time zone boundaries; it supports queries via place
 names and shows location maps.</li>
 </ul>
-<h2>Network protocols for <code><abbr>tz</abbr></code> data</h2>
+<h2 id="protocols">Network protocols for <code><abbr>tz</abbr></code> data</h2>
 <ul>
 <li>The <a href="https://www.ietf.org">Internet Engineering Task Force</a>'s
 <a href="https://datatracker.ietf.org/wg/tzdist/charter/">Time Zone Data
@@ -267,7 +268,7 @@ title="Extensible Markup Language">XML</abbr></a> format, and a variant
 uses <a href="http://www.json.org"><abbr
 title="JavaScript Object Notation">JSON</abbr></a> format.</li>
 </ul>
-<h2>Other <code><abbr>tz</abbr></code> compilers</h2>
+<h2 id="compilers">Other <code><abbr>tz</abbr></code> compilers</h2>
 <ul>
 <li><a href="https://sourceforge.net/projects/vzic/">Vzic</a> is a <a
 href="https://en.wikipedia.org/wiki/C_%28programming_language%29">C</a>
@@ -390,7 +391,7 @@ source into text files, along with a runtime that can read those
 files. Tcl is freely available under a <abbr>BSD</abbr>-style
 license.</li>
 </ul>
-<h2>Other <code><abbr>tz</abbr></code> binary file readers</h2>
+<h2 id="binary">Other <code><abbr>tz</abbr></code> binary file readers</h2>
 <ul>
 <li>The <a
 href="https://www.gnu.org/software/libc/"><abbr>GNU</abbr> C
@@ -439,7 +440,7 @@ package contains <a href="https://www.haskell.org">Haskell</a> code that
 parses and uses <code><abbr>tz</abbr></code> binary data. It is freely
 available under a <abbr>BSD</abbr>-style license.</li>
 </ul>
-<h2>Other <code><abbr>tz</abbr></code>-based time zone software</h2>
+<h2 id="software">Other <code><abbr>tz</abbr></code>-based time zone software</h2>
 <ul>
 <li><a href="https://foxclocks.org">FoxClocks</a>
 is an extension for <a href="https://www.google.com/chrome/">Google
@@ -496,7 +497,7 @@ an <abbr>OS X</abbr> program. Its developers
 <a href="http://veladg.com/tzoffer.html">offer free
 licenses</a> to <code><abbr>tz</abbr></code> contributors.</li>
 </ul>
-<h2>Other time zone databases</h2>
+<h2 id="other-dbs">Other time zone databases</h2>
 <ul>
 <li><a href="http://www.astro.com/atlas">Time-zone Atlas</a>
 is Astrodienst's Web version of Shanks and Pottenger's
@@ -525,7 +526,7 @@ Schedules Information Manual</a> of the
 International Air Transport Association
 gives current time zone rules for airports served by commercial aviation.</li>
 </ul>
-<h2>Maps</h2>
+<h2 id="maps">Maps</h2>
 <ul>
 <li>The <a href="https://www.cia.gov/index.html">United States Central
 Intelligence Agency (<abbr
@@ -552,7 +553,7 @@ much is time wrong around the world?</a> maps the difference between
 mean solar and standard time, highlighting areas such as western China
 where the two differ greatly. It's a bit out of date, unfortunately.</li>
 </ul>
-<h2>Time zone boundaries</h2>
+<h2 id="boundaries">Time zone boundaries</h2>
 <ul>
 <li><a href="http://efele.net/maps/tz/"><abbr>TZ</abbr> timezones
 maps</a> contains <a
@@ -589,7 +590,7 @@ for land and territorial waters only). A captain can change ship's
 clocks any time after entering a new time zone; midnight changes are
 common.</li>
 </ul>
-<h2>Civil time concepts and history</h2>
+<h2 id="civil">Civil time concepts and history</h2>
 <ul>
 <li><a href="http://physics.nist.gov/time">A
 Walk through Time</a>
@@ -609,7 +610,7 @@ time zone boundary.</li>
 <li><a href="http://statoids.com/tconcept.html">Basic Time
 Zone Concepts</a> discusses terminological issues behind time zones.</li>
 </ul>
-<h2>National histories of legal time</h2>
+<h2 id="national">National histories of legal time</h2>
 <dl>
 <dt>Australia</dt>
 <dd>The Parliamentary Library has commissioned a <a
@@ -679,7 +680,7 @@ of Summer time dates</a>.</dd>
 href="https://www.transportation.gov/regulations/recent-time-zone-proceedings">Recent
 Time Zone Proceedings</a> lists changes to time zone boundaries.</dd>
 </dl>
-<h2>Precision timekeeping</h2>
+<h2 id="precision">Precision timekeeping</h2>
 <ul>
 <li><a
 href="http://literature.agilent.com/litweb/pdf/5965-7984E.pdf">The
@@ -752,7 +753,7 @@ might be redefined
 without Leap Seconds</a> gives pointers on this
 contentious issue.</li>
 </ul>
-<h2>Time notation</h2>
+<h2 id="notation">Time notation</h2>
 <ul>
 <li>The <a href="http://cldr.unicode.org">Unicode Common Locale Data
 Repository (<abbr>CLDR</abbr>) Project</a> has localizations for time
@@ -826,7 +827,7 @@ any future changes to the rules. One should never set
 local time is nine hours ahead of <abbr>UTC</abbr> and the time zone
 is called "<abbr>GMT</abbr>".</li>
 </ul>
-<h2>See also</h2>
+<h2 id="see-also">See also</h2>
 <ul>
 <li><a href="tz-art.htm">Time and the Arts</a></li>
 </ul>

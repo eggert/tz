@@ -2544,11 +2544,6 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # From Paul Eggert (2015-03-03):
 # http://www.timeanddate.com/time/change/west-bank/ramallah?year=2014
 # says that the fall 2014 transition was Oct 23 at 24:00.
-# For future dates, guess the last Friday in March at 24:00 through
-# the first Friday on or after October 21 at 00:00.  This is consistent with
-# the predictions in today's editions of the following URLs:
-# http://www.timeanddate.com/time/change/gaza-strip/gaza
-# http://www.timeanddate.com/time/change/west-bank/hebron
 
 # From Hannah Kreitem (2016-03-09):
 # http://www.palestinecabinet.gov.ps/WebSite/ar/ViewDetails?ID=31728
@@ -2558,19 +2553,21 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 #
 # From Paul Eggert (2016-03-12):
 # Predict spring transitions on March's last Saturday at 01:00 from now on.
-#
+
 # From Sharef Mustafa (2016-10-19):
 # [T]he Palestinian cabinet decision (Mar 8th 2016) published on
 # http://www.palestinecabinet.gov.ps/WebSite/Upload/Decree/GOV_17/16032016134830.pdf
 # states that summer time will end on Oct 29th at 01:00.
-# ...
-# http://www.pal24.net/news/90179.html
-# http://palweather.ps/ar/node/31792.html
 #
 # From Tim Parenti (2016-10-19):
 # Predict fall transitions on October's last Saturday at 01:00 from now on.
 # This is consistent with the 2016 transition as well as our spring
 # predictions.
+#
+# From Paul Eggert (2016-10-19):
+# It's also consistent with predictions in the following URLs today:
+# http://www.timeanddate.com/time/change/gaza-strip/gaza
+# http://www.timeanddate.com/time/change/west-bank/hebron
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule EgyptAsia	1957	only	-	May	10	0:00	1:00	S

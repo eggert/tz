@@ -2,6 +2,14 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to past and future time stamps
+
+	Asia/Gaza and Asia/Hebron end DST on 2016-10-29 at 01:00, not
+	2016-10-21 at 00:00.  (Thanks to Sharef Mustafa.)  Predict that
+	future fall transitions will be on the last Saturday of October
+	at 01:00, which is consistent with predicted spring transitions
+	on the last Saturday of March.  (Thanks to Tim Parenti.)
+
   Changes to past time stamps
 
     In Turkey, transitions in 1986-1990 were at 01:00 standard time

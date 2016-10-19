@@ -8,6 +8,14 @@ Unreleased, experimental changes
     not at 02:00, and the spring 1994 transition was on March 20, not
     March 27.  (Thanks to Kıvanç Yazan.)
 
+  Changes to past and future time zone abbreviations
+
+    Asia/Colombo now uses numeric time zone abbreviations like "+0530"
+    instead of alphabetic ones like "IST" and "LKT".  Various
+    English-language sources use "IST", "LKT" and "SLST", with no
+    working consensus.  (Usage of "SLST" mentioned by Sadika
+    Sumanapala.)
+
   Changes to code
 
     zic no longer mishandles relativizing file names when creating

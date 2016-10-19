@@ -2739,45 +2739,31 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 # People who live in regions under Tamil control can use [TZ='Asia/Kolkata'],
 # as that zone has agreed with the Tamil areas since our cutoff date of 1970.
 
-# From K Sethu (2006-04-25):
-# I think the abbreviation LKT originated from the world of computers at
-# the time of or subsequent to the time zone changes by SL Government
-# twice in 1996 and probably SL Government or its standardization
-# agencies never declared an abbreviation as a national standard.
+# From Sadika Sumanapala (2016-10-19):
+# According to http://www.sltime.org (maintained by Measurement Units,
+# Standards & Services Department, Sri Lanka) abbreviation for Sri Lanka
+# standard time is SLST.
 #
-# I recollect before the recent change the government announcements
-# mentioning it as simply changing Sri Lanka Standard Time or Sri Lanka
-# Time and no mention was made about the abbreviation.
-#
-# If we look at Sri Lanka Department of Government's "Official News
-# Website of Sri Lanka" ... http://www.news.lk/ we can see that they
-# use SLT as abbreviation in time stamp at the beginning of each news
-# item....
-#
-# Within Sri Lanka I think LKT is well known among computer users and
-# administrators.  In my opinion SLT may not be a good choice because the
-# nation's largest telcom / internet operator Sri Lanka Telcom is well
-# known by that abbreviation - simply as SLT (there IP domains are
-# slt.lk and sltnet.lk).
-#
-# But if indeed our government has adopted SLT as standard abbreviation
-# (that we have not known so far) then  it is better that it be used for
-# all computers.
-
-# From Paul Eggert (2006-04-25):
-# One possibility is that we wait for a bit for the dust to settle down
-# and then see what people actually say in practice.
+# From Paul Eggert (2016-10-18):
+# "SLST" seems to be reasonably recent and rarely-used outside time
+# zone nerd sources.  I searched Google News and found three uses of
+# it in the International Business Times of India in February and
+# March of this year when discussing cricket match times, but nothing
+# since then (though there has been a lot of cricket) and nothing in
+# other English-language news sources.  Our old abbreviation "LKT" is
+# even worse.  For now, let's use a numeric abbreviation; we can
+# switch to "SLST" if it catches on.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Colombo	5:19:24 -	LMT	1880
 			5:19:32	-	MMT	1906        # Moratuwa Mean Time
-			5:30	-	IST	1942 Jan  5
-			5:30	0:30	IHST	1942 Sep
-			5:30	1:00	IST	1945 Oct 16  2:00
-			5:30	-	IST	1996 May 25  0:00
-			6:30	-	LKT	1996 Oct 26  0:30
-			6:00	-	LKT	2006 Apr 15  0:30
-			5:30	-	IST
+			5:30	-	+0530	1942 Jan  5
+			5:30	0:30	+0530/+06 1942 Sep
+			5:30	1:00	+0530/+0630 1945 Oct 16  2:00
+			5:30	-	+0530	1996 May 25  0:00
+			6:30	-	+0630	1996 Oct 26  0:30
+			6:00	-	+06	2006 Apr 15  0:30
+			5:30	-	+0530
 
 # Syria
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S

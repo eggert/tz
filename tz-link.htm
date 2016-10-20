@@ -10,7 +10,7 @@
  content="Sources for time zone and daylight saving time data">
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2016-10-11">
+<meta name="DC.Date" content="2016-10-19">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -250,9 +250,13 @@ names and shows location maps.</li>
 Distribution Service (tzdist) working group</a> defined <a
 href="https://tools.ietf.org/html/rfc7808">TZDIST</a>
 (Internet <abbr>RFC</abbr> 7808), a time zone data distribution service,
-along with a <a href="https://tools.ietf.org/html/rfc7809">calendar access
-protocol for transferring time zone data by reference</a>
-(Internet <abbr>RFC</abbr> 7809).</li>
+along with <a href="https://tools.ietf.org/html/rfc7809">CalDAV</a>
+(Internet <abbr>RFC</abbr> 7809), a calendar access protocol for
+transferring time zone data by reference. The draft <a name="TZDIST-Geolocate"
+href="https://tools.ietf.org/html/draft-murchison-tzdist-geolocate-00">TZDIST
+Geolocate Extension</a> lets a client determine its time zone region
+from its geographic location using a <a
+href="https://tools.ietf.org/html/rfc5870">'geo' URI</a>.</li>
 <li>The <a href="https://tools.ietf.org/html/rfc5545">
 Internet Calendaring and Scheduling Core Object Specification
 (iCalendar)</a> (Internet <abbr>RFC</abbr> 5445)
@@ -299,13 +303,13 @@ Database Parser</a> is a
 runtime library. It is freely available under the
 <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons
 Attribution 4.0 International Public License</a>.</li>
-<li><a href="http://site.icu-project.org">International Components for
+<li><a name="ICU" href="http://site.icu-project.org">International Components for
 Unicode (<abbr>ICU</abbr>)</a> contains C/C++ and <a
 href="https://en.wikipedia.org/wiki/Java_%28programming_language%29">Java</a>
 libraries for internationalization that
 has a compiler from <code><abbr>tz</abbr></code> source
 and from <abbr title="Common Locale Data Repository">CLDR</abbr> data
-(mentioned below)
+(mentioned <a href="#CLDR">below</a>)
 into an <abbr>ICU</abbr>-specific format.
 <abbr>ICU</abbr> is freely available under a
 <abbr>BSD</abbr>-style license.</li>
@@ -341,7 +345,7 @@ available under the <a
 href="https://www.gnu.org/copyleft/lesser.html"><abbr>GNU</abbr> Lesser
 General Public License (<abbr title="Lesser General Public
 License">LGPL</abbr>)</a>.</li>
-<li><abbr>ICU</abbr> (mentioned above) contains compilers and
+<li><abbr>ICU</abbr> (mentioned <a href="#ICU">above</a>) contains compilers and
 Java-based libraries.</li>
 </ul>
 <li><a href="http://nodatime.org">Noda Time &ndash; Date and
@@ -385,7 +389,7 @@ library that compiles <code><abbr>tz</abbr></code> source into a time
 zone repository whose format
 is either proprietary or an <abbr>XML</abbr>-encoded
 representation.</li>
-<li><a href="http://tcl.tk">Tcl</a>
+<li><a name="Tcl" href="http://tcl.tk">Tcl</a>
 contains a developer-oriented parser that compiles <code><abbr>tz</abbr></code>
 source into text files, along with a runtime that can read those
 files. Tcl is freely available under a <abbr>BSD</abbr>-style
@@ -420,7 +424,7 @@ It is freely available under the <abbr>LGPL</abbr>.</li>
 <li><a href="https://github.com/bigeasy/timezone">Timezone</a> is a
 JavaScript library that supports date arithmetic that is time zone
 aware. It is freely available under the <abbr>MIT</abbr> license.</li>
-<li>Tcl, mentioned above, also contains a
+<li>Tcl, mentioned <a href="#Tcl">above</a>, also contains a
 <code><abbr>tz</abbr></code> binary file reader.</li>
 <li><a href="http://search.cpan.org/perldoc?DateTime::TimeZone::Tzfile">
 DateTime::TimeZone::Tzfile</a>
@@ -463,11 +467,11 @@ clock (intclock)</a> is a clock that displays multiple time zones on
 under the <abbr>GPL</abbr>.</li>
 <li>Microsoft Windows 8.1
 and later has <code><abbr>tz</abbr></code> data and <abbr>CLDR</abbr>
-data (mentioned below) used by
+data (mentioned <a href="#CLDR">below</a>) used by
 <a href="https://en.wikipedia.org/wiki/Windows_Runtime">Windows Runtime</a>
 classes such as <a
 href="https://msdn.microsoft.com/en-us/library/windows/apps/windows.globalization.datetimeformatting.datetimeformatter.aspx"><code>DateTimeFormatter</code></a>.
-<a
+<a name="System.TimeZoneInfo"
 href="https://blogs.msdn.microsoft.com/bclteam/2007/06/07/exploring-windows-time-zones-with-system-timezoneinfo-josh-free/">Exploring
 Windows Time Zones with <code>System.TimeZoneInfo</code></a> describes
 the older, proprietary method of Microsoft Windows 2000 and later,
@@ -514,7 +518,8 @@ guessed many <abbr>UT</abbr> offsets and transitions. The atlases cite no
 sources and do not indicate which entries are guesswork.</li>
 <li><a href="https://en.wikipedia.org/wiki/HP-UX">HP-UX</a> has a database in
 its own <code>tztab</code>(4) format.</li>
-<li>Microsoft Windows has proprietary data mentioned above.</li>
+<li>Microsoft Windows has proprietary data mentioned
+<a href="#System.TimeZoneInfo">above</a>.</li>
 <li><a href="http://www.worldtimeserver.com">World Time Server</a>
 is another time zone database.</li>
 <li><a href="http://tycho.usno.navy.mil/tzones.html">World Time Zones</a>
@@ -608,9 +613,13 @@ geospatial query operators to shapefiles' data.</li>
 the <a href="http://www.geonames.org/export/web-services.html#timezone">GeoNames Timezone web service</a>,
 the <a href="https://developers.google.com/maps/documentation/timezone/intro">Google Maps Time Zone API</a>, and
 the <a href="https://timezonedb.com">Time Zone Database &amp; API</a>.
-Commercial network API access is also provided
+Commercial network API access is provided
 by <a href="https://askgeo.com">AskGeo</a>
-and <a href="https://www.geogarage.com/blog/news-1/post/geogarage-time-zone-api-31">GeoGarage</a>.</li>
+and <a href="https://www.geogarage.com/blog/news-1/post/geogarage-time-zone-api-31">GeoGarage</a>.
+Also, an <a
+href="http://mm.icann.org/pipermail/tz/2016-October/024309.html">experimental
+server</a> is available for the TZDIST Geolocate Extension mentioned
+<a href="#TZDIST-Geolocate">above</a>.</li>
 <li>"<a
 href="http://stackoverflow.com/questions/16086962/how-to-get-a-time-zone-from-a-location-using-latitude-and-longitude-coordinates/16086964">How
 to get a time zone from a location using latitude and longitude
@@ -701,7 +710,7 @@ Congress has published a <a
 href="http://www.diputados.gob.mx/bibliot/publica/inveyana/polisoc/horver/index.htm"
 hreflang="es">history of Mexican local time (in Spanish)</a>.</dd>
 <dt>Malaysia</dt>
-<dd>See Singapore below.</dd>
+<dd>See Singapore <a href="#Singapore">below</a>.</dd>
 <dt>Netherlands</dt>
 <dd><a href="http://www.staff.science.uu.nl/~gent0113/wettijd/wettijd.htm"
 hreflang="nl">Legal time in the Netherlands (in Dutch)</a>
@@ -713,7 +722,7 @@ Daylight Saving</a>. The privately-maintained <a
 href="http://astrologyschool.com/nztime.html">History of New Zealand
 time</a> has more details.</dd>
 <dt>Singapore</dt>
-<dd><a
+<dd><a name="Singapore"
 href="http://www.math.nus.edu.sg/aslaksen/teaching/timezone.html">Why
 is Singapore in the "Wrong" Time Zone?</a> details the
 history of legal time in Singapore and Malaysia.</dd>
@@ -805,7 +814,7 @@ contentious issue.</li>
 </ul>
 <h2 id="notation">Time notation</h2>
 <ul>
-<li>The <a href="http://cldr.unicode.org">Unicode Common Locale Data
+<li>The <a name="CLDR" href="http://cldr.unicode.org">Unicode Common Locale Data
 Repository (<abbr>CLDR</abbr>) Project</a> has localizations for time
 zone names, abbreviations, identifiers, and formats. For example, it
 contains French translations for "Eastern European Summer Time",
@@ -828,9 +837,8 @@ interchange &ndash; Representation of dates and times</a>.</li>
 <a href="https://www.w3.org/TR/xmlschema-2/#dateTime"><abbr>XML</abbr>
 Schema: Datatypes &ndash; dateTime</a> specifies a format inspired by
 <abbr>ISO</abbr> 8601 that is in common use in <abbr>XML</abbr> data.</li>
-<li>
-<a href="https://tools.ietf.org/html/rfc5322">Internet
-Message Format</a> (Internet <abbr>RFC</abbr> 5322) &sect;3.3
+<li><a href="https://tools.ietf.org/html/rfc5322#section-3.3">&sect;3.3 of
+Internet Message Format</a> (Internet <abbr>RFC</abbr> 5322)
 specifies the time notation used in email and <a
 href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol"><abbr>HTTP</abbr></a>
 headers.</li>

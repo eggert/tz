@@ -209,12 +209,16 @@ typedef long		int_fast64_t;
 # endif
 #endif
 
-#ifndef SCNdFAST64
+#ifndef PRIdFAST64
 # if INT_FAST64_MAX == LLONG_MAX
-#  define SCNdFAST64 "lld"
+#  define PRIdFAST64 "lld"
 # else
-#  define SCNdFAST64 "ld"
+#  define PRIdFAST64 "ld"
 # endif
+#endif
+
+#ifndef SCNdFAST64
+# define SCNdFAST64 PRIdFAST64
 #endif
 
 #ifndef INT_FAST32_MAX
@@ -508,9 +512,28 @@ time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_PURE;
 #define MINVAL(t, b)						\
   ((t) (TYPE_SIGNED(t) ? - TWOS_COMPLEMENT(t) - MAXVAL(t, b) : 0))
 
-/* The minimum and maximum finite time values.  This assumes no padding.  */
+/* The minimum and maximum finite time values.  This implementation
+   assumes no padding if time_t is signed and either the compiler is
+   pre-C11 or time_t is not one of the standard signed integer types.  */
+#if 201112 <= __STDC_VERSION__
+static time_t const time_t_min
+  = (TYPE_SIGNED(time_t)
+     ? _Generic((time_t) 0,
+		signed char: SCHAR_MIN, short: SHRT_MIN,
+		int: INT_MIN, long: LONG_MIN, long long: LLONG_MIN,
+		default: MINVAL(time_t, TYPE_BIT(time_t)))
+     : 0);
+static time_t const time_t_max
+  = (TYPE_SIGNED(time_t)
+     ? _Generic((time_t) 0,
+		signed char: SCHAR_MAX, short: SHRT_MAX,
+		int: INT_MAX, long: LONG_MAX, long long: LLONG_MAX,
+		default: MAXVAL(time_t, TYPE_BIT(time_t)))
+     : -1);
+#else
 static time_t const time_t_min = MINVAL(time_t, TYPE_BIT(time_t));
 static time_t const time_t_max = MAXVAL(time_t, TYPE_BIT(time_t));
+#endif
 
 #ifndef INT_STRLEN_MAXIMUM
 /*

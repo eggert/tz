@@ -9,6 +9,7 @@
 #include "tzfile.h"
 
 #include <stdarg.h>
+#include <stddef.h>
 
 #define	ZIC_VERSION_PRE_2013 '2'
 #define	ZIC_VERSION	'3'
@@ -16,6 +17,7 @@
 typedef int_fast64_t	zic_t;
 #define ZIC_MIN INT_FAST64_MIN
 #define ZIC_MAX INT_FAST64_MAX
+#define PRIdZIC PRIdFAST64
 #define SCNdZIC SCNdFAST64
 
 #ifndef ZIC_MAX_ABBR_LEN_WO_WARN
@@ -38,9 +40,18 @@ typedef int_fast64_t	zic_t;
 #define MKDIR_UMASK 0755
 #endif
 
+/* The maximum ptrdiff_t value, for pre-C99 platforms.  */
+#ifndef PTRDIFF_MAX
+static ptrdiff_t const PTRDIFF_MAX = MAXVAL(ptrdiff_t, TYPE_BIT(ptrdiff_t));
+#endif
+
+/* The type and printf format for line numbers.  */
+typedef intmax_t lineno;
+#define PRIdLINENO PRIdMAX
+
 struct rule {
 	const char *	r_filename;
-	int		r_linenum;
+	lineno		r_linenum;
 	const char *	r_name;
 
 	zic_t		r_loyear;	/* for example, 1986 */
@@ -63,7 +74,7 @@ struct rule {
 	zic_t		r_stdoff;	/* offset from standard time */
 	const char *	r_abbrvar;	/* variable part of abbreviation */
 
-	int		r_todo;		/* a rule to do (used in outzone) */
+	bool		r_todo;		/* a rule to do (used in outzone) */
 	zic_t		r_temp;		/* used in outzone */
 };
 
@@ -77,7 +88,7 @@ struct rule {
 
 struct zone {
 	const char *	z_filename;
-	int		z_linenum;
+	lineno		z_linenum;
 
 	const char *	z_name;
 	zic_t		z_gmtoff;
@@ -88,7 +99,7 @@ struct zone {
 	zic_t		z_stdoff;
 
 	struct rule *	z_rules;
-	int		z_nrules;
+	ptrdiff_t	z_nrules;
 
 	struct rule	z_untilrule;
 	zic_t		z_untiltime;
@@ -133,14 +144,14 @@ static char	lowerit(char);
 static void	mkdirs(char const *, bool);
 static void	newabbr(const char * abbr);
 static zic_t	oadd(zic_t t1, zic_t t2);
-static void	outzone(const struct zone * zp, int ntzones);
+static void	outzone(const struct zone * zp, ptrdiff_t ntzones);
 static zic_t	rpytime(const struct rule * rp, zic_t wantedy);
 static void	rulesub(struct rule * rp,
 			const char * loyearp, const char * hiyearp,
 			const char * typep, const char * monthp,
 			const char * dayp, const char * timep);
 static zic_t	tadd(zic_t t1, zic_t t2);
-static bool	yearistype(int year, const char * type);
+static bool	yearistype(zic_t year, const char * type);
 
 /* Bound on length of what %z can expand to.  */
 enum { PERCENT_Z_LEN_BOUND = sizeof "+995959" - 1 };
@@ -160,17 +171,17 @@ static int		leapcnt;
 static bool		leapseen;
 static zic_t		leapminyear;
 static zic_t		leapmaxyear;
-static int		linenum;
+static lineno		linenum;
 static int		max_abbrvar_len = PERCENT_Z_LEN_BOUND;
 static int		max_format_len;
 static zic_t		max_year;
 static zic_t		min_year;
 static bool		noise;
 static const char *	rfilename;
-static int		rlinenum;
+static lineno		rlinenum;
 static const char *	progname;
-static int		timecnt;
-static int		timecnt_alloc;
+static ptrdiff_t	timecnt;
+static ptrdiff_t	timecnt_alloc;
 static int		typecnt;
 
 /*
@@ -255,23 +266,23 @@ static int		typecnt;
 #define YR_ONLY		2
 
 static struct rule *	rules;
-static int		nrules;	/* number of rules */
-static int		nrules_alloc;
+static ptrdiff_t	nrules;	/* number of rules */
+static ptrdiff_t	nrules_alloc;
 
 static struct zone *	zones;
-static int		nzones;	/* number of zones */
-static int		nzones_alloc;
+static ptrdiff_t	nzones;	/* number of zones */
+static ptrdiff_t	nzones_alloc;
 
 struct link {
 	const char *	l_filename;
-	int		l_linenum;
+	lineno		l_linenum;
 	const char *	l_from;
 	const char *	l_to;
 };
 
 static struct link *	links;
-static int		nlinks;
-static int		nlinks_alloc;
+static ptrdiff_t	nlinks;
+static ptrdiff_t	nlinks_alloc;
 
 struct lookup {
 	const char *	l_word;
@@ -425,16 +436,16 @@ ecpyalloc (char const *str)
 }
 
 static void *
-growalloc(void *ptr, size_t itemsize, int nitems, int *nitems_alloc)
+growalloc(void *ptr, size_t itemsize, ptrdiff_t nitems, ptrdiff_t *nitems_alloc)
 {
 	if (nitems < *nitems_alloc)
 		return ptr;
 	else {
-		int nitems_max = INT_MAX - WORK_AROUND_QTBUG_53071;
-		int amax = nitems_max < SIZE_MAX ? nitems_max : SIZE_MAX;
+		ptrdiff_t nitems_max = PTRDIFF_MAX - WORK_AROUND_QTBUG_53071;
+		ptrdiff_t amax = nitems_max < SIZE_MAX ? nitems_max : SIZE_MAX;
 		if ((amax - 1) / 3 * 2 < *nitems_alloc)
-			memory_exhausted(_("int overflow"));
-		*nitems_alloc = *nitems_alloc + (*nitems_alloc >> 1) + 1;
+			memory_exhausted(_("integer overflow"));
+		*nitems_alloc += (*nitems_alloc >> 1) + 1;
 		return erealloc(ptr, size_product(*nitems_alloc, itemsize));
 	}
 }
@@ -444,8 +455,7 @@ growalloc(void *ptr, size_t itemsize, int nitems, int *nitems_alloc)
 */
 
 static void
-eats(const char *const name, const int num, const char *const rname,
-     const int rnum)
+eats(char const *name, lineno num, char const *rname, lineno rnum)
 {
 	filename = name;
 	linenum = num;
@@ -454,7 +464,7 @@ eats(const char *const name, const int num, const char *const rname,
 }
 
 static void
-eat(const char *const name, const int num)
+eat(char const *name, lineno num)
 {
 	eats(name, num, NULL, -1);
 }
@@ -468,10 +478,10 @@ verror(const char *const string, va_list args)
 	** on BSD systems.
 	*/
 	if (filename)
-	  fprintf(stderr, _("\"%s\", line %d: "), filename, linenum);
+	  fprintf(stderr, _("\"%s\", line %"PRIdLINENO": "), filename, linenum);
 	vfprintf(stderr, string, args);
 	if (rfilename != NULL)
-		fprintf(stderr, _(" (rule from \"%s\", line %d)"),
+		fprintf(stderr, _(" (rule from \"%s\", line %"PRIdLINENO")"),
 			rfilename, rlinenum);
 	fprintf(stderr, "\n");
 }
@@ -554,9 +564,8 @@ static const char *	yitcommand;
 int
 main(int argc, char **argv)
 {
-	register int	i;
-	register int	j;
-	register int	c;
+	register int c, k;
+	register ptrdiff_t i, j;
 
 #ifdef S_IWGRP
 	umask(umask(S_IWGRP | S_IWOTH) | (S_IWGRP | S_IWOTH));
@@ -574,12 +583,12 @@ main(int argc, char **argv)
 			_("wild compilation-time specification of zic_t"));
 		return EXIT_FAILURE;
 	}
-	for (i = 1; i < argc; ++i)
-		if (strcmp(argv[i], "--version") == 0) {
+	for (k = 1; k < argc; k++)
+		if (strcmp(argv[k], "--version") == 0) {
 			printf("zic %s%s\n", PKGVERSION, TZVERSION);
 			close_file(stdout, NULL, NULL);
 			return EXIT_SUCCESS;
-		} else if (strcmp(argv[i], "--help") == 0) {
+		} else if (strcmp(argv[k], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
 		}
 	while ((c = getopt(argc, argv, "d:l:p:L:vsy:")) != EOF && c != -1)
@@ -655,8 +664,8 @@ _("%s: More than one -L option specified\n"),
 		adjleap();
 	}
 
-	for (i = optind; i < argc; ++i)
-		infile(argv[i]);
+	for (k = optind; k < argc; k++)
+		infile(argv[k]);
 	if (errors)
 		return EXIT_FAILURE;
 	associate();
@@ -699,7 +708,7 @@ componentcheck(char const *name, char const *component,
 	       char const *component_end)
 {
 	enum { component_len_max = 14 };
-	size_t component_len = component_end - component;
+	ptrdiff_t component_len = component_end - component;
 	if (component_len == 0) {
 	  if (!*name)
 	    error (_("empty file name"));
@@ -714,8 +723,9 @@ componentcheck(char const *name, char const *component,
 	}
 	if (0 < component_len && component_len <= 2
 	    && component[0] == '.' && component_end[-1] == '.') {
+	  int len = component_len;
 	  error(_("file name '%s' contains '%.*s' component"),
-		name, (int) component_len, component);
+		name, len, component);
 	  return false;
 	}
 	if (noise) {
@@ -884,8 +894,8 @@ dolink(char const *fromfield, char const *tofield, bool staysymlink)
 
 #define TIME_T_BITS_IN_FILE	64
 
-static zic_t const min_time = MINVAL (zic_t, TIME_T_BITS_IN_FILE);
-static zic_t const max_time = MAXVAL (zic_t, TIME_T_BITS_IN_FILE);
+static zic_t const min_time = MINVAL(zic_t, TIME_T_BITS_IN_FILE);
+static zic_t const max_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
 
 /* Estimated time of the Big Bang, in seconds since the POSIX epoch.
    rounded downward to the negation of a power of two that is
@@ -969,8 +979,7 @@ associate(void)
 {
 	register struct zone *	zp;
 	register struct rule *	rp;
-	register int		base, out;
-	register int		i, j;
+	register ptrdiff_t i, j, base, out;
 
 	if (nrules != 0) {
 		qsort(rules, nrules, sizeof *rules, rcomp);
@@ -1048,7 +1057,7 @@ infile(const char *name)
 	register const struct lookup *	lp;
 	register int			nfields;
 	register bool			wantcont;
-	register int			num;
+	register lineno			num;
 	char				buf[BUFSIZ];
 
 	if (strcmp(name, "-") == 0) {
@@ -1089,7 +1098,7 @@ infile(const char *name)
 			lp = byword(fields[0], line_codes);
 			if (lp == NULL)
 				error(_("input line of unknown type"));
-			else switch ((int) (lp->l_value)) {
+			else switch (lp->l_value) {
 				case LC_RULE:
 					inrule(fields, nfields);
 					wantcont = false;
@@ -1201,7 +1210,7 @@ inrule(char **fields, int nfields)
 static bool
 inzone(char **fields, int nfields)
 {
-	register int	i;
+	register ptrdiff_t i;
 
 	if (nfields < ZONE_MINFIELDS || nfields > ZONE_MAXFIELDS) {
 		error(_("wrong number of fields on Zone line"));
@@ -1222,8 +1231,8 @@ _("\"Zone %s\" line and -p option are mutually exclusive"),
 	for (i = 0; i < nzones; ++i)
 		if (zones[i].z_name != NULL &&
 			strcmp(zones[i].z_name, fields[ZF_NAME]) == 0) {
-				error(
-_("duplicate zone name %s (file \"%s\", line %d)"),
+				error(_("duplicate zone name %s"
+					" (file \"%s\", line %"PRIdLINENO")"),
 					fields[ZF_NAME],
 					zones[i].z_filename,
 					zones[i].z_linenum);
@@ -1335,7 +1344,7 @@ inleap(char **fields, int nfields)
 {
 	register const char *		cp;
 	register const struct lookup *	lp;
-	register int			i, j;
+	register zic_t			i, j;
 	zic_t				year;
 	int				month, day;
 	zic_t				dayoff, tod;
@@ -1507,7 +1516,7 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 	cp = loyearp;
 	lp = byword(cp, begin_years);
 	rp->r_lowasnum = lp == NULL;
-	if (!rp->r_lowasnum) switch ((int) lp->l_value) {
+	if (!rp->r_lowasnum) switch (lp->l_value) {
 		case YR_MINIMUM:
 			rp->r_loyear = ZIC_MIN;
 			break;
@@ -1526,7 +1535,7 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 	cp = hiyearp;
 	lp = byword(cp, end_years);
 	rp->r_hiwasnum = lp == NULL;
-	if (!rp->r_hiwasnum) switch ((int) lp->l_value) {
+	if (!rp->r_hiwasnum) switch (lp->l_value) {
 		case YR_MINIMUM:
 			rp->r_hiyear = ZIC_MIN;
 			break;
@@ -1664,16 +1673,16 @@ static void
 writezone(const char *const name, const char *const string, char version)
 {
 	register FILE *			fp;
-	register int			i, j;
+	register ptrdiff_t		i, j;
 	register int			leapcnt32, leapi32;
-	register int			timecnt32, timei32;
+	register ptrdiff_t		timecnt32, timei32;
 	register int			pass;
 	static const struct tzhead	tzh0;
 	static struct tzhead		tzh;
 	bool dir_checked = false;
 	zic_t one = 1;
 	zic_t y2038_boundary = one << 31;
-	int nats = timecnt + WORK_AROUND_QTBUG_53071;
+	ptrdiff_t nats = timecnt + WORK_AROUND_QTBUG_53071;
 	zic_t *ats = emalloc(size_product(nats, sizeof *ats + 1));
 	void *typesptr = ats + nats;
 	unsigned char *types = typesptr;
@@ -1687,8 +1696,7 @@ writezone(const char *const name, const char *const string, char version)
 	** Optimize.
 	*/
 	{
-		int	fromi;
-		int	toi;
+		ptrdiff_t fromi, toi;
 
 		toi = 0;
 		fromi = 0;
@@ -1710,9 +1718,16 @@ writezone(const char *const name, const char *const string, char version)
 		}
 		timecnt = toi;
 	}
-	if (noise && timecnt > 1200)
+
+	if (noise && timecnt > 1200) {
+	  if (timecnt > TZ_MAX_TIMES)
+		warning(_("reference clients mishandle"
+			  " more than %d transition times"),
+			TZ_MAX_TIMES);
+	  else
 		warning(_("pre-2014 clients may mishandle"
 			  " more than 1200 transition times"));
+	}
 	/*
 	** Transfer.
 	*/
@@ -1797,27 +1812,31 @@ writezone(const char *const name, const char *const string, char version)
 	  }
 	}
 	for (pass = 1; pass <= 2; ++pass) {
-		register int	thistimei, thistimecnt;
-		register int	thisleapi, thisleapcnt;
-		register int	thistimelim, thisleaplim;
+		register ptrdiff_t thistimei, thistimecnt, thistimelim;
+		register int	thisleapi, thisleapcnt, thisleaplim;
 		int		writetype[TZ_MAX_TYPES];
 		int		typemap[TZ_MAX_TYPES];
 		register int	thistypecnt;
 		char		thischars[TZ_MAX_CHARS];
-		char		thischarcnt;
+		int		thischarcnt;
+		bool		toomanytimes;
 		int		indmap[TZ_MAX_CHARS];
 
 		if (pass == 1) {
 			thistimei = timei32;
 			thistimecnt = timecnt32;
+			toomanytimes = thistimecnt >> 31 >> 1 != 0;
 			thisleapi = leapi32;
 			thisleapcnt = leapcnt32;
 		} else {
 			thistimei = 0;
 			thistimecnt = timecnt;
+			toomanytimes = thistimecnt >> 31 >> 31 >> 2 != 0;
 			thisleapi = 0;
 			thisleapcnt = leapcnt;
 		}
+		if (toomanytimes)
+		  error(_("too many transition times"));
 		thistimelim = thistimei + thistimecnt;
 		thisleaplim = thisleapi + thisleapcnt;
 		for (i = 0; i < typecnt; ++i)
@@ -1904,8 +1923,7 @@ writezone(const char *const name, const char *const string, char version)
 				if (strcmp(&thischars[j], thisabbr) == 0)
 					break;
 			if (j == thischarcnt) {
-				strcpy(&thischars[(int) thischarcnt],
-					thisabbr);
+				strcpy(&thischars[thischarcnt], thisabbr);
 				thischarcnt += strlen(thisabbr) + 1;
 			}
 			indmap[abbrinds[i]] = j;
@@ -2189,13 +2207,13 @@ rule_cmp(struct rule const *a, struct rule const *b)
 enum { YEAR_BY_YEAR_ZONE = 1 };
 
 static int
-stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
+stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 {
 	register const struct zone *	zp;
 	register struct rule *		rp;
 	register struct rule *		stdrp;
 	register struct rule *		dstrp;
-	register int			i;
+	register ptrdiff_t		i;
 	register const char *		abbrvar;
 	register int			compat = 0;
 	register int			c;
@@ -2308,11 +2326,11 @@ stringzone(char *result, const struct zone *const zpfirst, const int zonecount)
 }
 
 static void
-outzone(const struct zone *zpfirst, int zonecount)
+outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 {
 	register const struct zone *	zp;
 	register struct rule *		rp;
-	register int			i, j;
+	register ptrdiff_t		i, j;
 	register bool			usestart, useuntil;
 	register zic_t			starttime, untiltime;
 	register zic_t			gmtoff;
@@ -2331,7 +2349,7 @@ outzone(const struct zone *zpfirst, int zonecount)
 	register int			compat;
 	register bool			do_extend;
 	register char			version;
-	int lastatmax = -1;
+	ptrdiff_t lastatmax = -1;
 
 	max_abbr_len = 2 + max_format_len + max_abbrvar_len;
 	max_envvar_len = 2 * max_abbr_len + 5 * 9;
@@ -2475,7 +2493,7 @@ outzone(const struct zone *zpfirst, int zonecount)
 					rp->r_temp = rpytime(rp, year);
 			}
 			for ( ; ; ) {
-				register int	k;
+				register ptrdiff_t k;
 				register zic_t	jtime, ktime;
 				register zic_t	offset;
 
@@ -2744,28 +2762,48 @@ adjleap(void)
 	}
 }
 
-static bool
-yearistype(int year, const char *type)
+static char *
+shellquote(char *b, char const *s)
 {
-	static char *	buf;
-	int		result;
+  *b++ = '\'';
+  while (*s) {
+    if (*s == '\'')
+      *b++ = '\'', *b++ = '\\', *b++ = '\'';
+    *b++ = *s++;
+  }
+  *b++ = '\'';
+  return b;
+}
+
+static bool
+yearistype(zic_t year, const char *type)
+{
+	char *buf;
+	char *b;
+	int result;
 
 	if (type == NULL || *type == '\0')
 		return true;
-	buf = erealloc(buf, 132 + strlen(yitcommand) + strlen(type));
-	sprintf(buf, "%s %d %s", yitcommand, year, type);
+	buf = emalloc(1 + 4 * strlen(yitcommand) + 2
+		      + INT_STRLEN_MAXIMUM(zic_t) + 2 + 4 * strlen(type) + 2);
+	b = shellquote(buf, yitcommand);
+	*b++ = ' ';
+	b += sprintf(b, "%"PRIdZIC, year);
+	*b++ = ' ';
+	b = shellquote(b, type);
+	*b = '\0';
 	result = system(buf);
-	if (WIFEXITED(result)) switch (WEXITSTATUS(result)) {
-		case 0:
-			return true;
-		case 1:
-			return false;
+	if (WIFEXITED(result)) {
+	  int status = WEXITSTATUS(result);
+	  if (status <= 1) {
+	    free(buf);
+	    return status == 0;
+	  }
 	}
 	error(_("Wild result from command execution"));
 	fprintf(stderr, _("%s: command was '%s', result was %d\n"),
 		progname, buf, result);
-	for ( ; ; )
-		exit(EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }
 
 /* Is A a space character in the C locale?  */
@@ -2893,10 +2931,8 @@ getfields(register char *cp)
 				if (*dp != '\0')
 					++dp;
 				else {
-					error(_(
-						"Odd number of quotation marks"
-						));
-					exit(1);
+				  error(_("Odd number of quotation marks"));
+				  exit(EXIT_FAILURE);
 				}
 		} while (*cp && *cp != '#' && !is_space(*cp));
 		if (is_space(*cp))

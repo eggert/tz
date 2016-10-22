@@ -2268,7 +2268,12 @@ posix2time(time_t t)
    which is called 'time_t' in this file.  Typically, this merely
    converts the time's integer width.  On some platforms, the system
    time is local time not UT, or uses some epoch other than the POSIX
-   epoch.  */
+   epoch.
+
+   Although this code appears to define a function named 'time' that
+   returns time_t, the macros in private.h cause this code to actually
+   define a function named 'tz_time' that returns tz_time_t.  The call
+   to sys_time invokes the underlying system's 'time' function.  */
 
 time_t
 time(time_t *p)

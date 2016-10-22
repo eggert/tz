@@ -14,6 +14,11 @@ Unreleased, experimental changes
     Europe/San_Marino, and Europe/Vatican.  (Thanks to Pierpaolo
     Bernardi and Brian Inglis.)
 
+  Changes to code
+
+    The code should now be buildable on AmigaOS merely by setting the
+    appropriate Makefile variables.  (From a patch by Carsten Larsen.)
+
 
 Release 2016h - 2016-10-19 23:17:57 -0700
 

@@ -320,6 +320,13 @@ typedef unsigned long uintmax_t;
 ** Workarounds for compilers/systems.
 */
 
+#ifndef EPOCH_LOCAL
+# define EPOCH_LOCAL 0
+#endif
+#ifndef EPOCH_OFFSET
+# define EPOCH_OFFSET 0
+#endif
+
 /*
 ** Compile with -Dtime_tz=T to build the tz package with a private
 ** time_t type equivalent to T rather than the system-supplied time_t.
@@ -327,7 +334,7 @@ typedef unsigned long uintmax_t;
 ** (e.g., time_t wider than 'long', or unsigned time_t) even on
 ** typical platforms.
 */
-#ifdef time_tz
+#if defined time_tz || EPOCH_LOCAL || EPOCH_OFFSET != 0
 # ifdef LOCALTIME_IMPLEMENTATION
 static time_t sys_time(time_t *x) { return time(x); }
 # endif

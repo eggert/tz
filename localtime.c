@@ -2254,15 +2254,34 @@ posix2time(time_t t)
 
 #endif /* defined STD_INSPIRED */
 
-#ifdef time_tz
+#if defined time_tz || EPOCH_LOCAL || EPOCH_OFFSET != 0
+
+# ifndef USG_COMPAT
+#  define daylight 0
+#  define timezone 0
+# endif
+# ifndef ALTZONE
+#  define altzone 0
+# endif
 
 /* Convert from the underlying system's time_t to the ersatz time_tz,
-   which is called 'time_t' in this file.  */
+   which is called 'time_t' in this file.  Typically, this merely
+   converts the time's integer width.  On some platforms, the system
+   time is local time not UT, or uses some epoch other than the POSIX
+   epoch.  */
 
 time_t
 time(time_t *p)
 {
   time_t r = sys_time(0);
+  if (r != (time_t) -1) {
+    int_fast32_t offset = EPOCH_LOCAL ? (daylight ? timezone : altzone) : 0;
+    if (increment_overflow32(&offset, -EPOCH_OFFSET)
+	|| increment_overflow_time (&r, offset)) {
+      errno = EOVERFLOW;
+      r = -1;
+    }
+  }
   if (p)
     *p = r;
   return r;

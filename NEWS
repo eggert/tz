@@ -25,6 +25,9 @@ Unreleased, experimental changes
     Europe/San_Marino, and Europe/Vatican.  (Thanks to Pierpaolo
     Bernardi, Brian Inglis, and Michael Deckers.)
 
+    The 1893-11-01 00:00 transition in Italy used the new UT offset
+    (+01), not the old (+00:49:56).  (Thanks to Michael Deckers.)
+
   Changes to code
 
     The code should now be buildable on AmigaOS merely by setting the

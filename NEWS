@@ -4,15 +4,16 @@ Unreleased, experimental changes
 
   Changes to past time stamps
 
-    Pre-1945 rules for daylight saving in Italy have been changed to
+    Pre-1975 rules for daylight saving in Italy have been changed to
     agree with Italy's National Institute of Metrological Research, as
     follows.  The 1916-06-03 transition was at 24:00, not 00:00.  The
     1916-10-01, 1919-10-05, and 1920-09-19 transitions were at 00:00,
     not 01:00.  The 1917-09-30 and 1918-10-06 transitions were at
     24:00, not 01:00.  The 1944-09-17 transition was at 02:00, not
-    01:00.  These changes affect Europe/Malta, Europe/Rome,
+    01:00.  The 1967-1970 and 1972-1974 fallback transitions were at
+    01:00, not 00:00.  These changes affect Europe/Malta, Europe/Rome,
     Europe/San_Marino, and Europe/Vatican.  (Thanks to Pierpaolo
-    Bernardi and Brian Inglis.)
+    Bernardi, Brian Inglis, and Michael Deckers.)
 
   Changes to code
 

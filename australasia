@@ -702,6 +702,8 @@ Rule	Tonga	1999	only	-	Oct	 7	2:00s	1:00	S
 Rule	Tonga	2000	only	-	Mar	19	2:00s	0	-
 Rule	Tonga	2000	2001	-	Nov	Sun>=1	2:00	1:00	S
 Rule	Tonga	2001	2002	-	Jan	lastSun	2:00	0	-
+Rule	Tonga	2016	max	-	Nov	Sun>=1	2:00	1:00	S
+Rule	Tonga	2017	max	-	Jan	Sun>=15	3:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Pacific/Tongatapu	12:19:20 -	LMT	1901
 			12:20	-	TOT	1941 # Tonga Time
@@ -1715,6 +1717,11 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # From Pulu 'Anau (2002-11-05):
 # The law was for 3 years, supposedly to get renewed.  It wasn't.
 
+# From http://mic.gov.to/news-today/press-releases/6375-daylight-saving-set-to-run-from-6-november-2016-to-15-january-2017
+# via Pulu 'Anau
+# Cannot find anyone who knows the rules, has seen the duration or
+# has seen the cabinet decision, but it appears we are following Fiji's rule
+# set, coded accordingly.
 
 # Wake
 

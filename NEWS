@@ -9,7 +9,8 @@ Unreleased, experimental changes
     Pacific/Tongatapu begins DST on 2016-11-06 at 02:00, ending on
     2017-01-15 at 03:00.  Assume future observances in Tonga will be
     from the first Sunday in November through the third Sunday in
-    January, like Fiji.  (Thanks to Pulu ʻAnau.)
+    January, like Fiji.  (Thanks to Pulu ʻAnau.)  Switch to numeric
+    time zone abbreviations for this zone.
 
   Changes to past time stamps
 

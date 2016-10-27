@@ -1717,11 +1717,15 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # From Pulu 'Anau (2002-11-05):
 # The law was for 3 years, supposedly to get renewed.  It wasn't.
 
-# From http://mic.gov.to/news-today/press-releases/6375-daylight-saving-set-to-run-from-6-november-2016-to-15-january-2017
-# via Pulu 'Anau
+# From Pulu 'Anau (2016-10-27):
+# http://mic.gov.to/news-today/press-releases/6375-daylight-saving-set-to-run-from-6-november-2016-to-15-january-2017
 # Cannot find anyone who knows the rules, has seen the duration or
 # has seen the cabinet decision, but it appears we are following Fiji's rule
-# set, coded accordingly.
+# set.
+#
+# From Tim Parenti (2016-10-26):
+# Assume Tonga will observe DST from the first Sunday in November at 02:00
+# through the third Sunday in January at 03:00, like Fiji, for now.
 
 # Wake
 

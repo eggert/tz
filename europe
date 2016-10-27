@@ -1510,6 +1510,26 @@ Zone Atlantic/Reykjavik	-1:28	-	LMT	1908
 # The authoritative source for time in Italy is the national metrological
 # institute, which has a summary page of historical DST data at
 # http://www.inrim.it/res/tf/ora_legale_i.shtml
+# (2016-10-24):
+# http://www.renzobaldini.it/le-ore-legali-in-italia/
+# has still different data for 1944.  It divides Italy in two, as
+# there were effectively two governments at the time, north of Gothic
+# Line German controlled territory, official government RSI, and south
+# of the Gothic Line, controlled by allied armies.
+#
+# From Brian Inglis (2016-10-23):
+# Viceregal LEGISLATIVE DECREE. 14 September 1944, no. 219.
+# Restoration of Standard Time. (044U0219) (OJ 62 of 30.9.1944) ...
+# Given the R. law decreed on 1944-03-29, no. 92, by which standard time is
+# advanced to sixty minutes later starting at hour two on 1944-04-02; ...
+# Starting at hour three on the date 1944-09-17 standard time will be resumed.
+#
+# From Paul Eggert (2016-10-27):
+# Go with INRiM for DST rules, except as corrected by Inglis for 1944
+# for the Kingdom of Italy.  This is consistent with Renzo Baldini.
+# Model Rome's occupation by using using C-Eur rules from 1943-09-10
+# to 1944-06-04; although Rome was an open city during this period, it
+# was effectively controlled by Germany.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Italy	1916	only	-	Jun	 3	24:00	1:00	S
@@ -1525,8 +1545,8 @@ Rule	Italy	1940	only	-	Jun	14	24:00	1:00	S
 Rule	Italy	1942	only	-	Nov	 2	 2:00s	0	-
 Rule	Italy	1943	only	-	Mar	29	 2:00s	1:00	S
 Rule	Italy	1943	only	-	Oct	 4	 2:00s	0	-
-Rule	Italy	1944	only	-	Apr	 3	 2:00	1:00	S
-Rule	Italy	1944	only	-	Sep	17	 2:00	0	-
+Rule	Italy	1944	only	-	Apr	 2	 2:00s	1:00	S
+Rule	Italy	1944	only	-	Sep	17	 2:00s	0	-
 Rule	Italy	1945	only	-	Apr	 2	 2:00	1:00	S
 Rule	Italy	1945	only	-	Sep	15	 1:00	0	-
 Rule	Italy	1946	only	-	Mar	17	 2:00s	1:00	S
@@ -1556,6 +1576,8 @@ Rule	Italy	1979	only	-	Sep	30	 0:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Rome	0:49:56 -	LMT	1866 Sep 22
 			0:49:56	-	RMT	1893 Oct 31 23:49:56 # Rome Mean
+			1:00	Italy	CE%sT	1943 Sep 10
+			1:00	C-Eur	CE%sT	1944 Jun  4
 			1:00	Italy	CE%sT	1980
 			1:00	EU	CE%sT
 

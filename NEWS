@@ -14,19 +14,35 @@ Unreleased, experimental changes
 
   Changes to past time stamps
 
-    Pre-1975 rules for daylight saving in Italy have been changed to
-    agree with Italy's National Institute of Metrological Research, as
-    follows.  The 1916-06-03 transition was at 24:00, not 00:00.  The
-    1916-10-01, 1919-10-05, and 1920-09-19 transitions were at 00:00,
-    not 01:00.  The 1917-09-30 and 1918-10-06 transitions were at
-    24:00, not 01:00.  The 1944-09-17 transition was at 02:00, not
-    01:00.  The 1967-1970 and 1972-1974 fallback transitions were at
-    01:00, not 00:00.  These changes affect Europe/Malta, Europe/Rome,
-    Europe/San_Marino, and Europe/Vatican.  (Thanks to Pierpaolo
-    Bernardi, Brian Inglis, and Michael Deckers.)
+    Several corrections were made for pre-1975 time stamps in Italy.
+    These affect Europe/Malta, Europe/Rome, Europe/San_Marino, and
+    Europe/Vatican.
 
-    The 1893-11-01 00:00 transition in Italy used the new UT offset
-    (+01), not the old (+00:49:56).  (Thanks to Michael Deckers.)
+    First, the 1893-11-01 00:00 transition in Italy used the new UT
+    offset (+01), not the old (+00:49:56).  (Thanks to Michael
+    Deckers.)
+
+    Second, rules for daylight saving in Italy were changed to agree
+    with Italy's National Institute of Metrological Research (INRiM)
+    except for 1944, as follows (thanks to Pierpaolo Bernardi, Brian
+    Inglis, and Michael Deckers):
+
+      The 1916-06-03 transition was at 24:00, not 00:00.
+
+      The 1916-10-01, 1919-10-05, and 1920-09-19 transitions were at
+      00:00, not 01:00.
+
+      The 1917-09-30 and 1918-10-06 transitions were at 24:00, not
+      01:00.
+
+      The 1944-09-17 transition was at 03:00, not 01:00.  This
+      particular change is taken from Italian law as INRiM's table,
+      (which says 02:00) appears to have a typo here.  Also, keep the
+      1944-04-03 transition for Europe/Rome, as Rome was controlled by
+      Germany then.
+
+      The 1967-1970 and 1972-1974 fallback transitions were at 01:00,
+      not 00:00.
 
   Changes to code
 

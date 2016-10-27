@@ -2,12 +2,14 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly: Tonga has reintroduced DST, starting 2016-11-06.
+
   Changes to future time stamps
 
     Pacific/Tongatapu begins DST on 2016-11-06 at 02:00, ending on
     2017-01-15 at 03:00.  Assume future observances in Tonga will be
     from the first Sunday in November through the third Sunday in
-    January, like Fiji.  (Thanks to Pulu 'Anau.)
+    January, like Fiji.  (Thanks to Pulu ʻAnau.)
 
   Changes to past time stamps
 

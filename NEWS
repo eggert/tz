@@ -2,7 +2,7 @@ News for the tz database
 
 Unreleased, experimental changes
 
-  Briefly: Tonga has reintroduced DST, starting 2016-11-06.
+  Briefly: Tonga reintroduces DST starting 2016-11-06.
 
   Changes to future time stamps
 
@@ -11,6 +11,11 @@ Unreleased, experimental changes
     from the first Sunday in November through the third Sunday in
     January, like Fiji.  (Thanks to Pulu ʻAnau.)  Switch to numeric
     time zone abbreviations for this zone.
+
+  Changes to past and future time stamps
+
+    Antarctica/Casey switched from +08 to +11 on 2016-10-22.
+    (Thanks to Steffen Thorsen.)
 
   Changes to past time stamps
 

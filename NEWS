@@ -2,7 +2,8 @@ News for the tz database
 
 Unreleased, experimental changes
 
-  Briefly: Tonga reintroduces DST starting 2016-11-06.
+  Briefly: Cyprus split into two time zones on 2016-10-30, and Tonga
+  reintroduces DST on 2016-11-06.
 
   Changes to future time stamps
 
@@ -13,6 +14,10 @@ Unreleased, experimental changes
     time zone abbreviations for this zone.
 
   Changes to past and future time stamps
+
+    Northern Cyprus is now +03 year round, causing a split in Cyprus
+    time zones starting 2016-10-30 at 04:00.  This creates a zone
+    Asia/North_Nicosia.  (Thanks to Even Scharning.)
 
     Antarctica/Casey switched from +08 to +11 on 2016-10-22.
     (Thanks to Steffen Thorsen.)

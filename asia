@@ -798,7 +798,7 @@ Rule	Cyprus	1981	1998	-	Mar	lastSun	0:00	1:00	S
 Zone	Asia/Nicosia	2:13:28 -	LMT	1921 Nov 14
 			2:00	Cyprus	EE%sT	1998 Sep
 			2:00	EUAsia	EE%sT
-Zone Asia/North_Nicosia 2:13:27	-	LMT	1921 Nov 14
+Zone	Asia/Famagusta	2:15:48	-	LMT	1921 Nov 14
 			2:00	Cyprus	EE%sT	1998 Sep
 			2:00	EUAsia	EE%sT	2016 Sep  8
 			3:00	-	+03

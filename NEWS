@@ -1,5 +1,13 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to past time zone abbreviations
+
+    Asia/Gaza and Asia/Hebron now use "EEST", not "EET", to denote
+    summer time before 1948.  The old use of "EET" was a typo.
+
+
 Release 2016i - 2016-11-01 23:19:52 -0700
 
   Briefly: Cyprus split into two time zones on 2016-10-30, and Tonga

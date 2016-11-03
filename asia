@@ -2616,7 +2616,7 @@ Rule Palestine	2016	max	-	Oct	lastSat	1:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct
-			2:00	Zion	EET	1948 May 15
+			2:00	Zion	EET/EEST 1948 May 15
 			2:00 EgyptAsia	EE%sT	1967 Jun  5
 			2:00	Zion	I%sT	1996
 			2:00	Jordan	EE%sT	1999
@@ -2629,7 +2629,7 @@ Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct
 			2:00 Palestine	EE%sT
 
 Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
-			2:00	Zion	EET	1948 May 15
+			2:00	Zion	EET/EEST 1948 May 15
 			2:00 EgyptAsia	EE%sT	1967 Jun  5
 			2:00	Zion	I%sT	1996
 			2:00	Jordan	EE%sT	1999

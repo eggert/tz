@@ -7,6 +7,14 @@ Unreleased, experimental changes
     Asia/Gaza and Asia/Hebron now use "EEST", not "EET", to denote
     summer time before 1948.  The old use of "EET" was a typo.
 
+  Changes to code
+
+    zic no longer mishandles file systems that lack hard links, fixing
+    a bug introduced in 2016g.  (Problem reported by Tom Lane.)
+    Also, when the destination already contains symbolic links, zic
+    should now work better on systems where the 'link' system call
+    does not follow symbolic links.
+
 
 Release 2016i - 2016-11-01 23:19:52 -0700
 

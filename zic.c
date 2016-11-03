@@ -8,6 +8,7 @@
 #include "locale.h"
 #include "tzfile.h"
 
+#include <fcntl.h>
 #include <stdarg.h>
 #include <stddef.h>
 
@@ -117,9 +118,13 @@ extern int	optind;
 # define link(from, to) (errno = ENOTSUP, -1)
 #endif
 #if ! HAVE_SYMLINK
-# define lstat(name, st) stat(name, st)
+# define readlink(file, buf, size) (errno = ENOTSUP, -1)
 # define symlink(from, to) (errno = ENOTSUP, -1)
 # define S_ISLNK(m) 0
+#endif
+#ifndef AT_SYMLINK_FOLLOW
+# define linkat(fromdir, from, todir, to, flag) \
+    (itssymlink(from) ? (errno = ENOTSUP, -1) : link(from, to))
 #endif
 
 static void	addtt(zic_t starttime, int type);
@@ -138,7 +143,8 @@ static void	inrule(char ** fields, int nfields);
 static bool	inzcont(char ** fields, int nfields);
 static bool	inzone(char ** fields, int nfields);
 static bool	inzsub(char **, int, bool);
-static int	itsdir(const char * name);
+static bool	itsdir(char const *);
+static bool	itssymlink(char const *);
 static bool	is_alpha(char a);
 static char	lowerit(char);
 static void	mkdirs(char const *, bool);
@@ -812,10 +818,18 @@ relname(char const *from, char const *to)
   return result;
 }
 
+/* Hard link FROM to TO, following any symbolic links.
+   Return 0 if successful, an error number otherwise.  */
+static int
+hardlinkerr(char const *from, char const *to)
+{
+  int r = linkat(AT_FDCWD, from, AT_FDCWD, to, AT_SYMLINK_FOLLOW);
+  return r == 0 ? 0 : errno;
+}
+
 static void
 dolink(char const *fromfield, char const *tofield, bool staysymlink)
 {
-	register int fromisdir;
 	bool todirs_made = false;
 	int link_errno;
 
@@ -823,15 +837,13 @@ dolink(char const *fromfield, char const *tofield, bool staysymlink)
 	** We get to be careful here since
 	** there's a fair chance of root running us.
 	*/
-	fromisdir = itsdir(fromfield);
-	if (fromisdir) {
-		char const *e = strerror(fromisdir < 0 ? errno : EPERM);
+	if (itsdir(fromfield)) {
 		fprintf(stderr, _("%s: link from %s/%s failed: %s\n"),
-			progname, directory, fromfield, e);
+			progname, directory, fromfield, strerror(EPERM));
 		exit(EXIT_FAILURE);
 	}
 	if (staysymlink)
-	  staysymlink = itsdir(tofield) == 2;
+	  staysymlink = itssymlink(tofield);
 	if (remove(tofield) == 0)
 	  todirs_made = true;
 	else if (errno != ENOENT) {
@@ -840,12 +852,11 @@ dolink(char const *fromfield, char const *tofield, bool staysymlink)
 		  progname, directory, tofield, e);
 	  exit(EXIT_FAILURE);
 	}
-	link_errno = (staysymlink ? ENOTSUP
-		      : link(fromfield, tofield) == 0 ? 0 : errno);
+	link_errno = staysymlink ? ENOTSUP : hardlinkerr(fromfield, tofield);
 	if (link_errno == ENOENT && !todirs_made) {
 	  mkdirs(tofield, true);
 	  todirs_made = true;
-	  link_errno = link(fromfield, tofield) == 0 ? 0 : errno;
+	  link_errno = hardlinkerr(fromfield, tofield);
 	}
 	if (link_errno != 0) {
 	  bool absolute = *fromfield == '/';
@@ -935,28 +946,35 @@ static const zic_t early_time = (WORK_AROUND_GNOME_BUG_730332
 				 ? BIG_BANG
 				 : MINVAL(zic_t, TIME_T_BITS_IN_FILE));
 
-/* Return 1 if NAME is a directory, 2 if a symbolic link, 0 if
-   something else, -1 (setting errno) if trouble.  */
-static int
+/* Return true if NAME is a directory.  */
+static bool
 itsdir(char const *name)
 {
 	struct stat st;
-	int res = lstat(name, &st);
-	if (res == 0) {
+	int res = stat(name, &st);
 #ifdef S_ISDIR
-		return S_ISDIR(st.st_mode) ? 1 : S_ISLNK(st.st_mode) ? 2 : 0;
-#else
+	if (res == 0)
+		return S_ISDIR(st.st_mode) != 0;
+#endif
+	if (res == 0 || errno == EOVERFLOW) {
 		size_t n = strlen(name);
 		char *nameslashdot = emalloc(n + 3);
 		bool dir;
 		memcpy(nameslashdot, name, n);
 		strcpy(&nameslashdot[n], &"/."[! (n && name[n - 1] != '/')]);
-		dir = lstat(nameslashdot, &st) == 0;
+		dir = stat(nameslashdot, &st) == 0 || errno == EOVERFLOW;
 		free(nameslashdot);
 		return dir;
-#endif
 	}
-	return -1;
+	return false;
+}
+
+/* Return true if NAME is a symbolic link.  */
+static bool
+itssymlink(char const *name)
+{
+  char c;
+  return 0 <= readlink(name, &c, 1);
 }
 
 /*
@@ -3097,7 +3115,8 @@ mp = _("time zone abbreviation differs from POSIX standard");
 
 /* Ensure that the directories of ARGNAME exist, by making any missing
    ones.  If ANCESTORS, do this only for ARGNAME's ancestors; otherwise,
-   do it for ARGNAME too.  Exit with failure if there is trouble.  */
+   do it for ARGNAME too.  Exit with failure if there is trouble.
+   Do not consider an existing non-directory to be trouble.  */
 static void
 mkdirs(char const *argname, bool ancestors)
 {
@@ -3126,7 +3145,7 @@ mkdirs(char const *argname, bool ancestors)
 		*/
 		if (mkdir(name, MKDIR_UMASK) != 0) {
 			int err = errno;
-			if (err != EEXIST && itsdir(name) < 0) {
+			if (err != EEXIST && !itsdir(name)) {
 				error(_("%s: Can't create directory %s: %s"),
 				      progname, name, strerror(err));
 				exit(EXIT_FAILURE);

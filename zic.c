@@ -3144,6 +3144,9 @@ mkdirs(char const *argname, bool ancestors)
 		** is checked anyway if the mkdir fails.
 		*/
 		if (mkdir(name, MKDIR_UMASK) != 0) {
+			/* For speed, skip itsdir if errno == EEXIST.  Since
+			   mkdirs is called only after open fails with ENOENT
+			   on a subfile, EEXIST implies itsdir here.  */
 			int err = errno;
 			if (err != EEXIST && !itsdir(name)) {
 				error(_("%s: Can't create directory %s: %s"),

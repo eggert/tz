@@ -10,7 +10,7 @@
  content="Sources for time zone and daylight saving time data">
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2016-11-01">
+<meta name="DC.Date" content="2016-11-04">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -120,7 +120,7 @@ gzip -dc tzdata-latest.tar.gz | tar -xf -
 <p>Alternatively, the following shell commands download the same
 release in a single-tarball format containing extra data
 useful for regression testing:</p>
-<pre style="margin-left: 2em"><code>wget --retr-symlinks 'ftp://ftp.iana.org/tz/tzdb-latest.tar.lz'
+<pre style="margin-left: 2em"><code>wget <a href="ftp://ftp.iana.org/tz/tzdb-latest.tar.lz">ftp://ftp.iana.org/tz/tzdb-latest.tar.lz</a>
 <a href="http://www.nongnu.org/lzip/">lzip</a> -dc tzdb-latest.tar.lz | tar -xf -
 </code></pre>
 <p>These commands use convenience links to the latest of the
@@ -139,14 +139,17 @@ through <samp>zzz</samp>, and so on).
 The releases can also be obtained from the
 <a href="http://www.iana.org/time-zones">Time Zone Database website</a>
 of the <a href="http://www.iana.org">Internet Assigned Numbers
-Authority (IANA)</a>.
-A <a href="https://github.com/eggert/tz">development
-repository</a> of the code and data is available
-in <a href="https://git-scm.com">Git</a> form
-from <a href="https://github.com">GitHub</a>; be careful, as this
-repository is less well tested and probably contains more errors.
+Authority (IANA)</a>.</p>
+<p>Alternatively, a development repository of code and data can be
+retrieved from <a href="https://github.com">GitHub</a> via the shell
+command:</p>
+<pre style="margin-left: 2em"><code><a href="https://git-scm.com">git</a> clone <a href="https://github.com/eggert/tz">https://github.com/eggert/tz</a>
+</code></pre>
+<p>Since 2012, each release has been tagged in the development
+repository. Untagged commits are less well tested and probably contain
+more errors.</p>
 <p>
-After extracting a distribution's files, see its
+After obtaining the code and data files, see the
 <code>README</code> file for what to do next.
 The code lets you compile the <code><abbr>tz</abbr></code> source files into
 machine-readable binary files, one for each location. It also lets

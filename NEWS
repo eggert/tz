@@ -15,6 +15,12 @@ Unreleased, experimental changes
     should now work better on systems where the 'link' system call
     does not follow symbolic links.
 
+  Changes to documentation and commentary
+
+    tz-link.htm now documents the relationship between release version
+    numbers and development-repository commit tags.  (Suggested by
+    Paul Koning.)
+
 
 Release 2016i - 2016-11-01 23:19:52 -0700
 
@@ -228,7 +234,7 @@ Release 2016g - 2016-09-13 08:56:38 -0700
     23 commits and some working-file changes have been made since
     release 2016g, the version number is now something like
     '2016g-23-g50556e3-dirty' instead of the misleading '2016g'.
-    Official releases uses the same version number format as before,
+    Tagged releases use the same version number format as before,
     e.g., '2016g'.  To support the more-accurate version number, its
     specification has moved from a line in the Makefile to a new
     source file 'version'.

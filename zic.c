@@ -804,9 +804,9 @@ relname(char const *from, char const *to)
   for (i = 0; f[i] && f[i] == to[i]; i++)
     if (f[i] == '/')
       dir_len = i + 1;
-  for (; f[i]; i++)
-    dotdots += f[i] == '/' && f[i - 1] != '/';
-  taillen = i - dir_len;
+  for (; to[i]; i++)
+    dotdots += to[i] == '/' && to[i - 1] != '/';
+  taillen = strlen(f + dir_len);
   dotdotetcsize = 3 * dotdots + taillen + 1;
   if (dotdotetcsize <= linksize) {
     if (!result)

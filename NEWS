@@ -10,7 +10,7 @@ Unreleased, experimental changes
   Changes to code
 
     zic no longer mishandles file systems that lack hard links, fixing
-    a bug introduced in 2016g.  (Problem reported by Tom Lane.)
+    bugs introduced in 2016g.  (Problems reported by Tom Lane.)
     Also, when the destination already contains symbolic links, zic
     should now work better on systems where the 'link' system call
     does not follow symbolic links.

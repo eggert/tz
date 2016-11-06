@@ -1139,7 +1139,7 @@ istrftime(char *buf, size_t size, char const *time_fmt,
 	}
 	break;
       }
-      if (! (0 <= formatted_len && formatted_len < s))
+      if (s <= formatted_len)
 	return false;
       b += formatted_len, s -= formatted_len;
       f = p + 1;

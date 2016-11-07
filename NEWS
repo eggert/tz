@@ -2,6 +2,12 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to past time stamps
+
+    The new zone Asia/Atyrau for Atyraū Region, Kazakhstan, is like
+    Asia/Aqtau except it switched from +04/+05 to +05/+06 in spring
+    1999, not fall 1994.  (Thanks to Stepan Golosunov.)
+
   Changes to past time zone abbreviations
 
     Asia/Gaza and Asia/Hebron now use "EEST", not "EET", to denote

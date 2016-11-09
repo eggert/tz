@@ -602,6 +602,9 @@ The tz code and data supply the following interfaces:
 
  * The format of the country code file, documented in iso3166.tab.
 
+ * The version number of the code and data, as the first line of
+   the text file 'version' in each release.
+
 Interface changes in a release attempt to preserve compatibility with
 recent releases.  For example, tz data files typically do not rely on
 recently-added zic features, so that users can run older zic versions

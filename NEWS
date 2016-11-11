@@ -2,6 +2,12 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to future time stamps
+
+    Saratov, Russia switches from +03 to +04 on 2016-12-04 at 02:00.
+    This hives off a new zone Europe/Saratov from Europe/Volgograd.
+    (Thanks to Yuri Konotopov and Stepan Golosunov.)
+
   Changes to past time stamps
 
     The new zone Asia/Atyrau for Atyraū Region, Kazakhstan, is like

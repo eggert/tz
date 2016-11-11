@@ -2601,10 +2601,9 @@ Zone Europe/Astrakhan	 3:12:12 -	LMT	1924 May
 			 3:00	-	+03	2016 Mar 27  2:00s
 			 4:00	-	+04
 
-# From Paul Eggert (2016-03-18):
+# From Paul Eggert (2016-11-11):
 # Europe/Volgograd covers:
 # 34	RU-VGG	Volgograd Oblast
-# 64	RU-SAR	Saratov Oblast
 # The 1988 transition is from USSR act No. 5 (1988-01-04).
 
 Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
@@ -2616,6 +2615,25 @@ Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 			 3:00	Russia	+03/+04	2011 Mar 27  2:00s
 			 4:00	-	+04	2014 Oct 26  2:00s
 			 3:00	-	+03
+
+# From Paul Eggert (2016-11-11):
+# Europe/Saratov covers:
+# 64	RU-SAR	Saratov Oblast
+
+# From Yuri Konotopov (2016-11-11):
+# Dec 4, 2016 02:00 UTC+3....  Saratov Region's local time will be ... UTC+4.
+# From Stepan Golosunov (2016-11-11):
+# http://asozd2.duma.gov.ru/main.nsf/(Spravka)?OpenAgent&RN=1083558-6
+
+Zone Europe/Saratov	 3:04:08 -	LMT	1919 Jul  1  0:00u
+			 3:00	-	+03	1930 Jun 21
+			 4:00	Russia	+04/+05	1988 Mar 27  2:00s
+			 3:00	Russia	+03/+04	1991 Mar 31  2:00s
+			 4:00	-	+04	1992 Mar 29  2:00s
+			 3:00	Russia	+03/+04	2011 Mar 27  2:00s
+			 4:00	-	+04	2014 Oct 26  2:00s
+			 3:00	-	+03	2016 Dec  4  2:00s
+			 4:00	-	+04
 
 # From Paul Eggert (2016-03-18):
 # Europe/Kirov covers:

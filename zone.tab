@@ -331,11 +331,12 @@ RS	+4450+02030	Europe/Belgrade
 RU	+5443+02030	Europe/Kaliningrad	MSK-01 - Kaliningrad
 RU	+554521+0373704	Europe/Moscow	MSK+00 - Moscow area
 RU	+4457+03406	Europe/Simferopol	MSK+00 - Crimea
-RU	+4844+04425	Europe/Volgograd	MSK+00 - Volgograd, Saratov
+RU	+4844+04425	Europe/Volgograd	MSK+00 - Volgograd
 RU	+5836+04939	Europe/Kirov	MSK+00 - Kirov
 RU	+4621+04803	Europe/Astrakhan	MSK+01 - Astrakhan
-RU	+5312+05009	Europe/Samara	MSK+01 - Samara, Udmurtia
+RU	+5134+04602	Europe/Saratov	MSK+01 - Saratov
 RU	+5420+04824	Europe/Ulyanovsk	MSK+01 - Ulyanovsk
+RU	+5312+05009	Europe/Samara	MSK+01 - Samara, Udmurtia
 RU	+5651+06036	Asia/Yekaterinburg	MSK+02 - Urals
 RU	+5500+07324	Asia/Omsk	MSK+03 - Omsk
 RU	+5502+08255	Asia/Novosibirsk	MSK+03 - Novosibirsk

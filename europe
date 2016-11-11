@@ -2624,8 +2624,9 @@ Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 # Dec 4, 2016 02:00 UTC+3....  Saratov Region's local time will be ... UTC+4.
 # From Stepan Golosunov (2016-11-11):
 # http://asozd2.duma.gov.ru/main.nsf/(Spravka)?OpenAgent&RN=1083558-6
+# ... Byalokoz listed Saratov on 03:04:18.
 
-Zone Europe/Saratov	 3:04:08 -	LMT	1919 Jul  1  0:00u
+Zone Europe/Saratov	 3:04:18 -	LMT	1919 Jul  1  0:00u
 			 3:00	-	+03	1930 Jun 21
 			 4:00	Russia	+04/+05	1988 Mar 27  2:00s
 			 3:00	Russia	+03/+04	1991 Mar 31  2:00s

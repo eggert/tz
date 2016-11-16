@@ -35,6 +35,9 @@ Unreleased, experimental changes
 
     The 'Theory' file now documents UT.
 
+    iso3166.tab now accents "Curaçao", and commentary now mentions
+    the names "Cabo Verde" and "Czechia".  (Thanks to Jiri Bohac.)
+
 
 Release 2016i - 2016-11-01 23:19:52 -0700
 

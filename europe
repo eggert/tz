@@ -901,7 +901,7 @@ Zone	Europe/Sofia	1:33:16 -	LMT	1880
 # Cyprus
 # Please see the 'asia' file for Asia/Nicosia.
 
-# Czech Republic
+# Czech Republic / Czechia
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Czech	1945	only	-	Apr	 8	2:00s	1:00	S
 Rule	Czech	1945	only	-	Nov	18	2:00s	0	-

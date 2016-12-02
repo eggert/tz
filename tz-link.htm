@@ -10,7 +10,7 @@
  content="Sources for time zone and daylight saving time data">
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2016-11-09">
+<meta name="DC.Date" content="2016-12-02">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -420,8 +420,9 @@ It is freely available under the <abbr>LGPL</abbr>.</li>
 implementation of a binary file reader. It is freely available under
 the Apache License.</li>
 <li><a href="https://github.com/google/cctz">CCTZ</a> is a simple C++
-library that translates between UTC and civil time and can read binary
-files. It is freely available under the Apache License.</li>
+library that translates between <abbr>UTC</abbr> and civil time and
+can read binary files. It is freely available under the Apache
+License.</li>
 <li><a href="http://bmsi.com/java/#TZ">ZoneInfo.java</a>
 is a <code><abbr>tz</abbr></code> binary file reader written in Java.
 It is freely available under the <abbr>LGPL</abbr>.</li>
@@ -805,20 +806,30 @@ how the art has progressed over the past few decades.</li>
 href="https://www.iers.org/IERS/EN/Publications/Bulletins/bulletins.html"><abbr
 title="International Earth Rotation and Reference Systems Service">IERS</abbr>
 Bulletins</a> contains official publications of the International
-Earth Rotation and Reference Systems Service, which decides
-when leap seconds occur.</li>
+Earth Rotation and Reference Systems Service, which decides when leap
+seconds occur. The <code>tz</code> code and data support leap seconds
+via an optional "<code>right</code>" configuration, as opposed to the
+default "<code>posix</code>" configuration.</li>
+<li><a href="https://developers.google.com/time/smear">Leap Smear</a>
+discusses how to gradually adjust <abbr>POSIX</abbr> clocks near a
+leap second so that they disagree with <abbr>UTC</abbr> by at most a
+half second, even though every <abbr>POSIX</abbr> minute has exactly
+sixty seconds. This approach works with the default <code>tz</code>
+"<code>posix</code>" configuration, and has become popular among cloud
+service providers.</li>
 <li>The <a
 href="https://pairlist6.pair.net/mailman/listinfo/leapsecs">Leap
 Second Discussion List</a> covers <a
 href="http://www2.unb.ca/gge/Resources/gpsworld.november99.pdf">McCarthy
-and Klepczynski's proposal to discontinue leap seconds</a>,
+and Klepczynski's 1999 proposal to discontinue leap seconds</a>,
 discussed further in
 <a href="http://www.cl.cam.ac.uk/~mgk25/time/metrologia-leapsecond.pdf">The
 leap second: its history and possible future</a>.
 <a href="http://www.ucolick.org/~sla/leapsecs/"><abbr>UTC</abbr>
 might be redefined
 without Leap Seconds</a> gives pointers on this
-contentious issue.</li>
+contentious issue, which was active until 2015 and could become active
+again.</li>
 </ul>
 <h2 id="notation">Time notation</h2>
 <ul>

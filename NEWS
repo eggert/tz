@@ -1,5 +1,12 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to documentation and commentary
+
+    tz-link.htm now covers leap smearing, which is popular in clouds.
+
+
 Release 2016j - 2016-11-22 23:17:13 -0800
 
   Briefly: Saratov, Russia moves from +03 to +04 on 2016-12-04.

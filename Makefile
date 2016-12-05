@@ -72,7 +72,7 @@ MANDIR=		$(TOPDIR)/man
 
 LIBDIR=		$(TOPDIR)/lib
 
-# If you want only POSIX time, where time values interpreted as
+# If you want only POSIX time, with time values interpreted as
 # seconds since the epoch (not counting leap seconds), use
 #	REDO=		posix_only
 # below.  If you want want only "right" time, with values interpreted
@@ -85,10 +85,10 @@ LIBDIR=		$(TOPDIR)/lib
 # normally, use
 #	REDO=		right_posix
 # below.  POSIX mandates that leap seconds not be counted; for compatibility
-# with it, use "posix_only" or "posix_right".  POSIX time is often combined
-# with leap smearing, as this is more accurate than strict POSIX time
-# and it often works better than "right" time with applications that
-# are not leap second aware.
+# with it, use "posix_only" or "posix_right".  Use POSIX time on systems with
+# leap smearing; this can work better than unsmeared "right" time with
+# applications that are not leap second aware, and is closer to unsmeared
+# "right" time than unsmeared POSIX time is (e.g., 0.5 vs 1.0 s max error).
 
 REDO=		posix_right
 

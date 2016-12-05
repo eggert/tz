@@ -2,6 +2,21 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly: Southern Chile moves from -04/-03 to -03.
+
+  Changes to future time stamps
+
+    Chile's Region of Magallanes moves from -04/-03 to -03 year-round.
+    Its clocks diverge from America/Santiago starting 2017-05-13 at
+    23:00, hiving off a new zone America/Punta_Arenas.  (Thanks to
+    Juan Correa.)  This also affects Antarctica/Palmer.
+
+  Changes to current and future time zone abbreviations
+
+    Switch to numeric time zones for Chile, so as to not invent an
+    abbreviation for its new zone.  This affects America/Santiago,
+    Pacific/Easter, and Antarctica/Palmer.
+
   Changes to documentation and commentary
 
     tz-link.htm now covers leap smearing, which is popular in clouds.

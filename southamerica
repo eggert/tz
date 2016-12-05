@@ -1235,6 +1235,10 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # to mean 24:00 mainland time, not 24:00 local time, so that Easter
 # Island is always two hours behind the mainland.
 
+# From Juan Correa (2016-12-04):
+# Magallanes region ... will keep DST (UTC -3) all year round....
+# http://www.soychile.cl/Santiago/Sociedad/2016/12/04/433428/Bachelet-firmo-el-decreto-para-establecer-un-horario-unico-para-la-Region-de-Magallanes.aspx
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Chile	1927	1931	-	Sep	 1	0:00	1:00	S
 Rule	Chile	1928	1932	-	Apr	 1	0:00	0	-
@@ -1275,22 +1279,35 @@ Rule	Chile	2016	max	-	Aug	Sun>=9	4:00u	1:00	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Santiago	-4:42:46 -	LMT	1890
 			-4:42:46 -	SMT	1910 Jan 10 # Santiago Mean Time
-			-5:00	-	CLT	1916 Jul  1 # Chile Time
+			-5:00	-	-05	1916 Jul  1
 			-4:42:46 -	SMT	1918 Sep 10
-			-4:00	-	CLT	1919 Jul  1
+			-4:00	-	-04	1919 Jul  1
 			-4:42:46 -	SMT	1927 Sep  1
-			-5:00	Chile	CL%sT	1932 Sep  1
-			-4:00	-	CLT	1942 Jun  1
-			-5:00	-	CLT	1942 Aug  1
-			-4:00	-	CLT	1946 Jul 15
-			-4:00	1:00	CLST	1946 Sep  1 # central Chile
-			-4:00	-	CLT	1947 Apr  1
-			-5:00	-	CLT	1947 May 21 23:00
-			-4:00	Chile	CL%sT
+			-5:00	Chile	-05/-04	1932 Sep  1
+			-4:00	-	-04	1942 Jun  1
+			-5:00	-	-05	1942 Aug  1
+			-4:00	-	-04	1946 Jul 15
+			-4:00	1:00	-03	1946 Sep  1 # central Chile
+			-4:00	-	-04	1947 Apr  1
+			-5:00	-	-05	1947 May 21 23:00
+			-4:00	Chile	-04/-03
+Zone America/Punta_Arenas -4:43:40 -	LMT	1890
+			-4:42:46 -	SMT	1910 Jan 10
+			-5:00	-	-05	1916 Jul  1
+			-4:42:46 -	SMT	1918 Sep 10
+			-4:00	-	-04	1919 Jul  1
+			-4:42:46 -	SMT	1927 Sep  1
+			-5:00	Chile	-05/-04	1932 Sep  1
+			-4:00	-	-04	1942 Jun  1
+			-5:00	-	-05	1942 Aug  1
+			-4:00	-	-04	1947 Apr  1
+			-5:00	-	-05	1947 May 21 23:00
+			-4:00	Chile	-04/-03	2016 Dec  4
+			-3:00	-	-03
 Zone Pacific/Easter	-7:17:28 -	LMT	1890
 			-7:17:28 -	EMT	1932 Sep    # Easter Mean Time
-			-7:00	Chile	EAS%sT	1982 Mar 14 3:00u # Easter Time
-			-6:00	Chile	EAS%sT
+			-7:00	Chile	-07/-06	1982 Mar 14 3:00u # Easter Time
+			-6:00	Chile	-06/-05
 #
 # Salas y Gómez Island is uninhabited.
 # Other Chilean locations, including Juan Fernández Is, Desventuradas Is,
@@ -1310,9 +1327,10 @@ Zone Pacific/Easter	-7:17:28 -	LMT	1890
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Antarctica/Palmer	0	-	-00	1965
-			-4:00	Arg	AR%sT	1969 Oct  5
-			-3:00	Arg	AR%sT	1982 May
-			-4:00	Chile	CL%sT
+			-4:00	Arg	-04/-03	1969 Oct  5
+			-3:00	Arg	-03/-02	1982 May
+			-4:00	Chile	-04/-03	2016 Dec  4
+			-3:00	-	-03
 
 # Colombia
 

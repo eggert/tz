@@ -10,7 +10,7 @@
  content="Sources for time zone and daylight saving time data">
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2016-12-02">
+<meta name="DC.Date" content="2016-12-04">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -815,8 +815,10 @@ discusses how to gradually adjust <abbr>POSIX</abbr> clocks near a
 leap second so that they disagree with <abbr>UTC</abbr> by at most a
 half second, even though every <abbr>POSIX</abbr> minute has exactly
 sixty seconds. This approach works with the default <code>tz</code>
-"<code>posix</code>" configuration, and has become popular among cloud
-service providers.</li>
+"<code>posix</code>" configuration, is <a
+href="http://bk1.ntp.org/ntp-stable/README.leapsmear">supported</a> by
+the <abbr>NTP</abbr> reference implementation, and is used by major
+cloud service providers.</li>
 <li>The <a
 href="https://pairlist6.pair.net/mailman/listinfo/leapsecs">Leap
 Second Discussion List</a> covers <a

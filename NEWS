@@ -11,6 +11,11 @@ Unreleased, experimental changes
     23:00, hiving off a new zone America/Punta_Arenas.  (Thanks to
     Juan Correa.)  This also affects Antarctica/Palmer.
 
+  Changes to past time stamps
+
+    Asia/Atyrau and Asia/Oral were at +03 (not +04) before 1930-06-21.
+    (Thanks to Stepan Golosunov.)
+
   Changes to past and future time zone abbreviations
 
     Switch to numeric time zone abbreviations for South America, as

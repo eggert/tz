@@ -1741,7 +1741,23 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # Kazakh 1992-01-13 act appears to provide the same rules and 1992-03-27
 # act was to be enacted on the last Sunday of March 1992.
 
-# From Paul Eggert (2016-11-07):
+# From Stepan Golosunov (2016-11-08):
+# Turgai reorganization should affect only southern part of Qostanay
+# oblast.  Which should probably be separated into Asia/Arkalyk zone.
+# (There were also 1970, 1988 and 1990 Turgai oblast reorganizations
+# according to wikipedia.)
+#
+# [For Qostanay] http://www.ng.kz/gazeta/195/hranit/
+# suggests that clocks were to be moved 40 minutes backwards on
+# 1920-01-01 to the fourth time belt.  But I do not understand
+# how that could happen....
+#
+# [For Atyrau and Oral] 1919 decree
+# (http://www.worldtimezone.com/dst_news/dst_news_russia-1919-02-08.html
+# and in Byalokoz) lists Ural river (plus 10 versts on its left bank) in
+# the third time belt (before 1930 this means +03).
+
+# From Paul Eggert (2016-12-06):
 # The tables below reflect Golosunov's remarks, with exceptions as noted.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1771,7 +1787,7 @@ Zone	Asia/Qyzylorda	4:21:52 -	LMT	1924 May  2
 			6:00	-	+06
 # The following zone is like Asia/Qyzylorda except for being one
 # hour earlier from 1991-09-29 to 1992-03-29.  The 1991/2 rules for
-# Qostenay are unclear partly because of the 1997 Turgai
+# Qostanay are unclear partly because of the 1997 Turgai
 # reorganization, so this zone is commented out for now.
 #Zone	Asia/Qostanay	4:14:20 -	LMT	1924 May  2
 #			4:00	-	+04	1930 Jun 21
@@ -1808,7 +1824,7 @@ Zone	Asia/Aqtau	3:21:04	-	LMT	1924 May  2
 # Atyraū (KZ-ATY) is like Mangghystaū except it switched from
 # +04/+05 to +05/+06 in spring 1999, not fall 1994.
 Zone	Asia/Atyrau	3:27:44	-	LMT	1924 May  2
-			4:00	-	+04	1930 Jun 21
+			3:00	-	+03	1930 Jun 21
 			5:00	-	+05	1981 Oct  1
 			6:00	-	+06	1982 Apr  1
 			5:00 RussiaAsia	+05/+06	1991 Mar 31  2:00s
@@ -1820,7 +1836,7 @@ Zone	Asia/Atyrau	3:27:44	-	LMT	1924 May  2
 # From Paul Eggert (2016-03-18):
 # The 1989 transition is from USSR act No. 227 (1989-03-14).
 Zone	Asia/Oral	3:25:24	-	LMT	1924 May  2 # or Ural'sk
-			4:00	-	+04	1930 Jun 21
+			3:00	-	+03	1930 Jun 21
 			5:00	-	+05	1981 Apr  1
 			5:00	1:00	+06	1981 Oct  1
 			6:00	-	+06	1982 Apr  1

@@ -11,11 +11,28 @@ Unreleased, experimental changes
     23:00, hiving off a new zone America/Punta_Arenas.  (Thanks to
     Juan Correa.)  This also affects Antarctica/Palmer.
 
-  Changes to current and future time zone abbreviations
+  Changes to past and future time zone abbreviations
 
-    Switch to numeric time zones for Chile, so as to not invent an
-    abbreviation for its new zone.  This affects America/Santiago,
-    Pacific/Easter, and Antarctica/Palmer.
+    Switch to numeric time zone abbreviations for South America, as
+    part of the ongoing project of removing invented abbreviations.
+    This avoids the need to invent an abbreviation for the new Chilean
+    new zone.  This change affects America/Araguaina,
+    America/Argentina/Buenos_Aires, America/Argentina/Catamarca,
+    America/Argentina/Cordoba, America/Argentina/Jujuy,
+    America/Argentina/La_Rioja, America/Argentina/Mendoza,
+    America/Argentina/Rio_Gallegos, America/Argentina/Salta,
+    America/Argentina/San_Juan, America/Argentina/San_Luis,
+    America/Argentina/Tucuman, America/Argentina/Ushuaia,
+    America/Asuncion, America/Bahia, America/Belem, America/Boa_Vista,
+    America/Bogota, America/Campo_Grande, America/Caracas,
+    America/Cayenne, America/Cuiaba, America/Curacao,
+    America/Eirunepe, America/Fortaleza, America/Guayaquil,
+    America/Guyana, America/La_Paz, America/Lima, America/Maceio,
+    America/Manaus, America/Montevideo, America/Noronha,
+    America/Paramaribo, America/Porto_Velho, America/Recife,
+    America/Rio_Branco, America/Santarem, America/Santiago,
+    America/Sao_Paulo, Antarctica/Palmer, Atlantic/South_Georgia,
+    Atlantic/Stanley, Pacific/Easter, and Pacific/Galapagos.
 
   Changes to documentation and commentary
 

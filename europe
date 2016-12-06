@@ -2536,10 +2536,8 @@ Zone Europe/Moscow	 2:30:17 -	LMT	1880
 			 3:00	-	MSK
 
 
-# From Tim Parenti (2014-07-03):
-# Europe/Simferopol covers...
-# **	****	Crimea, Republic of
-# **	****	Sevastopol
+# From Paul Eggert (2016-12-06):
+# Europe/Simferopol covers Crimea.
 
 Zone Europe/Simferopol	 2:16:24 -	LMT	1880
 			 2:16	-	SMT	1924 May  2 # Simferopol Mean T

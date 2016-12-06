@@ -226,7 +226,7 @@ in decreasing order of importance:
 			for double summer time append 'DST'; etc.
 		Otherwise, take the first three letters of an English place
 			name identifying each zone and append 'T', 'ST', etc.
-			as before; e.g. 'VLAST' for VLAdivostok Summer Time.
+			as before; e.g. 'CHAST' for CHAtham Summer Time.
 
 	Use UT (with time zone abbreviation '-00') for locations while
 		uninhabited.  The leading '-' is a flag that the time

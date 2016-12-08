@@ -360,12 +360,10 @@ Errors in the tz database arise from many sources:
  * Civil time was not based on atomic time before 1972, and we don't
    know the history of earth's rotation accurately enough to map SI
    seconds to historical solar time to more than about one-hour
-   accuracy.  See: Morrison LV, Stephenson FR.
-   Historical values of the Earth's clock error Delta T and the
-   calculation of eclipses. J Hist Astron. 2004;35:327-36
-   <http://adsabs.harvard.edu/full/2004JHA....35..327M>;
-   Historical values of the Earth's clock error. J Hist Astron. 2005;36:339
-   <http://adsabs.harvard.edu/full/2005JHA....36..339M>.
+   accuracy.  See: Stephenson FR, Morrison LV, Hohenkerk CY.
+   Measurement of the Earth's rotation: 720 BC to AD 2015.
+   Proc Royal Soc A. 2016 Dec 7;472:20160404.
+   http://dx.doi.org/10.1098/rspa.2016.0404
 
  * The relationship between POSIX time (that is, UTC but ignoring leap
    seconds) and UTC is not agreed upon after 1972.  Although the POSIX

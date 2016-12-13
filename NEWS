@@ -13,6 +13,13 @@ Unreleased, experimental changes
 
   Changes to past time stamps
 
+    Fix many entries for historical time stamps for Europe/Madrid
+    before 1979, to agree with tables compiled by Pere Planesas of the
+    National Astronomical Observatory of Spain.  As a side effect,
+    this changes some time stamps for Africa/Ceuta before 1929, which
+    are probably guesswork anyway.  (Thanks to Steve Allen and
+    Pierpaolo Bernardi for the heads-ups.)
+
     Asia/Atyrau and Asia/Oral were at +03 (not +04) before 1930-06-21.
     (Thanks to Stepan Golosunov.)
 
@@ -38,6 +45,9 @@ Unreleased, experimental changes
     America/Rio_Branco, America/Santarem, America/Santiago,
     America/Sao_Paulo, Antarctica/Palmer, Atlantic/South_Georgia,
     Atlantic/Stanley, Pacific/Easter, and Pacific/Galapagos.
+
+    Similarly, switch to a numeric time zone abbreviation for Canary
+    Island time before 1946.
 
   Changes to documentation and commentary
 

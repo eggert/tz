@@ -3231,13 +3231,22 @@ Link Europe/Prague Europe/Bratislava
 
 # Spain
 #
-# From Paul Eggert (2016-12-13):
+# From Paul Eggert (2016-12-14):
+#
 # The source for Europe/Madrid before 2013 is:
 # Planesas P. La hora oficial en España y sus cambios.
 # Anuario del Observatorio Astronómico de Madrid (2013, in Spanish).
 # http://astronomia.ign.es/rknowsys-theme/images/webAstro/paginas/documentos/Anuario/lahoraoficialenespana.pdf
 # As this source says that historical time in the Canaries is obscure,
 # and it does not discuss Ceuta, stick with Shanks for now for that data.
+#
+# In the 1918 and 1919 fallback transitions in Spain, the clock for
+# the hour-longer day officially kept going after midnight, so that
+# the repeated instances of that day's 00:00 hour were 24 hours apart,
+# with a fallback transition from the second occurrence of 00:59... to
+# the next day's 00:00.  Our data format cannot represent this
+# directly, and instead repeats the first hour of the next day, with a
+# fallback transition from the next day's 00:59... to 00:00.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Spain	1918	only	-	Apr	15	23:00	1:00	S

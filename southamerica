@@ -1354,19 +1354,32 @@ Link	America/Curacao	America/Kralendijk	# Caribbean Netherlands
 #
 # Milne says the Central and South American Telegraph Company used -5:24:15.
 #
-# From Paul Eggert (2007-03-04):
-# Apparently Ecuador had a failed experiment with DST in 1992.
-# <http://midena.gov.ec/content/view/1261/208/> (2007-02-27) and
-# <http://www.hoy.com.ec/NoticiaNue.asp?row_id=249856> (2006-11-06) both
-# talk about "hora Sixto".  Leave this alone for now, as we have no data.
+# From Alois Treindl (2016-12-15):
+# http://www.elcomercio.com/actualidad/hora-sixto-1993.html
+# ... Whether the law applied also to Galápagos, I do not know.
+# From Paul Eggert (2016-12-15):
+# http://www.elcomercio.com/afull/modificacion-husohorario-ecuador-presidentes-decreto.html
+# This says President Sixto Durán Ballén signed decree No. 285, which
+# established DST from 1992-11-28 to 1993-02-05; it does not give transition
+# times.  The people called it "hora de Sixto" ("Sixto hour").  The change did
+# not go over well; a popular song "Qué hora es" by Jaime Guevara had lyrics
+# that included "Amanecía en mitad de la noche, los guaguas iban a clase sin
+# sol" ("It was dawning in the middle of the night, the buses went to class
+# without sun").  Although Ballén's campaign slogan was "Ni un paso atrás"
+# (Not one step back), the clocks went back in 1993 and the experiment was not
+# repeated.  For now, assume transitions were at 00:00 local time country-wide.
+#
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Ecuador	1992	only	-	Nov	28	0:00	1:00	S
+Rule	Ecuador	1993	only	-	Feb	 5	0:00	0	-
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Guayaquil	-5:19:20 -	LMT	1890
 			-5:14:00 -	QMT	1931 # Quito Mean Time
-			-5:00	-	-05
+			-5:00	Ecuador	-05/-04
 Zone Pacific/Galapagos	-5:58:24 -	LMT	1931 # Puerto Baquerizo Moreno
 			-5:00	-	-05	1986
-			-6:00	-	-06
+			-6:00	Ecuador	-06/-05
 
 # Falklands
 

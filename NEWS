@@ -20,6 +20,9 @@ Unreleased, experimental changes
     are probably guesswork anyway.  (Thanks to Steve Allen and
     Pierpaolo Bernardi for the heads-ups.)
 
+    Ecuador observed DST from 1992-11-28 to 1993-02-05.
+    (Thanks to Alois Treindl.)
+
     Asia/Atyrau and Asia/Oral were at +03 (not +04) before 1930-06-21.
     (Thanks to Stepan Golosunov.)
 

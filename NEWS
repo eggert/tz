@@ -18,7 +18,8 @@ Unreleased, experimental changes
     National Astronomical Observatory of Spain.  As a side effect,
     this changes some time stamps for Africa/Ceuta before 1929, which
     are probably guesswork anyway.  (Thanks to Steve Allen and
-    Pierpaolo Bernardi for the heads-ups.)
+    Pierpaolo Bernardi for the heads-ups, and to Michael Deckers for
+    correcting the 1901 transition.)
 
     Ecuador observed DST from 1992-11-28 to 1993-02-05.
     (Thanks to Alois Treindl.)

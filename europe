@@ -3248,6 +3248,14 @@ Link Europe/Prague Europe/Bratislava
 # directly, and instead repeats the first hour of the next day, with a
 # fallback transition from the next day's 00:59... to 00:00.
 
+# From Michael Deckers (2016-12-15):
+# The Royal Decree of 1900-06-26 quoted by Planesas, online at
+# https://www.boe.es/datos/pdfs/BOE//1900/209/A00383-00384.pdf
+# says in its article 5 (my translation):
+# These dispositions will enter into force beginning with the
+# instant at which, according to the time indicated in article 1,
+# the 1st day of January of 1901 will begin.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Spain	1918	only	-	Apr	15	23:00	1:00	S
 Rule	Spain	1918	1919	-	Oct	 6	24:00s	0	-
@@ -3304,11 +3312,11 @@ Rule SpainAfrica 1977	only	-	Sep	28	 0:00	0	-
 Rule SpainAfrica 1978	only	-	Jun	 1	 0:00	1:00	S
 Rule SpainAfrica 1978	only	-	Aug	 4	 0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Madrid	-0:14:44 -	LMT	1901 Jan  1  0:00s
+Zone	Europe/Madrid	-0:14:44 -	LMT	1900 Dec 31 23:45:16
 			 0:00	Spain	WE%sT	1940 Mar 16 23:00
 			 1:00	Spain	CE%sT	1979
 			 1:00	EU	CE%sT
-Zone	Africa/Ceuta	-0:21:16 -	LMT	1901
+Zone	Africa/Ceuta	-0:21:16 -	LMT	1900 Dec 31 23:38:44
 			 0:00	-	WET	1918 May  6 23:00
 			 0:00	1:00	WEST	1918 Oct  7 23:00
 			 0:00	-	WET	1924

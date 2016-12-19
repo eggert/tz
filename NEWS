@@ -53,6 +53,13 @@ Unreleased, experimental changes
     Similarly, switch to a numeric time zone abbreviation for Canary
     Island time before 1946.
 
+  Changes to code
+
+    zdump -i now outputs non-hour numeric time zone abbreviations
+    without a colon, e.g., "+0535" rather than "+05:30".  This agrees
+    with zic %z and with common practice, and simplifies auditing of
+    zdump output.
+
   Changes to documentation and commentary
 
     tz-link.htm now covers leap smearing, which is popular in clouds.

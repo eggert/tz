@@ -115,7 +115,7 @@ format where
 .IR hh <24.
 Times are in local time immediately after the transition.  A
 time interval description consists of a UT offset in signed
-.RI \(+- hh : mm : ss
+.RI \(+- hhmmss
 format, a time zone abbreviation, and an isdst flag.  An abbreviation
 that equals the UT offset is omitted; other abbreviations are
 double-quoted strings unless they consist of one or more alphabetic
@@ -123,7 +123,8 @@ characters.  An isdst flag is omitted for standard time, and otherwise
 is a decimal integer that is unsigned and positive (typically 1) for
 daylight saving time and negative for unknown.
 .PP
-In times and UT offsets, the seconds are omitted if they are zero, and
+In times and in UT offsets with absolute value less than 100 hours,
+the seconds are omitted if they are zero, and
 the minutes are also omitted if they are also zero.  Positive UT
 offsets are east of Greenwich.  The UT offset \*-00 denotes a UT
 placeholder in areas where the actual offset is unspecified; by

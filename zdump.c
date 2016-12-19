@@ -993,9 +993,11 @@ format_local_time(char *buf, size_t size, struct tm const *tm)
 
 /* Store into BUF, of size SIZE, a formatted UTC offset for the
    localtime *TM corresponding to time T.  Use ISO 8601 format
-   +HH:MM:SS, or -HH:MM:SS for time stamps west of Greenwich.  Omit
-   :SS if :SS is zero, and omit :MM too if :MM is also zero.  If the
-   time stamp represents an unknown UTC offset, use the format -00.
+   +HHMMSS, or -HHMMSS for time stamps west of Greenwich; if the time
+   stamp represents an unknown UTC offset, use the format -00.  If the
+   hour needs more than two digits to represent, extend the length of
+   HH as needed.  Otherwise, omit SS if SS is zero, and omit MM too if
+   MM is also zero.
 
    Return the length of the resulting string, or -1 if the result is
    not representable as a string.  If the string does not fit, return
@@ -1020,10 +1022,10 @@ format_utc_offset(char *buf, size_t size, struct tm const *tm, time_t t)
   ss = off % 60;
   mm = off / 60 % 60;
   hh = off / 60 / 60;
-  return (ss
-	  ? snprintf(buf, size, "%c%02ld:%02d:%02d", sign, hh, mm, ss)
+  return (ss || 100 <= hh
+	  ? snprintf(buf, size, "%c%02ld%02d%02d", sign, hh, mm, ss)
 	  : mm
-	  ? snprintf(buf, size, "%c%02ld:%02d", sign, hh, mm)
+	  ? snprintf(buf, size, "%c%02ld%02d", sign, hh, mm)
 	  : snprintf(buf, size, "%c%02ld", sign, hh));
 }
 

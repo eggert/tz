@@ -1479,7 +1479,7 @@ Rule	Falk	2001	2010	-	Sep	Sun>=1	2:00	1:00	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Atlantic/Stanley	-3:51:24 -	LMT	1890
 			-3:51:24 -	SMT	1912 Mar 12 # Stanley Mean Time
-			-4:00	Falk	-04/-03	1983 May    # Falkland Is Time
+			-4:00	Falk	-04/-03	1983 May
 			-3:00	Falk	-03/-02	1985 Sep 15
 			-4:00	Falk	-04/-03	2010 Sep  5  2:00
 			-3:00	-	-03
@@ -1745,6 +1745,12 @@ Zone America/Montevideo	-3:44:44 -	LMT	1898 Jun 28
 			-3:00	Uruguay	-03/-02	1974
 			-3:00	Uruguay	-03/-0230 1974 Dec 22
 			-3:00	Uruguay	-03/-02
+# From Tim Parenti (2016-12-19):
+# The transitions after 1942 are constructed to support representing Uruguay's
+# various DST schemes while zic %z is relatively new and not widely supported.
+# The last several lines can ultimately be replaced with the following:
+#			-3:30	Uruguay	%z	1942 Dec 14
+#			-3:00	Uruguay	%z
 
 # Venezuela
 #

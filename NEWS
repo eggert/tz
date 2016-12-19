@@ -63,7 +63,7 @@ Unreleased, experimental changes
   Changes to code
 
     zdump -i now outputs non-hour numeric time zone abbreviations
-    without a colon, e.g., "+0535" rather than "+05:30".  This agrees
+    without a colon, e.g., "+0530" rather than "+05:30".  This agrees
     with zic %z and with common practice, and simplifies auditing of
     zdump output.
 

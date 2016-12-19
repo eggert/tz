@@ -50,8 +50,15 @@ Unreleased, experimental changes
     America/Sao_Paulo, Antarctica/Palmer, Atlantic/South_Georgia,
     Atlantic/Stanley, Pacific/Easter, and Pacific/Galapagos.
 
-    Similarly, switch to a numeric time zone abbreviation for Canary
-    Island time before 1946.
+    Similarly, switch to numeric time zone abbreviations for St Pierre
+    and Miquelon time, for half-hour DST in Belize before 1944 and in
+    the Dominican Republic before 1975, and for Canary Island time
+    before 1946.
+
+    For Alaska time from 1900 through 1967, instead of "CAT" use the
+    abbreviation "AST", the abbreviation commonly used at the time
+    (Atlantic Standard Time had not been standardized yet).  Use "AWT"
+    and "APT" instead of the invented abbreviations "CAWT" and "CAPT".
 
   Changes to code
 

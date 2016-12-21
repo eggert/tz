@@ -168,7 +168,7 @@ GCC_DEBUG_FLAGS = -Dlint -g3 -O3 -fno-common -fstrict-aliasing \
 	-Wshadow -Wstrict-prototypes -Wsuggest-attribute=const \
 	-Wsuggest-attribute=format -Wsuggest-attribute=noreturn \
 	-Wsuggest-attribute=pure -Wtrampolines \
-	-Wunused -Wwrite-strings \
+	-Wundef -Wunused -Wwrite-strings \
 	-Wno-address -Wno-format-nonliteral -Wno-sign-compare \
 	-Wno-type-limits -Wno-unused-parameter
 #

@@ -67,6 +67,9 @@ Unreleased, experimental changes
     with zic %z and with common practice, and simplifies auditing of
     zdump output.
 
+    zdump is now buildable again with -DUSE_LTZ=0.
+    (Problem reported bny Joseph Myers.)
+
   Changes to documentation and commentary
 
     tz-link.htm now covers leap smearing, which is popular in clouds.

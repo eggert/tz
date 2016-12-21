@@ -23,6 +23,11 @@
 # include "private.h"
 #endif
 
+/*
+** Substitutes for pre-C99 and pre-POSIX platforms.
+** Much of this section of code is stolen from private.h.
+*/
+
 /* Enable tm_gmtoff and tm_zone on GNUish systems.  */
 #define _GNU_SOURCE 1
 /* Enable strtoimax on Solaris 10.  */
@@ -36,10 +41,17 @@
 #include "limits.h"	/* for CHAR_BIT, LLONG_MAX */
 #include <errno.h>
 
-/*
-** Substitutes for pre-C99 compilers.
-** Much of this section of code is stolen from private.h.
-*/
+#ifndef HAVE_POSIX_DECLS
+# define HAVE_POSIX_DECLS 1
+#endif
+
+#ifndef HAVE_UNISTD_H
+# define HAVE_UNISTD_H 1
+#endif
+
+#if HAVE_UNISTD_H
+# include <unistd.h>
+#endif
 
 #ifndef HAVE_STDINT_H
 # define HAVE_STDINT_H \
@@ -158,6 +170,14 @@ typedef long intmax_t;
 	((TYPE_BIT(type) - TYPE_SIGNED(type)) * 302 / 1000 + \
 	1 + TYPE_SIGNED(type))
 #endif /* !defined INT_STRLEN_MAXIMUM */
+
+#ifndef INITIALIZE
+# ifdef lint
+#  define INITIALIZE(x)	((x) = 0)
+# else
+#  define INITIALIZE(x)
+# endif
+#endif
 
 #ifndef EXIT_SUCCESS
 #define EXIT_SUCCESS	0

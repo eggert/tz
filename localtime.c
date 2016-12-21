@@ -16,7 +16,7 @@
 #include "tzfile.h"
 #include "fcntl.h"
 
-#if THREAD_SAFE
+#if defined THREAD_SAFE && THREAD_SAFE
 # include <pthread.h>
 static pthread_mutex_t locallock = PTHREAD_MUTEX_INITIALIZER;
 static int lock(void) { return pthread_mutex_lock(&locallock); }

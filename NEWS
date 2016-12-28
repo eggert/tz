@@ -50,10 +50,12 @@ Unreleased, experimental changes
     America/Sao_Paulo, Antarctica/Palmer, Atlantic/South_Georgia,
     Atlantic/Stanley, Pacific/Easter, and Pacific/Galapagos.
 
-    Similarly, switch to numeric time zone abbreviations for St Pierre
-    and Miquelon time, for half-hour DST in Belize before 1944 and in
-    the Dominican Republic before 1975, and for Canary Island time
-    before 1946.
+    Similarly, switch from invented to numeric time zone abbreviations
+    for Greenland, the Azores, and St Pierre and Miquelon; for
+    half-hour DST in Belize before 1944 and in the Dominican Republic
+    before 1975; and for Canary Islands before 1946, for Madeira
+    before 1967, for Iceland before 1969, for the Netherlands in
+    1937-9, and for Zaporozhye in 1880-1924.
 
     For Alaska time from 1900 through 1967, instead of "CAT" use the
     abbreviation "AST", the abbreviation commonly used at the time

@@ -1736,7 +1736,8 @@ Rule	Uruguay	2006	only	-	Mar	12	 2:00	0	-
 # [dated 2015-06-29; repeals Decree 311/006 dated 2006-09-04]
 Rule	Uruguay	2006	2014	-	Oct	Sun>=1	 2:00	1:00	S
 Rule	Uruguay	2007	2015	-	Mar	Sun>=8	 2:00	0	-
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
+
+# This Zone can be simplified once we assume zic %z.
 Zone America/Montevideo	-3:44:44 -	LMT	1898 Jun 28
 			-3:44:44 -	MMT	1920 May  1 # Montevideo MT
 			-3:30	Uruguay	-0330/-03 1942 Dec 14
@@ -1745,12 +1746,6 @@ Zone America/Montevideo	-3:44:44 -	LMT	1898 Jun 28
 			-3:00	Uruguay	-03/-02	1974
 			-3:00	Uruguay	-03/-0230 1974 Dec 22
 			-3:00	Uruguay	-03/-02
-# From Tim Parenti (2016-12-19):
-# The transitions after 1942 are constructed to support representing Uruguay's
-# various DST schemes while zic %z is relatively new and not widely supported.
-# The last several lines can ultimately be replaced with the following:
-#			-3:30	Uruguay	%z	1942 Dec 14
-#			-3:00	Uruguay	%z
 
 # Venezuela
 #

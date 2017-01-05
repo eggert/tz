@@ -2368,6 +2368,9 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 	register bool			do_extend;
 	register char			version;
 	ptrdiff_t lastatmax = -1;
+	zic_t one = 1;
+	zic_t y2038_boundary = one << 31;
+	zic_t max_year0;
 
 	max_abbr_len = 2 + max_format_len + max_abbrvar_len;
 	max_envvar_len = 2 * max_abbr_len + 5 * 9;
@@ -2463,12 +2466,13 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 	}
 	/*
 	** For the benefit of older systems,
-	** generate data from 1900 through 2037.
+	** generate data from 1900 through 2038.
 	*/
 	if (min_year > 1900)
 		min_year = 1900;
-	if (max_year < 2037)
-		max_year = 2037;
+	max_year0 = max_year;
+	if (max_year < 2038)
+		max_year = 2038;
 	for (i = 0; i < zonecount; ++i) {
 		/*
 		** A guess that may well be corrected later.
@@ -2507,8 +2511,12 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				rp->r_todo = year >= rp->r_loyear &&
 						year <= rp->r_hiyear &&
 						yearistype(year, rp->r_yrtype);
-				if (rp->r_todo)
+				if (rp->r_todo) {
 					rp->r_temp = rpytime(rp, year);
+					rp->r_todo
+					  = (rp->r_temp < y2038_boundary
+					     || year <= max_year0);
+				}
 			}
 			for ( ; ; ) {
 				register ptrdiff_t k;

@@ -568,12 +568,12 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 			    && ts->typecnt == 2) {
 
 			  /* Attempt to reuse existing abbreviations.
-			     Without this, America/Anchorage would stop
-			     working after 2037 when TZ_MAX_CHARS is 50, as
-			     sp->charcnt equals 42 (for LMT CAT CAWT CAPT AHST
+			     Without this, America/Anchorage would be right on
+			     the edge after 2037 when TZ_MAX_CHARS is 50, as
+			     sp->charcnt equals 40 (for LMT AST AWT APT AHST
 			     AHDT YST AKDT AKST) and ts->charcnt equals 10
 			     (for AKST AKDT).  Reusing means sp->charcnt can
-			     stay 42 in this example.  */
+			     stay 40 in this example.  */
 			  int gotabbr = 0;
 			  int charcnt = sp->charcnt;
 			  for (i = 0; i < 2; i++) {
@@ -597,6 +597,15 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 			  }
 			  if (gotabbr == 2) {
 			    sp->charcnt = charcnt;
+
+			    /* Ignore any transition that was almost surely
+			       generated because of WORK_AROUND_QTBUG_53071 in
+			       zic.c, as it doesn't help here and can run
+			       afoul of bugs in zic 2016j or earlier.  */
+			    if (1 < sp->timecnt
+				&& sp->ats[sp->timecnt - 1] == 0x7fffffff)
+			      sp->timecnt--;
+
 			    for (i = 0; i < ts->timecnt; i++)
 			      if (sp->ats[sp->timecnt - 1] < ts->ats[i])
 				break;

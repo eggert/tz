@@ -332,7 +332,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=10	0:00	1:00	D
 # (could be true), for the moment I am assuming that those two
 # counties are mistakes in the astro.com data.
 
-# From Paul Eggert (2014-06-30):
+# From Paul Eggert (2017-01-05):
 # Alois Treindl kindly sent me translations of the following two sources:
 #
 # (1)
@@ -390,28 +390,26 @@ Rule	PRC	1987	1991	-	Apr	Sun>=10	0:00	1:00	D
 # mainly observed in coastal areas), the five zones were:
 #
 # Changbai Time ("Long-white Time", Long-white = Heilongjiang area) UT +08:30
-# Asia/Harbin (currently a link to Asia/Shanghai)
+# Now part of Asia/Shanghai; its pre-1970 times are not recorded here.
 # Heilongjiang (except Mohe county), Jilin
 #
 # Zhongyuan Time ("Central plain Time") UT +08
-# Asia/Shanghai
+# Now part of Asia/Shanghai.
 # most of China
-# This currently represents most other zones as well,
-# as apparently these regions have been the same since 1970.
 # Milne gives 8:05:43.2 for Xujiahui Observatory time; round to nearest.
 # Guo says Shanghai switched to UT +08 "from the end of the 19th century".
 #
-# Long-shu Time (probably due to Long and Shu being two names of the area) UT +07
-# Asia/Chongqing (currently a link to Asia/Shanghai)
+# Long-shu Time (probably as Long and Shu were two names of the area) UT +07
+# Now part of Asia/Shanghai; its pre-1970 times are not recorded here.
 # Guangxi, Guizhou, Hainan, Ningxia, Sichuan, Shaanxi, and Yunnan;
 # most of Gansu; west Inner Mongolia; east Qinghai; and the Guangdong
 # counties Deqing, Enping, Kaiping, Luoding, Taishan, Xinxing,
 # Yangchun, Yangjiang, Yu'nan, and Yunfu.
 #
 # Xin-zang Time ("Xinjiang-Tibet Time") UT +06
-# Asia/Urumqi
-# This currently represents Kunlun Time as well,
-# as apparently the two regions have been the same since 1970.
+# This region is now part of either Asia/Urumqi or Asia/Shanghai with
+# current boundaries uncertain; times before 1970 for areas that
+# disagree with Ürümqi or Shanghai are not recorded here.
 # The Gansu counties Aksay, Anxi, Dunhuang, Subei; west Qinghai;
 # the Guangdong counties  Xuwen, Haikang, Suixi, Lianjiang,
 # Zhanjiang, Wuchuan, Huazhou, Gaozhou, Maoming, Dianbai, and Xinyi;
@@ -422,7 +420,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=10	0:00	1:00	D
 # Fukang, Kuitun, Kumukuli, Miquan, Qitai, and Turfan.
 #
 # Kunlun Time UT +05:30
-# Asia/Kashgar (currently a link to Asia/Urumqi)
+# This region is now in the same status as Xin-zang Time (see above).
 # West Tibet, including Pulan, Aheqi, Shufu, Shule;
 # West Xinjiang, including Aksu, Atushi, Yining, Hetian, Cele, Luopu, Nileke,
 # Zhaosu, Tekesi, Gongliu, Chabuchaer, Huocheng, Bole, Pishan, Suiding,

@@ -78,6 +78,10 @@ Unreleased, experimental changes
     zdump is now buildable again with -DUSE_LTZ=0.
     (Problem reported bny Joseph Myers.)
 
+    localtime.c no longer mishandles early or late timestamps
+    when TZ is set to a POSIX-style string that specifies DST.
+    (Problem reported by Kees Dekker.)
+
   Changes to documentation and commentary
 
     tz-link.htm now covers leap smearing, which is popular in clouds.

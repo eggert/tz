@@ -1136,7 +1136,9 @@ tzparse(const char *name, struct state *sp, bool lastditch)
 					break;
 			}
 			sp->timecnt = timecnt;
-			if (!timecnt)
+			if (timecnt)
+				sp->goback = sp->goahead = true;
+			else
 				sp->typecnt = 1;	/* Perpetual DST.  */
 		} else {
 			register int_fast32_t	theirstdoffset;

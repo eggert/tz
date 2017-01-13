@@ -32,35 +32,26 @@ Unreleased, experimental changes
     Switch to numeric time zone abbreviations for South America, as
     part of the ongoing project of removing invented abbreviations.
     This avoids the need to invent an abbreviation for the new Chilean
-    new zone.  This change affects America/Araguaina,
-    America/Argentina/Buenos_Aires, America/Argentina/Catamarca,
-    America/Argentina/Cordoba, America/Argentina/Jujuy,
-    America/Argentina/La_Rioja, America/Argentina/Mendoza,
-    America/Argentina/Rio_Gallegos, America/Argentina/Salta,
-    America/Argentina/San_Juan, America/Argentina/San_Luis,
-    America/Argentina/Tucuman, America/Argentina/Ushuaia,
-    America/Asuncion, America/Bahia, America/Belem, America/Boa_Vista,
-    America/Bogota, America/Campo_Grande, America/Caracas,
-    America/Cayenne, America/Cuiaba, America/Curacao,
-    America/Eirunepe, America/Fortaleza, America/Guayaquil,
-    America/Guyana, America/La_Paz, America/Lima, America/Maceio,
-    America/Manaus, America/Montevideo, America/Noronha,
-    America/Paramaribo, America/Porto_Velho, America/Recife,
-    America/Rio_Branco, America/Santarem, America/Santiago,
-    America/Sao_Paulo, Antarctica/Palmer, Atlantic/South_Georgia,
-    Atlantic/Stanley, Pacific/Easter, and Pacific/Galapagos.
-
-    Similarly, switch from invented to numeric time zone abbreviations
-    for Greenland, the Azores, and St Pierre and Miquelon; for
-    half-hour DST in Belize before 1944 and in the Dominican Republic
-    before 1975; and for Canary Islands before 1946, for Madeira
-    before 1967, for Iceland before 1969, for the Netherlands in
-    1937-9, and for Zaporozhye in 1880-1924.
+    new zone.  Similarly, switch from invented to numeric time zone
+    abbreviations for Afghanistan, the Azores, Bangladesh, Bhutan, the
+    British Indian Ocean Territory, Brunei, Dubai, East Timor,
+    Greenland, Indochina, Iran, Iraq, Malaysia, the Maldives,
+    Mongolia, Myanmar, Nepal, the Philippines, Qatar, St Pierre and
+    Miquelon, Saudi Arabia, Singapore, and Xinjiang; for half-hour DST
+    in Belize before 1944 and in the Dominican Republic before 1975;
+    and for Canary Islands before 1946, for Madeira before 1967, for
+    Iceland before 1969, for Indian Summer Time before 1942, for
+    Indonesia before around 1964, for the Netherlands in 1937-9, for
+    Pakistan before 1971, and for Zaporozhye in 1880-1924.
 
     For Alaska time from 1900 through 1967, instead of "CAT" use the
     abbreviation "AST", the abbreviation commonly used at the time
     (Atlantic Standard Time had not been standardized yet).  Use "AWT"
     and "APT" instead of the invented abbreviations "CAWT" and "CAPT".
+
+    Use "CST" and "CDT" instead of invented abbreviations for Macau
+    before 1999 and Taiwan before 1938, and use "JST" instead of the
+    invented abbreviation "JCST" for Japan and Korea before 1938.
 
   Changes to code
 

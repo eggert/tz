@@ -598,12 +598,12 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 			  if (gotabbr == 2) {
 			    sp->charcnt = charcnt;
 
-			    /* Ignore any transition that was almost surely
-			       generated because of WORK_AROUND_QTBUG_53071 in
-			       zic.c, as it doesn't help here and can run
-			       afoul of bugs in zic 2016j or earlier.  */
-			    if (1 < sp->timecnt
-				&& sp->ats[sp->timecnt - 1] == 0x7fffffff)
+			    /* Ignore any trailing, no-op transitions generated
+			       by zic as they don't help here and can run afoul
+			       of bugs in zic 2016j or earlier.  */
+			    while (1 < sp->timecnt
+				   && (sp->types[sp->timecnt - 1]
+				       == sp->types[sp->timecnt - 2]))
 			      sp->timecnt--;
 
 			    for (i = 0; i < ts->timecnt; i++)

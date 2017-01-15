@@ -74,6 +74,10 @@ Unreleased, experimental changes
     when TZ is set to a POSIX-style string that specifies DST.
     (Problem reported by Kees Dekker.)
 
+    date and strftime now cause %z to generate "-0000" instead of
+    "+0000" when the UT offset is zero and the time zone abbreviation
+    begins with "-".
+
   Changes to documentation and commentary
 
     tz-link.htm now covers leap smearing, which is popular in clouds.

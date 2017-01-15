@@ -500,6 +500,7 @@ label:
 				{
 				long		diff;
 				char const *	sign;
+				bool negative;
 
 # ifdef TM_GMTOFF
 				diff = t->TM_GMTOFF;
@@ -538,7 +539,17 @@ label:
 					continue;
 #  endif
 # endif
-				if (diff < 0) {
+				negative = diff < 0;
+				if (diff == 0) {
+#ifdef TM_ZONE
+				  negative = t->TM_ZONE[0] == '-';
+#else
+				  negative
+				    = (t->tm_isdst < 0
+				       || tzname[t->tm_isdst != 0][0] == '-');
+#endif
+				}
+				if (negative) {
 					sign = "-";
 					diff = -diff;
 				} else	sign = "+";

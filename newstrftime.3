@@ -50,6 +50,13 @@ strftime \- format date and time
 .SH DESCRIPTION
 .ie '\(en'' .ds en \-
 .el .ds en \(en
+.ie '\(lq'' .ds lq \&"\"
+.el .ds lq \(lq\"
+.ie '\(rq'' .ds rq \&"\"
+.el .ds rq \(rq\"
+.de q
+\\$3\*(lq\\$1\*(rq\\$2
+..
 The
 .I strftime
 function formats the information from
@@ -211,6 +218,11 @@ is replaced by the offset from the Prime Meridian
 in the format +HHMM or \*-HHMM as appropriate,
 with positive values representing locations east of Greenwich,
 or by the empty string if this is not determinable.
+The numeric time zone \*-0000 is used when the time is Universal Time
+but local time is indeterminate; by convention this is used for
+locations while uninhabited, and corresponds to a zero offset when the
+time zone abbreviation begins with
+.q "\*-" .
 .TP
 %%
 is replaced by a single %.

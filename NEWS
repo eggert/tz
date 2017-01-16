@@ -80,6 +80,9 @@ Unreleased, experimental changes
 
   Changes to documentation and commentary
 
+    The 'Theory' file now better documents choice of historical time
+    zone abbreviations.  (Problems reported by Michael Deckers.)
+
     tz-link.htm now covers leap smearing, which is popular in clouds.
 
 

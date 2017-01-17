@@ -70,6 +70,9 @@ Unreleased, experimental changes
     zdump is now buildable again with -DUSE_LTZ=0.
     (Problem reported bny Joseph Myers.)
 
+    zdump.c now always includes private.h, to avoid code duplication
+    with private.h.  (Problem reported by Kees Dekker.)
+
     localtime.c no longer mishandles early or late timestamps
     when TZ is set to a POSIX-style string that specifies DST.
     (Problem reported by Kees Dekker.)

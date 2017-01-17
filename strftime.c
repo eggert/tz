@@ -35,7 +35,6 @@
 
 #include "private.h"
 
-#include "tzfile.h"
 #include <fcntl.h>
 #include <locale.h>
 

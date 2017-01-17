@@ -12,7 +12,6 @@
 /*LINTLIBRARY*/
 
 #include "private.h"
-#include "tzfile.h"
 
 /*
 ** Some systems only handle "%.2d"; others only handle "%02d";

@@ -5,10 +5,10 @@
 
 #include "version.h"
 #include "private.h"
-#include "locale.h"
 #include "tzfile.h"
 
 #include <fcntl.h>
+#include <locale.h>
 #include <stdarg.h>
 #include <stddef.h>
 

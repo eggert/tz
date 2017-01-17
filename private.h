@@ -104,13 +104,13 @@
 #undef tzalloc
 #undef tzfree
 
-#include "sys/types.h"	/* for time_t */
-#include "stdio.h"
-#include "string.h"
-#include "limits.h"	/* for CHAR_BIT et al. */
-#include "stdlib.h"
+#include <sys/types.h>	/* for time_t */
+#include <stdio.h>
+#include <string.h>
+#include <limits.h>	/* for CHAR_BIT et al. */
+#include <stdlib.h>
 
-#include "errno.h"
+#include <errno.h>
 
 #ifndef ENAMETOOLONG
 # define ENAMETOOLONG EINVAL
@@ -123,7 +123,7 @@
 #endif
 
 #if HAVE_GETTEXT
-#include "libintl.h"
+#include <libintl.h>
 #endif /* HAVE_GETTEXT */
 
 #if HAVE_SYS_WAIT_H
@@ -138,7 +138,7 @@
 #endif /* !defined WEXITSTATUS */
 
 #if HAVE_UNISTD_H
-#include "unistd.h"	/* for F_OK, R_OK, and other POSIX goodness */
+#include <unistd.h>	/* for F_OK, R_OK, and other POSIX goodness */
 #endif /* HAVE_UNISTD_H */
 
 #ifndef HAVE_STRFTIME_L
@@ -173,7 +173,7 @@
 #endif /* !defined HAVE_STDINT_H */
 
 #if HAVE_STDINT_H
-#include "stdint.h"
+#include <stdint.h>
 #endif /* !HAVE_STDINT_H */
 
 #ifndef HAVE_INTTYPES_H

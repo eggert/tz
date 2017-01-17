@@ -14,7 +14,7 @@
 #include "private.h"
 
 #include "tzfile.h"
-#include "fcntl.h"
+#include <fcntl.h>
 
 #if defined THREAD_SAFE && THREAD_SAFE
 # include <pthread.h>

@@ -28,7 +28,7 @@
    SUCH DAMAGE.  */
 
 #include "private.h"
-#include "locale.h"
+#include <locale.h>
 
 /*
 ** The two things date knows about time are. . .

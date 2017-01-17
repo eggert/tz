@@ -33,12 +33,12 @@
 /* Enable strtoimax on Solaris 10.  */
 #define __EXTENSIONS__ 1
 
-#include "stdio.h"	/* for stdout, stderr, perror */
-#include "string.h"	/* for strcpy */
-#include "sys/types.h"	/* for time_t */
-#include "time.h"	/* for struct tm */
-#include "stdlib.h"	/* for exit, malloc, atoi */
-#include "limits.h"	/* for CHAR_BIT, LLONG_MAX */
+#include <stdio.h>	/* for stdout, stderr, perror */
+#include <string.h>	/* for strcpy */
+#include <sys/types.h>	/* for time_t */
+#include <time.h>	/* for struct tm */
+#include <stdlib.h>	/* for exit, malloc, atoi */
+#include <limits.h>	/* for CHAR_BIT, LLONG_MAX */
 #include <errno.h>
 
 #ifndef HAVE_POSIX_DECLS
@@ -60,7 +60,7 @@
      || __CYGWIN__ || INTMAX_MAX)
 #endif
 #if HAVE_STDINT_H
-# include "stdint.h"
+# include <stdint.h>
 #endif
 #ifndef HAVE_INTTYPES_H
 # define HAVE_INTTYPES_H HAVE_STDINT_H
@@ -245,8 +245,8 @@ enum { SECSPER400YEARS_FITS = SECSPERLYEAR <= INTMAX_MAX / 400 };
 #define HAVE_GETTEXT 0
 #endif
 #if HAVE_GETTEXT
-#include "locale.h"	/* for setlocale */
-#include "libintl.h"
+#include <locale.h>	/* for setlocale */
+#include <libintl.h>
 #endif /* HAVE_GETTEXT */
 
 #if 2 < __GNUC__ || (__GNUC__ == 2 && 96 <= __GNUC_MINOR__)

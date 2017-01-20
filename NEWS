@@ -8,8 +8,10 @@ Unreleased, experimental changes
 
     Chile's Region of Magallanes moves from -04/-03 to -03 year-round.
     Its clocks diverge from America/Santiago starting 2017-05-13 at
-    23:00, hiving off a new zone America/Punta_Arenas.  (Thanks to
-    Juan Correa.)  This also affects Antarctica/Palmer.
+    23:00, hiving off a new zone America/Punta_Arenas.  Although the
+    Chilean government says this change expires in May 2019, for now
+    assume it's permanent.  (Thanks to Juan Correa and Deborah
+    Goldsmith.)  This also affects Antarctica/Palmer.
 
   Changes to past time stamps
 

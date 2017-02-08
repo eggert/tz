@@ -2137,14 +2137,18 @@ Rule	Mongol	1983	only	-	Oct	1	0:00	0	-
 # correction of 02:00 (in the previous edition) not being done correctly
 # in the latest edition; so ignore it for now.
 
+# From Ganbold Tsagaankhuu (2017-02-09):
+# Mongolian Government meeting has concluded today to cancel daylight
+# saving time adoption in Mongolia.  Source: http://zasag.mn/news/view/16192
+
 Rule	Mongol	1985	1998	-	Mar	lastSun	0:00	1:00	S
 Rule	Mongol	1984	1998	-	Sep	lastSun	0:00	0	-
 # IATA SSIM (1999-09) says Mongolia no longer observes DST.
 Rule	Mongol	2001	only	-	Apr	lastSat	2:00	1:00	S
 Rule	Mongol	2001	2006	-	Sep	lastSat	2:00	0	-
 Rule	Mongol	2002	2006	-	Mar	lastSat	2:00	1:00	S
-Rule	Mongol	2015	max	-	Mar	lastSat	2:00	1:00	S
-Rule	Mongol	2015	max	-	Sep	lastSat	0:00	0	-
+Rule	Mongol	2015	2016	-	Mar	lastSat	2:00	1:00	S
+Rule	Mongol	2015	2016	-	Sep	lastSat	0:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 # Hovd, a.k.a. Chovd, Dund-Us, Dzhargalant, Khovd, Jirgalanta

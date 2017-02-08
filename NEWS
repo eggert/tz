@@ -6,6 +6,8 @@ Unreleased, experimental changes
 
   Changes to future time stamps
 
+    Mongolia no longer observes DST.  (Thanks to Ganbold Tsagaankhuu.)
+
     Chile's Region of Magallanes moves from -04/-03 to -03 year-round.
     Its clocks diverge from America/Santiago starting 2017-05-13 at
     23:00, hiving off a new zone America/Punta_Arenas.  Although the

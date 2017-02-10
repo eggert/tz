@@ -62,6 +62,11 @@ Unreleased, experimental changes
     before 1999 and Taiwan before 1938, and use "JST" instead of the
     invented abbreviation "JCST" for Japan and Korea before 1938.
 
+  Change to database entry category
+
+    Move the Pacific/Johnston link from 'australasia' to 'backward',
+    since Johnston is now uninhabited.
+
   Changes to code
 
     zic no longer mishandles some transitions in January 2038 when it

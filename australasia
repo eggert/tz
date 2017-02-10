@@ -736,10 +736,11 @@ Zone Pacific/Funafuti	11:56:52 -	LMT	1901
 
 # Johnston
 #
-# From Paul Eggert (2014-03-11):
+# From Paul Eggert (2017-02-10):
 # Sometimes Johnston kept Hawaii time, and sometimes it was an hour behind.
 # Details are uncertain.  We have no data for Johnston after 1970, so
-# treat it like Hawaii for now.
+# treat it like Hawaii for now.  Since Johnston is now uninhabited,
+# its link to Pacific/Honolulu is in the 'backward' file.
 #
 # In his memoirs of June 6th to October 4, 1945
 # <http://www.315bw.org/Herb_Bach.htm> (2005), Herbert C. Bach writes,
@@ -759,8 +760,6 @@ Zone Pacific/Funafuti	11:56:52 -	LMT	1901
 # See the table on page 4 where he lists GMT and local times for the tests; a
 # footnote for the JI tests reads that local time is "JI time = Hawaii Time
 # Minus One Hour".
-#
-# See 'northamerica' for Pacific/Johnston.
 
 # Kingman
 # uninhabited

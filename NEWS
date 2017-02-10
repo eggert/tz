@@ -37,11 +37,16 @@ Unreleased, experimental changes
     part of the ongoing project of removing invented abbreviations.
     This avoids the need to invent an abbreviation for the new Chilean
     new zone.  Similarly, switch from invented to numeric time zone
-    abbreviations for Afghanistan, the Azores, Bangladesh, Bhutan, the
-    British Indian Ocean Territory, Brunei, Dubai, East Timor,
-    Greenland, Indochina, Iran, Iraq, Malaysia, the Maldives,
-    Mongolia, Myanmar, Nepal, the Philippines, Qatar, St Pierre and
-    Miquelon, Saudi Arabia, Singapore, and Xinjiang; for half-hour DST
+    abbreviations for Afghanistan, American Samoa, the Azores,
+    Bangladesh, Bhutan, the British Indian Ocean Territory, Brunei,
+    Chatham Is, Christmas I, Cocos (Keeling) Is, Cook Is, Dubai, East
+    Timor, Eucla, Fiji, French Polynesia, Greenland, Indochina, Iran,
+    Iraq, Kiribati, Lord Howe, Macquarie, Malaysia, the Maldives,
+    Marshall Is, Micronesia, Mongolia, Myanmar, Nauru, Nepal, New
+    Caledonia, Niue, Norfolk I, Palau, Papua New Guinea, the
+    Philippines, Pitcairn, Qatar, St Pierre & Miquelon, Samoa, Saudi
+    Arabia, Singapore, Solomon Is, Tokelau, Tuvalu, Wake, Vanuatu,
+    Wallis & Futuna, and Xinjiang; for half-hour daylight saving time
     in Belize before 1944 and in the Dominican Republic before 1975;
     and for Canary Islands before 1946, for Madeira before 1967, for
     Iceland before 1969, for Indian Summer Time before 1942, for

@@ -726,7 +726,7 @@ adjusted_yday(struct tm const *a, struct tm const *b)
    the same instant, return A's UTC offset in seconds, where positive
    offsets are east of Greenwich.  On failure, return LONG_MIN.
 
-   If T is nonnull, *T is the time stamp that corresponds to A; call
+   If T is nonnull, *T is the timestamp that corresponds to A; call
    my_gmtime_r and use its result instead of B.  Otherwise, B is the
    possibly nonnull result of an earlier call to my_gmtime_r.  */
 static long
@@ -807,11 +807,11 @@ format_local_time(char *buf, size_t size, struct tm const *tm)
 
 /* Store into BUF, of size SIZE, a formatted UTC offset for the
    localtime *TM corresponding to time T.  Use ISO 8601 format
-   +HHMMSS, or -HHMMSS for time stamps west of Greenwich; if the time
-   stamp represents an unknown UTC offset, use the format -00.  If the
-   hour needs more than two digits to represent, extend the length of
-   HH as needed.  Otherwise, omit SS if SS is zero, and omit MM too if
-   MM is also zero.
+   +HHMMSS, or -HHMMSS for timestamps west of Greenwich; use the
+   format -00 for unknown UTC offsets.  If the hour needs more than
+   two digits to represent, extend the length of HH as needed.
+   Otherwise, omit SS if SS is zero, and omit MM too if MM is also
+   zero.
 
    Return the length of the resulting string, or -1 if the result is
    not representable as a string.  If the string does not fit, return
@@ -874,7 +874,7 @@ format_quoted_string(char *buf, size_t size, char const *p)
   }
 }
 
-/* Store into BUF (of size SIZE) a time stamp formatted by TIME_FMT.
+/* Store into BUF (of size SIZE) a timestamp formatted by TIME_FMT.
    TM is the broken-down time, T the seconds count, AB the time zone
    abbreviation, and ZONE_NAME the zone name.  Return true if
    successful, false if the output would require more than SIZE bytes.

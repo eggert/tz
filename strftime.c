@@ -1,4 +1,4 @@
-/* Convert a broken-down time stamp to a string.  */
+/* Convert a broken-down timestamp to a string.  */
 
 /* Copyright 1989 The Regents of the University of California.
    All rights reserved.

@@ -3286,7 +3286,7 @@ Rule	Spain	1929	only	-	Apr	20	23:00	1:00	S
 Rule	Spain	1937	only	-	Jun	16	23:00	1:00	S
 Rule	Spain	1937	only	-	Oct	 2	24:00s	0	-
 Rule	Spain	1938	only	-	Apr	 2	23:00	1:00	S
-Rule	Spain	1938	only	-	Apr	30	23:00	2:00	DS
+Rule	Spain	1938	only	-	Apr	30	23:00	2:00	M
 Rule	Spain	1938	only	-	Oct	 2	24:00	1:00	S
 # The following rules are for unified Spain again.
 #

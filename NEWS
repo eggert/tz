@@ -2,7 +2,8 @@ News for the tz database
 
 Unreleased, experimental changes
 
-  Briefly: Southern Chile moves from -04/-03 to -03.
+  Briefly: Southern Chile moves from -04/-03 to -03, and Mongolia
+  discontinues DST.
 
   Changes to future time stamps
 
@@ -86,7 +87,7 @@ Unreleased, experimental changes
     zdump output.
 
     zdump is now buildable again with -DUSE_LTZ=0.
-    (Problem reported bny Joseph Myers.)
+    (Problem reported by Joseph Myers.)
 
     zdump.c now always includes private.h, to avoid code duplication
     with private.h.  (Problem reported by Kees Dekker.)

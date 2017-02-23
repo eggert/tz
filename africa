@@ -943,9 +943,12 @@ Link Africa/Maputo Africa/Lusaka	# Zambia
 # the country are close to 40 minutes earlier in sunrise than the rest
 # of the country.
 #
-# From Paul Eggert (2007-03-31):
-# Apparently the Caprivi Strip informally observes Botswana time, but
-# we have no details.  In the meantime people there can use Africa/Gaborone.
+# From Paul Eggert (2017-02-22):
+# Although the Zambezi Region (formerly known as Caprivi) informally
+# observes Botswana time, we have no details about historical practice.
+# In the meantime people there can use Africa/Gaborone.
+# See: Immanuel S. The Namibian. 2017-02-23.
+# http://www.namibian.com.na/51480/read/Time-change-divides-lawmakers
 
 # RULE	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Namibia	1994	max	-	Sep	Sun>=1	2:00	1:00	S

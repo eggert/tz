@@ -2,6 +2,10 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to past and future time stamps
+
+    Haiti resumed observance of DST in 2017.  (Thanks to Steffen Thorsen.)
+
   Changes to past time stamps
 
     Liberia changed from -004430 to +00 on 1972-01-07, not 1972-05-01.

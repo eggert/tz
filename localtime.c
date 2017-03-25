@@ -639,7 +639,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		}
 	}
 	/*
-	** If type 0 is is unused in transitions,
+	** If type 0 is unused in transitions,
 	** it's the type to use for early times.
 	*/
 	for (i = 0; i < sp->timecnt; ++i)

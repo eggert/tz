@@ -75,7 +75,7 @@ LIBDIR=		$(TOPDIR)/lib
 # If you want only POSIX time, with time values interpreted as
 # seconds since the epoch (not counting leap seconds), use
 #	REDO=		posix_only
-# below.  If you want want only "right" time, with values interpreted
+# below.  If you want only "right" time, with values interpreted
 # as seconds since the epoch (counting leap seconds), use
 #	REDO=		right_only
 # below.  If you want both sets of data available, with leap seconds not

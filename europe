@@ -1524,7 +1524,7 @@ Zone Atlantic/Reykjavik	-1:28	-	LMT	1908
 # From Paul Eggert (2016-10-27):
 # Go with INRiM for DST rules, except as corrected by Inglis for 1944
 # for the Kingdom of Italy.  This is consistent with Renzo Baldini.
-# Model Rome's occupation by using using C-Eur rules from 1943-09-10
+# Model Rome's occupation by using C-Eur rules from 1943-09-10
 # to 1944-06-04; although Rome was an open city during this period, it
 # was effectively controlled by Germany.
 #

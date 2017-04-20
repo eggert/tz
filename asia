@@ -258,9 +258,15 @@ Zone	Asia/Brunei	7:39:40 -	LMT	1926 Mar # Bandar Seri Begawan
 
 # Milne says 6:24:40 was the meridian of the time ball observatory at Rangoon.
 
+# From Paul Eggert (2017-04-20):
+# Page 27 of Reed & Low (cited for Asia/Kolkata) says "Rangoon local time is
+# used upon the railways and telegraphs of Burma, and is 6h. 24m. 47s. ahead
+# of Greenwich."  This refers to the period before Burma's transition to +0630,
+# a transition for which Shanks is the only source.
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Yangon	6:24:40 -	LMT	1880        # or Rangoon
-			6:24:40	-	RMT	1920        # Rangoon Mean Time?
+Zone	Asia/Yangon	6:24:47 -	LMT	1880        # or Rangoon
+			6:24:47	-	RMT	1920        # Rangoon local time
 			6:30	-	+0630	1942 May
 			9:00	-	+09	1945 May  3
 			6:30	-	+0630
@@ -887,14 +893,55 @@ Zone	Asia/Dili	8:22:20 -	LMT	1912 Jan  1
 # local time in favor of Indian Standard Time....  Journalists called this
 # dispute the "Battle of the Clocks."  It lasted nearly half a century.
 
+# From Paul Eggert (2017-04-20):
+# Good luck trying to nail down old timekeeping records in India.
+# "... in the nineteenth century ... Madras Observatory took its magnetic
+# measurements in Göttingen time, its meterological measurements on Madras
+# (local) time, dropped its time ball on Greenwich (ocean navigator's) time,
+# and distributed civil (local time)." -- Bartky IR. Selling the time:
+# 19th-century timekeeping in america. Stanford U Press (2000), 247 note 19.
+# "A more potent cause of resistance to the general adoption of the present
+# standard time lies in the fact that it is Madras time.  The citizen of
+# Bombay, proud of being 'primus in Indis' and of Calcutta, equally proud of
+# his city being the Capital of India, and - for a part of the year - the Seat
+# of the Supreme Government, alike look down on Madras, and refuse to change
+# the time they are using, for that of what they regard as a benighted
+# Presidency; while Madras, having for long given the standard time to the
+# rest of India, would resist the adoption of any other Indian standard in its
+# place." -- Oldham RD. On Time in India: a suggestion for its improvement.
+# Proceedings of the Asiatic Society of Bengal (April 1899), 49-55.
+#
+# "In 1870 ... Madras time - 'now used by the telegraph and regulated from the
+# only government observatory' - was suggested as a standard railway time,
+# first to be dopted on the Great Indian Peninsular Railway (GIPR)....
+# Calcutta, Bombay, and Karachi, were to be allowed to continue with their
+# local time for civil purposes." - Prasad R. Tracks of Change: Railways and
+# Everyday Life in Colonial India. Cambridge University Press (2016), 145.
+#
+# Reed S, Low F. The Indian Year Book 1936-37. Bennett, Coleman, pp 27-8.
+# https://archive.org/details/in.ernet.dli.2015.282212
+# This lists +052110 as Madras local time used in railways, and says that on
+# 1906-01-01 railways and telegraphs in India switched to +0530.  Some
+# municipalities retained their former time, and the time in Calcutta
+# continued to depend on whether you were at the railway station or at
+# government offices.  Government time was at +055320 (according to Shanks) or
+# at +0554 (according to the Indian Year Book).  Railway time is more
+# appropriate for our purposes, as it was better documented, it is what we do
+# elsewhere (e.g., Europe/London before 1880), and after 1906 it was
+# consistent in the region now identified by Asia/Kolkata.  So, use railway
+# time for 1870-1941.  Shanks is our only (and dubious) source for the
+# 1941-1945 data.
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Kolkata	5:53:28 -	LMT	1880        # Kolkata
-			5:53:20	-	HMT	1941 Oct    # Howrah Mean Time?
-			6:30	-	+0630	1942 May 15
+Zone	Asia/Kolkata	5:53:28 -	LMT	1854 Jun 28 # Kolkata
+			5:53:20	-	HMT	1870	    # Howrah Mean Time?
+			5:21:10	-	MMT	1906 Jan  1 # Madras local time
+			5:30	-	IST	1941 Oct
+			5:30	1:00	+0630	1942 May 15
 			5:30	-	IST	1942 Sep
 			5:30	1:00	+0630	1945 Oct 15
 			5:30	-	IST
-# The following are like Asia/Kolkata:
+# Since 1970 the following are like Asia/Kolkata:
 #	Andaman Is
 #	Lakshadweep (Laccadive, Minicoy and Amindivi Is)
 #	Nicobar Is

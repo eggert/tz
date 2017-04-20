@@ -1,5 +1,16 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to past time stamps
+
+    Use railway time for Asia/Kolkata before 1941, by switching to
+    Madras local time (UT +052110) in 1870, then to IST (UT +0530) in
+    1906.  Also, treat 1941-2's +0630 as DST, like 1942-5.
+
+    Add 7 s to the UT offset in Asia/Yangon before 1920.
+
+
 Release 2017b - 2017-03-17 07:30:38 -0700
 
   Briefly: Haiti has resumed DST.

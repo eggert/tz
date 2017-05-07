@@ -18,7 +18,7 @@ Theory and pragmatics of the tz code and data
 The tz database attempts to record the history and predicted future of
 all computer-based clocks that track civil time.  To represent this
 data, the world is partitioned into regions whose clocks all agree
-about time stamps that occur after the somewhat-arbitrary cutoff point
+about timestamps that occur after the somewhat-arbitrary cutoff point
 of the POSIX Epoch (1970-01-01 00:00:00 UTC).  For each such region,
 the database records all known clock transitions, and labels the region
 with a notable location.  Although 1970 is a somewhat-arbitrary
@@ -27,7 +27,7 @@ even by a decade or two, due to the wide variety of local practices
 before computer timekeeping became prevalent.
 
 Clock transitions before 1970 are recorded for each such location,
-because most systems support time stamps before 1970 and could
+because most systems support timestamps before 1970 and could
 misbehave if data entries were omitted for pre-1970 transitions.
 However, the database is not designed for and does not suffice for
 applications requiring accurate handling of all past times everywhere,
@@ -262,7 +262,7 @@ bodies and the references cited in the database's comments.
 
 Errors in the tz database arise from many sources:
 
- * The tz database predicts future time stamps, and current predictions
+ * The tz database predicts future timestamps, and current predictions
    will be incorrect after future governments change the rules.
    For example, if today someone schedules a meeting for 13:00 next
    October 1, Casablanca time, and tomorrow Morocco changes its
@@ -359,15 +359,15 @@ Errors in the tz database arise from many sources:
    clock error.
 
  * The tz database assumes Universal Time (UT) as an origin, even
-   though UT is not standardized for older time stamps.  In the tz
+   though UT is not standardized for older timestamps.  In the tz
    database commentary, UT denotes a family of time standards that
    includes Coordinated Universal Time (UTC) along with other variants
    such as UT1 and GMT, with days starting at midnight.  Although UT
-   equals UTC for modern time stamps, UTC was not defined until 1960,
-   so commentary uses the more-general abbreviation UT for time stamps
+   equals UTC for modern timestamps, UTC was not defined until 1960,
+   so commentary uses the more-general abbreviation UT for timestamps
    that might predate 1960.  Since UT, UT1, etc. disagree slightly,
    and since pre-1972 UTC seconds varied in length, interpretation of
-   older time stamps can be problematic when subsecond accuracy is
+   older timestamps can be problematic when subsecond accuracy is
    needed.
 
  * Civil time was not based on atomic time before 1972, and we don't
@@ -393,7 +393,7 @@ Errors in the tz database arise from many sources:
    active research, though, and it's not clear how to apply it here.
 
 In short, many, perhaps most, of the tz database's pre-1970 and future
-time stamps are either wrong or misleading.  Any attempt to pass the
+timestamps are either wrong or misleading.  Any attempt to pass the
 tz database off as the definition of time should be unacceptable to
 anybody who cares about the facts.  In particular, the tz database's
 LMT offsets should not be considered meaningful, and should not prompt
@@ -453,16 +453,18 @@ POSIX has the following properties and limitations.
 			Typically, this is the only useful form;
 			the n and Jn forms are rarely used.
 
-	Here is an example POSIX TZ string, for US Pacific time using rules
-	appropriate from 1987 through 2006:
+	Here is an example POSIX TZ string for New Zealand after 2007.
+	It says that standard time (NZST) is 12 hours ahead of UTC,
+	and that daylight saving time (NZDT) is observed from September's
+	last Sunday at 02:00 until April's first Sunday at 03:00:
 
-		TZ='PST8PDT,M4.1.0/02:00,M10.5.0/02:00'
+		TZ='NZST-12NZDT,M9.5.0,M4.1.0/3'
 
-	This POSIX TZ string is hard to remember, and mishandles time stamps
-	before 1987 and after 2006.  With this package you can use this
+	This POSIX TZ string is hard to remember, and mishandles some
+	timestamps before 2008.  With this package you can use this
 	instead:
 
-		TZ='America/Los_Angeles'
+		TZ='Pacific/Auckland'
 
 *	POSIX does not define the exact meaning of TZ values like "EST5EDT".
 	Typically the current US DST rules are used to interpret such values,
@@ -485,7 +487,7 @@ POSIX has the following properties and limitations.
 	calls to off-peak hours.)
 
 *	POSIX provides no convenient and efficient way to determine the UT
-	offset and time zone abbreviation of arbitrary time stamps,
+	offset and time zone abbreviation of arbitrary timestamps,
 	particularly for time zone settings that do not fit into the
 	POSIX model.
 
@@ -637,9 +639,9 @@ to process newer data files.  The tz-link.htm file describes how
 releases are tagged and distributed.
 
 Interfaces not listed above are less stable.  For example, users
-should not rely on particular UT offsets or abbreviations for time
-stamps, as data entries are often based on guesswork and these guesses
-may be corrected or improved.
+should not rely on particular UT offsets or abbreviations for
+timestamps, as data entries are often based on guesswork and these
+guesses may be corrected or improved.
 
 
 ----- Calendrical issues -----

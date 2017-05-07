@@ -15,6 +15,16 @@ Release 2017b - 2017-03-17 07:30:38 -0700
     Use "MMT" to abbreviate Liberia's time zone before 1972, as "-004430"
     is one byte over the POSIX limit.  (Problem reported by Derick Rethans.)
 
+  Changes to code
+
+    The reference localtime implementation now falls back on the
+    current US daylight-saving transition rules rather than the
+    1987-2006 rules.  This fallback occurs only when (1) the TZ
+    environment variable's value has a name like "AST4ADT" that asks
+    for daylight saving time but does not specify the rules, (2) there
+    is no file by that name, and (3) the TZDEFRULES file cannot be
+    loaded.  (Thanks to Tom Lane.)
+
 
 Release 2017a - 2017-02-28 00:05:36 -0800
 

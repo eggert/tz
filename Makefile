@@ -115,7 +115,7 @@ LDLIBS=
 #  -DHAVE_INCOMPATIBLE_CTIME_R if your system's time.h declares
 #	ctime_r and asctime_r incompatibly with the POSIX standard
 #	(Solaris when _POSIX_PTHREAD_SEMANTICS is not defined).
-#  -DHAVE_INTTYPES_H if you have a pre-C99 compiler with <inttypes.h>
+#  -DHAVE_INTTYPES_H if you have a non-C99 compiler with <inttypes.h>
 #  -DHAVE_LINK=0 if your system lacks a link function
 #  -DHAVE_LOCALTIME_R=0 if your system lacks a localtime_r function
 #  -DHAVE_LOCALTIME_RZ=0 if you do not want zdump to use localtime_rz
@@ -123,7 +123,8 @@ LDLIBS=
 #	localtime_rz can make zdump significantly faster, but is nonstandard.
 #  -DHAVE_POSIX_DECLS=0 if your system's include files do not declare
 #	functions like 'link' or variables like 'tzname' required by POSIX
-#  -DHAVE_STDINT_H if you have a pre-C99 compiler with <stdint.h>
+#  -DHAVE_STDBOOL_H if you have a non-C99 compiler with <stdbool.h>
+#  -DHAVE_STDINT_H if you have a non-C99 compiler with <stdint.h>
 #  -DHAVE_STRFTIME_L if <time.h> declares locale_t and strftime_l
 #	This defaults to 0 if _POSIX_VERSION < 200809, 1 otherwise.
 #  -DHAVE_STRDUP=0 if your system lacks the strdup function

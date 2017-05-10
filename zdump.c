@@ -1030,10 +1030,10 @@ tformat(void)
 static void
 dumptime(register const struct tm *timeptr)
 {
-	static const char	wday_name[][3] = {
+	static const char	wday_name[][4] = {
 		"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
 	};
-	static const char	mon_name[][3] = {
+	static const char	mon_name[][4] = {
 		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 	};
@@ -1059,7 +1059,7 @@ dumptime(register const struct tm *timeptr)
 		(int) (sizeof mon_name / sizeof mon_name[0]))
 			mn = "???";
 	else		mn = mon_name[timeptr->tm_mon];
-	printf("%.3s %.3s%3d %.2d:%.2d:%.2d ",
+	printf("%s %s%3d %.2d:%.2d:%.2d ",
 		wn, mn,
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec);

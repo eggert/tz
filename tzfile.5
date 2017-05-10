@@ -98,7 +98,7 @@ structure(s) in the file.
 Then there are
 .I tzh_leapcnt
 pairs of four-byte values, written in standard byte order;
-the first value of each pair gives the time
+the first value of each pair gives the nonnegative time
 (as returned by
 .IR time(2))
 at which a leap second occurs;
@@ -107,6 +107,8 @@ the second gives the
 number of leap seconds to be applied during the time period
 starting at the given time.
 The pairs of values are sorted in ascending order by time.
+Each transition is for one leap second, either positive or negative;
+transitions always separated by at least 28 days minus 1 second.
 .PP
 Then there are
 .I tzh_ttisstdcnt

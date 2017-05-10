@@ -1434,15 +1434,9 @@ inleap(char **fields, int nfields)
 		if (strcmp(cp, "") == 0) { /* infile() turns "-" into "" */
 			positive = false;
 			count = 1;
-		} else if (strcmp(cp, "--") == 0) {
-			positive = false;
-			count = 2;
 		} else if (strcmp(cp, "+") == 0) {
 			positive = true;
 			count = 1;
-		} else if (strcmp(cp, "++") == 0) {
-			positive = true;
-			count = 2;
 		} else {
 			error(_("illegal CORRECTION field on Leap line"));
 			return;
@@ -1454,8 +1448,8 @@ inleap(char **fields, int nfields)
 			return;
 		}
 		t = tadd(t, tod);
-		if (t < early_time) {
-			error(_("leap second precedes Big Bang"));
+		if (t < 0) {
+			error(_("leap second precedes Epoch"));
 			return;
 		}
 		leapadd(t, positive, lp->l_value, count);
@@ -2753,13 +2747,8 @@ leapadd(zic_t t, bool positive, int rolling, int count)
 		exit(EXIT_FAILURE);
 	}
 	for (i = 0; i < leapcnt; ++i)
-		if (t <= trans[i]) {
-			if (t == trans[i]) {
-				error(_("repeated leap second moment"));
-				exit(EXIT_FAILURE);
-			}
+		if (t <= trans[i])
 			break;
-		}
 	do {
 		for (j = leapcnt; j > i; --j) {
 			trans[j] = trans[j - 1];
@@ -2778,11 +2767,17 @@ adjleap(void)
 {
 	register int	i;
 	register zic_t	last = 0;
+	register zic_t	prevtrans = 0;
 
 	/*
 	** propagate leap seconds forward
 	*/
 	for (i = 0; i < leapcnt; ++i) {
+		if (trans[i] - prevtrans < 28 * SECSPERDAY) {
+		  error(_("Leap seconds too close together"));
+		  exit(EXIT_FAILURE);
+		}
+		prevtrans = trans[i];
 		trans[i] = tadd(trans[i], last);
 		last = corr[i] += last;
 	}

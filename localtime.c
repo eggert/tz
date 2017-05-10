@@ -425,6 +425,8 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 	for (stored = 4; stored <= 8; stored *= 2) {
 		int_fast32_t ttisstdcnt = detzcode(up->tzhead.tzh_ttisstdcnt);
 		int_fast32_t ttisgmtcnt = detzcode(up->tzhead.tzh_ttisgmtcnt);
+		int_fast64_t prevtr = 0;
+		int_fast32_t prevcorr = 0;
 		int_fast32_t leapcnt = detzcode(up->tzhead.tzh_leapcnt);
 		int_fast32_t timecnt = detzcode(up->tzhead.tzh_timecnt);
 		int_fast32_t typecnt = detzcode(up->tzhead.tzh_typecnt);
@@ -510,17 +512,20 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		  int_fast64_t tr = stored == 4 ? detzcode(p) : detzcode64(p);
 		  int_fast32_t corr = detzcode(p + stored);
 		  p += stored + 4;
+		  /* Leap seconds cannot occur before the Epoch.  */
+		  if (tr < 0)
+		    return EINVAL;
 		  if (tr <= time_t_max) {
-		    time_t trans
-		      = ((TYPE_SIGNED(time_t) ? tr < time_t_min : tr < 0)
-			 ? time_t_min : tr);
-		    if (leapcnt && trans <= sp->lsis[leapcnt - 1].ls_trans) {
-		      if (trans < sp->lsis[leapcnt - 1].ls_trans)
-			return EINVAL;
-		      leapcnt--;
-		    }
-		    sp->lsis[leapcnt].ls_trans = trans;
-		    sp->lsis[leapcnt].ls_corr = corr;
+		    /* Leap seconds cannot occur more than once per UTC month,
+		       and UTC months are at least 28 days long (minus 1
+		       second for a negative leap second).  Each leap second's
+		       correction must differ from the previous one's by 1
+		       second.  */
+		    if (tr - prevtr < 28 * SECSPERDAY - 1
+			|| (corr != prevcorr - 1 && corr != prevcorr + 1))
+		      return EINVAL;
+		    sp->lsis[leapcnt].ls_trans = prevtr = tr;
+		    sp->lsis[leapcnt].ls_corr = prevcorr = corr;
 		    leapcnt++;
 		  }
 		}
@@ -1610,20 +1615,9 @@ timesub(const time_t *timep, int_fast32_t offset,
 	while (--i >= 0) {
 		lp = &sp->lsis[i];
 		if (*timep >= lp->ls_trans) {
-			if (*timep == lp->ls_trans) {
-				hit = ((i == 0 && lp->ls_corr > 0) ||
-					lp->ls_corr > sp->lsis[i - 1].ls_corr);
-				if (hit)
-					while (i > 0 &&
-						sp->lsis[i].ls_trans ==
-						sp->lsis[i - 1].ls_trans + 1 &&
-						sp->lsis[i].ls_corr ==
-						sp->lsis[i - 1].ls_corr + 1) {
-							++hit;
-							--i;
-					}
-			}
 			corr = lp->ls_corr;
+			hit = (*timep == lp->ls_trans
+			       && (i == 0 ? 0 : lp[-1].ls_corr) < corr);
 			break;
 		}
 	}

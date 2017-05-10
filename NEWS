@@ -12,6 +12,14 @@ Unreleased, experimental changes
 
   Changes to code
 
+    zic and the reference runtime now reject multiple leap seconds
+    within 28 days of each other, or leap seconds before the Epoch.
+    As a result, support for double leap seconds, which was
+    obsolescent and undocumented, has been removed.  Double leap
+    seconds were an error in the C89 standard; they have never existed
+    in civil timekeeping.  (Thanks to Robert Elz and Bradley White for
+    noticing glitches in the code that uncovered this problem.)
+
     Several minor changes have been made to the code to make it a
     bit easier to port to MS-Windows.  (Thanks to Kees Dekker for
     reporting the problems.)

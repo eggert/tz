@@ -76,7 +76,7 @@
 #define ctime_r _incompatible_ctime_r
 #endif /* HAVE_INCOMPATIBLE_CTIME_R */
 
-/* Enable tm_gmtoff and tm_zone on GNUish systems.  */
+/* Enable tm_gmtoff, tm_zone, and environ on GNUish systems.  */
 #define _GNU_SOURCE 1
 /* Fix asctime_r on Solaris 11.  */
 #define _POSIX_PTHREAD_SEMANTICS 1
@@ -404,6 +404,18 @@ void tzset(void);
 
 #if !HAVE_DECL_ASCTIME_R && !defined asctime_r
 extern char *asctime_r(struct tm const *restrict, char *restrict);
+#endif
+
+#ifndef HAVE_DECL_ENVIRON
+# if defined environ || defined __USE_GNU
+#  define HAVE_DECL_ENVIRON 1
+# else
+#  define HAVE_DECL_ENVIRON 0
+# endif
+#endif
+
+#if !HAVE_DECL_ENVIRON
+extern char **environ;
 #endif
 
 #if !HAVE_POSIX_DECLS

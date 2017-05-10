@@ -72,8 +72,6 @@ enum { SECSPER400YEARS_FITS = SECSPERLYEAR <= INTMAX_MAX / 400 };
 # define timezone_t char **
 #endif
 
-extern char **	environ;
-
 #if !HAVE_POSIX_DECLS
 extern int	getopt(int argc, char * const argv[],
 			const char * options);

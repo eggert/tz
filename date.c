@@ -42,8 +42,6 @@
 #define SECSPERMIN	60
 #endif /* !defined SECSPERMIN */
 
-extern char **		environ;
-
 #if !HAVE_POSIX_DECLS
 extern char *		optarg;
 extern int		optind;

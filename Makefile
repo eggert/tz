@@ -109,12 +109,13 @@ LDLIBS=
 # Add the following to the end of the "CFLAGS=" line as needed.
 #  -DBIG_BANG=-9999999LL if the Big Bang occurred at time -9999999 (see zic.c)
 #  -DHAVE_DECL_ASCTIME_R=0 if <time.h> does not declare asctime_r
+#  -DHAVE_DECL_ENVIRON if <unistd.h> declares 'environ'
 #  -DHAVE_DIRECT_H if mkdir needs <direct.h> (MS-Windows)
-#  -DHAVE_GETTEXT=1 if 'gettext' works (e.g., GNU/Linux, FreeBSD, Solaris)
-#  -DHAVE_INCOMPATIBLE_CTIME_R=1 if your system's time.h declares
+#  -DHAVE_GETTEXT if 'gettext' works (e.g., GNU/Linux, FreeBSD, Solaris)
+#  -DHAVE_INCOMPATIBLE_CTIME_R if your system's time.h declares
 #	ctime_r and asctime_r incompatibly with the POSIX standard
 #	(Solaris when _POSIX_PTHREAD_SEMANTICS is not defined).
-#  -DHAVE_INTTYPES_H=1 if you have a pre-C99 compiler with "inttypes.h"
+#  -DHAVE_INTTYPES_H if you have a pre-C99 compiler with <inttypes.h>
 #  -DHAVE_LINK=0 if your system lacks a link function
 #  -DHAVE_LOCALTIME_R=0 if your system lacks a localtime_r function
 #  -DHAVE_LOCALTIME_RZ=0 if you do not want zdump to use localtime_rz
@@ -122,16 +123,16 @@ LDLIBS=
 #	localtime_rz can make zdump significantly faster, but is nonstandard.
 #  -DHAVE_POSIX_DECLS=0 if your system's include files do not declare
 #	functions like 'link' or variables like 'tzname' required by POSIX
-#  -DHAVE_STDINT_H=1 if you have a pre-C99 compiler with "stdint.h"
-#  -DHAVE_STRFTIME_L=1 if <time.h> declares locale_t and strftime_l
+#  -DHAVE_STDINT_H if you have a pre-C99 compiler with <stdint.h>
+#  -DHAVE_STRFTIME_L if <time.h> declares locale_t and strftime_l
 #	This defaults to 0 if _POSIX_VERSION < 200809, 1 otherwise.
 #  -DHAVE_STRDUP=0 if your system lacks the strdup function
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
-#  -DHAVE_SYS_STAT_H=0 if your compiler lacks a "sys/stat.h"
-#  -DHAVE_SYS_WAIT_H=0 if your compiler lacks a "sys/wait.h"
+#  -DHAVE_SYS_STAT_H=0 if your compiler lacks a <sys/stat.h>
+#  -DHAVE_SYS_WAIT_H=0 if your compiler lacks a <sys/wait.h>
 #  -DHAVE_TZSET=0 if your system lacks a tzset function
-#  -DHAVE_UNISTD_H=0 if your compiler lacks a "unistd.h" (Microsoft C++ 7?)
-#  -DEPOCH_LOCAL=1 if the 'time' function returns local time not UT
+#  -DHAVE_UNISTD_H=0 if your compiler lacks a <unistd.h>
+#  -DEPOCH_LOCAL if the 'time' function returns local time not UT
 #  -DEPOCH_OFFSET=N if the 'time' function returns a value N greater
 #	than what POSIX specifies, assuming local time is UT.
 #	For example, N is 252460800 on AmigaOS.
@@ -139,7 +140,7 @@ LDLIBS=
 #	if you do not want run time warnings about formats that may cause
 #	year 2000 grief
 #  -Dssize_t=long on ancient hosts that lack ssize_t
-#  -DTHREAD_SAFE=1 to make localtime.c thread-safe, as POSIX requires;
+#  -DTHREAD_SAFE to make localtime.c thread-safe, as POSIX requires;
 #	not needed by the main-program tz code, which is single-threaded.
 #	Append other compiler flags as needed, e.g., -pthread on GNU/Linux.
 #  -Dtime_tz=\"T\" to use T as the time_t type, rather than the system time_t
@@ -148,7 +149,7 @@ LDLIBS=
 #	the default is system-supplied, typically "/usr/lib/locale"
 #  -DTZDEFRULESTRING=\",date/time,date/time\" to default to the specified
 #	DST transitions if the time zone files cannot be accessed
-#  -DUNINIT_TRAP=1 if reading uninitialized storage can cause problems
+#  -DUNINIT_TRAP if reading uninitialized storage can cause problems
 #	other than simply getting garbage data
 #  -DUSE_LTZ=0 to build zdump with the system time zone library
 #	Also set TZDOBJS=zdump.o and CHECK_TIME_T_ALTERNATIVES= below.

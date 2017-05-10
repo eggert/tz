@@ -137,6 +137,7 @@ LDLIBS=
 #  -DEPOCH_OFFSET=N if the 'time' function returns a value N greater
 #	than what POSIX specifies, assuming local time is UT.
 #	For example, N is 252460800 on AmigaOS.
+#  -Dlocale_t=XXX if your system uses XXX instead of locale_t
 #  -DNO_RUN_TIME_WARNINGS_ABOUT_YEAR_2000_PROBLEMS_THANK_YOU=1
 #	if you do not want run time warnings about formats that may cause
 #	year 2000 grief

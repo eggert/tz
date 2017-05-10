@@ -10,6 +10,12 @@ Unreleased, experimental changes
 
     Add 7 s to the UT offset in Asia/Yangon before 1920.
 
+  Changes to code
+
+    Several minor changes have been made to the code to make it a
+    bit easier to port to MS-Windows.  (Thanks to Kees Dekker for
+    reporting the problems.)
+
 
 Release 2017b - 2017-03-17 07:30:38 -0700
 

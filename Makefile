@@ -110,7 +110,6 @@ LDLIBS=
 #  -DBIG_BANG=-9999999LL if the Big Bang occurred at time -9999999 (see zic.c)
 #  -DHAVE_DECL_ASCTIME_R=0 if <time.h> does not declare asctime_r
 #  -DHAVE_DIRECT_H if mkdir needs <direct.h> (MS-Windows)
-#  -DHAVE_DOS_FILE_NAMES if file names have drive specifiers etc. (MS-DOS)
 #  -DHAVE_GETTEXT=1 if 'gettext' works (e.g., GNU/Linux, FreeBSD, Solaris)
 #  -DHAVE_INCOMPATIBLE_CTIME_R=1 if your system's time.h declares
 #	ctime_r and asctime_r incompatibly with the POSIX standard

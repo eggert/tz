@@ -3133,11 +3133,14 @@ mkdirs(char const *argname, bool ancestors)
 
 	cp = name = ecpyalloc(argname);
 
+	/* On MS-Windows systems, do not worry about drive letters or
+	   backslashes, as this should suffice in practice.  Time zone
+	   names do not use drive letters and backslashes.  If the -d
+	   option of zic does not name an already-existing directory,
+	   it can use slashes to separate the already-existing
+	   ancestor prefix from the to-be-created subdirectories.  */
+
 	/* Do not mkdir a root directory, as it must exist.  */
-#ifdef HAVE_DOS_FILE_NAMES
-	if (is_alpha(name[0]) && name[1] == ':')
-	  cp += 2;
-#endif
 	while (*cp == '/')
 	  cp++;
 

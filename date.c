@@ -54,7 +54,7 @@ static void		display(const char *, time_t);
 static void		dogmt(void);
 static void		errensure(void);
 static void		timeout(FILE *, const char *, const struct tm *);
-static void		usage(void);
+static _Noreturn void	usage(void);
 
 int
 main(const int argc, char *argv[])

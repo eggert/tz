@@ -159,20 +159,27 @@ LDLIBS=
 #	(or some other number) to set the maximum time zone abbreviation length
 #	that zic will accept without a warning (the default is 6)
 #  $(GCC_DEBUG_FLAGS) if you are using recent GCC and want lots of checking
-GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common -fstrict-aliasing \
-	-Wall -Wextra \
-	-Wbad-function-cast -Wcast-align -Wdate-time \
-	-Wdeclaration-after-statement \
-	-Wdouble-promotion \
-	-Wformat=2 -Winit-self -Wjump-misses-init \
-	-Wlogical-op -Wmissing-prototypes -Wnested-externs \
-	-Wold-style-definition -Woverlength-strings -Wpointer-arith \
-	-Wshadow -Wstrict-prototypes -Wsuggest-attribute=const \
-	-Wsuggest-attribute=format -Wsuggest-attribute=noreturn \
-	-Wsuggest-attribute=pure -Wtrampolines \
-	-Wundef -Wunused -Wwrite-strings \
-	-Wno-address -Wno-format-nonliteral -Wno-sign-compare \
-	-Wno-type-limits -Wno-unused-parameter
+# Select instrumentation via "make GCC_INSTRUMENT='whatever'".
+GCC_INSTRUMENT = \
+  -fsanitize=undefined -fsanitize-address-use-after-scope \
+  -fsanitize-undefined-trap-on-error -fstack-protector
+GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
+  $(GCC_INSTRUMENT) \
+  -Wall -Wextra \
+  -Walloc-size-larger-than=100000 -Warray-bounds=2 \
+  -Wbad-function-cast -Wcast-align -Wdate-time \
+  -Wdeclaration-after-statement -Wdouble-promotion \
+  -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation \
+  -Winit-self -Wjump-misses-init -Wlogical-op \
+  -Wmissing-declarations -Wmissing-prototypes -Wnested-externs \
+  -Wold-style-definition -Woverlength-strings -Wpointer-arith \
+  -Wshadow -Wshift-overflow=2 -Wstrict-prototypes -Wstringop-overflow=5 \
+  -Wsuggest-attribute=const -Wsuggest-attribute=format \
+  -Wsuggest-attribute=noreturn -Wsuggest-attribute=pure \
+  -Wtrampolines -Wundef -Wuninitialized -Wunused \
+  -Wvariadic-macros -Wvla -Wwrite-strings \
+  -Wno-address -Wno-format-nonliteral -Wno-sign-compare \
+  -Wno-type-limits -Wno-unused-parameter
 #
 # If you want to use System V compatibility code, add
 #	-DUSG_COMPAT

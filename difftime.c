@@ -14,7 +14,7 @@ dminus(double x)
   return -x;
 }
 
-double ATTRIBUTE_CONST
+double
 difftime(time_t time1, time_t time0)
 {
 	/*

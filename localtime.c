@@ -919,7 +919,7 @@ getrule(const char *strp, register struct rule *const rulep)
 ** effect, calculate the year-relative time that rule takes effect.
 */
 
-static int_fast32_t ATTRIBUTE_PURE
+static int_fast32_t
 transtime(const int year, register const struct rule *const rulep,
 	  const int_fast32_t offset)
 {
@@ -1588,11 +1588,18 @@ offtime(const time_t *timep, long offset)
 ** where, to make the math easy, the answer for year zero is defined as zero.
 */
 
-static int ATTRIBUTE_PURE
+static int
+leaps_thru_end_of_nonneg(int y)
+{
+  return y / 4 - y / 100 + y / 400;
+}
+
+static int
 leaps_thru_end_of(register const int y)
 {
-	return (y >= 0) ? (y / 4 - y / 100 + y / 400) :
-		-(leaps_thru_end_of(-(y + 1)) + 1);
+  return (y < 0
+	  ? -1 - leaps_thru_end_of_nonneg(-1 - y)
+	  : leaps_thru_end_of_nonneg(y));
 }
 
 static struct tm *
@@ -2210,7 +2217,7 @@ leapcorr(struct state const *sp, time_t t)
 	return 0;
 }
 
-NETBSD_INSPIRED_EXTERN time_t ATTRIBUTE_PURE
+NETBSD_INSPIRED_EXTERN time_t
 time2posix_z(struct state *sp, time_t t)
 {
   return t - leapcorr(sp, t);
@@ -2232,7 +2239,7 @@ time2posix(time_t t)
   return t;
 }
 
-NETBSD_INSPIRED_EXTERN time_t ATTRIBUTE_PURE
+NETBSD_INSPIRED_EXTERN time_t
 posix2time_z(struct state *sp, time_t t)
 {
 	time_t	x;

@@ -683,17 +683,15 @@ hunt(timezone_t tz, char *name, time_t lot, time_t hit)
 }
 
 /*
-** Thanks to Paul Eggert for logic used in delta.
+** Thanks to Paul Eggert for logic used in delta_nonneg.
 */
 
 static intmax_t
-delta(struct tm * newp, struct tm *oldp)
+delta_nonneg(struct tm *newp, struct tm *oldp)
 {
 	register intmax_t	result;
 	register int		tmy;
 
-	if (newp->tm_year < oldp->tm_year)
-		return -delta(oldp, newp);
 	result = 0;
 	for (tmy = oldp->tm_year; tmy < newp->tm_year; ++tmy)
 		result += DAYSPERNYEAR + isleap_sum(tmy, TM_YEAR_BASE);
@@ -705,6 +703,14 @@ delta(struct tm * newp, struct tm *oldp)
 	result *= SECSPERMIN;
 	result += newp->tm_sec - oldp->tm_sec;
 	return result;
+}
+
+static intmax_t
+delta(struct tm *newp, struct tm *oldp)
+{
+  return (newp->tm_year < oldp->tm_year
+	  ? -delta_nonneg(oldp, newp)
+	  : delta_nonneg(newp, oldp));
 }
 
 #ifndef TM_GMTOFF

@@ -396,7 +396,7 @@ typedef time_tz tz_time_t;
 
 char *ctime(time_t const *);
 char *ctime_r(time_t const *, char *);
-double difftime(time_t, time_t);
+double difftime(time_t, time_t) ATTRIBUTE_CONST;
 struct tm *gmtime(time_t const *);
 struct tm *gmtime_r(time_t const *restrict, struct tm *restrict);
 struct tm *localtime(time_t const *);

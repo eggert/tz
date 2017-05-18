@@ -159,7 +159,7 @@ LDLIBS=
 #	(or some other number) to set the maximum time zone abbreviation length
 #	that zic will accept without a warning (the default is 6)
 #  $(GCC_DEBUG_FLAGS) if you are using recent GCC and want lots of checking
-GCC_DEBUG_FLAGS = -Dlint -g3 -O3 -fno-common -fstrict-aliasing \
+GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common -fstrict-aliasing \
 	-Wall -Wextra \
 	-Wbad-function-cast -Wcast-align -Wdate-time \
 	-Wdeclaration-after-statement \

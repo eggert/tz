@@ -566,7 +566,7 @@ static time_t const time_t_max = MAXVAL(time_t, TYPE_BIT(time_t));
 ** INITIALIZE(x)
 */
 
-#ifdef lint
+#ifdef GCC_LINT
 # define INITIALIZE(x)	((x) = 0)
 #else
 # define INITIALIZE(x)

@@ -20,6 +20,10 @@ Unreleased, experimental changes
     in civil timekeeping.  (Thanks to Robert Elz and Bradley White for
     noticing glitches in the code that uncovered this problem.)
 
+    'make BACKWARD=' now suppresses backward-compatibility names
+    like 'US/Pacific' that are defined in the 'backward' and
+    'pacificnew' files.
+
     Several minor changes have been made to the code to make it a
     bit easier to port to MS-Windows.  (Thanks to Kees Dekker for
     reporting the problems.)

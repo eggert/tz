@@ -92,6 +92,13 @@ LIBDIR=		$(TOPDIR)/lib
 
 REDO=		posix_right
 
+# For backward-compatibility links for old zone names, use
+#	BACKWARD=	backward pacificnew
+# To omit these links, use
+#	BACKWARD=
+
+BACKWARD=	backward pacificnew
+
 # If you want out-of-scope and often-wrong data from the file 'backzone', use
 #	PACKRATDATA=	backzone
 # To omit this data, use
@@ -384,7 +391,7 @@ WEB_PAGES=	tz-art.htm tz-how-to.html tz-link.htm
 DOCS=		$(MANS) date.1 $(MANTXTS) $(WEB_PAGES)
 PRIMARY_YDATA=	africa antarctica asia australasia \
 		europe northamerica southamerica
-YDATA=		$(PRIMARY_YDATA) pacificnew etcetera backward
+YDATA=		$(PRIMARY_YDATA) etcetera $(BACKWARD)
 NDATA=		systemv factory
 TDATA=		$(YDATA) $(NDATA)
 ZONETABLES=	zone1970.tab zone.tab
@@ -482,6 +489,7 @@ leapseconds:	$(LEAP_DEPS)
 # Arguments to pass to submakes of install_data.
 # They can be overridden by later submake arguments.
 INSTALLARGS = \
+ BACKWARD=$(BACKWARD) \
  DESTDIR=$(DESTDIR) \
  LEAPSECONDS='$(LEAPSECONDS)' \
  PACKRATDATA='$(PACKRATDATA)' \

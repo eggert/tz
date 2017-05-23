@@ -75,8 +75,8 @@ Rule E-EurAsia	1996	max	-	Oct	lastSun	 0:00	0	-
 Rule RussiaAsia	1981	1984	-	Apr	1	 0:00	1:00	S
 Rule RussiaAsia	1981	1983	-	Oct	1	 0:00	0	-
 Rule RussiaAsia	1984	1995	-	Sep	lastSun	 2:00s	0	-
-Rule RussiaAsia	1985	2011	-	Mar	lastSun	 2:00s	1:00	S
-Rule RussiaAsia	1996	2011	-	Oct	lastSun	 2:00s	0	-
+Rule RussiaAsia	1985	2010	-	Mar	lastSun	 2:00s	1:00	S
+Rule RussiaAsia	1996	2010	-	Oct	lastSun	 2:00s	0	-
 
 # Afghanistan
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -109,13 +109,17 @@ Zone	Asia/Kabul	4:36:48 -	LMT	1890
 # or
 # (brief)
 # http://www.worldtimezone.com/dst_news/dst_news_armenia03.html
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule Armenia	2011	only	-	Mar	lastSun	 2:00s	1:00	S
+Rule Armenia	2011	only	-	Oct	lastSun	 2:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Yerevan	2:58:00 -	LMT	1924 May  2
 			3:00	-	+03	1957 Mar
 			4:00 RussiaAsia +04/+05	1991 Mar 31  2:00s
 			3:00 RussiaAsia	+03/+04	1995 Sep 24  2:00s
 			4:00	-	+04	1997
-			4:00 RussiaAsia	+04/+05
+			4:00 RussiaAsia	+04/+05	2011
+			4:00	Armenia	+04/+05
 
 # Azerbaijan
 

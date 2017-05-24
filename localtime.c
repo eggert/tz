@@ -737,7 +737,7 @@ static const int	year_lengths[2] = {
 ** character.
 */
 
-static const char * ATTRIBUTE_PURE
+static const char *
 getzname(register const char *strp)
 {
 	register char	c;
@@ -757,7 +757,7 @@ getzname(register const char *strp)
 ** We don't do any checking here; checking is done later in common-case code.
 */
 
-static const char * ATTRIBUTE_PURE
+static const char *
 getqzname(register const char *strp, const int delim)
 {
 	register int	c;

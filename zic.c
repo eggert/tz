@@ -415,7 +415,7 @@ strdup(char const *str)
 }
 #endif
 
-static ATTRIBUTE_PURE void *
+static void *
 memcheck(void *ptr)
 {
 	if (ptr == NULL)
@@ -2878,7 +2878,7 @@ lowerit(char a)
 }
 
 /* case-insensitive equality */
-static ATTRIBUTE_PURE bool
+static bool
 ciequal(register const char *ap, register const char *bp)
 {
 	while (lowerit(*ap) == lowerit(*bp++))
@@ -2887,7 +2887,7 @@ ciequal(register const char *ap, register const char *bp)
 	return false;
 }
 
-static ATTRIBUTE_PURE bool
+static bool
 itsabbr(register const char *abbr, register const char *word)
 {
 	if (lowerit(*abbr) != lowerit(*word))
@@ -2901,7 +2901,7 @@ itsabbr(register const char *abbr, register const char *word)
 	return true;
 }
 
-static ATTRIBUTE_PURE const struct lookup *
+static const struct lookup *
 byword(const char *word, const struct lookup *table)
 {
 	register const struct lookup *	foundlp;

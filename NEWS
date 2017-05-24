@@ -20,6 +20,9 @@ Unreleased, experimental changes
     in civil timekeeping.  (Thanks to Robert Elz and Bradley White for
     noticing glitches in the code that uncovered this problem.)
 
+    zic now warns about use of the obsolescent and undocumented -y
+    option, and about use of the obsolescent TYPE field of Rule lines.
+
     zic now allows unambiguous abbreviations like "Sa" and "Su" for
     weekdays; formerly it rejected them due to a bug.  Conversely, zic
     no longer considers non-prefixes to be abbreviations; for example,

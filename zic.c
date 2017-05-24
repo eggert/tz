@@ -632,9 +632,10 @@ _("%s: More than one -p option specified\n"),
 				}
 				break;
 			case 'y':
-				if (yitcommand == NULL)
+				if (yitcommand == NULL) {
+					warning(_("-y is obsolescent"));
 					yitcommand = optarg;
-				else {
+				} else {
 					fprintf(stderr,
 _("%s: More than one -y option specified\n"),
 						progname);
@@ -1577,6 +1578,8 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 			error(_("typed single year"));
 			return;
 		}
+		warning(_("year type \"%s\" is obsolete; use \"-\" instead"),
+			typep);
 		rp->r_yrtype = ecpyalloc(typep);
 	}
 	/*

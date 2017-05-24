@@ -281,7 +281,7 @@ ZFLAGS=
 
 # How to use zic to install tz binary files.
 
-ZIC_INSTALL=	$(ZIC) -y $(YEARISTYPE) -d $(DESTDIR)$(TZDIR) $(LEAPSECONDS)
+ZIC_INSTALL=	$(ZIC) -d $(DESTDIR)$(TZDIR) $(LEAPSECONDS)
 
 # The name of a Posix-compliant 'awk' on your system.
 AWK=		awk

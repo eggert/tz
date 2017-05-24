@@ -28,6 +28,9 @@ Unreleased, experimental changes
     bit easier to port to MS-Windows.  (Thanks to Kees Dekker for
     reporting the problems.)
 
+  Changes to documentation and commentary
+
+    The zic man page now documents abbreviation rules.
 
 Release 2017b - 2017-03-17 07:30:38 -0700
 

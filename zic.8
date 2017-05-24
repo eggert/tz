@@ -148,7 +148,8 @@ Non-blank lines are expected to be of one of three types:
 rule lines, zone lines, and link lines.
 .PP
 Names (such as month names) must be in English and are case insensitive.
-Abbreviations, if used, must be unambiguous in context.
+A name can be abbreviated by omitting all but an initial prefix; any
+abbreviation must be unambiguous in context.
 .PP
 A rule line has the form
 .nf
@@ -221,7 +222,13 @@ Sun<=25	last Sunday on or before the 25th
 .fi
 .in -.5i
 .sp
-Names of days of the week may be abbreviated or spelled out in full.
+A weekday name (e.g.,
+.BR "Sunday" )
+or a weekday name preceded by
+.q "last"
+(e.g.,
+.BR "lastSunday" )
+may be abbreviated or spelled out in full.
 Note that there must be no spaces within the
 .B ON
 field.

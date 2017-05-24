@@ -2901,6 +2901,19 @@ itsabbr(register const char *abbr, register const char *word)
 	return true;
 }
 
+/* Return true if ABBR is an initial prefix of WORD, ignoring ASCII case.  */
+
+static bool
+ciprefix(char const *abbr, char const *word)
+{
+  do
+    if (!*abbr)
+      return true;
+  while (lowerit(*abbr++) == lowerit(*word++));
+
+  return false;
+}
+
 static const struct lookup *
 byword(const char *word, const struct lookup *table)
 {
@@ -2909,6 +2922,20 @@ byword(const char *word, const struct lookup *table)
 
 	if (word == NULL || table == NULL)
 		return NULL;
+
+	/* If TABLE is LASTS and the word starts with "last" followed
+	   by a non-'-', skip the "last" and look in WDAY_NAMES instead.
+	   Warn about any usage of the undocumented prefix "last-".  */
+	if (table == lasts && ciprefix("last", word) && word[4]) {
+	  if (word[4] == '-')
+	    warning(_("\"%s\" is undocumented; use \"last%s\" instead"),
+		    word, word + 5);
+	  else {
+	    word += 4;
+	    table = wday_names;
+	  }
+	}
+
 	/*
 	** Look for exact match.
 	*/
@@ -2920,11 +2947,25 @@ byword(const char *word, const struct lookup *table)
 	*/
 	foundlp = NULL;
 	for (lp = table; lp->l_word != NULL; ++lp)
-		if (itsabbr(word, lp->l_word)) {
+		if (ciprefix(word, lp->l_word)) {
 			if (foundlp == NULL)
 				foundlp = lp;
 			else	return NULL;	/* multiple inexact matches */
 		}
+
+	/* Warn about any backward-compatibility issue with pre-2017c zic.  */
+	if (foundlp) {
+	  bool pre_2017c_match = false;
+	  for (lp = table; lp->l_word; lp++)
+	    if (itsabbr(word, lp->l_word)) {
+	      if (pre_2017c_match) {
+		warning(_("\"%s\" is ambiguous in pre-2017c zic"), word);
+		break;
+	      }
+	      pre_2017c_match = true;
+	    }
+	}
+
 	return foundlp;
 }
 

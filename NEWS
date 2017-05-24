@@ -20,6 +20,13 @@ Unreleased, experimental changes
     in civil timekeeping.  (Thanks to Robert Elz and Bradley White for
     noticing glitches in the code that uncovered this problem.)
 
+    zic now allows unambiguous abbreviations like "Sa" and "Su" for
+    weekdays; formerly it rejected them due to a bug.  Conversely, zic
+    no longer considers non-prefixes to be abbreviations; for example,
+    it no longer accepts "lF" as an abbreviation for "lastFriday".
+    Also, zic warns about the undocumented usage with a "last-"
+    prefix, e.g., "last-Fri".
+
     'make BACKWARD=' now suppresses backward-compatibility names
     like 'US/Pacific' that are defined in the 'backward' and
     'pacificnew' files.

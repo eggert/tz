@@ -599,7 +599,7 @@ tzselect:	tzselect.ksh version
 		mv $@.out $@
 
 check:		check_character_set check_white_space check_links check_sorted \
-		  check_tables check_tzs check_web
+		  check_tables check_web check_zishrink check_tzs
 
 check_character_set: $(ENCHILADA)
 		LC_ALL=en_US.utf8 && export LC_ALL && \
@@ -644,6 +644,22 @@ check_tzs:	$(TZS) $(TZS_NEW)
 
 check_web:	$(WEB_PAGES)
 		$(VALIDATE_ENV) $(VALIDATE) $(VALIDATE_FLAGS) $(WEB_PAGES)
+
+# Check that tzdata.zi generates the same binary data that its sources do.
+check_zishrink: tzdata.zi zic leapseconds $(PACKRATDATA) $(TDATA)
+		for type in posix right; do \
+		  mkdir -p time_t.dir/$$type time_t.dir/$$type-shrunk && \
+		  case $$type in \
+		    right) leap='-L leapseconds';; \
+	            *) leap=;; \
+		  esac && \
+		  $(ZIC) $$leap -d time_t.dir/$$type $(TDATA) && \
+		  $(AWK) '/^Rule/' $(TDATA) | \
+		    $(ZIC) $$leap -d time_t.dir/$$type - $(PACKRATDATA) && \
+		  $(ZIC) $$leap -d time_t.dir/$$type-shrunk tzdata.zi && \
+		  diff -r time_t.dir/$$type time_t.dir/$$type-shrunk || exit; \
+		done
+		rm -fr time_t.dir
 
 clean_misc:
 		rm -f core *.o *.out \
@@ -826,6 +842,7 @@ zic.o:		private.h tzfile.h version.h
 .PHONY: check check_character_set check_links
 .PHONY: check_public check_sorted check_tables
 .PHONY: check_time_t_alternatives check_tzs check_web check_white_space
+.PHONY: check_zishrink
 .PHONY: clean clean_misc force_tzs
 .PHONY: install install_data maintainer-clean names
 .PHONY: posix_only posix_packrat posix_right

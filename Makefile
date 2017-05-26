@@ -92,6 +92,17 @@ LIBDIR=		$(TOPDIR)/lib
 
 REDO=		posix_right
 
+# To install data in text form that has all the information of the binary data,
+# (optionally incorporating leap second information), use
+#	TZDATA_TEXT=	tzdata.zi leapseconds
+# To install text data without leap second information (e.g., because
+# REDO='posix_only'), use
+#	TZDATA_TEXT=	tzdata.zi
+# To avoid installing text data, use
+#	TZDATA_TEXT=
+
+TZDATA_TEXT=	leapseconds tzdata.zi
+
 # For backward-compatibility links for old zone names, use
 #	BACKWARD=	backward pacificnew
 # To omit these links, use
@@ -395,18 +406,19 @@ YDATA=		$(PRIMARY_YDATA) etcetera $(BACKWARD)
 NDATA=		systemv factory
 TDATA=		$(YDATA) $(NDATA)
 ZONETABLES=	zone1970.tab zone.tab
-TABDATA=	iso3166.tab leapseconds $(ZONETABLES)
+TABDATA=	iso3166.tab $(TZDATA_TEXT) $(ZONETABLES)
 LEAP_DEPS=	leapseconds.awk leap-seconds.list
-DATA=		$(YDATA) $(NDATA) backzone $(TABDATA) \
-			leap-seconds.list yearistype.sh
-AWK_SCRIPTS=	checklinks.awk checktab.awk leapseconds.awk
+TZDATA_ZI_DEPS=	zishrink.awk $(TDATA) $(PACKRATDATA)
+DATA=		$(YDATA) $(NDATA) backzone iso3166.tab leap-seconds.list \
+			leapseconds yearistype.sh $(ZONETABLES)
+AWK_SCRIPTS=	checklinks.awk checktab.awk leapseconds.awk zishrink.awk
 MISC=		$(AWK_SCRIPTS) zoneinfo2tdf.pl
 TZS_YEAR=	2050
 TZS=		to$(TZS_YEAR).tzs
 TZS_NEW=	to$(TZS_YEAR)new.tzs
 TZS_DEPS=	$(PRIMARY_YDATA) asctime.c localtime.c \
 			private.h tzfile.h zdump.c zic.c
-ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC) $(TZS)
+ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC) $(TZS) tzdata.zi
 
 # Consult these files when deciding whether to rebuild the 'version' file.
 # This list is not the same as the output of 'git ls-files', since
@@ -443,7 +455,7 @@ install:	all $(DATA) $(REDO) $(MANS)
 			$(DESTDIR)$(MANDIR)/man3 $(DESTDIR)$(MANDIR)/man5 \
 			$(DESTDIR)$(MANDIR)/man8
 		$(ZIC_INSTALL) -l $(LOCALTIME) -p $(POSIXRULES)
-		cp -f iso3166.tab $(ZONETABLES) $(DESTDIR)$(TZDIR)/.
+		cp -f $(TABDATA) $(DESTDIR)$(TZDIR)/.
 		cp tzselect zic zdump $(DESTDIR)$(ETCDIR)/.
 		cp libtz.a $(DESTDIR)$(LIBDIR)/.
 		$(RANLIB) $(DESTDIR)$(LIBDIR)/libtz.a
@@ -462,6 +474,13 @@ version:	$(VERSION_DEPS)
 				--abbrev=7 --dirty` || \
 		  V=$(VERSION); } && \
 		printf '%s\n' "$$V" >$@.out
+		mv $@.out $@
+
+# This file can be tailored by setting BACKWARD, PACKRATDATA, etc.
+tzdata.zi:	$(TZDATA_ZI_DEPS)
+		$(AWK) -v PACKRATDATA='$(PACKRATDATA)' \
+		  -f zishrink.awk \
+		  $(TDATA) $(PACKRATDATA) >$@.out
 		mv $@.out $@
 
 version.h:	version
@@ -498,10 +517,8 @@ INSTALLARGS = \
  ZIC='$(ZIC)'
 
 # 'make install_data' installs one set of tz binary files.
-# It can be tailored by setting LEAPSECONDS, PACKRATDATA, etc.
-install_data:	zic leapseconds yearistype $(PACKRATDATA) $(TDATA)
-		$(ZIC_INSTALL) $(TDATA)
-		$(AWK) '/^Rule/' $(TDATA) | $(ZIC_INSTALL) - $(PACKRATDATA)
+install_data:	zic leapseconds yearistype tzdata.zi
+		$(ZIC_INSTALL) tzdata.zi
 
 posix_only:
 		$(MAKE) $(INSTALLARGS) LEAPSECONDS= install_data
@@ -538,14 +555,14 @@ posix_packrat:
 
 zones:		$(REDO)
 
-$(TZS_NEW):	$(TDATA) zdump zic
+$(TZS_NEW):	tzdata.zi zdump zic
 		mkdir -p tzs.dir
-		$(zic) -d tzs.dir $(TDATA)
+		$(zic) -d tzs.dir tzdata.zi
 		$(AWK) '/^Link/{print $$1 "\t" $$2 "\t" $$3}' \
-		   $(TDATA) | LC_ALL=C sort >$@.out
+		   tzdata.zi | LC_ALL=C sort >$@.out
 		wd=`pwd` && \
 		zones=`$(AWK) -v wd="$$wd" \
-				'/^Zone/{print wd "/tzs.dir/" $$2}' $(TDATA) \
+				'/^Zone/{print wd "/tzs.dir/" $$2}' tzdata.zi \
 			 | LC_ALL=C sort` && \
 		./zdump -i -c $(TZS_YEAR) $$zones >>$@.out
 		sed 's,^TZ=".*tzs\.dir/,TZ=",' $@.out >$@.sed.out
@@ -589,7 +606,8 @@ check_character_set: $(ENCHILADA)
 		sharp='#' && \
 		! grep -Env $(SAFE_LINE) $(MANS) date.1 $(MANTXTS) \
 			$(MISC) $(SOURCES) $(WEB_PAGES) \
-			CONTRIBUTING LICENSE Makefile README version && \
+			CONTRIBUTING LICENSE Makefile README \
+			version tzdata.ic && \
 		! grep -Env $(SAFE_SHARP_LINE) $(TDATA) backzone \
 			leapseconds yearistype.sh zone.tab && \
 		! grep -Env $(OK_LINE) $(ENCHILADA)
@@ -613,6 +631,7 @@ check_sorted: backward backzone iso3166.tab zone.tab zone1970.tab
 
 check_links:	checklinks.awk $(TDATA)
 		$(AWK) -f checklinks.awk $(TDATA)
+		$(AWK) -f checklinks.awk tzdata.zi
 
 check_tables:	checktab.awk $(PRIMARY_YDATA) $(ZONETABLES)
 		for tab in $(ZONETABLES); do \
@@ -630,7 +649,7 @@ clean_misc:
 		rm -f core *.o *.out \
 		  date tzselect version.h zdump zic yearistype libtz.a
 clean:		clean_misc
-		rm -fr *.dir tzdb-*/ $(TZS_NEW)
+		rm -fr *.dir tzdata.zi tzdb-*/ $(TZS_NEW)
 
 maintainer-clean: clean
 		@echo 'This command is intended for maintainers to use; it'
@@ -684,6 +703,7 @@ set-timestamps.out: $(ENCHILADA)
 		  touch -cmr `ls -t $$file workman.sh | sed 1q` $$file.txt || \
 		    exit; \
 		done
+		touch -cmr `ls -t $(TZDATA_ZI_DEPS) | sed 1q` tzdata.zi
 		touch -cmr `ls -t $(TZS_DEPS) | sed 1q` $(TZS)
 		touch -cmr `ls -t $(VERSION_DEPS) | sed 1q` version
 		touch $@
@@ -695,7 +715,7 @@ check_public:
 		$(MAKE) maintainer-clean
 		$(MAKE) "CFLAGS=$(GCC_DEBUG_FLAGS)" ALL
 		mkdir -p public.dir
-		for i in $(TDATA) ; do \
+		for i in $(TDATA) tzdata.zi; do \
 		  $(zic) -v -d public.dir $$i 2>&1 || exit; \
 		done
 		$(zic) -v -d public.dir $(TDATA)
@@ -789,8 +809,8 @@ typecheck:
 			$(MAKE) clean ; \
 		done
 
-zonenames:	$(TDATA)
-		@$(AWK) '/^Zone/ { print $$2 } /^Link/ { print $$3 }' $(TDATA)
+zonenames:	tzdata.zi
+		@$(AWK) '/^Zone/ { print $$2 } /^Link/ { print $$3 }' tzdata.zi
 
 asctime.o:	private.h tzfile.h
 date.o:		private.h

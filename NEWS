@@ -10,6 +10,21 @@ Unreleased, experimental changes
 
     Add 7 s to the UT offset in Asia/Yangon before 1920.
 
+  Changes to build procedure
+
+    To support applications that prefer to read time zone data in text
+    form, two zic input files tzdata.zi and leapseconds are now
+    installed by default.  The commands 'zic tzdata.zi' and 'zic -L
+    leapseconds tzdata.zi' can reproduce the tzdata binary files
+    without and with leap seconds, respectively.  To prevent these two
+    new files from being installed, use 'make TZDATA_TEXT=', and to
+    suppress leap seconds from the tzdata text installation, use 'make
+    TZDATA_TEXT=tzdata.zi'.
+
+    'make BACKWARD=' now suppresses backward-compatibility names
+    like 'US/Pacific' that are defined in the 'backward' and
+    'pacificnew' files.
+
   Changes to code
 
     zic and the reference runtime now reject multiple leap seconds
@@ -29,10 +44,6 @@ Unreleased, experimental changes
     it no longer accepts "lF" as an abbreviation for "lastFriday".
     Also, zic warns about the undocumented usage with a "last-"
     prefix, e.g., "last-Fri".
-
-    'make BACKWARD=' now suppresses backward-compatibility names
-    like 'US/Pacific' that are defined in the 'backward' and
-    'pacificnew' files.
 
     Several minor changes have been made to the code to make it a
     bit easier to port to MS-Windows.  (Thanks to Kees Dekker for

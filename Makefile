@@ -478,7 +478,7 @@ version:	$(VERSION_DEPS)
 
 # This file can be tailored by setting BACKWARD, PACKRATDATA, etc.
 tzdata.zi:	$(TZDATA_ZI_DEPS)
-		$(AWK) -v PACKRATDATA='$(PACKRATDATA)' \
+		LC_ALL=C $(AWK) -v PACKRATDATA='$(PACKRATDATA)' \
 		  -f zishrink.awk \
 		  $(TDATA) $(PACKRATDATA) >$@.out
 		mv $@.out $@

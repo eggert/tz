@@ -46,20 +46,8 @@ BEGIN {
 
   # Abbreviate weekday names.  Do not abbreviate "Sun" and "Sat", as
   # pre-2017c zic erroneously diagnoses "Su" and "Sa" as ambiguous.
-  while (n = match(line, /[ l]Mon[<>]/)) {
-    line = substr(line, 1, n + 1) substr(line, n + 4)
-  }
-  while (n = match(line, /[ l]Tue[<>]/)) {
-    line = substr(line, 1, n + 2) substr(line, n + 4)
-  }
-  while (n = match(line, /[ l]Wed[<>]/)) {
-    line = substr(line, 1, n + 1) substr(line, n + 4)
-  }
-  while (n = match(line, /[ l]Thu[<>]/)) {
-    line = substr(line, 1, n + 2) substr(line, n + 4)
-  }
-  while (n = match(line, /[ l]Fri[<>]/)) {
-    line = substr(line, 1, n + 1) substr(line, n + 4)
+  while (n = match(line, / (last)?(Mon|Tue|Wed|Thu|Fri)[ <>]/)) {
+    line = substr(line, 1, n + RLENGTH - 4) substr(line, n + RLENGTH - 1)
   }
 
   # Abbreviate "only" and month names.

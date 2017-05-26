@@ -181,7 +181,7 @@ Zone	Africa/Lome	0:04:52 -	LMT	1893
 # with the date that it took effect, namely 1912-01-01.
 #
 Zone	Africa/Luanda	0:52:56	-	LMT	1892
-			0:52:04	-	+005204	1912 Jan  1
+			0:52:04	-	LMT	1912 Jan  1 # Luanda Mean Time?
 			1:00	-	WAT
 
 # Democratic Republic of the Congo (east)

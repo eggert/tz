@@ -348,6 +348,12 @@
 # Justice (tel +353 1 678 9711) who confirmed to me that the correct name is
 # "Irish Summer Time", abbreviated to "IST".
 
+# Michael Deckers (2017-06-01) gave the following URLs for Ireland's
+# Summer Time Act, 1925 and Summer Time Orders, 1926 and 1947:
+# http://www.irishstatutebook.ie/eli/1925/act/8/enacted/en/print.html
+# http://www.irishstatutebook.ie/eli/1926/sro/919/made/en/print.html
+# http://www.irishstatutebook.ie/eli/1947/sro/71/made/en/print.html
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 # Summer Time Act, 1916
 Rule	GB-Eire	1916	only	-	May	21	2:00s	1:00	BST
@@ -472,14 +478,14 @@ Link	Europe/London	Europe/Isle_of_Man
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
-			-0:25:21 -	DMT	1916 May 21  2:00 # Dublin MT
+			-0:25:21 -	DMT	1916 May 21  2:00s # Dublin MT
 			-0:25:21 1:00	IST	1916 Oct  1  2:00s
 			 0:00	GB-Eire	%s	1921 Dec  6 # independence
-			 0:00	GB-Eire	GMT/IST	1940 Feb 25  2:00
-			 0:00	1:00	IST	1946 Oct  6  2:00
-			 0:00	-	GMT	1947 Mar 16  2:00
-			 0:00	1:00	IST	1947 Nov  2  2:00
-			 0:00	-	GMT	1948 Apr 18  2:00
+			 0:00	GB-Eire	GMT/IST	1940 Feb 25  2:00s
+			 0:00	1:00	IST	1946 Oct  6  2:00s
+			 0:00	-	GMT	1947 Mar 16  2:00s
+			 0:00	1:00	IST	1947 Nov  2  2:00s
+			 0:00	-	GMT	1948 Apr 18  2:00s
 			 0:00	GB-Eire	GMT/IST	1968 Oct 27
 			 1:00	-	IST	1971 Oct 31  2:00u
 			 0:00	GB-Eire	GMT/IST	1996

@@ -8,6 +8,9 @@ Unreleased, experimental changes
     Madras local time (UT +052110) in 1870, then to IST (UT +0530) in
     1906.  Also, treat 1941-2's +0630 as DST, like 1942-5.
 
+    Europe/Dublin's 1946 and 1947 fallback transitions occurred at
+    02:00 standard time, not 02:00 DST.  (Thanks to Michael Deckers.)
+
     Add 7 s to the UT offset in Asia/Yangon before 1920.
 
   Changes to build procedure

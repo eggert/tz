@@ -298,10 +298,13 @@ struct lookup {
 static struct lookup const *	byword(const char * string,
 					const struct lookup * lp);
 
-static struct lookup const	line_codes[] = {
+static struct lookup const zi_line_codes[] = {
 	{ "Rule",	LC_RULE },
 	{ "Zone",	LC_ZONE },
 	{ "Link",	LC_LINK },
+	{ NULL,		0 }
+};
+static struct lookup const leap_line_codes[] = {
 	{ "Leap",	LC_LEAP },
 	{ NULL,		0}
 };
@@ -1114,6 +1117,8 @@ infile(const char *name)
 		} else if (wantcont) {
 			wantcont = inzcont(fields, nfields);
 		} else {
+			struct lookup const *line_codes
+			  = name == leapsec ? leap_line_codes : zi_line_codes;
 			lp = byword(fields[0], line_codes);
 			if (lp == NULL)
 				error(_("input line of unknown type"));
@@ -1130,11 +1135,7 @@ infile(const char *name)
 					wantcont = false;
 					break;
 				case LC_LEAP:
-					if (name != leapsec)
-					  warning(_("%s: Leap line in non leap"
-						    " seconds file %s"),
-						  progname, name);
-					else	inleap(fields, nfields);
+					inleap(fields, nfields);
 					wantcont = false;
 					break;
 				default:	/* "cannot happen" */
@@ -1586,7 +1587,8 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 	** Day work.
 	** Accept things such as:
 	**	1
-	**	last-Sunday
+	**	lastSunday
+	**	last-Sunday (undocumented; warn about this)
 	**	Sun<=20
 	**	Sun>=7
 	*/

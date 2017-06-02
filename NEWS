@@ -48,6 +48,15 @@ Unreleased, experimental changes
     Also, zic warns about the undocumented usage with a "last-"
     prefix, e.g., "last-Fri".
 
+    Similarly, zic now accepts the unambiguous abbreviation "L" for
+    "Link" in ordinary context and for "Leap" in leap-second context.
+    Conversely, zic no longer accepts non-prefixes such as "La" as
+    abbreviations for words like "Leap".
+
+    zic no longer accepts leap second lines in ordinary input, or
+    ordinary lines in leap second input.  Formerly, zic sometimes
+    warned about this undocumented usage and handled it incorrectly.
+
     Several minor changes have been made to the code to make it a
     bit easier to port to MS-Windows.  (Thanks to Kees Dekker for
     reporting the problems.)

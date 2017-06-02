@@ -478,9 +478,7 @@ version:	$(VERSION_DEPS)
 
 # This file can be tailored by setting BACKWARD, PACKRATDATA, etc.
 tzdata.zi:	$(TZDATA_ZI_DEPS)
-		LC_ALL=C $(AWK) -v PACKRATDATA='$(PACKRATDATA)' \
-		  -f zishrink.awk \
-		  $(TDATA) $(PACKRATDATA) >$@.out
+		LC_ALL=C $(AWK) -f zishrink.awk $(TDATA) $(PACKRATDATA) >$@.out
 		mv $@.out $@
 
 version.h:	version
@@ -558,11 +556,11 @@ zones:		$(REDO)
 $(TZS_NEW):	tzdata.zi zdump zic
 		mkdir -p tzs.dir
 		$(zic) -d tzs.dir tzdata.zi
-		$(AWK) '/^Link/{print $$1 "\t" $$2 "\t" $$3}' \
+		$(AWK) '/^L/{print "Link\t" $$2 "\t" $$3}' \
 		   tzdata.zi | LC_ALL=C sort >$@.out
 		wd=`pwd` && \
 		zones=`$(AWK) -v wd="$$wd" \
-				'/^Zone/{print wd "/tzs.dir/" $$2}' tzdata.zi \
+				'/^Z/{print wd "/tzs.dir/" $$2}' tzdata.zi \
 			 | LC_ALL=C sort` && \
 		./zdump -i -c $(TZS_YEAR) $$zones >>$@.out
 		sed 's,^TZ=".*tzs\.dir/,TZ=",' $@.out >$@.sed.out
@@ -826,7 +824,7 @@ typecheck:
 		done
 
 zonenames:	tzdata.zi
-		@$(AWK) '/^Zone/ { print $$2 } /^Link/ { print $$3 }' tzdata.zi
+		@$(AWK) '/^Z/ { print $$2 } /^L/ { print $$3 }' tzdata.zi
 
 asctime.o:	private.h tzfile.h
 date.o:		private.h

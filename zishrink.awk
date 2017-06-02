@@ -6,33 +6,52 @@
 # 'zic' should treat this script's output as if it were identical to
 # this script's input.
 
-function paw_through_packratdata(line)
+
+# Return a new rule name.
+# N_RULE_NAMES keeps track of how many rule names have been generated.
+
+function gen_rule_name(alphabet, base, rule_name, n, digit)
 {
-  if (PACKRATDATA) {
-    while (0 < (getline line <PACKRATDATA)) {
-      if (split(line, field)) {
-	if (field[1] == "Zone") packrat_zone[field[2]] = 1
-	if (field[1] == "Link") packrat_zone[field[3]] = 1
-      }
-    }
-    close(PACKRATDATA)
-  }
+  alphabet = ""
+  alphabet = alphabet "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  alphabet = alphabet "abcdefghijklmnopqrstuvwxyz"
+  alphabet = alphabet "!$%&'()*+,./:;<=>?@[\\]^_`{|}~"
+  base = length(alphabet)
+  rule_name = ""
+  n = n_rule_names++
+
+  do {
+    n -= rule_name && n <= base
+    digit = n % base
+    rule_name = substr(alphabet, digit + 1, 1) rule_name
+    n = (n - digit) / base
+  } while (n);
+
+  return rule_name
 }
 
-function process_input_line(line, field, end)
+# Process an input line and save it for later output.
+
+function process_input_line(line, field, end, i, n, startdef)
 {
   # Remove comments, normalize spaces, and append a space to each line.
   sub(/#.*/, "", line)
   line = line " "
   gsub(/[[:space:]]+/, " ", line)
 
+  # Abbreviate keywords.  Do not abbreviate "Link" to just "L",
+  # as pre-2017c zic erroneously diagnoses "Li" as ambiguous.
+  sub(/^Link /, "Li ", line)
+  sub(/^Rule /, "R ", line)
+  sub(/^Zone /, "Z ", line)
+
   # SystemV rules are not needed.
-  if (line ~ /^Rule SystemV /) next
+  if (line ~ /^R SystemV /) next
 
   # Replace FooAsia rules with the same rules without "Asia", as they
   # are duplicates.
   if (match(line, /[^ ]Asia /)) {
-    if (line ~ /^Rule /) next
+    if (line ~ /^R /) next
     line = substr(line, 1, RSTART) substr(line, RSTART + 5)
   }
 
@@ -53,7 +72,10 @@ function process_input_line(line, field, end)
     line = substr(line, 1, end - 3) substr(line, end - 1)
   }
 
-  # Abbreviate "only" and month names.
+  # Abbreviate "max", "only" and month names.
+  # Do not abbreviate "min", as pre-2017c zic erroneously diagnoses "mi"
+  # as ambiguous.
+  gsub(/ max /, " ma ", line)
   gsub(/ only /, " o ", line)
   gsub(/ Jan /, " Ja ", line)
   gsub(/ Feb /, " F ", line)
@@ -78,26 +100,57 @@ function process_input_line(line, field, end)
   # Remove unnecessary trailing " Ja" (for January).
   sub(/ Ja$/, "", line)
 
-  # Output lines unless they are later overridden in PACKRATDATA.
-  if (line ~ /^[LRZ]/) {
-    overridden = 0
-    if (FILENAME != PACKRATDATA) {
-      split(line, field)
-      if (field[1] == "Zone")
-	overridden = packrat_zone[field[2]]
-      else if (field[1] == "Link" && packrat_zone[field[3]])
-	next
+  n = split(line, field)
+
+  # Abbreviate rule names.
+  i = field[1] == "Z" ? 4 : field[1] == "Li" ? 0 : 2
+  if (i && field[i] ~ /^[^-+0-9]/) {
+    if (!rule[field[i]])
+      rule[field[i]] = gen_rule_name()
+    field[i] = rule[field[i]]
+  }
+
+  # If this zone supersedes an earlier one, delete the earlier one
+  # from the saved output lines.
+  startdef = ""
+  if (field[1] == "Z")
+    zonename = startdef = field[2]
+  else if (field[1] == "Li")
+    zonename = startdef = field[3]
+  else if (field[1] == "R")
+    zonename = ""
+  if (startdef) {
+    i = zonedef[startdef]
+    if (i) {
+      do
+	output_line[i - 1] = ""
+      while (output_line[i++] ~ /^[-+0-9]/);
     }
   }
-  if (!overridden)
-    print line
+  zonedef[zonename] = nout + 1
+
+  # Save the line for later output.
+  line = field[1]
+  for (i = 2; i <= n; i++)
+    line = line " " field[i]
+  output_line[nout++] = line
+}
+
+function output_saved_lines(i)
+{
+  for (i = 0; i < nout; i++)
+    if (output_line[i])
+      print output_line[i]
 }
 
 BEGIN {
   print "# This zic input file is in the public domain."
-  paw_through_packratdata()
 }
 
 /^[[:space:]]*[^#[:space:]]/ {
   process_input_line($0)
+}
+
+END {
+  output_saved_lines()
 }

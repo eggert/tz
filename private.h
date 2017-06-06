@@ -153,6 +153,22 @@
 # endif
 #endif
 
+#ifndef USG_COMPAT
+# ifndef _XOPEN_VERSION
+#  define USG_COMPAT 0
+# else
+#  define USG_COMPAT 1
+# endif
+#endif
+
+#ifndef HAVE_TZNAME
+# if _POSIX_VERSION < 198808 && !USG_COMPAT
+#  define HAVE_TZNAME 0
+# else
+#  define HAVE_TZNAME 1
+# endif
+#endif
+
 #ifndef F_OK
 #define F_OK	0
 #endif /* !defined F_OK */
@@ -339,6 +355,12 @@ typedef unsigned long uintmax_t;
 ** typical platforms.
 */
 #if defined time_tz || EPOCH_LOCAL || EPOCH_OFFSET != 0
+# define TZ_TIME_T 1
+#else
+# define TZ_TIME_T 0
+#endif
+
+#if TZ_TIME_T
 # ifdef LOCALTIME_IMPLEMENTATION
 static time_t sys_time(time_t *x) { return time(x); }
 # endif
@@ -393,6 +415,20 @@ typedef time_tz tz_time_t;
 # define tzset tz_tzset
 # undef  tzsetwall
 # define tzsetwall tz_tzsetwall
+# if HAVE_TZNAME
+#  undef  tzname
+#  define tzname tz_tzname
+# endif
+# if USG_COMPAT
+#  undef  daylight
+#  define daylight tz_daylight
+#  undef  timezone
+#  define timezone tz_timezone
+# endif
+# ifdef ALTZONE
+#  undef  altzone
+#  define altzone tz_altzone
+# endif
 
 char *ctime(time_t const *);
 char *ctime_r(time_t const *, char *);
@@ -422,18 +458,17 @@ extern char *asctime_r(struct tm const *restrict, char *restrict);
 extern char **environ;
 #endif
 
-#if !HAVE_POSIX_DECLS
-# ifdef USG_COMPAT
-#  ifndef timezone
+#if TZ_TIME_T || !HAVE_POSIX_DECLS
+# if HAVE_TZNAME
+extern char *tzname[];
+# endif
+# if USG_COMPAT
 extern long timezone;
-#  endif
-#  ifndef daylight
 extern int daylight;
-#  endif
 # endif
 #endif
 
-#if defined ALTZONE && !defined altzone
+#ifdef ALTZONE
 extern long altzone;
 #endif
 
@@ -443,25 +478,25 @@ extern long altzone;
 */
 
 #ifdef STD_INSPIRED
-# if !defined tzsetwall || defined time_tz
+# if TZ_TIME_T || !defined tzsetwall
 void tzsetwall(void);
 # endif
-# if !defined offtime || defined time_tz
+# if TZ_TIME_T || !defined offtime
 struct tm *offtime(time_t const *, long);
 # endif
-# if !defined timegm || defined time_tz
+# if TZ_TIME_T || !defined timegm
 time_t timegm(struct tm *);
 # endif
-# if !defined timelocal || defined time_tz
+# if TZ_TIME_T || !defined timelocal
 time_t timelocal(struct tm *);
 # endif
-# if !defined timeoff || defined time_tz
+# if TZ_TIME_T || !defined timeoff
 time_t timeoff(struct tm *, long);
 # endif
-# if !defined time2posix || defined time_tz
+# if TZ_TIME_T || !defined time2posix
 time_t time2posix(time_t);
 # endif
-# if !defined posix2time || defined time_tz
+# if TZ_TIME_T || !defined posix2time
 time_t posix2time(time_t);
 # endif
 #endif
@@ -495,10 +530,10 @@ time_t mktime_z(timezone_t restrict, struct tm *restrict);
 timezone_t tzalloc(char const *);
 void tzfree(timezone_t);
 # ifdef STD_INSPIRED
-#  if !defined posix2time_z || defined time_tz
+#  if TZ_TIME_T || !defined posix2time_z
 time_t posix2time_z(timezone_t, time_t) ATTRIBUTE_PURE;
 #  endif
-#  if !defined time2posix_z || defined time_tz
+#  if TZ_TIME_T || !defined time2posix_z
 time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_PURE;
 #  endif
 # endif
@@ -649,7 +684,7 @@ char *ctime_r(time_t const *, char *);
 ** or
 **	isleap(a + b) == isleap(a % 400 + b % 400)
 ** This is true even if % means modulo rather than Fortran remainder
-** (which is allowed by C89 but not C99).
+** (which is allowed by C89 but not by C99 or later).
 ** We use this to avoid addition overflow problems.
 */
 

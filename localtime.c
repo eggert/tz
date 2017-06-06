@@ -188,20 +188,21 @@ static int		lcl_is_set;
 
 static struct tm	tm;
 
-#if !HAVE_POSIX_DECLS
+#if !HAVE_POSIX_DECLS || TZ_TIME_T
+# if HAVE_TZNAME
 char *			tzname[2] = {
 	(char *) wildabbr,
 	(char *) wildabbr
 };
-# ifdef USG_COMPAT
+# endif
+# if USG_COMPAT
 long			timezone;
 int			daylight;
 # endif
-#endif
-
-#ifdef ALTZONE
+# ifdef ALTZONE
 long			altzone;
-#endif /* defined ALTZONE */
+# endif
+#endif
 
 /* Initialize *S to a value based on GMTOFF, ISDST, and ABBRIND.  */
 static void
@@ -263,8 +264,10 @@ detzcode64(const char *const codep)
 static void
 update_tzname_etc(struct state const *sp, struct ttinfo const *ttisp)
 {
+#if HAVE_TZNAME
   tzname[ttisp->tt_isdst] = (char *) &sp->chars[ttisp->tt_abbrind];
-#ifdef USG_COMPAT
+#endif
+#if USG_COMPAT
   if (!ttisp->tt_isdst)
     timezone = - ttisp->tt_gmtoff;
 #endif
@@ -280,16 +283,17 @@ settzname(void)
 	register struct state * const	sp = lclptr;
 	register int			i;
 
-	tzname[0] = tzname[1] = (char *) wildabbr;
-#ifdef USG_COMPAT
+#if HAVE_TZNAME
+	tzname[0] = tzname[1] = (char *) (sp ? wildabbr : gmt);
+#endif
+#if USG_COMPAT
 	daylight = 0;
 	timezone = 0;
-#endif /* defined USG_COMPAT */
+#endif
 #ifdef ALTZONE
 	altzone = 0;
 #endif /* defined ALTZONE */
 	if (sp == NULL) {
-		tzname[0] = tzname[1] = (char *) gmt;
 		return;
 	}
 	/*
@@ -304,10 +308,10 @@ settzname(void)
 							&sp->ttis[
 								sp->types[i]];
 		update_tzname_etc(sp, ttisp);
-#ifdef USG_COMPAT
+#if USG_COMPAT
 		if (ttisp->tt_isdst)
 			daylight = 1;
-#endif /* defined USG_COMPAT */
+#endif
 	}
 }
 
@@ -2286,9 +2290,9 @@ posix2time(time_t t)
 
 #endif /* defined STD_INSPIRED */
 
-#if defined time_tz || EPOCH_LOCAL || EPOCH_OFFSET != 0
+#if TZ_TIME_T
 
-# ifndef USG_COMPAT
+# if !USG_COMPAT
 #  define daylight 0
 #  define timezone 0
 # endif

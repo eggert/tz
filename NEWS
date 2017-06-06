@@ -57,6 +57,14 @@ Unreleased, experimental changes
     ordinary lines in leap second input.  Formerly, zic sometimes
     warned about this undocumented usage and handled it incorrectly.
 
+    The new macro HAVE_TZNAME governs whether the tzname external
+    variable is exported, instead of USG_COMPAT.  USG_COMPAT now
+    governs only the external variables "timezone" and "daylight".
+    This change is needed because the three variables are not in the
+    same category: although POSIX requires tzname, it specifies the
+    other two variables as optional.  Also, USG_COMPAT is now 1 or 0:
+    if not defined, the code attempts to guess it from other macros.
+
     Several minor changes have been made to the code to make it a
     bit easier to port to MS-Windows.  (Thanks to Kees Dekker for
     reporting the problems.)

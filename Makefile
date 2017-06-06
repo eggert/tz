@@ -164,6 +164,7 @@ LDLIBS=
 #	not needed by the main-program tz code, which is single-threaded.
 #	Append other compiler flags as needed, e.g., -pthread on GNU/Linux.
 #  -Dtime_tz=\"T\" to use T as the time_t type, rather than the system time_t
+#	This is intended for internal use only; it mangles external names.
 #  -DTZ_DOMAIN=\"foo\" to use "foo" for gettext domain name; default is "tz"
 #  -DTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
 #	the default is system-supplied, typically "/usr/lib/locale"
@@ -199,12 +200,6 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
   -Wno-address -Wno-format-nonliteral -Wno-sign-compare \
   -Wno-type-limits -Wno-unused-parameter
 #
-# If you want to use System V compatibility code, add
-#	-DUSG_COMPAT
-# to the end of the "CFLAGS=" line.  This arrange for "timezone" and "daylight"
-# variables to be kept up-to-date by the time conversion functions.  Neither
-# "timezone" nor "daylight" is described in X3J11's work.
-#
 # If your system has a "GMT offset" field in its "struct tm"s
 # (or if you decide to add such a field in your system's "time.h" file),
 # add the name to a define such as
@@ -215,6 +210,31 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 #	-DTM_ZONE=tm_zone
 # and define NO_TM_ZONE to suppress any guessing.  These two fields are not
 # required by POSIX, but are widely available on GNU/Linux and BSD systems.
+#
+# The next batch of options control support for external variables
+# exported by tzcode.  In practice these variables are less useful
+# than TM_GMTOFF and TM_ZONE.  However, most of them are standardized.
+# #
+# # To omit or support the external variable "tzname", add one of:
+# #	-DHAVE_TZNAME=0
+# #	-DHAVE_TZNAME=1
+# # to the "CFLAGS=" line.  "tzname" is required by POSIX 1988 and later.
+# # If not defined, the code attempts to guess HAVE_TZNAME from other macros.
+# # Warning: unless time_tz is also defined, HAVE_TZNAME=1 can cause
+# # crashes when combined with some platforms' standard libraries,
+# # presumably due to memory allocation issues.
+# #
+# # To omit or support the external variables "timezone" and "daylight", add
+# #	-DUSG_COMPAT=0
+# #	-DUSG_COMPAT=1
+# # to the "CFLAGS=" line; "timezone" and "daylight" are inspired by
+# # Unix Systems Group code and are required by POSIX 2008 (with XSI) and later.
+# # If not defined, the code attempts to guess USG_COMPAT from other macros.
+# #
+# # To support the external variable "altzone", add
+# #	-DALTZONE
+# # to the end of the "CFLAGS=" line; although "altzone" appeared in
+# # System V Release 3.1 it has not been standardized.
 #
 # If you want functions that were inspired by early versions of X3J11's work,
 # add
@@ -252,11 +272,6 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # If you want to allocate state structures in localtime, add
 #	-DALL_STATE
 # to the end of the "CFLAGS=" line.  Storage is obtained by calling malloc.
-#
-# If you want an "altzone" variable (a la System V Release 3.1), add
-#	-DALTZONE
-# to the end of the "CFLAGS=" line.
-# This variable is not described in X3J11's work.
 #
 # NIST-PCTS:151-2, Version 1.4, (1993-12-03) is a test suite put
 # out by the National Institute of Standards and Technology

@@ -73,7 +73,7 @@ static const struct lc_time_T	C_time_locale = {
 
 	/*
 	** x_fmt
-	** C99 requires this format.
+	** C99 and later require this format.
 	** Using just numbers (as here) makes Quakers happier;
 	** it's also compatible with SVR4.
 	*/
@@ -81,7 +81,7 @@ static const struct lc_time_T	C_time_locale = {
 
 	/*
 	** c_fmt
-	** C99 requires this format.
+	** C99 and later require this format.
 	** Previously this code used "%D %X", but we now conform to C99.
 	** Note that
 	**	"%a %b %d %H:%M:%S %Y"
@@ -104,10 +104,6 @@ static char *	_conv(int, const char *, char *, const char *);
 static char *	_fmt(const char *, const struct tm *, char *, const char *,
 			int *);
 static char *	_yconv(int, int, bool, bool, char *, char const *);
-
-#if !HAVE_POSIX_DECLS
-extern char *	tzname[];
-#endif
 
 #ifndef YEAR_2000_NAME
 #define YEAR_2000_NAME	"CHECK_STRFTIME_FORMATS_FOR_TWO_DIGIT_YEARS"
@@ -223,7 +219,7 @@ label:
 			case 'E':
 			case 'O':
 				/*
-				** C99 locale modifiers.
+				** Locale modifiers of C99 and later.
 				** The sequences
 				**	%Ec %EC %Ex %EX %Ey %EY
 				**	%Od %oe %OH %OI %Om %OM
@@ -483,19 +479,19 @@ label:
 			case 'Z':
 #ifdef TM_ZONE
 				pt = _add(t->TM_ZONE, pt, ptlim);
-#else
+#elif HAVE_TZNAME
 				if (t->tm_isdst >= 0)
 					pt = _add(tzname[t->tm_isdst != 0],
 						pt, ptlim);
 #endif
 				/*
-				** C99 says that %Z must be replaced by the
-				** empty string if the time zone is not
-				** determinable.
+				** C99 and later say that %Z must be
+				** replaced by the empty string if the
+				** time zone is not determinable.
 				*/
 				continue;
 			case 'z':
-#if defined TM_GMTOFF || defined USG_COMPAT || defined ALTZONE
+#if defined TM_GMTOFF || USG_COMPAT || defined ALTZONE
 				{
 				long		diff;
 				char const *	sign;
@@ -505,7 +501,7 @@ label:
 				diff = t->TM_GMTOFF;
 # else
 				/*
-				** C99 says that the UT offset must
+				** C99 and later say that the UT offset must
 				** be computed by looking only at
 				** tm_isdst. This requirement is
 				** incorrect, since it means the code
@@ -513,20 +509,20 @@ label:
 				** altzone and timezone), and the
 				** magic might not have the correct
 				** offset. Doing things correctly is
-				** tricky and requires disobeying C99;
+				** tricky and requires disobeying the standard;
 				** see GNU C strftime for details.
 				** For now, punt and conform to the
 				** standard, even though it's incorrect.
 				**
-				** C99 says that %z must be replaced by the
-				** empty string if the time zone is not
+				** C99 and later that %z must be replaced by
+				** the empty string if the time zone is not
 				** determinable, so output nothing if the
 				** appropriate variables are not available.
 				*/
 				if (t->tm_isdst < 0)
 					continue;
 				if (t->tm_isdst == 0)
-#  ifdef USG_COMPAT
+#  if USG_COMPAT
 					diff = -timezone;
 #  else
 					continue;
@@ -543,9 +539,11 @@ label:
 #ifdef TM_ZONE
 				  negative = t->TM_ZONE[0] == '-';
 #else
-				  negative
-				    = (t->tm_isdst < 0
-				       || tzname[t->tm_isdst != 0][0] == '-');
+				  negative = t->tm_isdst < 0;
+# if HAVE_TZNAME
+				  if (tzname[t->tm_isdst != 0][0] == '-')
+				    negative = true;
+# endif
 #endif
 				}
 				if (negative) {

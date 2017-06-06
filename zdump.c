@@ -77,7 +77,6 @@ extern int	getopt(int argc, char * const argv[],
 			const char * options);
 extern char *	optarg;
 extern int	optind;
-extern char *	tzname[];
 #endif
 
 /* The minimum and maximum finite time values.  */
@@ -997,9 +996,11 @@ abbr(struct tm const *tmp)
 #ifdef TM_ZONE
 	return tmp->TM_ZONE;
 #else
-	return (0 <= tmp->tm_isdst && tzname[0 < tmp->tm_isdst]
-		? tzname[0 < tmp->tm_isdst]
-		: "");
+# if HAVE_TZNAME
+	if (0 <= tmp->tm_isdst && tzname[0 < tmp->tm_isdst])
+	  return tzname[0 < tmp->tm_isdst];
+# endif
+	return "";
 #endif
 }
 

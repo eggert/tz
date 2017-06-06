@@ -581,9 +581,9 @@ Points of interest to folks with other systems:
 	of GMT" value and a "daylight saving time in effect" flag) to a
 	time zone abbreviation, and we refuse to guess.
 	Programs that in the past used the timezone function may now examine
-	tzname[localtime(&clock)->tm_isdst] to learn the correct time
-	zone abbreviation to use.  Alternatively, use
-	localtime(&clock)->tm_zone if this has been enabled.
+	localtime(&clock)->tm_zone (if TM_ZONE is defined) or
+	tzname[localtime(&clock)->tm_isdst] (if HAVE_TZNAME is defined)
+	to learn the correct time zone abbreviation to use.
 
 *	The 4.2BSD gettimeofday function is not used in this package.
 	This formerly let users obtain the current UTC offset and DST flag,

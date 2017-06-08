@@ -46,12 +46,12 @@ function process_input_line(line, field, end, i, n, startdef)
   sub(/^Zone /, "Z ", line)
 
   # SystemV rules are not needed.
-  if (line ~ /^R SystemV /) next
+  if (line ~ /^R SystemV /) return
 
   # Replace FooAsia rules with the same rules without "Asia", as they
   # are duplicates.
   if (match(line, /[^ ]Asia /)) {
-    if (line ~ /^R /) next
+    if (line ~ /^R /) return
     line = substr(line, 1, RSTART) substr(line, RSTART + 5)
   }
 

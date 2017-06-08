@@ -605,7 +605,7 @@ check_character_set: $(ENCHILADA)
 		! grep -Env $(SAFE_LINE) $(MANS) date.1 $(MANTXTS) \
 			$(MISC) $(SOURCES) $(WEB_PAGES) \
 			CONTRIBUTING LICENSE Makefile README \
-			version tzdata.ic && \
+			version tzdata.zi && \
 		! grep -Env $(SAFE_SHARP_LINE) $(TDATA) backzone \
 			leapseconds yearistype.sh zone.tab && \
 		! grep -Env $(OK_LINE) $(ENCHILADA)

@@ -514,7 +514,7 @@ label:
 				** For now, punt and conform to the
 				** standard, even though it's incorrect.
 				**
-				** C99 and later that %z must be replaced by
+				** C99 and later say that %z must be replaced by
 				** the empty string if the time zone is not
 				** determinable, so output nothing if the
 				** appropriate variables are not available.

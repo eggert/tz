@@ -11,6 +11,15 @@ Unreleased, experimental changes
     Europe/Dublin's 1946 and 1947 fallback transitions occurred at
     02:00 standard time, not 02:00 DST.  (Thanks to Michael Deckers.)
 
+    Adjust the 1867 transition in Alaska to better reflect the
+    historical record, by changing it to occur on 1867-10-18 at 15:30
+    Sitka time rather than at the start of 1867-10-17 local time.
+    Although strictly speaking this is accurate only for Sitka,
+    the rest of Alaska's blanks need to be filled in somehow.
+
+    Fix off-by-one errors in UT offsets for Adak and Nome before 1867.
+    (Thanks to Michael Deckers.)
+
     Add 7 s to the UT offset in Asia/Yangon before 1920.
 
   Changes to build procedure

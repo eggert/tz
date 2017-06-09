@@ -28,6 +28,13 @@ Unreleased, experimental changes
     like 'US/Pacific' that are defined in the 'backward' and
     'pacificnew' files.
 
+    'make check' now works on systems that lack a UTF-8 locale,
+    or that lack the nsgmls program.  Set UTF8_LOCALE to configure
+    the name of a UTF-8 locale, if you have one.
+
+    The build procedure for zdump now works on AIX 7.1.
+    (Problem reported by Kees Dekker.)
+
   Changes to code
 
     zic and the reference runtime now reject multiple leap seconds

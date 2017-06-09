@@ -393,6 +393,8 @@ typedef time_tz tz_time_t;
 # define posix2time tz_posix2time
 # undef  posix2time_z
 # define posix2time_z tz_posix2time_z
+# undef  strftime
+# define strftime tz_strftime
 # undef  time
 # define time tz_time
 # undef  time2posix
@@ -415,6 +417,10 @@ typedef time_tz tz_time_t;
 # define tzset tz_tzset
 # undef  tzsetwall
 # define tzsetwall tz_tzsetwall
+# if HAVE_STRFTIME_L
+#  undef  strftime_l
+#  define strftime_l tz_strftime_l
+# endif
 # if HAVE_TZNAME
 #  undef  tzname
 #  define tzname tz_tzname

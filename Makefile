@@ -117,6 +117,11 @@ BACKWARD=	backward pacificnew
 
 PACKRATDATA=
 
+# The name of a locale using the UTF-8 encoding, used during self-tests.
+# The tests are skipped if the name does not appear to work on this system.
+
+UTF8_LOCALE=	en_US.utf8
+
 # Since "." may not be in PATH...
 
 YEARISTYPE=	./yearistype
@@ -331,6 +336,7 @@ SGML_CATALOG_FILES= \
 # The name, arguments and environment of a program to validate your web pages.
 # See <http://openjade.sourceforge.net/doc/> for a validator, and
 # <https://validator.w3.org/source/> for a validation library.
+# Set VALIDATE=':' if you do not have such a program.
 VALIDATE = nsgmls
 VALIDATE_FLAGS = -s -B -wall -wno-unused-param
 VALIDATE_ENV = \
@@ -397,7 +403,7 @@ AR=		ar
 RANLIB=		:
 
 TZCOBJS=	zic.o
-TZDOBJS=	zdump.o localtime.o asctime.o
+TZDOBJS=	zdump.o localtime.o asctime.o strftime.o
 DATEOBJS=	date.o localtime.o strftime.o asctime.o
 LIBSRCS=	localtime.c asctime.c difftime.c
 LIBOBJS=	localtime.o asctime.o difftime.o
@@ -615,7 +621,10 @@ check:		check_character_set check_white_space check_links check_sorted \
 		  check_tables check_web check_zishrink check_tzs
 
 check_character_set: $(ENCHILADA)
-		LC_ALL=en_US.utf8 && export LC_ALL && \
+	test ! '$(UTF8_LOCALE)' || \
+	! printf 'A\304\200B\n' | \
+	  LC_ALL='$(UTF8_LOCALE)' grep -q '^A.B$$' >/dev/null 2>&1 || { \
+		LC_ALL='$(UTF8_LOCALE)' && export LC_ALL && \
 		sharp='#' && \
 		! grep -Env $(SAFE_LINE) $(MANS) date.1 $(MANTXTS) \
 			$(MISC) $(SOURCES) $(WEB_PAGES) \
@@ -623,7 +632,8 @@ check_character_set: $(ENCHILADA)
 			version tzdata.zi && \
 		! grep -Env $(SAFE_SHARP_LINE) $(TDATA) backzone \
 			leapseconds yearistype.sh zone.tab && \
-		! grep -Env $(OK_LINE) $(ENCHILADA)
+		! grep -Env $(OK_LINE) $(ENCHILADA); \
+	}
 
 check_white_space: $(ENCHILADA)
 		patfmt=' \t|[\f\r\v]' && pat=`printf "$$patfmt\\n"` && \

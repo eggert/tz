@@ -492,15 +492,15 @@ Zone America/Los_Angeles -7:52:58 -	LMT	1883 Nov 18 12:07:02
 # Alaska
 # AK%sT is the modern abbreviation for -09 per USNO.
 #
-# From Paul Eggert (2017-06-09):
+# From Paul Eggert (2017-06-10):
 # Howse writes that Alaska switched from the Julian to the Gregorian calendar,
 # and from east-of-GMT to west-of-GMT days, when the US bought it from Russia.
 # This was on 1867-10-18, a Friday.  Lovell Rousseau wrote that the ceremony
 # took place at 15:30 precisely, marked by a salute fired from the man-of-war
 # Ossipee; see 40th Congress, 2d session, Ex. Doc No. 125, p 4.
 # Presumably 1867-10-18 is the Gregorian date of the ceremony.
-# Inhabitants of Sitka did not change their calendars until Sunday,
-# 1867-10-20, which they celebrated twice; see Ahllund T (tr Hallamaa P).
+# Sitka workers did not change their calendars until Sunday, 1867-10-20,
+# presumably to get another day off that week.  See: Ahllund T (tr Hallamaa P).
 # From the memoirs of a Finnish workman. Alaska History. 2006 Fall;21(2):1-25.
 # http://alaskahistoricalsociety.org/wp-content/uploads/2016/12/Ahllund-2006-Memoirs-of-a-Finnish-Workman.pdf
 # Include only the time zone part of this transition, ignoring the switch
@@ -514,12 +514,9 @@ Zone America/Los_Angeles -7:52:58 -	LMT	1883 Nov 18 12:07:02
 # time change.  However, the Russian-influenced part of Alaska did observe
 # Russian time, and it is more accurate to model this than to ignore it.
 # The database format requires an exact transition time; use the Ossipee's
-# salute as a somewhat-arbitrary point of transition for all of Alaska.
-# Sitka's UTC offset is -9:01:13, so adjust its 15:30 to the local times of
-# Alaskan locations, as follows: 12:44:25 for Adak (-11:46:38), 13:29:25 for
-# Nome (-11:01:38), 14:31:23 for Anchorage (-9:59:36), 15:22:42 for Yakutat
-# (-9:18:55), 15:33:32 for Juneau (-8:57:41), and 15:44:55 for Metlakatla
-# (-8:46:18).
+# salute as a somewhat-arbitrary time for the formal transfer of control for
+# all of Alaska.  Sitka's UTC offset is -9:01:13; adjust its 15:30 to the
+# local times of other Alaskan locations so that they change simultaneously.
 
 # From Paul Eggert (2014-07-18):
 # One opinion of the early-1980s turmoil in Alaska over time zones and
@@ -601,14 +598,14 @@ Zone America/Metlakatla	 15:13:42 -	LMT	1867 Oct 19 15:44:55
 			 -8:00	US	P%sT	1983 Oct 30  2:00
 			 -8:00	-	PST	2015 Nov  1  2:00
 			 -9:00	US	AK%sT
-Zone America/Yakutat	 14:41:05 -	LMT	1867 Oct 19 15:22:42
+Zone America/Yakutat	 14:41:05 -	LMT	1867 Oct 19 15:12:18
 			 -9:18:55 -	LMT	1900 Aug 20 12:00
 			 -9:00	-	YST	1942
 			 -9:00	US	Y%sT	1946
 			 -9:00	-	YST	1969
 			 -9:00	US	Y%sT	1983 Nov 30
 			 -9:00	US	AK%sT
-Zone America/Anchorage	 14:00:24 -	LMT	1867 Oct 19 14:31:23
+Zone America/Anchorage	 14:00:24 -	LMT	1867 Oct 19 14:31:37
 			 -9:59:36 -	LMT	1900 Aug 20 12:00
 			-10:00	-	AST	1942
 			-10:00	US	A%sT	1967 Apr
@@ -616,7 +613,7 @@ Zone America/Anchorage	 14:00:24 -	LMT	1867 Oct 19 14:31:23
 			-10:00	US	AH%sT	1983 Oct 30  2:00
 			 -9:00	US	Y%sT	1983 Nov 30
 			 -9:00	US	AK%sT
-Zone America/Nome	 12:58:22 -	LMT	1867 Oct 19 13:29:25
+Zone America/Nome	 12:58:22 -	LMT	1867 Oct 19 13:29:35
 			-11:01:38 -	LMT	1900 Aug 20 12:00
 			-11:00	-	NST	1942
 			-11:00	US	N%sT	1946
@@ -625,7 +622,7 @@ Zone America/Nome	 12:58:22 -	LMT	1867 Oct 19 13:29:25
 			-11:00	US	B%sT	1983 Oct 30  2:00
 			 -9:00	US	Y%sT	1983 Nov 30
 			 -9:00	US	AK%sT
-Zone America/Adak	 12:13:22 -	LMT	1867 Oct 19 12:44:25
+Zone America/Adak	 12:13:22 -	LMT	1867 Oct 19 12:44:35
 			-11:46:38 -	LMT	1900 Aug 20 12:00
 			-11:00	-	NST	1942
 			-11:00	US	N%sT	1946

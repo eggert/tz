@@ -82,8 +82,8 @@ Unreleased, experimental changes
     if not defined, the code attempts to guess it from other macros.
 
     Several minor changes have been made to the code to make it a
-    bit easier to port to MS-Windows.  (Thanks to Kees Dekker for
-    reporting the problems.)
+    bit easier to port to MS-Windows and Solaris.  (Thanks to Kees
+    Dekker for reporting the problems.)
 
   Changes to documentation and commentary
 

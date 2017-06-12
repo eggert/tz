@@ -358,17 +358,17 @@ union input_buffer {
 
 /* Local storage needed for 'tzloadbody'.  */
 union local_storage {
-  /* The file name to be opened.  */
-  char fullname[FILENAME_MAX + 1];
-
   /* The results of analyzing the file's contents after it is opened.  */
-  struct {
+  struct file_analysis {
     /* The input buffer.  */
     union input_buffer u;
 
     /* A temporary state used for parsing a TZ string in the file.  */
     struct state st;
   } u;
+
+  /* The file name to be opened.  */
+  char fullname[sizeof (struct file_analysis)];
 };
 
 /* Load tz data from the file named NAME into *SP.  Read extended
@@ -383,7 +383,6 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 	register int			stored;
 	register ssize_t		nread;
 	register bool doaccess;
-	register char *fullname = lsp->fullname;
 	register union input_buffer *up = &lsp->u.u;
 	register int tzheadsize = sizeof (struct tzhead);
 
@@ -404,13 +403,13 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		  return EINVAL;
 		if (sizeof lsp->fullname - 1 <= strlen(p) + strlen(name))
 		  return ENAMETOOLONG;
-		strcpy(fullname, p);
-		strcat(fullname, "/");
-		strcat(fullname, name);
+		strcpy(lsp->fullname, p);
+		strcat(lsp->fullname, "/");
+		strcat(lsp->fullname, name);
 		/* Set doaccess if '.' (as in "../") shows up in name.  */
 		if (strchr(name, '.'))
 			doaccess = true;
-		name = fullname;
+		name = lsp->fullname;
 	}
 	if (doaccess && access(name, R_OK) != 0)
 	  return errno;

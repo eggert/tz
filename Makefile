@@ -49,6 +49,7 @@ TOPDIR=		/usr/local
 # "Compiled" time zone information is placed in the "TZDIR" directory
 # (and subdirectories).
 # Use an absolute path name for TZDIR unless you're just testing the software.
+# TZDIR_BASENAME should not contain "/" and should not be ".", ".." or empty.
 
 TZDIR_BASENAME=	zoneinfo
 TZDIR=		$(TOPDIR)/etc/$(TZDIR_BASENAME)

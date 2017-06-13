@@ -356,6 +356,9 @@ union input_buffer {
 	   + 4 * TZ_MAX_TIMES];
 };
 
+/* TZDIR with a trailing '/' rather than a trailing '\0'.  */
+static char const tzdirslash[sizeof TZDIR] = TZDIR "/";
+
 /* Local storage needed for 'tzloadbody'.  */
 union local_storage {
   /* The results of analyzing the file's contents after it is opened.  */
@@ -368,7 +371,8 @@ union local_storage {
   } u;
 
   /* The file name to be opened.  */
-  char fullname[sizeof (struct file_analysis)];
+  char fullname[BIGGEST(sizeof (struct file_analysis),
+			sizeof tzdirslash + 1024)];
 };
 
 /* Load tz data from the file named NAME into *SP.  Read extended
@@ -398,14 +402,16 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		++name;
 	doaccess = name[0] == '/';
 	if (!doaccess) {
-		char const *p = TZDIR;
-		if (! p)
-		  return EINVAL;
-		if (sizeof lsp->fullname - 1 <= strlen(p) + strlen(name))
+		size_t namelen = strlen(name);
+		if (sizeof lsp->fullname - sizeof tzdirslash <= namelen)
 		  return ENAMETOOLONG;
-		strcpy(lsp->fullname, p);
-		strcat(lsp->fullname, "/");
-		strcat(lsp->fullname, name);
+
+		/* Create a string "TZDIR/NAME".  Using sprintf here
+		   would pull in stdio (and would fail if the
+		   resulting string length exceeded INT_MAX!).  */
+		memcpy(lsp->fullname, tzdirslash, sizeof tzdirslash);
+		strcpy(lsp->fullname + sizeof tzdirslash, name);
+
 		/* Set doaccess if '.' (as in "../") shows up in name.  */
 		if (strchr(name, '.'))
 			doaccess = true;

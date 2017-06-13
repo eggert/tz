@@ -39,6 +39,10 @@
 #include <locale.h>
 #include <stdio.h>
 
+#ifndef DEPRECATE_TWO_DIGIT_YEARS
+# define DEPRECATE_TWO_DIGIT_YEARS false
+#endif
+
 struct lc_time_T {
 	const char *	mon[MONSPERYEAR];
 	const char *	month[MONSPERYEAR];
@@ -100,10 +104,17 @@ static const struct lc_time_T	C_time_locale = {
 	"%a %b %e %H:%M:%S %Z %Y"
 };
 
+enum warn { IN_NONE, IN_SOME, IN_THIS, IN_ALL };
+
 static char *	_add(const char *, char *, const char *);
 static char *	_conv(int, const char *, char *, const char *);
-static char *	_fmt(const char *, const struct tm *, char *, const char *);
+static char *	_fmt(const char *, const struct tm *, char *, const char *,
+		     enum warn *);
 static char *	_yconv(int, int, bool, bool, char *, char const *);
+
+#ifndef YEAR_2000_NAME
+#define YEAR_2000_NAME	"CHECK_STRFTIME_FORMATS_FOR_TWO_DIGIT_YEARS"
+#endif /* !defined YEAR_2000_NAME */
 
 #if HAVE_STRFTIME_L
 size_t
@@ -119,9 +130,22 @@ size_t
 strftime(char *s, size_t maxsize, const char *format, const struct tm *t)
 {
 	char *	p;
+	enum warn warn = IN_NONE;
 
 	tzset();
-	p = _fmt(format, t, s, s + maxsize);
+	p = _fmt(format, t, s, s + maxsize, &warn);
+	if (DEPRECATE_TWO_DIGIT_YEARS
+	    && warn != IN_NONE && getenv(YEAR_2000_NAME)) {
+		fprintf(stderr, "\n");
+		fprintf(stderr, "strftime format \"%s\" ", format);
+		fprintf(stderr, "yields only two digits of years in ");
+		if (warn == IN_SOME)
+			fprintf(stderr, "some locales");
+		else if (warn == IN_THIS)
+			fprintf(stderr, "the current locale");
+		else	fprintf(stderr, "all locales");
+		fprintf(stderr, "\n");
+	}
 	if (p == s + maxsize)
 		return 0;
 	*p = '\0';
@@ -129,7 +153,8 @@ strftime(char *s, size_t maxsize, const char *format, const struct tm *t)
 }
 
 static char *
-_fmt(const char *format, const struct tm *t, char *pt, const char *ptlim)
+_fmt(const char *format, const struct tm *t, char *pt,
+     const char *ptlim, enum warn *warnp)
 {
 	for ( ; *format; ++format) {
 		if (*format == '%') {
@@ -175,10 +200,18 @@ label:
 					    true, false, pt, ptlim);
 				continue;
 			case 'c':
-				pt = _fmt(Locale->c_fmt, t, pt, ptlim);
+				{
+				enum warn warn2 = IN_SOME;
+
+				pt = _fmt(Locale->c_fmt, t, pt, ptlim, &warn2);
+				if (warn2 == IN_ALL)
+					warn2 = IN_THIS;
+				if (warn2 > *warnp)
+					*warnp = warn2;
+				}
 				continue;
 			case 'D':
-				pt = _fmt("%m/%d/%y", t, pt, ptlim);
+				pt = _fmt("%m/%d/%y", t, pt, ptlim, warnp);
 				continue;
 			case 'd':
 				pt = _conv(t->tm_mday, "%02d", pt, ptlim);
@@ -199,7 +232,7 @@ label:
 				pt = _conv(t->tm_mday, "%2d", pt, ptlim);
 				continue;
 			case 'F':
-				pt = _fmt("%Y-%m-%d", t, pt, ptlim);
+				pt = _fmt("%Y-%m-%d", t, pt, ptlim, warnp);
 				continue;
 			case 'H':
 				pt = _conv(t->tm_hour, "%02d", pt, ptlim);
@@ -263,10 +296,10 @@ label:
 					pt, ptlim);
 				continue;
 			case 'R':
-				pt = _fmt("%H:%M", t, pt, ptlim);
+				pt = _fmt("%H:%M", t, pt, ptlim, warnp);
 				continue;
 			case 'r':
-				pt = _fmt("%I:%M:%S %p", t, pt, ptlim);
+				pt = _fmt("%I:%M:%S %p", t, pt, ptlim, warnp);
 				continue;
 			case 'S':
 				pt = _conv(t->tm_sec, "%02d", pt, ptlim);
@@ -289,7 +322,7 @@ label:
 				}
 				continue;
 			case 'T':
-				pt = _fmt("%H:%M:%S", t, pt, ptlim);
+				pt = _fmt("%H:%M:%S", t, pt, ptlim, warnp);
 				continue;
 			case 't':
 				pt = _add("\t", pt, ptlim);
@@ -391,6 +424,7 @@ label:
 						pt = _conv(w, "%02d",
 							pt, ptlim);
 					else if (*format == 'g') {
+						*warnp = IN_ALL;
 						pt = _yconv(year, base,
 							false, true,
 							pt, ptlim);
@@ -405,7 +439,7 @@ label:
 				** "date as dd-bbb-YYYY"
 				** (ado, 1993-05-24)
 				*/
-				pt = _fmt("%e-%b-%Y", t, pt, ptlim);
+				pt = _fmt("%e-%b-%Y", t, pt, ptlim, warnp);
 				continue;
 			case 'W':
 				pt = _conv((t->tm_yday + DAYSPERWEEK -
@@ -418,12 +452,21 @@ label:
 				pt = _conv(t->tm_wday, "%d", pt, ptlim);
 				continue;
 			case 'X':
-				pt = _fmt(Locale->X_fmt, t, pt, ptlim);
+				pt = _fmt(Locale->X_fmt, t, pt, ptlim, warnp);
 				continue;
 			case 'x':
-				pt = _fmt(Locale->x_fmt, t, pt, ptlim);
+				{
+				enum warn warn2 = IN_SOME;
+
+				pt = _fmt(Locale->x_fmt, t, pt, ptlim, &warn2);
+				if (warn2 == IN_ALL)
+					warn2 = IN_THIS;
+				if (warn2 > *warnp)
+					*warnp = warn2;
+				}
 				continue;
 			case 'y':
+				*warnp = IN_ALL;
 				pt = _yconv(t->tm_year, TM_YEAR_BASE,
 					false, true,
 					pt, ptlim);
@@ -516,7 +559,8 @@ label:
 #endif
 				continue;
 			case '+':
-				pt = _fmt(Locale->date_fmt, t, pt, ptlim);
+				pt = _fmt(Locale->date_fmt, t, pt, ptlim,
+					warnp);
 				continue;
 			case '%':
 			/*

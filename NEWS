@@ -41,6 +41,11 @@ Unreleased, experimental changes
     or that lack the nsgmls program.  Set UTF8_LOCALE to configure
     the name of a UTF-8 locale, if you have one.
 
+    Y2K runtime checks are no longer enabled by default.  Add
+    -DDEPRECATE_TWO_DIGIT_YEARS to CFLAGS to enable them, instead of
+    adding -DNO_RUN_TIME_WARNINGS_ABOUT_YEAR_2000_PROBLEMS_THANK_YOU
+    to disable them.  (New name suggested by Brian Inglis.)
+
     The build procedure for zdump now works on AIX 7.1.
     (Problem reported by Kees Dekker.)
 
@@ -80,8 +85,6 @@ Unreleased, experimental changes
     same category: although POSIX requires tzname, it specifies the
     other two variables as optional.  Also, USG_COMPAT is now 1 or 0:
     if not defined, the code attempts to guess it from other macros.
-
-    Y2K runtime checks have been removed, as Y2K was years ago.
 
     localtime.c and difftime.c no longer require stdio.h, and .c files
     other than zic.c no longer require sys/wait.h.

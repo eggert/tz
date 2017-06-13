@@ -579,7 +579,7 @@ Zone Pacific/Pitcairn	-8:40:20 -	LMT	1901        # Adamstown
 			-8:00	-	-08
 
 # American Samoa
-Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1879 Jul  5
+Zone Pacific/Pago_Pago	 12:37:12 -	LMT	1892 Jul  5
 			-11:22:48 -	LMT	1911
 			-11:00	-	SST	            # S=Samoa
 Link Pacific/Pago_Pago Pacific/Midway # in US minor outlying islands
@@ -659,7 +659,7 @@ Rule	WS	2011	only	-	Sep	lastSat	3:00	1	D
 Rule	WS	2012	max	-	Apr	Sun>=1	4:00	0	S
 Rule	WS	2012	max	-	Sep	lastSun	3:00	1	D
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone Pacific/Apia	 12:33:04 -	LMT	1879 Jul  5
+Zone Pacific/Apia	 12:33:04 -	LMT	1892 Jul  5
 			-11:26:56 -	LMT	1911
 			-11:30	-	-1130	1950
 			-11:00	WS	-11/-10	2011 Dec 29 24:00
@@ -1606,11 +1606,13 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 # (Western) Samoa and American Samoa
 
-# Howse writes (p 153, citing p 10 of the 1883-11-18 New York Herald)
-# that in 1879 the King of Samoa decided to change
+# Howse writes (p 153) that after the 1879 standardization on Antipodean
+# time by the British governor of Fiji, the King of Samoa decided to change
 # "the date in his kingdom from the Antipodean to the American system,
 # ordaining - by a masterpiece of diplomatic flattery - that
 # the Fourth of July should be celebrated twice in that year."
+# This happened in 1892, according to the Evening News (Sydney) of 1892-07-20.
+# http://www.staff.science.uu.nl/~gent0113/idl/idl.htm
 
 # Although Shanks & Pottenger says they both switched to UT -11:30
 # in 1911, and to -11 in 1950. many earlier sources give -11

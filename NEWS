@@ -86,7 +86,7 @@ Unreleased, experimental changes
     localtime.c and difftime.c no longer require stdio.h, and .c files
     other than zic.c no longer require sys/wait.h.
 
-    zdump.c no longer assumes snprintf.  (
+    zdump.c no longer assumes snprintf.  (Reported by Jonathan Leffler.)
 
     Several minor changes have been made to the code to make it a
     bit easier to port to MS-Windows and Solaris.  (Thanks to Kees

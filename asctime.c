@@ -100,6 +100,9 @@ asctime_r(register const struct tm *timeptr, char *buf)
 	** (e.g., timeptr->tm_mday) when processing "%Y".
 	*/
 	strftime(year, sizeof year, "%Y", timeptr);
+	/*
+	** We avoid using snprintf since it's not available on all systems.
+	*/
 	sprintf(result,
 		((strlen(year) <= 4) ? ASCTIME_FMT : ASCTIME_FMT_B),
 		wn, mn,

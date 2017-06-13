@@ -22,6 +22,10 @@
 #include "private.h"
 #include <stdio.h>
 
+#ifndef HAVE_SNPRINTF
+# define HAVE_SNPRINTF (199901 <= __STDC_VERSION__)
+#endif
+
 #ifndef HAVE_LOCALTIME_R
 # define HAVE_LOCALTIME_R 1
 #endif
@@ -790,6 +794,38 @@ show(timezone_t tz, char *zone, time_t t, bool v)
 	if (tmp != NULL && *abbr(tmp) != '\0')
 		abbrok(abbr(tmp), zone);
 }
+
+#if !HAVE_SNPRINTF
+# include <stdarg.h>
+
+/* A substitute for snprintf that is good enough for zdump.  */
+static int
+snprintf(char *s, size_t size, char const *format, ...)
+{
+  int n;
+  va_list args;
+  char const *arg;
+  size_t arglen, slen;
+  char buf[1024];
+  va_start(args, format);
+  if (strcmp(format, "%s") == 0) {
+    arg = va_arg(args, char const *);
+    arglen = strlen(arg);
+  } else {
+    n = vsprintf(buf, format, args);
+    if (n < 0)
+      return n;
+    arg = buf;
+    arglen = n;
+  }
+  slen = arglen < size ? arglen : size - 1;
+  memcpy(s, arg, slen);
+  s[slen] = '\0';
+  n = arglen <= INT_MAX ? arglen : -1;
+  va_end(args);
+  return n;
+}
+#endif
 
 /* Store into BUF, of size SIZE, a formatted local time taken from *TM.
    Use ISO 8601 format +HH:MM:SS.  Omit :SS if SS is zero, and omit

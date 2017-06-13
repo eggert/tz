@@ -12,6 +12,7 @@
 /*LINTLIBRARY*/
 
 #include "private.h"
+#include <stdio.h>
 
 /*
 ** Some systems only handle "%.2d"; others only handle "%02d";

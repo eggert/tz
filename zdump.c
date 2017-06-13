@@ -20,6 +20,7 @@
 #endif
 
 #include "private.h"
+#include <stdio.h>
 
 #ifndef HAVE_LOCALTIME_R
 # define HAVE_LOCALTIME_R 1

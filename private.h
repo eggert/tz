@@ -109,7 +109,6 @@
 #undef tzfree
 
 #include <sys/types.h>	/* for time_t */
-#include <stdio.h>
 #include <string.h>
 #include <limits.h>	/* for CHAR_BIT et al. */
 #include <stdlib.h>
@@ -130,19 +129,8 @@
 #include <libintl.h>
 #endif /* HAVE_GETTEXT */
 
-#if HAVE_SYS_WAIT_H
-#include <sys/wait.h>	/* for WIFEXITED and WEXITSTATUS */
-#endif /* HAVE_SYS_WAIT_H */
-
-#ifndef WIFEXITED
-#define WIFEXITED(status)	(((status) & 0xff) == 0)
-#endif /* !defined WIFEXITED */
-#ifndef WEXITSTATUS
-#define WEXITSTATUS(status)	(((status) >> 8) & 0xff)
-#endif /* !defined WEXITSTATUS */
-
 #if HAVE_UNISTD_H
-#include <unistd.h>	/* for F_OK, R_OK, and other POSIX goodness */
+#include <unistd.h>	/* for R_OK, and other POSIX goodness */
 #endif /* HAVE_UNISTD_H */
 
 #ifndef HAVE_STRFTIME_L
@@ -169,9 +157,6 @@
 # endif
 #endif
 
-#ifndef F_OK
-#define F_OK	0
-#endif /* !defined F_OK */
 #ifndef R_OK
 #define R_OK	4
 #endif /* !defined R_OK */

@@ -29,6 +29,7 @@
 
 #include "private.h"
 #include <locale.h>
+#include <stdio.h>
 
 /*
 ** The two things date knows about time are. . .

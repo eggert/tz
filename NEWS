@@ -83,6 +83,9 @@ Unreleased, experimental changes
 
     Y2K runtime checks have been removed, as Y2K was years ago.
 
+    localtime.c and difftime.c no longer require stdio.h, and .c files
+    other than zic.c no longer require sys/wait.h.
+
     Several minor changes have been made to the code to make it a
     bit easier to port to MS-Windows and Solaris.  (Thanks to Kees
     Dekker for reporting the problems.)

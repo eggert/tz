@@ -37,6 +37,7 @@
 
 #include <fcntl.h>
 #include <locale.h>
+#include <stdio.h>
 
 struct lc_time_T {
 	const char *	mon[MONSPERYEAR];

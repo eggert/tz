@@ -11,6 +11,7 @@
 #include <locale.h>
 #include <stdarg.h>
 #include <stddef.h>
+#include <stdio.h>
 
 #define	ZIC_VERSION_PRE_2013 '2'
 #define	ZIC_VERSION	'3'
@@ -40,6 +41,17 @@ typedef int_fast64_t	zic_t;
 #else
 #define MKDIR_UMASK 0755
 #endif
+
+#if HAVE_SYS_WAIT_H
+#include <sys/wait.h>	/* for WIFEXITED and WEXITSTATUS */
+#endif /* HAVE_SYS_WAIT_H */
+
+#ifndef WIFEXITED
+#define WIFEXITED(status)	(((status) & 0xff) == 0)
+#endif /* !defined WIFEXITED */
+#ifndef WEXITSTATUS
+#define WEXITSTATUS(status)	(((status) >> 8) & 0xff)
+#endif /* !defined WEXITSTATUS */
 
 /* The maximum ptrdiff_t value, for pre-C99 platforms.  */
 #ifndef PTRDIFF_MAX

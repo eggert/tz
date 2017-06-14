@@ -492,15 +492,15 @@ Zone America/Los_Angeles -7:52:58 -	LMT	1883 Nov 18 12:07:02
 # Alaska
 # AK%sT is the modern abbreviation for -09 per USNO.
 #
-# From Paul Eggert (2017-06-10):
+# From Paul Eggert (2017-06-14):
 # Howse writes that Alaska switched from the Julian to the Gregorian calendar,
 # and from east-of-GMT to west-of-GMT days, when the US bought it from Russia.
-# This was on 1867-10-18, a Friday.  Lovell Rousseau wrote that the ceremony
-# took place at 15:30 precisely, marked by a salute fired from the man-of-war
-# Ossipee; see 40th Congress, 2d session, Ex. Doc No. 125, p 4.
-# Presumably 1867-10-18 is the Gregorian date of the ceremony.
+# On Friday, 1867-10-18 (Gregorian), at precisely 15:30 local time, the
+# Russian forts and fleet at Sitka fired salutes to mark the ceremony of
+# formal transfer.  See the Sacramento Daily Union (1867-11-14), p 3, col 2.
+# https://cdnc.ucr.edu/cgi-bin/cdnc?a=d&d=SDU18671114.2.12.1
 # Sitka workers did not change their calendars until Sunday, 1867-10-20,
-# presumably to get another day off that week.  See: Ahllund T (tr Hallamaa P).
+# presumably to get two Sundays off that week.  See: Ahllund T (tr Hallamaa P).
 # From the memoirs of a Finnish workman. Alaska History. 2006 Fall;21(2):1-25.
 # http://alaskahistoricalsociety.org/wp-content/uploads/2016/12/Ahllund-2006-Memoirs-of-a-Finnish-Workman.pdf
 # Include only the time zone part of this transition, ignoring the switch
@@ -513,7 +513,7 @@ Zone America/Los_Angeles -7:52:58 -	LMT	1883 Nov 18 12:07:02
 # were unaware of the US acquisition of Alaska, much less of any calendar or
 # time change.  However, the Russian-influenced part of Alaska did observe
 # Russian time, and it is more accurate to model this than to ignore it.
-# The database format requires an exact transition time; use the Ossipee's
+# The database format requires an exact transition time; use the Russian
 # salute as a somewhat-arbitrary time for the formal transfer of control for
 # all of Alaska.  Sitka's UTC offset is -9:01:13; adjust its 15:30 to the
 # local times of other Alaskan locations so that they change simultaneously.

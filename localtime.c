@@ -94,7 +94,7 @@ static const char	gmt[] = "GMT";
 */
 #ifndef TZDEFRULESTRING
 #define TZDEFRULESTRING ",M3.2.0,M11.1.0"
-#endif /* !defined TZDEFDST */
+#endif
 
 struct ttinfo {				/* time type information */
 	int_fast32_t	tt_gmtoff;	/* UT offset in seconds */

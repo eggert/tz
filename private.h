@@ -33,7 +33,7 @@
 
 #ifndef HAVE_INCOMPATIBLE_CTIME_R
 #define HAVE_INCOMPATIBLE_CTIME_R	0
-#endif /* !defined INCOMPATIBLE_CTIME_R */
+#endif
 
 #ifndef HAVE_LINK
 #define HAVE_LINK		1

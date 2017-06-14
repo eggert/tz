@@ -130,10 +130,15 @@ YEARISTYPE=	./yearistype
 # Non-default libraries needed to link.
 LDLIBS=
 
-# Add the following to the end of the "CFLAGS=" line as needed.
+# Add the following to the end of the "CFLAGS=" line as needed to override
+# defaults specified in the source code.  "-DFOO" is equivalent to "-DFOO=1".
 #  -DBIG_BANG=-9999999LL if the Big Bang occurred at time -9999999 (see zic.c)
 #  -DDEPRECATE_TWO_DIGIT_YEARS for optional runtime warnings about strftime
 #	formats that generate only the last two digits of year numbers
+#  -DEPOCH_LOCAL if the 'time' function returns local time not UT
+#  -DEPOCH_OFFSET=N if the 'time' function returns a value N greater
+#	than what POSIX specifies, assuming local time is UT.
+#	For example, N is 252460800 on AmigaOS.
 #  -DHAVE_DECL_ASCTIME_R=0 if <time.h> does not declare asctime_r
 #  -DHAVE_DECL_ENVIRON if <unistd.h> declares 'environ'
 #  -DHAVE_DIRECT_H if mkdir needs <direct.h> (MS-Windows)
@@ -145,7 +150,6 @@ LDLIBS=
 #  -DHAVE_LINK=0 if your system lacks a link function
 #  -DHAVE_LOCALTIME_R=0 if your system lacks a localtime_r function
 #  -DHAVE_LOCALTIME_RZ=0 if you do not want zdump to use localtime_rz
-#	This defaults to 1 if a working localtime_rz seems to be available.
 #	localtime_rz can make zdump significantly faster, but is nonstandard.
 #  -DHAVE_POSIX_DECLS=0 if your system's include files do not declare
 #	functions like 'link' or variables like 'tzname' required by POSIX
@@ -153,17 +157,12 @@ LDLIBS=
 #  -DHAVE_STDBOOL_H if you have a non-C99 compiler with <stdbool.h>
 #  -DHAVE_STDINT_H if you have a non-C99 compiler with <stdint.h>
 #  -DHAVE_STRFTIME_L if <time.h> declares locale_t and strftime_l
-#	This defaults to 0 if _POSIX_VERSION < 200809, 1 otherwise.
 #  -DHAVE_STRDUP=0 if your system lacks the strdup function
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
 #  -DHAVE_SYS_STAT_H=0 if your compiler lacks a <sys/stat.h>
 #  -DHAVE_SYS_WAIT_H=0 if your compiler lacks a <sys/wait.h>
 #  -DHAVE_TZSET=0 if your system lacks a tzset function
 #  -DHAVE_UNISTD_H=0 if your compiler lacks a <unistd.h>
-#  -DEPOCH_LOCAL if the 'time' function returns local time not UT
-#  -DEPOCH_OFFSET=N if the 'time' function returns a value N greater
-#	than what POSIX specifies, assuming local time is UT.
-#	For example, N is 252460800 on AmigaOS.
 #  -Dlocale_t=XXX if your system uses XXX instead of locale_t
 #  -Dssize_t=long on hosts like MS-Windows that lack ssize_t
 #  -DTHREAD_SAFE to make localtime.c thread-safe, as POSIX requires;
@@ -288,8 +287,8 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # If you want strict compliance with XPG4 as of 1994-04-09, add
 #	-DXPG4_1994_04_09
 # to the end of the "CFLAGS=" line.  This causes "strftime" to always return
-# 53 as a week number (rather than 52 or 53) for those days in January that
-# before the first Monday in January when a "%V" format is used and January 1
+# 53 as a week number (rather than 52 or 53) for January days before
+# January's first Monday when a "%V" format is used and January 1
 # falls on a Friday, Saturday, or Sunday.
 
 CFLAGS=

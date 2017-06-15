@@ -492,7 +492,7 @@ Zone America/Los_Angeles -7:52:58 -	LMT	1883 Nov 18 12:07:02
 # Alaska
 # AK%sT is the modern abbreviation for -09 per USNO.
 #
-# From Paul Eggert (2017-06-14):
+# From Paul Eggert (2017-06-15):
 # Howse writes that Alaska switched from the Julian to the Gregorian calendar,
 # and from east-of-GMT to west-of-GMT days, when the US bought it from Russia.
 # On Friday, 1867-10-18 (Gregorian), at precisely 15:30 local time, the
@@ -500,7 +500,7 @@ Zone America/Los_Angeles -7:52:58 -	LMT	1883 Nov 18 12:07:02
 # formal transfer.  See the Sacramento Daily Union (1867-11-14), p 3, col 2.
 # https://cdnc.ucr.edu/cgi-bin/cdnc?a=d&d=SDU18671114.2.12.1
 # Sitka workers did not change their calendars until Sunday, 1867-10-20,
-# presumably to get two Sundays off that week.  See: Ahllund T (tr Hallamaa P).
+# and so celebrated two Sundays that week.  See: Ahllund T (tr Hallamaa P).
 # From the memoirs of a Finnish workman. Alaska History. 2006 Fall;21(2):1-25.
 # http://alaskahistoricalsociety.org/wp-content/uploads/2016/12/Ahllund-2006-Memoirs-of-a-Finnish-Workman.pdf
 # Include only the time zone part of this transition, ignoring the switch

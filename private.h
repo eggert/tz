@@ -424,6 +424,12 @@ typedef time_tz tz_time_t;
 char *ctime(time_t const *);
 char *ctime_r(time_t const *, char *);
 double difftime(time_t, time_t) ATTRIBUTE_CONST;
+size_t strftime(char *restrict, size_t, char const *restrict,
+		struct tm const *restrict);
+# if HAVE_STRFTIME_L
+size_t strftime_l(char *restrict, size_t, char const *restrict,
+		  struct tm const *restrict, locale_t);
+# endif
 struct tm *gmtime(time_t const *);
 struct tm *gmtime_r(time_t const *restrict, struct tm *restrict);
 struct tm *localtime(time_t const *);

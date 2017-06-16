@@ -142,6 +142,7 @@ LDLIBS=
 #  -DHAVE_DECL_ASCTIME_R=0 if <time.h> does not declare asctime_r
 #  -DHAVE_DECL_ENVIRON if <unistd.h> declares 'environ'
 #  -DHAVE_DIRECT_H if mkdir needs <direct.h> (MS-Windows)
+#  -DHAVE_GENERIC=0 if _Generic does not work
 #  -DHAVE_GETTEXT if 'gettext' works (e.g., GNU/Linux, FreeBSD, Solaris)
 #  -DHAVE_INCOMPATIBLE_CTIME_R if your system's time.h declares
 #	ctime_r and asctime_r incompatibly with the POSIX standard

@@ -464,17 +464,17 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		sp->charcnt = charcnt;
 
 		/* Read transitions, discarding those out of time_t range.
-		   But pretend the last transition before time_t_min
-		   occurred at time_t_min.  */
+		   But pretend the last transition before TIME_T_MIN
+		   occurred at TIME_T_MIN.  */
 		timecnt = 0;
 		for (i = 0; i < sp->timecnt; ++i) {
 			int_fast64_t at
 			  = stored == 4 ? detzcode(p) : detzcode64(p);
-			sp->types[i] = at <= time_t_max;
+			sp->types[i] = at <= TIME_T_MAX;
 			if (sp->types[i]) {
 			  time_t attime
-			    = ((TYPE_SIGNED(time_t) ? at < time_t_min : at < 0)
-			       ? time_t_min : at);
+			    = ((TYPE_SIGNED(time_t) ? at < TIME_T_MIN : at < 0)
+			       ? TIME_T_MIN : at);
 			  if (timecnt && attime <= sp->ats[timecnt - 1]) {
 			    if (attime < sp->ats[timecnt - 1])
 			      return EINVAL;
@@ -524,7 +524,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		  /* Leap seconds cannot occur before the Epoch.  */
 		  if (tr < 0)
 		    return EINVAL;
-		  if (tr <= time_t_max) {
+		  if (tr <= TIME_T_MAX) {
 		    /* Leap seconds cannot occur more than once per UTC month,
 		       and UTC months are at least 28 days long (minus 1
 		       second for a negative leap second).  Each leap second's
@@ -1795,12 +1795,12 @@ increment_overflow_time(time_t *tp, int_fast32_t j)
 {
 	/*
 	** This is like
-	** 'if (! (time_t_min <= *tp + j && *tp + j <= time_t_max)) ...',
+	** 'if (! (TIME_T_MIN <= *tp + j && *tp + j <= TIME_T_MAX)) ...',
 	** except that it does the right thing even if *tp + j would overflow.
 	*/
 	if (! (j < 0
-	       ? (TYPE_SIGNED(time_t) ? time_t_min - j <= *tp : -1 - j < *tp)
-	       : *tp <= time_t_max - j))
+	       ? (TYPE_SIGNED(time_t) ? TIME_T_MIN - j <= *tp : -1 - j < *tp)
+	       : *tp <= TIME_T_MAX - j))
 		return true;
 	*tp += j;
 	return false;
@@ -1936,8 +1936,8 @@ time2sub(struct tm *const tmp,
 	/*
 	** Do a binary search (this works whatever time_t's type is).
 	*/
-	lo = time_t_min;
-	hi = time_t_max;
+	lo = TIME_T_MIN;
+	hi = TIME_T_MAX;
 	for ( ; ; ) {
 		t = lo / 2 + hi / 2;
 		if (t < lo)
@@ -1954,12 +1954,12 @@ time2sub(struct tm *const tmp,
 		} else	dir = tmcomp(&mytm, &yourtm);
 		if (dir != 0) {
 			if (t == lo) {
-				if (t == time_t_max)
+				if (t == TIME_T_MAX)
 					return WRONG;
 				++t;
 				++lo;
 			} else if (t == hi) {
-				if (t == time_t_min)
+				if (t == TIME_T_MIN)
 					return WRONG;
 				--t;
 				--hi;

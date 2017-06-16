@@ -27,6 +27,21 @@
 #define HAVE_DECL_ASCTIME_R 1
 #endif
 
+#if !defined HAVE_GENERIC && defined __has_extension
+# if __has_extension(c_generic_selections)
+#  define HAVE_GENERIC 1
+# else
+#  define HAVE_GENERIC 0
+# endif
+#endif
+/* _Generic is buggy in pre-4.9 GCC.  */
+#if !defined HAVE_GENERIC && defined __GNUC__
+# define HAVE_GENERIC (4 < __GNUC__ + (9 <= __GNUC_MINOR__))
+#endif
+#ifndef HAVE_GENERIC
+# define HAVE_GENERIC (201112 <= __STDC_VERSION__)
+#endif
+
 #ifndef HAVE_GETTEXT
 #define HAVE_GETTEXT		0
 #endif /* !defined HAVE_GETTEXT */
@@ -561,27 +576,32 @@ time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_PURE;
 #define MINVAL(t, b)						\
   ((t) (TYPE_SIGNED(t) ? - TWOS_COMPLEMENT(t) - MAXVAL(t, b) : 0))
 
-/* The minimum and maximum finite time values.  This implementation
-   assumes no padding if time_t is signed and either the compiler is
-   pre-C11 or time_t is not one of the standard signed integer types.  */
-#if 201112 <= __STDC_VERSION__
-static time_t const time_t_min
-  = (TYPE_SIGNED(time_t)
-     ? _Generic((time_t) 0,
-		signed char: SCHAR_MIN, short: SHRT_MIN,
-		int: INT_MIN, long: LONG_MIN, long long: LLONG_MIN,
-		default: MINVAL(time_t, TYPE_BIT(time_t)))
-     : 0);
-static time_t const time_t_max
-  = (TYPE_SIGNED(time_t)
-     ? _Generic((time_t) 0,
-		signed char: SCHAR_MAX, short: SHRT_MAX,
-		int: INT_MAX, long: LONG_MAX, long long: LLONG_MAX,
-		default: MAXVAL(time_t, TYPE_BIT(time_t)))
-     : -1);
+/* The extreme time values, assuming no padding.  */
+#define TIME_T_MIN_NO_PADDING MINVAL(time_t, TYPE_BIT(time_t))
+#define TIME_T_MAX_NO_PADDING MAXVAL(time_t, TYPE_BIT(time_t))
+
+/* The extreme time values.  These are macros, not constants, so that
+   any portability problem occur only when compiling .c files that use
+   the macros, which is safer for applications that need only zdump and zic.
+   This implementation assumes no padding if time_t is signed and
+   either the compiler lacks support for _Generic or time_t is not one
+   of the standard signed integer types.  */
+#if HAVE_GENERIC
+# define TIME_T_MIN \
+    _Generic((time_t) 0, \
+	     signed char: SCHAR_MIN, short: SHRT_MIN, \
+	     int: INT_MIN, long: LONG_MIN, long long: LLONG_MIN, \
+	     default: TIME_T_MIN_NO_PADDING)
+# define TIME_T_MAX \
+    (TYPE_SIGNED(time_t) \
+     ? _Generic((time_t) 0, \
+		signed char: SCHAR_MAX, short: SHRT_MAX, \
+		int: INT_MAX, long: LONG_MAX, long long: LLONG_MAX, \
+		default: TIME_T_MAX_NO_PADDING)			    \
+     : (time_t) -1)
 #else
-static time_t const time_t_min = MINVAL(time_t, TYPE_BIT(time_t));
-static time_t const time_t_max = MAXVAL(time_t, TYPE_BIT(time_t));
+# define TIME_T_MIN TIME_T_MIN_NO_PADDING
+# define TIME_T_MAX TIME_T_MAX_NO_PADDING
 #endif
 
 /*

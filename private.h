@@ -102,6 +102,16 @@
 /* Enable strtoimax on pre-C99 Solaris 11.  */
 #define __EXTENSIONS__ 1
 
+/* To avoid having 'stat' fail unnecessarily with errno == EOVERFLOW,
+   enable large files on GNUish systems ...  */
+#ifndef _FILE_OFFSET_BITS
+# define _FILE_OFFSET_BITS 64
+#endif
+/* ... and on AIX ...  */
+#define _LARGE_FILES 1
+/* ... and enable large inode numbers on Mac OS X 10.5 and later.  */
+#define _DARWIN_USE_64_BIT_INODE 1
+
 /*
 ** Nested includes
 */

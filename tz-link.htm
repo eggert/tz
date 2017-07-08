@@ -10,7 +10,7 @@
  content="Sources for time zone and daylight saving time data">
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2017-02-28">
+<meta name="DC.Date" content="2017-07-08">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -58,6 +58,7 @@ title="Berkeley Software Distribution">BSD</abbr></a>,
 <a href="http://www.delorie.com/djgpp/"><abbr
 title="DJ's GNU Programming Platform">DJGPP</abbr></a>,
 <a href="https://en.wikipedia.org/wiki/MINIX">MINIX</a>,
+<a href="https://www.mysql.com">MySQL</a>,
 <a href="https://en.wikipedia.org/wiki/WebOS"><abbr
 title="Web Operating System">webOS</abbr></a>,
 <a href="http://ibm.com/aix"><abbr
@@ -176,6 +177,28 @@ less than a year's notice there is a good chance that some
 computer-based clocks will operate incorrectly after the change, due
 to delays in propagating updates to software and data. The shorter
 the notice, the more likely clock problems will arise.
+</p>
+<p>
+Changes to the <code><abbr>tz</abbr></code> code and data are often
+propagated to clients via operating system updates, so
+client <code><abbr>tz</abbr></code> data can often be corrected by
+applying these updates. With GNU/Linux and similar systems, if your
+maintenance provider has not yet adopted the
+latest <code><abbr>tz</abbr></code> data, you can often short-circuit
+the process by tailoring the generic instructions in
+the <code><abbr>tz</abbr> README</code> file and installing the latest
+data yourself. System-specific instructions for installing the
+latest <code><abbr>tz</abbr></code> data have also been published
+for <a href="https://www.ibm.com/developerworks/aix/library/au-aix-olson-time-zone/index.html"><abbr>AIX</abbr></a>,
+<a
+href="http://userguide.icu-project.org/datetime/timezone"><abbr
+title="International Components for Unicode">ICU</abbr></a>,
+<a href="https://developer.ibm.com/javasdk/support/dst/jtzu/"><abbr>IBM</abbr></a>
+and <a
+href="http://www.oracle.com/technetwork/java/javase/tzupdater-readme-136440.html">Oracle</a>
+Java, <a href="http://www.joda.org/joda-time/tz_update.html">Joda-Time</a>,
+and <a
+href="https://dev.mysql.com/doc/refman/en/time-zone-support.html">MySQL</a>.
 </p>
 <p>Sources for the <code><abbr>tz</abbr></code> database are
 <a href="https://en.wikipedia.org/wiki/UTF-8"><abbr

@@ -105,6 +105,9 @@ Unreleased, experimental changes
 
     The zic man page now documents abbreviation rules.
 
+    tz-link.htm now covers how to apply tzdata changes to clients.
+    (Thanks to Jorge Fábregas for the AIX link.)  It also mentions MySQL.
+
 Release 2017b - 2017-03-17 07:30:38 -0700
 
   Briefly: Haiti has resumed DST.

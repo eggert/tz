@@ -108,6 +108,9 @@ Unreleased, experimental changes
     tz-link.htm now covers how to apply tzdata changes to clients.
     (Thanks to Jorge Fábregas for the AIX link.)  It also mentions MySQL.
 
+    The leap-seconds.list URL has been updated to something that is
+    more reliable for tzdb.  (Thanks to Tim Parenti and Brian Inglis.)
+
 Release 2017b - 2017-03-17 07:30:38 -0700
 
   Briefly: Haiti has resumed DST.
@@ -2099,7 +2102,7 @@ Release 2013e - 2013-09-19 23:50:04 -0700
 
     The 'leapseconds' file is now generated automatically from a
     new file 'leap-seconds.list', which is a copy of
-    <ftp://time.nist.gov/pub/leap-seconds.list>.
+    <ftp://ftp.nist.gov/pub/time/leap-seconds.list>
     A new source file 'leapseconds.awk' implements this.
     The goal is simplification of the future maintenance of 'leapseconds'.
 

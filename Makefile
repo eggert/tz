@@ -618,7 +618,8 @@ tzselect:	tzselect.ksh version
 		chmod +x $@.out
 		mv $@.out $@
 
-check:		check_character_set check_white_space check_links check_sorted \
+check:		check_character_set check_white_space check_links \
+		  check_name_lengths check_sorted \
 		  check_tables check_web check_zishrink check_tzs
 
 check_character_set: $(ENCHILADA)
@@ -640,6 +641,13 @@ check_white_space: $(ENCHILADA)
 		patfmt=' \t|[\f\r\v]' && pat=`printf "$$patfmt\\n"` && \
 		! grep -En "$$pat" $(ENCHILADA)
 		! grep -n '[[:space:]]$$' $(ENCHILADA)
+
+PRECEDES_FILE_NAME = ^(Zone|Link[[:space:]]+[^[:space:]]+)[[:space:]]+
+FILE_NAME_COMPONENT_TOO_LONG = \
+  $(PRECEDES_FILE_NAME)[^[:space:]]*[^/[:space:]]{15}
+
+check_name_lengths: $(TDATA) backzone
+		! grep -En '$(FILE_NAME_COMPONENT_TOO_LONG)' $(TDATA) backzone
 
 CHECK_CC_LIST = { n = split($$1,a,/,/); for (i=2; i<=n; i++) print a[1], a[i]; }
 

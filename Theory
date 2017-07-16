@@ -158,9 +158,8 @@ Older versions of this package defined legacy names that are
 incompatible with the first rule of location names, but which are
 still supported.  These legacy names are mostly defined in the file
 'etcetera'.  Also, the file 'backward' defines the legacy names
-'GMT0', 'GMT-0', 'GMT+0' and 'Canada/East-Saskatchewan', and the file
-'northamerica' defines the legacy names 'EST5EDT', 'CST6CDT',
-'MST7MDT', and 'PST8PDT'.
+'GMT0', 'GMT-0' and 'GMT+0', and the file 'northamerica' defines the
+legacy names 'EST5EDT', 'CST6CDT', 'MST7MDT', and 'PST8PDT'.
 
 Excluding 'backward' should not affect the other data.  If
 'backward' is excluded, excluding 'etcetera' should not affect the

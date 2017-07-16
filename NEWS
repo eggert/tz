@@ -25,6 +25,11 @@ Unreleased, experimental changes
 
     Add 7 s to the UT offset in Asia/Yangon before 1920.
 
+  Changes to zone names
+
+    Remove Canada/East-Saskatchewan from the 'backward' file, as it
+    exceeded the 14-character limit and was an unused misnomer anyway.
+
   Changes to build procedure
 
     To support applications that prefer to read time zone data in text

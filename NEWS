@@ -102,6 +102,9 @@ Unreleased, experimental changes
     Calculation of time_t extrema works around a bug in GCC 4.8.4
     (Reported by Stan Shebs and Joseph Myers.)
 
+    zic.c no longer mistranslates formats of line numbers in non-English
+    locales.  (Problem reported by Benno Schulenberg.)
+
     Several minor changes have been made to the code to make it a
     bit easier to port to MS-Windows and Solaris.  (Thanks to Kees
     Dekker for reporting the problems.)

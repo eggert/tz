@@ -1040,12 +1040,23 @@ Zone America/Kentucky/Monticello -5:39:24 - LMT	1883 Nov 18 12:20:36
 # one hour in 1914."  This change is not in Shanks.  We have no more
 # info, so omit this for now.
 #
+# From Paul Eggert (2017-07-26):
+# Although Shanks says Detroit observed DST in 1967 from 06-14 00:01
+# until 10-29 00:01, I now see multiple reports that this is incorrect.
+# For example, according to a 50-year anniversary report about the 1967
+# Detroit riots and a major-league doubleheader on 1967-07-23, "By the time
+# the last fly ball of the doubleheader settled into the glove of leftfielder
+# Lenny Green, it was after 7 p.m.  Detroit did not observe daylight saving
+# time, so light was already starting to fail.  Twilight was made even deeper
+# by billowing columns of smoke that ascended in an unbroken wall north of the
+# ballpark."  See: Dow B. Detroit '67: As violence unfolded, Tigers played two
+# at home vs. Yankees. Detroit Free Press 2017-07-23.
+# http://www.freep.com/story/sports/mlb/tigers/2017/07/23/detroit-tigers-1967-riot-new-york-yankees/499951001/
+#
 # Most of Michigan observed DST from 1973 on, but was a bit late in 1975.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER
 Rule	Detroit	1948	only	-	Apr	lastSun	2:00	1:00	D
 Rule	Detroit	1948	only	-	Sep	lastSun	2:00	0	S
-Rule	Detroit	1967	only	-	Jun	14	2:00	1:00	D
-Rule	Detroit	1967	only	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Detroit	-5:32:11 -	LMT	1905
 			-6:00	-	CST	1915 May 15  2:00

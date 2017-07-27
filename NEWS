@@ -4,6 +4,8 @@ Unreleased, experimental changes
 
   Changes to past time stamps
 
+    Detroit did not observe DST in 1967.
+
     Use railway time for Asia/Kolkata before 1941, by switching to
     Madras local time (UT +052110) in 1870, then to IST (UT +0530) in
     1906.  Also, treat 1941-2's +0630 as DST, like 1942-5.

@@ -10,7 +10,7 @@
  content="Sources for time zone and daylight saving time data">
 <meta name="DC.Creator" content="Eggert, Paul">
 <meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2017-07-08">
+<meta name="DC.Date" content="2017-08-01">
 <meta name="DC.Description"
  content="Sources of information about time zones and daylight saving time">
 <meta name="DC.Identifier"
@@ -105,6 +105,7 @@ Universal Time</a> (<abbr>UTC</abbr>).
 The database also records when daylight saving time was in use,
 along with some time zone abbreviations such as <abbr>EST</abbr>
 for Eastern Standard Time in the <abbr>US</abbr>.</p>
+<h2 id="download">Downloading the <code><abbr>tz</abbr></code> database</h2>
 <p>
 The following <a
 href="https://en.wikipedia.org/wiki/Unix_shell">shell</a> commands download
@@ -196,9 +197,10 @@ title="International Components for Unicode">ICU</abbr></a>,
 <a href="https://developer.ibm.com/javasdk/support/dst/jtzu/"><abbr>IBM</abbr></a>
 and <a
 href="http://www.oracle.com/technetwork/java/javase/tzupdater-readme-136440.html">Oracle</a>
-Java, <a href="http://www.joda.org/joda-time/tz_update.html">Joda-Time</a>,
+Java, <a href="http://www.joda.org/joda-time/tz_update.html">Joda-Time</a>, <a
+href="https://dev.mysql.com/doc/refman/en/time-zone-support.html">MySQL</a>,
 and <a
-href="https://dev.mysql.com/doc/refman/en/time-zone-support.html">MySQL</a>.
+href="http://nodatime.org/userguide/tzdb">Noda Time</a> (see below).
 </p>
 <p>Sources for the <code><abbr>tz</abbr></code> database are
 <a href="https://en.wikipedia.org/wiki/UTF-8"><abbr
@@ -209,14 +211,11 @@ title="linefeed">LF</abbr></a>,
 which can be modified by common text editors such
 as <a href="https://www.gnu.org/software/emacs/">GNU Emacs</a>,
 <a href="https://wiki.gnome.org/Apps/Gedit">gedit</a>, and
-<a href="http://www.vim.org">vim</a>. One
-editor has a package to simplify editing further:</p>
-<ul>
-<li><a href="https://packagecontrol.io/packages/zoneinfo">Sublime
-zoneinfo</a> is a <a href="http://www.sublimetext.com">Sublime
-Text</a> package for syntax highlighting <code><abbr>tz</abbr></code>
-source files.</li>
-</ul>
+<a href="http://www.vim.org">vim</a>. The <a
+href="http://www.sublimetext.com">Sublime Text</a> editor has
+a <a href="https://packagecontrol.io/packages/zoneinfo">Sublime
+zoneinfo</a> package to simplify editing further.
+</p>
 <p>
 For further information about updates, please see
 <a href="https://tools.ietf.org/html/rfc6557">Procedures for

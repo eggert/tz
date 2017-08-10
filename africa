@@ -976,7 +976,7 @@ Link Africa/Maputo Africa/Lusaka	# Zambia
 
 # RULE	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Namibia	1994	only	-	Mar	21	0:00	0	-
-Rule	Namibia	1994	2017	-	Sep	Sun>=1	2:00	1:00	S
+Rule	Namibia	1994	2016	-	Sep	Sun>=1	2:00	1:00	S
 Rule	Namibia	1995	2017	-	Apr	Sun>=1	2:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Windhoek	1:08:24 -	LMT	1892 Feb 8

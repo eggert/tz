@@ -2,6 +2,12 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to future time stamps
+
+    Namibia will switch from +01 with DST to +02 all year on
+    2017-09-03 at 02:00.  This affects UT offsets starting 2018-04-01
+    at 02:00.  (Thanks to Steffen Thorsen.)
+
   Changes to past time stamps
 
     Detroit did not observe DST in 1967.

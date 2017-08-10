@@ -957,9 +957,18 @@ Link Africa/Maputo Africa/Lusaka	# Zambia
 # See: Immanuel S. The Namibian. 2017-02-23.
 # http://www.namibian.com.na/51480/read/Time-change-divides-lawmakers
 
+# From Steffen Thorsen (2017-08-09):
+# Namibia is going to change their time zone to what is now their DST:
+# https://www.newera.com.na/2017/02/23/namibias-winter-time-might-be-repealed/
+# This video is from the government decision:
+# https://www.nbc.na/news/na-passes-namibia-time-bill-repealing-1994-namibia-time-act.8665
+# We have made the assumption so far that they will change their time zone at
+# the same time they would normally start DST, the first Sunday in September:
+# https://www.timeanddate.com/news/time/namibia-new-time-zone.html
+
 # RULE	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Namibia	1994	max	-	Sep	Sun>=1	2:00	1:00	S
-Rule	Namibia	1995	max	-	Apr	Sun>=1	2:00	0	-
+Rule	Namibia	1994	2017	-	Sep	Sun>=1	2:00	1:00	S
+Rule	Namibia	1995	2017	-	Apr	Sun>=1	2:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Windhoek	1:08:24 -	LMT	1892 Feb 8
 			1:30	-	+0130	1903 Mar
@@ -967,7 +976,8 @@ Zone	Africa/Windhoek	1:08:24 -	LMT	1892 Feb 8
 			2:00	1:00	SAST	1943 Mar 21  2:00
 			2:00	-	SAST	1990 Mar 21 # independence
 			2:00	-	CAT	1994 Apr  3
-			1:00	Namibia	WA%sT
+			1:00	Namibia	WA%sT	2017 Sep  3  2:00
+			2:00	-	CAT
 
 # Niger
 # See Africa/Lagos.

@@ -8,6 +8,10 @@ Unreleased, experimental changes
     2017-09-03 at 02:00.  This affects UT offsets starting 2018-04-01
     at 02:00.  (Thanks to Steffen Thorsen.)
 
+    Turks & Caicos will switch from -04 all year to -05 with US DST on
+    2018-04-01 at 00:00.  This affects UT offsets starting 2018-11-04
+    at 02:00.  (Thanks to Steffen Thorsen.)
+
   Changes to past time stamps
 
     Detroit did not observe DST in 1967.

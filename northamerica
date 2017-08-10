@@ -3384,12 +3384,19 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15 # St Pierre
 # "permanent daylight saving time" by one year....
 # http://tcweeklynews.com/time-change-to-go-ahead-this-november-p5437-127.htm
 #
+# From the Turks & Caicos Cabinet (2017-07-20), heads-up from Steffen Thorsen:
+# ... agreed to the reintroduction in TCI of Daylight Saving Time (DST)
+# during the summer months and Standard Time, also known as Local
+# Time, during the winter months with effect from April 2018 ...
+# https://www.gov.uk/government/news/turks-and-caicos-post-cabinet-meeting-statement--3
+#
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Grand_Turk	-4:44:32 -	LMT	1890
 			-5:07:11 -	KMT	1912 Feb # Kingston Mean Time
 			-5:00	-	EST	1979
 			-5:00	US	E%sT	2015 Nov Sun>=1 2:00
-			-4:00	-	AST
+			-4:00	-	AST	2018 Apr
+			-5:00	US	E%sT
 
 # British Virgin Is
 # Virgin Is

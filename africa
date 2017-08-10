@@ -937,9 +937,17 @@ Link Africa/Maputo Africa/Kigali	# Rwanda
 Link Africa/Maputo Africa/Lubumbashi	# E Dem. Rep. of Congo
 Link Africa/Maputo Africa/Lusaka	# Zambia
 
+
 # Namibia
-# The 1994-04-03 transition is from Shanks & Pottenger.
-# Shanks & Pottenger report no DST after 1998-04; go with IATA.
+
+# From Arthur David Olson (2017-08-09):
+# The text of the "Namibia Time Act, 1994" is available online at
+# www.lac.org.na/laws/1994/811.pdf
+# and includes this nugget:
+# Notwithstanding the provisions of subsection (2) of section 1, the
+# first winter period after the commencement of this Act shall
+# commence at OOhOO on Monday 21 March 1994 and shall end at 02h00 on
+# Sunday 4 September 1994.
 
 # From Petronella Sibeene (2007-03-30):
 # http://allafrica.com/stories/200703300178.html
@@ -967,6 +975,7 @@ Link Africa/Maputo Africa/Lusaka	# Zambia
 # https://www.timeanddate.com/news/time/namibia-new-time-zone.html
 
 # RULE	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Namibia	1994	only	-	Mar	21	0:00	0	-
 Rule	Namibia	1994	2017	-	Sep	Sun>=1	2:00	1:00	S
 Rule	Namibia	1995	2017	-	Apr	Sun>=1	2:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -975,7 +984,7 @@ Zone	Africa/Windhoek	1:08:24 -	LMT	1892 Feb 8
 			2:00	-	SAST	1942 Sep 20  2:00
 			2:00	1:00	SAST	1943 Mar 21  2:00
 			2:00	-	SAST	1990 Mar 21 # independence
-			2:00	-	CAT	1994 Apr  3
+			2:00	-	CAT	1994 Mar 21  0:00
 			1:00	Namibia	WA%sT	2017 Sep  3  2:00
 			2:00	-	CAT
 

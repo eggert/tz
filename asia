@@ -900,7 +900,7 @@ Zone	Asia/Dili	8:22:20 -	LMT	1912 Jan  1
 # From Paul Eggert (2017-04-20):
 # Good luck trying to nail down old timekeeping records in India.
 # "... in the nineteenth century ... Madras Observatory took its magnetic
-# measurements in Göttingen time, its meterological measurements on Madras
+# measurements in Göttingen time, its metrological measurements on Madras
 # (local) time, dropped its time ball on Greenwich (ocean navigator's) time,
 # and distributed civil (local time)." -- Bartky IR. Selling the time:
 # 19th-century timekeeping in america. Stanford U Press (2000), 247 note 19.
@@ -917,7 +917,7 @@ Zone	Asia/Dili	8:22:20 -	LMT	1912 Jan  1
 #
 # "In 1870 ... Madras time - 'now used by the telegraph and regulated from the
 # only government observatory' - was suggested as a standard railway time,
-# first to be dopted on the Great Indian Peninsular Railway (GIPR)....
+# first to be adopted on the Great Indian Peninsular Railway (GIPR)....
 # Calcutta, Bombay, and Karachi, were to be allowed to continue with their
 # local time for civil purposes." - Prasad R. Tracks of Change: Railways and
 # Everyday Life in Colonial India. Cambridge University Press (2016), 145.

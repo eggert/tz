@@ -900,9 +900,9 @@ Zone	Asia/Dili	8:22:20 -	LMT	1912 Jan  1
 # From Paul Eggert (2017-04-20):
 # Good luck trying to nail down old timekeeping records in India.
 # "... in the nineteenth century ... Madras Observatory took its magnetic
-# measurements in Göttingen time, its metrological measurements on Madras
+# measurements on Göttingen time, its meteorological measurements on Madras
 # (local) time, dropped its time ball on Greenwich (ocean navigator's) time,
-# and distributed civil (local time)." -- Bartky IR. Selling the time:
+# and distributed civil (local time)." -- Bartky IR. Selling the true time:
 # 19th-century timekeeping in america. Stanford U Press (2000), 247 note 19.
 # "A more potent cause of resistance to the general adoption of the present
 # standard time lies in the fact that it is Madras time.  The citizen of

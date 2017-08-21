@@ -2,12 +2,17 @@ News for the tz database
 
 Unreleased, experimental changes
 
-  Briefly: Namibia switches from +01/+02 to +02 on 2018-04-01.
+  Briefly: Fiji ends DST 2018-01-14, not 2018-01-21.
+  Namibia switches from +01/+02 to +02 on 2018-04-01.
   Turks & Caicos switches from -04 to -05/-04 on 2018-11-04.
   A new file tzdata.zi now holds a small text copy of all data.
   The zic input format has been regularized slightly.
 
   Changes to future time stamps
+
+    Fiji ends DST 2018-01-14 instead of the 2018-01-21 previously
+    predicted.  (Thanks to Dominic Fok.)  Adjust future predictions
+    accordingly.
 
     Namibia will switch from +01 with DST to +02 all year on
     2017-09-03 at 02:00.  This affects UT offsets starting 2018-04-01

@@ -3390,10 +3390,10 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15 # St Pierre
 # Time, during the winter months with effect from April 2018 ...
 # https://www.gov.uk/government/news/turks-and-caicos-post-cabinet-meeting-statement--3
 #
-# From Paul Eggert (2018-08-26):
+# From Paul Eggert (2017-08-26):
 # The date of effect of the spring 2018 change appears to be March 11,
 # which makes more sense.  See: Hamilton D. Time change back
-# by March 2018 for TCI. Magnetic Media. 2018-08-25.
+# by March 2018 for TCI. Magnetic Media. 2017-08-25.
 # http://magneticmediatv.com/2017/08/time-change-back-by-march-2018-for-tci/
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

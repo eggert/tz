@@ -1,22 +1,8 @@
-<!DOCTYPE html
-	PUBLIC "-//W3C//DTD HTML 4.01//EN"
-	"http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head profile="http://dublincore.org/documents/2008/08/04/dc-html/">
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <title>Sources for time zone and daylight saving time data</title>
-<link rel="schema.DC" href="https://purl.org/DC/elements/1.1/">
-<meta http-equiv="Content-type" content='text/html; charset="UTF-8"'>
-<meta name="DC.Title"
- content="Sources for time zone and daylight saving time data">
-<meta name="DC.Creator" content="Eggert, Paul">
-<meta name="DC.Contributor" content="Olson, Arthur David">
-<meta name="DC.Date" content="2017-09-23">
-<meta name="DC.Description"
- content="Sources of information about time zones and daylight saving time">
-<meta name="DC.Identifier"
- content="https://www.iana.org/time-zones/repository/tz-link.htm">
-<meta name="Keywords"
- content="database,daylight saving,DST,time zone,timezone,tz,zoneinfo">
+<meta charset="UTF-8">
 </head>
 <body>
 <h1>Sources for time zone and daylight saving time data</h1>
@@ -279,7 +265,7 @@ href="https://tools.ietf.org/html/rfc7808">TZDIST</a>
 (Internet <abbr>RFC</abbr> 7808), a time zone data distribution service,
 along with <a href="https://tools.ietf.org/html/rfc7809">CalDAV</a>
 (Internet <abbr>RFC</abbr> 7809), a calendar access protocol for
-transferring time zone data by reference. The draft <a name="TZDIST-Geolocate"
+transferring time zone data by reference. The draft <a id="TZDIST-Geolocate"
 href="https://tools.ietf.org/html/draft-murchison-tzdist-geolocate-00">TZDIST
 Geolocate Extension</a> lets a client determine its time zone region
 from its geographic location using a <a
@@ -330,7 +316,7 @@ Database Parser</a> is a
 runtime library. It is freely available under the
 <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons
 Attribution 4.0 International Public License</a>.</li>
-<li><a name="ICU" href="http://site.icu-project.org">International Components for
+<li><a id="ICU" href="http://site.icu-project.org">International Components for
 Unicode (<abbr>ICU</abbr>)</a> contains C/C++ and <a
 href="https://en.wikipedia.org/wiki/Java_%28programming_language%29">Java</a>
 libraries for internationalization that
@@ -416,7 +402,7 @@ library that compiles <code><abbr>tz</abbr></code> source into a time
 zone repository whose format
 is either proprietary or an <abbr>XML</abbr>-encoded
 representation.</li>
-<li><a name="Tcl" href="https://tcl.tk">Tcl</a>
+<li><a id="Tcl" href="https://tcl.tk">Tcl</a>
 contains a developer-oriented parser that compiles <code><abbr>tz</abbr></code>
 source into text files, along with a runtime that can read those
 files. Tcl is freely available under a <abbr>BSD</abbr>-style
@@ -499,7 +485,7 @@ data (mentioned <a href="#CLDR">below</a>) used by
 <a href="https://en.wikipedia.org/wiki/Windows_Runtime">Windows Runtime</a>
 classes such as <a
 href="https://msdn.microsoft.com/en-us/library/windows/apps/windows.globalization.datetimeformatting.datetimeformatter.aspx"><code>DateTimeFormatter</code></a>.
-<a name="System.TimeZoneInfo"
+<a id="System.TimeZoneInfo"
 href="https://blogs.msdn.microsoft.com/bclteam/2007/06/07/exploring-windows-time-zones-with-system-timezoneinfo-josh-free/">Exploring
 Windows Time Zones with <code>System.TimeZoneInfo</code></a> describes
 the older, proprietary method of Microsoft Windows 2000 and later,
@@ -755,7 +741,7 @@ Daylight Saving</a>. The privately-maintained <a
 href="http://astrologyschool.com/nztime.html">History of New Zealand
 time</a> has more details.</dd>
 <dt>Singapore</dt>
-<dd><a name="Singapore"
+<dd><a id="Singapore"
 href="http://www.math.nus.edu.sg/aslaksen/teaching/timezone.html">Why
 is Singapore in the "Wrong" Time Zone?</a> details the
 history of legal time in Singapore and Malaysia.</dd>
@@ -856,7 +842,7 @@ again.</li>
 </ul>
 <h2 id="notation">Time notation</h2>
 <ul>
-<li>The <a name="CLDR" href="http://cldr.unicode.org">Unicode Common Locale Data
+<li>The <a id="CLDR" href="http://cldr.unicode.org">Unicode Common Locale Data
 Repository (<abbr>CLDR</abbr>) Project</a> has localizations for time
 zone names, abbreviations, identifiers, and formats. For example, it
 contains French translations for "Eastern European Summer Time",

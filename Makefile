@@ -674,8 +674,10 @@ check_tables:	checktab.awk $(PRIMARY_YDATA) $(ZONETABLES)
 check_tzs:	$(TZS) $(TZS_NEW)
 		diff -u $(TZS) $(TZS_NEW)
 
-check_web:	$(WEB_PAGES)
-		$(VALIDATE_ENV) $(VALIDATE) $(VALIDATE_FLAGS) $(WEB_PAGES)
+# This checks only the HTML 4.01 strict page.
+# To check the the other pages, use <https://validator.w3.org/>.
+check_web:	tz-how-to.html
+		$(VALIDATE_ENV) $(VALIDATE) $(VALIDATE_FLAGS) tz-how-to.html
 
 # Check that tzdata.zi generates the same binary data that its sources do.
 check_zishrink: tzdata.zi zic leapseconds $(PACKRATDATA) $(TDATA)

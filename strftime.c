@@ -352,7 +352,7 @@ label:
 ** (01-53)."
 ** (ado, 1993-05-24)
 **
-** From <http://www.ft.uni-erlangen.de/~mskuhn/iso-time.html> by Markus Kuhn:
+** From <https://www.cl.cam.ac.uk/~mgk25/iso-time.html> by Markus Kuhn:
 ** "Week 01 of a year is per definition the first week which has the
 ** Thursday in this year, which is equivalent to the week which contains
 ** the fourth day of January. In other words, the first week of a new year

@@ -293,7 +293,7 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # http://www.fiji.gov.fj/index.php?option=com_content&view=article&id=1096:3310-cabinet-approves-change-in-daylight-savings-dates&catid=49:cabinet-releases&Itemid=166
 #
 # A bit more background info here:
-# http://www.timeanddate.com/news/time/fiji-dst-ends-march-2010.html
+# https://www.timeanddate.com/news/time/fiji-dst-ends-march-2010.html
 
 # From Alexander Krivenyshev (2010-10-24):
 # According to Radio Fiji and Fiji Times online, Fiji will end DST 3
@@ -560,7 +560,7 @@ Zone Pacific/Port_Moresby 9:48:40 -	LMT	1880
 # The World War II entries below are instead based on Arawa-Kieta.
 # The Japanese occupied Kieta in July 1942,
 # according to the Pacific War Online Encyclopedia
-# http://pwencycl.kgbudge.com/B/o/Bougainville.htm
+# https://pwencycl.kgbudge.com/B/o/Bougainville.htm
 # and seem to have controlled it until their 1945-08-21 surrender.
 #
 # The Autonomous Region of Bougainville switched from UT +10 to +11
@@ -598,7 +598,7 @@ Link Pacific/Pago_Pago Pacific/Midway # in US minor outlying islands
 # Sunday of April 2011."
 #
 # Background info:
-# http://www.timeanddate.com/news/time/samoa-dst-plan-2009.html
+# https://www.timeanddate.com/news/time/samoa-dst-plan-2009.html
 #
 # Samoa's Daylight Saving Time Act 2009 is available here, but does not
 # contain any dates:
@@ -689,7 +689,7 @@ Zone Pacific/Guadalcanal 10:39:48 -	LMT	1912 Oct # Honiara
 # From Paul Eggert (2012-07-25)
 # A Google Books snippet of Appendix to the Journals of the House of
 # Representatives of New Zealand, Session 1948,
-# <http://books.google.com/books?id=ZaVCAQAAIAAJ>, page 65, says Tokelau
+# <https://books.google.com/books?id=ZaVCAQAAIAAJ>, page 65, says Tokelau
 # was "11 hours slow on G.M.T."  Go with Thorsen and assume Shanks & Pottenger
 # are off by an hour starting in 1901.
 
@@ -759,7 +759,7 @@ Zone Pacific/Funafuti	11:56:52 -	LMT	1901
 # Operation Fishbowl shot (Tightrope, 1962-11-04).... [See] Herman Hoerlin,
 # "The United States High-Altitude Test Experience: A Review Emphasizing the
 # Impact on the Environment", Los Alamos LA-6405, Oct 1976.
-# http://www.fas.org/sgp/othergov/doe/lanl/docs1/00322994.pdf
+# https://www.fas.org/sgp/othergov/doe/lanl/docs1/00322994.pdf
 # See the table on page 4 where he lists GMT and local times for the tests; a
 # footnote for the JI tests reads that local time is "JI time = Hawaii Time
 # Minus One Hour".
@@ -825,7 +825,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 #
 # For data circa 1899, a common source is:
 # Milne J. Civil time. Geogr J. 1899 Feb;13(2):173-94.
-# http://www.jstor.org/stable/1774359
+# https://www.jstor.org/stable/1774359
 #
 # A reliable and entertaining source about time zones is
 # Derek Howse, Greenwich time and longitude, Philip Wilson Publishers (1997).
@@ -972,7 +972,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 #   AEST ACST AWST AEDT ACDT
 #
 #   Parliamentary Library (2008-11-10)
-#   http://www.aph.gov.au/binaries/library/pubs/rp/2008-09/09rp14.pdf
+#   https://www.aph.gov.au/binaries/library/pubs/rp/2008-09/09rp14.pdf
 #   EST CST WST preferred for standard time; AEST AEDT ACST ACDT also used
 #
 #   The Transport Safety Bureau has an extensive series of accident reports,
@@ -1008,13 +1008,13 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 #
 # NSW (including LHI and Broken Hill):
 # Standard Time Act 1987 (updated 1995-04-04)
-# http://www.austlii.edu.au/au/legis/nsw/consol_act/sta1987137/index.html
+# https://www.austlii.edu.au/au/legis/nsw/consol_act/sta1987137/index.html
 # ACT
 # Standard Time and Summer Time Act 1972
-# http://www.austlii.edu.au/au/legis/act/consol_act/stasta1972279/index.html
+# https://www.austlii.edu.au/au/legis/act/consol_act/stasta1972279/index.html
 # SA
 # Standard Time Act, 1898
-# http://www.austlii.edu.au/au/legis/sa/consol_act/sta1898137/index.html
+# https://www.austlii.edu.au/au/legis/sa/consol_act/sta1898137/index.html
 
 # From David Grosz (2005-06-13):
 # It was announced last week that Daylight Saving would be extended by
@@ -1412,7 +1412,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # the ACT for all 52 weeks of the year...
 #
 # We have a wrap-up here:
-# http://www.timeanddate.com/news/time/south-australia-extends-dst.html
+# https://www.timeanddate.com/news/time/south-australia-extends-dst.html
 ###############################################################################
 
 # New Zealand
@@ -1466,7 +1466,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # From Paul Eggert (2014-07-14):
 # Chatham Island time was formally standardized on 1957-01-01 by
 # New Zealand's Standard Time Amendment Act 1956 (1956-10-26).
-# http://www.austlii.edu.au/nz/legis/hist_act/staa19561956n100244.pdf
+# https://www.austlii.edu.au/nz/legis/hist_act/staa19561956n100244.pdf
 # According to Google Books snippet view, a speaker in the New Zealand
 # parliamentary debates in 1956 said "Clause 78 makes provision for standard
 # time in the Chatham Islands.  The time there is 45 minutes in advance of New
@@ -1581,7 +1581,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # the Norfolk Island Museum and the Australian Bureau of Meteorology's
 # Norfolk Island station, and found no record of Norfolk observing DST
 # other than in 1974/5.  See:
-# http://www.timeanddate.com/time/australia/norfolk-island.html
+# https://www.timeanddate.com/time/australia/norfolk-island.html
 
 # Pitcairn
 
@@ -1615,7 +1615,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # ordaining - by a masterpiece of diplomatic flattery - that
 # the Fourth of July should be celebrated twice in that year."
 # This happened in 1892, according to the Evening News (Sydney) of 1892-07-20.
-# http://www.staff.science.uu.nl/~gent0113/idl/idl.htm
+# https://www.staff.science.uu.nl/~gent0113/idl/idl.htm
 
 # Although Shanks & Pottenger says they both switched to UT -11:30
 # in 1911, and to -11 in 1950. many earlier sources give -11
@@ -1732,7 +1732,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # making calculation of time in Washington difficult if not almost
 # impossible.
 #
-# http://www.trumanlibrary.org/wake/meeting.htm
+# https://www.trumanlibrary.org/oralhist/andrsonv.htm
 
 # From Paul Eggert (2003-03-23):
 # We have no other report of DST in Wake Island, so omit this info for now.
@@ -1760,7 +1760,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # an international standard, there are some places on the high seas where the
 # correct date is ambiguous.
 
-# From Wikipedia <http://en.wikipedia.org/wiki/Time_zone> (2005-08-31):
+# From Wikipedia <https://en.wikipedia.org/wiki/Time_zone> (2005-08-31):
 # Before 1920, all ships kept local apparent time on the high seas by setting
 # their clocks at night or at the morning sight so that, given the ship's
 # speed and direction, it would be 12 o'clock when the Sun crossed the ship's

@@ -2341,7 +2341,7 @@ Release 2013a - 2013-02-27 09:20:35 -0800
 
   Many changes affect historical timestamps before 1940.
   These were deduced from: Milne J. Civil time. Geogr J. 1899
-  Feb;13(2):173-94 <http://www.jstor.org/stable/1774359>.
+  Feb;13(2):173-94 <https://www.jstor.org/stable/1774359>.
 
   Changes affecting the code:
 

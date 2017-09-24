@@ -934,7 +934,7 @@ static zic_t const max_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
    Ade PAR, Aghanim N, Armitage-Caplan C et al.  Planck 2013 results.
    I. Overview of products and scientific results.
    arXiv:1303.5062 2013-03-20 20:10:01 UTC
-   <http://arxiv.org/pdf/1303.5062v1> [PDF]
+   <https://arxiv.org/pdf/1303.5062v1> [PDF]
 
    Page 36, Table 9, row Age/Gyr, column Planck+WP+highL+BAO 68% limits
    gives the value 13.798 plus-or-minus 0.037 billion years.

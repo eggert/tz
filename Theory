@@ -293,7 +293,7 @@ Errors in the tz database arise from many sources:
    typically found to be incorrect.
 
  * For the UK the tz database relies on years of first-class work done by
-   Joseph Myers and others; see <http://www.polyomino.org.uk/british-time/>.
+   Joseph Myers and others; see <https://www.polyomino.org.uk/british-time/>.
    Other countries are not done nearly as well.
 
  * Sometimes, different people in the same city would maintain clocks
@@ -377,7 +377,7 @@ Errors in the tz database arise from many sources:
    Proc Royal Soc A. 2016 Dec 7;472:20160404.
    http://dx.doi.org/10.1098/rspa.2016.0404
    Also see: Espenak F. Uncertainty in Delta T (ΔT).
-   http://eclipse.gsfc.nasa.gov/SEhelp/uncertainty2004.html
+   https://eclipse.gsfc.nasa.gov/SEhelp/uncertainty2004.html
 
  * The relationship between POSIX time (that is, UTC but ignoring leap
    seconds) and UTC is not agreed upon after 1972.  Although the POSIX
@@ -650,7 +650,7 @@ but they indicate the sort of problems that we would run into if we
 extended the time zone database further into the past.  An excellent
 resource in this area is Nachum Dershowitz and Edward M. Reingold,
 Calendrical Calculations: Third Edition, Cambridge University Press (2008)
-<http://emr.cs.iit.edu/home/reingold/calendar-book/third-edition/>.
+<https://www.cs.tau.ac.il/~nachum/calendar-book/third-edition/>.
 Other information and sources are given below.  They sometimes disagree.
 
 
@@ -851,14 +851,14 @@ Sources:
 
 Michael Allison and Robert Schmunk,
 "Technical Notes on Mars Solar Time as Adopted by the Mars24 Sunclock"
-<http://www.giss.nasa.gov/tools/mars24/help/notes.html> (2012-08-08).
+<https://www.giss.nasa.gov/tools/mars24/help/notes.html> (2012-08-08).
 
 Jia-Rui Chong, "Workdays Fit for a Martian", Los Angeles Times
 <http://articles.latimes.com/2004/jan/14/science/sci-marstime14>
 (2004-01-14), pp A1, A20-A21.
 
 Tom Chmielewski, "Jet Lag Is Worse on Mars", The Atlantic (2015-02-26)
-<http://www.theatlantic.com/technology/archive/2015/02/jet-lag-is-worse-on-mars/386033/>
+<https://www.theatlantic.com/technology/archive/2015/02/jet-lag-is-worse-on-mars/386033/>
 
 -----
 

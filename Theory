@@ -810,7 +810,7 @@ Mittelalters und der Neuzeit_, herausgegeben von Dr. O. Grotefend
 (Hannover: Hahnsche Buchhandlung, 1941), pp. 26-28.
 
 
------ Time and time zones on Mars -----
+----- Time and time zones on other planets -----
 
 Some people's work schedules use Mars time.  Jet Propulsion Laboratory
 (JPL) coordinators have kept Mars time on and off at least since 1997
@@ -844,7 +844,20 @@ wide acceptance.  Astronomers often use Mars Sol Date (MSD) which is a
 sequential count of Mars solar days elapsed since about 1873-12-29
 12:00 GMT.
 
-The tz database does not currently support Mars time, but it is
+In our solar system, Mars is the planet with time and calendar most
+like Earth's.  On other planets, Sun-based time and calendars would
+work quite differently.  For example, although Mercury's sidereal
+rotation period is 58.646 Earth days, Mercury revolves around the Sun
+so rapidly that an observer on Mercury's equator would see a sunrise
+only every 175.97 Earth days, i.e., a Mercury year is 0.5 of a Mercury
+day.  Venus is more complicated, partly because its rotation is
+slightly retrograde: its year is 1.92 of its days.  Gas giants like
+Jupiter are trickier still, as their polar and equatorial regions
+rotate at different rates, so that the length of a day depends on
+latitude.  This effect is most pronounced on Neptune, where the day is
+about 12 hours at the poles and 18 hours at the equator.
+
+Although the tz database does not support time on other planets, it is
 documented here in the hopes that support will be added eventually.
 
 Sources:
@@ -859,6 +872,10 @@ Jia-Rui Chong, "Workdays Fit for a Martian", Los Angeles Times
 
 Tom Chmielewski, "Jet Lag Is Worse on Mars", The Atlantic (2015-02-26)
 <https://www.theatlantic.com/technology/archive/2015/02/jet-lag-is-worse-on-mars/386033/>
+
+Matt Williams, "How long is a day on the other planets of the solar
+system?" <https://www.universetoday.com/37481/days-of-the-planets/>
+(2017-04-27).
 
 -----
 

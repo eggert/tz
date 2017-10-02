@@ -5,11 +5,13 @@
 *.o
 *.tar.*
 *.txt
+*.zi
 *~
 ChangeLog
 date
 leapseconds
 tzselect
+version
 version.h
 yearistype
 zdump

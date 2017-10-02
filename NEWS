@@ -136,6 +136,10 @@ Unreleased, experimental changes
 
   Changes to documentation and commentary
 
+    The two new files 'theory.html' and 'calendars' contain the
+    contents of the removed file 'Theory'.  The goal is to document
+    tzdb theory more accessibly.
+
     The zic man page now documents abbreviation rules.
 
     tz-link.htm now covers how to apply tzdata changes to clients.

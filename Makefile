@@ -419,7 +419,8 @@ MANTXTS=	newctime.3.txt newstrftime.3.txt newtzset.3.txt \
 			time2posix.3.txt \
 			tzfile.5.txt tzselect.8.txt zic.8.txt zdump.8.txt \
 			date.1.txt
-COMMON=		CONTRIBUTING LICENSE Makefile NEWS README Theory version
+COMMON=		calendars CONTRIBUTING LICENSE Makefile \
+			NEWS README theory.html version
 WEB_PAGES=	tz-art.htm tz-how-to.html tz-link.htm
 DOCS=		$(MANS) date.1 $(MANTXTS) $(WEB_PAGES)
 PRIMARY_YDATA=	africa antarctica asia australasia \
@@ -446,7 +447,7 @@ ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC) $(TZS) tzdata.zi
 # This list is not the same as the output of 'git ls-files', since
 # .gitignore is not distributed.
 VERSION_DEPS= \
-		CONTRIBUTING LICENSE Makefile NEWS README Theory \
+		calendars CONTRIBUTING LICENSE Makefile NEWS README \
 		africa antarctica asctime.c asia australasia \
 		backward backzone \
 		checklinks.awk checktab.awk \
@@ -455,7 +456,7 @@ VERSION_DEPS= \
 		leap-seconds.list leapseconds.awk localtime.c \
 		newctime.3 newstrftime.3 newtzset.3 northamerica \
 		pacificnew private.h \
-		southamerica strftime.c systemv \
+		southamerica strftime.c systemv theory.html \
 		time2posix.3 tz-art.htm tz-how-to.html tz-link.htm \
 		tzfile.5 tzfile.h tzselect.8 tzselect.ksh \
 		workman.sh yearistype.sh \

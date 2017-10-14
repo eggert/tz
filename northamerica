@@ -1254,11 +1254,13 @@ Rule	Canada	2007	max	-	Nov	Sun>=1	2:00	0	S
 
 # Newfoundland and Labrador
 
-# From Paul Eggert (2000-10-02):
-# Matthews and Vincent (1998) write that Labrador should use NST/NDT,
-# but the only part of Labrador that follows the rules is the
-# southeast corner, including Port Hope Simpson and Mary's Harbour,
-# but excluding, say, Black Tickle.
+# From Paul Eggert (2017-10-14):
+# Legally Labrador should observe Newfoundland time; see:
+# McLeod J. Labrador time - legal or not? St. John's Telegram, 2017-10-07
+# http://www.thetelegram.com/news/local/labrador-time--legal-or-not-154860/
+# Matthews and Vincent (1998) write that the only part of Labrador
+# that follows the rules is the southeast corner, including Port Hope
+# Simpson and Mary's Harbour, but excluding, say, Black Tickle.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	StJohns	1917	only	-	Apr	 8	2:00	1:00	D

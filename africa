@@ -1073,18 +1073,24 @@ Link Africa/Johannesburg Africa/Mbabane    # Swaziland
 # no information
 
 # Sudan
-#
+
 # From <http://www.sunanews.net/sn13jane.html>
 # Sudan News Agency (2000-01-13),
 # also reported by Michaël De Beukelaer-Dossche via Steffen Thorsen:
 # Clocks will be moved ahead for 60 minutes all over the Sudan as of noon
 # Saturday....  This was announced Thursday by Caretaker State Minister for
 # Manpower Abdul-Rahman Nur-Eddin.
-#
-# From Ahmed Atyya, National Telecommunications Corp., Sudan (2017-10-17):
+
+# From Ahmed Atyya, National Telecommunications Corp. (NTC), Sudan (2017-10-17):
 # ... the Republic of Sudan is going to change the time zone from (GMT+3:00)
 # to (GMT+ 2:00) starting from Wednesday 1 November 2017.
 #
+# From Paul Eggert (2017-10-18):
+# A scanned copy (in Arabic) of Cabinet Resolution No. 352 for the
+# year 2017 can be found as an attachment in email today from Yahia
+# Abdalla of NTC, archived at:
+# https://mm.icann.org/pipermail/tz/2017-October/025333.html
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Sudan	1970	only	-	May	 1	0:00	1:00	S
 Rule	Sudan	1970	1985	-	Oct	15	0:00	0	-

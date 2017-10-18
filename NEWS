@@ -2,7 +2,9 @@ News for the tz database
 
 Unreleased, experimental changes
 
-  Briefly: Fiji ends DST 2018-01-14, not 2018-01-21.
+  Briefly:
+  Northern Cyprus switches from +03 to +02/+03 on 2017-10-29.
+  Fiji ends DST 2018-01-14, not 2018-01-21.
   Namibia switches from +01/+02 to +02 on 2018-04-01.
   Sudan switches from +03 to +02 on 2017-11-01.
   Turks & Caicos switches from -04 to -05/-04 on 2018-11-04.
@@ -10,6 +12,9 @@ Unreleased, experimental changes
   The zic input format has been regularized slightly.
 
   Changes to future time stamps
+
+    Northern Cyprus has decided to resume EU rules starting
+    2017-10-29, thus reinstituting winter time.
 
     Fiji ends DST 2018-01-14 instead of the 2018-01-21 previously
     predicted.  (Thanks to Dominic Fok.)  Adjust future predictions

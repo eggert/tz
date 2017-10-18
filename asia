@@ -785,6 +785,12 @@ Zone	Asia/Macau	7:34:20 -	LMT	1912 Jan  1
 # Looks like the time zone split in Cyprus went through last night.
 # http://cyprus-mail.com/2016/10/30/cyprus-new-division-two-time-zones-now-reality/
 
+# From Paul Eggert (2017-10-18):
+# Northern Cyprus will reinstate winter time on October 29, thus
+# staying in sync with the rest of Cyprus.  See: Anastasiou A.
+# Cyprus to remain united in time.  Cyprus Mail 2017-10-17.
+# https://cyprus-mail.com/2017/10/17/cyprus-remain-united-time/
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Cyprus	1975	only	-	Apr	13	0:00	1:00	S
 Rule	Cyprus	1975	only	-	Oct	12	0:00	0	-
@@ -802,7 +808,8 @@ Zone	Asia/Nicosia	2:13:28 -	LMT	1921 Nov 14
 Zone	Asia/Famagusta	2:15:48	-	LMT	1921 Nov 14
 			2:00	Cyprus	EE%sT	1998 Sep
 			2:00	EUAsia	EE%sT	2016 Sep  8
-			3:00	-	+03
+			3:00	-	+03	2017 Oct 29 1:00u
+			2:00	EUAsia	EE%sT
 
 # Classically, Cyprus belongs to Asia; e.g. see Herodotus, Histories, I.72.
 # However, for various reasons many users expect to find it under Europe.

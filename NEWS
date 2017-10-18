@@ -20,7 +20,8 @@ Unreleased, experimental changes
     at 02:00.  (Thanks to Steffen Thorsen.)
 
     Sudan will switch from +03 to +02 on 2017-11-01.
-    (Thanks to Ahmed Atyya.)
+    (Thanks to Ahmed Atyya.)  South Sudan is not switching, so
+    Africa/Juba is no longer a link to Africa/Khartoum.
 
     Turks & Caicos will switch from -04 all year to -05 with US DST on
     2018-03-11 at 03:00.  This affects UT offsets starting 2018-11-04

@@ -1,5 +1,13 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to build procedure
+
+    The Makefile now quotes values like BACKWARD more carefully when
+    passing them to the shell.  (Problem reported by Zefram.)
+
+
 Release 2017c - 2017-10-20 14:49:34 -0700
 
   Briefly:

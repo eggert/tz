@@ -313,7 +313,7 @@ ZFLAGS=
 
 # How to use zic to install tz binary files.
 
-ZIC_INSTALL=	$(ZIC) -d $(DESTDIR)$(TZDIR) $(LEAPSECONDS)
+ZIC_INSTALL=	$(ZIC) -d '$(DESTDIR)$(TZDIR)' $(LEAPSECONDS)
 
 # The name of a Posix-compliant 'awk' on your system.
 AWK=		awk
@@ -341,8 +341,8 @@ SGML_CATALOG_FILES= \
 VALIDATE = nsgmls
 VALIDATE_FLAGS = -s -B -wall -wno-unused-param
 VALIDATE_ENV = \
-  SGML_CATALOG_FILES=$(SGML_CATALOG_FILES) \
-  SGML_SEARCH_PATH=$(SGML_SEARCH_PATH) \
+  SGML_CATALOG_FILES='$(SGML_CATALOG_FILES)' \
+  SGML_SEARCH_PATH='$(SGML_SEARCH_PATH)' \
   SP_CHARSET_FIXED=YES \
   SP_ENCODING=UTF-8
 
@@ -396,7 +396,7 @@ GZIPFLAGS=	-9n
 #MAKE=		make
 
 cc=		cc
-CC=		$(cc) -DTZDIR=\"$(TZDIR)\"
+CC=		$(cc) -DTZDIR='"$(TZDIR)"'
 
 AR=		ar
 
@@ -473,29 +473,29 @@ all:		tzselect yearistype zic zdump libtz.a $(TABDATA)
 ALL:		all date $(ENCHILADA)
 
 install:	all $(DATA) $(REDO) $(MANS)
-		mkdir -p $(DESTDIR)$(ETCDIR) $(DESTDIR)$(TZDIR) \
-			$(DESTDIR)$(LIBDIR) \
-			$(DESTDIR)$(MANDIR)/man3 $(DESTDIR)$(MANDIR)/man5 \
-			$(DESTDIR)$(MANDIR)/man8
+		mkdir -p '$(DESTDIR)$(ETCDIR)' '$(DESTDIR)$(TZDIR)' \
+			'$(DESTDIR)$(LIBDIR)' \
+			'$(DESTDIR)$(MANDIR)/man3' '$(DESTDIR)$(MANDIR)/man5' \
+			'$(DESTDIR)$(MANDIR)/man8'
 		$(ZIC_INSTALL) -l $(LOCALTIME) -p $(POSIXRULES)
-		cp -f $(TABDATA) $(DESTDIR)$(TZDIR)/.
-		cp tzselect zic zdump $(DESTDIR)$(ETCDIR)/.
-		cp libtz.a $(DESTDIR)$(LIBDIR)/.
-		$(RANLIB) $(DESTDIR)$(LIBDIR)/libtz.a
-		cp -f newctime.3 newtzset.3 $(DESTDIR)$(MANDIR)/man3/.
-		cp -f tzfile.5 $(DESTDIR)$(MANDIR)/man5/.
-		cp -f tzselect.8 zdump.8 zic.8 $(DESTDIR)$(MANDIR)/man8/.
+		cp -f $(TABDATA) '$(DESTDIR)$(TZDIR)/.'
+		cp tzselect zic zdump '$(DESTDIR)$(ETCDIR)/.'
+		cp libtz.a '$(DESTDIR)$(LIBDIR)/.'
+		$(RANLIB) '$(DESTDIR)$(LIBDIR)/libtz.a'
+		cp -f newctime.3 newtzset.3 '$(DESTDIR)$(MANDIR)/man3/.'
+		cp -f tzfile.5 '$(DESTDIR)$(MANDIR)/man5/.'
+		cp -f tzselect.8 zdump.8 zic.8 '$(DESTDIR)$(MANDIR)/man8/.'
 
 INSTALL:	ALL install date.1
-		mkdir -p $(DESTDIR)$(BINDIR) $(DESTDIR)$(MANDIR)/man1
-		cp date $(DESTDIR)$(BINDIR)/.
-		cp -f date.1 $(DESTDIR)$(MANDIR)/man1/.
+		mkdir -p '$(DESTDIR)$(BINDIR)' '$(DESTDIR)$(MANDIR)/man1'
+		cp date '$(DESTDIR)$(BINDIR)/.'
+		cp -f date.1 '$(DESTDIR)$(MANDIR)/man1/.'
 
 version:	$(VERSION_DEPS)
 		{ (type git) >/dev/null 2>&1 && \
 		  V=`git describe --match '[0-9][0-9][0-9][0-9][a-z]*' \
 				--abbrev=7 --dirty` || \
-		  V=$(VERSION); } && \
+		  V='$(VERSION)'; } && \
 		printf '%s\n' "$$V" >$@.out
 		mv $@.out $@
 
@@ -529,12 +529,12 @@ leapseconds:	$(LEAP_DEPS)
 # Arguments to pass to submakes of install_data.
 # They can be overridden by later submake arguments.
 INSTALLARGS = \
- BACKWARD=$(BACKWARD) \
- DESTDIR=$(DESTDIR) \
+ BACKWARD='$(BACKWARD)' \
+ DESTDIR='$(DESTDIR)' \
  LEAPSECONDS='$(LEAPSECONDS)' \
  PACKRATDATA='$(PACKRATDATA)' \
- TZDIR=$(TZDIR) \
- YEARISTYPE=$(YEARISTYPE) \
+ TZDIR='$(TZDIR)' \
+ YEARISTYPE='$(YEARISTYPE)' \
  ZIC='$(ZIC)'
 
 # 'make install_data' installs one set of tz binary files.
@@ -558,16 +558,16 @@ right_only:
 # You must replace all of $(TZDIR) to switch from not using leap seconds
 # to using them, or vice versa.
 right_posix:	right_only
-		rm -fr $(DESTDIR)$(TZDIR)-leaps
-		ln -s $(TZDIR_BASENAME) $(DESTDIR)$(TZDIR)-leaps || \
-		  $(MAKE) $(INSTALLARGS) TZDIR=$(TZDIR)-leaps right_only
-		$(MAKE) $(INSTALLARGS) TZDIR=$(TZDIR)-posix posix_only
+		rm -fr '$(DESTDIR)$(TZDIR)-leaps'
+		ln -s '$(TZDIR_BASENAME)' '$(DESTDIR)$(TZDIR)-leaps' || \
+		  $(MAKE) $(INSTALLARGS) TZDIR='$(TZDIR)-leaps' right_only
+		$(MAKE) $(INSTALLARGS) TZDIR='$(TZDIR)-posix' posix_only
 
 posix_right:	posix_only
-		rm -fr $(DESTDIR)$(TZDIR)-posix
-		ln -s $(TZDIR_BASENAME) $(DESTDIR)$(TZDIR)-posix || \
-		  $(MAKE) $(INSTALLARGS) TZDIR=$(TZDIR)-posix posix_only
-		$(MAKE) $(INSTALLARGS) TZDIR=$(TZDIR)-leaps right_only
+		rm -fr '$(DESTDIR)$(TZDIR)-posix'
+		ln -s '$(TZDIR_BASENAME)' '$(DESTDIR)$(TZDIR)-posix' || \
+		  $(MAKE) $(INSTALLARGS) TZDIR='$(TZDIR)-posix' posix_only
+		$(MAKE) $(INSTALLARGS) TZDIR='$(TZDIR)-leaps' right_only
 
 # This obsolescent rule is present for backwards compatibility with
 # tz releases 2014g through 2015g.  It should go away eventually.
@@ -764,7 +764,7 @@ set-timestamps.out: $(ENCHILADA)
 
 check_public:
 		$(MAKE) maintainer-clean
-		$(MAKE) "CFLAGS=$(GCC_DEBUG_FLAGS)" ALL
+		$(MAKE) CFLAGS='$(GCC_DEBUG_FLAGS)' ALL
 		mkdir -p public.dir
 		for i in $(TDATA) tzdata.zi; do \
 		  $(zic) -v -d public.dir $$i 2>&1 || exit; \

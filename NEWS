@@ -2,6 +2,13 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to past time stamps
+
+    A discrepancy of 4 s in timestamps before 1931 in South Sudan has
+    been corrected.  The 'backzone' and 'zone.tab' files did not agree
+    with the 'africa' and 'zone1970.tab' files.  (Problem reported by
+    Michael Deckers.)
+
   Changes to build procedure
 
     The Makefile now quotes values like BACKWARD more carefully when

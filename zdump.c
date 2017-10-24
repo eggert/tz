@@ -795,12 +795,14 @@ show(timezone_t tz, char *zone, time_t t, bool v)
 		abbrok(abbr(tmp), zone);
 }
 
-#if !HAVE_SNPRINTF
+#if HAVE_SNPRINTF
+# define my_snprintf snprintf
+#else
 # include <stdarg.h>
 
 /* A substitute for snprintf that is good enough for zdump.  */
-static int
-snprintf(char *s, size_t size, char const *format, ...)
+static int ATTRIBUTE_FORMAT((printf, 3, 4))
+my_snprintf(char *s, size_t size, char const *format, ...)
 {
   int n;
   va_list args;
@@ -839,10 +841,10 @@ format_local_time(char *buf, size_t size, struct tm const *tm)
 {
   int ss = tm->tm_sec, mm = tm->tm_min, hh = tm->tm_hour;
   return (ss
-	  ? snprintf(buf, size, "%02d:%02d:%02d", hh, mm, ss)
+	  ? my_snprintf(buf, size, "%02d:%02d:%02d", hh, mm, ss)
 	  : mm
-	  ? snprintf(buf, size, "%02d:%02d", hh, mm)
-	  : snprintf(buf, size, "%02d", hh));
+	  ? my_snprintf(buf, size, "%02d:%02d", hh, mm)
+	  : my_snprintf(buf, size, "%02d", hh));
 }
 
 /* Store into BUF, of size SIZE, a formatted UTC offset for the
@@ -877,10 +879,10 @@ format_utc_offset(char *buf, size_t size, struct tm const *tm, time_t t)
   mm = off / 60 % 60;
   hh = off / 60 / 60;
   return (ss || 100 <= hh
-	  ? snprintf(buf, size, "%c%02ld%02d%02d", sign, hh, mm, ss)
+	  ? my_snprintf(buf, size, "%c%02ld%02d%02d", sign, hh, mm, ss)
 	  : mm
-	  ? snprintf(buf, size, "%c%02ld%02d", sign, hh, mm)
-	  : snprintf(buf, size, "%c%02ld", sign, hh));
+	  ? my_snprintf(buf, size, "%c%02ld%02d", sign, hh, mm)
+	  : my_snprintf(buf, size, "%c%02ld", sign, hh));
 }
 
 /* Store into BUF (of size SIZE) a quoted string representation of P.
@@ -983,15 +985,16 @@ istrftime(char *buf, size_t size, char const *time_fmt,
 	    for (abp = ab; is_alpha(*abp); abp++)
 	      continue;
 	    len = (!*abp && *ab
-		   ? snprintf(b, s, "%s", ab)
+		   ? my_snprintf(b, s, "%s", ab)
 		   : format_quoted_string(b, s, ab));
 	    if (s <= len)
 	      return false;
 	    b += len, s -= len;
 	  }
-	  formatted_len = (tm->tm_isdst
-			   ? snprintf(b, s, &"\t\t%d"[show_abbr], tm->tm_isdst)
-			   : 0);
+	  formatted_len
+	    = (tm->tm_isdst
+	       ? my_snprintf(b, s, &"\t\t%d"[show_abbr], tm->tm_isdst)
+	       : 0);
 	}
 	break;
       }

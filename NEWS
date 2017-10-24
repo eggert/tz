@@ -7,6 +7,10 @@ Unreleased, experimental changes
     The Makefile now quotes values like BACKWARD more carefully when
     passing them to the shell.  (Problem reported by Zefram.)
 
+    Builders no longer need to specify -DHAVE_SNPRINTF on platforms
+    that have snprintf and use pre-C99 compilers.  (Problem reported
+    by Jon Skeet.)
+
 
 Release 2017c - 2017-10-20 14:49:34 -0700
 

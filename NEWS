@@ -2,6 +2,15 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+  Turkey switches from +03 to +02/+03 with EU DST on 2018-10-28.
+
+  Changes to future time stamps
+
+    Turkey will switch back from +03 to +02/+03 and resume EU rules
+    starting 2018-10-28, thus reinstituting winter time.  (Thanks to
+    Kıvanç Yazan.)
+
   Changes to past time stamps
 
     A discrepancy of 4 s in timestamps before 1931 in South Sudan has

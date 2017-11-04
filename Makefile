@@ -105,11 +105,14 @@ REDO=		posix_right
 TZDATA_TEXT=	leapseconds tzdata.zi
 
 # For backward-compatibility links for old zone names, use
+#	BACKWARD=	backward
+# If you also want the link US/Pacific-New, even though it is confusing
+# and is planned to be removed from the database eventually, use
 #	BACKWARD=	backward pacificnew
 # To omit these links, use
 #	BACKWARD=
 
-BACKWARD=	backward pacificnew
+BACKWARD=	backward
 
 # If you want out-of-scope and often-wrong data from the file 'backzone', use
 #	PACKRATDATA=	backzone

@@ -20,6 +20,12 @@ Unreleased, experimental changes
 
   Changes to build procedure
 
+    The default installation procedure no longer creates the
+    backward-compatibility link US/Pacific-New, which causes
+    confusion during user setup (e.g., see Debian bug 815200).
+    Use 'make BACKWARD="backward pacificnew"' to create the link
+    anyway, for now.  Eventually we plan to remove the link entirely.
+
     The Makefile now quotes values like BACKWARD more carefully when
     passing them to the shell.  (Problem reported by Zefram.)
 

@@ -35,8 +35,8 @@ Unreleased, experimental changes
 
   Changes to code
 
-    Diagnostis and commentary are now more careful about
-    distinguishing UT from UTC.
+    Diagnostics and commentary now distinguish UT from UTC more
+    carefully; see theory.html for more information about UT vs UTC.
 
 
 Release 2017c - 2017-10-20 14:49:34 -0700

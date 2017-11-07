@@ -33,6 +33,11 @@ Unreleased, experimental changes
     that have snprintf and use pre-C99 compilers.  (Problem reported
     by Jon Skeet.)
 
+  Changes to code
+
+    Diagnostis and commentary are now more careful about
+    distinguishing UT from UTC.
+
 
 Release 2017c - 2017-10-20 14:49:34 -0700
 
@@ -929,8 +934,8 @@ Release 2015f - 2015-08-10 18:06:56 -0700
     (Thanks to Jon Skeet and Arthur David Olson.)  Constraints on
     simultaneity are now documented.
 
-    The two characters '%z' in a zone format now stand for the UTC
-    offset, e.g., '-07' for seven hours behind UTC and '+0530' for
+    The two characters '%z' in a zone format now stand for the UT
+    offset, e.g., '-07' for seven hours behind UT and '+0530' for
     five hours and thirty minutes ahead.  This better supports time
     zone abbreviations conforming to POSIX.1-2001 and later.
 
@@ -1053,13 +1058,13 @@ Release 2015c - 2015-04-11 08:55:55 -0700
       The spring 1988 transition was 1988-10-09, not 1988-10-02.
       The fall 1990 transition was 1990-03-11, not 1990-03-18.
 
-      Assume no UTC offset change for Pacific/Easter on 1890-01-01,
+      Assume no UT offset change for Pacific/Easter on 1890-01-01,
       and omit all transitions on Pacific/Easter from 1942 through 1946
       since we have no data suggesting that they existed.
 
     One more zone has been turned into a link, as it differed
     from an existing zone only for older time stamps.  As usual,
-    this change affects UTC offsets in pre-1970 time stamps only.
+    this change affects UT offsets in pre-1970 time stamps only.
     The zone's old contents have been moved to the 'backzone' file.
     The affected zone is America/Montreal.
 
@@ -1089,7 +1094,7 @@ Release 2015b - 2015-03-19 23:28:11 -0700
 
     Some more zones have been turned into links, when they differed
     from existing zones only for older time stamps.  As usual,
-    these changes affect UTC offsets in pre-1970 time stamps only.
+    these changes affect UT offsets in pre-1970 time stamps only.
     Their old contents have been moved to the 'backzone' file.
     The affected zones are: America/Antigua, America/Cayman,
     Pacific/Midway, and Pacific/Saipan.
@@ -1141,7 +1146,7 @@ Release 2015a - 2015-01-29 22:35:20 -0800
 
     Some more zones have been turned into links, when they differed
     from existing zones only for older time stamps.  As usual,
-    these changes affect UTC offsets in pre-1970 time stamps only.
+    these changes affect UT offsets in pre-1970 time stamps only.
     Their old contents have been moved to the 'backzone' file.
     The affected zones are: Asia/Aden, Asia/Bahrain, Asia/Kuwait,
     and Asia/Muscat.
@@ -1188,7 +1193,7 @@ Release 2014j - 2014-11-10 17:37:11 -0800
 
     Some more zones have been turned into links, when they differed
     from existing zones only for older time stamps.  As usual,
-    these changes affect UTC offsets in pre-1970 time stamps only.
+    these changes affect UT offsets in pre-1970 time stamps only.
     Their old contents have been moved to the 'backzone' file.
     The affected zones are: Africa/Addis_Ababa, Africa/Asmara,
     Africa/Dar_es_Salaam, Africa/Djibouti, Africa/Kampala,
@@ -1278,7 +1283,7 @@ Release 2014h - 2014-09-25 18:59:03 -0700
 
     Some more zones have been turned into links, when they differed
     from existing zones only for older timestamps.  As usual,
-    these changes affect UTC offsets in pre-1970 timestamps only.
+    these changes affect UT offsets in pre-1970 timestamps only.
     Their old contents have been moved to the 'backzone' file.
     The affected zones are: Africa/Blantyre, Africa/Bujumbura,
     Africa/Gaborone, Africa/Harare, Africa/Kigali, Africa/Lubumbashi,
@@ -1363,7 +1368,7 @@ Release 2014g - 2014-08-28 12:31:23 -0700
 
     Some more zones have been turned into links, when they differed
     from existing zones only for older timestamps.  As usual,
-    these changes affect UTC offsets in pre-1970 timestamps only.
+    these changes affect UT offsets in pre-1970 timestamps only.
     Their old contents have been moved to the 'backzone' file.
     The affected zones are: Africa/Bangui, Africa/Brazzaville,
     Africa/Douala, Africa/Kinshasa, Africa/Libreville, Africa/Luanda,
@@ -1513,7 +1518,7 @@ Release 2014f - 2014-08-05 17:42:36 -0700
     standard and daylight saving time the abbreviations are AEST and AEDT
     instead of the former EST for both; similarly, ACST/ACDT, ACWST/ACWDT,
     and AWST/AWDT are now used instead of the former CST, CWST, and WST.
-    This change does not affect UTC offsets, only time zone abbreviations.
+    This change does not affect UT offsets, only time zone abbreviations.
     (Thanks to Rich Tibbett and many others.)
 
     Asia/Novokuznetsk shifts from NOVT to KRAT (remaining on UT +07)
@@ -1550,8 +1555,8 @@ Release 2014f - 2014-08-05 17:42:36 -0700
     Treindl sent helpful translations of two papers by Guo Qingsheng.)
 
     Some zones have been turned into links, when they differed from existing
-    zones only for older UTC offsets where data entries were likely invented.
-    These changes affect UTC offsets in pre-1970 timestamps only.  This is
+    zones only for older UT offsets where data entries were likely invented.
+    These changes affect UT offsets in pre-1970 timestamps only.  This is
     similar to the change in release 2013e, except this time for western
     Africa.  The affected zones are: Africa/Bamako, Africa/Banjul,
     Africa/Conakry, Africa/Dakar, Africa/Freetown, Africa/Lome,

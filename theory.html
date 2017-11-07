@@ -598,7 +598,7 @@ POSIX has the following properties and limitations.
 		and daylight saving time (DST) zone names.
 		Starting with POSIX.1-2001, <var>std</var>
 		and <var>dst</var> may also be
-		in a quoted form like '<code>&lt;UTC+10&gt;</code>'; this allows
+		in a quoted form like '<code>&lt;+09&gt;</code>'; this allows
 		"<code>+</code>" and "<code>-</code>" in the names.
       </dd>
       <dt><var>offset</var></dt><dd>
@@ -646,7 +646,7 @@ POSIX has the following properties and limitations.
 </dd>
 </dl>
 	Here is an example POSIX TZ string for New Zealand after 2007.
-	It says that standard time (NZST) is 12 hours ahead of UTC,
+	It says that standard time (NZST) is 12 hours ahead of UT,
 	and that daylight saving time (NZDT) is observed from September's
 	last Sunday at 02:00 until April's first Sunday at 03:00:
 
@@ -678,7 +678,7 @@ POSIX has the following properties and limitations.
 	applications that an administrator wants used only at certain
 	times &ndash;
 	without regard to whether the user has fiddled the TZ environment
-	variable.  While an administrator can "do everything in UTC" to get
+	variable.  While an administrator can "do everything in UT" to get
 	around the problem, doing so is inconvenient and precludes handling
 	daylight saving time shifts - as might be required to limit phone
 	calls to off-peak hours.)

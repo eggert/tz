@@ -2055,7 +2055,7 @@ abbroffset(char *buf, zic_t offset)
   minutes = offset % MINSPERHOUR;
   offset /= MINSPERHOUR;
   if (100 <= offset) {
-    error(_("%%z UTC offset magnitude exceeds 99:59:59"));
+    error(_("%%z UT offset magnitude exceeds 99:59:59"));
     return "%z";
   } else {
     char *p = buf;

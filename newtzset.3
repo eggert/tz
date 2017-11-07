@@ -61,7 +61,7 @@ If the implied call to
 .B tzalloc
 fails,
 .I tzset
-falls back on UTC.
+falls back on Universal Time (UT).
 .PP
 If
 .B TZ
@@ -74,7 +74,7 @@ in the system time conversion information directory, is used.
 If
 .B TZ
 is the empty string,
-Universal Time (UT) is used, with the abbreviation "UTC"
+UT is used, with the abbreviation "UTC"
 and without leap second correction; please see
 .IR newctime (3)
 for more about UT, UTC, and leap seconds.  If
@@ -256,22 +256,22 @@ extensions to POSIX.
 .TP
 .B EST5
 stands for US Eastern Standard
-Time (EST), 5 hours behind UTC, without daylight saving.
+Time (EST), 5 hours behind UT, without daylight saving.
 .TP
 .B FJT\*-12FJST,M11.1.0,M1.3.4/75
 stands for Fiji Time (FJT) and Fiji Summer Time (FJST), 12 hours ahead
-of UTC, springing forward on November's first Sunday at 02:00, and
+of UT, springing forward on November's first Sunday at 02:00, and
 falling back on January's third Thursday at 75:00 (i.e., 03:00 on the
 first Sunday on or after January 18).
 .TP
 .B IST\*-2IDT,M3.4.4/26,M10.5.0
 stands for Israel Standard Time (IST) and Israel Daylight Time (IDT),
-2 hours ahead of UTC, springing forward on March's fourth
+2 hours ahead of UT, springing forward on March's fourth
 Thursday at 26:00 (i.e., 02:00 on the first Friday on or after March
 23), and falling back on October's last Sunday at 02:00.
 .TP
 .B WART4WARST,J1/0,J365/25
-stands for Western Argentina Summer Time (WARST), 3 hours behind UTC.
+stands for Western Argentina Summer Time (WARST), 3 hours behind UT.
 There is a dummy fall-back transition on December 31 at 25:00 daylight
 saving time (i.e., 24:00 standard time, equivalent to January 1 at
 00:00 standard time), and a simultaneous spring-forward transition on
@@ -282,9 +282,9 @@ is a placeholder.
 .TP
 .B WGT3WGST,M3.5.0/\*-2,M10.5.0/\*-1
 stands for Western Greenland Time (WGT) and Western Greenland Summer
-Time (WGST), 3 hours behind UTC, where clocks follow the EU rules of
-springing forward on March's last Sunday at 01:00 UTC (\-02:00 local
-time) and falling back on October's last Sunday at 01:00 UTC
+Time (WGST), 3 hours behind UT, where clocks follow the EU rules of
+springing forward on March's last Sunday at 01:00 UT (\-02:00 local
+time) and falling back on October's last Sunday at 01:00 UT
 (\-01:00 local time).
 .PP
 If no
@@ -297,7 +297,7 @@ by the
 file
 .B posixrules
 in the system time conversion information directory are used, with the
-standard and summer time offsets from UTC replaced by those specified by
+standard and summer time offsets from UT replaced by those specified by
 the
 .I offset
 values in

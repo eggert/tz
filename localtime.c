@@ -1982,7 +1982,7 @@ time2sub(struct tm *const tmp,
 			   && ((BIGGEST (INT_FAST32_MIN, LONG_MIN)
 				+ yourtm.TM_GMTOFF)
 			       <= mytm.TM_GMTOFF)))) {
-		  /* MYTM matches YOURTM except with the wrong UTC offset.
+		  /* MYTM matches YOURTM except with the wrong UT offset.
 		     YOURTM.TM_GMTOFF is plausible, so try it instead.
 		     It's OK if YOURTM.TM_GMTOFF contains uninitialized data,
 		     since the guess gets checked.  */

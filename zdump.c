@@ -265,7 +265,7 @@ tzfree(timezone_t env)
 }
 #endif /* ! USE_LOCALTIME_RZ */
 
-/* A UTC time zone, and its initializer.  */
+/* A UT time zone, and its initializer.  */
 static timezone_t gmtz;
 static void
 gmtzinit(void)
@@ -280,7 +280,7 @@ gmtzinit(void)
   }
 }
 
-/* Convert *TP to UTC, storing the broken-down time into *TMP.
+/* Convert *TP to UT, storing the broken-down time into *TMP.
    Return TMP if successful, NULL otherwise.  This is like gmtime_r(TP, TMP),
    except typically faster if USE_LOCALTIME_RZ.  */
 static struct tm *
@@ -730,8 +730,8 @@ adjusted_yday(struct tm const *a, struct tm const *b)
 }
 #endif
 
-/* If A is the broken-down local time and B the broken-down UTC for
-   the same instant, return A's UTC offset in seconds, where positive
+/* If A is the broken-down local time and B the broken-down UT for
+   the same instant, return A's UT offset in seconds, where positive
    offsets are east of Greenwich.  On failure, return LONG_MIN.
 
    If T is nonnull, *T is the timestamp that corresponds to A; call
@@ -847,10 +847,10 @@ format_local_time(char *buf, size_t size, struct tm const *tm)
 	  : my_snprintf(buf, size, "%02d", hh));
 }
 
-/* Store into BUF, of size SIZE, a formatted UTC offset for the
+/* Store into BUF, of size SIZE, a formatted UT offset for the
    localtime *TM corresponding to time T.  Use ISO 8601 format
    +HHMMSS, or -HHMMSS for timestamps west of Greenwich; use the
-   format -00 for unknown UTC offsets.  If the hour needs more than
+   format -00 for unknown UT offsets.  If the hour needs more than
    two digits to represent, extend the length of HH as needed.
    Otherwise, omit SS if SS is zero, and omit MM too if MM is also
    zero.
@@ -925,7 +925,7 @@ format_quoted_string(char *buf, size_t size, char const *p)
 
    %f zone name
    %L local time as per format_local_time
-   %Q like "U\t%Z\tD" where U is the UTC offset as for format_utc_offset
+   %Q like "U\t%Z\tD" where U is the UT offset as for format_utc_offset
       and D is the isdst flag; except omit D if it is zero, omit %Z if
       it equals U, quote and escape %Z if it contains nonalphabetics,
       and omit any trailing tabs.  */

@@ -432,7 +432,7 @@ It is freely available under the <abbr>LGPL</abbr>.</li>
 implementation of a binary file reader. It is freely available under
 the Apache License.</li>
 <li><a href="https://github.com/google/cctz">CCTZ</a> is a simple C++
-library that translates between <abbr>UTC</abbr> and civil time and
+library that translates between <abbr>UT</abbr> and civil time and
 can read binary files. It is freely available under the Apache
 License.</li>
 <li><a href="http://bmsi.com/java/#TZ">ZoneInfo.java</a>
@@ -660,7 +660,7 @@ world time zone boundaries distributed under the
 href="https://en.wikipedia.org/wiki/Territorial_waters">territorial
 waters</a> of any nation uses that nation's time. In international
 waters, time zone boundaries are meridians 15&deg; apart, except that
-<abbr>UTC</abbr>&minus;12 and <abbr>UTC</abbr>+12 are each 7.5&deg;
+<abbr>UT</abbr>&minus;12 and <abbr>UT</abbr>+12 are each 7.5&deg;
 wide and are separated by
 the 180&deg; meridian (not by the International Date Line, which is
 for land and territorial waters only). A captain can change ship's
@@ -884,10 +884,10 @@ protocols.</li>
 Formats on the Web</a> surveys web- and Internet-oriented date and time
 formats.</li>
 <li>Alphabetic time zone abbreviations should not be used as unique
-identifiers for <abbr>UTC</abbr> offsets as they are ambiguous in
+identifiers for <abbr>UT</abbr> offsets as they are ambiguous in
 practice. For example, in English-speaking North America
-"<abbr>CST</abbr>" denotes 6 hours behind <abbr>UTC</abbr>,
-but in China it denotes 8 hours ahead of <abbr>UTC</abbr>,
+"<abbr>CST</abbr>" denotes 6 hours behind <abbr>UT</abbr>,
+but in China it denotes 8 hours ahead of <abbr>UT</abbr>,
 and French-speaking North Americans prefer
 "<abbr title="Heure Normale du Centre">HNC</abbr>" to
 "<abbr>CST</abbr>". The <code><abbr>tz</abbr></code>
@@ -895,7 +895,7 @@ database contains English abbreviations for many time stamps;
 unfortunately some of these abbreviations were merely the database maintainers'
 inventions, and are gradually being removed.</li>
 <li>Numeric time zone abbreviations typically count hours east of
-<abbr>UTC</abbr>, e.g., +09 for Japan and
+<abbr>UT</abbr>, e.g., +09 for Japan and
 &minus;10 for Hawaii. However, the <abbr>POSIX</abbr>
 <code><abbr>TZ</abbr></code> environment variable uses the opposite convention.
 For example, one might use <code><abbr>TZ</abbr>="<abbr
@@ -909,7 +909,7 @@ confusion, handle old time stamps better, and insulate you better from
 any future changes to the rules. One should never set
 <abbr>POSIX</abbr> <code><abbr>TZ</abbr></code> to a value like
 <code>"GMT-9"</code>, though, since this would incorrectly imply that
-local time is nine hours ahead of <abbr>UTC</abbr> and the time zone
+local time is nine hours ahead of <abbr>UT</abbr> and the time zone
 is called "<abbr>GMT</abbr>".</li>
 </ul>
 <h2 id="see-also">See also</h2>

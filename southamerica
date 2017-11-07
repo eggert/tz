@@ -25,7 +25,7 @@
 # https://www.jstor.org/stable/1774359
 #
 # These tables use numeric abbreviations like -03 and -0330 for
-# integer hour and minute UTC offsets.  Although earlier editions used
+# integer hour and minute UT offsets.  Although earlier editions used
 # alphabetic time zone abbreviations, these abbreviations were
 # invented and did not reflect common practice.
 
@@ -1068,7 +1068,7 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 
 # From Paul Eggert (2015-04-03):
 # Shanks & Pottenger says America/Santiago introduced standard time in
-# 1890 and rounds its UTC offset to 70W40; guess that in practice this
+# 1890 and rounds its UT offset to 70W40; guess that in practice this
 # was the same offset as in 1916-1919.  It also says Pacific/Easter
 # standardized on 109W22 in 1890; assume this didn't change the clocks.
 #

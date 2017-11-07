@@ -343,8 +343,9 @@ while
 			echo >&2 'Please enter the desired value' \
 				'of the TZ environment variable.'
 			echo >&2 'For example, AEST-10 is a zone named AEST' \
-				'that is 10 hours ahead (east) of UT'
-			echo >&2 'and does not observe daylight saving time.'
+				'that is 10 hours'
+			echo >&2 'ahead (east) of Greenwich,' \
+				'with no daylight saving time.'
 			read TZ
 			$AWK -v TZ="$TZ" 'BEGIN {
 				tzname = "(<[[:alnum:]+-]{3,}>|[[:alpha:]]{3,})"

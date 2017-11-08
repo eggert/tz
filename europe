@@ -3585,6 +3585,13 @@ Zone	Europe/Zurich	0:34:08 -	LMT	1853 Jul 16 # See above comment.
 # From Kıvanç Yazan (2017-10-28):
 # Turkey will go back to Daylight Saving Time starting 2018-10.
 # http://www.resmigazete.gov.tr/eskiler/2017/10/20171028-5.pdf
+#
+# From Even Scharning (2017-11-08):
+# ... today it was announced that the DST will become "continuous":
+# http://www.hurriyet.com.tr/son-dakika-yaz-saati-uygulamasi-surekli-hale-geldi-40637482
+# From Paul Eggert (2017-11-08):
+# Although Google Translate misfires on that source, it looks like
+# Turkey reversed last month's decision, and so will stay at +03.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Turkey	1916	only	-	May	 1	0:00	1:00	S
@@ -3658,8 +3665,7 @@ Zone	Europe/Istanbul	1:55:52 -	LMT	1880
 			2:00	EU	EE%sT	2015 Oct 25  1:00u
 			2:00	1:00	EEST	2015 Nov  8  1:00u
 			2:00	EU	EE%sT	2016 Sep  7
-			3:00	-	+03	2018 Oct 28  1:00u
-			2:00	EU	EE%sT
+			3:00	-	+03
 Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 
 # Ukraine

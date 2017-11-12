@@ -29,6 +29,9 @@ Unreleased, experimental changes
     Diagnostics and commentary now distinguish UT from UTC more
     carefully; see theory.html for more information about UT vs UTC.
 
+    zic has been ported to GCC 8's -Wstringop-truncation option.
+    (Problem reported by Martin Sebor.)
+
 
 Release 2017c - 2017-10-20 14:49:34 -0700
 

@@ -434,7 +434,7 @@ TDATA=		$(YDATA) $(NDATA)
 ZONETABLES=	zone1970.tab zone.tab
 TABDATA=	iso3166.tab $(TZDATA_TEXT) $(ZONETABLES)
 LEAP_DEPS=	leapseconds.awk leap-seconds.list
-TZDATA_ZI_DEPS=	zishrink.awk $(TDATA) $(PACKRATDATA)
+TZDATA_ZI_DEPS=	zishrink.awk version $(TDATA) $(PACKRATDATA)
 DATA=		$(YDATA) $(NDATA) backzone iso3166.tab leap-seconds.list \
 			leapseconds yearistype.sh $(ZONETABLES)
 AWK_SCRIPTS=	checklinks.awk checktab.awk leapseconds.awk zishrink.awk
@@ -504,7 +504,9 @@ version:	$(VERSION_DEPS)
 
 # This file can be tailored by setting BACKWARD, PACKRATDATA, etc.
 tzdata.zi:	$(TZDATA_ZI_DEPS)
-		LC_ALL=C $(AWK) -f zishrink.awk $(TDATA) $(PACKRATDATA) >$@.out
+		version=`sed 1q version` && \
+		  LC_ALL=C $(AWK) -v version="$$version" -f zishrink.awk \
+		    $(TDATA) $(PACKRATDATA) >$@.out
 		mv $@.out $@
 
 version.h:	version

@@ -17,6 +17,9 @@ Unreleased, experimental changes
     Use 'make BACKWARD="backward pacificnew"' to create the link
     anyway, for now.  Eventually we plan to remove the link entirely.
 
+    tzdata.zi now contains a version-number comment.
+    (Suggested by Tom Lane.)
+
     The Makefile now quotes values like BACKWARD more carefully when
     passing them to the shell.  (Problem reported by Zefram.)
 

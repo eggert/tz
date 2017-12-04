@@ -552,6 +552,7 @@ main(int argc, char *argv[])
 		}
 		if (t < cutlotime)
 			t = cutlotime;
+		INITIALIZE (ab);
 		tm_ok = my_localtime_rz(tz, &t, &tm) != NULL;
 		if (tm_ok) {
 		  ab = saveabbr(&abbrev, &abbrevsize, &tm);
@@ -567,11 +568,10 @@ main(int argc, char *argv[])
 				 : cuthitime);
 		  struct tm *newtmp = localtime_rz(tz, &newt, &newtm);
 		  bool newtm_ok = newtmp != NULL;
-		  if (! (tm_ok & newtm_ok
-			 ? (delta(&newtm, &tm) == newt - t
-			    && newtm.tm_isdst == tm.tm_isdst
-			    && strcmp(abbr(&newtm), ab) == 0)
-			 : tm_ok == newtm_ok)) {
+		  if (tm_ok != newtm_ok
+		      || (tm_ok && (delta(&newtm, &tm) != newt - t
+				    || newtm.tm_isdst != tm.tm_isdst
+				    || strcmp(abbr(&newtm), ab) != 0))) {
 		    newt = hunt(tz, argv[i], t, newt);
 		    newtmp = localtime_rz(tz, &newt, &newtm);
 		    newtm_ok = newtmp != NULL;

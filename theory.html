@@ -297,7 +297,7 @@ in decreasing order of importance:
 		'<code>+</code>' and '<code>-</code>' are safe in all locales.
 
 		In other words, in the C locale the POSIX extended regular
-		expression <code>[-+[:alnum:]]{3,}</code> should match
+		expression <code>[-+[:alnum:]]{3,6}</code> should match
 		the abbreviation.
 		This guarantees that all abbreviations could have been
 		specified by a POSIX TZ string.
@@ -322,7 +322,7 @@ CET/CEST/CEMT Central European,
 ChST Chamorro,
 CST/CDT/CWT/CPT/CDDT Central [North America],
 CST/CDT China,
-GMT/BST/BDST Greenwich,
+GMT/BST/IST/BDST Greenwich,
 EAT East Africa,
 EST/EDT/EWT/EPT/EDDT Eastern [North America],
 EET/EEST Eastern European,
@@ -387,10 +387,11 @@ TMT Tallinn, Tehran;
 WMT Warsaw</small>.</p>
 
 <p><small>A few abbreviations also follow the pattern that
-GMT/BST/BDST established for time in the UK. They are:
+GMT/BST/IST/BDST established for time in the UK. They are:
 
 CMT/BST for Calamarca Mean Time and Bolivian Summer Time
-1890&ndash;1932, MMT/MST/MDST for Moscow 1880&ndash;1919, and RMT/LST
+1890&ndash;1932, DMT/IST for Dublin Mean Time and Irish Summer Time
+1880&ndash;1916, MMT/MST/MDST for Moscow 1880&ndash;1919, and RMT/LST
 for Riga Mean Time and Latvian Summer time 1880&ndash;1926.
 An extra-special case is SET for Swedish Time (<em>svensk
 normaltid</em>) 1879&ndash;1899, 3&deg; west of the Stockholm
@@ -431,10 +432,10 @@ Observatory.</small></p>
 </ul>
 <p>
 Application writers should note that these abbreviations are ambiguous
-in practice: e.g. 'CST' has a different meaning in China than
-it does in the United States.  In new applications, it's often better
-to use numeric UT offsets like '<code>-</code>0600' instead of time zone
-abbreviations like 'CST'; this avoids the ambiguity.
+in practice: e.g., 'CST' means one thing in China and something else
+in North America, and 'IST' can refer to time in India, Ireland or
+Israel. To avoid ambiguity, use numeric UT offsets like
+'<code>-</code>0600' instead of time zone abbreviations like 'CST'.
 </p>
   </section>
 

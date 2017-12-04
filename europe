@@ -278,16 +278,31 @@
 # The following claim by Shanks & Pottenger is possible though doubtful;
 # we'll ignore it for now.
 #     * Dublin's 1971-10-31 switch was at 02:00, even though London's was 03:00.
+
+# From Paul Eggert (2017-12-04):
 #
-#
-# Whitman says Dublin Mean Time was -0:25:21, which is more precise than
-# Shanks & Pottenger.
-# Perhaps this was Dunsink Observatory Time, as Dunsink Observatory
-# (8 km NW of Dublin's center) seemingly was to Dublin as Greenwich was
-# to London.  For example:
+# Dunsink Observatory (8 km NW of Dublin's center) was to Dublin as
+# Greenwich was to London.  For example:
 #
 #   "Timeball on the ballast office is down.  Dunsink time."
 #   -- James Joyce, Ulysses
+#
+# The abbreviation DMT stood for "Dublin Mean Time" or "Dunsink Mean Time";
+# this being Ireland, opinions differed.
+#
+# Whitman says Dublin/Dunsink Mean Time was UT-00:25:21, which agrees
+# with measurements of recent visitors to the Meridian Room of Dunsink
+# Observatory; see Malone D. Dunsink and timekeeping. 2017-01-24.
+# <https://www.maths.tcd.ie/~dwmalone/time/dunsink.html>.  Malone
+# writes that the Nautical Almanac listed UT-00:25:22 until 1896, when
+# it moved to UT-00:25:21.1 (I confirmed that the 1893 edition used
+# the former and the 1896 edition used the latter).  Evidently the
+# news of this change propagated slowly, as Milne 1899 still lists
+# UT-00:25:22 and cites the International Telegraph Bureau.  As it is
+# not clear that there was any practical significance to the change
+# from UT-00:25:22 to UT-00:25:21.1 in civil timekeeping, omit this
+# transition for now and just use the latter value, omitting its
+# fraction since our format cannot represent fractions.
 
 # "Countess Markievicz ... claimed that the [1916] abolition of Dublin Mean Time
 # was among various actions undertaken by the 'English' government that
@@ -478,7 +493,7 @@ Link	Europe/London	Europe/Isle_of_Man
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
-			-0:25:21 -	DMT	1916 May 21  2:00s # Dublin MT
+			-0:25:21 -	DMT	1916 May 21  2:00s
 			-0:25:21 1:00	IST	1916 Oct  1  2:00s
 			 0:00	GB-Eire	%s	1921 Dec  6 # independence
 			 0:00	GB-Eire	GMT/IST	1940 Feb 25  2:00s

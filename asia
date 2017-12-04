@@ -2066,8 +2066,8 @@ Zone Asia/Kuching	7:21:20	-	LMT	1926 Mar
 
 # Maldives
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Indian/Maldives	4:54:00 -	LMT	1880 # Male
-			4:54:00	-	MMT	1960 # Male Mean Time
+Zone	Indian/Maldives	4:54:00 -	LMT	1880 # Malé
+			4:54:00	-	MMT	1960 # Malé Mean Time
 			5:00	-	+05
 
 # Mongolia

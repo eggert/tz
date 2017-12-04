@@ -9,6 +9,10 @@ Unreleased, experimental changes
     with the 'africa' and 'zone1970.tab' files.  (Problem reported by
     Michael Deckers.)
 
+    The abbreviation invented for Bolivia Summer Time (1931-2) is now
+    BST instead of BOST, to be more consistent with the convention
+    used for Latvian Summer Time (1918-9) and for British Summer Time.
+
   Changes to build procedure
 
     The default installation procedure no longer creates the
@@ -34,6 +38,11 @@ Unreleased, experimental changes
 
     zic has been ported to GCC 8's -Wstringop-truncation option.
     (Problem reported by Martin Sebor.)
+
+  Changes to documentation and commentary
+
+    The theory.html file now mentions the POSIX limit of six chars
+    per abbreviation, and lists alphabetic abbreviations used.
 
 
 Release 2017c - 2017-10-20 14:49:34 -0700

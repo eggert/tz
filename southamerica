@@ -579,7 +579,7 @@ Link America/Curacao America/Aruba
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	America/La_Paz	-4:32:36 -	LMT	1890
 			-4:32:36 -	CMT	1931 Oct 15 # Calamarca MT
-			-4:32:36 1:00	BOST	1932 Mar 21 # Bolivia ST
+			-4:32:36 1:00	BST	1932 Mar 21 # Bolivia ST
 			-4:00	-	-04
 
 # Brazil

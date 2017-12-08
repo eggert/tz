@@ -13,6 +13,17 @@ Unreleased, experimental changes
     BST instead of BOST, to be more consistent with the convention
     used for Latvian Summer Time (1918-9) and for British Summer Time.
 
+  Changes to tm_isdst
+
+    Change Europe/Dublin so that it observes Irish Standard Time (UT
+    +01) in summer and GMT (as negative daylight-saving) in winter,
+    instead of observing standard time (GMT) in winter and Irish
+    Summer Time (UT +01) in summer.  This change does not affect UT
+    offsets or abbreviations; it affects only whether timestamps are
+    considered to be standard time or daylight-saving time, as
+    expressed in the tm_isdst flag of C's struct tm type.
+    (Discrepancy noted by Derick Rethans.)
+
   Changes to build procedure
 
     The default installation procedure no longer creates the

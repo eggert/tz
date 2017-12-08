@@ -68,6 +68,7 @@
 #        0:00       WET  WEST WEMT  Western Europe
 #        0:19:32.13 AMT* NST*       Amsterdam, Netherlands Summer (1835-1937)
 #        1:00       BST             British Standard (1968-1971)
+#        1:00       IST  GMT        Irish Standard (1968-) with winter DST
 #        1:00       CET  CEST CEMT  Central Europe
 #        1:00:14    SET             Swedish (1879-1899)
 #        1:36:34    RMT* LST*       Riga, Latvian Summer (1880-1926)*
@@ -362,12 +363,28 @@
 # regulations. I spoke this morning with the Secretary of the Department of
 # Justice (tel +353 1 678 9711) who confirmed to me that the correct name is
 # "Irish Summer Time", abbreviated to "IST".
+#
+# From Paul Eggert (2017-12-07):
+# The 1996 anonymous contributor's goal was to determine the correct
+# abbreviation for summer time in Dublin and so the contributor
+# focused on the "IST", not on the "Irish Summer Time".  Though the
+# "IST" was correct, the "Irish Summer Time" appears to have been an
+# error, as Ireland's Standard Time (Amendment) Act, 1971 states that
+# standard time in Ireland remains at UT +01 and is observed in
+# summer, and that Greenwich mean time is observd in winter.  (Thanks
+# to Derick Rethans for pointing out the error.)  That is, when
+# Ireland amended the 1968 act that established UT +01 as Irish
+# Standard Time, it left standard time unchanged and established GMT
+# as a negative daylight saving time in winter.  So, in this database
+# IST stands for Irish Summer Time for timestamps before 1968, and for
+# Irish Standard Time after that.  See:
+# http://www.irishstatutebook.ie/eli/1971/act/17/enacted/en/print
 
 # Michael Deckers (2017-06-01) gave the following URLs for Ireland's
 # Summer Time Act, 1925 and Summer Time Orders, 1926 and 1947:
-# http://www.irishstatutebook.ie/eli/1925/act/8/enacted/en/print.html
-# http://www.irishstatutebook.ie/eli/1926/sro/919/made/en/print.html
-# http://www.irishstatutebook.ie/eli/1947/sro/71/made/en/print.html
+# http://www.irishstatutebook.ie/eli/1925/act/8/enacted/en/print
+# http://www.irishstatutebook.ie/eli/1926/sro/919/made/en/print
+# http://www.irishstatutebook.ie/eli/1947/sro/71/made/en/print
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 # Summer Time Act, 1916
@@ -491,6 +508,17 @@ Link	Europe/London	Europe/Jersey
 Link	Europe/London	Europe/Guernsey
 Link	Europe/London	Europe/Isle_of_Man
 
+# The following is like GB-Eire and EU, except with standard time in
+# summer and negative daylight saving time in winter.
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Eire	1971	only	-	Oct	31	 2:00u	-1:00	GMT
+Rule	Eire	1972	1980	-	Mar	Sun>=16	 2:00u	0	IST
+Rule	Eire	1972	1980	-	Oct	Sun>=23	 2:00u	-1:00	GMT
+Rule	Eire	1981	max	-	Mar	lastSun	 1:00u	0	IST
+Rule	Eire	1981	1989	-	Oct	Sun>=23	 1:00u	-1:00	GMT
+Rule	Eire	1990	1995	-	Oct	Sun>=22	 1:00u	-1:00	GMT
+Rule	Eire	1996	max	-	Oct	lastSun	 1:00u	-1:00	GMT
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
 			-0:25:21 -	DMT	1916 May 21  2:00s
@@ -502,9 +530,7 @@ Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
 			 0:00	1:00	IST	1947 Nov  2  2:00s
 			 0:00	-	GMT	1948 Apr 18  2:00s
 			 0:00	GB-Eire	GMT/IST	1968 Oct 27
-			 1:00	-	IST	1971 Oct 31  2:00u
-			 0:00	GB-Eire	GMT/IST	1996
-			 0:00	EU	GMT/IST
+			 1:00	Eire	IST/GMT
 
 ###############################################################################
 

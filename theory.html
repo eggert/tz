@@ -52,6 +52,10 @@ However, the database is not designed for and does not suffice for
 applications requiring accurate handling of all past times everywhere,
 as it would take far too much effort and guesswork to record all
 details of pre-1970 civil timekeeping.
+Athough some information outside the scope of the database is
+collected in a file <code>backzone</code> that is distributed along
+with the database proper, this file is less reliable and does not
+necessarily follow database guidelines.
 </p>
 
 <p>
@@ -338,6 +342,7 @@ MET/MEST Middle European (a backward-compatibility alias for Central European),
 MSK/MSD Moscow,
 MST/MDT/MWT/MPT/MDDT Mountain,
 NST/NDT/NWT/NPT/NDDT Newfoundland,
+NST/NDT/NWT/NPT Nome,
 NZMT/NZST New Zealand through 1945,
 NZST/NZDT New Zealand 1946&ndash;present,
 PKT/PKST Pakistan,
@@ -445,7 +450,7 @@ Israel. To avoid ambiguity, use numeric UT offsets like
     <h2 id="accuracy">Accuracy of the tz database</h2>
 <p>
 The tz database is not authoritative, and it surely has errors.
-Corrections are welcome and encouraged; see the file CONTRIBUTING.
+Corrections are welcome and encouraged; see the file <code>CONTRIBUTING</code>.
 Users requiring authoritative data should consult national standards
 bodies and the references cited in the database's comments.
 </p>

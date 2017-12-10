@@ -75,8 +75,8 @@
 #        2:00       EET  EEST       Eastern Europe
 #        3:00       MSK  MSD  MDST* Moscow
 
-# From Peter Ilieve (1994-12-04),
-# The original six [EU members]: Belgium, France, (West) Germany, Italy,
+# From Peter Ilieve (1994-12-04), re EEC/EC/EU members:
+# The original six: Belgium, France, (West) Germany, Italy,
 # Luxembourg, the Netherlands.
 # Plus, from 1 Jan 73: Denmark, Ireland, United Kingdom.
 # Plus, from 1 Jan 81: Greece.
@@ -536,8 +536,9 @@ Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
 
 # Europe
 
-# EU rules are for the European Union, previously known as the EC, EEC,
-# Common Market, etc.
+# The following rules are for the European Union and for its
+# predecessor organization, the European Communities.
+# For brevity they are called "EU rules" elsewhere in this file.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	EU	1977	1980	-	Apr	Sun>=1	 1:00u	1:00	S
@@ -970,7 +971,7 @@ Zone	Europe/Prague	0:57:44 -	LMT	1850
 # The page http://www.retsinfo.dk/_GETDOCI_/ACCN/A18930008330-REGL
 # confirms this, and states that the law was put forth 1893-03-29.
 #
-# The EU treaty with effect from 1973:
+# The EU [actually, EEC and Euratom] treaty with effect from 1973:
 # http://www.retsinfo.dk/_GETDOCI_/ACCN/A19722110030-REGL
 #
 # This provoked a new law from 1974 to make possible summer time changes
@@ -1026,9 +1027,10 @@ Zone Atlantic/Faroe	-0:27:04 -	LMT	1908 Jan 11 # Tórshavn
 # East Greenland and Franz Josef Land, but we don't know their time zones.
 # My source for this is Wilhelm Dege's book mentioned under Svalbard.
 #
-# From Paul Eggert (2006-03-22):
-# Greenland joined the EU as part of Denmark, obtained home rule on 1979-05-01,
-# and left the EU on 1985-02-01.  It therefore should have been using EU
+# From Paul Eggert (2017-12-10):
+# Greenland joined the European Communities as part of Denmark,
+# obtained home rule on 1979-05-01, and left the European Communities
+# on 1985-02-01.  It therefore should have been using EU
 # rules at least through 1984.  Shanks & Pottenger say Scoresbysund and Godthåb
 # used C-Eur rules after 1980, but IATA SSIM (1991/1996) says they use EU
 # rules since at least 1991.  Assume EU rules since 1980.
@@ -1439,7 +1441,7 @@ Zone	Europe/Athens	1:34:52 -	LMT	1895 Sep 14
 			1:00	Greece	CE%sT	1944 Apr  4
 			2:00	Greece	EE%sT	1981
 			# Shanks & Pottenger say it switched to C-Eur in 1981;
-			# go with EU instead, since Greece joined it on Jan 1.
+			# go with EU rules instead, since Greece joined Jan 1.
 			2:00	EU	EE%sT
 
 # Hungary
@@ -2138,7 +2140,7 @@ Zone	Europe/Warsaw	1:24:00 -	LMT	1880
 # IATA SSIM (1991/1992) reports that the Azores were at -1:00.
 # IATA SSIM (1993-02) says +0:00; later issues (through 1996-09) say -1:00.
 # Guess that the Azores changed to EU rules in 1992 (since that's when Portugal
-# harmonized with the EU), and that they stayed +0:00 that winter.
+# harmonized with EU rules), and that they stayed +0:00 that winter.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 # DSH writes that despite Decree 1,469 (1915), the change to the clocks was not

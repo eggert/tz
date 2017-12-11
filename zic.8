@@ -178,13 +178,14 @@ Gives the (arbitrary) name of the set of rules this rule is part of.
 .TP
 .B FROM
 Gives the first year in which the rule applies.
-Any integer year can be supplied; the proleptic Gregorian calendar is assumed.
+Any signed integer year can be supplied; the proleptic Gregorian calendar
+is assumed, with year 0 preceding year 1.
 The word
 .B minimum
-(or an abbreviation) means the minimum year representable as an integer.
+(or an abbreviation) means the indefinite past.
 The word
 .B maximum
-(or an abbreviation) means the maximum year representable as an integer.
+(or an abbreviation) means the indefinite future.
 Rules can describe times that are not representable as time values,
 with the unrepresentable times ignored; this allows rules to be portable
 among hosts with differing time value types.
@@ -246,11 +247,13 @@ Recognized forms include:
 .nf
 .in +.5i
 .sp
-.ta \w'1:28:13\0\0'u
+.ta \w'01:28:13\0\0'u
 2	time in hours
 2:00	time in hours and minutes
+01:28:14	time in hours, minutes, and seconds
 15:00	24-hour format time (for times after noon)
-1:28:14	time in hours, minutes, and seconds
+260:00	260 hours after 00:00
+\*-2:30	2.5 hours before 00:00
 \*-	equivalent to 0
 .fi
 .in -.5i
@@ -286,10 +289,10 @@ This field has the same format as the
 .B AT
 field
 (although, of course, the
-.B w
-and
-.B s
 suffixes are not used).
+Negative offsets are allowed; in Ireland, for example, daylight saving
+time is observed in winter and has a negative offset relative to
+Irish Standard Time.
 Only the sum of standard time and this amount matters; for example,
 .I zic
 does not distinguish a 10:30 standard time plus an 0:30
@@ -317,13 +320,13 @@ A zone line has the form
 .sp
 .nf
 .ti +.5i
-.ta \w'Zone\0\0'u +\w'Australia/Adelaide\0\0'u +\w'GMTOFF\0\0'u +\w'RULES/SAVE\0\0'u +\w'FORMAT\0\0'u
-Zone	NAME	GMTOFF	RULES/SAVE	FORMAT	[UNTILYEAR [MONTH [DAY [TIME]]]]
+.ta \w'Zone\0\0'u +\w'Asia/Amman\0\0'u +\w'GMTOFF\0\0'u +\w'Jordan\0\0'u +\w'FORMAT\0\0'u
+Zone	NAME	GMTOFF	RULES	FORMAT	[UNTIL]
 .sp
 For example:
 .sp
 .ti +.5i
-Zone	Australia/Adelaide	9:30	Aus	AC%sT	1971 Oct 31  2:00
+Zone	Asia/Amman	2:00	Jordan	EE%sT	2017 Oct 27 01:00
 .sp
 .fi
 The fields that make up a zone line are:
@@ -348,8 +351,8 @@ and
 fields of rule lines;
 begin the field with a minus sign if time must be subtracted from UT.
 .TP
-.B RULES/SAVE
-The name of the rule(s) that apply in the time zone or,
+.B RULES
+The name of the rules that apply in the time zone or,
 alternately, an amount of time to add to local standard time.
 If this field is
 .B \*-
@@ -383,9 +386,9 @@ separates standard and daylight abbreviations.
 To conform to POSIX, a time zone abbreviation should contain only
 alphanumeric ASCII characters, "+" and "\*-".
 .TP
-.B UNTILYEAR [MONTH [DAY [TIME]]]
+.B UNTIL
 The time at which the UT offset or the rule(s) change for a location.
-It is specified as a year, a month, a day, and a time of day.
+It takes the form of YEAR [MONTH [DAY [TIME]]].
 If this is specified,
 the time zone information is generated from the given UT offset
 and rule change until the time specified, which is interpreted using
@@ -454,7 +457,7 @@ Leap	YEAR	MONTH	DAY	HH:MM:SS	CORR	R/S
 For example:
 .ti +.5i
 .sp
-Leap	1974	Dec	31	23:59:60	+	S
+Leap	2016	Dec	31	23:59:60	+	S
 .sp
 .fi
 The
@@ -507,25 +510,25 @@ Rule	EU	1979	1995	\*-	Sep	lastSun	1:00u	0	\*-
 Rule	EU	1981	max	\*-	Mar	lastSun	1:00u	1:00	S
 Rule	EU	1996	max	\*-	Oct	lastSun	1:00u	0	\*-
 .sp
-.ta \w'# Zone\0\0'u +\w'Europe/Zurich\0\0'u +\w'GMTOFF\0\0'u +\w'RULES/SAVE\0\0'u +\w'FORMAT\0\0'u
-# Zone	NAME	GMTOFF	RULES/SAVE	FORMAT	UNTIL
+.ta \w'# Zone\0\0'u +\w'Europe/Zurich\0\0'u +\w'GMTOFF\0\0'u +\w'0:34:08\0\0'u +\w'FORMAT\0\0'u
+# Zone	NAME	GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Zurich	0:34:08	\*-	LMT	1853 Jul 16
 		0:29:46	\*-	BMT	1894 Jun
 		1:00	Swiss	CE%sT	1981
 		1:00	EU	CE%sT
 .sp
-Link	Europe/Zurich	Switzerland
+Link	Europe/Zurich	Europe/Vaduz
 .sp
 .in
 .fi
 In this example, the zone is named Europe/Zurich but it has an alias
-as Switzerland.  This example says that Zurich was 34 minutes and 8
-seconds west of UT until 1853-07-16 at 00:00, when the legal offset
+as Europe/Vaduz.  This example says that Zurich was 34 minutes and 8
+seconds east of UT until 1853-07-16 at 00:00, when the legal offset
 was changed to 7\(de\|26\(fm\|22.50\(sd; although this works out to
 0:29:45.50, the input format cannot represent fractional seconds so it
-is rounded here.  After 1894-06-01 at 00:00 Swiss daylight saving rules
-(defined with lines beginning with "Rule Swiss") apply, and the UT offset
-became one hour.  From 1981 to the present, EU daylight saving rules have
+is rounded here.  After 1894-06-01 at 00:00 the UT offset became one hour
+and Swiss daylight saving rules (defined with lines beginning with "Rule
+Swiss") apply.  From 1981 to the present, EU daylight saving rules have
 applied, and the UTC offset has remained at one hour.
 .PP
 In 1941 and 1942, daylight saving time applied from the first Monday

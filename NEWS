@@ -52,6 +52,11 @@ Unreleased, experimental changes
 
   Changes to documentation and commentary
 
+    The zic man page now documents the longstanding behavior that
+    times and years can be out of the usual range, with negative times
+    counting backwards from midnight and with year 0 preceding year 1.
+    (Problem reported by Michael Deckers.)
+
     The theory.html file now mentions the POSIX limit of six chars
     per abbreviation, and lists alphabetic abbreviations used.
 

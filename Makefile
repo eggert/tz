@@ -42,36 +42,63 @@ POSIXRULES=	America/New_York
 # Also see TZDEFRULESTRING below, which takes effect only
 # if the time zone files cannot be accessed.
 
-# Everything gets put in subdirectories of. . .
 
-TOPDIR=		/usr/local
+# Installation locations.
+#
+# The defaults are suitable for Debian, except that if REDO is
+# posix_right or right_posix then files that Debian puts under
+# /usr/share/zoneinfo/posix and /usr/share/zoneinfo/right are instead
+# put under /usr/share/zoneinfo-posix and /usr/share/zoneinfo-leaps,
+# respectively.  Problems with the Debian approach are discussed in
+# the commentary for the right_posix rule (below).
+
+# Destination directory, which can be used for staging.
+# 'make DESTDIR=/stage install' installs under /stage (e.g., to
+# /stage/etc/localtime instead of to /etc/localtime).  Files under
+# /stage are not intended to work as-is, but can be copied by hand to
+# the root directory later.  If DESTDIR is empty, 'make install' does
+# not stage, but installs directly into production locations.
+DESTDIR =
+
+# Everything is installed into subdirectories of TOPDIR, and used there.
+# TOPDIR should be empty (meaning the root directory),
+# or a directory name that does not end in "/".
+# TOPDIR should be empty or an absolute name unless you're just testing.
+TOPDIR =
+
+# The default local time zone is taken from the file TZDEFAULT.
+TZDEFAULT = $(TOPDIR)/etc/localtime
+
+# The subdirectory containing installed program and data files, and
+# likewise for installed files that can be shared among architectures.
+# These should be relative file names.
+USRDIR = usr
+USRSHAREDIR = $(USRDIR)/share
 
 # "Compiled" time zone information is placed in the "TZDIR" directory
 # (and subdirectories).
-# Use an absolute path name for TZDIR unless you're just testing the software.
 # TZDIR_BASENAME should not contain "/" and should not be ".", ".." or empty.
-
 TZDIR_BASENAME=	zoneinfo
-TZDIR=		$(TOPDIR)/etc/$(TZDIR_BASENAME)
+TZDIR = $(TOPDIR)/$(USRSHAREDIR)/$(TZDIR_BASENAME)
 
-# Types to try, as an alternative to time_t.  int64_t should be first.
-TIME_T_ALTERNATIVES= int64_t int32_t uint32_t uint64_t
+# The "tzselect" and (if you do "make INSTALL") "date" commands go in:
+BINDIR = $(TOPDIR)/$(USRDIR)/bin
 
-# The "tzselect", "zic", and "zdump" commands get installed in. . .
+# The "zdump" command goes in:
+ZDUMPDIR = $(BINDIR)
 
-ETCDIR=		$(TOPDIR)/etc
-
-# If you "make INSTALL", the "date" command gets installed in. . .
-
-BINDIR=		$(TOPDIR)/bin
+# The "zic" command goes in:
+ZICDIR = $(TOPDIR)/$(USRDIR)/sbin
 
 # Manual pages go in subdirectories of. . .
-
-MANDIR=		$(TOPDIR)/man
+MANDIR = $(TOPDIR)/$(USRSHAREDIR)/man
 
 # Library functions are put in an archive in LIBDIR.
+LIBDIR = $(TOPDIR)/$(USRDIR)/lib
 
-LIBDIR=		$(TOPDIR)/lib
+
+# Types to try, as an alternative to time_t.  int64_t should be first.
+TIME_T_ALTERNATIVES = int64_t int32_t uint32_t uint64_t
 
 # If you want only POSIX time, with time values interpreted as
 # seconds since the epoch (not counting leap seconds), use
@@ -476,13 +503,17 @@ all:		tzselect yearistype zic zdump libtz.a $(TABDATA)
 ALL:		all date $(ENCHILADA)
 
 install:	all $(DATA) $(REDO) $(MANS)
-		mkdir -p '$(DESTDIR)$(ETCDIR)' '$(DESTDIR)$(TZDIR)' \
+		mkdir -p '$(DESTDIR)$(BINDIR)' \
+			'$(DESTDIR)$(ZDUMPDIR)' '$(DESTDIR)$(ZICDIR)' \
 			'$(DESTDIR)$(LIBDIR)' \
 			'$(DESTDIR)$(MANDIR)/man3' '$(DESTDIR)$(MANDIR)/man5' \
 			'$(DESTDIR)$(MANDIR)/man8'
-		$(ZIC_INSTALL) -l $(LOCALTIME) -p $(POSIXRULES)
+		$(ZIC_INSTALL) -l $(LOCALTIME) -p $(POSIXRULES) \
+			-t '$(DESTDIR)$(TZDEFAULT)'
 		cp -f $(TABDATA) '$(DESTDIR)$(TZDIR)/.'
-		cp tzselect zic zdump '$(DESTDIR)$(ETCDIR)/.'
+		cp tzselect '$(DESTDIR)$(BINDIR)/.'
+		cp zdump '$(DESTDIR)$(ZDUMPDIR)/.'
+		cp zic '$(DESTDIR)$(ZICDIR)/.'
 		cp libtz.a '$(DESTDIR)$(LIBDIR)/.'
 		$(RANLIB) '$(DESTDIR)$(LIBDIR)/libtz.a'
 		cp -f newctime.3 newtzset.3 '$(DESTDIR)$(MANDIR)/man3/.'
@@ -538,6 +569,7 @@ INSTALLARGS = \
  DESTDIR='$(DESTDIR)' \
  LEAPSECONDS='$(LEAPSECONDS)' \
  PACKRATDATA='$(PACKRATDATA)' \
+ TZDEFAULT='$(TZDEFAULT)' \
  TZDIR='$(TZDIR)' \
  YEARISTYPE='$(YEARISTYPE)' \
  ZIC='$(ZIC)'
@@ -795,8 +827,11 @@ check_time_t_alternatives:
 		    REDO='$(REDO)' \
 		    install && \
 		  diff $$quiet_option -r \
-		    time_t.dir/int64_t/etc/zoneinfo \
-		    time_t.dir/$$type/etc/zoneinfo && \
+		    time_t.dir/int64_t/etc \
+		    time_t.dir/$$type/etc && \
+		  diff $$quiet_option -r \
+		    time_t.dir/int64_t/usr/share \
+		    time_t.dir/$$type/usr/share && \
 		  case $$type in \
 		  int32_t) range=-2147483648,2147483647;; \
 		  uint32_t) range=0,4294967296;; \
@@ -805,9 +840,9 @@ check_time_t_alternatives:
 		  *) range=-10000000000,10000000000;; \
 		  esac && \
 		  echo checking $$type zones ... && \
-		  time_t.dir/int64_t/etc/zdump -V -t $$range $$zones \
+		  time_t.dir/int64_t/usr/bin/zdump -V -t $$range $$zones \
 		      >time_t.dir/int64_t.out && \
-		  time_t.dir/$$type/etc/zdump -V -t $$range $$zones \
+		  time_t.dir/$$type/usr/bin/zdump -V -t $$range $$zones \
 		      >time_t.dir/$$type.out && \
 		  diff -u time_t.dir/int64_t.out time_t.dir/$$type.out \
 		    || exit; \

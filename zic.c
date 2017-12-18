@@ -549,7 +549,7 @@ usage(FILE *stream, int status)
   fprintf(stream,
 	  _("%s: usage is %s [ --version ] [ --help ] [ -v ] \\\n"
 	    "\t[ -l localtime ] [ -p posixrules ] [ -d directory ] \\\n"
-	    "\t[ -L leapseconds ] [ filename ... ]\n\n"
+	    "\t[ -t localtime-link ] [ -L leapseconds ] [ filename ... ]\n\n"
 	    "Report bugs to %s.\n"),
 	  progname, progname, REPORT_BUGS_TO);
   if (status == EXIT_SUCCESS)
@@ -581,6 +581,7 @@ static const char *	psxrules;
 static const char *	lcltime;
 static const char *	directory;
 static const char *	leapsec;
+static const char *	tzdefault;
 static const char *	yitcommand;
 
 int
@@ -613,7 +614,7 @@ main(int argc, char **argv)
 		} else if (strcmp(argv[k], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
 		}
-	while ((c = getopt(argc, argv, "d:l:p:L:vsy:")) != EOF && c != -1)
+	while ((c = getopt(argc, argv, "d:l:L:p:st:vy:")) != EOF && c != -1)
 		switch (c) {
 			default:
 				usage(stderr, EXIT_FAILURE);
@@ -647,6 +648,16 @@ _("%s: More than one -p option specified\n"),
 					return EXIT_FAILURE;
 				}
 				break;
+			case 't':
+				if (tzdefault != NULL) {
+				  fprintf(stderr,
+					  _("%s: More than one -t option"
+					    " specified\n"),
+					  progname);
+				  return EXIT_FAILURE;
+				}
+				tzdefault = optarg;
+				break;
 			case 'y':
 				if (yitcommand == NULL) {
 					warning(_("-y is obsolescent"));
@@ -679,6 +690,8 @@ _("%s: More than one -L option specified\n"),
 		usage(stderr, EXIT_FAILURE);	/* usage message by request */
 	if (directory == NULL)
 		directory = TZDIR;
+	if (tzdefault == NULL)
+		tzdefault = TZDEFAULT;
 	if (yitcommand == NULL)
 		yitcommand = "yearistype";
 
@@ -715,7 +728,7 @@ _("%s: More than one -L option specified\n"),
 	}
 	if (lcltime != NULL) {
 		eat(_("command line"), 1);
-		dolink(lcltime, TZDEFAULT, true);
+		dolink(lcltime, tzdefault, true);
 	}
 	if (psxrules != NULL) {
 		eat(_("command line"), 1);
@@ -1249,10 +1262,10 @@ inzone(char **fields, int nfields)
 		error(_("wrong number of fields on Zone line"));
 		return false;
 	}
-	if (strcmp(fields[ZF_NAME], TZDEFAULT) == 0 && lcltime != NULL) {
+	if (lcltime != NULL && strcmp(fields[ZF_NAME], tzdefault) == 0) {
 		error(
 _("\"Zone %s\" line and -l option are mutually exclusive"),
-			TZDEFAULT);
+			tzdefault);
 		return false;
 	}
 	if (strcmp(fields[ZF_NAME], TZDEFRULES) == 0 && psxrules != NULL) {

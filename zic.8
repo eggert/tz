@@ -63,6 +63,10 @@ will act as if the input contained a link line of the form
 .ti +.5i
 Link	\fItimezone\fP		posixrules
 .TP
+.BI "\*-t " file
+When creating local time information, put the configuration link in
+the named file rather than in the standard location.
+.TP
 .BI "\*-L " leapsecondfilename
 Read leap second information from the file with the given name.
 If this option is not used,
@@ -568,8 +572,10 @@ This works around bugs in software that mishandles large negative time
 stamps.  Call it sour grapes, but pre-Big-Bang time stamps are
 physically suspect anyway.  The pre-Big-Bang cutoff time is
 approximate and may change in future versions.
-.SH FILE
-/usr/local/etc/zoneinfo	standard directory used for created files
+.SH FILES
+.ta \w'/usr/share/zoneinfo\0\0'u
+/etc/localtime	default local time zone file
+/usr/share/zoneinfo	default time zone information directory
 .SH "SEE ALSO"
 newctime(3), tzfile(5), zdump(8)
 .\" This file is in the public domain, so clarified as of

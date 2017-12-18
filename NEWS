@@ -26,6 +26,14 @@ Unreleased, experimental changes
 
   Changes to build procedure
 
+    The default installation locations have been changed to mostly
+    match Debian circa 2017, instead of being designed as an add-on to
+    4.3BSD circa 1986.  This affects the Makefile macros TOPDIR,
+    TZDIR, MANDIR, and LIBDIR.  New makefile macros TZDEFAULT, USRDIR,
+    USRSHAREDIR, BINDIR, ZDUMPDIR, and ZICDIR let installers tailor
+    locations more precisely.  (This responds to suggestions from
+    Brian Inglis and from Steve Summit.)
+
     The default installation procedure no longer creates the
     backward-compatibility link US/Pacific-New, which causes
     confusion during user setup (e.g., see Debian bug 815200).
@@ -43,6 +51,11 @@ Unreleased, experimental changes
     by Jon Skeet.)
 
   Changes to code
+
+    zic has a new option -t FILE that specifies the location of the
+    file that determines local time when TZ is unset.  The default for
+    this location can be configured via the new TZDEFAULT makefile
+    macro, which defaults to /etc/localtime.
 
     Diagnostics and commentary now distinguish UT from UTC more
     carefully; see theory.html for more information about UT vs UTC.

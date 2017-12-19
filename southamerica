@@ -908,12 +908,17 @@ Rule	Brazil	2007	only	-	Oct	Sun>=8	 0:00	1:00	S
 # [t]he DST period in Brazil now on will be from the 3rd Oct Sunday to the
 # 3rd Feb Sunday. There is an exception on the return date when this is
 # the Carnival Sunday then the return date will be the next Sunday...
-Rule	Brazil	2008	max	-	Oct	Sun>=15	0:00	1:00	S
+Rule	Brazil	2008	2017	-	Oct	Sun>=15	0:00	1:00	S
 Rule	Brazil	2008	2011	-	Feb	Sun>=15	0:00	0	-
 Rule	Brazil	2012	only	-	Feb	Sun>=22	0:00	0	-
 Rule	Brazil	2013	2014	-	Feb	Sun>=15	0:00	0	-
 Rule	Brazil	2015	only	-	Feb	Sun>=22	0:00	0	-
 Rule	Brazil	2016	2022	-	Feb	Sun>=15	0:00	0	-
+# From Steffen Thorsen (2017-12-18):
+# According to many media sources, next year's DST start in Brazil will move to
+# the first Sunday of November, and it will stay like that for the years after.
+# ... https://www.timeanddate.com/news/time/brazil-delays-dst-2018.html
+Rule	Brazil	2018	max	-	Nov	Sun>=1	0:00	1:00	S
 Rule	Brazil	2023	only	-	Feb	Sun>=22	0:00	0	-
 Rule	Brazil	2024	2025	-	Feb	Sun>=15	0:00	0	-
 Rule	Brazil	2026	only	-	Feb	Sun>=22	0:00	0	-

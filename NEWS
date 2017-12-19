@@ -2,6 +2,12 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to future time stamps
+
+    Starting in 2018 southern Brazil will begin DST on November's
+    first Sunday instead of October's third Sunday.  (Thanks to
+    Steffen Thorsen.)
+
   Changes to past time stamps
 
     A discrepancy of 4 s in timestamps before 1931 in South Sudan has

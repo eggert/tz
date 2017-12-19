@@ -73,6 +73,10 @@ Unreleased, experimental changes
     The theory.html file now mentions the POSIX limit of six chars
     per abbreviation, and lists alphabetic abbreviations used.
 
+    The files tz-art.htm and tz-link.htm have been renamed to
+    tz-art.html and tz-link.html, respectively, for consistency with
+    other file names and to simplify web server configuration.
+
 
 Release 2017c - 2017-10-20 14:49:34 -0700
 

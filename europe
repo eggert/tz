@@ -1344,7 +1344,7 @@ Zone	Europe/Paris	0:09:21 -	LMT	1891 Mar 15  0:01
 # From Markus Kuhn (1998-09-29):
 # The German time zone web site by the Physikalisch-Technische
 # Bundesanstalt contains DST information back to 1916.
-# [See tz-link.htm for the URL.]
+# [See tz-link.html for the URL.]
 
 # From Jörg Schilling (2002-10-23):
 # In 1945, Berlin was switched to Moscow Summer time (GMT+4) by

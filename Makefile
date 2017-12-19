@@ -451,7 +451,7 @@ MANTXTS=	newctime.3.txt newstrftime.3.txt newtzset.3.txt \
 			date.1.txt
 COMMON=		calendars CONTRIBUTING LICENSE Makefile \
 			NEWS README theory.html version
-WEB_PAGES=	tz-art.htm tz-how-to.html tz-link.htm
+WEB_PAGES=	tz-art.html tz-how-to.html tz-link.html
 DOCS=		$(MANS) date.1 $(MANTXTS) $(WEB_PAGES)
 PRIMARY_YDATA=	africa antarctica asia australasia \
 		europe northamerica southamerica
@@ -487,7 +487,7 @@ VERSION_DEPS= \
 		newctime.3 newstrftime.3 newtzset.3 northamerica \
 		pacificnew private.h \
 		southamerica strftime.c systemv theory.html \
-		time2posix.3 tz-art.htm tz-how-to.html tz-link.htm \
+		time2posix.3 tz-art.html tz-how-to.html tz-link.html \
 		tzfile.5 tzfile.h tzselect.8 tzselect.ksh \
 		workman.sh yearistype.sh \
 		zdump.8 zdump.c zic.8 zic.c \

@@ -1450,7 +1450,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 #
 # From Paul Eggert (2006-03-22):
 # The Department of Internal Affairs (DIA) maintains a brief history,
-# as does Carol Squires; see tz-link.htm for the full references.
+# as does Carol Squires; see tz-link.html for the full references.
 # Use these sources in preference to Shanks & Pottenger.
 #
 # For Chatham, IATA SSIM (1991/1999) gives the NZ rules but with

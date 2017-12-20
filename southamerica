@@ -910,7 +910,13 @@ Rule	Brazil	2007	only	-	Oct	Sun>=8	 0:00	1:00	S
 # the Carnival Sunday then the return date will be the next Sunday...
 Rule	Brazil	2008	2017	-	Oct	Sun>=15	0:00	1:00	S
 Rule	Brazil	2008	2011	-	Feb	Sun>=15	0:00	0	-
+# Decree 7,584 <http://pcdsh01.on.br/HVdecreto7584_20111013.jpg> (2011-10-13)
+# added Bahia.
 Rule	Brazil	2012	only	-	Feb	Sun>=22	0:00	0	-
+# Decree 7,826 <http://pcdsh01.on.br/HVdecreto7826_20121015.jpg> (2012-10-15)
+# removed Bahia and added Tocantins.
+# Decree 8,112 <http://pcdsh01.on.br/HVdecreto8112_20130930.JPG> (2013-09-30)
+# removed Tocantins.
 Rule	Brazil	2013	2014	-	Feb	Sun>=15	0:00	0	-
 Rule	Brazil	2015	only	-	Feb	Sun>=22	0:00	0	-
 Rule	Brazil	2016	2022	-	Feb	Sun>=15	0:00	0	-
@@ -918,6 +924,8 @@ Rule	Brazil	2016	2022	-	Feb	Sun>=15	0:00	0	-
 # According to many media sources, next year's DST start in Brazil will move to
 # the first Sunday of November, and it will stay like that for the years after.
 # ... https://www.timeanddate.com/news/time/brazil-delays-dst-2018.html
+# From Steffen Thorsen (2017-12-20):
+# http://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/decreto/D9242.htm
 Rule	Brazil	2018	max	-	Nov	Sun>=1	0:00	1:00	S
 Rule	Brazil	2023	only	-	Feb	Sun>=22	0:00	0	-
 Rule	Brazil	2024	2025	-	Feb	Sun>=15	0:00	0	-

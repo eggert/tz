@@ -237,11 +237,6 @@ Zone Africa/Porto-Novo	0:10:28	-	LMT	1912 Jan  1
 			0:00	-	GMT	1934 Feb 26
 			1:00	-	WAT
 
-# São Tomé and Príncipe
-Zone	Africa/Sao_Tome	 0:26:56 -	LMT	1884
-			-0:36:32 -	LMT	1912 # Lisbon Mean Time
-			 0:00	-	GMT
-
 # Mali (northern)
 Zone	Africa/Timbuktu	-0:12:04 -	LMT	1912
 			 0:00	-	GMT

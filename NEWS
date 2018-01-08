@@ -2,6 +2,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to past and future time stamps
+
+    São Tomé and Príncipe switched from +00 to +01 on 2018-01-01 at
+    00:00.  (Thanks to Steffen Thorsen.)
+
   Changes to future time stamps
 
     Starting in 2018 southern Brazil will begin DST on November's

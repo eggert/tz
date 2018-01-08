@@ -158,7 +158,6 @@ Link Africa/Abidjan Africa/Freetown	# Sierra Leone
 Link Africa/Abidjan Africa/Lome		# Togo
 Link Africa/Abidjan Africa/Nouakchott	# Mauritania
 Link Africa/Abidjan Africa/Ouagadougou	# Burkina Faso
-Link Africa/Abidjan Africa/Sao_Tome	# São Tomé and Príncipe
 Link Africa/Abidjan Atlantic/St_Helena	# St Helena
 
 # Djibouti
@@ -1037,6 +1036,11 @@ Zone	Indian/Reunion	3:41:52 -	LMT	1911 Jun # Saint-Denis
 #	Inaccessible, Nightingale: uninhabited
 
 # São Tomé and Príncipe
+Zone	Africa/Sao_Tome	 0:26:56 -	LMT	1884
+			-0:36:45 -	LMT	1912 # Lisbon Mean Time
+			 0:00	-	GMT	2018 Jan 1 00:00
+			 1:00	-	WAT
+
 # Senegal
 # See Africa/Abidjan.
 

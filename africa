@@ -1040,12 +1040,13 @@ Zone	Indian/Reunion	3:41:52 -	LMT	1911 Jun # Saint-Denis
 # From Steffen Thorsen (2018-01-08):
 # Multiple sources tell that Sao Tome changed from UTC to UTC+1 as
 # they entered the year 2018.
-# https://www.dn.pt/lusa/interior/relogios-avancam-uma-hora-em-sao-tome-e-principe-a-partir-de-janeiro-de-2018-9006615.html
-# ...
+# From Michael Deckers (2018-01-08):
+# the switch is from 01:00 to 02:00 ... [Decree No. 25/2017]
+# http://www.mnec.gov.st/index.php/publicacoes/documentos/file/90-decreto-lei-n-25-2017
 
 Zone	Africa/Sao_Tome	 0:26:56 -	LMT	1884
 			-0:36:45 -	LMT	1912 # Lisbon Mean Time
-			 0:00	-	GMT	2018 Jan 1 00:00
+			 0:00	-	GMT	2018 Jan  1 01:00
 			 1:00	-	WAT
 
 # Senegal

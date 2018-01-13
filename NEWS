@@ -40,7 +40,7 @@ Unreleased, experimental changes
     The default installation locations have been changed to mostly
     match Debian circa 2017, instead of being designed as an add-on to
     4.3BSD circa 1986.  This affects the Makefile macros TOPDIR,
-    TZDIR, MANDIR, and LIBDIR.  New makefile macros TZDEFAULT, USRDIR,
+    TZDIR, MANDIR, and LIBDIR.  New Makefile macros TZDEFAULT, USRDIR,
     USRSHAREDIR, BINDIR, ZDUMPDIR, and ZICDIR let installers tailor
     locations more precisely.  (This responds to suggestions from
     Brian Inglis and from Steve Summit.)

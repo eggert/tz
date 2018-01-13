@@ -1,6 +1,13 @@
 News for the tz database
 
-Unreleased, experimental changes
+Release 2018a - 2018-01-12 22:29:21 -0800
+
+  Briefly:
+  São Tomé and Príncipe switched from +00 to +01.
+  Brazil's DST will now start on November's first Sunday.
+  Ireland's standard time is now in the summer, not the winter.
+  Use Debian-style installation locations, instead of 4.3BSD-style.
+  New zic option -t.
 
   Changes to past and future time stamps
 

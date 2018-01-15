@@ -678,7 +678,8 @@ check_character_set: $(ENCHILADA)
 check_white_space: $(ENCHILADA)
 		patfmt=' \t|[\f\r\v]' && pat=`printf "$$patfmt\\n"` && \
 		! grep -En "$$pat" $(ENCHILADA)
-		! grep -n '[[:space:]]$$' $(ENCHILADA)
+		! grep -n '[[:space:]]$$' \
+			$$(ls $(ENCHILADA) | grep -Fvx leap-seconds.list)
 
 PRECEDES_FILE_NAME = ^(Zone|Link[[:space:]]+[^[:space:]]+)[[:space:]]+
 FILE_NAME_COMPONENT_TOO_LONG = \

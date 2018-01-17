@@ -480,13 +480,13 @@ ENCHILADA=	$(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC) $(TZS) tzdata.zi
 VERSION_DEPS= \
 		calendars CONTRIBUTING LICENSE Makefile NEWS README \
 		africa antarctica asctime.c asia australasia \
-		backward backzone \
+		$(BACKWARD) backzone \
 		checklinks.awk checktab.awk \
 		date.1 date.c difftime.c \
 		etcetera europe factory iso3166.tab \
 		leap-seconds.list leapseconds.awk localtime.c \
 		newctime.3 newstrftime.3 newtzset.3 northamerica \
-		pacificnew private.h \
+		private.h \
 		southamerica strftime.c systemv theory.html \
 		time2posix.3 tz-art.html tz-how-to.html tz-link.html \
 		tzfile.5 tzfile.h tzselect.8 tzselect.ksh \

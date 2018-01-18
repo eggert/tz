@@ -1,13 +1,13 @@
 News for the tz database
 
-Unreleased, experimental changes
+Release 2018b - 2018-01-17 23:24:48 -0800
 
   Briefly:
-  Fix a packaging problem in tz2018a, which was missing ‘pacificnew’.
+  Fix a packaging problem in tz2018a, which was missing 'pacificnew'.
 
   Changes to build procedure
 
-     The distribution now contains the file ‘pacificnew’ again.
+     The distribution now contains the file 'pacificnew' again.
      This file was inadvertantly omitted in the 2018a distribution.
      (Problem reported by Matias Fonzo.)
 

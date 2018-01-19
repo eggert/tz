@@ -530,7 +530,25 @@ Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
 			 0:00	1:00	IST	1947 Nov  2  2:00s
 			 0:00	-	GMT	1948 Apr 18  2:00s
 			 0:00	GB-Eire	GMT/IST	1968 Oct 27
-			 1:00	Eire	IST/GMT
+# From Paul Eggert (2018-01-18):
+# The next line should look like this:
+#			 1:00	Eire	IST/GMT
+# However, in January 2018 we discovered that the Eire rules cause
+# problems with tests for ICU:
+# https://mm.icann.org/pipermail/tz/2018-January/025825.html
+# and with tests for OpenJDK:
+# https://mm.icann.org/pipermail/tz/2018-January/025822.html
+# To work around this problem, use a traditional approximation for
+# time stamps after 1971-10-31 02:00 UTC, to give ICU and OpenJDK
+# developers breathing room to fix bugs.  This approximation has
+# correct UTC offsets, but results in tm_isdst flags are the reverse
+# of what they should be.  This workaround is temporary and should be
+# removed reasonably soon.
+			 1:00	-	IST	1971 Oct 31  2:00u
+			 0:00	GB-Eire	GMT/IST	1996
+			 0:00	EU	GMT/IST
+# End of workaround for ICU and OpenJDK bugs.
+
 
 ###############################################################################
 

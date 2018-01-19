@@ -3,6 +3,10 @@
 # Contributed by Paul Eggert.  This file is in the public domain.
 
 BEGIN {
+	# Hack to avoid 'make check' failure in temporary workaround
+	# for ICU and OpenJDK bugs.
+	ruleUsed["Eire"] = 1
+
 	FS = "\t"
 
 	if (!iso_table) iso_table = "iso3166.tab"

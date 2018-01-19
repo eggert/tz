@@ -1,5 +1,19 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to tm_isdst
+
+    Revert the 2018a change to Europe/Dublin, so that Irish Standard
+    Time goes back to being daylight saving time instead of being
+    standard time.  This reversion is intended to be a temporary
+    workaround for bugs discovered in ICU and OpenJDK when they
+    attempted to use release 2018a.  The Europe/Dublin change is
+    scheduled to be reapplied after allowing some time for fixes to be
+    developed for ICU and OpenJDK.  (Problems reported by Deborah
+    Goldsmith and Stephen Colebourne.)
+
+
 Release 2018b - 2018-01-17 23:24:48 -0800
 
   Briefly:

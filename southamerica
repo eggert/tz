@@ -381,9 +381,9 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	S
 # rules...San Luis is still using "Western ARgentina Time" and it got
 # stuck on Summer daylight savings time even though the summer is over.
 
-# From Paul Eggert (2013-09-05):
+# From Paul Eggert (2018-01-23):
 # Perhaps San Luis operates on the legal fiction that it is at -04
-# with perpetual summer time, but ordinary usage typically seems to
+# with perpetual daylight saving time, but ordinary usage typically seems to
 # just say it's at -03; see, for example,
 # https://es.wikipedia.org/wiki/Hora_oficial_argentina
 # We've documented similar situations as being plain changes to
@@ -1481,7 +1481,7 @@ Zone Pacific/Galapagos	-5:58:24 -	LMT	1931 # Puerto Baquerizo Moreno
 #   the maintainers of the database to inform them we're adopting
 #   the same policy this year and suggest recommendations for future years.
 #
-# For now we will assume permanent summer time for the Falklands
+# For now we will assume permanent -03 for the Falklands
 # until advised differently (to apply for 2012 and beyond, after the 2011
 # experiment was apparently successful.)
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S

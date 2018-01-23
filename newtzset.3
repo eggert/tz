@@ -111,13 +111,14 @@ Where:
 .IR std " and " dst
 Three or more bytes that are the designation for the standard
 .RI ( std )
-or summer
-.RI ( dst )
+or the alternative
+.RI ( dst ,
+such as daylight saving time)
 time zone.  Only
 .I std
 is required; if
 .I dst
-is missing, then summer time does not apply in this locale.
+is missing, then daylight saving time does not apply in this locale.
 Upper- and lowercase letters are explicitly allowed.  Any characters
 except a leading colon
 .RB ( : ),
@@ -160,7 +161,7 @@ is required.  If no
 .I offset
 follows
 .IR dst ,
-summer time is assumed to be one hour ahead of standard time.  One or
+daylight saving time is assumed to be one hour ahead of standard time.  One or
 more digits may be used; the value is always interpreted as a decimal
 number.  The hour must be between zero and 24, and the minutes (and
 seconds) \*(en if present \*(en between zero and 59.  If preceded by a
@@ -170,7 +171,7 @@ west (which may be indicated by an optional preceding
 .q "+" .
 .TP
 .I rule
-Indicates when to change to and back from summer time.  The
+Indicates when to change to and back from daylight saving time.  The
 .I rule
 has the form:
 .RS
@@ -180,7 +181,7 @@ has the form:
 .IP
 where the first
 .I date
-describes when the change from standard to summer time occurs and the
+describes when the change from standard to daylight saving time occurs and the
 second
 .I date
 describes when the change back happens.  Each
@@ -258,11 +259,15 @@ extensions to POSIX.
 stands for US Eastern Standard
 Time (EST), 5 hours behind UT, without daylight saving.
 .TP
-.B FJT\*-12FJST,M11.1.0,M1.3.4/75
-stands for Fiji Time (FJT) and Fiji Summer Time (FJST), 12 hours ahead
+.B <+12>\*-12<+13>,M11.1.0,M1.2.1/147
+stands for Fiji time, 12 hours ahead
 of UT, springing forward on November's first Sunday at 02:00, and
-falling back on January's third Thursday at 75:00 (i.e., 03:00 on the
-first Sunday on or after January 18).
+falling back on January's second Monday at 147:00 (i.e., 03:00 on the
+first Sunday on or after January 14).  The abbreviations for standard
+and daylight saving time are
+.q "+12"
+and
+.q "+13".
 .TP
 .B IST\*-2IDT,M3.4.4/26,M10.5.0
 stands for Israel Standard Time (IST) and Israel Daylight Time (IDT),
@@ -270,22 +275,28 @@ stands for Israel Standard Time (IST) and Israel Daylight Time (IDT),
 Thursday at 26:00 (i.e., 02:00 on the first Friday on or after March
 23), and falling back on October's last Sunday at 02:00.
 .TP
-.B WART4WARST,J1/0,J365/25
-stands for Western Argentina Summer Time (WARST), 3 hours behind UT.
+.B <\*-04>4<\*-03>,J1/0,J365/25
+stands for permanent daylight saving time, 3 hours behind UT with
+abbreviation
+.q "\*-03".
 There is a dummy fall-back transition on December 31 at 25:00 daylight
 saving time (i.e., 24:00 standard time, equivalent to January 1 at
 00:00 standard time), and a simultaneous spring-forward transition on
 January 1 at 00:00 standard time, so daylight saving time is in effect
 all year and the initial
-.B WART
+.B <\*-04>
 is a placeholder.
 .TP
-.B WGT3WGST,M3.5.0/\*-2,M10.5.0/\*-1
-stands for Western Greenland Time (WGT) and Western Greenland Summer
-Time (WGST), 3 hours behind UT, where clocks follow the EU rules of
+.B <\*-03>3<\*-02>,M3.5.0/\*-2,M10.5.0/\*-1
+stands for time in western Greenland, 3 hours behind UT, where clocks
+follow the EU rules of
 springing forward on March's last Sunday at 01:00 UT (\-02:00 local
-time) and falling back on October's last Sunday at 01:00 UT
-(\-01:00 local time).
+time, i.e., 22:00 the previous day) and falling back on October's last
+Sunday at 01:00 UT (\-01:00 local time, i.e., 23:00 the previous day).
+The abbreviations for standard and daylight saving time are
+.q "\*-03"
+and
+.q "\*-02".
 .PP
 If no
 .I rule
@@ -297,7 +308,7 @@ by the
 file
 .B posixrules
 in the system time conversion information directory are used, with the
-standard and summer time offsets from UT replaced by those specified by
+standard and daylight saving time offsets from UT replaced by those specified by
 the
 .I offset
 values in

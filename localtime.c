@@ -1221,12 +1221,13 @@ tzparse(const char *name, struct state *sp, bool lastditch)
 					/* No adjustment to transition time */
 				} else {
 					/*
-					** If summer time is in effect, and the
-					** transition time was not specified as
-					** standard time, add the summer time
-					** offset to the transition time;
-					** otherwise, add the standard time
-					** offset to the transition time.
+					** If daylight saving time is in
+					** effect, and the transition time was
+					** not specified as standard time, add
+					** the daylight saving time offset to
+					** the transition time; otherwise, add
+					** the standard time offset to the
+					** transition time.
 					*/
 					/*
 					** Transitions from DST to DDST

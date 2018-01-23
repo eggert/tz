@@ -25,10 +25,10 @@ LOCALTIME=	GMT
 # for handling POSIX-style time zone environment variables,
 # change the line below (after finding the zone you want in the
 # time zone files, or adding it to a time zone file).
-# (When a POSIX-style environment variable is handled, the rules in the
+# When a POSIX-style environment variable is handled, the rules in the
 # template file are used to determine "spring forward" and "fall back" days and
 # times; the environment variable itself specifies UT offsets of standard and
-# summer time.)
+# daylight saving time.
 # Alternately, if you discover you've got the wrong time zone, you can just
 #	zic -p rightzone
 # to correct things.

@@ -137,15 +137,14 @@ to their normal ranges.
 .B tm_isdst
 causes
 .I mktime
-to presume initially that summer time (for example, Daylight Saving Time
-in the U.S.A.)
+to presume initially that daylight saving time
 respectively,
 is or is not in effect for the specified time.
 A negative value for
 .B tm_isdst
 causes the
 .I mktime
-function to attempt to divine whether summer time is in effect
+function to attempt to divine whether daylight saving time is in effect
 for the specified time; in this case it does not use a consistent
 rule and may give a different answer when later
 presented with the same argument.)
@@ -222,14 +221,14 @@ includes the following fields:
 	int tm_year;	/\(** year \- 1900 \(**/
 	int tm_wday;	/\(** day of week (Sunday = 0) \(**/
 	int tm_yday;	/\(** day of year (0\*(en365) \(**/
-	int tm_isdst;	/\(** is summer time in effect? \(**/
+	int tm_isdst;	/\(** is daylight saving time in effect? \(**/
 	char \(**tm_zone;	/\(** time zone abbreviation (optional) \(**/
 	long tm_gmtoff;	/\(** offset from UT in seconds (optional) \(**/
 .fi
 .RE
 .PP
 .I Tm_isdst
-is non-zero if summer time is in effect.
+is non-zero if daylight saving time is in effect.
 .PP
 .I Tm_gmtoff
 is the offset (in seconds) of the time represented

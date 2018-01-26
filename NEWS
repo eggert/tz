@@ -1,5 +1,19 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to documentation and commentary
+
+    theory.html now has a section "POSIX features no longer needed"
+    that lists POSIX API components that are now vestigial.
+    (From a suggestion by Steve Summit.)
+
+    Commentary is now more consistent about using the phrase "daylight
+    saving time", to match the C name tm_isdst.  Daylight saving time
+    need not occur in summer, and need not have a positive offset from
+    standard time.
+
+
 Release 2018c - 2018-01-22 23:00:44 -0800
 
   Briefly:

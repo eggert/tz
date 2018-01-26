@@ -631,11 +631,18 @@ transitioned to standard time at different dates.
 <p>
 The tz code contains time and date functions that are upwards
 compatible with those of POSIX.
+Code compatible with this package is already
+<a href="tz-link.html#tzdb">part of many platforms</a>,
+where the primary use of this package
+is to update obsolete time zone rule tables.
+To do this, you may need to compile the time zone compiler
+'<code>zic</code>' supplied with this package instead of using
+the system '<code>zic</code>', since the format
+of <code>zic</code>'s input is occasionally extended, and a
+platform may still be shipping an older <code>zic</code>.
 </p>
 
-<p>
-POSIX has the following properties and limitations.
-</p>
+<h3 id="POSIX">POSIX properties and limitations</h3>
 <ul>
   <li>
     <p>
@@ -772,9 +779,8 @@ POSIX has the following properties and limitations.
 	to be an integer type.
   </li>
 </ul>
-<p>
-These are the extensions that have been made to the POSIX functions:
-</p>
+
+<h3 id="POSIX-extensions">Extensions to POSIX in the tz code</h3>
 <ul>
   <li>
     <p>
@@ -814,14 +820,6 @@ These are the extensions that have been made to the POSIX functions:
 	<code>struct tm</code>, e.g., <code>tm_zone</code>.
 </li>
 <li>
-	Since the TZ environment variable can now be used to control time
-	conversion, the <code>daylight</code>
-	and <code>timezone</code> variables are no longer needed.
-	(These variables are defined and set by <code>tzset</code>;
-	however, their values will not be used
-	by <code>localtime</code>.)
-</li>
-<li>
 	Functions <code>tzalloc</code>, <code>tzfree</code>,
 	<code>localtime_rz</code>, and <code>mktime_z</code> for
 	more-efficient thread-safe applications that need to use
@@ -855,22 +853,46 @@ These are the extensions that have been made to the POSIX functions:
 	These functions can account for leap seconds, thanks to Bradley White.
 </li>
 </ul>
+
+<h3 id="vestigial">POSIX features no longer needed</h3>
 <p>
-Points of interest to folks with other systems:
+POSIX and ISO C define some APIs that are vestigial: they are not
+needed, and are relics of a too-simple model that does not suffice to
+handle many real-world timestamps. Although the tz code supports these
+vestigial APIs for backwards compatibility, they should be avoided in
+portable applications. The vestigial APIs are:
 </p>
 <ul>
   <li>
-	Code compatible with this package is already part of many platforms,
-	including GNU/Linux, Android, the BSDs, Chromium OS, Cygwin, AIX, iOS,
-	BlackBery 10, macOS, Microsoft Windows, OpenVMS, and Solaris.
-	On such hosts, the primary use of this package
-	is to update obsolete time zone rule tables.
-	To do this, you may need to compile the time zone compiler
-	'<code>zic</code>' supplied with this package instead of using
-	the system '<code>zic</code>', since the format
-	of <code>zic</code>'s input is occasionally extended, and a
-	platform may still be shipping an older <code>zic</code>.
+    The POSIX <code>tzname</code> variable does not suffice and is no
+    longer needed. To get a timestamp's time zone abbreviation,
+    consult the <code>tm_zone</code> member if available; otherwise,
+    use <code>strftime</code>'s <code>"%Z"</code> conversion
+    specification.
   </li>
+  <li>
+    The POSIX <code>daylight</code> and <code>timezone</code>
+    variables do not suffice and are no longer needed. To get a
+    timestamp's UT offset, consult the <code>tm_gmtoff</code> member
+    if available; otherwise, subtract values returned
+    by <code>localtime</code> and <code>gmtime</code> using the rules
+    of the Gregorian calendar, or
+    use <code>strftime</code>'s <code>"%z"</code> conversion
+    specification if a string like <samp>"+0900"</samp> suffices.
+  </li>
+  <li>
+    The <code>tm_isdst</code> member is almost never needed and most of
+    its uses should be discouraged in favor of the abovementioned
+    APIs. Although it can still be used in arguments to
+    <code>mktime</code> to disambiguate timestamps near a DST
+    transition when the clock jumps back, this disambguation does not
+    work when standard time itself jumps back, which can occur when a
+    location changes to a time zone with a lesser UT offset.
+  </li>
+</ul>
+
+<h3 id="other-portability">Other portability notes</h3>
+<ul>
   <li>
 	The UNIX Version 7 <code>timezone</code> function is not
 	present in this package;
@@ -898,8 +920,7 @@ Points of interest to folks with other systems:
 	A comment in the source code tells how to get compatibly wrong
 	results.
   </li>
-</ul>
-<p>
+<li>
 The functions that are conditionally compiled
 if <code>STD_INSPIRED</code> is defined
 should, at this point, be looked on primarily as food for thought.  They are
@@ -907,9 +928,8 @@ not in any sense "standard compatible" &ndash; some are not, in fact,
 specified in <em>any</em> standard.  They do, however, represent responses of
 various authors to
 standardization proposals.
-</p>
-
-<p>
+</li>
+<li>
 Other time conversion proposals, in particular the one developed by folks at
 Hewlett Packard, offer a wider selection of functions that provide capabilities
 beyond those provided here.  The absence of such functions from this package
@@ -918,7 +938,8 @@ functions.  Rather, their absence reflects the decision to make this package
 contain valid extensions to POSIX, to ensure its broad acceptability.  If
 more powerful time conversion functions can be standardized, so much the
 better.
-</p>
+</li>
+</ul>
   </section>
 
 

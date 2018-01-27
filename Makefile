@@ -189,6 +189,7 @@ LDLIBS=
 #  -DHAVE_STDINT_H if you have a non-C99 compiler with <stdint.h>
 #  -DHAVE_STRFTIME_L if <time.h> declares locale_t and strftime_l
 #  -DHAVE_STRDUP=0 if your system lacks the strdup function
+#  -DHAVE_STRTOLL=0 if your system lacks the strtoll function
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
 #  -DHAVE_SYS_STAT_H=0 if your compiler lacks a <sys/stat.h>
 #  -DHAVE_SYS_WAIT_H=0 if your compiler lacks a <sys/wait.h>

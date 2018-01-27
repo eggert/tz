@@ -66,6 +66,10 @@
 #define HAVE_STRDUP 1
 #endif
 
+#ifndef HAVE_STRTOLL
+#define HAVE_STRTOLL 1
+#endif
+
 #ifndef HAVE_SYMLINK
 #define HAVE_SYMLINK		1
 #endif /* !defined HAVE_SYMLINK */
@@ -266,14 +270,18 @@ typedef int int_fast32_t;
 #ifndef INTMAX_MAX
 # ifdef LLONG_MAX
 typedef long long intmax_t;
-#  define strtoimax strtoll
+#  if HAVE_STRTOLL
+#   define strtoimax strtoll
+#  endif
 #  define INTMAX_MAX LLONG_MAX
 #  define INTMAX_MIN LLONG_MIN
 # else
 typedef long intmax_t;
-#  define strtoimax strtol
 #  define INTMAX_MAX LONG_MAX
 #  define INTMAX_MIN LONG_MIN
+# endif
+# ifndef strtoimax
+#  define strtoimax strtol
 # endif
 #endif
 

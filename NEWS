@@ -2,6 +2,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to code
+
+    The code is a bit more portable to MS-Windows.  (Thanks to Manuela
+    Friedrich).
+
   Changes to documentation and commentary
 
     theory.html now has a section "POSIX features no longer needed"

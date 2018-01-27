@@ -893,9 +893,11 @@ dolink(char const *fromfield, char const *tofield, bool staysymlink)
 	  char *linkalloc = absolute ? NULL : relname(fromfield, tofield);
 	  char const *contents = absolute ? fromfield : linkalloc;
 	  int symlink_errno = symlink(contents, tofield) == 0 ? 0 : errno;
-	  if (symlink_errno == ENOENT && !todirs_made) {
+	  if (!todirs_made
+	      && (symlink_errno == ENOENT || symlink_errno == ENOTSUP)) {
 	    mkdirs(tofield, true);
-	    symlink_errno = symlink(contents, tofield) == 0 ? 0 : errno;
+	    if (symlink_errno == ENOENT)
+	      symlink_errno = symlink(contents, tofield) == 0 ? 0 : errno;
 	  }
 	  free(linkalloc);
 	  if (symlink_errno == 0) {

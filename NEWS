@@ -2,6 +2,36 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+  Support zi parsers that mishandle negative DST offsets
+
+  Changes to build procedure
+
+    The new XDST macro in the Makefile lets the installer choose
+    XDST=full, which allows arbitrary DST offsets in the data, or
+    XDST=pdst, which allows only positive DST offsets.  Choosing
+    XDST=full is arguably more correct for Ireland, which observes
+    Irish Standard Time (IST, UTC+01) in summer and GMT (UTC) in
+    winter.  Choosing XDST=pdst is better for zoneinfo parsers that do
+    not work well with negative DST offsets, notably OpenJDK+CLDR.
+    On platforms using tzcode or similar APIs, XDST should not affect
+    any behavior other than that depending on the tm_isdst flag.
+
+    For now this change does not affect client-visible behavior by
+    default, as the Makefile defaults to XDST=pdst and uncommented
+    parts of the data source files contain only pdst-format data.
+    After a bit of time for testing, XDST=full and full-format source
+    files are planned to become the default, so that parsers that
+    support negative DST offsets can get full data without changing
+    their build procedures.  Parsers requiring positive DST offsets
+    should use the new file pdstdata.zi instead of tzdata.zi or the
+    source files 'africa' etc.: pdstdata.zi is pdst-compatible, it is
+    automatically built from the data source files, and it will
+    continue to be pdst-compatible regardless of XDST.  To get
+    full-format data now, use the new file fulldata.zi, which will
+    continue to be full-format regardless of XDST.  To get the format
+    selected by XDST, use tzdata.zi.
+
   Changes to code
 
     The code is a bit more portable to MS-Windows.  (Thanks to Manuela

@@ -10,6 +10,26 @@ VERSION=	unknown
 # Email address for bug reports.
 BUGEMAIL=	tz@iana.org
 
+# To install the full data, which can contain daylight saving time
+# offsets that are negative (relative to standard time), use
+#	XDST=	full
+# To install data containing only positive daylight saving time
+# offsets, but otherwise as close to the full data as practical, use
+#	XDST=	pdst
+XDST=		pdst
+# Parsers requiring DST offsets to be positive should use the file
+# pdstdata.zi, which contains almost all the data of 'africa' etc.,
+# except with positive DST offsets.  This works around a problem that
+# was discovered in January 2018 with negative DST in tests for ICU
+# and OpenJDK.  See:
+# https://mm.icann.org/pipermail/tz/2018-January/025825.html
+# https://mm.icann.org/pipermail/tz/2018-January/025822.html
+# Currently the 'africa' etc. files use pdst form if comments are
+# ignored, to ease transition for parsers that do not support
+# negative DST offsets.  This is intended to change to full form at
+# some point, so that full-featured zi parsers that use the 'africa'
+# files will get the full data without changing anything.
+
 # Change the line below for your time zone (after finding the zone you want in
 # the time zone files, or adding it to a time zone file).
 # Alternately, if you discover you've got the wrong time zone, you can just
@@ -463,7 +483,8 @@ TDATA=		$(YDATA) $(NDATA) $(BACKWARD)
 ZONETABLES=	zone1970.tab zone.tab
 TABDATA=	iso3166.tab $(TZDATA_TEXT) $(ZONETABLES)
 LEAP_DEPS=	leapseconds.awk leap-seconds.list
-TZDATA_ZI_DEPS=	zishrink.awk version $(TDATA) $(PACKRATDATA)
+TZDATA_ZI_DEPS=	zidst.awk zishrink.awk version $(TDATA) $(PACKRATDATA)
+DSTDATA_ZI_DEPS= zidst.awk $(TDATA) $(PACKRATDATA)
 DATA=		$(TDATA_TO_CHECK) backzone iso3166.tab leap-seconds.list \
 			leapseconds yearistype.sh $(ZONETABLES)
 AWK_SCRIPTS=	checklinks.awk checktab.awk leapseconds.awk zishrink.awk
@@ -500,7 +521,8 @@ VERSION_DEPS= \
 
 SHELL=		/bin/sh
 
-all:		tzselect yearistype zic zdump libtz.a $(TABDATA)
+all:		tzselect yearistype zic zdump libtz.a $(TABDATA) \
+		  fulldata.zi pdstdata.zi
 
 ALL:		all date $(ENCHILADA)
 
@@ -535,11 +557,15 @@ version:	$(VERSION_DEPS)
 		printf '%s\n' "$$V" >$@.out
 		mv $@.out $@
 
-# This file can be tailored by setting BACKWARD, PACKRATDATA, etc.
-tzdata.zi:	$(TZDATA_ZI_DEPS)
+# These files can be tailored by setting BACKWARD, PACKRATDATA, etc.
+fulldata.zi pdstdata.zi: $(DSTDATA_ZI_DEPS)
+		$(AWK) -v outfile='$@' -f zidst.awk $(TDATA) $(PACKRATDATA) \
+		  >$@.out
+		mv $@.out $@
+tzdata.zi:	$(XDST)data.zi version
 		version=`sed 1q version` && \
 		  LC_ALL=C $(AWK) -v version="$$version" -f zishrink.awk \
-		    $(TDATA) $(PACKRATDATA) >$@.out
+		    $(XDST)data.zi >$@.out
 		mv $@.out $@
 
 version.h:	version
@@ -721,17 +747,32 @@ check_tzs:	$(TZS) $(TZS_NEW)
 check_web:	tz-how-to.html
 		$(VALIDATE_ENV) $(VALIDATE) $(VALIDATE_FLAGS) tz-how-to.html
 
-# Check that tzdata.zi generates the same binary data that its sources do.
-check_zishrink: tzdata.zi zic leapseconds $(PACKRATDATA) $(TDATA)
+# The format of the source files, either full or pdst.
+# Currently they are in pdst format, but this is expected to change.
+SDST = pdst
+
+# Check that zishrink.awk does not alter the data, and that zidst.awk
+# preserves $(SDST) data.
+check_zishrink: zic leapseconds $(PACKRATDATA) $(TDATA) \
+  $(XDST)data.zi tzdata.zi
 		for type in posix right; do \
-		  mkdir -p time_t.dir/$$type time_t.dir/$$type-shrunk && \
+		  mkdir -p time_t.dir/$$type time_t.dir/$$type-$(SDST) \
+		    time_t.dir/$$type-shrunk && \
 		  case $$type in \
 		    right) leap='-L leapseconds';; \
 	            *) leap=;; \
 		  esac && \
-		  $(ZIC) $$leap -d time_t.dir/$$type $(TDATA) && \
-		  $(AWK) '/^Rule/' $(TDATA) | \
+		  $(ZIC) $$leap -d time_t.dir/$$type $(XDST)data.zi && \
+		  $(AWK) '/^Rule/' $(XDST)data.zi | \
 		    $(ZIC) $$leap -d time_t.dir/$$type - $(PACKRATDATA) && \
+		  case $(XDST) in \
+		    $(SDST)) \
+		      $(ZIC) $$leap -d time_t.dir/$$type-$(SDST) $(TDATA) && \
+		      $(AWK) '/^Rule/' $(TDATA) | \
+			$(ZIC) $$leap -d time_t.dir/$$type-$(SDST) \
+			  $(XDST)data.zi && \
+		      diff -r time_t.dir/$$type time_t.dir/$$type-$(SDST);; \
+		  esac && \
 		  $(ZIC) $$leap -d time_t.dir/$$type-shrunk tzdata.zi && \
 		  diff -r time_t.dir/$$type time_t.dir/$$type-shrunk || exit; \
 		done
@@ -741,7 +782,7 @@ clean_misc:
 		rm -f core *.o *.out \
 		  date tzselect version.h zdump zic yearistype libtz.a
 clean:		clean_misc
-		rm -fr *.dir tzdata.zi tzdb-*/ $(TZS_NEW)
+		rm -fr *.dir *.zi tzdb-*/ $(TZS_NEW)
 
 maintainer-clean: clean
 		@echo 'This command is intended for maintainers to use; it'

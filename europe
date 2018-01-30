@@ -508,11 +508,27 @@ Link	Europe/London	Europe/Jersey
 Link	Europe/London	Europe/Guernsey
 Link	Europe/London	Europe/Isle_of_Man
 
-# From Paul Eggert (2018-01-19):
+# From Paul Eggert (2018-01-30):
+# In January 2018 we discovered that the negative DST offsets in the
+# Eire rules cause problems with tests for ICU:
+# https://mm.icann.org/pipermail/tz/2018-January/025825.html
+# and with tests for OpenJDK:
+# https://mm.icann.org/pipermail/tz/2018-January/025822.html
+# To work around this problem, zidst.awk translates the following data
+# lines into two forms.  First, fulldata.zi contains the full data,
+# which includes negative DST offsets.  Second, pdstdata.zi uses a
+# traditional approximation for Irish time stamps after 1971-10-31
+# 02:00 UTC; although this approximation has tm_isdst flags that are
+# the reverse of the full data, its UTC offsets are correct and this
+# suffices for ICU and OpenJDK.  Although this source file currently
+# has pdstdata.zi lines active and fulldata.zi lines commented out,
+# this is intended to change in the near future and downstream code
+# should not rely on it.
+#
 # The following is like GB-Eire and EU, except with standard time in
 # summer and negative daylight saving time in winter.
-# Although currently commented out, this will need to become uncommented
-# once the ICU/OpenJDK workaround is removed; see below.
+# This rule set is active in fulldata.zi and is commented out in
+# pdstdata.zi.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 #Rule	Eire	1971	only	-	Oct	31	 2:00u	-1:00	GMT
 #Rule	Eire	1972	1980	-	Mar	Sun>=16	 2:00u	0	IST
@@ -533,24 +549,13 @@ Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
 			 0:00	1:00	IST	1947 Nov  2  2:00s
 			 0:00	-	GMT	1948 Apr 18  2:00s
 			 0:00	GB-Eire	GMT/IST	1968 Oct 27
-# From Paul Eggert (2018-01-18):
-# The next line should look like this:
+# The next line is active in fulldata.zi and commented out in pdstdata.zi.
 #			 1:00	Eire	IST/GMT
-# However, in January 2018 we discovered that the Eire rules cause
-# problems with tests for ICU:
-# https://mm.icann.org/pipermail/tz/2018-January/025825.html
-# and with tests for OpenJDK:
-# https://mm.icann.org/pipermail/tz/2018-January/025822.html
-# To work around this problem, use a traditional approximation for
-# time stamps after 1971-10-31 02:00 UTC, to give ICU and OpenJDK
-# developers breathing room to fix bugs.  This approximation has
-# correct UTC offsets, but results in tm_isdst flags are the reverse
-# of what they should be.  This workaround is temporary and should be
-# removed reasonably soon.
+# These three lines are active in pdstdata.zi and commented out in
+# fulldata.zi.
 			 1:00	-	IST	1971 Oct 31  2:00u
 			 0:00	GB-Eire	GMT/IST	1996
 			 0:00	EU	GMT/IST
-# End of workaround for ICU and OpenJDK bugs.
 
 
 ###############################################################################

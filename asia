@@ -69,13 +69,13 @@
 Rule	EUAsia	1981	max	-	Mar	lastSun	 1:00u	1:00	S
 Rule	EUAsia	1979	1995	-	Sep	lastSun	 1:00u	0	-
 Rule	EUAsia	1996	max	-	Oct	lastSun	 1:00u	0	-
-Rule E-EurAsia	1981	max	-	Mar	lastSun	 0:00	1:00	S
+Rule E-EurAsia	1981	max	-	Mar	lastSun	 0:00	1:00	-
 Rule E-EurAsia	1979	1995	-	Sep	lastSun	 0:00	0	-
 Rule E-EurAsia	1996	max	-	Oct	lastSun	 0:00	0	-
-Rule RussiaAsia	1981	1984	-	Apr	1	 0:00	1:00	S
+Rule RussiaAsia	1981	1984	-	Apr	1	 0:00	1:00	-
 Rule RussiaAsia	1981	1983	-	Oct	1	 0:00	0	-
 Rule RussiaAsia	1984	1995	-	Sep	lastSun	 2:00s	0	-
-Rule RussiaAsia	1985	2010	-	Mar	lastSun	 2:00s	1:00	S
+Rule RussiaAsia	1985	2010	-	Mar	lastSun	 2:00s	1:00	-
 Rule RussiaAsia	1996	2010	-	Oct	lastSun	 2:00s	0	-
 
 # Afghanistan
@@ -110,7 +110,7 @@ Zone	Asia/Kabul	4:36:48 -	LMT	1890
 # (brief)
 # http://www.worldtimezone.com/dst_news/dst_news_armenia03.html
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule Armenia	2011	only	-	Mar	lastSun	 2:00s	1:00	S
+Rule Armenia	2011	only	-	Mar	lastSun	 2:00s	1:00	-
 Rule Armenia	2011	only	-	Oct	lastSun	 2:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Yerevan	2:58:00 -	LMT	1924 May  2
@@ -136,7 +136,7 @@ Zone	Asia/Yerevan	2:58:00 -	LMT	1924 May  2
 # http://en.apa.az/xeber_azerbaijan_abolishes_daylight_savings_ti_240862.html
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Azer	1997	2015	-	Mar	lastSun	 4:00	1:00	S
+Rule	Azer	1997	2015	-	Mar	lastSun	 4:00	1:00	-
 Rule	Azer	1997	2015	-	Oct	lastSun	 5:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Baku	3:19:24 -	LMT	1924 May  2
@@ -223,7 +223,7 @@ Zone	Asia/Baku	3:19:24 -	LMT	1924 May  2
 # http://www.worldtimezone.com/dst_news/dst_news_bangladesh06.html
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Dhaka	2009	only	-	Jun	19	23:00	1:00	S
+Rule	Dhaka	2009	only	-	Jun	19	23:00	1:00	-
 Rule	Dhaka	2009	only	-	Dec	31	24:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -1106,61 +1106,61 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # thirtieth day of Shahrivar.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Iran	1978	1980	-	Mar	21	0:00	1:00	D
-Rule	Iran	1978	only	-	Oct	21	0:00	0	S
-Rule	Iran	1979	only	-	Sep	19	0:00	0	S
-Rule	Iran	1980	only	-	Sep	23	0:00	0	S
-Rule	Iran	1991	only	-	May	 3	0:00	1:00	D
-Rule	Iran	1992	1995	-	Mar	22	0:00	1:00	D
-Rule	Iran	1991	1995	-	Sep	22	0:00	0	S
-Rule	Iran	1996	only	-	Mar	21	0:00	1:00	D
-Rule	Iran	1996	only	-	Sep	21	0:00	0	S
-Rule	Iran	1997	1999	-	Mar	22	0:00	1:00	D
-Rule	Iran	1997	1999	-	Sep	22	0:00	0	S
-Rule	Iran	2000	only	-	Mar	21	0:00	1:00	D
-Rule	Iran	2000	only	-	Sep	21	0:00	0	S
-Rule	Iran	2001	2003	-	Mar	22	0:00	1:00	D
-Rule	Iran	2001	2003	-	Sep	22	0:00	0	S
-Rule	Iran	2004	only	-	Mar	21	0:00	1:00	D
-Rule	Iran	2004	only	-	Sep	21	0:00	0	S
-Rule	Iran	2005	only	-	Mar	22	0:00	1:00	D
-Rule	Iran	2005	only	-	Sep	22	0:00	0	S
-Rule	Iran	2008	only	-	Mar	21	0:00	1:00	D
-Rule	Iran	2008	only	-	Sep	21	0:00	0	S
-Rule	Iran	2009	2011	-	Mar	22	0:00	1:00	D
-Rule	Iran	2009	2011	-	Sep	22	0:00	0	S
-Rule	Iran	2012	only	-	Mar	21	0:00	1:00	D
-Rule	Iran	2012	only	-	Sep	21	0:00	0	S
-Rule	Iran	2013	2015	-	Mar	22	0:00	1:00	D
-Rule	Iran	2013	2015	-	Sep	22	0:00	0	S
-Rule	Iran	2016	only	-	Mar	21	0:00	1:00	D
-Rule	Iran	2016	only	-	Sep	21	0:00	0	S
-Rule	Iran	2017	2019	-	Mar	22	0:00	1:00	D
-Rule	Iran	2017	2019	-	Sep	22	0:00	0	S
-Rule	Iran	2020	only	-	Mar	21	0:00	1:00	D
-Rule	Iran	2020	only	-	Sep	21	0:00	0	S
-Rule	Iran	2021	2023	-	Mar	22	0:00	1:00	D
-Rule	Iran	2021	2023	-	Sep	22	0:00	0	S
-Rule	Iran	2024	only	-	Mar	21	0:00	1:00	D
-Rule	Iran	2024	only	-	Sep	21	0:00	0	S
-Rule	Iran	2025	2027	-	Mar	22	0:00	1:00	D
-Rule	Iran	2025	2027	-	Sep	22	0:00	0	S
-Rule	Iran	2028	2029	-	Mar	21	0:00	1:00	D
-Rule	Iran	2028	2029	-	Sep	21	0:00	0	S
-Rule	Iran	2030	2031	-	Mar	22	0:00	1:00	D
-Rule	Iran	2030	2031	-	Sep	22	0:00	0	S
-Rule	Iran	2032	2033	-	Mar	21	0:00	1:00	D
-Rule	Iran	2032	2033	-	Sep	21	0:00	0	S
-Rule	Iran	2034	2035	-	Mar	22	0:00	1:00	D
-Rule	Iran	2034	2035	-	Sep	22	0:00	0	S
+Rule	Iran	1978	1980	-	Mar	21	0:00	1:00	-
+Rule	Iran	1978	only	-	Oct	21	0:00	0	-
+Rule	Iran	1979	only	-	Sep	19	0:00	0	-
+Rule	Iran	1980	only	-	Sep	23	0:00	0	-
+Rule	Iran	1991	only	-	May	 3	0:00	1:00	-
+Rule	Iran	1992	1995	-	Mar	22	0:00	1:00	-
+Rule	Iran	1991	1995	-	Sep	22	0:00	0	-
+Rule	Iran	1996	only	-	Mar	21	0:00	1:00	-
+Rule	Iran	1996	only	-	Sep	21	0:00	0	-
+Rule	Iran	1997	1999	-	Mar	22	0:00	1:00	-
+Rule	Iran	1997	1999	-	Sep	22	0:00	0	-
+Rule	Iran	2000	only	-	Mar	21	0:00	1:00	-
+Rule	Iran	2000	only	-	Sep	21	0:00	0	-
+Rule	Iran	2001	2003	-	Mar	22	0:00	1:00	-
+Rule	Iran	2001	2003	-	Sep	22	0:00	0	-
+Rule	Iran	2004	only	-	Mar	21	0:00	1:00	-
+Rule	Iran	2004	only	-	Sep	21	0:00	0	-
+Rule	Iran	2005	only	-	Mar	22	0:00	1:00	-
+Rule	Iran	2005	only	-	Sep	22	0:00	0	-
+Rule	Iran	2008	only	-	Mar	21	0:00	1:00	-
+Rule	Iran	2008	only	-	Sep	21	0:00	0	-
+Rule	Iran	2009	2011	-	Mar	22	0:00	1:00	-
+Rule	Iran	2009	2011	-	Sep	22	0:00	0	-
+Rule	Iran	2012	only	-	Mar	21	0:00	1:00	-
+Rule	Iran	2012	only	-	Sep	21	0:00	0	-
+Rule	Iran	2013	2015	-	Mar	22	0:00	1:00	-
+Rule	Iran	2013	2015	-	Sep	22	0:00	0	-
+Rule	Iran	2016	only	-	Mar	21	0:00	1:00	-
+Rule	Iran	2016	only	-	Sep	21	0:00	0	-
+Rule	Iran	2017	2019	-	Mar	22	0:00	1:00	-
+Rule	Iran	2017	2019	-	Sep	22	0:00	0	-
+Rule	Iran	2020	only	-	Mar	21	0:00	1:00	-
+Rule	Iran	2020	only	-	Sep	21	0:00	0	-
+Rule	Iran	2021	2023	-	Mar	22	0:00	1:00	-
+Rule	Iran	2021	2023	-	Sep	22	0:00	0	-
+Rule	Iran	2024	only	-	Mar	21	0:00	1:00	-
+Rule	Iran	2024	only	-	Sep	21	0:00	0	-
+Rule	Iran	2025	2027	-	Mar	22	0:00	1:00	-
+Rule	Iran	2025	2027	-	Sep	22	0:00	0	-
+Rule	Iran	2028	2029	-	Mar	21	0:00	1:00	-
+Rule	Iran	2028	2029	-	Sep	21	0:00	0	-
+Rule	Iran	2030	2031	-	Mar	22	0:00	1:00	-
+Rule	Iran	2030	2031	-	Sep	22	0:00	0	-
+Rule	Iran	2032	2033	-	Mar	21	0:00	1:00	-
+Rule	Iran	2032	2033	-	Sep	21	0:00	0	-
+Rule	Iran	2034	2035	-	Mar	22	0:00	1:00	-
+Rule	Iran	2034	2035	-	Sep	22	0:00	0	-
 #
 # The following rules are approximations starting in the year 2038.
 # These are the best post-2037 approximations available, given the
 # restrictions of a single rule using a Gregorian-based data format.
 # At some point this table will need to be extended, though quite
 # possibly Iran will change the rules first.
-Rule	Iran	2036	max	-	Mar	21	0:00	1:00	D
-Rule	Iran	2036	max	-	Sep	21	0:00	0	S
+Rule	Iran	2036	max	-	Mar	21	0:00	1:00	-
+Rule	Iran	2036	max	-	Sep	21	0:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Tehran	3:25:44	-	LMT	1916
@@ -1196,17 +1196,17 @@ Zone	Asia/Tehran	3:25:44	-	LMT	1916
 # https://www.timeanddate.com/news/time/iraq-dumps-daylight-saving.html
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Iraq	1982	only	-	May	1	0:00	1:00	D
-Rule	Iraq	1982	1984	-	Oct	1	0:00	0	S
-Rule	Iraq	1983	only	-	Mar	31	0:00	1:00	D
-Rule	Iraq	1984	1985	-	Apr	1	0:00	1:00	D
-Rule	Iraq	1985	1990	-	Sep	lastSun	1:00s	0	S
-Rule	Iraq	1986	1990	-	Mar	lastSun	1:00s	1:00	D
+Rule	Iraq	1982	only	-	May	1	0:00	1:00	-
+Rule	Iraq	1982	1984	-	Oct	1	0:00	0	-
+Rule	Iraq	1983	only	-	Mar	31	0:00	1:00	-
+Rule	Iraq	1984	1985	-	Apr	1	0:00	1:00	-
+Rule	Iraq	1985	1990	-	Sep	lastSun	1:00s	0	-
+Rule	Iraq	1986	1990	-	Mar	lastSun	1:00s	1:00	-
 # IATA SSIM (1991/1996) says Apr 1 12:01am UTC; guess the ':01' is a typo.
 # Shanks & Pottenger say Iraq did not observe DST 1992/1997; ignore this.
 #
-Rule	Iraq	1991	2007	-	Apr	 1	3:00s	1:00	D
-Rule	Iraq	1991	2007	-	Oct	 1	3:00s	0	S
+Rule	Iraq	1991	2007	-	Apr	 1	3:00s	1:00	-
+Rule	Iraq	1991	2007	-	Oct	 1	3:00s	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Baghdad	2:57:40	-	LMT	1890
 			2:57:36	-	BMT	1918     # Baghdad Mean Time?
@@ -1903,9 +1903,9 @@ Zone	Asia/Oral	3:25:24	-	LMT	1924 May  2 # or Ural'sk
 # From 2005-08-12 our GMT-offset is +6, w/o any daylight saving.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Kyrgyz	1992	1996	-	Apr	Sun>=7	0:00s	1:00	S
+Rule	Kyrgyz	1992	1996	-	Apr	Sun>=7	0:00s	1:00	-
 Rule	Kyrgyz	1992	1996	-	Sep	lastSun	0:00	0	-
-Rule	Kyrgyz	1997	2005	-	Mar	lastSun	2:30	1:00	S
+Rule	Kyrgyz	1997	2005	-	Mar	lastSun	2:30	1:00	-
 Rule	Kyrgyz	1997	2004	-	Oct	lastSun	2:30	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Bishkek	4:58:24 -	LMT	1924 May  2
@@ -2037,7 +2037,7 @@ Zone	Asia/Beirut	2:22:00 -	LMT	1880
 
 # Malaysia
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	NBorneo	1935	1941	-	Sep	14	0:00	0:20	TS # one-Third Summer
+Rule	NBorneo	1935	1941	-	Sep	14	0:00	0:20	-
 Rule	NBorneo	1935	1941	-	Dec	14	0:00	0	-
 #
 # peninsular Malaysia
@@ -2182,7 +2182,7 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880 # Malé
 # http://zasag.mn/news/view/8969
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Mongol	1983	1984	-	Apr	1	0:00	1:00	S
+Rule	Mongol	1983	1984	-	Apr	1	0:00	1:00	-
 Rule	Mongol	1983	only	-	Oct	1	0:00	0	-
 # Shanks & Pottenger and IATA SSIM say 1990s switches occurred at 00:00,
 # but McDow says the 2001 switches occurred at 02:00.  Also, IATA SSIM
@@ -2199,13 +2199,13 @@ Rule	Mongol	1983	only	-	Oct	1	0:00	0	-
 # Mongolian Government meeting has concluded today to cancel daylight
 # saving time adoption in Mongolia.  Source: http://zasag.mn/news/view/16192
 
-Rule	Mongol	1985	1998	-	Mar	lastSun	0:00	1:00	S
+Rule	Mongol	1985	1998	-	Mar	lastSun	0:00	1:00	-
 Rule	Mongol	1984	1998	-	Sep	lastSun	0:00	0	-
 # IATA SSIM (1999-09) says Mongolia no longer observes DST.
-Rule	Mongol	2001	only	-	Apr	lastSat	2:00	1:00	S
+Rule	Mongol	2001	only	-	Apr	lastSat	2:00	1:00	-
 Rule	Mongol	2001	2006	-	Sep	lastSat	2:00	0	-
-Rule	Mongol	2002	2006	-	Mar	lastSat	2:00	1:00	S
-Rule	Mongol	2015	2016	-	Mar	lastSat	2:00	1:00	S
+Rule	Mongol	2002	2006	-	Mar	lastSat	2:00	1:00	-
+Rule	Mongol	2015	2016	-	Mar	lastSat	2:00	1:00	-
 Rule	Mongol	2015	2016	-	Sep	lastSat	0:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
@@ -2737,11 +2737,11 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 # http://www.philstar.com/headlines/2014/08/05/1354152/pnoy-urged-declare-use-daylight-saving-time
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Phil	1936	only	-	Nov	1	0:00	1:00	S
+Rule	Phil	1936	only	-	Nov	1	0:00	1:00	-
 Rule	Phil	1937	only	-	Feb	1	0:00	0	-
-Rule	Phil	1954	only	-	Apr	12	0:00	1:00	S
+Rule	Phil	1954	only	-	Apr	12	0:00	1:00	-
 Rule	Phil	1954	only	-	Jul	1	0:00	0	-
-Rule	Phil	1978	only	-	Mar	22	0:00	1:00	S
+Rule	Phil	1978	only	-	Mar	22	0:00	1:00	-
 Rule	Phil	1978	only	-	Sep	21	0:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Manila	-15:56:00 -	LMT	1844 Dec 31

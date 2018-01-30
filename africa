@@ -370,13 +370,32 @@ Zone	Africa/Cairo	2:05:09 -	LMT	1900 Oct
 # See Africa/Abidjan.
 
 # Ghana
-# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+
+# From Paul Eggert (2019-01-30):
 # Whitman says DST was observed from 1931 to "the present";
-# Shanks & Pottenger say 1936 to 1942;
-# and September 1 to January 1 is given by:
-# Scott Keltie J, Epstein M (eds), The Statesman's Year-Book,
-# 57th ed. Macmillan, London (1920), OCLC 609408015, pp xxviii.
-# For lack of better info, assume DST was observed from 1920 to 1942.
+# Shanks & Pottenger say 1936 to 1942 with 20 minutes of DST,
+# with transitions on 09-01 and 12-31 at 00:00.
+# Page 33 of Parish GCB, Colonial Reports - Annual. No. 1066. Gold
+# Coast. Report for 1919. (March 1921), OCLC 784024077
+# http://libsysdigi.library.illinois.edu/ilharvest/africana/books2011-05/5530214/5530214_1919/5530214_1919_opt.pdf
+# lists the Determination of the Time Ordinance, 1919, No. 18,
+# "to advance the time observed locally by the space of twenty minutes
+# during the last four months of each year; the object in view being
+# to extend during those months the period of daylight-time available
+# for evening recreation after office hours."
+# Vanessa Ogle, The Global Transformation of Time, 1870-1950 (2015), p 33,
+# writes "In 1919, the Gold Coast (Ghana as of 1957) made Greenwich
+# time its legal time and simultaneously legalized a summer time of
+# UTC - 00:20 minutes from March to October."; a footnote lists
+# the ordinance as being dated 1919-11-24.
+# The Crown Colonist, Volume 12 (1942), p 176, says "the Government
+# intend advancing Gold Coast time half an hour ahead of G.M.T.
+# The actual date of the alteration has not yet been announced."
+# These sources are incomplete and contradictory.  Possibly what is
+# now Ghana observed different DST regimes in different years.  For
+# lack of better info, use Shanks except treat the minus sign as a
+# typo, and assume DST started in 1920 not 1936.
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Ghana	1920	1942	-	Sep	 1	0:00	0:20	GHST
 Rule	Ghana	1920	1942	-	Dec	31	0:00	0	GMT
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

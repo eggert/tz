@@ -202,12 +202,14 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	-
 # It's Law No. 7,210.  This change is due to a public power emergency, so for
 # now we'll assume it's for this year only.
 #
-# From Paul Eggert (2014-08-09):
+# From Paul Eggert (2018-01-31):
 # Hora de verano para la República Argentina
 # http://buenasiembra.com.ar/esoterismo/astrologia/hora-de-verano-de-la-republica-argentina-27.html
 # says that standard time in Argentina from 1894-10-31
 # to 1920-05-01 was -4:16:48.25.  Go with this more-precise value
-# over Shanks & Pottenger.
+# over Shanks & Pottenger.  It is upward compatible with Milne, who
+# says Córdoba time was -4:16:48.2.
+
 #
 # From Mariano Absatz (2004-06-05):
 # These media articles from a major newspaper mostly cover the current state:
@@ -391,9 +393,6 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	-
 # offsets, only tm_isdst and the time zone abbreviations.  One minor
 # plus is that this silences a zic complaint that there's no POSIX TZ
 # setting for time stamps past 2038.
-
-# From Paul Eggert (2013-02-21):
-# Milne says Córdoba time was -4:16:48.2.  Round to the nearest second.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 #

@@ -41,6 +41,10 @@ typedef int_fast64_t	zic_t;
 #else
 #define MKDIR_UMASK 0755
 #endif
+/* Port to native MS-Windows and to ancient UNIX.  */
+#if !defined S_ISDIR && defined S_IFDIR && defined S_IFMT
+# define S_ISDIR(mode) (((mode) & S_IFMT) == S_IFDIR)
+#endif
 
 #if HAVE_SYS_WAIT_H
 #include <sys/wait.h>	/* for WIFEXITED and WEXITSTATUS */

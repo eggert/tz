@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
   Support zi parsers that mishandle negative DST offsets
+  Add fractional seconds to source data format.
 
   Changes to build procedure
 
@@ -33,6 +34,11 @@ Unreleased, experimental changes
     selected by XDST, use tzdata.zi.
 
   Changes to code
+
+    zic now accepts fractional seconds in expressions like 00:19:32.13
+    (the UT offset of the Netherlands from 1835 to 1937).  Although
+    zic currently ignores these fractions, they may be useful to
+    applications requiring more precision in historical timestamps.
 
     The code is a bit more portable to MS-Windows.  (Thanks to Manuela
     Friedrich).

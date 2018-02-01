@@ -1196,8 +1196,9 @@ static zic_t
 gethms(char const *string, char const *errstring, bool signable)
 {
 	zic_t	hh;
-	int	mm, ss, sign;
-	char xs;
+	int sign, mm = 0, ss = 0;
+	char hhx, mmx, ssx, xs;
+	bool ok = true;
 
 	if (string == NULL || *string == '\0')
 		return 0;
@@ -1207,12 +1208,16 @@ gethms(char const *string, char const *errstring, bool signable)
 		sign = -1;
 		++string;
 	} else	sign = 1;
-	if (sscanf(string, "%"SCNdZIC"%c", &hh, &xs) == 1)
-		mm = ss = 0;
-	else if (sscanf(string, "%"SCNdZIC":%d%c", &hh, &mm, &xs) == 2)
-		ss = 0;
-	else if (sscanf(string, "%"SCNdZIC":%d:%d%c", &hh, &mm, &ss, &xs)
-		 != 3) {
+	switch (sscanf(string,
+		       "%"SCNdZIC"%c%d%c%d%c%*1d%*[0123456789]%c",
+		       &hh, &hhx, &mm, &mmx, &ss, &ssx, &xs)) {
+	  default: ok = false; break;
+	  case 6: ok &= ssx == '.'; /* fallthrough */
+	  case 5: ok &= mmx == ':'; /* fallthrough */
+	  case 3: ok &= hhx == ':'; /* fallthrough */
+	  case 1: break;
+	}
+	if (!ok) {
 			error("%s", errstring);
 			return 0;
 	}

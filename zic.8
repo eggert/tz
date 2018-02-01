@@ -251,10 +251,11 @@ Recognized forms include:
 .nf
 .in +.5i
 .sp
-.ta \w'01:28:13\0\0'u
+.ta \w'00:19:32.13\0\0'u
 2	time in hours
 2:00	time in hours and minutes
 01:28:14	time in hours, minutes, and seconds
+00:19:32.13	time with fractional seconds
 15:00	24-hour format time (for times after noon)
 260:00	260 hours after 00:00
 \*-2:30	2.5 hours before 00:00
@@ -264,6 +265,10 @@ Recognized forms include:
 .sp
 where hour 0 is midnight at the start of the day,
 and hour 24 is midnight at the end of the day.
+Although
+.I zic
+currently ignores any fractional seconds, the fractions may be useful
+to other applications requiring greater precision.
 Any of these forms may be followed by the letter
 .B w
 if the given time is local

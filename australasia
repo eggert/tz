@@ -406,11 +406,11 @@ Zone Pacific/Tarawa	 11:32:04 -	LMT	1901 # Bairiki
 			 12:00	-	+12
 Zone Pacific/Enderbury	-11:24:20 -	LMT	1901
 			-12:00	-	-12	1979 Oct
-			-11:00	-	-11	1995
+			-11:00	-	-11	1994 Dec 31
 			 13:00	-	+13
 Zone Pacific/Kiritimati	-10:29:20 -	LMT	1901
 			-10:40	-	-1040	1979 Oct
-			-10:00	-	-10	1995
+			-10:00	-	-10	1994 Dec 31
 			 14:00	-	+14
 
 # N Mariana Is
@@ -1512,6 +1512,12 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # "declared it the same day [throughout] the country as of Jan. 1, 1995"
 # as part of the competition to be first into the 21st century.
 
+# From Kerry Shetline (2018-02-03):
+# December 31 was the day that was skipped, so that the transition
+# would be from Friday December 30, 1994 to Sunday January 1, 1995.
+# From Paul Eggert (2018-02-04):
+# One source for this is page 202 of: Bartky IR. One Time Fits All:
+# The Campaigns for Global Uniformity (2007).
 
 # Kwajalein
 

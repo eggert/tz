@@ -6,6 +6,11 @@ Unreleased, experimental changes
   Support zi parsers that mishandle negative DST offsets
   Add fractional seconds to source data format.
 
+  Changes to past time stamps
+
+    Enderbury and Kiritimati skipped New Year's Eve 1994, not
+    New Year's day 1995.  (Thanks to Kerry Shetline.)
+
   Changes to build procedure
 
     The new XDST macro in the Makefile lets the installer choose

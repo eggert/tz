@@ -38,6 +38,8 @@ BEGIN {
   frac["7:07:12"] = "7:07:12.5" # Asia/Jakarta before 1923
   frac["7:36:42"] = "7:36:41.7" # Asia/Hong_Kong before 1904
   frac["8:05:43"] = "8:05:43.2" # Asia/Shanghai before 1901
+
+  fract["23:47:12"] = "23:47:12.5" # Asia/Jakarta 1923-12-31 transition
 }
 
 /^Zone/ { zone = $2 }
@@ -61,12 +63,19 @@ outfile != "main.zi" {
     }
   }
 
-  # Add or remove fractional seconds as needed.
+  # Add or remove fractional seconds as needed in UT offsets.
   f = $1 == "Zone" ? 3 : 1
   for (rounded in frac) {
     original = frac[rounded]
     if ($f == rounded || $f == original) {
       $f = vanguard ? original : rounded
+    }
+  }
+  # Likewise for transition times.
+  for (rounded in fract) {
+    original = fract[rounded]
+    if ($(f + 6) == rounded || $(f + 6) == original) {
+      $(f + 6) = vanguard ? original : rounded
     }
   }
 }

@@ -514,21 +514,19 @@ Link	Europe/London	Europe/Isle_of_Man
 # https://mm.icann.org/pipermail/tz/2018-January/025825.html
 # and with tests for OpenJDK:
 # https://mm.icann.org/pipermail/tz/2018-January/025822.html
-# To work around this problem, zidst.awk translates the following data
-# lines into two forms.  First, fulldata.zi contains the full data,
-# which includes negative DST offsets.  Second, pdstdata.zi uses a
-# traditional approximation for Irish time stamps after 1971-10-31
-# 02:00 UTC; although this approximation has tm_isdst flags that are
-# the reverse of the full data, its UTC offsets are correct and this
-# suffices for ICU and OpenJDK.  Although this source file currently
-# has pdstdata.zi lines active and fulldata.zi lines commented out,
-# this is intended to change in the near future and downstream code
-# should not rely on it.
+#
+# To work around this problem, the build procedure can translate the
+# following data into two forms, one with negative DST offsets and the
+# other form with a traditional approximation for Irish time stamps
+# after 1971-10-31 02:00 UTC; although this approximation has tm_isdst
+# flags that are reversed, its UTC offsets are correct and this often
+# suffices.  This source file currently uses only positive DST
+# offsets, but this is intended to change and downstream code should
+# not rely on it.
 #
 # The following is like GB-Eire and EU, except with standard time in
-# summer and negative daylight saving time in winter.
-# This rule set is active in fulldata.zi and is commented out in
-# pdstdata.zi.
+# summer and negative daylight saving time in winter.  It is for when
+# negative DST offsets are used.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 #Rule	Eire	1971	only	-	Oct	31	 2:00u	-1:00	GMT
 #Rule	Eire	1972	1980	-	Mar	Sun>=16	 2:00u	0	IST
@@ -549,10 +547,9 @@ Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
 			 0:00	1:00	IST	1947 Nov  2  2:00s
 			 0:00	-	GMT	1948 Apr 18  2:00s
 			 0:00	GB-Eire	GMT/IST	1968 Oct 27
-# The next line is active in fulldata.zi and commented out in pdstdata.zi.
+# The next line is for when negative DST offsets are used.
 #			 1:00	Eire	IST/GMT
-# These three lines are active in pdstdata.zi and commented out in
-# fulldata.zi.
+# These three lines are for when positive DST offsets are used.
 			 1:00	-	IST	1971 Oct 31  2:00u
 			 0:00	GB-Eire	GMT/IST	1996
 			 0:00	EU	GMT/IST

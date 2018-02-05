@@ -3,8 +3,8 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
-  Support zi parsers that mishandle negative DST offsets
-  Add fractional seconds to source data format.
+  Add support for vanguard and rearguard data consumers.
+  Add fractional seconds to source data format and to vanguard data.
 
   Changes to past time stamps
 
@@ -16,30 +16,41 @@ Unreleased, experimental changes
 
   Changes to build procedure
 
-    The new XDST macro in the Makefile lets the installer choose
-    XDST=full, which allows arbitrary DST offsets in the data, or
-    XDST=pdst, which allows only positive DST offsets.  Choosing
-    XDST=full is arguably more correct for Ireland, which observes
-    Irish Standard Time (IST, UTC+01) in summer and GMT (UTC) in
-    winter.  Choosing XDST=pdst is better for zoneinfo parsers that do
-    not work well with negative DST offsets, notably OpenJDK+CLDR.
-    On platforms using tzcode or similar APIs, XDST should not affect
-    any behavior other than that depending on the tm_isdst flag.
+    The new DATAFORM macro in the Makefile lets the installer choose
+    among three source data formats.  The idea is to lessen downstream
+    disruption when data formats are improved.
 
-    For now this change does not affect client-visible behavior by
-    default, as the Makefile defaults to XDST=pdst and uncommented
-    parts of the data source files contain only pdst-format data.
-    After a bit of time for testing, XDST=full and full-format source
-    files are planned to become the default, so that parsers that
-    support negative DST offsets can get full data without changing
-    their build procedures.  Parsers requiring positive DST offsets
-    should use the new file pdstdata.zi instead of tzdata.zi or the
-    source files 'africa' etc.: pdstdata.zi is pdst-compatible, it is
-    automatically built from the data source files, and it will
-    continue to be pdst-compatible regardless of XDST.  To get
-    full-format data now, use the new file fulldata.zi, which will
-    continue to be full-format regardless of XDST.  To get the format
-    selected by XDST, use tzdata.zi.
+    * DATAFORM=vanguard installs from the latest, bleeding-edge
+      format.  DATAFORM=main (the default) installs from the format
+      used in the 'africa' etc. files.  DATAFORM=rearguard installs
+      from a trailing-edge format.  Eventually, elements of today's
+      vanguard format should move to the main format, and similarly
+      the main format's features should eventually move to the
+      rearguard format.
+
+    * In the current version, the main and rearguard formats are
+      identical and match that of 2018c, so this change does not
+      affect default behavior.  The vanguard format contains two
+      features not in the main format: fractional seconds and negative
+      DST offsets.  Fractional seconds were added in this release,
+      where they affect only zic input (output is unaffected).
+      Negative DST offsets improve support for Ireland, which uses
+      Irish Standard Time (IST, UTC+01) in summer and GMT (UTC) in
+      winter.  tzcode has supported negative DST offsets for decades,
+      and this feature should move to the main format soon.  However,
+      it will not move to the rearguard format for quite some time
+      because some downstream parsers do not support it.
+
+    * The build procedure constructs three files vanguard.zi, main.zi,
+      and rearguard.zi, one for each format.  The files represent the
+      same data as closely as the formats allow.  These three files
+      are intended for downstream data consumers and are not
+      installed.  Zoneinfo parsers that require positive DST offsets
+      should start using rearguard.zi, so that they will be unaffected
+      when the negative-DST feature moves from vanguard to main.
+      Bleeding-edge Zoneinfo parsers that support the new features
+      already can use vanguard.zi; in this respect, current tzcode is
+      bleeding-edge.
 
   Changes to code
 
@@ -48,6 +59,7 @@ Unreleased, experimental changes
     zic currently rounds these fractions to the nearest integer
     (breaking ties to the even integer), the fractions may be useful
     to applications requiring more precision in historical timestamps.
+    This extension is currently used only in vanguard.zi.
 
     The code is a bit more portable to MS-Windows.  (Thanks to Manuela
     Friedrich).

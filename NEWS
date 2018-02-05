@@ -45,8 +45,9 @@ Unreleased, experimental changes
 
     zic now accepts fractional seconds in expressions like 00:19:32.13
     (the UT offset of the Netherlands from 1835 to 1937).  Although
-    zic currently ignores these fractions, they may be useful to
-    applications requiring more precision in historical timestamps.
+    zic currently rounds these fractions to the nearest integer
+    (breaking ties to the even integer), the fractions may be useful
+    to applications requiring more precision in historical timestamps.
 
     The code is a bit more portable to MS-Windows.  (Thanks to Manuela
     Friedrich).

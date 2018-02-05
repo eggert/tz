@@ -1197,7 +1197,8 @@ gethms(char const *string, char const *errstring, bool signable)
 {
 	zic_t	hh;
 	int sign, mm = 0, ss = 0;
-	char hhx, mmx, ssx, xs;
+	char hhx, mmx, ssx, xr = '0', xs;
+	int tenths = 0;
 	bool ok = true;
 
 	if (string == NULL || *string == '\0')
@@ -1209,10 +1210,18 @@ gethms(char const *string, char const *errstring, bool signable)
 		++string;
 	} else	sign = 1;
 	switch (sscanf(string,
-		       "%"SCNdZIC"%c%d%c%d%c%*1d%*[0123456789]%c",
-		       &hh, &hhx, &mm, &mmx, &ss, &ssx, &xs)) {
+		       "%"SCNdZIC"%c%d%c%d%c%1d%*[0]%c%*[0123456789]%c",
+		       &hh, &hhx, &mm, &mmx, &ss, &ssx, &tenths, &xr, &xs)) {
 	  default: ok = false; break;
-	  case 6: ok &= ssx == '.'; /* fallthrough */
+	  case 8:
+	    ok = '0' <= xr && xr <= '9';
+	    /* fallthrough */
+	  case 7:
+	    ok &= ssx == '.';
+	    if (ok && noise)
+	      warning(_("fractional seconds rejected by"
+			" pre-2018 versions of zic"));
+	    /* fallthrough */
 	  case 5: ok &= mmx == ':'; /* fallthrough */
 	  case 3: ok &= hhx == ':'; /* fallthrough */
 	  case 1: break;
@@ -1231,6 +1240,7 @@ gethms(char const *string, char const *errstring, bool signable)
 		error(_("time overflow"));
 		return 0;
 	}
+	ss += 5 + ((ss ^ 1) & (xr == '0')) <= tenths; /* Round to even.  */
 	if (noise && (hh > HOURSPERDAY ||
 		(hh == HOURSPERDAY && (mm != 0 || ss != 0))))
 warning(_("values over 24 hours not handled by pre-2007 versions of zic"));

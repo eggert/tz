@@ -267,8 +267,10 @@ where hour 0 is midnight at the start of the day,
 and hour 24 is midnight at the end of the day.
 Although
 .I zic
-currently ignores any fractional seconds, the fractions may be useful
+currently rounds fractional seconds to the nearest integer
+(breaking ties to the even integer), the fractions may be useful
 to other applications requiring greater precision.
+The source format does not specify any maximum precision.
 Any of these forms may be followed by the letter
 .B w
 if the given time is local

@@ -3264,8 +3264,8 @@ Zone America/Tegucigalpa -5:48:52 -	LMT	1921 Apr
 # http://www.jamaicaobserver.com/columns/The-politician-in-all-of-us_17573647
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Jamaica	-5:07:11 -	LMT	1890        # Kingston
-			-5:07:11 -	KMT	1912 Feb    # Kingston Mean Time
+Zone	America/Jamaica	-5:07:10 -	LMT	1890        # Kingston
+			-5:07:10 -	KMT	1912 Feb    # Kingston Mean Time
 			-5:00	-	EST	1974
 			-5:00	US	E%sT	1984
 			-5:00	-	EST
@@ -3415,7 +3415,7 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15 # St Pierre
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone America/Grand_Turk	-4:44:32 -	LMT	1890
-			-5:07:11 -	KMT	1912 Feb # Kingston Mean Time
+			-5:07:10 -	KMT	1912 Feb # Kingston Mean Time
 			-5:00	-	EST	1979
 			-5:00	US	E%sT	2015 Nov Sun>=1 2:00
 			-4:00	-	AST	2018 Mar 11 3:00

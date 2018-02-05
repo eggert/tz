@@ -11,6 +11,9 @@ Unreleased, experimental changes
     Enderbury and Kiritimati skipped New Year's Eve 1994, not
     New Year's day 1995.  (Thanks to Kerry Shetline.)
 
+    Fix an off-by-1 error for pre-1913 timestamps in Jamaica and in
+    Turks & Caicos.
+
   Changes to build procedure
 
     The new XDST macro in the Makefile lets the installer choose

@@ -271,7 +271,7 @@ Zone	America/Aruba	-4:40:24 -	LMT	1912 Feb 12 # Oranjestad
 
 # Cayman Is
 Zone	America/Cayman	-5:25:32 -	LMT	1890     # Georgetown
-			-5:07:11 -	KMT	1912 Feb # Kingston Mean Time
+			-5:07:10 -	KMT	1912 Feb # Kingston Mean Time
 			-5:00	-	EST
 
 # Canada

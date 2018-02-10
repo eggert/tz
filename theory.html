@@ -606,12 +606,15 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
   </li>
   <li>
     Sometimes historical timekeeping was specified more precisely
-    than what the <code><abbr>tz</abbr></code> database can handle.
+    than what the <code><abbr>tz</abbr></code> code can handle.
     For example, from 1909 to 1937 <a
     href="https://www.staff.science.uu.nl/~gent0113/wettijd/wettijd.htm"
-    hreflang="nl">Netherlands clocks</a> were legally <abbr>UT</abbr>
-    +00:19:32.13, but the <code><abbr>tz</abbr></code>
-    database cannot represent the fractional second.
+    hreflang="nl">Netherlands clocks</a> were legally Amsterdam Mean
+    Time (estimated to be <abbr>UT</abbr>
+    +00:19:32.13), but the <code><abbr>tz</abbr></code>
+    code cannot represent the fractional second.
+    In practice these old specifications were rarely if ever
+    implemented to subsecond precision.
   </li>
   <li>
     Even when all the timestamp transitions recorded by the

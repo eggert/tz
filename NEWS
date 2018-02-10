@@ -4,7 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
   Add support for vanguard and rearguard data consumers.
-  Add fractional seconds to source data format and to vanguard data.
+  Add subsecond precision to source data format, though not to data.
 
   Changes to past time stamps
 
@@ -30,16 +30,14 @@ Unreleased, experimental changes
 
     * In the current version, the main and rearguard formats are
       identical and match that of 2018c, so this change does not
-      affect default behavior.  The vanguard format contains two
-      features not in the main format: fractional seconds and negative
-      DST offsets.  Fractional seconds were added in this release,
-      where they affect only zic input (output is unaffected).
-      Negative DST offsets improve support for Ireland, which uses
-      Irish Standard Time (IST, UTC+01) in summer and GMT (UTC) in
-      winter.  tzcode has supported negative DST offsets for decades,
-      and this feature should move to the main format soon.  However,
-      it will not move to the rearguard format for quite some time
-      because some downstream parsers do not support it.
+      affect default behavior.  The vanguard format currently contains
+      one feature not in the main format: negative DST offsets.  This
+      improves support for Ireland, which uses Irish Standard Time
+      (IST, UTC+01) in summer and GMT (UTC) in winter.  tzcode has
+      supported negative DST offsets for decades, and this feature
+      should move to the main format soon.  However, it will not move
+      to the rearguard format for quite some time because some
+      downstream parsers do not support it.
 
     * The build procedure constructs three files vanguard.zi, main.zi,
       and rearguard.zi, one for each format.  The files represent the
@@ -54,12 +52,13 @@ Unreleased, experimental changes
 
   Changes to code
 
-    zic now accepts fractional seconds in expressions like 00:19:32.13
-    (the UT offset of the Netherlands from 1835 to 1937).  Although
-    zic currently rounds these fractions to the nearest integer
-    (breaking ties to the even integer), the fractions may be useful
-    to applications requiring more precision in historical timestamps.
-    This extension is currently used only in vanguard.zi.
+    zic now accepts subsecond precision in expressions like
+    00:19:32.13, which is approximately the legal time of the
+    Netherlands from 1835 to 1937.  However, because it is
+    questionable whether the few recorded uses of non-integer offsets
+    had subsecond precision in practice, there are no plans for tzdata
+    to use this feature.  (Thanks to Steve Allen for pointing out
+    the limitations of historical data in this area.)
 
     The code is a bit more portable to MS-Windows.  (Thanks to Manuela
     Friedrich).

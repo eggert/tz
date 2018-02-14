@@ -65,9 +65,11 @@ Unreleased, experimental changes
 
   Changes to documentation and commentary
 
-    theory.html now has a section "POSIX features no longer needed"
+    theory.html now outlines tzdb's extensions to POSIX's model for
+    civil time, and has a section "POSIX features no longer needed"
     that lists POSIX API components that are now vestigial.
-    (From a suggestion by Steve Summit.)
+    (From suggestions by Steve Summit.)  It also better distinguishes
+    time zones from tz regions.  (From a suggestion by Guy Harris.)
 
     Commentary is now more consistent about using the phrase "daylight
     saving time", to match the C name tm_isdst.  Daylight saving time

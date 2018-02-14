@@ -11,7 +11,7 @@
     <ul>
       <li><a href="#scope">Scope of the <code><abbr>tz</abbr></code>
 	  database</a></li>
-      <li><a href="#naming">Names of time zone rules</a></li>
+      <li><a href="#naming">Names of time zone rulesets</a></li>
       <li><a href="#abbreviations">Time zone abbreviations</a></li>
       <li><a href="#accuracy">Accuracy of the <code><abbr>tz</abbr></code>
 	  database</a></li>
@@ -70,13 +70,26 @@ As of this writing, the current edition of POSIX is: <a
 href="http://pubs.opengroup.org/onlinepubs/9699919799/"> The Open
 Group Base Specifications Issue 7</a>, IEEE Std 1003.1-2008, 2016
 Edition.
+Because the database's scope encompasses real-world changes to civil
+timekeeping, its model for describing time is more complex than the
+standard and daylight saving times supported by POSIX.
+A <code><abbr>tz</abbr></code> region corresponds to a ruleset that can
+have more than two changes per year, these changes need not merely
+flip back and forth between two alternatives, and the rules themselves
+can change at times.
+Whether and when a <code><abbr>tz</abbr></code> region changes its
+clock, and even the region's notional base offset from UTC, are variable.
+It doesn't even really make sense to talk about a region's
+"base offset", since it is not necessarily a single number.
 </p>
+
 </section>
 
 <section>
-  <h2 id="naming">Names of time zone rules</h2>
+  <h2 id="naming">Names of time zone rulesets</h2>
 <p>
-Each of the database's time zone rules has a unique name.
+Each <code><abbr>tz</abbr></code> region has a unique name that
+corresponds to a set of time zone rules.
 Inexperienced users are not expected to select these names unaided.
 Distributors should provide documentation and/or a simple selection
 interface that explains the names; for one example, see the 'tzselect'
@@ -87,7 +100,7 @@ interfaces.
 </p>
 
 <p>
-The time zone rule naming conventions attempt to strike a balance
+The naming conventions attempt to strike a balance
 among the following goals:
 </p>
 
@@ -127,7 +140,8 @@ Typical names are '<code>Africa/Cairo</code>',
 </p>
 
 <p>
-Here are the general rules used for choosing location names,
+Here are the general guidelines used for
+choosing <code><abbr>tz</abbr></code> region names,
 in decreasing order of importance:
 </p>
 
@@ -192,8 +206,8 @@ in decreasing order of importance:
   <li>
     Keep locations compact.
     Use cities or small islands, not countries or regions, so that any
-    future time zone changes do not split locations into different
-    time zones.
+    future changes do not split individual locations into different
+    <code><abbr>tz</abbr></code> regions.
     E.g., prefer '<code>Paris</code>' to '<code>France</code>', since
     <a href="https://en.wikipedia.org/wiki/Time_in_France#History">France
     has had multiple time zones</a>.
@@ -202,10 +216,10 @@ in decreasing order of importance:
     Use mainstream English spelling, e.g., prefer '<code>Rome</code>'
     to '<code>Roma</code>', and prefer '<code>Athens</code>' to the
     Greek '<code>Αθήνα</code>' or the Romanized '<code>Athína</code>'.
-    The POSIX file name restrictions encourage this rule.
+    The POSIX file name restrictions encourage this guideline.
   </li>
   <li>
-    Use the most populous among locations in a zone,
+    Use the most populous among locations in a region,
     e.g., prefer '<code>Shanghai</code>' to
     '<code>Beijing</code>'.
     Among locations with similar populations, pick the best-known
@@ -235,7 +249,7 @@ in decreasing order of importance:
   </li>
   <li>
     Do not change established names if they only marginally violate
-    the above rules.
+    the above guidelines.
     For example, don't change the existing name '<code>Rome</code>' to
     '<code>Milan</code>' merely because Milan's population has grown
     to be somewhat greater than Rome's.
@@ -249,7 +263,7 @@ in decreasing order of importance:
 
 <p>
 The file '<code>zone1970.tab</code>' lists geographical locations used
-to name time zone rules.
+to name <code><abbr>tz</abbr></code> regions.
 It is intended to be an exhaustive list of names for geographic
 regions as described above; this is a subset of the names in the data.
 Although a '<code>zone1970.tab</code>' location's
@@ -272,7 +286,7 @@ The other old-fashioned names still supported are
 
 <p>
 Older versions of this package defined legacy names that are
-incompatible with the first rule of location names, but which are
+incompatible with the first guideline of location names, but which are
 still supported.
 These legacy names are mostly defined in the file
 '<code>etcetera</code>'.
@@ -295,7 +309,7 @@ If '<code>backward</code>' is excluded, excluding
 <p>
 When this package is installed, it generates time zone abbreviations
 like '<code>EST</code>' to be compatible with human tradition and POSIX.
-Here are the general rules used for choosing time zone abbreviations,
+Here are the general guidelines used for choosing time zone abbreviations,
 in decreasing order of importance:
 </p>
 
@@ -309,9 +323,9 @@ in decreasing order of importance:
     '<code><a href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#set">set</a>
     `<a href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/date.html">date</a>`</code>'
     to have unexpected effects.
-    Previous editions of this rule required upper-case letters, but the
-    Congressman who
-    introduced <a href="https://en.wikipedia.org/wiki/Chamorro_Time_Zone">Chamorro
+    Previous editions of this guideline required upper-case letters, but the
+    Congressman who introduced
+    <a href="https://en.wikipedia.org/wiki/Chamorro_Time_Zone">Chamorro
     Standard Time</a> preferred "ChST", so lower-case letters are now
     allowed.
     Also, POSIX from 2001 on relaxed the rule to allow '<code>-</code>',
@@ -383,7 +397,7 @@ in decreasing order of importance:
   </li>
   <li>
     <p>
-    For zones whose times are taken from a city's longitude, use the
+    For times taken from a city's longitude, use the
     traditional <var>x</var>MT notation.
     The only abbreviation like this in current use is '<abbr>GMT</abbr>'.
     The others are for timestamps before 1960,
@@ -461,16 +475,17 @@ in decreasing order of importance:
     usage.
   </li>
   <li>
-    Use a consistent style in a zone's history.
-    For example, if a zone's history tends to use numeric
+    Use a consistent style in a <code><abbr>tz</abbr></code> region's history.
+    For example, if history tends to use numeric
     abbreviations and a particular entry could go either way, use a
     numeric abbreviation.
   </li>
   <li>
-    Use <a href="https://en.wikipedia.org/wiki/Universal_Time">Universal Time</a>
+    Use
+    <a href="https://en.wikipedia.org/wiki/Universal_Time">Universal Time</a>
     (<abbr>UT</abbr>) (with time zone abbreviation '<code>-</code>00') for
     locations while uninhabited.
-    The leading '<code>-</code>' is a flag that the time zone is in
+    The leading '<code>-</code>' is a flag that the <abbr>UT</abbr> offset is in
     some sense undefined; this notation is derived
     from <a href="https://tools.ietf.org/html/rfc3339">Internet
     <abbr title="Request For Comments">RFC 3339</a>.
@@ -515,7 +530,7 @@ Errors in the <code><abbr>tz</abbr></code> database arise from many sources:
     The pre-1970 entries in this database cover only a tiny sliver of how
     clocks actually behaved; the vast majority of the necessary
     information was lost or never recorded.
-    Thousands more zones would be needed if
+    Thousands more <code><abbr>tz</abbr></code> regions would be needed if
     the <code><abbr>tz</abbr></code> database's scope were extended to
     cover even just the known or guessed history of standard time; for
     example, the current single entry for France would need to split
@@ -524,7 +539,8 @@ Errors in the <code><abbr>tz</abbr></code> database arise from many sources:
     due to widespread disagreement or indifference about what times
     should be observed.
     In her 2015 book
-    <cite><a href="http://www.hup.harvard.edu/catalog.php?isbn=9780674286146">The
+    <cite><a
+    href="http://www.hup.harvard.edu/catalog.php?isbn=9780674286146">The
     Global Transformation of Time, 1870&ndash;1950</a></cite>,
     Vanessa Ogle writes
     "Outside of Europe and North America there was no system of time
@@ -574,18 +590,19 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
   </li>
   <li>
     The <code><abbr>tz</abbr></code> database does not record the
-    earliest time for which a zone's
+    earliest time for which a <code><abbr>tz</abbr></code> region's
     data entries are thereafter valid for every location in the region.
     For example, <code>Europe/London</code> is valid for all locations
     in its region after <abbr>GMT</abbr> was made the standard time,
     but the date of standardization (1880-08-02) is not in the
     <code><abbr>tz</abbr></code> database, other than in commentary.
-    For many zones the earliest time of validity is unknown.
+    For many <code><abbr>tz</abbr></code> regions the earliest time of
+    validity is unknown.
   </li>
   <li>
     The <code><abbr>tz</abbr></code> database does not record a
     region's boundaries, and in many cases the boundaries are not known.
-    For example, the zone
+    For example, the <code><abbr>tz</abbr></code> region
     <code>America/Kentucky/Louisville</code> represents a region
     around the city of Louisville, the boundaries of which are
     unclear.
@@ -711,7 +728,8 @@ Any attempt to pass the
 should be unacceptable to anybody who cares about the facts.
 In particular, the <code><abbr>tz</abbr></code> database's
 <abbr>LMT</abbr> offsets should not be considered meaningful, and
-should not prompt creation of zones merely because two locations
+should not prompt creation of <code><abbr>tz</abbr></code> regions
+merely because two locations
 differ in <abbr>LMT</abbr> or transitioned to standard time at
 different dates.
 </p>
@@ -724,8 +742,7 @@ The <code><abbr>tz</abbr></code> code contains time and date functions
 that are upwards compatible with those of POSIX.
 Code compatible with this package is already
 <a href="tz-link.html#tzdb">part of many platforms</a>, where the
-primary use of this package is to update obsolete time zone rule
-tables.
+primary use of this package is to update obsolete time-related files.
 To do this, you may need to compile the time zone compiler
 '<code>zic</code>' supplied with this package instead of using the
 system '<code>zic</code>', since the format of <code>zic</code>'s
@@ -779,8 +796,8 @@ an older <code>zic</code>.
       </dd>
       <dt><var>date</var>[<code>/</code><var>time</var>]<code>,</code><var>date</var>[<code>/</code><var>time</var>]</dt><dd>
 	specifies the beginning and end of <abbr>DST</abbr>.
-	If this is absent, the system supplies its own rules
-	for <abbr>DST</abbr>, and these can differ from year to year;
+	If this is absent, the system supplies its own ruleset
+	for <abbr>DST</abbr>, and its rules can differ from year to year;
 	typically <abbr>US</abbr> <abbr>DST</abbr> rules are used.
       </dd>
       <dt><var>time</var></dt><dd>
@@ -849,7 +866,7 @@ an older <code>zic</code>.
   <li>
     The <code>TZ</code> environment variable is process-global, which
     makes it hard to write efficient, thread-safe applications that
-    need access to multiple time zones.
+    need access to multiple time zone rulesets.
   </li>
   <li>
     In POSIX, there's no tamper-proof way for a process to learn the
@@ -866,8 +883,8 @@ an older <code>zic</code>.
   <li>
     POSIX provides no convenient and efficient way to determine
     the <abbr>UT</abbr> offset and time zone abbreviation of arbitrary
-    timestamps, particularly for time zone settings that do not fit
-    into the POSIX model.
+    timestamps, particularly for <code><abbr>tz</abbr></code> regions
+    that do not fit into the POSIX model.
   </li>
   <li>
     POSIX requires that systems ignore leap seconds.
@@ -896,13 +913,14 @@ an older <code>zic</code>.
   <li>
     <p>
     The <code>TZ</code> environment variable is used in generating
-    the name of a file from which time zone information is read
+    the name of a binary file from which time-related information is read
     (or is interpreted à la POSIX); <code>TZ</code> is no longer
     constrained to be a three-letter time zone
-    name followed by a number of hours and an optional three-letter
-    daylight time zone name.
-    The daylight saving time rules to be used for a particular time
-    zone are encoded in the time zone file; the format of the file
+    abbreviation followed by a number of hours and an optional three-letter
+    daylight time zone abbreviation.
+    The daylight saving time rules to be used for a
+    particular <code><abbr>tz</abbr></code> region are encoded in the
+    binary file; the format of the file
     allows U.S., Australian, and other rules to be encoded, and
     allows for situations where more than two time zone
     abbreviations are used.
@@ -913,7 +931,7 @@ an older <code>zic</code>.
     might cause "old" programs (that expect <code>TZ</code> to have a
     certain form) to operate incorrectly; consideration was given to using
     some other environment variable (for example, <code>TIMEZONE</code>)
-    to hold the string used to generate the time zone information file name.
+    to hold the string used to generate the binary file's name.
     In the end, however, it was decided to continue using
     <code>TZ</code>: it is widely used for time zone purposes;
     separately maintaining both <code>TZ</code>
@@ -936,7 +954,7 @@ an older <code>zic</code>.
     Functions <code>tzalloc</code>, <code>tzfree</code>,
     <code>localtime_rz</code>, and <code>mktime_z</code> for
     more-efficient thread-safe applications that need to use multiple
-    time zones.
+    time zone rulesets.
     The <code>tzalloc</code> and <code>tzfree</code> functions
     allocate and free objects of type <code>timezone_t</code>,
     and <code>localtime_rz</code> and <code>mktime_z</code> are
@@ -953,7 +971,7 @@ an older <code>zic</code>.
     if such code is moved to "old" systems that don't
     provide <code>tzsetwall</code>, you won't be able to generate an
     executable program.
-    (These time zone functions also arrange for local wall clock time to
+    (These functions also arrange for local wall clock time to
     be used if <code>tzset</code> is called &ndash; directly or
     indirectly &ndash; and there's no <code>TZ</code> environment
     variable; portable applications should not, however, rely on this
@@ -997,7 +1015,7 @@ The vestigial <abbr>API</abbr>s are:
     subtract values returned by <code>localtime</code>
     and <code>gmtime</code> using the rules of the Gregorian calendar,
     or use <code>strftime</code>'s <code>"%z"</code> conversion
-    specification if a string like <samp>"+0900"</samp> suffices.
+    specification if a string like <code>"+0900"</code> suffices.
   </li>
   <li>
     The <code>tm_isdst</code> member is almost never needed and most of
@@ -1076,8 +1094,8 @@ The <code><abbr>tz</abbr></code> code and data supply the following interfaces:
 
 <ul>
   <li>
-    A set of zone names as per "<a href="#naming">Names of time zone
-      rules</a>" above.
+    A set of <code><abbr>tz</abbr></code> region names as per
+      "<a href="#naming">Names of time zone rulesets</a>" above.
   </li>
   <li>
     Library functions described in "<a href="#functions">Time and date
@@ -1136,7 +1154,7 @@ An excellent resource in this area is Nachum Dershowitz and Edward M.
 Reingold, <cite><a
 href="https://www.cs.tau.ac.il/~nachum/calendar-book/third-edition/">Calendrical
 Calculations: Third Edition</a></cite>, Cambridge University Press (2008).
-Other information and sources are given in the file '<samp>calendars</samp>'
+Other information and sources are given in the file '<code>calendars</code>'
 in the <code><abbr>tz</abbr></code> distribution.
 They sometimes disagree.
 </p>

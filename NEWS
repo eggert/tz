@@ -60,7 +60,9 @@ Unreleased, experimental changes
     to use this feature.  (Thanks to Steve Allen for pointing out
     the limitations of historical data in this area.)
 
-    The code is a bit more portable to MS-Windows.  (Thanks to Manuela
+    The code is a bit more portable to MS-Windows.  Installers can
+    compile with -DRESERVE_STD_EXT_IDS on MS-Windows platforms that
+    reserve identifiers like 'localtime'.  (Thanks to Manuela
     Friedrich).
 
   Changes to documentation and commentary

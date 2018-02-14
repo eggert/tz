@@ -205,6 +205,8 @@ LDLIBS=
 #  -DHAVE_TZSET=0 if your system lacks a tzset function
 #  -DHAVE_UNISTD_H=0 if your compiler lacks a <unistd.h>
 #  -Dlocale_t=XXX if your system uses XXX instead of locale_t
+#  -DRESERVE_STD_EXT_IDS if your platform reserves standard identifiers
+#	with external linkage, e.g., applications cannot define 'localtime'.
 #  -Dssize_t=long on hosts like MS-Windows that lack ssize_t
 #  -DTHREAD_SAFE to make localtime.c thread-safe, as POSIX requires;
 #	not needed by the main-program tz code, which is single-threaded.

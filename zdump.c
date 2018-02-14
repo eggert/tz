@@ -5,18 +5,8 @@
 
 #include "version.h"
 
-/*
-** This code has been made independent of the rest of the time
-** conversion package to increase confidence in the verification it provides.
-** You can use this code to help in verifying other implementations.
-** To do this, compile with -DUSE_LTZ=0 and link without the tz library.
-*/
-
 #ifndef NETBSD_INSPIRED
 # define NETBSD_INSPIRED 1
-#endif
-#ifndef USE_LTZ
-# define USE_LTZ 1
 #endif
 
 #include "private.h"

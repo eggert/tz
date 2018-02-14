@@ -15,6 +15,16 @@
 ** Thank you!
 */
 
+/*
+** zdump has been made independent of the rest of the time
+** conversion package to increase confidence in the verification it provides.
+** You can use zdump to help in verifying other implementations.
+** To do this, compile with -DUSE_LTZ=0 and link without the tz library.
+*/
+#ifndef USE_LTZ
+# define USE_LTZ 1
+#endif
+
 /* This string was in the Factory zone through version 2016f.  */
 #define GRANDPARENTED	"Local time zone must be set--see zic manual page"
 
@@ -363,6 +373,16 @@ typedef unsigned long uintmax_t;
 #endif
 #ifndef EPOCH_OFFSET
 # define EPOCH_OFFSET 0
+#endif
+#ifndef RESERVE_STD_EXT_IDS
+# define RESERVE_STD_EXT_IDS 0
+#endif
+
+/* If standard C identifiers with external linkage (e.g., localtime)
+   are reserved and are not already being renamed anyway, rename them
+   as if compiling with '-Dtime_tz=time_t'.  */
+#if !defined time_tz && RESERVE_STD_EXT_IDS && USE_LTZ
+# define time_tz time_t
 #endif
 
 /*

@@ -50,6 +50,11 @@ Unreleased, experimental changes
       already can use vanguard.zi; in this respect, current tzcode is
       bleeding-edge.
 
+    When built with -DSUPPRESS_TZDIR, the tzcode library no longer
+    prepends TZDIR/ to file names that do not begin with '/'.  This is
+    not recommended for general use, due to its security implications.
+    (From a suggestion by Manuela Friedrich.)
+
   Changes to code
 
     zic now accepts subsecond precision in expressions like

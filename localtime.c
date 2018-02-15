@@ -400,7 +400,13 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 
 	if (name[0] == ':')
 		++name;
+#ifdef SUPPRESS_TZDIR
+	/* Do not prepend TZDIR.  This is intended for specialized
+	   applications only, due to its security implications.  */
+	doaccess = true;
+#else
 	doaccess = name[0] == '/';
+#endif
 	if (!doaccess) {
 		size_t namelen = strlen(name);
 		if (sizeof lsp->fullname - sizeof tzdirslash <= namelen)

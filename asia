@@ -1478,8 +1478,7 @@ Rule	Japan	1950	1951	-	May	Sat>=1	24:00	1:00	D
 
 # From Hideyuki Suzuki (1998-11-09):
 # 'Tokyo' usually stands for the former location of Tokyo Astronomical
-# Observatory: 139 degrees 44' 40.90" E (9h 18m 58.727s),
-# 35 degrees 39' 16.0" N.
+# Observatory: 139° 44' 40.90" E (9h 18m 58.727s), 35° 39' 16.0" N.
 # This data is from 'Rika Nenpyou (Chronological Scientific Tables) 1996'
 # edited by National Astronomical Observatory of Japan....
 # JST (Japan Standard Time) has been used since 1888-01-01 00:00 (JST).
@@ -1487,10 +1486,10 @@ Rule	Japan	1950	1951	-	May	Sat>=1	24:00	1:00	D
 
 # From Hideyuki Suzuki (1998-11-16):
 # The ordinance No. 51 (1886) established "standard time" in Japan,
-# which stands for the time on 135 degrees E.
+# which stands for the time on 135° E.
 # In the ordinance No. 167 (1895), "standard time" was renamed to "central
 # standard time".  And the same ordinance also established "western standard
-# time", which stands for the time on 120 degrees E....  But "western standard
+# time", which stands for the time on 120° E....  But "western standard
 # time" was abolished in the ordinance No. 529 (1937).  In the ordinance No.
 # 167, there is no mention regarding for what place western standard time is
 # standard....
@@ -3097,9 +3096,9 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # and is the basis for the information below.
 #
 # The 1906 transition was effective July 1 and standardized Indochina to
-# Phù Liễn Observatory, legally 104 deg. 17'17" east of Paris.
+# Phù Liễn Observatory, legally 104° 17' 17" east of Paris.
 # It's unclear whether this meant legal Paris Mean Time (00:09:21) or
-# the Paris Meridian (2 deg. 20'14.03" E); the former yields 07:06:30.1333...
+# the Paris Meridian (2° 20' 14.03" E); the former yields 07:06:30.1333...
 # and the latter 07:06:29.333... so either way it rounds to 07:06:30,
 # which is used below even though the modern-day Phù Liễn Observatory
 # is closer to 07:06:31.  Abbreviate Phù Liễn Mean Time as PLMT.

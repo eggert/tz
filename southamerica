@@ -1694,7 +1694,7 @@ Link America/Port_of_Spain America/Tortola	# Virgin Islands (UK)
 # auspices of the National Institute for the Prediction of Time.  It is unclear
 # exactly what offset was used during this period, though Ley No. 7200 of
 # 1920-04-23 used the Observatory of the National Meteorological Institute in
-# Montevideo (S 34 deg. 54'33", W 056 deg. 12'45") as its reference meridian,
+# Montevideo (34° 54' 33" S, 56° 12' 45" W) as its reference meridian,
 # retarding legal time by 15 minutes 9 seconds from 1920-04-30 24:00,
 # resulting in UT-04.  Assume the corresponding LMT of UT-03:44:51 (given on
 # page 725 of the Proceedings of the Second Pan-American Scientific Congress,

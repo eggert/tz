@@ -408,13 +408,19 @@ SAFE_CHARSET3=	'abcdefghijklmnopqrstuvwxyz{|}~'
 SAFE_CHARSET=	$(SAFE_CHARSET1)$(SAFE_CHARSET2)$(SAFE_CHARSET3)
 SAFE_CHAR=	'[]'$(SAFE_CHARSET)'-]'
 
+# Non-ASCII non-letters that OK_CHAR allows, as these characters are
+# useful in commentary.  XEmacs 21.5.34 displays them correctly,
+# presumably because they are Latin-1.
+UNUSUAL_OK_CHARSET= °±½¾×
+
 # OK_CHAR matches any character allowed in the distributed files.
-# This is the same as SAFE_CHAR, except that multibyte letters are
-# also allowed so that commentary can contain people's names and quote
-# non-English sources.  For non-letters the sources are limited to
-# ASCII renderings for the convenience of maintainers whose text editors
-# mishandle UTF-8 by default (e.g., XEmacs 21.4.22).
-OK_CHAR=	'[][:alpha:]'$(SAFE_CHARSET)'-]'
+# This is the same as SAFE_CHAR, except that UNUSUAL_OK_CHARSET and
+# multibyte letters are also allowed so that commentary can contain a
+# few safe symbols and people's names and can quote non-English sources.
+# Other non-letters are limited to ASCII renderings for the
+# convenience of maintainers using XEmacs 21.5.34, which by default
+# mishandles Unicode characters U+0100 and greater.
+OK_CHAR=	'[][:alpha:]$(UNUSUAL_OK_CHARSET)'$(SAFE_CHARSET)'-]'
 
 # SAFE_LINE matches a line of safe characters.
 # SAFE_SHARP_LINE is similar, except any OK character can follow '#';
@@ -689,8 +695,10 @@ check_character_set: $(ENCHILADA)
 		sharp='#' && \
 		! grep -Env $(SAFE_LINE) $(MANS) date.1 $(MANTXTS) \
 			$(MISC) $(SOURCES) $(WEB_PAGES) \
-			CONTRIBUTING LICENSE Makefile README \
+			CONTRIBUTING LICENSE README \
 			version tzdata.zi && \
+		! grep -Env $(SAFE_LINE)'|^UNUSUAL_OK_CHARSET='$(OK_CHAR)'*$$' \
+			Makefile && \
 		! grep -Env $(SAFE_SHARP_LINE) $(TDATA_TO_CHECK) backzone \
 			leapseconds yearistype.sh zone.tab && \
 		! grep -Env $(OK_LINE) $(ENCHILADA); \

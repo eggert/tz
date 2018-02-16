@@ -409,7 +409,7 @@ Zone	Asia/Bahrain	3:22:20 -	LMT	1920     # Manamah
 # From Paul Eggert (2014-08-21):
 # In tomorrow's The Hindu, Nitya Menon reports that India had two civil time
 # zones starting in 1884, one in Bombay and one in Calcutta, and that railways
-# used a third time zone based on Madras time (80 deg. 18'30" E).  Also,
+# used a third time zone based on Madras time (80° 18' 30" E).  Also,
 # in 1881 Bombay briefly switched to Madras time, but switched back.  See:
 # http://www.thehindu.com/news/cities/chennai/madras-375-when-madras-clocked-the-time/article6339393.ece
 #Zone	  Asia/Chennai  [not enough info to complete]
@@ -532,7 +532,7 @@ Zone	Europe/Belfast	-0:23:40 -	LMT	1880 Aug  2
 # Data from Joseph S. Myers
 # https://mm.icann.org/pipermail/tz/2013-September/019883.html
 # References to be added
-# LMT is for Town Church, St. Peter Port, 49 degrees 27'17"N 2 degrees 32'10"W
+# LMT is for Town Church, St. Peter Port, 49° 27' 17" N, 2° 32' 10" W.
 Zone	Europe/Guernsey	-0:10:09 -	LMT	1913 Jun 18
 			 0:00	GB-Eire	%s	1940 Jul  2
 			 1:00	C-Eur	CE%sT	1945 May  8
@@ -566,7 +566,7 @@ Zone Europe/Isle_of_Man	-0:17:55 -	LMT	1883 Mar 30  0:00s
 # Data from Joseph S. Myers
 # https://mm.icann.org/pipermail/tz/2013-September/019883.html
 # References to be added
-# LMT is for Parish Church, St. Helier, 49 degrees 11'0.57"N 2 degrees 6'24.33"W
+# LMT is for Parish Church, St. Helier, 49° 11' 0.57" N, 2° 6' 24.33" W.
 Zone	Europe/Jersey	-0:08:26 -	LMT	1898 Jun 11 16:00u
 			 0:00	GB-Eire	%s	1940 Jul  2
 			 1:00	C-Eur	CE%sT	1945 May  8

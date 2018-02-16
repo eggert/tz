@@ -424,8 +424,7 @@ Zone America/North_Dakota/New_Salem -6:45:39 - LMT	1883 Nov 18 12:14:21
 # ...according to the Census Bureau, the largest city is Beulah (although
 # it's commonly referred to as Beulah-Hazen, with Hazen being the next
 # largest city in Mercer County).  Google Maps places Beulah's city hall
-# at 47 degrees 15' 51" N, 101 degrees 46' 40" W, which yields an offset
-# of 6h47'07".
+# at 47° 15' 51" N, 101° 46' 40" W, which yields an offset of 6h47'07".
 
 Zone America/North_Dakota/Beulah -6:47:07 - LMT	1883 Nov 18 12:12:53
 			-7:00	US	M%sT	2010 Nov  7  2:00
@@ -458,7 +457,7 @@ Zone America/Denver	-6:59:56 -	LMT	1883 Nov 18 12:00:04
 # California, northern Idaho (Benewah, Bonner, Boundary, Clearwater,
 # Kootenai, Latah, Lewis, Nez Perce, and Shoshone counties, Idaho county
 # north of the Salmon River, and the towns of Burgdorf and Warren),
-# Nevada (except West Wendover), Oregon (except the northern 3/4 of
+# Nevada (except West Wendover), Oregon (except the northern ¾ of
 # Malheur county), and Washington
 
 # From Paul Eggert (2016-08-20):

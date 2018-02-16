@@ -12,7 +12,7 @@
 #     of ISO 3166 2-character country codes.  See the file 'iso3166.tab'.
 # 2.  Latitude and longitude of the zone's principal location
 #     in ISO 6709 sign-degrees-minutes-seconds format,
-#     either +-DDMM+-DDDMM or +-DDMMSS+-DDDMMSS,
+#     either ±DDMM±DDDMM or ±DDMMSS±DDDMMSS,
 #     first latitude (+ is north), then longitude (+ is east).
 # 3.  Zone name used in value of TZ environment variable.
 #     Please see the theory.html file for how zone names are chosen.

@@ -108,6 +108,10 @@ Unreleased, experimental changes
     with links to many relevant legal documents.
     (Thanks to Tim Parenti.)
 
+    Commentary now uses some non-ASCII characters with Unicode value
+    less than U+0100, as they can be useful and should work even with
+    older editors such as XEmacs.
+
 
 Release 2018c - 2018-01-22 23:00:44 -0800
 
@@ -1009,7 +1013,7 @@ Release 2016b - 2016-03-12 17:30:14 -0800
     Comments in zone tables have been improved.  (Thanks to J William Piggott.)
 
     tzselect again limits its menu comments so that menus fit on a
-    24x80 alphanumeric display.
+    24×80 alphanumeric display.
 
     A new web page tz-how-to.html.  (Thanks to Bill Seymour.)
 

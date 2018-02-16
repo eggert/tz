@@ -8,11 +8,32 @@ Unreleased, experimental changes
 
   Changes to past time stamps
 
+    Historical transitions for Uruguay, represented by
+    America/Montevideo, have been updated per official legal documents,
+    replacing previous data mainly originating from the inventions of
+    Shanks & Pottenger.  This has resulted in adjustments ranging from
+    30 to 90 minutes in either direction over at least two dozen
+    distinct periods ranging from one day to several years in length.
+    A mere handful of pre-1991 transitions are unaffected; data since
+    then has come from more reliable contemporaneous reporting.  These
+    changes affect various timestamps in 1920-1923, 1926, 1936, 1939,
+    1942-1943, 1959, 1966-1970, 1972, 1974-1980, and 1988-1990.
+    Additionally, Uruguay's pre-standard-time UT offset has been
+    adjusted westward by 7 seconds, from UT-03:44:44 to UT-03:44:51, to
+    match the location of the Observatory of the National Meteorological
+    Institute in Montevideo.
+    (Thanks to Jeremie Bonjour and Tim Parenti.)
+
     Enderbury and Kiritimati skipped New Year's Eve 1994, not
-    New Year's day 1995.  (Thanks to Kerry Shetline.)
+    New Year's Day 1995.  (Thanks to Kerry Shetline.)
 
     Fix an off-by-1 error for pre-1913 timestamps in Jamaica and in
     Turks & Caicos.
+
+  Changes to past time zone abbreviations
+
+    MMT took effect in Uruguay from 1908-06-10, not 1898-06-28.  There
+    is no clock change associated with the transition.
 
   Changes to build procedure
 
@@ -82,6 +103,10 @@ Unreleased, experimental changes
     saving time", to match the C name tm_isdst.  Daylight saving time
     need not occur in summer, and need not have a positive offset from
     standard time.
+
+    Commentary about historical transitions in Uruguay has been expanded
+    with links to many relevant legal documents.
+    (Thanks to Tim Parenti.)
 
 
 Release 2018c - 2018-01-22 23:00:44 -0800

@@ -1678,72 +1678,201 @@ Link America/Port_of_Spain America/Tortola	# Virgin Islands (UK)
 # Uruguay
 # From Paul Eggert (1993-11-18):
 # Uruguay wins the prize for the strangest peacetime manipulation of the rules.
-# From Shanks & Pottenger:
+#
+# From Tim Parenti (2018-02-15), per Jeremie Bonjour (2018-01-31):
+# ... At least they kept good records...
+#
+# http://www.armada.mil.uy/ContenidosPDFs/sohma/web/almanaque/almanaque_2018.pdf#page=36
+# Page 36 of Almanaque 2018, published by the Oceanography, Hydrography, and
+# Meteorology Service of the Uruguayan Navy, seems to give many transitions
+# with greater clarity than we've had before.  It directly references many laws
+# and decrees which are, in turn, referenced below.  They can be viewed in the
+# public archives of the Diario Oficial (in Spanish) at
+# http://www.impo.com.uy/diariooficial/
+#
+# Ley No. 3920 of 1908-06-10 placed the determination of legal time under the
+# auspices of the National Institute for the Prediction of Time.  It is unclear
+# exactly what offset was used during this period, though Ley No. 7200 of
+# 1920-04-23 used the Observatory of the National Meteorological Institute in
+# Montevideo (S 34°54′33″, W 056°12′45″) as its reference meridian, retarding
+# legal time by 15 minutes 9 seconds from 1920-04-30 24:00, resulting in UT-04.
+# Assume the corresponding LMT of UT-03:44:51 (given on page 725 of the
+# Proceedings of the Second Pan-American Scientific Congress, 1915-1916) was in
+# use, and merely became official from 1908-06-10.
+# https://www.impo.com.uy/diariooficial/1908/06/18/12
+# https://www.impo.com.uy/diariooficial/1920/04/27/9
+#
+# Ley No. 7594 of 1923-06-28 specified legal time as Observatory time advanced
+# by 44 minutes 51 seconds (UT-03) "from 30 September to 31 March", and by 14
+# minutes 51 seconds (UT-03:30) "the rest of the year"; a message from the
+# National Council of Administration the same day, published directly below the
+# law in the Diario Oficial, specified the first transition to be 1923-09-30
+# 24:00.  This effectively established standard time at UT-03:30 with 30
+# minutes DST.  Assume transitions at 24:00 on the specified days until Ley No.
+# 7919 of 1926-03-05 ended this arrangement, repealing all "laws and other
+# provisions which oppose" it, resulting immediately in year-round UT-03:30.
+# (Since we don't know the time at which the change became law, assume clocks
+# were changed at 24:00 that evening.  Almanaque 2018 is a bit hand-wavey here,
+# anyway.)
+# https://www.impo.com.uy/diariooficial/1923/07/02/2
+# https://www.impo.com.uy/diariooficial/1926/03/10/2
+#
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-# Whitman gives 1923 Oct 1; go with Shanks & Pottenger.
-Rule	Uruguay	1923	only	-	Oct	 2	 0:00	0:30	-
-Rule	Uruguay	1924	1926	-	Apr	 1	 0:00	0	-
-Rule	Uruguay	1924	1925	-	Oct	 1	 0:00	0:30	-
-Rule	Uruguay	1933	1935	-	Oct	lastSun	 0:00	0:30	-
-# Shanks & Pottenger give 1935 Apr 1 0:00 & 1936 Mar 30 0:00; go with Whitman.
-Rule	Uruguay	1934	1936	-	Mar	Sat>=25	23:30s	0	-
-Rule	Uruguay	1936	only	-	Nov	 1	 0:00	0:30	-
-Rule	Uruguay	1937	1941	-	Mar	lastSun	 0:00	0	-
-# Whitman gives 1937 Oct 3; go with Shanks & Pottenger.
-Rule	Uruguay	1937	1940	-	Oct	lastSun	 0:00	0:30	-
-# Whitman gives 1941 Oct 24 - 1942 Mar 27, 1942 Dec 14 - 1943 Apr 13,
-# and 1943 Apr 13 "to present time"; go with Shanks & Pottenger.
+Rule	Uruguay	1923	1925	-	Oct	 1	 0:00	0:30	-
+Rule	Uruguay	1924	1925	-	Apr	 1	 0:00	0	-
+Rule	Uruguay	1926	only	-	Mar	 5	24:00	0	-
+# From Tim Parenti (2018-02-15):
+# http://www.impo.com.uy/diariooficial/1933/10/27/6
+#
+# It appears Ley No. 9122 of 1933 was never published as such in the Diario
+# Oficial, but instead appeared as Document 26 in the Diario on Friday
+# 1933-10-27 as a decree made Monday 1933-10-23 and filed under the Ministry of
+# National Defense.  It reinstituted a DST of 30 minutes (to UT-03) "from the
+# last Sunday of October...until the last Saturday of March."  In accordance
+# with this provision, the first transition was explicitly specified in Article
+# 2 of the decree as Saturday 1933-10-28 at 24:00; that is, Sunday 1933-10-29
+# at 00:00.  Assume transitions at 00:00 Sunday throughout.
+#
+# Departing from the matter-of-fact nature of previous timekeeping laws, the
+# 1933 decree "consider[s] the advantages of...the advance of legal time":
+#
+#   "Whereas: The measure adopted by almost all nations at the time of the last
+#    World War still persists in North America and Europe, precisely because of
+#    the economic, hygienic, and social advantages derived from such an
+#    emergency measure...
+#
+#    Whereas: The advance of the legal time during the summer seasons, by
+#    displacing social activity near sunrise, favors the citizen populations
+#    and especially the society that creates and works..."
+#
+# It further specified that "necessary measures" be taken to ensure that
+# "public spectacles finish, in general, before [01:00]."
+Rule	Uruguay	1933	1938	-	Oct	lastSun	 0:00	0:30	-
+Rule	Uruguay	1934	1941	-	Mar	lastSat	24:00	0	-
+# From Tim Parenti (2018-02-15):
+# Most of the Rules below, and their contemporaneous Zone lines, have been
+# updated simply to match the Almanaque 2018.  Although the document does not
+# list exact transition times, midnight transitions were already present in our
+# data here for all transitions through 2004-09, and this is both consistent
+# with prior transitions and verified in several decrees marked below between
+# 1939-09 and 2004-09, wherein the relevant text was typically of the form:
+#
+#   "From 0 hours on [date], the legal time of the entire Republic will be...
+#
+#    In accordance with [the preceding], on [previous date] at 24 hours, all
+#    clocks throughout the Republic will be [advanced/retarded] by..."
+#
+# It is possible that there is greater specificity to be found for the Rules
+# below, but it is buried in no fewer than 40 different decrees individually
+# referenced by the Almanaque for the period from 1939-09 to 2014-09.
+# Four-fifths of these were promulgated less than two weeks before taking
+# effect; more than half within a week and none more than 5 weeks.  Only the
+# handful with comments below have been checked with any thoroughness.
+Rule	Uruguay	1939	only	-	Oct	 1	 0:00	0:30	-
+Rule	Uruguay	1940	only	-	Oct	27	 0:00	0:30	-
+# From Tim Parenti (2018-02-15):
+# Decreto 1145 of the Ministry of National Defense, dated 1941-07-26, specified
+# UT-03 from Friday 1941-08-01 00:00, citing an "urgent...need to save fuel".
+# http://www.impo.com.uy/diariooficial/1941/08/04/1
 Rule	Uruguay	1941	only	-	Aug	 1	 0:00	0:30	-
-Rule	Uruguay	1942	only	-	Jan	 1	 0:00	0	-
-Rule	Uruguay	1942	only	-	Dec	14	 0:00	1:00	-
+# From Tim Parenti (2018-02-15):
+# Decreto 1866 of the Ministry of National Defense, dated 1942-12-09, specified
+# further advancement (to UT-02:30) from Sunday 1942-12-13 24:00.  Since clocks
+# never went back to UT-03:30 thereafter, this is modeled as advancing standard
+# time by 30 minutes to UT-03, while retaining 30 minutes of DST.
+# http://www.impo.com.uy/diariooficial/1942/12/16/3
+Rule	Uruguay	1942	only	-	Dec	14	 0:00	0:30	-
 Rule	Uruguay	1943	only	-	Mar	14	 0:00	0	-
-Rule	Uruguay	1959	only	-	May	24	 0:00	1:00	-
+Rule	Uruguay	1959	only	-	May	24	 0:00	0:30	-
 Rule	Uruguay	1959	only	-	Nov	15	 0:00	0	-
 Rule	Uruguay	1960	only	-	Jan	17	 0:00	1:00	-
 Rule	Uruguay	1960	only	-	Mar	 6	 0:00	0	-
-Rule	Uruguay	1965	1967	-	Apr	Sun>=1	 0:00	1:00	-
+Rule	Uruguay	1965	only	-	Apr	 4	 0:00	1:00	-
 Rule	Uruguay	1965	only	-	Sep	26	 0:00	0	-
-Rule	Uruguay	1966	1967	-	Oct	31	 0:00	0	-
-Rule	Uruguay	1968	1970	-	May	27	 0:00	0:30	-
-Rule	Uruguay	1968	1970	-	Dec	 2	 0:00	0	-
-Rule	Uruguay	1972	only	-	Apr	24	 0:00	1:00	-
-Rule	Uruguay	1972	only	-	Aug	15	 0:00	0	-
+# From Tim Parenti (2018-02-15):
+# Decreto 321/968 of 1968-05-25, citing emergency drought measures decreed the
+# day before, brought clocks forward 30 minutes from Monday 1968-05-27 00:00.
+# http://www.impo.com.uy/diariooficial/1968/05/30/5
+Rule	Uruguay	1968	only	-	May	27	 0:00	0:30	-
+Rule	Uruguay	1968	only	-	Dec	 1	 0:00	0	-
+# From Tim Parenti (2018-02-15):
+# Decreto 188/970 of 1970-04-23 instituted restrictions on electricity
+# consumption "as a consequence of the current rainfall regime in the country".
+# Articles 13 and 14 advanced clocks by an hour from Saturday 1970-04-25 00:00.
+# http://www.impo.com.uy/diariooficial/1970/04/29/4
+Rule	Uruguay	1970	only	-	Apr	25	 0:00	1:00	-
+Rule	Uruguay	1970	only	-	Jun	14	 0:00	0	-
+Rule	Uruguay	1972	only	-	Apr	23	 0:00	1:00	-
+Rule	Uruguay	1972	only	-	Jul	16	 0:00	0	-
+# From Tim Parenti (2018-02-15):
+# Decreto 29/974 of 1974-01-11, citing "the international rise in the price of
+# oil", advanced clocks by 90 minutes (to UT-01:30).  Decreto 163/974 of
+# 1974-03-04 returned 60 of those minutes (to UT-02:30), and the remaining 30
+# minutes followed in Decreto 679/974 of 1974-08-29.
+# http://www.impo.com.uy/diariooficial/1974/01/22/11
+# http://www.impo.com.uy/diariooficial/1974/03/14/3
+# http://www.impo.com.uy/diariooficial/1974/09/04/6
+Rule	Uruguay	1974	only	-	Jan	13	 0:00	1:30	-
 Rule	Uruguay	1974	only	-	Mar	10	 0:00	0:30	-
+Rule	Uruguay	1974	only	-	Sep	 1	 0:00	0	-
 Rule	Uruguay	1974	only	-	Dec	22	 0:00	1:00	-
-Rule	Uruguay	1976	only	-	Oct	 1	 0:00	0	-
+Rule	Uruguay	1975	only	-	Mar	30	 0:00	0	-
+Rule	Uruguay	1976	only	-	Dec	19	 0:00	1:00	-
+Rule	Uruguay	1977	only	-	Mar	 6	 0:00	0	-
 Rule	Uruguay	1977	only	-	Dec	 4	 0:00	1:00	-
-Rule	Uruguay	1978	only	-	Apr	 1	 0:00	0	-
-Rule	Uruguay	1979	only	-	Oct	 1	 0:00	1:00	-
-Rule	Uruguay	1980	only	-	May	 1	 0:00	0	-
+Rule	Uruguay	1978	1979	-	Mar	Sun>=1	 0:00	0	-
+Rule	Uruguay	1978	only	-	Dec	17	 0:00	1:00	-
+Rule	Uruguay	1979	only	-	Apr	29	 0:00	1:00	-
+Rule	Uruguay	1980	only	-	Mar	16	 0:00	0	-
+# From Tim Parenti (2018-02-15):
+# Decreto 725/987 of 1987-12-04 cited "better use of national tourist
+# attractions" to advance clocks one hour from Monday 1987-12-14 00:00.
+# http://www.impo.com.uy/diariooficial/1988/01/25/1
 Rule	Uruguay	1987	only	-	Dec	14	 0:00	1:00	-
-Rule	Uruguay	1988	only	-	Mar	14	 0:00	0	-
+Rule	Uruguay	1988	only	-	Feb	28	 0:00	0	-
 Rule	Uruguay	1988	only	-	Dec	11	 0:00	1:00	-
-Rule	Uruguay	1989	only	-	Mar	12	 0:00	0	-
+Rule	Uruguay	1989	only	-	Mar	 5	 0:00	0	-
 Rule	Uruguay	1989	only	-	Oct	29	 0:00	1:00	-
-# Shanks & Pottenger say no DST was observed in 1990/1 and 1991/2,
-# and that 1992/3's DST was from 10-25 to 03-01.  Go with IATA.
-Rule	Uruguay	1990	1992	-	Mar	Sun>=1	 0:00	0	-
+Rule	Uruguay	1990	only	-	Feb	25	 0:00	0	-
+# From Tim Parenti (2018-02-15), per Paul Eggert (1999-11-04):
+# IATA agrees as below for 1990-10 through 1993-02.  Per Almanaque 2018, the
+# 1992/1993 season appears to be the first in over half a century where DST
+# both began and ended pursuant to the same decree.
 Rule	Uruguay	1990	1991	-	Oct	Sun>=21	 0:00	1:00	-
+Rule	Uruguay	1991	1992	-	Mar	Sun>=1	 0:00	0	-
 Rule	Uruguay	1992	only	-	Oct	18	 0:00	1:00	-
 Rule	Uruguay	1993	only	-	Feb	28	 0:00	0	-
 # From Eduardo Cota (2004-09-20):
 # The Uruguayan government has decreed a change in the local time....
-# http://www.presidencia.gub.uy/decretos/2004091502.htm
+# From Tim Parenti (2018-02-15):
+# Decreto 328/004 of 2004-09-15.
+# http://www.impo.com.uy/diariooficial/2004/09/23/documentos.pdf#page=1
 Rule	Uruguay	2004	only	-	Sep	19	 0:00	1:00	-
 # From Steffen Thorsen (2005-03-11):
 # Uruguay's DST was scheduled to end on Sunday, 2005-03-13, but in order to
 # save energy ... it was postponed two weeks....
-# http://www.presidencia.gub.uy/_Web/noticias/2005/03/2005031005.htm
+# From Tim Parenti (2018-02-15):
+# This 2005 postponement is not in Almanaque 2018.  Go with the contemporaneous
+# reporting, which is confirmed by Decreto 107/005 of 2005-03-10 amending
+# Decreto 328/004:
+# http://www.impo.com.uy/diariooficial/2005/03/15/documentos.pdf#page=1
+# The original decree specified a transition of 2005-03-12 24:00, but the new
+# one specified 2005-03-27 02:00.
 Rule	Uruguay	2005	only	-	Mar	27	 2:00	0	-
 # From Eduardo Cota (2005-09-27):
-# http://www.presidencia.gub.uy/_Web/decretos/2005/09/CM%20119_09%2009%202005_00001.PDF
-# This means that from 2005-10-09 at 02:00 local time, until 2006-03-12 at
-# 02:00 local time, official time in Uruguay will be at GMT -2.
+# ...from 2005-10-09 at 02:00 local time, until 2006-03-12 at 02:00 local time,
+# official time in Uruguay will be at GMT -2.
+# From Tim Parenti (2018-02-15):
+# Decreto 318/005 of 2005-09-19.
+# http://www.impo.com.uy/diariooficial/2005/09/23/documentos.pdf#page=1
 Rule	Uruguay	2005	only	-	Oct	 9	 2:00	1:00	-
-Rule	Uruguay	2006	only	-	Mar	12	 2:00	0	-
-# From Jesper Nørgaard Welen (2006-09-06):
-# http://www.presidencia.gub.uy/_web/decretos/2006/09/CM%20210_08%2006%202006_00001.PDF
-#
+Rule	Uruguay	2006	2015	-	Mar	Sun>=8	 2:00	0	-
+# From Tim Parenti (2018-02-15), per Jesper Nørgaard Welen (2006-09-06):
+# Decreto 311/006 of 2006-09-04 established regular DST from the first Sunday
+# of October at 02:00 through the second Sunday of March at 02:00.  Almanaque
+# 2018 appears to have a few typoed dates through this period; ignore them.
+# http://www.impo.com.uy/diariooficial/2006/09/08/documentos.pdf#page=1
+Rule	Uruguay	2006	2014	-	Oct	Sun>=1	 2:00	1:00	-
 # From Steffen Thorsen (2015-06-30):
 # ... it looks like they will not be using DST the coming summer:
 # http://www.elobservador.com.uy/gobierno-resolvio-que-no-habra-cambio-horario-verano-n656787
@@ -1753,17 +1882,19 @@ Rule	Uruguay	2006	only	-	Mar	12	 2:00	0	-
 # instead of out to dinner.
 # From Pablo Camargo (2015-07-13):
 # http://archivo.presidencia.gub.uy/sci/decretos/2015/06/cons_min_201.pdf
-# [dated 2015-06-29; repeals Decree 311/006 dated 2006-09-04]
-Rule	Uruguay	2006	2014	-	Oct	Sun>=1	 2:00	1:00	-
-Rule	Uruguay	2007	2015	-	Mar	Sun>=8	 2:00	0	-
+# From Tim Parenti (2018-02-15):
+# Decreto 178/015 of 2015-06-29; repeals Decreto 311/006.
 
 # This Zone can be simplified once we assume zic %z.
-Zone America/Montevideo	-3:44:44 -	LMT	1898 Jun 28
-			-3:44:44 -	MMT	1920 May  1 # Montevideo MT
+Zone America/Montevideo	-3:44:51 -	LMT	1908 Jun 10
+			-3:44:51 -	MMT	1920 May  1 # Montevideo MT
+			-4:00	-	-04	1923 Oct  1
 			-3:30	Uruguay	-0330/-03 1942 Dec 14
+			-3:00	Uruguay	-03/-0230 1960
 			-3:00	Uruguay	-03/-02	1968
-			-3:00	Uruguay	-03/-0230 1971
+			-3:00	Uruguay	-03/-0230 1970
 			-3:00	Uruguay	-03/-02	1974
+			-3:00	Uruguay	-03/-0130 1974 Mar 10
 			-3:00	Uruguay	-03/-0230 1974 Dec 22
 			-3:00	Uruguay	-03/-02
 

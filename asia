@@ -764,8 +764,9 @@ Rule	Macau	1974	1977	-	Oct	Sun>=15	3:30	0	S
 Rule	Macau	1975	1977	-	Apr	Sun>=15	3:30	1:00	D
 Rule	Macau	1978	1980	-	Apr	Sun>=15	0:00	1:00	D
 Rule	Macau	1978	1980	-	Oct	Sun>=15	0:00	0	S
+# See Europe/Lisbon for info about the 1912 transition.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Macau	7:34:20 -	LMT	1912 Jan  1
+Zone	Asia/Macau	7:34:20 -	LMT	1911 Dec 31 16:00u
 			8:00	Macau	C%sT
 
 

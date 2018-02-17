@@ -170,13 +170,13 @@ Zone	Africa/Lome	0:04:52 -	LMT	1893
 
 # Angola
 #
+# From Paul Eggert (2018-02-16):
 # Shanks gives 1911-05-26 for the transition to WAT,
 # evidently confusing the date of the Portuguese decree
-# https://dre.pt/pdf1sdip/1911/05/12500/23132313.pdf
-# with the date that it took effect, namely 1912-01-01.
+# (see Europe/Lisbon) with the date that it took effect.
 #
 Zone	Africa/Luanda	0:52:56	-	LMT	1892
-			0:52:04	-	LMT	1912 Jan  1 # Luanda Mean Time?
+			0:52:04	-	LMT	1911 Dec 31 23:00u # Luanda MT?
 			1:00	-	WAT
 
 # Democratic Republic of the Congo (east)

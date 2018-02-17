@@ -2140,15 +2140,19 @@ Zone	Europe/Warsaw	1:24:00 -	LMT	1880
 			1:00	EU	CE%sT
 
 # Portugal
-#
+
 # From Paul Eggert (2014-08-11), after a heads-up from Stephen Colebourne:
 # According to a Portuguese decree (1911-05-26)
 # https://dre.pt/application/dir/pdf1sdip/1911/05/12500/23132313.pdf
 # Lisbon was at -0:36:44.68, but switched to GMT on 1912-01-01 at 00:00.
-# Round the old offset to -0:36:45.  This agrees with Willett but disagrees
-# with Shanks, who says the transition occurred on 1911-05-24 at 00:00 for
-# Europe/Lisbon, Atlantic/Azores, and Atlantic/Madeira.
+# Round the old offset to -0:36:45.  This agrees with Willett....
 #
+# From Michael Deckers (2018-02-15):
+# article 5 [of the 1911 decree; Deckers's translation] ...:
+# These dispositions shall enter into force at the instant at which,
+# according to the 2nd article, the civil day January 1, 1912 begins,
+# all clocks therefore having to be advanced or set back correspondingly ...
+
 # From Rui Pedro Salgueiro (1992-11-12):
 # Portugal has recently (September, 27) changed timezone
 # (from WET to MET or CET) to harmonize with EEC.
@@ -2231,7 +2235,7 @@ Rule	Port	1983	only	-	Mar	lastSun	 2:00s	1:00	S
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Lisbon	-0:36:45 -	LMT	1884
-			-0:36:45 -	LMT	1912 Jan  1 # Lisbon Mean Time
+			-0:36:45 -	LMT	1912 Jan  1  0:00u # Lisbon MT
 			 0:00	Port	WE%sT	1966 Apr  3  2:00
 			 1:00	-	CET	1976 Sep 26  1:00
 			 0:00	Port	WE%sT	1983 Sep 25  1:00s
@@ -2240,7 +2244,7 @@ Zone	Europe/Lisbon	-0:36:45 -	LMT	1884
 			 0:00	EU	WE%sT
 # This Zone can be simplified once we assume zic %z.
 Zone Atlantic/Azores	-1:42:40 -	LMT	1884        # Ponta Delgada
-			-1:54:32 -	HMT	1912 Jan  1 # Horta Mean Time
+			-1:54:32 -	HMT	1912 Jan  1  2:00u # Horta MT
 			-2:00	Port	-02/-01	1942 Apr 25 22:00s
 			-2:00	Port	+00	1942 Aug 15 22:00s
 			-2:00	Port	-02/-01	1943 Apr 17 22:00s
@@ -2256,7 +2260,7 @@ Zone Atlantic/Azores	-1:42:40 -	LMT	1884        # Ponta Delgada
 			-1:00	EU	-01/+00
 # This Zone can be simplified once we assume zic %z.
 Zone Atlantic/Madeira	-1:07:36 -	LMT	1884        # Funchal
-			-1:07:36 -	FMT	1912 Jan  1 # Funchal Mean Time
+			-1:07:36 -	FMT	1912 Jan  1  1:00u # Funchal MT
 			-1:00	Port	-01/+00	1942 Apr 25 22:00s
 			-1:00	Port	+01	1942 Aug 15 22:00s
 			-1:00	Port	-01/+00	1943 Apr 17 22:00s

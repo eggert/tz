@@ -27,6 +27,14 @@ Unreleased, experimental changes
     Enderbury and Kiritimati skipped New Year's Eve 1994, not
     New Year's Day 1995.  (Thanks to Kerry Shetline.)
 
+    Fix the 1912-01-01 transition for Portugual and its colonies.
+    This transition was at 00:00 according to the new UT offset, not
+    according to the old one.  Also assume that Cape Verde switched on
+    the same date as the rest, not in 1907.  This affects
+    Africa/Bissau, Africa/Sao_Tome, Asia/Macau, Atlantic/Azores,
+    Atlantic/Cape_Verde, Atlantic/Madeira, and Europe/Lisbon.
+    (Thanks to Michael Deckers.)
+
     Fix an off-by-1 error for pre-1913 timestamps in Jamaica and in
     Turks & Caicos.
 

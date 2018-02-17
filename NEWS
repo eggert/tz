@@ -60,10 +60,10 @@ Unreleased, experimental changes
     * In the current version, the main and rearguard formats are
       identical and match that of 2018c, so this change does not
       affect default behavior.  The vanguard format currently contains
-      one feature not in the main format: negative DST offsets.  This
+      one feature not in the main format: negative SAVE values.  This
       improves support for Ireland, which uses Irish Standard Time
       (IST, UTC+01) in summer and GMT (UTC) in winter.  tzcode has
-      supported negative DST offsets for decades, and this feature
+      supported negative SAVE values for decades, and this feature
       should move to the main format soon.  However, it will not move
       to the rearguard format for quite some time because some
       downstream parsers do not support it.
@@ -72,7 +72,7 @@ Unreleased, experimental changes
       and rearguard.zi, one for each format.  The files represent the
       same data as closely as the formats allow.  These three files
       are intended for downstream data consumers and are not
-      installed.  Zoneinfo parsers that require positive DST offsets
+      installed.  Zoneinfo parsers that do not support negative SAVE values
       should start using rearguard.zi, so that they will be unaffected
       when the negative-DST feature moves from vanguard to main.
       Bleeding-edge Zoneinfo parsers that support the new features
@@ -124,7 +124,7 @@ Unreleased, experimental changes
 Release 2018c - 2018-01-22 23:00:44 -0800
 
   Briefly:
-  Revert Irish changes that relied on negative DST offsets.
+  Revert Irish changes that relied on negative SAVE values.
 
   Changes to tm_isdst
 
@@ -135,8 +135,8 @@ Release 2018c - 2018-01-22 23:00:44 -0800
     struct tm type.  This reversion is intended to be a temporary
     workaround for problems discovered with downstream uses of
     releases 2018a and 2018b, which implemented Irish time by using
-    negative DST offsets in the Eire rules of the 'europe' file.
-    Although negative DST offsets have been part of tzcode for many
+    negative SAVE values in the Eire rules of the 'europe' file.
+    Although negative SAVE values have been part of tzcode for many
     years and are supported by many platforms, they were not
     documented before 2018a and ICU and OpenJDK do not currently
     support them.  A mechanism to export data to platforms lacking

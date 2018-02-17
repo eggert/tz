@@ -508,25 +508,25 @@ Link	Europe/London	Europe/Jersey
 Link	Europe/London	Europe/Guernsey
 Link	Europe/London	Europe/Isle_of_Man
 
-# From Paul Eggert (2018-01-30):
-# In January 2018 we discovered that the negative DST offsets in the
+# From Paul Eggert (2018-02-15):
+# In January 2018 we discovered that the negative SAVE values in the
 # Eire rules cause problems with tests for ICU:
 # https://mm.icann.org/pipermail/tz/2018-January/025825.html
 # and with tests for OpenJDK:
 # https://mm.icann.org/pipermail/tz/2018-January/025822.html
 #
 # To work around this problem, the build procedure can translate the
-# following data into two forms, one with negative DST offsets and the
+# following data into two forms, one with negative SAVE values and the
 # other form with a traditional approximation for Irish time stamps
 # after 1971-10-31 02:00 UTC; although this approximation has tm_isdst
 # flags that are reversed, its UTC offsets are correct and this often
-# suffices.  This source file currently uses only positive DST
-# offsets, but this is intended to change and downstream code should
+# suffices.  This source file currently uses only nonnegative SAVE
+# values, but this is intended to change and downstream code should
 # not rely on it.
 #
 # The following is like GB-Eire and EU, except with standard time in
 # summer and negative daylight saving time in winter.  It is for when
-# negative DST offsets are used.
+# negative SAVE values are used.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 #Rule	Eire	1971	only	-	Oct	31	 2:00u	-1:00	GMT
 #Rule	Eire	1972	1980	-	Mar	Sun>=16	 2:00u	0	IST
@@ -547,9 +547,9 @@ Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
 			 0:00	1:00	IST	1947 Nov  2  2:00s
 			 0:00	-	GMT	1948 Apr 18  2:00s
 			 0:00	GB-Eire	GMT/IST	1968 Oct 27
-# The next line is for when negative DST offsets are used.
+# The next line is for when negative SAVE values are used.
 #			 1:00	Eire	IST/GMT
-# These three lines are for when positive DST offsets are used.
+# These three lines are for when SAVE values are always nonnegative.
 			 1:00	-	IST	1971 Oct 31  2:00u
 			 0:00	GB-Eire	GMT/IST	1996
 			 0:00	EU	GMT/IST

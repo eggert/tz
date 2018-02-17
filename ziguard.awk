@@ -4,11 +4,11 @@
 
 # This is not a general-purpose converter; it is designed for current tzdata.
 #
-# When converting to vanguard form, the output can use negative DST
-# offsets.
+# When converting to vanguard form, the output can use negative SAVE
+# values.
 #
-# When converting to rearguard form, the output uses only positive DST
-# offsets.  The idea is for the output data to simulate the behavior
+# When converting to rearguard form, the output uses only nonnegative
+# SAVE values.  The idea is for the output data to simulate the behavior
 # of the input data as best it can within the constraints of the
 # rearguard format.
 
@@ -27,7 +27,7 @@ BEGIN {
 outfile != "main.zi" {
   in_comment = /^#/
 
-  # If this line should differ due to Ireland using negative DST offsets,
+  # If this line should differ due to Ireland using negative SAVE values,
   # uncomment the desired version and comment out the undesired one.
   Rule_Eire = /^#?Rule[\t ]+Eire[\t ]/
   Zone_Dublin_post_1968 \

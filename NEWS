@@ -16,13 +16,13 @@ Unreleased, experimental changes
     distinct periods ranging from one day to several years in length.
     A mere handful of pre-1991 transitions are unaffected; data since
     then has come from more reliable contemporaneous reporting.  These
-    changes affect various timestamps in 1920-1923, 1926, 1936, 1939,
+    changes affect various timestamps in 1920-1923, 1936, 1939,
     1942-1943, 1959, 1966-1970, 1972, 1974-1980, and 1988-1990.
     Additionally, Uruguay's pre-standard-time UT offset has been
     adjusted westward by 7 seconds, from UT-03:44:44 to UT-03:44:51, to
     match the location of the Observatory of the National Meteorological
     Institute in Montevideo.
-    (Thanks to Jeremie Bonjour and Tim Parenti.)
+    (Thanks to Jeremie Bonjour, Tim Parenti, and Michael Deckers.)
 
     Enderbury and Kiritimati skipped New Year's Eve 1994, not
     New Year's Day 1995.  (Thanks to Kerry Shetline.)

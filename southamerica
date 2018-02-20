@@ -1679,7 +1679,8 @@ Link America/Port_of_Spain America/Tortola	# Virgin Islands (UK)
 # From Paul Eggert (1993-11-18):
 # Uruguay wins the prize for the strangest peacetime manipulation of the rules.
 #
-# From Tim Parenti (2018-02-15), per Jeremie Bonjour (2018-01-31):
+# From Tim Parenti (2018-02-20), per Jeremie Bonjour (2018-01-31) and Michael
+# Deckers (2018-02-20):
 # ... At least they kept good records...
 #
 # http://www.armada.mil.uy/ContenidosPDFs/sohma/web/almanaque/almanaque_2018.pdf#page=36
@@ -1710,17 +1711,16 @@ Link America/Port_of_Spain America/Tortola	# Virgin Islands (UK)
 # 24:00.  This effectively established standard time at UT-03:30 with 30
 # minutes DST.  Assume transitions at 24:00 on the specified days until Ley No.
 # 7919 of 1926-03-05 ended this arrangement, repealing all "laws and other
-# provisions which oppose" it, resulting immediately in year-round UT-03:30.
-# (Since we don't know the time at which the change became law, assume clocks
-# were changed at 24:00 that evening.  Almanaque 2018 is a bit hand-wavey here,
-# anyway.)
+# provisions which oppose" it, resulting in year-round UT-03:30; a Resolución
+# of 1926-03-11 puts the final transition at 1926-03-31 24:00, the same as it
+# would have been under the previous law.
 # https://www.impo.com.uy/diariooficial/1923/07/02/2
 # https://www.impo.com.uy/diariooficial/1926/03/10/2
+# https://www.impo.com.uy/diariooficial/1926/03/18/2
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Uruguay	1923	1925	-	Oct	 1	 0:00	0:30	-
-Rule	Uruguay	1924	1925	-	Apr	 1	 0:00	0	-
-Rule	Uruguay	1926	only	-	Mar	 5	24:00	0	-
+Rule	Uruguay	1924	1926	-	Apr	 1	 0:00	0	-
 # From Tim Parenti (2018-02-15):
 # http://www.impo.com.uy/diariooficial/1933/10/27/6
 #

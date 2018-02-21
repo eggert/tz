@@ -640,19 +640,29 @@ posix_packrat:
 
 zones:		$(REDO)
 
+# dummy.zd is not a real file; it is mentioned here only so that the
+# top-level 'make' does not have a syntax error.
+ZDS = dummy.zd
+# Rule used only by submakes invoked by the $(TZS_NEW) rule.
+# It is separate so that GNU 'make -j' can run instances in parallel.
+$(ZDS): zdump
+		./zdump -i -c $(TZS_YEAR) '$(wd)/'$$(expr $@ : '\(.*\).zd') >$@
+
 $(TZS_NEW):	tzdata.zi zdump zic
-		mkdir -p tzs.dir
+		rm -fr tzs.dir
+		mkdir tzs.dir
 		$(zic) -d tzs.dir tzdata.zi
 		$(AWK) '/^L/{print "Link\t" $$2 "\t" $$3}' \
 		   tzdata.zi | LC_ALL=C sort >$@.out
 		wd=`pwd` && \
-		zones=`$(AWK) -v wd="$$wd" \
-				'/^Z/{print wd "/tzs.dir/" $$2}' tzdata.zi \
-			 | LC_ALL=C sort` && \
-		./zdump -i -c $(TZS_YEAR) $$zones >>$@.out
-		sed 's,^TZ=".*tzs\.dir/,TZ=",' $@.out >$@.sed.out
-		rm -fr tzs.dir $@.out
-		mv $@.sed.out $@
+		set x `$(AWK) '/^Z/{print "tzs.dir/" $$2 ".zd"}' tzdata.zi \
+			| LC_ALL=C sort -t . -k 2,2` && \
+		shift && \
+		ZDS=$$* && \
+		$(MAKE) wd="$$wd" TZS_YEAR=$(TZS_YEAR) ZDS="$$ZDS" $$ZDS && \
+		sed 's,^TZ=".*tzs\.dir/,TZ=",' $$ZDS >>$@.out
+		rm -fr tzs.dir
+		mv $@.out $@
 
 # If $(TZS) does not already exist (e.g., old-format tarballs), create it.
 # If it exists but 'make check_tzs' fails, a maintainer should inspect the
@@ -730,7 +740,7 @@ check_sorted: backward backzone iso3166.tab zone.tab zone1970.tab
 		$(AWK) '/^[^#]/ $(CHECK_CC_LIST)' zone1970.tab | \
 		  LC_ALL=C sort -cu
 
-check_links:	checklinks.awk $(TDATA_TO_CHECK)
+check_links:	checklinks.awk $(TDATA_TO_CHECK) tzdata.zi
 		$(AWK) -f checklinks.awk $(TDATA_TO_CHECK)
 		$(AWK) -f checklinks.awk tzdata.zi
 
@@ -964,3 +974,4 @@ zic.o:		private.h tzfile.h version.h
 .PHONY: public right_only right_posix signatures signatures_version
 .PHONY: tarballs tarballs_version typecheck
 .PHONY: zonenames zones
+.PHONY: $(ZDS)

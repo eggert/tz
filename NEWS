@@ -79,6 +79,10 @@ Unreleased, experimental changes
       already can use vanguard.zi; in this respect, current tzcode is
       bleeding-edge.
 
+    The Makefile should now be safe for parallelized builds, and 'make
+    -j to2050new.tzs' is now much faster on a multiprocoessor host
+    with GNU Make.
+
     When built with -DSUPPRESS_TZDIR, the tzcode library no longer
     prepends TZDIR/ to file names that do not begin with '/'.  This is
     not recommended for general use, due to its security implications.

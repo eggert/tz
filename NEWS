@@ -80,7 +80,7 @@ Unreleased, experimental changes
       bleeding-edge.
 
     The Makefile should now be safe for parallelized builds, and 'make
-    -j to2050new.tzs' is now much faster on a multiprocoessor host
+    -j to2050new.tzs' is now much faster on a multiprocessor host
     with GNU Make.
 
     When built with -DSUPPRESS_TZDIR, the tzcode library no longer

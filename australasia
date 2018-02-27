@@ -1086,6 +1086,13 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # South Australian time even though it's located in Western Australia.
 
 # Queensland
+
+# From Paul Eggert (2018-02-26):
+# I lack access to the following source for Queensland DST:
+# Pearce C. History of daylight saving time in Queensland.
+# Queensland Hist J. 2017 Aug;23(6):389-403
+# https://search.informit.com.au/documentSummary;dn=994682348436426;res=IELHSS
+
 # From George Shepherd via Simon Woodhead via Robert Elz (1991-03-06):
 # #   The state of QUEENSLAND.. [ Courtesy Qld. Dept Premier Econ&Trade Devel ]
 # #						[ Dec 1990 ]

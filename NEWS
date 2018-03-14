@@ -6,6 +6,11 @@ Unreleased, experimental changes
   Add support for vanguard and rearguard data consumers.
   Add subsecond precision to source data format, though not to data.
 
+  Changes to past and future time stamps
+
+    Casey Station in Antarctica changed from +11 to +08 on 2018-03-11
+    at 04:00.  (Thanks to Steffen Thorsen.)
+
   Changes to past time stamps
 
     Historical transitions for Uruguay, represented by

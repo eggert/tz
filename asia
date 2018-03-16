@@ -2639,9 +2639,6 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # [Google translation]: "The Council also decided to start daylight
 # saving in Palestine as of one o'clock on Saturday morning,
 # 2016-03-26, to provide the clock 60 minutes ahead."
-#
-# From Paul Eggert (2016-03-12):
-# Predict spring transitions on March's last Saturday at 01:00 from now on.
 
 # From Sharef Mustafa (2016-10-19):
 # [T]he Palestinian cabinet decision (Mar 8th 2016) published on
@@ -2657,6 +2654,16 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # It's also consistent with predictions in the following URLs today:
 # https://www.timeanddate.com/time/change/gaza-strip/gaza
 # https://www.timeanddate.com/time/change/west-bank/hebron
+
+# From Sharef Mustafa (2018-03-16):
+# Palestine summer time will start on Mar 24th 2018 by advancing the
+# clock by 60 minutes as per Palestinian cabinet decision published on
+# the offical website, though the decree did not specify the exact
+# time of the time shift.
+# http://www.palestinecabinet.gov.ps/Website/AR/NDecrees/ViewFile.ashx?ID=e7a42ab7-ee23-435a-b9c8-a4f7e81f3817
+#
+# From Paul Eggert (2018-03-16):
+# For 2016 on, predict spring transitions on March's fourth Saturday at 01:00.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule EgyptAsia	1957	only	-	May	10	0:00	1:00	S
@@ -2687,7 +2694,7 @@ Rule Palestine	2012	only	-	Sep	21	1:00	0	-
 Rule Palestine	2013	only	-	Sep	Fri>=21	0:00	0	-
 Rule Palestine	2014	2015	-	Oct	Fri>=21	0:00	0	-
 Rule Palestine	2015	only	-	Mar	lastFri	24:00	1:00	S
-Rule Palestine	2016	max	-	Mar	lastSat	1:00	1:00	S
+Rule Palestine	2016	max	-	Mar	Sat>=22	1:00	1:00	S
 Rule Palestine	2016	max	-	Oct	lastSat	1:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

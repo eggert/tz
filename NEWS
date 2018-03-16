@@ -3,8 +3,15 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+
+  Palestine starts DST a week earlier in 2018.
   Add support for vanguard and rearguard data consumers.
   Add subsecond precision to source data format, though not to data.
+
+  Changes to future time stamps
+
+    In 2018, Palestine starts DST on March 24, not March 31.
+    Adjust future predictions accordingly.  (Thanks to Sharef Mustafa.)
 
   Changes to past and future time stamps
 

@@ -358,6 +358,30 @@ Zone America/Montreal	-4:54:16 -	LMT	1884
 Zone America/Montserrat	-4:08:52 -	LMT	1911 Jul  1  0:01 # Cork Hill
 			-4:00	-	AST
 
+# United States
+#
+# From Paul Eggert (2018-03-18):
+# America/Palm_Springs would be tricky, as it kept two sets of clocks
+# in 1946/7.  See the following notes.
+#
+# From Steve Allen (2018-01-19):
+# The shadow of Mt. San Jacinto brings darkness very early in the winter
+# months.  In 1946 the chamber of commerce decided to put the clocks of Palm
+# Springs forward by an hour in the winter.
+# https://www.desertsun.com/story/life/2017/12/27/palm-springs-struggle-daylight-savings-time-and-idea-sun-time/984416001/
+# Desert Sun, Number 18, 1 November 1946
+# https://cdnc.ucr.edu/cgi-bin/cdnc?a=d&d=DS19461101
+# has proposal for meeting on front page and page 21.
+# Desert Sun, Number 19, 5 November 1946
+# https://cdnc.ucr.edu/cgi-bin/cdnc?a=d&d=DS19461105
+# reports that Sun Time won at the meeting on front page and page 5.
+# Desert Sun, Number 37, 7 January 1947
+# https://cdnc.ucr.edu/cgi-bin/cdnc?a=d&d=DS19470107.2.12
+# front page reports request to abandon Sun Time and page 7 notes a "class war".
+# Desert Sun, Number 38, 10 January 1947
+# https://cdnc.ucr.edu/cgi-bin/cdnc?a=d&d=DS19470110
+# front page reports on end.
+
 # Argentina
 # This entry was intended for the following areas, but has been superseded by
 # more detailed zones.

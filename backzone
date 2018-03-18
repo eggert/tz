@@ -274,6 +274,16 @@ Zone	America/Cayman	-5:25:32 -	LMT	1890     # Georgetown
 			-5:07:10 -	KMT	1912 Feb # Kingston Mean Time
 			-5:00	-	EST
 
+# United States
+#
+# From Paul Eggert (2018-03-18):
+# America/Chillicothe would be tricky, as it was a city of two-timers:
+# "To prevent a constant mixup at Chillicothe, caused by the courthouse
+#  clock running on central time and the city running on 'daylight saving'
+#  time, a third hand was added to the dial of the courthouse clock."
+# -- Ohio news in brief. The Cedarville Herald. 1920-05-21;43(21):1 (col. 5)
+# https://digitalcommons.cedarville.edu/cedarville_herald/794
+
 # Canada
 Zone America/Coral_Harbour -5:32:40 -	LMT	1884
 			-5:00	NT_YK	E%sT	1946

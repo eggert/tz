@@ -964,14 +964,17 @@ zic.o:		private.h tzfile.h version.h
 .KEEP_STATE:
 
 .PHONY: ALL INSTALL all
-.PHONY: check check_character_set check_links
+.PHONY: check check_character_set check_links check_name_lengths
 .PHONY: check_public check_sorted check_tables
 .PHONY: check_time_t_alternatives check_tzs check_web check_white_space
 .PHONY: check_zishrink
-.PHONY: clean clean_misc force_tzs
+.PHONY: clean clean_misc dummy.zd force_tzs
 .PHONY: install install_data maintainer-clean names
 .PHONY: posix_only posix_packrat posix_right
 .PHONY: public right_only right_posix signatures signatures_version
-.PHONY: tarballs tarballs_version typecheck
+.PHONY: tarballs tarballs_version
+.PHONY: traditional_signatures traditional_signatures_version
+.PHONY: traditional_tarballs traditional_tarballs_version
+.PHONY: typecheck
 .PHONY: zonenames zones
 .PHONY: $(ZDS)

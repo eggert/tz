@@ -25,7 +25,7 @@
 # in New York City (1869-10).  His 1870 proposal was based on Washington, DC,
 # but in 1872-05 he moved the proposed origin to Greenwich.
 
-# From Paul Eggert (2016-09-21):
+# From Paul Eggert (2018-03-20):
 # Dowd's proposal left many details unresolved, such as where to draw
 # lines between time zones.  The key individual who made time zones
 # work in the US was William Frederick Allen - railway engineer,
@@ -36,10 +36,9 @@
 # to the General Time Convention on 1883-04-11, saying that his plan
 # meant "local time would be practically abolished" - a plus for
 # railway scheduling.  By the next convention on 1883-10-11 nearly all
-# railroads had agreed and it took effect on 1883-11-18 at 12:00.
-# That Sunday was called the "day of two noons", as the eastern parts
-# of the new zones observed noon twice.  Allen witnessed the
-# transition in New York City, writing:
+# railroads had agreed and it took effect on 1883-11-18.  That Sunday
+# was called the "day of two noons", as some locations observed noon
+# twice.  Allen witnessed the transition in New York City, writing:
 #
 #   I heard the bells of St. Paul's strike on the old time.  Four
 #   minutes later, obedient to the electrical signal from the Naval
@@ -955,6 +954,13 @@ Zone America/Indiana/Vevay -5:40:16 -	LMT	1883 Nov 18 12:19:44
 			-5:00	-	EST	2006
 			-5:00	US	E%sT
 
+# From Paul Eggert (2018-03-20):
+# The Louisville & Nashville Railroad's 1883-11-18 change occurred at
+# 10:00 old local time; train were supposed to come to a standstill
+# for precisely 18 minutes.  See Bartky Fig. 1 (page 50).  It is not
+# clear how this matched civil time in Louisville, so for now continue
+# to assume Louisville switched at noon new local time, like New York.
+#
 # Part of Kentucky left its clocks alone in 1974.
 # This also includes Clark, Floyd, and Harrison counties in Indiana.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER

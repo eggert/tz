@@ -486,7 +486,8 @@ TZDATA_ZI_DEPS=	ziguard.awk zishrink.awk version $(TDATA) $(PACKRATDATA)
 DSTDATA_ZI_DEPS= ziguard.awk $(TDATA) $(PACKRATDATA)
 DATA=		$(TDATA_TO_CHECK) backzone iso3166.tab leap-seconds.list \
 			leapseconds yearistype.sh $(ZONETABLES)
-AWK_SCRIPTS=	checklinks.awk checktab.awk leapseconds.awk zishrink.awk
+AWK_SCRIPTS=	checklinks.awk checktab.awk leapseconds.awk \
+			ziguard.awk zishrink.awk
 MISC=		$(AWK_SCRIPTS) zoneinfo2tdf.pl
 TZS_YEAR=	2050
 TZS=		to$(TZS_YEAR).tzs
@@ -903,6 +904,9 @@ tarballs traditional_tarballs signatures traditional_signatures: version
 		VERSION=`cat version` && \
 		$(MAKE) VERSION="$$VERSION" $@_version
 
+# These *_version rules are intended for use if VERSION is set by some
+# other means.  Ordinarily these rules are used only by the above
+# non-_version rules, which set VERSION on the 'make' command line.
 tarballs_version: traditional_tarballs_version tzdb-$(VERSION).tar.lz
 traditional_tarballs_version: \
   tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz

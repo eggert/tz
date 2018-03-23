@@ -39,7 +39,7 @@ Release 2018d - 2018-03-22 07:05:46 -0700
     Enderbury and Kiritimati skipped New Year's Eve 1994, not
     New Year's Day 1995.  (Thanks to Kerry Shetline.)
 
-    Fix the 1912-01-01 transition for Portugual and its colonies.
+    Fix the 1912-01-01 transition for Portugal and its colonies.
     This transition was at 00:00 according to the new UT offset, not
     according to the old one.  Also assume that Cape Verde switched on
     the same date as the rest, not in 1907.  This affects

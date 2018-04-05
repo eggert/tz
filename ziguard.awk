@@ -26,6 +26,7 @@ BEGIN {
 
 outfile != "main.zi" {
   in_comment = /^#/
+  uncomment = comment_out = 0
 
   # If this line should differ due to Ireland using negative SAVE values,
   # uncomment the desired version and comment out the undesired one.
@@ -37,10 +38,31 @@ outfile != "main.zi" {
     if ((Rule_Eire \
 	 || (Zone_Dublin_post_1968 && $(in_comment + 3) == "IST/GMT"))	\
 	== vanguard) {
-      sub(/^#/, "")
-    } else if (/^[^#]/) {
-      sub(/^/, "#")
+      uncomment = in_comment
+    } else {
+      comment_out = !in_comment
     }
+  }
+
+  # If this line should differ due to Namibia using negative SAVE values,
+  # uncomment the desired version and comment out the undesired one.
+  Rule_Namibia = /^#?Rule[\t ]+Namibia[\t ]/
+  Zone_using_Namibia_rule \
+    = (zone == "Africa/Windhoek" && /^#?[\t ]+[12]:00[\t ]/ \
+       && $(in_comment + 2) == "Namibia")
+  if (Rule_Namibia || Zone_using_Namibia_rule) {
+    if (in_comment == vanguard) {
+      uncomment = in_comment
+    } else {
+      comment_out = !in_comment
+    }
+  }
+
+  if (uncomment) {
+    sub(/^#/, "")
+  }
+  if (comment_out) {
+    sub(/^/, "#")
   }
 }
 

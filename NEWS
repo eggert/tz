@@ -1,5 +1,15 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to past time stamps
+
+    For Namibia's transition from +01/+02 to plain +02, change the
+    transition date from 2017-09-03 at 03:00 to 2017-10-24 at 00:00.
+    This does not affect UTC offsets, only whether a DST regime was
+    in place.
+
+
 Release 2018d - 2018-03-22 07:05:46 -0700
 
   Briefly:

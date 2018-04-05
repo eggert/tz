@@ -992,9 +992,20 @@ Link Africa/Maputo Africa/Lusaka	# Zambia
 # the same time they would normally start DST, the first Sunday in September:
 # https://www.timeanddate.com/news/time/namibia-new-time-zone.html
 
+# From Paul Eggert (2017-04-05):
+# The official date of the time zone change was 2017-10-24.  See:
+# http://www.lac.org.na/laws/annoSTAT/Namibian%20Time%20Act%209%20of%202017.pdf
+
 # RULE	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+# The following has standard time in summer and negative daylight
+# saving time in winter.  It is for when negative SAVE values are used.
+# For more about this, see the comments in 'europe' for Rule Eire.
+#Rule	Namibia	1994	only	-	Mar	21	0:00	-1:00	+01
+#Rule	Namibia	1994	2017	-	Sep	Sun>=1	2:00	0	CAT
+#Rule	Namibia	1995	2017	-	Apr	Sun>=1	2:00	-1:00	+01
+# The following is for when SAVE values are always nonnegative.
 Rule	Namibia	1994	only	-	Mar	21	0:00	0	-
-Rule	Namibia	1994	2016	-	Sep	Sun>=1	2:00	1:00	S
+Rule	Namibia	1994	2017	-	Sep	Sun>=1	2:00	1:00	S
 Rule	Namibia	1995	2017	-	Apr	Sun>=1	2:00	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Windhoek	1:08:24 -	LMT	1892 Feb 8
@@ -1003,7 +1014,11 @@ Zone	Africa/Windhoek	1:08:24 -	LMT	1892 Feb 8
 			2:00	1:00	SAST	1943 Mar 21  2:00
 			2:00	-	SAST	1990 Mar 21 # independence
 			2:00	-	CAT	1994 Mar 21  0:00
-			1:00	Namibia	WA%sT	2017 Sep  3  2:00
+# The next line is for when negative SAVE values are used.
+#			2:00	Namibia	%s	2017 Oct 24
+# The next line is for when SAVE values are always nonnegative.
+			1:00	Namibia	WA%sT   2017 Oct 24
+# End of daylight saving.
 			2:00	-	CAT
 
 # Niger

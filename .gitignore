@@ -3,8 +3,10 @@
 *.a
 *.asc
 *.o
+*.patch
 *.tar.*
 *.txt
+*.tzs
 *.zi
 *~
 ChangeLog

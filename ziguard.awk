@@ -44,12 +44,14 @@ outfile != "main.zi" {
     }
   }
 
-  # If this line should differ due to Namibia using negative SAVE values,
+  # If this line should differ due to Namibia using Rule SAVE suffixes,
   # uncomment the desired version and comment out the undesired one.
   Rule_Namibia = /^#?Rule[\t ]+Namibia[\t ]/
   Zone_using_Namibia_rule \
-    = (zone == "Africa/Windhoek" && /^#?[\t ]+[12]:00[\t ]/ \
-       && $(in_comment + 2) == "Namibia")
+    = (zone == "Africa/Windhoek" \
+       && ($(in_comment + 2) == "Namibia" \
+	   || (1994 <= $(in_comment + 4) && $(in_comment + 4) <= 2017) \
+	   || in_comment + 3 == NF))
   if (Rule_Namibia || Zone_using_Namibia_rule) {
     if (in_comment == vanguard) {
       uncomment = in_comment

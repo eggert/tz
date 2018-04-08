@@ -2,12 +2,27 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+
+    New 's' and 'd' suffixes in SAVE columns of Rule lines.
+
+  Changes to data format and to code
+
+    The SAVE column in Rule lines can now be followed by an 's' or 'd'
+    suffix, which specifies whether the adjusted time is standard time
+    or daylight saving time.  If no suffix is given, daylight saving
+    time is used if and only if the SAVE column is nonzero; this is
+    the longstanding behavior.  This new feature can be used to
+    represent Namibia's 1994-2017 timekeeping, as described below.
+
   Changes to past time stamps
 
-    For Namibia's transition from +01/+02 to plain +02, change the
-    transition date from 2017-09-03 at 03:00 to 2017-10-24 at 00:00.
-    This does not affect UTC offsets, only whether a DST regime was
-    in place.
+    From 1994 through 2017 Nambia did not observe DST.  Instead, it
+    changed standard time twice per year, and summer and winter time
+    were both considered standard.  This change does not affect UTC
+    offsets; it affects only the tm_isdst flag and the abbreviation
+    that was used during summer, which is now CAT rather than WAST.
+    (Problem reported by Michael Deckers.)
 
 
 Release 2018d - 2018-03-22 07:05:46 -0700

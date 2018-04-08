@@ -165,14 +165,14 @@ abbreviation must be unambiguous in context.
 A rule line has the form
 .nf
 .ti +.5i
-.ta \w'Rule\0\0'u +\w'NAME\0\0'u +\w'FROM\0\0'u +\w'1973\0\0'u +\w'TYPE\0\0'u +\w'Apr\0\0'u +\w'lastSun\0\0'u +\w'2:00\0\0'u +\w'SAVE\0\0'u
+.ta \w'Rule\0\0'u +\w'NAME\0\0'u +\w'FROM\0\0'u +\w'1973\0\0'u +\w'TYPE\0\0'u +\w'Apr\0\0'u +\w'lastSun\0\0'u +\w'2:00s\0\0'u +\w'1:00d\0\0'u
 .sp
 Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 .sp
 For example:
 .ti +.5i
 .sp
-Rule	US	1967	1973	\*-	Apr	lastSun	2:00	1:00	D
+Rule	US	1967	1973	\*-	Apr	lastSun	2:00s	1:00d	D
 .sp
 .fi
 The fields that make up a rule line are:
@@ -295,16 +295,24 @@ field would show the specified date and time of day.
 .TP
 .B SAVE
 Gives the amount of time to be added to local standard time when the rule is in
-effect.
+effect, and whether the resulting time is standard or daylight saving.
 This field has the same format as the
 .B AT
 field
-(although, of course, the
-suffixes are not used).
+except with a different set of suffix letters:
+.B s
+for standard time and
+.B d
+for daylight saving time.
+The suffix letter is typically omitted, and defaults to
+.B s
+if the offset is zero and to
+.B d
+otherwise.
 Negative offsets are allowed; in Ireland, for example, daylight saving
 time is observed in winter and has a negative offset relative to
 Irish Standard Time.
-Only the sum of standard time and this amount matters; for example,
+The offset is merely added to standard time; for example,
 .I zic
 does not distinguish a 10:30 standard time plus an 0:30
 .B SAVE

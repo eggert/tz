@@ -514,6 +514,7 @@ VERSION_DEPS= \
 		tzfile.5 tzfile.h tzselect.8 tzselect.ksh \
 		workman.sh yearistype.sh \
 		zdump.8 zdump.c zic.8 zic.c \
+		ziguard.awk zishrink.awk \
 		zone.tab zone1970.tab zoneinfo2tdf.pl
 
 # And for the benefit of csh users on systems that assume the user

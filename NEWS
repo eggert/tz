@@ -4,11 +4,11 @@ Unreleased, experimental changes
 
   Briefly:
 
-    New 's' and 'd' suffixes in SAVE columns of Rule lines.
+    New 's' and 'd' suffixes in SAVE columns of Rule and Zone lines.
 
   Changes to data format and to code
 
-    The SAVE column in Rule lines can now be followed by an 's' or 'd'
+    The SAVE column of Rule and Zone lines can now have an 's' or 'd'
     suffix, which specifies whether the adjusted time is standard time
     or daylight saving time.  If no suffix is given, daylight saving
     time is used if and only if the SAVE column is nonzero; this is

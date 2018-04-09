@@ -112,10 +112,11 @@ struct zone {
 
 	const char *	z_name;
 	zic_t		z_gmtoff;
-	const char *	z_rule;
+	char *		z_rule;
 	const char *	z_format;
 	char		z_format_specifier;
 
+	bool		z_isdst;
 	zic_t		z_stdoff;
 
 	struct rule *	z_rules;
@@ -155,6 +156,7 @@ static void	dolink(const char *, const char *, bool);
 static char **	getfields(char * buf);
 static zic_t	gethms(const char * string, const char * errstring,
 		       bool);
+static zic_t	getstdoff(char *, bool *);
 static void	infile(const char * filename);
 static void	inleap(char ** fields, int nfields);
 static void	inlink(char ** fields, int nfields);
@@ -1090,8 +1092,7 @@ associate(void)
 			** Maybe we have a local standard time offset.
 			*/
 			eat(zp->z_filename, zp->z_linenum);
-			zp->z_stdoff = gethms(zp->z_rule, _("unruly zone"),
-				true);
+			zp->z_stdoff = getstdoff(zp->z_rule, &zp->z_isdst);
 			/*
 			** Note, though, that if there's no rule,
 			** a '%s' in the format is a bad thing.
@@ -1250,11 +1251,28 @@ warning(_("values over 24 hours not handled by pre-2007 versions of zic"));
 		    sign * (mm * SECSPERMIN + ss));
 }
 
+static zic_t
+getstdoff(char *field, bool *isdst)
+{
+  int dst = -1;
+  zic_t stdoff;
+  size_t fieldlen = strlen(field);
+  if (fieldlen != 0) {
+    char *ep = field + fieldlen - 1;
+    switch (*ep) {
+      case 'd': dst = 1; *ep = '\0'; break;
+      case 's': dst = 0; *ep = '\0'; break;
+    }
+  }
+  stdoff = gethms(field, _("invalid saved time"), true);
+  *isdst = dst < 0 ? stdoff != 0 : dst;
+  return stdoff;
+}
+
 static void
 inrule(char **fields, int nfields)
 {
 	static struct rule	r;
-	int isdst = -1;
 
 	if (nfields != RULE_FIELDS) {
 		error(_("wrong number of fields on Rule line"));
@@ -1266,15 +1284,7 @@ inrule(char **fields, int nfields)
 	}
 	r.r_filename = filename;
 	r.r_linenum = linenum;
-	if (fields[RF_STDOFF][0]) {
-	  char *ep = fields[RF_STDOFF] + strlen(fields[RF_STDOFF]) - 1;
-	  switch (*ep) {
-	    case 'd': isdst = 1; *ep = '\0'; break;
-	    case 's': isdst = 0; *ep = '\0'; break;
-	  }
-	}
-	r.r_stdoff = gethms(fields[RF_STDOFF], _("invalid saved time"), true);
-	r.r_isdst = isdst < 0 ? r.r_stdoff != 0 : isdst;
+	r.r_stdoff = getstdoff(fields[RF_STDOFF], &r.r_isdst);
 	rulesub(&r, fields[RF_LOYEAR], fields[RF_HIYEAR], fields[RF_COMMAND],
 		fields[RF_MONTH], fields[RF_DAY], fields[RF_TOD]);
 	r.r_name = ecpyalloc(fields[RF_NAME]);
@@ -2360,7 +2370,7 @@ stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 			stdrp = &stdr;
 		}
 	}
-	if (stdrp == NULL && (zp->z_nrules != 0 || zp->z_stdoff != 0))
+	if (stdrp == NULL && (zp->z_nrules != 0 || zp->z_isdst))
 		return -1;
 	abbrvar = (stdrp == NULL) ? "" : stdrp->r_abbrvar;
 	len = doabbr(result, zp, abbrvar, false, 0, true);
@@ -2549,9 +2559,9 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 		startoff = zp->z_gmtoff;
 		if (zp->z_nrules == 0) {
 			stdoff = zp->z_stdoff;
-			doabbr(startbuf, zp, NULL, stdoff != 0, stdoff, false);
+			doabbr(startbuf, zp, NULL, zp->z_isdst, stdoff, false);
 			type = addtype(oadd(zp->z_gmtoff, stdoff),
-				startbuf, stdoff != 0, startttisstd,
+				startbuf, zp->z_isdst, startttisstd,
 				startttisgmt);
 			if (usestart) {
 				addtt(starttime, type);

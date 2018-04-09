@@ -21,7 +21,7 @@ DATAFORM=		main
 
 # Change the line below for your time zone (after finding the zone you want in
 # the time zone files, or adding it to a time zone file).
-# Alternately, if you discover you've got the wrong time zone, you can just
+# Alternatively, if you discover you've got the wrong time zone, you can just
 #	zic -l rightzone
 # to correct things.
 # Use the command
@@ -38,7 +38,7 @@ LOCALTIME=	GMT
 # template file are used to determine "spring forward" and "fall back" days and
 # times; the environment variable itself specifies UT offsets of standard and
 # daylight saving time.
-# Alternately, if you discover you've got the wrong time zone, you can just
+# Alternatively, if you discover you've got the wrong time zone, you can just
 #	zic -p rightzone
 # to correct things.
 # Use the command

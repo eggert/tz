@@ -12,17 +12,22 @@ Unreleased, experimental changes
     suffix, which specifies whether the adjusted time is standard time
     or daylight saving time.  If no suffix is given, daylight saving
     time is used if and only if the SAVE column is nonzero; this is
-    the longstanding behavior.  This new feature can be used to
-    represent Namibia's 1994-2017 timekeeping, as described below.
+    the longstanding behavior.  Although this new feature is not used
+    in tzdata, it could be used to specify the legal time in Namibia
+    1994-2017, as opposed to the popular time (see below).
 
   Changes to past time stamps
 
-    From 1994 through 2017 Nambia did not observe DST.  Instead, it
-    changed standard time twice per year, and summer and winter time
-    were both considered standard.  This change does not affect UTC
-    offsets; it affects only the tm_isdst flag and the abbreviation
-    that was used during summer, which is now CAT rather than WAST.
-    (Problem reported by Michael Deckers.)
+    From 1994 through 2017 Namibia observed DST in winter, not summer.
+    That is, it used negative DST, as Ireland still does.  This change
+    does not affect UTC offsets; it affects only the tm_isdst flag and
+    the abbreviation used during summer, which is now CAT, not WAST.
+    Although (as noted by Michael Deckers) summer and winter time were
+    both simply called "standard time" in Namibian law, in common
+    practice winter time was considered to be DST (as noted by Stephen
+    Colebourne).  The full effect of this change is only in vanguard
+    format; in rearguard and main format, the tm_isdst flag is still
+    zero in winter and nonzero in summer.
 
 
 Release 2018d - 2018-03-22 07:05:46 -0700

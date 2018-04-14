@@ -987,8 +987,7 @@ Rule	Czech	1945	only	-	Apr	Mon>=1	2:00s	1:00	S
 Rule	Czech	1945	only	-	Oct	 1	2:00s	0	-
 Rule	Czech	1946	only	-	May	 6	2:00s	1:00	S
 Rule	Czech	1946	1949	-	Oct	Sun>=1	2:00s	0	-
-Rule	Czech	1947	only	-	Apr	20	2:00s	1:00	S
-Rule	Czech	1948	only	-	Apr	18	2:00s	1:00	S
+Rule	Czech	1947	1948	-	Apr	Sun>=15	2:00s	1:00	S
 Rule	Czech	1949	only	-	Apr	 9	2:00s	1:00	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Prague	0:57:44 -	LMT	1850

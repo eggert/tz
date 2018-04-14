@@ -2016,7 +2016,7 @@ Rule	Neth	1938	1939	-	May	15	2:00s	1:00	S
 Rule	Neth	1945	only	-	Apr	 2	2:00s	1:00	S
 Rule	Neth	1945	only	-	Sep	16	2:00s	0	-
 #
-# Amsterdam Mean Time was +00:19:32.13 exactly, but the .13 is omitted
+# Amsterdam Mean Time was +00:19:32.13, but the .13 is omitted
 # below because the current format requires GMTOFF to be an integer.
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Europe/Amsterdam	0:19:32 -	LMT	1835

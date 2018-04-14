@@ -28,6 +28,16 @@ outfile != "main.zi" {
   in_comment = /^#/
   uncomment = comment_out = 0
 
+  # If the line should differ due to Czechoslovakia using negative SAVE values,
+  # uncomment the desired version and comment out the undesired one.
+  if (zone == "Europe/Prague" && /1947 Feb 23/) {
+    if (($(in_comment + 2) != "-") == vanguard) {
+      uncomment = in_comment
+    } else {
+      comment_out = !in_comment
+    }
+  }
+
   # If this line should differ due to Ireland using negative SAVE values,
   # uncomment the desired version and comment out the undesired one.
   Rule_Eire = /^#?Rule[\t ]+Eire[\t ]/

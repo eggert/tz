@@ -29,6 +29,12 @@ Unreleased, experimental changes
     format; in rearguard and main format, the tm_isdst flag is still
     zero in winter and nonzero in summer.
 
+    In 1946/7 Czechoslovakia also observed negative DST in winter.
+    The full effect of this change is only in vanguard format; in
+    rearguard and main formats, it is modeled as plain GMT without
+    daylight saving.  Also, the dates of some 1944/5 DST transitions
+    in Czechoslovakia have been changed.
+
 
 Release 2018d - 2018-03-22 07:05:46 -0700
 

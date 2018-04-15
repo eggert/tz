@@ -1,3 +1,5 @@
+/* asctime and asctime_r a la POSIX and ISO C, except pad years before 1000.  */
+
 /*
 ** This file is in the public domain, so clarified as of
 ** 1996-06-05 by Arthur David Olson.
@@ -29,7 +31,7 @@
 ** leading zeroes to get the newline in the traditional place.
 ** The -4 ensures that we get four characters of output even if
 ** we call a strftime variant that produces fewer characters for some years.
-** The ISO C 1999 and POSIX 1003.1-2004 standards prohibit padding the year,
+** The ISO C and POSIX standards prohibit padding the year,
 ** but many implementations pad anyway; most likely the standards are buggy.
 */
 #ifdef __GNUC__
@@ -63,10 +65,6 @@
 #define MAX_ASCTIME_BUF_SIZE	(2*3+5*INT_STRLEN_MAXIMUM(int)+7+2+1+1)
 
 static char	buf_asctime[MAX_ASCTIME_BUF_SIZE];
-
-/*
-** A la ISO/IEC 9945-1, ANSI/IEEE Std 1003.1, 2004 Edition.
-*/
 
 char *
 asctime_r(register const struct tm *timeptr, char *buf)
@@ -116,10 +114,6 @@ asctime_r(register const struct tm *timeptr, char *buf)
 		return NULL;
 	}
 }
-
-/*
-** A la ISO/IEC 9945-1, ANSI/IEEE Std 1003.1, 2004 Edition.
-*/
 
 char *
 asctime(register const struct tm *timeptr)

@@ -971,14 +971,9 @@ Zone	Europe/Sofia	1:33:16 -	LMT	1880
 
 # Czech Republic / Czechia
 #
-# From Paul Eggert (2018-04-14):
-# The source for Czech data is: Kdy začíná a končí letní čas.
+# From Paul Eggert (2018-04-15):
+# The source for Czech data is: Kdy začíná a končí letní čas. 2018-04-15.
 # https://kalendar.beda.cz/kdy-zacina-a-konci-letni-cas
-# with one correction, taken from:
-# Sbírka zákonů a nařízení republiky Československé, částka 92/1946.
-# http://ftp.aspi.cz/opispdf/1946/092-1946.pdf
-# which says that the winter time (negative DST) starting 1946-12-01
-# was a switch from 03:00 to 02:00 (not from 02:00 to 01:00).
 # We know of no English-language name for historical Czech winter time;
 # abbreviate it as "GMT", as it happened to be GMT.
 #

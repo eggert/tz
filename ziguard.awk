@@ -13,18 +13,18 @@
 # rearguard format.
 
 BEGIN {
-  dst_type["vanguard.zi"] = 1
-  dst_type["main.zi"] = 1
-  dst_type["rearguard.zi"] = 1
+  dataform_type["vanguard"] = 1
+  dataform_type["main"] = 1
+  dataform_type["rearguard"] = 1
 
-  # The command line should set OUTFILE to the name of the output file.
-  if (!dst_type[outfile]) exit 1
-  vanguard = outfile == "vanguard.zi"
+  # The command line should set DATAFORM.
+  if (!dataform_type[DATAFORM]) exit 1
+  vanguard = DATAFORM == "vanguard"
 }
 
 /^Zone/ { zone = $2 }
 
-outfile != "main.zi" {
+DATAFORM != "main" {
   in_comment = /^#/
   uncomment = comment_out = 0
 

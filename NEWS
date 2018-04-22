@@ -4,7 +4,18 @@ Unreleased, experimental changes
 
   Briefly:
 
+    'make tarballs' now also builds a rearguard tarball.
     New 's' and 'd' suffixes in SAVE columns of Rule and Zone lines.
+
+  Changes to build procedure
+
+    The command 'make tarballs' now also builds the tarball
+    tzdataVERSION-rearguard.tar.gz, which is like tzdataVERSION.tar.gz
+    except that it uses rearguard format intended for trailing-edge
+    data parsers.  Although the two tarballs currently are the same
+    except for version, they will differ more when negative DST
+    offsets are moved from vanguard to main format, since rearguard
+    format will continue to avoid negative DST offsets.
 
   Changes to data format and to code
 

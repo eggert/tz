@@ -4,18 +4,30 @@ Unreleased, experimental changes
 
   Briefly:
 
+    The main format uses negative DST again, for Ireland etc.
     'make tarballs' now also builds a rearguard tarball.
     New 's' and 'd' suffixes in SAVE columns of Rule and Zone lines.
+
+  Changes to past and future time stamps
+
+    Bring back the negative-DST changes of 2018a, except be more
+    compatible with data parsers that do not support negative DST.
+    Also, this now affects historical time stamps in Namibia and the
+    former Czechoslovakia, not just Ireland.  The main format now uses
+    negative DST to model time stamps in Europe/Dublin (from 1971 on),
+    Europe/Prague (1946/7), and Africa/Windhoek (1994/2017).  This
+    does not affect UT offsets, only time zone abbreviations and the
+    tm_isdst flag.  Also, this does not affect rearguard or vanguard
+    formats; effectively the main format now uses vanguard instead of
+    rearguard format.  Data parsers that do not support negative DST
+    can still use data from the rearguard tarball described below.
 
   Changes to build procedure
 
     The command 'make tarballs' now also builds the tarball
     tzdataVERSION-rearguard.tar.gz, which is like tzdataVERSION.tar.gz
     except that it uses rearguard format intended for trailing-edge
-    data parsers.  Although the two tarballs currently are the same
-    except for version, they will differ more when negative DST
-    offsets are moved from vanguard to main format, since rearguard
-    format will continue to avoid negative DST offsets.
+    data parsers.
 
   Changes to data format and to code
 

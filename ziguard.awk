@@ -63,7 +63,11 @@ outfile != "main.zi" {
 	   || (1994 <= $(in_comment + 4) && $(in_comment + 4) <= 2017) \
 	   || in_comment + 3 == NF))
   if (Rule_Namibia || Zone_using_Namibia_rule) {
-    if (in_comment == vanguard) {
+      if ((Rule_Namibia \
+	   ? ($(in_comment + 9) ~ /^-/ \
+	      || ($(in_comment + 9) == 0 && $(in_comment + 10) == "CAT")) \
+	   : $(in_comment + 1) == "2:00" && $(in_comment + 2) == "Namibia") \
+	  == vanguard) {
       uncomment = in_comment
     } else {
       comment_out = !in_comment

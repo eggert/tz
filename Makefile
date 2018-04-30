@@ -236,14 +236,16 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
   $(GCC_INSTRUMENT) \
   -Wall -Wextra \
   -Walloc-size-larger-than=100000 -Warray-bounds=2 \
-  -Wbad-function-cast -Wcast-align -Wdate-time \
+  -Wbad-function-cast -Wcast-align=strict -Wdate-time \
   -Wdeclaration-after-statement -Wdouble-promotion \
   -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation \
   -Winit-self -Wjump-misses-init -Wlogical-op \
   -Wmissing-declarations -Wmissing-prototypes -Wnested-externs \
   -Wold-style-definition -Woverlength-strings -Wpointer-arith \
-  -Wshadow -Wshift-overflow=2 -Wstrict-prototypes -Wstringop-overflow=5 \
+  -Wshadow -Wshift-overflow=2 -Wstrict-prototypes -Wstringop-overflow=4 \
+  -Wstringop-truncation -Wsuggest-attribute=cold \
   -Wsuggest-attribute=const -Wsuggest-attribute=format \
+  -Wsuggest-attribute=malloc \
   -Wsuggest-attribute=noreturn -Wsuggest-attribute=pure \
   -Wtrampolines -Wundef -Wuninitialized -Wunused \
   -Wvariadic-macros -Wvla -Wwrite-strings \

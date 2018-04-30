@@ -4,11 +4,16 @@ Unreleased, experimental changes
 
   Briefly:
 
+    North Korea switches back to +09 on 2018-05-05.
     The main format uses negative DST again, for Ireland etc.
     'make tarballs' now also builds a rearguard tarball.
     New 's' and 'd' suffixes in SAVE columns of Rule and Zone lines.
 
   Changes to past and future time stamps
+
+    North Korea switches back from +0830 to +09 on 2018-05-05.
+    (Thanks to Kang Seonghoon, Arthur David Olson, Seo Sanghyeon,
+    and Tim Parenti.)
 
     Bring back the negative-DST changes of 2018a, except be more
     compatible with data parsers that do not support negative DST.

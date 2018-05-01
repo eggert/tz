@@ -136,7 +136,7 @@ sumsize(size_t a, size_t b)
 
 /* Return a pointer to a newly allocated buffer of size SIZE, exiting
    on failure.  SIZE should be nonzero.  */
-static void *
+static void * ATTRIBUTE_MALLOC
 xmalloc(size_t size)
 {
   void *p = malloc(size);

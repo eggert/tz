@@ -64,12 +64,12 @@ Release 2018e - 2018-05-01 23:42:51 -0700
     both simply called "standard time" in Namibian law, in common
     practice winter time was considered to be DST (as noted by Stephen
     Colebourne).  The full effect of this change is only in vanguard
-    format; in rearguard and main format, the tm_isdst flag is still
+    and main format; in rearguard format, the tm_isdst flag is still
     zero in winter and nonzero in summer.
 
     In 1946/7 Czechoslovakia also observed negative DST in winter.
-    The full effect of this change is only in vanguard format; in
-    rearguard and main formats, it is modeled as plain GMT without
+    The full effect of this change is only in vanguard and main
+    formats; in rearguard format, it is modeled as plain GMT without
     daylight saving.  Also, the dates of some 1944/5 DST transitions
     in Czechoslovakia have been changed.
 

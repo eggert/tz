@@ -906,23 +906,27 @@ check_time_t_alternatives:
 TRADITIONAL_ASC = \
   tzcode$(VERSION).tar.gz.asc \
   tzdata$(VERSION).tar.gz.asc
-ALL_ASC = $(TRADITIONAL_ASC) \
-  tzdata$(VERSION)-rearguard.tar.gz.asc \
+REARGUARD_ASC = \
+  tzdata$(VERSION)-rearguard.tar.gz.asc
+ALL_ASC = $(TRADITIONAL_ASC) $(REARGUARD_ASC) \
   tzdb-$(VERSION).tar.lz.asc
 
-tarballs traditional_tarballs signatures traditional_signatures: version
+tarballs rearguard_tarballs traditional_tarballs \
+signatures rearguard_signatures traditional_signatures: version
 		VERSION=`cat version` && \
 		$(MAKE) VERSION="$$VERSION" $@_version
 
 # These *_version rules are intended for use if VERSION is set by some
 # other means.  Ordinarily these rules are used only by the above
 # non-_version rules, which set VERSION on the 'make' command line.
-tarballs_version: traditional_tarballs_version \
-  tzdata$(VERSION)-rearguard.tar.gz \
+tarballs_version: traditional_tarballs_version rearguard_tarballs_version \
   tzdb-$(VERSION).tar.lz
+rearguard_tarballs_version: \
+  tzdata$(VERSION)-rearguard.tar.gz
 traditional_tarballs_version: \
   tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz
 signatures_version: $(ALL_ASC)
+rearguard_signatures_version: $(REARGUARD_ASC)
 traditional_signatures_version: $(TRADITIONAL_ASC)
 
 tzcode$(VERSION).tar.gz: set-timestamps.out
@@ -1003,8 +1007,10 @@ zic.o:		private.h tzfile.h version.h
 .PHONY: check_zishrink
 .PHONY: clean clean_misc dummy.zd force_tzs
 .PHONY: install install_data maintainer-clean names
-.PHONY: posix_only posix_packrat posix_right
-.PHONY: public right_only right_posix signatures signatures_version
+.PHONY: posix_only posix_packrat posix_right public
+.PHONY: rearguard_signatures rearguard_signatures_version
+.PHONY: rearguard_tarballs rearguard_tarballs_version
+.PHONY: right_only right_posix signatures signatures_version
 .PHONY: tarballs tarballs_version
 .PHONY: traditional_signatures traditional_signatures_version
 .PHONY: traditional_tarballs traditional_tarballs_version

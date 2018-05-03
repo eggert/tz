@@ -1,5 +1,15 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to build procedure
+
+    New 'make' target 'rearguard_tarballs' to build the rearguard
+    tarball only.  This is a convenience on platforms that lack lzip
+    if you want to build the rearguard tarball.  (Problem reported by
+    Deborah Goldsmith.)
+
+
 Release 2018e - 2018-05-01 23:42:51 -0700
 
   Briefly:

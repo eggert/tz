@@ -2,6 +2,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to past time stamps
+
+    The 2018-05-05 North Korea 30-minute time zone change took place
+    at 23:30 the previous day, not at 00:00 that day.
+
   Changes to build procedure
 
     New 'make' target 'rearguard_tarballs' to build the rearguard

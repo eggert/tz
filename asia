@@ -1995,6 +1995,10 @@ Rule	ROK	1987	1988	-	Oct	Sun>=8	3:00	0	S
 # Assembly, as published in Rodong Sinmun.
 # From Tim Parenti (2018-04-29):
 # It appears to be the front page story at the top in the right-most column.
+#
+# From Paul Eggert (2018-05-04):
+# The BBC reported that the transition was from 23:30 to 24:00 today.
+# https://www.bbc.com/news/world-asia-44010705
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Seoul	8:27:52	-	LMT	1908 Apr  1
@@ -2007,7 +2011,7 @@ Zone	Asia/Pyongyang	8:23:00 -	LMT	1908 Apr  1
 			8:30	-	KST	1912 Jan  1
 			9:00	-	JST	1945 Aug 24
 			9:00	-	KST	2015 Aug 15 00:00
-			8:30	-	KST	2018 May  5
+			8:30	-	KST	2018 May  4 23:30
 			9:00	-	KST
 
 ###############################################################################

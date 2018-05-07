@@ -7,9 +7,9 @@ Unreleased, experimental changes
     The 2018-05-05 North Korea 30-minute time zone change took place
     at 23:30 the previous day, not at 00:00 that day.
 
-    China's 1988 spring-forward transition was on May 17, not May 10.
-    Its DST transitions in 1986/91 were at 02:00, not 00:00.  (Thanks
-    to P Chan.)
+    China's 1988 spring-forward transition was on April 17, not
+    April 10.  Its DST transitions in 1986/91 were at 02:00, not 00:00.
+    (Thanks to P Chan.)
 
   Changes to build procedure
 

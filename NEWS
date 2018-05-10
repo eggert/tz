@@ -11,6 +11,12 @@ Unreleased, experimental changes
     April 10.  Its DST transitions in 1986/91 were at 02:00, not 00:00.
     (Thanks to P Chan.)
 
+    Fix several issues for Macau before 1992.  Macau's pre-1904 LMT
+    was off by 10 s.  Macau switched to +08 in 1904 not 1912, and
+    temporarily switched to +09/+10 during World War II.  Macau
+    observed DST in 1942/79, not 1961/80, and there were several
+    errors for transition times and dates.  (Thanks to P Chan.)
+
   Changes to build procedure
 
     New 'make' target 'rearguard_tarballs' to build the rearguard

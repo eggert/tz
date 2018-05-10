@@ -767,24 +767,140 @@ Zone	Asia/Taipei	8:06:00 -	LMT	1896 Jan  1
 			8:00	Taiwan	C%sT
 
 # Macau (Macao, Aomen)
+#
+# From P Chan (2018-05-10):
+# * LegisMac
+#   http://legismac.safp.gov.mo/legismac/descqry/Descqry.jsf?lang=pt
+#   A database for searching titles of legal documents of Macau in
+#   Chinese and Portuguese.  The term "HORÁRIO DE VERÃO" can be used for
+#   searching decrees about summer time.
+# * Archives of Macao
+#   http://www.archives.gov.mo/en/bo/
+#   It contains images of old official gazettes.
+# * The Macao Meteorological and Geophysical Bureau have a page listing the
+#   summer time history.  But it is not complete and has some mistakes.
+#   http://www.smg.gov.mo/smg/geophysics/e_t_Summer%20Time.htm
+# Macau adopted GMT+8 on 30 Oct 1904 to follow Hong Kong.  Clocks were
+# advanced by 25 minutes and 50 seconds.  Which means the LMT used was
+# +7:34:10.  As stated in the "Portaria No. 204" dated 21 October 1904
+# and published in the Official Gazette on 29 October 1904.
+# http://igallery.icm.gov.mo/Images/Archives/BO/MO_AH_PUB_BO_1904_10/MO_AH_PUB_BO_1904_10_00025_Grey.JPG
+#
+# Therefore the 1911 decree of Portugal did not change time in Macau.
+#
+# From LegisMac, here is a list of decrees that changed the time ...
+# [Decree Gazette-no. date; titles omitted in this quotation]
+#	DIL 732 BOCM 51 1941.12.20
+#	DIL 764 BOCM 9S 1942.04.30
+#	DIL 781 BOCM 21 1942.10.10
+#	PT 3434 BOCM 8S 1943.04.17
+#	PT 3504 BOCM 20 1943.09.25
+#	PT 3843 BOCM 39 1945.09.29
+#	PT 3961 BOCM 17 1946.04.27
+#	PT 4026 BOCM 39 1946.09.28
+#	PT 4153 BOCM 16 1947.04.10
+#	PT 4271 BOCM 48 1947.11.29
+#	PT 4374 BOCM 18 1948.05.01
+#	PT 4465 BOCM 44 1948.10.30
+#	PT 4590 BOCM 14 1949.04.02
+#	PT 4666 BOCM 44 1949.10.29
+#	PT 4771 BOCM 12 1950.03.25
+#	PT 4838 BOCM 43 1950.10.28
+#	PT 4946 BOCM 12 1951.03.24
+#	PT 5025 BO 43 1951.10.27
+#	PT 5149 BO 14 1952.04.05
+#	PT 5251 BO 43 1952.10.25
+#	PT 5366 BO 13 1953.03.28
+#	PT 5444 BO 44 1953.10.31
+#	PT 5540 BO 12 1954.03.20
+#	PT 5589 BO 44 1954.10.30
+#	PT 5676 BO 12 1955.03.19
+#	PT 5739 BO 45 1955.11.05
+#	PT 5823 BO 11 1956.03.17
+#	PT 5891 BO 44 1956.11.03
+#	PT 5981 BO 12 1957.03.23
+#	PT 6064 BO 43 1957.10.26
+#	PT 6172 BO 12 1958.03.22
+#	PT 6243 BO 43 1958.10.25
+#	PT 6341 BO 12 1959.03.21
+#	PT 6411 BO 43 1959.10.24
+#	PT 6514 BO 11 1960.03.12
+#	PT 6584 BO 44 1960.10.29
+#	PT 6721 BO 10 1961.03.11
+#	PT 6815 BO 43 1961.10.28
+#	PT 6947 BO 10 1962.03.10
+#	PT 7080 BO 43 1962.10.27
+#	PT 7218 BO 12 1963.03.23
+#	PT 7340 BO 43 1963.10.26
+#	PT 7491 BO 11 1964.03.14
+#	PT 7664 BO 43 1964.10.24
+#	PT 7846 BO 15 1965.04.10
+#	PT 7979 BO 42 1965.10.16
+#	PT 8146 BO 15 1966.04.09
+#	PT 8252 BO 41 1966.10.08
+#	PT 8429 BO 15 1967.04.15
+#	PT 8540 BO 41 1967.10.14
+#	PT 8735 BO 15 1968.04.13
+#	PT 8860 BO 41 1968.10.12
+#	PT 9035 BO 16 1969.04.19
+#	PT 9156 BO 42 1969.10.18
+#	PT 9328 BO 15 1970.04.11
+#	PT 9418 BO 41 1970.10.10
+#	PT 9587 BO 14 1971.04.03
+#	PT 9702 BO 41 1971.10.09
+#	PT 38-A/72 BO 14 1972.04.01
+#	PT 126-A/72 BO 41 1972.10.07
+#	PT 61/73 BO 14 1973.04.07
+#	PT 182/73 BO 40 1973.10.06
+#	PT 282/73 BO 51 1973.12.22
+#	PT 177/74 BO 41 1974.10.12
+#	PT 51/75 BO 15 1975.04.12
+#	PT 173/75 BO 41 1975.10.11
+#	PT 67/76/M BO 14 1976.04.03
+#	PT 169/76/M BO 41 1976.10.09
+#	PT 78/79/M BO 19 1979.05.12
+#	PT 166/79/M BO 42 1979.10.20
+# Note that DIL 732 does not belong to "HORÁRIO DE VERÃO" according to
+# LegisMac.... Note that between 1942 and 1945, the time switched
+# between GMT+9 and GMT+10.  Also in 1965 and 1965 the DST ended at 2:30am.
+
+# From Paul Eggert (2018-05-10):
+# The 1904 decree says that Macau changed from the meridian of
+# Fortalezo do Monteo, presumably the basis for the 7:34:10 for LMT.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Macau	1961	1962	-	Mar	Sun>=16	3:30	1:00	D
-Rule	Macau	1961	1964	-	Nov	Sun>=1	3:30	0	S
-Rule	Macau	1963	only	-	Mar	Sun>=16	0:00	1:00	D
-Rule	Macau	1964	only	-	Mar	Sun>=16	3:30	1:00	D
-Rule	Macau	1965	only	-	Mar	Sun>=16	0:00	1:00	D
-Rule	Macau	1965	only	-	Oct	31	0:00	0	S
-Rule	Macau	1966	1971	-	Apr	Sun>=16	3:30	1:00	D
-Rule	Macau	1966	1971	-	Oct	Sun>=16	3:30	0	S
-Rule	Macau	1972	1974	-	Apr	Sun>=15	0:00	1:00	D
-Rule	Macau	1972	1973	-	Oct	Sun>=15	0:00	0	S
-Rule	Macau	1974	1977	-	Oct	Sun>=15	3:30	0	S
-Rule	Macau	1975	1977	-	Apr	Sun>=15	3:30	1:00	D
-Rule	Macau	1978	1980	-	Apr	Sun>=15	0:00	1:00	D
-Rule	Macau	1978	1980	-	Oct	Sun>=15	0:00	0	S
-# See Europe/Lisbon for info about the 1912 transition.
+Rule	Macau	1942	1943	-	Apr	30	23:00	1:00	-
+Rule	Macau	1942	only	-	Nov	17	23:00	0	-
+Rule	Macau	1943	only	-	Sep	30	23:00	0	S
+Rule	Macau	1946	only	-	Apr	30	23:00s	1:00	D
+Rule	Macau	1946	only	-	Sep	30	23:00s	0	S
+Rule	Macau	1947	only	-	Apr	19	23:00s	1:00	D
+Rule	Macau	1947	only	-	Nov	30	23:00s	0	S
+Rule	Macau	1948	only	-	May	 2	23:00s	1:00	D
+Rule	Macau	1948	only	-	Oct	31	23:00s	0	S
+Rule	Macau	1949	1951	-	Apr	Sat>=1	23:00s	1:00	D
+Rule	Macau	1949	1950	-	Oct	lastSat	23:00s	0	S
+Rule	Macau	1951	only	-	Mar	31	23:00s	1:00	D
+Rule	Macau	1951	only	-	Oct	28	23:00s	0	S
+Rule	Macau	1952	1953	-	Apr	Sat>=1	23:00s	1:00	D
+Rule	Macau	1952	only	-	Nov	 1	23:00s	0	S
+Rule	Macau	1953	1954	-	Oct	lastSat	23:00s	0	S
+Rule	Macau	1954	1956	-	Mar	Sat>=17	23:00s	1:00	D
+Rule	Macau	1955	only	-	Nov	 5	23:00s	0	S
+Rule	Macau	1956	1964	-	Nov	Sun>=1	03:30	0	S
+Rule	Macau	1957	1964	-	Mar	Sun>=18	03:30	1:00	D
+Rule	Macau	1965	1973	-	Apr	Sun>=16	03:30	1:00	D
+Rule	Macau	1965	1966	-	Oct	Sun>=16	02:30	0	S
+Rule	Macau	1967	1976	-	Oct	Sun>=16	03:30	0	S
+Rule	Macau	1973	only	-	Dec	30	03:30	1:00	D
+Rule	Macau	1975	1976	-	Apr	Sun>=16	03:30	1:00	D
+Rule	Macau	1979	only	-	May	13	03:30	1:00	D
+Rule	Macau	1979	only	-	Oct	Sun>=16	03:30	0	S
+
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Macau	7:34:20 -	LMT	1911 Dec 31 16:00u
+Zone	Asia/Macau	7:34:10 -	LMT	1904 Oct 30
+			8:00	-	CST	1941 Dec 21 23:00
+ 			9:00	Macau	+09/+10	1945 Sep 30 24:00
 			8:00	Macau	C%sT
 
 

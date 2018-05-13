@@ -900,7 +900,7 @@ Rule	Macau	1979	only	-	Oct	Sun>=16	03:30	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Macau	7:34:10 -	LMT	1904 Oct 30
 			8:00	-	CST	1941 Dec 21 23:00
- 			9:00	Macau	+09/+10	1945 Sep 30 24:00
+			9:00	Macau	+09/+10	1945 Sep 30 24:00
 			8:00	Macau	C%sT
 
 

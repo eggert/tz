@@ -178,7 +178,15 @@ Rule	US	1967	1973	\*-	Apr	lastSun	2:00s	1:00d	D
 The fields that make up a rule line are:
 .TP "\w'LETTER/S'u"
 .B NAME
-Gives the (arbitrary) name of the set of rules this rule is part of.
+Gives the name of the set of rules this rule is part of.
+The name must start with a character that is neither
+an ASCII digit nor
+.q \*-
+nor
+.q + .
+To allow for future extensions,
+an unquoted name should not contain characters from the set
+.q !$%&'()*,/:;<=>?@[\e]^`{|}~ .
 .TP
 .B FROM
 Gives the first year in which the rule applies.

@@ -17,6 +17,14 @@ Unreleased, experimental changes
     observed DST in 1942/79, not 1961/80, and there were several
     errors for transition times and dates.  (Thanks to P Chan.)
 
+  Changes to documentation
+
+    New restrictions: A Rule name must start with a character that
+    is neither an ASCII digit nor "-" nor "+", and an unquoted name
+    should not use characters in the set "!$%&'()*,/:;<=>?@[\]^`{|}~".
+    The latter restriction makes room for future extensions (a
+    possibility noted by Tom Lane).
+
   Changes to build procedure
 
     New 'make' target 'rearguard_tarballs' to build the rearguard

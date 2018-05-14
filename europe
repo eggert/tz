@@ -3424,6 +3424,7 @@ Zone	Africa/Ceuta	-0:21:16 -	LMT	1900 Dec 31 23:38:44
 			 0:00	1:00	WEST	1918 Oct  7 23:00
 			 0:00	-	WET	1924
 			 0:00	Spain	WE%sT	1929
+			 0:00	-	WET	1967 # Help zishrink.awk.
 			 0:00 SpainAfrica WE%sT	1984 Mar 16
 			 1:00	-	CET	1986
 			 1:00	EU	CE%sT

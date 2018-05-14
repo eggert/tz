@@ -1278,8 +1278,13 @@ inrule(char **fields, int nfields)
 		error(_("wrong number of fields on Rule line"));
 		return;
 	}
-	if (*fields[RF_NAME] == '\0') {
-		error(_("nameless rule"));
+	switch (*fields[RF_NAME]) {
+	  case '\0':
+	  case ' ': case '\f': case '\n': case '\r': case '\t': case '\v':
+	  case '+': case '-':
+	  case '0': case '1': case '2': case '3': case '4':
+	  case '5': case '6': case '7': case '8': case '9':
+		error(_("Invalid rule name \"%s\""), fields[RF_NAME]);
 		return;
 	}
 	r.r_filename = filename;

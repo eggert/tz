@@ -82,7 +82,7 @@ function prehash_rule_names(name)
   rule["Tunisia"] = "n" # country code TN
   rule["Moncton"] = "o" # arbitrary
   rule["Port"] = "p"
-  rule["Albania"] = "q"
+  rule["Albania"] = "q" # arbitrary
   rule["Regina"] = "r"
   rule["Spain"] = "s"
   rule["Toronto"] = "t"

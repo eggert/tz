@@ -3,6 +3,9 @@
 <head>
 <title>Sources for time zone and daylight saving time data</title>
 <meta charset="UTF-8">
+<style>
+pre {margin-left: 2em; white-space: pre-wrap;}
+</style>
 </head>
 <body>
 <h1>Sources for time zone and daylight saving time data</h1>
@@ -97,7 +100,7 @@ href="https://en.wikipedia.org/wiki/Unix_shell">shell</a> commands download
 the latest release's two
 <a href="https://en.wikipedia.org/wiki/Tar_(computing)">tarballs</a>
 to a <abbr>GNU</abbr>/Linux or similar host.</p>
-<pre style="margin-left: 2em"><code>mkdir tzdb
+<pre><code>mkdir tzdb
 cd tzdb
 <a href="https://www.gnu.org/software/wget/">wget</a> https://www.iana.org/time-zones/repository/tzcode-latest.tar.gz
 wget https://www.iana.org/time-zones/repository/tzdata-latest.tar.gz
@@ -107,7 +110,7 @@ gzip -dc tzdata-latest.tar.gz | tar -xf -
 <p>Alternatively, the following shell commands download the same
 release in a single-tarball format containing extra data
 useful for regression testing:</p>
-<pre style="margin-left: 2em"><code>wget <a href="https://www.iana.org/time-zones/repository/tzdb-latest.tar.lz">https://www.iana.org/time-zones/repository/tzdb-latest.tar.lz</a>
+<pre><code>wget <a href="https://www.iana.org/time-zones/repository/tzdb-latest.tar.lz">https://www.iana.org/time-zones/repository/tzdb-latest.tar.lz</a>
 <a href="https://www.nongnu.org/lzip/">lzip</a> -dc tzdb-latest.tar.lz | tar -xf -
 </code></pre>
 <p>These commands use convenience links to the latest release
@@ -133,7 +136,7 @@ less-secure protocol.</p>
 <p>Alternatively, a development repository of code and data can be
 retrieved from <a href="https://github.com">GitHub</a> via the shell
 command:</p>
-<pre style="margin-left: 2em"><code><a href="https://git-scm.com">git</a> clone <a href="https://github.com/eggert/tz">https://github.com/eggert/tz</a>
+<pre><code><a href="https://git-scm.com">git</a> clone <a href="https://github.com/eggert/tz">https://github.com/eggert/tz</a>
 </code></pre>
 <p>
 Since version 2012e, each release has been tagged in development repositories.

@@ -146,8 +146,10 @@ more errors.</p>
 After obtaining the code and data files, see the
 <code>README</code> file for what to do next.
 The code lets you compile the <code><abbr>tz</abbr></code> source files into
-machine-readable binary files, one for each location. It also lets
-you read a <code><abbr>tz</abbr></code> binary file and interpret time stamps for that
+machine-readable binary files, one for each location. The binary files
+are in a special time zone information format (<dfn><abbr>TZif</abbr></dfn>).
+The code also lets
+you read a <abbr>TZif</abbr> file and interpret time stamps for that
 location.</p>
 <h2 id="changes">Changes to the <code><abbr>tz</abbr></code> database</h2>
 <p>
@@ -275,12 +277,17 @@ href="https://tools.ietf.org/html/rfc7808">TZDIST</a>
 (Internet <abbr>RFC</abbr> 7808), a time zone data distribution service,
 along with <a href="https://tools.ietf.org/html/rfc7809">CalDAV</a>
 (Internet <abbr>RFC</abbr> 7809), a calendar access protocol for
-transferring time zone data by reference. The draft <a
+transferring time zone data by reference.
+The <a href="https://www.ietf.org/mailman/listinfo/tzdist-bis">tzdist-bis
+mailing list</a> discusses two Internet drafts: <a
 id="TZDIST-Geolocate"
 href="https://tools.ietf.org/html/draft-murchison-tzdist-geolocate-01">TZDIST
 Geolocate Extension</a> lets a client determine its time zone region
 from its geographic location using a <a
-href="https://tools.ietf.org/html/rfc5870">'geo' URI</a>.</li>
+href="https://tools.ietf.org/html/rfc5870">'geo' URI</a>, and
+<a href="https://tools.ietf.org/html/draft-murchison-tzdist-tzif-00">The
+Time Zone Information Format (<abbr>TZif</abbr>)</a> specifies the format of
+<abbr>TZif</abbr> data.</li>
 <li>The <a href="https://tools.ietf.org/html/rfc5545">
 Internet Calendaring and Scheduling Core Object Specification
 (iCalendar)</a> (Internet <abbr>RFC</abbr> 5445)
@@ -429,35 +436,35 @@ source into text files, along with a runtime that can read those
 files. Tcl is freely available under a <abbr>BSD</abbr>-style
 license.</li>
 </ul>
-<h2 id="binary">Other <code><abbr>tz</abbr></code> binary file readers</h2>
+<h2 id="TZif">Other <abbr>TZif</abbr> readers</h2>
 <ul>
 <li>The <a
 href="https://www.gnu.org/software/libc/"><abbr>GNU</abbr> C
 Library</a>
 has an independent, thread-safe implementation of
-a <code><abbr>tz</abbr></code> binary file reader.
+a <abbr>TZif</abbr> file reader.
 This library is freely available under the LGPL
 and is widely used in <abbr>GNU</abbr>/Linux systems.</li>
 <li><a href="https://www.gnome.org">GNOME</a>'s
 <a href="https://developer.gnome.org/glib/">GLib</a> has
-a <code><abbr>tz</abbr></code> binary file reader written in C that
+a <abbr>TZif</abbr> file reader written in C that
 creates a <code>GTimeZone</code> object representing sets
 of <abbr>UT</abbr> offsets.
 It is freely available under the <abbr>LGPL</abbr>.</li>
 <li>The
 <a href="https://github.com/bloomberg/bde/wiki">BDE Standard Library</a>'s
 <code>baltzo::TimeZoneUtil</code> component contains a C++
-implementation of a binary file reader. It is freely available under
+implementation of a <abbr>TZif</abbr> file reader. It is freely available under
 the Apache License.</li>
 <li><a href="https://github.com/google/cctz">CCTZ</a> is a simple C++
 library that translates between <abbr>UT</abbr> and civil time and
-can read binary files. It is freely available under the Apache
+can read <abbr>TZif</abbr> files. It is freely available under the Apache
 License.</li>
 <li><a href="http://bmsi.com/java/#TZ">ZoneInfo.java</a>
-is a <code><abbr>tz</abbr></code> binary file reader written in Java.
+is a <abbr>TZif</abbr> file reader written in Java.
 It is freely available under the <abbr>LGPL</abbr>.</li>
 <li><a href="https://github.com/derickr/timelib">Timelib</a> is a C
-library that reads tz binary files and converts
+library that reads <abbr>TZif</abbr> files and converts
 time stamps from one time zone or format to another.
 It is used by <a href="https://secure.php.net"><abbr
 title="PHP: Hypertext Preprocessor">PHP</abbr></a>,
@@ -468,23 +475,23 @@ It is freely available under the <abbr>MIT</abbr> license.</li>
 JavaScript library that supports date arithmetic that is time zone
 aware. It is freely available under the <abbr>MIT</abbr> license.</li>
 <li>Tcl, mentioned <a href="#Tcl">above</a>, also contains a
-<code><abbr>tz</abbr></code> binary file reader.</li>
+<abbr>TZif</abbr> file reader.</li>
 <li><a href="http://search.cpan.org/perldoc?DateTime::TimeZone::Tzfile">
 DateTime::TimeZone::Tzfile</a>
-is a <code><abbr>tz</abbr></code> binary file reader written in Perl.
+is a <abbr>TZif</abbr> file reader written in Perl.
 It is freely available under the same terms as Perl
 (dual <abbr>GPL</abbr> and Artistic license).</li>
 <li>The
 public-domain <a href="https://github.com/dbaron/tz.js">tz.js</a>
 library contains a Python tool that
-converts <code><abbr>tz</abbr></code> binary data into
+converts <abbr>TZif</abbr> data into
 <abbr>JSON</abbr>-format data suitable for use
 in its JavaScript library for time zone conversion. Dates before 1970
 are not supported.</li>
 <li>The <a
 href="https://hackage.haskell.org/package/timezone-olson">timezone-olson</a>
 package contains <a href="https://www.haskell.org">Haskell</a> code that
-parses and uses <code><abbr>tz</abbr></code> binary data. It is freely
+parses and uses <abbr>TZif</abbr> data. It is freely
 available under a <abbr>BSD</abbr>-style license.</li>
 </ul>
 <h2 id="software">Other <code><abbr>tz</abbr></code>-based time zone software</h2>

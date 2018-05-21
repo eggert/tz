@@ -109,6 +109,8 @@ LIBDIR = $(TOPDIR)/$(USRDIR)/lib
 # Types to try, as an alternative to time_t.  int64_t should be first.
 TIME_T_ALTERNATIVES = int64_t int32_t uint32_t uint64_t
 
+# What kind of TZif data files to generate.
+# (TZif is the binary time zone data format that zic generates.)
 # If you want only POSIX time, with time values interpreted as
 # seconds since the epoch (not counting leap seconds), use
 #	REDO=		posix_only
@@ -129,7 +131,7 @@ TIME_T_ALTERNATIVES = int64_t int32_t uint32_t uint64_t
 
 REDO=		posix_right
 
-# To install data in text form that has all the information of the binary data,
+# To install data in text form that has all the information of the TZif data,
 # (optionally incorporating leap second information), use
 #	TZDATA_TEXT=	tzdata.zi leapseconds
 # To install text data without leap second information (e.g., because
@@ -357,7 +359,7 @@ ZIC=		$(zic) $(ZFLAGS)
 
 ZFLAGS=
 
-# How to use zic to install tz binary files.
+# How to use zic to install TZif files.
 
 ZIC_INSTALL=	$(ZIC) -d '$(DESTDIR)$(TZDIR)' $(LEAPSECONDS)
 
@@ -605,7 +607,7 @@ INSTALLARGS = \
  YEARISTYPE='$(YEARISTYPE)' \
  ZIC='$(ZIC)'
 
-# 'make install_data' installs one set of tz binary files.
+# 'make install_data' installs one set of TZif files.
 install_data:	zic leapseconds yearistype tzdata.zi
 		$(ZIC_INSTALL) tzdata.zi
 

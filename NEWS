@@ -25,6 +25,8 @@ Unreleased, experimental changes
     The latter restriction makes room for future extensions (a
     possibility noted by Tom Lane).
 
+    The name "TZif" is now used for the tz binary data format.
+
   Changes to build procedure
 
     New 'make' target 'rearguard_tarballs' to build the rearguard

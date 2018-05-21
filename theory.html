@@ -935,15 +935,16 @@ an older <code>zic</code>.
   <li>
     <p>
     The <code>TZ</code> environment variable is used in generating
-    the name of a binary file from which time-related information is read
+    the name of a file from which time-related information is read
     (or is interpreted à la POSIX); <code>TZ</code> is no longer
-    constrained to be a three-letter time zone
-    abbreviation followed by a number of hours and an optional three-letter
-    daylight time zone abbreviation.
+    constrained to be a string containing abbreviations
+    and numeric data as described <a href="#POSIX">above</a>.
+    The file's format is <dfn><abbr>TZif</abbr></dfn>,
+    a time zone information format that contains binary data.
     The daylight saving time rules to be used for a
     particular <code><abbr>tz</abbr></code> region are encoded in the
-    binary file; the format of the file
-    allows U.S., Australian, and other rules to be encoded, and
+    <abbr>TZif</abbr> file; the format of the file allows <abbr>US</abbr>,
+    Australian, and other rules to be encoded, and
     allows for situations where more than two time zone
     abbreviations are used.
     </p>
@@ -953,7 +954,7 @@ an older <code>zic</code>.
     might cause "old" programs (that expect <code>TZ</code> to have a
     certain form) to operate incorrectly; consideration was given to using
     some other environment variable (for example, <code>TIMEZONE</code>)
-    to hold the string used to generate the binary file's name.
+    to hold the string used to generate the <abbr>TZif</abbr> file's name.
     In the end, however, it was decided to continue using
     <code>TZ</code>: it is widely used for time zone purposes;
     separately maintaining both <code>TZ</code>

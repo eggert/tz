@@ -184,7 +184,7 @@ static bool	yearistype(zic_t year, const char * type);
 enum { PERCENT_Z_LEN_BOUND = sizeof "+995959" - 1 };
 
 /* If true, work around a bug in Qt 5.6.1 and earlier, which mishandles
-   tz binary files whose POSIX-TZ-style strings contain '<'; see
+   TZif files whose POSIX-TZ-style strings contain '<'; see
    QTBUG-53071 <https://bugreports.qt.io/browse/QTBUG-53071>.  This
    workaround will no longer be needed when Qt 5.6.1 and earlier are
    obsolete, say in the year 2021.  */

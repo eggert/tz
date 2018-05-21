@@ -874,15 +874,15 @@ an older <code>zic</code>.
     <pre><code>TZ='Pacific/Auckland'</code></pre>
   </li>
   <li>
-    POSIX does not define the exact meaning of <code>TZ</code> values like
+    POSIX does not define the <abbr>DST</abbr> transitions
+    for <code>TZ</code> values like
     "<code>EST5EDT</code>".
-    Typically the current <abbr>US</abbr> <abbr>DST</abbr> rules
-    are used to interpret such values, but this means that the
-    <abbr>US</abbr> <abbr>DST</abbr> rules are compiled into each
-    program that does time conversion.
-    This means that when
-    <abbr>US</abbr> time conversion rules change (as in the United
-    States in 1987), all programs that do time conversion must be
+    Traditionally the current <abbr>US</abbr> <abbr>DST</abbr> rules
+    were used to interpret such values, but this meant that the
+    <abbr>US</abbr> <abbr>DST</abbr> rules were compiled into each
+    program that did time conversion. This meant that when
+    <abbr>US</abbr> time conversion rules changed (as in the United
+    States in 1987), all programs that did time conversion had to be
     recompiled to ensure proper results.
   </li>
   <li>
@@ -893,14 +893,14 @@ an older <code>zic</code>.
   <li>
     In POSIX, there is no tamper-proof way for a process to learn the
     system's best idea of local wall clock.
-    (This is important for applications that an administrator wants
+    This is important for applications that an administrator wants
     used only at certain times &ndash; without regard to whether the
     user has fiddled the
     <code>TZ</code> environment variable.
     While an administrator can "do everything in <abbr>UT</abbr>" to
     get around the problem, doing so is inconvenient and precludes
-    handling daylight saving time shifts - as might be required to
-    limit phone calls to off-peak hours.)
+    handling daylight saving time shifts &ndash; as might be required to
+    limit phone calls to off-peak hours.
   </li>
   <li>
     POSIX provides no convenient and efficient way to determine
@@ -923,7 +923,7 @@ an older <code>zic</code>.
     Unsigned 32-bit integers are used on one or two platforms, and 36-bit
     and 40-bit integers are also used occasionally.
     Although earlier POSIX versions allowed <code>time_t</code> to be a
-    floating-point type, this was not supported by any practical systems,
+    floating-point type, this was not supported by any practical system,
     and POSIX.1-2013 and the <code><abbr>tz</abbr></code> code both
     require <code>time_t</code> to be an integer type.
   </li>
@@ -960,9 +960,9 @@ an older <code>zic</code>.
     separately maintaining both <code>TZ</code>
     and <code>TIMEZONE</code> seemed a nuisance; and systems where
     "new" forms of <code>TZ</code> might cause problems can simply
-    use <code>TZ</code> values such as "<code>EST5EDT</code>" which
-    can be used both by "new" programs (à la POSIX) and "old"
-    programs (as zone names and offsets).
+    use legacy <code>TZ</code> values such as "<code>EST5EDT</code>" which
+    can be used by "new" programs as well as by "old" programs that
+    assume pre-POSIX <code>TZ</code> values.
     </p>
   </li>
   <li>

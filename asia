@@ -866,7 +866,7 @@ Zone	Asia/Taipei	8:06:00 -	LMT	1896 Jan  1
 
 # From Paul Eggert (2018-05-10):
 # The 1904 decree says that Macau changed from the meridian of
-# Fortalezo do Monteo, presumably the basis for the 7:34:10 for LMT.
+# Fortaleza do Monte, presumably the basis for the 7:34:10 for LMT.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Macau	1942	1943	-	Apr	30	23:00	1:00	-

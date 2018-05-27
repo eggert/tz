@@ -974,8 +974,8 @@ static zic_t const max_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
 
 /* If true, work around GNOME bug 730332
    <https://bugzilla.gnome.org/show_bug.cgi?id=730332>
-   by refusing to output time stamps before BIG_BANG.
-   Such time stamps are physically suspect anyway.
+   by refusing to output timestamps before BIG_BANG.
+   Such timestamps are physically suspect anyway.
 
    The GNOME bug is scheduled to be fixed in GNOME 3.22, and if so
    this workaround will no longer be needed when GNOME 3.21 and
@@ -1826,7 +1826,7 @@ writezone(const char *const name, const char *const string, char version)
 		types[i] = attypes[i].type;
 	}
 
-	/* Work around QTBUG-53071 for time stamps less than y2038_boundary - 1,
+	/* Work around QTBUG-53071 for timestamps less than y2038_boundary - 1,
 	   by inserting a no-op transition at time y2038_boundary - 1.
 	   This works only for timestamps before the boundary, which
 	   should be good enough in practice as QTBUG-53071 should be

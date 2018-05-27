@@ -820,7 +820,7 @@ $(MANTXTS):	workman.sh
 		LC_ALL=C sh workman.sh `expr $@ : '\(.*\)\.txt$$'` >$@.out
 		mv $@.out $@
 
-# Set the time stamps to those of the git repository, if available,
+# Set the timestamps to those of the git repository, if available,
 # and if the files have not changed since then.
 # This uses GNU 'touch' syntax 'touch -d@N FILE',
 # where N is the number of seconds since 1970.

@@ -517,7 +517,7 @@ Link	Europe/London	Europe/Isle_of_Man
 #
 # To work around this problem, the build procedure can translate the
 # following data into two forms, one with negative SAVE values and the
-# other form with a traditional approximation for Irish time stamps
+# other form with a traditional approximation for Irish timestamps
 # after 1971-10-31 02:00 UTC; although this approximation has tm_isdst
 # flags that are reversed, its UTC offsets are correct and this often
 # suffices.  This source file currently uses only nonnegative SAVE
@@ -3610,7 +3610,7 @@ Zone	Europe/Zurich	0:34:08 -	LMT	1853 Jul 16 # See above comment.
 # http://www.resmigazete.gov.tr/eskiler/2001/03/20010324.htm#2  - for 2001
 # http://www.resmigazete.gov.tr/eskiler/2002/03/20020316.htm#2  - for 2002-2006
 # From Paul Eggert (2016-09-25):
-# Prefer the above sources to Shanks & Pottenger for time stamps after 1985.
+# Prefer the above sources to Shanks & Pottenger for timestamps after 1985.
 
 # From Steffen Thorsen (2007-03-09):
 # Starting 2007 though, it seems that they are adopting EU's 1:00 UTC

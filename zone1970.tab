@@ -4,7 +4,7 @@
 #
 # From Paul Eggert (2017-10-01):
 # This file contains a table where each row stands for a zone where
-# civil time stamps have agreed since 1970.  Columns are separated by
+# civil timestamps have agreed since 1970.  Columns are separated by
 # a single tab.  Lines beginning with '#' are comments.  All text uses
 # UTF-8 encoding.  The columns of the table are as follows:
 #

@@ -392,7 +392,7 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	-
 # standard time, so let's do that here too.  This does not change UTC
 # offsets, only tm_isdst and the time zone abbreviations.  One minor
 # plus is that this silences a zic complaint that there's no POSIX TZ
-# setting for time stamps past 2038.
+# setting for timestamps past 2038.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 #

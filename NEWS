@@ -27,6 +27,9 @@ Unreleased, experimental changes
 
     The name "TZif" is now used for the tz binary data format.
 
+    tz-link.htm now mentions the A0 TimeZone Migration utilities.
+    (Thanks to Aldrin Martoq for the link.)
+
   Changes to build procedure
 
     New 'make' target 'rearguard_tarballs' to build the rearguard

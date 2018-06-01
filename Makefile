@@ -978,7 +978,7 @@ tzdata$(VERSION).tar.gz.asc: tzdata$(VERSION).tar.gz
 tzdata$(VERSION)-rearguard.tar.gz.asc: tzdata$(VERSION)-rearguard.tar.gz
 tzdb-$(VERSION).tar.lz.asc: tzdb-$(VERSION).tar.lz
 $(ALL_ASC):
-		gpg --armor --detach-sign $?
+		gpg2 --armor --detach-sign $?
 
 typecheck:
 		$(MAKE) clean

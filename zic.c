@@ -3141,6 +3141,15 @@ rpytime(const struct rule *rp, zic_t wantedy)
 	dayoff = 0;
 	m = TM_JANUARY;
 	y = EPOCH_YEAR;
+	if (y < wantedy) {
+	  wantedy -= y;
+	  dayoff = (wantedy / YEARSPERREPEAT) * (SECSPERREPEAT / SECSPERDAY);
+	  wantedy %= YEARSPERREPEAT;
+	  wantedy += y;
+	} else if (wantedy < 0) {
+	  dayoff = (wantedy / YEARSPERREPEAT) * (SECSPERREPEAT / SECSPERDAY);
+	  wantedy %= YEARSPERREPEAT;
+	}
 	while (wantedy != y) {
 		if (wantedy > y) {
 			i = len_years[isleap(y)];

@@ -1760,6 +1760,17 @@ is32(const zic_t x)
 }
 
 static void
+swaptypes(int i, int j)
+{
+  { zic_t t = gmtoffs[i]; gmtoffs[i] = gmtoffs[j]; gmtoffs[j] = t; }
+  { char t = isdsts[i]; isdsts[i] = isdsts[j]; isdsts[j] = t; }
+  { unsigned char t = abbrinds[i]; abbrinds[i] = abbrinds[j];
+    abbrinds[j] = t; }
+  { bool t = ttisstds[i]; ttisstds[i] = ttisstds[j]; ttisstds[j] = t; }
+  { bool t = ttisgmts[i]; ttisgmts[i] = ttisgmts[j]; ttisgmts[j] = t; }
+}
+
+static void
 writezone(const char *const name, const char *const string, char version)
 {
 	register FILE *			fp;
@@ -1904,7 +1915,8 @@ writezone(const char *const name, const char *const string, char version)
 	for (pass = 1; pass <= 2; ++pass) {
 		register ptrdiff_t thistimei, thistimecnt, thistimelim;
 		register int	thisleapi, thisleapcnt, thisleaplim;
-		int		writetype[TZ_MAX_TYPES];
+		int old0, new0;
+		char		omittype[TZ_MAX_TYPES + 1];
 		int		typemap[TZ_MAX_TYPES];
 		register int	thistypecnt;
 		char		thischars[TZ_MAX_CHARS];
@@ -1929,25 +1941,46 @@ writezone(const char *const name, const char *const string, char version)
 		  error(_("too many transition times"));
 		thistimelim = thistimei + thistimecnt;
 		thisleaplim = thisleapi + thisleapcnt;
-		for (i = 0; i < typecnt; ++i)
-			writetype[i] = thistimecnt == timecnt;
+		memset(omittype, thistimecnt != timecnt, typecnt);
 		if (thistimecnt == 0) {
 			/*
 			** No transition times fall in the current
 			** (32- or 64-bit) window.
 			*/
 			if (typecnt != 0)
-				writetype[typecnt - 1] = true;
+			  omittype[typecnt - 1] = false;
 		} else {
 			for (i = thistimei - 1; i < thistimelim; ++i)
 				if (i >= 0)
-					writetype[types[i]] = true;
+				  omittype[types[i]] = false;
 			/*
 			** For America/Godthab and Antarctica/Palmer
 			*/
 			if (thistimei == 0)
-				writetype[0] = true;
+			  omittype[0] = false;
 		}
+
+		/* Reorder types to make type 0 the first-used standard type
+		   if one is used, otherwise the first-used DST type if one
+		   is used, otherwise no reordering.  Use TYPEMAP to swap
+		   OLD0 and NEW0 so that NEW0 appears as type 0 in the output
+		   instead of OLD0.  TYPEMAP also omits unused types.  */
+		omittype[typecnt] = false;  /* strlen sentinel */
+		old0 = strlen(omittype);
+		new0 = -1;
+		for (i = 0; i < timecnt; i++)
+		  if (!omittype[types[i]]) {
+		    if (! isdsts[types[i]]) {
+		      new0 = types[i];
+		      break;
+		    }
+		    if (new0 < 0)
+		      new0 = types[i];
+		  }
+		if (new0 < 0)
+		  new0 = old0;
+		swaptypes(old0, new0);
+
 #ifndef LEAVE_SOME_PRE_2011_SYSTEMS_IN_THE_LURCH
 		/*
 		** For some pre-2011 systems: if the last-to-be-written
@@ -1965,8 +1998,8 @@ writezone(const char *const name, const char *const string, char version)
 				if (isdsts[types[i]])
 					mrudst = types[i];
 				else	mrustd = types[i];
-			for (i = 0; i < typecnt; ++i)
-				if (writetype[i]) {
+			for (i = old0; i < typecnt; i++)
+				if (!omittype[i]) {
 					if (isdsts[i])
 						hidst = i;
 					else	histd = i;
@@ -1980,7 +2013,7 @@ writezone(const char *const name, const char *const string, char version)
 						ttisstds[mrudst],
 						ttisgmts[mrudst]);
 					isdsts[mrudst] = 1;
-					writetype[type] = true;
+					omittype[type] = false;
 			}
 			if (histd >= 0 && mrustd >= 0 && histd != mrustd &&
 				gmtoffs[histd] != gmtoffs[mrustd]) {
@@ -1991,20 +2024,23 @@ writezone(const char *const name, const char *const string, char version)
 						ttisstds[mrustd],
 						ttisgmts[mrustd]);
 					isdsts[mrustd] = 0;
-					writetype[type] = true;
+					omittype[type] = false;
 			}
 		}
 #endif /* !defined LEAVE_SOME_PRE_2011_SYSTEMS_IN_THE_LURCH */
 		thistypecnt = 0;
-		for (i = 0; i < typecnt; ++i)
-			typemap[i] = writetype[i] ?  thistypecnt++ : -1;
+		for (i = old0; i < typecnt; i++)
+		  if (!omittype[i])
+		    typemap[i == old0 ? new0 : i == new0 ? old0 : i]
+		      = thistypecnt++;
+
 		for (i = 0; i < sizeof indmap / sizeof indmap[0]; ++i)
 			indmap[i] = -1;
 		thischarcnt = 0;
-		for (i = 0; i < typecnt; ++i) {
+		for (i = old0; i < typecnt; i++) {
 			register char *	thisabbr;
 
-			if (!writetype[i])
+			if (omittype[i])
 				continue;
 			if (indmap[abbrinds[i]] >= 0)
 				continue;
@@ -2053,8 +2089,8 @@ writezone(const char *const name, const char *const string, char version)
 			uc = typemap[types[i]];
 			fwrite(&uc, sizeof uc, 1, fp);
 		}
-		for (i = 0; i < typecnt; ++i)
-			if (writetype[i]) {
+		for (i = old0; i < typecnt; i++)
+			if (!omittype[i]) {
 				puttzcode(gmtoffs[i], fp);
 				putc(isdsts[i], fp);
 				putc((unsigned char) indmap[abbrinds[i]], fp);
@@ -2087,12 +2123,13 @@ writezone(const char *const name, const char *const string, char version)
 			else	puttzcode64(todo, fp);
 			puttzcode(corr[i], fp);
 		}
-		for (i = 0; i < typecnt; ++i)
-			if (writetype[i])
+		for (i = old0; i < typecnt; i++)
+			if (!omittype[i])
 				putc(ttisstds[i], fp);
-		for (i = 0; i < typecnt; ++i)
-			if (writetype[i])
+		for (i = old0; i < typecnt; i++)
+			if (!omittype[i])
 				putc(ttisgmts[i], fp);
+		swaptypes(old0, new0);
 	}
 	fprintf(fp, "\n%s\n", string);
 	close_file(fp, directory, name);

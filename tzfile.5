@@ -70,7 +70,9 @@ at which the rules for computing local time change.
 one-byte unsigned integer values;
 each one tells which of the different types of local time types
 described in the file is associated with the time period
-starting with the same-indexed transition time.
+starting with the same-indexed transition time
+and continuing up to but not including the next transition time
+(or continuing for one second, if this is the last transition).
 These values serve as indices into the next field.
 .IP *
 .I tzh_typecnt
@@ -159,15 +161,20 @@ eight bytes are used for each transition time or leap second time.
 After the second header and data comes a newline-enclosed,
 POSIX-TZ-environment-variable-style string for use in handling instants
 after the last transition time stored in the file
-(with nothing between the newlines if there is no POSIX representation for
-such instants).
-The POSIX-style string must agree with the local time type after
-both data's last transition times; for example, given the string
+or for all instants if the file has no transitions.
+The POSIX-style TZ string is empty (i.e., nothing between the newlines)
+if there is no POSIX representation for such instants.
+If nonempty, the POSIX-style TZ string must agree with the local time
+type after both data's last transition times if present;
+for example, given the string
 .q "WET0WEST,M3.5.0,M10.5.0/3"
 then if a last transition time is in July, the transition's local time
 type must specify a daylight-saving time abbreviated
 .q "WEST"
 that is one hour east of UT.
+Also, if there is at least one transition, time type 0 is associated
+with the time period from the indefinite past up to but not including
+the earliest transition time.
 .SS Version 3 format
 For version-3-format time zone files, the POSIX-TZ-style string may
 use two minor extensions to the POSIX TZ format, as described in

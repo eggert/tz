@@ -17,6 +17,16 @@ Unreleased, experimental changes
     observed DST in 1942/79, not 1961/80, and there were several
     errors for transition times and dates.  (Thanks to P Chan.)
 
+  Changes to code
+
+    zic now always generates TZif files where time type 0 is used for
+    timestamps before the first transition.  This simplifies the
+    reading of TZif files and should not affect behavior of existing
+    TZif readers because the same set of time types is used; only
+    their internal indexes may have changed.  This affects only the
+    legacy zones EST5EDT, CST6CDT, MST7MDT, PST8PDT, CET, MET, and
+    EET, which previously used nonzero types for these timestamps.
+
   Changes to documentation
 
     New restrictions: A Rule name must start with a character that
@@ -24,6 +34,9 @@ Unreleased, experimental changes
     should not use characters in the set "!$%&'()*,/:;<=>?@[\]^`{|}~".
     The latter restriction makes room for future extensions (a
     possibility noted by Tom Lane).
+
+    tzfile.5 now documents what time types apply before the first and
+    after the last transition, if any.
 
     The name "TZif" is now used for the tz binary data format.
 

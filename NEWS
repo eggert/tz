@@ -27,6 +27,12 @@ Unreleased, experimental changes
     legacy zones EST5EDT, CST6CDT, MST7MDT, PST8PDT, CET, MET, and
     EET, which previously used nonzero types for these timestamps.
 
+    localtime.c no longer ignores TZif POSIX-style TZ strings that
+    specify only standard time.  Instead, these TZ strings now
+    override the default time type for timestamps after the last
+    transition (or for all time stamps if there are no transitions),
+    just as DST strings specifying DST have always done.
+
   Changes to documentation
 
     New restrictions: A Rule name must start with a character that

@@ -587,8 +587,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 			struct state	*ts = &lsp->u.st;
 
 			up->buf[nread - 1] = '\0';
-			if (tzparse(&up->buf[1], ts, false)
-			    && ts->typecnt == 2) {
+			if (tzparse(&up->buf[1], ts, false)) {
 
 			  /* Attempt to reuse existing abbreviations.
 			     Without this, America/Anchorage would be right on
@@ -599,7 +598,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 			     stay 40 in this example.  */
 			  int gotabbr = 0;
 			  int charcnt = sp->charcnt;
-			  for (i = 0; i < 2; i++) {
+			  for (i = 0; i < ts->typecnt; i++) {
 			    char *tsabbr = ts->chars + ts->ttis[i].tt_abbrind;
 			    int j;
 			    for (j = 0; j < charcnt; j++)
@@ -618,7 +617,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 			      }
 			    }
 			  }
-			  if (gotabbr == 2) {
+			  if (gotabbr == ts->typecnt) {
 			    sp->charcnt = charcnt;
 
 			    /* Ignore any trailing, no-op transitions generated
@@ -640,8 +639,8 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 			      sp->timecnt++;
 			      i++;
 			    }
-			    sp->ttis[sp->typecnt++] = ts->ttis[0];
-			    sp->ttis[sp->typecnt++] = ts->ttis[1];
+			    for (i = 0; i < ts->typecnt; i++)
+			      sp->ttis[sp->typecnt++] = ts->ttis[i];
 			  }
 			}
 	}

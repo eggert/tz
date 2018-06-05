@@ -27,6 +27,12 @@ Unreleased, experimental changes
     legacy zones EST5EDT, CST6CDT, MST7MDT, PST8PDT, CET, MET, and
     EET, which previously used nonzero types for these timestamps.
 
+    localtime.c no longer requires at least one time type in TZif
+    files that lack transitions or have a POSIX-style TZ string.  This
+    future-proofs the code against possible future extensions to the
+    format that would allow TZif files with POSIX-style TZ strings and
+    without transitions or time types.
+
     localtime.c no longer ignores TZif POSIX-style TZ strings that
     specify only standard time.  Instead, these TZ strings now
     override the default time type for timestamps after the last

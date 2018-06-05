@@ -33,6 +33,10 @@ Unreleased, experimental changes
     format that would allow TZif files with POSIX-style TZ strings and
     without transitions or time types.
 
+    A read-access subscript error in localtime.c has been fixed.
+    It could occur only in TZif files with timecnt == 0, something that
+    does not happen in practice now but could happen in future versions.
+
     localtime.c no longer ignores TZif POSIX-style TZ strings that
     specify only standard time.  Instead, these TZ strings now
     override the default time type for timestamps after the last

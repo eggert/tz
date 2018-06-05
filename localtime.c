@@ -632,7 +632,8 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 			      sp->timecnt--;
 
 			    for (i = 0; i < ts->timecnt; i++)
-			      if (sp->ats[sp->timecnt - 1] < ts->ats[i])
+			      if (sp->timecnt == 0
+				  || sp->ats[sp->timecnt - 1] < ts->ats[i])
 				break;
 			    while (i < ts->timecnt
 				   && sp->timecnt < TZ_MAX_TIMES) {

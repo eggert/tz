@@ -2106,8 +2106,8 @@ Release 2014d - 2014-05-27 21:34:40 -0700
   Changes affecting code
 
     zic no longer generates files containing timestamps before the Big Bang.
-    This works around GNOME bug 730332
-    <https://bugzilla.gnome.org/show_bug.cgi?id=730332>.
+    This works around GNOME glib bug 878
+    <https://gitlab.gnome.org/GNOME/glib/issues/878>
     (Thanks to Leonardo Chiquitto for reporting the bug, and to
     Arthur David Olson and James Cloos for suggesting improvements to the fix.)
 

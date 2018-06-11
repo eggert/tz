@@ -972,17 +972,17 @@ static zic_t const max_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
 #define BIG_BANG (- (1LL << 59))
 #endif
 
-/* If true, work around GNOME bug 730332
-   <https://bugzilla.gnome.org/show_bug.cgi?id=730332>
+/* If true, work around GNOME glib bug 878
+   <https://gitlab.gnome.org/GNOME/glib/issues/878>
    by refusing to output timestamps before BIG_BANG.
    Such timestamps are physically suspect anyway.
 
-   The GNOME bug is scheduled to be fixed in GNOME 3.22, and if so
-   this workaround will no longer be needed when GNOME 3.21 and
-   earlier are obsolete, say in the year 2021.  */
-enum { WORK_AROUND_GNOME_BUG_730332 = true };
+   The glib bug is scheduled to be fixed in glib 2.58, and if so
+   this workaround will no longer be needed when glib 2.57 and
+   earlier are obsolete, say in the year 2025.  */
+enum { WORK_AROUND_GLIB_BUG_878 = true };
 
-static const zic_t early_time = (WORK_AROUND_GNOME_BUG_730332
+static const zic_t early_time = (WORK_AROUND_GLIB_BUG_878
 				 ? BIG_BANG
 				 : MINVAL(zic_t, TIME_T_BITS_IN_FILE));
 

@@ -976,13 +976,17 @@ static zic_t const max_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
    <https://gitlab.gnome.org/GNOME/glib/issues/878>
    by refusing to output timestamps before BIG_BANG.
    Such timestamps are physically suspect anyway.
+   The glib bug is scheduled to be fixed in glib 2.58.
+   There is a similar bug in 32-bit glibc 2.27 and earlier
+   <https://sourceware.org/bugzilla/show_bug.cgi?id=19738>
+   that is scheduled to be fixed in glibc 2.28;
+   unfortunately a similar bug might persist in 64-bit glibc
+   though this has not been verified.  With all this in mind,
+   let's hope that the workaround will no longer be needed
+   in the year 2025.  */
+enum { WORK_AROUND_CLIENT_OVERFLOW_BUGS = true };
 
-   The glib bug is scheduled to be fixed in glib 2.58, and if so
-   this workaround will no longer be needed when glib 2.57 and
-   earlier are obsolete, say in the year 2025.  */
-enum { WORK_AROUND_GLIB_BUG_878 = true };
-
-static const zic_t early_time = (WORK_AROUND_GLIB_BUG_878
+static const zic_t early_time = (WORK_AROUND_CLIENT_OVERFLOW_BUGS
 				 ? BIG_BANG
 				 : MINVAL(zic_t, TIME_T_BITS_IN_FILE));
 

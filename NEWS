@@ -27,6 +27,12 @@ Unreleased, experimental changes
     legacy zones EST5EDT, CST6CDT, MST7MDT, PST8PDT, CET, MET, and
     EET, which previously used nonzero types for these timestamps.
 
+    Because of the type 0 change, zic no longer outputs a dummy
+    transition at time -2**59 (before the Big Bang), as clients should
+    no longer need this to handle historical timestamps correctly.
+    This reverts a change introduced in 2013d and shrinks most TZif
+    files by a few bytes.
+
     localtime.c no longer requires at least one time type in TZif
     files that lack transitions or have a POSIX-style TZ string.  This
     future-proofs the code against possible future extensions to the

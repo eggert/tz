@@ -173,7 +173,6 @@ LDLIBS=
 
 # Add the following to the end of the "CFLAGS=" line as needed to override
 # defaults specified in the source code.  "-DFOO" is equivalent to "-DFOO=1".
-#  -DBIG_BANG=-9999999LL if the Big Bang occurred at time -9999999 (see zic.c)
 #  -DDEPRECATE_TWO_DIGIT_YEARS for optional runtime warnings about strftime
 #	formats that generate only the last two digits of year numbers
 #  -DEPOCH_LOCAL if the 'time' function returns local time not UT

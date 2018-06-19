@@ -18,15 +18,18 @@ zdump \- time zone dumper
 ..
 .ie \n(.g .ds - \f(CW-\fP
 .el ds - \-
-.I Zdump
-prints the current time in each
+The
+.B zdump
+program prints the current time in each
 .I zonename
 named on the command line.
-.PP
-These options are available:
+.SH OPTIONS
 .TP
-.BI "\*-\*-version"
+.B \*-\*-version
 Output version information and exit.
+.TP
+.B \*-\*-help
+Output short usage message and exit.
 .TP
 .B \*-i
 .I "(This option is experimental: its behavior may change in future versions.)"
@@ -68,7 +71,7 @@ except omit the times relative to the extreme time values.
 This generates output that is easier to compare to that of
 implementations with different time representations.
 .TP
-.BI "\*-c " [loyear,]hiyear
+.BI "\*-c " \fR[\fIloyear , \fR]\fIhiyear
 Cut off interval output at the given year(s).
 Cutoff times are computed using the proleptic Gregorian calendar with year 0
 and with Universal Time (UT) ignoring leap seconds.
@@ -80,7 +83,7 @@ of 1970 includes the transition.
 The default cutoff is
 .BR \*-500,2500 .
 .TP
-.BI "\*-t " [lotime,]hitime
+.BI "\*-t " \fR[\fIlotime , \fR]\fIhitime
 Cut off interval output at the given time(s),
 given in decimal seconds since 1970-01-01 00:00:00
 Coordinated Universal Time (UTC).
@@ -220,7 +223,8 @@ for newer and
 .q "UT"
 for older timestamps, partly because the exact date of the
 introduction of UTC is problematic.
-.SH "SEE ALSO"
-newctime(3), tzfile(5), zic(8)
+.SH SEE ALSO
+.BR tzfile (5),
+.BR zic (8)
 .\" This file is in the public domain, so clarified as of
 .\" 2009-05-17 by Arthur David Olson.

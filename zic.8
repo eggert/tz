@@ -28,19 +28,22 @@ zic \- time zone compiler
 .  ds :
 .  ds - \-
 .\}
-.I Zic
-reads text from the file(s) named on the command line
+The
+.B zic
+program reads text from the file(s) named on the command line
 and creates the time conversion information files specified in this input.
 If a
 .I filename
 is
 .q "\*-" ,
-the standard input is read.
-.PP
-These options are available:
+standard input is read.
+.SH OPTIONS
 .TP
-.BI "\*-\*-version"
+.B "\*-\*-version"
 Output version information and exit.
+.TP
+.B \*-\*-help
+Output short usage message and exit.
 .TP
 .BI "\*-d " directory
 Create time conversion information files in the named directory rather than
@@ -48,7 +51,7 @@ in the standard directory named below.
 .TP
 .BI "\*-l " timezone
 Use the given time zone as local time.
-.I Zic
+.B zic
 will act as if the input contained a link line of the form
 .sp
 .ti +.5i
@@ -57,7 +60,7 @@ Link	\fItimezone\fP		localtime
 .BI "\*-p " timezone
 Use the given time zone's rules when handling POSIX-format
 time zone environment variables.
-.I Zic
+.B zic
 will act as if the input contained a link line of the form
 .sp
 .ti +.5i
@@ -80,17 +83,17 @@ The input specifies a link to a link.
 .PP
 A year that appears in a data file is outside the range
 of years representable by
-.IR time (2)
+.BR time (2)
 values.
 .PP
 A time of 24:00 or more appears in the input.
 Pre-1998 versions of
-.I zic
+.B zic
 prohibit 24:00, and pre-2007 versions prohibit times greater than 24:00.
 .PP
 A rule goes past the start or end of the month.
 Pre-2004 versions of
-.I zic
+.B zic
 prohibit this.
 .PP
 The output file does not contain all the information about the
@@ -102,7 +105,7 @@ represented.
 .PP
 The output contains data that may not be handled properly by client
 code designed for older
-.I zic
+.B zic
 output formats.  These compatibility issues affect only timestamps
 before 1970 or after the start of 2038.
 .PP
@@ -148,7 +151,7 @@ to the end of the line the sharp character appears on.
 White space characters and sharp characters may be enclosed in double quotes
 (") if they're to be used as part of a field.
 Any line that is blank (after comment stripping) is ignored.
-Non-blank lines are expected to be of one of three types:
+Nonblank lines are expected to be of one of three types:
 rule lines, zone lines, and link lines.
 .PP
 Names must be in English and are case insensitive.
@@ -165,14 +168,14 @@ abbreviation must be unambiguous in context.
 A rule line has the form
 .nf
 .ti +.5i
-.ta \w'Rule\0\0'u +\w'NAME\0\0'u +\w'FROM\0\0'u +\w'1973\0\0'u +\w'TYPE\0\0'u +\w'Apr\0\0'u +\w'lastSun\0\0'u +\w'2:00s\0\0'u +\w'1:00d\0\0'u
+.ta \w'Rule\0\0'u +\w'NAME\0\0'u +\w'FROM\0\0'u +\w'1973\0\0'u +\w'TYPE\0\0'u +\w'Apr\0\0'u +\w'lastSun\0\0'u +\w'2:00w\0\0'u +\w'1:00d\0\0'u
 .sp
 Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 .sp
 For example:
 .ti +.5i
 .sp
-Rule	US	1967	1973	\*-	Apr	lastSun	2:00s	1:00d	D
+Rule	US	1967	1973	\*-	Apr	lastSun	2:00w	1:00d	D
 .sp
 .fi
 The fields that make up a rule line are:
@@ -220,7 +223,7 @@ field.
 should be
 .q \*-
 and is present for compatibility with older versions of
-.I zic
+.B zic
 in which it could contain year types.
 .TP
 .B IN
@@ -274,7 +277,7 @@ Recognized forms include:
 where hour 0 is midnight at the start of the day,
 and hour 24 is midnight at the end of the day.
 Although
-.I zic
+.B zic
 rounds times to the nearest integer second
 (breaking ties to the even integer), the fractions may be useful
 to other applications requiring greater precision.
@@ -321,7 +324,7 @@ Negative offsets are allowed; in Ireland, for example, daylight saving
 time is observed in winter and has a negative offset relative to
 Irish Standard Time.
 The offset is merely added to standard time; for example,
-.I zic
+.B zic
 does not distinguish a 10:30 standard time plus an 0:30
 .B SAVE
 from a 10:00 standard time plus a 1:00
@@ -347,8 +350,8 @@ A zone line has the form
 .sp
 .nf
 .ti +.5i
-.ta \w'Zone\0\0'u +\w'Asia/Amman\0\0'u +\w'GMTOFF\0\0'u +\w'Jordan\0\0'u +\w'FORMAT\0\0'u
-Zone	NAME	GMTOFF	RULES	FORMAT	[UNTIL]
+.ta \w'Zone\0\0'u +\w'Asia/Amman\0\0'u +\w'UTOFF\0\0'u +\w'Jordan\0\0'u +\w'FORMAT\0\0'u
+Zone	NAME	UTOFF	RULES	FORMAT	[UNTIL]
 .sp
 For example:
 .sp
@@ -357,7 +360,7 @@ Zone	Asia/Amman	2:00	Jordan	EE%sT	2017 Oct 27 01:00
 .sp
 .fi
 The fields that make up a zone line are:
-.TP "\w'GMTOFF'u"
+.TP "\w'UTOFF'u"
 .B NAME
 The name of the time zone.
 This is the name used in creating the time conversion information file for the
@@ -369,7 +372,7 @@ or
 a file name component is a maximal substring that does not contain
 .q "/" .
 .TP
-.B GMTOFF
+.B UTOFF
 The amount of time to add to UT to get standard time in this zone.
 This field has the same format as the
 .B AT
@@ -413,7 +416,10 @@ Alternatively,
 a slash (/)
 separates standard and daylight abbreviations.
 To conform to POSIX, a time zone abbreviation should contain only
-alphanumeric ASCII characters, "+" and "\*-".
+alphanumeric ASCII characters,
+.q "+"
+and
+.q "\*-".
 .TP
 .B UNTIL
 The time at which the UT offset or the rule(s) change for a location.
@@ -518,7 +524,7 @@ if the leap second time given by the other fields should be interpreted as
 local wall clock time.
 .SH "EXTENDED EXAMPLE"
 Here is an extended example of
-.I zic
+.B zic
 input, intended to illustrate many of its features.
 In this example, the EU rules are for the European Union
 and for its predecessor organization, the European Communities.
@@ -539,8 +545,8 @@ Rule	EU	1979	1995	\*-	Sep	lastSun	1:00u	0	\*-
 Rule	EU	1981	max	\*-	Mar	lastSun	1:00u	1:00	S
 Rule	EU	1996	max	\*-	Oct	lastSun	1:00u	0	\*-
 .sp
-.ta \w'# Zone\0\0'u +\w'Europe/Zurich\0\0'u +\w'GMTOFF\0\0'u +\w'0:34:08\0\0'u +\w'FORMAT\0\0'u
-# Zone	NAME	GMTOFF	RULES	FORMAT	[UNTIL]
+.ta \w'# Zone\0\0'u +\w'Europe/Zurich\0\0'u +\w'0:34:08\0\0'u +\w'RULES\0\0'u +\w'FORMAT\0\0'u
+# Zone	NAME	UTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Zurich	0:34:08	\*-	LMT	1853 Jul 16
 		0:29:46	\*-	BMT	1894 Jun
 		1:00	Swiss	CE%sT	1981
@@ -556,8 +562,9 @@ seconds east of UT until 1853-07-16 at 00:00, when the legal offset
 was changed to 7\(de\|26\(fm\|22.50\(sd; although this works out to
 0:29:45.50, the input format cannot represent fractional seconds so it
 is rounded here.  After 1894-06-01 at 00:00 the UT offset became one hour
-and Swiss daylight saving rules (defined with lines beginning with "Rule
-Swiss") apply.  From 1981 to the present, EU daylight saving rules have
+and Swiss daylight saving rules (defined with lines beginning with
+.q "Rule Swiss")
+apply.  From 1981 to the present, EU daylight saving rules have
 applied, and the UTC offset has remained at one hour.
 .PP
 In 1941 and 1942, daylight saving time applied from the first Monday
@@ -568,11 +575,21 @@ saving has begun on the last Sunday in March at 01:00 UTC.
 Until 1995 it ended the last Sunday in September at 01:00 UTC,
 but this changed to the last Sunday in October starting in 1996.
 .PP
-For purposes of
-display, "LMT" and "BMT" were initially used, respectively.  Since
+For purposes of display,
+.q "LMT"
+and
+.q "BMT"
+were initially used, respectively.  Since
 Swiss rules and later EU rules were applied, the display name for the
 time zone has been CET for standard time and CEST for daylight saving
 time.
+.SH FILES
+.TP
+.I /etc/localtime
+Default local time zone file.
+.TP
+.I /usr/share/zoneinfo
+Default time zone information directory.
 .SH NOTES
 For areas with more than two types of local time,
 you may need to use local standard time in the
@@ -585,17 +602,14 @@ for a particular zone,
 a clock advance caused by the start of daylight saving
 coincides with and is equal to
 a clock retreat caused by a change in UT offset,
-.IR zic
+.B zic
 produces a single transition to daylight saving at the new UT offset
 (without any change in wall clock time).
 To get separate transitions
 use multiple zone continuation lines
 specifying transition instants using universal time.
-.SH FILES
-.ta \w'/usr/share/zoneinfo\0\0'u
-/etc/localtime	default local time zone file
-/usr/share/zoneinfo	default time zone information directory
-.SH "SEE ALSO"
-newctime(3), tzfile(5), zdump(8)
+.SH SEE ALSO
+.BR tzfile (5),
+.BR zdump (8)
 .\" This file is in the public domain, so clarified as of
 .\" 2009-05-17 by Arthur David Olson.

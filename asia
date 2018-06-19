@@ -6,7 +6,7 @@
 # tz@iana.org for general use in the future).  For more, please see
 # the file CONTRIBUTING in the tz distribution.
 
-# From Paul Eggert (2017-01-13):
+# From Paul Eggert (2018-06-19):
 #
 # Unless otherwise specified, the source for data through 1990 is:
 # Thomas G. Shanks and Rique Pottenger, The International Atlas (6th edition),
@@ -35,7 +35,8 @@
 # A reliable and entertaining source about time zones is
 # Derek Howse, Greenwich time and longitude, Philip Wilson Publishers (1997).
 #
-# The following alphabetic abbreviations appear in these tables:
+# The following alphabetic abbreviations appear in these tables
+# (corrections are welcome):
 #	     std  dst
 #	     LMT	Local Mean Time
 #	2:00 EET  EEST	Eastern European Time
@@ -44,11 +45,13 @@
 #	7:00 WIB	west Indonesia (Waktu Indonesia Barat)
 #	8:00 WITA	central Indonesia (Waktu Indonesia Tengah)
 #	8:00 CST	China
+#	8:00 PST  PDT*	Philippine Standard Time
 #	8:30 KST  KDT	Korea when at +0830
 #	9:00 WIT	east Indonesia (Waktu Indonesia Timur)
 #	9:00 JST  JDT	Japan
 #	9:00 KST  KDT	Korea when at +09
 #	9:30 ACST	Australian Central Standard Time
+# *I invented the abbreviation PDT; see "Philippines" below.
 # Otherwise, these tables typically use numeric abbreviations like +03
 # and +0330 for integer hour and minute UT offsets.  Although earlier
 # editions invented alphabetic time zone abbreviations for every
@@ -2895,19 +2898,35 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 # Philippine Star 2014-08-05
 # http://www.philstar.com/headlines/2014/08/05/1354152/pnoy-urged-declare-use-daylight-saving-time
 
+# From Paul Goyette (2018-06-15):
+# In the Philippines, there is a national law, Republic Act No. 10535
+# which declares the official time here as "Philippine Standard Time".
+# The act [1] even specifies use of PST as the abbreviation, although
+# the FAQ provided by PAGASA [2] uses the "acronym PhST to distinguish
+# it from the Pacific Standard Time (PST)."
+# [1] http://www.officialgazette.gov.ph/2013/05/15/republic-act-no-10535/
+# [2] https://www1.pagasa.dost.gov.ph/index.php/astronomy/philippine-standard-time#republic-act-10535
+#
+# From Paul Eggert (2018-06-19):
+# I surveyed recent news reports, and my impression is that "PST" is
+# more popular among reliable English-language news sources.  This is
+# not just a measure of Google hit counts: it's also the sizes and
+# influence of the sources.  There is no current abbreviation for DST,
+# so use "PDT", the usual American style.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Phil	1936	only	-	Nov	1	0:00	1:00	-
-Rule	Phil	1937	only	-	Feb	1	0:00	0	-
-Rule	Phil	1954	only	-	Apr	12	0:00	1:00	-
-Rule	Phil	1954	only	-	Jul	1	0:00	0	-
-Rule	Phil	1978	only	-	Mar	22	0:00	1:00	-
-Rule	Phil	1978	only	-	Sep	21	0:00	0	-
+Rule	Phil	1936	only	-	Nov	1	0:00	1:00	D
+Rule	Phil	1937	only	-	Feb	1	0:00	0	S
+Rule	Phil	1954	only	-	Apr	12	0:00	1:00	D
+Rule	Phil	1954	only	-	Jul	1	0:00	0	S
+Rule	Phil	1978	only	-	Mar	22	0:00	1:00	D
+Rule	Phil	1978	only	-	Sep	21	0:00	0	S
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Manila	-15:56:00 -	LMT	1844 Dec 31
 			8:04:00 -	LMT	1899 May 11
-			8:00	Phil	+08/+09	1942 May
-			9:00	-	+09	1944 Nov
-			8:00	Phil	+08/+09
+			8:00	Phil	P%sT	1942 May
+			9:00	-	JST	1944 Nov
+			8:00	Phil	P%sT
 
 # Qatar
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

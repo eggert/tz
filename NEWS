@@ -17,6 +17,10 @@ Unreleased, experimental changes
     observed DST in 1942/79, not 1961/80, and there were several
     errors for transition times and dates.  (Thanks to P Chan.)
 
+  Changes to time zone abbreviations
+
+    Use "PST" and "PDT" for Philippine time.  (Thanks to Paul Goyette.)
+
   Changes to code
 
     zic now always generates TZif files where time type 0 is used for

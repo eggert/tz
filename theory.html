@@ -669,6 +669,11 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
     way to specify Easter, these exceptional years are entered as
     separate <code><abbr>tz</abbr> Rule</code> lines, even though the
     legal rules did not change.
+    When transitions are known but the historical rules behind them are not,
+    the database contains <code>Zone</code> and <code>Rule</code>
+    entries that are intended to represent only the generated
+    transitions, not any underlying historical rules; however, this
+    intent is recorded at best only in commentary.
   </li>
   <li>
     The <code><abbr>tz</abbr></code> database models pre-standard time

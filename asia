@@ -881,7 +881,7 @@ Rule	Macau	1947	only	-	Apr	19	23:00s	1:00	D
 Rule	Macau	1947	only	-	Nov	30	23:00s	0	S
 Rule	Macau	1948	only	-	May	 2	23:00s	1:00	D
 Rule	Macau	1948	only	-	Oct	31	23:00s	0	S
-Rule	Macau	1949	1951	-	Apr	Sat>=1	23:00s	1:00	D
+Rule	Macau	1949	1950	-	Apr	Sat>=1	23:00s	1:00	D
 Rule	Macau	1949	1950	-	Oct	lastSat	23:00s	0	S
 Rule	Macau	1951	only	-	Mar	31	23:00s	1:00	D
 Rule	Macau	1951	only	-	Oct	28	23:00s	0	S

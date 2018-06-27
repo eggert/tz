@@ -210,7 +210,7 @@ is replaced by the year with century as a decimal number.
 is replaced by the year without century as a decimal number (00\*(en99).
 .TP
 %Z
-is replaced by the time zone name,
+is replaced by the time zone abbreviation,
 or by the empty string if this is not determinable.
 .TP
 %z
@@ -218,7 +218,8 @@ is replaced by the offset from the Prime Meridian
 in the format +HHMM or \*-HHMM as appropriate,
 with positive values representing locations east of Greenwich,
 or by the empty string if this is not determinable.
-The numeric time zone \*-0000 is used when the time is Universal Time
+The numeric time zone abbreviation \*-0000 is used when the time is
+Universal Time
 but local time is indeterminate; by convention this is used for
 locations while uninhabited, and corresponds to a zero offset when the
 time zone abbreviation begins with

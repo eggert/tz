@@ -487,7 +487,8 @@ label:
 				/*
 				** C99 and later say that %Z must be
 				** replaced by the empty string if the
-				** time zone is not determinable.
+				** time zone abbreviation is not
+				** determinable.
 				*/
 				continue;
 			case 'z':

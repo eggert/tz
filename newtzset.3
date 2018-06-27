@@ -26,17 +26,17 @@ tzset \- initialize time conversion information
 \\$3\*(lq\\$1\*(rq\\$2
 ..
 .I Tzalloc
-allocates and returns a time zone object described by
+allocates and returns a timezone object described by
 .BR TZ .
 If
 .B TZ
-is not a valid time zone description, or if the object cannot be allocated,
+is not a valid timezone description, or if the object cannot be allocated,
 .I tzalloc
 returns a null pointer and sets
 .BR errno .
 .PP
 .I Tzfree
-frees a time zone object
+frees a timezone object
 .BR tz ,
 which should have been successfully allocated by
 .IR tzalloc .
@@ -49,13 +49,13 @@ was used to set.
 .I Tzset
 acts like
 .BR tzalloc(getenv("TZ")) ,
-except it saves any resulting time zone object into internal
+except it saves any resulting timezone object into internal
 storage that is accessed by
 .IR localtime ,
 .IR localtime_r ,
 and
 .IR mktime .
-The anonymous shared time zone object is freed by the next call to
+The anonymous shared timezone object is freed by the next call to
 .IR tzset .
 If the implied call to
 .B tzalloc
@@ -252,7 +252,7 @@ is not given, is
 .LP
 Here are some examples of
 .B TZ
-values that directly specify the time zone rules; they use some of the
+values that directly specify the timezone; they use some of the
 extensions to POSIX.
 .TP
 .B EST5
@@ -321,9 +321,9 @@ may be used to separate the
 from the rest of the specification.
 .SH FILES
 .ta \w'/usr/share/zoneinfo/posixrules\0\0'u
-/usr/share/zoneinfo	time zone information directory
+/usr/share/zoneinfo	timezone information directory
 .br
-/usr/share/zoneinfo/localtime	local time zone file
+/usr/share/zoneinfo/localtime	local timezone file
 .br
 /usr/share/zoneinfo/posixrules	used with POSIX-style TZ's
 .br

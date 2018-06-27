@@ -61,10 +61,10 @@ title="Virtual Memory System">VMS</abbr></a>,
 <a href="https://www.oracle.com/database/index.html">Oracle Database</a>, and
 <a href="https://www.oracle.com/solaris">Oracle Solaris</a>.</p>
 <p>
-Each location in the database represents a region where all
-clocks keeping local time have agreed since 1970.
-Locations are identified by continent or ocean and then by the name of
-the location, which is typically the largest city within the region.
+Each main entry in the database represents a <dfn>timezone</dfn>
+for a set of civil-time clocks that have all agreed since 1970.
+Timezones are typically identified by continent or ocean and then by the
+name of the largest city within the region containing the clocks.
 For example, <code>America/New_York</code>
 represents most of the <abbr title="United States">US</abbr> eastern time zone;
 <code>America/Phoenix</code> represents most of Arizona, which
@@ -82,7 +82,7 @@ implementation set the <code><abbr>TZ</abbr></code>
 environment variable to the location's full name,
 e.g., <code><abbr>TZ</abbr>="America/New_York"</code>.</p>
 <p>
-Associated with each region is a history of offsets from
+Associated with each timezone is a history of offsets from
 <a href="https://en.wikipedia.org/wiki/Universal_Time">Universal
 Time</a> (<abbr>UT</abbr>), which is <a
 href="https://en.wikipedia.org/wiki/Greenwich_Mean_Time">Greenwich Mean
@@ -147,7 +147,7 @@ After obtaining the code and data files, see the
 <code>README</code> file for what to do next.
 The code lets you compile the <code><abbr>tz</abbr></code> source files into
 machine-readable binary files, one for each location. The binary files
-are in a special time zone information format (<dfn><abbr>TZif</abbr></dfn>).
+are in a special timezone information format (<dfn><abbr>TZif</abbr></dfn>).
 The code also lets
 you read a <abbr>TZif</abbr> file and interpret timestamps for that
 location.</p>
@@ -284,7 +284,7 @@ The <a href="https://www.ietf.org/mailman/listinfo/tzdist-bis">tzdist-bis
 mailing list</a> discusses two Internet drafts: <a
 id="TZDIST-Geolocate"
 href="https://tools.ietf.org/html/draft-murchison-tzdist-geolocate">TZDIST
-Geolocate Extension</a> lets a client determine its time zone region
+Geolocate Extension</a> lets a client determine its timezone
 from its geographic location using a <a
 href="https://tools.ietf.org/html/rfc5870">'geo' URI</a>, and
 <a href="https://tools.ietf.org/html/draft-murchison-tzdist-tzif">The
@@ -603,7 +603,7 @@ mean solar and standard time, highlighting areas such as western China
 where the two differ greatly. It's a bit out of date, unfortunately.</li>
 </ul>
 <h2 id="boundaries">Time zone boundaries</h2>
-<p>Geographical boundaries between time zone regions are available
+<p>Geographical boundaries between timezones are available
 from several <a href="https://en.wikipedia.org/wiki/Geolocation">geolocation</a>
 services and other sources.</p>
 <ul>
@@ -612,7 +612,7 @@ services and other sources.</p>
 <li><a href="https://github.com/evansiroky/timezone-boundary-builder">Timezone
 Boundary Builder</a> extracts
 <a href="https://www.openstreetmap.org">Open Street Map</a> data to build
-boundaries of <code><abbr>tz</abbr></code> regions.
+boundaries of <code><abbr>tzdb</abbr></code> timezones.
 Its code is freely available under the <abbr>MIT</abbr> license, and
 its data entries are freely available under the
 <a href="https://opendatacommons.org/licenses/odbl/">Open Data Commons
@@ -620,9 +620,9 @@ Open Database License</a>. The maps' borders appear to be quite accurate.</li>
 <li><a href="http://efele.net/maps/tz/"><abbr>TZ</abbr> timezones
 maps</a> contains <a
 href="https://en.wikipedia.org/wiki/Shapefile">shapefiles</a> of
-sets of <code><abbr>tz</abbr></code> regions. This includes
+sets of <code><abbr>tzdb</abbr></code> timezones. This includes
 <a href="http://efele.net/maps/tz/world/">tz_world</a>, a shapefile
-for all the world's regions. These maps are no longer maintained and
+for all the world's timezones. These maps are no longer maintained and
 are superseded by the Timezone Boundary Builder.</li>
 <li><a
 href="https://github.com/straup/whereonearth-timezone">Whereonearth-timezone</a>
@@ -633,7 +633,7 @@ the tz_world shapefiles with the
 dataset.</li>
 </ul></li>
 <li>Programmatic interfaces that map geographical coordinates via tz_world to
-<code><abbr>tz</abbr></code> regions include:
+<code><abbr>tzdb</abbr></code> timezones include:
 <ul>
 <li><a href="https://github.com/mj1856/GeoTimeZone">GeoTimeZone</a> is
 written in <a

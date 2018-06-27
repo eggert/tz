@@ -187,7 +187,7 @@ and
 are like their unsuffixed counterparts, except that they accept an
 extra initial
 .B zone
-argument specifying the time zone to be used for conversion.
+argument specifying the timezone to be used for conversion.
 If
 .B zone
 is null, UT is used; otherwise,
@@ -252,9 +252,9 @@ There is no guarantee that these fields and this variable will
 continue to exist in this form in future releases of this code.
 .SH FILES
 .ta \w'/usr/share/zoneinfo/posixrules\0\0'u
-/usr/share/zoneinfo	time zone information directory
+/usr/share/zoneinfo	timezone information directory
 .br
-/usr/share/zoneinfo/localtime	local time zone file
+/usr/share/zoneinfo/localtime	local timezone file
 .br
 /usr/share/zoneinfo/posixrules	used with POSIX-style TZ's
 .br
@@ -292,7 +292,7 @@ can be freed or overwritten by later calls to the functions
 .IR tzfree ,
 and
 .IR tzset ,
-if these functions affect the time zone information that specifies the
+if these functions affect the timezone information that specifies the
 abbreviation in question.
 The remaining functions and data are thread-safe.
 .PP

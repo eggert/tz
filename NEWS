@@ -64,6 +64,10 @@ Unreleased, experimental changes
     tzfile.5 now documents what time types apply before the first and
     after the last transition, if any.
 
+    Documentation now uses the spelling "timezone" for a TZ setting
+    that determines timestamp history, and "time zone" for a
+    geographic region currently sharing the same standard time.
+
     The name "TZif" is now used for the tz binary data format.
 
     tz-link.htm now mentions the A0 TimeZone Migration utilities.
@@ -607,7 +611,7 @@ Release 2017b - 2017-03-17 07:30:38 -0700
     The reference localtime implementation now falls back on the
     current US daylight-saving transition rules rather than the
     1987-2006 rules.  This fallback occurs only when (1) the TZ
-    environment variable's value has a name like "AST4ADT" that asks
+    environment variable has a value like "AST4ADT" that asks
     for daylight saving time but does not specify the rules, (2) there
     is no file by that name, and (3) the TZDEFRULES file cannot be
     loaded.  (Thanks to Tom Lane.)
@@ -1762,7 +1766,7 @@ Release 2014g - 2014-08-28 12:31:23 -0700
 
     Unless NETBSD_INSPIRED is defined to 0, the tz library now
     supplies functions for creating and using objects that represent
-    time zones. The new functions are tzalloc, tzfree, localtime_rz,
+    timezones. The new functions are tzalloc, tzfree, localtime_rz,
     mktime_z, and (if STD_INSPIRED is also defined) posix2time_z and
     time2posix_z.  They are intended for performance: for example,
     localtime_rz (unlike localtime_r) is trivially thread-safe without
@@ -1776,7 +1780,7 @@ Release 2014g - 2014-08-28 12:31:23 -0700
     TZDOBJS=zdump.o CHECK_TIME_T_ALTERNATIVES='.
 
     zdump now uses localtime_rz if available, as it's significantly faster,
-    and it can help zdump better diagnose invalid time zone names.
+    and it can help zdump better diagnose invalid timezone names.
     Define HAVE_LOCALTIME_RZ to 0 to suppress this.  HAVE_LOCALTIME_RZ
     defaults to 1 if NETBSD_INSPIRED && USE_LTZ.  When localtime_rz is
     not available, zdump now uses localtime_r and tzset if available,
@@ -1792,7 +1796,7 @@ Release 2014g - 2014-08-28 12:31:23 -0700
     invalid or outlandish input.
 
     The tz library no longer mishandles leap seconds on platforms with
-    unsigned time_t in time zones that lack ordinary transitions after 1970.
+    unsigned time_t in timezones that lack ordinary transitions after 1970.
 
     The tz code now attempts to infer TM_GMTOFF and TM_ZONE if not
     already defined, to make it easier to configure on common platforms.
@@ -3570,7 +3574,7 @@ Release 2005j - 2005-06-13 14:34:13 -0400
   These reflect changes to limit the length of time zone abbreviations
   and the characters used in those abbreviations.
 
-  There are also changes to handle POSIX-style "quoted" time zone
+  There are also changes to handle POSIX-style "quoted" timezone
   environment variables.
 
   The changes were circulated on the time zone mailing list; the only
@@ -3896,7 +3900,7 @@ Release 1999f - 1999-09-23 09:48:14 -0400
 Release 1999e - 1999-08-17 15:20:54 -0400
 
   changes circulated by Paul Eggert, although the change to handling
-  of DST-specifying time zone names has been commented out for now
+  of DST-specifying timezone names has been commented out for now
   (search for "XXX" in "localtime.c" for details).  These files also
   do not make any changes to the start of DST in Brazil.
 
@@ -4021,7 +4025,7 @@ Release code1997i-data1997k - 1997-12-29 09:53:41 -0500
 
 Release code1997h-data1997j - 1997-12-18 17:47:35 -0500
 
-  minor changes to put "TZif" at the start of each time zone information file
+  minor changes to put "TZif" at the start of each timezone information file
 
   a rule has also been added to the Makefile so you can
 	make zones
@@ -4531,8 +4535,8 @@ consisting of a single tarball tzdb-R.tar.lz with extra data.
 Release timestamps are taken from the release's commit (for newer,
 Git-based releases), from the newest file in the tarball (for older
 releases, where this info is available) or from the email announcing
-the release (if all else fails; these are marked with a time zone of
--0000 and an "is missing!" comment).
+the release (if all else fails; these are marked with a time zone
+abbreviation of -0000 and an "is missing!" comment).
 
 Earlier versions of the code and data were not announced on the tz
 list and are not summarized here.

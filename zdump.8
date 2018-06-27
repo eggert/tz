@@ -1,12 +1,12 @@
 .TH ZDUMP 8
 .SH NAME
-zdump \- time zone dumper
+zdump \- timezone dumper
 .SH SYNOPSIS
 .B zdump
 [
 .I option
 \&... ] [
-.I zonename
+.I timezone
 \&... ]
 .SH DESCRIPTION
 .ie '\(lq'' .ds lq \&"\"
@@ -21,7 +21,7 @@ zdump \- time zone dumper
 The
 .B zdump
 program prints the current time in each
-.I zonename
+.I timezone
 named on the command line.
 .SH OPTIONS
 .TP
@@ -34,16 +34,16 @@ Output short usage message and exit.
 .B \*-i
 .I "(This option is experimental: its behavior may change in future versions.)"
 Output a description of time intervals.  For each
-.I zonename
+.I timezone
 on the command line, output an interval-format description of the
-zone.  See
+timezone.  See
 .q "INTERVAL FORMAT"
 below.
 .TP
 .B \*-v
 Output a verbose description of time intervals.
 For each
-.I zonename
+.I timezone
 on the command line,
 print the time at the lowest possible time value,
 the time one day after the lowest possible time value,
@@ -88,7 +88,7 @@ Cut off interval output at the given time(s),
 given in decimal seconds since 1970-01-01 00:00:00
 Coordinated Universal Time (UTC).
 The
-.I zonename
+.I timezone
 determines whether the count includes leap seconds.
 As with
 .BR \*-c ,
@@ -102,7 +102,7 @@ then a line
 .q "TZ=\fIstring\fP"
 where
 .I string
-is a double-quoted string giving the zone name, a second line
+is a double-quoted string giving the timezone, a second line
 .q "\*- \*- \fIinterval\fP"
 describing the time interval before the first transition if any, and
 zero or more following lines

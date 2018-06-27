@@ -300,7 +300,7 @@ settzname(void)
 		return;
 	}
 	/*
-	** And to get the latest zone names into tzname. . .
+	** And to get the latest time zone abbreviations into tzname. . .
 	*/
 	for (i = 0; i < sp->typecnt; ++i) {
 		register const struct ttinfo * const	ttisp = &sp->ttis[i];
@@ -774,9 +774,9 @@ static const int	year_lengths[2] = {
 };
 
 /*
-** Given a pointer into a time zone string, scan until a character that is not
-** a valid character in a zone name is found. Return a pointer to that
-** character.
+** Given a pointer into a timezone string, scan until a character that is not
+** a valid character in a time zone abbreviation is found.
+** Return a pointer to that character.
 */
 
 static const char *
@@ -791,8 +791,9 @@ getzname(register const char *strp)
 }
 
 /*
-** Given a pointer into an extended time zone string, scan until the ending
-** delimiter of the zone name is located. Return a pointer to the delimiter.
+** Given a pointer into an extended timezone string, scan until the ending
+** delimiter of the time zone abbreviation is located.
+** Return a pointer to the delimiter.
 **
 ** As with getzname above, the legal character set is actually quite
 ** restricted, with other characters producing undefined results.
@@ -810,7 +811,7 @@ getqzname(register const char *strp, const int delim)
 }
 
 /*
-** Given a pointer into a time zone string, extract a number from that string.
+** Given a pointer into a timezone string, extract a number from that string.
 ** Check that the number is within a specified range; if it is not, return
 ** NULL.
 ** Otherwise, return a pointer to the first character not part of the number.
@@ -838,7 +839,7 @@ getnum(register const char *strp, int *const nump, const int min, const int max)
 }
 
 /*
-** Given a pointer into a time zone string, extract a number of seconds,
+** Given a pointer into a timezone string, extract a number of seconds,
 ** in hh[:mm[:ss]] form, from the string.
 ** If any error occurs, return NULL.
 ** Otherwise, return a pointer to the first character not part of the number
@@ -879,7 +880,7 @@ getsecs(register const char *strp, int_fast32_t *const secsp)
 }
 
 /*
-** Given a pointer into a time zone string, extract an offset, in
+** Given a pointer into a timezone string, extract an offset, in
 ** [+-]hh[:mm[:ss]] form, from the string.
 ** If any error occurs, return NULL.
 ** Otherwise, return a pointer to the first character not part of the time.
@@ -904,7 +905,7 @@ getoffset(register const char *strp, int_fast32_t *const offsetp)
 }
 
 /*
-** Given a pointer into a time zone string, extract a rule in the form
+** Given a pointer into a timezone string, extract a rule in the form
 ** date[/time]. See POSIX section 8 for the format of "date" and "time".
 ** If a valid rule is not found, return NULL.
 ** Otherwise, return a pointer to the first character not part of the rule.
@@ -1106,7 +1107,7 @@ tzparse(const char *name, struct state *sp, bool lastditch)
 		} else {
 			dstname = name;
 			name = getzname(name);
-			dstlen = name - dstname; /* length of DST zone name */
+			dstlen = name - dstname; /* length of DST abbr. */
 		}
 		if (!dstlen)
 		  return false;
@@ -1450,7 +1451,7 @@ tzfree(timezone_t sp)
 **
 ** If successful and SETNAME is nonzero,
 ** set the applicable parts of tzname, timezone and altzone;
-** however, it's OK to omit this step if the time zone is POSIX-compatible,
+** however, it's OK to omit this step if the timezone is POSIX-compatible,
 ** since in that case tzset should have already done this step correctly.
 ** SETNAME's type is intfast32_t for compatibility with gmtsub,
 ** but it is actually a boolean and its value should be 0 or 1.

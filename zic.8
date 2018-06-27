@@ -1,6 +1,6 @@
 .TH ZIC 8
 .SH NAME
-zic \- time zone compiler
+zic \- timezone compiler
 .SH SYNOPSIS
 .B zic
 [
@@ -50,7 +50,9 @@ Create time conversion information files in the named directory rather than
 in the standard directory named below.
 .TP
 .BI "\*-l " timezone
-Use the given time zone as local time.
+Use
+.I timezone
+as local time.
 .B zic
 will act as if the input contained a link line of the form
 .sp
@@ -58,8 +60,10 @@ will act as if the input contained a link line of the form
 Link	\fItimezone\fP		localtime
 .TP
 .BI "\*-p " timezone
-Use the given time zone's rules when handling POSIX-format
-time zone environment variables.
+Use
+.IR timezone 's
+rules when handling POSIX-format
+timezone environment variables.
 .B zic
 will act as if the input contained a link line of the form
 .sp
@@ -97,7 +101,7 @@ Pre-2004 versions of
 prohibit this.
 .PP
 The output file does not contain all the information about the
-long-term future of a zone, because the future cannot be summarized as
+long-term future of a timezone, because the future cannot be summarized as
 an extended POSIX TZ string.  For example, as of 2013 this problem
 occurs for Iran's daylight-saving rules for the predicted future, as
 these rules are based on the Iranian calendar, which cannot be
@@ -362,9 +366,9 @@ Zone	Asia/Amman	2:00	Jordan	EE%sT	2017 Oct 27 01:00
 The fields that make up a zone line are:
 .TP "\w'UTOFF'u"
 .B NAME
-The name of the time zone.
+The name of the timezone.
 This is the name used in creating the time conversion information file for the
-zone.
+timezone.
 It should not contain a file name component
 .q ".\&"
 or
@@ -373,7 +377,7 @@ a file name component is a maximal substring that does not contain
 .q "/" .
 .TP
 .B UTOFF
-The amount of time to add to UT to get standard time in this zone.
+The amount of time to add to UT to get standard time.
 This field has the same format as the
 .B AT
 and
@@ -382,18 +386,18 @@ fields of rule lines;
 begin the field with a minus sign if time must be subtracted from UT.
 .TP
 .B RULES
-The name of the rules that apply in the time zone or,
+The name of the rules that apply in the timezone or,
 alternatively, a field in the same format as a rule-line SAVE column,
 giving of the amount of time to be added to local standard time
 effect, and whether the resulting time is standard or daylight saving.
 If this field is
 .B \*-
-then standard time always applies in the time zone.
+then standard time always applies.
 When an amount of time is given, only the sum of standard time and
 this amount matters.
 .TP
 .B FORMAT
-The format for time zone abbreviations in this time zone.
+The format for time zone abbreviations.
 The pair of characters
 .B %s
 is used to show where the
@@ -556,7 +560,7 @@ Link	Europe/Zurich	Europe/Vaduz
 .sp
 .in
 .fi
-In this example, the zone is named Europe/Zurich but it has an alias
+In this example, the timezone is named Europe/Zurich but it has an alias
 as Europe/Vaduz.  This example says that Zurich was 34 minutes and 8
 seconds east of UT until 1853-07-16 at 00:00, when the legal offset
 was changed to 7\(de\|26\(fm\|22.50\(sd; although this works out to
@@ -580,16 +584,16 @@ For purposes of display,
 and
 .q "BMT"
 were initially used, respectively.  Since
-Swiss rules and later EU rules were applied, the display name for the
-time zone has been CET for standard time and CEST for daylight saving
+Swiss rules and later EU rules were applied, the time zone abbreviation
+has been CET for standard time and CEST for daylight saving
 time.
 .SH FILES
 .TP
 .I /etc/localtime
-Default local time zone file.
+Default local timezone file.
 .TP
 .I /usr/share/zoneinfo
-Default time zone information directory.
+Default timezone information directory.
 .SH NOTES
 For areas with more than two types of local time,
 you may need to use local standard time in the
@@ -598,7 +602,7 @@ field of the earliest transition time's rule to ensure that
 the earliest transition time recorded in the compiled file is correct.
 .PP
 If,
-for a particular zone,
+for a particular timezone,
 a clock advance caused by the start of daylight saving
 coincides with and is equal to
 a clock retreat caused by a change in UT offset,

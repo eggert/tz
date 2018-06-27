@@ -382,7 +382,7 @@ static void
 usage(FILE * const stream, const int status)
 {
 	fprintf(stream,
-_("%s: usage: %s OPTIONS ZONENAME ...\n"
+_("%s: usage: %s OPTIONS TIMEZONE ...\n"
   "Options include:\n"
   "  -c [L,]U   Start at year L (default -500), end before year U (default 2500)\n"
   "  -t [L,]U   Start at time L, end before time U (in seconds since 1970)\n"

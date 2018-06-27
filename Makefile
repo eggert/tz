@@ -19,9 +19,9 @@ BUGEMAIL=	tz@iana.org
 #	DATAFORM=	rearguard
 DATAFORM=		main
 
-# Change the line below for your time zone (after finding the zone you want in
-# the time zone files, or adding it to a time zone file).
-# Alternatively, if you discover you've got the wrong time zone, you can just
+# Change the line below for your timezone (after finding the one you want in
+# one of the $(TDATA) source files, or adding it to a source file).
+# Alternatively, if you discover you've got the wrong timezone, you can just
 #	zic -l rightzone
 # to correct things.
 # Use the command
@@ -31,14 +31,14 @@ DATAFORM=		main
 LOCALTIME=	GMT
 
 # If you want something other than Eastern United States time as a template
-# for handling POSIX-style time zone environment variables,
-# change the line below (after finding the zone you want in the
-# time zone files, or adding it to a time zone file).
+# for handling POSIX-style timezone environment variables,
+# change the line below (after finding the timezone you want in the
+# one of the $(TDATA) source files, or adding it to a source file).
 # When a POSIX-style environment variable is handled, the rules in the
 # template file are used to determine "spring forward" and "fall back" days and
 # times; the environment variable itself specifies UT offsets of standard and
 # daylight saving time.
-# Alternatively, if you discover you've got the wrong time zone, you can just
+# Alternatively, if you discover you've got the wrong timezone, you can just
 #	zic -p rightzone
 # to correct things.
 # Use the command
@@ -75,7 +75,7 @@ DESTDIR =
 # TOPDIR should be empty or an absolute name unless you're just testing.
 TOPDIR =
 
-# The default local time zone is taken from the file TZDEFAULT.
+# The default local timezone is taken from the file TZDEFAULT.
 TZDEFAULT = $(TOPDIR)/etc/localtime
 
 # The subdirectory containing installed program and data files, and
@@ -84,7 +84,7 @@ TZDEFAULT = $(TOPDIR)/etc/localtime
 USRDIR = usr
 USRSHAREDIR = $(USRDIR)/share
 
-# "Compiled" time zone information is placed in the "TZDIR" directory
+# "Compiled" timezone information is placed in the "TZDIR" directory
 # (and subdirectories).
 # TZDIR_BASENAME should not contain "/" and should not be ".", ".." or empty.
 TZDIR_BASENAME=	zoneinfo
@@ -298,7 +298,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # "tzsetwall", "offtime", "timelocal", "timegm", "timeoff",
 # "posix2time", and "time2posix" to be added to the time conversion library.
 # "tzsetwall" is like "tzset" except that it arranges for local wall clock
-# time (rather than the time specified in the TZ environment variable)
+# time (rather than the timezone specified in the TZ environment variable)
 # to be used.
 # "offtime" is like "gmtime" except that it accepts a second (long) argument
 # that gives an offset to add to the time_t when converting it.
@@ -321,7 +321,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # "posix2time_z" and "time2posix_z" are added as well.
 # The functions ending in "_z" (or "_rz") are like their unsuffixed
 # (or suffixed-by-"_r") counterparts, except with an extra first
-# argument of opaque type timezone_t that specifies the time zone.
+# argument of opaque type timezone_t that specifies the timezone.
 # "tzalloc" allocates a timezone_t value, and "tzfree" frees it.
 #
 # If you want to allocate state structures in localtime, add

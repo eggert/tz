@@ -2,6 +2,15 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+  Fiji ends DST 2019-01-13, not 2019-01-20.
+
+  Changes to future timestamps
+
+    Fiji ends DST 2018-01-13 instead of the 2018-01-20 previously
+    predicted.  (Thanks to Raymond Kumar.)  Adjust future predictions
+    accordingly.
+
   Changes to past timestamps
 
     The 2018-05-05 North Korea 30-minute time zone change took place

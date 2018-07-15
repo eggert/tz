@@ -366,9 +366,10 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # http://www.fijitimes.com/government-approves-2018-daylight-saving/
 # ... The daylight saving period will end at 3am on Sunday January 13, 2019.
 #
-# From Paul Eggert (2018-07-12):
+# From Paul Eggert (2018-07-15):
 # For now, guess DST from 02:00 the first Sunday in November to 03:00
-# the first Sunday on or after January 13.  Although ad hoc, it matches
+# the first Sunday on or after January 13.  January transitions reportedly
+# depend on when school terms start.  Although the guess is ad hoc, it matches
 # transitions since late 2014 and seems more likely to match future
 # practice than guessing no DST.
 

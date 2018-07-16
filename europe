@@ -2429,6 +2429,20 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # administratively part of Sakhalin oblast', they appear to have
 # remained on UTC+11 along with Magadan.
 
+# From Marat Nigametzianov (2018-07-16):
+# this is link to order from 1956 about timezone in USSR
+# http://astro.uni-altai.ru/~orion/blog/2011/11/novyie-granitsyi-chasovyih-poyasov-v-sssr/
+# From Paul Eggert (2018-07-16):
+# Perhaps someone could translate the above-mentioned link and use it
+# to correct our data for the ex-Soviet Union.  It cites the following:
+# «Поясное время и новые границы часовых поясов» / сост. П.Н. Долгов,
+# отв. ред. Г.Д. Бурдун - М: Комитет стандартов, мер и измерительных
+# приборов при Совете Министров СССР, Междуведомственная комиссия
+# единой службы времени, 1956 г.
+# This book looks like it would be a helpful resource for the Soviet
+# Union through 1956.  Although a copy was in the Scientific Library
+# of Tomsk State University, I have not been able to track down a copy nearby.
+
 # From Tim Parenti (2014-07-06):
 # The comments detailing the coverage of each Russian zone are meant to assist
 # with maintenance only and represent our best guesses as to which regions
@@ -2438,9 +2452,6 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # and are used for convenience only; no guarantees are made regarding their
 # future stability.  ISO 3166-2:RU codes are also listed for first-level
 # divisions where available.
-
-# Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-
 
 # From Tim Parenti (2014-07-03):
 # Europe/Kaliningrad covers...

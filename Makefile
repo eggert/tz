@@ -416,9 +416,9 @@ SAFE_CHARSET=	$(SAFE_CHARSET1)$(SAFE_CHARSET2)$(SAFE_CHARSET3)
 SAFE_CHAR=	'[]'$(SAFE_CHARSET)'-]'
 
 # Non-ASCII non-letters that OK_CHAR allows, as these characters are
-# useful in commentary.  XEmacs 21.5.34 displays them correctly,
-# presumably because they are Latin-1.
-UNUSUAL_OK_CHARSET= °±½¾×
+# useful in commentary.  These all came from Latin-1, and so are likely
+# to be displayable even in editors with limited character sets.
+UNUSUAL_OK_CHARSET= «°±»½¾×
 
 # OK_CHAR matches any character allowed in the distributed files.
 # This is the same as SAFE_CHAR, except that UNUSUAL_OK_CHARSET and

@@ -1,11 +1,10 @@
 #!/bin/bash
+# Ask the user about the time zone, and output the resulting TZ value to stdout.
+# Interact with the user via stderr and stdin.
 
 PKGVERSION='(tzcode) '
 TZVERSION=see_Makefile
 REPORT_BUGS_TO=tz@iana.org
-
-# Ask the user about the time zone, and output the resulting TZ value to stdout.
-# Interact with the user via stderr and stdin.
 
 # Contributed by Paul Eggert.  This file is in the public domain.
 

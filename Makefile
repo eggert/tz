@@ -1,3 +1,5 @@
+# Make and install tzdb code and data.
+
 # This file is in the public domain, so clarified as of
 # 2009-05-17 by Arthur David Olson.
 

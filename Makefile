@@ -367,6 +367,9 @@ ZFLAGS=
 ZIC_INSTALL=	$(ZIC) -d '$(DESTDIR)$(TZDIR)' $(LEAPSECONDS)
 
 # The name of a Posix-compliant 'awk' on your system.
+# Older 'mawk' versions, such as the 'mawk' in Ubuntu 16.04, might dump core;
+# on Ubuntu you can work around this with
+#	AWK=		gawk
 AWK=		awk
 
 # The full path name of a Posix-compliant shell, preferably one that supports

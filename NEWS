@@ -92,6 +92,12 @@ Unreleased, experimental changes
     tzdata.zi is now more stable from release to release.  (Problem
     noted by Tom Lane.)  It is also a bit shorter.
 
+    tzdata.zi's version comment now contains information about which
+    data format was selected, and whether backward, backzone and
+    pacificnew were used.  (Problem noted by Lester Caine.)  If the
+    Makefile defaults were used, no information is appended to the
+    version comment, for backward compatibility.
+
 
 Release 2018e - 2018-05-01 23:42:51 -0700
 

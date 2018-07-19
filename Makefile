@@ -571,14 +571,20 @@ version:	$(VERSION_DEPS)
 		printf '%s\n' "$$V" >$@.out
 		mv $@.out $@
 
-# These files can be tailored by setting BACKWARD, PACKRATDATA, etc.
+# These files can be tailored by setting BACKWARD and PACKRATDATA.
 vanguard.zi main.zi rearguard.zi: $(DSTDATA_ZI_DEPS)
 		$(AWK) -v DATAFORM=`expr $@ : '\(.*\).zi'` -f ziguard.awk \
 		  $(TDATA) $(PACKRATDATA) >$@.out
 		mv $@.out $@
+# This file has a version comment that attempts to capture any tailoring
+# via BACKWARD, DATAFORM, and PACKRATDATA.
 tzdata.zi:	$(DATAFORM).zi version
 		version=`sed 1q version` && \
-		  LC_ALL=C $(AWK) -v version="$$version" -f zishrink.awk \
+		  LC_ALL=C $(AWK) \
+		    -v backlinks='$(BACKWARD) $(PACKRATDATA)' \
+		    -v dataform='$(DATAFORM)' \
+		    -v version="$$version" \
+		    -f zishrink.awk \
 		    $(DATAFORM).zi >$@.out
 		mv $@.out $@
 

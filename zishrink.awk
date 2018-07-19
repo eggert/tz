@@ -267,6 +267,21 @@ function output_saved_lines(i)
 }
 
 BEGIN {
+  if (dataform != "main") {
+    version = version "," dataform
+  }
+  not_backward = ",!backward"
+  nback = split(backlinks, back)
+  for (i = 1; i <= nback; i++) {
+    if (back[i] != "-") {
+      if (back[i] == "backward") {
+	not_backward = ""
+      } else {
+	version = version "," back[i]
+      }
+    }
+  }
+  version = version not_backward
   print "# version", version
   print "# This zic input file is in the public domain."
   prehash_rule_names()

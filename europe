@@ -2432,6 +2432,7 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # From Marat Nigametzianov (2018-07-16):
 # this is link to order from 1956 about timezone in USSR
 # http://astro.uni-altai.ru/~orion/blog/2011/11/novyie-granitsyi-chasovyih-poyasov-v-sssr/
+#
 # From Paul Eggert (2018-07-16):
 # Perhaps someone could translate the above-mentioned link and use it
 # to correct our data for the ex-Soviet Union.  It cites the following:
@@ -2442,6 +2443,18 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # This book looks like it would be a helpful resource for the Soviet
 # Union through 1956.  Although a copy was in the Scientific Library
 # of Tomsk State University, I have not been able to track down a copy nearby.
+#
+# From Stepan Golosunov (2018-07-21):
+# http://astro.uni-altai.ru/~orion/blog/2015/05/center-reforma-ischisleniya-vremeni-br-na-territorii-sssr-v-1957-godu-center/
+# says that the 1956 decision to change time belts' borders was not
+# implemented as planned in 1956 and the change happened in 1957.
+# There is also the problem that actual time zones were different from
+# the official time belts (and from many time belts' maps) as there were
+# numerous exceptions to application of time belt rules.  For example,
+# https://ru.wikipedia.org/wiki/Московское_время#Перемещение_границы_применения_московского_времени_на_восток
+# says that by 1962 there were many regions in the 3rd time belt that
+# were on Moscow time, referring to a 1962 map.  By 1989 number of such
+# exceptions grew considerably. 
 
 # From Tim Parenti (2014-07-06):
 # The comments detailing the coverage of each Russian zone are meant to assist

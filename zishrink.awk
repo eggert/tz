@@ -267,23 +267,52 @@ function output_saved_lines(i)
 }
 
 BEGIN {
+  # Files that the output normally depends on.
+  default_dep["africa"] = 1
+  default_dep["antarctica"] = 1
+  default_dep["asia"] = 1
+  default_dep["australasia"] = 1
+  default_dep["backward"] = 1
+  default_dep["etcetera"] = 1
+  default_dep["europe"] = 1
+  default_dep["factory"] = 1
+  default_dep["northamerica"] = 1
+  default_dep["southamerica"] = 1
+  default_dep["systemv"] = 1
+  default_dep["ziguard.awk"] = 1
+  default_dep["zishrink.awk"] = 1
+
+  # Output a version string from 'version' and related configuration variables
+  # supported by tzdb's Makefile.  If you change the makefile or any other files
+  # that affect the output of this script, you should append '-SOMETHING'
+  # to the contents of 'version', where SOMETHING identifies what was changed.
+
   if (dataform != "main") {
-    version = version "," dataform
+    version = version ",dataform=" dataform
   }
-  not_backward = ",!backward"
-  nback = split(backlinks, back)
-  for (i = 1; i <= nback; i++) {
-    if (back[i] != "-") {
-      if (back[i] == "backward") {
-	not_backward = ""
-      } else {
-	version = version "," back[i]
-      }
+  if (redo != "posix_right") {
+    version = version ",redo=" redo
+  }
+  ndeps = split(deps, dep)
+  ddeps = ""
+  for (i = 1; i <= ndeps; i++) {
+    if (default_dep[dep[i]]) {
+      default_dep[dep[i]]++
+    } else {
+      ddeps = ddeps "," dep[i]
     }
   }
-  version = version not_backward
+  for (d in default_dep) {
+    if (default_dep[d] == 1) {
+      ddeps = ddeps ",!" d
+    }
+  }
+  if (ddeps) {
+    version = version ",ddeps=(" substr(ddeps, 2) ")"
+  }
   print "# version", version
   print "# This zic input file is in the public domain."
+
   prehash_rule_names()
 }
 

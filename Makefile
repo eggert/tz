@@ -577,12 +577,13 @@ vanguard.zi main.zi rearguard.zi: $(DSTDATA_ZI_DEPS)
 		  $(TDATA) $(PACKRATDATA) >$@.out
 		mv $@.out $@
 # This file has a version comment that attempts to capture any tailoring
-# via BACKWARD, DATAFORM, and PACKRATDATA.
-tzdata.zi:	$(DATAFORM).zi version
+# via BACKWARD, DATAFORM, PACKRATDATA, and REDO.
+tzdata.zi:	$(DATAFORM).zi version zishrink.awk
 		version=`sed 1q version` && \
 		  LC_ALL=C $(AWK) \
-		    -v backlinks='$(BACKWARD) $(PACKRATDATA)' \
 		    -v dataform='$(DATAFORM)' \
+		    -v deps='$(DSTDATA_ZI_DEPS) zishrink.awk' \
+		    -v redo='$(REDO)' \
 		    -v version="$$version" \
 		    -f zishrink.awk \
 		    $(DATAFORM).zi >$@.out

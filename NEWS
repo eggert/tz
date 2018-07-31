@@ -92,14 +92,14 @@ Unreleased, experimental changes
     tzdata.zi is now more stable from release to release.  (Problem
     noted by Tom Lane.)  It is also a bit shorter.
 
-    tzdata.zi's version comment now contains information about which
-    data format was selected, which input files were used, and how
-    leap seconds are treated.  (Problems noted by Lester Caine and
-    Brian Inglis.)  If the Makefile defaults are used, no text is
-    appended to the version comment, for backward compatibility.
-    A redistributor intending to alter its copy of the files should
-    also append "-SOMETHING" to the 'version' file's first line, where
-    "SOMETHING" identifies what was changed.
+    tzdata.zi now can contain comment lines documenting configuration
+    information, such as which data format was selected, which input
+    files were used, and how leap seconds are treated.  (Problems
+    noted by Lester Caine and Brian Inglis.)  If the Makefile defaults
+    are used these comment lines are absent, for backward
+    compatibility.  A redistributor intending to alter its copy of the
+    files should also append "-LABEL" to the 'version' file's first
+    line, where "LABEL" identifies the redistributor's change.
 
 
 Release 2018e - 2018-05-01 23:42:51 -0700

@@ -287,30 +287,30 @@ BEGIN {
   # that affect the output of this script, you should append '-SOMETHING'
   # to the contents of 'version', where SOMETHING identifies what was changed.
 
-  if (dataform != "main") {
-    version = version ",dataform=" dataform
-  }
-  if (redo != "posix_right") {
-    version = version ",redo=" redo
-  }
   ndeps = split(deps, dep)
   ddeps = ""
   for (i = 1; i <= ndeps; i++) {
     if (default_dep[dep[i]]) {
       default_dep[dep[i]]++
     } else {
-      ddeps = ddeps "," dep[i]
+      ddeps = ddeps " " dep[i]
     }
   }
   for (d in default_dep) {
     if (default_dep[d] == 1) {
-      ddeps = ddeps ",!" d
+      ddeps = ddeps " !" d
     }
   }
-  if (ddeps) {
-    version = version ",ddeps=(" substr(ddeps, 2) ")"
-  }
   print "# version", version
+  if (dataform != "main") {
+    print "# dataform", dataform
+  }
+  if (redo != "posix_right") {
+    print "# redo " redo
+  }
+  if (ddeps) {
+    print "# ddeps" ddeps
+  }
   print "# This zic input file is in the public domain."
 
   prehash_rule_names()

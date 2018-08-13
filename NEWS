@@ -4,12 +4,19 @@ Unreleased, experimental changes
 
   Briefly:
   Fiji ends DST 2019-01-13, not 2019-01-20.
+  Most of Chile changes DST dates, effective 2019-04-06.
 
   Changes to future timestamps
 
     Fiji ends DST 2019-01-13 instead of the 2019-01-20 previously
     predicted.  (Thanks to Raymond Kumar.)  Adjust future predictions
     accordingly.
+
+    Most of Chile will end DST on the first Saturday in April at 24:00 mainland
+    time, and resume DST on the first Saturday in September at 24:00 mainland
+    time.  The changes are effective from 2019-04-06, and do not affect the
+    Magallanes region modeled by America/Punta_Arenas.  (Thanks to Juan Correa
+    and Tim Parenti.)  Adjust future predictions accordingly.
 
   Changes to past timestamps
 

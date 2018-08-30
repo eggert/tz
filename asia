@@ -2939,14 +2939,33 @@ Link Asia/Qatar Asia/Bahrain
 
 # Saudi Arabia
 #
-# From Paul Eggert (2014-07-15):
+# From Paul Eggert (2018-08-29):
 # Time in Saudi Arabia and other countries in the Arabian peninsula was not
-# standardized until relatively recently; we don't know when, and possibly it
+# standardized until 1968 or so; we don't know exactly when, and possibly it
 # has never been made official.  Richard P Hunt, in "Islam city yielding to
 # modern times", New York Times (1961-04-09), p 20, wrote that only airlines
 # observed standard time, and that people in Jeddah mostly observed quasi-solar
 # time, doing so by setting their watches at sunrise to 6 o'clock (or to 12
 # o'clock for "Arab" time).
+#
+# Timekeeping differed depending on who you were and which part of Saudi
+# Arabia you were in.  In 1969, Elias Antar wrote that although a common
+# practice had been to set one's watch to 12:00 (i.e., midnight) at sunset -
+# which meant that the time on one side of a mountain could differ greatly from
+# the time on the other side - many foreigners set their watches to 6pm
+# instead, while airlines instead used UTC +03 (except in Dhahran, where they
+# used UTC +04), Aramco used UTC +03 with DST, and the Trans-Arabian Pipe Line
+# Company used Aramco time in eastern Saudi Arabia and airline time in western.
+# (The American Military Aid Advisory Group used plain UTC.)  Antar writes,
+# "A man named Higgins, so the story goes, used to run a local power
+# station. One day, the whole thing became too much for Higgins and he
+# assembled his staff and laid down the law. 'I've had enough of this,' he
+# shrieked. 'It is now 12 o'clock Higgins Time, and from now on this station is
+# going to run on Higgins Time.' And so, until last year, it did."  See:
+# Antar E. Dinner at When? Saudi Aramco World, 1969 March/April. 2-3.
+# http://archive.aramcoworld.com/issue/196902/dinner.at.when.htm
+# newspapers.com says a similar story about Higgins was published in the Port
+# Angeles (WA) Evening News, 1965-03-10, page 5, but I lack access to the text.
 #
 # The TZ database cannot represent quasi-solar time; airline time is the best
 # we can do.  The 1946 foreign air news digest of the U.S. Civil Aeronautics
@@ -2957,7 +2976,8 @@ Link Asia/Qatar Asia/Bahrain
 #
 # Shanks & Pottenger also state that until 1968-05-01 Saudi Arabia had two
 # time zones; the other zone, at UT +04, was in the far eastern part of
-# the country.  Ignore this, as it's before our 1970 cutoff.
+# the country.  Presumably this is documenting airline time.  Ignore this,
+# as it's before our 1970 cutoff.
 #
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Riyadh	3:06:52 -	LMT	1947 Mar 14

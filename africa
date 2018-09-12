@@ -366,6 +366,13 @@ Zone	Africa/Cairo	2:05:09 -	LMT	1900 Oct
 # Eritrea
 # Ethiopia
 # See Africa/Nairobi.
+#
+# Unfortunately tzdb records only Western clock time in use in Ethiopia,
+# as the tzdb format is not up to properly recording a common Ethiopian
+# timekeeping practice that is based on solar time.  See:
+# Mortada D. If you have a meeting in Ethiopia, you'd better double
+# check the time. PRI's The World. 2015-01-30 15:15 -05.
+# https://www.pri.org/stories/2015-01-30/if-you-have-meeting-ethiopia-you-better-double-check-time
 
 # Gabon
 # See Africa/Lagos.

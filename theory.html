@@ -691,17 +691,29 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
     intent is recorded at best only in commentary.
   </li>
   <li>
-    The <code><abbr>tz</abbr></code> database models pre-standard time
+    The <code><abbr>tz</abbr></code> database models time
     using the <a
     href="https://en.wikipedia.org/wiki/Proleptic_Gregorian_calendar">proleptic
-    Gregorian calendar</a> and local mean time, but many people used
-    other calendars and other timescales.
+    Gregorian calendar</a> with days containing 24 equal-length hours
+    numbered 00 through 23, except when clock transitions occur.
+    Pre-standard time is modeled as local mean time.
+    However, historically many people used other calendars and other timescales.
     For example, the Roman Empire used
     the <a href="https://en.wikipedia.org/wiki/Julian_calendar">Julian
     calendar</a>,
     and <a href="https://en.wikipedia.org/wiki/Roman_timekeeping">Roman
     timekeeping</a> had twelve varying-length daytime hours with a
     non-hour-based system at night.
+    And even today, some local practices diverge from the Gregorian
+    calendar with 24-hour days. These divergences range from
+    relatively minor, such as Japanese bars giving times like "24:30" for the
+    wee hours of the morning, to more-significant differences such as <a
+    href="https://www.pri.org/stories/2015-01-30/if-you-have-meeting-ethiopia-you-better-double-check-time">the
+    east African practice of starting the day at dawn</a>, renumbering
+    the Western 06:00 to be 12:00. These practices are largely outside
+    the scope of the <code><abbr>tz</abbr></code> code and data, which
+    provide only limited support for date and time localization
+    such as that required by POSIX.
   </li>
   <li>
     Early clocks were less reliable, and data entries do not represent

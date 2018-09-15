@@ -713,7 +713,10 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
     the Western 06:00 to be 12:00. These practices are largely outside
     the scope of the <code><abbr>tz</abbr></code> code and data, which
     provide only limited support for date and time localization
-    such as that required by POSIX.
+    such as that required by POSIX. Sometimes a different time zone
+    can do the trick; for example, in Kenya a <code>TZ</code> setting
+    like <code><-03>3</code> or <code>America/Cayenne</code> starts
+    the day six hours later than <code>Africa/Nairobi</code> does.
   </li>
   <li>
     Early clocks were less reliable, and data entries do not represent

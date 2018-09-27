@@ -33,6 +33,11 @@ Unreleased, experimental changes
     observed DST in 1942/79, not 1961/80, and there were several
     errors for transition times and dates.  (Thanks to P Chan.)
 
+    The 1948-1951 fallback transitions in Japan were at 25:00 on
+    September's second Saturday, not at 24:00.  (Thanks to Phake Nick.)
+    zic turns this into 01:00 on the day after September's second
+    Saturday, which is the best that POSIX or C platforms can do.
+
   Changes to time zone abbreviations
 
     Use "PST" and "PDT" for Philippine time.  (Thanks to Paul Goyette.)

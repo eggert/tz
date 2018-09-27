@@ -1610,9 +1610,29 @@ Zone	Asia/Jerusalem	2:20:54 -	LMT	1880
 # http://www.shugiin.go.jp/internet/itdb_housei.nsf/html/houritsu/00719500331039.htm
 # ... In summary, it is written as follows.  From 24:00 on the first Saturday
 # in May, until 0:00 on the day after the second Saturday in September.
+
+# From Phake Nick (2018-09-27):
+# [T]he webpage authored by National Astronomical Observatory of Japan
+# https://eco.mtk.nao.ac.jp/koyomi/wiki/BBFEB9EF2FB2C6BBFEB9EF.html
+# ... mentioned that using Showa 23 (year 1948) as example, 13pm of September
+# 11 in summer time will equal to 0am of September 12 in standard time.
+# It cited a document issued by the Liaison Office which briefly existed
+# during the postwar period of Japan, where the detail on implementation
+# of the summer time is described in the document.
+# https://eco.mtk.nao.ac.jp/koyomi/wiki/BBFEB9EF2FB2C6BBFEB9EFB2C6BBFEB9EFA4CEBCC2BBDCA4CBA4C4A4A4A4C6.pdf
+# The text in the document do instruct a fall back to occur at
+# September 11, 13pm in summer time, while ordinary citizens can
+# change the clock before they sleep.
+#
+# From Paul Eggert (2018-09-27):
+# This instruction is equivalent to "Sat>=8 25:00", so use that.  zic treats
+# it like "Sun>=9 01:00", which is not quite the same but is the best we can
+# do in any POSIX or C platform.  The "25:00" assumes zic from 2007 or later,
+# which should be safe now.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Japan	1948	only	-	May	Sat>=1	24:00	1:00	D
-Rule	Japan	1948	1951	-	Sep	Sun>=9	 0:00	0	S
+Rule	Japan	1948	1951	-	Sep	Sat>=8	25:00	0	S
 Rule	Japan	1949	only	-	Apr	Sat>=1	24:00	1:00	D
 Rule	Japan	1950	1951	-	May	Sat>=1	24:00	1:00	D
 

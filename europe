@@ -2733,6 +2733,17 @@ Zone Europe/Astrakhan	 3:12:12 -	LMT	1924 May
 # 34	RU-VGG	Volgograd Oblast
 # The 1988 transition is from USSR act No. 5 (1988-01-04).
 
+# From Alexander Fetisov (2018-09-20):
+# Volgograd region in southern Russia (Europe/Volgograd) change
+# timezone from UTC+3 to UTC+4 from 28oct2018.
+# http://sozd.parliament.gov.ru/bill/452878-7
+#
+# From Stepan Golosunov (2018-09-29):
+# According to <http://sozd.parliament.gov.ru/bill/452878-7> the bill is
+# already approved by the State Duma and now is in the Federation Council....
+# The bill will likely be approved by the Federation Council on 2018-10-03,
+# then signed by the President and published into law on 2018-10-08 ± few days.
+
 Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 			 3:00	-	+03	1930 Jun 21
 			 4:00	-	+04	1961 Nov 11
@@ -2741,7 +2752,8 @@ Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 			 4:00	-	+04	1992 Mar 29  2:00s
 			 3:00	Russia	+03/+04	2011 Mar 27  2:00s
 			 4:00	-	+04	2014 Oct 26  2:00s
-			 3:00	-	+03
+			 3:00	-	+03	2018 Oct 28  2:00s
+			 4:00	-	+04
 
 # From Paul Eggert (2016-11-11):
 # Europe/Saratov covers:

@@ -3,10 +3,14 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+  Volgograd moves from +03 to +04 on 2018-10-28.
   Fiji ends DST 2019-01-13, not 2019-01-20.
   Most of Chile changes DST dates, effective 2019-04-06.
 
   Changes to future timestamps
+
+    Volgograd moves from +03 to +04 on 2018-10-28 at 02:00.
+    (Thanks to Alexander Fetisov and Stepan Golosunov.)
 
     Fiji ends DST 2019-01-13 instead of the 2019-01-20 previously
     predicted.  (Thanks to Raymond Kumar.)  Adjust future predictions

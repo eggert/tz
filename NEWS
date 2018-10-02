@@ -42,6 +42,9 @@ Unreleased, experimental changes
     zic turns this into 01:00 on the day after September's second
     Saturday, which is the best that POSIX or C platforms can do.
 
+    Incorporate 1940-1949 Asia/Shanghai DST transitions from a 2014
+    paper by Li Yu, replacing more-questionable data from Shanks.
+
   Changes to time zone abbreviations
 
     Use "PST" and "PDT" for Philippine time.  (Thanks to Paul Goyette.)

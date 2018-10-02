@@ -745,7 +745,8 @@ check_character_set: $(ENCHILADA)
 
 check_white_space: $(ENCHILADA)
 		patfmt=' \t|[\f\r\v]' && pat=`printf "$$patfmt\\n"` && \
-		! grep -En "$$pat" $(ENCHILADA)
+		! grep -En "$$pat" \
+			$$(ls $(ENCHILADA) | grep -Fvx leap-seconds.list)
 		! grep -n '[[:space:]]$$' \
 			$$(ls $(ENCHILADA) | grep -Fvx leap-seconds.list)
 		touch $@

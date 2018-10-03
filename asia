@@ -293,7 +293,7 @@ Zone	Asia/Yangon	6:24:47 -	LMT	1880        # or Rangoon
 # http://oversea.cnki.net/kns55/detail.aspx?dbname=CJFD2014&filename=NJSH201402020
 # The table lists dates only; I am guessing 00:00 and 24:00 transition times.
 # Also, the table lists the planned end of DST in 1949, but the corresponding
-# zone line cuts this off on May 27, when the Communists took power.
+# zone line cuts this off on May 28, when the Communists took power.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Shang	1940	only	-	Jun	 1	 0:00	1:00	D
@@ -307,7 +307,7 @@ Rule	Shang	1946	only	-	Sep	30	24:00	0	S
 Rule	Shang	1947	only	-	Apr	15	 0:00	1:00	D
 Rule	Shang	1947	only	-	Oct	31	24:00	0	S
 Rule	Shang	1948	1949	-	May	 1	 0:00	1:00	D
-Rule	Shang	1948	1949	-	Sep	30	24:00	0	S
+Rule	Shang	1948	1949	-	Sep	30	24:00	0	S #plan
 
 # From Guy Harris:
 # People's Republic of China.  Yes, they really have only one time zone.
@@ -383,10 +383,11 @@ Rule	PRC	1987	1991	-	Apr	Sun>=11	 2:00	1:00	D
 # Alois Treindl kindly sent me translations of the following two sources:
 #
 # (1)
-# Guo Qingsheng (National Time-Service Center, CAS, Xi'an 710600, China)
+# Guo Qing-sheng (National Time-Service Center, CAS, Xi'an 710600, China)
 # Beijing Time at the Beginning of the PRC
 # China Historical Materials of Science and Technology
-# (Zhongguo ke ji shi liao, 中国科技史料), Vol. 24, No. 1 (2003)
+# (Zhongguo ke ji shi liao, 中国科技史料). 2003;24(1):5-9.
+# http://oversea.cnki.net/kcms/detail/detail.aspx?filename=ZGKS200301000&dbname=CJFD2003
 # It gives evidence that at the beginning of the PRC, Beijing time was
 # officially apparent solar time!  However, Guo also says that the
 # evidence is dubious, as the relevant institute of astronomy had not
@@ -563,7 +564,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=11	 2:00	1:00	D
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 # Beijing time, used throughout China; represented by Shanghai.
 Zone	Asia/Shanghai	8:05:43	-	LMT	1901
-			8:00	Shang	C%sT	1949 May 27
+			8:00	Shang	C%sT	1949 May 28
 			8:00	PRC	C%sT
 # Xinjiang time, used by many in western China; represented by Ürümqi / Ürümchi
 # / Wulumuqi.  (Please use Asia/Shanghai if you prefer Beijing time.)

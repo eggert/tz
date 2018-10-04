@@ -421,8 +421,10 @@ SAFE_CHAR=	'[]'$(SAFE_CHARSET)'-]'
 # These characters are Latin-1, and so are likely to be displayable
 # even in editors with limited character sets.
 UNUSUAL_OK_LATIN_1 = «°±»½¾×
-# IPA symbols are OK in commentary despite being non-alphabetic.
-UNUSUAL_OK_IPA = ɪu̯
+# This IPA symbol is represented in Unicode as the composition of
+# U+0075 and U+032F, and U+032F is not considered alphabetic by some
+# grep implementations that do not grok composition.
+UNUSUAL_OK_IPA = u̯
 # Non-ASCII non-letters that OK_CHAR allows, as these characters are
 # useful in commentary.
 UNUSUAL_OK_CHARSET= $(UNUSUAL_OK_LATIN_1)$(UNUSUAL_OK_IPA)

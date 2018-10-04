@@ -927,7 +927,14 @@ Rule	Brazil	2016	2022	-	Feb	Sun>=15	0:00	0	-
 # ... https://www.timeanddate.com/news/time/brazil-delays-dst-2018.html
 # From Steffen Thorsen (2017-12-20):
 # http://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/decreto/D9242.htm
-Rule	Brazil	2018	max	-	Nov	Sun>=1	0:00	1:00	-
+# From Fábio Gomes (2018-10-04):
+# The Brazilian president just announced a new change on this year DST.
+# It was scheduled to start on November 4th and it was changed to November 18th.
+# From Paul Eggert (2018-10-04):
+# This attempts to avoid confusion during the November 4 and 11 national high
+# school exams, which were mis-scheduled.  Guess that it's just this year.
+Rule	Brazil	2018	only	-	Nov	Sun>=15	0:00	1:00	-
+Rule	Brazil	2019	max	-	Nov	Sun>=1	0:00	1:00	-
 Rule	Brazil	2023	only	-	Feb	Sun>=22	0:00	0	-
 Rule	Brazil	2024	2025	-	Feb	Sun>=15	0:00	0	-
 Rule	Brazil	2026	only	-	Feb	Sun>=22	0:00	0	-

@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
   Volgograd moves from +03 to +04 on 2018-10-28.
+  Southern Brazil starts DST 2018-11-18, not 2018-11-04.
   Fiji ends DST 2019-01-13, not 2019-01-20.
   Most of Chile changes DST dates, effective 2019-04-06.
 
@@ -11,6 +12,10 @@ Unreleased, experimental changes
 
     Volgograd moves from +03 to +04 on 2018-10-28 at 02:00.
     (Thanks to Alexander Fetisov and Stepan Golosunov.)
+
+    Southern Brazil starts DST 2018-11-18 instead of the 2018-11-04
+    previously predicted.  (Thanks to Fábio Gomes.)  Guess that this
+    is a one-time change.
 
     Fiji ends DST 2019-01-13 instead of the 2019-01-20 previously
     predicted.  (Thanks to Raymond Kumar.)  Adjust future predictions

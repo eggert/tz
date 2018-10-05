@@ -86,6 +86,9 @@ Unreleased, experimental changes
     transition (or for all time stamps if there are no transitions),
     just as DST strings specifying DST have always done.
 
+    leapseconds.awk now outputs "#updated" and "#expires" comments.
+    (Inspired by a suggestion from Chris Woodbury.)
+
   Changes to documentation
 
     New restrictions: A Rule name must start with a character that

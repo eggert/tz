@@ -8,21 +8,25 @@ BEGIN {
   print "# This file is in the public domain."
   print ""
   print "# This file is generated automatically from the data in the public-domain"
-  print "# leap-seconds.list file, which is copied from:"
-  print "# ftp://ftp.nist.gov/pub/time/leap-seconds.list"
+  print "# leap-seconds.list file, which can be copied from"
+  print "# <ftp://ftp.nist.gov/pub/time/leap-seconds.list>"
+  print "# or <ftp://ftp.boulder.nist.gov/pub/time/leap-seconds.list>"
+  print "# or <ftp://tycho.usno.navy.mil/pub/ntp/leap-seconds.list>."
   print "# For more about leap-seconds.list, please see"
   print "# The NTP Timescale and Leap Seconds"
-  print "# https://www.eecis.udel.edu/~mills/leap.html"
+  print "# <https://www.eecis.udel.edu/~mills/leap.html>."
   print ""
   print "# The International Earth Rotation and Reference Systems Service"
   print "# periodically uses leap seconds to keep UTC to within 0.9 s of UT1"
-  print "# (which measures the true angular orientation of the earth in space); see"
-  print "# Levine J. Coordinated Universal Time and the leap second."
+  print "# (which measures the true angular orientation of the earth in space)"
+  print "# and publishes leap second data in a copyrighted file"
+  print "# <https://hpiers.obspm.fr/iers/bul/bulc/Leap_Second.dat>."
+  print "# See: Levine J. Coordinated Universal Time and the leap second."
   print "# URSI Radio Sci Bull. 2016;89(4):30-6. doi:10.23919/URSIRSB.2016.7909995"
-  print "# http://ieeexplore.ieee.org/document/7909995/"
+  print "# <https://ieeexplore.ieee.org/document/7909995>."
   print "# There were no leap seconds before 1972, because the official mechanism"
   print "# accounting for the discrepancy between atomic time and the earth's rotation"
-  print "# did not exist until the early 1970s."
+  print "# did not exist."
   print ""
   print "# The correction (+ or -) is made at the given time, so lines"
   print "# will typically look like:"
@@ -30,17 +34,18 @@ BEGIN {
   print "# or"
   print "#	Leap	YEAR	MON	DAY	23:59:59	-	R/S"
   print ""
-  print "# If the leapsecond is Rolling (R) the given time is local time."
-  print "# If the leapsecond is Stationary (S) the given time is UTC."
+  print "# If the leap second is Rolling (R) the given time is local time (unused here)."
+  print "# If the leap second is Stationary (S) the given time is UTC."
   print ""
   print "# Leap	YEAR	MONTH	DAY	HH:MM:SS	CORR	R/S"
 }
 
-/^ *$/ { next }
-
 /^#\tUpdated through/ || /^#\tFile expires on:/ {
     last_lines = last_lines $0 "\n"
 }
+
+/^#[$][ \t]/ { updated = $2 }
+/^#[@][ \t]/ { expires = $2 }
 
 /^#/ { next }
 
@@ -71,5 +76,14 @@ BEGIN {
 }
 
 END {
+    # The difference between the NTP and POSIX epochs is 70 years
+    # (including 17 leap days), each 24 hours of 60 minutes of 60
+    # seconds each.
+    epoch_minus_NTP = ((1970 - 1900) * 365 + 17) * 24 * 60 * 60
+
+    print ""
+    print "# POSIX timestamps for the data in this file:"
+    printf "#updated %s\n", updated - epoch_minus_NTP
+    printf "#expires %s\n", expires - epoch_minus_NTP
     printf "\n%s", last_lines
 }

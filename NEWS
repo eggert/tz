@@ -86,8 +86,9 @@ Unreleased, experimental changes
     transition (or for all time stamps if there are no transitions),
     just as DST strings specifying DST have always done.
 
-    leapseconds.awk now outputs "#updated" and "#expires" comments.
-    (Inspired by a suggestion from Chris Woodbury.)
+    leapseconds.awk now outputs "#updated" and "#expires" comments,
+    and supports leap seconds at the ends of months other than June
+    and December.  (Inspired by suggestions from Chris Woodbury.)
 
   Changes to documentation
 

@@ -35,9 +35,25 @@ BEGIN {
   print "#	Leap	YEAR	MON	DAY	23:59:59	-	R/S"
   print ""
   print "# If the leap second is Rolling (R) the given time is local time (unused here)."
-  print "# If the leap second is Stationary (S) the given time is UTC."
-  print ""
-  print "# Leap	YEAR	MONTH	DAY	HH:MM:SS	CORR	R/S"
+
+  monthabbr[ 1] = "Jan"
+  monthabbr[ 2] = "Feb"
+  monthabbr[ 3] = "Mar"
+  monthabbr[ 4] = "Apr"
+  monthabbr[ 5] = "May"
+  monthabbr[ 6] = "Jun"
+  monthabbr[ 7] = "Jul"
+  monthabbr[ 8] = "Aug"
+  monthabbr[ 9] = "Sep"
+  monthabbr[10] = "Oct"
+  monthabbr[11] = "Nov"
+  monthabbr[12] = "Dec"
+  for (i in monthabbr) {
+      monthnum[monthabbr[i]] = i
+      monthlen[i] = 31
+  }
+  monthlen[2] = 28
+  monthlen[4] = monthlen[6] = monthlen[9] = monthlen[11] = 30
 }
 
 /^#\tUpdated through/ || /^#\tFile expires on:/ {
@@ -62,14 +78,14 @@ BEGIN {
 	} else {
 	    sign = "23:59:59\t-"
 	}
-	if (month == "Jan") {
+	m = monthnum[month] - 1
+	if (m == 0) {
 	    year--;
-	    month = "Dec";
-	    day = 31
-	} else if (month == "Jul") {
-	    month = "Jun";
-	    day = 30
+	    m = 12
 	}
+	month = monthabbr[m]
+	day = monthlen[m]
+	day += m == 2 && year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
 	printf "Leap\t%s\t%s\t%s\t%s\tS\n", year, month, day, sign
     }
     old_TAI_minus_UTC = TAI_minus_UTC

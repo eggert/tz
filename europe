@@ -2738,11 +2738,9 @@ Zone Europe/Astrakhan	 3:12:12 -	LMT	1924 May
 # timezone from UTC+3 to UTC+4 from 28oct2018.
 # http://sozd.parliament.gov.ru/bill/452878-7
 #
-# From Stepan Golosunov (2018-09-29):
-# According to <http://sozd.parliament.gov.ru/bill/452878-7> the bill is
-# already approved by the State Duma and now is in the Federation Council....
-# The bill will likely be approved by the Federation Council on 2018-10-03,
-# then signed by the President and published into law on 2018-10-08 ± few days.
+# From Stepan Golosunov (2018-10-11):
+# The law has been published today on
+# http://publication.pravo.gov.ru/Document/View/0001201810110037
 
 Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 			 3:00	-	+03	1930 Jun 21

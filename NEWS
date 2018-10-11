@@ -70,6 +70,12 @@ Unreleased, experimental changes
     This reverts a change introduced in 2013d and shrinks most TZif
     files by a few bytes.
 
+    zic now supports negative time-of-day in Rule and Leap lines, e.g.,
+    "Rule X min max - Apr lastSun -6:00 1:00 -" means the transition
+    occurs at 18:00 on the Saturday before the last Sunday in April.
+    This behavior was documented in 2018a but the code did not
+    entirely match the documentation.
+
     localtime.c no longer requires at least one time type in TZif
     files that lack transitions or have a POSIX-style TZ string.  This
     future-proofs the code against possible future extensions to the

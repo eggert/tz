@@ -156,8 +156,7 @@ static void	adjleap(void);
 static void	associate(void);
 static void	dolink(const char *, const char *, bool);
 static char **	getfields(char * buf);
-static zic_t	gethms(const char * string, const char * errstring,
-		       bool);
+static zic_t	gethms(const char * string, const char * errstring);
 static zic_t	getstdoff(char *, bool *);
 static void	infile(const char * filename);
 static void	inleap(char ** fields, int nfields);
@@ -1160,7 +1159,7 @@ _("%s: panic: Invalid l_value %d\n"),
 */
 
 static zic_t
-gethms(char const *string, char const *errstring, bool signable)
+gethms(char const *string, char const *errstring)
 {
 	zic_t	hh;
 	int sign, mm = 0, ss = 0;
@@ -1170,9 +1169,7 @@ gethms(char const *string, char const *errstring, bool signable)
 
 	if (string == NULL || *string == '\0')
 		return 0;
-	if (!signable)
-		sign = 1;
-	else if (*string == '-') {
+	if (*string == '-') {
 		sign = -1;
 		++string;
 	} else	sign = 1;
@@ -1228,7 +1225,7 @@ getstdoff(char *field, bool *isdst)
       case 's': dst = 0; *ep = '\0'; break;
     }
   }
-  stdoff = gethms(field, _("invalid saved time"), true);
+  stdoff = gethms(field, _("invalid saved time"));
   *isdst = dst < 0 ? stdoff != 0 : dst;
   return stdoff;
 }
@@ -1342,7 +1339,7 @@ inzsub(char **fields, int nfields, bool iscont)
 	}
 	z.z_filename = filename;
 	z.z_linenum = linenum;
-	z.z_gmtoff = gethms(fields[i_gmtoff], _("invalid UT offset"), true);
+	z.z_gmtoff = gethms(fields[i_gmtoff], _("invalid UT offset"));
 	if ((cp = strchr(fields[i_format], '%')) != 0) {
 		if ((*++cp != 's' && *cp != 'z') || strchr(cp, '%')
 		    || strchr(fields[i_format], '/')) {
@@ -1464,7 +1461,7 @@ inleap(char **fields, int nfields)
 		return;
 	}
 	t = dayoff * SECSPERDAY;
-	tod = gethms(fields[LP_TIME], _("invalid time of day"), false);
+	tod = gethms(fields[LP_TIME], _("invalid time of day"));
 	cp = fields[LP_CORR];
 	{
 		register bool	positive;
@@ -1559,7 +1556,7 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 				break;
 		}
 	}
-	rp->r_tod = gethms(dp, _("invalid time of day"), false);
+	rp->r_tod = gethms(dp, _("invalid time of day"));
 	free(dp);
 	/*
 	** Year work.

@@ -261,7 +261,8 @@ Note that there must be no spaces within the
 field.
 .TP
 .B AT
-Gives the time of day at which the rule takes effect.
+Gives the time of day at which the rule takes effect,
+relative to 00:00, the start of a calendar day.
 Recognized forms include:
 .nf
 .in +.5i
@@ -271,15 +272,15 @@ Recognized forms include:
 2:00	time in hours and minutes
 01:28:14	time in hours, minutes, and seconds
 00:19:32.13	time with fractional seconds
-15:00	24-hour format time (for times after noon)
+12:00	midday, 12 hours after 00:00
+15:00	3 PM, 15 hours after 00:00
+24:00	end of day, 24 hours after 00:00
 260:00	260 hours after 00:00
 \*-2:30	2.5 hours before 00:00
 \*-	equivalent to 0
 .fi
 .in -.5i
 .sp
-where hour 0 is midnight at the start of the day,
-and hour 24 is midnight at the end of the day.
 Although
 .B zic
 rounds times to the nearest integer second

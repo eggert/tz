@@ -304,6 +304,10 @@ or
 if the given time is universal time;
 in the absence of an indicator,
 wall clock time is assumed.
+These forms ignore leap seconds; for example,
+if a leap second occurs at 00:59:60 local time,
+.q "1:00"
+stands for 3601 seconds after local midnight instead of the usual 3600 seconds.
 The intent is that a rule line describes the instants when a
 clock/calendar set to the type of time specified in the
 .B AT

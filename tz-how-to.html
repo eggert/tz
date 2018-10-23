@@ -459,8 +459,8 @@ given alphabetic string.</li>
 <p>An example of a specific amount of time is:</p>
 <pre>
 #Zone NAME            GMTOFF RULES FORMAT [UNTIL]
-Zone Pacific/Honolulu ...                 1933 Apr 30 2:00
-                      -10:30 1:00  HDT    1933 May 21 2:00
+Zone Pacific/Honolulu ...                 1933 Apr 30  2:00
+                      -10:30 1:00  HDT    1933 May 21 12:00
                       ...
 </pre>
 
@@ -559,7 +559,7 @@ the true offset is undefined.
 Rule  US   1918 1919 -    Oct lastSun  2:00  0    S
 Rule  US   1942 only -    Feb  9       2:00  1:00 W # War
 Rule  US   1945 only -    Aug 14      23:00u 1:00 P # Peace
-Rule  US   1945 only -    Sep 30       2:00  0    S
+Rule  US   1945 only -    Sep lastSun  2:00  0    S
 </pre>
   </td></tr></table></td>
 </tr>
@@ -570,7 +570,7 @@ Rule  US   1945 only -    Sep 30       2:00  0    S
   <td colspan="6" align="center"><table><tr><td>
 <pre>
 #Zone NAME            GMTOFF    RULES FORMAT [UNTIL]
-Zone Pacific/Honolulu -10:31:26 -     LMT    1900 Jan  1 12:00
+Zone Pacific/Honolulu -10:31:26 -     LMT    1896 Jan 13 12:00
                       -10:30    -     HST    1933 Apr 30  2:00
                       -10:30    1:00  HDT    1933 May 21  2:00
                       -10:30    US    H%sT   1947 Jun  8  2:00
@@ -598,7 +598,7 @@ Zone Pacific/Honolulu -10:31:26 -     LMT    1900 Jan  1 12:00
   <td>&mdash;</td>
   <td>LMT</td>
   <td>local mean time</td>
-  <td>1900-01-01</td>
+  <td>1896-01-13</td>
   <td>12:00</td>
 </tr>
 <tr align="center">
@@ -607,7 +607,7 @@ Zone Pacific/Honolulu -10:31:26 -     LMT    1900 Jan  1 12:00
   <td>HST</td>
   <td>Hawaii standard time</td>
   <td>1933-04-30</td>
-  <td rowspan="3">02:00</td>
+  <td>02:00</td>
 </tr>
 <tr align="center">
   <td>&minus;9:30</td>
@@ -615,6 +615,7 @@ Zone Pacific/Honolulu -10:31:26 -     LMT    1900 Jan  1 12:00
   <td>HDT</td>
   <td>Hawaii daylight time</td>
   <td>1933-05-21</td>
+  <td>12:00</td>
 </tr>
 <tr align="center">
   <td>&minus;10:30&sup1;</td>
@@ -622,6 +623,7 @@ Zone Pacific/Honolulu -10:31:26 -     LMT    1900 Jan  1 12:00
   <td>HST&sup1;</td>
   <td>Hawaii standard time</td>
   <td>1942-02-09</td>
+  <td>02:00</td>
 </tr>
 <tr align="center">
   <td rowspan="2">&minus;9:30</td>

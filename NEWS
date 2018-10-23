@@ -10,6 +10,10 @@ Unreleased, experimental changes
     This caters to zic before 2007 and to at least one Java-based zi
     compiler of uncertain vintage.  (Reported by Christos Zoulas.)
 
+  Changes to past time zone abbreviations
+
+    Change HDT to HWT/HPT for WWII-era abbreviations in Hawaii.
+
 
 Release 2018f - 2018-10-18 00:14:18 -0700
 

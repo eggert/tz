@@ -16,6 +16,10 @@ Unreleased, experimental changes
     This reverts to 2011h, as the abbreviation change in 2011i was
     likely inadvertent.
 
+  Changes to documentation
+
+    tzfile.5 has new sections on interoperability issues.
+
 
 Release 2018f - 2018-10-18 00:14:18 -0700
 

@@ -64,6 +64,11 @@ typedef int_fast64_t	zic_t;
 static ptrdiff_t const PTRDIFF_MAX = MAXVAL(ptrdiff_t, TYPE_BIT(ptrdiff_t));
 #endif
 
+/* The minimum alignment of a type, for pre-C11 platforms.  */
+#if __STDC_VERSION__ < 201112
+# define _Alignof(type) offsetof(struct { char a; type b; }, b)
+#endif
+
 /* The type for line numbers.  Use PRIdMAX to format them; formerly
    there was also "#define PRIdLINENO PRIdMAX" and formats used
    PRIdLINENO, but xgettext cannot grok that.  */
@@ -189,7 +194,9 @@ enum { PERCENT_Z_LEN_BOUND = sizeof "+995959" - 1 };
    QTBUG-53071 <https://bugreports.qt.io/browse/QTBUG-53071>.  This
    workaround will no longer be needed when Qt 5.6.1 and earlier are
    obsolete, say in the year 2021.  */
+#ifndef WORK_AROUND_QTBUG_53071
 enum { WORK_AROUND_QTBUG_53071 = true };
+#endif
 
 static int		charcnt;
 static bool		errors;
@@ -429,6 +436,16 @@ size_product(size_t nitems, size_t itemsize)
 	if (SIZE_MAX / itemsize < nitems)
 		memory_exhausted(_("size overflow"));
 	return nitems * itemsize;
+}
+
+static ATTRIBUTE_PURE size_t
+align_to(size_t size, size_t alignment)
+{
+  size_t aligned_size = size + alignment - 1;
+  aligned_size -= aligned_size % alignment;
+  if (aligned_size < size)
+    memory_exhausted(_("alignment overflow"));
+  return aligned_size;
 }
 
 #if !HAVE_STRDUP
@@ -1740,7 +1757,11 @@ writezone(const char *const name, const char *const string, char version,
 	zic_t one = 1;
 	zic_t y2038_boundary = one << 31;
 	ptrdiff_t nats = timecnt + WORK_AROUND_QTBUG_53071;
-	zic_t *ats = emalloc(size_product(nats, sizeof *ats + 1));
+
+	/* Allocate the ATS and TYPES arrays via a single malloc,
+	   as this is a bit faster.  */
+	zic_t *ats = emalloc(align_to(size_product(nats, sizeof *ats + 1),
+				      _Alignof(zic_t)));
 	void *typesptr = ats + nats;
 	unsigned char *types = typesptr;
 
@@ -1827,16 +1848,16 @@ writezone(const char *const name, const char *const string, char version,
 	leapi32 = 0;
 	while (0 < timecnt32 && INT32_MAX < ats[timecnt32 - 1])
 		--timecnt32;
-	while (0 < timecnt32 && ats[timei32] < INT32_MIN) {
+	while (1 < timecnt32 && ats[timei32] < INT32_MIN
+	       && ats[timei32 + 1] <= INT32_MIN) {
+		/* Discard too-low transitions, except keep any last too-low
+		   transition if no transition is exactly at INT32_MIN.
+		   The kept transition will be output as an INT32_MIN
+		   "transition" appropriate for buggy 32-bit clients that do
+		   not use time type 0 for timestamps before the first
+		   transition; see below.  */
 		--timecnt32;
 		++timei32;
-	}
-	/*
-	** Output an INT32_MIN "transition" if appropriate; see below.
-	*/
-	if (timei32 > 0 && ats[timei32] > INT32_MIN) {
-		--timei32;
-		++timecnt32;
 	}
 	while (0 < leapcnt32 && INT32_MAX < trans[leapcnt32 - 1])
 		--leapcnt32;

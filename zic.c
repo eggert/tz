@@ -1714,12 +1714,6 @@ atcomp(const void *avp, const void *bvp)
 	return (a < b) ? -1 : (a > b);
 }
 
-static bool
-is32(const zic_t x)
-{
-	return INT32_MIN <= x && x <= INT32_MAX;
-}
-
 static void
 swaptypes(int i, int j)
 {
@@ -1797,18 +1791,6 @@ writezone(const char *const name, const char *const string, char version,
 		types[i] = attypes[i].type;
 	}
 
-	/* Work around QTBUG-53071 for timestamps less than y2038_boundary - 1,
-	   by inserting a no-op transition at time y2038_boundary - 1.
-	   This works only for timestamps before the boundary, which
-	   should be good enough in practice as QTBUG-53071 should be
-	   long-dead by 2038.  */
-	if (WORK_AROUND_QTBUG_53071 && timecnt != 0
-	    && ats[timecnt - 1] < y2038_boundary - 1 && strchr(string, '<')) {
-	  ats[timecnt] = y2038_boundary - 1;
-	  types[timecnt] = types[timecnt - 1];
-	  timecnt++;
-	}
-
 	/*
 	** Correct for leap seconds.
 	*/
@@ -1820,6 +1802,22 @@ writezone(const char *const name, const char *const string, char version,
 				break;
 			}
 	}
+
+	/* Work around QTBUG-53071 for timestamps less than y2038_boundary - 1,
+	   by inserting a no-op transition at time y2038_boundary - 1.
+	   This works only for timestamps before the boundary, which
+	   should be good enough in practice as QTBUG-53071 should be
+	   long-dead by 2038.  Do this after correcting for leap
+	   seconds, as the idea is to insert a transition just before
+	   32-bit time_t rolls around, and this occurs at a slightly
+	   different moment if transitions are leap-second corrected.  */
+	if (WORK_AROUND_QTBUG_53071 && timecnt != 0
+	    && ats[timecnt - 1] < y2038_boundary - 1 && strchr(string, '<')) {
+	  ats[timecnt] = y2038_boundary - 1;
+	  types[timecnt] = types[timecnt - 1];
+	  timecnt++;
+	}
+
 	/*
 	** Figure out 32-bit-limited starts and counts.
 	*/
@@ -1827,9 +1825,9 @@ writezone(const char *const name, const char *const string, char version,
 	timei32 = 0;
 	leapcnt32 = leapcnt;
 	leapi32 = 0;
-	while (timecnt32 > 0 && !is32(ats[timecnt32 - 1]))
+	while (0 < timecnt32 && INT32_MAX < ats[timecnt32 - 1])
 		--timecnt32;
-	while (timecnt32 > 0 && !is32(ats[timei32])) {
+	while (0 < timecnt32 && ats[timei32] < INT32_MIN) {
 		--timecnt32;
 		++timei32;
 	}
@@ -1840,9 +1838,9 @@ writezone(const char *const name, const char *const string, char version,
 		--timei32;
 		++timecnt32;
 	}
-	while (leapcnt32 > 0 && !is32(trans[leapcnt32 - 1]))
+	while (0 < leapcnt32 && INT32_MAX < trans[leapcnt32 - 1])
 		--leapcnt32;
-	while (leapcnt32 > 0 && !is32(trans[leapi32])) {
+	while (0 < leapcnt32 && trans[leapi32] < INT32_MIN) {
 		--leapcnt32;
 		++leapi32;
 	}

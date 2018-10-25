@@ -7,12 +7,14 @@ Unreleased, experimental changes
     The translator to rearguard format now rewrites the line
     "Rule Japan 1948 1951 - Sep Sat>=8 25:00 0 S" to
     "Rule Japan 1948 1951 - Sep Sun>=9  1:00 0 S".
-    This caters to zic before 2007 and to at least one Java-based zi
-    compiler of uncertain vintage.  (Reported by Christos Zoulas.)
+    This caters to zic before 2007 and to Oracle TZUpdater 2.2.0
+    and earlier.  (Reported by Christos Zoulas.)
 
   Changes to past time zone abbreviations
 
     Change HDT to HWT/HPT for WWII-era abbreviations in Hawaii.
+    This reverts to 2011h, as the abbreviation change in 2011i was
+    likely inadvertent.
 
 
 Release 2018f - 2018-10-18 00:14:18 -0700

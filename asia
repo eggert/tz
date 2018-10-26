@@ -659,7 +659,7 @@ Rule	HK	1973	only	-	Dec	30	3:30	1:00	S
 Rule	HK	1979	only	-	May	Sun>=8	3:30	1:00	S
 Rule	HK	1979	only	-	Oct	Sun>=16	3:30	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
+Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30	10:00
 			8:00	HK	HK%sT	1941 Oct 1	4:00
 			8:30	HK	HKT	1941 Dec 25
 			9:00	-	JST	1945 Aug 30

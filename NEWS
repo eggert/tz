@@ -2,6 +2,15 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    Morocco switches to permanent +01 on 2018-10-27.
+
+  Changes to future timestamps
+
+    Morocco switches from +00/+01 to permanent +01 effective 2018-10-27,
+    so its clocks will not fall back on 2018-10-28 as previously scheduled.
+    (Thanks to Mohamed Essedik Najd and Brian Inglis.)
+
   Changes to code
 
     When generating TZif files with leap seconds, zic no longer uses a

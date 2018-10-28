@@ -847,8 +847,8 @@ Zone Indian/Mauritius	3:50:00 -	LMT	1907 # Port Louis
 # From Mohamed Essedik Najd (2018-10-26):
 # Today, a Moroccan government council approved the perpetual addition
 # of 60 minutes to the regular Moroccan timezone.
-# From Brian Inglis (2018-10-26):
-# http://www.maroc.ma/fr/actualites/le-conseil-de-gouvernement-adopte-un-projet-de-decret-relatif-lheure-legale-stipulant-le
+# From Matt Johnson (2018-10-28):
+# http://www.sgg.gov.ma/Portals/1/BO/2018/BO_6720-bis_Ar.pdf
 
 # RULE	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Morocco	1939	only	-	Sep	12	 0:00	1:00	-
@@ -897,7 +897,7 @@ Rule	Morocco	2018	only	-	Jun	17	 2:00	1:00	-
 Zone Africa/Casablanca	-0:30:20 -	LMT	1913 Oct 26
 			 0:00	Morocco	+00/+01	1984 Mar 16
 			 1:00	-	+01	1986
-			 0:00	Morocco	+00/+01	2018 Oct 27
+			 0:00	Morocco	+00/+01	2018 Oct 28  3:00
 			 1:00	-	+01
 
 # Western Sahara
@@ -913,7 +913,7 @@ Zone Africa/Casablanca	-0:30:20 -	LMT	1913 Oct 26
 
 Zone Africa/El_Aaiun	-0:52:48 -	LMT	1934 Jan # El Aaiún
 			-1:00	-	-01	1976 Apr 14
-			 0:00	Morocco	+00/+01	2018 Oct 27
+			 0:00	Morocco	+00/+01	2018 Oct 28  3:00
 			 1:00	-	+01
 
 # Mozambique

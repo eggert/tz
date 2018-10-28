@@ -1,14 +1,23 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to past tm_isdst flags
+
+    For the recent Morocco change, the tm_isdst flag should be 1 from
+    2018-10-27 00:00 to 2018-10-28 03:00.  (Thanks to Michael Deckers.)
+    Give a URL to the official decree.  (Thanks to .)
+
+
 Release 2018g - 2018-10-26 22:22:45 -0700
 
   Briefly:
-    Morocco switches to permanent +01 on 2018-10-27.
+    Morocco switches to permanent +01 on 2018-10-28.
 
   Changes to future timestamps
 
-    Morocco switches from +00/+01 to permanent +01 effective 2018-10-27,
-    so its clocks will not fall back on 2018-10-28 as previously scheduled.
+    Morocco switches from +00/+01 to permanent +01 effective 2018-10-28,
+    so its clocks will not fall back as previously scheduled.
     (Thanks to Mohamed Essedik Najd and Brian Inglis.)
 
   Changes to code

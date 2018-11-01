@@ -19,7 +19,7 @@ Unreleased, experimental changes
 
     For the recent Morocco change, the tm_isdst flag should be 1 from
     2018-10-27 00:00 to 2018-10-28 03:00.  (Thanks to Michael Deckers.)
-    Give a URL to the official decree.  (Thanks to .)
+    Give a URL to the official decree.  (Thanks to Matt Johnson.)
 
 
 Release 2018g - 2018-10-26 22:22:45 -0700

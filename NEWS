@@ -2,6 +2,19 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to future timestamps
+
+    Guess that Morocco will continue to fall back just before and
+    spring forward just after Ramadan, the practice since 2012.
+    (Thanks to Maamar Abdelkader.)  This means Morocco will observe
+    negative DST during Ramadan in main and vanguard formats, and in
+    rearguard format it stays in the +00 timezone and observes
+    ordinary DST in all months other than Ramadan.  As before, extend
+    this guesswork to the year 2037.  As a consequence, Morocco is
+    scheduled to observe three DST transitions in some Gregorian years
+    (e.g., 2033) due to the mismatch between the Gregorian and Islamic
+    calendars.
+
   Changes to past tm_isdst flags
 
     For the recent Morocco change, the tm_isdst flag should be 1 from

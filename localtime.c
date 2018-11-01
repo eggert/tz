@@ -413,6 +413,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 	doaccess = name[0] == '/';
 #endif
 	if (!doaccess) {
+		char const *dot;
 		size_t namelen = strlen(name);
 		if (sizeof lsp->fullname - sizeof tzdirslash <= namelen)
 		  return ENAMETOOLONG;
@@ -423,9 +424,16 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		memcpy(lsp->fullname, tzdirslash, sizeof tzdirslash);
 		strcpy(lsp->fullname + sizeof tzdirslash, name);
 
-		/* Set doaccess if '.' (as in "../") shows up in name.  */
-		if (strchr(name, '.'))
-			doaccess = true;
+		/* Set doaccess if NAME contains a ".." file name
+		   component, as such a name could read a file outside
+		   the TZDIR virtual subtree.  */
+		for (dot = name; (dot = strchr(dot, '.')); dot++)
+		  if ((dot == name || dot[-1] == '/') && dot[1] == '.'
+		      && (dot[2] == '/' || !dot[2])) {
+		    doaccess = true;
+		    break;
+		  }
+
 		name = lsp->fullname;
 	}
 	if (doaccess && access(name, R_OK) != 0)

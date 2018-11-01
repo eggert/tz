@@ -2741,7 +2741,7 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 			if (attypes[i].at > lastat->at)
 				lastat = &attypes[i];
 		if (lastat->at < rpytime(&xr, max_year - 1)) {
-			addtt(rpytime(&xr, max_year + 1), typecnt-1);
+			addtt(rpytime(&xr, max_year + 1), lastat->type);
 			attypes[timecnt - 1].dontmerge = true;
 		}
 	}

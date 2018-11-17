@@ -2175,21 +2175,43 @@ Zone	Asia/Bishkek	4:58:24 -	LMT	1924 May  2
 # started at June 1 in that year.  For another example, the article in
 # 1988 said that DST started at 2:00 AM in that year.
 
+# From Phake Nick (2018-10-27):
+# 1. According to official announcement from Korean government, the DST end
+# date in South Korea should be
+# 1955-09-08 without specifying time
+# http://theme.archives.go.kr/next/common/viewEbook.do?singleData=N&archiveEventId=0027977557
+# 1956-09-29 without specifying time
+# http://theme.archives.go.kr/next/common/viewEbook.do?singleData=N&archiveEventId=0027978341
+# 1957-09-21 24 o'clock
+# http://theme.archives.go.kr/next/common/viewEbook.do?singleData=N&archiveEventId=0027979690#3
+# 1958-09-20 24 o'clock
+# http://theme.archives.go.kr/next/common/viewEbook.do?singleData=N&archiveEventId=0027981189
+# 1959-09-19 24 o'clock
+# http://theme.archives.go.kr/next/common/viewEbook.do?singleData=N&archiveEventId=0027982974#2
+# 1960-09-17 24 o'clock
+# http://theme.archives.go.kr/next/common/viewEbook.do?singleData=N&archiveEventId=0028044104
+# ...
+# 2.... https://namu.wiki/w/대한민국%20표준시 ... [says]
+# when Korea was using GMT+8:30 as standard time, the international
+# aviation/marine/meteorological industry in the country refused to
+# follow and continued to use GMT+9:00 for interoperability.
+
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	ROK	1948	only	-	Jun	 1	0:00	1:00	D
-Rule	ROK	1948	only	-	Sep	13	0:00	0	S
-Rule	ROK	1949	only	-	Apr	 3	0:00	1:00	D
-Rule	ROK	1949	1951	-	Sep	Sun>=8	0:00	0	S
-Rule	ROK	1950	only	-	Apr	 1	0:00	1:00	D
-Rule	ROK	1951	only	-	May	 6	0:00	1:00	D
-Rule	ROK	1955	only	-	May	 5	0:00	1:00	D
-Rule	ROK	1955	only	-	Sep	 9	0:00	0	S
-Rule	ROK	1956	only	-	May	20	0:00	1:00	D
-Rule	ROK	1956	only	-	Sep	30	0:00	0	S
-Rule	ROK	1957	1960	-	May	Sun>=1	0:00	1:00	D
-Rule	ROK	1957	1960	-	Sep	Sun>=18	0:00	0	S
-Rule	ROK	1987	1988	-	May	Sun>=8	2:00	1:00	D
-Rule	ROK	1987	1988	-	Oct	Sun>=8	3:00	0	S
+Rule	ROK	1948	only	-	Jun	 1	 0:00	1:00	D
+Rule	ROK	1948	only	-	Sep	12	24:00	0	S
+Rule	ROK	1949	only	-	Apr	 3	 0:00	1:00	D
+Rule	ROK	1949	1951	-	Sep	Sat>=7	24:00	0	S
+Rule	ROK	1950	only	-	Apr	 1	 0:00	1:00	D
+Rule	ROK	1951	only	-	May	 6	 0:00	1:00	D
+Rule	ROK	1955	only	-	May	 5	 0:00	1:00	D
+Rule	ROK	1955	only	-	Sep	 8	24:00	0	S
+Rule	ROK	1956	only	-	May	20	 0:00	1:00	D
+Rule	ROK	1956	only	-	Sep	29	24:00	0	S
+Rule	ROK	1957	1960	-	May	Sun>=1	 0:00	1:00	D
+Rule	ROK	1957	1960	-	Sep	Sat>=17	24:00	0	S
+Rule	ROK	1987	1988	-	May	Sun>=8	 2:00	1:00	D
+Rule	ROK	1987	1988	-	Oct	Sun>=8	 3:00	0	S
 
 # From Paul Eggert (2016-08-23):
 # The Korean Wikipedia entry gives the following sources for UT offsets:

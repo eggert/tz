@@ -26,7 +26,9 @@ Unreleased, experimental changes
     Hong Kong observed DST in 1941 starting 06-15 (not 04-01), then on
     10-01 changed standard time to +08:30 (not +08).  Its transition
     back to +08 after WWII was on 1945-09-15, not the previous day.
-    (Thanks to Phake Nick.)  Its 1952 fallback was on 11-02 (not 10-25).
+    Its 1904-10-30 change took effect at 01:00 +08 (not 00:00 LMT).
+    (Thanks to Phake Nick, Steve Allen, and Joseph Myers.)  Also,
+    its 1952 fallback was on 11-02 (not 10-25).
 
   Changes to past tm_isdst flags
 

@@ -592,14 +592,35 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928
 # the day that Hong Kong start using GMT+8 should be Oct 30, 1904.
 #
 # From Paul Eggert (2018-11-17):
-# Hong Kong had a time ball nearthe Marine Police Station, Tsim Sha Tsui.
+# Hong Kong had a time ball near the Marine Police Station, Tsim Sha Tsui.
 # "The ball was raised manually each day and dropped at exactly 1pm
 # (except on Sundays and Government holidays)."
 # Dyson AD. From Time Ball to Atomic Clock. Hong Kong Government. 1983.
 # <https://www.hko.gov.hk/publica/gen_pub/timeball_atomic_clock.pdf>
-# As 1904-10-30 was a Sunday, most likely the time change did not
-# propagate to most of Hong Kong until the afternoon of the next day.
-# For now, just record the date, not any time of day.
+# "From 1904 October 30 the time-ball at Hong Kong has been dropped by order
+# of the Governor of the Colony at 17h 0h 0s G.M.T., which is 23m 18s.14 in
+# advance of 1h 0m 0s of Hong Kong mean time."
+# Hollis HP. Universal Time, Longitudes, and Geodesy. Mon Not R Astron Soc.
+# 1905-02-10;65(4):405-6. https://doi.org/10.1093/mnras/65.4.382
+#
+# From Joseph Myers (2018-11-18):
+# An astronomer before 1925 referring to GMT would have been using the old
+# astronomical convention where the day started at noon, not midnight.
+#
+# From Steve Allen (2018-11-17):
+# Meteorological Observations made at the Hongkong Observatory in the year 1904
+# page 4 <https://books.google.com/books?id=kgw5AQAAMAAJ&pg=RA4-PA4>
+# ... the log of drop times in Table II shows that on Sunday 1904-10-30 the
+# ball was dropped.  So that looks like a special case drop for the sake
+# of broadcasting the new local time.
+#
+# From Phake Nick (2018-11-18):
+# According to The Hong Kong Weekly Press, 1904-10-29, p.324, the
+# governor of Hong Kong at the time stated that "We are further desired to
+# make it known that the change will be effected by firing the gun and by the
+# dropping of the Ball at 23min. 18sec. before one."
+# From Paul Eggert (2018-11-18):
+# See <https://mmis.hkpl.gov.hk> for this; unfortunately Flash is required.
 
 # From Phake Nick (2018-10-26):
 # I went to check microfilm records stored at Hong Kong Public Library....
@@ -708,7 +729,7 @@ Rule	HK	1973	only	-	Dec	30	3:30	1:00	S
 Rule	HK	1979	only	-	May	Sun>=8	3:30	1:00	S
 Rule	HK	1979	only	-	Oct	Sun>=16	3:30	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
+Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30  0:36:42
 			8:00	-	HKT	1941 Jun 15  3:30
 			8:00	1:00	HKST	1941 Oct  1  4:00
 			8:30	-	HKT	1941 Dec 25

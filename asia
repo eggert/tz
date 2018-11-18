@@ -592,12 +592,14 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928
 # the day that Hong Kong start using GMT+8 should be Oct 30, 1904.
 #
 # From Paul Eggert (2018-11-17):
-# Assume the 1904 switch occurred when the time ball was dropped.
-# "From 1904 October 30 the time-ball at Hong Kong has been dropped by order
-# of the Governor of the Colony at 17h 0h 0s G.M.T., which is 23m 18s.14 in
-# advance of 1h 0m 0s of Hong Kong mean time."
-# H.P.H. Universal Time, Longitudes, and Geodesy. Mon Not R Astron Soc.
-# 1905-02-10;65(4):405-6. https://doi.org/10.1093/mnras/65.4.382
+# Hong Kong had a time ball nearthe Marine Police Station, Tsim Sha Tsui.
+# "The ball was raised manually each day and dropped at exactly 1pm
+# (except on Sundays and Government holidays)."
+# Dyson AD. From Time Ball to Atomic Clock. Hong Kong Government. 1983.
+# <https://www.hko.gov.hk/publica/gen_pub/timeball_atomic_clock.pdf>
+# As 1904-10-30 was a Sunday, most likely the time change did not
+# propagate to most of Hong Kong until the afternoon of the next day.
+# For now, just record the date, not any time of day.
 
 # From Phake Nick (2018-10-26):
 # I went to check microfilm records stored at Hong Kong Public Library....
@@ -706,7 +708,7 @@ Rule	HK	1973	only	-	Dec	30	3:30	1:00	S
 Rule	HK	1979	only	-	May	Sun>=8	3:30	1:00	S
 Rule	HK	1979	only	-	Oct	Sun>=16	3:30	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 29 17:00u
+Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30
 			8:00	-	HKT	1941 Jun 15  3:30
 			8:00	1:00	HKST	1941 Oct  1  4:00
 			8:30	-	HKT	1941 Dec 25
@@ -1106,14 +1108,14 @@ Zone	Asia/Dili	8:22:20 -	LMT	1912 Jan  1
 
 # India
 
-# A British astronomer disapproved when India Standard Time was proposed:
+# British astronomer Henry Park Hollis disliked India Standard Time's offset:
 # "A new time system has been proposed for India, Further India, and Burmah.
 # The scheme suggested is that the times of the meridians 5½ and 6½ hours
 # east of Greenwich should be adopted in these territories.  No reason is
 # given why hourly meridians five hours and six hours east should not be
 # chosen; a plan which would bring the time of India into harmony with
 # that of almost the whole of the civilised world."
-# H.P.H. Universal Time, Longitudes, and Geodesy. Mon Not R Astron Soc.
+# Hollis HP. Universal Time, Longitudes, and Geodesy. Mon Not R Astron Soc.
 # 1905-02-10;65(4):405-6. https://doi.org/10.1093/mnras/65.4.382
 
 # From Ian P. Beacock, in "A brief history of (modern) time", The Atlantic

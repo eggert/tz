@@ -508,9 +508,9 @@ Zone Pacific/Kosrae	-13:08:04 -	LMT	1844 Dec 31
 # Nauru
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Pacific/Nauru	11:07:40 -	LMT	1921 Jan 15 # Uaobe
-			11:30	-	+1130	1942 Mar 15
-			9:00	-	+09	1944 Aug 15
-			11:30	-	+1130	1979 May
+			11:30	-	+1130	1942 Aug 29
+			 9:00	-	+09	1945 Sep  8
+			11:30	-	+1130	1979 Feb 10  2:00
 			12:00	-	+12
 
 # New Caledonia
@@ -1784,6 +1784,29 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # We don't know the date of that quote, but we'll guess they
 # started DST on June 3.  Possibly DST was observed other years
 # in Midway, but we have no record of it.
+
+# Nauru
+
+# From Phake Nick (2018-10-31):
+# Currently, the tz database say Nauru use LMT until 1921, and then
+# switched to GMT+11:30 for the next two decades.
+# However, a number of timezone map published in America/Japan back then
+# showed its timezone as GMT+11 per https://wiki.suikawiki.org/n/ナウルの標準時
+# And it would also be nice if the 1921 transition date could be sourced.
+# ...
+# The "Nauru Standard Time Act 1978 Time Change"
+# http://ronlaw.gov.nr/nauru_lpms/files/gazettes/4b23a17d2030150404db7a5fa5872f52.pdf#page=3
+# based on "Nauru Standard Time Act 1978 Time Change"
+# http://www.paclii.org/nr/legis/num_act/nsta1978207/ defined that "Nauru
+# Alternative Time" (GMT+12) should be in effect from 1979 Feb.
+#
+# From Paul Eggert (2018-11-19):
+# The 1921-01-15 introduction of standard time is in Shanks; it is also in
+# "Standard Time Throughout the World", US National Bureau of Standards (1935),
+# page 3, which does not give the UT offset.  In response to a comment by
+# Phake Nick I set the Nauru time of occupation by Japan to
+# 1942-08-29/1945-09-08 by using dates from:
+# https://en.wikipedia.org/wiki/Japanese_occupation_of_Nauru
 
 # Norfolk
 

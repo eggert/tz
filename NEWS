@@ -27,6 +27,9 @@ Unreleased, experimental changes
     not 00:00.  I transcribed the time incorrectly from Shanks.
     (Thanks to Phake Nick.)
 
+    Nauru's 1979 transition was on 02-10 at 02:00, not 05-01 at 00:00.
+    (Thanks to Phake Nick.)
+
     Guam observed DST irregularly from 1959 through 1977.
     (Thanks to Phake Nick.)
 
@@ -40,7 +43,8 @@ Unreleased, experimental changes
     This release contains many changes to timestamps before 1946 due
     to Japanese possession or occupation of Pacific/Chuuk,
     Pacific/Guam, Pacific/Kosrae, Pacific/Kwajalein, Pacific/Majuro,
-    Pacific/Palau, and Pacific/Pohnpei.  (Thanks to Phake Nick.)
+    Pacific/Nauru, Pacific/Palau, and Pacific/Pohnpei.
+    (Thanks to Phake Nick.)
 
     Assume that the Spanish East Indies was like the Philippines and
     observed American time until the end of 1844.  This affects

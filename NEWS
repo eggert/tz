@@ -21,7 +21,14 @@ Unreleased, experimental changes
     It did not change clocks that day and is now on -08 indefinitely,
     reverting to its form before fall 2015.  (Thanks to Ryan Stanley.)
 
-  Change to past time stamps
+  Change to past timestamps
+
+    Kwajalein's 1993-08-20 transition from -12 to +12 was at 24:00,
+    not 00:00.  I transcribed the time incorrectly from Shanks.
+    (Thanks to Phake Nick.)
+
+    Guam observed DST irregularly from 1959 through 1977.
+    (Thanks to Phake Nick.)
 
     Hong Kong observed DST in 1941 starting 06-15 (not 04-01), then on
     10-01 changed standard time to +08:30 (not +08).  Its transition
@@ -29,6 +36,15 @@ Unreleased, experimental changes
     Its 1904-10-30 change took effect at 01:00 +08 (not 00:00 LMT).
     (Thanks to Phake Nick, Steve Allen, and Joseph Myers.)  Also,
     its 1952 fallback was on 11-02 (not 10-25).
+
+    This release contains many changes to timestamps before 1946 due
+    to Japanese possession or occupation of Pacific/Chuuk,
+    Pacific/Guam, Pacific/Kosrae, Pacific/Kwajalein, Pacific/Majuro,
+    Pacific/Palau, and Pacific/Pohnpei.  (Thanks to Phake Nick.)
+
+    Assume that the Spanish East Indies was like the Philippines and
+    observed American time until the end of 1844.  This affects
+    Pacific/Chuuk, Pacific/Kosrae, Pacific/Palau, and Pacific/Pohnpei.
 
   Changes to past tm_isdst flags
 
@@ -156,7 +172,7 @@ Release 2018f - 2018-10-18 00:14:18 -0700
     localtime.c no longer ignores TZif POSIX-style TZ strings that
     specify only standard time.  Instead, these TZ strings now
     override the default time type for timestamps after the last
-    transition (or for all time stamps if there are no transitions),
+    transition (or for all timestamps if there are no transitions),
     just as DST strings specifying DST have always done.
 
     leapseconds.awk now outputs "#updated" and "#expires" comments,

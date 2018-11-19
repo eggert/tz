@@ -1773,7 +1773,9 @@ Rule	Japan	1950	1951	-	May	Sat>=1	24:00	1:00	D
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
 			9:00	Japan	J%sT
-# Since 1938, all Japanese possessions have been like Asia/Tokyo.
+# Since 1938, all Japanese possessions have been like Asia/Tokyo,
+# except that Truk (Chuuk), Ponape (Pohnpei), and Jaluit (Kosrae) did not
+# switch from +10 to +09 until 1941-04-01; see the 'australasia' file.
 
 # Jordan
 #
@@ -3024,6 +3026,11 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 # no information
 
 # Philippines
+
+# From Paul Eggert (2018-11-18):
+# The Spanish initially used American (west-of-Greenwich) time.
+# It is unknown what time Manila kept when the British occupied it from
+# 1762-10-06 through 1764-04; for now assume it kept American time.
 # On 1844-08-16, Narciso Clavería, governor-general of the
 # Philippines, issued a proclamation announcing that 1844-12-30 was to
 # be immediately followed by 1845-01-01; see R.H. van Gent's

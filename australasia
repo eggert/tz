@@ -1624,7 +1624,14 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # should occur at around 1950s instead.
 #
 # From Paul Eggert (2018-11-18):
-# "Seize the High Ground" says
+# The NYT (actually, AP) article is vague and possibly wrong about this.
+# The article says the earlier switch was "40 years ago when the United States
+# Army established a missile test range here".  However, the Kwajalein Test
+# Center was established on 1960-10-01 and was run by the US Navy.  It was
+# transferred to the US Army on 1964-07-01.  See "Seize the High Ground"
+# <https://history.army.mil/html/books/070/70-88-1/cmhPub_70-88-1.pdf>.
+# Given that Shanks was right on the money about the 1993 change, I'm inclined
+# to take Shanks's word for the 1969 change unless we find better evidence.
 
 
 # N Mariana Is, Guam

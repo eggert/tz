@@ -15,6 +15,13 @@ Unreleased, experimental changes
     (e.g., 2033) due to the mismatch between the Gregorian and Islamic
     calendars.
 
+    The table of exact transitions for Iranian DST has been extended.
+    It formerly stopped at the year 2037 in a nod to 32-bit time_t.
+    It now stops at 2090, as there is doubt about how the Persian
+    calendar will treat 2091.  This change predicts DST transitions in
+    2038-9, 2042-3, and 2046-7 to occur one day later than previously
+    predicted.  As before, post-cutoff transitions are approximated.
+
   Changes to past and future timestamps
 
     Metlakatla moved from Alaska to Pacific standard time on 2018-11-04.

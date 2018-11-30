@@ -1311,53 +1311,63 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 #
 # From Paul Eggert (2018-11-30):
 # Go with Shanks & Pottenger before Sept. 1991, and with Pournader thereafter.
-# I used the following code in GNU Emacs 25.2 to generate the "Rule Iran"
-# lines from 2008 through 2087.  This code uses Ed Reingold's cal-persia
-# which uses Birashk's approximation, and this disagrees with the solar
-# calendar predictions for the Persian years 1404 (Gregorian 2025)
-# and 1437 (Gregorian 2058), so this code fixes those two years by hand.
-# My source for this disagreement is Table 15.1, page 264, of:
+# I used the following code in GNU Emacs 26.1 to generate the "Rule Iran"
+# lines from 2008 through 2087.  Emacs 26.1 uses Ed Reingold's
+# cal-persia implementation of Birashk's approximation, which in the
+# 2008-2087 range disagrees with the the astronomical Persian calendar
+# for Persian years 1404 (Gregorian 2025) and 1437 (Gregorian 2058),
+# so the following code special-case those years.  See Table 15.1, page 264, of:
 # Edward M. Reingold and Nachum Dershowitz, Calendrical Calculations:
 # The Ultimate Edition, Cambridge University Press (2018).
 # https://www.cambridge.org/fr/academic/subjects/computer-science/computing-general-interest/calendrical-calculations-ultimate-edition-4th-edition
 # Page 258, footnote 2, of this book says there is some dispute over what will
 # happen in 2091 (and some other years after that), so this code
 # stops in 2087, as 2088 and 2089 agree with the "max" rule below.
-# (let* ((persian-year 1387)
-#	 (persian-lastyear 1466)
-#	 (exceptional-persian-years '(1404 1437)) ; from Table 15.1, page 264
-#	 prevyear
-#	 (persian-beginrange persian-year))
-#   (require 'cal-persia)
-#   (while (<= persian-year persian-lastyear)
-#     (let*
-#	  ((incr (if (member persian-year exceptional-persian-years) 1 0))
-#	   (pa (+ incr (calendar-persian-to-absolute (list 1 1 persian-year))))
-#	   (pa1 (+ (if (member (1+ persian-year) exceptional-persian-years) 1 0)
-#		   (calendar-persian-to-absolute (list 1 1 (1+ persian-year)))))
-#	   (pb (+ incr (calendar-persian-to-absolute (list 6 30 persian-year))))
-#	   (ga (calendar-gregorian-from-absolute pa))
-#	   (ga1 (calendar-gregorian-from-absolute pa1))
-#	   (gb (calendar-gregorian-from-absolute pb))
-#	   (gayear (calendar-extract-year ga)))
-#	(when (not prevyear)
-#	  (setq prevyear gayear))
-#	(when (or (= persian-year persian-lastyear)
-#		  (/= (calendar-extract-day ga) (calendar-extract-day ga1)))
-#	  (insert
-#	   (format
-#	    (concat "Rule\tIran\t%d\t%s\t-\t%s\t%2d\t24:00\t1:00\t-\n"
-#		    "Rule\tIran\t%d\t%s\t-\t%s\t%2d\t24:00\t0\t-\n")
-#	    prevyear
-#	    (if (= prevyear gayear) "only" gayear)
-#	    (calendar-month-name (calendar-extract-month ga) t)
-#	    (calendar-extract-day ga)
-#	    prevyear
-#	    (if (= prevyear gayear) "only" gayear)
-#	    (calendar-month-name (calendar-extract-month gb) t)
-#	    (calendar-extract-day gb)))
-#	  (setq prevyear nil)))
-#     (setq persian-year (+ 1 persian-year))))
+# (cl-loop
+#  initially (require 'cal-persia)
+#  with first-persian-year = 1387
+#  with last-persian-year = 1466
+#  ;; Exceptional years in the above range,
+#  ;; from Reingold & Dershowitz Table 15.1, page 264:
+#  with exceptional-persian-years = '(1404 1437)
+#  with range-start = nil
+#  for persian-year from first-persian-year to last-persian-year
+#  do
+#  (let*
+#      ((exceptional-year-offset
+#        (if (member persian-year exceptional-persian-years) 1 0))
+#       (beg-dst-absolute
+#        (+ (calendar-persian-to-absolute (list 1 1 persian-year))
+#           exceptional-year-offset))
+#       (end-dst-absolute
+#        (+ (calendar-persian-to-absolute (list 6 30 persian-year))
+#           exceptional-year-offset))
+#       (next-year-beg-dst-absolute
+#        (+ (calendar-persian-to-absolute (list 1 1 (1+ persian-year)))
+#           (if (member (1+ persian-year) exceptional-persian-years) 1 0)))
+#       (beg-dst (calendar-gregorian-from-absolute beg-dst-absolute))
+#       (end-dst (calendar-gregorian-from-absolute end-dst-absolute))
+#       (next-year-beg-dst (calendar-gregorian-from-absolute
+#                           next-year-beg-dst-absolute))
+#       (year (calendar-extract-year beg-dst))
+#       (range-end (if range-start year "only")))
+#    (setq range-start (or range-start year))
+#    (when (or (/= (calendar-extract-day beg-dst)
+#                  (calendar-extract-day next-year-beg-dst))
+#              (= persian-year last-persian-year))
+#      (insert
+#       (format
+#        "Rule\tIran\t%d\t%s\t-\t%s\t%2d\t24:00\t1:00\t-\n"
+#        range-start range-end
+#        (calendar-month-name (calendar-extract-month beg-dst) t)
+#        (calendar-extract-day beg-dst)))
+#      (insert
+#       (format
+#        "Rule\tIran\t%d\t%s\t-\t%s\t%2d\t24:00\t0\t-\n"
+#        range-start range-end
+#        (calendar-month-name (calendar-extract-month end-dst) t)
+#        (calendar-extract-day end-dst)))
+#      (setq range-start nil))))
 #
 # From Oscar van Vlijmen (2005-03-30), writing about future
 # discrepancies between cal-persia and the Iranian calendar:

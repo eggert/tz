@@ -792,6 +792,22 @@ Zone America/Boise	-7:44:49 -	LMT	1883 Nov 18 12:15:11
 # For a map of Indiana's time zone regions, see:
 # https://en.wikipedia.org/wiki/Time_in_Indiana
 #
+# From Paul Eggert (2018-11-30):
+# A brief but entertaining history of time in Indiana describes a 1949 debate
+# in the Indiana House where city legislators (who favored "fast time")
+# tussled with farm legislators (who didn't) over a bill to outlaw DST:
+#  "Lacking enough votes, the city faction tries to filibuster until time runs
+#   out on the session at midnight, but rural champion Rep. Herbert Copeland,
+#   R-Madison, leans over the gallery railing and forces the official clock
+#   back to 9 p.m., breaking it in the process.  The clock sticks on 9 as the
+#   debate rages on into the night.  The filibuster finally dies out and the
+#   bill passes, while outside the chamber, clocks read 3:30 a.m.  In the end,
+#   it doesn't matter which side won.  The law has no enforcement powers and
+#   is simply ignored by fast-time communities."
+# How Indiana went from 'God's time' to split zones and daylight-saving.
+# Indianapolis Star. 2018-11-27 14:58 -05.
+# https://www.indystar.com/story/news/politics/2018/11/27/indianapolis-indiana-time-zone-history-central-eastern-daylight-savings-time/2126300002/
+#
 # From Paul Eggert (2007-08-17):
 # Since 1970, most of Indiana has been like America/Indiana/Indianapolis,
 # with the following exceptions:

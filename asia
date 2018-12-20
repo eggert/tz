@@ -2170,8 +2170,10 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # and in Byalokoz) lists Ural river (plus 10 versts on its left bank) in
 # the third time belt (before 1930 this means +03).
 
-# From Paul Eggert (2016-12-06):
-# The tables below reflect Golosunov's remarks, with exceptions as noted.
+# From Alexander Konzurovski (2018-12-20):
+# Qyzyolrda Region (Asia/Qyzylorda) is changing its time zone from
+# UTC+6 to UTC+5 effective December 21st, 2018. The legal document is
+# located here: http://adilet.zan.kz/rus/docs/P1800000817 (russian language).
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 #
@@ -2185,8 +2187,6 @@ Zone	Asia/Almaty	5:07:48 -	LMT	1924 May  2 # or Alma-Ata
 			6:00 RussiaAsia	+06/+07	2004 Oct 31  2:00s
 			6:00	-	+06
 # Qyzylorda (aka Kyzylorda, Kizilorda, Kzyl-Orda, etc.) (KZ-KZY)
-# This currently includes Qostanay (aka Kostanay, Kustanay) (KZ-KUS);
-# see comments below.
 Zone	Asia/Qyzylorda	4:21:52 -	LMT	1924 May  2
 			4:00	-	+04	1930 Jun 21
 			5:00	-	+05	1981 Apr  1
@@ -2197,21 +2197,22 @@ Zone	Asia/Qyzylorda	4:21:52 -	LMT	1924 May  2
 			5:00 RussiaAsia	+05/+06	1992 Jan 19  2:00s
 			6:00 RussiaAsia	+06/+07	1992 Mar 29  2:00s
 			5:00 RussiaAsia	+05/+06	2004 Oct 31  2:00s
-			6:00	-	+06
-# The following zone is like Asia/Qyzylorda except for being one
-# hour earlier from 1991-09-29 to 1992-03-29.  The 1991/2 rules for
-# Qostanay are unclear partly because of the 1997 Turgai
-# reorganization, so this zone is commented out for now.
-#Zone	Asia/Qostanay	4:14:20 -	LMT	1924 May  2
-#			4:00	-	+04	1930 Jun 21
-#			5:00	-	+05	1981 Apr  1
-#			5:00	1:00	+06	1981 Oct  1
-#			6:00	-	+06	1982 Apr  1
-#			5:00 RussiaAsia	+05/+06	1991 Mar 31  2:00s
-#			4:00 RussiaAsia	+04/+05	1992 Jan 19  2:00s
-#			5:00 RussiaAsia	+05/+06	2004 Oct 31  2:00s
-#			6:00	-	+06
+			6:00	-	+06	2018 Dec 21  0:00
+			5:00	-	+05
 #
+# Qostanay (aka Kostanay, Kustanay) (KZ-KUS)
+# The 1991/2 rules are unclear partly because of the 1997 Turgai
+# reorganization.
+Zone	Asia/Qostanay	4:14:28 -	LMT	1924 May  2
+			4:00	-	+04	1930 Jun 21
+			5:00	-	+05	1981 Apr  1
+			5:00	1:00	+06	1981 Oct  1
+			6:00	-	+06	1982 Apr  1
+			5:00 RussiaAsia	+05/+06	1991 Mar 31  2:00s
+			4:00 RussiaAsia	+04/+05	1992 Jan 19  2:00s
+			5:00 RussiaAsia	+05/+06	2004 Oct 31  2:00s
+			6:00	-	+06
+
 # Aqtöbe (aka Aktobe, formerly Aktyubinsk) (KZ-AKT)
 Zone	Asia/Aqtobe	3:48:40	-	LMT	1924 May  2
 			4:00	-	+04	1930 Jun 21

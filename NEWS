@@ -2,6 +2,13 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    Qyzylorda, Kazakhstan moved from +06 to +05 on 2018-12-21.
+    New zone Asia/Qostanay because Qostanay, Kazakhstan didn't move.
+    Metlakatla, Alaska observes PST this winter only.
+    Guess Morocco will continue to adjust clocks around Ramadan.
+    Add predictions for Iran from 2038 through 2090.
+
   Changes to future timestamps
 
     Guess that Morocco will continue to fall back just before and
@@ -23,6 +30,10 @@ Unreleased, experimental changes
     predicted.  As before, post-cutoff transitions are approximated.
 
   Changes to past and future timestamps
+
+    Qyzylorda (aka Kyzylorda) oblast in Kazakhstan moved from +06 to
+    +05 on 2018-12-21.  This is a zone split as Qostanay (aka
+    Kostanay) did not switch, so create a zone Asia/Qostanay.
 
     Metlakatla moved from Alaska to Pacific standard time on 2018-11-04.
     It did not change clocks that day and remains on -08 this winter.

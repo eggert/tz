@@ -1,5 +1,16 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Briefly:
+    São Tomé and Príncipe switches from +01 to +00 on 2019-01-01.
+
+  Changes to past and future timestamps
+
+    São Tomé and Príncipe switches back from +01 to +00 on 2019-01-01,
+    due to a change in government.  (Thanks to Vadim Nasardinov.)
+
+
 Release 2018h - 2018-12-23 17:59:32 -0800
 
   Briefly:

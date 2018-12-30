@@ -551,8 +551,8 @@ Java</a> contains a copy of a subset of a recent
 Java-specific format.</li>
 <li><a href="https://relativedata.com/page/Time-Zone-Master">Time Zone
 Master</a> is a Microsoft Windows clock program that can automatically
-download, compile and use <code>tz</code> releases. The Basic version
-is free.</li>
+download, compile and use <code><abbr>tz</abbr></code> releases.
+The Basic version is free.</li>
 <li><a
 href="http://veladg.com/velaterra.html">VelaTerra</a> is
 a macOS program. Its developers
@@ -563,10 +563,16 @@ licenses</a> to <code><abbr>tz</abbr></code> contributors.</li>
 <ul>
 <li><a href="https://www.astro.com/atlas">Time-zone Atlas</a>
 is Astrodienst's Web version of Shanks and Pottenger's out-of-print
-time zone history atlases now published in <a
+time zone history atlases
+<a href="https://www.worldcat.org/oclc/468828649">for the US</a> and
+<a href="https://www.worldcat.org/oclc/76950459">for the world</a>,
+now published in <a
 href="https://astrocom.com/astrology-products/software/acs-atlas-software">software</a>
 form by <a href="https://astrocom.com">ACS-Starcrafts</a>.
-These atlases are extensive but unreliable, as Shanks appears to have
+Although these extensive atlases
+<a href="https://astrologynewsservice.com/opinion/how-astrologers-contributed-to-the-information-age-a-brief-history-of-time/">were
+sources for much of the older <code><abbr>tz</abbr></code> data</a>,
+they are unreliable as Shanks appears to have
 guessed many <abbr>UT</abbr> offsets and transitions. The atlases cite no
 sources and do not indicate which entries are guesswork.</li>
 <li><a href="https://en.wikipedia.org/wiki/HP-UX">HP-UX</a> has a database in
@@ -856,14 +862,14 @@ href="https://www.iers.org/IERS/EN/Publications/Bulletins/bulletins.html"><abbr
 title="International Earth Rotation and Reference Systems Service">IERS</abbr>
 Bulletins</a> contains official publications of the International
 Earth Rotation and Reference Systems Service, which decides when leap
-seconds occur. The <code>tz</code> code and data support leap seconds
+seconds occur. The <code><abbr>tz</abbr></code> code and data support leap seconds
 via an optional "<code>right</code>" configuration, as opposed to the
 default "<code>posix</code>" configuration.</li>
 <li><a href="https://developers.google.com/time/smear">Leap Smear</a>
 discusses how to gradually adjust <abbr>POSIX</abbr> clocks near a
 leap second so that they disagree with <abbr>UTC</abbr> by at most a
 half second, even though every <abbr>POSIX</abbr> minute has exactly
-sixty seconds. This approach works with the default <code>tz</code>
+sixty seconds. This approach works with the default <code><abbr>tz</abbr></code>
 "<code>posix</code>" configuration, is <a
 href="http://bk1.ntp.org/ntp-stable/README.leapsmear">supported</a> by
 the <abbr>NTP</abbr> reference implementation, and is used by major

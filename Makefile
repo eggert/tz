@@ -12,7 +12,10 @@ VERSION=	unknown
 # Email address for bug reports.
 BUGEMAIL=	tz@iana.org
 
-# Choose source data features.  To get new features right away, use:
+# DATAFORM selects the data format.
+# Available formats represent essentially the same data, albeit
+# possibly with minor discrepancies that users are not likely to notice.
+# To get new features and the best data right away, use:
 #	DATAFORM=	vanguard
 # To wait a while before using new features, to give downstream users
 # time to upgrade zic (the default), use:

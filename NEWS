@@ -1,5 +1,18 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Briefly:
+    Metlakatla "falls back" to rejoin Alaska Time on 2019-01-20 at 02:00.
+
+  Changes to future timestamps
+
+    Metlakatla will end its observance of Pacific standard time, rejoining
+    Alaska Time, on 2019-01-20 at 02:00, and will not wait until Alaska springs
+    forward on 2019-03-10 as was predicted in 2018h.  (Thanks to Ryan Stanley
+    and Tim Parenti.)
+
+
 Release 2018i - 2018-12-30 11:05:43 -0800
 
   Briefly:

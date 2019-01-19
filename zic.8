@@ -63,7 +63,7 @@ Link	\fItimezone\fP		localtime
 Use
 .IR timezone 's
 rules when handling POSIX-format
-timezone environment variables.
+TZ strings like "CST6CDT" that lack transition rules.
 .B zic
 will act as if the input contained a link line of the form
 .sp
@@ -102,7 +102,7 @@ prohibit this.
 .PP
 The output file does not contain all the information about the
 long-term future of a timezone, because the future cannot be summarized as
-an extended POSIX TZ string.  For example, as of 2013 this problem
+an extended POSIX TZ string.  For example, as of 2019 this problem
 occurs for Iran's daylight-saving rules for the predicted future, as
 these rules are based on the Iranian calendar, which cannot be
 represented.
@@ -130,6 +130,10 @@ or that starts with
 Limit time values stored in output files to values that are the same
 whether they're taken to be signed or unsigned.
 You can use this option to generate SVVS-compatible files.
+.SH FILES
+Input files use the format described in this section; output files use
+.IR tzfile (5)
+format.
 .PP
 Input files should be text files, that is, they should be a series of
 zero or more lines, each ending in a newline byte and containing at
@@ -457,6 +461,16 @@ continuation.
 .PP
 If a zone changes at the same instant that a rule would otherwise take
 effect in the earlier zone or continuation line, the rule is ignored.
+A zone or continuation line
+.I L
+with a named rule set starts with standard time by default:
+that is, any of
+.IR L 's
+timestamps preceding
+.IR L 's
+earliest rule use the rule in effect after
+.IR L 's
+first transition into standard time.
 In a single zone it is an error if two rules take effect at the same
 instant, or if two zone changes take effect at the same instant.
 .PP

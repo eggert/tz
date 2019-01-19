@@ -36,11 +36,11 @@ DATAFORM=		main
 LOCALTIME=	GMT
 
 # If you want something other than Eastern United States time as a template
-# for handling POSIX-style timezone environment variables,
+# for handling ruleless POSIX-style timezone environment variables,
 # change the line below (after finding the timezone you want in the
 # one of the $(TDATA) source files, or adding it to a source file).
-# When a POSIX-style environment variable is handled, the rules in the
-# template file are used to determine "spring forward" and "fall back" days and
+# A ruleless environment setting like TZ='CST6CDT' uses the rules in the
+# template file to determine "spring forward" and "fall back" days and
 # times; the environment variable itself specifies UT offsets of standard and
 # daylight saving time.
 # Alternatively, if you discover you've got the wrong timezone, you can just
@@ -49,7 +49,6 @@ LOCALTIME=	GMT
 # Use the command
 #	make zonenames
 # to get a list of the values you can use for POSIXRULES.
-# If you want POSIX compatibility, use "America/New_York".
 
 POSIXRULES=	America/New_York
 

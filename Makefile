@@ -115,8 +115,8 @@ TIME_T_ALTERNATIVES = $(TIME_T_ALTERNATIVES_HEAD) $(TIME_T_ALTERNATIVES_TAIL)
 TIME_T_ALTERNATIVES_HEAD = int64_t
 TIME_T_ALTERNATIVES_TAIL = int32_t uint32_t uint64_t
 
-# What kind of TZif data files to generate.
-# (TZif is the binary time zone data format that zic generates.)
+# What kind of TZif data files to generate.  (TZif is the binary time
+# zone data format that zic generates; see Internet RFC 8536.)
 # If you want only POSIX time, with time values interpreted as
 # seconds since the epoch (not counting leap seconds), use
 #	REDO=		posix_only

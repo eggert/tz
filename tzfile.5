@@ -15,7 +15,8 @@ The timezone information files used by
 .BR tzset (3)
 are typically found under a directory with a name like
 .IR /usr/share/zoneinfo .
-These files begin with a 44-byte header containing the following fields:
+These files use the format described in Internet RFC 8536.
+The format begins with a 44-byte header containing the following fields:
 .IP * 2
 The magic four-byte ASCII sequence
 .q "TZif"
@@ -384,6 +385,15 @@ of one hour, or of 15 minutes, or of 1 minute.
 .BR tzset (3),
 .BR tzselect (8),
 .BR zdump (8),
-.BR zic (8)
+.BR zic (8).
+.PP
+Olson A, Eggert P, Murchison K. The Time Zone Information Format (TZif).
+2019 Feb.
+.UR https://\:www.rfc-editor.org/\:info/\:rfc8536
+Internet RFC 8536
+.UE
+.UR https://\:doi.org/\:10.17487/\:RFC8536
+doi:10.17487/RFC8536
+.UE .
 .\" This file is in the public domain, so clarified as of
 .\" 1996-06-05 by Arthur David Olson.

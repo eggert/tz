@@ -14,6 +14,8 @@ Unreleased, experimental changes
 
   Changes to documentation
 
+    Mention Internet RFC 8536 (February 2019), which documents TZif.
+
     tz-link.html now cites tzdata-meta
     <https://tzdata-meta.timtimeonline.com/>.
 

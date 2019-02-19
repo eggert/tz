@@ -493,7 +493,8 @@ MANTXTS=	newctime.3.txt newstrftime.3.txt newtzset.3.txt \
 COMMON=		calendars CONTRIBUTING LICENSE Makefile \
 			NEWS README theory.html version
 WEB_PAGES=	tz-art.html tz-how-to.html tz-link.html
-CHECK_WEB_PAGES=check_tz-art.html check_tz-how-to.html check_tz-link.html
+CHECK_WEB_PAGES=check_theory.html check_tz-art.html \
+			check_tz-how-to.html check_tz-link.html
 DOCS=		$(MANS) date.1 $(MANTXTS) $(WEB_PAGES)
 PRIMARY_YDATA=	africa antarctica asia australasia \
 		europe northamerica southamerica
@@ -806,9 +807,10 @@ check_tzs:	$(TZS) $(TZS_NEW)
 		touch $@
 
 check_web:	$(CHECK_WEB_PAGES)
+check_theory.html: theory.html
 check_tz-art.html: tz-art.html
 check_tz-link.html: tz-link.html
-check_tz-art.html check_tz-link.html:
+check_theory.html check_tz-art.html check_tz-link.html:
 		$(CURL) -sS --url https://validator.w3.org/nu/ -F out=gnu \
 		    -F file=@$$(expr $@ : 'check_\(.*\)') -o $@.out && \
 		  test ! -s $@.out || { cat $@.out; exit 1; }

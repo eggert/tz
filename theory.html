@@ -215,13 +215,6 @@ in decreasing order of importance:
     do not need locations, since local time is not defined there.
   </li>
   <li>
-    There should typically be at least one name for each <a
-    href="https://en.wikipedia.org/wiki/ISO_3166-1"><abbr
-    title="International Organization for Standardization">ISO</abbr>
-    3166-1</a> officially assigned two-letter code for an inhabited
-    country or territory.
-  </li>
-  <li>
     If all the clocks in a timezone have agreed since 1970,
     do not bother to include more than one timezone
     even if some of the clocks disagreed before 1970.
@@ -305,29 +298,23 @@ in decreasing order of importance:
 </ul>
 
 <p>
-The file '<code>zone1970.tab</code>' lists geographical locations used
-to name timezones.
-It is intended to be an exhaustive list of names for geographic
-regions as described above; this is a subset of the timezones in the data.
-Although a '<code>zone1970.tab</code>' location's
-<a href="https://en.wikipedia.org/wiki/Longitude">longitude</a>
-corresponds to
-its <a href="https://en.wikipedia.org/wiki/Local_mean_time">local mean
-time (<abbr>LMT</abbr>)</a> offset with one hour for every 15&deg;
-east longitude, this relationship is not exact.
+Guidelines have evolved with time, and names following old versions of
+this guideline might not follow the current version. When guidelines
+have changed, old names continue to be supported. Guideline changes
+have included the following:
 </p>
 
-<p>
-Older versions of this package used a different naming scheme,
-and these older names are still supported.
+<ul>
+<li>
+Older versions of this package used a different naming scheme.
 See the file '<code>backward</code>' for most of these older names
 (e.g., '<code>US/Eastern</code>' instead of '<code>America/New_York</code>').
 The other old-fashioned names still supported are
 '<code>WET</code>', '<code>CET</code>', '<code>MET</code>', and
 '<code>EET</code>' (see the file '<code>europe</code>').
-</p>
+</li>
 
-<p>
+<li>
 Older versions of this package defined legacy names that are
 incompatible with the first guideline of location names, but which are
 still supported.
@@ -338,6 +325,31 @@ Also, the file '<code>backward</code>' defines the legacy names
 and the file '<code>northamerica</code>' defines the legacy names
 '<code>EST5EDT</code>', '<code>CST6CDT</code>',
 '<code>MST7MDT</code>', and '<code>PST8PDT</code>'.
+</li>
+
+<li>
+Older versions of this guideline said that
+there should typically be at least one name for each <a
+href="https://en.wikipedia.org/wiki/ISO_3166-1"><abbr
+title="International Organization for Standardization">ISO</abbr>
+3166-1</a> officially assigned two-letter code for an inhabited
+country or territory.
+This old guideline has been dropped, as it was not needed to handle
+timestamps correctly and it increased maintenance burden.
+</li>
+</ul>
+
+<p>
+The file '<code>zone1970.tab</code>' lists geographical locations used
+to name timezones.
+It is intended to be an exhaustive list of names for geographic
+regions as described above; this is a subset of the timezones in the data.
+Although a '<code>zone1970.tab</code>' location's
+<a href="https://en.wikipedia.org/wiki/Longitude">longitude</a>
+corresponds to
+its <a href="https://en.wikipedia.org/wiki/Local_mean_time">local mean
+time (<abbr>LMT</abbr>)</a> offset with one hour for every 15&deg;
+east longitude, this relationship is not exact.
 </p>
 
 <p>

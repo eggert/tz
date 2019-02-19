@@ -107,9 +107,9 @@ It does not always make sense to talk about a timezone's
 </section>
 
 <section>
-  <h2 id="naming">Names of timezones</h2>
+  <h2 id="naming">Timezone identifiers</h2>
 <p>
-Each timezone has a unique name.
+Each timezone has a name that uniquely identifies the timezone.
 Inexperienced users are not expected to select these names unaided.
 Distributors should provide documentation and/or a simple selection
 interface that explains each name via a map or via descriptive text like
@@ -1220,6 +1220,17 @@ Interfaces not listed above are less stable.
 For example, users should not rely on particular <abbr>UT</abbr>
 offsets or abbreviations for timestamps, as data entries are often
 based on guesswork and these guesses may be corrected or improved.
+</p>
+
+<p>
+Timezone boundaries are not part of the stable interface.
+For example, even though the <samp>Asia/Bangkok</samp> timezone
+currently includes Chang Mai, Hanoi, and Phnom Penh, this is not part
+of the stable interface and the timezone can split at any time.
+If a calendar application records a future event in some location other
+than Bangkok by putting "<samp>Asia/Bangkok</samp>" in the event's record,
+the application should be robust in the presence of timezone splits
+between now and the future time.
 </p>
 </section>
 

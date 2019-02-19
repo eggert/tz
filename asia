@@ -3596,5 +3596,17 @@ Zone Asia/Ho_Chi_Minh	7:06:40 -	LMT	1906 Jul  1
 			8:00	-	+08	1975 Jun 13
 			7:00	-	+07
 
+# From Paul Eggert (2019-02-19):
+#
+# The Ho Chi Minh entry suffices for most purposes as it agrees with all of
+# Vietnam since 1975-06-13.  Presumably clocks often changed in south Vietnam
+# in the early 1970s as locations changed hands during the war; however the
+# details are unknown and would likely be too voluminous for this database.
+#
+# For timestamps in north Vietnam back to 1970 (the tzdb cutoff),
+# use Asia/Bankgok; see the VN entries in the file zone1970.tab.
+# For timestamps before 1970, see Asia/Hanoi in the file 'backzone'.
+
+
 # Yemen
 # See Asia/Riyadh.

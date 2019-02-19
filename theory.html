@@ -228,6 +228,12 @@ in decreasing order of importance:
     Otherwise these tables would become annoyingly large.
   </li>
   <li>
+    If boundaries between regions are fluid, such as during a war or
+    insurrection, do not bother to create a new timezone merely
+    because of yet another boundary change. This helps prevent table
+    bloat and simplifies maintenance.
+  </li>
+  <li>
     If a name is ambiguous, use a less ambiguous alternative;
     e.g., many cities are named San José and Georgetown, so
     prefer <code>America/Costa_Rica</code> to

@@ -3604,7 +3604,7 @@ Zone Asia/Ho_Chi_Minh	7:06:40 -	LMT	1906 Jul  1
 # details are unknown and would likely be too voluminous for this database.
 #
 # For timestamps in north Vietnam back to 1970 (the tzdb cutoff),
-# use Asia/Bankgok; see the VN entries in the file zone1970.tab.
+# use Asia/Bangkok; see the VN entries in the file zone1970.tab.
 # For timestamps before 1970, see Asia/Hanoi in the file 'backzone'.
 
 

@@ -364,6 +364,11 @@ Zone	Africa/Cairo	2:05:09 -	LMT	1900 Oct
 # See Africa/Lagos.
 
 # Eritrea
+# See Africa/Nairobi.
+
+# Eswatini (formerly Swaziland)
+# See Africa/Johannesburg.
+
 # Ethiopia
 # See Africa/Nairobi.
 #
@@ -373,9 +378,6 @@ Zone	Africa/Cairo	2:05:09 -	LMT	1900 Oct
 # Mortada D. If you have a meeting in Ethiopia, you'd better double
 # check the time. PRI's The World. 2015-01-30 15:15 -05.
 # https://www.pri.org/stories/2015-01-30/if-you-have-meeting-ethiopia-you-better-double-check-time
-
-# Eswatini (formerly Swaziland)
-# See Africa/Johannesburg.
 
 # Gabon
 # See Africa/Lagos.

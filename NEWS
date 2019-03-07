@@ -12,6 +12,11 @@ Unreleased, experimental changes
     forward on 2019-03-10 as was predicted in 2018h.  (Thanks to Ryan Stanley
     and Tim Parenti.)
 
+  Changes to past timestamps
+
+    Israel observed DST in 1980 (08-02/09-13) and 1984 (05-05/08-25).
+    (Thanks to Alois Treindl and Isaac Starkman.)
+
   Changes to documentation
 
     Mention Internet RFC 8536 (February 2019), which documents TZif.

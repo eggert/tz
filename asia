@@ -1620,6 +1620,24 @@ Rule	Zion	1974	only	-	Jul	 7	0:00	1:00	D
 Rule	Zion	1974	only	-	Oct	13	0:00	0	S
 Rule	Zion	1975	only	-	Apr	20	0:00	1:00	D
 Rule	Zion	1975	only	-	Aug	31	0:00	0	S
+
+# From Alois Treindl (2019-03-06):
+# http://www.moin.gov.il/Documents/שעון קיץ/clock-50-years-7-2014.pdf
+# From Isaac Starkman (2019-03-06):
+# Summer time was in that period in 1980 and 1984, see
+# https://www.ynet.co.il/articles/0,7340,L-3951073,00.html
+# You can of course read it in translation.
+# I checked the local newspapers for that years.
+# It started on midnight and end at 01.00 am.
+# From Paul Eggert (2019-03-06):
+# Also see this thread about the moin.gov.il URL:
+# https://mm.icann.org/pipermail/tz/2018-November/027194.html
+Rule	Zion	1980	only	-	Aug	 2	0:00	1:00	D
+Rule	Zion	1980	only	-	Sep	13	1:00	0	S
+Rule	Zion	1984	only	-	May	 5	0:00	1:00	D
+Rule	Zion	1984	only	-	Aug	25	1:00	0	S
+
+# From Shanks & Pottenger:
 Rule	Zion	1985	only	-	Apr	14	0:00	1:00	D
 Rule	Zion	1985	only	-	Sep	15	0:00	0	S
 Rule	Zion	1986	only	-	May	18	0:00	1:00	D

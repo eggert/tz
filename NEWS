@@ -17,6 +17,13 @@ Unreleased, experimental changes
     Israel observed DST in 1980 (08-02/09-13) and 1984 (05-05/08-25).
     (Thanks to Alois Treindl and Isaac Starkman.)
 
+  Changes to time zone abbreviations
+
+    Etc/UCT is now a backward-compatibility link to Etc/UTC, instead
+    of being a separate zone that generates the abbreviation "UCT",
+    which nowadays is typically a typo.  (Problem reported by Isiah
+    Meadows.)
+
   Changes to documentation
 
     Mention Internet RFC 8536 (February 2019), which documents TZif.

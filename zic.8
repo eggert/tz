@@ -79,6 +79,30 @@ Read leap second information from the file with the given name.
 If this option is not used,
 no leap second information appears in output files.
 .TP
+.BR "\*-r " "[\fB@\fP\fIlo\fP][\fB/@\fP\fIhi\fP]"
+Reduce the size of output files by limiting their applicability
+to timestamps in the range from
+.I lo
+through
+.IR hi ,
+where
+.I lo
+and
+.I hi
+are possibly-signed decimal counts of seconds since the Epoch
+(1970-01-01 00:00:00 UTC).
+Omitted counts default to extreme values.
+For example,
+.q "zic \*-r @0"
+omits data intended for negative timestamps (i.e., before the Epoch), and
+.q "zic \*-r @0/@2147483647"
+outputs data intended only for nonnegative timestamps that fit into
+31-bit signed integers.
+On platforms with GNU
+.BR date ,
+.q "zic \-r @$(date +%s)"
+omits data intended for past timestamps.
+.TP
 .B \*-v
 Be more verbose, and complain about the following situations:
 .RS
@@ -125,11 +149,6 @@ or it contains a file name component that contains more than 14 bytes
 or that starts with
 .q "\*-" .
 .RE
-.TP
-.B \*-s
-Limit time values stored in output files to values that are the same
-whether they're taken to be signed or unsigned.
-You can use this option to generate SVVS-compatible files.
 .SH FILES
 Input files use the format described in this section; output files use
 .IR tzfile (5)

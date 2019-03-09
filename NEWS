@@ -24,6 +24,16 @@ Unreleased, experimental changes
     which nowadays is typically a typo.  (Problem reported by Isiah
     Meadows.)
 
+  Changes to code
+
+    zic now has an -r option to limit the time range of output data.
+    For example, 'zic -r @1000000000' limits the output data to
+    timestamps starting 1000000000 seconds after the Epoch.
+    This helps shrink output size and can be useful for applications
+    not needing the full timestamp history, such as TZDIST truncation;
+    see Internet RFC 8536 section 5.1.  (Inspired by a feature request
+    from Christopher Wong.)
+
   Changes to documentation
 
     Mention Internet RFC 8536 (February 2019), which documents TZif.

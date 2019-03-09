@@ -362,6 +362,9 @@ LEAPSECONDS=
 zic=		./zic
 ZIC=		$(zic) $(ZFLAGS)
 
+# To shrink the size of installed TZif files,
+# append "-r @N" to omit data before N-seconds-after-the-Epoch.
+# See the zic man page for more about -r.
 ZFLAGS=
 
 # How to use zic to install TZif files.

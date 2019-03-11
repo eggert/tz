@@ -847,11 +847,13 @@ check_zishrink_posix check_zishrink_right: \
 		touch $@
 
 clean_misc:
+		rm -fr check_*.dir
 		rm -f *.o *.out $(TIME_T_ALTERNATIVES) \
 		  check_* core typecheck_* \
 		  date tzselect version.h zdump zic yearistype libtz.a
 clean:		clean_misc
-		rm -fr *.dir *.zi tzdb-*/ $(TZS_NEW)
+		rm -fr *.dir tzdb-*/
+		rm -f *.zi $(TZS_NEW)
 
 maintainer-clean: clean
 		@echo 'This command is intended for maintainers to use; it'

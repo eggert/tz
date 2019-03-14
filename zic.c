@@ -1758,12 +1758,16 @@ puttzcode(const int_fast32_t val, FILE *const fp)
 }
 
 static void
-puttzcode64(const zic_t val, FILE *const fp)
+puttzcodepass(zic_t val, FILE *fp, int pass)
 {
+  if (pass == 1)
+    puttzcode(val, fp);
+  else {
 	char	buf[8];
 
 	convert64(val, buf);
 	fwrite(buf, sizeof buf, 1, fp);
+  }
 }
 
 static int
@@ -1796,24 +1800,23 @@ static struct timerange
 limitrange(struct timerange r, zic_t lo, zic_t hi,
 	   zic_t const *ats, unsigned char const *types)
 {
-  while (0 < r.count && hi < ats[r.base + r.count - 1])
-    r.count--;
-  while (1 < r.count && ats[r.base] < lo && ats[r.base + 1] <= lo) {
-    /* Discard too-low transitions, except keep any last too-low
-       transition if no transition is exactly at LO.  The kept
-       transition will be output as a LO "transition" appropriate for
-       buggy clients that do not use time type 0 for timestamps before
-       the first transition; see "Output a LO_TIME transition" below.  */
+  while (0 < r.count && ats[r.base] < lo) {
+    r.defaulttype = types[r.base];
     r.count--;
     r.base++;
-    r.defaulttype = types[r.base - (ats[r.base] == lo)];
   }
-  while (0 < r.leapcount && hi < trans[r.leapbase + r.leapcount - 1])
-    r.leapcount--;
   while (0 < r.leapcount && trans[r.leapbase] < lo) {
     r.leapcount--;
     r.leapbase++;
   }
+
+  if (hi < ZIC_MAX) {
+    while (0 < r.count && hi + 1 < ats[r.base + r.count - 1])
+      r.count--;
+    while (0 < r.leapcount && hi + 1 < trans[r.leapbase + r.leapcount - 1])
+      r.leapcount--;
+  }
+
   return r;
 }
 
@@ -1949,7 +1952,8 @@ writezone(const char *const name, const char *const string, char version,
 	for (pass = 1; pass <= 2; ++pass) {
 		register ptrdiff_t thistimei, thistimecnt, thistimelim;
 		register int	thisleapi, thisleapcnt, thisleaplim;
-		int thisdefaulttype;
+		int currenttype, thisdefaulttype;
+		bool locut, hicut;
 		zic_t lo;
 		int old0;
 		char		omittype[TZ_MAX_TYPES];
@@ -1980,17 +1984,42 @@ writezone(const char *const name, const char *const string, char version,
 			toomanytimes = thistimecnt >> 31 >> 1 != 0;
 			thisleapi = range32.leapbase;
 			thisleapcnt = range32.leapcount;
+			locut = INT32_MIN < lo_time;
+			hicut = hi_time < INT32_MAX;
 		} else {
+			thisdefaulttype = range64.defaulttype;
 			thistimei = range64.base;
 			thistimecnt = range64.count;
 			toomanytimes = thistimecnt >> 31 >> 31 >> 2 != 0;
 			thisleapi = range64.leapbase;
 			thisleapcnt = range64.leapcount;
+			locut = min_time < lo_time;
+			hicut = hi_time < max_time;
 		}
 		if (toomanytimes)
 		  error(_("too many transition times"));
+
+		/* Keep the last too-low transition if no transition is
+		   exactly at LO.  The kept transition will be output as
+		   a LO "transition"; see "Output a LO_TIME transition"
+		   below.  This is needed when the output is truncated at
+		   the start, and is also useful when catering to buggy
+		   32-bit clients that do not use time type 0 for
+		   timestamps before the first transition.  */
+		if (0 < thistimei && ats[thistimei] != lo_time) {
+		  thistimei--;
+		  thistimecnt++;
+		  locut = false;
+		}
+
 		thistimelim = thistimei + thistimecnt;
 		thisleaplim = thisleapi + thisleapcnt;
+		if (thistimecnt != 0) {
+		  if (ats[thistimei] == lo_time)
+		    locut = false;
+		  if (hi_time < ZIC_MAX && ats[thistimelim - 1] == hi_time + 1)
+		    hicut = false;
+		}
 		memset(omittype, true, typecnt);
 		omittype[thisdefaulttype] = false;
 		for (i = thistimei; i < thistimelim; i++)
@@ -2084,7 +2113,7 @@ writezone(const char *const name, const char *const string, char version,
 		convert(thistypecnt, tzh.tzh_ttisgmtcnt);
 		convert(thistypecnt, tzh.tzh_ttisstdcnt);
 		convert(thisleapcnt, tzh.tzh_leapcnt);
-		convert(thistimecnt, tzh.tzh_timecnt);
+		convert(locut + thistimecnt + hicut, tzh.tzh_timecnt);
 		convert(thistypecnt, tzh.tzh_typecnt);
 		convert(thischarcnt, tzh.tzh_charcnt);
 		DO(tzh_magic);
@@ -2102,19 +2131,24 @@ writezone(const char *const name, const char *const string, char version,
 		   for this pass.  */
 		lo = pass == 1 && lo_time < INT32_MIN ? INT32_MIN : lo_time;
 
+		if (locut)
+		  puttzcodepass(lo, fp, pass);
 		for (i = thistimei; i < thistimelim; ++i) {
 		  zic_t at = ats[i] < lo ? lo : ats[i];
-		  if (pass == 1)
-		    puttzcode(at, fp);
-		  else
-		    puttzcode64(at, fp);
+		  puttzcodepass(at, fp, pass);
 		}
+		if (hicut)
+		  puttzcodepass(hi_time + 1, fp, pass);
+		currenttype = 0;
+		if (locut)
+		  putc(currenttype, fp);
 		for (i = thistimei; i < thistimelim; ++i) {
-			unsigned char	uc;
-
-			uc = typemap[types[i]];
-			fwrite(&uc, sizeof uc, 1, fp);
+		  currenttype = typemap[types[i]];
+		  putc(currenttype, fp);
 		}
+		if (hicut)
+		  putc(currenttype, fp);
+
 		for (i = old0; i < typecnt; i++)
 			if (!omittype[i]) {
 				puttzcode(gmtoffs[i], fp);
@@ -2144,9 +2178,7 @@ writezone(const char *const name, const char *const string, char version,
 				}
 				todo = tadd(trans[i], -gmtoffs[j]);
 			} else	todo = trans[i];
-			if (pass == 1)
-				puttzcode(todo, fp);
-			else	puttzcode64(todo, fp);
+			puttzcodepass(todo, fp, pass);
 			puttzcode(corr[i], fp);
 		}
 		for (i = old0; i < typecnt; i++)

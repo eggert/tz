@@ -32,7 +32,8 @@ Unreleased, experimental changes
     This helps shrink output size and can be useful for applications
     not needing the full timestamp history, such as TZDIST truncation;
     see Internet RFC 8536 section 5.1.  (Inspired by a feature request
-    from Christopher Wong.)
+    from Christopher Wong, helped along by bug reports from Wong and
+    from Tim Parenti.)
 
   Changes to documentation
 

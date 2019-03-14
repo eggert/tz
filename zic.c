@@ -2849,11 +2849,12 @@ error(_("can't determine time zone abbreviation to use just after until time"));
 		xr.r_dycode = DC_DOM;
 		xr.r_dayofmonth = 1;
 		xr.r_tod = 0;
-		for (lastat = &attypes[0], i = 1; i < timecnt; i++)
+		for (lastat = attypes, i = 1; i < timecnt; i++)
 			if (attypes[i].at > lastat->at)
 				lastat = &attypes[i];
-		if (lastat->at < rpytime(&xr, max_year - 1)) {
-			addtt(rpytime(&xr, max_year + 1), lastat->type);
+		if (!lastat || lastat->at < rpytime(&xr, max_year - 1)) {
+			addtt(rpytime(&xr, max_year + 1),
+			      lastat ? lastat->type : defaulttype);
 			attypes[timecnt - 1].dontmerge = true;
 		}
 	}

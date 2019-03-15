@@ -610,7 +610,7 @@ change_directory (char const *dir)
 static zic_t const min_time = MINVAL(zic_t, TIME_T_BITS_IN_FILE);
 static zic_t const max_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
 
-/* The minimum, and one less than the maxmimum, values specified by
+/* The minimum, and one less than the maximum, values specified by
    the -r option.  These default to MIN_TIME and MAX_TIME.  */
 static zic_t lo_time = MINVAL(zic_t, TIME_T_BITS_IN_FILE);
 static zic_t hi_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);

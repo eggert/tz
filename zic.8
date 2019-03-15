@@ -83,9 +83,9 @@ no leap second information appears in output files.
 Reduce the size of output files by limiting their applicability
 to timestamps in the range from
 .I lo
-through
-.IR hi ,
-where
+(inclusive) to
+.I hi
+(exclusive), where
 .I lo
 and
 .I hi
@@ -95,7 +95,7 @@ Omitted counts default to extreme values.
 For example,
 .q "zic \*-r @0"
 omits data intended for negative timestamps (i.e., before the Epoch), and
-.q "zic \*-r @0/@2147483647"
+.q "zic \*-r @0/@2147483648"
 outputs data intended only for nonnegative timestamps that fit into
 31-bit signed integers.
 On platforms with GNU

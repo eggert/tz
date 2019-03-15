@@ -605,8 +605,13 @@ change_directory (char const *dir)
 }
 
 #define TIME_T_BITS_IN_FILE 64
+
+/* The minimum and maximum values representable in a TZif file.  */
 static zic_t const min_time = MINVAL(zic_t, TIME_T_BITS_IN_FILE);
 static zic_t const max_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
+
+/* The minimum, and one less than the maxmimum, values specified by
+   the -r option.  These default to MIN_TIME and MAX_TIME.  */
 static zic_t lo_time = MINVAL(zic_t, TIME_T_BITS_IN_FILE);
 static zic_t hi_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
 
@@ -617,22 +622,24 @@ timerange_option(char *timerange)
 {
   intmax_t lo = min_time, hi = max_time;
   char *lo_end = timerange, *hi_end;
-  bool badrange = false;
   if (*timerange == '@') {
+    errno = 0;
     lo = strtoimax (timerange + 1, &lo_end, 10);
-    if (lo_end == timerange + 1)
-      badrange = true;
+    if (lo_end == timerange + 1 || (lo == INTMAX_MAX && errno == ERANGE))
+      return false;
   }
   hi_end = lo_end;
   if (lo_end[0] == '/' && lo_end[1] == '@') {
+    errno = 0;
     hi = strtoimax (lo_end + 2, &hi_end, 10);
-    if (hi_end == lo_end + 2)
-      badrange = true;
+    if (hi_end == lo_end + 2 || hi == INTMAX_MIN)
+      return false;
+    hi -= ! (hi == INTMAX_MAX && errno == ERANGE);
   }
-  if (badrange || *hi_end || hi < lo)
+  if (*hi_end || hi < lo || max_time < lo || hi < min_time)
     return false;
-  lo_time = lo < min_time ? min_time : lo <= max_time ? lo : max_time;
-  hi_time = hi < min_time ? min_time : hi <= max_time ? hi : max_time;
+  lo_time = lo < min_time ? min_time : lo;
+  hi_time = max_time < hi ? max_time : hi;
   return true;
 }
 

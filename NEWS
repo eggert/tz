@@ -4,7 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     Palestine "springs forward" on 2019-03-30 instead of 2019-03-23.
-    Metlakatla "falls back" to rejoin Alaska Time on 2019-01-20 at 02:00.
+    Metlakatla "fell back" to rejoin Alaska Time on 2019-01-20 at 02:00.
 
   Changes to past and future timestamps
 
@@ -13,12 +13,9 @@ Unreleased, experimental changes
     transitions will be between 24 and 30 March, which matches recent practice
     since 2016.  (Thanks to Even Scharning and Tim Parenti.)
 
-  Changes to future timestamps
-
-    Metlakatla will end its observance of Pacific standard time, rejoining
-    Alaska Time, on 2019-01-20 at 02:00, and will not wait until Alaska springs
-    forward on 2019-03-10 as was predicted in 2018h.  (Thanks to Ryan Stanley
-    and Tim Parenti.)
+    Metlakatla ended its observance of Pacific standard time,
+    rejoining Alaska Time, on 2019-01-20 at 02:00.  (Thanks to Ryan
+    Stanley and Tim Parenti.)
 
   Changes to past timestamps
 

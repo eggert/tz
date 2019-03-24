@@ -3089,14 +3089,11 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # the official website, though the decree did not specify the exact
 # time of the time shift.
 # http://www.palestinecabinet.gov.ps/Website/AR/NDecrees/ViewFile.ashx?ID=e7a42ab7-ee23-435a-b9c8-a4f7e81f3817
-#
-# From Paul Eggert (2018-03-16):
-# For 2016 on, predict spring transitions on March's fourth Saturday at 01:00.
 
 # From Even Scharning (2019-03-23):
 # DST in Palestine will start on 30 March this year, not 23 March as the time
 # zone database predicted.
-# https://ramallah.news/post/123610/%D9%85%D9%88%D8%B9%D8%AF-%D8%A7%D9%84%D8%B9%D9%85%D9%84-%D8%A8%D8%A7%D9%84%D8%AA%D9%88%D9%82%D9%8A%D8%AA-%D8%A7%D9%84%D8%B5%D9%8A%D9%81%D9%8A-%D9%81%D9%8A-%D9%81%D9%84%D8%B3%D8%B7%D9%8A%D9%86
+# https://ramallah.news/post/123610/موعد-العمل-بالتوقيت-الصيفي-في-فلسطين
 #
 # From Tim Parenti (2019-03-23):
 # Combining this with the rules observed since 2016, adjust our spring

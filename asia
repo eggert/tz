@@ -3093,6 +3093,15 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # From Paul Eggert (2018-03-16):
 # For 2016 on, predict spring transitions on March's fourth Saturday at 01:00.
 
+# From Even Scharning (2019-03-23):
+# DST in Palestine will start on 30 March this year, not 23 March as the time
+# zone database predicted.
+# https://ramallah.news/post/123610/%D9%85%D9%88%D8%B9%D8%AF-%D8%A7%D9%84%D8%B9%D9%85%D9%84-%D8%A8%D8%A7%D9%84%D8%AA%D9%88%D9%82%D9%8A%D8%AA-%D8%A7%D9%84%D8%B5%D9%8A%D9%81%D9%8A-%D9%81%D9%8A-%D9%81%D9%84%D8%B3%D8%B7%D9%8A%D9%86
+#
+# From Tim Parenti (2019-03-23):
+# Combining this with the rules observed since 2016, adjust our spring
+# transition guess to Mar Sat>=24.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule EgyptAsia	1957	only	-	May	10	0:00	1:00	S
 Rule EgyptAsia	1957	1958	-	Oct	 1	0:00	0	-
@@ -3122,7 +3131,7 @@ Rule Palestine	2012	only	-	Sep	21	1:00	0	-
 Rule Palestine	2013	only	-	Sep	Fri>=21	0:00	0	-
 Rule Palestine	2014	2015	-	Oct	Fri>=21	0:00	0	-
 Rule Palestine	2015	only	-	Mar	lastFri	24:00	1:00	S
-Rule Palestine	2016	max	-	Mar	Sat>=22	1:00	1:00	S
+Rule Palestine	2016	max	-	Mar	Sat>=24	1:00	1:00	S
 Rule Palestine	2016	max	-	Oct	lastSat	1:00	0	-
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

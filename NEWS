@@ -3,7 +3,15 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Palestine "springs forward" on 2019-03-30 instead of 2019-03-23.
     Metlakatla "falls back" to rejoin Alaska Time on 2019-01-20 at 02:00.
+
+  Changes to past and future timestamps
+
+    Palestine will not start DST until 2019-03-30, instead of 2019-03-23 as
+    previously predicted.  Adjust our prediction by guessing that spring
+    transitions will be between 24 and 30 March, which matches recent practice
+    since 2016.  (Thanks to Even Scharning and Tim Parenti.)
 
   Changes to future timestamps
 

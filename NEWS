@@ -3,13 +3,13 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
-    Palestine's 2019-03-30 transition is at 00:00, not 01:00.
+    Palestine's 2019 spring-forward transition is on 03-29, not 03-30.
 
   Changes to future timestamps
 
-    Palestine's 2019-03-30 spring-forward transition is at 00:00, not 01:00.
-    At least that's our guess, since the decree says 2019-03-29 with no time,
-    and news reports say 2019-03-30 at midnight.  (Thanks to Sharef Mustafa.)
+    Palestine's 2019 spring-forward transition is on 03-29, not 03-30.
+    Continue to guess a 01:00 transition; the decree gives no time,
+    and news reports are unclear.  (Thanks to Sharef Mustafa.)
 
 
 Release 2019a - 2019-03-25 22:01:33 -0700

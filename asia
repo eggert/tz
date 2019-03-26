@@ -3091,8 +3091,6 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # http://www.palestinecabinet.gov.ps/Website/AR/NDecrees/ViewFile.ashx?ID=e7a42ab7-ee23-435a-b9c8-a4f7e81f3817
 
 # From Even Scharning (2019-03-23):
-# DST in Palestine will start on 30 March this year, not 23 March as the time
-# zone database predicted.
 # http://pnn.ps/news/401130
 # http://palweather.ps/ar/node/50136.html
 #
@@ -3102,9 +3100,13 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # The decree signing date is Mar 12th but it was not published till today.
 # The decree does not specify the exact time of switch.
 # http://palestinecabinet.gov.ps/Website/AR/NDecrees/ViewFile.ashx?ID=e54e9ea1-50ee-4137-84df-0d6c78da259b
+# ... As per the wording of the cabinet decree:
+# "اعتبارا من صباح يوم الجمعة الموافق 29 اذار 2019"
+# "As of morning of Fri Mar 29th 2019"
+# Thus it is safe to assume the DST change occurs on Fri Mar 29th at 01:00.
 #
 # From Paul Eggert (2019-03-26):
-# For now, guess spring-ahead transitions are March's last Friday at 24:00.
+# For now, guess spring-ahead transitions are March's last Friday at 01:00.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule EgyptAsia	1957	only	-	May	10	0:00	1:00	S
@@ -3137,7 +3139,7 @@ Rule Palestine	2014	2015	-	Oct	Fri>=21	0:00	0	-
 Rule Palestine	2015	only	-	Mar	lastFri	24:00	1:00	S
 Rule Palestine	2016	2018	-	Mar	Sat>=24	1:00	1:00	S
 Rule Palestine	2016	max	-	Oct	lastSat	1:00	0	-
-Rule Palestine	2019	max	-	Mar	lastFri	24:00	1:00	S
+Rule Palestine	2019	max	-	Mar	lastFri	1:00	1:00	S
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct

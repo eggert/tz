@@ -3,7 +3,13 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Brazil no longer observes DST.
     Palestine's 2019 spring-forward transition was on 03-29, not 03-30.
+
+  Changes to future timestamps
+
+    Brazil has canceled DST and will stay on standard time indefinitely.
+    (Thanks to Steffen Thorsen and Marcus Diniz.)
 
   Changes to past and future timestamps
 

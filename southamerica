@@ -920,14 +920,13 @@ Rule	Brazil	2012	only	-	Feb	Sun>=22	0:00	0	-
 # removed Tocantins.
 Rule	Brazil	2013	2014	-	Feb	Sun>=15	0:00	0	-
 Rule	Brazil	2015	only	-	Feb	Sun>=22	0:00	0	-
-Rule	Brazil	2016	2022	-	Feb	Sun>=15	0:00	0	-
+Rule	Brazil	2016	2019	-	Feb	Sun>=15	0:00	0	-
 # From Steffen Thorsen (2017-12-18):
 # According to many media sources, next year's DST start in Brazil will move to
-# the first Sunday of November, and it will stay like that for the years after.
+# the first Sunday of November
 # ... https://www.timeanddate.com/news/time/brazil-delays-dst-2018.html
 # From Steffen Thorsen (2017-12-20):
 # http://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/decreto/D9242.htm
-#
 # From Fábio Gomes (2018-10-04):
 # The Brazilian president just announced a new change on this year DST.
 # It was scheduled to start on November 4th and it was changed to November 18th.
@@ -935,20 +934,17 @@ Rule	Brazil	2016	2022	-	Feb	Sun>=15	0:00	0	-
 # The Brazilian government just announced that the change in DST was
 # canceled....  Maybe the president Michel Temer also woke up one hour
 # earlier today. :)
-Rule	Brazil	2018	max	-	Nov	Sun>=1	0:00	1:00	-
-Rule	Brazil	2023	only	-	Feb	Sun>=22	0:00	0	-
-Rule	Brazil	2024	2025	-	Feb	Sun>=15	0:00	0	-
-Rule	Brazil	2026	only	-	Feb	Sun>=22	0:00	0	-
-Rule	Brazil	2027	2033	-	Feb	Sun>=15	0:00	0	-
-Rule	Brazil	2034	only	-	Feb	Sun>=22	0:00	0	-
-Rule	Brazil	2035	2036	-	Feb	Sun>=15	0:00	0	-
-Rule	Brazil	2037	only	-	Feb	Sun>=22	0:00	0	-
-# From Arthur David Olson (2008-09-29):
-# The next is wrong in some years but is better than nothing.
-Rule	Brazil	2038	max	-	Feb	Sun>=15	0:00	0	-
-
-# The latest ruleset listed above says that the following states observe DST:
+Rule	Brazil	2018	only	-	Nov	Sun>=1	0:00	1:00	-
+# The last ruleset listed above says that the following states observed DST:
 # DF, ES, GO, MG, MS, MT, PR, RJ, RS, SC, SP.
+#
+# From Steffen Thorsen (2019-04-05):
+# According to multiple sources the Brazilian president wants to get rid of DST.
+# https://gmconline.com.br/noticias/politica/bolsonaro-horario-de-verao-deve-acabar-este-ano
+# https://g1.globo.com/economia/noticia/2019/04/05/governo-anuncia-fim-do-horario-de-verao.ghtml
+# From Marcus Diniz (2019-04-25):
+# Brazil no longer has DST changes - decree signed today
+# https://g1.globo.com/politica/noticia/2019/04/25/bolsonaro-assina-decreto-que-acaba-com-o-horario-de-verao.ghtml
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 #

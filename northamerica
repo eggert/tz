@@ -1843,6 +1843,13 @@ Zone America/Winnipeg	-6:28:36 -	LMT	1887 Jul 16
 # Willett (1914-03) notes that DST "has been in operation ... in the
 # City of Moose Jaw, Saskatchewan, for one year."
 
+# From Paul Eggert (2019-04-26):
+# Chris Pearce's book "The Great Daylight Saving Time Controversy" (2017)
+# says that Regina observed DST in 1914-1917.  No dates and times,
+# unfortunately.  It also says that in 1914 Saskatoon observed DST
+# from 1 June to 6 July, and that DST was also tried out in Davidson,
+# Melfort, and Prince Albert.
+
 # From Paul Eggert (2006-03-22):
 # Shanks & Pottenger say that since 1970 this region has mostly been as Regina.
 # Some western towns (e.g. Swift Current) switched from MST/MDT to CST in 1972.

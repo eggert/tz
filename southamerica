@@ -945,7 +945,7 @@ Rule	Brazil	2018	only	-	Nov	Sun>=1	0:00	1:00	-
 # From Marcus Diniz (2019-04-25):
 # Brazil no longer has DST changes - decree signed today
 # https://g1.globo.com/politica/noticia/2019/04/25/bolsonaro-assina-decreto-que-acaba-com-o-horario-de-verao.ghtml
-# From Daniel Soares de Oliveira (2019-04-26):
+# From Rodrigo Brüning Wessler (2019-04-26):
 # http://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2019/Decreto/D9772.htm
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]

@@ -3869,14 +3869,6 @@ Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 # controversial, and some day "Kyiv" may become substantially more popular in
 # English; in the meantime, stick with the traditional English "Kiev" as that
 # means less disruption for our users.
-#
-# Anyway, none of the common English-language spellings (Kiev, Kyiv, Kieff,
-# Kijeff, Kijev, Kiyef, Kiyeff) do justice to the common pronunciation in
-# Ukrainian, namely [ˈkɪjiu̯] (IPA).  This pronunciation has nothing like an
-# English "v" or "f", and instead trails off with what an English-speaker
-# would call a demure "oo" sound, and it would would be better anglicized as
-# "Kuiyu".  Here's a sound file, if you would like to do as the Kuiyuvians do:
-# https://commons.wikimedia.org/wiki/File:Uk-Київ.ogg
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 # This represents most of Ukraine.  See above for the spelling of "Kiev".

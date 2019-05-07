@@ -18,6 +18,13 @@ Unreleased, experimental changes
     at 01:00.  (Thanks to Sharef Mustafa and Even Scharning.)  Guess
     future transitions to be March's last Friday at 00:00.
 
+  Changes to past time zone abbreviations
+
+    Italy's 1866 transition to Rome Mean Time was on December 12, not
+    September 22.  This affects only the time zone abbreviation for
+    Europe/Rome during that period.  (Thanks to Stephen Trainor and
+    Luigi Rosa.)
+
 
 Release 2019a - 2019-03-25 22:01:33 -0700
 

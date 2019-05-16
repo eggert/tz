@@ -25,6 +25,11 @@ Unreleased, experimental changes
     Europe/Rome between those dates.  (Thanks to Stephen Trainor and
     Luigi Rosa.)
 
+  Changes to build procedure
+
+    tzdata.zi now assumes zic 2017c or later.  This shrinks tzdata.zi
+    by a percent or so.
+
 
 Release 2019a - 2019-03-25 22:01:33 -0700
 

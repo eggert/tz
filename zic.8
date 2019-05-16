@@ -110,9 +110,7 @@ Be more verbose, and complain about the following situations:
 The input specifies a link to a link.
 .PP
 A year that appears in a data file is outside the range
-of years representable by
-.BR time (2)
-values.
+of representable years.
 .PP
 A time of 24:00 or more appears in the input.
 Pre-1998 versions of
@@ -123,6 +121,36 @@ A rule goes past the start or end of the month.
 Pre-2004 versions of
 .B zic
 prohibit this.
+.PP
+A time zone abbreviation uses a
+.B %z
+format.
+Pre-2015 versions of
+.B zic
+do not support this.
+.PP
+A timestamp contains fractional seconds.
+Pre-2018 versions of
+.B zic
+do not support this.
+.PP
+The input contains abbreviations that are mishandled by pre-2018 versions of
+.B zic
+due to a longstanding coding bug.
+These abbreviations include
+.q L
+for
+.q Link ,
+.q mi
+for
+.q min ,
+.q Sa
+for
+.q Sat ,
+and
+.q Su
+for
+.q Sun .
 .PP
 The output file does not contain all the information about the
 long-term future of a timezone, because the future cannot be summarized as
@@ -137,8 +165,15 @@ code designed for older
 output formats.  These compatibility issues affect only timestamps
 before 1970 or after the start of 2038.
 .PP
-A time zone abbreviation has fewer than 3 characters.
-POSIX requires at least 3.
+The output file contains more than 1200 transitions,
+which may be mishandled by some clients.
+The current reference client supports at most 2000 transitions;
+pre-2014 versions of the reference client support at most 1200
+transitions.
+.PP
+A time zone abbreviation has fewer than 3 or more than 6 characters.
+POSIX requires at least 3, and requires implementations to support
+at least 6.
 .PP
 An output file name contains a byte that is not an ASCII letter,
 .q "\*-" ,
@@ -279,7 +314,7 @@ or a weekday name preceded by
 (e.g.,
 .BR "lastSunday" )
 may be abbreviated or spelled out in full.
-Note that there must be no spaces within the
+There must be no white space characters within the
 .B ON
 field.
 .TP
@@ -455,7 +490,7 @@ and
 .TP
 .B UNTIL
 The time at which the UT offset or the rule(s) change for a location.
-It takes the form of YEAR [MONTH [DAY [TIME]]].
+It takes the form of one to four fields YEAR [MONTH [DAY [TIME]]].
 If this is specified,
 the time zone information is generated from the given UT offset
 and rule change until the time specified, which is interpreted using
@@ -587,10 +622,10 @@ Rule	EU	1979	1995	\*-	Sep	lastSun	1:00u	0	\*-
 Rule	EU	1981	max	\*-	Mar	lastSun	1:00u	1:00	S
 Rule	EU	1996	max	\*-	Oct	lastSun	1:00u	0	\*-
 .sp
-.ta \w'# Zone\0\0'u +\w'Europe/Zurich\0\0'u +\w'0:34:08\0\0'u +\w'RULES\0\0'u +\w'FORMAT\0\0'u
+.ta \w'# Zone\0\0'u +\w'Europe/Zurich\0\0'u +\w'0:29:45.50\0\0'u +\w'RULES\0\0'u +\w'FORMAT\0\0'u
 # Zone	NAME	UTOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Zurich	0:34:08	\*-	LMT	1853 Jul 16
-		0:29:46	\*-	BMT	1894 Jun
+		0:29:45.50	\*-	BMT	1894 Jun
 		1:00	Swiss	CE%sT	1981
 		1:00	EU	CE%sT
 .sp
@@ -601,9 +636,10 @@ Link	Europe/Zurich	Europe/Vaduz
 In this example, the timezone is named Europe/Zurich but it has an alias
 as Europe/Vaduz.  This example says that Zurich was 34 minutes and 8
 seconds east of UT until 1853-07-16 at 00:00, when the legal offset
-was changed to 7\(de\|26\(fm\|22.50\(sd; although this works out to
-0:29:45.50, the input format cannot represent fractional seconds so it
-is rounded here.  After 1894-06-01 at 00:00 the UT offset became one hour
+was changed to 7\(de\|26\(fm\|22.50\(sd, which works out to 0:29:45.50;
+.B zic
+treats this by rounding it to 0:29:46.
+After 1894-06-01 at 00:00 the UT offset became one hour
 and Swiss daylight saving rules (defined with lines beginning with
 .q "Rule Swiss")
 apply.  From 1981 to the present, EU daylight saving rules have

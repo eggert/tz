@@ -3140,8 +3140,8 @@ byword(const char *word, const struct lookup *table)
 			else	return NULL;	/* multiple inexact matches */
 		}
 
-	/* Warn about any backward-compatibility issue with pre-2017c zic.  */
-	if (foundlp) {
+	if (foundlp && noise) {
+	  /* Warn about any backward-compatibility issue with pre-2017c zic.  */
 	  bool pre_2017c_match = false;
 	  for (lp = table; lp->l_word; lp++)
 	    if (itsabbr(word, lp->l_word)) {

@@ -652,9 +652,39 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928
 #   https://i.imgur.com/05KkvtC.png
 # * 1941-09-30, Hong Kong Daily Press, Winter Time Warning.
 #   https://i.imgur.com/dge4kFJ.png
-# Also, the Liberation day of Hong Kong after WWII which British rule
-# over the territory resumed was August 30, 1945, which I think should
-# be the termination date for the use of JST in the territory....
+
+# From P Chan (2018-12-31):
+# * According to the Hong Kong Daylight-Saving Regulations, 1941, the
+#   1941 spring-forward transition was at 03:00.
+#	http://sunzi.lib.hku.hk/hkgro/view/g1941/304271.pdf
+#	http://sunzi.lib.hku.hk/hkgro/view/g1941/305516.pdf
+# * According to some articles from South China Morning Post, +08 was
+#   resumed on 1945-11-18 at 02:00.
+#	https://i.imgur.com/M2IsZ3c.png
+#	https://i.imgur.com/iOPqrVo.png
+#	https://i.imgur.com/fffcGDs.png
+# * Some newspapers published on said the 1946 spring-forward transition was on
+#   04-21 at 00:00.  The Kung Sheung Evening News 1946-04-20 (Chinese)
+#	https://i.imgur.com/ZSzent0.png
+#	https://mmis.hkpl.gov.hk///c/portal/cover?c=QF757YsWv5%2FH7zGe%2FKF%2BFLYsuqGhRBfe p.4
+#   The Kung Sheung Daily News 1946-04-21 (Chinese)
+#	https://i.imgur.com/7ecmRlcm.png
+#	https://mmis.hkpl.gov.hk///c/portal/cover?c=QF757YsWv5%2BQBGt1%2BwUj5qG2GqtwR3Wh p.4
+# * According to the Summer Time Ordinance (1946), the fallback
+#   transitions between 1946 and 1952 were at 03:30 Standard Time (+08)
+#	http://oelawhk.lib.hku.hk/archive/files/bb74b06a74d5294620a15de560ab33c6.pdf
+# * Some other laws and regulations related to DST from 1953 to 1979
+#   Summer Time Ordinance 1953
+#	https://i.imgur.com/IOlJMav.jpg
+#   Summer Time (Amendment) Ordinance 1965
+#	https://i.imgur.com/8rofeLa.jpg
+#   Interpretation and General Clauses Ordinance (1966)
+#	https://i.imgur.com/joy3msj.jpg
+#   Emergency (Summer Time) Regulation 1973 <https://i.imgur.com/OpRWrKz.jpg>
+#   Interpretation and General Clauses (Amendment) Ordinance 1977
+#	https://i.imgur.com/RaNqnc4.jpg
+#   Resolution of the Legislative Council passed on 9 May 1979
+#	https://www.legco.gov.hk/yr78-79/english/lc_sitg/hansard/h790509.pdf#page=39
 
 # From Paul Eggert (2018-11-17):
 # Here are the dates given at
@@ -704,36 +734,28 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928
 # The page does not give times of day for transitions,
 # or dates for the 1942 and 1945 transitions.
 # The Japanese occupation of Hong Kong began 1941-12-25.
-# The Japanese surrender of Hong Kong was signed 1945-09-16; see:
-# Heaver S. The days after the Pacific war ended: unsettling times
-# in Hong Kong. Post Magazine. 2016-06-13.
-# https://www.scmp.com/magazines/post-magazine/article/1852990/days-after-pacific-war-ended-unsettling-times-hong-kong
-# For lack of anything better, use start of those days as the
-# transition times.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	HK	1946	only	-	Apr	20	3:30	1:00	S
-Rule	HK	1946	only	-	Dec	1	3:30	0	-
+Rule	HK	1946	only	-	Apr	21	0:00	1:00	S
+Rule	HK	1946	only	-	Dec	1	3:30s	0	-
 Rule	HK	1947	only	-	Apr	13	3:30	1:00	S
 Rule	HK	1947	only	-	Dec	30	3:30	0	-
 Rule	HK	1948	only	-	May	2	3:30	1:00	S
 Rule	HK	1948	1951	-	Oct	lastSun	3:30	0	-
-Rule	HK	1952	1953	-	Nov	Sun>=1	3:30	0	-
+Rule	HK	1952	1964	-	Oct	Sun>=31	3:30	0	-
 Rule	HK	1949	1953	-	Apr	Sun>=1	3:30	1:00	S
 Rule	HK	1954	1964	-	Mar	Sun>=18	3:30	1:00	S
-Rule	HK	1954	only	-	Oct	31	3:30	0	-
-Rule	HK	1955	1964	-	Nov	Sun>=1	3:30	0	-
 Rule	HK	1965	1976	-	Apr	Sun>=16	3:30	1:00	S
 Rule	HK	1965	1976	-	Oct	Sun>=16	3:30	0	-
 Rule	HK	1973	only	-	Dec	30	3:30	1:00	S
-Rule	HK	1979	only	-	May	Sun>=8	3:30	1:00	S
-Rule	HK	1979	only	-	Oct	Sun>=16	3:30	0	-
+Rule	HK	1979	only	-	May	13	3:30	1:00	S
+Rule	HK	1979	only	-	Oct	21	3:30	0	-
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30  0:36:42
-			8:00	-	HKT	1941 Jun 15  3:30
+			8:00	-	HKT	1941 Jun 15  3:00
 			8:00	1:00	HKST	1941 Oct  1  4:00
 			8:30	-	HKT	1941 Dec 25
-			9:00	-	JST	1945 Sep 16
+			9:00	-	JST	1945 Nov 18  2:00
 			8:00	HK	HK%sT
 
 ###############################################################################

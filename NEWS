@@ -18,6 +18,14 @@ Unreleased, experimental changes
     at 01:00.  (Thanks to Sharef Mustafa and Even Scharning.)  Guess
     future transitions to be March's last Friday at 00:00.
 
+  Changes to past timestamps
+
+    Hong Kong's 1941-06-15 spring-forward transition was at 03:00, not
+    03:30.  Its 1945 transition from JST to HKT was on 11-18 at 00:00,
+    not 09-15 at 00:00.  In 1946 its spring-forward transition was on
+    04-21 at 00:00, not the previous day at 03:30, and its fall-back
+    transition on 12-01 was at 04:30, not 03:30.  (Thanks to P Chan.)
+
   Changes to past time zone abbreviations
 
     Italy's 1866 transition to Rome Mean Time was on December 12, not

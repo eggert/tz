@@ -1248,6 +1248,21 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # in WA or its introduction in SA had anything to do with the genesis
 # of this time zone.  My hunch is that it's been around since well
 # before 1975.  I remember seeing it noted on road maps decades ago.
+#
+# From Gilmore Davidson (2019-04-08):
+# https://www.abc.net.au/news/2019-04-08/this-remote-stretch-of-desert-has-its-own-custom-time-zone/10981000
+# ... include[s] a rough description of the geographical boundaries...
+# "The time zone exists for about 340 kilometres and takes in the tiny
+# roadhouse communities of Cocklebiddy, Madura, Eucla and Border Village."
+# ... and an indication that the zone has definitely been in existence
+# since before the 1970 cut-off of the database: "Mr Pike has lived on
+# the Nullarbor for 47 years".
+# From Paul Eggert (2019-05-17):
+# That ABC Esperance story by Christien de Garis also says:
+#    there is a sign instructing you which way to wind your clocks 45 minutes
+#    and scrawled underneath one of them in Texta is the word: "Why"?
+#    "Good question," Mr Pike said.
+#    "I don't even know that, and it's been going for over 50 years."
 
 # From Paul Eggert (2006-12-15):
 # For lack of better info, assume the tradition dates back to the

@@ -1256,6 +1256,8 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # https://twitter.com/MinEnergia/status/1029009354001973248
 # "We will keep the new time policy unchanged for at least the next 4 years."
 # So we extend the new rules on Saturdays at 24:00 mainland time indefinitely.
+# From Juan Correa (2019-02-04):
+# http://www.diariooficial.interior.gob.cl/publicaciones/2018/11/23/42212/01/1498738.pdf
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Chile	1927	1931	-	Sep	 1	0:00	1:00	-

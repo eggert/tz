@@ -1782,32 +1782,15 @@ Rule	Zion	2004	only	-	Sep	22	1:00	0	S
 #
 #	ftp://ftp.cs.huji.ac.il/pub/tz/announcements/2005+beyond.ps
 
-# From Paul Eggert (2012-10-26):
-# I used Ephraim Silverberg's dst-israel.el program
-# <ftp://ftp.cs.huji.ac.il/pub/tz/software/dst-israel.el> (2005-02-20)
-# along with Ed Reingold's cal-hebrew in GNU Emacs 21.4,
-# to generate the transitions from 2005 through 2012.
-# (I replaced "lastFri" with "Fri>=26" by hand.)
-# The spring transitions all correspond to the following Rule:
-#
-# Rule	Zion	2005	2012	-	Mar	Fri>=26	2:00	1:00	D
-#
-# but older zic implementations (e.g., Solaris 8) do not support
-# "Fri>=26" to mean April 1 in years like 2005, so for now we list the
-# springtime transitions explicitly.
-
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Zion	2005	only	-	Apr	 1	2:00	1:00	D
+Rule	Zion	2005	2012	-	Apr	Fri<=1	2:00	1:00	D
 Rule	Zion	2005	only	-	Oct	 9	2:00	0	S
-Rule	Zion	2006	2010	-	Mar	Fri>=26	2:00	1:00	D
 Rule	Zion	2006	only	-	Oct	 1	2:00	0	S
 Rule	Zion	2007	only	-	Sep	16	2:00	0	S
 Rule	Zion	2008	only	-	Oct	 5	2:00	0	S
 Rule	Zion	2009	only	-	Sep	27	2:00	0	S
 Rule	Zion	2010	only	-	Sep	12	2:00	0	S
-Rule	Zion	2011	only	-	Apr	 1	2:00	1:00	D
 Rule	Zion	2011	only	-	Oct	 2	2:00	0	S
-Rule	Zion	2012	only	-	Mar	Fri>=26	2:00	1:00	D
 Rule	Zion	2012	only	-	Sep	23	2:00	0	S
 
 # From Ephraim Silverberg (2013-06-27):

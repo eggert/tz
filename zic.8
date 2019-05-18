@@ -317,6 +317,15 @@ may be abbreviated or spelled out in full.
 There must be no white space characters within the
 .B ON
 field.
+The
+.q <=
+and
+.q >=
+constructs can result in a day in the neighboring month;
+for example, the IN-ON combination
+.q "Oct Sun>=31"
+stands for the first Sunday on or after October 31,
+even if that Sunday occurs in November.
 .TP
 .B AT
 Gives the time of day at which the rule takes effect,

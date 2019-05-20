@@ -12,6 +12,10 @@ Unreleased, experimental changes
     (Thanks to Steffen Thorsen, Marcus Diniz, and Daniel Soares de
     Oliveira.)
 
+    Predictions for Morocco now go through 2087 instead of 2037, to
+    work around a problem on newlib when using TZif files output by
+    zic 2019a or earlier.  (Problem reported by David Gauchard.)
+
   Changes to past and future timestamps
 
     Palestine's 2019 spring transition was 03-29 at 00:00, not 03-30

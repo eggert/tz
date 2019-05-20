@@ -868,16 +868,16 @@ Zone Indian/Mauritius	3:50:00 -	LMT	1907 # Port Louis
 # The switch to GMT+1 will occur on Sunday, June 9th 2019 at 2am....
 # http://fr.le360.ma/societe/voici-la-date-du-retour-a-lheure-legale-au-maroc-188222
 #
-# From Paul Eggert (2019-04-16):
+# From Paul Eggert (2019-05-20):
 # This agrees with our 2018-11-01 guess that the Moroccan government
 # would continue the practice of falling back at 03:00 the last Sunday
 # before Ramadan, and of springing forward at 02:00 the first Sunday after
 # Ramadan, as this has been the practice since 2012.  To implement this,
-# transition dates for 2019 through 2037 were determined by running the
-# following program under GNU Emacs 26.1.
+# transition dates for 2019 through 2087 were determined by running the
+# following program under GNU Emacs 26.2.
 # (let ((islamic-year 1440))
 #   (require 'cal-islam)
-#   (while (< islamic-year 1460)
+#   (while (< islamic-year 1511)
 #     (let ((a (calendar-islamic-to-absolute (list 9 1 islamic-year)))
 #           (b (calendar-islamic-to-absolute (list 10 1 islamic-year)))
 #           (sunday 0))
@@ -976,6 +976,112 @@ Rule	Morocco	2036	only	-	Oct	19	 3:00	-1:00	-
 Rule	Morocco	2036	only	-	Nov	23	 2:00	0	-
 Rule	Morocco	2037	only	-	Oct	 4	 3:00	-1:00	-
 Rule	Morocco	2037	only	-	Nov	15	 2:00	0	-
+Rule	Morocco	2038	only	-	Sep	26	 3:00	-1:00	-
+Rule	Morocco	2038	only	-	Oct	31	 2:00	0	-
+Rule	Morocco	2039	only	-	Sep	18	 3:00	-1:00	-
+Rule	Morocco	2039	only	-	Oct	23	 2:00	0	-
+Rule	Morocco	2040	only	-	Sep	 2	 3:00	-1:00	-
+Rule	Morocco	2040	only	-	Oct	14	 2:00	0	-
+Rule	Morocco	2041	only	-	Aug	25	 3:00	-1:00	-
+Rule	Morocco	2041	only	-	Sep	29	 2:00	0	-
+Rule	Morocco	2042	only	-	Aug	10	 3:00	-1:00	-
+Rule	Morocco	2042	only	-	Sep	21	 2:00	0	-
+Rule	Morocco	2043	only	-	Aug	 2	 3:00	-1:00	-
+Rule	Morocco	2043	only	-	Sep	 6	 2:00	0	-
+Rule	Morocco	2044	only	-	Jul	24	 3:00	-1:00	-
+Rule	Morocco	2044	only	-	Aug	28	 2:00	0	-
+Rule	Morocco	2045	only	-	Jul	 9	 3:00	-1:00	-
+Rule	Morocco	2045	only	-	Aug	20	 2:00	0	-
+Rule	Morocco	2046	only	-	Jul	 1	 3:00	-1:00	-
+Rule	Morocco	2046	only	-	Aug	 5	 2:00	0	-
+Rule	Morocco	2047	only	-	Jun	23	 3:00	-1:00	-
+Rule	Morocco	2047	only	-	Jul	28	 2:00	0	-
+Rule	Morocco	2048	only	-	Jun	 7	 3:00	-1:00	-
+Rule	Morocco	2048	only	-	Jul	19	 2:00	0	-
+Rule	Morocco	2049	only	-	May	30	 3:00	-1:00	-
+Rule	Morocco	2049	only	-	Jul	 4	 2:00	0	-
+Rule	Morocco	2050	only	-	May	15	 3:00	-1:00	-
+Rule	Morocco	2050	only	-	Jun	26	 2:00	0	-
+Rule	Morocco	2051	only	-	May	 7	 3:00	-1:00	-
+Rule	Morocco	2051	only	-	Jun	11	 2:00	0	-
+Rule	Morocco	2052	only	-	Apr	28	 3:00	-1:00	-
+Rule	Morocco	2052	only	-	Jun	 2	 2:00	0	-
+Rule	Morocco	2053	only	-	Apr	13	 3:00	-1:00	-
+Rule	Morocco	2053	only	-	May	25	 2:00	0	-
+Rule	Morocco	2054	only	-	Apr	 5	 3:00	-1:00	-
+Rule	Morocco	2054	only	-	May	10	 2:00	0	-
+Rule	Morocco	2055	only	-	Mar	28	 3:00	-1:00	-
+Rule	Morocco	2055	only	-	May	 2	 2:00	0	-
+Rule	Morocco	2056	only	-	Mar	12	 3:00	-1:00	-
+Rule	Morocco	2056	only	-	Apr	23	 2:00	0	-
+Rule	Morocco	2057	only	-	Mar	 4	 3:00	-1:00	-
+Rule	Morocco	2057	only	-	Apr	 8	 2:00	0	-
+Rule	Morocco	2058	only	-	Feb	17	 3:00	-1:00	-
+Rule	Morocco	2058	only	-	Mar	31	 2:00	0	-
+Rule	Morocco	2059	only	-	Feb	 9	 3:00	-1:00	-
+Rule	Morocco	2059	only	-	Mar	16	 2:00	0	-
+Rule	Morocco	2060	only	-	Feb	 1	 3:00	-1:00	-
+Rule	Morocco	2060	only	-	Mar	 7	 2:00	0	-
+Rule	Morocco	2061	only	-	Jan	16	 3:00	-1:00	-
+Rule	Morocco	2061	only	-	Feb	27	 2:00	0	-
+Rule	Morocco	2062	only	-	Jan	 8	 3:00	-1:00	-
+Rule	Morocco	2062	only	-	Feb	12	 2:00	0	-
+Rule	Morocco	2062	only	-	Dec	31	 3:00	-1:00	-
+Rule	Morocco	2063	only	-	Feb	 4	 2:00	0	-
+Rule	Morocco	2063	only	-	Dec	16	 3:00	-1:00	-
+Rule	Morocco	2064	only	-	Jan	20	 2:00	0	-
+Rule	Morocco	2064	only	-	Dec	 7	 3:00	-1:00	-
+Rule	Morocco	2065	only	-	Jan	11	 2:00	0	-
+Rule	Morocco	2065	only	-	Nov	22	 3:00	-1:00	-
+Rule	Morocco	2066	only	-	Jan	 3	 2:00	0	-
+Rule	Morocco	2066	only	-	Nov	14	 3:00	-1:00	-
+Rule	Morocco	2066	only	-	Dec	19	 2:00	0	-
+Rule	Morocco	2067	only	-	Nov	 6	 3:00	-1:00	-
+Rule	Morocco	2067	only	-	Dec	11	 2:00	0	-
+Rule	Morocco	2068	only	-	Oct	21	 3:00	-1:00	-
+Rule	Morocco	2068	only	-	Dec	 2	 2:00	0	-
+Rule	Morocco	2069	only	-	Oct	13	 3:00	-1:00	-
+Rule	Morocco	2069	only	-	Nov	17	 2:00	0	-
+Rule	Morocco	2070	only	-	Oct	 5	 3:00	-1:00	-
+Rule	Morocco	2070	only	-	Nov	 9	 2:00	0	-
+Rule	Morocco	2071	only	-	Sep	20	 3:00	-1:00	-
+Rule	Morocco	2071	only	-	Oct	25	 2:00	0	-
+Rule	Morocco	2072	only	-	Sep	11	 3:00	-1:00	-
+Rule	Morocco	2072	only	-	Oct	16	 2:00	0	-
+Rule	Morocco	2073	only	-	Aug	27	 3:00	-1:00	-
+Rule	Morocco	2073	only	-	Oct	 8	 2:00	0	-
+Rule	Morocco	2074	only	-	Aug	19	 3:00	-1:00	-
+Rule	Morocco	2074	only	-	Sep	23	 2:00	0	-
+Rule	Morocco	2075	only	-	Aug	11	 3:00	-1:00	-
+Rule	Morocco	2075	only	-	Sep	15	 2:00	0	-
+Rule	Morocco	2076	only	-	Jul	26	 3:00	-1:00	-
+Rule	Morocco	2076	only	-	Sep	 6	 2:00	0	-
+Rule	Morocco	2077	only	-	Jul	18	 3:00	-1:00	-
+Rule	Morocco	2077	only	-	Aug	22	 2:00	0	-
+Rule	Morocco	2078	only	-	Jul	10	 3:00	-1:00	-
+Rule	Morocco	2078	only	-	Aug	14	 2:00	0	-
+Rule	Morocco	2079	only	-	Jun	25	 3:00	-1:00	-
+Rule	Morocco	2079	only	-	Jul	30	 2:00	0	-
+Rule	Morocco	2080	only	-	Jun	16	 3:00	-1:00	-
+Rule	Morocco	2080	only	-	Jul	21	 2:00	0	-
+Rule	Morocco	2081	only	-	Jun	 1	 3:00	-1:00	-
+Rule	Morocco	2081	only	-	Jul	13	 2:00	0	-
+Rule	Morocco	2082	only	-	May	24	 3:00	-1:00	-
+Rule	Morocco	2082	only	-	Jun	28	 2:00	0	-
+Rule	Morocco	2083	only	-	May	16	 3:00	-1:00	-
+Rule	Morocco	2083	only	-	Jun	20	 2:00	0	-
+Rule	Morocco	2084	only	-	Apr	30	 3:00	-1:00	-
+Rule	Morocco	2084	only	-	Jun	11	 2:00	0	-
+Rule	Morocco	2085	only	-	Apr	22	 3:00	-1:00	-
+Rule	Morocco	2085	only	-	May	27	 2:00	0	-
+Rule	Morocco	2086	only	-	Apr	14	 3:00	-1:00	-
+Rule	Morocco	2086	only	-	May	19	 2:00	0	-
+Rule	Morocco	2087	only	-	Mar	30	 3:00	-1:00	-
+Rule	Morocco	2087	only	-	May	 4	 2:00	0	-
+# For dates after the somewhat-arbitrary cutoff of 2087, assume that
+# Morocco will no longer observe DST.  At some point this table will
+# need to be extended, though quite possibly Morocco will change the
+# rules first.
 
 # Zone	NAME		GMTOFF	RULES	FORMAT	[UNTIL]
 Zone Africa/Casablanca	-0:30:20 -	LMT	1913 Oct 26

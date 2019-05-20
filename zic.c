@@ -2396,8 +2396,6 @@ rule_cmp(struct rule const *a, struct rule const *b)
 	return a->r_dayofmonth - b->r_dayofmonth;
 }
 
-enum { YEAR_BY_YEAR_ZONE = 1 };
-
 static int
 stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 {
@@ -2452,14 +2450,6 @@ stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 			if (rule_cmp(stdrp, rp) < 0)
 				stdrp = rp;
 		}
-		/*
-		** Horrid special case: if year is 2037,
-		** presume this is a zone handled on a year-by-year basis;
-		** do not try to apply a rule to the zone.
-		*/
-		if (stdrp != NULL && stdrp->r_hiyear == 2037)
-			return YEAR_BY_YEAR_ZONE;
-
 		if (stdrp != NULL && stdrp->r_isdst) {
 			/* Perpetual DST.  */
 			dstr.r_month = TM_JANUARY;
@@ -2600,13 +2590,13 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 	*/
 	compat = stringzone(envvar, zpfirst, zonecount);
 	version = compat < 2013 ? ZIC_VERSION_PRE_2013 : ZIC_VERSION;
-	do_extend = compat < 0 || compat == YEAR_BY_YEAR_ZONE;
+	do_extend = compat < 0;
 	if (noise) {
 		if (!*envvar)
 			warning("%s %s",
 				_("no POSIX environment variable for zone"),
 				zpfirst->z_name);
-		else if (compat != 0 && compat != YEAR_BY_YEAR_ZONE) {
+		else if (compat != 0) {
 			/* Circa-COMPAT clients, and earlier clients, might
 			   not work for this zone when given dates before
 			   1970 or after 2038.  */

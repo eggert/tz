@@ -37,6 +37,15 @@ Unreleased, experimental changes
     Europe/Rome between those dates.  (Thanks to Stephen Trainor and
     Luigi Rosa.)
 
+  Changes to code
+
+    zic no longer treats a set of rules ending in 2037 specially.
+    Previously, zic assumed that such a ruleset meant that future
+    timestamps could not be predicted, and therefore omitted a
+    POSIX-like TZ string in the TZif output.  The old behavior is no
+    longer needed for current tzdata, and caused problems with newlib
+    when used with older tzdata (reported by David Gauchard).
+
   Changes to build procedure
 
     tzdata.zi now assumes zic 2017c or later.  This shrinks tzdata.zi

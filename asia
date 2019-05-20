@@ -1336,7 +1336,7 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # I used the following code in GNU Emacs 26.1 to generate the "Rule Iran"
 # lines from 2008 through 2087.  Emacs 26.1 uses Ed Reingold's
 # cal-persia implementation of Birashk's approximation, which in the
-# 2008-2087 range disagrees with the the astronomical Persian calendar
+# 2008-2087 range disagrees with the astronomical Persian calendar
 # for Persian years 1404 (Gregorian 2025) and 1437 (Gregorian 2058),
 # so the following code special-case those years.  See Table 15.1, page 264, of:
 # Edward M. Reingold and Nachum Dershowitz, Calendrical Calculations:

@@ -51,6 +51,10 @@ Unreleased, experimental changes
     tzdata.zi now assumes zic 2017c or later.  This shrinks tzdata.zi
     by a percent or so.
 
+  Changes to documentation and commentary
+
+    New info on Bonin Islands and Marcus (thanks to Wakaba and Phake Nick.)
+
 
 Release 2019a - 2019-03-25 22:01:33 -0700
 

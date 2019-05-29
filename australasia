@@ -1581,6 +1581,42 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 ###############################################################################
 
 
+# Bonin (Ogasawara) Islands and Marcus Island (Minami-Tori-shima)
+
+# From Wakaba (2019-01-28) via Phake Nick:
+# National Diet Library of Japan has several reports by Japanese Government
+# officers that describe the time used in islands when they visited there.
+# According to them (and other sources such as newspapers), standard time UTC
+# + 10 (JST + 1) and DST UTC + 11 (JST + 2) was used until its return to Japan
+# at 1968-06-26 00:00 JST.  The exact periods of DST are still unknown.
+# I guessed Guam, Mariana, and Bonin and Marcus districts might have
+# synchronized their DST periods, but reports imply they had their own
+# decisions, i.e. there were three or more different time zones....
+#
+# https://wiki.suikawiki.org/n/小笠原諸島の標準時
+
+# From Phake Nick (2019-02-12):
+# Because their last time change to return to Japanese time when they returned
+# to Japanese rule was right before 1970, ... per the current tz database
+# rule, the information doesn't warrant creation of a new timezone for Bonin
+# Islands itself and is thus as an anecdotal note for interest purpose only.
+# ... [The abovementioned link] described some special timekeeping phenomenon
+# regarding Marcus island, another remote island currently owned by Japanese
+# in the same administrative unit as Bonin Islands.  Many reports claim that
+# the American coastal guard on the American quarter of the island use its own
+# coastal guard time, and most sources describe the time as UTC+11, being two
+# hours faster than JST used by some Japanese personnel on the island.  Some
+# sites describe it as same as Wake Island/Guam time although it would be
+# incorrect to be same as Guam.  And then in a few Japanese governmental
+# report from 1980s (from National Institute of Information and Communications
+# Technology) regarding the construction of VLBI facility on the Marcus
+# Island, it claimed that there are three time standards being used on the
+# island at the time which include not just JST (UTC+9) or [US]CG time
+# (UTC+11) but also a JMSDF time (UTC+10) (Japan Maritime Self-Defense
+# Force).  Unfortunately there are no other sources that mentioned such time
+# and there are also no information on things like how the tine was used.
+
+
 # Fiji
 
 # Howse writes (p 153) that in 1879 the British governor of Fiji

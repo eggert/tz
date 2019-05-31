@@ -1255,12 +1255,13 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # "The time zone exists for about 340 kilometres and takes in the tiny
 # roadhouse communities of Cocklebiddy, Madura, Eucla and Border Village."
 # ... and an indication that the zone has definitely been in existence
-# since before the 1970 cut-off of the database: "Mr Pike has lived on
-# the Nullarbor for 47 years".
+# since before the 1970 cut-off of the database ...
 # From Paul Eggert (2019-05-17):
 # That ABC Esperance story by Christien de Garis also says:
-#    there is a sign instructing you which way to wind your clocks 45 minutes
-#    and scrawled underneath one of them in Texta is the word: "Why"?
+#    Although the Central Western Time Zone is not officially recognised (your
+#    phones won't automatically change), there is a sign instructing you which
+#    way to wind your clocks 45 minutes and scrawled underneath one of them in
+#    Texta is the word: 'Why'?
 #    "Good question," Mr Pike said.
 #    "I don't even know that, and it's been going for over 50 years."
 

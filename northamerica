@@ -93,10 +93,24 @@
 # was the first nationwide legal time standard, and apparently
 # time was just called "Standard Time" or "Daylight Saving Time".
 
-# From Arthur David Olson:
-# US Daylight Saving Time ended on the last Sunday of *October* in 1974.
-# See, for example, the front page of the Saturday, 1974-10-26
-# and Sunday, 1974-10-27 editions of the Washington Post.
+# From Paul Eggert (2019-06-04):
+# Here is the legal basis for the US federal rules.
+# * Public Law 65-107 (1918-03-19) implemented standard and daylight saving
+#   time for the first time across the US, springing forward on March's last
+#   Sunday and falling back on October's last Sunday.
+# * Public Law 66-40 (1919-08-20) repealed DST on October 1919's last Sunday.
+# * Public Law 77-403 (1942-01-20) started wartime DST on 1942-02-09.
+# * Public Law 79-187 (1945-09-25) ended wartime DST on 1945-09-30.
+# * Public Law 89-387 (1966-04-13) reinstituted a national standard for DST,
+#   from April's last Sunday to October's last Sunday, effective 1967.
+# * Public Law 93-182 (1973-12-15) moved the 1974 spring-forward to 01-06.
+# * Public Law 94-434 (1974-10-05) moved the 1975 spring-forward to
+#   February's last Sunday.
+# * Public Law 99-359 (1986-07-08) moved the spring-forward to April's first
+#   Sunday.
+# * Public Law 109-50 (2005-08-08), effective 2007, moved the spring-forward
+#   to March's second Sunday and the fall-back to November's first Sunday.
+# All transitions are at 02:00 local time.
 
 # From Arthur David Olson:
 # Before the Uniform Time Act of 1966 took effect in 1967, observance of
@@ -152,11 +166,11 @@ Rule	US	1918	1919	-	Mar	lastSun	2:00	1:00	D
 Rule	US	1918	1919	-	Oct	lastSun	2:00	0	S
 Rule	US	1942	only	-	Feb	9	2:00	1:00	W # War
 Rule	US	1945	only	-	Aug	14	23:00u	1:00	P # Peace
-Rule	US	1945	only	-	Sep	lastSun	2:00	0	S
+Rule	US	1945	only	-	Sep	30	2:00	0	S
 Rule	US	1967	2006	-	Oct	lastSun	2:00	0	S
 Rule	US	1967	1973	-	Apr	lastSun	2:00	1:00	D
 Rule	US	1974	only	-	Jan	6	2:00	1:00	D
-Rule	US	1975	only	-	Feb	23	2:00	1:00	D
+Rule	US	1975	only	-	Feb	lastSun	2:00	1:00	D
 Rule	US	1976	1986	-	Apr	lastSun	2:00	1:00	D
 Rule	US	1987	2006	-	Apr	Sun>=1	2:00	1:00	D
 Rule	US	2007	max	-	Mar	Sun>=8	2:00	1:00	D

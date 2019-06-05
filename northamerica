@@ -104,12 +104,13 @@
 # * Public Law 89-387 (1966-04-13) reinstituted a national standard for DST,
 #   from April's last Sunday to October's last Sunday, effective 1967.
 # * Public Law 93-182 (1973-12-15) moved the 1974 spring-forward to 01-06.
-# * Public Law 94-434 (1974-10-05) moved the 1975 spring-forward to
+# * Public Law 93-434 (1974-10-05) moved the 1975 spring-forward to
 #   February's last Sunday.
 # * Public Law 99-359 (1986-07-08) moved the spring-forward to April's first
 #   Sunday.
-# * Public Law 109-50 (2005-08-08), effective 2007, moved the spring-forward
+# * Public Law 109-58 (2005-08-08), effective 2007, moved the spring-forward
 #   to March's second Sunday and the fall-back to November's first Sunday.
+#   https://www.govinfo.gov/content/pkg/PLAW-109publ58/pdf/PLAW-109publ58.pdf
 # All transitions are at 02:00 local time.
 
 # From Arthur David Olson:

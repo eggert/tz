@@ -95,19 +95,27 @@
 
 # From Paul Eggert (2019-06-04):
 # Here is the legal basis for the US federal rules.
-# * Public Law 65-107 (1918-03-19) implemented standard and daylight saving
+# * Public Law 65-106 (1918-03-19) implemented standard and daylight saving
 #   time for the first time across the US, springing forward on March's last
 #   Sunday and falling back on October's last Sunday.
+#   https://www.loc.gov/law/help/statutes-at-large/65th-congress/session-2/c65s2ch24.pdf
 # * Public Law 66-40 (1919-08-20) repealed DST on October 1919's last Sunday.
+#   https://www.loc.gov/law/help/statutes-at-large/66th-congress/session-1/c66s1ch51.pdf
 # * Public Law 77-403 (1942-01-20) started wartime DST on 1942-02-09.
+#   https://www.loc.gov/law/help/statutes-at-large/77th-congress/session-2/c77s2ch7.pdf
 # * Public Law 79-187 (1945-09-25) ended wartime DST on 1945-09-30.
+#   https://www.loc.gov/law/help/statutes-at-large/79th-congress/session-1/c79s1ch388.pdf
 # * Public Law 89-387 (1966-04-13) reinstituted a national standard for DST,
 #   from April's last Sunday to October's last Sunday, effective 1967.
+#   https://www.govinfo.gov/content/pkg/STATUTE-80/pdf/STATUTE-80-Pg107.pdf
 # * Public Law 93-182 (1973-12-15) moved the 1974 spring-forward to 01-06.
+#   https://www.govinfo.gov/content/pkg/STATUTE-87/pdf/STATUTE-87-Pg707.pdf
 # * Public Law 93-434 (1974-10-05) moved the 1975 spring-forward to
 #   February's last Sunday.
+#   https://www.govinfo.gov/content/pkg/STATUTE-88/pdf/STATUTE-88-Pg1209.pdf
 # * Public Law 99-359 (1986-07-08) moved the spring-forward to April's first
 #   Sunday.
+#   https://www.govinfo.gov/content/pkg/STATUTE-100/pdf/STATUTE-100-Pg764.pdf
 # * Public Law 109-58 (2005-08-08), effective 2007, moved the spring-forward
 #   to March's second Sunday and the fall-back to November's first Sunday.
 #   https://www.govinfo.gov/content/pkg/PLAW-109publ58/pdf/PLAW-109publ58.pdf

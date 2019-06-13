@@ -48,6 +48,9 @@ Unreleased, experimental changes
     longer needed for current tzdata, and caused problems with newlib
     when used with older tzdata (reported by David Gauchard).
 
+    zic no longer generates some artifact transitions.  For example,
+    Europe/London no longer has a no-op transition in January 1996.
+
   Changes to build procedure
 
     tzdata.zi now assumes zic 2017c or later.  This shrinks tzdata.zi

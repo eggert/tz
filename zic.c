@@ -1873,7 +1873,12 @@ writezone(const char *const name, const char *const string, char version,
 			}
 			if (toi == 0
 			    || attypes[fromi].dontmerge
-			    || attypes[toi - 1].type != attypes[fromi].type)
+			    || (gmtoffs[attypes[toi - 1].type]
+				!= gmtoffs[attypes[fromi].type])
+			    || (isdsts[attypes[toi - 1].type]
+				!= isdsts[attypes[fromi].type])
+			    || (abbrinds[attypes[toi - 1].type]
+				!= abbrinds[attypes[fromi].type]))
 					attypes[toi++] = attypes[fromi];
 		}
 		timecnt = toi;

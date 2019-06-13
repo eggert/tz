@@ -574,8 +574,9 @@ usage(FILE *stream, int status)
 {
   fprintf(stream,
 	  _("%s: usage is %s [ --version ] [ --help ] [ -v ] \\\n"
-	    "\t[ -l localtime ] [ -p posixrules ] [ -d directory ] \\\n"
-	    "\t[ -t localtime-link ] [ -L leapseconds ] [ -r '[@lo][/@hi]' ] \\\n"
+	    "\t[ -b {slim|fat} ] [ -d directory ] [ -l localtime ]"
+	    " [ -L leapseconds ] \\\n"
+	    "\t[ -p posixrules ] [ -r '[@lo][/@hi]' ] [ -t localtime-link ] \\\n"
 	    "\t[ filename ... ]\n\n"
 	    "Report bugs to %s.\n"),
 	  progname, progname, REPORT_BUGS_TO);
@@ -650,6 +651,17 @@ static const char *	leapsec;
 static const char *	tzdefault;
 static const char *	yitcommand;
 
+/* -1 if the TZif output file should be slim, 0 if default, 1 if the
+   output should be fat for backward compatibility.  Currently the
+   default is fat, although this may change.  */
+static int bloat;
+
+static bool
+want_bloat(void)
+{
+  return 0 <= bloat;
+}
+
 int
 main(int argc, char **argv)
 {
@@ -681,10 +693,22 @@ main(int argc, char **argv)
 		} else if (strcmp(argv[k], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
 		}
-	while ((c = getopt(argc, argv, "d:l:L:p:r:st:vy:")) != EOF && c != -1)
+	while ((c = getopt(argc, argv, "b:d:l:L:p:r:st:vy:")) != EOF && c != -1)
 		switch (c) {
 			default:
 				usage(stderr, EXIT_FAILURE);
+			case 'b':
+				if (strcmp(optarg, "slim") == 0) {
+				  if (0 < bloat)
+				    error(_("incompatible -b options"));
+				  bloat = -1;
+				} else if (strcmp(optarg, "fat") == 0) {
+				  if (bloat < 0)
+				    error(_("incompatible -b options"));
+				  bloat = 1;
+				} else
+				  error(_("invalid option: -b '%s'"), optarg);
+				break;
 			case 'd':
 				if (directory == NULL)
 					directory = optarg;
@@ -1921,7 +1945,7 @@ writezone(const char *const name, const char *const string, char version,
 	   seconds, as the idea is to insert a transition just before
 	   32-bit time_t rolls around, and this occurs at a slightly
 	   different moment if transitions are leap-second corrected.  */
-	if (WORK_AROUND_QTBUG_53071 && timecnt != 0
+	if (WORK_AROUND_QTBUG_53071 && timecnt != 0 && want_bloat()
 	    && ats[timecnt - 1] < y2038_boundary - 1 && strchr(string, '<')) {
 	  ats[timecnt] = y2038_boundary - 1;
 	  types[timecnt] = types[timecnt - 1];
@@ -1970,7 +1994,7 @@ writezone(const char *const name, const char *const string, char version,
 		int old0;
 		char		omittype[TZ_MAX_TYPES];
 		int		typemap[TZ_MAX_TYPES];
-		register int	thistypecnt;
+		int		thistypecnt, stdcnt, utcnt;
 		char		thischars[TZ_MAX_CHARS];
 		int		thischarcnt;
 		bool		toomanytimes;
@@ -2053,7 +2077,7 @@ writezone(const char *const name, const char *const string, char version,
 		** (to help get global "altzone" and "timezone" variables
 		** set correctly).
 		*/
-		{
+		if (want_bloat()) {
 			register int	mrudst, mrustd, hidst, histd, type;
 
 			hidst = histd = mrudst = mrustd = -1;
@@ -2100,12 +2124,16 @@ writezone(const char *const name, const char *const string, char version,
 
 		for (i = 0; i < sizeof indmap / sizeof indmap[0]; ++i)
 			indmap[i] = -1;
-		thischarcnt = 0;
+		thischarcnt = stdcnt = utcnt = 0;
 		for (i = old0; i < typecnt; i++) {
 			register char *	thisabbr;
 
 			if (omittype[i])
 				continue;
+			if (ttisstds[i])
+			  stdcnt = thistypecnt;
+			if (ttisgmts[i])
+			  utcnt = thistypecnt;
 			if (indmap[abbrinds[i]] >= 0)
 				continue;
 			thisabbr = &chars[abbrinds[i]];
@@ -2118,12 +2146,18 @@ writezone(const char *const name, const char *const string, char version,
 			}
 			indmap[abbrinds[i]] = j;
 		}
+		if (pass == 1 && !want_bloat()) {
+		  utcnt = stdcnt = thisleapcnt = 0;
+		  thistimecnt = - locut - hicut;
+		  thistypecnt = thischarcnt = 1;
+		  thistimelim = thistimei;
+		}
 #define DO(field)	fwrite(tzh.field, sizeof tzh.field, 1, fp)
 		tzh = tzh0;
 		memcpy(tzh.tzh_magic, TZ_MAGIC, sizeof tzh.tzh_magic);
 		tzh.tzh_version[0] = version;
-		convert(thistypecnt, tzh.tzh_ttisgmtcnt);
-		convert(thistypecnt, tzh.tzh_ttisstdcnt);
+		convert(utcnt, tzh.tzh_ttisgmtcnt);
+		convert(stdcnt, tzh.tzh_ttisstdcnt);
 		convert(thisleapcnt, tzh.tzh_leapcnt);
 		convert(locut + thistimecnt + hicut, tzh.tzh_timecnt);
 		convert(thistypecnt, tzh.tzh_typecnt);
@@ -2138,6 +2172,15 @@ writezone(const char *const name, const char *const string, char version,
 		DO(tzh_typecnt);
 		DO(tzh_charcnt);
 #undef DO
+		if (pass == 1 && !want_bloat()) {
+		  /* Output a minimal data block with just one time type.  */
+		  puttzcode(0, fp);	/* utoff */
+		  putc(0, fp);		/* dst */
+		  putc(0, fp);		/* index of abbreviation */
+		  putc(0, fp);		/* empty-string abbreviation */
+		  continue;
+		}
+
 		/* Output a LO_TIME transition if needed; see limitrange.
 		   But do not go below the minimum representable value
 		   for this pass.  */
@@ -2193,10 +2236,12 @@ writezone(const char *const name, const char *const string, char version,
 			puttzcodepass(todo, fp, pass);
 			puttzcode(corr[i], fp);
 		}
-		for (i = old0; i < typecnt; i++)
+		if (stdcnt != 0)
+		  for (i = old0; i < typecnt; i++)
 			if (!omittype[i])
 				putc(ttisstds[i], fp);
-		for (i = old0; i < typecnt; i++)
+		if (utcnt != 0)
+		  for (i = old0; i < typecnt; i++)
 			if (!omittype[i])
 				putc(ttisgmts[i], fp);
 		swaptypes(old0, thisdefaulttype);
@@ -2643,16 +2688,18 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 			max_year = min_year + years_of_observations;
 		}
 	}
-	/*
-	** For the benefit of older systems,
-	** generate data from 1900 through 2038.
-	*/
-	if (min_year > 1900)
-		min_year = 1900;
 	max_year0 = max_year;
-	if (max_year < 2038)
+	if (want_bloat()) {
+	  /* For the benefit of older systems,
+	     generate data from 1900 through 2038.  */
+	  if (min_year > 1900)
+		min_year = 1900;
+	  if (max_year < 2038)
 		max_year = 2038;
+	}
+
 	for (i = 0; i < zonecount; ++i) {
+		struct rule *prevrp = NULL;
 		/*
 		** A guess that may well be corrected later.
 		*/
@@ -2788,6 +2835,11 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				doabbr(ab, zp, rp->r_abbrvar,
 				       rp->r_isdst, rp->r_stdoff, false);
 				offset = oadd(zp->z_gmtoff, rp->r_stdoff);
+				if (!want_bloat() && !useuntil && !do_extend
+				    && prevrp
+				    && rp->r_hiyear == ZIC_MAX
+				    && prevrp->r_hiyear == ZIC_MAX)
+				  break;
 				type = addtype(offset, ab, rp->r_isdst,
 					rp->r_todisstd, rp->r_todisgmt);
 				if (defaulttype < 0 && !rp->r_isdst)
@@ -2797,6 +2849,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 					  && ktime < attypes[lastatmax].at))
 				  lastatmax = timecnt;
 				addtt(ktime, type);
+				prevrp = rp;
 			}
 		}
 		if (usestart) {

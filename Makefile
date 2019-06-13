@@ -362,9 +362,17 @@ LEAPSECONDS=
 zic=		./zic
 ZIC=		$(zic) $(ZFLAGS)
 
-# To shrink the size of installed TZif files,
+# Append "-b fat" to install larger TZif files that work around
+# incompatiblities and bugs in some TZif readers, notably readers that
+# mishandle 64-bit data in TZif files.  Append "-b slim" to install
+# smaller TZif files that test for these year-2038 bugs.  If no -b
+# option is given, the current default is "-b fat", but this is
+# intended to change as buggy readers often mishandle timestamps
+# after 2038 anyway.
+#
+# To shrink the size of installed TZif files even further,
 # append "-r @N" to omit data before N-seconds-after-the-Epoch.
-# See the zic man page for more about -r.
+# See the zic man page for more about -b and -r.
 ZFLAGS=
 
 # How to use zic to install TZif files.

@@ -41,6 +41,20 @@ Unreleased, experimental changes
 
   Changes to code
 
+    zic's new -b option supports a way to control data bloat and to
+    test for year-2038 bugs in software that reads TZif files.
+    'zic -b fat' and 'zic -b slim' generate larger and smaller output;
+    for example, changing from fat to slim shrinks the Europe/London
+    file from 3648 to 1625 bytes, saving about 55%.  Fat and slim
+    files represent the same time data and use the same TZif format as
+    documented in tzfile(5) and in Internet RFC 8536.  Fat format
+    attempts to work around bugs or incompatibilities on older
+    software that reads TZif files, notably software that mishandles
+    64-bit TZif data.  Slim format is more efficient and tests for
+    these bugs.  Currently zic defaults to fat format, although this
+    is intended to change in future zic versions, as the buggy
+    software typically mishandles post-2038 timestamps anyway.
+
     zic no longer treats a set of rules ending in 2037 specially.
     Previously, zic assumed that such a ruleset meant that future
     timestamps could not be predicted, and therefore omitted a

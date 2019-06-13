@@ -2876,16 +2876,28 @@ addtype(zic_t gmtoff, char const *abbr, bool isdst, bool ttisstd, bool ttisgmt)
 {
 	register int	i, j;
 
-	/*
-	** See if there's already an entry for this zone type.
-	** If so, just return its index.
-	*/
-	for (i = 0; i < typecnt; ++i) {
+	if (! (-1L - 2147483647L <= gmtoff && gmtoff <= 2147483647L)) {
+		error(_("UT offset out of range"));
+		exit(EXIT_FAILURE);
+	}
+
+	for (j = 0; j < charcnt; ++j)
+		if (strcmp(&chars[j], abbr) == 0)
+			break;
+	if (j == charcnt)
+		newabbr(abbr);
+	else {
+	  /*
+	  ** See if there's already an entry for this zone type.
+	  ** If so, just return its index.
+	  */
+	  for (i = 0; i < typecnt; i++) {
 		if (gmtoff == gmtoffs[i] && isdst == isdsts[i] &&
-			strcmp(abbr, &chars[abbrinds[i]]) == 0 &&
+			j == abbrinds[i] &&
 			ttisstd == ttisstds[i] &&
 			ttisgmt == ttisgmts[i])
 				return i;
+	  }
 	}
 	/*
 	** There isn't one; add a new one, unless there are already too
@@ -2895,22 +2907,12 @@ addtype(zic_t gmtoff, char const *abbr, bool isdst, bool ttisstd, bool ttisgmt)
 		error(_("too many local time types"));
 		exit(EXIT_FAILURE);
 	}
-	if (! (-1L - 2147483647L <= gmtoff && gmtoff <= 2147483647L)) {
-		error(_("UT offset out of range"));
-		exit(EXIT_FAILURE);
-	}
+	i = typecnt++;
 	gmtoffs[i] = gmtoff;
 	isdsts[i] = isdst;
 	ttisstds[i] = ttisstd;
 	ttisgmts[i] = ttisgmt;
-
-	for (j = 0; j < charcnt; ++j)
-		if (strcmp(&chars[j], abbr) == 0)
-			break;
-	if (j == charcnt)
-		newabbr(abbr);
 	abbrinds[i] = j;
-	++typecnt;
 	return i;
 }
 

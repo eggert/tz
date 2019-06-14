@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     Brazil no longer observes DST.
+    'zic -b slim' outputs smaller TZif files; please try it out.
     Palestine's 2019 spring-forward transition was on 03-29, not 03-30.
 
   Changes to future timestamps

@@ -1810,17 +1810,6 @@ atcomp(const void *avp, const void *bvp)
 	return (a < b) ? -1 : (a > b);
 }
 
-static void
-swaptypes(int i, int j)
-{
-  { zic_t t = gmtoffs[i]; gmtoffs[i] = gmtoffs[j]; gmtoffs[j] = t; }
-  { char t = isdsts[i]; isdsts[i] = isdsts[j]; isdsts[j] = t; }
-  { unsigned char t = abbrinds[i]; abbrinds[i] = abbrinds[j];
-    abbrinds[j] = t; }
-  { bool t = ttisstds[i]; ttisstds[i] = ttisstds[j]; ttisstds[j] = t; }
-  { bool t = ttisgmts[i]; ttisgmts[i] = ttisgmts[j]; ttisgmts[j] = t; }
-}
-
 struct timerange {
   int defaulttype;
   ptrdiff_t base, count;
@@ -2066,7 +2055,6 @@ writezone(const char *const name, const char *const string, char version,
 		   THISDEFAULTTYPE appears as type 0 in the output instead
 		   of OLD0.  TYPEMAP also omits unused types.  */
 		old0 = strlen(omittype);
-		swaptypes(old0, thisdefaulttype);
 
 #ifndef LEAVE_SOME_PRE_2011_SYSTEMS_IN_THE_LURCH
 		/*
@@ -2085,12 +2073,16 @@ writezone(const char *const name, const char *const string, char version,
 				if (isdsts[types[i]])
 					mrudst = types[i];
 				else	mrustd = types[i];
-			for (i = old0; i < typecnt; i++)
-				if (!omittype[i]) {
-					if (isdsts[i])
-						hidst = i;
-					else	histd = i;
-				}
+			for (i = old0; i < typecnt; i++) {
+			  int h = (i == old0 ? thisdefaulttype
+				   : i == thisdefaulttype ? old0 : i);
+			  if (!omittype[h]) {
+			    if (isdsts[h])
+			      hidst = i;
+			    else
+			      histd = i;
+			  }
+			}
 			if (hidst >= 0 && mrudst >= 0 && hidst != mrudst &&
 				gmtoffs[hidst] != gmtoffs[mrudst]) {
 					isdsts[mrudst] = -1;
@@ -2204,12 +2196,15 @@ writezone(const char *const name, const char *const string, char version,
 		if (hicut)
 		  putc(currenttype, fp);
 
-		for (i = old0; i < typecnt; i++)
-			if (!omittype[i]) {
-				puttzcode(gmtoffs[i], fp);
-				putc(isdsts[i], fp);
-				putc((unsigned char) indmap[abbrinds[i]], fp);
-			}
+		for (i = old0; i < typecnt; i++) {
+		  int h = (i == old0 ? thisdefaulttype
+			   : i == thisdefaulttype ? old0 : i);
+		  if (!omittype[h]) {
+		    puttzcode(gmtoffs[h], fp);
+		    putc(isdsts[h], fp);
+		    putc(indmap[abbrinds[h]], fp);
+		  }
+		}
 		if (thischarcnt != 0)
 			fwrite(thischars, sizeof thischars[0],
 				      thischarcnt, fp);
@@ -2244,7 +2239,6 @@ writezone(const char *const name, const char *const string, char version,
 		  for (i = old0; i < typecnt; i++)
 			if (!omittype[i])
 				putc(ttisgmts[i], fp);
-		swaptypes(old0, thisdefaulttype);
 	}
 	fprintf(fp, "\n%s\n", string);
 	close_file(fp, directory, name);

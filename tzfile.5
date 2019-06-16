@@ -37,7 +37,7 @@ These values are,
 in order:
 .RS
 .TP
-.I tzh_ttisgmtcnt
+.I tzh_ttisutcnt
 The number of UT/local indicators stored in the file.
 .TP
 .I tzh_ttisstdcnt
@@ -87,21 +87,21 @@ entries, each defined as follows:
 .nf
 .ta .5i +\w'unsigned char\0\0'u
 struct ttinfo {
-	int32_t	tt_gmtoff;
+	int32_t	tt_utoff;
 	unsigned char	tt_isdst;
-	unsigned char	tt_abbrind;
+	unsigned char	tt_desigidx;
 };
 .in -.5i
 .fi
 .sp
 Each structure is written as a four-byte signed integer value for
-.IR tt_gmtoff ,
+.IR tt_utoff ,
 in a standard byte order, followed by a one-byte value for
 .I tt_isdst
 and a one-byte value for
-.IR tt_abbrind .
+.IR tt_desigidx .
 In each structure,
-.I tt_gmtoff
+.I tt_utoff
 gives the number of seconds to be added to UT,
 .I tt_isdst
 tells whether
@@ -109,7 +109,7 @@ tells whether
 should be set by
 .BR localtime (3)
 and
-.I tt_abbrind
+.I tt_desigidx
 serves as an index into the array of time zone abbreviation bytes
 that follow the
 .I ttinfo
@@ -136,7 +136,7 @@ were specified as standard time or wall clock time,
 and are used when a timezone file is used in handling POSIX-style
 timezone environment variables.
 .IP *
-.I tzh_ttisgmtcnt
+.I tzh_ttisutcnt
 UT/local indicators, each stored as a one-byte value;
 they tell whether the transition times associated with local time types
 were specified as UT or local time,

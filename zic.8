@@ -455,8 +455,8 @@ A zone line has the form
 .sp
 .nf
 .ti +.5i
-.ta \w'Zone\0\0'u +\w'Asia/Amman\0\0'u +\w'UTOFF\0\0'u +\w'Jordan\0\0'u +\w'FORMAT\0\0'u
-Zone	NAME	UTOFF	RULES	FORMAT	[UNTIL]
+.ta \w'Zone\0\0'u +\w'Asia/Amman\0\0'u +\w'STDOFF\0\0'u +\w'Jordan\0\0'u +\w'FORMAT\0\0'u
+Zone	NAME	STDOFF	RULES	FORMAT	[UNTIL]
 .sp
 For example:
 .sp
@@ -465,7 +465,7 @@ Zone	Asia/Amman	2:00	Jordan	EE%sT	2017 Oct 27 01:00
 .sp
 .fi
 The fields that make up a zone line are:
-.TP "\w'UTOFF'u"
+.TP "\w'STDOFF'u"
 .B NAME
 The name of the timezone.
 This is the name used in creating the time conversion information file for the
@@ -477,7 +477,7 @@ or
 a file name component is a maximal substring that does not contain
 .q "/" .
 .TP
-.B UTOFF
+.B STDOFF
 The amount of time to add to UT to get standard time.
 This field has the same format as the
 .B AT
@@ -661,7 +661,7 @@ Rule	EU	1981	max	\*-	Mar	lastSun	1:00u	1:00	S
 Rule	EU	1996	max	\*-	Oct	lastSun	1:00u	0	\*-
 .sp
 .ta \w'# Zone\0\0'u +\w'Europe/Zurich\0\0'u +\w'0:29:45.50\0\0'u +\w'RULES\0\0'u +\w'FORMAT\0\0'u
-# Zone	NAME	UTOFF	RULES	FORMAT	[UNTIL]
+# Zone	NAME	STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Zurich	0:34:08	\*-	LMT	1853 Jul 16
 		0:29:45.50	\*-	BMT	1894 Jun
 		1:00	Swiss	CE%sT	1981

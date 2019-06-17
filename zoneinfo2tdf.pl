@@ -28,7 +28,7 @@ while (<>) {
 
   $contZone = '';
   if ($type eq 'zone') {
-    # Zone  NAME  UTOFF   RULES/SAVE  FORMAT  [UNTIL]
+    # Zone  NAME  STDOFF  RULES/SAVE  FORMAT  [UNTIL]
     my $nfields = @fields;
     $nfields >= 5 or warn "bad zone line";
     if ($nfields > 6) {

@@ -385,13 +385,12 @@ to other applications requiring greater precision.
 The source format does not specify any maximum precision.
 Any of these forms may be followed by the letter
 .B w
-if the given time is local
+if the given time is local or
 .q "wall clock"
 time,
 .B s
-if the given time is local
-.q "standard"
-time, or
+if the given time is standard time without any adjustment for daylight saving,
+or
 .B u
 (or
 .B g
@@ -399,7 +398,7 @@ or
 .BR z )
 if the given time is universal time;
 in the absence of an indicator,
-wall clock time is assumed.
+local (wall clock) time is assumed.
 These forms ignore leap seconds; for example,
 if a leap second occurs at 00:59:60 local time,
 .q "1:00"
@@ -478,7 +477,8 @@ a file name component is a maximal substring that does not contain
 .q "/" .
 .TP
 .B STDOFF
-The amount of time to add to UT to get standard time.
+The amount of time to add to UT to get standard time,
+without any adjustment for daylight saving.
 This field has the same format as the
 .B AT
 and
@@ -636,7 +636,7 @@ or
 (an abbreviation of)
 .q "Rolling"
 if the leap second time given by the other fields should be interpreted as
-local wall clock time.
+local (wall clock) time.
 .SH "EXTENDED EXAMPLE"
 Here is an extended example of
 .B zic
@@ -720,7 +720,7 @@ coincides with and is equal to
 a clock retreat caused by a change in UT offset,
 .B zic
 produces a single transition to daylight saving at the new UT offset
-(without any change in wall clock time).
+without any change in local (wall clock) time.
 To get separate transitions
 use multiple zone continuation lines
 specifying transition instants using universal time.

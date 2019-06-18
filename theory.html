@@ -955,7 +955,7 @@ an older <code>zic</code>.
   </li>
   <li>
     In POSIX, there is no tamper-proof way for a process to learn the
-    system's best idea of local wall clock.
+    system's best idea of local (wall clock) time.
     This is important for applications that an administrator wants
     used only at certain times &ndash; without regard to whether the
     user has fiddled the
@@ -1052,14 +1052,14 @@ an older <code>zic</code>.
   </li>
   <li>
     A function <code>tzsetwall</code> has been added to arrange for the
-    system's best approximation to local wall clock time to be delivered
+    system's best approximation to local (wall clock) time to be delivered
     by subsequent calls to <code>localtime</code>.
-    Source code for portable applications that "must" run on local wall
-    clock time should call <code>tzsetwall</code>;
+    Source code for portable applications that "must" run on local
+    time should call <code>tzsetwall</code>;
     if such code is moved to "old" systems that do not
     provide <code>tzsetwall</code>, you will not be able to generate an
     executable program.
-    (These functions also arrange for local wall clock time to
+    (These functions also arrange for local time to
     be used if <code>tzset</code> is called &ndash; directly or
     indirectly &ndash; and there is no <code>TZ</code> environment
     variable; portable applications should not, however, rely on this

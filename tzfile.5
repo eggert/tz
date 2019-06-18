@@ -16,6 +16,13 @@ The timezone information files used by
 are typically found under a directory with a name like
 .IR /usr/share/zoneinfo .
 These files use the format described in Internet RFC 8536.
+Each file is a sequence of 8-bit bytes.
+In a file, a binary integer is represented by a sequence of one or
+more bytes in network order (bigendian, or high-order byte first),
+with all bits significant,
+a signed binary integer is represented using two's complement,
+and a boolean is represented by a one-byte binary integer that is
+either 0 (false) or 1 (true).
 The format begins with a 44-byte header containing the following fields:
 .IP * 2
 The magic four-byte ASCII sequence
@@ -30,11 +37,7 @@ or
 .IP *
 Fifteen bytes containing zeros reserved for future use.
 .IP *
-Six four-byte integer values
-written in a standard byte order
-(the high-order byte of the value is written first).
-These values are,
-in order:
+Six four-byte integer values, in the following order:
 .RS
 .TP
 .I tzh_ttisutcnt
@@ -64,7 +67,7 @@ depend on the contents of the header:
 .IP * 2
 .I tzh_timecnt
 four-byte signed integer values sorted in ascending order.
-These values are written in standard byte order.
+These values are written in network byte order.
 Each is used as a transition time (as returned by
 .BR time (2))
 at which the rules for computing local time change.
@@ -96,7 +99,7 @@ struct ttinfo {
 .sp
 Each structure is written as a four-byte signed integer value for
 .IR tt_utoff ,
-in a standard byte order, followed by a one-byte value for
+in network byte order, followed by a one-byte boolean for
 .I tt_isdst
 and a one-byte value for
 .IR tt_desigidx .
@@ -114,14 +117,23 @@ serves as an index into the array of time zone abbreviation bytes
 that follow the
 .I ttinfo
 structure(s) in the file.
+The
+.I tt_utoff
+value is never equal to -2**31, to let 32-bit clients negate it without
+overflow.
+Also, in realistic applications
+.I tt_utoff
+is in the range [-89999, 93599] (i.e., more than -25 hours and less
+than 26 hours); this allows easy support by implementations that
+already support the POSIX-required range [-24:59:59, 25:59:59].
 .IP *
 .I tzh_leapcnt
-pairs of four-byte values, written in standard byte order;
+pairs of four-byte values, written in network byte order;
 the first value of each pair gives the nonnegative time
 (as returned by
 .BR time (2))
 at which a leap second occurs;
-the second gives the
+the second is a signed integer specifying the
 .I total
 number of leap seconds to be applied during the time period
 starting at the given time.
@@ -130,28 +142,36 @@ Each transition is for one leap second, either positive or negative;
 transitions always separated by at least 28 days minus 1 second.
 .IP *
 .I tzh_ttisstdcnt
-standard/wall indicators, each stored as a one-byte value;
+standard/wall indicators, each stored as a one-byte boolean;
 they tell whether the transition times associated with local time types
-were specified as standard time or wall clock time,
-and are used when a timezone file is used in handling POSIX-style
-timezone environment variables.
+were specified as standard time or local (wall clock) time.
 .IP *
 .I tzh_ttisutcnt
-UT/local indicators, each stored as a one-byte value;
+UT/local indicators, each stored as a one-byte boolean;
 they tell whether the transition times associated with local time types
-were specified as UT or local time,
-and are used when a timezone file is used in handling POSIX-style
-timezone environment variables.
+were specified as UT or local time.
+If a UT/local indicator is set, the corresponding standard/wall indicator
+must also be set.
+.PP
+The standard/wall and UT/local indicators were designed for
+transforming a TZif file's transition times into transitions appropriate
+for another time zone specified via a POSIX-style TZ string that lacks rules.
+For example, when TZ="AKST9AKDT" and there is no TZif file "AKST9AKDT",
+the transition times might be adapted from a TZif file with the
+well-known name "posixrules" that is present only for this purpose and
+is a copy of the file "America/New_York", a file with a different UT offset.
+POSIX does not specify this obsolescent transformational behavior and
+widely used platforms such as GNU/Linux do not support it correctly, so users
+desiring Alaska time should specify TZ="America/Anchorage" for better
+historical coverage, or TZ="AKST9AKDT,M3.2.0,M11.1.0" for POSIX
+conformance and coverage for recent timestamps only.
 .PP
 The
 .BR localtime (3)
 function
-uses the first standard-time
+normally uses the first
 .I ttinfo
 structure in the file
-(or simply the first
-.I ttinfo
-structure in the absence of a standard-time structure)
 if either
 .I tzh_timecnt
 is zero or the time argument is less than the first transition time recorded

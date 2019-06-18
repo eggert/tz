@@ -92,10 +92,8 @@ struct rule {
 	int		r_wday;
 
 	zic_t		r_tod;		/* time from midnight */
-	bool		r_todisstd;	/* above is standard time if 1 */
-					/* or wall clock time if 0 */
-	bool		r_todisut;	/* above is GMT if 1 */
-					/* or local time if 0 */
+	bool		r_todisstd;	/* is r_tod standard time? */
+	bool		r_todisut;	/* is r_tod UT? */
 	bool		r_isdst;	/* is this daylight saving time? */
 	zic_t		r_save;		/* offset from standard time */
 	const char *	r_abbrvar;	/* variable part of abbreviation */

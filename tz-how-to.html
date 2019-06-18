@@ -102,7 +102,7 @@ in some localizable way. It&rsquo;s used in the file, <code>pacificnew</code>,
 to determine whether a given year will have a US presidential election;
 but everything related to that use is commented out.)
 
-<p>The <code>SAVE</code> column contains the wall clock offset from
+<p>The <code>SAVE</code> column contains the local (wall clock) offset from
 local standard time.
 This is usually either zero for standard time or one hour for daylight
 saving time; but there&rsquo;s no reason, in principle, why it can&rsquo;t
@@ -250,10 +250,10 @@ Rule  US   2007 max   -   Nov Sun&gt;=1   2:00  0    S
 <p>There are two interesting things to note here.</p>
 
 <p>First, the time that something happens (in the <code>AT</code>
-column) is not necessarily the local wall clock time. The time can be
+column) is not necessarily the local (wall clock) time. The time can be
 suffixed with &lsquo;s&rsquo; (for &ldquo;standard&rdquo;) to mean
-local standard time (different from wall clock time when observing
-daylight saving time); or it can be suffixed with &lsquo;g&rsquo;,
+local standard time, different from local (wall clock) time when observing
+daylight saving time; or it can be suffixed with &lsquo;g&rsquo;,
 &lsquo;u&rsquo;, or &lsquo;z&rsquo;, all three of which mean the
 standard time at the
 <a href="https://en.wikipedia.org/wiki/Prime_Meridian">prime meridian</a>.
@@ -265,8 +265,8 @@ href="https://en.wikipedia.org/wiki/Coordinated_Universal_Time">UTC</a>&rdquo;
 (whichever was official at the time); &lsquo;z&rsquo; stands for the
 <a href="https://en.wikipedia.org/wiki/Nautical_time">nautical time zone</a>
 Z (a.k.a. &ldquo;Zulu&rdquo; which, in turn, stands for &lsquo;Z&rsquo;).
-The time can also be suffixed with &lsquo;w&rsquo; meaning &ldquo;wall
-clock time;&rdquo; but it usually isn&rsquo;t because that&rsquo;s the
+The time can also be suffixed with &lsquo;w&rsquo; meaning local (wall
+clock) time; but it usually isn&rsquo;t because that&rsquo;s the
 default.</p>
 
 <p>Second, the day in the <code>ON</code> column, in addition to
@@ -467,7 +467,7 @@ Zone Pacific/Honolulu ...                 1933 Apr 30  2:00
 <p>Hawaii tried daylight saving time for three weeks in 1933 and
 decided they didn&rsquo;t like it. <code>8-) </code>Note that
 the <code>STDOFF</code> column always contains the standard time
-offset, so the wall clock time during this period was GMT &minus;
+offset, so the local (wall clock) time during this period was GMT &minus;
 10:30 + 1:00 = GMT &minus; 9:30.</p>
 
 <p>The <code>FORMAT</code> column specifies the usual abbreviation of

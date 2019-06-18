@@ -83,6 +83,7 @@ as local time.
 will act as if the input contained a link line of the form
 .sp
 .ti +.5i
+.ta \w'Link\0\0'u  +\w'\fItimezone\fP\0\0'u
 Link	\fItimezone\fP		localtime
 .TP
 .BI "\*-L " leapsecondfilename
@@ -674,7 +675,11 @@ Link	Europe/Zurich	Europe/Vaduz
 In this example, the timezone is named Europe/Zurich but it has an alias
 as Europe/Vaduz.  This example says that Zurich was 34 minutes and 8
 seconds east of UT until 1853-07-16 at 00:00, when the legal offset
-was changed to 7\(de\|26\(fm\|22.50\(sd, which works out to 0:29:45.50;
+was changed to
+.ds o 7 degrees 26 minutes 22.50 seconds
+.if \n(.g .if c \(de .if c \(fm .if c \(sd .ds o 7\(de\|26\(fm\|22.50\(sd
+\*o,
+which works out to 0:29:45.50;
 .B zic
 treats this by rounding it to 0:29:46.
 After 1894-06-01 at 00:00 the UT offset became one hour

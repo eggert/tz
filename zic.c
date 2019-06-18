@@ -2930,6 +2930,8 @@ addtype(zic_t utoff, char const *abbr, bool isdst, bool ttisstd, bool ttisut)
 		error(_("UT offset out of range"));
 		exit(EXIT_FAILURE);
 	}
+	if (!want_bloat())
+	  ttisstd = ttisut = false;
 
 	for (j = 0; j < charcnt; ++j)
 		if (strcmp(&chars[j], abbr) == 0)

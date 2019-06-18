@@ -58,6 +58,8 @@ LOCALTIME=	GMT
 # Nonempty POSIXRULES is obsolete and should not be relied on, because:
 # * It does not work correctly in popular implementations such as GNU/Linux.
 # * It does not work in the tzdb implementation for timestamps after 2037.
+# * It is incompatible with ’zic -b slim’ if POSIXRULES specifies transitions
+#   at standard time or UT rather than at local time.
 # In short, software should avoid ruleless settings like TZ='EET-2EEST'
 # and so should not depend on the value of POSIXRULES.
 

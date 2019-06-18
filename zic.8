@@ -103,7 +103,12 @@ will act as if the input contained a link line of the form
 Link	\fItimezone\fP		posixrules
 .sp
 This feature is obsolete and poorly supported.
-Among other things it should not be used for timestamps after the year 2037.
+Among other things it should not be used for timestamps after the year 2037,
+and it should not be combined with
+.B "\*-b slim"
+if
+.IR timezone 's
+transitions are at standard time or UT instead of local time.
 .TP
 .BR "\*-r " "[\fB@\fP\fIlo\fP][\fB/@\fP\fIhi\fP]"
 Reduce the size of output files by limiting their applicability

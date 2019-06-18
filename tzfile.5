@@ -119,13 +119,13 @@ that follow the
 structure(s) in the file.
 The
 .I tt_utoff
-value is never equal to -2**31, to let 32-bit clients negate it without
+value is never equal to \-2**31, to let 32-bit clients negate it without
 overflow.
 Also, in realistic applications
 .I tt_utoff
-is in the range [-89999, 93599] (i.e., more than -25 hours and less
+is in the range [\-89999, 93599] (i.e., more than \-25 hours and less
 than 26 hours); this allows easy support by implementations that
-already support the POSIX-required range [-24:59:59, 25:59:59].
+already support the POSIX-required range [\-24:59:59, 25:59:59].
 .IP *
 .I tzh_leapcnt
 pairs of four-byte values, written in network byte order;
@@ -204,7 +204,7 @@ For version-3-format timezone files, the POSIX-TZ-style string may
 use two minor extensions to the POSIX TZ format, as described in
 .BR newtzset (3).
 First, the hours part of its transition times may be signed and range from
-\*-167 through 167 instead of the POSIX-required unsigned values
+\-167 through 167 instead of the POSIX-required unsigned values
 from 0 through 24.
 Second, DST is in effect all year if it starts
 January 1 at 00:00 and ends December 31 at 24:00 plus the difference
@@ -239,7 +239,7 @@ in the version 1 data block to save space.
 Time zone designations should consist of at least three (3)
 and no more than six (6) ASCII characters from the set of
 alphanumerics,
-.q "-",
+.q "\*-",
 and
 .q "+".
 This is for compatibility with POSIX requirements for
@@ -298,11 +298,11 @@ mishandled by version 2 readers.
 Some readers designed for version 2 do not support
 permanent daylight saving time, e.g., a TZ string
 .q "EST5EDT,0/0,J365/25"
-denoting permanent Eastern Daylight Time (\*-04).
+denoting permanent Eastern Daylight Time (\-04).
 As a partial workaround, a writer can substitute standard time
 for the next time zone east, e.g.,
 .q "AST4"
-for permanent Atlantic Standard Time (\*-04).
+for permanent Atlantic Standard Time (\-04).
 .IP *
 Some readers ignore the footer, and instead predict future
 timestamps from the time type of the last transition.
@@ -316,17 +316,17 @@ As a partial workaround, a writer can output a dummy (no-op)
 first transition at an early time.
 .IP *
 Some readers mishandle timestamps before the first
-transition that has a timestamp not less than -2**31.
+transition that has a timestamp not less than \-2**31.
 Readers that support only 32-bit timestamps are likely to be
 more prone to this problem, for example, when they process
 64-bit transitions only some of which are representable in 32
 bits.
 As a partial workaround, a writer can output a dummy
-transition at timestamp \*-2**31.
+transition at timestamp \-2**31.
 .IP *
 Some readers mishandle a transition if its timestamp has
 the minimum possible signed 64-bit value.
-Timestamps less than \*-2**59 are not recommended.
+Timestamps less than \-2**59 are not recommended.
 .IP *
 Some readers mishandle POSIX-style TZ strings that
 contain
@@ -347,7 +347,7 @@ These characters are not recommended.
 Some readers may mishandle time zone abbreviations that
 contain fewer than 3 or more than 6 characters, or that
 contain ASCII characters other than alphanumerics,
-.q "-",
+.q "\*-",
 and
 .q "+".
 These abbreviations are not recommended.
@@ -381,18 +381,18 @@ Readers that do not support negative timestamps are likely to
 be more prone to this problem.
 .IP *
 Some readers mishandle time zone abbreviations like
-.q "-08"
+.q "\*-08"
 that contain
 .q "+",
-.q "-",
+.q "\*-",
 or digits.
 .IP *
 Some readers mishandle UT offsets that are out of the
-traditional range of \*-12 through +12 hours, and so do not
+traditional range of \-12 through +12 hours, and so do not
 support locations like Kiritimati that are outside this
 range.
 .IP *
-Some readers mishandle UT offsets in the range [\*-3599, \*-1]
+Some readers mishandle UT offsets in the range [\-3599, \-1]
 seconds from UT, because they integer-divide the offset by
 3600 to get 0 and then display the hour part as
 .q "+00".

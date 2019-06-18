@@ -156,15 +156,17 @@ must also be set.
 The standard/wall and UT/local indicators were designed for
 transforming a TZif file's transition times into transitions appropriate
 for another time zone specified via a POSIX-style TZ string that lacks rules.
-For example, when TZ="AKST9AKDT" and there is no TZif file "AKST9AKDT",
-the transition times might be adapted from a TZif file with the
+For example, when TZ="EET\*-2EEST" and there is no TZif file "EET\*-2EEST",
+the idea was to adapt the transition times from a TZif file with the
 well-known name "posixrules" that is present only for this purpose and
-is a copy of the file "America/New_York", a file with a different UT offset.
-POSIX does not specify this obsolescent transformational behavior and
-widely used platforms such as GNU/Linux do not support it correctly, so users
-desiring Alaska time should specify TZ="America/Anchorage" for better
-historical coverage, or TZ="AKST9AKDT,M3.2.0,M11.1.0" for POSIX
-conformance and coverage for recent timestamps only.
+is a copy of the file "Europe/Brussels", a file with a different UT offset.
+POSIX does not specify this obsolete transformational behavior,
+the default rules are installation-dependent, and no implementation
+is known to support this feature for timestamps past 2037,
+so users desiring (say) Greek time should instead specify
+TZ="Europe/Athens" for better historical coverage, falling back on
+TZ="EET\*-2EEST,M3.5.0/3,M10.5.0/4" if POSIX conformance is required
+and older timestamps need not be handled accurately.
 .PP
 The
 .BR localtime (3)

@@ -94,13 +94,16 @@ no leap second information appears in output files.
 .BI "\*-p " timezone
 Use
 .IR timezone 's
-rules when handling POSIX-format
-TZ strings like "CST6CDT" that lack transition rules.
+rules when handling nonstandard
+TZ strings like "EET\*-2EEST" that lack transition rules.
 .B zic
 will act as if the input contained a link line of the form
 .sp
 .ti +.5i
 Link	\fItimezone\fP		posixrules
+.sp
+This feature is obsolete and poorly supported.
+Among other things it should not be used for timestamps after the year 2037.
 .TP
 .BR "\*-r " "[\fB@\fP\fIlo\fP][\fB/@\fP\fIhi\fP]"
 Reduce the size of output files by limiting their applicability

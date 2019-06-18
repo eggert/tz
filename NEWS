@@ -73,6 +73,17 @@ Unreleased, experimental changes
 
   Changes to documentation and commentary
 
+    The Makefile now documents the POSIXRULES macro as being obsolete,
+    and similarly, zic's -p POSIXRULES option is now documented as
+    being obsolete.  Although the POSIXRULES feature still exists and
+    works as before, in practice it is rarely used for its intended
+    purpose, and it does not work either in the default reference
+    implementation (for timestamps after 2037) or in common
+    implementations such as GNU/Linux (for contemporary timestamps).
+    Since POSIXRULES was designed primarily as a temporary transition
+    facility for System V platforms that died off decades ago, it is
+    being decommissioned rather than institutionalized.
+
     New info on Bonin Islands and Marcus (thanks to Wakaba and Phake Nick.)
 
 

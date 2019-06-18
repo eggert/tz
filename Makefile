@@ -35,11 +35,13 @@ DATAFORM=		main
 
 LOCALTIME=	GMT
 
-# If you want something other than Eastern United States time as a template
-# for handling ruleless POSIX-style timezone environment variables,
+# The POSIXRULES macro controls interpretation of nonstandard and obsolete
+# POSIX-like TZ settings like TZ=’EET-2EEST’ that lack DST transition rules.
+# In the reference implementation, if you want something other than Eastern
+# United States time as a template for handling these settings, you can
 # change the line below (after finding the timezone you want in the
 # one of the $(TDATA) source files, or adding it to a source file).
-# A ruleless environment setting like TZ='CST6CDT' uses the rules in the
+# A setting like TZ='EET-2EEST' is supposed to use the rules in the
 # template file to determine "spring forward" and "fall back" days and
 # times; the environment variable itself specifies UT offsets of standard and
 # daylight saving time.
@@ -49,6 +51,15 @@ LOCALTIME=	GMT
 # Use the command
 #	make zonenames
 # to get a list of the values you can use for POSIXRULES.
+#
+# If POSIXRULES is empty, no template is installed; this is the intended
+# future default for POSIXRULES.
+#
+# Nonempty POSIXRULES is obsolete and should not be relied on, because:
+# * It does not work correctly in popular implementations such as GNU/Linux.
+# * It does not work in the tzdb implementation for timestamps after 2037.
+# In short, software should avoid ruleless settings like TZ='EET-2EEST'
+# and so should not depend on the value of POSIXRULES.
 
 POSIXRULES=	America/New_York
 
@@ -570,7 +581,9 @@ install:	all $(DATA) $(REDO) $(MANS)
 			'$(DESTDIR)$(LIBDIR)' \
 			'$(DESTDIR)$(MANDIR)/man3' '$(DESTDIR)$(MANDIR)/man5' \
 			'$(DESTDIR)$(MANDIR)/man8'
-		$(ZIC_INSTALL) -l $(LOCALTIME) -p $(POSIXRULES) \
+		$(ZIC_INSTALL) -l $(LOCALTIME) \
+			`case '$(POSIXRULES)' in ?*) echo '-p';; esac \
+			` $(POSIXRULES) \
 			-t '$(DESTDIR)$(TZDEFAULT)'
 		cp -f $(TABDATA) '$(DESTDIR)$(TZDIR)/.'
 		cp tzselect '$(DESTDIR)$(BINDIR)/.'

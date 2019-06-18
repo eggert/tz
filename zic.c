@@ -659,6 +659,10 @@ want_bloat(void)
   return 0 <= bloat;
 }
 
+#ifndef ZIC_BLOAT_DEFAULT
+# define ZIC_BLOAT_DEFAULT "fat"
+#endif
+
 int
 main(int argc, char **argv)
 {
@@ -791,6 +795,8 @@ _("%s: invalid time range: %s\n"),
 		}
 	if (optind == argc - 1 && strcmp(argv[optind], "=") == 0)
 		usage(stderr, EXIT_FAILURE);	/* usage message by request */
+	if (bloat == 0)
+	  bloat = strcmp(ZIC_BLOAT_DEFAULT, "slim") == 0 ? -1 : 1;
 	if (directory == NULL)
 		directory = TZDIR;
 	if (tzdefault == NULL)

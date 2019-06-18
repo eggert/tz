@@ -53,9 +53,10 @@ Unreleased, experimental changes
     older software, notably software that mishandles 64-bit TZif data
     or uses obsolete TZ strings like "EET-2EEST" that lack DST rules.
     Slim format is more efficient and does not work around 64-bit bugs
-    or obsolete TZ strings.  Currently zic defaults to fat format,
-    although this is intended to change in future zic versions, as the
-    buggy software often mishandles timestamps anyway.
+    or obsolete TZ strings.  Currently zic defaults to fat format
+    unless you compile with -DZIC_BLOAT_DEFAULT=\"slim\"; this
+    out-of-the-box default is intended to change in future releases
+    as the buggy software often mishandles timestamps anyway.
 
     zic no longer treats a set of rules ending in 2037 specially.
     Previously, zic assumed that such a ruleset meant that future

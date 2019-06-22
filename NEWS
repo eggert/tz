@@ -40,6 +40,11 @@ Unreleased, experimental changes
     Europe/Rome between those dates.  (Thanks to Stephen Trainor and
     Luigi Rosa.)
 
+  Changes affecting metadata only
+
+    Add info about the Crimea situation in zone1970.tab and zone.tab.
+    (Problem reported by Serhii Demediuk.)
+
   Changes to code
 
     zic's new -b option supports a way to control data bloat and to

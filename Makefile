@@ -36,7 +36,7 @@ DATAFORM=		main
 LOCALTIME=	GMT
 
 # The POSIXRULES macro controls interpretation of nonstandard and obsolete
-# POSIX-like TZ settings like TZ=’EET-2EEST’ that lack DST transition rules.
+# POSIX-like TZ settings like TZ='EET-2EEST' that lack DST transition rules.
 # In the reference implementation, if you want something other than Eastern
 # United States time as a template for handling these settings, you can
 # change the line below (after finding the timezone you want in the
@@ -58,7 +58,7 @@ LOCALTIME=	GMT
 # Nonempty POSIXRULES is obsolete and should not be relied on, because:
 # * It does not work correctly in popular implementations such as GNU/Linux.
 # * It does not work in the tzdb implementation for timestamps after 2037.
-# * It is incompatible with ’zic -b slim’ if POSIXRULES specifies transitions
+# * It is incompatible with 'zic -b slim' if POSIXRULES specifies transitions
 #   at standard time or UT rather than at local time.
 # In short, software should avoid ruleless settings like TZ='EET-2EEST'
 # and so should not depend on the value of POSIXRULES.
@@ -805,12 +805,6 @@ CHECK_CC_LIST = { n = split($$1,a,/,/); for (i=2; i<=n; i++) print a[1], a[i]; }
 check_sorted: backward backzone iso3166.tab zone.tab zone1970.tab
 		$(AWK) '/^Link/ {print $$3}' backward | LC_ALL=C sort -cu
 		$(AWK) '/^Zone/ {print $$2}' backzone | LC_ALL=C sort -cu
-		$(AWK) '/^[^#]/ {print $$1}' iso3166.tab | LC_ALL=C sort -cu
-		$(AWK) '/^[^#]/ {print $$1}' zone.tab | LC_ALL=C sort -c
-		$(AWK) '/^[^#]/ {print substr($$0, 1, 2)}' zone1970.tab | \
-		  LC_ALL=C sort -c
-		$(AWK) '/^[^#]/ $(CHECK_CC_LIST)' zone1970.tab | \
-		  LC_ALL=C sort -cu
 		touch $@
 
 check_links:	checklinks.awk $(TDATA_TO_CHECK) tzdata.zi

@@ -1644,7 +1644,7 @@ Rule	Zion	1975	only	-	Apr	20	0:00	1:00	D
 Rule	Zion	1975	only	-	Aug	31	0:00	0	S
 
 # From Alois Treindl (2019-03-06):
-# http://www.moin.gov.il/Documents/שעון קיץ/clock-50-years-7-2014.pdf
+# http://www.moin.gov.il/Documents/שעון%20קיץ/clock-50-years-7-2014.pdf
 # From Isaac Starkman (2019-03-06):
 # Summer time was in that period in 1980 and 1984, see
 # https://www.ynet.co.il/articles/0,7340,L-3951073,00.html
@@ -2042,8 +2042,8 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # text.
 #
 # According to Izvestia newspaper No. 68 (23334) from 1991-03-20
-# (page 6; available at http://libinfo.org/newsr/newsr2574.djvu via
-# http://libinfo.org/index.php?id=58564) on 1991-03-31 at 2:00 during
+# -- page 6; available at http://libinfo.org/newsr/newsr2574.djvu via
+# http://libinfo.org/index.php?id=58564 -- on 1991-03-31 at 2:00 during
 # transition to "summer" time:
 # Republic of Georgia, Latvian SSR, Lithuanian SSR, SSR Moldova,
 # Estonian SSR; Komi ASSR; Kaliningrad oblast; Nenets autonomous okrug
@@ -2059,7 +2059,7 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # Apparently there were last minute changes. Apparently Kazakh act No. 170
 # was one of such changes.
 #
-# https://ru.wikipedia.org/wiki/Декретное время
+# https://ru.wikipedia.org/wiki/Декретное_время
 # claims that Sovetskaya Rossiya newspaper on 1991-03-29 published that
 # Nenets autonomous okrug, Komi and Kazakhstan (excluding Uralsk oblast)
 # were to not move clocks and Uralsk oblast was to move clocks

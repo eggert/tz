@@ -1612,7 +1612,7 @@ Zone Atlantic/Reykjavik	-1:28	-	LMT	1908
 # The authoritative source for time in Italy is the national metrological
 # institute, which has a summary page of historical DST data at
 # http://www.inrim.it/res/tf/ora_legale_i.shtml
-# [http://oldsite.inrim.it/res/tf/ora_legale_i.shtml in 2017]
+# [now at http://oldsite.inrim.it/res/tf/ora_legale_i.shtml as of 2017]
 # (2016-10-24):
 # http://www.renzobaldini.it/le-ore-legali-in-italia/
 # has still different data for 1944.  It divides Italy in two, as

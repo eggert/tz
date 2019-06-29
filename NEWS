@@ -31,8 +31,7 @@ Unreleased, experimental changes
     04-21 at 00:00, not the previous day at 03:30.  From 1946 through
     1952 its fall-back transitions occurred at 04:30, not at 03:30.
     In 1947 its fall-back transition was on 11-30, not 12-30.
-    (Thanks to P Chan.)  In 1952 its fall-back transition was on
-    11-02, not 10-26 (thanks to Brad Arndt).
+    (Thanks to P Chan.)
 
   Changes to past time zone abbreviations
 

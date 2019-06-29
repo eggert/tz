@@ -32,7 +32,7 @@ Unreleased, experimental changes
     1952 its fall-back transitions occurred at 04:30, not at 03:30.
     In 1947 its fall-back transition was on 11-30, not 12-30.
     (Thanks to P Chan.)  In 1952 its fall-back transition was on
-    11-02, not 10-26 (Thanks to Brad Arndt.)
+    11-02, not 10-26 (thanks to Brad Arndt).
 
   Changes to past time zone abbreviations
 
@@ -92,7 +92,7 @@ Unreleased, experimental changes
     facility for System V platforms that died off decades ago, it is
     being decommissioned rather than institutionalized.
 
-    New info on Bonin Islands and Marcus (thanks to Wakaba and Phake Nick.)
+    New info on Bonin Islands and Marcus (thanks to Wakaba and Phake Nick).
 
 
 Release 2019a - 2019-03-25 22:01:33 -0700
@@ -576,7 +576,7 @@ Release 2018d - 2018-03-22 07:05:46 -0700
     The code is a bit more portable to MS-Windows.  Installers can
     compile with -DRESERVE_STD_EXT_IDS on MS-Windows platforms that
     reserve identifiers like 'localtime'.  (Thanks to Manuela
-    Friedrich).
+    Friedrich.)
 
   Changes to documentation and commentary
 
@@ -2371,7 +2371,7 @@ Release 2014f - 2014-08-05 17:42:36 -0700
     warlord Jin Shuren in the data.
 
     Commentary about the coverage of each Russian zone has been standardized.
-    (Thanks to Tim Parenti).
+    (Thanks to Tim Parenti.)
 
     There is new commentary about contemporary timekeeping in Ethiopia.
 
@@ -2819,7 +2819,7 @@ Release 2013e - 2013-09-19 23:50:04 -0700
 
     Change the UT offset of Bern Mean Time from 0:29:44 to 0:29:46.
     This affects Europe/Zurich timestamps from 1853 to 1894.  (Thanks
-    to Alois Treindl).
+    to Alois Treindl.)
 
     Change the date of the circa-1850 Zurich transition from 1849-09-12
     to 1853-07-16, overriding Shanks with data from Messerli about
@@ -3129,7 +3129,7 @@ Release 2013a - 2013-02-27 09:20:35 -0800
     (Thanks to Arthur David Olson.)
 
     Improve the commentary about which districts observe what times
-    in Russia.  (Thanks to Oscar van Vlijmen and Arthur David Olson).
+    in Russia.  (Thanks to Oscar van Vlijmen and Arthur David Olson.)
 
     Add web page links to tz.js.
 

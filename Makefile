@@ -410,6 +410,9 @@ KSHELL=		/bin/bash
 # Name of curl <https://curl.haxx.se/>, used for HTML validation.
 CURL=		curl
 
+# Name of GNU Privacy Guard <https://gnupg.org/>, used to sign distributions.
+GPG=		gpg
+
 # The path where SGML DTDs are kept and the catalog file(s) to use when
 # validating HTML 4.01.  The default should work on both Debian and Red Hat.
 SGML_TOPDIR= /usr
@@ -1069,7 +1072,7 @@ tzdata$(VERSION).tar.gz.asc: tzdata$(VERSION).tar.gz
 tzdata$(VERSION)-rearguard.tar.gz.asc: tzdata$(VERSION)-rearguard.tar.gz
 tzdb-$(VERSION).tar.lz.asc: tzdb-$(VERSION).tar.lz
 $(ALL_ASC):
-		gpg2 --armor --detach-sign $?
+		$(GPG) --armor --detach-sign $?
 
 TYPECHECK_CFLAGS = $(CFLAGS) -DTYPECHECK -D__time_t_defined -D_TIME_T
 typecheck: typecheck_long_long typecheck_unsigned

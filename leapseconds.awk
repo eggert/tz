@@ -23,7 +23,7 @@ BEGIN {
   print "# <https://www.itu.int/rec/R-REC-TF.460-6-200202-I/>."
   print "# The International Earth Rotation and Reference Systems Service"
   print "# periodically uses leap seconds to keep UTC to within 0.9 s of UT1"
-  print "# (a proxy for Earth's angle in space corrected for polar motion)"
+  print "# (a proxy for Earth's angle in space as measured by astronomers)"
   print "# and publishes leap second data in a copyrighted file"
   print "# <https://hpiers.obspm.fr/iers/bul/bulc/Leap_Second.dat>."
   print "# See: Levine J. Coordinated Universal Time and the leap second."

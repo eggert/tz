@@ -1,5 +1,13 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to commentary
+
+    Liechtenstein observed Swiss DST in 1941/2.
+    (Thanks to Alois Treindl.)
+
+
 Release 2019b - 2019-07-01 00:09:53 -0700
 
   Briefly:

@@ -406,6 +406,31 @@ Zone America/New_York	-4:56:02 -	LMT	1883 Nov 18 12:03:58
 # From Paul Eggert (2015-12-25):
 # Assume this practice predates 1970, so Fort Pierre can use America/Chicago.
 
+# From Paul Eggert (2015-04-06):
+# In 1950s Nashville a public clock had dueling faces, one for conservatives
+# and the other for liberals; the two sides didn't agree about the time of day.
+# I haven't found a photo of this clock, nor have I tracked down the TIME
+# magazine report cited below, but here's the story as told by the late
+# American journalist John Seigenthaler, who was there:
+#
+# "The two [newspaper] owners held strongly contrasting political and
+# ideological views.  Evans was a New South liberal, Stahlman an Old South
+# conservative, and their two papers frequently clashed editorially, often on
+# the same day....  In the 1950s as the state legislature was grappling with
+# the question of whether to approve daylight saving time for the entire state,
+# TIME magazine reported:
+#
+# "'The Nashville Banner and The Nashville Tennessean rarely agree on anything
+# but the time of day — and last week they couldn't agree on that.'
+#
+# "It was all too true. The clock on the front of the building had two faces -
+# The Tennessean side of the building facing west, the other, east.  When it
+# was high noon Banner time, it was 11 a.m. Tennessean time."
+#
+# Seigenthaler J. For 100 years, Tennessean had it covered.
+# The Tennessean 2007-05-11, republished 2015-04-06.
+# https://www.tennessean.com/story/insider/extras/2015/04/06/archives-seigenthaler-for-100-years-the-tennessean-had-it-covered/25348545/
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER
 Rule	Chicago	1920	only	-	Jun	13	2:00	1:00	D
 Rule	Chicago	1920	1921	-	Oct	lastSun	2:00	0	S

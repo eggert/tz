@@ -2,6 +2,13 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to past timestamps
+
+    Detroit observed DST in 1967 and 1968 following the US DST rules,
+    except that its 1967 DST began on June 14 at 00:01.  (Thanks to
+    Alois Treindl for pointing out that the old data entries were
+    probably wrong.)
+
   Changes to commentary
 
     Nashville's newspapers dueled about the time of day in the 1950s.

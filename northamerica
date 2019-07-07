@@ -421,7 +421,7 @@ Zone America/New_York	-4:56:02 -	LMT	1883 Nov 18 12:03:58
 # TIME magazine reported:
 #
 # "'The Nashville Banner and The Nashville Tennessean rarely agree on anything
-# but the time of day — and last week they couldn't agree on that.'
+# but the time of day - and last week they couldn't agree on that.'
 #
 # "It was all too true. The clock on the front of the building had two faces -
 # The Tennessean side of the building facing west, the other, east.  When it
@@ -1159,18 +1159,19 @@ Zone America/Kentucky/Monticello -5:39:24 - LMT	1883 Nov 18 12:20:36
 # one hour in 1914."  This change is not in Shanks.  We have no more
 # info, so omit this for now.
 #
-# From Paul Eggert (2017-07-26):
-# Although Shanks says Detroit observed DST in 1967 from 06-14 00:01
-# until 10-29 00:01, I now see multiple reports that this is incorrect.
-# For example, according to a 50-year anniversary report about the 1967
-# Detroit riots and a major-league doubleheader on 1967-07-23, "By the time
-# the last fly ball of the doubleheader settled into the glove of leftfielder
-# Lenny Green, it was after 7 p.m.  Detroit did not observe daylight saving
-# time, so light was already starting to fail.  Twilight was made even deeper
-# by billowing columns of smoke that ascended in an unbroken wall north of the
-# ballpark."  See: Dow B. Detroit '67: As violence unfolded, Tigers played two
-# at home vs. Yankees. Detroit Free Press 2017-07-23.
-# https://www.freep.com/story/sports/mlb/tigers/2017/07/23/detroit-tigers-1967-riot-new-york-yankees/499951001/
+# From Paul Eggert (2019-07-06):
+# Due to a complicated set of legal maneuvers, in 1967 Michigan did
+# not start daylight saving time when the rest of the US did.
+# Instead, it began DST on Jun 14 at 00:01.  This was big news:
+# the Detroit Free Press reported it at the top of Page 1 on
+# 1967-06-14, in an article "State Adjusting to Switch to Fast Time"
+# by Gary Blonston, above an article about Thurgood Marshall's
+# confirmation to the US Supreme Court.  Although Shanks says Detroit
+# observed DST until 1967-10-29 00:01, that time of day seems to be
+# incorrect, as the Free Press later said DST ended in Michigan at the
+# same time as the rest of the US.  Also, although Shanks reports no DST in
+# Detroit in 1968, it did observe DST that year; in the November 1968
+# election Michigan voters narrowly repealed DST, effective 1969.
 #
 # Most of Michigan observed DST from 1973 on, but was a bit late in 1975.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER
@@ -1181,7 +1182,9 @@ Zone America/Detroit	-5:32:11 -	LMT	1905
 			-6:00	-	CST	1915 May 15  2:00
 			-5:00	-	EST	1942
 			-5:00	US	E%sT	1946
-			-5:00	Detroit	E%sT	1973
+			-5:00	Detroit	E%sT	1967 Jun 14  0:01
+			-5:00	US	E%sT	1969
+			-5:00	-	EST	1973
 			-5:00	US	E%sT	1975
 			-5:00	-	EST	1975 Apr 27  2:00
 			-5:00	US	E%sT

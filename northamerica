@@ -970,21 +970,22 @@ Zone America/Indiana/Vincennes -5:50:07 - LMT	1883 Nov 18 12:09:53
 			-5:00	US	E%sT
 #
 # Perry County, Indiana, switched from eastern to central time in April 2006.
+# From Alois Triendl (2019-07-09):
+# The Indianapolis News, Friday 27 October 1967 states that Perry County
+# returned to CST.  It went again to EST on 27 April 1969, as documented by the
+# Indianapolis star of Saturday 26 April.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER
-Rule Perry	1946	only	-	Apr	lastSun	2:00	1:00	D
-Rule Perry	1946	only	-	Sep	lastSun	2:00	0	S
-Rule Perry	1953	1954	-	Apr	lastSun	2:00	1:00	D
-Rule Perry	1953	1959	-	Sep	lastSun	2:00	0	S
 Rule Perry	1955	only	-	May	 1	0:00	1:00	D
+Rule Perry	1955	1960	-	Sep	lastSun	2:00	0	S
 Rule Perry	1956	1963	-	Apr	lastSun	2:00	1:00	D
 Rule Perry	1960	only	-	Oct	lastSun	2:00	0	S
-Rule Perry	1961	only	-	Sep	lastSun	2:00	0	S
-Rule Perry	1962	1963	-	Oct	lastSun	2:00	0	S
+Rule Perry	1961	1963	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Indiana/Tell_City -5:47:03 - LMT	1883 Nov 18 12:12:57
 			-6:00	US	C%sT	1946
 			-6:00 Perry	C%sT	1964 Apr 26  2:00
-			-5:00	-	EST	1969
+			-5:00	-	EST	1967 Oct 29  2:00
+			-6:00	US	C%sT	1969 Apr 27  2:00
 			-5:00	US	E%sT	1971
 			-5:00	-	EST	2006 Apr  2  2:00
 			-6:00	US	C%sT

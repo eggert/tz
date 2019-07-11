@@ -978,7 +978,6 @@ Zone America/Indiana/Vincennes -5:50:07 - LMT	1883 Nov 18 12:09:53
 Rule Perry	1955	only	-	May	 1	0:00	1:00	D
 Rule Perry	1955	1960	-	Sep	lastSun	2:00	0	S
 Rule Perry	1956	1963	-	Apr	lastSun	2:00	1:00	D
-Rule Perry	1960	only	-	Oct	lastSun	2:00	0	S
 Rule Perry	1961	1963	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Indiana/Tell_City -5:47:03 - LMT	1883 Nov 18 12:12:57

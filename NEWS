@@ -12,6 +12,11 @@ Unreleased, experimental changes
     Fix several errors in pre-1970 transitions in Perry County, IN.
     (Thanks to Alois Triendl for pointing out the 1967/9 errors.)
 
+  Changes to past time zone abbreviations and DST flags
+
+    Hong Kong Winter Time, observed from 1941-10-01 to 1941-12-25,
+    is now flagged as DST and is abbreviated HKWT not HKT.
+
   Changes to commentary
 
     Nashville's newspapers dueled about the time of day in the 1950s.

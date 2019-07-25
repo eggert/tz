@@ -268,7 +268,8 @@ For further information about updates, please see
 <a href="https://tools.ietf.org/html/rfc6557">Procedures for
 Maintaining the Time Zone Database</a> (Internet <abbr
 title="Request For Comments">RFC</abbr> 6557). More detail can be
-found in <a href="theory.html">Theory and pragmatics of the tz code and data</a>.
+found in <a href="theory.html">Theory and pragmatics of the
+<code><abbr>tz</abbr></code> code and data</a>.
 <a href="https://a0.github.io/a0-tzmigration/">A0 TimeZone Migration</a>
 displays changes between recent <code><abbr>tzdb</abbr></code> versions.
 </p>
@@ -361,6 +362,11 @@ title="JavaScript Object Notation">JSON</abbr></a> format.</li>
 
 <section>
 <h2 id="compilers">Other <code><abbr>tz</abbr></code> compilers</h2>
+<p>Although some of these do not fully support
+<code><abbr>tz</abbr></code> data, in recent <code><abbr>tzdb</abbr></code>
+distributions you can generally work around compatibility problems by
+running the command <code>make rearguard_tarballs</code> and compiling
+from the resulting tarballs instead.</p>
 <ul>
 <li><a href="https://sourceforge.net/projects/vzic/">Vzic</a> is a <a
 href="https://en.wikipedia.org/wiki/C_%28programming_language%29">C</a>
@@ -408,7 +414,7 @@ into an <abbr>ICU</abbr>-specific format.
 <abbr>BSD</abbr>-style license.</li>
 <li>The <a href="https://github.com/lau/tzdata">Tzdata</a> package for
 the <a href="https://elixir-lang.org">Elixir</a> language downloads
-and compiles tz source and exposes <abbr
+and compiles <code><abbr>tz</abbr></code> source and exposes <abbr
 title="Application Program Interface">API</abbr>s for use. It is
 freely available under the <abbr>MIT</abbr> license.</li>
 <li>Java-based compilers and libraries include:
@@ -429,6 +435,11 @@ and time <abbr>API</abbr></a> contains a class
 Java 8 <code>java.time</code>, which its users should migrate to once
 they can assume Java 8 or later. It is available under the <a
 href="https://www.apache.org/licenses/LICENSE-2.0">Apache License</a>.</li>
+<li><a href="https://bell-sw.com/pages/iana-updater/">IANA Updater</a>,
+<a href="https://github.com/akashche/tzdbgen">tzdbgen</a>, and <a
+href="https://www.azul.com/products/open-source-tools/ziupdater-time-zone-tool/">ZIUpdater</a>
+are other alternatives to TZUpdater. IANA Updater's license is unclear;
+the others are licensed under the <abbr>GPL</abbr>.</li>
 <li><a href="https://github.com/MenoData/Time4A">Time4A: Advanced date and
 time library for Android</a> and
 <a href="https://github.com/MenoData/Time4J/">Time4J: Advanced date,
@@ -1040,7 +1051,8 @@ is called "<abbr>GMT</abbr>".</li>
 <section>
 <h2 id="see-also">See also</h2>
 <ul>
-<li><a href="theory.html">Theory and pragmatics of the tz code and data</a></li>
+<li><a href="theory.html">Theory and pragmatics of the
+<code><abbr>tz</abbr></code> code and data</a></li>
 <li><a href="tz-art.html">Time and the Arts</a></li>
 </ul>
 </section>

@@ -2497,6 +2497,12 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # Europe/Kaliningrad covers...
 # 39	RU-KGD	Kaliningrad Oblast
 
+# From Paul Eggert (2019-07-25):
+# Although Shanks lists 1945-01-01 as the date for transition from
+# +01/+02 to +02/+03, more likely this is a placeholder.  Guess that
+# the transition occurred at 1945-04-10 00:00, which is about when
+# Königsberg surrendered to Soviet troops.  (Thanks to Alois Triendl.)
+
 # From Paul Eggert (2016-03-18):
 # The 1989 transition is from USSR act No. 227 (1989-03-14).
 
@@ -2513,8 +2519,8 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # Moscow on 1991-11-03, switched to Moscow-1 on 1992-01-19.
 
 Zone Europe/Kaliningrad	 1:22:00 -	LMT	1893 Apr
-			 1:00	C-Eur	CE%sT	1945
-			 2:00	Poland	CE%sT	1946
+			 1:00	C-Eur	CE%sT	1945 Apr 10
+			 2:00	Poland	EE%sT	1946 Apr  7
 			 3:00	Russia	MSK/MSD	1989 Mar 26  2:00s
 			 2:00	Russia	EE%sT	2011 Mar 27  2:00s
 			 3:00	-	+03	2014 Oct 26  2:00s

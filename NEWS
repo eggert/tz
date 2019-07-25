@@ -13,7 +13,8 @@ Unreleased, experimental changes
     (Thanks to Alois Triendl for pointing out the 1967/9 errors.)
 
     Edmonton did not observe DST in 1967 or 1969.  In 1946 Vancouver
-    ended DST on 09-29, not 10-13.  (Thanks to Alois Triendl.)
+    ended DST on 09-29 not 10-13, and Vienna ended DST on 10-07 not
+    10-06.  (Thanks to Alois Triendl.)
 
   Changes to past time zone abbreviations and DST flags
 

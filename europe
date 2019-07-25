@@ -821,11 +821,16 @@ Zone	Europe/Andorra	0:06:04 -	LMT	1901
 # Shanks & Pottenger give 02:00, the BEV 00:00.  Go with the BEV,
 # and guess 02:00 for 1945-04-12.
 
+# From Alois Triendl (2019-07-22):
+# In 1946 the end of DST was on Monday, 7 October 1946, at 3:00 am.
+# Shanks had this right.  Source: Die Weltpresse, 5. Oktober 1946, page 5.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Austria	1920	only	-	Apr	 5	2:00s	1:00	S
 Rule	Austria	1920	only	-	Sep	13	2:00s	0	-
 Rule	Austria	1946	only	-	Apr	14	2:00s	1:00	S
-Rule	Austria	1946	1948	-	Oct	Sun>=1	2:00s	0	-
+Rule	Austria	1946	only	-	Oct	 7	2:00s	0	-
+Rule	Austria	1947	1948	-	Oct	Sun>=1	2:00s	0	-
 Rule	Austria	1947	only	-	Apr	 6	2:00s	1:00	S
 Rule	Austria	1948	only	-	Apr	18	2:00s	1:00	S
 Rule	Austria	1980	only	-	Apr	 6	0:00	1:00	S

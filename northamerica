@@ -2065,8 +2065,20 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # been on MST (-0700) like Dawson Creek since it advanced its clocks on
 # 2015-03-08.
 #
-# From Paul Eggert (2015-09-23):
+# From Paul Eggert (2019-07-25):
 # Shanks says Fort Nelson did not observe DST in 1946, unlike Vancouver.
+# Alois Triendl confirmed this on 07-22, citing the 1946-04-27 Vancouver Daily
+# Province.  He also cited the 1946-09-28 Victoria Daily Times, which said
+# that Vancouver, Victoria, etc. "change at midnight Saturday"; for now,
+# guess they meant 02:00 Sunday since 02:00 was common practice in Vancouver.
+#
+# Early Vancouver, Volume Four, by Major J.S. Matthews, V.D., 2011 edition
+# says that a 1922 plebiscite adopted DST, but a 1923 plebiscite rejected it.
+# http://former.vancouver.ca/ctyclerk/archives/digitized/EarlyVan/SearchEarlyVan/Vol4pdf/MatthewsEarlyVancouverVol4_DaylightSavings.pdf
+# A catalog entry for a newspaper clipping seems to indicate that Vancouver
+# observed DST in 1941 from 07-07 through 09-27; see
+# https://searcharchives.vancouver.ca/daylight-saving-1918-starts-again-july-7-1941-start-d-s-sept-27-end-of-d-s-1941
+# We have no further details, so omit them for now.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Vanc	1918	only	-	Apr	14	2:00	1:00	D
@@ -2075,7 +2087,7 @@ Rule	Vanc	1942	only	-	Feb	 9	2:00	1:00	W # War
 Rule	Vanc	1945	only	-	Aug	14	23:00u	1:00	P # Peace
 Rule	Vanc	1945	only	-	Sep	30	2:00	0	S
 Rule	Vanc	1946	1986	-	Apr	lastSun	2:00	1:00	D
-Rule	Vanc	1946	only	-	Oct	13	2:00	0	S
+Rule	Vanc	1946	only	-	Sep	29	2:00	0	S
 Rule	Vanc	1947	1961	-	Sep	lastSun	2:00	0	S
 Rule	Vanc	1962	2006	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]

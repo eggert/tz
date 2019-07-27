@@ -61,6 +61,9 @@ BEGIN {
   monthlen[4] = monthlen[6] = monthlen[9] = monthlen[11] = 30
 }
 
+# In case the input has CRLF form a la NIST.
+{ sub(/\r$/, "") }
+
 /^#\tUpdated through/ || /^#\tFile expires on:/ {
     last_lines = last_lines $0 "\n"
 }
@@ -104,7 +107,7 @@ END {
 
     print ""
     print "# POSIX timestamps for the data in this file:"
-    printf "#updated %s\n", updated - epoch_minus_NTP
-    printf "#expires %s\n", expires - epoch_minus_NTP
+    printf "#updated %d\n", updated - epoch_minus_NTP
+    printf "#expires %d\n", expires - epoch_minus_NTP
     printf "\n%s", last_lines
 }

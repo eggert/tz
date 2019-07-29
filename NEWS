@@ -24,6 +24,11 @@ Unreleased, experimental changes
     Hong Kong Winter Time, observed from 1941-10-01 to 1941-12-25,
     is now flagged as DST and is abbreviated HKWT not HKT.
 
+  Changes to code
+
+    The code now defends against CRLFs in leap-seconds.list.
+    (Thanks to Brian Inglis and Chris Woodbury.)
+
   Changes to commentary
 
     Nashville's newspapers dueled about the time of day in the 1950s.

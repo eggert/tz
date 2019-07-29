@@ -59,10 +59,10 @@ BEGIN {
   }
   monthlen[2] = 28
   monthlen[4] = monthlen[6] = monthlen[9] = monthlen[11] = 30
-}
 
-# In case the input has CRLF form a la NIST.
-{ sub(/\r$/, "") }
+  # In case the input has CRLF form a la NIST.
+  RS = "\r?\n"
+}
 
 /^#\tUpdated through/ || /^#\tFile expires on:/ {
     last_lines = last_lines $0 "\n"

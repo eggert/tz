@@ -1065,11 +1065,13 @@ Zone America/Indiana/Vevay -5:40:16 -	LMT	1883 Nov 18 12:19:44
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER
 Rule Louisville	1921	only	-	May	1	2:00	1:00	D
 Rule Louisville	1921	only	-	Sep	1	2:00	0	S
-Rule Louisville	1941	1961	-	Apr	lastSun	2:00	1:00	D
+Rule Louisville	1941	only	-	Apr	lastSun	2:00	1:00	D
 Rule Louisville	1941	only	-	Sep	lastSun	2:00	0	S
+Rule Louisville	1946	only	-	Apr	lastSun	2:00	1:00	D
 Rule Louisville	1946	only	-	Jun	2	2:00	0	S
+Rule Louisville	1950	1961	-	Apr	lastSun	2:00	1:00	D
 Rule Louisville	1950	1955	-	Sep	lastSun	2:00	0	S
-Rule Louisville	1956	1960	-	Oct	lastSun	2:00	0	S
+Rule Louisville	1956	1961	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Kentucky/Louisville -5:43:02 -	LMT	1883 Nov 18 12:16:58
 			-6:00	US	C%sT	1921

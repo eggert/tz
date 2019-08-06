@@ -2,6 +2,15 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    Fiji observes DST from 2019-11-10 to 2020-01-12.
+
+  Changes to future timestamps
+
+    Fiji's next DST transitions will be 2019-11-10 and 2020-01-12
+    instead of 2019-11-03 and 2020-01-19.  (Thanks to Raymond Kumar.)
+    Adjust future guesses accordingly.
+
   Changes to past timestamps
 
     Detroit observed DST in 1967 and 1968 following the US DST rules,

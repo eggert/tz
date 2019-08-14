@@ -4,12 +4,17 @@ Unreleased, experimental changes
 
   Briefly:
     Fiji observes DST from 2019-11-10 to 2020-01-12.
+    Norfolk Island starts observing Australian-style DST.
 
   Changes to future timestamps
 
     Fiji's next DST transitions will be 2019-11-10 and 2020-01-12
     instead of 2019-11-03 and 2020-01-19.  (Thanks to Raymond Kumar.)
     Adjust future guesses accordingly.
+
+    Norfolk Island will observe Australian-style DST starting in
+    spring 2019.  The first transition is on 2019-10-06.  (Thanks to
+    Kyle Czech and Michael Deckers.)
 
   Changes to past timestamps
 

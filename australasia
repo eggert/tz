@@ -611,7 +611,8 @@ Zone	Pacific/Norfolk	11:11:52 -	LMT	1901 # Kingston
 			11:30	-	+1130	1974 Oct 27 02:00
 			11:30	1:00	+1230	1975 Mar  2 02:00
 			11:30	-	+1130	2015 Oct  4 02:00
-			11:00	-	+11
+			11:00	-	+11	2019 Jul
+			11:00	AN	+11/+12
 
 # Palau (Belau)
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
@@ -1885,6 +1886,12 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # Norfolk Island station, and found no record of Norfolk observing DST
 # other than in 1974/5.  See:
 # https://www.timeanddate.com/time/australia/norfolk-island.html
+
+# Norfolk started observing Australian DST in spring 2019.
+# From Kyle Czech (2019-08-13):
+# https://www.legislation.gov.au/Details/F2018L01702
+# From Michael Deckers (2019-08-14):
+# https://www.legislation.gov.au/Details/F2019C00010
 
 # Palau
 # See commentary for Micronesia.

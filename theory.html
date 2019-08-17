@@ -1072,7 +1072,8 @@ an older <code>zic</code>.
     where <code>time_t</code> is signed.
   </li>
   <li>
-    These functions can account for leap seconds, thanks to Bradley White.
+    These functions can account for leap seconds;
+    see the section on "<a href="#leapsec">Leapsecond Support</a>" below.
   </li>
 </ul>
 
@@ -1246,6 +1247,56 @@ than Bangkok by putting "<samp>Asia/Bangkok</samp>" in the event's record,
 the application should be robust in the presence of timezone splits
 between now and the future time.
 </p>
+</section>
+
+<section>
+  <h2 id="leapsec">Leapsecond Support</h2>
+<p>
+The tz code and data can account for leap seconds,
+thanks to code contributed by Bradley White.
+The mechanism assumes that the OS kernel counts all seconds since 1970,
+<em>including</em> leap seconds.
+(This is by contrast to the Posix definition,
+which explicitly ignores leap seconds.)
+The conversion from this modified timescale to UTC
+(including the insertion or deletion of leap seconds, as necessary)
+occurs at the same point that timezone and DST adjustments are applied --
+namely, at calls to <code>localtime</code> and analogous functions --
+and the process is driven by leapsecond information
+stored in alternate versions of the time zone files.
+<p>
+The alternate set of time zone files is referred to as the "right" zones,
+because they were traditionally organized
+in a separate subdirectory of that name.
+In general, however, it is desirable to install just one set of
+files on a given system,
+either the conventional or the leapsecond-observing set.
+(The choice would obviously depend on
+whether the system in question is known to be counting leap seconds
+and keeping the modified timescale internally.)
+To build and install the "right" zones,
+set the <code>REDO</code> variable in the Makefile
+according to the instructions there.
+<p>
+With a kernel clock counting leap seconds,
+all raw timestamps returned by or sent to the kernel
+will necessarily include leap seconds,
+and will therefore not match Posix UTC time_t values.
+To convert raw timestamps to or from Posix UTC timestamps
+(for use when, say,
+embedding or interpreting those raw timestamps in <code>tar</code> files),
+you can use the utility functions
+<code>time2posix</code> and <code>posix2time</code>
+included with this package.
+<p>
+Of note is that when using the "right" timezones,
+the leapsecond adjustment is required
+whether or not any actual timezone correction is being applied.
+This means that calls to <code>gmtime</code> will also make use of a zonefile;
+if necessary
+<!-- not 100% sure about this -->
+zone "GMT"
+will be used for this purpose.
 </section>
 
 <section>

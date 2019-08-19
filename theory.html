@@ -974,7 +974,8 @@ an older <code>zic</code>.
     that do not fit into the POSIX model.
   </li>
   <li>
-    POSIX requires that systems ignore leap seconds.
+    POSIX requires that <code>time_t</code> clock counts exclude leap
+    seconds.
   </li>
   <li>
     The <code><abbr>tz</abbr></code> code attempts to support all the
@@ -1257,7 +1258,7 @@ between now and the future time.
 The <code><abbr>tz</abbr></code> code and data can account for leap seconds,
 thanks to code contributed by Bradley White.
 However, the leap second support of this package is rarely used directly
-because POSIX requires leap seconds to be ignored and many
+because POSIX requires leap seconds to be excluded and many
 software packages would mishandle leap seconds if they were present.
 Instead, leap seconds are more commonly handled by occasionally adjusting
 the operating system kernel clock as described in
@@ -1274,7 +1275,7 @@ second support directly.
 <p>
 The directly-supported mechanism assumes that <code>time_t</code>
 counts of seconds since the POSIX epoch normally include leap seconds,
-as opposed to POSIX <code>time_t</code> counts which ignore leap seconds.
+as opposed to POSIX <code>time_t</code> counts which exclude leap seconds.
 This modified timescale is converted to <abbr>UTC</abbr>
 at the same point that time zone and DST adjustments are applied &ndash;
 namely, at calls to <code>localtime</code> and analogous functions &ndash;

@@ -47,7 +47,9 @@ Unreleased, experimental changes
     The code now defends against CRLFs in leap-seconds.list.
     (Thanks to Brian Inglis and Chris Woodbury.)
 
-  Changes to commentary
+  Changes to documentation and commentary
+
+    theory.html discusses leap seconds.  (Thanks to Steve Summit.)
 
     Nashville's newspapers dueled about the time of day in the 1950s.
     (Thanks to John Seigenthaler.)

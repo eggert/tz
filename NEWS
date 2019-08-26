@@ -18,6 +18,10 @@ Unreleased, experimental changes
 
   Changes to past timestamps
 
+    South Korea observed DST from 1948 through 1951.  Although this
+    info was supposed to appear in release 2014j, a typo inadvertently
+    suppressed the change.  (Thanks to Alois Treindl.)
+
     Detroit observed DST in 1967 and 1968 following the US DST rules,
     except that its 1967 DST began on June 14 at 00:01.  (Thanks to
     Alois Treindl for pointing out that the old data entries were

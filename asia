@@ -2428,7 +2428,7 @@ Rule	ROK	1987	1988	-	Oct	Sun>=8	 3:00	0	S
 Zone	Asia/Seoul	8:27:52	-	LMT	1908 Apr  1
 			8:30	-	KST	1912 Jan  1
 			9:00	-	JST	1945 Sep  8
-			9:00	-	KST	1954 Mar 21
+			9:00	ROK	K%sT	1954 Mar 21
 			8:30	ROK	K%sT	1961 Aug 10
 			9:00	ROK	K%sT
 Zone	Asia/Pyongyang	8:23:00 -	LMT	1908 Apr  1

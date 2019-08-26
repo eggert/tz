@@ -377,6 +377,8 @@ Zone	Indian/Cocos	6:27:40	-	LMT	1900
 # depend on when school terms start.  Although the guess is ad hoc, it matches
 # transitions planned this year and seems more likely to match future practice
 # than guessing no DST.
+# From Michael Deckers (2019-08-06):
+# https://www.laws.gov.fj/LawsAsMade/downloadfile/848
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Fiji	1998	1999	-	Nov	Sun>=1	2:00	1:00	-

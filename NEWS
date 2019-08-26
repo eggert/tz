@@ -33,9 +33,9 @@ Unreleased, experimental changes
     EET/EEST, not CET/CEST.  (Thanks to Alois Triendl.)  In 1946
     Königsberg switched to +03 on 04-07 not 01-01.
 
-    In 1946 Louisville switched from CST to CDT on 04-28, not 01-01.
-    (Thanks to Alois Treindl.)  Also, it switched from CST to CDT
-    on 1950-04-30, not 1947-04-27.
+    In 1946 Louisville switched from CST to CDT on 04-28 at 00:01, not
+    01-01 at 00:00.  (Thanks to Alois Treindl and Michael Deckers.)
+    Also, it switched from CST to CDT on 1950-04-30, not 1947-04-27.
 
   Changes to past time zone abbreviations and DST flags
 

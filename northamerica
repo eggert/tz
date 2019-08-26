@@ -1060,6 +1060,15 @@ Zone America/Indiana/Vevay -5:40:16 -	LMT	1883 Nov 18 12:19:44
 # clear how this matched civil time in Louisville, so for now continue
 # to assume Louisville switched at noon new local time, like New York.
 #
+# From Michael Deckers (2019-08-06):
+# From the contemporary source given by Alois Treindl,
+# the switch in Louisville on 1946-04-28 was on 00:01
+# From Paul Eggert (2019-08-26):
+# That source was the Louisville Courier-Journal, 1946-04-27, p 4.
+# Shanks gives 02:00 for all 20th-century transition times in Louisville.
+# Evidently this is wrong for spring 1946.  Although also likely wrong
+# for other dates, we have no data.
+#
 # Part of Kentucky left its clocks alone in 1974.
 # This also includes Clark, Floyd, and Harrison counties in Indiana.
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER
@@ -1067,7 +1076,7 @@ Rule Louisville	1921	only	-	May	1	2:00	1:00	D
 Rule Louisville	1921	only	-	Sep	1	2:00	0	S
 Rule Louisville	1941	only	-	Apr	lastSun	2:00	1:00	D
 Rule Louisville	1941	only	-	Sep	lastSun	2:00	0	S
-Rule Louisville	1946	only	-	Apr	lastSun	2:00	1:00	D
+Rule Louisville	1946	only	-	Apr	lastSun	0:01	1:00	D
 Rule Louisville	1946	only	-	Jun	2	2:00	0	S
 Rule Louisville	1950	1961	-	Apr	lastSun	2:00	1:00	D
 Rule Louisville	1950	1955	-	Sep	lastSun	2:00	0	S

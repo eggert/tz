@@ -19,7 +19,7 @@ Unreleased, experimental changes
   Changes to past timestamps
 
     Many corrections to time in Turkey from 1940 through 1985.
-    (Thanks to Oya Vulaş via Alois Treindl.)
+    (Thanks to Oya Vulaş via Alois Treindl, and to Kıvanç Yazan.)
 
     South Korea observed DST from 1948 through 1951.  Although this
     info was supposed to appear in release 2014j, a typo inadvertently

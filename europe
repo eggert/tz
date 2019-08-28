@@ -3666,10 +3666,57 @@ Zone	Europe/Zurich	0:34:08 -	LMT	1853 Jul 16 # See above comment.
 # From Alois Treindl (2019-08-12):
 # http://www.astrolojidergisi.com/yazsaati.htm has researched the time zone
 # history of Turkey, based on newspaper archives and official documents.
-# From Paul Eggert (2019-08-27):
+# From Paul Eggert (2019-08-28):
 # That source (Oya Vulaş, "Türkiye'de Yaz Saati Uygulamaları")
-# is used for 1940/1985, where it seems more reliable than our other
+# is used for 1940/1972, where it seems more reliable than our other
 # sources.
+
+# From Kıvanç Yazan (2019-08-12):
+# http://www.resmigazete.gov.tr/arsiv/14539.pdf (page 24)
+# 1973-06-03 01:00 -> 02:00, 1973-11-04 02:00 -> 01:00
+#
+# http://www.resmigazete.gov.tr/arsiv/14829.pdf (page 1)
+# 1974-03-31 02:00 -> 03:00, 1974-11-03 02:00 -> 01:00
+#
+# http://www.resmigazete.gov.tr/arsiv/15161.pdf (page 1)
+# 1975-03-22 02:00 -> 03:00, 1975-11-02 02:00 -> 01:00
+#
+# http://www.resmigazete.gov.tr/arsiv/15535_1.pdf (page 1)
+# 1976-03-21 02:00 -> 03:00, 1976-10-31 02:00 -> 01:00
+#
+# http://www.resmigazete.gov.tr/arsiv/15778.pdf (page 5)
+# 1977-04-03 02:00 -> 03:00, 1977-10-16 02:00 -> 01:00,
+# 1978-04-02 02:00 -> 03:00 (not applied, see below)
+# 1978-10-15 02:00 -> 01:00 (not applied, see below)
+# 1979-04-01 02:00 -> 03:00 (not applied, see below)
+# 1979-10-14 02:00 -> 01:00 (not applied, see below)
+#
+# http://www.resmigazete.gov.tr/arsiv/16245.pdf (page 17)
+# This cancels the previous decision, and repeats it only for 1978.
+# 1978-04-02 02:00 -> 03:00, 1978-10-15 02:00 -> 01:00
+# (not applied due to standard TZ change below)
+#
+# http://www.resmigazete.gov.tr/arsiv/16331.pdf (page 3)
+# This decision changes the default longitude for Turkish time zone from 30
+# degrees East to 45 degrees East.  This means a standard TZ change, from +2
+# to +3.  This is published & applied on 1978-06-29.  At that time, Turkey was
+# already on summer time (already on 45E).  Hence, this new law just meant an
+# "continuous summer time".  Note that this was reversed in a few years.
+#
+# http://www.resmigazete.gov.tr/arsiv/18119_1.pdf (page 1)
+# 1983-07-31 02:00 -> 03:00 (note that this jumps TZ to +4)
+# 1983-10-02 02:00 -> 01:00 (back to +3)
+#
+# http://www.resmigazete.gov.tr/arsiv/18561.pdf (page 1 and 34)
+# At this time, Turkey is still on +3 with no spring-forward on early
+# 1984.  This decision is published on 10/31/1984.  Page 1 declares
+# the decision of reverting the "default longitude change".  So the
+# standard time should go back to +3 (30E).  And page 34 explains when
+# that will happen: 1984-11-01 02:00 -> 01:00.  You can think of this
+# as "end of continuous summer time, change of standard time zone".
+#
+# http://www.resmigazete.gov.tr/arsiv/18713.pdf (page 1)
+# 1985-04-20 01:00 -> 02:00, 1985-09-28 02:00 -> 01:00
 
 # From Kıvanç Yazan (2016-09-25):
 # 1) For 1986-2006, DST started at 01:00 local and ended at 02:00 local, with

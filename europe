@@ -887,6 +887,20 @@ Zone	Europe/Minsk	1:50:16 -	LMT	1880
 # the switch in Europe/Brussels on 1892-05-01 was from 00:17:30 to 00:00:00.
 #
 # From Paul Eggert (2019-08-28):
+# This quote helps explain the late-1914 situation:
+#   In early November 1914, the Germans imposed the time zone used in central
+#   Europe and forced the inhabitants to set their watches and public clocks
+#   sixty minutes ahead. Many were reluctant to accept "German time" and
+#   continued to use "Belgian time" among themselves. Reflecting the spirit of
+#   resistance that arose in the population, a song made fun of this change....
+# The song ended:
+#   Putting your clock forward
+#   Will but hasten the happy hour
+#   When we kick out the Boches!
+# See: Pluvinage G. Brussels on German time. Cahiers Bruxellois -
+# Brusselse Cahiers. 2014;XLVI(1E):15–38.
+# https://www.cairn.info/revue-cahiers-bruxellois-2014-1E-page-15.htm
+#
 # Entries from 1914 through 1917 are taken from "De tijd in België"
 # <https://www.astro.oma.be/GENERAL/INFO/nli001a.html>.
 # Entries from 1918 through 1991 are taken from:

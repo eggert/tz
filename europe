@@ -880,15 +880,21 @@ Zone	Europe/Minsk	1:50:16 -	LMT	1880
 
 # Belgium
 #
-# From Paul Eggert (1997-07-02):
+# From Michael Deckers (2019-08-25):
+# The exposition in the web page
+# https://www.bestor.be/wiki/index.php/Voyager_dans_le_temps._L%E2%80%99introduction_de_la_norme_de_Greenwich_en_Belgique
+# gives several contemporary sources from which one can conclude that
+# the switch in Europe/Brussels on 1892-05-01 was from 00:17:30 to 00:00:00.
+#
+# From Paul Eggert (2019-08-28):
+# Entries from 1914 through 1917 are taken from "De tijd in België"
+# <https://www.astro.oma.be/GENERAL/INFO/nli001a.html>.
 # Entries from 1918 through 1991 are taken from:
 #	Annuaire de L'Observatoire Royal de Belgique,
 #	Avenue Circulaire, 3, B-1180 BRUXELLES, CLVIIe année, 1991
 #	(Imprimerie HAYEZ, s.p.r.l., Rue Fin, 4, 1080 BRUXELLES, MCMXC),
 #	pp 8-9.
-# LMT before 1892 was 0:17:30, according to the official journal of Belgium:
-#	Moniteur Belge, Samedi 30 Avril 1892, N.121.
-# Thanks to Pascal Delmoitie for these references.
+# Thanks to Pascal Delmoitie for the 1918/1991 references.
 # The 1918 rules are listed for completeness; they apply to unoccupied Belgium.
 # Assume Brussels switched to WET in 1918 when the armistice took effect.
 #
@@ -933,7 +939,7 @@ Rule	Belgium	1946	only	-	May	19	 2:00s	1:00	S
 Rule	Belgium	1946	only	-	Oct	 7	 2:00s	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Brussels	0:17:30 -	LMT	1880
-			0:17:30	-	BMT	1892 May  1 12:00  # Brussels MT
+			0:17:30	-	BMT	1892 May  1 00:17:30
 			0:00	-	WET	1914 Nov  8
 			1:00	-	CET	1916 May  1  0:00
 			1:00	C-Eur	CE%sT	1918 Nov 11 11:00u

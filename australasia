@@ -610,9 +610,9 @@ Zone	Pacific/Niue	-11:19:40 -	LMT	1901        # Alofi
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Pacific/Norfolk	11:11:52 -	LMT	1901 # Kingston
 			11:12	-	+1112	1951
-			11:30	-	+1130	1974 Oct 27 02:00
-			11:30	1:00	+1230	1975 Mar  2 02:00
-			11:30	-	+1130	2015 Oct  4 02:00
+			11:30	-	+1130	1974 Oct 27 02:00s
+			11:30	1:00	+1230	1975 Mar  2 02:00s
+			11:30	-	+1130	2015 Oct  4 02:00s
 			11:00	-	+11	2019 Jul
 			11:00	AN	+11/+12
 
@@ -1882,12 +1882,15 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # ... at 12.30 am (by legal time in New South Wales) on 4 October 2015.
 # http://www.norfolkisland.gov.nf/nia/MediaRelease/Media%20Release%20Norfolk%20Island%20Standard%20Time%20Change.pdf
 
-# From Paul Eggert (2015-09-23):
+# From Paul Eggert (2015-08-28):
 # Transitions before 2015 are from timeanddate.com, which consulted
 # the Norfolk Island Museum and the Australian Bureau of Meteorology's
 # Norfolk Island station, and found no record of Norfolk observing DST
 # other than in 1974/5.  See:
 # https://www.timeanddate.com/time/australia/norfolk-island.html
+# However, disagree with timeanddate about the 1975-03-02 transition;
+# timeanddate has 02:00 but 02:00s corresponds to what the NSW law said
+# (thanks to Michael Deckers).
 
 # Norfolk started observing Australian DST in spring 2019.
 # From Kyle Czech (2019-08-13):

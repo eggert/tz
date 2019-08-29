@@ -890,15 +890,15 @@ Zone	Europe/Minsk	1:50:16 -	LMT	1880
 # This quote helps explain the late-1914 situation:
 #   In early November 1914, the Germans imposed the time zone used in central
 #   Europe and forced the inhabitants to set their watches and public clocks
-#   sixty minutes ahead. Many were reluctant to accept "German time" and
-#   continued to use "Belgian time" among themselves. Reflecting the spirit of
+#   sixty minutes ahead.  Many were reluctant to accept "German time" and
+#   continued to use "Belgian time" among themselves.  Reflecting the spirit of
 #   resistance that arose in the population, a song made fun of this change....
 # The song ended:
 #   Putting your clock forward
 #   Will but hasten the happy hour
 #   When we kick out the Boches!
 # See: Pluvinage G. Brussels on German time. Cahiers Bruxellois -
-# Brusselse Cahiers. 2014;XLVI(1E):15–38.
+# Brusselse Cahiers. 2014;XLVI(1E):15-38.
 # https://www.cairn.info/revue-cahiers-bruxellois-2014-1E-page-15.htm
 #
 # Entries from 1914 through 1917 are taken from "De tijd in België"
@@ -3836,7 +3836,7 @@ Rule	Turkey	1924	only	-	May	13	0:00	1:00	S
 Rule	Turkey	1924	1925	-	Oct	 1	0:00	0	-
 Rule	Turkey	1925	only	-	May	 1	0:00	1:00	S
 Rule	Turkey	1940	only	-	Jul	 1	0:00	1:00	S
-Rule	Turkey	1940	only	-	Oct	 5	0:00	0	-
+Rule	Turkey	1940	only	-	Oct	 6	0:00	0	-
 Rule	Turkey	1940	only	-	Dec	 1	0:00	1:00	S
 Rule	Turkey	1941	only	-	Sep	21	0:00	0	-
 Rule	Turkey	1942	only	-	Apr	 1	0:00	1:00	S
@@ -3848,6 +3848,7 @@ Rule	Turkey	1947	1951	-	Oct	Sun>=2	0:00	0	-
 Rule	Turkey	1949	only	-	Apr	10	0:00	1:00	S
 Rule	Turkey	1950	only	-	Apr	16	0:00	1:00	S
 Rule	Turkey	1951	only	-	Apr	22	0:00	1:00	S
+# DST for 15 months; unusual but we'll let it pass.
 Rule	Turkey	1962	only	-	Jul	15	0:00	1:00	S
 Rule	Turkey	1963	only	-	Oct	30	0:00	0	-
 Rule	Turkey	1964	only	-	May	15	0:00	1:00	S
@@ -3858,7 +3859,7 @@ Rule	Turkey	1974	only	-	Mar	31	2:00	1:00	S
 Rule	Turkey	1975	only	-	Mar	22	2:00	1:00	S
 Rule	Turkey	1976	only	-	Mar	21	2:00	1:00	S
 Rule	Turkey	1977	1978	-	Apr	Sun>=1	2:00	1:00	S
-Rule	Turkey	1977	1978	-	Oct	16	2:00	0	-
+Rule	Turkey	1977	1978	-	Oct	Sun>=15	2:00	0	-
 Rule	Turkey	1978	only	-	Jun	29	0:00	0	-
 Rule	Turkey	1983	only	-	Jul	31	2:00	1:00	S
 Rule	Turkey	1983	only	-	Oct	 2	2:00	0	-

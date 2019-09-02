@@ -1882,7 +1882,7 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # ... at 12.30 am (by legal time in New South Wales) on 4 October 2015.
 # http://www.norfolkisland.gov.nf/nia/MediaRelease/Media%20Release%20Norfolk%20Island%20Standard%20Time%20Change.pdf
 
-# From Paul Eggert (2015-08-28):
+# From Paul Eggert (2019-08-28):
 # Transitions before 2015 are from timeanddate.com, which consulted
 # the Norfolk Island Museum and the Australian Bureau of Meteorology's
 # Norfolk Island station, and found no record of Norfolk observing DST

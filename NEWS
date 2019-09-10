@@ -57,6 +57,10 @@ Unreleased, experimental changes
 
   Changes to code
 
+    leapseconds.awk now relies only its input data, rather than
+    also relying on its comments.  (Inspired by code from Dennis
+    Ferguson and Chris Woodbury.)
+
     The code now defends against CRLFs in leap-seconds.list.
     (Thanks to Brian Inglis and Chris Woodbury.)
 

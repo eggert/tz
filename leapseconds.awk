@@ -12,7 +12,7 @@
 # timestamps this program should be good until the year 285,428,681
 # (the year 1900 plus 2**53 seconds).  By then leap seconds will be
 # long obsolete, as the Earth will likely slow down so much that
-# there will less than 23 hours in a day and so some other scheme
+# there will be more than 25 hours per day and so some other scheme
 # will be needed.
 
 BEGIN {

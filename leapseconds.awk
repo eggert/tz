@@ -204,7 +204,7 @@ function sstamp_to_ymdhMs(sstamp, epoch_days, \
   year = int(day / ss_year_days)
   year -= year == 4
   day -= year * ss_year_days
-  for (month = 0; month < 12; month++) {
+  for (month = 0; month < 11; month++) {
     if (day < ss_mon_days[month])
       break
     day -= ss_mon_days[month]

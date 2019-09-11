@@ -57,7 +57,7 @@ Unreleased, experimental changes
 
   Changes to code
 
-    leapseconds.awk now relies only its input data, rather than
+    leapseconds.awk now relies only on its input data, rather than
     also relying on its comments.  (Inspired by code from Dennis
     Ferguson and Chris Woodbury.)
 

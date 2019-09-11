@@ -302,7 +302,7 @@ These are listed roughly in ascending order of complexity and fanciness.
 time and zones.</li>
 <li><a href="https://www.timejones.com">TimeJones.com</a>,
 <a href="https://timezoneconverterapp.com">Time Zone Converter</a> and
-<a href="https://worldclock.com">The World Clock</a>
+<a href="https://www.worldclock.com">The World Clock</a>
 are time zone converters.</li>
 <li><a
 href="https://twiki.org/cgi-bin/xtra/tzdatepick.html">Date and Time Gateway</a>
@@ -312,7 +312,7 @@ href="http://www.convertit.com/Go/ConvertIt/World_Time/Current_Time.ASP">Current
 Time in 1000 Places</a> uses descriptions of the values.</li>
 <li><a href="https://timezoneconverterapp.com/">Time Zone Converter</a>
 uses a pulldown menu.</li>
-<li><a href="http://home.kpn.nl/vanadovv/time/TZworld.html">Complete
+<li><a href="https://home.kpn.nl/vanadovv/time/TZworld.html">Complete
 timezone information for all countries</a> displays tables of DST rules.
 <li><a href="https://www.timeanddate.com/worldclock/">The World Clock &ndash;
 Worldwide</a> lets you sort zone names and convert times.</li>
@@ -395,9 +395,9 @@ transition in the <code><abbr>tz</abbr></code> database.</li>
 <li>The <a href="https://howardhinnant.github.io/date/tz.html">Time Zone
 Database Parser</a> is a
 <a href="https://en.wikipedia.org/wiki/C%2B%2B">C++</a> parser and
-runtime library that is <a
-href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0355r4.html">moving
-forward</a> for inclusion in
+runtime library with API <a
+href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0355r7.html">adopted
+into the draft standard</a> for
 <a href="https://en.wikipedia.org/wiki/C++20">C++20</a>,
 the next iteration of the C++ standard.
 It is freely available under the
@@ -749,7 +749,7 @@ coordinates?</a>" discusses other geolocation possibilities.</li>
 <li><a href="http://statoids.com/statoids.html">Administrative
 Divisions of Countries ("Statoids")</a> lists
 political subdivision data related to time zones.</li>
-<li><a href="http://home.kpn.nl/vanadovv/time/Multizones.html">Time
+<li><a href="https://home.kpn.nl/vanadovv/time/Multizones.html">Time
 zone boundaries for multizone countries</a> summarizes legal
 boundaries between time zones within countries.</li>
 <li><a href="http://manifold.net/info/freestuff.shtml">Manifold Software
@@ -963,7 +963,12 @@ sixty seconds. This approach works with the default <code><abbr>tz</abbr></code>
 "<code>posix</code>" configuration, is <a
 href="http://bk1.ntp.org/ntp-stable/README.leapsmear">supported</a> by
 the <abbr>NTP</abbr> reference implementation, and is used by major
-cloud service providers.</li>
+cloud service providers. However, according to
+<a href="https://tools.ietf.org/html/rfc8633#section-3.7.1">&sect;3.7.1 of
+Network Time Protocol Best Current Practices</a>
+(Internet <abbr>RFC</abbr> 8633), leap smearing is not suitable for
+applications requiring accurate UTC or civil time,
+and is intended for use only in single, well-controlled environments.</li>
 <li>The <a
 href="https://pairlist6.pair.net/mailman/listinfo/leapsecs">Leap
 Second Discussion List</a> covers <a

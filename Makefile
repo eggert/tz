@@ -505,11 +505,11 @@ RANLIB=		:
 TZCOBJS=	zic.o
 TZDOBJS=	zdump.o localtime.o asctime.o strftime.o
 DATEOBJS=	date.o localtime.o strftime.o asctime.o
-LIBSRCS=	localtime.c asctime.c difftime.c
-LIBOBJS=	localtime.o asctime.o difftime.o
+LIBSRCS=	localtime.c asctime.c difftime.c strftime.c
+LIBOBJS=	localtime.o asctime.o difftime.o strftime.o
 HEADERS=	tzfile.h private.h
 NONLIBSRCS=	zic.c zdump.c
-NEWUCBSRCS=	date.c strftime.c
+NEWUCBSRCS=	date.c
 SOURCES=	$(HEADERS) $(LIBSRCS) $(NONLIBSRCS) $(NEWUCBSRCS) \
 			tzselect.ksh workman.sh
 MANS=		newctime.3 newstrftime.3 newtzset.3 time2posix.3 \

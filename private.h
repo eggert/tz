@@ -409,6 +409,10 @@ static time_t sys_time(time_t *x) { return time(x); }
 
 typedef time_tz tz_time_t;
 
+# undef  asctime
+# define asctime tz_asctime
+# undef  asctime_r
+# define asctime_r tz_asctime_r
 # undef  ctime
 # define ctime tz_ctime
 # undef  ctime_r
@@ -478,6 +482,8 @@ typedef time_tz tz_time_t;
 #  define altzone tz_altzone
 # endif
 
+char *asctime(struct tm const *);
+char *asctime_r(struct tm const *restrict, char *restrict);
 char *ctime(time_t const *);
 char *ctime_r(time_t const *, char *);
 double difftime(time_t, time_t) ATTRIBUTE_CONST;

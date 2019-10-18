@@ -3086,22 +3086,9 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # [T]he Palestinian cabinet decision (Mar 8th 2016) published on
 # http://www.palestinecabinet.gov.ps/WebSite/Upload/Decree/GOV_17/16032016134830.pdf
 # states that summer time will end on Oct 29th at 01:00.
-#
-# From Tim Parenti (2016-10-19):
-# Predict fall transitions on October's last Saturday at 01:00 from now on.
-# This is consistent with the 2016 transition as well as our spring
-# predictions.
-#
-# From Paul Eggert (2016-10-19):
-# It's also consistent with predictions in the following URLs today:
-# https://www.timeanddate.com/time/change/gaza-strip/gaza
-# https://www.timeanddate.com/time/change/west-bank/hebron
 
 # From Sharef Mustafa (2018-03-16):
-# Palestine summer time will start on Mar 24th 2018 by advancing the
-# clock by 60 minutes as per Palestinian cabinet decision published on
-# the official website, though the decree did not specify the exact
-# time of the time shift.
+# Palestine summer time will start on Mar 24th 2018 ...
 # http://www.palestinecabinet.gov.ps/Website/AR/NDecrees/ViewFile.ashx?ID=e7a42ab7-ee23-435a-b9c8-a4f7e81f3817
 
 # From Even Scharning (2019-03-23):
@@ -3111,15 +3098,20 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # From Sharif Mustafa (2019-03-26):
 # The Palestinian cabinet announced today that the switch to DST will
 # be on Fri Mar 29th 2019 by advancing the clock by 60 minutes.
-# The decree signing date is Mar 12th but it was not published till today.
-# The decree does not specify the exact time of switch.
 # http://palestinecabinet.gov.ps/Website/AR/NDecrees/ViewFile.ashx?ID=e54e9ea1-50ee-4137-84df-0d6c78da259b
 #
 # From Even Scharning (2019-04-10):
 # Our source in Palestine said it happened Friday 29 at 00:00 local time....
+
+# From Sharef Mustafa (2019-10-18):
+# Palestine summer time will end on midnight Oct 26th 2019 ...
+# http://www.palestinecabinet.gov.ps/website/ar/ViewDetails?ID=43948
 #
 # From Paul Eggert (2019-04-10):
 # For now, guess spring-ahead transitions are March's last Friday at 00:00.
+#
+# From Tim Parenti (2016-10-19):
+# Predict fall transitions on October's last Saturday at 01:00 from now on.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule EgyptAsia	1957	only	-	May	10	0:00	1:00	S

@@ -203,6 +203,7 @@ static void
 timeout(FILE *fp, char const *format, struct tm const *tmp)
 {
 	char *	cp;
+	char *  new_cp;
 	size_t	result;
 	size_t	size;
 	struct tm tm;
@@ -230,7 +231,10 @@ timeout(FILE *fp, char const *format, struct tm const *tmp)
 		if (result != 0 || cp[0] == '\0')
 			break;
 		size += INCR;
-		cp = realloc(cp, size);
+		new_cp = realloc(cp, size);
+		if (new_cp == NULL)
+			free(cp);
+		cp = new_cp;
 	}
 	fwrite(cp, 1, result, fp);
 	free(cp);

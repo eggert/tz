@@ -1175,14 +1175,17 @@ Zone America/Danmarkshavn -1:14:40 -	LMT	1916 Jul 28
 			-3:00	-	-03	1980 Apr  6  2:00
 			-3:00	EU	-03/-02	1996
 			0:00	-	GMT
+#
+# Use the old name Scoresbysund, as the current name Ittoqqortoormiit
+# exceeds tzdb's 14-letter limit and has no common English abbreviation.
 Zone America/Scoresbysund -1:27:52 -	LMT	1916 Jul 28 # Ittoqqortoormiit
 			-2:00	-	-02	1980 Apr  6  2:00
 			-2:00	C-Eur	-02/-01	1981 Mar 29
 			-1:00	EU	-01/+00
-Zone America/Godthab	-3:26:56 -	LMT	1916 Jul 28 # Nuuk
+Zone America/Nuuk	-3:26:56 -	LMT	1916 Jul 28 # Godthåb
 			-3:00	-	-03	1980 Apr  6  2:00
 			-3:00	EU	-03/-02
-Zone America/Thule	-4:35:08 -	LMT	1916 Jul 28 # Pituffik air base
+Zone America/Thule	-4:35:08 -	LMT	1916 Jul 28 # Pituffik
 			-4:00	Thule	A%sT
 
 # Estonia

@@ -1,5 +1,17 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Briefly:
+    America/Nuuk renamed from America/Godthab.
+
+  Changes to timezone identifiers
+
+    To reflect current usage in English better, America/Godthab has
+    been renamed to America/Nuuk.  A backwards-compatibility link
+    remains for the old name.
+
+
 Release 2019c - 2019-09-11 08:59:48 -0700
 
   Briefly:
@@ -54,12 +66,6 @@ Release 2019c - 2019-09-11 08:59:48 -0700
 
     Hong Kong Winter Time, observed from 1941-10-01 to 1941-12-25,
     is now flagged as DST and is abbreviated HKWT not HKT.
-
-  Changes to timezone identifiers
-
-    To reflect current usage in English better, America/Godthab has
-    been renamed to America/Nuuk.  A backwards-compatibility link
-    remains for the old name.
 
   Changes to code
 

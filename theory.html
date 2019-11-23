@@ -1141,7 +1141,7 @@ The vestigial <abbr>API</abbr>s are:
     may now examine <code>localtime(&amp;clock)-&gt;tm_zone</code>
     (if <code>TM_ZONE</code> is defined) or
     <code>tzname[localtime(&amp;clock)-&gt;tm_isdst]</code>
-    (if <code>HAVE_TZNAME</code> is defined) to learn the correct time
+    (if <code>HAVE_TZNAME</code> is nonzero) to learn the correct time
     zone abbreviation to use.
   </li>
   <li>

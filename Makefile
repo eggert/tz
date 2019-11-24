@@ -295,8 +295,9 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # than TM_GMTOFF and TM_ZONE.  However, most of them are standardized.
 # #
 # # To omit or support the external variable "tzname", add one of:
-# #	-DHAVE_TZNAME=0
-# #	-DHAVE_TZNAME=1
+# #	-DHAVE_TZNAME=0 # do not support "tzname"
+# #	-DHAVE_TZNAME=1 # support "tzname", which is defined by system library
+# #	-DHAVE_TZNAME=2 # support and define "tzname"
 # # to the "CFLAGS=" line.  "tzname" is required by POSIX 1988 and later.
 # # If not defined, the code attempts to guess HAVE_TZNAME from other macros.
 # # Warning: unless time_tz is also defined, HAVE_TZNAME=1 can cause
@@ -304,16 +305,20 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # # presumably due to memory allocation issues.
 # #
 # # To omit or support the external variables "timezone" and "daylight", add
-# #	-DUSG_COMPAT=0
-# #	-DUSG_COMPAT=1
+# #	-DUSG_COMPAT=0 # do not support
+# #	-DUSG_COMPAT=1 # support, and variables are defined by system library
+# #	-DUSG_COMPAT=2 # support and define variables
 # # to the "CFLAGS=" line; "timezone" and "daylight" are inspired by
 # # Unix Systems Group code and are required by POSIX 2008 (with XSI) and later.
 # # If not defined, the code attempts to guess USG_COMPAT from other macros.
 # #
 # # To support the external variable "altzone", add
-# #	-DALTZONE
+# #	-DALTZONE=0 # do not support
+# #	-DALTZONE=1 # support "altzone", which is defined by system library
+# #	-DALTZONE=2 # support and define "altzone"
 # # to the end of the "CFLAGS=" line; although "altzone" appeared in
 # # System V Release 3.1 it has not been standardized.
+# # If not defined, the code attempts to guess ALTZONE from other macros.
 #
 # If you want functions that were inspired by early versions of X3J11's work,
 # add

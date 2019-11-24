@@ -198,6 +198,14 @@
 # endif
 #endif
 
+#ifndef ALTZONE
+# if defined __sun || defined _M_XENIX
+#  define ALTZONE 1
+# else
+#  define ALTZONE 0
+# endif
+#endif
+
 #ifndef R_OK
 #define R_OK	4
 #endif /* !defined R_OK */
@@ -477,7 +485,7 @@ typedef time_tz tz_time_t;
 #  undef  timezone
 #  define timezone tz_timezone
 # endif
-# ifdef ALTZONE
+# if ALTZONE
 #  undef  altzone
 #  define altzone tz_altzone
 # endif
@@ -518,17 +526,14 @@ extern char *asctime_r(struct tm const *restrict, char *restrict);
 extern char **environ;
 #endif
 
-#if TZ_TIME_T || !HAVE_POSIX_DECLS
-# if HAVE_TZNAME
+#if 2 <= HAVE_TZNAME + (TZ_TIME_T || !HAVE_POSIX_DECLS)
 extern char *tzname[];
-# endif
-# if USG_COMPAT
+#endif
+#if 2 <= USG_COMPAT + (TZ_TIME_T || !HAVE_POSIX_DECLS)
 extern long timezone;
 extern int daylight;
-# endif
 #endif
-
-#ifdef ALTZONE
+#if 2 <= ALTZONE + (TZ_TIME_T || !HAVE_POSIX_DECLS)
 extern long altzone;
 #endif
 

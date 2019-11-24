@@ -193,20 +193,18 @@ static int		lcl_is_set;
 
 static struct tm	tm;
 
-#if !HAVE_POSIX_DECLS || TZ_TIME_T
-# if HAVE_TZNAME
+#if 2 <= HAVE_TZNAME + TZ_TIME_T
 char *			tzname[2] = {
 	(char *) wildabbr,
 	(char *) wildabbr
 };
-# endif
-# if USG_COMPAT
+#endif
+#if 2 <= USG_COMPAT + TZ_TIME_T
 long			timezone;
 int			daylight;
-# endif
-# ifdef ALTZONE
+#endif
+#if 2 <= ALTZONE + TZ_TIME_T
 long			altzone;
-# endif
 #endif
 
 /* Initialize *S to a value based on UTOFF, ISDST, and DESIGIDX.  */
@@ -276,7 +274,7 @@ update_tzname_etc(struct state const *sp, struct ttinfo const *ttisp)
   if (!ttisp->tt_isdst)
     timezone = - ttisp->tt_utoff;
 #endif
-#ifdef ALTZONE
+#if ALTZONE
   if (ttisp->tt_isdst)
     altzone = - ttisp->tt_utoff;
 #endif
@@ -295,9 +293,9 @@ settzname(void)
 	daylight = 0;
 	timezone = 0;
 #endif
-#ifdef ALTZONE
+#if ALTZONE
 	altzone = 0;
-#endif /* defined ALTZONE */
+#endif
 	if (sp == NULL) {
 		return;
 	}
@@ -2345,7 +2343,7 @@ posix2time(time_t t)
 #  define daylight 0
 #  define timezone 0
 # endif
-# ifndef ALTZONE
+# if !ALTZONE
 #  define altzone 0
 # endif
 

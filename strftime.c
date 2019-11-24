@@ -492,7 +492,7 @@ label:
 				*/
 				continue;
 			case 'z':
-#if defined TM_GMTOFF || USG_COMPAT || defined ALTZONE
+#if defined TM_GMTOFF || USG_COMPAT || ALTZONE
 				{
 				long		diff;
 				char const *	sign;
@@ -529,7 +529,7 @@ label:
 					continue;
 #  endif
 				else
-#  ifdef ALTZONE
+#  if ALTZONE
 					diff = -altzone;
 #  else
 					continue;

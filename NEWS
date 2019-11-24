@@ -11,6 +11,16 @@ Unreleased, experimental changes
     been renamed to America/Nuuk.  A backwards-compatibility link
     remains for the old name.
 
+  Changes to code
+
+    The configuration macros HAVE_TZNAME and USG_COMPAT should now be
+    set to 1 if the system library supports the feature, and 2 if not.
+    As before, these macros are nonzero if tzcode should support the
+    feature, zero otherwise.
+
+    The configuration macro ALTZONE now has the same values with the
+    same meaning as HAVE_TZNAME and USG_COMPAT.
+
 
 Release 2019c - 2019-09-11 08:59:48 -0700
 

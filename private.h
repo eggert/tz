@@ -132,11 +132,16 @@
 ** Nested includes
 */
 
-/* Avoid clashes with NetBSD by renaming NetBSD's declarations.  */
+/* Avoid clashes with NetBSD by renaming NetBSD's declarations.
+   If defining the 'timezone' variable, avoid a clash with FreeBSD's
+   'timezone' function by renaming its declaration.  */
 #define localtime_rz sys_localtime_rz
 #define mktime_z sys_mktime_z
 #define posix2time_z sys_posix2time_z
 #define time2posix_z sys_time2posix_z
+#if defined USG_COMPAT && USG_COMPAT == 2
+# define timezone sys_timezone
+#endif
 #define timezone_t sys_timezone_t
 #define tzalloc sys_tzalloc
 #define tzfree sys_tzfree
@@ -145,6 +150,9 @@
 #undef mktime_z
 #undef posix2time_z
 #undef time2posix_z
+#if defined USG_COMPAT && USG_COMPAT == 2
+# undef timezone
+#endif
 #undef timezone_t
 #undef tzalloc
 #undef tzfree

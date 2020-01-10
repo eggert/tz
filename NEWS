@@ -21,6 +21,12 @@ Unreleased, experimental changes
     The configuration macro ALTZONE now has the same values with the
     same meaning as HAVE_TZNAME and USG_COMPAT.
 
+  Changes to commentary
+
+    The Îles-de-la-Madeleine and the Listuguj reserve are noted as
+    following America/Halifax, and comments about Yukon's "south" and
+    "north" have been corrected to say "east" and "west".  (Thanks to
+    Jeffery Nichols.)
 
 Release 2019c - 2019-09-11 08:59:48 -0700
 

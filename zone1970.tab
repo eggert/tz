@@ -128,8 +128,8 @@ CA	+4906-11631	America/Creston	MST - BC (Creston)
 CA	+5946-12014	America/Dawson_Creek	MST - BC (Dawson Cr, Ft St John)
 CA	+5848-12242	America/Fort_Nelson	MST - BC (Ft Nelson)
 CA	+4916-12307	America/Vancouver	Pacific - BC (most areas)
-CA	+6043-13503	America/Whitehorse	Pacific - Yukon (south)
-CA	+6404-13925	America/Dawson	Pacific - Yukon (north)
+CA	+6043-13503	America/Whitehorse	Pacific - Yukon (east)
+CA	+6404-13925	America/Dawson	Pacific - Yukon (west)
 CC	-1210+09655	Indian/Cocos
 CH,DE,LI	+4723+00832	Europe/Zurich	Swiss time
 CI,BF,GM,GN,ML,MR,SH,SL,SN,TG	+0519-00402	Africa/Abidjan

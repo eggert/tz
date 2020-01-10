@@ -1470,7 +1470,8 @@ Zone America/Goose_Bay	-4:01:40 -	LMT	1884 # Happy Valley-Goose Bay
 			-4:00	Canada	A%sT
 
 
-# west Labrador, Nova Scotia, Prince Edward I
+# west Labrador, Nova Scotia, Prince Edward I,
+# Îles-de-la-Madeleine, Listuguj reserve
 
 # From Brian Inglis (2015-07-20):
 # From the historical weather station records available at:
@@ -1488,6 +1489,13 @@ Zone America/Goose_Bay	-4:01:40 -	LMT	1884 # Happy Valley-Goose Bay
 # Shanks & Pottenger also write that Liverpool, NS was the only town
 # in Canada to observe DST in 1971 but not 1970; for now we'll assume
 # this is a typo.
+
+# From Jeffery Nichols (2020-01-09):
+# America/Halifax ... also applies to Îles-de-la-Madeleine and the Listuguj
+# reserve in Quebec. Officially, this came into effect on January 1, 2007
+# (Legal Time Act, CQLR c T-5.1), but the legislative debates surrounding that
+# bill say that it is "accommodating the customs and practices" of those
+# regions, which suggests that they have always been in-line with Halifax.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Halifax	1916	only	-	Apr	 1	0:00	1:00	D
@@ -1582,19 +1590,20 @@ Zone America/Moncton	-4:19:08 -	LMT	1883 Dec  9
 
 # Quebec
 
-# From Paul Eggert (2015-03-24):
+# From Paul Eggert (2020-01-10):
 # See America/Toronto for most of Quebec, including Montreal.
+# See America/Halifax for the Îles de la Madeleine and the Listuguj reserve.
 #
 # Matthews and Vincent (1998) also write that Quebec east of the -63
 # meridian is supposed to observe AST, but residents as far east as
 # Natashquan use EST/EDT, and residents east of Natashquan use AST.
 # The Quebec department of justice writes in
 # "The situation in Minganie and Basse-Côte-Nord"
-# http://www.justice.gouv.qc.ca/english/publications/generale/temps-minganie-a.htm
+# https://www.justice.gouv.qc.ca/en/department/ministre/functions-and-responsabilities/legal-time-in-quebec/the-situation-in-minganie-and-basse-cote-nord/
 # that the coastal strip from just east of Natashquan to Blanc-Sablon
 # observes Atlantic standard time all year round.
-# https://www.assnat.qc.ca/Media/Process.aspx?MediaId=ANQ.Vigie.Bll.DocumentGenerique_8845en
-# says this common practice was codified into law as of 2007.
+# This common practice was codified into law as of 2007; see Legal Time Act,
+# CQLR c T-5.1 <http://legisquebec.gouv.qc.ca/en/ShowDoc/cs/T-5.1>.
 # For lack of better info, guess this practice began around 1970, contra to
 # Shanks & Pottenger who have this region observing AST/ADT.
 

@@ -68,11 +68,11 @@ BEGIN {
   monthabbr[11] = "Nov"
   monthabbr[12] = "Dec"
 
-  # Strip trailing CR, in case the input has CRLF form a la NIST.
-  RS = "\r?\n"
-
   sstamp_init()
 }
+
+# In case the input has CRLF form a la NIST.
+{ sub(/\r$/, "") }
 
 /^#[ \t]*[Uu]pdated through/ || /^#[ \t]*[Ff]ile expires on/ {
     last_lines = last_lines $0 "\n"

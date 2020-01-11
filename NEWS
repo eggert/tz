@@ -21,6 +21,9 @@ Unreleased, experimental changes
     The configuration macro ALTZONE now has the same values with the
     same meaning as HAVE_TZNAME and USG_COMPAT.
 
+    The code's defense against CRLF in leap-seconds.list is now
+    portable to POSIX awk.  (Problem reported by Deborah Goldsmith.)
+
   Changes to commentary
 
     The Îles-de-la-Madeleine and the Listuguj reserve are noted as

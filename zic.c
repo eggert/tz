@@ -153,7 +153,7 @@ extern int	optind;
 
 static void	addtt(zic_t starttime, int type);
 static int	addtype(zic_t, char const *, bool, bool, bool);
-static void	leapadd(zic_t, bool, int, int);
+static void	leapadd(zic_t, int, int);
 static void	adjleap(void);
 static void	associate(void);
 static void	dolink(const char *, const char *, bool);
@@ -1559,15 +1559,12 @@ inleap(char **fields, int nfields)
 	tod = gethms(fields[LP_TIME], _("invalid time of day"));
 	cp = fields[LP_CORR];
 	{
-		register bool	positive;
-		int		count;
+		int correction;
 
 		if (strcmp(cp, "") == 0) { /* infile() turns "-" into "" */
-			positive = false;
-			count = 1;
+			correction = -1;
 		} else if (strcmp(cp, "+") == 0) {
-			positive = true;
-			count = 1;
+			correction = 1;
 		} else {
 			error(_("illegal CORRECTION field on Leap line"));
 			return;
@@ -1583,7 +1580,7 @@ inleap(char **fields, int nfields)
 			error(_("leap second precedes Epoch"));
 			return;
 		}
-		leapadd(t, positive, lp->l_value, count);
+		leapadd(t, correction, lp->l_value);
 	}
 }
 
@@ -2969,28 +2966,24 @@ addtype(zic_t utoff, char const *abbr, bool isdst, bool ttisstd, bool ttisut)
 }
 
 static void
-leapadd(zic_t t, bool positive, int rolling, int count)
+leapadd(zic_t t, int correction, int rolling)
 {
-	register int	i, j;
+	register int i;
 
-	if (leapcnt + (positive ? count : 1) > TZ_MAX_LEAPS) {
+	if (TZ_MAX_LEAPS <= leapcnt) {
 		error(_("too many leap seconds"));
 		exit(EXIT_FAILURE);
 	}
 	for (i = 0; i < leapcnt; ++i)
 		if (t <= trans[i])
 			break;
-	do {
-		for (j = leapcnt; j > i; --j) {
-			trans[j] = trans[j - 1];
-			corr[j] = corr[j - 1];
-			roll[j] = roll[j - 1];
-		}
-		trans[i] = t;
-		corr[i] = positive ? 1 : -count;
-		roll[i] = rolling;
-		++leapcnt;
-	} while (positive && --count != 0);
+	memmove(&trans[i + 1], &trans[i], (leapcnt - i) * sizeof *trans);
+	memmove(&corr[i + 1], &corr[i], (leapcnt - i) * sizeof *corr);
+	memmove(&roll[i + 1], &roll[i], (leapcnt - i) * sizeof *roll);
+	trans[i] = t;
+	corr[i] = correction;
+	roll[i] = rolling;
+	++leapcnt;
 }
 
 static void

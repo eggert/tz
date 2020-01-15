@@ -13,6 +13,14 @@ Unreleased, experimental changes
 
   Changes to code
 
+    localtime.c no longer mishandles timestamps after the last
+    transition in a TZif file with leap seconds and with daylight
+    saving time transitions projected into the indefinite future.
+    For example, with TZ='America/Los_Angeles' with leap seconds,
+    zdump formerly reported a DST transition on 2038-03-14
+    from 01:59:32.999... to 02:59:33 instead of the correct transition
+    from 01:59:59.999... to 03:00:00.
+
     The configuration macros HAVE_TZNAME and USG_COMPAT should now be
     set to 1 if the system library supports the feature, and 2 if not.
     As before, these macros are nonzero if tzcode should support the

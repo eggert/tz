@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     America/Nuuk renamed from America/Godthab.
+    zic now supports expiration dates for leap second lists.
 
   Changes to timezone identifiers
 
@@ -20,6 +21,19 @@ Unreleased, experimental changes
     zdump formerly reported a DST transition on 2038-03-14
     from 01:59:32.999... to 02:59:33 instead of the correct transition
     from 01:59:59.999... to 03:00:00.
+
+    zic -L now supports an Expires line in the leapseconds file, and
+    truncates the TZif output accordingly.  This propagates leap
+    second expiration information into the TZif file, and avoids the
+    abovementioned localtime.c bug as well as similar bugs present in
+    many client implementations.  If no Expires line is present, zic
+    -L instead truncates the TZif output based on the #expires comment
+    present in leapseconds files distributed by tzdb 2018f and later;
+    however, this usage is obsolescent.  For now, the distributed
+    leapseconds file has an Expires line that is commented out, so
+    that the file can be fed to older versions of zic which ignore the
+    commented-out line.  Future tzdb distributions are planned to
+    contain a leapseconds file with an Expires line.
 
     The configuration macros HAVE_TZNAME and USG_COMPAT should now be
     set to 1 if the system library supports the feature, and 2 if not.

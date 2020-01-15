@@ -606,7 +606,9 @@ However, the behavior is unspecified if multiple zone or link lines
 define the same name, or if the source of one link line is the target
 of another.
 .PP
-Lines in the file that describes leap seconds have the following form:
+The file that describes leap seconds can have leap lines and an
+expiration line.
+Leap lines have the following form:
 .nf
 .ti +.5i
 .ta \w'Leap\0\0'u +\w'YEAR\0\0'u +\w'MONTH\0\0'u +\w'DAY\0\0'u +\w'HH:MM:SS\0\0'u +\w'CORR\0\0'u
@@ -646,6 +648,43 @@ or
 .q "Rolling"
 if the leap second time given by the other fields should be interpreted as
 local (wall clock) time.
+.PP
+The expiration line, if present, has the form:
+.nf
+.ti +.5i
+.ta \w'Expires\0\0'u +\w'YEAR\0\0'u +\w'MONTH\0\0'u +\w'DAY\0\0'u
+.sp
+Expires	YEAR	MONTH	DAY	HH:MM:SS
+.sp
+For example:
+.ti +.5i
+.sp
+Expires	2020	Dec	28	00:00:00
+.sp
+.fi
+The
+.BR YEAR ,
+.BR MONTH ,
+.BR DAY ,
+and
+.B HH:MM:SS
+fields give the expiration timestamp in UTC for the leap second table;
+.B zic
+outputs this expiration timestamp by truncating the end of the output
+file to the timestamp.
+If there is no expiration line,
+.B zic
+also accepts a comment
+.q "#expires \fIE\fP ...\&"
+where
+.I E
+is the expiration timestamp as a decimal integer count of seconds
+since the Epoch, not counting leap seconds.
+However, the
+.q "#expires"
+comment is an obsolescent feature,
+and the leap second file should use an expiration line
+instead of relying on a comment.
 .SH "EXTENDED EXAMPLE"
 Here is an extended example of
 .B zic

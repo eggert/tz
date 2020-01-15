@@ -150,6 +150,15 @@ TIME_T_ALTERNATIVES_TAIL = int32_t uint32_t uint64_t
 
 REDO=		posix_right
 
+# Whether to put an "Expires" line in the leapseconds file.
+# Use EXPIRES_LINE=1 to put the line in, 0 to omit it.
+# The EXPIRES_LINE value matters only if REDO's value contains "right".
+# If you change EXPIRES_LINE, remove the leapseconds file before running "make".
+# zic's support for the Expires line was introduced in tzdb 2020a,
+# and EXPIRES_LINE defaults to 0 for now so that the leapseconds file
+# can be given to older zic implementations.
+EXPIRES_LINE=	0
+
 # To install data in text form that has all the information of the TZif data,
 # (optionally incorporating leap second information), use
 #	TZDATA_TEXT=	tzdata.zi leapseconds
@@ -656,7 +665,8 @@ yearistype:	yearistype.sh
 		chmod +x yearistype
 
 leapseconds:	$(LEAP_DEPS)
-		$(AWK) -f leapseconds.awk leap-seconds.list >$@.out
+		$(AWK) -v EXPIRES_LINE=$(EXPIRES_LINE) \
+		  -f leapseconds.awk leap-seconds.list >$@.out
 		mv $@.out $@
 
 # Arguments to pass to submakes of install_data.

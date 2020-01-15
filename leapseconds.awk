@@ -100,6 +100,17 @@ BEGIN {
 }
 
 END {
+    sstamp_to_ymdhMs(expires, ss_NTP)
+
+    print ""
+    print "# UTC timestamp when this leap second list expires."
+    print "# Any additional leap seconds will come after this."
+    print "# This Expires line is commented out for now,"
+    print "# so that pre-2020a zic implementations do not reject this file."
+    printf "%sExpires %.4d\t%s\t%.2d\t%.2d:%.2d:%.2d\n", \
+      EXPIRES_LINE ? "" : "#", \
+      ss_year, monthabbr[ss_month], ss_mday, ss_hour, ss_min, ss_sec
+
     # The difference between the NTP and POSIX epochs is 70 years
     # (including 17 leap days), each 24 hours of 60 minutes of 60
     # seconds each.

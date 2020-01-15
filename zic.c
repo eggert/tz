@@ -160,6 +160,7 @@ static void	dolink(const char *, const char *, bool);
 static char **	getfields(char * buf);
 static zic_t	gethms(const char * string, const char * errstring);
 static zic_t	getsave(char *, bool *);
+static void	inexpires(char **, int);
 static void	infile(const char * filename);
 static void	inleap(char ** fields, int nfields);
 static void	inlink(char ** fields, int nfields);
@@ -224,6 +225,7 @@ static int		typecnt;
 #define LC_ZONE		1
 #define LC_LINK		2
 #define LC_LEAP		3
+#define LC_EXPIRES	4
 
 /*
 ** Which fields are which on a Zone line.
@@ -289,6 +291,9 @@ static int		typecnt;
 #define LP_ROLL		6
 #define LEAP_FIELDS	7
 
+/* Expires lines are like Leap lines, except without CORR and ROLL fields.  */
+#define EXPIRES_FIELDS	5
+
 /*
 ** Year synonyms.
 */
@@ -332,6 +337,7 @@ static struct lookup const zi_line_codes[] = {
 };
 static struct lookup const leap_line_codes[] = {
 	{ "Leap",	LC_LEAP },
+	{ "Expires",	LC_EXPIRES },
 	{ NULL,		0}
 };
 
@@ -612,6 +618,12 @@ static zic_t const max_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
    the -r option.  These default to MIN_TIME and MAX_TIME.  */
 static zic_t lo_time = MINVAL(zic_t, TIME_T_BITS_IN_FILE);
 static zic_t hi_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
+
+/* The time specified by an Expires line, or negative if no such line.  */
+static zic_t leapexpires = -1;
+
+/* The time specified by an #expires comment, or negative if no such line.  */
+static zic_t comment_leapexpires = -1;
 
 /* Set the time range of the output to TIMERANGE.
    Return true if successful.  */
@@ -1206,7 +1218,8 @@ infile(const char *name)
 			++nfields;
 		}
 		if (nfields == 0) {
-			/* nothing to do */
+		  if (name == leapsec && *buf == '#')
+		    sscanf(buf, "#expires %"SCNdZIC, &comment_leapexpires);
 		} else if (wantcont) {
 			wantcont = inzcont(fields, nfields);
 		} else {
@@ -1229,6 +1242,10 @@ infile(const char *name)
 					break;
 				case LC_LEAP:
 					inleap(fields, nfields);
+					wantcont = false;
+					break;
+				case LC_EXPIRES:
+					inexpires(fields, nfields);
 					wantcont = false;
 					break;
 				default:	/* "cannot happen" */
@@ -1488,8 +1505,8 @@ inzsub(char **fields, int nfields, bool iscont)
 	return hasuntil;
 }
 
-static void
-inleap(char **fields, int nfields)
+static zic_t
+getleapdatetime(char **fields, int nfields, bool expire_line)
 {
 	register const char *		cp;
 	register const struct lookup *	lp;
@@ -1500,10 +1517,6 @@ inleap(char **fields, int nfields)
 	zic_t				t;
 	char xs;
 
-	if (nfields != LEAP_FIELDS) {
-		error(_("wrong number of fields on Leap line"));
-		return;
-	}
 	dayoff = 0;
 	cp = fields[LP_YEAR];
 	if (sscanf(cp, "%"SCNdZIC"%c", &year, &xs) != 1) {
@@ -1511,13 +1524,15 @@ inleap(char **fields, int nfields)
 		** Leapin' Lizards!
 		*/
 		error(_("invalid leaping year"));
-		return;
+		return -1;
 	}
-	if (!leapseen || leapmaxyear < year)
+	if (!expire_line) {
+	    if (!leapseen || leapmaxyear < year)
 		leapmaxyear = year;
-	if (!leapseen || leapminyear > year)
+	    if (!leapseen || leapminyear > year)
 		leapminyear = year;
-	leapseen = true;
+	    leapseen = true;
+	}
 	j = EPOCH_YEAR;
 	while (j != year) {
 		if (year > j) {
@@ -1531,7 +1546,7 @@ inleap(char **fields, int nfields)
 	}
 	if ((lp = byword(fields[LP_MONTH], mon_names)) == NULL) {
 		error(_("invalid month name"));
-		return;
+		return -1;
 	}
 	month = lp->l_value;
 	j = TM_JANUARY;
@@ -1544,44 +1559,60 @@ inleap(char **fields, int nfields)
 	if (sscanf(cp, "%d%c", &day, &xs) != 1 ||
 		day <= 0 || day > len_months[isleap(year)][month]) {
 			error(_("invalid day of month"));
-			return;
+			return -1;
 	}
 	dayoff = oadd(dayoff, day - 1);
 	if (dayoff < min_time / SECSPERDAY) {
 		error(_("time too small"));
-		return;
+		return -1;
 	}
 	if (dayoff > max_time / SECSPERDAY) {
 		error(_("time too large"));
-		return;
+		return -1;
 	}
 	t = dayoff * SECSPERDAY;
 	tod = gethms(fields[LP_TIME], _("invalid time of day"));
-	cp = fields[LP_CORR];
-	{
-		int correction;
+	t = tadd(t, tod);
+	if (t < 0)
+	  error(_("leap second precedes Epoch"));
+	return t;
+}
 
-		if (strcmp(cp, "") == 0) { /* infile() turns "-" into "" */
-			correction = -1;
-		} else if (strcmp(cp, "+") == 0) {
-			correction = 1;
-		} else {
-			error(_("illegal CORRECTION field on Leap line"));
-			return;
-		}
-		if ((lp = byword(fields[LP_ROLL], leap_types)) == NULL) {
-			error(_(
-				"illegal Rolling/Stationary field on Leap line"
-				));
-			return;
-		}
-		t = tadd(t, tod);
-		if (t < 0) {
-			error(_("leap second precedes Epoch"));
-			return;
-		}
-		leapadd(t, correction, lp->l_value);
-	}
+static void
+inleap(char **fields, int nfields)
+{
+  if (nfields != LEAP_FIELDS)
+    error(_("wrong number of fields on Leap line"));
+  else {
+    zic_t t = getleapdatetime(fields, nfields, false);
+    if (0 <= t) {
+      struct lookup const *lp = byword(fields[LP_ROLL], leap_types);
+      if (!lp)
+	error(_("invalid Rolling/Stationary field on Leap line"));
+      else {
+	int correction = 0;
+	if (!fields[LP_CORR][0]) /* infile() turns "-" into "".  */
+	  correction = -1;
+	else if (strcmp(fields[LP_CORR], "+") == 0)
+	  correction = 1;
+	else
+	  error(_("invalid CORRECTION field on Leap line"));
+	if (correction)
+	  leapadd(t, correction, lp->l_value);
+      }
+    }
+  }
+}
+
+static void
+inexpires(char **fields, int nfields)
+{
+  if (nfields != EXPIRES_FIELDS)
+    error(_("wrong number of fields on Expires line"));
+  else if (0 <= leapexpires)
+    error(_("multiple Expires lines"));
+  else
+    leapexpires = getleapdatetime(fields, nfields, true);
 }
 
 static void
@@ -3004,6 +3035,22 @@ adjleap(void)
 		prevtrans = trans[i];
 		trans[i] = tadd(trans[i], last);
 		last = corr[i] += last;
+	}
+
+	if (leapexpires < 0) {
+	  leapexpires = comment_leapexpires;
+	  if (0 <= leapexpires)
+	    warning(_("\"#expires\" is obsolescent; use \"Expires\""));
+	}
+
+	if (0 <= leapexpires) {
+	  leapexpires = oadd(leapexpires, last);
+	  if (! (leapcnt == 0 || (trans[leapcnt - 1] < leapexpires))) {
+	    error(_("last Leap time does not precede Expires time"));
+	    exit(EXIT_FAILURE);
+	  }
+	  if (leapexpires <= hi_time)
+	    hi_time = leapexpires - 1;
 	}
 }
 

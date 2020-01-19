@@ -1828,6 +1828,37 @@ Zone	Asia/Jerusalem	2:20:54 -	LMT	1880
 
 # '9:00' and 'JST' is from Guy Harris.
 
+# From Hideyuki Suzuki (1998-11-09):
+# 'Tokyo' usually stands for the former location of Tokyo Astronomical
+# Observatory: 139° 44' 40.90" E (9h 18m 58.727s), 35° 39' 16.0" N.
+# This data is from 'Rika Nenpyou (Chronological Scientific Tables) 1996'
+# edited by National Astronomical Observatory of Japan....
+# JST (Japan Standard Time) has been used since 1888-01-01 00:00 (JST).
+# The law is enacted on 1886-07-07.
+
+# From Hideyuki Suzuki (1998-11-16):
+# The ordinance No. 51 (1886) established "standard time" in Japan,
+# which stands for the time on 135° E.
+# In the ordinance No. 167 (1895), "standard time" was renamed to "central
+# standard time".  And the same ordinance also established "western standard
+# time", which stands for the time on 120° E....  But "western standard
+# time" was abolished in the ordinance No. 529 (1937).  In the ordinance No.
+# 167, there is no mention regarding for what place western standard time is
+# standard....
+#
+# I wrote "ordinance" above, but I don't know how to translate.
+# In Japanese it's "chokurei", which means ordinance from emperor.
+
+# From Yu-Cheng Chuang (2013-07-12):
+# ...the Meiji Emperor announced Ordinance No. 167 of Meiji Year 28 "The clause
+# about standard time" ... The adoption began from Jan 1, 1896.
+# https://ja.wikisource.org/wiki/標準時ニ關スル件_(公布時)
+#
+# ...the Showa Emperor announced Ordinance No. 529 of Showa Year 12 ... which
+# means the whole Japan territory, including later occupations, adopt Japan
+# Central Time (UT+9). The adoption began on Oct 1, 1937.
+# https://ja.wikisource.org/wiki/明治二十八年勅令第百六十七號標準時ニ關スル件中改正ノ件
+
 # From Paul Eggert (1995-03-06):
 # Today's _Asahi Evening News_ (page 4) reports that Japan had
 # daylight saving between 1948 and 1951, but "the system was discontinued
@@ -1875,37 +1906,6 @@ Rule	Japan	1948	only	-	May	Sat>=1	24:00	1:00	D
 Rule	Japan	1948	1951	-	Sep	Sat>=8	25:00	0	S
 Rule	Japan	1949	only	-	Apr	Sat>=1	24:00	1:00	D
 Rule	Japan	1950	1951	-	May	Sat>=1	24:00	1:00	D
-
-# From Hideyuki Suzuki (1998-11-09):
-# 'Tokyo' usually stands for the former location of Tokyo Astronomical
-# Observatory: 139° 44' 40.90" E (9h 18m 58.727s), 35° 39' 16.0" N.
-# This data is from 'Rika Nenpyou (Chronological Scientific Tables) 1996'
-# edited by National Astronomical Observatory of Japan....
-# JST (Japan Standard Time) has been used since 1888-01-01 00:00 (JST).
-# The law is enacted on 1886-07-07.
-
-# From Hideyuki Suzuki (1998-11-16):
-# The ordinance No. 51 (1886) established "standard time" in Japan,
-# which stands for the time on 135° E.
-# In the ordinance No. 167 (1895), "standard time" was renamed to "central
-# standard time".  And the same ordinance also established "western standard
-# time", which stands for the time on 120° E....  But "western standard
-# time" was abolished in the ordinance No. 529 (1937).  In the ordinance No.
-# 167, there is no mention regarding for what place western standard time is
-# standard....
-#
-# I wrote "ordinance" above, but I don't know how to translate.
-# In Japanese it's "chokurei", which means ordinance from emperor.
-
-# From Yu-Cheng Chuang (2013-07-12):
-# ...the Meiji Emperor announced Ordinance No. 167 of Meiji Year 28 "The clause
-# about standard time" ... The adoption began from Jan 1, 1896.
-# https://ja.wikisource.org/wiki/標準時ニ關スル件_(公布時)
-#
-# ...the Showa Emperor announced Ordinance No. 529 of Showa Year 12 ... which
-# means the whole Japan territory, including later occupations, adopt Japan
-# Central Time (UT+9). The adoption began on Oct 1, 1937.
-# https://ja.wikisource.org/wiki/明治二十八年勅令第百六十七號標準時ニ關スル件中改正ノ件
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u

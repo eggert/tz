@@ -1828,6 +1828,16 @@ Zone	Asia/Jerusalem	2:20:54 -	LMT	1880
 
 # '9:00' and 'JST' is from Guy Harris.
 
+# From Paul Eggert (2020-01-19):
+# Starting in the 7th century, Japan generally followed an ancient Chinese
+# timekeeping system that divided night and day into six hours each,
+# with hour length depending on season.  In 1873 the government
+# started requiring the use of a Western style 24-hour clock.  See:
+# Yulia Frumer, "Making Time: Astronomical Time Measurement in Tokugawa Japan"
+# <https://www.worldcat.org/oclc/1043907065>.  As the tzdb code and
+# data support only 24-hour clocks, its tables model timestamps before
+# 1873 using Western-style local mean time.
+
 # From Hideyuki Suzuki (1998-11-09):
 # 'Tokyo' usually stands for the former location of Tokyo Astronomical
 # Observatory: 139° 44' 40.90" E (9h 18m 58.727s), 35° 39' 16.0" N.

@@ -1622,6 +1622,15 @@ Zone America/Blanc-Sablon -3:48:28 -	LMT	1884
 # Nipigon (EST) and Rainy River (CST) are the largest that we know of.
 # Far west Ontario is like Winnipeg; far east Quebec is like Halifax.
 
+# From Jeffery Nichols (2020-02-06):
+# According to the [Shanks] atlas, those western Ontario zones are huge,
+# covering most of Ontario northwest of Sault Ste Marie and Timmins.
+# The zones seem to include towns bigger than the ones they're named after,
+# like Dryden in America/Rainy_River and Wawa (and maybe Attawapiskat) in
+# America/Nipigon.  I assume it's too much trouble to change the name of the
+# zone (like when you found out that America/Glace_Bay includes Sydney, Nova
+# Scotia)....
+
 # From Mark Brader (2003-07-26):
 # [According to the Toronto Star] Orillia, Ontario, adopted DST
 # effective Saturday, 1912-06-22, 22:00; the article mentions that

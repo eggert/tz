@@ -3,8 +3,19 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Canada's Yukon advances to -07 year-round from 2020-03-08.
     America/Nuuk renamed from America/Godthab.
     zic now supports expiration dates for leap second lists.
+
+  Changes to future timestamps
+
+    Canada's Yukon, represented by America/Whitehorse and
+    America/Dawson, advances to -07 year-round, beginning with its
+    spring-forward transition on 2020-03-08, and will not fall back on
+    2020-11-01.  Although a government press release calls this
+    "permanent Pacific Daylight Saving Time", we prefer MST for
+    consistency with nearby Dawson Creek, Creston, and Fort Nelson.
+    (Thanks to Tim Parenti.)
 
   Changes to timezone identifiers
 

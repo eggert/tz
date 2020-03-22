@@ -1812,8 +1812,21 @@ Rule	Zion	2012	only	-	Sep	23	2:00	0	S
 # in March.  DST ends at 02:00 on the last Sunday of October.
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Zion	2013	max	-	Mar	Fri>=23	2:00	1:00	D
+Rule	Zion	2013	2019	-	Mar	Fri>=23	2:00	1:00	D
 Rule	Zion	2013	max	-	Oct	lastSun	2:00	0	S
+
+# From Ephraim Silverberg (2020-03-22):
+# https://www.jpost.com/Breaking-News/Litzman-Health-Ministry-considering-postponing-daylight-savings-621922
+# From Andrew Paprocki (2020-03-22), quoting Interior Minister Aryeh Deri:
+# "We are going to legislate emergency regulations to delay switching
+# to daylight saving time until May 1."...
+# https://www.timesofisrael.com/israel-set-to-delay-daylight-saving-time-to-encourage-social-distancing/
+# From Paul Eggert (2020-03-22):
+# Assume DST start will be May 1 at 02:00 this year, with no other changes.
+
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Zion	2020	only	-	May	 1	2:00	1:00	D
+Rule	Zion	2021	max	-	Mar	Fri>=23	2:00	1:00	D
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Jerusalem	2:20:54 -	LMT	1880

@@ -3,17 +3,11 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
-    Israel starts 2020 DST on 05-01, not 03-27.
     Canada's Yukon advances to -07 year-round from 2020-03-08.
     America/Nuuk renamed from America/Godthab.
     zic now supports expiration dates for leap second lists.
 
   Changes to future timestamps
-
-    As a measure to encourage physical distancing during the COVID-19
-    pandemic, Israel delayed the start of 2020 DST from 03-27 to 05-01.
-    (Thanks to Ephraim Silverberg and Andrew Paprocki.)  For now, assume
-    this is a one-time change that affects no other transitions.
 
     Canada's Yukon, represented by America/Whitehorse and
     America/Dawson, advances to -07 year-round, beginning with its

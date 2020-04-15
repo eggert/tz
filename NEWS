@@ -3,14 +3,20 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
-    Canada's Yukon advances to -07 year-round from 2020-03-08.
+    Morocco springs forward on 2020-05-31, not 2020-05-24.
+    Canada's Yukon advanced to -07 year-round on 2020-03-08.
     America/Nuuk renamed from America/Godthab.
     zic now supports expiration dates for leap second lists.
 
   Changes to future timestamps
 
+    Morocco's second spring-forward transition in 2020 will be May 31,
+    not May 24 as predicted earlier.  (Thanks to Semlali Naoufal.)
+    Adjust future-year predictions to use the first Sunday after the
+    day after Ramadan, not the first Sunday after Ramadan.
+
     Canada's Yukon, represented by America/Whitehorse and
-    America/Dawson, advances to -07 year-round, beginning with its
+    America/Dawson, advanced to -07 year-round, beginning with its
     spring-forward transition on 2020-03-08, and will not fall back on
     2020-11-01.  Although a government press release calls this
     "permanent Pacific Daylight Saving Time", we prefer MST for

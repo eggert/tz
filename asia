@@ -286,6 +286,27 @@ Zone	Asia/Yangon	6:24:47 -	LMT	1880        # or Rangoon
 
 # China
 
+# From Phake Nick (2020-04-15):
+# According to this news report:
+# http://news.sina.com.cn/c/2004-09-01/19524201403.shtml
+# on April 11, 1919, newspaper in Shanghai said clocks in Shanghai will spring
+# forward for an hour starting from midnight of that Saturday. The report did
+# not mention what happened in Shanghai thereafter, but it mentioned that a
+# similar trial in Tianjin which ended at October 1st as citizens are told to
+# recede the clock on September 30 from 12:00pm to 11:00pm. The trial at
+# Tianjin got terminated in 1920.
+#
+# From Paul Eggert (2020-04-15):
+# The Returns of Trade and Trade Reports, page 711, says "Daylight saving was
+# given a trial during the year, and from the 12th April to the 1st October
+# the clocks were all set one hour ahead of sun time.  Though the scheme was
+# generally esteemed a success, it was announced early in 1920 that it would
+# not be repeated."
+#
+# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	Shang	1919	only	-	Apr	12	24:00	1:00	D
+Rule	Shang	1919	only	-	Sep	30	24:00	0	S
+
 # From Paul Eggert (2018-10-02):
 # The following comes from Table 1 of:
 # Li Yu. Research on the daylight saving movement in 1940s Shanghai.
@@ -294,6 +315,89 @@ Zone	Asia/Yangon	6:24:47 -	LMT	1880        # or Rangoon
 # The table lists dates only; I am guessing 00:00 and 24:00 transition times.
 # Also, the table lists the planned end of DST in 1949, but the corresponding
 # zone line cuts this off on May 28, when the Communists took power.
+
+# From Phake Nick (2020-04-15):
+#
+# For the history of time in Shanghai between 1940-1942, the situation is
+# actually slightly more complex than the table [below]....  At the time,
+# there were three different authorities in Shanghai, including Shanghai
+# International Settlement, a settlement established by western countries with
+# its own westernized form of government, Shanghai French Concession, similar
+# to the international settlement but is controlled by French, and then the
+# rest of the city of Shanghai, which have already been controlled by Japanese
+# force through a puppet local government (Wang Jingwei regime).  It was
+# additionally complicated by the circumstances that, according to the 1940s
+# Shanghai summer time essay cited in the database, some
+# departments/businesses/people in the Shanghai city itself during that time
+# period, refused to change their clock and instead only changed their opening
+# hours.
+#
+# For example, as quoted in the article, in 1940, other than the authority
+# itself, power, tram, bus companies, cinema, department stores, and other
+# public service organizations have all decided to follow the summer time and
+# spring forward the clock.  On the other hand, the custom office refused to
+# spring forward the clock because of worry on mechanical wear to the physical
+# clock, postal office refused to spring forward because of disruption to
+# business and log-keeping, although they did changed their office hour to
+# match rest of the city.  So is travel agents, and also weather
+# observatory.  It is said both time standards had their own supporters in the
+# city at the time, those who prefer new time standard would have moved their
+# clock while those who prefer the old time standard would keep their clock
+# unchange, and there were different clocks that use different time standard
+# in the city at the time for people who use different time standard to adjust
+# their clock to their preferred time.
+#
+# a. For the 1940 May 31 spring forward, the essay claim that it was
+# coordinared between the international settlement authority and the French
+# concession authority and have gathered support from Hong Kong and Xiamen,
+# that it would spring forward an hour from May 31 "midnight", and the essay
+# claim "Hong Kong government implemented the spring forward in the same time
+# on the same date as Shanghai".
+#
+# b. For the 1940 fall back, it was said that they initially intended to do
+# so on September 30 00:59 at night, however they postponed it to October 12
+# after discussion with relevant parties. However schools restored to the
+# original schedule ten days earlier.
+#
+# c. For the 1941 spring forward, it is said to start from March 15
+# "following the previous year's method", and in addition to that the essay
+# cited an announcement in 1941 from the Wang regime which said the Special
+# City of Shanghai under Wang regime control will follow the DST rule set by
+# the Settlements, irrespective of the original DST plan announced by the Wang
+# regime for other area under its control(April 1 to September 30). (no idea
+# to situation before that announcement)
+#
+# d. For the 1941 fall back, it was said that the fall back would occurs at
+# the end of September (A newspaper headline cited by the essay, published on
+# October 1, 1941, have the headlines which said "French Concession would
+# rewind to the old clock this morning), but it ultimately didn't happen due
+# to disagreement between the international settlement authority and the
+# French concession authority, and the fall back ultimately occurred on
+# November 1.
+#
+# e. In 1941 December, Japan have officially started war with the United
+# States and the United Kingdom, and in Shanghai they have marched into the
+# international settlement, taken over its control
+#
+# f. For the 1942 spring forward, the essay said that the spring forward
+# started on January 31. It said this time the custom office and postal
+# department will also change their clocks, unlike before.
+#
+# g. The essay itself didn't cover any specific changes thereafter until the
+# end of the war, it quoted a November 1942 command from the government of the
+# Wang regime, which claim the daylight saving time applies year round during
+# the war. However, the essay ambiguously said the period is "February 1 to
+# September 30", which I don't really understand what is the meaning of such
+# period in the context of year round implementation here.. More researches
+# might be needed to show exactly what happened during that period of time.
+
+# From Phake Nick (2020-04-15):
+# According to a Japanese tour bus pamphlet in Nanjing area believed to be
+# from around year 1941: http://www.tt-museum.jp/tairiku_0280_nan1941.html ,
+# the schedule listed was in the format of Japanese time.  Which indicate some
+# use of the Japanese time (instead of syncing by DST) might have occurred in
+# the Yangtze river delta area during that period of time although the scope
+# of such use will need to be investigated to determine.
 #
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	Shang	1940	only	-	Jun	 1	 0:00	1:00	D
@@ -582,9 +686,7 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928
 # it is not [an] observatory, but the official meteorological agency of HK,
 # and also serves as the official timing agency), there are some missing
 # and incorrect rules. Although the exact switch over time is missing, I
-# think 3:30 is correct. The official DST record for Hong Kong can be
-# obtained from
-# http://www.hko.gov.hk/gts/time/Summertime.htm
+# think 3:30 is correct.
 
 # From Phake Nick (2018-10-27):
 # According to Singaporean newspaper
@@ -695,10 +797,10 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928
 #   Resolution of the Legislative Council passed on 9 May 1979
 #	https://www.legco.gov.hk/yr78-79/english/lc_sitg/hansard/h790509.pdf#page=39
 
-# From Paul Eggert (2019-05-31):
+# From Paul Eggert (2020-04-15):
 # Here are the dates given at
-# https://www.hko.gov.hk/gts/time/Summertime.htm
-# as of 2014-06-19:
+# https://www.hko.gov.hk/en/gts/time/Summertime.htm
+# as of 2020-02-10:
 # Year        Period
 # 1941        15 Jun to 30 Sep
 # 1942        Whole year

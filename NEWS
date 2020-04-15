@@ -23,6 +23,10 @@ Unreleased, experimental changes
     consistency with nearby Dawson Creek, Creston, and Fort Nelson.
     (Thanks to Tim Parenti.)
 
+  Changes to past timestamps
+
+    Shanghai observed DST in 1919.  (Thanks to Phake Nick.)
+
   Changes to timezone identifiers
 
     To reflect current usage in English better, America/Godthab has

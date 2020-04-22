@@ -335,9 +335,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # to the end of the "CFLAGS=" line.  This arranges for the functions
 # "tzsetwall", "offtime", "timelocal", "timegm", "timeoff",
 # "posix2time", and "time2posix" to be added to the time conversion library.
-# "tzsetwall" is like "tzset" except that it arranges for local wall clock
-# time (rather than the timezone specified in the TZ environment variable)
-# to be used.
+# "tzsetwall" is deprecated and is intended to be removed soon; see NEWS.
 # "offtime" is like "gmtime" except that it accepts a second (long) argument
 # that gives an offset to add to the time_t when converting it.
 # "timelocal" is equivalent to "mktime".
@@ -347,7 +345,6 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # that gives an offset to use when converting to a time_t.
 # "posix2time" and "time2posix" are described in an included manual page.
 # X3J11's work does not describe any of these functions.
-# Sun has provided "tzsetwall", "timelocal", and "timegm" in SunOS 4.0.
 # These functions may well disappear in future releases of the time
 # conversion package.
 #

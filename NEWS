@@ -67,6 +67,13 @@ Unreleased, experimental changes
     The code's defense against CRLF in leap-seconds.list is now
     portable to POSIX awk.  (Problem reported by Deborah Goldsmith.)
 
+    Although the undocumented tzsetwall function is not changed in
+    this release, it is now deprecated in preparation for removal in
+    future releases.  Due to POSIX requirements, tzsetwall has not
+    worked for some time.  Any code that uses it should instead use
+    tzalloc(NULL) or, if portability trumps thread-safety, should
+    unset the TZ environment variable.
+
   Changes to commentary
 
     The Îles-de-la-Madeleine and the Listuguj reserve are noted as

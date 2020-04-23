@@ -1,6 +1,6 @@
 News for the tz database
 
-Unreleased, experimental changes
+Release 2020a - 2020-04-23 16:03:47 -0700
 
   Briefly:
     Morocco springs forward on 2020-05-31, not 2020-05-24.
@@ -80,6 +80,7 @@ Unreleased, experimental changes
     following America/Halifax, and comments about Yukon's "south" and
     "north" have been corrected to say "east" and "west".  (Thanks to
     Jeffery Nichols.)
+
 
 Release 2019c - 2019-09-11 08:59:48 -0700
 

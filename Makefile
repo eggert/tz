@@ -333,9 +333,8 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # add
 #	-DSTD_INSPIRED
 # to the end of the "CFLAGS=" line.  This arranges for the functions
-# "tzsetwall", "offtime", "timelocal", "timegm", "timeoff",
+# "offtime", "timelocal", "timegm", "timeoff",
 # "posix2time", and "time2posix" to be added to the time conversion library.
-# "tzsetwall" is deprecated and is intended to be removed soon; see NEWS.
 # "offtime" is like "gmtime" except that it accepts a second (long) argument
 # that gives an offset to add to the time_t when converting it.
 # "timelocal" is equivalent to "mktime".

@@ -477,8 +477,6 @@ typedef time_tz tz_time_t;
 # define tzfree tz_tzfree
 # undef  tzset
 # define tzset tz_tzset
-# undef  tzsetwall
-# define tzsetwall tz_tzsetwall
 # if HAVE_STRFTIME_L
 #  undef  strftime_l
 #  define strftime_l tz_strftime_l
@@ -551,9 +549,6 @@ extern long altzone;
 */
 
 #ifdef STD_INSPIRED
-# if TZ_TIME_T || !defined tzsetwall
-void tzsetwall(void);
-# endif
 # if TZ_TIME_T || !defined offtime
 struct tm *offtime(time_t const *, long);
 # endif

@@ -1,5 +1,13 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to code
+
+    The undocumented and ineffective tzsetwall function has been
+    removed.
+
+
 Release 2020a - 2020-04-23 16:03:47 -0700
 
   Briefly:

@@ -47,11 +47,11 @@ to be
 (mostly)
 opaque \*(en time_t values should only be obtained-from and
 passed-to functions such as
-.IR time(2) ,
-.IR localtime(3) ,
-.IR mktime(3) ,
+.BR time(2) ,
+.BR localtime(3) ,
+.BR mktime(3) ,
 and
-.IR difftime(3) .
+.BR difftime(3) .
 However,
 POSIX gives an arithmetic
 expression for directly computing a time_t value from a given date/time,
@@ -63,9 +63,9 @@ using such a relationship will typically not handle intervals
 over leap seconds correctly.
 .PP
 The
-.I time2posix
+.B time2posix
 and
-.I posix2time
+.B posix2time
 functions are provided to address this time_t mismatch by converting
 between local time_t values and their POSIX equivalents.
 This is done by accounting for the number of time-base changes that
@@ -75,12 +75,16 @@ These converted values can then be used in lieu of correcting the older
 applications,
 or when communicating with POSIX-compliant systems.
 .PP
-.I Time2posix
+The
+.B time2posix
+function
 is single-valued.
 That is,
 every local time_t
 corresponds to a single POSIX time_t.
-.I Posix2time
+The
+.B posix2time
+function
 is less well-behaved:
 for a positive leap second hit the result is not unique,
 and for a negative leap second hit the corresponding
@@ -116,9 +120,9 @@ If leap-second support is not enabled,
 local time_t's and
 POSIX time_t's are equivalent,
 and both
-.I time2posix
+.B time2posix
 and
-.I posix2time
+.B posix2time
 degenerate to the identity function.
 .SH SEE ALSO
 difftime(3),

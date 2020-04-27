@@ -51,7 +51,9 @@ asctime, ctime, difftime, gmtime, localtime, mktime \- convert date and time
 .de q
 \\$3\*(lq\\$1\*(rq\\$2
 ..
-.I Ctime
+The
+.B ctime
+function
 converts a long integer, pointed to by
 .IR clock ,
 and returns a pointer to a
@@ -86,45 +88,55 @@ and can therefore represent timestamps that predate the
 introduction of UTC and are some other flavor of Universal Time (UT).
 Some implementations support leap seconds, in contradiction to POSIX.
 .PP
-.I Localtime
+The
+.B localtime
 and
-.I gmtime
+.B gmtime
+functions
 return pointers to
 .q "tm"
 structures, described below.
-.I Localtime
+The
+.B localtime
+function
 corrects for the time zone and any time zone adjustments
 (such as Daylight Saving Time in the United States).
 After filling in the
 .q "tm"
 structure,
-.I localtime
+.B localtime
 sets the
 .BR tm_isdst 'th
 element of
 .B tzname
 to a pointer to a string that's the time zone abbreviation to be used with
-.IR localtime 's
+.BR localtime 's
 return value.
 .PP
-.I Gmtime
+The
+.B gmtime
+function
 converts to Coordinated Universal Time.
 .PP
-.I Asctime
+The
+.B asctime
+function
 converts a time value contained in a
 .q "tm"
 structure to a string,
 as shown in the above example,
 and returns a pointer to the string.
 .PP
-.I Mktime
+The
+.B mktime
+function
 converts the broken-down time,
 expressed as local time,
 in the structure pointed to by
 .I tm
 into a calendar time value with the same encoding as that of the values
 returned by the
-.I time
+.B time
 function.
 The original values of the
 .B tm_wday
@@ -136,14 +148,14 @@ to their normal ranges.
 (A positive or zero value for
 .B tm_isdst
 causes
-.I mktime
+.B mktime
 to presume initially that daylight saving time
 respectively,
 is or is not in effect for the specified time.
 A negative value for
 .B tm_isdst
 causes the
-.I mktime
+.B mktime
 function to attempt to divine whether daylight saving time is in effect
 for the specified time; in this case it does not use a consistent
 rule and may give a different answer when later
@@ -161,29 +173,37 @@ is not set until
 and
 .B tm_year
 are determined.
-.I Mktime
+The
+.B mktime
+function
 returns the specified calendar time;
 If the calendar time cannot be represented,
 it returns \-1.
 .PP
-.I Difftime
+The
+.B difftime
+function
 returns the difference between two calendar times,
 .RI ( time1
 \-
 .IR time0 ),
 expressed in seconds.
 .PP
-.IR Ctime_r ,
-.IR localtime_r ,
-.IR gmtime_r ,
+The
+.BR ctime_r ,
+.BR localtime_r ,
+.BR gmtime_r ,
 and
-.I asctime_r
+.B asctime_r
+functions
 are like their unsuffixed counterparts, except that they accept an
 additional argument specifying where to store the result if successful.
 .PP
-.IR Localtime_rz
+The
+.B localtime_rz
 and
-.I mktime_z
+.B mktime_z
+functions
 are like their unsuffixed counterparts, except that they accept an
 extra initial
 .B zone
@@ -193,9 +213,9 @@ If
 is null, UT is used; otherwise,
 .B zone
 should be have been allocated by
-.I tzalloc
+.B tzalloc
 and should not be freed until after all uses (e.g., by calls to
-.IR strftime )
+.BR strftime )
 of the filled-in
 .B tm_zone
 fields.
@@ -227,21 +247,25 @@ includes the following fields:
 .fi
 .RE
 .PP
-.I Tm_isdst
+The
+.B tm_isdst
+field
 is non-zero if daylight saving time is in effect.
 .PP
-.I Tm_gmtoff
+The
+.B tm_gmtoff
+field
 is the offset (in seconds) of the time represented
 from UT, with positive values indicating east
 of the Prime Meridian.
 The field's name is derived from Greenwich Mean Time, a precursor of UT.
 .PP
 In
-.B struct tm
+.B "struct tm"
 the
-.I tm_zone
+.B tm_zone
 and
-.I tm_gmtoff
+.B tm_gmtoff
 fields exist, and are filled in, only if arrangements to do
 so were made when the library containing these functions was
 created.
@@ -273,11 +297,11 @@ time(2),
 tzfile(5)
 .SH NOTES
 The return values of
-.IR asctime ,
-.IR ctime ,
-.IR gmtime ,
+.BR asctime ,
+.BR ctime ,
+.BR gmtime ,
 and
-.I localtime
+.B localtime
 point to static data
 overwritten by each call.
 The
@@ -288,19 +312,21 @@ field of a returned
 .B "struct tm"
 both point to an array of characters that
 can be freed or overwritten by later calls to the functions
-.IR localtime ,
-.IR tzfree ,
+.BR localtime ,
+.BR tzfree ,
 and
-.IR tzset ,
+.BR tzset ,
 if these functions affect the timezone information that specifies the
 abbreviation in question.
 The remaining functions and data are thread-safe.
 .PP
-.IR Asctime ,
-.IR asctime_r ,
-.IR ctime ,
+The
+.BR asctime ,
+.BR asctime_r ,
+.BR ctime ,
 and
-.I ctime_r
+.B ctime_r
+functions
 behave strangely for years before 1000 or after 9999.
 The 1989 and 1999 editions of the C Standard say
 that years from \-99 through 999 are converted without
@@ -311,7 +337,7 @@ is undefined if the year is before 1000 or after 9999.
 Traditional implementations of these two functions are
 restricted to years in the range 1900 through 2099.
 To avoid this portability mess, new programs should use
-.I strftime
+.B strftime
 instead.
 .\" This file is in the public domain, so clarified as of
 .\" 2009-05-17 by Arthur David Olson.

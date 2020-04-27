@@ -40,25 +40,25 @@ Fifteen bytes containing zeros reserved for future use.
 Six four-byte integer values, in the following order:
 .RS
 .TP
-.I tzh_ttisutcnt
+.B tzh_ttisutcnt
 The number of UT/local indicators stored in the file.
 (UT is Universal Time.)
 .TP
-.I tzh_ttisstdcnt
+.B tzh_ttisstdcnt
 The number of standard/wall indicators stored in the file.
 .TP
-.I tzh_leapcnt
+.B tzh_leapcnt
 The number of leap seconds for which data entries are stored in the file.
 .TP
-.I tzh_timecnt
+.B tzh_timecnt
 The number of transition times for which data entries are stored
 in the file.
 .TP
-.I tzh_typecnt
+.B tzh_typecnt
 The number of local time types for which data entries are stored
 in the file (must not be zero).
 .TP
-.I tzh_charcnt
+.B tzh_charcnt
 The number of bytes of time zone abbreviation strings
 stored in the file.
 .RE
@@ -66,14 +66,14 @@ stored in the file.
 The above header is followed by the following fields, whose lengths
 depend on the contents of the header:
 .IP * 2
-.I tzh_timecnt
+.B tzh_timecnt
 four-byte signed integer values sorted in ascending order.
 These values are written in network byte order.
 Each is used as a transition time (as returned by
 .BR time (2))
 at which the rules for computing local time change.
 .IP *
-.I tzh_timecnt
+.B tzh_timecnt
 one-byte unsigned integer values;
 each one but the last tells which of the different types of local time types
 described in the file is associated with the time period
@@ -83,8 +83,8 @@ and continuing up to but not including the next transition time.
 POSIX-style TZ string described below.)
 These values serve as indices into the next field.
 .IP *
-.I tzh_typecnt
-.I ttinfo
+.B tzh_typecnt
+.B ttinfo
 entries, each defined as follows:
 .in +.5i
 .sp
@@ -99,36 +99,36 @@ struct ttinfo {
 .fi
 .sp
 Each structure is written as a four-byte signed integer value for
-.IR tt_utoff ,
+.BR tt_utoff ,
 in network byte order, followed by a one-byte boolean for
-.I tt_isdst
+.B tt_isdst
 and a one-byte value for
-.IR tt_desigidx .
+.BR tt_desigidx .
 In each structure,
-.I tt_utoff
+.B tt_utoff
 gives the number of seconds to be added to UT,
-.I tt_isdst
+.B tt_isdst
 tells whether
-.I tm_isdst
+.B tm_isdst
 should be set by
 .BR localtime (3)
 and
-.I tt_desigidx
+.B tt_desigidx
 serves as an index into the array of time zone abbreviation bytes
 that follow the
-.I ttinfo
+.B ttinfo
 structure(s) in the file.
 The
-.I tt_utoff
+.B tt_utoff
 value is never equal to \-2**31, to let 32-bit clients negate it without
 overflow.
 Also, in realistic applications
-.I tt_utoff
+.B tt_utoff
 is in the range [\-89999, 93599] (i.e., more than \-25 hours and less
 than 26 hours); this allows easy support by implementations that
 already support the POSIX-required range [\-24:59:59, 25:59:59].
 .IP *
-.I tzh_leapcnt
+.B tzh_leapcnt
 pairs of four-byte values, written in network byte order;
 the first value of each pair gives the nonnegative time
 (as returned by
@@ -142,12 +142,12 @@ The pairs of values are sorted in ascending order by time.
 Each transition is for one leap second, either positive or negative;
 transitions always separated by at least 28 days minus 1 second.
 .IP *
-.I tzh_ttisstdcnt
+.B tzh_ttisstdcnt
 standard/wall indicators, each stored as a one-byte boolean;
 they tell whether the transition times associated with local time types
 were specified as standard time or local (wall clock) time.
 .IP *
-.I tzh_ttisutcnt
+.B tzh_ttisutcnt
 UT/local indicators, each stored as a one-byte boolean;
 they tell whether the transition times associated with local time types
 were specified as UT or local time.
@@ -173,10 +173,10 @@ The
 .BR localtime (3)
 function
 normally uses the first
-.I ttinfo
+.B ttinfo
 structure in the file
 if either
-.I tzh_timecnt
+.B tzh_timecnt
 is zero or the time argument is less than the first transition time recorded
 in the file.
 .SS Version 2 format
@@ -235,7 +235,7 @@ This guideline helps obsolescent version 1 readers
 agree with current readers about timestamps within the
 contiguous subsequence.  It also lets writers not
 supporting obsolescent readers use a
-.I tzh_timecnt
+.B tzh_timecnt
 of zero
 in the version 1 data block to save space.
 .PP

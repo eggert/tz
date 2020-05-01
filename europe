@@ -3983,7 +3983,7 @@ Zone Europe/Kiev	2:02:04 -	LMT	1880
 			2:00	1:00	EEST	1991 Sep 29  3:00
 			2:00	E-Eur	EE%sT	1995
 			2:00	EU	EE%sT
-# Ruthenia used CET 1990/1991.
+# Transcarpathia used CET 1990/1991.
 # "Uzhhorod" is the transliteration of the Rusyn/Ukrainian pronunciation, but
 # "Uzhgorod" is more common in English.
 Zone Europe/Uzhgorod	1:29:12 -	LMT	1890 Oct

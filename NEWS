@@ -2,6 +2,13 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to future timestamps
+
+    Morocco's spring-forward after Ramadan is now predicted to occur
+    no sooner than two days after Ramadan, instead of one day.
+    (Thanks to Milamber.)  The first altered prediction is for 2023,
+    now predicted to spring-forward on April 30 instead of April 23.
+
   Changes to code
 
     The undocumented and ineffective tzsetwall function has been

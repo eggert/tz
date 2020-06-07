@@ -9,6 +9,12 @@ Unreleased, experimental changes
     (Thanks to Milamber.)  The first altered prediction is for 2023,
     now predicted to spring-forward on April 30 instead of April 23.
 
+  Changes to past timestamps
+
+    Correct several transitions for Hungary for 1918/1983.
+    For example, the 1983-09-25 fall-back was at 01:00, not 03:00.
+    (Thanks to Géza Nyáry.)
+
   Changes to code
 
     The undocumented and ineffective tzsetwall function has been

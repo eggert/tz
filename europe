@@ -1511,38 +1511,39 @@ Zone	Europe/Athens	1:34:52 -	LMT	1895 Sep 14
 			2:00	EU	EE%sT
 
 # Hungary
-# From Paul Eggert (2014-07-15):
-# Dates for 1916-1945 are taken from:
-# Oross A. Jelen a múlt jövője: a nyári időszámítás Magyarországon 1916-1945.
-# National Archives of Hungary (2012-10-29).
-# http://mnl.gov.hu/a_het_dokumentuma/a_nyari_idoszamitas_magyarorszagon_19161945.html
-# This source does not always give times, which are taken from Shanks
-# & Pottenger (which disagree about the dates).
+# From Géza Nyáry (2020-06-07):
+# Data for 1918-1983 are based on the archive database of Library Hungaricana.
+# The dates are collected from original, scanned governmental orders,
+# bulletins, instructions and public press.
+# https://library.hungaricana.hu
+# For example, the 1920 dates are from ministerial decree 1920.évi.2.254.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
-Rule	Hungary	1918	only	-	Apr	 1	 3:00	1:00	S
-Rule	Hungary	1918	only	-	Sep	16	 3:00	0	-
-Rule	Hungary	1919	only	-	Apr	15	 3:00	1:00	S
-Rule	Hungary	1919	only	-	Nov	24	 3:00	0	-
+Rule	Hungary	1918	1919	-	Apr	15	 2:00	1:00	S
+Rule	Hungary	1918	1920	-	Sep	Mon>=15	 3:00	0	-
+Rule	Hungary	1920	only	-	Apr	 5	 2:00	1:00	S
 Rule	Hungary	1945	only	-	May	 1	23:00	1:00	S
-Rule	Hungary	1945	only	-	Nov	 1	 0:00	0	-
+Rule	Hungary	1945	only	-	Nov	 1	 1:00	0	-
 Rule	Hungary	1946	only	-	Mar	31	 2:00s	1:00	S
-Rule	Hungary	1946	1949	-	Oct	Sun>=1	 2:00s	0	-
+Rule	Hungary	1946	only	-	Oct	 7	 2:00	0	-
 Rule	Hungary	1947	1949	-	Apr	Sun>=4	 2:00s	1:00	S
-Rule	Hungary	1950	only	-	Apr	17	 2:00s	1:00	S
-Rule	Hungary	1950	only	-	Oct	23	 2:00s	0	-
-Rule	Hungary	1954	1955	-	May	23	 0:00	1:00	S
-Rule	Hungary	1954	1955	-	Oct	 3	 0:00	0	-
-Rule	Hungary	1956	only	-	Jun	Sun>=1	 0:00	1:00	S
-Rule	Hungary	1956	only	-	Sep	lastSun	 0:00	0	-
-Rule	Hungary	1957	only	-	Jun	Sun>=1	 1:00	1:00	S
-Rule	Hungary	1957	only	-	Sep	lastSun	 3:00	0	-
-Rule	Hungary	1980	only	-	Apr	 6	 1:00	1:00	S
+Rule	Hungary	1947	1949	-	Oct	Sun>=1	 2:00s	0	-
+Rule	Hungary	1954	only	-	May	23	 0:00	1:00	S
+Rule	Hungary	1954	only	-	Oct	 3	 0:00	0	-
+Rule	Hungary	1955	only	-	May	22	 2:00	1:00	S
+Rule	Hungary	1955	only	-	Oct	 2	 3:00	0	-
+Rule	Hungary	1956	1957	-	Jun	Sun>=1	 2:00	1:00	S
+Rule	Hungary	1956	1957	-	Sep	lastSun	 3:00	0	-
+Rule	Hungary	1980	only	-	Apr	 6	 0:00	1:00	S
+Rule	Hungary	1980	only	-	Sep	28	 1:00	0	-
+Rule	Hungary	1981	1983	-	Mar	lastSun	 0:00	1:00	S
+Rule	Hungary	1981	1983	-	Sep	lastSun	 1:00	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Budapest	1:16:20 -	LMT	1890 Oct
 			1:00	C-Eur	CE%sT	1918
-			1:00	Hungary	CE%sT	1941 Apr  8
+			1:00	Hungary	CE%sT	1941 Apr  7 23:00
 			1:00	C-Eur	CE%sT	1945
-			1:00	Hungary	CE%sT	1980 Sep 28  2:00s
+			1:00	Hungary	CE%sT	1984
 			1:00	EU	CE%sT
 
 # Iceland

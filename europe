@@ -1521,32 +1521,56 @@ Zone	Europe/Athens	1:34:52 -	LMT	1895 Sep 14
 # Data for 1918-1983 are based on the archive database of Library Hungaricana.
 # The dates are collected from original, scanned governmental orders,
 # bulletins, instructions and public press.
-# https://library.hungaricana.hu
-# For example, the 1920 dates are from ministerial decree 1920.évi.2.254.
+# [See URLs below.]
 
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+# https://library.hungaricana.hu/hu/view/OGYK_RT_1918/?pg=238
+# https://library.hungaricana.hu/hu/view/OGYK_RT_1919/?pg=808
+# https://library.hungaricana.hu/hu/view/OGYK_RT_1920/?pg=201
 Rule	Hungary	1918	1919	-	Apr	15	 2:00	1:00	S
 Rule	Hungary	1918	1920	-	Sep	Mon>=15	 3:00	0	-
 Rule	Hungary	1920	only	-	Apr	 5	 2:00	1:00	S
+# https://library.hungaricana.hu/hu/view/OGYK_RT_1945/?pg=882
 Rule	Hungary	1945	only	-	May	 1	23:00	1:00	S
 Rule	Hungary	1945	only	-	Nov	 1	 1:00	0	-
+# https://library.hungaricana.hu/hu/view/Delmagyarorszag_1946_03/?pg=49
 Rule	Hungary	1946	only	-	Mar	31	 2:00s	1:00	S
+# https://library.hungaricana.hu/hu/view/Delmagyarorszag_1946_09/?pg=54
 Rule	Hungary	1946	only	-	Oct	 7	 2:00	0	-
+# https://library.hungaricana.hu/hu/view/KulfBelfHirek_1947_04_1__001-123/?pg=90
+# https://library.hungaricana.hu/hu/view/DunantuliNaplo_1947_09/?pg=128
+# https://library.hungaricana.hu/hu/view/KulfBelfHirek_1948_03_3__001-123/?pg=304
+# https://library.hungaricana.hu/hu/view/Zala_1948_09/?pg=64
+# https://library.hungaricana.hu/hu/view/SatoraljaujhelyiLeveltar_ZempleniNepujsag_1948/?pg=53
+# https://library.hungaricana.hu/hu/view/SatoraljaujhelyiLeveltar_ZempleniNepujsag_1948/?pg=160
+# https://library.hungaricana.hu/hu/view/Delmagyarorszag_1949_09/?pg=94
 Rule	Hungary	1947	1949	-	Apr	Sun>=4	 2:00s	1:00	S
 Rule	Hungary	1947	1949	-	Oct	Sun>=1	 2:00s	0	-
+# https://library.hungaricana.hu/hu/view/DTT_KOZL_TanacsokKozlonye_1954/?pg=513
 Rule	Hungary	1954	only	-	May	23	 0:00	1:00	S
 Rule	Hungary	1954	only	-	Oct	 3	 0:00	0	-
+# https://library.hungaricana.hu/hu/view/DTT_KOZL_TanacsokKozlonye_1955/?pg=398
 Rule	Hungary	1955	only	-	May	22	 2:00	1:00	S
 Rule	Hungary	1955	only	-	Oct	 2	 3:00	0	-
+# https://library.hungaricana.hu/hu/view/HevesMegyeiNepujsag_1956_06/?pg=0
+# https://library.hungaricana.hu/hu/view/EszakMagyarorszag_1956_06/?pg=6
+# https://library.hungaricana.hu/hu/view/SzolnokMegyeiNeplap_1957_04/?pg=120
+# https://library.hungaricana.hu/hu/view/PestMegyeiHirlap_1957_09/?pg=143
 Rule	Hungary	1956	1957	-	Jun	Sun>=1	 2:00	1:00	S
 Rule	Hungary	1956	1957	-	Sep	lastSun	 3:00	0	-
+# https://library.hungaricana.hu/hu/view/DTT_KOZL_TanacsokKozlonye_1980/?pg=1227
 Rule	Hungary	1980	only	-	Apr	 6	 0:00	1:00	S
 Rule	Hungary	1980	only	-	Sep	28	 1:00	0	-
+# https://library.hungaricana.hu/hu/view/Delmagyarorszag_1981_01/?pg=79
+# https://library.hungaricana.hu/hu/view/DTT_KOZL_TanacsokKozlonye_1982/?pg=115
+# https://library.hungaricana.hu/hu/view/DTT_KOZL_TanacsokKozlonye_1983/?pg=85
 Rule	Hungary	1981	1983	-	Mar	lastSun	 0:00	1:00	S
 Rule	Hungary	1981	1983	-	Sep	lastSun	 1:00	0	-
+#
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Budapest	1:16:20 -	LMT	1890 Nov  1
 			1:00	C-Eur	CE%sT	1918
+# https://library.hungaricana.hu/hu/view/OGYK_RT_1941/?pg=1204
 			1:00	Hungary	CE%sT	1941 Apr  7 23:00
 			1:00	C-Eur	CE%sT	1945
 			1:00	Hungary	CE%sT	1984

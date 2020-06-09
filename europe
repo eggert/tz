@@ -1511,6 +1511,12 @@ Zone	Europe/Athens	1:34:52 -	LMT	1895 Sep 14
 			2:00	EU	EE%sT
 
 # Hungary
+
+# From Michael Deckers (2020-06-09):
+# an Austrian encyclopedia of railroads of 1913, online at
+# http://www.zeno.org/Roell-1912/A/Eisenbahnzeit
+# says that the switch [to CET] happened on 1890-11-01.
+
 # From Géza Nyáry (2020-06-07):
 # Data for 1918-1983 are based on the archive database of Library Hungaricana.
 # The dates are collected from original, scanned governmental orders,
@@ -1539,7 +1545,7 @@ Rule	Hungary	1980	only	-	Sep	28	 1:00	0	-
 Rule	Hungary	1981	1983	-	Mar	lastSun	 0:00	1:00	S
 Rule	Hungary	1981	1983	-	Sep	lastSun	 1:00	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Budapest	1:16:20 -	LMT	1890 Oct
+Zone	Europe/Budapest	1:16:20 -	LMT	1890 Nov  1
 			1:00	C-Eur	CE%sT	1918
 			1:00	Hungary	CE%sT	1941 Apr  7 23:00
 			1:00	C-Eur	CE%sT	1945

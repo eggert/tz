@@ -1326,6 +1326,34 @@ Link	Europe/Helsinki	Europe/Mariehamn
 # Françoise Gauquelin, Problèmes de l'heure résolus en astrologie,
 # Guy Trédaniel, Paris 1987
 
+# From Michael Deckers (2020-06-10):
+# Le Gaulois, 1911-03-11, page 1/6, online at
+# https://www.retronews.fr/societe/echo-de-presse/2018/01/29/1911-change-lheure-de-paris
+# ... [ Instantly, all pressure driven clock dials halted...  Nine minutes and
+#       twenty-one seconds later the hands resumed their circular motion. ]
+# There are also precise reports about how the change was prepared in train
+# stations: all the publicly visible clocks stopped at midnight railway time
+# (or were covered), only the chief of service had a watch, labeled
+# "Heure ancienne", that he kept running until it reached 00:04:21, when
+# he announced "Heure nouvelle".  See the "Le Petit Journal 1911-03-11".
+# https://gallica.bnf.fr/ark:/12148/bpt6k6192911/f1.item.zoom
+#
+# From Paul Eggert (2020-06-10):
+# French time in railway stations was legally five minutes behind civil time,
+# which explains why "old time" ran to 00:04:21 instead of to 00:09:21.
+# The Brooklyn Daily Eagle Almanac (1912), page 494, says:
+#
+#   ALL CLOCKS STOPPED IN FRANCE.
+#   On March 10, 1911, all clocks in the Republic of France were stopped
+#   for 9 minutes and 21 seconds.  This was in obedience to a measure
+#   adopted by the French Senate, which went into effect at midnight....
+#   Owing to this change in time a question arose in the French press as
+#   to whether or not a child that was born and died within the elapsed
+#   time could be said to have legally lived.
+#
+# tzdb has no way to represent stopped clocks.  As the railway practice
+# was to keep a watch running on "old time" to decide when to restart
+# the other clocks, model this as a transition for "old time" at 00:09:21.
 
 #
 # Shank & Pottenger seem to use '24:00' ambiguously; resolve it with Whitman.
@@ -1395,7 +1423,7 @@ Rule	France	1976	only	-	Sep	26	 1:00	0	-
 # on PMT-0:09:21 until 1978-08-09, when the time base finally switched to UTC.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Paris	0:09:21 -	LMT	1891 Mar 15  0:01
-			0:09:21	-	PMT	1911 Mar 11  0:01 # Paris MT
+			0:09:21	-	PMT	1911 Mar 11  0:09:21 # Paris MT
 # Shanks & Pottenger give 1940 Jun 14 0:00; go with Excoffier and Le Corre.
 			0:00	France	WE%sT	1940 Jun 14 23:00
 # Le Corre says Paris stuck with occupied-France time after the liberation;

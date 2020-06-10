@@ -16,6 +16,13 @@ Unreleased, experimental changes
     (Thanks to Géza Nyáry.)  Also, the 1890 transition to standard
     time was on 11-01, not 10-01 (thanks to Michael Deckers).
 
+    The 1911-03-11 French transition from +00:09:21 to +00 is now
+    modeled as occurring at 00:09:21, not at 00:01.  Legally, clocks
+    stopped at 00:00 for 9 minutes, 21 seconds but this cannot be
+    represented in tzdb, so tzdb instead represents the common
+    practice of keeping an old clock running until the new clock
+    started up.  (Thanks to Michael Deckers.)
+
   Changes to code
 
     The undocumented and ineffective tzsetwall function has been

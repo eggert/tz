@@ -691,6 +691,13 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
     <code><abbr>tz</abbr></code> database requires.
   </li>
   <li>
+    The <code><abbr>tz</abbr></code> database cannot represent stopped clocks.
+    However, on 1911-03-11 at 00:00, French clocks were changed by
+    stopping them for 9 minutes, 21 seconds. This is approximated
+    in <code><abbr>tz</abbr></code> as a transition from 00:09:21 back
+    to 00:00:00 that day.
+  </li>
+  <li>
     Sometimes historical timekeeping was specified more precisely
     than what the <code><abbr>tz</abbr></code> code can handle.
     For example, from 1909 to 1937 <a

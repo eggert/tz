@@ -21,7 +21,7 @@ Unreleased, experimental changes
     stopped at 00:00 for 9 minutes, 21 seconds but this cannot be
     represented in tzdb, so tzdb instead represents the also-common
     practice of keeping an old clock running until the new clock
-    started up.  Similarly for the 1895-03-16 transition.
+    started up.  Similarly for the 1891-03-16 transition.
     (Thanks to Michael Deckers.)
 
   Changes to code

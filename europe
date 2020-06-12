@@ -2093,8 +2093,8 @@ Zone	Europe/Chisinau	1:55:20 -	LMT	1880
 # In the "Journal de Monaco" of 1911-03-28, online at
 # https://journaldemonaco.gouv.mc/var/jdm/storage/original/application/de74ffb7db53d4f599059fe8f0ed482a.pdf
 # we read an ordinance of 1911-03-16: ...
-#  [Legal time in the Pricipality will be set, from the date of promulgation
-#   of the present ordinance, to legal time in France.  Consequently, legal
+#  [Legal time in the Principality will be set, from the date of promulgation
+#   of the present ordinance, to legal time in France....  Consequently, legal
 #   time will be retarded by 9 minutes and 21 seconds.]
 #
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]

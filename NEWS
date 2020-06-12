@@ -16,13 +16,10 @@ Unreleased, experimental changes
     (Thanks to Géza Nyáry.)  Also, the 1890 transition to standard
     time was on 11-01, not 10-01 (thanks to Michael Deckers).
 
-    The 1911-03-11 French transition from +00:09:21 to +00 is now
-    modeled as occurring at 00:09:21, not at 00:01.  Clocks reportedly
-    stopped at 00:00 for 9 minutes, 21 seconds but this cannot be
-    represented in tzdb, so tzdb instead represents the also-common
-    practice of keeping an old clock running until the new clock
-    started up.  Similarly for the 1891-03-16 transition.
-    (Thanks to Michael Deckers.)
+    The 1891 French transition was on March 16, not March 15.  The
+    1911-03-11 French transition was at midnight, not a minute later.
+    Monaco's transitions were on 1892-06-01 and 1911-03-29, not
+    1891-03-15 and 1911-03-11.  (Thanks to Michael Deckers.)
 
   Changes to code
 

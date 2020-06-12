@@ -1342,21 +1342,24 @@ Link	Europe/Helsinki	Europe/Mariehamn
 # he announced "Heure nouvelle".  See the "Le Petit Journal 1911-03-11".
 # https://gallica.bnf.fr/ark:/12148/bpt6k6192911/f1.item.zoom
 #
-# From Paul Eggert (2020-06-11):
+# From Michael Deckers (2020-06-12):
+# That "all French clocks stopped" for 00:09:21 is a misreading of French
+# newspapers; this sort of adjustment applies only to certain
+# remote-controlled clocks ("pendules pneumatiques", of which there existed
+# perhaps a dozen in Paris, and which simply could not be set back remotely),
+# but not to all the clocks in all French towns and villages.  For instance,
+# the following story in the "Courrier de Saône-et-Loire" 1911-03-11, page 2:
+# only works if legal time was stepped back (was not monotone): ...
+#   [One can observe that children who had been born at midnight less 5
+#    minutes and who had died at midnight of the old time, would turn out to
+#    be dead before being born, time having been set back and having
+#    suppressed 9 minutes and 25 seconds of their existence, that is, more
+#    than they could spend.]
+#
+# From Paul Eggert (2020-06-12):
 # French time in railway stations was legally five minutes behind civil time,
-# which explains why "old time" ran to 00:04:21 instead of to 00:09:21.
-# The Brooklyn Daily Eagle Almanac (1912), page 494, says:
-#
-#   ALL CLOCKS STOPPED IN FRANCE.
-#   On March 10, 1911, all clocks in the Republic of France were stopped
-#   for 9 minutes and 21 seconds.  This was in obedience to a measure
-#   adopted by the French Senate, which went into effect at midnight....
-#   Owing to this change in time a question arose in the French press as
-#   to whether or not a child that was born and died within the elapsed
-#   time could be said to have legally lived.
-#
-# There are similar stories in the Washington Herald and Washington Times
-# (1911-03-11).  The law's text (which Michael Deckers noted is at
+# which explains why railway "old time" ran to 00:04:21 instead of to 00:09:21.
+# The law's text (which Michael Deckers noted is at
 # <https://gallica.bnf.fr/ark:/12148/bpt6k2022333z/f2>) says only that
 # at 1911-03-11 00:00 legal time was that of Paris mean time delayed by
 # nine minutes and twenty-one seconds, and does not say how the
@@ -1364,9 +1367,13 @@ Link	Europe/Helsinki	Europe/Mariehamn
 #
 # tzdb has no way to represent stopped clocks.  As the railway practice
 # was to keep a watch running on "old time" to decide when to restart
-# the other clocks, model this as a transition for "old time" at 00:09:21.
-# Do something similar for the 1891-03-16 transition, which has a similar
-# problem in Algiers and Monaco.
+# the other clocks, this could be modeled as a transition for "old time" at
+# 00:09:21.  However, since the law was ambiguous and clocks outside railway
+# stations were probably done haphazardly with the popular impression being
+# that the transition was done at 00:00 "old time", simply leave the time
+# blank; this causes zic to default to 00:00 "old time" which is good enough.
+# Do something similar for the 1891-03-16 transition.  There are similar
+# problems in Algiers, Monaco and Tunis.
 
 #
 # Shank & Pottenger seem to use '24:00' ambiguously; resolve it with Whitman.
@@ -1434,7 +1441,7 @@ Rule	France	1976	only	-	Sep	26	 1:00	0	-
 # on PMT-0:09:21 until 1978-08-09, when the time base finally switched to UTC.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Paris	0:09:21 -	LMT	1891 Mar 16
-			0:09:21	-	PMT	1911 Mar 11  0:09:21 # Paris MT
+			0:09:21	-	PMT	1911 Mar 11 # Paris Mean Time
 # Shanks & Pottenger give 1940 Jun 14 0:00; go with Excoffier and Le Corre.
 			0:00	France	WE%sT	1940 Jun 14 23:00
 # Le Corre says Paris stuck with occupied-France time after the liberation;
@@ -2075,10 +2082,24 @@ Zone	Europe/Chisinau	1:55:20 -	LMT	1880
 			2:00	Moldova	EE%sT
 
 # Monaco
-# See Europe/Paris for PMT-related transitions.
+#
+# From Michael Deckers (2020-06-12):
+# In the "Journal de Monaco" of 1892-05-24, online at
+# https://journaldemonaco.gouv.mc/var/jdm/storage/original/application/b1c67c12c5af11b41ea888fb048e4fe8.pdf
+# we read: ...
+#  [In virtue of a Sovereign Ordinance of the May 13 of the current [year],
+#   legal time in the Principality will be set to, from the date of June 1,
+#   1892 onwards, to the meridian of Paris, as in France.]
+# In the "Journal de Monaco" of 1911-03-28, online at
+# https://journaldemonaco.gouv.mc/var/jdm/storage/original/application/de74ffb7db53d4f599059fe8f0ed482a.pdf
+# we read an ordinance of 1911-03-16: ...
+#  [Legal time in the Pricipality will be set, from the date of promulgation
+#   of the present ordinance, to legal time in France.  Consequently, legal
+#   time will be retarded by 9 minutes and 21 seconds.]
+#
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Monaco	0:29:32 -	LMT	1891 Mar 16  0:20:11
-			0:09:21	-	PMT	1911 Mar 11  0:09:21 # Paris MT
+Zone	Europe/Monaco	0:29:32 -	LMT	1892 Jun  1
+			0:09:21	-	PMT	1911 Mar 29 # Paris Mean Time
 			0:00	France	WE%sT	1945 Sep 16  3:00
 			1:00	France	CE%sT	1977
 			1:00	EU	CE%sT

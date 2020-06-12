@@ -87,11 +87,10 @@ Rule	Algeria	1978	only	-	Mar	24	 1:00	1:00	S
 Rule	Algeria	1978	only	-	Sep	22	 3:00	0	-
 Rule	Algeria	1980	only	-	Apr	25	 0:00	1:00	S
 Rule	Algeria	1980	only	-	Oct	31	 2:00	0	-
-# Shanks & Pottenger give 0:09:20 for Paris Mean Time; go with Howse's
-# more precise 0:09:21.
+# See Europe/Paris for PMT-related transitions.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Africa/Algiers	0:12:12 -	LMT	1891 Mar 15  0:01
-			0:09:21	-	PMT	1911 Mar 11 # Paris Mean Time
+Zone	Africa/Algiers	0:12:12 -	LMT	1891 Mar 16  0:02:51
+			0:09:21	-	PMT	1911 Mar 11  0:09:21 # Paris MT
 			0:00	Algeria	WE%sT	1940 Feb 25  2:00
 			1:00	Algeria	CE%sT	1946 Oct  7
 			0:00	-	WET	1956 Jan 29
@@ -1464,12 +1463,10 @@ Rule	Tunisia	2005	only	-	Sep	30	 1:00s	0	-
 Rule	Tunisia	2006	2008	-	Mar	lastSun	 2:00s	1:00	S
 Rule	Tunisia	2006	2008	-	Oct	lastSun	 2:00s	0	-
 
-# Shanks & Pottenger give 0:09:20 for Paris Mean Time; go with Howse's
-# more precise 0:09:21.
-# Shanks & Pottenger say the 1911 switch was on Mar 9; go with Howse's Mar 11.
+# See Europe/Paris for PMT-related transitions.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Tunis	0:40:44 -	LMT	1881 May 12
-			0:09:21	-	PMT	1911 Mar 11 # Paris Mean Time
+			0:09:21	-	PMT	1911 Mar 11  0:09:21 # Paris MT
 			1:00	Tunisia	CE%sT
 
 # Uganda

@@ -606,13 +606,13 @@ Rule	C-Eur	1944	only	-	Oct	 2	 2:00s	0	-
 # corrected in version 2008d). The circumstantial evidence is simply the
 # tz database itself, as seen below:
 #
-# Zone Europe/Paris 0:09:21 - LMT 1891 Mar 15  0:01
+# Zone Europe/Paris ...
 #    0:00 France WE%sT 1945 Sep 16  3:00
 #
-# Zone Europe/Monaco 0:29:32 - LMT 1891 Mar 15
+# Zone Europe/Monaco ...
 #    0:00 France WE%sT 1945 Sep 16  3:00
 #
-# Zone Europe/Belgrade 1:22:00 - LMT 1884
+# Zone Europe/Belgrade ...
 #    1:00 1:00 CEST 1945 Sep 16  2:00s
 #
 # Rule France 1945 only - Sep 16  3:00 0 -
@@ -1326,6 +1326,10 @@ Link	Europe/Helsinki	Europe/Mariehamn
 # Françoise Gauquelin, Problèmes de l'heure résolus en astrologie,
 # Guy Trédaniel, Paris 1987
 
+# From Michael Deckers (2020-06-11):
+# the law of 1891 <https://gallica.bnf.fr/ark:/12148/bpt6k64415343.texteImage>
+# was published on 1891-03-15, so it could only take force on 1891-03-16.
+
 # From Michael Deckers (2020-06-10):
 # Le Gaulois, 1911-03-11, page 1/6, online at
 # https://www.retronews.fr/societe/echo-de-presse/2018/01/29/1911-change-lheure-de-paris
@@ -1338,7 +1342,7 @@ Link	Europe/Helsinki	Europe/Mariehamn
 # he announced "Heure nouvelle".  See the "Le Petit Journal 1911-03-11".
 # https://gallica.bnf.fr/ark:/12148/bpt6k6192911/f1.item.zoom
 #
-# From Paul Eggert (2020-06-10):
+# From Paul Eggert (2020-06-11):
 # French time in railway stations was legally five minutes behind civil time,
 # which explains why "old time" ran to 00:04:21 instead of to 00:09:21.
 # The Brooklyn Daily Eagle Almanac (1912), page 494, says:
@@ -1351,9 +1355,18 @@ Link	Europe/Helsinki	Europe/Mariehamn
 #   to whether or not a child that was born and died within the elapsed
 #   time could be said to have legally lived.
 #
+# There are similar stories in the Washington Herald and Washington Times
+# (1911-03-11).  The law's text (which Michael Deckers noted is at
+# <https://gallica.bnf.fr/ark:/12148/bpt6k2022333z/f2>) says only that
+# at 1911-03-11 00:00 legal time was that of Paris mean time delayed by
+# nine minutes and twenty-one seconds, and does not say how the
+# transition from Paris mean time was to occur.
+#
 # tzdb has no way to represent stopped clocks.  As the railway practice
 # was to keep a watch running on "old time" to decide when to restart
 # the other clocks, model this as a transition for "old time" at 00:09:21.
+# Do something similar for the 1891-03-16 transition, which has a similar
+# problem in Algiers and Monaco.
 
 #
 # Shank & Pottenger seem to use '24:00' ambiguously; resolve it with Whitman.
@@ -1417,12 +1430,10 @@ Rule	France	1945	only	-	Sep	16	 3:00	0	-
 # go with Excoffier's 28/3/76 0hUT and 25/9/76 23hUT.
 Rule	France	1976	only	-	Mar	28	 1:00	1:00	S
 Rule	France	1976	only	-	Sep	26	 1:00	0	-
-# Shanks & Pottenger give 0:09:20 for Paris Mean Time, and Whitman 0:09:05,
-# but Howse quotes the actual French legislation as saying 0:09:21.
-# Go with Howse.  Howse writes that the time in France was officially based
+# Howse writes that the time in France was officially based
 # on PMT-0:09:21 until 1978-08-09, when the time base finally switched to UTC.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Paris	0:09:21 -	LMT	1891 Mar 15  0:01
+Zone	Europe/Paris	0:09:21 -	LMT	1891 Mar 16
 			0:09:21	-	PMT	1911 Mar 11  0:09:21 # Paris MT
 # Shanks & Pottenger give 1940 Jun 14 0:00; go with Excoffier and Le Corre.
 			0:00	France	WE%sT	1940 Jun 14 23:00
@@ -2064,11 +2075,10 @@ Zone	Europe/Chisinau	1:55:20 -	LMT	1880
 			2:00	Moldova	EE%sT
 
 # Monaco
-# Shanks & Pottenger give 0:09:20 for Paris Mean Time; go with Howse's
-# more precise 0:09:21.
+# See Europe/Paris for PMT-related transitions.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Monaco	0:29:32 -	LMT	1891 Mar 15
-			0:09:21	-	PMT	1911 Mar 11 # Paris Mean Time
+Zone	Europe/Monaco	0:29:32 -	LMT	1891 Mar 16  0:20:11
+			0:09:21	-	PMT	1911 Mar 11  0:09:21 # Paris MT
 			0:00	France	WE%sT	1945 Sep 16  3:00
 			1:00	France	CE%sT	1977
 			1:00	EU	CE%sT

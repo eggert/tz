@@ -27,8 +27,7 @@ DATAFORM=		main
 # Change the line below for your timezone (after finding the one you want in
 # one of the $(TDATA) source files, or adding it to a source file).
 # Alternatively, if you discover you've got the wrong timezone, you can just
-#	zic -l rightzone
-# to correct things.
+# 'zic -l -' to remove it, or 'zic -l rightzone' to change it.
 # Use the command
 #	make zonenames
 # to get a list of the values you can use for LOCALTIME.
@@ -37,33 +36,30 @@ LOCALTIME=	GMT
 
 # The POSIXRULES macro controls interpretation of nonstandard and obsolete
 # POSIX-like TZ settings like TZ='EET-2EEST' that lack DST transition rules.
-# In the reference implementation, if you want something other than Eastern
-# United States time as a template for handling these settings, you can
-# change the line below (after finding the timezone you want in the
-# one of the $(TDATA) source files, or adding it to a source file).
-# A setting like TZ='EET-2EEST' is supposed to use the rules in the
-# template file to determine "spring forward" and "fall back" days and
-# times; the environment variable itself specifies UT offsets of standard and
-# daylight saving time.
-# Alternatively, if you discover you've got the wrong timezone, you can just
-#	zic -p rightzone
-# to correct things.
-# Use the command
-#	make zonenames
-# to get a list of the values you can use for POSIXRULES.
+# Such a setting uses the rules in a template file to determine
+# "spring forward" and "fall back" days and times; the environment
+# variable itself specifies UT offsets of standard and daylight saving time.
 #
-# If POSIXRULES is empty, no template is installed; this is the intended
-# future default for POSIXRULES.
+# If POSIXRULES is '-', no template is installed; this is the default.
 #
-# Nonempty POSIXRULES is obsolete and should not be relied on, because:
+# Any other value for POSIXRULES is obsolete and should not be relied on, as:
 # * It does not work correctly in popular implementations such as GNU/Linux.
 # * It does not work in the tzdb implementation for timestamps after 2037.
 # * It is incompatible with 'zic -b slim' if POSIXRULES specifies transitions
 #   at standard time or UT rather than at local time.
 # In short, software should avoid ruleless settings like TZ='EET-2EEST'
 # and so should not depend on the value of POSIXRULES.
+#
+# If, despite the above, you want a template for handling these settings,
+# you can change the line below (after finding the timezone you want in the
+# one of the $(TDATA) source files, or adding it to a source file).
+# Alternatively, if you discover you've got the wrong timezone, you can just
+# 'zic -p -' to remove it, or 'zic -p rightzone' to change it.
+# Use the command
+#	make zonenames
+# to get a list of the values you can use for POSIXRULES.
 
-POSIXRULES=	America/New_York
+POSIXRULES=	-
 
 # Also see TZDEFRULESTRING below, which takes effect only
 # if the time zone files cannot be accessed.

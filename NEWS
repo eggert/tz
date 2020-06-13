@@ -29,6 +29,11 @@ Unreleased, experimental changes
     The undocumented and ineffective tzsetwall function has been
     removed.
 
+  Changes to build procedure
+
+    The Makefile now defaults POSIXRULES to '-', so the posixrules
+    feature (obsolete as of 2019b) is no longer installed by default.
+
 
 Release 2020a - 2020-04-23 16:03:47 -0700
 

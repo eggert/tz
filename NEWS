@@ -23,6 +23,9 @@ Unreleased, experimental changes
 
   Changes to code
 
+    zic's new '-l -' and '-p -' options uninstall any existing
+    localtime and posixrules files, respectively.
+
     The undocumented and ineffective tzsetwall function has been
     removed.
 

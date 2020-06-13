@@ -85,6 +85,12 @@ will act as if the input contained a link line of the form
 .ti +.5i
 .ta \w'Link\0\0'u  +\w'\fItimezone\fP\0\0'u
 Link	\fItimezone\fP		localtime
+.sp
+If
+.I timezone
+is
+.BR \*- ,
+any already-existing link is removed.
 .TP
 .BI "\*-L " leapsecondfilename
 Read leap second information from the file with the given name.
@@ -109,6 +115,12 @@ and it should not be combined with
 if
 .IR timezone 's
 transitions are at standard time or Universal Time (UT) instead of local time.
+.sp
+If
+.I timezone
+is
+.BR \*- ,
+any already-existing link is removed.
 .TP
 .BR "\*-r " "[\fB@\fP\fIlo\fP][\fB/@\fP\fIhi\fP]"
 Reduce the size of output files by limiting their applicability

@@ -981,6 +981,7 @@ hardlinkerr(char const *from, char const *to)
 static void
 dolink(char const *fromfield, char const *tofield, bool staysymlink)
 {
+	bool remove_only = strcmp(fromfield, "-") == 0;
 	bool todirs_made = false;
 	int link_errno;
 
@@ -988,7 +989,7 @@ dolink(char const *fromfield, char const *tofield, bool staysymlink)
 	** We get to be careful here since
 	** there's a fair chance of root running us.
 	*/
-	if (itsdir(fromfield)) {
+	if (!remove_only && itsdir(fromfield)) {
 		fprintf(stderr, _("%s: link from %s/%s failed: %s\n"),
 			progname, directory, fromfield, strerror(EPERM));
 		exit(EXIT_FAILURE);
@@ -1003,6 +1004,8 @@ dolink(char const *fromfield, char const *tofield, bool staysymlink)
 		  progname, directory, tofield, e);
 	  exit(EXIT_FAILURE);
 	}
+	if (remove_only)
+	  return;
 	link_errno = staysymlink ? ENOTSUP : hardlinkerr(fromfield, tofield);
 	if (link_errno == ENOENT && !todirs_made) {
 	  mkdirs(tofield, true);

@@ -661,8 +661,7 @@ static const char *	tzdefault;
 static const char *	yitcommand;
 
 /* -1 if the TZif output file should be slim, 0 if default, 1 if the
-   output should be fat for backward compatibility.  Currently the
-   default is fat, although this may change.  */
+   output should be fat for backward compatibility.  The default is slim.  */
 static int bloat;
 
 static bool
@@ -672,7 +671,7 @@ want_bloat(void)
 }
 
 #ifndef ZIC_BLOAT_DEFAULT
-# define ZIC_BLOAT_DEFAULT "fat"
+# define ZIC_BLOAT_DEFAULT "slim"
 #endif
 
 int

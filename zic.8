@@ -61,15 +61,13 @@ is
 .BR slim ,
 keep the output files small; this can help check for the bugs
 and incompatibilities.
-Although the default is currently
-.BR fat ,
-this is intended to change in future
-.B zic
-versions, as software that mishandles the 64-bit data typically
+The default is
+.BR slim ,
+as software that mishandles 64-bit data typically
 mishandles timestamps after the year 2038 anyway.
 Also see the
 .B \*-r
-option for another way to shrink output size.
+option for another way to alter output size.
 .TP
 .BI "\*-d " directory
 Create time conversion information files in the named directory rather than

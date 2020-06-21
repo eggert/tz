@@ -23,6 +23,8 @@ Unreleased, experimental changes
 
   Changes to code
 
+    zic now defaults to '-b slim' instead of to '-b fat'.
+
     zic's new '-l -' and '-p -' options uninstall any existing
     localtime and posixrules files, respectively.
 

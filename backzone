@@ -460,19 +460,31 @@ Zone	Asia/Aden	2:59:54	-	LMT	1950
 
 # Bahrain
 #
-# From Paul Eggert (2020-07-22):
+# From Paul Eggert (2020-07-23):
 # Most of this data comes from:
 # Stewart A. Why Gulf Standard Time is far from standard: the fascinating story
 # behind the time zone's invention. The National (Abu Dhabi). 2020-07-22.
 # https://www.thenational.ae/arts-culture/why-gulf-standard-time-is-far-from-standard-the-fascinating-story-behind-the-time-zone-s-invention-1.1052589
-# Stewart writes that before 1940 some companies in Bahrain were at +0330 and
+# Stewart writes that before 1941 some companies in Bahrain were at +0330 and
 # others at +0323.  Reginald George Alban, a British political agent based in
 # Manama, worked to standardize this, and from 1941-07-20 Bahrain was at
 # +0330.  However, BOAC asked that clocks be moved to gain more light at day's
 # end, so Bahrain switched to +04 on 1944-01-01.
 #
-# We don't know when companies chose +0330 or +0323 before 1940; for now
-# assume that there was no real standard in Bahrain before 1941-07-20.
+# Re the 1941 transition, Stewart privately sent me this citation:
+# "File 16/53 Enquiries Re: Calculation of Local Time", British Library: India
+# Office Records and Private Papers, IOR/R/15/2/1564, in Qatar Digital Library
+# https://www.qdl.qa/archive/81055/vdc_100000000282.0x00012b
+# It says there was no real standard in Bahrain before 1941-07-20.
+# +0330 was used by steamers of the British India Co, by Petroleum Concessions
+# and by Cable & Wireless; +0323 was used by the Eastern Bank Ltd, BOAC, and
+# Bahrein Petroleum (Bapco), and California Arabian Standard Oil Co (Casoc)
+# adopted DST effective 1941-05-24.  Alban suggested adopting DST, R.B. Coomb
+# of C&W countersuggested +0330, and although C.A. Rodstrom of Casoc (formerly
+# of Bapco) stated that Bahrain had formerly used +0330 before Bapco arrived
+# but Bapco switched to +0323 because of "constant confusion", the consensus
+# was +0330.  The government adopted +0330 in 1941-07-20 and companies seem to
+# have switched by 08-01.  No time of day was given for the 1940s transitions.
 Zone	Asia/Bahrain	3:22:20 -	LMT	1941 Jul 20  # Manamah
 			3:30	-	+0330	1944 Jan  1
 			4:00	-	+04	1972 Jun

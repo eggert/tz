@@ -130,10 +130,15 @@ size_t
 strftime(char *s, size_t maxsize, const char *format, const struct tm *t)
 {
 	char *	p;
+	int saved_errno = errno;
 	enum warn warn = IN_NONE;
 
 	tzset();
 	p = _fmt(format, t, s, s + maxsize, &warn);
+	if (!p) {
+	  errno = EOVERFLOW;
+	  return 0;
+	}
 	if (DEPRECATE_TWO_DIGIT_YEARS
 	    && warn != IN_NONE && getenv(YEAR_2000_NAME)) {
 		fprintf(stderr, "\n");
@@ -146,9 +151,12 @@ strftime(char *s, size_t maxsize, const char *format, const struct tm *t)
 		else	fprintf(stderr, "all locales");
 		fprintf(stderr, "\n");
 	}
-	if (p == s + maxsize)
+	if (p == s + maxsize) {
+		errno = ERANGE;
 		return 0;
+	}
 	*p = '\0';
+	errno = saved_errno;
 	return p - s;
 }
 
@@ -312,7 +320,21 @@ label:
 					time_t		mkt;
 
 					tm = *t;
+					tm.tm_yday = -1;
 					mkt = mktime(&tm);
+					if (mkt == (time_t) -1) {
+					  /* Fail unless this -1 represents
+					     a valid time.  */
+					  struct tm tm_1;
+					  if (!localtime_r(&mkt, &tm_1))
+					    return NULL;
+					  if (!(tm.tm_year == tm_1.tm_year
+						&& tm.tm_yday == tm_1.tm_yday
+						&& tm.tm_hour == tm_1.tm_hour
+						&& tm.tm_min == tm_1.tm_min
+						&& tm.tm_sec == tm_1.tm_sec))
+					    return NULL;
+					}
 					if (TYPE_SIGNED(time_t))
 						sprintf(buf, "%"PRIdMAX,
 							(intmax_t) mkt);

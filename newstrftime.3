@@ -82,13 +82,6 @@ and one other character.
 No more than
 .I maxsize
 bytes are placed into the array.
-If the total number of resulting bytes, including the terminating
-NUL character, is not more than
-.IR maxsize ,
-.B strftime
-returns the number of bytes placed into the array, not counting the
-terminating NUL.
-Otherwise, zero is returned and the array contents are unspecified.
 .PP
 Each conversion specification is replaced by the characters as
 follows which are then copied into the array.
@@ -259,6 +252,33 @@ is replaced by a single %.
 is replaced by the locale's date and time in
 .BR date (1)
 format.
+.SH "RETURN VALUE"
+If the conversion is successful,
+.B strftime
+returns the number of bytes placed into the array, not counting the
+terminating NUL;
+.B errno
+is unchanged if the returned value is zero.
+Otherwise,
+.B errno
+is set to indicate the error, zero is returned,
+and the array contents are unspecified.
+.SH ERRORS
+This function fails if:
+.TP
+[ERANGE]
+The total number of resulting bytes, including the terminating
+NUL character, is more than
+.IR maxsize .
+.PP
+This function may fail if:
+.TP
+[EOVERFLOW]
+The format includes an
+.c %s
+conversion and the number of seconds since the Epoch cannot be represented
+in a
+.c time_t .
 .SH SEE ALSO
 date(1),
 getenv(3),

@@ -112,7 +112,7 @@ main(const int argc, char *argv[])
 		cp = argv[optind++];
 		if (*cp == '+')
 			if (format == NULL)
-				format = cp + 1;
+				format = cp;
 			else {
 				fprintf(stderr,
 _("date: error: multiple formats in command line\n"));
@@ -186,7 +186,7 @@ display(char const *format, time_t now)
 		errensure();
 		return;
 	}
-	timeout(stdout, format ? format : "%+", tmp);
+	timeout(stdout, format ? format : "+%+", tmp);
 	putchar('\n');
 	fflush(stdout);
 	fflush(stderr);
@@ -207,8 +207,6 @@ timeout(FILE *fp, char const *format, struct tm const *tmp)
 	size_t	size;
 	struct tm tm;
 
-	if (*format == '\0')
-		return;
 	if (!tmp) {
 		fprintf(stderr, _("date: error: time out of range\n"));
 		errensure();
@@ -225,13 +223,12 @@ timeout(FILE *fp, char const *format, struct tm const *tmp)
 			errensure();
 			exit(retval);
 		}
-		cp[0] = '\1';
 		result = strftime(cp, size, format, tmp);
-		if (result != 0 || cp[0] == '\0')
+		if (result != 0)
 			break;
 		size += INCR;
 		cp = realloc(cp, size);
 	}
-	fwrite(cp, 1, result, fp);
+	fwrite(cp + 1, 1, result - 1, fp);
 	free(cp);
 }

@@ -59,8 +59,7 @@ static _Noreturn void	usage(void);
 int
 main(const int argc, char *argv[])
 {
-	register const char *	format;
-	register const char *	cp;
+	register const char *	format = "+%+";
 	register int		ch;
 	register bool		rflag = false;
 	time_t			t;
@@ -77,7 +76,6 @@ main(const int argc, char *argv[])
 	textdomain(TZ_DOMAIN);
 #endif /* HAVE_GETTEXT */
 	t = time(NULL);
-	format = NULL;
 	while ((ch = getopt(argc, argv, "ucr:")) != EOF && ch != -1) {
 		switch (ch) {
 		default:
@@ -108,20 +106,17 @@ main(const int argc, char *argv[])
 			break;
 		}
 	}
-	while (optind < argc) {
-		cp = argv[optind++];
-		if (*cp == '+')
-			if (format == NULL)
-				format = cp;
-			else {
-				fprintf(stderr,
-_("date: error: multiple formats in command line\n"));
-				usage();
-			}
-		else {
-		  fprintf(stderr, _("date: unknown operand: %s\n"), cp);
-		  usage();
-		}
+	if (optind < argc) {
+	  if (argc - optind != 1) {
+	    fprintf(stderr,
+		    _("date: error: multiple operands in command line\n"));
+	    usage();
+	  }
+	  format = argv[optind];
+	  if (*format != '+') {
+	    fprintf(stderr, _("date: unknown operand: %s\n"), format);
+	    usage();
+	  }
 	}
 
 	display(format, t);
@@ -186,7 +181,7 @@ display(char const *format, time_t now)
 		errensure();
 		return;
 	}
-	timeout(stdout, format ? format : "+%+", tmp);
+	timeout(stdout, format, tmp);
 	putchar('\n');
 	fflush(stdout);
 	fflush(stderr);

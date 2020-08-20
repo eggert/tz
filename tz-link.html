@@ -466,9 +466,16 @@ Java-based libraries.</li>
 time <abbr>API</abbr> for .NET</a>
 is like Joda-Time and Time4J, but for the .NET framework instead of Java.
 It is freely available under the Apache License.</li>
-<li><a href="https://en.wikipedia.org/wiki/JavaScript">JavaScript</a>-based
-compilers and libraries include:
+<li>Many modern
+<a href="https://en.wikipedia.org/wiki/JavaScript">JavaScript</a>
+runtimes support <code><abbr>tz</abbr></code> natively via the
+<samp>timeZone</samp> option of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat"><samp>Intl.DateTimeFormat</samp></a>.
+On other runtimes, you can use one of the following.
 <ul>
+<li>The <a
+href="https://github.com/formatjs/date-time-format-timezone"><samp>Intl.DateTimeFormat</samp>
+timezone polyfill</a>
+is freely available under a <abbr>BSD</abbr>-style license.</li>
 <li><a
 href="https://github.com/kshetline/compact-time-zone-generator">CompactTimeZoneGenerator</a>
 compiles time zone data into a compact form designed for
@@ -478,6 +485,9 @@ the <abbr>MIT</abbr> license and the Apache License.</li>
 plugin for the <a href="https://momentjs.com">Moment.js</a> date
 manipulation library. It is freely available under the <abbr>MIT</abbr>
 license.</li>
+<li><a href="https://github.com/bigeasy/timezone">Timezone</a> is a
+JavaScript library that supports date arithmetic that is time zone
+aware. It is freely available under the <abbr>MIT</abbr> license.</li>
 <li><a href="https://github.com/mde/timezone-js">TimezoneJS.Date</a>'s
 <abbr>API</abbr> is upward compatible with standard JavaScript
 Dates. It is freely available under the Apache License.</li>
@@ -555,9 +565,6 @@ title="PHP: Hypertext Preprocessor">PHP</abbr></a>,
 <a href="https://hhvm.com"><abbr title="HipHop Virtual Machine">HHVM</abbr></a>,
 and <a href="https://www.mongodb.com">MongoDB</a>.
 It is freely available under the <abbr>MIT</abbr> license.</li>
-<li><a href="https://github.com/bigeasy/timezone">Timezone</a> is a
-JavaScript library that supports date arithmetic that is time zone
-aware. It is freely available under the <abbr>MIT</abbr> license.</li>
 <li>Tcl, mentioned <a href="#Tcl">above</a>, also contains a
 <abbr>TZif</abbr> file reader.</li>
 <li><a href="https://metacpan.org/pod/DateTime::TimeZone::Tzfile">

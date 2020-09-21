@@ -581,11 +581,15 @@ It is freely available under the same terms as Perl
 (dual <abbr>GPL</abbr> and Artistic license).</li>
 <li>Python has a <a
 href="https://docs.python.org/3.9/library/zoneinfo.html"><code>zoneinfo.ZoneInfo</code>
-class</a> that reads <abbr>TZif</abbr> files and creates objects
+class</a> that reads <abbr>TZif</abbr> data and creates objects
 that represent <code><abbr>tzdb</abbr></code> timezones.
 Python is freely available under the
 <a href="https://docs.python.org/3.9/license.html">Python Software Foundation
-License</a>.</li>
+License</a>.
+A companion <a href="https://pypi.org/">PyPI</a> module
+<a href="https://pypi.org/project/tzdata/"><code>tzdata</code></a>
+supplies TZif data if the underlying system data cannot be found;
+it is freely available under the Apache License.</li>
 <li>The
 public-domain <a href="https://github.com/dbaron/tz.js">tz.js</a>
 library contains a Python tool that

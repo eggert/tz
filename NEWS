@@ -2,12 +2,25 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    Revised predictions for Morocco's changes starting in 20203.
+    Canada's Yukon changes to -07 on 2020-11-01, not 2020-03-08.
+
   Changes to future timestamps
 
     Morocco's spring-forward after Ramadan is now predicted to occur
     no sooner than two days after Ramadan, instead of one day.
     (Thanks to Milamber.)  The first altered prediction is for 2023,
     now predicted to spring-forward on April 30 instead of April 23.
+
+  Changes to past and future time zone abbreviations and DST flags
+
+    Canada's Yukon, represented by America/Whitehorse and
+    America/Dawson, changes its time zone rules from -08/-07 to
+    permanent -07 on 2020-11-01, not on 2020-03-08 as 2020a had it.
+    This change affects only the time zone abbreviation (MST vs PDT)
+    and daylight saving flag for the period between the two dates.
+    (Thanks to Andrew G. Smith.)
 
   Changes to past timestamps
 

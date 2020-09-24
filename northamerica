@@ -2449,6 +2449,18 @@ Zone America/Creston	-7:46:04 -	LMT	1884
 # consistency with nearby Dawson Creek, Creston, and Fort Nelson.
 # https://yukon.ca/en/news/yukon-end-seasonal-time-change
 
+# From Andrew G. Smith (2020-09-24):
+# Yukon has completed its regulatory change to be on UTC -7 year-round....
+# http://www.gov.yk.ca/legislation/regs/oic2020_125.pdf
+# What we have done is re-defined Yukon Standard Time, as we are
+# authorized to do under section 33 of our Interpretation Act:
+# http://www.gov.yk.ca/legislation/acts/interpretation_c.pdf
+#
+# From Paul Eggert (2020-09-24):
+# tzdb uses the obsolete YST abbreviation for standard time in Yukon through
+# about 1970, and uses PST for standard time in Yukon since then.  Consistent
+# with that, use MST for -07, the new standard time in Yukon effective Nov. 1.
+
 # Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
 Rule	NT_YK	1918	only	-	Apr	14	2:00	1:00	D
 Rule	NT_YK	1918	only	-	Oct	27	2:00	0	S
@@ -2503,12 +2515,12 @@ Zone America/Inuvik	0	-	-00	1953 # Inuvik founded
 Zone America/Whitehorse	-9:00:12 -	LMT	1900 Aug 20
 			-9:00	NT_YK	Y%sT	1967 May 28  0:00
 			-8:00	NT_YK	P%sT	1980
-			-8:00	Canada	P%sT	2020 Mar  8  2:00
+			-8:00	Canada	P%sT	2020 Nov  1
 			-7:00	-	MST
 Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 			-9:00	NT_YK	Y%sT	1973 Oct 28  0:00
 			-8:00	NT_YK	P%sT	1980
-			-8:00	Canada	P%sT	2020 Mar  8  2:00
+			-8:00	Canada	P%sT	2020 Nov  1
 			-7:00	-	MST
 
 

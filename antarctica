@@ -70,14 +70,14 @@
 # Australian Antarctica Division informed us that Casey changed time
 # zone to UTC+11 in "the morning of 22nd October 2016".
 
-# From Steffen Thorsen (2020-10-02):
+# From Steffen Thorsen (2020-10-02, as corrected):
 # Based on information we have received from the Australian Antarctic
 # Division, Casey station and Macquarie Island station will move to Tasmanian
 # daylight savings time on Sunday 4 October. This will take effect from 0001
 # hrs on Sunday 4 October 2020 and will mean Casey and Macquarie Island will
 # be on the same time zone as Hobart.  Some past dates too for this 3 hour
 # time change back and forth between UTC+8 and UTC+11 for Casey:
-# - 2018 Oct  7 4:00 - 2019 Mar 17 3:00 - 2019 Oct  6 3:00 - 2020 Mar  8 3:00
+# - 2018 Oct  7 4:00 - 2019 Mar 17 3:00 - 2019 Oct  4 3:00 - 2020 Mar  8 3:00
 # and now - 2020 Oct  4 0:01
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
@@ -90,7 +90,7 @@ Zone Antarctica/Casey	 0	-	-00	1969
 			11:00	-	+11	2018 Mar 11  4:00
 			 8:00	-	+08	2018 Oct  7  4:00
 			11:00	-	+11	2019 Mar 17  3:00
-			 8:00	-	+08	2019 Oct  6  3:00
+			 8:00	-	+08	2019 Oct  4  3:00
 			11:00	-	+11	2020 Mar  8  3:00
 			 8:00	-	+08	2020 Oct  4  0:01
 			11:00	-	+11

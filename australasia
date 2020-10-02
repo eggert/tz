@@ -252,8 +252,9 @@ Zone Antarctica/Macquarie 0	-	-00	1899 Nov
 			10:00	Aus	AE%sT	1919 Apr  1  0:00s
 			0	-	-00	1948 Mar 25
 			10:00	Aus	AE%sT	1967
-			10:00	AT	AE%sT	2010 Apr  4  3:00
-			11:00	-	+11
+			10:00	AT	AE%sT	2010
+			10:00	1:00	AEDT	2011
+			10:00	AT	AE%sT
 
 # Christmas
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]

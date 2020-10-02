@@ -5,6 +5,8 @@ Unreleased, experimental changes
   Briefly:
     Revised predictions for Morocco's changes starting in 2023.
     Canada's Yukon changes to -07 on 2020-11-01, not 2020-03-08.
+    Macquarie Island has stayed in sync with Tasmania since 2011.
+    Casey, Antarctica is at +08 in summer and +11 in winter.
 
   Changes to future timestamps
 
@@ -12,6 +14,13 @@ Unreleased, experimental changes
     no sooner than two days after Ramadan, instead of one day.
     (Thanks to Milamber.)  The first altered prediction is for 2023,
     now predicted to spring-forward on April 30 instead of April 23.
+
+  Changes to past and future timestamps
+
+   Casey Station, Antarctica has been using +08 in summer and +11 in
+   winter since 2018.  The next transition is from +08 to +11 on
+   2020-10-04 00:01.  Also, Macquarie Island has been staying in
+   sync with Tasmania since 2011.  (Thanks to Steffen Thorsen.)
 
   Changes to past and future time zone abbreviations and DST flags
 

@@ -533,7 +533,7 @@ DOCS=		$(MANS) date.1 $(MANTXTS) $(WEB_PAGES)
 PRIMARY_YDATA=	africa antarctica asia australasia \
 		europe northamerica southamerica
 YDATA=		$(PRIMARY_YDATA) etcetera
-NDATA=		systemv factory
+NDATA=		factory
 TDATA_TO_CHECK=	$(YDATA) $(NDATA) backward pacificnew
 TDATA=		$(YDATA) $(NDATA) $(BACKWARD)
 ZONETABLES=	zone1970.tab zone.tab
@@ -569,7 +569,7 @@ VERSION_DEPS= \
 		leap-seconds.list leapseconds.awk localtime.c \
 		newctime.3 newstrftime.3 newtzset.3 northamerica \
 		pacificnew private.h \
-		southamerica strftime.c systemv theory.html \
+		southamerica strftime.c theory.html \
 		time2posix.3 tz-art.html tz-how-to.html tz-link.html \
 		tzfile.5 tzfile.h tzselect.8 tzselect.ksh \
 		workman.sh yearistype.sh \

@@ -58,6 +58,11 @@ Unreleased, experimental changes
     The Makefile now defaults POSIXRULES to '-', so the posixrules
     feature (obsolete as of 2019b) is no longer installed by default.
 
+  Changes to documentation and commentary
+
+    The long-obsolete file systemv has been removed from the
+    distribution.  (Thanks to Tim Parenti.)
+
 
 Release 2020a - 2020-04-23 16:03:47 -0700
 

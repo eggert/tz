@@ -278,9 +278,9 @@ abbreviation must be unambiguous in context.
 A rule line has the form
 .nf
 .ti +.5i
-.ta \w'Rule\0\0'u +\w'NAME\0\0'u +\w'FROM\0\0'u +\w'1973\0\0'u +\w'TYPE\0\0'u +\w'Apr\0\0'u +\w'lastSun\0\0'u +\w'2:00w\0\0'u +\w'1:00d\0\0'u
+.ta \w'Rule\0\0'u +\w'NAME\0\0'u +\w'FROM\0\0'u +\w'1973\0\0'u +\w'\*-\0\0'u +\w'Apr\0\0'u +\w'lastSun\0\0'u +\w'2:00w\0\0'u +\w'1:00d\0\0'u
 .sp
-Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+Rule	NAME	FROM	TO	\*-	IN	ON	AT	SAVE	LETTER/S
 .sp
 For example:
 .ti +.5i
@@ -329,12 +329,17 @@ may be used to repeat the value of the
 .B FROM
 field.
 .TP
-.B TYPE
-should be
+.B \*-
+Is a reserved field and should always contain
 .q \*-
-and is present for compatibility with older versions of
-.B zic
-in which it could contain year types.
+for compatibility with older versions of
+.BR zic .
+It was previously known as the
+.B TYPE
+field, which could contain values to allow a
+separate script to further restrict in which
+.q types
+of years the rule would apply.
 .TP
 .B IN
 Names the month in which the rule takes effect.
@@ -705,9 +710,9 @@ and for its predecessor organization, the European Communities.
 .ne 22
 .nf
 .in +2m
-.ta \w'# Rule\0\0'u +\w'NAME\0\0'u +\w'FROM\0\0'u +\w'1973\0\0'u +\w'TYPE\0\0'u +\w'Apr\0\0'u +\w'lastSun\0\0'u +\w'2:00\0\0'u +\w'SAVE\0\0'u
+.ta \w'# Rule\0\0'u +\w'NAME\0\0'u +\w'FROM\0\0'u +\w'1973\0\0'u +\w'\*-\0\0'u +\w'Apr\0\0'u +\w'lastSun\0\0'u +\w'2:00\0\0'u +\w'SAVE\0\0'u
 .sp
-# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+# Rule	NAME	FROM	TO	\*-	IN	ON	AT	SAVE	LETTER/S
 Rule	Swiss	1941	1942	\*-	May	Mon>=1	1:00	1:00	S
 Rule	Swiss	1941	1942	\*-	Oct	Mon>=1	2:00	0	\*-
 .sp .5

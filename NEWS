@@ -7,6 +7,7 @@ Unreleased, experimental changes
     Canada's Yukon changes to -07 on 2020-11-01, not 2020-03-08.
     Macquarie Island has stayed in sync with Tasmania since 2011.
     Casey, Antarctica is at +08 in summer and +11 in winter.
+    zic no longer supports -y, nor the TYPE field of Rules.
 
   Changes to future timestamps
 
@@ -45,6 +46,12 @@ Unreleased, experimental changes
 
   Changes to code
 
+    Support for zic's long-obsolete '-y YEARISTYPE' option has been
+    removed and, with it, so has support for the TYPE field in Rule
+    lines, which is now reserved for compatibility with earlier zic.
+    These features were previously deprecated in release 2015f.
+    (Thanks to Tim Parenti.)
+
     zic now defaults to '-b slim' instead of to '-b fat'.
 
     zic's new '-l -' and '-p -' options uninstall any existing
@@ -60,8 +67,8 @@ Unreleased, experimental changes
 
   Changes to documentation and commentary
 
-    The long-obsolete file systemv has been removed from the
-    distribution.  (Thanks to Tim Parenti.)
+    The long-obsolete files pacificnew, systemv, and yearistype.sh have
+    been removed from the distribution.  (Thanks to Tim Parenti.)
 
 
 Release 2020a - 2020-04-23 16:03:47 -0700

@@ -150,7 +150,7 @@ Zone	Africa/Douala	0:38:48	-	LMT	1912
 # Whitman gives Mar 31 - Aug 31 for 1931 on.
 # The International Hydrographic Bulletin, 1932-33, p 63 says that
 # Sierra Leone would advance its clocks by 20 minutes on 1933-10-01.
-# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+# Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	SL	1935	1942	-	Jun	 1	0:00	0:40	-0020
 Rule	SL	1935	1942	-	Oct	 1	0:00	0	-01
 Rule	SL	1957	1962	-	Jun	 1	0:00	1:00	+01
@@ -351,7 +351,7 @@ Zone America/Guadeloupe	-4:06:08 -	LMT	1911 Jun  8 # Pointe-à-Pitre
 # Pottenger data.  The post-1970 entries have been corrected, but the
 # pre-1970 entries are unchecked and probably have errors.
 #
-# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+# Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Mont	1917	only	-	Mar	25	2:00	1:00	D
 Rule	Mont	1917	only	-	Apr	24	0:00	0	S
 Rule	Mont	1919	only	-	Mar	31	2:30	1:00	D

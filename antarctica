@@ -239,7 +239,7 @@ Zone Antarctica/Syowa	0	-	-00	1957 Jan 29
 # suggested by Bengt-Inge Larsson comment them out for now, and approximate
 # with only UTC and CEST.  Uncomment them when 2014b is more prevalent.
 #
-# Rule	NAME	FROM	TO	TYPE	IN	ON	AT	SAVE	LETTER/S
+# Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 #Rule	Troll	2005	max	-	Mar	 1	1:00u	1:00	+01
 Rule	Troll	2005	max	-	Mar	lastSun	1:00u	2:00	+02
 #Rule	Troll	2005	max	-	Oct	lastSun	1:00u	1:00	+01

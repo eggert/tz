@@ -81,7 +81,6 @@ struct rule {
 
 	zic_t		r_loyear;	/* for example, 1986 */
 	zic_t		r_hiyear;	/* for example, 1986 */
-	const char *	r_yrtype;
 	bool		r_lowasnum;
 	bool		r_hiwasnum;
 
@@ -182,7 +181,6 @@ static void	rulesub(struct rule * rp,
 			const char * typep, const char * monthp,
 			const char * dayp, const char * timep);
 static zic_t	tadd(zic_t t1, zic_t t2);
-static bool	yearistype(zic_t year, const char * type);
 
 /* Bound on length of what %z can expand to.  */
 enum { PERCENT_Z_LEN_BOUND = sizeof "+995959" - 1 };
@@ -658,7 +656,6 @@ static const char *	lcltime;
 static const char *	directory;
 static const char *	leapsec;
 static const char *	tzdefault;
-static const char *	yitcommand;
 
 /* -1 if the TZif output file should be slim, 0 if default, 1 if the
    output should be fat for backward compatibility.  The default is slim.  */
@@ -762,15 +759,7 @@ _("%s: More than one -p option specified\n"),
 				tzdefault = optarg;
 				break;
 			case 'y':
-				if (yitcommand == NULL) {
-					warning(_("-y is obsolescent"));
-					yitcommand = optarg;
-				} else {
-					fprintf(stderr,
-_("%s: More than one -y option specified\n"),
-						progname);
-					return EXIT_FAILURE;
-				}
+				warning(_("-y ignored"));
 				break;
 			case 'L':
 				if (leapsec == NULL)
@@ -812,8 +801,6 @@ _("%s: invalid time range: %s\n"),
 		directory = TZDIR;
 	if (tzdefault == NULL)
 		tzdefault = TZDEFAULT;
-	if (yitcommand == NULL)
-		yitcommand = "yearistype";
 
 	if (optind < argc && leapsec != NULL) {
 		infile(leapsec);
@@ -1731,16 +1718,10 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 		error(_("starting year greater than ending year"));
 		return;
 	}
-	if (*typep == '\0')
-		rp->r_yrtype = NULL;
-	else {
-		if (rp->r_loyear == rp->r_hiyear) {
-			error(_("typed single year"));
-			return;
-		}
-		warning(_("year type \"%s\" is obsolete; use \"-\" instead"),
+	if (*typep != '\0') {
+		error(_("year type \"%s\" is unsupported; use \"-\" instead"),
 			typep);
-		rp->r_yrtype = ecpyalloc(typep);
+		return;
 	}
 	/*
 	** Day work.
@@ -2502,8 +2483,6 @@ stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 		rp = &zp->z_rules[i];
 		if (rp->r_hiwasnum || rp->r_hiyear != ZIC_MAX)
 			continue;
-		if (rp->r_yrtype != NULL)
-			continue;
 		if (!rp->r_isdst) {
 			if (stdrp == NULL)
 				stdrp = rp;
@@ -2758,14 +2737,14 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 			/*
 			** Mark which rules to do in the current year.
 			** For those to do, calculate rpytime(rp, year);
+			** The former TYPE field was also considered here.
 			*/
 			for (j = 0; j < zp->z_nrules; ++j) {
 				rp = &zp->z_rules[j];
 				eats(zp->z_filename, zp->z_linenum,
 					rp->r_filename, rp->r_linenum);
 				rp->r_todo = year >= rp->r_loyear &&
-						year <= rp->r_hiyear &&
-						yearistype(year, rp->r_yrtype);
+						year <= rp->r_hiyear;
 				if (rp->r_todo) {
 					rp->r_temp = rpytime(rp, year);
 					rp->r_todo
@@ -3054,50 +3033,6 @@ adjleap(void)
 	  if (leapexpires <= hi_time)
 	    hi_time = leapexpires - 1;
 	}
-}
-
-static char *
-shellquote(char *b, char const *s)
-{
-  *b++ = '\'';
-  while (*s) {
-    if (*s == '\'')
-      *b++ = '\'', *b++ = '\\', *b++ = '\'';
-    *b++ = *s++;
-  }
-  *b++ = '\'';
-  return b;
-}
-
-static bool
-yearistype(zic_t year, const char *type)
-{
-	char *buf;
-	char *b;
-	int result;
-
-	if (type == NULL || *type == '\0')
-		return true;
-	buf = emalloc(1 + 4 * strlen(yitcommand) + 2
-		      + INT_STRLEN_MAXIMUM(zic_t) + 2 + 4 * strlen(type) + 2);
-	b = shellquote(buf, yitcommand);
-	*b++ = ' ';
-	b += sprintf(b, "%"PRIdZIC, year);
-	*b++ = ' ';
-	b = shellquote(b, type);
-	*b = '\0';
-	result = system(buf);
-	if (WIFEXITED(result)) {
-	  int status = WEXITSTATUS(result);
-	  if (status <= 1) {
-	    free(buf);
-	    return status == 0;
-	  }
-	}
-	error(_("Wild result from command execution"));
-	fprintf(stderr, _("%s: command was '%s', result was %d\n"),
-		progname, buf, result);
-	exit(EXIT_FAILURE);
 }
 
 /* Is A a space character in the C locale?  */

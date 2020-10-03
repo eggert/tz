@@ -169,9 +169,6 @@ TZDATA_TEXT=	leapseconds tzdata.zi
 
 # For backward-compatibility links for old zone names, use
 #	BACKWARD=	backward
-# If you also want the link US/Pacific-New, even though it is confusing
-# and is planned to be removed from the database eventually, use
-#	BACKWARD=	backward pacificnew
 # To omit these links, use
 #	BACKWARD=
 
@@ -188,10 +185,6 @@ PACKRATDATA=
 # The tests are skipped if the name does not appear to work on this system.
 
 UTF8_LOCALE=	en_US.utf8
-
-# Since "." may not be in PATH...
-
-YEARISTYPE=	./yearistype
 
 # Non-default libraries needed to link.
 LDLIBS=
@@ -534,7 +527,7 @@ PRIMARY_YDATA=	africa antarctica asia australasia \
 		europe northamerica southamerica
 YDATA=		$(PRIMARY_YDATA) etcetera
 NDATA=		factory
-TDATA_TO_CHECK=	$(YDATA) $(NDATA) backward pacificnew
+TDATA_TO_CHECK=	$(YDATA) $(NDATA) backward
 TDATA=		$(YDATA) $(NDATA) $(BACKWARD)
 ZONETABLES=	zone1970.tab zone.tab
 TABDATA=	iso3166.tab $(TZDATA_TEXT) $(ZONETABLES)
@@ -542,7 +535,7 @@ LEAP_DEPS=	leapseconds.awk leap-seconds.list
 TZDATA_ZI_DEPS=	ziguard.awk zishrink.awk version $(TDATA) $(PACKRATDATA)
 DSTDATA_ZI_DEPS= ziguard.awk $(TDATA) $(PACKRATDATA)
 DATA=		$(TDATA_TO_CHECK) backzone iso3166.tab leap-seconds.list \
-			leapseconds yearistype.sh $(ZONETABLES)
+			leapseconds $(ZONETABLES)
 AWK_SCRIPTS=	checklinks.awk checktab.awk leapseconds.awk \
 			ziguard.awk zishrink.awk
 MISC=		$(AWK_SCRIPTS) zoneinfo2tdf.pl
@@ -568,12 +561,10 @@ VERSION_DEPS= \
 		etcetera europe factory iso3166.tab \
 		leap-seconds.list leapseconds.awk localtime.c \
 		newctime.3 newstrftime.3 newtzset.3 northamerica \
-		pacificnew private.h \
-		southamerica strftime.c theory.html \
+		private.h southamerica strftime.c theory.html \
 		time2posix.3 tz-art.html tz-how-to.html tz-link.html \
 		tzfile.5 tzfile.h tzselect.8 tzselect.ksh \
-		workman.sh yearistype.sh \
-		zdump.8 zdump.c zic.8 zic.c \
+		workman.sh zdump.8 zdump.c zic.8 zic.c \
 		ziguard.awk zishrink.awk \
 		zone.tab zone1970.tab zoneinfo2tdf.pl
 
@@ -582,7 +573,7 @@ VERSION_DEPS= \
 
 SHELL=		/bin/sh
 
-all:		tzselect yearistype zic zdump libtz.a $(TABDATA) \
+all:		tzselect zic zdump libtz.a $(TABDATA) \
 		  vanguard.zi main.zi rearguard.zi
 
 ALL:		all date $(ENCHILADA)
@@ -652,10 +643,6 @@ zdump:		$(TZDOBJS)
 zic:		$(TZCOBJS)
 		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(TZCOBJS) $(LDLIBS)
 
-yearistype:	yearistype.sh
-		cp yearistype.sh yearistype
-		chmod +x yearistype
-
 leapseconds:	$(LEAP_DEPS)
 		$(AWK) -v EXPIRES_LINE=$(EXPIRES_LINE) \
 		  -f leapseconds.awk leap-seconds.list >$@.out
@@ -670,10 +657,9 @@ INSTALLARGS = \
  PACKRATDATA='$(PACKRATDATA)' \
  TZDEFAULT='$(TZDEFAULT)' \
  TZDIR='$(TZDIR)' \
- YEARISTYPE='$(YEARISTYPE)' \
  ZIC='$(ZIC)'
 
-INSTALL_DATA_DEPS = zic leapseconds yearistype tzdata.zi
+INSTALL_DATA_DEPS = zic leapseconds tzdata.zi
 
 # 'make install_data' installs one set of TZif files.
 install_data: $(INSTALL_DATA_DEPS)
@@ -788,7 +774,7 @@ check_character_set: $(ENCHILADA)
 		! grep -Env $(SAFE_LINE)'|^UNUSUAL_OK_'$(OK_CHAR)'*$$' \
 			Makefile && \
 		! grep -Env $(SAFE_SHARP_LINE) $(TDATA_TO_CHECK) backzone \
-			leapseconds yearistype.sh zone.tab && \
+			leapseconds zone.tab && \
 		! grep -Env $(OK_LINE) $(ENCHILADA); \
 	}
 	touch $@
@@ -878,7 +864,7 @@ clean_misc:
 		rm -fr check_*.dir
 		rm -f *.o *.out $(TIME_T_ALTERNATIVES) \
 		  check_* core typecheck_* \
-		  date tzselect version.h zdump zic yearistype libtz.a
+		  date tzselect version.h zdump zic libtz.a
 clean:		clean_misc
 		rm -fr *.dir tzdb-*/
 		rm -f *.zi $(TZS_NEW)

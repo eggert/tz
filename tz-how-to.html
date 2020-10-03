@@ -38,7 +38,7 @@ the <code>data</code> subdirectory):</p>
 <tr>
   <td colspan="6" align="center"><table><tr><td>
 <pre>
-#Rule NAME    FROM TO   TYPE IN  ON      AT   SAVE LETTER
+#Rule NAME    FROM TO    -   IN  ON      AT   SAVE LETTER
 Rule  Chicago 1920 only  -   Jun 13      2:00 1:00 D
 Rule  Chicago 1920 1921  -   Oct lastSun 2:00 0    S
 Rule  Chicago 1921 only  -   Mar lastSun 2:00 1:00 D
@@ -93,14 +93,23 @@ Rule  Chicago 1955 1966  -   Oct lastSun 2:00 0    S
 </tr>
 </table>
 
-<p>We&rsquo;ll basically just ignore the <code>TYPE</code> column.
-In the 2007j release, the most recent as of this writing, the
-<code>TYPE</code> column never contains anything but a hyphen,
-a kind of null value. (From the description in <code>zic.8.txt</code>,
-this appears to be a mechanism for removing years from a set
-in some localizable way. It&rsquo;s used in the file, <code>pacificnew</code>,
-to determine whether a given year will have a US presidential election;
-but everything related to that use is commented out.)
+<p>The <code>FROM</code> and <code>TO</code> columns, respectively, specify the
+first and last calendar years defining a contiguous range over which a specific
+Rule line is to apply.  The keyword <code>only</code> can be used in the
+<code>TO</code> field to repeat the value of the <code>FROM</code> field in the
+event that a rule should only apply to a single year.  Often, the keyword
+<code>max</code> is used to extend a rule&rsquo;s application into the
+indefinite future; it is a platform-agnostic stand-in for the largest
+representable year.
+
+<p>The next column, <code>-</code>, is reserved; for compatibility with earlier
+releases, it always contains a hyphen, which acts as a kind of null value.
+Prior to the 2020b release, it was called the <code>TYPE</code> field, though
+it was never used in the main data.  An obsolescent supplementary file used the
+field as a proof-of-concept to allow <code>zic</code> to apply a given Rule
+line only to certain &ldquo;types&rdquo; of years within the specified range as
+dictated by the output of a separate script, such as: only years which would
+have a US presidential election, or only years which wouldn&rsquo;t.
 
 <p>The <code>SAVE</code> column contains the local (wall clock) offset from
 local standard time.
@@ -148,7 +157,7 @@ time changed in 1955. Got it?</p>
 <tr>
   <td colspan="6" align="center"><table><tr><td>
 <pre>
-#Rule NAME FROM TO   TYPE IN  ON        AT   SAVE LETTER/S
+#Rule NAME FROM TO    -   IN  ON        AT   SAVE LETTER/S
 Rule  US   1918 1919  -   Mar lastSun  2:00  1:00 D
 Rule  US   1918 1919  -   Oct lastSun  2:00  0    S
 Rule  US   1942 only  -   Feb 9        2:00  1:00 W # War
@@ -555,7 +564,7 @@ the true offset is undefined.
 <tr>
   <td colspan="6" align="center"><table><tr><td>
 <pre>
-#Rule NAME FROM TO   TYPE IN  ON      AT     SAVE LETTER/S
+#Rule NAME FROM TO   -    IN  ON      AT     SAVE LETTER/S
 Rule  US   1918 1919 -    Oct lastSun  2:00  0    S
 Rule  US   1942 only -    Feb  9       2:00  1:00 W # War
 Rule  US   1945 only -    Aug 14      23:00u 1:00 P # Peace

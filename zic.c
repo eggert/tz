@@ -132,22 +132,22 @@ struct zone {
 #if !HAVE_POSIX_DECLS
 extern int	getopt(int argc, char * const argv[],
 			const char * options);
-extern int	link(const char * fromname, const char * toname);
+extern int	link(const char * target, const char * linkname);
 extern char *	optarg;
 extern int	optind;
 #endif
 
 #if ! HAVE_LINK
-# define link(from, to) (errno = ENOTSUP, -1)
+# define link(target, linkname) (errno = ENOTSUP, -1)
 #endif
 #if ! HAVE_SYMLINK
 # define readlink(file, buf, size) (errno = ENOTSUP, -1)
-# define symlink(from, to) (errno = ENOTSUP, -1)
+# define symlink(target, linkname) (errno = ENOTSUP, -1)
 # define S_ISLNK(m) 0
 #endif
 #ifndef AT_SYMLINK_FOLLOW
-# define linkat(fromdir, from, todir, to, flag) \
-    (itssymlink(from) ? (errno = ENOTSUP, -1) : link(from, to))
+# define linkat(targetdir, target, linknamedir, linkname, flag) \
+    (itssymlink(target) ? (errno = ENOTSUP, -1) : link(target, linkname))
 #endif
 
 static void	addtt(zic_t starttime, int type);
@@ -273,8 +273,8 @@ static int		typecnt;
 ** Which fields are which on a Link line.
 */
 
-#define LF_FROM		1
-#define LF_TO		2
+#define LF_TARGET	1
+#define LF_LINKNAME	2
 #define LINK_FIELDS	3
 
 /*
@@ -311,8 +311,8 @@ static ptrdiff_t	nzones_alloc;
 struct link {
 	const char *	l_filename;
 	lineno		l_linenum;
-	const char *	l_from;
-	const char *	l_to;
+	const char *	l_target;
+	const char *	l_linkname;
 };
 
 static struct link *	links;
@@ -826,11 +826,11 @@ _("%s: invalid time range: %s\n"),
 	*/
 	for (i = 0; i < nlinks; ++i) {
 		eat(links[i].l_filename, links[i].l_linenum);
-		dolink(links[i].l_from, links[i].l_to, false);
+		dolink(links[i].l_target, links[i].l_linkname, false);
 		if (noise)
 			for (j = 0; j < nlinks; ++j)
-				if (strcmp(links[i].l_to,
-					links[j].l_from) == 0)
+				if (strcmp(links[i].l_linkname,
+					links[j].l_target) == 0)
 						warning(_("link to link"));
 	}
 	if (lcltime != NULL) {
@@ -922,27 +922,27 @@ namecheck(const char *name)
    is relative to the global variable DIRECTORY.  TO can be either
    relative or absolute.  */
 static char *
-relname(char const *from, char const *to)
+relname(char const *target, char const *linkname)
 {
   size_t i, taillen, dotdotetcsize;
   size_t dir_len = 0, dotdots = 0, linksize = SIZE_MAX;
-  char const *f = from;
+  char const *f = target;
   char *result = NULL;
-  if (*to == '/') {
+  if (*linkname == '/') {
     /* Make F absolute too.  */
     size_t len = strlen(directory);
     bool needslash = len && directory[len - 1] != '/';
-    linksize = len + needslash + strlen(from) + 1;
+    linksize = len + needslash + strlen(target) + 1;
     f = result = emalloc(linksize);
     strcpy(result, directory);
     result[len] = '/';
-    strcpy(result + len + needslash, from);
+    strcpy(result + len + needslash, target);
   }
-  for (i = 0; f[i] && f[i] == to[i]; i++)
+  for (i = 0; f[i] && f[i] == linkname[i]; i++)
     if (f[i] == '/')
       dir_len = i + 1;
-  for (; to[i]; i++)
-    dotdots += to[i] == '/' && to[i - 1] != '/';
+  for (; linkname[i]; i++)
+    dotdots += linkname[i] == '/' && linkname[i - 1] != '/';
   taillen = strlen(f + dir_len);
   dotdotetcsize = 3 * dotdots + taillen + 1;
   if (dotdotetcsize <= linksize) {
@@ -958,56 +958,56 @@ relname(char const *from, char const *to)
 /* Hard link FROM to TO, following any symbolic links.
    Return 0 if successful, an error number otherwise.  */
 static int
-hardlinkerr(char const *from, char const *to)
+hardlinkerr(char const *target, char const *linkname)
 {
-  int r = linkat(AT_FDCWD, from, AT_FDCWD, to, AT_SYMLINK_FOLLOW);
+  int r = linkat(AT_FDCWD, target, AT_FDCWD, linkname, AT_SYMLINK_FOLLOW);
   return r == 0 ? 0 : errno;
 }
 
 static void
-dolink(char const *fromfield, char const *tofield, bool staysymlink)
+dolink(char const *target, char const *linkname, bool staysymlink)
 {
-	bool remove_only = strcmp(fromfield, "-") == 0;
-	bool todirs_made = false;
+	bool remove_only = strcmp(target, "-") == 0;
+	bool linkdirs_made = false;
 	int link_errno;
 
 	/*
 	** We get to be careful here since
 	** there's a fair chance of root running us.
 	*/
-	if (!remove_only && itsdir(fromfield)) {
-		fprintf(stderr, _("%s: link from %s/%s failed: %s\n"),
-			progname, directory, fromfield, strerror(EPERM));
+	if (!remove_only && itsdir(target)) {
+		fprintf(stderr, _("%s: linking target %s/%s failed: %s\n"),
+			progname, directory, target, strerror(EPERM));
 		exit(EXIT_FAILURE);
 	}
 	if (staysymlink)
-	  staysymlink = itssymlink(tofield);
-	if (remove(tofield) == 0)
-	  todirs_made = true;
+	  staysymlink = itssymlink(linkname);
+	if (remove(linkname) == 0)
+	  linkdirs_made = true;
 	else if (errno != ENOENT) {
 	  char const *e = strerror(errno);
 	  fprintf(stderr, _("%s: Can't remove %s/%s: %s\n"),
-		  progname, directory, tofield, e);
+		  progname, directory, linkname, e);
 	  exit(EXIT_FAILURE);
 	}
 	if (remove_only)
 	  return;
-	link_errno = staysymlink ? ENOTSUP : hardlinkerr(fromfield, tofield);
-	if (link_errno == ENOENT && !todirs_made) {
-	  mkdirs(tofield, true);
-	  todirs_made = true;
-	  link_errno = hardlinkerr(fromfield, tofield);
+	link_errno = staysymlink ? ENOTSUP : hardlinkerr(target, linkname);
+	if (link_errno == ENOENT && !linkdirs_made) {
+	  mkdirs(linkname, true);
+	  linkdirs_made = true;
+	  link_errno = hardlinkerr(target, linkname);
 	}
 	if (link_errno != 0) {
-	  bool absolute = *fromfield == '/';
-	  char *linkalloc = absolute ? NULL : relname(fromfield, tofield);
-	  char const *contents = absolute ? fromfield : linkalloc;
-	  int symlink_errno = symlink(contents, tofield) == 0 ? 0 : errno;
-	  if (!todirs_made
+	  bool absolute = *target == '/';
+	  char *linkalloc = absolute ? NULL : relname(target, linkname);
+	  char const *contents = absolute ? target : linkalloc;
+	  int symlink_errno = symlink(contents, linkname) == 0 ? 0 : errno;
+	  if (!linkdirs_made
 	      && (symlink_errno == ENOENT || symlink_errno == ENOTSUP)) {
-	    mkdirs(tofield, true);
+	    mkdirs(linkname, true);
 	    if (symlink_errno == ENOENT)
-	      symlink_errno = symlink(contents, tofield) == 0 ? 0 : errno;
+	      symlink_errno = symlink(contents, linkname) == 0 ? 0 : errno;
 	  }
 	  free(linkalloc);
 	  if (symlink_errno == 0) {
@@ -1017,24 +1017,24 @@ dolink(char const *fromfield, char const *tofield, bool staysymlink)
 	  } else {
 	    FILE *fp, *tp;
 	    int c;
-	    fp = fopen(fromfield, "rb");
+	    fp = fopen(target, "rb");
 	    if (!fp) {
 	      char const *e = strerror(errno);
 	      fprintf(stderr, _("%s: Can't read %s/%s: %s\n"),
-		      progname, directory, fromfield, e);
+		      progname, directory, target, e);
 	      exit(EXIT_FAILURE);
 	    }
-	    tp = fopen(tofield, "wb");
+	    tp = fopen(linkname, "wb");
 	    if (!tp) {
 	      char const *e = strerror(errno);
 	      fprintf(stderr, _("%s: Can't create %s/%s: %s\n"),
-		      progname, directory, tofield, e);
+		      progname, directory, linkname, e);
 	      exit(EXIT_FAILURE);
 	    }
 	    while ((c = getc(fp)) != EOF)
 	      putc(c, tp);
-	    close_file(fp, directory, fromfield);
-	    close_file(tp, directory, tofield);
+	    close_file(fp, directory, target);
+	    close_file(tp, directory, linkname);
 	    if (link_errno != ENOTSUP)
 	      warning(_("copy used because hard link failed: %s"),
 		      strerror(link_errno));
@@ -1613,16 +1613,16 @@ inlink(char **fields, int nfields)
 		error(_("wrong number of fields on Link line"));
 		return;
 	}
-	if (*fields[LF_FROM] == '\0') {
-		error(_("blank FROM field on Link line"));
+	if (*fields[LF_TARGET] == '\0') {
+		error(_("blank TARGET field on Link line"));
 		return;
 	}
-	if (! namecheck(fields[LF_TO]))
+	if (! namecheck(fields[LF_LINKNAME]))
 	  return;
 	l.l_filename = filename;
 	l.l_linenum = linenum;
-	l.l_from = ecpyalloc(fields[LF_FROM]);
-	l.l_to = ecpyalloc(fields[LF_TO]);
+	l.l_target = ecpyalloc(fields[LF_TARGET]);
+	l.l_linkname = ecpyalloc(fields[LF_LINKNAME]);
 	links = growalloc(links, sizeof *links, nlinks, &nlinks_alloc);
 	links[nlinks++] = l;
 }

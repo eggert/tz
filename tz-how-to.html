@@ -1,12 +1,16 @@
-<!DOCTYPE html
-	PUBLIC "-//W3C//DTD HTML 4.01//EN"
-	"http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <title>How to Read the tz Database</title>
-<meta http-equiv="Content-type" content='text/html; charset="UTF-8"'>
-<style type="text/css">
+<meta charset="UTF-8">
+<style>
 pre {margin-left: 2em; white-space: pre-wrap;}
+pre.td {margin-left: 0;}
+td {text-align: center;}
+table {border: 1px outset;}
+th, td {border: 1px inset;}
+table.rule {border: none; margin: auto;}
+td.footnote {text-align: left;}
 </style>
 </head>
 <body>
@@ -31,13 +35,15 @@ about the zones.</p>
 for Chicago (from the <code>northamerica</code> file in
 the <code>data</code> subdirectory):</p>
 
-<table border="1">
+<table>
 <tr>
   <th colspan="6">From the Source File</th>
 </tr>
 <tr>
-  <td colspan="6" align="center"><table><tr><td>
-<pre>
+  <td colspan="6">
+    <table class="rule">
+      <tr><td style="border:none;text-align:left">
+<pre class="td">
 #Rule NAME    FROM TO    -   IN  ON      AT   SAVE LETTER
 Rule  Chicago 1920 only  -   Jun 13      2:00 1:00 D
 Rule  Chicago 1920 1921  -   Oct lastSun 2:00 0    S
@@ -58,35 +64,35 @@ Rule  Chicago 1955 1966  -   Oct lastSun 2:00 0    S
   <th>At</th>
   <th>Action</th>
 </tr>
-<tr align="center">
+<tr>
   <td colspan="2">1920 only</td>
   <td colspan="2">June 13<small><sup>th</sup></small></td>
   <td rowspan="6">02:00 local</td>
   <td>go to daylight saving time</td>
 </tr>
-<tr align="center">
+<tr>
   <td>1920</td>
   <td>1921</td>
   <td rowspan="5">last Sunday</td>
   <td>in October</td>
   <td>return to standard time</td>
 </tr>
-<tr align="center">
+<tr>
   <td colspan="2">1921 only</td>
   <td>in March</td>
   <td rowspan="2">go to daylight saving time</td>
 </tr>
-<tr align="center">
+<tr>
   <td rowspan="2">1922</td>
   <td>1966</td>
   <td>in April</td>
 </tr>
-<tr align="center">
+<tr>
   <td>1954</td>
   <td>in September</td>
   <td rowspan="2">return to standard time</td>
 </tr>
-<tr align="center">
+<tr>
   <td>1955</td>
   <td>1966</td>
   <td>in October</td>
@@ -150,13 +156,15 @@ time changed in 1955. Got it?</p>
 
 <p>OK, now for the somewhat more interesting &ldquo;US&rdquo; rules:</p>
 
-<table border="1">
+<table>
 <tr>
   <th colspan="6">From the Source File</th>
 </tr>
 <tr>
-  <td colspan="6" align="center"><table><tr><td>
-<pre>
+  <td colspan="6">
+    <table class="rule">
+      <tr><td style="border:none;text-align:left">
+<pre class="td">
 #Rule NAME FROM TO    -   IN  ON        AT   SAVE LETTER/S
 Rule  US   1918 1919  -   Mar lastSun  2:00  1:00 D
 Rule  US   1918 1919  -   Oct lastSun  2:00  0    S
@@ -184,7 +192,7 @@ Rule  US   2007 max   -   Nov Sun&gt;=1   2:00  0    S
   <th>At</th>
   <th>Action</th>
 </tr>
-<tr align="center">
+<tr>
   <td rowspan="2">1918</td>
   <td rowspan="2">1919</td>
   <td rowspan="2">last Sunday</td>
@@ -192,16 +200,16 @@ Rule  US   2007 max   -   Nov Sun&gt;=1   2:00  0    S
   <td rowspan="3">02:00 local</td>
   <td>go to daylight saving time</td>
 </tr>
-<tr align="center">
+<tr>
   <td>in October</td>
   <td>return to standard time</td>
 </tr>
-<tr align="center">
+<tr>
   <td colspan="2">1942 only</td>
   <td colspan="2">February 9<small><sup>th</sup></small></td>
   <td>go to &ldquo;war time&rdquo;</td>
 </tr>
-<tr align="center">
+<tr>
   <td colspan="2" rowspan="2">1945 only</td>
   <td colspan="2">August 14<small><sup>th</sup></small></td>
   <td>23:00 <a href="https://en.wikipedia.org/wiki/Universal_Time">UT</a></td>
@@ -210,47 +218,47 @@ Rule  US   2007 max   -   Nov Sun&gt;=1   2:00  0    S
     clocks don&rsquo;t change
   </td>
 </tr>
-<tr align="center">
+<tr>
   <td colspan="2">September 30<small><sup>th</sup></small></td>
   <td rowspan="9">02:00 local</td>
   <td rowspan="2">return to standard time</td>
 </tr>
-<tr align="center">
+<tr>
   <td rowspan="2">1967</td>
   <td>2006</td>
   <td rowspan="2">last Sunday</td>
   <td>in October</td>
 </tr>
-<tr align="center">
+<tr>
   <td>1973</td>
   <td>in April</td>
   <td rowspan="6">go to daylight saving time</td>
 </tr>
-<tr align="center">
+<tr>
   <td colspan="2">1974 only</td>
   <td colspan="2">January 6<small><sup>th</sup></small></td>
 </tr>
-<tr align="center">
+<tr>
   <td colspan="2">1975 only</td>
   <td colspan="2">February 23<small><sup>rd</sup></small></td>
 </tr>
-<tr align="center">
+<tr>
   <td>1976</td>
   <td>1986</td>
   <td>last Sunday</td>
   <td rowspan="2">in April</td>
 </tr>
-<tr align="center">
+<tr>
   <td>1987</td>
   <td>2006</td>
   <td>first Sunday</td>
 </tr>
-<tr align="center">
+<tr>
   <td rowspan="2">2007</td>
   <td rowspan="2">present</td>
   <td colspan="2">second Sunday in March</td>
 </tr>
-<tr align="center">
+<tr>
   <td colspan="2">first Sunday in November</td>
   <td>return to standard time</td>
 </tr>
@@ -316,13 +324,15 @@ rule, so there should be no change.</li>
 
 <p>OK, now let&rsquo;s look at a Zone record:</p>
 
-<table border="1">
+<table>
 <tr>
   <th colspan="5">From the Source File</th>
 </tr>
 <tr>
-  <td colspan="6" align="center"><table><tr><td>
-<pre>
+  <td colspan="5">
+    <table class="rule">
+      <tr><td style="border:none;text-align:left">
+<pre class="td">
 #Zone       NAME      STDOFF   RULES FORMAT [UNTIL]
 Zone  America/Chicago -5:50:36 -       LMT  1883 Nov 18 12:09:24
                       -6:00    US      C%sT 1920
@@ -350,49 +360,49 @@ Zone  America/Chicago -5:50:36 -       LMT  1883 Nov 18 12:09:24
   <th>Date</th>
   <th>Time</th>
 </tr>
-<tr align="center">
+<tr>
   <td>&minus;5:50:36</td>
   <td>not observed</td>
   <td>LMT</td>
   <td>1883-11-18</td>
   <td>12:09:24</td>
 </tr>
-<tr align="center">
+<tr>
   <td rowspan="2">&minus;6:00:00</td>
   <td>US rules</td>
   <td rowspan="2">CST or CDT</td>
   <td>1920-01-01</td>
   <td>00:00:00</td>
 </tr>
-<tr align="center">
+<tr>
   <td>Chicago rules</td>
   <td>1936-03-01</td>
   <td rowspan="2">02:00:00</td>
 </tr>
-<tr align="center">
+<tr>
   <td>&minus;5:00:00</td>
   <td>not observed</td>
   <td>EST</td>
   <td>1936-11-15</td>
 </tr>
-<tr align="center">
+<tr>
   <td rowspan="4">&minus;6:00:00</td>
   <td>Chicago rules</td>
   <td>CST or CDT</td>
   <td>1942-01-01</td>
   <td rowspan="3">00:00:00</td>
 </tr>
-<tr align="center">
+<tr>
   <td>US rules</td>
   <td>CST, CWT or CPT</td>
   <td>1946-01-01</td>
 </tr>
-<tr align="center">
+<tr>
   <td>Chicago rules</td>
   <td rowspan="2">CST or CDT</td>
   <td>1967-01-01</td>
 </tr>
-<tr align="center">
+<tr>
   <td>US rules</td>
   <td colspan="2">&mdash;</td>
 </tr>
@@ -557,13 +567,15 @@ the true offset is undefined.
 
 <p>As a final example, here&rsquo;s the complete history for Hawaii:</p>
 
-<table border="1">
+<table>
 <tr>
   <th colspan="6">Relevant Excerpts from the US Rules</th>
 </tr>
 <tr>
-  <td colspan="6" align="center"><table><tr><td>
-<pre>
+  <td colspan="6">
+    <table class="rule">
+      <tr><td style="border:none;text-align:left">
+<pre class="td">
 #Rule NAME FROM TO   -    IN  ON      AT     SAVE LETTER/S
 Rule  US   1918 1919 -    Oct lastSun  2:00  0    S
 Rule  US   1942 only -    Feb  9       2:00  1:00 W # War
@@ -576,8 +588,10 @@ Rule  US   1945 only -    Sep lastSun  2:00  0    S
   <th colspan="6">The Zone Record</th>
 </tr>
 <tr>
-  <td colspan="6" align="center"><table><tr><td>
-<pre>
+  <td colspan="6">
+    <table class="rule">
+      <tr><td style="border:none;text-align:left">
+<pre class="td">
 #Zone NAME            STDOFF    RULES FORMAT [UNTIL]
 Zone Pacific/Honolulu -10:31:26 -     LMT    1896 Jan 13 12:00
                       -10:30    -     HST    1933 Apr 30  2:00
@@ -602,7 +616,7 @@ Zone Pacific/Honolulu -10:31:26 -     LMT    1896 Jan 13 12:00
   <th>Date</th>
   <th>Time</th>
 </tr>
-<tr align="center">
+<tr>
   <td>&minus;10:31:26</td>
   <td>&mdash;</td>
   <td>LMT</td>
@@ -610,7 +624,7 @@ Zone Pacific/Honolulu -10:31:26 -     LMT    1896 Jan 13 12:00
   <td>1896-01-13</td>
   <td>12:00</td>
 </tr>
-<tr align="center">
+<tr>
   <td>&minus;10:30</td>
   <td>+0:01:26</td>
   <td>HST</td>
@@ -618,7 +632,7 @@ Zone Pacific/Honolulu -10:31:26 -     LMT    1896 Jan 13 12:00
   <td>1933-04-30</td>
   <td>02:00</td>
 </tr>
-<tr align="center">
+<tr>
   <td>&minus;9:30</td>
   <td>+1:00</td>
   <td>HDT</td>
@@ -626,7 +640,7 @@ Zone Pacific/Honolulu -10:31:26 -     LMT    1896 Jan 13 12:00
   <td>1933-05-21</td>
   <td>12:00</td>
 </tr>
-<tr align="center">
+<tr>
   <td>&minus;10:30&sup1;</td>
   <td>&minus;1:00&sup1;</td>
   <td>HST&sup1;</td>
@@ -634,7 +648,7 @@ Zone Pacific/Honolulu -10:31:26 -     LMT    1896 Jan 13 12:00
   <td>1942-02-09</td>
   <td>02:00</td>
 </tr>
-<tr align="center">
+<tr>
   <td rowspan="2">&minus;9:30</td>
   <td>+1:00</td>
   <td>HWT</td>
@@ -642,38 +656,38 @@ Zone Pacific/Honolulu -10:31:26 -     LMT    1896 Jan 13 12:00
   <td>1945-08-14</td>
   <td>13:30&sup2;</td>
 </tr>
-<tr align="center">
+<tr>
   <td>0</td>
   <td>HPT</td>
   <td>Hawaii peace time</td>
   <td>1945-09-30</td>
   <td rowspan="2">02:00</td>
 </tr>
-<tr align="center">
+<tr>
   <td>&minus;10:30</td>
   <td>&minus;1:00</td>
   <td rowspan="2">HST</td>
   <td rowspan="2">Hawaii standard time</td>
   <td>1947-06-08</td>
 </tr>
-<tr align="center">
+<tr>
   <td>&minus;10:00&sup3;</td>
   <td>+0:30&sup3;</td>
   <td colspan="2">&mdash;</td>
 </tr>
 <tr>
-  <td colspan="6">
+  <td colspan="6" class="footnote">
     &sup1;Switching to US rules&hellip;most recent transition (in 1919) was to standard time
   </td>
 </tr>
 <tr>
-  <td colspan="6">
+  <td colspan="6" class="footnote">
     &sup2;23:00 <a href="https://en.wikipedia.org/wiki/Universal_Time">UT</a>
     + (&minus;9:30) = 13:30 local
   </td>
 </tr>
 <tr>
-  <td colspan="6">
+  <td colspan="6" class="footnote">
     &sup3;Since <a href="https://en.wikipedia.org/wiki/ISO_8601">1947&ndash;06&ndash;08T12:30Z</a>,
     the civil time in Hawaii has been
     <a href="https://en.wikipedia.org/wiki/Universal_Time">UT</a>/<a href="https://en.wikipedia.org/wiki/Coordinated_Universal_Time">UTC</a>

@@ -412,26 +412,6 @@ CURL=		curl
 # Name of GNU Privacy Guard <https://gnupg.org/>, used to sign distributions.
 GPG=		gpg
 
-# The path where SGML DTDs are kept and the catalog file(s) to use when
-# validating HTML 4.01.  The default should work on both Debian and Red Hat.
-SGML_TOPDIR= /usr
-SGML_DTDDIR= $(SGML_TOPDIR)/share/xml/w3c-sgml-lib/schema/dtd
-SGML_SEARCH_PATH= $(SGML_DTDDIR)/REC-html401-19991224
-SGML_CATALOG_FILES= \
-  $(SGML_TOPDIR)/share/doc/w3-recs/html/www.w3.org/TR/1999/REC-html401-19991224/HTML4.cat:$(SGML_TOPDIR)/share/sgml/html/4.01/HTML4.cat
-
-# The name, arguments and environment of a program to validate HTML 4.01.
-# See <http://openjade.sourceforge.net/doc/> for a validator, and
-# <https://validator.w3.org/source/> for a validation library.
-# Set VALIDATE=':' if you do not have such a program.
-VALIDATE = nsgmls
-VALIDATE_FLAGS = -s -B -wall -wno-unused-param
-VALIDATE_ENV = \
-  SGML_CATALOG_FILES='$(SGML_CATALOG_FILES)' \
-  SGML_SEARCH_PATH='$(SGML_SEARCH_PATH)' \
-  SP_CHARSET_FIXED=YES \
-  SP_ENCODING=UTF-8
-
 # This expensive test requires USE_LTZ.
 # To suppress it, define this macro to be empty.
 CHECK_TIME_T_ALTERNATIVES = check_time_t_alternatives
@@ -826,15 +806,13 @@ check_tzs:	$(TZS) $(TZS_NEW)
 check_web:	$(CHECK_WEB_PAGES)
 check_theory.html: theory.html
 check_tz-art.html: tz-art.html
+check_tz-how-to.html: tz-how-to.html
 check_tz-link.html: tz-link.html
-check_theory.html check_tz-art.html check_tz-link.html:
+check_theory.html check_tz-art.html check_tz-how-to.html check_tz-link.html:
 		$(CURL) -sS --url https://validator.w3.org/nu/ -F out=gnu \
 		    -F file=@$$(expr $@ : 'check_\(.*\)') -o $@.out && \
 		  test ! -s $@.out || { cat $@.out; exit 1; }
 		mv $@.out $@
-check_tz-how-to.html: tz-how-to.html
-		$(VALIDATE_ENV) $(VALIDATE) $(VALIDATE_FLAGS) tz-how-to.html
-		touch $@
 
 # Check that zishrink.awk does not alter the data, and that ziguard.awk
 # preserves main-format data.

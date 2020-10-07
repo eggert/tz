@@ -6,7 +6,7 @@ Unreleased, experimental changes
     Revised predictions for Morocco's changes starting in 2023.
     Canada's Yukon changes to -07 on 2020-11-01, not 2020-03-08.
     Macquarie Island has stayed in sync with Tasmania since 2011.
-    Casey, Antarctica is at +08 in summer and +11 in winter.
+    Casey, Antarctica is at +08 in winter and +11 in summer.
     zic no longer supports -y, nor the TYPE field of Rules.
 
   Changes to future timestamps
@@ -18,8 +18,8 @@ Unreleased, experimental changes
 
   Changes to past and future timestamps
 
-   Casey Station, Antarctica has been using +08 in summer and +11 in
-   winter since 2018.  The next transition is from +08 to +11 on
+   Casey Station, Antarctica has been using +08 in winter and +11 in
+   summer since 2018.  The most recent transition from +08 to +11 was
    2020-10-04 00:01.  Also, Macquarie Island has been staying in
    sync with Tasmania since 2011.  (Thanks to Steffen Thorsen.)
 

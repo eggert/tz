@@ -1,5 +1,23 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Briefly:
+    Palestine ends DST earlier than predicted, on 2020-10-24.
+
+  Changes to future timestamps
+
+    Palestine ends DST on 2020-10-24 at 01:00, instead of 2020-10-31 as
+    previously predicted.  (Thanks to Sharef Mustafa.)  This affects
+    Asia/Gaza and Asia/Hebron.  Assume future fall transitions will be
+    on the Saturday preceding October's last Sunday.
+
+  Changes to past timestamps
+
+    Palestine's 2019-10-26 fall-back was at 00:00, not 01:00.  (Thanks
+    to Steffen Thorsen.)
+
+
 Release 2020c - 2020-10-16 11:15:53 -0700
 
   Briefly:

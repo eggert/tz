@@ -3221,13 +3221,31 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 
 # From Sharef Mustafa (2019-10-18):
 # Palestine summer time will end on midnight Oct 26th 2019 ...
-# http://www.palestinecabinet.gov.ps/website/ar/ViewDetails?ID=43948
 #
+# From Steffen Thorsen (2020-10-20):
+# Some sources such as these say, and display on clocks, that DST ended at
+# midnight last year...
+# https://www.amad.ps/ar/post/320006
+#
+# From Tim Parenti (2020-10-20):
+# The report of the Palestinian Cabinet meeting of 2019-10-14 confirms
+# a decision on (translated): "The start of the winter time in Palestine, by
+# delaying the clock by sixty minutes, starting from midnight on Friday /
+# Saturday corresponding to 26/10/2019."
+# http://www.palestinecabinet.gov.ps/portal/meeting/details/43948
+
+# From Sharef Mustafa (2020-10-20):
+# As per the palestinian cabinet announcement yesterday , the day light saving
+# shall [end] on Oct 24th 2020 at 01:00AM by delaying the clock by 60 minutes.
+# http://www.palestinecabinet.gov.ps/portal/Meeting/Details/51584
+
 # From Paul Eggert (2019-04-10):
 # For now, guess spring-ahead transitions are March's last Friday at 00:00.
 #
-# From Tim Parenti (2016-10-19):
-# Predict fall transitions on October's last Saturday at 01:00 from now on.
+# From Tim Parenti (2020-10-20):
+# Predict future fall transitions at 01:00 on the Saturday preceding October's
+# last Sunday (i.e., Sat>=24).  This is consistent with our predictions since
+# 2016, although the time of the change differed slightly in 2019.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule EgyptAsia	1957	only	-	May	10	0:00	1:00	S
@@ -3259,8 +3277,10 @@ Rule Palestine	2013	only	-	Sep	Fri>=21	0:00	0	-
 Rule Palestine	2014	2015	-	Oct	Fri>=21	0:00	0	-
 Rule Palestine	2015	only	-	Mar	lastFri	24:00	1:00	S
 Rule Palestine	2016	2018	-	Mar	Sat>=24	1:00	1:00	S
-Rule Palestine	2016	max	-	Oct	lastSat	1:00	0	-
+Rule Palestine	2016	2018	-	Oct	Sat>=24	1:00	0	-
 Rule Palestine	2019	max	-	Mar	lastFri	0:00	1:00	S
+Rule Palestine	2019	only	-	Oct	Sat>=24	0:00	0	-
+Rule Palestine	2020	max	-	Oct	Sat>=24	1:00	0	-
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct

@@ -583,11 +583,19 @@ INSTALL:	ALL install date.1
 		cp date '$(DESTDIR)$(BINDIR)/.'
 		cp -f date.1 '$(DESTDIR)$(MANDIR)/man1/.'
 
+# Calculate version number from git, if available.
+# Otherwise, use $(VERSION) unless it is "unknown" and there is already
+# a 'version' file, in which case reuse the existing 'version' contents
+# and append "-dirty" if the contents do not already end in "-dirty".
 version:	$(VERSION_DEPS)
 		{ (type git) >/dev/null 2>&1 && \
 		  V=`git describe --match '[0-9][0-9][0-9][0-9][a-z]*' \
 				--abbrev=7 --dirty` || \
-		  V='$(VERSION)'; } && \
+		  if test '$(VERSION)' = unknown && V=`cat $@`; then \
+		    case $$V in *-dirty);; *) V=$$V-dirty;; esac; \
+		  else \
+		    V='$(VERSION)'; \
+		  fi; } && \
 		printf '%s\n' "$$V" >$@.out
 		mv $@.out $@
 

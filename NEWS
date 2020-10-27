@@ -4,13 +4,12 @@ Unreleased, experimental changes
 
   Changes to past timestamps
 
+    Correct several 1940 through 1985 transitions for Israel and Palestine,
+    fixing several entries originally derived from Shanks.
+    (Thanks to P Chan.)
+
     Correct several 1908 through 1960 transitions for Kenya and adjacent,
     fixing several hazy entries originally derived from Shanks.
-    Insert a transition from LMT to +0230 on 1908-05.
-    The first transition to +03 was on 1928-06-30, not 1928-07.
-    The later transition to +0230 was on 1930-01-04, not the guessed 01-01.
-    The transition to +0245 was on 1936-12-31, not 1940.
-    And the final transition to +03 was on 1942-07-31, not 1960.
     (Thanks to P Chan.)
 
 Release 2020d - 2020-10-21 11:24:13 -0700

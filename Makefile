@@ -1012,7 +1012,7 @@ tarballs rearguard_tarballs traditional_tarballs \
 signatures rearguard_signatures traditional_signatures: \
   version set-timestamps.out rearguard.zi
 		VERSION=`cat version` && \
-		$(MAKE) VERSION="$$VERSION" $@_version
+		$(MAKE) AWK='$(AWK)' VERSION="$$VERSION" $@_version
 
 # These *_version rules are intended for use if VERSION is set by some
 # other means.  Ordinarily these rules are used only by the above
@@ -1109,8 +1109,6 @@ localtime.o:	private.h tzfile.h
 strftime.o:	private.h tzfile.h
 zdump.o:	version.h
 zic.o:		private.h tzfile.h version.h
-
-.KEEP_STATE:
 
 .PHONY: ALL INSTALL all
 .PHONY: check check_time_t_alternatives

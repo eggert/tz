@@ -2964,16 +2964,56 @@ Zone America/Barbados	-3:58:29 -	LMT	1924 # Bridgetown
 			-4:00	Barb	A%sT
 
 # Belize
-# Whitman entirely disagrees with Shanks; go with Shanks & Pottenger.
+
+# From P Chan (2020-11-03):
+# Below are some laws related to the time in British Honduras/Belize:
+#
+# Definition of Time Ordinance, 1927 (No.4 of 1927) [1927-04-01]
+# Ordinances of British Honduras Passed in the Year 1927, p 19-20
+# https://books.google.com/books?id=LqEpAQAAMAAJ&pg=RA3-PA19
+#
+# Definition of Time (Amendment) Ordinance, 1942 (No. 5 of 1942) [1942-06-27]
+# Ordinances of British Honduras Passed in the Year 1942, p 31-32
+# https://books.google.com/books?id=h6MpAQAAMAAJ&pg=RA6-PA95-IA44
+#
+# Definition of Time Ordinance, 1945 (No. 19 of 1945) [1945-12-15]
+# Ordinances of British Honduras Passed in the Year 1945, p 49-50
+# https://books.google.com/books?id=xaMpAQAAMAAJ&pg=RA2-PP1
+#
+# Definition of Time Ordinance, 1947 (No. 1 of 1947) [1947-03-11]
+# Ordinances of British Honduras Passed in the Year 1947, p 1-2
+# https://books.google.com/books?id=xaMpAQAAMAAJ&pg=RA3-PA1
+#
+# Time (Definition of) Ordinance  (Chapter 180)
+# The Laws of British Honduras in Force on the 15th Day of September, 1958 , Volume IV, p 2580
+# https://books.google.com/books?id=v5QpAQAAMAAJ&pg=PA2580
+#
+# Time (Definition of) (Amendment) Ordinance, 1968 (No. 13 of 1968) [1968-08-03]
+# https://books.google.com/books?id=xij7KEB_58wC&pg=RA1-PA428-IA9
+#
+# Definition of Time Act (Chapter 339)
+# Law of Belize, Revised Edition 2000
+# http://www.belizelaw.org/web/lawadmin/PDF%20files/cap339.pdf
+
+# From Paul Eggert (2020-11-03):
+# The transitions below are derived from P Chan's sources, except that the
+# 1973 through 1983 transitions are from Shanks & Pottenger since we have
+# no better data there.
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
-Rule	Belize	1918	1942	-	Oct	Sun>=2	0:00	0:30	-0530
-Rule	Belize	1919	1943	-	Feb	Sun>=9	0:00	0	CST
+Rule	Belize	1918	1941	-	Oct	Sat>=1	24:00	0:30	-0530
+Rule	Belize	1919	1945	-	Feb	Sat>=8	24:00	0	CST
+Rule	Belize	1942	1944	-	Oct	Sat>=1	24:00	1:00	CWT
+Rule	Belize	1945	only	-	Oct	Sat>=1	24:00	1:00	CDT
+Rule	Belize	1945	only	-	Dec	15	24:00	0	CST
+Rule	Belize	1947	1967	-	Oct	Sat>=1	24:00	0:30	-0530
+Rule	Belize	1948	1968	-	Feb	Sat>=8	24:00	0	CST
 Rule	Belize	1973	only	-	Dec	 5	0:00	1:00	CDT
 Rule	Belize	1974	only	-	Feb	 9	0:00	0	CST
 Rule	Belize	1982	only	-	Dec	18	0:00	1:00	CDT
 Rule	Belize	1983	only	-	Feb	12	0:00	0	CST
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	America/Belize	-5:52:48 -	LMT	1912 Apr
+Zone	America/Belize	-5:52:48 -	LMT	1912 Apr  1
 			-6:00	Belize	%s
 
 # Bermuda

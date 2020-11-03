@@ -4,13 +4,13 @@ Unreleased, experimental changes
 
   Changes to past timestamps
 
-    Correct several 1940 through 1985 transitions for Israel and Palestine,
-    fixing several entries originally derived from Shanks.
+    Correct several pre-1970 transitions, fixing entries originally
+    derived from Shanks.  The fixes include:
+      - Several 1942 through 1968 transitions for Belize.
+      - Several 1940 through 1985 transitions for Israel and Palestine.
+      - Several 1908 through 1960 transitions for Kenya and adjacent.
     (Thanks to P Chan.)
 
-    Correct several 1908 through 1960 transitions for Kenya and adjacent,
-    fixing several hazy entries originally derived from Shanks.
-    (Thanks to P Chan.)
 
 Release 2020d - 2020-10-21 11:24:13 -0700
 

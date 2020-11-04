@@ -3002,9 +3002,9 @@ Zone America/Barbados	-3:58:29 -	LMT	1924 # Bridgetown
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Belize	1918	1941	-	Oct	Sat>=1	24:00	0:30	-0530
-Rule	Belize	1919	1945	-	Feb	Sat>=8	24:00	0	CST
-Rule	Belize	1942	1944	-	Oct	Sat>=1	24:00	1:00	CWT
-Rule	Belize	1945	only	-	Oct	Sat>=1	24:00	1:00	CDT
+Rule	Belize	1919	1942	-	Feb	Sat>=8	24:00	0	CST
+Rule	Belize	1942	only	-	Jun	27	24:00	1:00	CWT
+Rule	Belize	1945	only	-	Aug	14	23:00u	1:00	CPT
 Rule	Belize	1945	only	-	Dec	15	24:00	0	CST
 Rule	Belize	1947	1967	-	Oct	Sat>=1	24:00	0:30	-0530
 Rule	Belize	1948	1968	-	Feb	Sat>=8	24:00	0	CST

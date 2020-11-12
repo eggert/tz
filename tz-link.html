@@ -1034,8 +1034,19 @@ title="International Earth Rotation and Reference Systems Service">IERS</abbr>
 Bulletins</a> contains official publications of the International
 Earth Rotation and Reference Systems Service, which decides when leap
 seconds occur. The <code><abbr>tz</abbr></code> code and data support leap seconds
-via an optional "<code>right</code>" configuration, as opposed to the
-default "<code>posix</code>" configuration.</li>
+via an optional "<code>right</code>" configuration where a computer's internal
+<code>time_t</code> integer clock counts every <abbr>TAI</abbr> second,
+as opposed to the default "<code>posix</code>" configuration
+where the internal clock ignores leap seconds.
+The two configurations agree for timestamps starting with 1972-01-01 00:00:00
+UTC (<code>time_t</code> 63&thinsp;072&thinsp;000) and diverge for
+timestamps starting with <code>time_t</code> 78&thinsp;796&thinsp;800,
+which corresponds to the first leap second
+1972-06-30 23:59:60 UTC in the "<code>right</code>" configuration, and to
+1972-07-01 00:00:00 UTC in the "<code>posix</code>" configuration.
+In practice the two configurations also agree for timestamps before
+1972 even though the historical situation is messy, partly because
+neither UTC nor TAI is well-defined for sufficiently-old timestamps.</li>
 <li><a href="https://developers.google.com/time/smear">Leap Smear</a>
 discusses how to gradually adjust <abbr>POSIX</abbr> clocks near a
 leap second so that they disagree with <abbr>UTC</abbr> by at most a

@@ -1039,14 +1039,16 @@ via an optional "<code>right</code>" configuration where a computer's internal
 as opposed to the default "<code>posix</code>" configuration
 where the internal clock ignores leap seconds.
 The two configurations agree for timestamps starting with 1972-01-01 00:00:00
-UTC (<code>time_t</code> 63&thinsp;072&thinsp;000) and diverge for
+<abbr>UTC</abbr> (<code>time_t</code> 63&thinsp;072&thinsp;000) and diverge for
 timestamps starting with <code>time_t</code> 78&thinsp;796&thinsp;800,
 which corresponds to the first leap second
-1972-06-30 23:59:60 UTC in the "<code>right</code>" configuration, and to
-1972-07-01 00:00:00 UTC in the "<code>posix</code>" configuration.
+1972-06-30 23:59:60 <abbr>UTC</abbr> in the "<code>right</code>" configuration,
+and to
+1972-07-01 00:00:00 <abbr>UTC</abbr> in the "<code>posix</code>" configuration.
 In practice the two configurations also agree for timestamps before
 1972 even though the historical situation is messy, partly because
-neither UTC nor TAI is well-defined for sufficiently-old timestamps.</li>
+neither <abbr>UTC</abbr> nor <abbr>TAI</abbr>
+is well-defined for sufficiently-old timestamps.</li>
 <li><a href="https://developers.google.com/time/smear">Leap Smear</a>
 discusses how to gradually adjust <abbr>POSIX</abbr> clocks near a
 leap second so that they disagree with <abbr>UTC</abbr> by at most a
@@ -1059,7 +1061,7 @@ cloud service providers. However, according to
 <a href="https://tools.ietf.org/html/rfc8633#section-3.7.1">&sect;3.7.1 of
 Network Time Protocol Best Current Practices</a>
 (Internet <abbr>RFC</abbr> 8633), leap smearing is not suitable for
-applications requiring accurate UTC or civil time,
+applications requiring accurate <abbr>UTC</abbr> or civil time,
 and is intended for use only in single, well-controlled environments.</li>
 <li>The <a
 href="https://pairlist6.pair.net/mailman/listinfo/leapsecs">Leap

@@ -4,12 +4,19 @@ Unreleased, experimental changes
 
   Changes to past timestamps
 
-    Correct several pre-1970 transitions, fixing entries originally
+    Correct several pre-1972 transitions, fixing entries originally
     derived from Shanks.  The fixes include:
-      - Several 1942 through 1968 transitions for Belize.
-      - Several 1940 through 1985 transitions for Israel and Palestine.
-      - Several 1908 through 1960 transitions for Kenya and adjacent.
+      - Australia: several 1917 through 1971 transitions.
+      - Belize: several 1942 through 1968 transitions
+      - Israel and Palestine: several 1940 through 1985 transitions
+      - Kenya and adjacent: several 1908 through 1960 transitions
     (Thanks to P Chan.)
+
+    Because of the Australia change, Australia/Currie (King Island) is
+    no longer needed, as it is identical to Australia/Hobart for all
+    timestamps since 1970 and was therefore created by mistake.
+    Australia/Currie has been moved to the 'backward' file and its
+    corrected data moved to the 'backzone' file.
 
 
 Release 2020d - 2020-10-21 11:24:13 -0700

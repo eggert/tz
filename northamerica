@@ -3018,20 +3018,107 @@ Zone	America/Belize	-5:52:48 -	LMT	1912 Apr  1
 
 # Bermuda
 
+# From Paul Eggert (2020-11-24):
 # For 1899 Milne gives -4:19:18.3 as the meridian of the clock tower,
-# Bermuda dockyard, Ireland I; round that.
+# Bermuda dockyard, Ireland I.  This agrees with standard offset given in the
+# Daylight Saving Act, 1917 cited below.  Round that to the nearest second.
+# It is not known when this time became standard for Bermuda; guess 1890.
+# The transition to -04 was specified by:
+# 1930: The Time Zone Act, 1929 (1929: No. 39) [1929-11-08]
+# https://books.google.com/books?id=7tdMAQAAIAAJ&pg=RA54-PP1
+
+# From P Chan (2020-11-20):
+# Most of the information can be found online from the Bermuda National
+# Library - Digital Collection which includes The Royal Gazette (RG) until 1957
+# https://bnl.contentdm.oclc.org/digital/
+# I will cite the ID.  For example, [10000] means
+# https://bnl.contentdm.oclc.org/digital/collection/BermudaNP02/id/10000
+#
+# 1917: Apr 5 midnight to Sep 30 midnight
+# Daylight Saving Act, 1917 (1917 No. 13) [1917-04-02]
+# Bermuda Acts and Resolves 1917, p 37-38
+# https://books.google.com/books?id=M-lCAQAAMAAJ&pg=PA36-IA2
+# RG, 1917-04-04, p 6 [42340] gives the spring forward date.
+#
+# 1918: Apr 13 midnight to Sep 15 midnight
+# Daylight Saving Act, 1918 (1918 No. 9) [1918-04-06]
+# Bermuda Acts and Resolves 1917, p 13
+# https://books.google.com/books?id=K-lCAQAAMAAJ&pg=RA1-PA7
+#
+# Note that local mean time was still used before 1930.
+#
+# During WWII, DST was introduced by Defence Regulations
+# 1942: Jan 11 02:00 to Oct 18 02:00 [113646], [115726]
+# 1943: Mar 21 02:00 to Oct 31 02:00 [116704], [118193]
+# 1944: Mar 12 02:00 to Nov 5 02:00 [119225], [121593]
+# 1945: Mar 11 02:00 to Nov 4 02:00 [122369], [124461]
+# RG, 1942-01-08, p 2, 1942-10-12, p 2 , 1943-03-06, p 2, 1943-09-03, p 1,
+# 1944-02-29, p 6, 1944-09-20, p 2, 1945-02-13, p 2, 1945-11-03, p 1
+#
+# In 1946, the House of Assembly rejected DST twice. [128686], [128076]
+# RG, 1946-03-16 p 1,1946-04-13 p 1
+#
+# 1947: third Sunday in May 02:00 to second Sunday in September 02:00
+# DST in 1947 was defined in the Daylight Saving Act, 1947 (1947: No. 12)
+# which expired at the end of the year.  [125784] ,[132405], [144454], [138226]
+# RG, 1947-02-27, p 1, 1947-05-15, p 1, 1947-09-13, p 1, 1947-12-30, p 1
+#
+# 1948-1952: fourth Sunday in May 02:00 to first Sunday in September 02:00
+# DST in 1948 was defined in the Daylight Saving Act, 1948 (1948 : No. 12)
+# which was set to expired at the end of the year but it was extended until
+# the end of 1952 and was not further extended.
+# [129802], [139403], [146008], [135240], [144330], [139049], [143309],
+# [148271], [149773], [153589], [153802], [155924]
+# RG, 1948-04-13, p 1, 1948-05-22, p 1, 1948-09-04, p 1, 1949-05-21, p1,
+# 1949-09-03, p 1, 1950-05-27 p 1, 1950-09-02, p 1, 1951-05-27, p 1,
+# 1951-09-01, p 1, 1952-05-23, p 1, 1952-09-26, p 1, 1952-12-21, p 8
+#
+# In 1953-1955, the House of Assembly rejected DST each year. [158996],
+# [162620], [166720] RG, 1953-05-02, p 1, 1954-04-01 p 1, 1955-03-12, p 1
+#
+# 1956: fourth Sunday in May 02:00 to last Sunday in October 02:00
+# Time Zone (Seasonal Variation) Act, 1956 (1956: No.44) [1956-05-25]
+# Bermuda Public Acts 1956, p 331-332
+# https://books.google.com/books?id=Xs1AlmD_cEwC&pg=PA63
+#
+# The extension of the Act was rejected by the House of Assembly. [176218]
+# RG, 1956-12-13, p 1
+#
+# From the Chronological Table of Public and Private Acts up to 1985, it seems
+# that there does not exist other Acts related to DST before 1973.
+# https://books.google.com/books?id=r9hMAQAAIAAJ&pg=RA23-PA1
+# Public Acts of the Legislature of the Islands of Bermuda, Together with
+# Statutory Instruments in Force Thereunder, Vol VII
 
 # From Dan Jones, reporting in The Royal Gazette (2006-06-26):
-
 # Next year, however, clocks in the US will go forward on the second Sunday
 # in March, until the first Sunday in November.  And, after the Time Zone
 # (Seasonal Variation) Bill 2006 was passed in the House of Assembly on
 # Friday, the same thing will happen in Bermuda.
 # http://www.theroyalgazette.com/apps/pbcs.dll/article?AID=/20060529/NEWS/105290135
 
+# Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
+Rule	Bermuda	1917	only	-	Apr	 5	24:00	1:00	-
+Rule	Bermuda	1917	only	-	Sep	30	24:00	0	-
+Rule	Bermuda	1918	only	-	Apr	13	24:00	1:00	-
+Rule	Bermuda	1918	only	-	Sep	15	24:00	0	S
+Rule	Bermuda	1942	only	-	Jan	11	 2:00	1:00	D
+Rule	Bermuda	1942	only	-	Oct	18	 2:00	0	S
+Rule	Bermuda	1943	only	-	Mar	21	 2:00	1:00	D
+Rule	Bermuda	1943	only	-	Oct	31	 2:00	0	S
+Rule	Bermuda	1944	1945	-	Mar	Sun>=8	 2:00	1:00	D
+Rule	Bermuda	1944	1945	-	Nov	Sun>=1	 2:00	0	S
+Rule	Bermuda	1947	only	-	May	Sun>=15	 2:00	1:00	D
+Rule	Bermuda	1947	only	-	Sep	Sun>=8	 2:00	0	S
+Rule	Bermuda	1948	1952	-	May	Sun>=22	 2:00	1:00	D
+Rule	Bermuda	1948	1952	-	Sep	Sun>=1	 2:00	0	S
+Rule	Bermuda	1956	only	-	May	Sun>=22	 2:00	1:00	D
+Rule	Bermuda	1956	only	-	Oct	lastSun	 2:00	0	S
+
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Atlantic/Bermuda	-4:19:18 -	LMT	1930 Jan  1  2:00 # Hamilton
-			-4:00	-	AST	1974 Apr 28  2:00
+Zone Atlantic/Bermuda	-4:19:18 -	LMT	1890	# Hamilton
+			-4:19:18 Bermuda BMT/BST 1930 Jan 1  2:00
+			-4:00	Bermuda	A%sT	1974 Apr 28  2:00
 			-4:00	Canada	A%sT	1976
 			-4:00	US	A%sT
 

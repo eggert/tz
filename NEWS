@@ -4,9 +4,10 @@ Unreleased, experimental changes
 
   Changes to past timestamps
 
-    Correct several pre-1972 transitions, fixing entries originally
+    Correct many pre-1986 transitions, fixing entries originally
     derived from Shanks.  The fixes include:
-      - Australia: several 1917 through 1971 transitions.
+      - Australia: several 1917 through 1971 transitions
+      - Bermuda: several 1917 through 1956 transitions
       - Belize: several 1942 through 1968 transitions
       - Israel and Palestine: several 1940 through 1985 transitions
       - Kenya and adjacent: several 1908 through 1960 transitions

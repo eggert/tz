@@ -386,36 +386,87 @@ Zone	Africa/Cairo	2:05:09 -	LMT	1900 Oct
 
 # Ghana
 
-# From Paul Eggert (2018-01-30):
-# Whitman says DST was observed from 1931 to "the present";
-# Shanks & Pottenger say 1936 to 1942 with 20 minutes of DST,
-# with transitions on 09-01 and 12-31 at 00:00.
-# Page 33 of Parish GCB, Colonial Reports - Annual. No. 1066. Gold
-# Coast. Report for 1919. (March 1921), OCLC 784024077
-# http://libsysdigi.library.illinois.edu/ilharvest/africana/books2011-05/5530214/5530214_1919/5530214_1919_opt.pdf
-# lists the Determination of the Time Ordinance, 1919, No. 18,
-# "to advance the time observed locally by the space of twenty minutes
-# during the last four months of each year; the object in view being
-# to extend during those months the period of daylight-time available
-# for evening recreation after office hours."
-# Vanessa Ogle, The Global Transformation of Time, 1870-1950 (2015), p 33,
-# writes "In 1919, the Gold Coast (Ghana as of 1957) made Greenwich
-# time its legal time and simultaneously legalized a summer time of
-# UTC - 00:20 minutes from March to October."; a footnote lists
-# the ordinance as being dated 1919-11-24.
-# The Crown Colonist, Volume 12 (1942), p 176, says "the Government
-# intend advancing Gold Coast time half an hour ahead of G.M.T.
-# The actual date of the alteration has not yet been announced."
-# These sources are incomplete and contradictory.  Possibly what is
-# now Ghana observed different DST regimes in different years.  For
-# lack of better info, use Shanks except treat the minus sign as a
-# typo, and assume DST started in 1920 not 1936.
+# From P Chan (2020-11-20):
+# Interpretation Amendment Ordinance, 1915 (No.24 of 1915) [1915-11-02]
+# Ordinances of the Gold Coast, Ashanti, Northern Territories 1915, p 69-71
+# https://books.google.com/books?id=ErA-AQAAIAAJ&pg=PA70
+# This Ordinance added "'Time' shall mean Greenwich Mean Time" to the
+# Interpretation Ordinance, 1876.
+#
+# Determination of the Time Ordinance, 1919 (No. 18 of 1919) [1919-11-24]
+# Ordinances of the Gold Coast, Ashanti, Northern Territories 1919, p 75-76
+# https://books.google.com/books?id=MbA-AQAAIAAJ&pg=PA75
+# This Ordinance removed the previous definition of time and introduced DST.
+#
+# Time Determination Ordinance (Cap. 214)
+# The Laws of the Gold Coast (including Togoland Under British Mandate)
+# Vol. II (1937), p 2328
+# https://books.google.com/books?id=Z7M-AQAAIAAJ&pg=PA2328
+# Revised edition of the 1919 Ordinance.
+#
+# Time Determination (Amendment) Ordinance, 1940 (No. 9 of 1940) [1940-04-06]
+# Annual Volume of the Laws of the Gold Coast:
+# Containing All Legislation Enacted During Year 1940, p 22
+# https://books.google.com/books?id=1ao-AQAAIAAJ&pg=PA22
+# This Ordinance changed the forward transition from September to May.
+#
+# Defence (Time Determination Ordinance Amendment) Regulations, 1942
+# (Regulations No. 6 of 1942) [1942-01-31, commenced on 1942-02-08]
+# Annual Volume of the Laws of the Gold Coast:
+# Containing All Legislation Enacted During Year 1942, p 48
+# https://books.google.com/books?id=Das-AQAAIAAJ&pg=PA48
+# These regulations advanced the [standard] time by thirty minutes.
+#
+# Defence (Time Determination Ordinance Amendment (No.2)) Regulations,
+# 1942 (Regulations No. 28 of 1942) [1942-04-25]
+# Annual Volume of the Laws of the Gold Coast:
+# Containing All Legislation Enacted During Year 1942, p 87
+# https://books.google.com/books?id=Das-AQAAIAAJ&pg=PA87
+# These regulations abolished DST and changed the time to GMT+0:30.
+#
+# Defence (Revocation) (No.4) Regulations, 1945 (Regulations No. 45 of
+# 1945) [1945-10-24, commenced on 1946-01-06]
+# Annual Volume of the Laws of the Gold Coast:
+# Containing All Legislation Enacted During Year 1945, p 256
+# https://books.google.com/books?id=9as-AQAAIAAJ&pg=PA256
+# These regulations revoked the previous two sets of Regulations.
+#
+# Time Determination (Amendment) Ordinance, 1945 (No. 18 of 1945) [1946-01-06]
+# Annual Volume of the Laws of the Gold Coast:
+# Containing All Legislation Enacted During Year 1945, p 69
+# https://books.google.com/books?id=9as-AQAAIAAJ&pg=PA69
+# This Ordinance abolished DST.
+#
+# Time Determination (Amendment) Ordinance, 1950 (No. 26 of 1950) [1950-07-22]
+# Annual Volume of the Laws of the Gold Coast:
+# Containing All Legislation Enacted During Year 1950, p 35
+# https://books.google.com/books?id=e60-AQAAIAAJ&pg=PA35
+# This Ordinance restored DST but with thirty minutes offset.
+#
+# Time Determination Ordinance (Cap. 264)
+# The Laws of the Gold Coast, Vol. V (1954), p 380
+# https://books.google.com/books?id=Mqc-AQAAIAAJ&pg=PA380
+# Revised edition of the Time Determination Ordinance.
+#
+# Time Determination (Amendment) Ordinance, 1956 (No. 21 of 1956) [1956-08-29]
+# Annual Volume of the Ordinances of the Gold Coast Enacted During the
+# Year 1956, p 83
+# https://books.google.com/books?id=VLE-AQAAIAAJ&pg=PA83
+# This Ordinance abolished DST.
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
-Rule	Ghana	1920	1942	-	Sep	 1	0:00	0:20	-
-Rule	Ghana	1920	1942	-	Dec	31	0:00	0	-
+Rule	Ghana	1920	only	-	Nov	24	0:00	0:20	+0020
+Rule	Ghana	1920	1946	-	Jan	 1	2:00	0	GMT
+Rule	Ghana	1921	1939	-	Sep	 1	2:00	0:20	+0020
+Rule	Ghana	1940	1945	-	May	 1	2:00	0:20	+0020
+Rule	Ghana	1950	1955	-	Sep	 1	2:00	0:30	+0030
+Rule	Ghana	1951	1956	-	Jan	 1	2:00	0	GMT
+
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Africa/Accra	-0:00:52 -	LMT	1918
-			 0:00	Ghana	GMT/+0020
+Zone	Africa/Accra	-0:00:52 -	LMT	1915 Nov  2
+			 0:00	Ghana	%s	1942 Feb  8
+			 0:30	-	+0030   1942 Oct 24
+			 0:00	Ghana	%s
 
 # Guinea
 # See Africa/Abidjan.

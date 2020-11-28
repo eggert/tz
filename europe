@@ -2892,6 +2892,15 @@ Zone Europe/Astrakhan	 3:12:12 -	LMT	1924 May
 # The law has been published today on
 # http://publication.pravo.gov.ru/Document/View/0001201810110037
 
+# From Alexander Krivenyshev (2020-11-27):
+# The State Duma approved (Nov 24, 2020) the transition of the Volgograd
+# region to the Moscow time zone....  If approved by the the Federation
+# Council and the President, this Federal Law 1012130-7 will enter into force
+# on December 20, 2020....
+# https://sozd.duma.gov.ru/bill/1012130-7
+# http://docs.cntd.ru/document/566418247
+# https://gorvesti.ru/society/gosduma-progolosovala-za-vozvrat-volgogradskoy-oblasti-k-moskovskomu-vremeni-95877.html
+
 Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 			 3:00	-	+03	1930 Jun 21
 			 4:00	-	+04	1961 Nov 11
@@ -2901,7 +2910,8 @@ Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 			 3:00	Russia	+03/+04	2011 Mar 27  2:00s
 			 4:00	-	+04	2014 Oct 26  2:00s
 			 3:00	-	+03	2018 Oct 28  2:00s
-			 4:00	-	+04
+			 4:00	-	+04	2020 Dec 20  2:00s
+			 3:00	-	+03
 
 # From Paul Eggert (2016-11-11):
 # Europe/Saratov covers:

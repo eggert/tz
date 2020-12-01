@@ -2935,12 +2935,37 @@ Zone America/Tijuana	-7:48:04 -	LMT	1922 Jan  1  0:11:56
 #
 # For 1899 Milne gives -5:09:29.5; round that.
 #
+# From P Chan (2020-11-27)
+# There were two periods of DST observed in 1941-1945: 1941-05-01 midnight to
+# 1944-12-31 and 1945-02-01 to 1945-10-17 midnight.
+#
+# War Time Order 1942 [1942-05-01] and War Time (No. 2) Order 1942  [1942-09-29]
+# Appendix to the Statutes of 7 George VI. and the Year 1942. p 34, 43
+# https://books.google.com/books?id=5rlNAQAAIAAJ&pg=RA3-PA34
+# https://books.google.com/books?id=5rlNAQAAIAAJ&pg=RA3-PA43
+#
+# War Time Order 1943 [1943-03-31] and War Time Order 1944 [1943-12-29]
+# Appendix to the Statutes of 8 George VI. and the Year 1943. p 9-10, 28-29
+# https://books.google.com/books?id=5rlNAQAAIAAJ&pg=RA4-PA9
+# https://books.google.com/books?id=5rlNAQAAIAAJ&pg=RA4-PA28
+#
+# War Time Order 1945 [1945-01-31] and the Order which revoke War Time Order
+# 1945 [1945-10-16] Appendix to the Statutes of 9 George VI. and the Year
+# 1945. p 160, 247-248
+# https://books.google.com/books?id=5rlNAQAAIAAJ&pg=RA6-PA160
+# https://books.google.com/books?id=5rlNAQAAIAAJ&pg=RA6-PA247
+#
 # From Sue Williams (2006-12-07):
 # The Bahamas announced about a month ago that they plan to change their DST
 # rules to sync with the U.S. starting in 2007....
 # http://www.jonesbahamas.com/?c=45&a=10412
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
+Rule	Bahamas	1941	only	-	May	 1	0:00	1:00	W
+Rule	Bahamas	1944	only	-	Dec	31	0:00	0	S
+Rule	Bahamas	1945	only	-	Feb	 1	0:00	1:00	W
+Rule	Bahamas	1945	only	-	Aug	14	23:00u	1:00	P # Peace
+Rule	Bahamas	1945	only	-	Oct	17	0:00	0	S
 Rule	Bahamas	1964	1975	-	Oct	lastSun	2:00	0	S
 Rule	Bahamas	1964	1975	-	Apr	lastSun	2:00	1:00	D
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]

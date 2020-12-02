@@ -456,16 +456,16 @@ Zone	Africa/Cairo	2:05:09 -	LMT	1900 Oct
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Ghana	1919	only	-	Nov	24	0:00	0:20	+0020
-Rule	Ghana	1920	1946	-	Jan	 1	2:00	0	GMT
+Rule	Ghana	1920	1942	-	Jan	 1	2:00	0	GMT
 Rule	Ghana	1920	1939	-	Sep	 1	2:00	0:20	+0020
-Rule	Ghana	1940	1945	-	May	 1	2:00	0:20	+0020
+Rule	Ghana	1940	1941	-	May	 1	2:00	0:20	+0020
 Rule	Ghana	1950	1955	-	Sep	 1	2:00	0:30	+0030
 Rule	Ghana	1951	1956	-	Jan	 1	2:00	0	GMT
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Accra	-0:00:52 -	LMT	1915 Nov  2
 			 0:00	Ghana	%s	1942 Feb  8
-			 0:30	-	+0030   1942 Oct 24
+			 0:30	-	+0030	1946 Jan  6
 			 0:00	Ghana	%s
 
 # Guinea

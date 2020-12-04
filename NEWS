@@ -5,7 +5,7 @@ Unreleased, experimental changes
   Changes to future timestamps
 
     Volgograd changes time zone from +04 to +03 on 2020-12-20 at 02:00.
-    (Thanks to Alexander Krivenyshev.)
+    (Thanks to Alexander Krivenyshev and Stepan Golosunov.)
 
   Changes to past timestamps
 

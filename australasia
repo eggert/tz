@@ -868,13 +868,36 @@ Zone	Pacific/Wake	11:06:28 -	LMT	1901
 
 
 # Vanuatu
+
+# From P Chan (2020-11-27):
+# Joint Daylight Saving Regulation No 59 of 1973
+# New Hebrides Condominium Gazette No 336. December 1973
+# http://www.paclii.org/vu/other/VUNHGovGaz//1973/11.pdf#page=15
+#
+# Joint Daylight Saving (Repeal) Regulation No 10 of 1974
+# New Hebrides Condominium Gazette No 336. March 1974
+# http://www.paclii.org/vu/other/VUNHGovGaz//1974/3.pdf#page=11
+#
+# Summer Time Act No. 35 of 1982 [commenced 1983-09-01]
+# http://www.paclii.org/vu/other/VUGovGaz/1982/32.pdf#page=48
+#
+# Summer Time Act (Cap 157)
+# Laws of the Republic of Vanuatu Revised Edition 1988
+# http://www.paclii.org/cgi-bin/sinodisp/vu/legis/consol_act1988/sta147/sta147.html
+#
+# Summer Time (Amendment) Act No. 6 of 1991 [commenced 1991-11-11]
+# http://www.paclii.org/vu/legis/num_act/sta1991227/
+#
+# Summer Time (Repeal) Act No. 4 of 1993 [commenced 1993-05-03]
+# http://www.paclii.org/vu/other/VUGovGaz/1993/15.pdf#page=59
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
-Rule	Vanuatu	1983	only	-	Sep	25	0:00	1:00	-
-Rule	Vanuatu	1984	1991	-	Mar	Sun>=23	0:00	0	-
-Rule	Vanuatu	1984	only	-	Oct	23	0:00	1:00	-
-Rule	Vanuatu	1985	1991	-	Sep	Sun>=23	0:00	1:00	-
-Rule	Vanuatu	1992	1993	-	Jan	Sun>=23	0:00	0	-
-Rule	Vanuatu	1992	only	-	Oct	Sun>=23	0:00	1:00	-
+Rule	Vanuatu	1973	only	-	Dec	22	12:00u	1:00	-
+Rule	Vanuatu	1974	only	-	Mar	30	12:00u	0	-
+Rule	Vanuatu	1983	1991	-	Sep	Sat>=22	24:00	1:00	-
+Rule	Vanuatu	1984	1991	-	Mar	Sat>=22	24:00	0	-
+Rule	Vanuatu	1992	1993	-	Jan	Sat>=22	24:00	0	-
+Rule	Vanuatu	1992	only	-	Oct	Sat>=22	24:00	1:00	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Pacific/Efate	11:13:16 -	LMT	1912 Jan 13 # Vila
 			11:00	Vanuatu	+11/+12

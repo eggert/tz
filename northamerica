@@ -3727,7 +3727,7 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15 # St Pierre
 # "Eastern Standard Times Begins 2007
 # Clocks are set back one hour at 2:00 a.m. local Daylight Saving Time"
 # indicating that the normal ET rules are followed.
-#
+
 # From Paul Eggert (2014-08-19):
 # The 2014-08-13 Cabinet meeting decided to stay on UT -04 year-round.  See:
 # http://tcweeklynews.com/daylight-savings-time-to-be-maintained-p5353-127.htm
@@ -3742,19 +3742,42 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15 # St Pierre
 # during the summer months and Standard Time, also known as Local
 # Time, during the winter months with effect from April 2018 ...
 # https://www.gov.uk/government/news/turks-and-caicos-post-cabinet-meeting-statement--3
-#
 # From Paul Eggert (2017-08-26):
 # The date of effect of the spring 2018 change appears to be March 11,
 # which makes more sense.  See: Hamilton D. Time change back
 # by March 2018 for TCI. Magnetic Media. 2017-08-25.
 # http://magneticmediatv.com/2017/08/time-change-back-by-march-2018-for-tci/
 #
+# From P Chan (2020-11-27):
+# Standard Time Declaration Order 2015 (L.N. 15/2015)
+# http://online.fliphtml5.com/fizd/czin/#p=2
+#
+# Standard Time Declaration Order 2017 (L.N. 31/2017)
+# http://online.fliphtml5.com/fizd/dmcu/#p=2
+#
+# From Tim Parenti (2020-12-05):
+# Although L.N. 31/2017 reads that it "shall come into operation at 2:00 a.m.
+# on 11th March 2018", a precise interpretation here poses some problems.  The
+# order states that "the standard time to be observed throughout the Turks and
+# Caicos Islands shall be the same time zone as the Eastern United States of
+# America" and further clarifies "[f]or the avoidance of doubt" that it
+# "applies to the Eastern Standard Time as well as any changes thereto for
+# Daylight Saving Time."  However, as clocks in Turks and Caicos approached
+# 02:00 -04, and thus the declared implementation time, it was still 01:00 EST
+# (-05), as DST in the Eastern US would not start until an hour later.
+#
+# Since it is unlikely that those on the islands switched their clocks twice in
+# the span of an hour, we assume instead that the adoption of EDT actually took
+# effect once clocks in the Eastern US had sprung forward, from 03:00 -04.
+# This discrepancy only affects the time zone abbreviation and DST flag for the
+# intervening hour, not wall clock times, as -04 was maintained throughout.
+
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Grand_Turk	-4:44:32 -	LMT	1890
 			-5:07:10 -	KMT	1912 Feb # Kingston Mean Time
 			-5:00	-	EST	1979
-			-5:00	US	E%sT	2015 Nov Sun>=1 2:00
-			-4:00	-	AST	2018 Mar 11 3:00
+			-5:00	US	E%sT	2015 Mar  8  2:00
+			-4:00	-	AST	2018 Mar 11  3:00
 			-5:00	US	E%sT
 
 # British Virgin Is

@@ -35,6 +35,11 @@ Unreleased, experimental changes
     returning to Eastern Time with US DST in 2018, rather than as
     maintaining EDT until 2015-11-01.  (Thanks to P Chan.)
 
+  Changes to documentation
+
+    The zic man page now documents zic's coalescing of transitions
+    when a zone falls back just before DST springs forward.
+
 
 Release 2020d - 2020-10-21 11:24:13 -0700
 

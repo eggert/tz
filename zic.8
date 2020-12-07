@@ -590,6 +590,36 @@ first transition into standard time.
 In a single zone it is an error if two rules take effect at the same
 instant, or if two zone changes take effect at the same instant.
 .PP
+If a continuation line subtracts from the UT offset after a transition that
+would be interpreted to be later if using the continuation line's rules, the
+.q "until"
+time of the earlier zone or continuation line is interpreted according
+to the continuation line's rules.
+For example:
+.br
+.ne 7
+.nf
+.in +2m
+.ta \w'# Rule\0\0'u +\w'NAME\0\0'u +\w'FROM\0\0'u +\w'max\0\0'u +\w'\*-\0\0'u +\w'Mar\0\0'u +\w'Sun>=8\0\0'u +\w'2:00\0\0'u +\w'SAVE\0\0'u
+.sp
+# Rule	NAME	FROM	TO	\*-	IN	ON	AT	SAVE	LETTER/S
+Rule	US	2007	max	\*-	Mar	Sun>=8	2:00	1:00	D
+Rule	US	2007	max	\*-	Nov	Sun>=1	2:00	0	S
+.ta \w'Zone\0\0America/Grand_Turk\0\0'u +\w'STDOFF\0\0'u +\w'RULES\0\0'u +\w'FORMAT\0\0'u
+# Zone\0\0NAME	STDOFF	RULES	FORMAT	[UNTIL]
+Zone\0\0America/Grand_Turk	\*-4:00	\*-	AST	2018 Mar 11 2:00
+	\*-5:00	US	E%sT
+.sp
+.in
+.fi
+Here, an incorrect reading would be there were two clock changes on 2018-03-11,
+the first from 02:00 AST (\*-04) to 01:00 EST (\*-05),
+and the second an hour later from 02:00 EST (\*-05) to 03:00 EDT (\*-04).
+However,
+.B zic
+interprets this more sensibly as a single transition from 02:00 AST (\*-04) to
+02:00 EDT (\*-04).
+.PP
 A link line has the form
 .sp
 .nf

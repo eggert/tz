@@ -1318,8 +1318,69 @@ Zone	Africa/Windhoek	1:08:24 -	LMT	1892 Feb 8
 # See Africa/Lagos.
 
 # Nigeria
+
+# From P Chan (2020-12-03):
+# GMT was adopted as the standard time of Lagos on 1905-07-01.
+# Lagos Weekly Record, 1905-06-24, p 3
+# http://ddsnext.crl.edu/titles/31558#?c=0&m=668&s=0&cv=2&r=0&xywh=1446%2C5221%2C1931%2C1235
+# says "It is officially notified that on and after the 1st of July 1905
+# Greenwich Mean Solar Time will be adopted thought the Colony and
+# Protectorate, and that it will be necessary to put all clocks 13 minutes and
+# 35 seconds back, recording local mean time."
+#
+# It seemed that Lagos returned to LMT on 1908-07-01.
+# [The Lagos Standard], 1908-07-01, p 5
+# http://ddsnext.crl.edu/titles/31556#?c=0&m=78&s=0&cv=4&r=0&xywh=-92%2C3590%2C3944%2C2523
+# says "Scarcely have the people become accustomed to this new time, when
+# another official notice has now appeared announcing that from and after the
+# 1st July next, return will be made to local mean time."
+#
+# From P Chan (2020-11-27):
+# On 1914-01-01, standard time of GMT+0:30 was adopted for the unified Nigeria.
+# Colonial Reports - Annual. No. 878. Nigeria. Report for 1914. (April 1916),
+# p 27
+# https://libsysdigi.library.illinois.edu/ilharvest/Africana/Books2011-05/3064634/3064634_1914/3064634_1914_opt.pdf#page=27
+# "On January 1st [1914], a universal standard time for Nigeria was adopted,
+# viz., half an hour fast on Greenwich mean time, corresponding to the meridian
+# 7 [degrees] 30' E. long."
+# Lloyd's Register of Shipping (1915) says "Hitherto the time observed in Lagos
+# was the local mean time. On 1st January, 1914, standard time for the whole of
+# Nigeria was introduced ... Lagos time has been advanced about 16 minutes
+# accordingly."
+#
+# In 1919, standard time was changed to GMT+1.
+# Interpretation Ordinance (Cap 2)
+# The Laws of Nigeria, Containing the Ordinances of Nigeria, in Force on the
+# 1st Day of January, 1923, Vol.I [p 16]
+# https://books.google.com/books?id=BOMrAQAAMAAJ&pg=PA16
+# "The expression 'Standard time' means standard time as used in Nigeria:
+# namely, 60 minutes in advance of Greenwich mean time.  (As amended by 18 of
+# 1919, s. 2.)"
+# From Tim Parenti (2020-12-10):
+# The Lagos Weekly Record, 1919-09-20, p 3 details discussion on the first
+# reading of this Bill by the Legislative Council of the Colony of Nigeria on
+# Thursday 1919-08-28:
+# http://ddsnext.crl.edu/titles/31558?terms&item_id=303484#?m=1118&c=1&s=0&cv=2&r=0&xywh=1261%2C3408%2C2994%2C1915
+# "The proposal is that the Globe should be divided into twelve zones East and
+# West of Greenwich, of one hour each, Nigeria falling into the zone with a
+# standard of one hour fast on Greenwich Mean Time.  Nigeria standard time is
+# now 30 minutes in advance of Greenwich Mean Time ... according to the new
+# proposal, standard time will be advanced another 30 minutes".  It was further
+# proposed that the firing of the time guns likewise be adjusted by 30 minutes
+# to compensate.
+# From Tim Parenti (2020-12-10), per P Chan (2020-12-11):
+# The text of Ordinance 18 of 1919, published in Nigeria Gazette, Vol 6, No 52,
+# shows that the change was assented to the following day and took effect "on
+# the 1st day of September, 1919."
+# Nigeria Gazette and Supplements 1919 Jan-Dec, Reference: 73266B-40,
+# img 245-246
+# https://microform.digital/boa/collections/77/volumes/539/nigeria-lagos-1887-1919
+
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Africa/Lagos	0:13:36 -	LMT	1919 Sep
+Zone	Africa/Lagos	0:13:35 -	LMT	1905 Jul  1
+			0:00	-	GMT	1908 Jul  1
+			0:13:35	-	LMT	1914 Jan  1
+			0:30	-	+0030	1919 Sep  1
 			1:00	-	WAT
 Link Africa/Lagos Africa/Bangui	     # Central African Republic
 Link Africa/Lagos Africa/Brazzaville # Rep. of the Congo

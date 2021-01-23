@@ -352,12 +352,7 @@ transferring time zone data by reference.
 <a href="https://devguide.calconnect.org/Time-Zones/TZDS/">TZDIST
 implementations</a> are available.
 The <a href="https://www.ietf.org/mailman/listinfo/tzdist-bis">tzdist-bis
-mailing list</a> discussed the Internet draft <a
-id="TZDIST-Geolocate"
-href="https://tools.ietf.org/html/draft-murchison-tzdist-geolocate">TZDIST
-Geolocate Extension</a> (now expired), which let a client determine its timezone
-from its geographic location using a <a
-href="https://tools.ietf.org/html/rfc5870">'geo' URI</a>.</li>
+mailing list</a> discusses possible extensions.</li>
 <li>The <a href="https://tools.ietf.org/html/rfc5545">
 Internet Calendaring and Scheduling Core Object Specification
 (iCalendar)</a> (Internet <abbr>RFC</abbr> 5445)
@@ -410,11 +405,11 @@ transition in the <code><abbr>tz</abbr></code> database.</li>
 <li>The <a href="https://howardhinnant.github.io/date/tz.html">Time Zone
 Database Parser</a> is a
 <a href="https://en.wikipedia.org/wiki/C%2B%2B">C++</a> parser and
-runtime library with API <a
-href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0355r7.html">adopted
-into the draft standard</a> for
+runtime library with <a
+href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0355r7.html">API</a>
+adopted by
 <a href="https://en.wikipedia.org/wiki/C++20">C++20</a>,
-the next iteration of the C++ standard.
+the current iteration of the C++ standard.
 It is freely available under the
 <abbr title="Massachusetts Institute of Technology">MIT</abbr> license.</li>
 <li><a id="ICU" href="http://site.icu-project.org">International Components for
@@ -627,11 +622,6 @@ It is freely available under the <abbr>GPL</abbr>.</li>
 implementations contain a copy of a 32-bit subset of a recent
 <code><abbr>tz</abbr></code> database in a
 Go-specific format.</li>
-<li><a
-href="http://users.skynet.be/Peter.Verthez/projects/intclock/">International
-clock (intclock)</a> is a clock that displays multiple time zones on
-<abbr>GNU</abbr>/Linux and similar systems. It is freely available
-under the <abbr>GPL</abbr>.</li>
 <li>Microsoft Windows 8.1
 and later has <code><abbr>tz</abbr></code> data and <abbr>CLDR</abbr>
 data (mentioned <a href="#CLDR">below</a>) used by the
@@ -677,10 +667,7 @@ licenses</a> to <code><abbr>tz</abbr></code> contributors.</li>
 is Astrodienst's Web version of Shanks and Pottenger's out-of-print
 time zone history atlases
 <a href="https://www.worldcat.org/oclc/468828649">for the US</a> and
-<a href="https://www.worldcat.org/oclc/76950459">for the world</a>,
-now published in <a
-href="https://astrocom.com/astrology-products/software/acs-atlas-software">software</a>
-form by <a href="https://astrocom.com">ACS-Starcrafts</a>.
+<a href="https://www.worldcat.org/oclc/76950459">for the world</a>.
 Although these extensive atlases
 <a href="https://astrologynewsservice.com/opinion/how-astrologers-contributed-to-the-information-age-a-brief-history-of-time/">were
 sources for much of the older <code><abbr>tz</abbr></code> data</a>,
@@ -704,11 +691,13 @@ gives current time zone rules for airports served by commercial aviation.</li>
 <section>
 <h2 id="maps">Maps</h2>
 <ul>
-<li>The <a href="https://www.cia.gov/index.html">United States Central
-Intelligence Agency (<abbr
-title="Central Intelligence Agency">CIA</abbr>)</a> publishes a <a
-href="https://www.cia.gov/library/publications/the-world-factbook/graphics/ref_maps/physical/pdf/standard_time_zones_of_the_world.pdf">time
-zone map</a>; the
+<li>The <a
+href="https://www.cia.gov/the-world-factbook/maps/world-regional/">World
+and Regional Maps section</a> of <em>The World Factbook</em>, published by the
+<a href="https://www.cia.gov">US Central Intelligence
+Agency (<abbr
+title="Central Intelligence Agency">CIA</abbr>)</a>, contains a time
+zone map; the
 <a
 href="https://legacy.lib.utexas.edu/maps/world.html">Perry&ndash;Casta&ntilde;eda
 Library Map Collection</a>
@@ -734,7 +723,9 @@ where the two differ greatly. It's a bit out of date, unfortunately.</li>
 <section>
 <h2 id="boundaries">Time zone boundaries</h2>
 <p>Geographical boundaries between timezones are available
-from several <a href="https://en.wikipedia.org/wiki/Geolocation">geolocation</a>
+from several <a
+href="https://en.wikipedia.org/wiki/Internet_geolocation">Internet
+geolocation</a>
 services and other sources.</p>
 <ul>
 <li><a href="https://github.com/evansiroky/timezone-boundary-builder">Timezone
@@ -883,10 +874,6 @@ of Legal Time in Germany</a>.</dd>
 <dd>The Interior Ministry periodically issues <a
 href="ftp://ftp.cs.huji.ac.il/pub/tz/announcements"
 hreflang="he">announcements (in Hebrew)</a>.</dd>
-<dt>Italy</dt>
-<dd>The National Institute of Metrological Research publishes a
-<a href="http://oldsite.inrim.it/res/tf/ora_legale_i.shtml" hreflang="it">table
-of civil time (in Italian)</a>.</dd>
 <dt>Malaysia</dt>
 <dd>See Singapore <a href="#Singapore">below</a>.</dd>
 <dt>Mexico</dt>

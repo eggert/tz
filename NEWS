@@ -1,5 +1,12 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to past timestamps
+
+    Portugal observed DST in 1950.  (Thanks to Alois Treindl.)
+
+
 Release 2021a - 2021-01-24 10:54:57 -0800
 
   Changes to future timestamps

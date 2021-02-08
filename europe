@@ -2376,12 +2376,10 @@ Rule	Port	1943	1945	-	Aug	Sat>=25	22:00s	1:00	S
 Rule	Port	1944	1945	-	Apr	Sat>=21	22:00s	2:00	M
 Rule	Port	1946	only	-	Apr	Sat>=1	23:00s	1:00	S
 Rule	Port	1946	only	-	Oct	Sat>=1	23:00s	0	-
-Rule	Port	1947	1949	-	Apr	Sun>=1	 2:00s	1:00	S
-Rule	Port	1947	1949	-	Oct	Sun>=1	 2:00s	0	-
-# Shanks & Pottenger say DST was observed in 1950; go with Whitman.
+# Whitman says DST was not observed in 1950; go with Shanks & Pottenger.
 # Whitman gives Oct lastSun for 1952 on; go with Shanks & Pottenger.
-Rule	Port	1951	1965	-	Apr	Sun>=1	 2:00s	1:00	S
-Rule	Port	1951	1965	-	Oct	Sun>=1	 2:00s	0	-
+Rule	Port	1947	1965	-	Apr	Sun>=1	 2:00s	1:00	S
+Rule	Port	1947	1965	-	Oct	Sun>=1	 2:00s	0	-
 Rule	Port	1977	only	-	Mar	27	 0:00s	1:00	S
 Rule	Port	1977	only	-	Sep	25	 0:00s	0	-
 Rule	Port	1978	1979	-	Apr	Sun>=1	 0:00s	1:00	S

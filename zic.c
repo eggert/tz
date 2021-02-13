@@ -2715,7 +2715,8 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 
 	for (i = 0; i < zonecount; ++i) {
 		struct rule *prevrp = NULL;
-		zic_t prevktime = min_time;
+		zic_t prevktime;
+		INITIALIZE(prevktime);
 		/*
 		** A guess that may well be corrected later.
 		*/

@@ -418,10 +418,11 @@ typedef unsigned long uintmax_t;
 # define TZ_TIME_T 0
 #endif
 
-#if TZ_TIME_T
-# ifdef LOCALTIME_IMPLEMENTATION
+#if defined LOCALTIME_IMPLEMENTATION && TZ_TIME_T
 static time_t sys_time(time_t *x) { return time(x); }
-# endif
+#endif
+
+#if TZ_TIME_T
 
 typedef time_tz tz_time_t;
 

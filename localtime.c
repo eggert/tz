@@ -28,14 +28,6 @@ static int lock(void) { return 0; }
 static void unlock(void) { }
 #endif
 
-/* NETBSD_INSPIRED_EXTERN functions are exported to callers if
-   NETBSD_INSPIRED is defined, and are private otherwise.  */
-#if NETBSD_INSPIRED
-# define NETBSD_INSPIRED_EXTERN
-#else
-# define NETBSD_INSPIRED_EXTERN static
-#endif
-
 #ifndef TZ_ABBR_MAX_LEN
 #define TZ_ABBR_MAX_LEN	16
 #endif /* !defined TZ_ABBR_MAX_LEN */
@@ -2246,6 +2238,14 @@ leapcorr(struct state const *sp, time_t t)
 */
 
 #ifdef STD_INSPIRED
+
+/* NETBSD_INSPIRED_EXTERN functions are exported to callers if
+   NETBSD_INSPIRED is defined, and are private otherwise.  */
+# if NETBSD_INSPIRED
+#  define NETBSD_INSPIRED_EXTERN
+# else
+#  define NETBSD_INSPIRED_EXTERN static
+# endif
 
 /*
 ** IEEE Std 1003.1 (POSIX) says that 536457599

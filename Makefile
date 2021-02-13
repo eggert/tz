@@ -257,22 +257,26 @@ LDLIBS=
 GCC_INSTRUMENT = \
   -fsanitize=undefined -fsanitize-address-use-after-scope \
   -fsanitize-undefined-trap-on-error -fstack-protector
+# Omit -fanalyzer from GCC_DEBUG_FLAGS, as it makes GCC too slow.
 GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
   $(GCC_INSTRUMENT) \
   -Wall -Wextra \
   -Walloc-size-larger-than=100000 -Warray-bounds=2 \
   -Wbad-function-cast -Wcast-align=strict -Wdate-time \
   -Wdeclaration-after-statement -Wdouble-promotion \
+  -Wduplicated-branches -Wduplicated-cond \
   -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation \
-  -Winit-self -Wjump-misses-init -Wlogical-op \
+  -Winit-self -Wlogical-op \
   -Wmissing-declarations -Wmissing-prototypes -Wnested-externs \
+  -Wnull-dereference \
   -Wold-style-definition -Woverlength-strings -Wpointer-arith \
-  -Wshadow -Wshift-overflow=2 -Wstrict-prototypes -Wstringop-overflow=4 \
+  -Wshadow -Wshift-overflow=2 -Wstrict-overflow \
+  -Wstrict-prototypes -Wstringop-overflow=4 \
   -Wstringop-truncation -Wsuggest-attribute=cold \
   -Wsuggest-attribute=const -Wsuggest-attribute=format \
   -Wsuggest-attribute=malloc \
   -Wsuggest-attribute=noreturn -Wsuggest-attribute=pure \
-  -Wtrampolines -Wundef -Wuninitialized -Wunused \
+  -Wtrampolines -Wundef -Wuninitialized -Wunused-macros \
   -Wvariadic-macros -Wvla -Wwrite-strings \
   -Wno-address -Wno-format-nonliteral -Wno-sign-compare \
   -Wno-type-limits -Wno-unused-parameter

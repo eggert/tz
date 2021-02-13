@@ -2715,6 +2715,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 
 	for (i = 0; i < zonecount; ++i) {
 		struct rule *prevrp = NULL;
+		zic_t prevktime = min_time;
 		/*
 		** A guess that may well be corrected later.
 		*/
@@ -2851,7 +2852,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				       rp->r_isdst, rp->r_save, false);
 				offset = oadd(zp->z_stdoff, rp->r_save);
 				if (!want_bloat() && !useuntil && !do_extend
-				    && prevrp
+				    && prevrp && lo_time <= prevktime
 				    && rp->r_hiyear == ZIC_MAX
 				    && prevrp->r_hiyear == ZIC_MAX)
 				  break;
@@ -2865,6 +2866,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				  lastatmax = timecnt;
 				addtt(ktime, type);
 				prevrp = rp;
+				prevktime = ktime;
 			}
 		}
 		if (usestart) {

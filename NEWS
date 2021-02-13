@@ -6,6 +6,12 @@ Unreleased, experimental changes
 
     Portugal observed DST in 1950.  (Thanks to Alois Treindl.)
 
+  Changes to code
+
+    Fix bug in zic -r; in some cases, the dummy time type after the
+    last time transition disagreed with the TZ string, contrary to
+    Internet RFC 8563 section 3.3.
+
 
 Release 2021a - 2021-01-24 10:54:57 -0800
 

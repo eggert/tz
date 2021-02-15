@@ -1341,7 +1341,7 @@ getsave(char *field, bool *isdst)
 static void
 inrule(char **fields, int nfields)
 {
-	static struct rule	r;
+	struct rule r;
 
 	if (nfields != RULE_FIELDS) {
 		error(_("wrong number of fields on Rule line"));
@@ -1418,7 +1418,7 @@ inzsub(char **fields, int nfields, bool iscont)
 {
 	register char *		cp;
 	char *			cp1;
-	static struct zone	z;
+	struct zone z;
 	register int		i_stdoff, i_rule, i_format;
 	register int		i_untilyear, i_untilmonth;
 	register int		i_untilday, i_untiltime;
@@ -1868,8 +1868,6 @@ writezone(const char *const name, const char *const string, char version,
 	register FILE *			fp;
 	register ptrdiff_t		i, j;
 	register int			pass;
-	static const struct tzhead	tzh0;
-	static struct tzhead		tzh;
 	bool dir_checked = false;
 	zic_t one = 1;
 	zic_t y2038_boundary = one << 31;
@@ -2000,6 +1998,7 @@ writezone(const char *const name, const char *const string, char version,
 	for (pass = 1; pass <= 2; ++pass) {
 		register ptrdiff_t thistimei, thistimecnt, thistimelim;
 		register int	thisleapi, thisleapcnt, thisleaplim;
+		struct tzhead tzh;
 		int currenttype, thisdefaulttype;
 		bool locut, hicut;
 		zic_t lo;
@@ -2168,7 +2167,7 @@ writezone(const char *const name, const char *const string, char version,
 		  thistimelim = thistimei;
 		}
 #define DO(field)	fwrite(tzh.field, sizeof tzh.field, 1, fp)
-		tzh = tzh0;
+		memset(&tzh, 0, sizeof tzh);
 		memcpy(tzh.tzh_magic, TZ_MAGIC, sizeof tzh.tzh_magic);
 		tzh.tzh_version[0] = version;
 		convert(utcnt, tzh.tzh_ttisutcnt);

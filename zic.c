@@ -2456,6 +2456,8 @@ rule_cmp(struct rule const *a, struct rule const *b)
 		return 1;
 	if (a->r_hiyear != b->r_hiyear)
 		return a->r_hiyear < b->r_hiyear ? -1 : 1;
+	if (a->r_hiyear == ZIC_MAX)
+		return 0;
 	if (a->r_month - b->r_month != 0)
 		return a->r_month - b->r_month;
 	return a->r_dayofmonth - b->r_dayofmonth;
@@ -2469,12 +2471,16 @@ stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 	register struct rule *		stdrp;
 	register struct rule *		dstrp;
 	register ptrdiff_t		i;
-	register const char *		abbrvar;
 	register int			compat = 0;
 	register int			c;
 	size_t				len;
 	int				offsetlen;
 	struct rule			stdr, dstr;
+	int dstcmp;
+	struct rule *lastrp[2] = { NULL, NULL };
+	struct zone zstr[2];
+	struct zone const *stdzp;
+	struct zone const *dstzp;
 
 	result[0] = '\0';
 
@@ -2484,63 +2490,64 @@ stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 	  return -1;
 
 	zp = zpfirst + zonecount - 1;
-	stdrp = dstrp = NULL;
 	for (i = 0; i < zp->z_nrules; ++i) {
+		struct rule **last;
+		int cmp;
 		rp = &zp->z_rules[i];
-		if (rp->r_hiwasnum || rp->r_hiyear != ZIC_MAX)
-			continue;
-		if (!rp->r_isdst) {
-			if (stdrp == NULL)
-				stdrp = rp;
-			else	return -1;
-		} else {
-			if (dstrp == NULL)
-				dstrp = rp;
-			else	return -1;
-		}
+		last = &lastrp[rp->r_isdst];
+		cmp = rule_cmp(*last, rp);
+		if (cmp < 0)
+		  *last = rp;
+		else if (cmp == 0)
+		  return -1;
 	}
-	if (stdrp == NULL && dstrp == NULL) {
-		/*
-		** There are no rules running through "max".
-		** Find the latest std rule in stdabbrrp
-		** and latest rule of any type in stdrp.
-		*/
-		register struct rule *stdabbrrp = NULL;
-		for (i = 0; i < zp->z_nrules; ++i) {
-			rp = &zp->z_rules[i];
-			if (!rp->r_isdst && rule_cmp(stdabbrrp, rp) < 0)
-				stdabbrrp = rp;
-			if (rule_cmp(stdrp, rp) < 0)
-				stdrp = rp;
-		}
-		if (stdrp != NULL && stdrp->r_isdst) {
-			/* Perpetual DST.  */
-			dstr.r_month = TM_JANUARY;
-			dstr.r_dycode = DC_DOM;
-			dstr.r_dayofmonth = 1;
-			dstr.r_tod = 0;
-			dstr.r_todisstd = dstr.r_todisut = false;
-			dstr.r_isdst = stdrp->r_isdst;
-			dstr.r_save = stdrp->r_save;
-			dstr.r_abbrvar = stdrp->r_abbrvar;
-			stdr.r_month = TM_DECEMBER;
-			stdr.r_dycode = DC_DOM;
-			stdr.r_dayofmonth = 31;
-			stdr.r_tod = SECSPERDAY + stdrp->r_save;
-			stdr.r_todisstd = stdr.r_todisut = false;
-			stdr.r_isdst = false;
-			stdr.r_save = 0;
-			stdr.r_abbrvar
-			  = (stdabbrrp ? stdabbrrp->r_abbrvar : "");
-			dstrp = &dstr;
-			stdrp = &stdr;
-		}
+	stdrp = lastrp[false];
+	dstrp = lastrp[true];
+	dstcmp = zp->z_nrules ? rule_cmp(dstrp, stdrp) : zp->z_isdst ? 1 : -1;
+	stdzp = dstzp = zp;
+
+	if (dstcmp < 0) {
+	  /* Standard time all year.  */
+	  dstrp = NULL;
+	} else if (0 < dstcmp) {
+	  /* DST all year.  Use an abbreviation like
+	     "XXX3EDT4,0/0,J365/23" for EDT (-04) all year.  */
+	  zic_t save = dstrp ? dstrp->r_save : zp->z_save;
+	  if (0 <= save)
+	    {
+	      /* Positive DST, the typical case for all-year DST.
+		 Fake a timezone with negative DST.  */
+	      stdzp = &zstr[0];
+	      dstzp = &zstr[1];
+	      zstr[0].z_stdoff = zp->z_stdoff - 2 * save;
+	      zstr[0].z_format = "XXX";  /* Any 3 letters will do.  */
+	      zstr[0].z_format_specifier = 0;
+	      zstr[1].z_stdoff = zstr[0].z_stdoff;
+	      zstr[1].z_format = zp->z_format;
+	      zstr[1].z_format_specifier = zp->z_format_specifier;
+	    }
+	  dstr.r_month = TM_JANUARY;
+	  dstr.r_dycode = DC_DOM;
+	  dstr.r_dayofmonth = 1;
+	  dstr.r_tod = 0;
+	  dstr.r_todisstd = dstr.r_todisut = false;
+	  dstr.r_isdst = true;
+	  dstr.r_save = save < 0 ? save : -save;
+	  dstr.r_abbrvar = dstrp ? dstrp->r_abbrvar : NULL;
+	  stdr.r_month = TM_DECEMBER;
+	  stdr.r_dycode = DC_DOM;
+	  stdr.r_dayofmonth = 31;
+	  stdr.r_tod = SECSPERDAY + dstr.r_save;
+	  stdr.r_todisstd = stdr.r_todisut = false;
+	  stdr.r_isdst = false;
+	  stdr.r_save = 0;
+	  stdr.r_abbrvar = save < 0 && stdrp ? stdrp->r_abbrvar : NULL;
+	  dstrp = &dstr;
+	  stdrp = &stdr;
 	}
-	if (stdrp == NULL && (zp->z_nrules != 0 || zp->z_isdst))
-		return -1;
-	abbrvar = (stdrp == NULL) ? "" : stdrp->r_abbrvar;
-	len = doabbr(result, zp, abbrvar, false, 0, true);
-	offsetlen = stringoffset(result + len, - zp->z_stdoff);
+	len = doabbr(result, stdzp, stdrp ? stdrp->r_abbrvar : NULL,
+		     false, 0, true);
+	offsetlen = stringoffset(result + len, - stdzp->z_stdoff);
 	if (! offsetlen) {
 		result[0] = '\0';
 		return -1;
@@ -2548,11 +2555,11 @@ stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 	len += offsetlen;
 	if (dstrp == NULL)
 		return compat;
-	len += doabbr(result + len, zp, dstrp->r_abbrvar,
+	len += doabbr(result + len, dstzp, dstrp->r_abbrvar,
 		      dstrp->r_isdst, dstrp->r_save, true);
 	if (dstrp->r_save != SECSPERMIN * MINSPERHOUR) {
 	  offsetlen = stringoffset(result + len,
-				   - (zp->z_stdoff + dstrp->r_save));
+				   - (dstzp->z_stdoff + dstrp->r_save));
 	  if (! offsetlen) {
 	    result[0] = '\0';
 	    return -1;
@@ -2560,7 +2567,7 @@ stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 	  len += offsetlen;
 	}
 	result[len++] = ',';
-	c = stringrule(result + len, dstrp, dstrp->r_save, zp->z_stdoff);
+	c = stringrule(result + len, dstrp, dstrp->r_save, stdzp->z_stdoff);
 	if (c < 0) {
 		result[0] = '\0';
 		return -1;
@@ -2569,7 +2576,7 @@ stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 		compat = c;
 	len += strlen(result + len);
 	result[len++] = ',';
-	c = stringrule(result + len, stdrp, dstrp->r_save, zp->z_stdoff);
+	c = stringrule(result + len, stdrp, dstrp->r_save, stdzp->z_stdoff);
 	if (c < 0) {
 		result[0] = '\0';
 		return -1;

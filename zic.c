@@ -2519,7 +2519,7 @@ stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 		 Fake a timezone with negative DST.  */
 	      stdzp = &zstr[0];
 	      dstzp = &zstr[1];
-	      zstr[0].z_stdoff = zp->z_stdoff - 2 * save;
+	      zstr[0].z_stdoff = zp->z_stdoff + 2 * save;
 	      zstr[0].z_format = "XXX";  /* Any 3 letters will do.  */
 	      zstr[0].z_format_specifier = 0;
 	      zstr[1].z_stdoff = zstr[0].z_stdoff;

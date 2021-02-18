@@ -20,6 +20,13 @@ Unreleased, experimental changes
     last time transition disagreed with the TZ string, contrary to
     Internet RFC 8563 section 3.3.
 
+    zic now generates a POSIX-conforming TZ string for TZif files
+    where all-year DST is predicted for the indefinite future.
+    For example, for all-year Eastern Daylight Time, zic now generates
+    "XXX3EDT4,0/0,J365/23" where it previously generated
+    "EST5EDT,0/0,J365/25" or "".  (Thanks to Michael Deckers for
+    noting the possibility of POSIX conformance.)
+
 
 Release 2021a - 2021-01-24 10:54:57 -0800
 

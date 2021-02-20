@@ -6,6 +6,8 @@ Unreleased, experimental changes
 
     Correct many pre-1993 transitions, fixing entries originally
     derived from Shanks and from Whitman.  The fixes include:
+      - Barbados: standard time was introduced in 1911, not 1932; and
+        DST was observed in 1942-1944
       - Guyana: corrected LMT for Georgetown; the introduction of
 	standard time in 1911, not 1915; and corrections to 1975 and
         1992 transitions

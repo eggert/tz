@@ -2978,15 +2978,51 @@ Zone	America/Nassau	-5:09:30 -	LMT	1912 Mar 2
 
 # For 1899 Milne gives -3:58:29.2; round that.
 
+# From P Chan (2020-12-09 and 2020-12-11):
+# Standard time of GMT-4 was adopted in 1911.
+# Definition of Time Act, 1911 (1911-7) [1911-08-28]
+# 1912, Laws of Barbados (5 v.), OCLC Number: 919801291, Vol. 4, Image No. 522
+# 1944, Laws of Barbados (5 v.), OCLC Number: 84548697, Vol. 4, Image No. 122
+# http://llmc.com/browse.aspx?type=2&coll=85&div=297
+#
+# DST was observed in 1942-44.
+# Defence (Daylight Saving) Regulations, 1942, 1942-04-13
+# Defence (Daylight Saving) (Repeal) Regulations, 1942, 1942-08-22
+# Defence (Daylight Saving) Regulations, 1943, 1943-04-16
+# Defence (Daylight Saving) (Repeal) Regulations, 1943, 1943-09-01
+# Defence (Daylight Saving) Regulations, 1944, 1944-03-21
+# [Defence (Daylight Saving) (Amendment) Regulations 1944, 1944-03-28]
+# Defence (Daylight Saving) (Repeal) Regulations, 1944, 1944-08-30
+#
+# 1914-, Subsidiary Legis., Annual Vols. OCLC Number: 226290591
+# 1942: Image Nos. 527-528, 555-556
+# 1943: Image Nos. 178-179, 198
+# 1944: Image Nos. 113-115, 129
+# http://llmc.com/titledescfull.aspx?type=2&coll=85&div=297&set=98437
+#
+# From Tim Parenti (2021-02-20):
+# The transitions below are derived from P Chan's sources, except that the 1977
+# through 1980 transitions are from Shanks & Pottenger since we have no better
+# data there.  Of particular note, the 1944 DST regulation only advanced the
+# time to "exactly three and a half hours later than Greenwich mean time", as
+# opposed to "three hours" in the 1942 and 1943 regulations.
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
+Rule	Barb	1942	only	-	Apr	19	5:00u	1:00	D
+Rule	Barb	1942	only	-	Aug	31	6:00u	0	S
+Rule	Barb	1943	only	-	May	 2	5:00u	1:00	D
+Rule	Barb	1943	only	-	Sep	 5	6:00u	0	S
+Rule	Barb	1944	only	-	Apr	10	5:00u	0:30	-
+Rule	Barb	1944	only	-	Sep	10	6:00u	0	S
 Rule	Barb	1977	only	-	Jun	12	2:00	1:00	D
 Rule	Barb	1977	1978	-	Oct	Sun>=1	2:00	0	S
 Rule	Barb	1978	1980	-	Apr	Sun>=15	2:00	1:00	D
 Rule	Barb	1979	only	-	Sep	30	2:00	0	S
 Rule	Barb	1980	only	-	Sep	25	2:00	0	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone America/Barbados	-3:58:29 -	LMT	1924 # Bridgetown
-			-3:58:29 -	BMT	1932 # Bridgetown Mean Time
+Zone America/Barbados	-3:58:29 -	LMT	1911 Aug 28 # Bridgetown
+			-4:00	Barb	A%sT	1944
+			-4:00	Barb	AST/-0330 1945
 			-4:00	Barb	A%sT
 
 # Belize

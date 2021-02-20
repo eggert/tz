@@ -4,7 +4,13 @@ Unreleased, experimental changes
 
   Changes to past timestamps
 
-    Portugal observed DST in 1950.  (Thanks to Alois Treindl.)
+    Correct many pre-1993 transitions, fixing entries originally
+    derived from Shanks and from Whitman.  The fixes include:
+      - Guyana: corrected LMT for Georgetown; the introduction of
+	standard time in 1911, not 1915; and corrections to 1975 and
+        1992 transitions
+      - Portugal: DST was observed in 1950
+    (Thanks to Alois Treindl and P Chan.)
 
   Changes to code
 

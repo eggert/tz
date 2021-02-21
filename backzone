@@ -102,13 +102,35 @@ Zone	Africa/Bangui	1:14:20	-	LMT	1912
 			1:00	-	WAT
 
 # Gambia
+# From P Chan (2020-12-09):
+# Standard time of GMT-1 was adopted on 1933-04-01.  On 1942-02-01, GMT was
+# adopted as a war time measure.  This was made permanent in 1946.
+#
+# Interpretation Ordinance, 1914 (No. 12 of 1914) [1914-09-29]
+# Interpretation Ordinance, 1933 (No. 10 of 1933) [1933-03-31]
+# Notice No. 5 of 1942, Colony of the Gambia Government Gazette, Vol. LIX,
+# No.2, 1942-01-15, p 2
+# Interpretation (Amendment) Ordinance, 1946 (No. 3 of 1946) [1946-07-15]
 Zone	Africa/Banjul	-1:06:36 -	LMT	1912
-			-1:06:36 -	BMT	1935 # Banjul Mean Time
-			-1:00	-	-01	1964
+			-1:06:36 -	BMT	1933 Apr  1 # Banjul Mean Time
+			-1:00	-	-01	1942 Feb  1  0:00
 			 0:00	-	GMT
 
 # Malawi
-Zone	Africa/Blantyre	2:20:00 -	LMT	1903 Mar
+# From P Chan (2020-12-09):
+# In 1911, Zomba mean time was adopted as the legal time of Nyasaland.  In
+# 1914, Zomba mean time switched from GMT+2:21:10 to GMT+2:21. On 1925-07-01,
+# GMT+2 was adopted.
+#
+# Interpretation and General Clauses Ordinance, 1911 (No. 12 of 1911)
+# [1911-07-24]
+# Notice No. 124 of 1914, 1914-06-30, The Nyasaland Government Gazette, Vol.
+# XXI, No. 8, 1914-06-30, p 122
+# Interpretation and General Clauses (Amendment) Ordinance, 1925 (No. 3 of
+# 1925) [1925-04-02]
+Zone	Africa/Blantyre	2:20:00 -	LMT	1911 Jul 24
+			2:21:10	-	ZMT	1914 Jun 30 # Zomba Mean Time
+			2:21	-	ZMT	1925 Jul  1
 			2:00	-	CAT
 
 # Republic of the Congo
@@ -145,19 +167,35 @@ Zone	Africa/Djibouti	2:52:36 -	LMT	1911 Jul
 Zone	Africa/Douala	0:38:48	-	LMT	1912
 			1:00	-	WAT
 # Sierra Leone
-# From Paul Eggert (2014-08-12):
-# The following table is from Shanks & Pottenger, but it can't be right.
-# Whitman gives Mar 31 - Aug 31 for 1931 on.
-# The International Hydrographic Bulletin, 1932-33, p 63 says that
-# Sierra Leone would advance its clocks by 20 minutes on 1933-10-01.
+# From P Chan (2020-12-09):
+# Standard time of GMT-1 was adopted on 1913-07-01.  Twenty minutes of DST was
+# introduce[d] in 1932 and was suspended in 1939.  In 1941, GMT was adopted by
+# Defence Regulations.  This was made permanent in 1946.
+#
+# Government Notice No. 121 of 1913, 1913-06-06, Sierra Leone Royal Gazette,
+# Vol. XLIV, No. 1384, 1913-06-14, p 347
+# Alteration of Time Ordinance, 1932 (No. 34 of 1932) [1932-12-01]
+# Alteration of Time (Amendment) Ordinance, 1938 (No. 25 of 1938) [1938-11-24]
+# Defence Regulations (No. 9), 1939 (Regulations No. 9 of 1939), 1939-09-05
+# Defence Regulations (No. 11), 1939 (Regulations No. 11 of 1939), 1939-09-27
+# Defence (Amendment) (No. 17) Regulations, 1941 (Public Notice No. 157 of
+# 1941), 1914-12-04
+# Alteration of Time (Amendment) Ordinance, 1946 (No. 2 of 1946) [1946-02-07]
+
+# From Tim Parenti (2021-02-20), per Paul Eggert (2014-08-12):
+# We retain the 1957 through 1962 transitions from Shanks & Pottenger since we
+# have no better data there.
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
-Rule	SL	1935	1942	-	Jun	 1	0:00	0:40	-0020
-Rule	SL	1935	1942	-	Oct	 1	0:00	0	-01
+Rule	SL	1932	only	-	Dec	 1	 0:00	0:20	-0040
+Rule	SL	1933	1938	-	Mar	31	24:00	0	-01
+Rule	SL	1933	1939	-	Aug	31	24:00	0:20	-0040
+Rule	SL	1939	only	-	May	31	24:00	0	-01
 Rule	SL	1957	1962	-	Jun	 1	0:00	1:00	+01
 Rule	SL	1957	1962	-	Sep	 1	0:00	0	GMT
 Zone	Africa/Freetown	-0:53:00 -	LMT	1882
-			-0:53:00 -	FMT	1913 Jun # Freetown Mean Time
-			-1:00	SL	%s	1957
+			-0:53:00 -	FMT	1913 Jul  1 # Freetown MT
+			-1:00	SL	%s	1939 Sep  5
+			-1:00	-	-01	1941 Dec  6 24:00
 			 0:00	SL	GMT/+01
 
 # Botswana

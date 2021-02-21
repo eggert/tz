@@ -12,6 +12,10 @@ Unreleased, experimental changes
 	standard time in 1911, not 1915; and corrections to 1975 and
         1992 transitions
       - Portugal: DST was observed in 1950
+    Additional fixes to entries in the 'backzone' file include:
+      - Gambia: 1933 and 1942 transitions
+      - Malawi: several 1911 through 1925 transitions
+      - Sierra Leone: several 1913 through 1941 transitions
     (Thanks to Alois Treindl and P Chan.)
 
   Changes to code

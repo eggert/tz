@@ -20,6 +20,11 @@ Unreleased, experimental changes
 
   Changes to code
 
+    zic now creates each output file or link atomically,
+    possibly by creating a temporary file and then renaming it.
+    This avoids races where a TZ setting would temporarily stop
+    working while zic was installing a replacement file or link.
+
     Fix bug that caused 'localtime' etc. to crash when TZ was
     set to a all-year DST string like "EST5EDT4,0/0,J365/25" that does
     not conform to POSIX but does conform to Internet RFC 8536.

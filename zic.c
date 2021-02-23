@@ -42,10 +42,6 @@ typedef int_fast64_t	zic_t;
 #else
 #define MKDIR_UMASK 0755
 #endif
-/* Port to native MS-Windows and to ancient UNIX.  */
-#if !defined S_ISDIR && defined S_IFDIR && defined S_IFMT
-# define S_ISDIR(mode) (((mode) & S_IFMT) == S_IFDIR)
-#endif
 
 #if HAVE_SYS_WAIT_H
 #include <sys/wait.h>	/* for WIFEXITED and WEXITSTATUS */
@@ -166,7 +162,6 @@ static void	inrule(char ** fields, int nfields);
 static bool	inzcont(char ** fields, int nfields);
 static bool	inzone(char ** fields, int nfields);
 static bool	inzsub(char **, int, bool);
-static bool	itsdir(char const *);
 static bool	itssymlink(char const *);
 static bool	is_alpha(char a);
 static char	lowerit(char);
@@ -924,6 +919,99 @@ namecheck(const char *name)
 	return componentcheck(name, component, cp);
 }
 
+/* Generate a randomish name in the same directory as *NAME.  If
+   *NAMEALLOC, put the name into *NAMEALLOC which is assumed to be
+   that returned by a previous call and is thus already almost set up
+   and and equal to *NAME; otherwise, allocate a new name and put its
+   address into both *NAMEALLOC and *NAME.  */
+static void
+random_dirent(char const **name, char **namealloc)
+{
+  char const *src = *name;
+  char *dst = *namealloc;
+  static char const prefix[] = ".zic";
+  static char const alphabet[] = ("abcdefghijklmnopqrstuvwxyz"
+				  "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+				  "0123456789");
+  enum { prefixlen = sizeof prefix - 1, alphabetlen = sizeof alphabet - 1 };
+  int suffixlen = 6;
+  char const *lastslash = strrchr(src, '/');
+  ptrdiff_t dirlen = lastslash ? lastslash + 1 - src : 0;
+  static unsigned short initialized;
+  int i;
+
+  if (!dst) {
+    dst = emalloc(dirlen + prefixlen + suffixlen + 1);
+    memcpy(dst, src, dirlen);
+    memcpy(dst + dirlen, prefix, prefixlen);
+    dst[dirlen + prefixlen + suffixlen] = '\0';
+    *name = *namealloc = dst;
+  }
+
+  /* This randomization is not the best, but is portable to C89.  */
+  if (!initialized++) {
+    unsigned now = time(NULL);
+    srand(rand () ^ now);
+  }
+  for (i = 0; i < suffixlen; i++)
+    dst[dirlen + prefixlen + i] = alphabet[rand () % alphabetlen];
+}
+
+/* Prepare to write to the file *OUTNAME, using *TEMPNAME to store the
+   name of the temporary file that will eventually be renamed to
+   *OUTNAME.  Assign the temporary file's name to both *OUTNAME and
+   *TEMPNAME.  If *TEMPNAME is null, allocate the name of any such
+   temporary file; otherwise, reuse *TEMPNAME's storage, which is
+   already set up and only needs its trailing suffix updated.  */
+static FILE *
+open_outfile(char const **outname, char **tempname)
+{
+#if __STDC_VERSION__ < 201112
+  static char const fopen_mode[] = "wb";
+#else
+  static char const fopen_mode[] = "wbx";
+#endif
+
+  FILE *fp;
+  bool dirs_made = false;
+  if (!*tempname)
+    random_dirent(outname, tempname);
+
+  while (! (fp = fopen(*outname, fopen_mode))) {
+    int fopen_errno = errno;
+    if (fopen_errno == ENOENT && !dirs_made) {
+      mkdirs(*outname, true);
+      dirs_made = true;
+    } else if (fopen_errno == EEXIST)
+      random_dirent(outname, tempname);
+    else {
+      fprintf(stderr, _("%s: Can't create %s/%s: %s\n"),
+	      progname, directory, *outname, strerror(fopen_errno));
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  return fp;
+}
+
+/* If TEMPNAME, the result is in the temporary file TEMPNAME even
+   though the user wanted it in NAME, so rename TEMPNAME to NAME.
+   Report an error and exit if there is trouble.  Also, free TEMPNAME.  */
+static void
+rename_dest(char *tempname, char const *name)
+{
+  if (tempname) {
+    if (rename(tempname, name) != 0) {
+      int rename_errno = errno;
+      remove(tempname);
+      fprintf(stderr, _("%s: rename to %s/%s: %s\n"),
+	      progname, directory, name, strerror(rename_errno));
+      exit(EXIT_FAILURE);
+    }
+    free(tempname);
+  }
+}
+
 /* Create symlink contents suitable for symlinking FROM to TO, as a
    freshly allocated string.  FROM should be a relative file name, and
    is relative to the global variable DIRECTORY.  TO can be either
@@ -962,63 +1050,73 @@ relname(char const *target, char const *linkname)
   return result;
 }
 
-/* Hard link FROM to TO, following any symbolic links.
-   Return 0 if successful, an error number otherwise.  */
-static int
-hardlinkerr(char const *target, char const *linkname)
-{
-  int r = linkat(AT_FDCWD, target, AT_FDCWD, linkname, AT_SYMLINK_FOLLOW);
-  return r == 0 ? 0 : errno;
-}
-
 static void
 dolink(char const *target, char const *linkname, bool staysymlink)
 {
-	bool remove_only = strcmp(target, "-") == 0;
 	bool linkdirs_made = false;
 	int link_errno;
+	char *tempname = NULL;
+	char const *outname = linkname;
 
-	/*
-	** We get to be careful here since
-	** there's a fair chance of root running us.
-	*/
-	if (!remove_only && itsdir(target)) {
-		fprintf(stderr, _("%s: linking target %s/%s failed: %s\n"),
-			progname, directory, target, strerror(EPERM));
-		exit(EXIT_FAILURE);
+	if (strcmp(target, "-") == 0) {
+	  if (remove(linkname) == 0 || errno == ENOENT || errno == ENOTDIR)
+	    return;
+	  else {
+	    char const *e = strerror(errno);
+	    fprintf(stderr, _("%s: Can't remove %s/%s: %s\n"),
+		    progname, directory, linkname, e);
+	    exit(EXIT_FAILURE);
+	  }
 	}
-	if (staysymlink)
-	  staysymlink = itssymlink(linkname);
-	if (remove(linkname) == 0)
-	  linkdirs_made = true;
-	else if (errno != ENOENT) {
-	  char const *e = strerror(errno);
-	  fprintf(stderr, _("%s: Can't remove %s/%s: %s\n"),
-		  progname, directory, linkname, e);
-	  exit(EXIT_FAILURE);
-	}
-	if (remove_only)
-	  return;
-	link_errno = staysymlink ? ENOTSUP : hardlinkerr(target, linkname);
-	if (link_errno == ENOENT && !linkdirs_made) {
-	  mkdirs(linkname, true);
-	  linkdirs_made = true;
-	  link_errno = hardlinkerr(target, linkname);
+
+	while (true) {
+	  if (linkat(AT_FDCWD, target, AT_FDCWD, outname, AT_SYMLINK_FOLLOW)
+	      == 0) {
+	    link_errno = 0;
+	    break;
+	  }
+	  link_errno = errno;
+	  if (link_errno == EXDEV || link_errno == ENOTSUP)
+	    break;
+
+	  if (link_errno == EEXIST) {
+	    staysymlink &= !tempname;
+	    random_dirent(&outname, &tempname);
+	    if (staysymlink && itssymlink(linkname))
+	      break;
+	  } else if (link_errno == ENOENT && !linkdirs_made) {
+	    mkdirs(linkname, true);
+	    linkdirs_made = true;
+	  } else {
+	    fprintf(stderr, _("%s: Can't link %s/%s to %s/%s: %s\n"),
+		    progname, directory, target, directory, outname,
+		    strerror(link_errno));
+	    exit(EXIT_FAILURE);
+	  }
 	}
 	if (link_errno != 0) {
 	  bool absolute = *target == '/';
 	  char *linkalloc = absolute ? NULL : relname(target, linkname);
 	  char const *contents = absolute ? target : linkalloc;
-	  int symlink_errno = symlink(contents, linkname) == 0 ? 0 : errno;
-	  if (!linkdirs_made
-	      && (symlink_errno == ENOENT || symlink_errno == ENOTSUP)) {
-	    mkdirs(linkname, true);
-	    if (symlink_errno == ENOENT)
-	      symlink_errno = symlink(contents, linkname) == 0 ? 0 : errno;
+	  int symlink_errno;
+
+	  while (true) {
+	    if (symlink(contents, outname) == 0) {
+	      symlink_errno = 0;
+	      break;
+	    }
+	    symlink_errno = errno;
+	    if (symlink_errno == EEXIST)
+	      random_dirent(&outname, &tempname);
+	    else if (symlink_errno == ENOENT && !linkdirs_made) {
+	      mkdirs(linkname, true);
+	      linkdirs_made = true;
+	    } else
+	      break;
 	  }
 	  free(linkalloc);
 	  if (symlink_errno == 0) {
-	    if (link_errno != ENOTSUP)
+	    if (link_errno != ENOTSUP && link_errno != EEXIST)
 	      warning(_("symbolic link used because hard link failed: %s"),
 		      strerror(link_errno));
 	  } else {
@@ -1031,17 +1129,11 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 		      progname, directory, target, e);
 	      exit(EXIT_FAILURE);
 	    }
-	    tp = fopen(linkname, "wb");
-	    if (!tp) {
-	      char const *e = strerror(errno);
-	      fprintf(stderr, _("%s: Can't create %s/%s: %s\n"),
-		      progname, directory, linkname, e);
-	      exit(EXIT_FAILURE);
-	    }
+	    tp = open_outfile(&outname, &tempname);
 	    while ((c = getc(fp)) != EOF)
 	      putc(c, tp);
 	    close_file(fp, directory, target);
-	    close_file(tp, directory, linkname);
+	    close_file(tp, directory, outname);
 	    if (link_errno != ENOTSUP)
 	      warning(_("copy used because hard link failed: %s"),
 		      strerror(link_errno));
@@ -1050,29 +1142,7 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 		      strerror(symlink_errno));
 	  }
 	}
-}
-
-/* Return true if NAME is a directory.  */
-static bool
-itsdir(char const *name)
-{
-	struct stat st;
-	int res = stat(name, &st);
-#ifdef S_ISDIR
-	if (res == 0)
-		return S_ISDIR(st.st_mode) != 0;
-#endif
-	if (res == 0 || errno == EOVERFLOW) {
-		size_t n = strlen(name);
-		char *nameslashdot = emalloc(n + 3);
-		bool dir;
-		memcpy(nameslashdot, name, n);
-		strcpy(&nameslashdot[n], &"/."[! (n && name[n - 1] != '/')]);
-		dir = stat(nameslashdot, &st) == 0 || errno == EOVERFLOW;
-		free(nameslashdot);
-		return dir;
-	}
-	return false;
+	rename_dest(tempname, linkname);
 }
 
 /* Return true if NAME is a symbolic link.  */
@@ -1868,10 +1938,11 @@ writezone(const char *const name, const char *const string, char version,
 	register FILE *			fp;
 	register ptrdiff_t		i, j;
 	register int			pass;
-	bool dir_checked = false;
 	zic_t one = 1;
 	zic_t y2038_boundary = one << 31;
 	ptrdiff_t nats = timecnt + WORK_AROUND_QTBUG_53071;
+	char *tempname = NULL;
+	char const *outname = name;
 
 	/* Allocate the ATS and TYPES arrays via a single malloc,
 	   as this is a bit faster.  */
@@ -1969,32 +2040,8 @@ writezone(const char *const name, const char *const string, char version,
 	range64 = limitrange(rangeall, lo_time, hi_time, ats, types);
 	range32 = limitrange(range64, INT32_MIN, INT32_MAX, ats, types);
 
-	/*
-	** Remove old file, if any, to snap links.
-	*/
-	if (remove(name) == 0)
-		dir_checked = true;
-	else if (errno != ENOENT) {
-		const char *e = strerror(errno);
+	fp = open_outfile(&outname, &tempname);
 
-		fprintf(stderr, _("%s: Can't remove %s/%s: %s\n"),
-			progname, directory, name, e);
-		exit(EXIT_FAILURE);
-	}
-	fp = fopen(name, "wb");
-	if (!fp) {
-	  int fopen_errno = errno;
-	  if (fopen_errno == ENOENT && !dir_checked) {
-	    mkdirs(name, true);
-	    fp = fopen(name, "wb");
-	    fopen_errno = errno;
-	  }
-	  if (!fp) {
-	    fprintf(stderr, _("%s: Can't create %s/%s: %s\n"),
-		    progname, directory, name, strerror(fopen_errno));
-	    exit(EXIT_FAILURE);
-	  }
-	}
 	for (pass = 1; pass <= 2; ++pass) {
 		register ptrdiff_t thistimei, thistimecnt, thistimelim;
 		register int	thisleapi, thisleapcnt, thisleaplim;
@@ -2263,7 +2310,8 @@ writezone(const char *const name, const char *const string, char version,
 				putc(ttisuts[i], fp);
 	}
 	fprintf(fp, "\n%s\n", string);
-	close_file(fp, directory, name);
+	close_file(fp, directory, outname);
+	rename_dest(tempname, name);
 	free(ats);
 }
 
@@ -3393,7 +3441,7 @@ mp = _("time zone abbreviation differs from POSIX standard");
 /* Ensure that the directories of ARGNAME exist, by making any missing
    ones.  If ANCESTORS, do this only for ARGNAME's ancestors; otherwise,
    do it for ARGNAME too.  Exit with failure if there is trouble.
-   Do not consider an existing non-directory to be trouble.  */
+   Do not consider an existing file to be trouble.  */
 static void
 mkdirs(char const *argname, bool ancestors)
 {
@@ -3424,11 +3472,11 @@ mkdirs(char const *argname, bool ancestors)
 		** is checked anyway if the mkdir fails.
 		*/
 		if (mkdir(name, MKDIR_UMASK) != 0) {
-			/* For speed, skip itsdir if errno == EEXIST.  Since
-			   mkdirs is called only after open fails with ENOENT
-			   on a subfile, EEXIST implies itsdir here.  */
+			/* Do not report an error if err == EEXIST, because
+			   some other process might have made the directory
+			   in the meantime.  */
 			int err = errno;
-			if (err != EEXIST && !itsdir(name)) {
+			if (err != EEXIST) {
 				error(_("%s: Can't create directory %s: %s"),
 				      progname, name, strerror(err));
 				exit(EXIT_FAILURE);

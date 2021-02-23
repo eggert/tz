@@ -1194,7 +1194,6 @@ tzparse(const char *name, struct state *sp, bool lastditch)
 					    (&sp->ats[timecnt],
 					     janoffset + endtime)) {
 					  sp->types[timecnt++] = reversed;
-					  yearlim = year + YEARSPERREPEAT + 1;
 					}
 				}
 				if (increment_overflow_time

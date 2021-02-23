@@ -990,7 +990,7 @@ namecheck(const char *name)
 /* Generate a randomish name in the same directory as *NAME.  If
    *NAMEALLOC, put the name into *NAMEALLOC which is assumed to be
    that returned by a previous call and is thus already almost set up
-   and and equal to *NAME; otherwise, allocate a new name and put its
+   and equal to *NAME; otherwise, allocate a new name and put its
    address into both *NAMEALLOC and *NAME.  */
 static void
 random_dirent(char const **name, char **namealloc)

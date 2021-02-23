@@ -45,9 +45,9 @@ LOCALTIME=	GMT
 #
 # Any other value for POSIXRULES is obsolete and should not be relied on, as:
 # * It does not work correctly in popular implementations such as GNU/Linux.
-# * It does not work in the tzdb implementation for timestamps after 2037.
-# * It is incompatible with 'zic -b slim' if POSIXRULES specifies transitions
-#   at standard time or UT rather than at local time.
+# * It does not work even in tzcode, except for historical timestamps
+#   that precede the last explicit transition in the POSIXRULES file.
+#   Hence it typically does not work for current and future timestamps.
 # In short, software should avoid ruleless settings like TZ='EET-2EEST'
 # and so should not depend on the value of POSIXRULES.
 #

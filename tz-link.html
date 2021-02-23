@@ -474,7 +474,8 @@ It is freely available under the Apache License.</li>
 <a href="https://en.wikipedia.org/wiki/JavaScript">JavaScript</a>
 runtimes support <code><abbr>tz</abbr></code> natively via the
 <samp>timeZone</samp> option of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat"><samp>Intl.DateTimeFormat</samp></a>.
-On other runtimes, you can use one of the following.
+This can be used as-is or with most of the following libraries,
+many of which also support runtimes lacking the <samp>timeZone</samp> option.
 <ul>
 <li>The <a
 href="https://github.com/formatjs/date-time-format-timezone"><samp>Intl.DateTimeFormat</samp>
@@ -485,16 +486,28 @@ href="https://github.com/kshetline/compact-time-zone-generator">CompactTimeZoneG
 compiles time zone data into a compact form designed for
 JavaScript. It is freely available under a combination of
 the <abbr>MIT</abbr> license and the Apache License.</li>
+<li>The <a href="https://date-fns.org/">date-fns</a>
+library manipulates timezone-aware timestamps in browsers and
+in <a href="https://nodejs.org/en/">Node.js</a>.
+It is freely available under the <abbr>MIT</abbr> license.</li>
+<li><a href="https://github.com/iamkun/dayjs">Day.js</a> is a
+minimalist replacement for the date and time API of
+the <a href="https://momentjs.com/docs/">now-legacy Moment.js</a> date
+manipulation library.
+It is freely available under the <abbr>MIT</abbr> license.</li>
+<li><a href="https://moment.github.io/luxon/">Luxon</a> improves
+timezone support for the <samp>Intl</samp> API.
+It is freely available under the <abbr>MIT</abbr> license.</li>
 <li><a href="https://momentjs.com/timezone/">Moment Timezone</a> is a
-plugin for the <a href="https://momentjs.com">Moment.js</a> date
-manipulation library. It is freely available under the <abbr>MIT</abbr>
-license.</li>
+Moment.js plugin.
+It is freely available under the <abbr>MIT</abbr> license.</li>
 <li><a href="https://github.com/bigeasy/timezone">Timezone</a> is a
 JavaScript library that supports date arithmetic that is time zone
 aware. It is freely available under the <abbr>MIT</abbr> license.</li>
-<li><a href="https://github.com/mde/timezone-js">TimezoneJS.Date</a>'s
-<abbr>API</abbr> is upward compatible with standard JavaScript
-Dates. It is freely available under the Apache License.</li>
+<li><a href="https://www.npmjs.com/package/@tubular/time">@tubular/time</a>
+supports live <code><abbr>tzdb</abbr></code> updates and astronomical time,
+and has full <a
+href="https://en.wikipedia.org/wiki/TypeScript">TypeScript</a> support.</li>
 </ul>
 <li><a href="https://github.com/JuliaTime/">JuliaTime</a> contains a
 compiler from <code><abbr>tz</abbr></code> source into
@@ -749,7 +762,7 @@ is written in Go and is freely available under the Apache License.</li>
 in both Java and
 <a href="https://en.wikipedia.org/wiki/Swift_(programming_language)">Swift</a>
 form, is freely available under the MIT license.</li>
-<li>For <a href="https://nodejs.org/en/">Node.js</a>,
+<li>For Node.js,
 the <a href="https://www.npmjs.com/package/geo-tz">geo-tz module</a>
 is freely available under the MIT license, and
 the <a href="https://www.npmjs.com/package/tz-lookup">tz-lookup module</a>

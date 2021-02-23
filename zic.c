@@ -2161,7 +2161,7 @@ writezone(const char *const name, const char *const string, char version,
 			indmap[desigidx[i]] = j;
 		}
 		if (pass == 1 && !want_bloat()) {
-		  utcnt = stdcnt = thisleapcnt = 0;
+		  thisleapcnt = 0;
 		  thistimecnt = - (locut + hicut);
 		  thistypecnt = thischarcnt = 1;
 		  thistimelim = thistimei;

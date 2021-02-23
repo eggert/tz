@@ -550,8 +550,11 @@ warning(const char *const string, ...)
 	warnings = true;
 }
 
+/* Close STREAM.  If it had an I/O error, report it against DIR/NAME,
+   remove TEMPNAME if nonnull, and then exit.  */
 static void
-close_file(FILE *stream, char const *dir, char const *name)
+close_file(FILE *stream, char const *dir, char const *name,
+	   char const *tempname)
 {
   char const *e = (ferror(stream) ? _("I/O error")
 		   : fclose(stream) != 0 ? strerror(errno) : NULL);
@@ -560,6 +563,8 @@ close_file(FILE *stream, char const *dir, char const *name)
 	    dir ? dir : "", dir ? "/" : "",
 	    name ? name : "", name ? ": " : "",
 	    e);
+    if (tempname)
+      remove(tempname);
     exit(EXIT_FAILURE);
   }
 }
@@ -576,7 +581,7 @@ usage(FILE *stream, int status)
 	    "Report bugs to %s.\n"),
 	  progname, progname, REPORT_BUGS_TO);
   if (status == EXIT_SUCCESS)
-    close_file(stream, NULL, NULL);
+    close_file(stream, NULL, NULL, NULL);
   exit(status);
 }
 
@@ -597,6 +602,68 @@ change_directory (char const *dir)
 	      progname, dir, strerror(chdir_errno));
       exit(EXIT_FAILURE);
     }
+  }
+}
+
+/* Simple signal handling: just set a flag that is checked
+   periodically outside critical sections.  To set up the handler,
+   prefer sigaction if available to close a signal race.  */
+
+static sig_atomic_t got_signal;
+
+static void
+signal_handler(int sig)
+{
+#ifndef SA_SIGINFO
+  signal(sig, signal_handler);
+#endif
+  got_signal = sig;
+}
+
+/* Arrange for SIGINT etc. to be caught by the handler.  */
+static void
+catch_signals(void)
+{
+  static int const signals[] = {
+#ifdef SIGHUP
+    SIGHUP,
+#endif
+    SIGINT,
+#ifdef SIGPIPE
+    SIGPIPE,
+#endif
+    SIGTERM
+  };
+  int i;
+  for (i = 0; i < sizeof signals / sizeof signals[0]; i++) {
+#ifdef SA_SIGINFO
+    struct sigaction act0, act;
+    act.sa_handler = signal_handler;
+    sigemptyset(&act.sa_mask);
+    act.sa_flags = 0;
+    if (sigaction(signals[i], &act, &act0) == 0
+	&& ! (act0.sa_flags & SA_SIGINFO) && act0.sa_handler == SIG_IGN) {
+      sigaction(signals[i], &act0, NULL);
+      got_signal = 0;
+    }
+#else
+    if (signal(signals[i], signal_handler) == SIG_IGN) {
+      signal(signals[i], SIG_IGN);
+      got_signal = 0;
+    }
+#endif
+  }
+}
+
+/* If a signal has arrived, terminate zic with appropriate status.  */
+static void
+check_for_signal(void)
+{
+  int sig = got_signal;
+  if (sig) {
+    signal(sig, SIG_DFL);
+    raise(sig);
+    abort(); /* A bug in 'raise'.  */
   }
 }
 
@@ -692,7 +759,7 @@ main(int argc, char **argv)
 	for (k = 1; k < argc; k++)
 		if (strcmp(argv[k], "--version") == 0) {
 			printf("zic %s%s\n", PKGVERSION, TZVERSION);
-			close_file(stdout, NULL, NULL);
+			close_file(stdout, NULL, NULL, NULL);
 			return EXIT_SUCCESS;
 		} else if (strcmp(argv[k], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
@@ -815,6 +882,7 @@ _("%s: invalid time range: %s\n"),
 		return EXIT_FAILURE;
 	associate();
 	change_directory(directory);
+	catch_signals();
 	for (i = 0; i < nzones; i = j) {
 		/*
 		** Find the next non-continuation zone entry.
@@ -1058,6 +1126,8 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 	char *tempname = NULL;
 	char const *outname = linkname;
 
+	check_for_signal();
+
 	if (strcmp(target, "-") == 0) {
 	  if (remove(linkname) == 0 || errno == ENOENT || errno == ENOTDIR)
 	    return;
@@ -1132,8 +1202,8 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 	    tp = open_outfile(&outname, &tempname);
 	    while ((c = getc(fp)) != EOF)
 	      putc(c, tp);
-	    close_file(fp, directory, target);
-	    close_file(tp, directory, outname);
+	    close_file(tp, directory, linkname, tempname);
+	    close_file(fp, directory, target, NULL);
 	    if (link_errno != ENOTSUP)
 	      warning(_("copy used because hard link failed: %s"),
 		      strerror(link_errno));
@@ -1323,7 +1393,7 @@ _("%s: panic: Invalid l_value %d\n"),
 		}
 		free(fields);
 	}
-	close_file(fp, NULL, filename);
+	close_file(fp, NULL, filename, NULL);
 	if (wantcont)
 		error(_("expected continuation line not found"));
 }
@@ -2310,7 +2380,7 @@ writezone(const char *const name, const char *const string, char version,
 				putc(ttisuts[i], fp);
 	}
 	fprintf(fp, "\n%s\n", string);
-	close_file(fp, directory, outname);
+	close_file(fp, directory, name, tempname);
 	rename_dest(tempname, name);
 	free(ats);
 }
@@ -2663,6 +2733,8 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 	zic_t y2038_boundary = one << 31;
 	zic_t max_year0;
 	int defaulttype = -1;
+
+	check_for_signal();
 
 	max_abbr_len = 2 + max_format_len + max_abbrvar_len;
 	max_envvar_len = 2 * max_abbr_len + 5 * 9;

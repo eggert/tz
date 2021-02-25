@@ -75,10 +75,10 @@ Cut off interval output at the given year(s).
 Cutoff times are computed using the proleptic Gregorian calendar with year 0
 and with Universal Time (UT) ignoring leap seconds.
 Cutoffs are at the start of each year, where the lower-bound
-timestamp is exclusive and the upper is inclusive; for example,
+timestamp is inclusive and the upper is exclusive; for example,
 .B "\*-c 1970,2070"
-selects transitions after 1970-01-01 00:00:00 UTC
-and on or before 2070-01-01 00:00:00 UTC.
+selects transitions on or after 1970-01-01 00:00:00 UTC
+and before 2070-01-01 00:00:00 UTC.
 The default cutoff is
 .BR \*-500,2500 .
 .TP
@@ -91,7 +91,7 @@ The
 determines whether the count includes leap seconds.
 As with
 .BR \*-c ,
-the cutoff's lower bound is exclusive and its upper bound is inclusive.
+the cutoff's lower bound is inclusive and its upper bound is exclusive.
 .SH "INTERVAL FORMAT"
 The interval format is a compact text representation that is intended
 to be both human- and machine-readable.  It consists of an empty line,

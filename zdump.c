@@ -480,8 +480,8 @@ main(int argc, char *argv[])
 			if (cuttimes != loend && !*loend) {
 				hi = lo;
 				if (hi < cuthitime) {
-					if (hi < absolute_min_time)
-						hi = absolute_min_time;
+					if (hi < absolute_min_time + 1)
+					  hi = absolute_min_time + 1;
 					cuthitime = hi;
 				}
 			} else if (cuttimes != loend && *loend == ','
@@ -493,8 +493,8 @@ main(int argc, char *argv[])
 					cutlotime = lo;
 				}
 				if (hi < cuthitime) {
-					if (hi < absolute_min_time)
-						hi = absolute_min_time;
+					if (hi < absolute_min_time + 1)
+					  hi = absolute_min_time + 1;
 					cuthitime = hi;
 				}
 			} else {
@@ -538,8 +538,8 @@ main(int argc, char *argv[])
 			t += SECSPERDAY;
 			show(tz, argv[i], t, true);
 		}
-		if (t < cutlotime)
-			t = cutlotime;
+		if (t + 1 < cutlotime)
+		  t = cutlotime - 1;
 		INITIALIZE (ab);
 		tm_ok = my_localtime_rz(tz, &t, &tm) != NULL;
 		if (tm_ok) {
@@ -549,11 +549,11 @@ main(int argc, char *argv[])
 		    showtrans("-\t-\t%Q", &tm, t, ab, argv[i]);
 		  }
 		}
-		while (t < cuthitime) {
+		while (t < cuthitime - 1) {
 		  time_t newt = ((t < absolute_max_time - SECSPERDAY / 2
-				  && t + SECSPERDAY / 2 < cuthitime)
+				  && t + SECSPERDAY / 2 < cuthitime - 1)
 				 ? t + SECSPERDAY / 2
-				 : cuthitime);
+				 : cuthitime - 1);
 		  struct tm *newtmp = localtime_rz(tz, &newt, &newtm);
 		  bool newtm_ok = newtmp != NULL;
 		  if (tm_ok != newtm_ok

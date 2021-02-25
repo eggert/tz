@@ -44,6 +44,10 @@ Unreleased, experimental changes
     "EST5EDT,0/0,J365/25" or "".  (Thanks to Michael Deckers for
     noting the possibility of POSIX conformance.)
 
+    zdump's -c and -t options are now consistently inclusive for the
+    lower time bound and exclusive for the upper.  Formerly they were
+    inconsistent.  (Confusion noted by Martin Burnicki.)
+
 
 Release 2021a - 2021-01-24 10:54:57 -0800
 

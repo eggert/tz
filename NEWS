@@ -5,13 +5,14 @@ Unreleased, experimental changes
   Changes to past timestamps
 
     Correct many pre-1993 transitions, fixing entries originally
-    derived from Shanks and from Whitman.  The fixes include:
+    derived from Shanks, Whitman, and Mundell.  The fixes include:
       - Barbados: standard time was introduced in 1911, not 1932; and
         DST was observed in 1942-1944
       - Guyana: corrected LMT for Georgetown; the introduction of
 	standard time in 1911, not 1915; and corrections to 1975 and
         1992 transitions
       - Portugal: DST was observed in 1950
+      - Tonga: moved from +12:20 to +13 in 1961, not 1941
     Additional fixes to entries in the 'backzone' file include:
       - Gambia: 1933 and 1942 transitions
       - Malawi: several 1911 through 1925 transitions

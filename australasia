@@ -796,7 +796,7 @@ Rule	Tonga	2016	only	-	Nov	Sun>=1	2:00	1:00	-
 Rule	Tonga	2017	only	-	Jan	Sun>=15	3:00	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone Pacific/Tongatapu	12:19:20 -	LMT	1901
-			12:20	-	+1220	1941
+			12:20	-	+1220	1961
 			13:00	-	+13	1999
 			13:00	Tonga	+13/+14
 
@@ -2049,9 +2049,20 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # The Crown Prince, presented an unanswerable argument: "Remember that
 # on the World Day of Prayer, you would be the first people on Earth
 # to say your prayers in the morning."
-
-# From Paul Eggert (2006-03-22):
-# Shanks & Pottenger say the transition was on 1968-10-01; go with Mundell.
+#
+# From Tim Parenti (2021-03-02), per Paul Eggert (2006-03-22):
+# Mundell places the transition from +12:20 to +13 in 1941, while Shanks &
+# Pottenger say the transition was on 1968-10-01.
+#
+# The Air Almanac published contemporaneous tables of standard times,
+# which listed +12:20 as of Nov 1960 and +13 as of Mar 1961:
+#   Nov 1960: https://books.google.com/books?id=bVgtWM6kPZUC&pg=SL1-PA19
+#   Mar 1961: https://books.google.com/books?id=W2nItAul4g0C&pg=SL1-PA19
+# (Thanks to P Chan for pointing us toward these sources.)
+# Without greater specificity, presume that this points to a 1961-01-01
+# transition, as Tāufaʻāhau Tupou IV was still Crown Prince in 1961 and this
+# still jives with the gist of Mundell's telling, and go with this over Shanks
+# & Pottenger.
 
 # From Eric Ulevik (1999-05-03):
 # Tonga's director of tourism, who is also secretary of the National Millennium

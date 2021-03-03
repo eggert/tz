@@ -182,16 +182,30 @@ Zone	Africa/Douala	0:38:48	-	LMT	1912
 # 1941), 1914-12-04
 # Alteration of Time (Amendment) Ordinance, 1946 (No. 2 of 1946) [1946-02-07]
 
-# From Tim Parenti (2021-02-20), per Paul Eggert (2014-08-12):
-# We retain the 1957 through 1962 transitions from Shanks & Pottenger since we
-# have no better data there.
+# From Tim Parenti (2021-03-02), per P Chan (2021-02-25):
+# For Sierra Leone in 1957-1962, the standard time was defined in the
+# Alteration of Time Ordinance, 1932 (as amended in 1946, renamed to Local Time
+# Ordinance in 1960 and Local Time Act in 1961). It was unamended throughout
+# that period.  See references to "Time" in the Alphabetical Index of the
+# Legislation in force on the 31st day of December,
+#   1957: https://books.google.com/books?id=lvQ-AQAAIAAJ&pg=RA2-PA49
+#   1958: https://books.google.com/books?id=4fQ-AQAAIAAJ&pg=RA2-PA50
+#   1959: https://books.google.com/books?id=p_U-AQAAIAAJ&pg=RA2-PA55
+#   1960: https://books.google.com/books?id=JPY-AQAAIAAJ&pg=RA3-PA37
+#   1961: https://books.google.com/books?id=7vY-AQAAIAAJ&pg=RA3-PA41
+#   1962: https://books.google.com/books?id=W_c-AQAAIAAJ&pg=RA3-PA44
+#   1963: https://books.google.com/books?id=9vk-AQAAIAAJ&pg=RA1-PA47
+#
+# Although Shanks & Pottenger had DST from Jun 1 00:00 to Sep 1 00:00 in this
+# period, many contemporaneous almanacs agree that it wasn't used:
+# https://mm.icann.org/pipermail/tz/2021-February/029866.html
+# Go with the above.
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	SL	1932	only	-	Dec	 1	 0:00	0:20	-0040
 Rule	SL	1933	1938	-	Mar	31	24:00	0	-01
 Rule	SL	1933	1939	-	Aug	31	24:00	0:20	-0040
 Rule	SL	1939	only	-	May	31	24:00	0	-01
-Rule	SL	1957	1962	-	Jun	 1	0:00	1:00	+01
-Rule	SL	1957	1962	-	Sep	 1	0:00	0	GMT
 Zone	Africa/Freetown	-0:53:00 -	LMT	1882
 			-0:53:00 -	FMT	1913 Jul  1 # Freetown MT
 			-1:00	SL	%s	1939 Sep  5

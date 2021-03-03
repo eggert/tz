@@ -15,7 +15,8 @@ Unreleased, experimental changes
     Additional fixes to entries in the 'backzone' file include:
       - Gambia: 1933 and 1942 transitions
       - Malawi: several 1911 through 1925 transitions
-      - Sierra Leone: several 1913 through 1941 transitions
+      - Sierra Leone: several 1913 through 1941 transitions, and DST
+        was NOT observed in 1957 through 1962
     (Thanks to Alois Treindl and P Chan.)
 
   Changes to code

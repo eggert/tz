@@ -12,13 +12,14 @@ Unreleased, experimental changes
 	standard time in 1911, not 1915; and corrections to 1975 and
         1992 transitions
       - Portugal: DST was observed in 1950
-      - Tonga: moved from +12:20 to +13 in 1961, not 1941
+      - Tonga: adopted standard time in 1945 not 1901, and moved from
+        +12:20 to +13 in 1961 not 1941
     Additional fixes to entries in the 'backzone' file include:
       - Gambia: 1933 and 1942 transitions
       - Malawi: several 1911 through 1925 transitions
       - Sierra Leone: several 1913 through 1941 transitions, and DST
         was NOT observed in 1957 through 1962
-    (Thanks to Alois Treindl and P Chan.)
+    (Thanks to P Chan, Michael Deckers and Alois Treindl.)
 
   Changes to code
 

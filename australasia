@@ -795,7 +795,7 @@ Rule	Tonga	2001	2002	-	Jan	lastSun	2:00	0	-
 Rule	Tonga	2016	only	-	Nov	Sun>=1	2:00	1:00	-
 Rule	Tonga	2017	only	-	Jan	Sun>=15	3:00	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Pacific/Tongatapu	12:19:20 -	LMT	1901
+Zone Pacific/Tongatapu	12:19:12 -	LMT	1945 Sep 10
 			12:20	-	+1220	1961
 			13:00	-	+13	1999
 			13:00	Tonga	+13/+14
@@ -2020,6 +2020,17 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 
 # Tonga
+
+# From Paul Eggert (2021-03-04):
+# In 1943 "The standard time kept is 12 hrs. 19 min. 12 sec. fast
+# on Greenwich mean time." according to the Admiralty's Hydrographic
+# Dept., Pacific Islands Pilot, Vol. II, 7th ed., 1943, p 360.
+
+# From Michael Deckers (2021-03-03):
+# [Ian R Bartky: "One Time Fits All: The Campaigns for Global Uniformity".
+# Stanford University Press. 2007. p 24..26]:
+# On 10 September 1945 Tonga adopted a standard time 12 hours,
+# 20 minutes in advance of Greenwich.
 
 # From Paul Eggert (1996-01-22):
 # Today's _Wall Street Journal_ (p 1) reports that "Tonga has been plotting

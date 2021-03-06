@@ -28,6 +28,17 @@ Unreleased, experimental changes
     This avoids races where a TZ setting would temporarily stop
     working while zic was installing a replacement file or link.
 
+    zic -L no longer omits the POSIX TZ string in its output.
+    Starting with 2020a, zic -L truncated its output according to the
+    "Expires" directive or "#expires" comment in the leapseconds file.
+    The resulting TZif files omitted daylight saving transitions after
+    the leap second table expired, which led to far less-accurate
+    predictions of times after the expiry.  Although future timestamps
+    cannot be converted accurately in the presence of leap seconds, it
+    is more accurate to convert near-future timestamps with a few
+    seconds error than with an hour error, so zic -L no longer
+    truncates output in this way.
+
     Fix bug that caused 'localtime' etc. to crash when TZ was
     set to a all-year DST string like "EST5EDT4,0/0,J365/25" that does
     not conform to POSIX but does conform to Internet RFC 8536.

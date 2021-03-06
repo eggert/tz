@@ -3166,8 +3166,6 @@ adjleap(void)
 	    error(_("last Leap time does not precede Expires time"));
 	    exit(EXIT_FAILURE);
 	  }
-	  if (leapexpires <= hi_time)
-	    hi_time = leapexpires - 1;
 	}
 }
 

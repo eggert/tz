@@ -52,6 +52,10 @@ Unreleased, experimental changes
     set to a POSIX-conforming but unusual TZ string like
     "EST5EDT4,0/0,J365/0", where almost all the year is DST.
 
+    Fix an unlikely bug that caused 'localtime' etc. to misbehave if
+    civil time changes a few seconds before time_t wraps around, when
+    leap seconds are enabled.
+
     Fix bug in zic -r; in some cases, the dummy time type after the
     last time transition disagreed with the TZ string, contrary to
     Internet RFC 8563 section 3.3.

@@ -639,19 +639,18 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 				       == sp->types[sp->timecnt - 2]))
 			      sp->timecnt--;
 
-			    for (i = 0; i < ts->timecnt; i++)
-			      if (sp->timecnt == 0
-				  || (sp->ats[sp->timecnt - 1]
-				      < ts->ats[i] + leapcorr(sp, ts->ats[i])))
-				break;
-			    while (i < ts->timecnt
-				   && sp->timecnt < TZ_MAX_TIMES) {
-			      sp->ats[sp->timecnt]
-				= ts->ats[i] + leapcorr(sp, ts->ats[i]);
+			    for (i = 0;
+				 i < ts->timecnt && sp->timecnt < TZ_MAX_TIMES;
+				 i++) {
+			      time_t t = ts->ats[i];
+			      if (increment_overflow_time(&t, leapcorr(sp, t))
+				  || (0 < sp->timecnt
+				      && t <= sp->ats[sp->timecnt - 1]))
+				continue;
+			      sp->ats[sp->timecnt] = t;
 			      sp->types[sp->timecnt] = (sp->typecnt
 							+ ts->types[i]);
 			      sp->timecnt++;
-			      i++;
 			    }
 			    for (i = 0; i < ts->typecnt; i++)
 			      sp->ttis[sp->typecnt++] = ts->ttis[i];

@@ -259,11 +259,23 @@ static void
 gmtzinit(void)
 {
   if (USE_LOCALTIME_RZ) {
-    static char const utc[] = "UTC0";
-    gmtz = tzalloc(utc);
+    /* Try "GMT" first to find out whether this is one of the rare
+       platforms where time_t counts leap seconds; this works due to
+       the "Link Etc/GMT GMT" line in the "etcetera" file.  If "GMT"
+       fails, fall back on "GMT0" which might be similar due to the
+       "Link Etc/GMT GMT0" line in the "backward" file, and which
+       should work on all POSIX platforms.  The rest of zdump does not
+       use the "GMT" abbreviation that comes from this setting, so it
+       is OK to use "GMT" here rather than the more-modern "UTC" which
+       would not work on platforms that omit the "backward" file.  */
+    gmtz = tzalloc("GMT");
     if (!gmtz) {
-      perror(utc);
-      exit(EXIT_FAILURE);
+      static char const gmt0[] = "GMT0";
+      gmtz = tzalloc(gmt0);
+      if (!gmtz) {
+	perror(gmt0);
+	exit(EXIT_FAILURE);
+      }
     }
   }
 }

@@ -86,6 +86,10 @@ Unreleased, experimental changes
     "EST5EDT,0/0,J365/25" or "".  (Thanks to Michael Deckers for
     noting the possibility of POSIX conformance.)
 
+    When reading slim TZif files, zdump no longer mishandles leap
+    seconds on the rare platforms where time_t counts leap seconds,
+    fixing a bug introduced in 2014g.
+
     zdump's -c and -t options are now consistently inclusive for the
     lower time bound and exclusive for the upper.  Formerly they were
     inconsistent.  (Confusion noted by Martin Burnicki.)

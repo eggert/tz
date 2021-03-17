@@ -445,7 +445,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		int_fast32_t ttisstdcnt = detzcode(up->tzhead.tzh_ttisstdcnt);
 		int_fast32_t ttisutcnt = detzcode(up->tzhead.tzh_ttisutcnt);
 		int_fast64_t prevtr = 0;
-		int_fast32_t prevcorr = 0;
+		int_fast32_t prevcorr;
 		int_fast32_t leapcnt = detzcode(up->tzhead.tzh_leapcnt);
 		int_fast32_t timecnt = detzcode(up->tzhead.tzh_timecnt);
 		int_fast32_t typecnt = detzcode(up->tzhead.tzh_typecnt);
@@ -542,9 +542,16 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		       and UTC months are at least 28 days long (minus 1
 		       second for a negative leap second).  Each leap second's
 		       correction must differ from the previous one's by 1
-		       second.  */
+		       second or less, except that the first correction can be
+		       any value; these requirements are more generous than
+		       RFC 8536, to allow future RFC extensions.  */
 		    if (tr - prevtr < 28 * SECSPERDAY - 1
-			|| (corr != prevcorr - 1 && corr != prevcorr + 1))
+			|| ((timecnt == 0 || sp->ats[0] < tr)
+			    && ! (i == 0
+				  || (prevcorr < corr
+				      ? corr == prevcorr + 1
+				      : (corr == prevcorr
+					 || corr == prevcorr - 1)))))
 		      return EINVAL;
 		    sp->lsis[leapcnt].ls_trans = prevtr = tr;
 		    sp->lsis[leapcnt].ls_corr = prevcorr = corr;

@@ -39,6 +39,11 @@ Unreleased, experimental changes
     seconds error than with an hour error, so zic -L no longer
     truncates output in this way.
 
+    The TZif reader now allows the leap second table to begin with a
+    correction other than -1 or +1, and to contain adjacent
+    transitions with equal corrections.  This supports possible
+    future extensions to the TZif format.
+
     Fix bug that caused 'localtime' etc. to crash when TZ was
     set to a all-year DST string like "EST5EDT4,0/0,J365/25" that does
     not conform to POSIX but does conform to Internet RFC 8536.

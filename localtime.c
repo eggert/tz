@@ -99,7 +99,7 @@ struct ttinfo {				/* time type information */
 
 struct lsinfo {				/* leap second information */
 	time_t		ls_trans;	/* transition time */
-	int_fast64_t	ls_corr;	/* correction to apply */
+	int_fast32_t	ls_corr;	/* correction to apply */
 };
 
 #define SMALLEST(a, b)	(((a) < (b)) ? (a) : (b))
@@ -150,7 +150,7 @@ static struct tm *gmtsub(struct state const *, time_t const *, int_fast32_t,
 			 struct tm *);
 static bool increment_overflow(int *, int);
 static bool increment_overflow_time(time_t *, int_fast32_t);
-static int_fast64_t leapcorr(struct state const *, time_t);
+static int_fast32_t leapcorr(struct state const *, time_t);
 static bool normalize_overflow32(int_fast32_t *, int *, int);
 static struct tm *timesub(time_t const *, int_fast32_t, struct state const *,
 			  struct tm *);
@@ -1652,7 +1652,7 @@ timesub(const time_t *timep, int_fast32_t offset,
 	register int_fast64_t		rem;
 	int				y;
 	register const int *		ip;
-	register int_fast64_t		corr;
+	register int_fast32_t		corr;
 	register bool			hit;
 	register int			i;
 
@@ -2228,7 +2228,7 @@ timeoff(struct tm *tmp, long offset)
 
 #endif /* defined STD_INSPIRED */
 
-static int_fast64_t
+static int_fast32_t
 leapcorr(struct state const *sp, time_t t)
 {
 	register struct lsinfo const *	lp;

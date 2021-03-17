@@ -155,7 +155,7 @@ static bool normalize_overflow32(int_fast32_t *, int *, int);
 static struct tm *timesub(time_t const *, int_fast32_t, struct state const *,
 			  struct tm *);
 static bool typesequiv(struct state const *, int, int);
-static bool tzparse(char const *, struct state *, bool);
+static bool tzparse(char const *, struct state *);
 
 #ifdef ALL_STATE
 static struct state *	lclptr;
@@ -598,7 +598,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 			struct state	*ts = &lsp->u.st;
 
 			up->buf[nread - 1] = '\0';
-			if (tzparse(&up->buf[1], ts, false)) {
+			if (tzparse(&up->buf[1], ts)) {
 
 			  /* Attempt to reuse existing abbreviations.
 			     Without this, America/Anchorage would be right on
@@ -1064,7 +1064,7 @@ transtime(const int year, register const struct rule *const rulep,
 */
 
 static bool
-tzparse(const char *name, struct state *sp, bool lastditch)
+tzparse(const char *name, struct state *sp)
 {
 	const char *			stdname;
 	const char *			dstname;
@@ -1077,29 +1077,23 @@ tzparse(const char *name, struct state *sp, bool lastditch)
 	register bool			load_ok;
 
 	stdname = name;
-	if (lastditch) {
-		stdlen = sizeof gmt - 1;
-		name += stdlen;
-		stdoffset = 0;
+	if (*name == '<') {
+	  name++;
+	  stdname = name;
+	  name = getqzname(name, '>');
+	  if (*name != '>')
+	    return false;
+	  stdlen = name - stdname;
+	  name++;
 	} else {
-		if (*name == '<') {
-			name++;
-			stdname = name;
-			name = getqzname(name, '>');
-			if (*name != '>')
-			  return false;
-			stdlen = name - stdname;
-			name++;
-		} else {
-			name = getzname(name);
-			stdlen = name - stdname;
-		}
-		if (!stdlen)
-		  return false;
-		name = getoffset(name, &stdoffset);
-		if (name == NULL)
-		  return false;
+	  name = getzname(name);
+	  stdlen = name - stdname;
 	}
+	if (!stdlen)
+	  return false;
+	name = getoffset(name, &stdoffset);
+	if (name == NULL)
+	  return false;
 	charcnt = stdlen + 1;
 	if (sizeof sp->chars < charcnt)
 	  return false;
@@ -1318,7 +1312,7 @@ static void
 gmtload(struct state *const sp)
 {
 	if (tzload(gmt, sp, true) != 0)
-		tzparse(gmt, sp, true);
+	  tzparse("GMT0", sp);
 }
 
 /* Initialize *SP to a value appropriate for the TZ setting NAME.
@@ -1341,7 +1335,7 @@ zoneinit(struct state *sp, char const *name)
     return 0;
   } else {
     int err = tzload(name, sp, true);
-    if (err != 0 && name && name[0] != ':' && tzparse(name, sp, false))
+    if (err != 0 && name && name[0] != ':' && tzparse(name, sp))
       err = 0;
     if (err == 0)
       scrub_abbrs(sp);

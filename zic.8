@@ -31,7 +31,8 @@ zic \- timezone compiler
 The
 .B zic
 program reads text from the file(s) named on the command line
-and creates the time conversion information files specified in this input.
+and creates the timezone information format (TZif) files
+specified in this input.
 If a
 .I filename
 is
@@ -212,6 +213,15 @@ code designed for older
 .B zic
 output formats.  These compatibility issues affect only timestamps
 before 1970 or after the start of 2038.
+.PP
+The output contains a truncated leap second table,
+which can cause some older TZif readers to misbehave.
+This can occur if the
+.B "\*-L"
+option is used, and either an Expires line is present or
+the
+.B "\*-r"
+option is also used.
 .PP
 The output file contains more than 1200 transitions,
 which may be mishandled by some clients.
@@ -720,19 +730,6 @@ The
 and
 .B HH:MM:SS
 fields give the expiration timestamp in UTC for the leap second table;
-If there is no expiration line,
-.B zic
-also accepts a comment
-.q "#expires \fIE\fP ...\&"
-where
-.I E
-is the expiration timestamp as a decimal integer count of seconds
-since the Epoch, not counting leap seconds.
-However, the
-.q "#expires"
-comment is an obsolescent feature,
-and the leap second file should use an expiration line
-instead of relying on a comment.
 .SH "EXTENDED EXAMPLE"
 Here is an extended example of
 .B zic

@@ -152,8 +152,10 @@ REDO=		posix_right
 # The EXPIRES_LINE value matters only if REDO's value contains "right".
 # If you change EXPIRES_LINE, remove the leapseconds file before running "make".
 # zic's support for the Expires line was introduced in tzdb 2020a,
-# and EXPIRES_LINE defaults to 0 for now so that the leapseconds file
-# can be given to older zic implementations.
+# and was modified in tzdb 2021b to generate version 4 TZif files.
+# EXPIRES_LINE defaults to 0 for now so that the leapseconds file
+# can be given to pre-2020a zic implementations and so that TZif files
+# built by newer zic implementations can be read by pre-2021b libraries.
 EXPIRES_LINE=	0
 
 # To install data in text form that has all the information of the TZif data,

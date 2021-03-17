@@ -30,10 +30,11 @@ The magic four-byte ASCII sequence
 identifies the file as a timezone information file.
 .IP *
 A byte identifying the version of the file's format
-(as of 2017, either an ASCII NUL, or
+(as of 2021, either an ASCII NUL,
 .q "2",
+.q "3",
 or
-.q "3" ).
+.q "4" ).
 .IP *
 Fifteen bytes containing zeros reserved for future use.
 .IP *
@@ -134,13 +135,15 @@ the first value of each pair gives the nonnegative time
 (as returned by
 .BR time (2))
 at which a leap second occurs;
-the second is a signed integer specifying the
+the second is a signed integer specifying the correction, which is the
 .I total
 number of leap seconds to be applied during the time period
 starting at the given time.
 The pairs of values are sorted in ascending order by time.
 Each transition is for one leap second, either positive or negative;
 transitions always separated by at least 28 days minus 1 second.
+The first entry's correction is +1 (or \(mi1, for a hypothetical leap
+second table where the first leap second was negative).
 .IP *
 .B tzh_ttisstdcnt
 standard/wall indicators, each stored as a one-byte boolean;
@@ -212,6 +215,16 @@ from 0 through 24.
 Second, DST is in effect all year if it starts
 January 1 at 00:00 and ends December 31 at 24:00 plus the difference
 between daylight saving and standard time.
+.SS Version 4 format
+For version-4-format TZif files,
+the first leap second transition can have a correction that is neither
++1 nor \(mi1, to support TZif files with reduced timestamp range.
+Also, if two or more leap second transitions are present and the last
+entry's correction equals the previous one, the last entry
+denotes the expiration of the leap second table instead of a leap second;
+timestamps after this expiration are unreliable in that future
+releases will likely add leap second entries after the expiration, and
+the added leap seconds will change how post-expiration timestamps are treated.
 .SS Interoperability considerations
 Future changes to the format may append more data.
 .PP

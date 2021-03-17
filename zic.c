@@ -15,9 +15,6 @@
 #include <stddef.h>
 #include <stdio.h>
 
-#define	ZIC_VERSION_PRE_2013 '2'
-#define	ZIC_VERSION	'3'
-
 typedef int_fast64_t	zic_t;
 #define ZIC_MIN INT_FAST64_MIN
 #define ZIC_MAX INT_FAST64_MAX
@@ -680,9 +677,6 @@ static zic_t hi_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
 
 /* The time specified by an Expires line, or negative if no such line.  */
 static zic_t leapexpires = -1;
-
-/* The time specified by an #expires comment, or negative if no such line.  */
-static zic_t comment_leapexpires = -1;
 
 /* Set the time range of the output to TIMERANGE.
    Return true if successful.  */
@@ -1354,8 +1348,7 @@ infile(const char *name)
 			++nfields;
 		}
 		if (nfields == 0) {
-		  if (name == leapsec && *buf == '#')
-		    sscanf(buf, "#expires %"SCNdZIC, &comment_leapexpires);
+			/* nothing to do */
 		} else if (wantcont) {
 			wantcont = inzcont(fields, nfields);
 		} else {
@@ -1975,6 +1968,7 @@ struct timerange {
   int defaulttype;
   ptrdiff_t base, count;
   int leapbase, leapcount;
+  bool leapexpiry;
 };
 
 static struct timerange
@@ -1986,7 +1980,7 @@ limitrange(struct timerange r, zic_t lo, zic_t hi,
     r.count--;
     r.base++;
   }
-  while (0 < r.leapcount && trans[r.leapbase] < lo) {
+  while (1 < r.leapcount && trans[r.leapbase + 1] <= lo) {
     r.leapcount--;
     r.leapbase++;
   }
@@ -1997,6 +1991,7 @@ limitrange(struct timerange r, zic_t lo, zic_t hi,
     while (0 < r.leapcount && hi + 1 < trans[r.leapbase + r.leapcount - 1])
       r.leapcount--;
   }
+  r.leapexpiry = 0 <= leapexpires && leapexpires - 1 <= hi;
 
   return r;
 }
@@ -2107,8 +2102,35 @@ writezone(const char *const name, const char *const string, char version,
 	rangeall.base = rangeall.leapbase = 0;
 	rangeall.count = timecnt;
 	rangeall.leapcount = leapcnt;
+	rangeall.leapexpiry = false;
 	range64 = limitrange(rangeall, lo_time, hi_time, ats, types);
 	range32 = limitrange(range64, INT32_MIN, INT32_MAX, ats, types);
+
+	/* TZif version 4 is needed if a no-op transition is appended to
+	   indicate the expiration of the leap second table, or if the first
+	   leap second transition is not to a +1 or -1 correction.  */
+	for (pass = 1; pass <= 2; pass++) {
+	  struct timerange const *r = pass == 1 ? &range32 : &range64;
+	  if (pass == 1 && !want_bloat())
+	    continue;
+	  if (r->leapexpiry) {
+	    if (noise)
+	      warning(_("%s: pre-2021b clients may mishandle"
+			" leap second expiry"),
+		      name);
+	    version = '4';
+	  }
+	  if (0 < r->leapcount
+	      && corr[r->leapbase] != 1 && corr[r->leapbase] != -1) {
+	    if (noise)
+	      warning(_("%s: pre-2021b clients may mishandle"
+			" leap second table truncation"),
+		      name);
+	    version = '4';
+	  }
+	  if (version == '4')
+	    break;
+	}
 
 	fp = open_outfile(&outname, &tempname);
 
@@ -2117,7 +2139,7 @@ writezone(const char *const name, const char *const string, char version,
 		register int	thisleapi, thisleapcnt, thisleaplim;
 		struct tzhead tzh;
 		int currenttype, thisdefaulttype;
-		bool locut, hicut;
+		bool locut, hicut, thisleapexpiry;
 		zic_t lo;
 		int old0;
 		char		omittype[TZ_MAX_TYPES];
@@ -2148,6 +2170,7 @@ writezone(const char *const name, const char *const string, char version,
 			toomanytimes = thistimecnt >> 31 >> 1 != 0;
 			thisleapi = range32.leapbase;
 			thisleapcnt = range32.leapcount;
+			thisleapexpiry = range32.leapexpiry;
 			locut = INT32_MIN < lo_time;
 			hicut = hi_time < INT32_MAX;
 		} else {
@@ -2157,6 +2180,7 @@ writezone(const char *const name, const char *const string, char version,
 			toomanytimes = thistimecnt >> 31 >> 31 >> 2 != 0;
 			thisleapi = range64.leapbase;
 			thisleapcnt = range64.leapcount;
+			thisleapexpiry = range64.leapexpiry;
 			locut = min_time < lo_time;
 			hicut = hi_time < max_time;
 		}
@@ -2177,7 +2201,6 @@ writezone(const char *const name, const char *const string, char version,
 		}
 
 		thistimelim = thistimei + thistimecnt;
-		thisleaplim = thisleapi + thisleapcnt;
 		if (thistimecnt != 0) {
 		  if (ats[thistimei] == lo_time)
 		    locut = false;
@@ -2279,6 +2302,7 @@ writezone(const char *const name, const char *const string, char version,
 		}
 		if (pass == 1 && !want_bloat()) {
 		  thisleapcnt = 0;
+		  thisleapexpiry = false;
 		  thistimecnt = - (locut + hicut);
 		  thistypecnt = thischarcnt = 1;
 		  thistimelim = thistimei;
@@ -2289,7 +2313,7 @@ writezone(const char *const name, const char *const string, char version,
 		tzh.tzh_version[0] = version;
 		convert(utcnt, tzh.tzh_ttisutcnt);
 		convert(stdcnt, tzh.tzh_ttisstdcnt);
-		convert(thisleapcnt, tzh.tzh_leapcnt);
+		convert(thisleapcnt + thisleapexpiry, tzh.tzh_leapcnt);
 		convert(locut + thistimecnt + hicut, tzh.tzh_timecnt);
 		convert(thistypecnt, tzh.tzh_typecnt);
 		convert(thischarcnt, tzh.tzh_charcnt);
@@ -2347,6 +2371,7 @@ writezone(const char *const name, const char *const string, char version,
 		if (thischarcnt != 0)
 			fwrite(thischars, sizeof thischars[0],
 				      thischarcnt, fp);
+		thisleaplim = thisleapi + thisleapcnt;
 		for (i = thisleapi; i < thisleaplim; ++i) {
 			register zic_t	todo;
 
@@ -2369,6 +2394,15 @@ writezone(const char *const name, const char *const string, char version,
 			} else	todo = trans[i];
 			puttzcodepass(todo, fp, pass);
 			puttzcode(corr[i], fp);
+		}
+		if (thisleapexpiry) {
+		  /* Append a no-op leap correction indicating when the leap
+		     second table expires.  Although this does not conform to
+		     Internet RFC 8536, most clients seem to accept this and
+		     the plan is to amend the RFC to allow this in version 4
+		     TZif files.  */
+		  puttzcodepass(leapexpires, fp, pass);
+		  puttzcode(thisleaplim ? corr[thisleaplim - 1] : 0, fp);
 		}
 		if (stdcnt != 0)
 		  for (i = old0; i < typecnt; i++)
@@ -2779,7 +2813,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 	** Generate lots of data if a rule can't cover all future times.
 	*/
 	compat = stringzone(envvar, zpfirst, zonecount);
-	version = compat < 2013 ? ZIC_VERSION_PRE_2013 : ZIC_VERSION;
+	version = compat < 2013 ? '2' : '3';
 	do_extend = compat < 0;
 	if (noise) {
 		if (!*envvar)
@@ -3152,12 +3186,6 @@ adjleap(void)
 		prevtrans = trans[i];
 		trans[i] = tadd(trans[i], last);
 		last = corr[i] += last;
-	}
-
-	if (leapexpires < 0) {
-	  leapexpires = comment_leapexpires;
-	  if (0 <= leapexpires)
-	    warning(_("\"#expires\" is obsolescent; use \"Expires\""));
 	}
 
 	if (0 <= leapexpires) {

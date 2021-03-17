@@ -66,6 +66,11 @@ Unreleased, experimental changes
     set to a POSIX-conforming but unusual TZ string like
     "EST5EDT4,0/0,J365/0", where almost all the year is DST.
 
+    Fix yet another bug that caused 'localtime' etc. to mishandle slim
+    TZif files containing leap seconds after the last explicit
+    transition in the table, or when handling far-future timestamps
+    in slim TZif files lacking leap seconds.
+
     Fix an unlikely bug that caused 'localtime' etc. to misbehave if
     civil time changes a few seconds before time_t wraps around, when
     leap seconds are enabled.

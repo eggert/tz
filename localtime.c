@@ -155,7 +155,7 @@ static bool normalize_overflow32(int_fast32_t *, int *, int);
 static struct tm *timesub(time_t const *, int_fast32_t, struct state const *,
 			  struct tm *);
 static bool typesequiv(struct state const *, int, int);
-static bool tzparse(char const *, struct state *);
+static bool tzparse(char const *, struct state *, time_t);
 
 #ifdef ALL_STATE
 static struct state *	lclptr;
@@ -596,9 +596,15 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		up->buf[0] == '\n' && up->buf[nread - 1] == '\n' &&
 		sp->typecnt + 2 <= TZ_MAX_TYPES) {
 			struct state	*ts = &lsp->u.st;
+			time_t parselb = TIME_T_MIN;
+			if (0 < sp->timecnt)
+			  parselb = sp->ats[sp->timecnt - 1];
+			if (0 < sp->leapcnt
+			    && parselb < sp->lsis[sp->leapcnt - 1].ls_trans)
+			  parselb = sp->lsis[sp->leapcnt - 1].ls_trans;
 
 			up->buf[nread - 1] = '\0';
-			if (tzparse(&up->buf[1], ts)) {
+			if (tzparse(&up->buf[1], ts, parselb)) {
 
 			  /* Attempt to reuse existing abbreviations.
 			     Without this, America/Anchorage would be right on
@@ -1064,7 +1070,7 @@ transtime(const int year, register const struct rule *const rulep,
 */
 
 static bool
-tzparse(const char *name, struct state *sp)
+tzparse(const char *name, struct state *sp, time_t parselb)
 {
 	const char *			stdname;
 	const char *			dstname;
@@ -1129,11 +1135,10 @@ tzparse(const char *name, struct state *sp)
 			struct rule	start;
 			struct rule	end;
 			register int	year;
-			register int	yearlim;
 			register int	timecnt;
 			time_t		janfirst;
 			int_fast32_t janoffset = 0;
-			int yearbeg;
+			int yearbeg, yearlim;
 
 			++name;
 			if ((name = getrule(name, &start)) == NULL)
@@ -1163,9 +1168,25 @@ tzparse(const char *name, struct state *sp)
 			    janoffset = -yearsecs;
 			    break;
 			  }
-			} while (EPOCH_YEAR - YEARSPERREPEAT / 2 < yearbeg);
+			} while (parselb < janfirst
+				 && EPOCH_YEAR - YEARSPERREPEAT / 2 < yearbeg);
 
-			yearlim = yearbeg + YEARSPERREPEAT + 1;
+			while (true) {
+			  int_fast32_t yearsecs
+			    = year_lengths[isleap(yearbeg)] * SECSPERDAY;
+			  int yearbeg1 = yearbeg;
+			  time_t janfirst1 = janfirst;
+			  if (increment_overflow_time(&janfirst1, yearsecs)
+			      || increment_overflow(&yearbeg1, 1)
+			      || parselb <= janfirst1)
+			    break;
+			  yearbeg = yearbeg1;
+			  janfirst = janfirst1;
+			}
+
+			yearlim = yearbeg;
+			if (increment_overflow(&yearlim, YEARSPERREPEAT + 1))
+			  yearlim = INT_MAX;
 			for (year = yearbeg; year < yearlim; year++) {
 				int_fast32_t
 				  starttime = transtime(year, &start, stdoffset),
@@ -1187,12 +1208,14 @@ tzparse(const char *name, struct state *sp)
 					sp->ats[timecnt] = janfirst;
 					if (! increment_overflow_time
 					    (&sp->ats[timecnt],
-					     janoffset + starttime))
+					     janoffset + starttime)
+					    && parselb <= sp->ats[timecnt])
 					  sp->types[timecnt++] = !reversed;
 					sp->ats[timecnt] = janfirst;
 					if (! increment_overflow_time
 					    (&sp->ats[timecnt],
-					     janoffset + endtime)) {
+					     janoffset + endtime)
+					    && parselb <= sp->ats[timecnt]) {
 					  sp->types[timecnt++] = reversed;
 					}
 				}
@@ -1312,7 +1335,7 @@ static void
 gmtload(struct state *const sp)
 {
 	if (tzload(gmt, sp, true) != 0)
-	  tzparse("GMT0", sp);
+	  tzparse("GMT0", sp, TIME_T_MIN);
 }
 
 /* Initialize *SP to a value appropriate for the TZ setting NAME.
@@ -1335,7 +1358,7 @@ zoneinit(struct state *sp, char const *name)
     return 0;
   } else {
     int err = tzload(name, sp, true);
-    if (err != 0 && name && name[0] != ':' && tzparse(name, sp))
+    if (err != 0 && name && name[0] != ':' && tzparse(name, sp, TIME_T_MIN))
       err = 0;
     if (err == 0)
       scrub_abbrs(sp);

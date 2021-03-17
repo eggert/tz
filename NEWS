@@ -48,11 +48,11 @@ Unreleased, experimental changes
     them, set the EXPIRES_LINE Makefile variable.  If a TZif file uses
     this new feature it is marked with a new TZif version number 4.
 
-    zic -L LEAPFILE -r @LO no longer no longer generates an invalid
-    TZif file that omits leap second information for the range LO..B
-    when LO falls between two leap seconds A and B.  Instead, it
-    generates a TZif version 4 file that represents the
-    previously-missing information.
+    zic -L LEAPFILE -r @LO no longer generates an invalid TZif file
+    that omits leap second information for the range LO..B when LO
+    falls between two leap seconds A and B.  Instead, it generates a
+    TZif version 4 file that represents the previously-missing
+    information.
 
     The TZif reader now allows the leap second table to begin with a
     correction other than -1 or +1, and to contain adjacent

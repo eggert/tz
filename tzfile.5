@@ -243,10 +243,13 @@ Readers that only understand Version 1 must ignore
 any data that extends beyond the calculated end of the version
 1 data block.
 .PP
-Writers should generate a version 3 file if
+Other than version 1, writers should generate
+the lowest version number needed by a file's data.
+For example, a writer should generate a version 3 file
+if the file does not contain a truncated leap second table
+and so does not use version 4 features, but
 TZ string extensions are necessary to accurately
-model transition times.
-Otherwise, version 2 files should be generated.
+model transition times so the file does need version 3 features.
 .PP
 The sequence of time changes defined by the version 1
 header and data block should be a contiguous subsequence
@@ -269,7 +272,7 @@ and
 This is for compatibility with POSIX requirements for
 time zone abbreviations.
 .PP
-When reading a version 2 or 3 file, readers
+When reading a version 2+ file, readers
 should ignore the version 1 header and data block except for
 the purpose of skipping over them.
 .PP
@@ -327,6 +330,10 @@ As a partial workaround, a writer can substitute standard time
 for the next time zone east, e.g.,
 .q "AST4"
 for permanent Atlantic Standard Time (\-04).
+.IP *
+Some readers designed for earlier versions reject version 4 files,
+because they require complete leap second tables that do not record
+expiration dates.
 .IP *
 Some readers ignore the footer, and instead predict future
 timestamps from the time type of the last transition.

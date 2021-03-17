@@ -129,6 +129,14 @@ is in the range [\-89999, 93599] (i.e., more than \-25 hours and less
 than 26 hours); this allows easy support by implementations that
 already support the POSIX-required range [\-24:59:59, 25:59:59].
 .IP *
+.B tzh_charcnt
+bytes that represent time zone designations,
+which are null-terminated byte strings, each indexed by the
+.B tt_desigidx
+values mentioned above.
+The byte strings can overlap if one is a prefix of the other.
+The encoding of these strings is not specified.
+.IP *
 .B tzh_leapcnt
 pairs of four-byte values, written in network byte order;
 the first value of each pair gives the nonnegative time

@@ -654,7 +654,6 @@ hunt(timezone_t tz, char *name, time_t lot, time_t hit)
 	static char *		loab;
 	static size_t		loabsize;
 	char const *		ab;
-	time_t			t;
 	struct tm		lotm;
 	struct tm		tm;
 	bool lotm_ok = my_localtime_rz(tz, &lot, &lotm) != NULL;
@@ -663,15 +662,16 @@ hunt(timezone_t tz, char *name, time_t lot, time_t hit)
 	if (lotm_ok)
 	  ab = saveabbr(&loab, &loabsize, &lotm);
 	for ( ; ; ) {
-		time_t diff = hit - lot;
-		if (diff < 2)
+		/* T = average of LOT and HIT, rounding down.
+		   Avoid overflow, even on oddball C89 platforms
+		   where / rounds down and TIME_T_MIN == -TIME_T_MAX
+		   so lot / 2 + hit / 2 might overflow.  */
+		time_t t = (lot / 2
+			    - ((lot % 2 + hit % 2) < 0)
+			    + ((lot % 2 + hit % 2) == 2)
+			    + hit / 2);
+		if (t == lot)
 			break;
-		t = lot;
-		t += diff / 2;
-		if (t <= lot)
-			++t;
-		else if (t >= hit)
-			--t;
 		tm_ok = my_localtime_rz(tz, &t, &tm) != NULL;
 		if (lotm_ok & tm_ok
 		    ? (delta(&tm, &lotm) == t - lot

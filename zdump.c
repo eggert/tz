@@ -693,11 +693,11 @@ hunt(timezone_t tz, char *name, time_t lot, time_t hit)
 static intmax_t
 delta_nonneg(struct tm *newp, struct tm *oldp)
 {
-	register intmax_t	result;
-	register int		tmy;
-
-	result = 0;
-	for (tmy = oldp->tm_year; tmy < newp->tm_year; ++tmy)
+	intmax_t oldy = oldp->tm_year;
+	int cycles = (newp->tm_year - oldy) / YEARSPERREPEAT;
+	intmax_t sec = SECSPERREPEAT, result = cycles * sec;
+	int tmy = oldp->tm_year + cycles * YEARSPERREPEAT;
+	for ( ; tmy < newp->tm_year; ++tmy)
 		result += DAYSPERNYEAR + isleap_sum(tmy, TM_YEAR_BASE);
 	result += newp->tm_yday - oldp->tm_yday;
 	result *= HOURSPERDAY;

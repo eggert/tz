@@ -748,6 +748,7 @@ char *ctime_r(time_t const *, char *);
 #define TM_DECEMBER	11
 
 #define TM_YEAR_BASE	1900
+#define TM_WDAY_BASE	TM_MONDAY
 
 #define EPOCH_YEAR	1970
 #define EPOCH_WDAY	TM_THURSDAY

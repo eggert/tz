@@ -91,8 +91,9 @@ static bool	errout;
 static char const *abbr(struct tm const *);
 static intmax_t	delta(struct tm *, struct tm *) ATTRIBUTE_PURE;
 static void dumptime(struct tm const *);
-static time_t hunt(timezone_t, char *, time_t, time_t);
+static time_t hunt(timezone_t, char *, time_t, struct tm *, time_t, bool);
 static void show(timezone_t, char *, time_t, bool);
+static void showextrema(timezone_t, char *, time_t, struct tm *, time_t);
 static void showtrans(char const *, struct tm const *, time_t, char const *,
 		      char const *);
 static const char *tformat(void);
@@ -533,6 +534,7 @@ main(int argc, char *argv[])
 		char const *ab;
 		time_t t;
 		struct tm tm, newtm;
+		struct tm *tmp;
 		bool tm_ok;
 		if (!tz) {
 		  perror(argv[i]);
@@ -547,21 +549,19 @@ main(int argc, char *argv[])
 		t = absolute_min_time;
 		if (! (iflag | Vflag)) {
 			show(tz, argv[i], t, true);
-			t += SECSPERDAY;
-			show(tz, argv[i], t, true);
-			if (my_localtime_rz(tz, &t, &tm) == NULL && t < cutlotime) {
+			if (my_localtime_rz(tz, &t, &tm) == NULL
+			    && t < cutlotime) {
 				time_t newt = cutlotime;
-				if (my_localtime_rz(tz, &newt, &newtm) != NULL) {
-					newt = hunt(tz, argv[i], t, newt);
-					show(tz, argv[i], newt - 1, true);
-					show(tz, argv[i], newt, true);
-				}
+				if (my_localtime_rz(tz, &newt, &newtm)
+				    != NULL)
+				  showextrema(tz, argv[i], t, NULL, newt);
 			}
 		}
 		if (t + 1 < cutlotime)
 		  t = cutlotime - 1;
 		INITIALIZE (ab);
-		tm_ok = my_localtime_rz(tz, &t, &tm) != NULL;
+		tmp = my_localtime_rz(tz, &t, &tm);
+		tm_ok = tmp != NULL;
 		if (tm_ok) {
 		  ab = saveabbr(&abbrev, &abbrevsize, &tm);
 		  if (iflag) {
@@ -580,7 +580,7 @@ main(int argc, char *argv[])
 		      || (tm_ok && (delta(&newtm, &tm) != newt - t
 				    || newtm.tm_isdst != tm.tm_isdst
 				    || strcmp(abbr(&newtm), ab) != 0))) {
-		    newt = hunt(tz, argv[i], t, newt);
+		    newt = hunt(tz, argv[i], t, tmp, newt, false);
 		    newtmp = localtime_rz(tz, &newt, &newtm);
 		    newtm_ok = newtmp != NULL;
 		    if (iflag)
@@ -600,20 +600,14 @@ main(int argc, char *argv[])
 		}
 		if (! (iflag | Vflag)) {
 			time_t newt = absolute_max_time;
-			newt -= SECSPERDAY;
 			t = cuthitime;
-			if (t < newt &&
-				my_localtime_rz(tz, &t, &tm) != NULL &&
-				my_localtime_rz(tz, &newt, &newtm) == NULL) {
-				newt = hunt(tz, argv[i], t, newt);
-				show(tz, argv[i], newt - 1, true);
-				show(tz, argv[i], newt, true);
+			if (t < newt) {
+			  tmp = my_localtime_rz(tz, &t, &tm);
+			  if (tmp != NULL
+			      && my_localtime_rz(tz, &newt, &newtm) == NULL)
+			    showextrema(tz, argv[i], t, tmp, newt);
 			}
-			t = absolute_max_time;
-			t -= SECSPERDAY;
-			show(tz, argv[i], t, true);
-			t += SECSPERDAY;
-			show(tz, argv[i], t, true);
+			show(tz, argv[i], absolute_max_time, true);
 		}
 		tzfree(tz);
 	}
@@ -666,19 +660,30 @@ yeartot(intmax_t y)
 	return t;
 }
 
+/* Search for a discontinuity in timezone TZ with name NAME, in the
+   timestamps ranging from LOT (with broken-down time LOTMP if
+   nonnull) through HIT.  LOT and HIT disagree about some aspect of
+   timezone.  If ONLY_OK, search only for definedness changes, i.e.,
+   localtime succeeds on one side of the transition but fails on the
+   other side.  Return the timestamp just before the transition from
+   LOT's settings.  */
+
 static time_t
-hunt(timezone_t tz, char *name, time_t lot, time_t hit)
+hunt(timezone_t tz, char *name, time_t lot, struct tm *lotmp, time_t hit,
+     bool only_ok)
 {
 	static char *		loab;
 	static size_t		loabsize;
 	char const *		ab;
 	struct tm		lotm;
 	struct tm		tm;
-	bool lotm_ok = my_localtime_rz(tz, &lot, &lotm) != NULL;
+	bool lotm_ok = lotmp != NULL;
 	bool tm_ok;
 
-	if (lotm_ok)
+	if (lotm_ok) {
+	  lotm = *lotmp;
 	  ab = saveabbr(&loab, &loabsize, &lotm);
+	}
 	for ( ; ; ) {
 		/* T = average of LOT and HIT, rounding down.
 		   Avoid overflow, even on oddball C89 platforms
@@ -691,11 +696,11 @@ hunt(timezone_t tz, char *name, time_t lot, time_t hit)
 		if (t == lot)
 			break;
 		tm_ok = my_localtime_rz(tz, &t, &tm) != NULL;
-		if (lotm_ok & tm_ok
-		    ? (delta(&tm, &lotm) == t - lot
-		       && tm.tm_isdst == lotm.tm_isdst
-		       && strcmp(abbr(&tm), ab) == 0)
-		    : lotm_ok == tm_ok) {
+		if (lotm_ok == tm_ok
+		    && (only_ok
+			|| (lotm_ok && tm.tm_isdst == lotm.tm_isdst
+			    && delta(&tm, &lotm) == t - lot
+			    && strcmp(abbr(&tm), ab) == 0))) {
 		  lot = t;
 		  if (tm_ok)
 		    lotm = tm;
@@ -817,6 +822,51 @@ show(timezone_t tz, char *zone, time_t t, bool v)
 	printf("\n");
 	if (tmp != NULL && *abbr(tmp) != '\0')
 		abbrok(abbr(tmp), zone);
+}
+
+/* Show timestamps just before and just after a transition between
+   defined and undefined (or vice versa) in either localtime or
+   gmtime.  These transitions are for timezone TZ with name ZONE, in
+   the range from LO (with broken-down time LOTMP if that is nonnull)
+   through HI.  LO and HI disagree on definedness.  */
+
+static void
+showextrema(timezone_t tz, char *zone, time_t lo, struct tm *lotmp, time_t hi)
+{
+  struct tm localtm[2], gmtm[2];
+  time_t t, boundary = hunt(tz, zone, lo, lotmp, hi, true);
+  bool old = false;
+  hi = (SECSPERDAY < hi - boundary
+	? boundary + SECSPERDAY
+	: hi + (hi < TIME_T_MAX));
+  if (SECSPERDAY < boundary - lo) {
+    lo = boundary - SECSPERDAY;
+    lotmp = my_localtime_rz(tz, &lo, &localtm[old]);
+  }
+  if (lotmp)
+    localtm[old] = *lotmp;
+  else
+    localtm[old].tm_sec = -1;
+  if (! my_gmtime_r(&lo, &gmtm[old]))
+    gmtm[old].tm_sec = -1;
+
+  /* Search sequentially for definedness transitions.  Although this
+     could be sped up by refining 'hunt' to search for either
+     localtime or gmtime definedness transitions, it hardly seems
+     worth the trouble.  */
+  for (t = lo + 1; t < hi; t++) {
+    bool new = !old;
+    if (! my_localtime_rz(tz, &t, &localtm[new]))
+      localtm[new].tm_sec = -1;
+    if (! my_gmtime_r(&t, &gmtm[new]))
+      gmtm[new].tm_sec = -1;
+    if (((localtm[old].tm_sec < 0) != (localtm[new].tm_sec < 0))
+	| ((gmtm[old].tm_sec < 0) != (gmtm[new].tm_sec < 0))) {
+      show(tz, zone, t - 1, true);
+      show(tz, zone, t, true);
+    }
+    old = new;
+  }
 }
 
 #if HAVE_SNPRINTF

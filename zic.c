@@ -5,6 +5,12 @@
 ** 2006-07-17 by Arthur David Olson.
 */
 
+/* Use the system 'time' function, instead of any private replacement.
+   This avoids creating an unnecessary dependency on localtime.c.  */
+#undef EPOCH_LOCAL
+#undef EPOCH_OFFSET
+#undef time_tz
+
 #include "version.h"
 #include "private.h"
 #include "tzfile.h"

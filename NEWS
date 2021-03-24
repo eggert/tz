@@ -7,20 +7,22 @@ Unreleased, experimental changes
     Correct many pre-1993 transitions, fixing entries originally
     derived from Shanks, Whitman, and Mundell.  The fixes include:
       - Barbados: standard time was introduced in 1911, not 1932; and
-        DST was observed in 1942-1944
+	DST was observed in 1942-1944
       - Cook Islands: In 1899 they switched from east to west of GMT,
-        celebrating Christmas for two days.
+	celebrating Christmas for two days.  They (and Niue) switched
+	to standard time in 1952, not 1901.
       - Guyana: corrected LMT for Georgetown; the introduction of
 	standard time in 1911, not 1915; and corrections to 1975 and
-        1992 transitions
+	1992 transitions
+      - Niue: observed -11:20 in 1951-1978
       - Portugal: DST was observed in 1950
       - Tonga: adopted standard time in 1945 not 1901, and moved from
-        +12:20 to +13 in 1961 not 1941
+	+12:20 to +13 in 1961 not 1941
     Additional fixes to entries in the 'backzone' file include:
       - Gambia: 1933 and 1942 transitions
       - Malawi: several 1911 through 1925 transitions
       - Sierra Leone: several 1913 through 1941 transitions, and DST
-        was NOT observed in 1957 through 1962
+	was NOT observed in 1957 through 1962
     (Thanks to P Chan, Michael Deckers, Alexander Krivenyshev and
     Alois Treindl.)
 

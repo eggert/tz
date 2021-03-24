@@ -608,8 +608,27 @@ Link Pacific/Auckland Antarctica/McMurdo
 # https://atojs.natlib.govt.nz/cgi-bin/atojs?a=d&d=AJHR1900-I.2.1.2.3
 # (page 20)
 #
-# From Paul Eggert (2021-03-23):
-# Transitions after 1900 are from Shanks & Pottenger.
+# From Michael Deckers (2021-03-24):
+# ... in the Cook Island Act of 1915-10-11, online at
+# http://www.paclii.org/ck/legis/ck-nz_act/cia1915132/
+# "651. The hour of the day shall in each of the islands included in the
+#  Cook Islands be determined in accordance with the meridian of that island."
+# so that local (mean?) time was still used in Rarotonga (and Niue) in 1915.
+# This was changed in the Cook Island Amendment Act of 1952-10-16 ...
+# http://www.paclii.org/ck/legis/ck-nz_act/ciaa1952212/
+# "651 (1) The hour of the day in each of the islands included in the Cook
+#  Islands, other than Niue, shall be determined as if each island were
+#  situated on the meridian one hundred and fifty-seven degrees thirty minutes
+#  West of Greenwich.  (2) The hour of the day in the Island of Niue shall be
+#  determined as if that island were situated on the meridian one hundred and
+#  seventy degrees West of Greenwich."
+# This act does not state when it takes effect, so one has to assume it
+# applies since 1952-10-16.  But there is the possibility that the act just
+# legalized prior existing practice, as we had seen with the Guernsey law of
+# 1913-06-18 for the switch in 1909-04-19.
+#
+# From Paul Eggert (2021-03-24):
+# Transitions after 1952 are from Shanks & Pottenger.
 #
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Cook	1978	only	-	Nov	12	0:00	0:30	-
@@ -617,7 +636,7 @@ Rule	Cook	1979	1991	-	Mar	Sun>=1	0:00	0	-
 Rule	Cook	1979	1990	-	Oct	lastSun	0:00	0:30	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone Pacific/Rarotonga	13:20:56 -	LMT	1899 Dec 26 # Avarua
-			-10:39:04 -	LMT	1901
+			-10:39:04 -	LMT	1952 Oct 16
 			-10:30	-	-1030	1978 Nov 12
 			-10:00	Cook	-10/-0930
 
@@ -625,10 +644,10 @@ Zone Pacific/Rarotonga	13:20:56 -	LMT	1899 Dec 26 # Avarua
 
 
 # Niue
+# See Pacific/Raratonga comments.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Pacific/Niue	-11:19:40 -	LMT	1901        # Alofi
-			-11:20	-	-1120	1951
-			-11:30	-	-1130	1978 Oct  1
+Zone	Pacific/Niue	-11:19:40 -	LMT	1952 Oct 16	# Alofi
+			-11:20	-	-1120	1978 Oct  1
 			-11:00	-	-11
 
 # Norfolk

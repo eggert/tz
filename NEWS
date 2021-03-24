@@ -8,6 +8,8 @@ Unreleased, experimental changes
     derived from Shanks, Whitman, and Mundell.  The fixes include:
       - Barbados: standard time was introduced in 1911, not 1932; and
         DST was observed in 1942-1944
+      - Cook Islands: In 1899 they switched from east to west of GMT,
+        celebrating Christmas for two days.
       - Guyana: corrected LMT for Georgetown; the introduction of
 	standard time in 1911, not 1915; and corrections to 1975 and
         1992 transitions
@@ -19,7 +21,8 @@ Unreleased, experimental changes
       - Malawi: several 1911 through 1925 transitions
       - Sierra Leone: several 1913 through 1941 transitions, and DST
         was NOT observed in 1957 through 1962
-    (Thanks to P Chan, Michael Deckers and Alois Treindl.)
+    (Thanks to P Chan, Michael Deckers, Alexander Krivenyshev and
+    Alois Treindl.)
 
   Changes to code
 

@@ -597,13 +597,27 @@ Link Pacific/Auckland Antarctica/McMurdo
 # was probably like Pacific/Auckland
 
 # Cook Is
-# From Shanks & Pottenger:
+#
+# From Alexander Krivenyshev (2021-03-24):
+# In 1899 the Cook Islands celebrated Christmas twice to correct the calendar.
+# According to the old books, missionaries were unaware of
+# the International Date line, when they came from Sydney.
+# Thus the Cook Islands were one day ahead....
+# http://nzetc.victoria.ac.nz/tm/scholarly/tei-KloDisc-t1-body-d18.html
+# ... Appendix to the Journals of the House of Representatives, 1900
+# https://atojs.natlib.govt.nz/cgi-bin/atojs?a=d&d=AJHR1900-I.2.1.2.3
+# (page 20)
+#
+# From Paul Eggert (2021-03-23):
+# Transitions after 1900 are from Shanks & Pottenger.
+#
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Cook	1978	only	-	Nov	12	0:00	0:30	-
 Rule	Cook	1979	1991	-	Mar	Sun>=1	0:00	0	-
 Rule	Cook	1979	1990	-	Oct	lastSun	0:00	0:30	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Pacific/Rarotonga	-10:39:04 -	LMT	1901        # Avarua
+Zone Pacific/Rarotonga	13:20:56 -	LMT	1899 Dec 26 # Avarua
+			-10:39:04 -	LMT	1901
 			-10:30	-	-1030	1978 Nov 12
 			-10:00	Cook	-10/-0930
 

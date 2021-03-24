@@ -155,7 +155,7 @@ static bool normalize_overflow32(int_fast32_t *, int *, int);
 static struct tm *timesub(time_t const *, int_fast32_t, struct state const *,
 			  struct tm *);
 static bool typesequiv(struct state const *, int, int);
-static bool tzparse(char const *, struct state *, time_t);
+static bool tzparse(char const *, struct state *, struct state *);
 
 #ifdef ALL_STATE
 static struct state *	lclptr;
@@ -596,15 +596,9 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		up->buf[0] == '\n' && up->buf[nread - 1] == '\n' &&
 		sp->typecnt + 2 <= TZ_MAX_TYPES) {
 			struct state	*ts = &lsp->u.st;
-			time_t parselb = TIME_T_MIN;
-			if (0 < sp->timecnt)
-			  parselb = sp->ats[sp->timecnt - 1];
-			if (0 < sp->leapcnt
-			    && parselb < sp->lsis[sp->leapcnt - 1].ls_trans)
-			  parselb = sp->lsis[sp->leapcnt - 1].ls_trans;
 
 			up->buf[nread - 1] = '\0';
-			if (tzparse(&up->buf[1], ts, parselb)) {
+			if (tzparse(&up->buf[1], ts, sp)) {
 
 			  /* Attempt to reuse existing abbreviations.
 			     Without this, America/Anchorage would be right on
@@ -1070,7 +1064,7 @@ transtime(const int year, register const struct rule *const rulep,
 */
 
 static bool
-tzparse(const char *name, struct state *sp, time_t parselb)
+tzparse(const char *name, struct state *sp, struct state *basep)
 {
 	const char *			stdname;
 	const char *			dstname;
@@ -1081,6 +1075,7 @@ tzparse(const char *name, struct state *sp, time_t parselb)
 	int_fast32_t			dstoffset;
 	register char *			cp;
 	register bool			load_ok;
+	time_t atlo = TIME_T_MIN, leaplo = TIME_T_MIN;
 
 	stdname = name;
 	if (*name == '<') {
@@ -1103,9 +1098,19 @@ tzparse(const char *name, struct state *sp, time_t parselb)
 	charcnt = stdlen + 1;
 	if (sizeof sp->chars < charcnt)
 	  return false;
-	load_ok = tzload(TZDEFRULES, sp, false) == 0;
-	if (!load_ok)
-		sp->leapcnt = 0;		/* so, we're off a little */
+	if (basep) {
+	  if (0 < basep->timecnt)
+	    atlo = basep->ats[basep->timecnt - 1];
+	  load_ok = false;
+	  sp->leapcnt = basep->leapcnt;
+	  memcpy(sp->lsis, basep->lsis, sp->leapcnt * sizeof *sp->lsis);
+	} else {
+	  load_ok = tzload(TZDEFRULES, sp, false) == 0;
+	  if (!load_ok)
+	    sp->leapcnt = 0;	/* So, we're off a little.  */
+	}
+	if (0 < sp->leapcnt)
+	  leaplo = sp->lsis[sp->leapcnt - 1].ls_trans;
 	if (*name != '\0') {
 		if (*name == '<') {
 			dstname = ++name;
@@ -1168,7 +1173,7 @@ tzparse(const char *name, struct state *sp, time_t parselb)
 			    janoffset = -yearsecs;
 			    break;
 			  }
-			} while (parselb < janfirst
+			} while (atlo < janfirst
 				 && EPOCH_YEAR - YEARSPERREPEAT / 2 < yearbeg);
 
 			while (true) {
@@ -1178,7 +1183,7 @@ tzparse(const char *name, struct state *sp, time_t parselb)
 			  time_t janfirst1 = janfirst;
 			  if (increment_overflow_time(&janfirst1, yearsecs)
 			      || increment_overflow(&yearbeg1, 1)
-			      || parselb <= janfirst1)
+			      || atlo <= janfirst1)
 			    break;
 			  yearbeg = yearbeg1;
 			  janfirst = janfirst1;
@@ -1209,15 +1214,21 @@ tzparse(const char *name, struct state *sp, time_t parselb)
 					if (! increment_overflow_time
 					    (&sp->ats[timecnt],
 					     janoffset + starttime)
-					    && parselb <= sp->ats[timecnt])
+					    && atlo <= sp->ats[timecnt])
 					  sp->types[timecnt++] = !reversed;
 					sp->ats[timecnt] = janfirst;
 					if (! increment_overflow_time
 					    (&sp->ats[timecnt],
 					     janoffset + endtime)
-					    && parselb <= sp->ats[timecnt]) {
+					    && atlo <= sp->ats[timecnt]) {
 					  sp->types[timecnt++] = reversed;
 					}
+				}
+				if (endtime < leaplo) {
+				  yearlim = year;
+				  if (increment_overflow(&yearlim,
+							 YEARSPERREPEAT + 1))
+				    yearlim = INT_MAX;
 				}
 				if (increment_overflow_time
 				    (&janfirst, janoffset + yearsecs))
@@ -1335,7 +1346,7 @@ static void
 gmtload(struct state *const sp)
 {
 	if (tzload(gmt, sp, true) != 0)
-	  tzparse("GMT0", sp, TIME_T_MIN);
+	  tzparse("GMT0", sp, NULL);
 }
 
 /* Initialize *SP to a value appropriate for the TZ setting NAME.
@@ -1358,7 +1369,7 @@ zoneinit(struct state *sp, char const *name)
     return 0;
   } else {
     int err = tzload(name, sp, true);
-    if (err != 0 && name && name[0] != ':' && tzparse(name, sp, TIME_T_MIN))
+    if (err != 0 && name && name[0] != ':' && tzparse(name, sp, NULL))
       err = 0;
     if (err == 0)
       scrub_abbrs(sp);

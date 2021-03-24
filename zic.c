@@ -3420,6 +3420,7 @@ rpytime(const struct rule *rp, zic_t wantedy)
 	register int	m, i;
 	register zic_t	dayoff;			/* with a nod to Margaret O. */
 	register zic_t	t, y;
+	int yrem;
 
 	if (wantedy == ZIC_MIN)
 		return min_time;
@@ -3428,24 +3429,20 @@ rpytime(const struct rule *rp, zic_t wantedy)
 	dayoff = 0;
 	m = TM_JANUARY;
 	y = EPOCH_YEAR;
-	if (y < wantedy) {
-	  wantedy -= y;
-	  dayoff = (wantedy / YEARSPERREPEAT) * (SECSPERREPEAT / SECSPERDAY);
-	  wantedy %= YEARSPERREPEAT;
-	  wantedy += y;
-	} else if (wantedy < 0) {
-	  dayoff = (wantedy / YEARSPERREPEAT) * (SECSPERREPEAT / SECSPERDAY);
-	  wantedy %= YEARSPERREPEAT;
-	}
+
+	/* dayoff = floor((wantedy - y) / YEARSPERREPEAT) * DAYSPERREPEAT,
+	   sans overflow.  */
+	yrem = wantedy % YEARSPERREPEAT - y % YEARSPERREPEAT;
+	dayoff = ((wantedy / YEARSPERREPEAT - y / YEARSPERREPEAT
+		   + yrem / YEARSPERREPEAT - (yrem % YEARSPERREPEAT < 0))
+		  * DAYSPERREPEAT);
+	/* wantedy = y + ((wantedy - y) mod YEARSPERREPEAT), sans overflow.  */
+	wantedy = y + (yrem + 2 * YEARSPERREPEAT) % YEARSPERREPEAT;
+
 	while (wantedy != y) {
-		if (wantedy > y) {
-			i = len_years[isleap(y)];
-			++y;
-		} else {
-			--y;
-			i = -len_years[isleap(y)];
-		}
+		i = len_years[isleap(y)];
 		dayoff = oadd(dayoff, i);
+		y++;
 	}
 	while (m != rp->r_month) {
 		i = len_months[isleap(y)][m];
@@ -3464,30 +3461,21 @@ rpytime(const struct rule *rp, zic_t wantedy)
 	--i;
 	dayoff = oadd(dayoff, i);
 	if (rp->r_dycode == DC_DOWGEQ || rp->r_dycode == DC_DOWLEQ) {
-		register zic_t	wday;
-
-#define LDAYSPERWEEK	((zic_t) DAYSPERWEEK)
-		wday = EPOCH_WDAY;
 		/*
 		** Don't trust mod of negative numbers.
 		*/
-		if (dayoff >= 0)
-			wday = (wday + dayoff) % LDAYSPERWEEK;
-		else {
-			wday -= ((-dayoff) % LDAYSPERWEEK);
-			if (wday < 0)
-				wday += LDAYSPERWEEK;
-		}
+		zic_t wday = ((EPOCH_WDAY + dayoff % DAYSPERWEEK + DAYSPERWEEK)
+			      % DAYSPERWEEK);
 		while (wday != rp->r_wday)
 			if (rp->r_dycode == DC_DOWGEQ) {
 				dayoff = oadd(dayoff, 1);
-				if (++wday >= LDAYSPERWEEK)
+				if (++wday >= DAYSPERWEEK)
 					wday = 0;
 				++i;
 			} else {
 				dayoff = oadd(dayoff, -1);
 				if (--wday < 0)
-					wday = LDAYSPERWEEK - 1;
+					wday = DAYSPERWEEK - 1;
 				--i;
 			}
 		if (i < 0 || i >= len_months[isleap(y)][m]) {

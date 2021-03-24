@@ -710,8 +710,6 @@ char *ctime_r(time_t const *, char *);
 
 /* Handy macros that are independent of tzfile implementation.  */
 
-#define YEARSPERREPEAT		400	/* years before a Gregorian repeat */
-
 #define SECSPERMIN	60
 #define MINSPERHOUR	60
 #define HOURSPERDAY	24
@@ -721,6 +719,12 @@ char *ctime_r(time_t const *, char *);
 #define SECSPERHOUR	(SECSPERMIN * MINSPERHOUR)
 #define SECSPERDAY	((int_fast32_t) SECSPERHOUR * HOURSPERDAY)
 #define MONSPERYEAR	12
+
+#define YEARSPERREPEAT		400	/* years before a Gregorian repeat */
+#define DAYSPERREPEAT		((int_fast32_t) 400 * 365 + 100 - 4 + 1)
+#define SECSPERREPEAT		((int_fast64_t) DAYSPERREPEAT * SECSPERDAY)
+#define SECSPERREPEAT_BITS	34	/* ceil(log2(SECSPERREPEAT)) */
+#define AVGSECSPERYEAR		(SECSPERREPEAT / YEARSPERREPEAT)
 
 #define TM_SUNDAY	0
 #define TM_MONDAY	1
@@ -763,15 +767,5 @@ char *ctime_r(time_t const *, char *);
 */
 
 #define isleap_sum(a, b)	isleap((a) % 400 + (b) % 400)
-
-
-/*
-** The Gregorian year averages 365.2425 days, which is 31556952 seconds.
-*/
-
-#define AVGSECSPERYEAR		31556952L
-#define SECSPERREPEAT \
-  ((int_fast64_t) YEARSPERREPEAT * (int_fast64_t) AVGSECSPERYEAR)
-#define SECSPERREPEAT_BITS	34	/* ceil(log2(SECSPERREPEAT)) */
 
 #endif /* !defined PRIVATE_H */

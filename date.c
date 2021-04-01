@@ -92,7 +92,7 @@ main(const int argc, char *argv[])
 			}
 			rflag = true;
 			errno = 0;
-			secs = strtoimax (optarg, &endarg, 0);
+			secs = strtoimax(optarg, &endarg, 0);
 			if (*endarg || optarg == endarg)
 				errno = EINVAL;
 			else if (! (TIME_T_MIN <= secs && secs <= TIME_T_MAX))

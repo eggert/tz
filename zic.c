@@ -476,7 +476,7 @@ erealloc(void *ptr, size_t size)
 }
 
 static char * ATTRIBUTE_MALLOC
-ecpyalloc (char const *str)
+ecpyalloc(char const *str)
 {
   return memcheck(strdup(str));
 }
@@ -592,7 +592,7 @@ usage(FILE *stream, int status)
    ancestors.  After this is done, all files are accessed with names
    relative to DIR.  */
 static void
-change_directory (char const *dir)
+change_directory(char const *dir)
 {
   if (chdir(dir) != 0) {
     int chdir_errno = errno;
@@ -693,14 +693,14 @@ timerange_option(char *timerange)
   char *lo_end = timerange, *hi_end;
   if (*timerange == '@') {
     errno = 0;
-    lo = strtoimax (timerange + 1, &lo_end, 10);
+    lo = strtoimax(timerange + 1, &lo_end, 10);
     if (lo_end == timerange + 1 || (lo == INTMAX_MAX && errno == ERANGE))
       return false;
   }
   hi_end = lo_end;
   if (lo_end[0] == '/' && lo_end[1] == '@') {
     errno = 0;
-    hi = strtoimax (lo_end + 2, &hi_end, 10);
+    hi = strtoimax(lo_end + 2, &hi_end, 10);
     if (hi_end == lo_end + 2 || hi == INTMAX_MIN)
       return false;
     hi -= ! (hi == INTMAX_MAX && errno == ERANGE);
@@ -924,9 +924,9 @@ componentcheck(char const *name, char const *component,
 	ptrdiff_t component_len = component_end - component;
 	if (component_len == 0) {
 	  if (!*name)
-	    error (_("empty file name"));
+	    error(_("empty file name"));
 	  else
-	    error (_(component == name
+	    error(_(component == name
 		     ? "file name '%s' begins with '/'"
 		     : *component_end
 		     ? "file name '%s' contains '//'"
@@ -1019,10 +1019,10 @@ random_dirent(char const **name, char **namealloc)
   /* This randomization is not the best, but is portable to C89.  */
   if (!initialized++) {
     unsigned now = time(NULL);
-    srand(rand () ^ now);
+    srand(rand() ^ now);
   }
   for (i = 0; i < suffixlen; i++)
-    dst[dirlen + prefixlen + i] = alphabet[rand () % alphabetlen];
+    dst[dirlen + prefixlen + i] = alphabet[rand() % alphabetlen];
 }
 
 /* Prepare to write to the file *OUTNAME, using *TEMPNAME to store the

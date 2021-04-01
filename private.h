@@ -361,10 +361,10 @@ typedef unsigned long uintmax_t;
 #endif
 
 #if 3 <= __GNUC__
-# define ATTRIBUTE_CONST __attribute__ ((const))
-# define ATTRIBUTE_MALLOC __attribute__ ((__malloc__))
-# define ATTRIBUTE_PURE __attribute__ ((__pure__))
-# define ATTRIBUTE_FORMAT(spec) __attribute__ ((__format__ spec))
+# define ATTRIBUTE_CONST __attribute__((const))
+# define ATTRIBUTE_MALLOC __attribute__((__malloc__))
+# define ATTRIBUTE_PURE __attribute__((__pure__))
+# define ATTRIBUTE_FORMAT(spec) __attribute__((__format__ spec))
 #else
 # define ATTRIBUTE_CONST /* empty */
 # define ATTRIBUTE_MALLOC /* empty */
@@ -374,7 +374,7 @@ typedef unsigned long uintmax_t;
 
 #if !defined _Noreturn && __STDC_VERSION__ < 201112
 # if 2 < __GNUC__ + (8 <= __GNUC_MINOR__)
-#  define _Noreturn __attribute__ ((__noreturn__))
+#  define _Noreturn __attribute__((__noreturn__))
 # else
 #  define _Noreturn
 # endif
@@ -620,7 +620,7 @@ time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_PURE;
 # define bool int
 #endif
 
-#define TYPE_BIT(type)	(sizeof (type) * CHAR_BIT)
+#define TYPE_BIT(type)	(sizeof(type) * CHAR_BIT)
 #define TYPE_SIGNED(type) (((type) -1) < 0)
 #define TWOS_COMPLEMENT(t) ((t) ~ (t) 0 < 0)
 

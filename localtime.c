@@ -348,7 +348,7 @@ union input_buffer {
   struct tzhead tzhead;
 
   /* The entire buffer.  */
-  char buf[2 * sizeof(struct tzhead) + 2 * sizeof (struct state)
+  char buf[2 * sizeof(struct tzhead) + 2 * sizeof(struct state)
 	   + 4 * TZ_MAX_TIMES];
 };
 
@@ -367,7 +367,7 @@ union local_storage {
   } u;
 
   /* The file name to be opened.  */
-  char fullname[BIGGEST(sizeof (struct file_analysis),
+  char fullname[BIGGEST(sizeof(struct file_analysis),
 			sizeof tzdirslash + 1024)];
 };
 
@@ -384,7 +384,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 	register ssize_t		nread;
 	register bool doaccess;
 	register union input_buffer *up = &lsp->u.u;
-	register int tzheadsize = sizeof (struct tzhead);
+	register int tzheadsize = sizeof(struct tzhead);
 
 	sp->goback = sp->goahead = false;
 
@@ -2025,10 +2025,10 @@ time2sub(struct tm *const tmp,
 		    && (yourtm.TM_GMTOFF < 0
 			? (-SECSPERDAY <= yourtm.TM_GMTOFF
 			   && (mytm.TM_GMTOFF <=
-			       (SMALLEST (INT_FAST32_MAX, LONG_MAX)
+			       (SMALLEST(INT_FAST32_MAX, LONG_MAX)
 				+ yourtm.TM_GMTOFF)))
 			: (yourtm.TM_GMTOFF <= SECSPERDAY
-			   && ((BIGGEST (INT_FAST32_MIN, LONG_MIN)
+			   && ((BIGGEST(INT_FAST32_MIN, LONG_MIN)
 				+ yourtm.TM_GMTOFF)
 			       <= mytm.TM_GMTOFF)))) {
 		  /* MYTM matches YOURTM except with the wrong UT offset.
@@ -2113,8 +2113,8 @@ time2(struct tm * const	tmp,
 
 static time_t
 time1(struct tm *const tmp,
-      struct tm *(*funcp) (struct state const *, time_t const *,
-			   int_fast32_t, struct tm *),
+      struct tm *(*funcp)(struct state const *, time_t const *,
+			  int_fast32_t, struct tm *),
       struct state const *sp,
       const int_fast32_t offset)
 {

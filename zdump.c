@@ -519,7 +519,7 @@ main(int argc, char *argv[])
 		}
 	}
 	gmtzinit();
-	INITIALIZE (now);
+	INITIALIZE(now);
 	if (! (iflag | vflag | Vflag))
 	  now = time(NULL);
 	longest = 0;
@@ -1123,21 +1123,21 @@ static const char *
 tformat(void)
 {
 	if (0 > (time_t) -1) {		/* signed */
-		if (sizeof (time_t) == sizeof (intmax_t))
+		if (sizeof(time_t) == sizeof(intmax_t))
 			return "%"PRIdMAX;
-		if (sizeof (time_t) > sizeof (long))
+		if (sizeof(time_t) > sizeof(long))
 			return "%lld";
-		if (sizeof (time_t) > sizeof (int))
+		if (sizeof(time_t) > sizeof(int))
 			return "%ld";
 		return "%d";
 	}
 #ifdef PRIuMAX
-	if (sizeof (time_t) == sizeof (uintmax_t))
+	if (sizeof(time_t) == sizeof(uintmax_t))
 		return "%"PRIuMAX;
 #endif
-	if (sizeof (time_t) > sizeof (unsigned long))
+	if (sizeof(time_t) > sizeof(unsigned long))
 		return "%llu";
-	if (sizeof (time_t) > sizeof (unsigned int))
+	if (sizeof(time_t) > sizeof(unsigned int))
 		return "%lu";
 	return "%u";
 }

@@ -26,6 +26,10 @@ Unreleased, experimental changes
     (Thanks to P Chan, Michael Deckers, Alexander Krivenyshev and
     Alois Treindl.)
 
+  Changes to maintenance procedure
+
+    The new file SECURITY covers how to report security-related bugs.
+
   Changes to code
 
     zic now creates each output file or link atomically,

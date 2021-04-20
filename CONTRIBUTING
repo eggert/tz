@@ -26,6 +26,9 @@ to work well.  Additions to data should contain commentary citing
 reliable sources as justification.  Citations should use https: URLs
 if available.
 
+For changes that fix sensitive security-related bugs, please see the
+file SECURITY.
+
 Please submit changes against either the latest release in
 <https://www.iana.org/time-zones> or the main branch of the development
 repository.  The latter is preferred.  If you use Git the following

@@ -9,6 +9,7 @@
    This avoids creating an unnecessary dependency on localtime.c.  */
 #undef EPOCH_LOCAL
 #undef EPOCH_OFFSET
+#undef RESERVE_STD_EXT_IDS
 #undef time_tz
 
 #include "version.h"

@@ -17,6 +17,7 @@
 
 #include <fcntl.h>
 #include <locale.h>
+#include <signal.h>
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdio.h>

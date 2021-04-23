@@ -1920,7 +1920,7 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 }
 
 static void
-convert(const int_fast32_t val, char *const buf)
+convert(uint_fast32_t val, char *buf)
 {
 	register int	i;
 	register int	shift;
@@ -1931,7 +1931,7 @@ convert(const int_fast32_t val, char *const buf)
 }
 
 static void
-convert64(const zic_t val, char *const buf)
+convert64(uint_fast64_t val, char *buf)
 {
 	register int	i;
 	register int	shift;

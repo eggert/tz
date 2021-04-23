@@ -321,6 +321,10 @@ typedef long intmax_t;
 # endif
 #endif
 
+#ifndef UINT_FAST32_MAX
+typedef unsigned long uint_fast32_t;
+#endif
+
 #ifndef UINT_FAST64_MAX
 # if defined ULLONG_MAX || defined __LONG_LONG_MAX__
 typedef unsigned long long uint_fast64_t;

@@ -237,7 +237,7 @@ detzcode(const char *const codep)
 static int_fast64_t
 detzcode64(const char *const codep)
 {
-	register uint_fast64_t result;
+	register int_fast64_t result;
 	register int	i;
 	int_fast64_t one = 1;
 	int_fast64_t halfmaxval = one << (64 - 2);

@@ -1927,7 +1927,7 @@ convert(uint_fast32_t val, char *buf)
 	unsigned char *const b = (unsigned char *) buf;
 
 	for (i = 0, shift = 24; i < 4; ++i, shift -= 8)
-		b[i] = val >> shift;
+	  b[i] = (val >> shift) & 0xff;
 }
 
 static void
@@ -1938,7 +1938,7 @@ convert64(uint_fast64_t val, char *buf)
 	unsigned char *const b = (unsigned char *) buf;
 
 	for (i = 0, shift = 56; i < 8; ++i, shift -= 8)
-		b[i] = val >> shift;
+	  b[i] = (val >> shift) & 0xff;
 }
 
 static void

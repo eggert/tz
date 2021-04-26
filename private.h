@@ -642,7 +642,7 @@ time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_PURE;
 #define TIME_T_MAX_NO_PADDING MAXVAL(time_t, TYPE_BIT(time_t))
 
 /* The extreme time values.  These are macros, not constants, so that
-   any portability problem occur only when compiling .c files that use
+   any portability problems occur only when compiling .c files that use
    the macros, which is safer for applications that need only zdump and zic.
    This implementation assumes no padding if time_t is signed and
    either the compiler lacks support for _Generic or time_t is not one
@@ -727,7 +727,6 @@ char *ctime_r(time_t const *, char *);
 #define YEARSPERREPEAT		400	/* years before a Gregorian repeat */
 #define DAYSPERREPEAT		((int_fast32_t) 400 * 365 + 100 - 4 + 1)
 #define SECSPERREPEAT		((int_fast64_t) DAYSPERREPEAT * SECSPERDAY)
-#define SECSPERREPEAT_BITS	34	/* ceil(log2(SECSPERREPEAT)) */
 #define AVGSECSPERYEAR		(SECSPERREPEAT / YEARSPERREPEAT)
 
 #define TM_SUNDAY	0

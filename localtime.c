@@ -334,14 +334,6 @@ scrub_abbrs(struct state *sp)
 	}
 }
 
-static bool
-differ_by_repeat(const time_t t1, const time_t t0)
-{
-	if (TYPE_BIT(time_t) - TYPE_SIGNED(time_t) < SECSPERREPEAT_BITS)
-		return 0;
-	return t1 - t0 == SECSPERREPEAT;
-}
-
 /* Input buffer for data read from a compiled tz file.  */
 union input_buffer {
   /* The first part of the buffer, interpreted as a header.  */
@@ -660,20 +652,26 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 	if (sp->typecnt == 0)
 	  return EINVAL;
 	if (sp->timecnt > 1) {
+	    if (sp->ats[0] <= TIME_T_MAX - SECSPERREPEAT) {
+		time_t repeatat = sp->ats[0] + SECSPERREPEAT;
+		int repeattype = sp->types[0];
 		for (i = 1; i < sp->timecnt; ++i)
-			if (typesequiv(sp, sp->types[i], sp->types[0]) &&
-				differ_by_repeat(sp->ats[i], sp->ats[0])) {
+		  if (sp->ats[i] == repeatat
+		      && typesequiv(sp, sp->types[i], repeattype)) {
 					sp->goback = true;
 					break;
-				}
+		  }
+	    }
+	    if (TIME_T_MIN + SECSPERREPEAT <= sp->ats[sp->timecnt - 1]) {
+		time_t repeatat = sp->ats[sp->timecnt - 1] - SECSPERREPEAT;
+		int repeattype = sp->types[sp->timecnt - 1];
 		for (i = sp->timecnt - 2; i >= 0; --i)
-			if (typesequiv(sp, sp->types[sp->timecnt - 1],
-				sp->types[i]) &&
-				differ_by_repeat(sp->ats[sp->timecnt - 1],
-				sp->ats[i])) {
+		  if (sp->ats[i] == repeatat
+		      && typesequiv(sp, sp->types[i], repeattype)) {
 					sp->goahead = true;
 					break;
-		}
+		  }
+	    }
 	}
 
 	/* Infer sp->defaulttype from the data.  Although this default

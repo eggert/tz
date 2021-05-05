@@ -91,7 +91,7 @@ static bool	errout;
 static char const *abbr(struct tm const *);
 static intmax_t	delta(struct tm *, struct tm *) ATTRIBUTE_PURE;
 static void dumptime(struct tm const *);
-static time_t hunt(timezone_t, char *, time_t, struct tm *, time_t, bool);
+static time_t hunt(timezone_t, char *, time_t, time_t, bool);
 static void show(timezone_t, char *, time_t, bool);
 static void showextrema(timezone_t, char *, time_t, struct tm *, time_t);
 static void showtrans(char const *, struct tm const *, time_t, char const *,
@@ -534,7 +534,6 @@ main(int argc, char *argv[])
 		char const *ab;
 		time_t t;
 		struct tm tm, newtm;
-		struct tm *tmp;
 		bool tm_ok;
 		if (!tz) {
 		  perror(argv[i]);
@@ -552,16 +551,14 @@ main(int argc, char *argv[])
 			if (my_localtime_rz(tz, &t, &tm) == NULL
 			    && t < cutlotime) {
 				time_t newt = cutlotime;
-				if (my_localtime_rz(tz, &newt, &newtm)
-				    != NULL)
+				if (my_localtime_rz(tz, &newt, &newtm) != NULL)
 				  showextrema(tz, argv[i], t, NULL, newt);
 			}
 		}
 		if (t + 1 < cutlotime)
 		  t = cutlotime - 1;
 		INITIALIZE (ab);
-		tmp = my_localtime_rz(tz, &t, &tm);
-		tm_ok = tmp != NULL;
+		tm_ok = my_localtime_rz(tz, &t, &tm) != NULL;
 		if (tm_ok) {
 		  ab = saveabbr(&abbrev, &abbrevsize, &tm);
 		  if (iflag) {
@@ -580,7 +577,7 @@ main(int argc, char *argv[])
 		      || (tm_ok && (delta(&newtm, &tm) != newt - t
 				    || newtm.tm_isdst != tm.tm_isdst
 				    || strcmp(abbr(&newtm), ab) != 0))) {
-		    newt = hunt(tz, argv[i], t, tmp, newt, false);
+		    newt = hunt(tz, argv[i], t, newt, false);
 		    newtmp = localtime_rz(tz, &newt, &newtm);
 		    newtm_ok = newtmp != NULL;
 		    if (iflag)
@@ -602,7 +599,7 @@ main(int argc, char *argv[])
 			time_t newt = absolute_max_time;
 			t = cuthitime;
 			if (t < newt) {
-			  tmp = my_localtime_rz(tz, &t, &tm);
+			  struct tm *tmp = my_localtime_rz(tz, &t, &tm);
 			  if (tmp != NULL
 			      && my_localtime_rz(tz, &newt, &newtm) == NULL)
 			    showextrema(tz, argv[i], t, tmp, newt);
@@ -661,29 +658,30 @@ yeartot(intmax_t y)
 }
 
 /* Search for a discontinuity in timezone TZ with name NAME, in the
-   timestamps ranging from LOT (with broken-down time LOTMP if
-   nonnull) through HIT.  LOT and HIT disagree about some aspect of
-   timezone.  If ONLY_OK, search only for definedness changes, i.e.,
-   localtime succeeds on one side of the transition but fails on the
-   other side.  Return the timestamp just before the transition from
-   LOT's settings.  */
+   timestamps ranging from LOT through HIT.  LOT and HIT disagree
+   about some aspect of timezone.  If ONLY_OK, search only for
+   definedness changes, i.e., localtime succeeds on one side of the
+   transition but fails on the other side.  Return the timestamp just
+   before the transition from LOT's settings.  */
 
 static time_t
-hunt(timezone_t tz, char *name, time_t lot, struct tm *lotmp, time_t hit,
-     bool only_ok)
+hunt(timezone_t tz, char *name, time_t lot, time_t hit, bool only_ok)
 {
 	static char *		loab;
 	static size_t		loabsize;
 	char const *		ab;
 	struct tm		lotm;
 	struct tm		tm;
-	bool lotm_ok = lotmp != NULL;
+
+	/* Convert LOT into a broken-down time here, even though our
+	   caller already did that.  On platforms without TM_ZONE,
+	   tzname may have been altered since our caller broke down
+	   LOT, and tzname needs to be changed back.  */
+	bool lotm_ok = my_localtime_rz(tz, &lot, &lotm) != NULL;
 	bool tm_ok;
 
-	if (lotm_ok) {
-	  lotm = *lotmp;
+	if (lotm_ok)
 	  ab = saveabbr(&loab, &loabsize, &lotm);
-	}
 	for ( ; ; ) {
 		/* T = average of LOT and HIT, rounding down.
 		   Avoid overflow, even on oddball C89 platforms
@@ -828,7 +826,7 @@ static void
 showextrema(timezone_t tz, char *zone, time_t lo, struct tm *lotmp, time_t hi)
 {
   struct tm localtm[2], gmtm[2];
-  time_t t, boundary = hunt(tz, zone, lo, lotmp, hi, true);
+  time_t t, boundary = hunt(tz, zone, lo, hi, true);
   bool old = false;
   hi = (SECSPERDAY < hi - boundary
 	? boundary + SECSPERDAY

@@ -3184,6 +3184,9 @@ Zone Atlantic/Bermuda	-4:19:18 -	LMT	1890	# Hamilton
 			-4:00	Canada	A%sT	1976
 			-4:00	US	A%sT
 
+# Caribbean Netherlands
+# See America/Curacao.
+
 # Cayman Is
 # See America/Panama.
 
@@ -3723,7 +3726,6 @@ Zone	America/Managua	-5:45:08 -	LMT	1890
 Zone	America/Panama	-5:18:08 -	LMT	1890
 			-5:19:36 -	CMT	1908 Apr 22 # Colón Mean Time
 			-5:00	-	EST
-Link America/Panama America/Cayman
 
 # Puerto Rico
 # There are too many San Juans elsewhere, so we'll use 'Puerto_Rico'.
@@ -3747,6 +3749,9 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15 # St Pierre
 
 # St Vincent and the Grenadines
 # See America/Port_of_Spain.
+
+# Sint Maarten
+# See America/Curacao.
 
 # Turks and Caicos
 #
@@ -3817,7 +3822,7 @@ Zone America/Grand_Turk	-4:44:32 -	LMT	1890
 			-5:00	US	E%sT
 
 # British Virgin Is
-# Virgin Is
+# US Virgin Is
 # See America/Port_of_Spain.
 
 

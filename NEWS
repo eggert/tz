@@ -30,6 +30,11 @@ Unreleased, experimental changes
 
     The new file SECURITY covers how to report security-related bugs.
 
+    Several backward-compatibility links have been moved to the
+    'backward' file.  These links, which range from Africa/Addis_Ababa
+    to Pacific/Saipan, are only for compatibility with now-obsolete
+    guidelines suggesting an entry for every ISO 3166 code.
+
   Changes to code
 
     zic now creates each output file or link atomically,

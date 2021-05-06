@@ -172,12 +172,14 @@ END {
 			status = 1
 		}
 	}
-	for (tz in tztab) {
+	if (zone_table != "zone.tab") {
+	    for (tz in tztab) {
 		if (!zoneSeen[tz]) {
 			printf "%s:%d: no Zone table for '%s'\n", \
 				zone_table, tz2NR[tz], tz >>"/dev/stderr"
 			status = 1
 		}
+	    }
 	}
 	if (0 < want_warnings) {
 		for (cc in cc2name) {

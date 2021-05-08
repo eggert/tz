@@ -34,6 +34,8 @@ Unreleased, experimental changes
     'backward' file.  These links, which range from Africa/Addis_Ababa
     to Pacific/Saipan, are only for compatibility with now-obsolete
     guidelines suggesting an entry for every ISO 3166 code.
+    The intercontinental convenience links Asia/Istanbul and
+    Europe/Nicosia have also been moved to 'backward'.
 
   Changes to code
 

@@ -19,7 +19,7 @@ Unreleased, experimental changes
       - Tonga: adopted standard time in 1945 not 1901, and moved from
 	+12:20 to +13 in 1961 not 1941
     Additional fixes to entries in the 'backzone' file include:
-      - Gambia: 1933 and 1942 transitions
+      - The Gambia: 1933 and 1942 transitions
       - Malawi: several 1911 through 1925 transitions
       - Sierra Leone: several 1913 through 1941 transitions, and DST
 	was NOT observed in 1957 through 1962
@@ -148,7 +148,7 @@ Release 2020e - 2020-12-22 15:14:34 -0800
     Correct many pre-1986 transitions, fixing entries originally
     derived from Shanks.  The fixes include:
       - Australia: several 1917 through 1971 transitions
-      - Bahamas: several 1941 through 1945 transitions
+      - The Bahamas: several 1941 through 1945 transitions
       - Bermuda: several 1917 through 1956 transitions
       - Belize: several 1942 through 1968 transitions
       - Ghana: several 1915 through 1956 transitions

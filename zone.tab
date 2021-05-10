@@ -17,8 +17,8 @@
 # that of zone1970.tab.
 #
 # Unlike zone1970.tab, this file's third column can contain duplicates,
-# and a row's third column does not necessarily name a location within
-# the country identified by the row's first column.
+# and a row's third column does not necessarily name the location given
+# by the row's second column.
 #
 # This table is intended as an aid for users, to help them select timezones
 # appropriate for their practical needs.  It is not intended to take or
@@ -444,7 +444,7 @@ VC	+1309-06114	America/Port_of_Spain
 VE	+1030-06656	America/Caracas
 VG	+1827-06437	America/Port_of_Spain
 VI	+1821-06456	America/Port_of_Spain
-VN	+1045+10640	Asia/Bangkok	Vietnam (north)
+VN	+2102+10551	Asia/Bangkok	Vietnam (north)
 VN	+1045+10640	Asia/Ho_Chi_Minh	Vietnam (south)
 VU	-1740+16825	Pacific/Efate
 WF	-1318-17610	Pacific/Wallis

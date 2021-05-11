@@ -58,8 +58,9 @@ specifies current standard time. For example, applications that deal
 with current and future timestamps in the traditional North
 American mountain time zone can choose from the timezones
 <code>America/Denver</code> which observes US-style daylight saving
-time, <code>America/Mazatlan</code> which observes Mexican-style DST,
-and <code>America/Phoenix</code> which does not observe DST.
+time (<abbr>DST</abbr>),
+<code>America/Mazatlan</code> which observes Mexican-style <abbr>DST</abbr>,
+and <code>America/Phoenix</code> which does not observe <abbr>DST</abbr>.
 Applications that also deal with past timestamps in the mountain time
 zone can choose from over a dozen timezones, such as
 <code>America/Boise</code>, <code>America/Edmonton</code>, and
@@ -754,7 +755,8 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
     the Western 06:00 to be 12:00. These practices are largely outside
     the scope of the <code><abbr>tz</abbr></code> code and data, which
     provide only limited support for date and time localization
-    such as that required by POSIX. If DST is not used a different time zone
+    such as that required by POSIX.
+    If <abbr>DST</abbr> is not used a different time zone
     can often do the trick; for example, in Kenya a <code>TZ</code> setting
     like <code>&lt;-03&gt;3</code> or <code>America/Cayenne</code> starts
     the day six hours later than <code>Africa/Nairobi</code> does.
@@ -1272,7 +1274,8 @@ The directly-supported mechanism assumes that <code>time_t</code>
 counts of seconds since the POSIX epoch normally include leap seconds,
 as opposed to POSIX <code>time_t</code> counts which exclude leap seconds.
 This modified timescale is converted to <abbr>UTC</abbr>
-at the same point that time zone and DST adjustments are applied &ndash;
+at the same point that time zone and <abbr>DST</abbr>
+adjustments are applied &ndash;
 namely, at calls to <code>localtime</code> and analogous functions &ndash;
 and the process is driven by leap second information
 stored in alternate versions of the <abbr>TZif</abbr> files.

@@ -3496,6 +3496,12 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 # influence of the sources.  There is no current abbreviation for DST,
 # so use "PDT", the usual American style.
 
+# From P Chan (2021-05-10):
+# Here's a fairly comprehensive article in Japanese:
+# https://wiki.suikawiki.org/n/Philippine%20Time
+# From Paul Eggert (2021-05-10):
+# The info in the Japanese table has not been absorbed (yet) below.
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Phil	1936	only	-	Nov	1	0:00	1:00	D
 Rule	Phil	1937	only	-	Feb	1	0:00	0	S

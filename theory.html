@@ -42,12 +42,13 @@ href="https://en.wikipedia.org/wiki/Unix_time">POSIX Epoch</a>
 (1970-01-01 00:00:00 <a
 href="https://en.wikipedia.org/wiki/Coordinated_Universal_Time"><abbr
 title="Coordinated Universal Time">UTC</abbr></a>).
-The database labels each timezone with a notable location and
-records all known clock transitions for that location.
 Although 1970 is a somewhat-arbitrary cutoff, there are significant
 challenges to moving the cutoff earlier even by a decade or two, due
 to the wide variety of local practices before computer timekeeping
 became prevalent.
+Most timezones correspond to a notable location and the database
+records all known clock transitions for that location;
+some timezones correspond instead to a fixed <abbr>UTC</abbr> offset.
 </p>
 
 <p>
@@ -69,7 +70,7 @@ time but differs from other timezones for some timestamps after 1970.
 </p>
 
 <p>
-Clock transitions before 1970 are recorded for each timezone,
+Clock transitions before 1970 are recorded for location-based timezones,
 because most systems support timestamps before 1970 and could
 misbehave if data entries were omitted for pre-1970 transitions.
 However, the database is not designed for and does not suffice for

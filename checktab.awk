@@ -147,7 +147,7 @@ $1 ~ /^#/ { next }
 		ruleUsed[$2] = 1
 		if ($3 ~ /%/) rulePercentUsed[$2] = 1
 	}
-	if (tz && tz ~ /\//) {
+	if (tz && tz ~ /\// && tz !~ /^Etc\//) {
 		if (!tztab[tz]) {
 			printf "%s: no data for '%s'\n", zone_table, tz \
 				>>"/dev/stderr"
@@ -171,7 +171,7 @@ END {
 		}
 	}
 	for (tz in tztab) {
-		if (!zoneSeen[tz]) {
+		if (!zoneSeen[tz] && tz !~ /^Etc\//) {
 			printf "%s:%d: no Zone table for '%s'\n", \
 				zone_table, tz2NR[tz], tz >>"/dev/stderr"
 			status = 1

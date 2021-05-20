@@ -255,10 +255,7 @@ Zone	Indian/Chagos	4:49:40	-	LMT	1907
 			6:00	-	+06
 
 # Brunei
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Brunei	7:39:40 -	LMT	1926 Mar # Bandar Seri Begawan
-			7:30	-	+0730	1933
-			8:00	-	+08
+# See Etc/GMT-8.
 
 # Burma / Myanmar
 
@@ -278,7 +275,7 @@ Zone	Asia/Yangon	6:24:47 -	LMT	1880        # or Rangoon
 			6:30	-	+0630
 
 # Cambodia
-# See Asia/Bangkok.
+# See Etc/GMT-7.
 
 
 # China
@@ -534,7 +531,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=11	 2:00	1:00	D
 # In earlier versions of this file, China had many separate Zone entries, but
 # this was based on what were apparently incorrect data in Shanks & Pottenger.
 # This has now been simplified to the two entries Asia/Shanghai and
-# Asia/Urumqi, with the others being links for backward compatibility.
+# Etc/GMT-6, with the others being links for backward compatibility.
 # Proposed in 1918 and theoretically in effect until 1949 (although in practice
 # mainly observed in coastal areas), the five zones were:
 #
@@ -556,7 +553,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=11	 2:00	1:00	D
 # Yangchun, Yangjiang, Yu'nan, and Yunfu.
 #
 # Xin-zang Time ("Xinjiang-Tibet Time") UT +06
-# This region is now part of either Asia/Urumqi or Asia/Shanghai with
+# This region is now part of either Etc/GMT-6 or Asia/Shanghai with
 # current boundaries uncertain; times before 1970 for areas that
 # disagree with Ürümqi or Shanghai are not recorded here.
 # The Gansu counties Aksay, Anxi, Dunhuang, Subei; west Qinghai;
@@ -609,68 +606,14 @@ Rule	PRC	1987	1991	-	Apr	Sun>=11	 2:00	1:00	D
 # 2. Kashi...
 # 3. Urumqi...
 # 4. Kashgar...
-# ...
-# 5. It seems that Uyghurs in Ürümqi has been using Xinjiang since at least the
-# 1960's. I know of one Han, now over 50, who grew up in the surrounding
-# countryside and used Xinjiang time as a child.
-#
-# 6. Likewise for Kashgar and the rest of south Xinjiang I don't know of any
-# start date for Xinjiang time.
-#
-# Without having access to local historical records, nor the ability to legally
-# publish them, I would go with October 1, 1949, when Xinjiang became the Uyghur
-# Autonomous Region under the PRC. (Before that Uyghurs, of course, would also
-# not be using Beijing time, but some local time.)
-
-# From David Cochrane (2014-03-26):
-# Just a confirmation that Ürümqi time was implemented in Ürümqi on 1 Feb 1986:
-# https://content.time.com/time/magazine/article/0,9171,960684,00.html
-
-# From Luther Ma (2014-04-22):
-# I have interviewed numerous people of various nationalities and from
-# different localities in Xinjiang and can confirm the information in Guo's
-# report regarding Xinjiang, as well as the Time article reference by David
-# Cochrane.  Whether officially recognized or not (and both are officially
-# recognized), two separate times have been in use in Xinjiang since at least
-# the Cultural Revolution: Xinjiang Time (XJT), aka Ürümqi Time or local time;
-# and Beijing Time.  There is no confusion in Xinjiang as to which name refers
-# to which time. Both are widely used in the province, although in some
-# population groups might be use one to the exclusion of the other.  The only
-# problem is that computers and smart phones list Ürümqi (or Kashgar) as
-# having the same time as Beijing.
-
-# From Paul Eggert (2014-06-30):
-# In the early days of the PRC, Tibet was given its own time zone (UT +06)
-# but this was withdrawn in 1959 and never reinstated; see Tubten Khétsun,
-# Memories of life in Lhasa under Chinese Rule, Columbia U Press, ISBN
-# 978-0231142861 (2008), translator's introduction by Matthew Akester, p x.
-# As this is before our 1970 cutoff, Tibet doesn't need a separate zone.
-#
-# Xinjiang Time is well-documented as being officially recognized.  E.g., see
-# "The Working-Calendar for The Xinjiang Uygur Autonomous Region Government"
-# <http://www.sinkiang.gov.cn/service/ourworking/> (2014-04-22).
-# Unfortunately, we have no good records of time in Xinjiang before 1986.
-# During the 20th century parts of Xinjiang were ruled by the Qing dynasty,
-# the Republic of China, various warlords, the First and Second East Turkestan
-# Republics, the Soviet Union, the Kuomintang, and the People's Republic of
-# China, and tracking down all these organizations' timekeeping rules would be
-# quite a trick.  Approximate this lost history by a transition from LMT to
-# UT +06 at the start of 1928, the year of accession of the warlord Jin Shuren,
-# which happens to be the date given by Shanks & Pottenger (no doubt as a
-# guess) as the transition from LMT.  Ignore the usage of +08 before
-# 1986-02-01 under the theory that the transition date to +08 is unknown and
-# that the sort of users who prefer Asia/Urumqi now typically ignored the
-# +08 mandate back then.
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 # Beijing time, used throughout China; represented by Shanghai.
 Zone	Asia/Shanghai	8:05:43	-	LMT	1901
 			8:00	Shang	C%sT	1949 May 28
 			8:00	PRC	C%sT
-# Xinjiang time, used by many in western China; represented by Ürümqi / Ürümchi
-# / Wulumuqi.  (Please use Asia/Shanghai if you prefer Beijing time.)
-Zone	Asia/Urumqi	5:50:20	-	LMT	1928
-			6:00	-	+06
+# See Etc/GMT-6 for Xinjiang time, used by many in western China.
+# (Please use Asia/Shanghai if you prefer Beijing time.)
 
 
 # Hong Kong
@@ -2693,10 +2636,10 @@ Zone	Asia/Pyongyang	8:23:00 -	LMT	1908 Apr  1
 ###############################################################################
 
 # Kuwait
-# See Asia/Riyadh.
+# See Etc/GMT-3.
 
 # Laos
-# See Asia/Bangkok.
+# See Etc/GMT-7.
 
 
 # Lebanon
@@ -2730,39 +2673,12 @@ Zone	Asia/Beirut	2:22:00 -	LMT	1880
 			2:00	Lebanon	EE%sT
 
 # Malaysia
-# Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
-Rule	NBorneo	1935	1941	-	Sep	14	0:00	0:20	-
-Rule	NBorneo	1935	1941	-	Dec	14	0:00	0	-
-#
-# peninsular Malaysia
-# taken from Mok Ly Yng (2003-10-30)
-# http://www.math.nus.edu.sg/aslaksen/teaching/timezone.html
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Asia/Kuala_Lumpur	6:46:46 -	LMT	1901 Jan  1
-			6:55:25	-	SMT	1905 Jun  1 # Singapore M.T.
-			7:00	-	+07	1933 Jan  1
-			7:00	0:20	+0720	1936 Jan  1
-			7:20	-	+0720	1941 Sep  1
-			7:30	-	+0730	1942 Feb 16
-			9:00	-	+09	1945 Sep 12
-			7:30	-	+0730	1982 Jan  1
-			8:00	-	+08
-# Sabah & Sarawak
-# From Paul Eggert (2014-08-12):
-# The data entries here are mostly from Shanks & Pottenger, but the 1942, 1945
-# and 1982 transition dates are from Mok Ly Yng.
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Asia/Kuching	7:21:20	-	LMT	1926 Mar
-			7:30	-	+0730	1933
-			8:00 NBorneo  +08/+0820	1942 Feb 16
-			9:00	-	+09	1945 Sep 12
-			8:00	-	+08
+# For peninsular Malaysia see Asia/Singapore.
+# For Sabah & Sarawak see Etc/GMT-8.
 
 # Maldives
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Indian/Maldives	4:54:00 -	LMT	1880 # Malé
-			4:54:00	-	MMT	1960 # Malé Mean Time
-			5:00	-	+05
+# See Etc/GMT-5.
+
 
 # Mongolia
 
@@ -2926,7 +2842,7 @@ Zone	Asia/Kathmandu	5:41:16 -	LMT	1920
 			5:45	-	+0545
 
 # Oman
-# See Asia/Dubai.
+# See Etc/GMT-4.
 
 # Pakistan
 
@@ -3523,54 +3439,11 @@ Zone	Asia/Qatar	3:26:08 -	LMT	1920     # Al Dawhah / Doha
 			3:00	-	+03
 
 # Saudi Arabia
-#
-# From Paul Eggert (2018-08-29):
-# Time in Saudi Arabia and other countries in the Arabian peninsula was not
-# standardized until 1968 or so; we don't know exactly when, and possibly it
-# has never been made official.  Richard P Hunt, in "Islam city yielding to
-# modern times", New York Times (1961-04-09), p 20, wrote that only airlines
-# observed standard time, and that people in Jeddah mostly observed quasi-solar
-# time, doing so by setting their watches at sunrise to 6 o'clock (or to 12
-# o'clock for "Arab" time).
-#
-# Timekeeping differed depending on who you were and which part of Saudi
-# Arabia you were in.  In 1969, Elias Antar wrote that although a common
-# practice had been to set one's watch to 12:00 (i.e., midnight) at sunset -
-# which meant that the time on one side of a mountain could differ greatly from
-# the time on the other side - many foreigners set their watches to 6pm
-# instead, while airlines instead used UTC +03 (except in Dhahran, where they
-# used UTC +04), Aramco used UTC +03 with DST, and the Trans-Arabian Pipe Line
-# Company used Aramco time in eastern Saudi Arabia and airline time in western.
-# (The American Military Aid Advisory Group used plain UTC.)  Antar writes,
-# "A man named Higgins, so the story goes, used to run a local power
-# station. One day, the whole thing became too much for Higgins and he
-# assembled his staff and laid down the law. 'I've had enough of this,' he
-# shrieked. 'It is now 12 o'clock Higgins Time, and from now on this station is
-# going to run on Higgins Time.' And so, until last year, it did."  See:
-# Antar E. Dinner at When? Saudi Aramco World, 1969 March/April. 2-3.
-# http://archive.aramcoworld.com/issue/196902/dinner.at.when.htm
-# Also see: Antar EN. Arabian flying is confusing.
-# Port Angeles (WA) Evening News. 1965-03-10. page 3.
-#
-# The TZ database cannot represent quasi-solar time; airline time is the best
-# we can do.  The 1946 foreign air news digest of the U.S. Civil Aeronautics
-# Board (OCLC 42299995) reported that the "... Arabian Government, inaugurated
-# a weekly Dhahran-Cairo service, via the Saudi Arabian cities of Riyadh and
-# Jidda, on March 14, 1947".  Shanks & Pottenger guessed 1950; go with the
-# earlier date.
-#
-# Shanks & Pottenger also state that until 1968-05-01 Saudi Arabia had two
-# time zones; the other zone, at UT +04, was in the far eastern part of
-# the country.  Presumably this is documenting airline time.  Ignore this,
-# as it's before our 1970 cutoff.
-#
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Riyadh	3:06:52 -	LMT	1947 Mar 14
-			3:00	-	+03
+# See Etc/GMT-3.
 
 # Singapore
 # taken from Mok Ly Yng (2003-10-30)
-# http://www.math.nus.edu.sg/aslaksen/teaching/timezone.html
+# https://web.archive.org/web/20190822231045/http://www.math.nus.edu.sg/~mathelmr/teaching/timezone.html
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 			6:55:25	-	SMT	1905 Jun  1 # Singapore M.T.
@@ -3819,10 +3692,7 @@ Zone	Asia/Dushanbe	4:35:12 -	LMT	1924 May  2
 			5:00	-	+05
 
 # Thailand
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Bangkok	6:42:04	-	LMT	1880
-			6:42:04	-	BMT	1920 Apr # Bangkok Mean Time
-			7:00	-	+07
+# See Etc/GMT-7.
 
 # Turkmenistan
 # From Shanks & Pottenger.
@@ -3834,9 +3704,7 @@ Zone	Asia/Ashgabat	3:53:32 -	LMT	1924 May  2 # or Ashkhabad
 			5:00	-	+05
 
 # United Arab Emirates
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Dubai	3:41:12 -	LMT	1920
-			4:00	-	+04
+# See Etc/GMT-4.
 
 # Uzbekistan
 # Byalokoz 1919 says Uzbekistan was 4:27:53.
@@ -3926,9 +3794,9 @@ Zone Asia/Ho_Chi_Minh	7:06:40 -	LMT	1906 Jul  1
 # details are unknown and would likely be too voluminous for this database.
 #
 # For timestamps in north Vietnam back to 1970 (the tzdb cutoff),
-# use Asia/Bangkok; see the VN entries in the file zone1970.tab.
+# use Etc/GMT-7; see the VN entries in the file zone1970.tab.
 # For timestamps before 1970, see Asia/Hanoi in the file 'backzone'.
 
 
 # Yemen
-# See Asia/Riyadh.
+# See Etc/GMT-3.

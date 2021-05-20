@@ -252,16 +252,10 @@ Zone Antarctica/Macquarie 0	-	-00	1899 Nov
 			10:00	AT	AE%sT
 
 # Christmas
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Indian/Christmas	7:02:52 -	LMT	1895 Feb
-			7:00	-	+07
+# See Etc/GMT-7.
 
 # Cocos (Keeling) Is
-# These islands were ruled by the Ross family from about 1830 to 1978.
-# We don't know when standard time was introduced; for now, we guess 1900.
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Indian/Cocos	6:27:40	-	LMT	1900
-			6:30	-	+0630
+# See Asia/Yangon.
 
 
 # Fiji
@@ -409,12 +403,9 @@ Zone	Pacific/Fiji	11:55:44 -	LMT	1915 Oct 26 # Suva
 
 # French Polynesia
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Pacific/Gambier	 -8:59:48 -	LMT	1912 Oct # Rikitea
-			 -9:00	-	-09
 Zone	Pacific/Marquesas -9:18:00 -	LMT	1912 Oct
 			 -9:30	-	-0930
-Zone	Pacific/Tahiti	 -9:58:16 -	LMT	1912 Oct # Papeete
-			-10:00	-	-10
+# See Etc/GMT+9 for the Gambier Islands and Etc/GMT+10 for the Society Islands.
 # Clipperton (near North America) is administered from French Polynesia;
 # it is uninhabited.
 
@@ -460,9 +451,8 @@ Zone	Pacific/Guam	-14:21:00 -	LMT	1844 Dec 31
 			10:00	-	ChST	# Chamorro Standard Time
 
 # Kiribati
+# See Etc/GMT-12 for the Gilbert Islands.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Pacific/Tarawa	 11:32:04 -	LMT	1901 # Bairiki
-			 12:00	-	+12
 Zone Pacific/Enderbury	-11:24:20 -	LMT	1901
 			-12:00	-	-12	1979 Oct
 			-11:00	-	-11	1994 Dec 31
@@ -476,15 +466,8 @@ Zone Pacific/Kiritimati	-10:29:20 -	LMT	1901
 # See Pacific/Guam.
 
 # Marshall Is
+# See Etc/GMT-12 for most locations.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Pacific/Majuro	 11:24:48 -	LMT	1901
-			 11:00	-	+11	1914 Oct
-			  9:00	-	+09	1919 Feb  1
-			 11:00	-	+11	1937
-			 10:00	-	+10	1941 Apr  1
-			  9:00	-	+09	1944 Jan 30
-			 11:00	-	+11	1969 Oct
-			 12:00	-	+12
 Zone Pacific/Kwajalein	 11:09:20 -	LMT	1901
 			 11:00	-	+11	1937
 			 10:00	-	+10	1941 Apr  1
@@ -494,22 +477,9 @@ Zone Pacific/Kwajalein	 11:09:20 -	LMT	1901
 			 12:00	-	+12
 
 # Micronesia
+# For Chuuk and Yap see Etc/GMT-10.
+# For Pohnpei see Etc/GMT-11.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Pacific/Chuuk	-13:52:52 -	LMT	1844 Dec 31
-			 10:07:08 -	LMT	1901
-			 10:00	-	+10	1914 Oct
-			  9:00	-	+09	1919 Feb  1
-			 10:00	-	+10	1941 Apr  1
-			  9:00	-	+09	1945 Aug
-			 10:00	-	+10
-Zone Pacific/Pohnpei	-13:27:08 -	LMT	1844 Dec 31	# Kolonia
-			 10:32:52 -	LMT	1901
-			 11:00	-	+11	1914 Oct
-			  9:00	-	+09	1919 Feb  1
-			 11:00	-	+11	1937
-			 10:00	-	+10	1941 Apr  1
-			  9:00	-	+09	1945 Aug
-			 11:00	-	+11
 Zone Pacific/Kosrae	-13:08:04 -	LMT	1844 Dec 31
 			 10:51:56 -	LMT	1901
 			 11:00	-	+11	1914 Oct
@@ -658,16 +628,10 @@ Zone	Pacific/Norfolk	11:11:52 -	LMT	1901 # Kingston
 			11:00	AN	+11/+12
 
 # Palau (Belau)
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Pacific/Palau	-15:02:04 -	LMT	1844 Dec 31	# Koror
-			  8:57:56 -	LMT	1901
-			  9:00	-	+09
+# See Etc/GMT-9.
 
 # Papua New Guinea
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Pacific/Port_Moresby 9:48:40 -	LMT	1880
-			9:48:32	-	PMMT	1895 # Port Moresby Mean Time
-			10:00	-	+10
+# See Etc/GMT-10 for most locations.
 #
 # From Paul Eggert (2014-10-13):
 # Base the Bougainville entry on the Arawa-Kieta region, which appears to have
@@ -787,9 +751,8 @@ Zone Pacific/Apia	 12:33:04 -	LMT	1892 Jul  5
 
 # Solomon Is
 # excludes Bougainville, for which see Papua New Guinea
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Pacific/Guadalcanal 10:39:48 -	LMT	1912 Oct # Honiara
-			11:00	-	+11
+# See Etc/GMT-11.
+
 
 # Tokelau
 #
@@ -830,9 +793,7 @@ Zone Pacific/Tongatapu	12:19:12 -	LMT	1945 Sep 10
 			13:00	Tonga	+13/+14
 
 # Tuvalu
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Pacific/Funafuti	11:56:52 -	LMT	1901
-			12:00	-	+12
+# See Etc/GMT-12.
 
 
 # US minor outlying islands
@@ -891,9 +852,7 @@ Zone Pacific/Funafuti	11:56:52 -	LMT	1901
 # uninhabited since World War II; was probably like Pacific/Kiritimati
 
 # Wake
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Pacific/Wake	11:06:28 -	LMT	1901
-			12:00	-	+12
+# See Etc/GMT-12.
 
 
 # Vanuatu
@@ -932,9 +891,7 @@ Zone	Pacific/Efate	11:13:16 -	LMT	1912 Jan 13 # Vila
 			11:00	Vanuatu	+11/+12
 
 # Wallis and Futuna
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Pacific/Wallis	12:15:20 -	LMT	1901
-			12:00	-	+12
+# See Etc/GMT-12.
 
 ###############################################################################
 
@@ -1834,13 +1791,6 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # Like the Ladrones (see Guam commentary), assume the Spanish East Indies
 # kept American time until the Philippines switched at the end of 1844.
 
-# Alan Eugene Davis writes (1996-03-16),
-# "I am certain, having lived there for the past decade, that 'Truk'
-# (now properly known as Chuuk) ... is in the time zone GMT+10."
-#
-# Shanks & Pottenger write that Truk switched from UT +10 to +11
-# on 1978-10-01; ignore this for now.
-
 # From Paul Eggert (1999-10-29):
 # The Federated States of Micronesia Visitors Board writes in
 # The Federated States of Micronesia - Visitor Information (1999-01-26)
@@ -2000,9 +1950,6 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # https://www.legislation.gov.au/Details/F2018L01702
 # From Michael Deckers (2019-08-14):
 # https://www.legislation.gov.au/Details/F2019C00010
-
-# Palau
-# See commentary for Micronesia.
 
 # Pitcairn
 
@@ -2171,26 +2118,6 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 #
 # From Paul Eggert (2017-10-18):
 # For now, guess that DST is discontinued.  That's what the IATA is guessing.
-
-
-# Wake
-
-# From Vernice Anderson, Personal Secretary to Philip Jessup,
-# US Ambassador At Large (oral history interview, 1971-02-02):
-#
-# Saturday, the 14th [of October, 1950] - ...  The time was all the
-# more confusing at that point, because we had crossed the
-# International Date Line, thus getting two Sundays.  Furthermore, we
-# discovered that Wake Island had two hours of daylight saving time
-# making calculation of time in Washington difficult if not almost
-# impossible.
-#
-# https://www.trumanlibrary.org/oralhist/andrsonv.htm
-
-# From Paul Eggert (2003-03-23):
-# We have no other report of DST in Wake Island, so omit this info for now.
-
-# See also the commentary for Micronesia.
 
 
 ###############################################################################

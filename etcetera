@@ -12,6 +12,8 @@
 # Starting with POSIX 1003.1-2001, the entries below are all
 # unnecessary as settings for the TZ environment variable.  E.g.,
 # instead of TZ='Etc/GMT+4' one can use the POSIX setting TZ='<-04>+4'.
+# However, some entries are needed if 'backward' is used:
+# for example, the 'backward' file links Etc/GMT to Africa/Abidjan.
 #
 # Do not use a POSIX TZ setting like TZ='GMT+4', which is four hours
 # behind GMT but uses the completely misleading abbreviation "GMT".

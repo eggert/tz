@@ -529,7 +529,7 @@ TZS_YEAR=	2050
 TZS_CUTOFF_FLAG=	-c $(TZS_YEAR)
 TZS=		to$(TZS_YEAR).tzs
 TZS_NEW=	to$(TZS_YEAR)new.tzs
-TZS_DEPS=	$(PRIMARY_YDATA) asctime.c localtime.c \
+TZS_DEPS=	$(YDATA) asctime.c localtime.c \
 			private.h tzfile.h zdump.c zic.c
 # EIGHT_YARDS is just a yard short of the whole ENCHILADA.
 EIGHT_YARDS = $(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC) tzdata.zi
@@ -802,9 +802,9 @@ check_links:	checklinks.awk $(TDATA_TO_CHECK) tzdata.zi
 		$(AWK) -f checklinks.awk tzdata.zi
 		touch $@
 
-check_tables:	checktab.awk $(PRIMARY_YDATA) $(ZONETABLES)
+check_tables:	checktab.awk $(YDATA) $(ZONETABLES)
 		for tab in $(ZONETABLES); do \
-		  $(AWK) -f checktab.awk -v zone_table=$$tab $(PRIMARY_YDATA) \
+		  $(AWK) -f checktab.awk -v zone_table=$$tab $(YDATA) \
 		    || exit; \
 		done
 		touch $@

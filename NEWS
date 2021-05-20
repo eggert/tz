@@ -26,6 +26,23 @@ Unreleased, experimental changes
     (Thanks to P Chan, Michael Deckers, Alexander Krivenyshev and
     Alois Treindl.)
 
+    Merge timezones whose timestamps agree since 1970, since pre-1970
+    timestamps are out of scope.  This change does not affect
+    post-1970 timestamps, and timezone historians who build with 'make
+    PACKRATDATA=backzone' should see no changes to pre-1970 timestamps.
+    When merging, keep the most-populous location's data, and move
+    data for other locations to 'backzone' with a backward
+    compatibility link in 'backward'.  Also, merge timezones with
+    neither post-1970 clock changes nor alphabetic abbreviations into
+    their Etc counterparts.  For example, move the Europe/Oslo data to
+    'backzone' with a link in 'backward' from Europe/Berlin because
+    the two timezones' timestamps agree since 1970; this change
+    affects some pre-1966 timestamps in Europe/Oslo because Berlin and
+    Oslo disagreed before 1966.  For another example, move the
+    Asia/Aden data to 'backzone' with a link in 'backward' from
+    Etc/GMT-3.  Affected entries range from Africa/Abidjan to
+    Pacific/Yap.
+
   Changes to maintenance procedure
 
     The new file SECURITY covers how to report security-related bugs.

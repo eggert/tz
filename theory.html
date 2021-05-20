@@ -192,8 +192,8 @@ in decreasing order of importance:
     <code>TZ</code> strings</a>.
     A file name component must not exceed 14 characters or start with
     '<code>-</code>'.
-    E.g., prefer <code>Asia/Brunei</code> to
-    <code>Asia/Bandar_Seri_Begawan</code>.
+    E.g., prefer <code>America/Noronha</code> to
+    <code>America/Fernando_de_Noronha</code>.
     Exceptions: see the discussion of legacy names below.
   </li>
   <li>
@@ -475,10 +475,10 @@ in decreasing order of importance:
 
     <p>
     <small>These abbreviations are:
-      AMT Amsterdam, Asunción, Athens;
-      BMT Baghdad, Bangkok, Batavia, Bermuda, Bern, Bogotá, Bridgetown,
+      AMT Asunción, Athens;
+      BMT Baghdad, Batavia, Bermuda, Bern, Bogotá, Bridgetown,
         Brussels, Bucharest;
-      CMT Calamarca, Caracas, Chisinau, Colón, Copenhagen, Córdoba;
+      CMT Calamarca, Caracas, Chisinau, Colón, Córdoba;
       DMT Dublin/Dunsink;
       EMT Easter;
       FFMT Fort-de-France;
@@ -493,7 +493,6 @@ in decreasing order of importance:
 	Moratuwa, Moscow;
       PLMT Phù Liễn;
       PMT Paramaribo, Paris, Perm, Pontianak, Prague;
-      PMMT Port Moresby;
       QMT Quito;
       RMT Rangoon, Riga, Rome;
       SDMT Santo Domingo;
@@ -516,9 +515,7 @@ in decreasing order of importance:
 	1880&ndash;1916,
       MMT/MST/MDST for Moscow 1880&ndash;1919, and
       RMT/LST for Riga Mean Time and Latvian Summer time 1880&ndash;1926.
-    An extra-special case is SET for Swedish Time (<em>svensk
-    normaltid</em>) 1879&ndash;1899, 3&deg; west of the Stockholm
-    Observatory.</small>
+    </small>
     </p>
   </li>
   <li>
@@ -705,11 +702,9 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
   <li>
     Sometimes historical timekeeping was specified more precisely
     than what the <code><abbr>tz</abbr></code> code can handle.
-    For example, from 1909 to 1937 <a
-    href="https://www.staff.science.uu.nl/~gent0113/wettijd/wettijd.htm"
-    hreflang="nl">Netherlands clocks</a> were legally Amsterdam Mean
+    For example, from 1880 to 1916 clocks in Ireland observed Dublin Mean
     Time (estimated to be <abbr>UT</abbr>
-    +00:19:32.13), but the <code><abbr>tz</abbr></code>
+    &minus;00:25:21.1), but the <code><abbr>tz</abbr></code>
     code cannot represent the fractional second.
     In practice these old specifications were rarely if ever
     implemented to subsecond precision.
@@ -759,7 +754,7 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
     such as that required by POSIX.
     If <abbr>DST</abbr> is not used a different time zone
     can often do the trick; for example, in Kenya a <code>TZ</code> setting
-    like <code>&lt;-03&gt;3</code> or <code>America/Cayenne</code> starts
+    like <code>&lt;-03&gt;3</code> starts
     the day six hours later than <code>Africa/Nairobi</code> does.
   </li>
   <li>
@@ -1240,11 +1235,11 @@ based on guesswork and these guesses may be corrected or improved.
 
 <p>
 Timezone boundaries are not part of the stable interface.
-For example, even though the <samp>Asia/Bangkok</samp> timezone
-currently includes Chang Mai, Hanoi, and Phnom Penh, this is not part
+For example, even though the <samp>Asia/Singapore</samp> timezone
+currently includes peninsular Malaysia as well as Singapore, this is not part
 of the stable interface and the timezone can split at any time.
 If a calendar application records a future event in some location other
-than Bangkok by putting "<samp>Asia/Bangkok</samp>" in the event's record,
+than Singapore by putting "<samp>Asia/Singapore</samp>" in the event's record,
 the application should be robust in the presence of timezone splits
 between now and the future time.
 </p>

@@ -72,11 +72,6 @@
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 
 
-# Côte d'Ivoire / Ivory Coast
-Zone	Africa/Abidjan	-0:16:08 -	LMT	1912
-			 0:00	-	GMT
-
-
 # Ghana
 
 # From P Chan (2020-11-20):
@@ -518,11 +513,6 @@ Zone America/Blanc-Sablon -3:48:28 -	LMT	1884
 			-4:00	Canada	A%sT	1970
 			-4:00	-	AST
 
-# French Guiana
-Zone	America/Cayenne	-3:29:20 -	LMT	1911 Jul
-			-4:00	-	-04	1967 Oct
-			-3:00	-	-03
-
 # Cayman Is
 Zone	America/Cayman	-5:25:32 -	LMT	1890     # Georgetown
 			-5:07:10 -	KMT	1912 Feb # Kingston Mean Time
@@ -644,11 +634,6 @@ Zone	America/Grenada	-4:07:00 -	LMT	1911 Jul # St George's
 Zone America/Guadeloupe	-4:06:08 -	LMT	1911 Jun  8 # Pointe-à-Pitre
 			-4:00	 -	AST
 
-# Bolivia
-Zone	America/La_Paz	-4:32:36 -	LMT	1890
-			-4:32:36 -	CMT	1931 Oct 15 # Calamarca MT
-			-4:32:36 1:00	BST	1932 Mar 21 # Bolivia ST
-			-4:00	-	-04
 
 # Canada
 #
@@ -902,11 +887,6 @@ Zone	Asia/Bahrain	3:22:20 -	LMT	1941 Jul 20  # Manamah
 			4:00	-	+04	1972 Jun
 			3:00	-	+03
 
-# Thailand
-Zone	Asia/Bangkok	6:42:04	-	LMT	1880
-			6:42:04	-	BMT	1920 Apr # Bangkok Mean Time
-			7:00	-	+07
-
 # Brunei
 Zone	Asia/Brunei	7:39:40 -	LMT	1926 Mar # Bandar Seri Begawan
 			7:30	-	+0730	1933
@@ -936,10 +916,6 @@ Zone	Asia/Chongqing	7:06:20	-	LMT	1928     # or Chungking
 			7:00	-	+07	1980 May
 			8:00	PRC	C%sT
 Link Asia/Chongqing Asia/Chungking
-
-# United Arab Emirates
-Zone	Asia/Dubai	3:41:12 -	LMT	1920
-			4:00	-	+04
 
 # Vietnam
 # From Paul Eggert (2014-10-13):
@@ -983,18 +959,6 @@ Zone Asia/Kuala_Lumpur	6:46:46 -	LMT	1901 Jan  1
 			7:30	-	+0730	1942 Feb 16
 			9:00	-	+09	1945 Sep 12
 			7:30	-	+0730	1982 Jan  1
-			8:00	-	+08
-#
-# Sabah & Sarawak
-# From Paul Eggert (2014-08-12):
-# The data entries here are mostly from Shanks & Pottenger, but the 1942, 1945
-# and 1982 transition dates are from Mok Ly Yng.
-Rule	NBorneo	1935	1941	-	Sep	14	0:00	0:20	-
-Rule	NBorneo	1935	1941	-	Dec	14	0:00	0	-
-Zone Asia/Kuching	7:21:20	-	LMT	1926 Mar
-			7:30	-	+0730	1933
-			8:00 NBorneo  +08/+0820	1942 Feb 16
-			9:00	-	+09	1945 Sep 12
 			8:00	-	+08
 
 # Kuwait
@@ -1046,117 +1010,10 @@ Zone	Asia/Phnom_Penh	6:59:40 -	LMT	1906 Jul  1
 			9:00	-	+09	1945 Sep  2
 			7:00	-	+07
 
-# Saudi Arabia
-#
-# From Paul Eggert (2018-08-29):
-# Time in Saudi Arabia and other countries in the Arabian peninsula was not
-# standardized until 1968 or so; we don't know exactly when, and possibly it
-# has never been made official.  Richard P Hunt, in "Islam city yielding to
-# modern times", New York Times (1961-04-09), p 20, wrote that only airlines
-# observed standard time, and that people in Jeddah mostly observed quasi-solar
-# time, doing so by setting their watches at sunrise to 6 o'clock (or to 12
-# o'clock for "Arab" time).
-#
-# Timekeeping differed depending on who you were and which part of Saudi
-# Arabia you were in.  In 1969, Elias Antar wrote that although a common
-# practice had been to set one's watch to 12:00 (i.e., midnight) at sunset -
-# which meant that the time on one side of a mountain could differ greatly from
-# the time on the other side - many foreigners set their watches to 6pm
-# instead, while airlines instead used UTC +03 (except in Dhahran, where they
-# used UTC +04), Aramco used UTC +03 with DST, and the Trans-Arabian Pipe Line
-# Company used Aramco time in eastern Saudi Arabia and airline time in western.
-# (The American Military Aid Advisory Group used plain UTC.)  Antar writes,
-# "A man named Higgins, so the story goes, used to run a local power
-# station. One day, the whole thing became too much for Higgins and he
-# assembled his staff and laid down the law. 'I've had enough of this,' he
-# shrieked. 'It is now 12 o'clock Higgins Time, and from now on this station is
-# going to run on Higgins Time.' And so, until last year, it did."  See:
-# Antar E. Dinner at When? Saudi Aramco World, 1969 March/April. 2-3.
-# http://archive.aramcoworld.com/issue/196902/dinner.at.when.htm
-# Also see: Antar EN. Arabian flying is confusing.
-# Port Angeles (WA) Evening News. 1965-03-10. page 3.
-#
-# The TZ database cannot represent quasi-solar time; airline time is the best
-# we can do.  The 1946 foreign air news digest of the U.S. Civil Aeronautics
-# Board (OCLC 42299995) reported that the "... Arabian Government, inaugurated
-# a weekly Dhahran-Cairo service, via the Saudi Arabian cities of Riyadh and
-# Jidda, on March 14, 1947".  Shanks & Pottenger guessed 1950; go with the
-# earlier date.
-#
-# Shanks & Pottenger also state that until 1968-05-01 Saudi Arabia had two
-# time zones; the other zone, at UT +04, was in the far eastern part of
-# the country.  Presumably this is documenting airline time.  Ignore this,
-# as it's before our 1970 cutoff.
-#
-Zone	Asia/Riyadh	3:06:52 -	LMT	1947 Mar 14
-			3:00	-	+03
-
-
 # Israel
 Zone	Asia/Tel_Aviv	2:19:04 -	LMT	1880
 			2:21	-	JMT	1918
 			2:00	Zion	I%sT
-
-
-# Xinjiang
-
-# From Luther Ma (2009-11-19):
-# It seems that Uyghurs in Ürümqi has been using Xinjiang since at least the
-# 1960's. I know of one Han, now over 50, who grew up in the surrounding
-# countryside and used Xinjiang time as a child.
-#
-# 6. Likewise for Kashgar and the rest of south Xinjiang I don't know of any
-# start date for Xinjiang time.
-#
-# Without having access to local historical records, nor the ability to legally
-# publish them, I would go with October 1, 1949, when Xinjiang became the Uyghur
-# Autonomous Region under the PRC. (Before that Uyghurs, of course, would also
-# not be using Beijing time, but some local time.)
-
-# From David Cochrane (2014-03-26):
-# Just a confirmation that Ürümqi time was implemented in Ürümqi on 1 Feb 1986:
-# https://content.time.com/time/magazine/article/0,9171,960684,00.html
-
-# From Luther Ma (2014-04-22):
-# I have interviewed numerous people of various nationalities and from
-# different localities in Xinjiang and can confirm the information in Guo's
-# report regarding Xinjiang, as well as the Time article reference by David
-# Cochrane.  Whether officially recognized or not (and both are officially
-# recognized), two separate times have been in use in Xinjiang since at least
-# the Cultural Revolution: Xinjiang Time (XJT), aka Ürümqi Time or local time;
-# and Beijing Time.  There is no confusion in Xinjiang as to which name refers
-# to which time. Both are widely used in the province, although in some
-# population groups might be use one to the exclusion of the other.  The only
-# problem is that computers and smart phones list Ürümqi (or Kashgar) as
-# having the same time as Beijing.
-
-# From Paul Eggert (2014-06-30):
-# In the early days of the PRC, Tibet was given its own time zone (UT +06)
-# but this was withdrawn in 1959 and never reinstated; see Tubten Khétsun,
-# Memories of life in Lhasa under Chinese Rule, Columbia U Press, ISBN
-# 978-0231142861 (2008), translator's introduction by Matthew Akester, p x.
-# As this is before our 1970 cutoff, Tibet doesn't need a separate zone.
-#
-# Xinjiang Time is well-documented as being officially recognized.  E.g., see
-# "The Working-Calendar for The Xinjiang Uygur Autonomous Region Government"
-# <http://www.sinkiang.gov.cn/service/ourworking/> (2014-04-22).
-# Unfortunately, we have no good records of time in Xinjiang before 1986.
-# During the 20th century parts of Xinjiang were ruled by the Qing dynasty,
-# the Republic of China, various warlords, the First and Second East Turkestan
-# Republics, the Soviet Union, the Kuomintang, and the People's Republic of
-# China, and tracking down all these organizations' timekeeping rules would be
-# quite a trick.  Approximate this lost history by a transition from LMT to
-# UT +06 at the start of 1928, the year of accession of the warlord Jin Shuren,
-# which happens to be the date given by Shanks & Pottenger (no doubt as a
-# guess) as the transition from LMT.  Ignore the usage of +08 before
-# 1986-02-01 under the theory that the transition date to +08 is unknown and
-# that the sort of users who prefer Etc/GMT-6 now typically ignored the
-# +08 mandate back then.
-
-# Xinjiang time, used by many in western China; represented by Ürümqi / Ürümchi
-# / Wulumuqi.  (Please use Asia/Shanghai if you prefer Beijing time.)
-Zone	Asia/Urumqi	5:50:20	-	LMT	1928
-			6:00	-	+06
 
 # Laos
 # From Paul Eggert (2014-10-11):
@@ -1234,10 +1091,6 @@ Zone Atlantic/Reykjavik	-1:28	-	LMT	1908
 			-1:00	Iceland	-01/+00	1968 Apr  7  1:00s
 			 0:00	-	GMT
 Link Atlantic/Reykjavik Iceland
-
-# South Georgia
-Zone Atlantic/South_Georgia -2:26:08 -	LMT	1890 # Grytviken
-			-2:00	-	-02
 
 # St Helena
 Zone Atlantic/St_Helena	-0:22:48 -	LMT	1890 # Jamestown
@@ -1674,11 +1527,6 @@ Zone	Indian/Mahe	3:41:48 -	LMT	1907 Jan  1 # Victoria
 # Possibly the islands were uninhabited.
 
 
-# Maldives
-Zone	Indian/Maldives	4:54:00 -	LMT	1880 # Malé
-			4:54:00	-	MMT	1960 # Malé Mean Time
-			5:00	-	+05
-
 # Mayotte
 Zone	Indian/Mayotte	3:00:56 -	LMT	1911 Jul # Mamoutzou
 			3:00	-	EAT
@@ -1722,14 +1570,6 @@ Link Pacific/Chuuk Pacific/Yap
 Zone Pacific/Funafuti	11:56:52 -	LMT	1901
 			12:00	-	+12
 
-# Gambier Islands
-Zone	Pacific/Gambier	 -8:59:48 -	LMT	1912 Oct # Rikitea
-			 -9:00	-	-09
-
-# Solomon Islands
-Zone Pacific/Guadalcanal 10:39:48 -	LMT	1912 Oct # Honiara
-			11:00	-	+11
-
 # Johnston
 Zone Pacific/Johnston	-10:00	-	HST
 
@@ -1760,12 +1600,6 @@ Zone Pacific/Midway	-11:49:28 -	LMT	1901
 			-11:00	1:00	-10	1956 Sep  2
 			-11:00	-	-11
 
-# Palau (Belau)
-# See commentary for Micronesia in 'australasia'.
-Zone Pacific/Palau	-15:02:04 -	LMT	1844 Dec 31	# Koror
-			  8:57:56 -	LMT	1901
-			  9:00	-	+09
-
 # Micronesia
 # See commentary for Micronesia in 'australasia'.
 Zone Pacific/Pohnpei	-13:27:08 -	LMT	1844 Dec 31	# Kolonia
@@ -1778,25 +1612,12 @@ Zone Pacific/Pohnpei	-13:27:08 -	LMT	1844 Dec 31	# Kolonia
 			 11:00	-	+11
 Link Pacific/Pohnpei Pacific/Ponape
 
-# Papua New Guinea
-Zone Pacific/Port_Moresby 9:48:40 -	LMT	1880
-			9:48:32	-	PMMT	1895 # Port Moresby Mean Time
-			10:00	-	+10
-
 # N Mariana Is
 Zone Pacific/Saipan	-14:17:00 -	LMT	1844 Dec 31
 			 9:43:00 -	LMT	1901
 			 9:00	-	+09	1969 Oct
 			10:00	-	+10	2000 Dec 23
 			10:00	-	ChST	# Chamorro Standard Time
-
-# Society Islands
-Zone	Pacific/Tahiti	 -9:58:16 -	LMT	1912 Oct # Papeete
-			-10:00	-	-10
-
-# Gilbert Islands
-Zone Pacific/Tarawa	 11:32:04 -	LMT	1901 # Bairiki
-			 12:00	-	+12
 
 
 # Wake

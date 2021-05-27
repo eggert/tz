@@ -27,7 +27,7 @@
 #country-
 #code	coordinates	TZ			comments
 AD	+4230+00131	Europe/Andorra
-AE	+2518+05518	Etc/GMT-4
+AE	+2518+05518	Asia/Dubai
 AF	+3431+06912	Asia/Kabul
 AG	+1703-06148	America/Puerto_Rico
 AI	+1812-06304	America/Puerto_Rico
@@ -37,13 +37,13 @@ AO	-0848+01314	Africa/Lagos
 AQ	-7750+16636	Pacific/Auckland	New Zealand time - McMurdo, South Pole
 AQ	-6617+11031	Antarctica/Casey	Casey
 AQ	-6835+07758	Antarctica/Davis	Davis
-AQ	-6640+14001	Etc/GMT-10	Dumont-d'Urville
+AQ	-6640+14001	Pacific/Port_Moresby	Dumont-d'Urville
 AQ	-6736+06253	Antarctica/Mawson	Mawson
 AQ	-6448-06406	Antarctica/Palmer	Palmer
 AQ	-6734-06808	Antarctica/Rothera	Rothera
-AQ	-690022+0393524	Etc/GMT-3	Syowa
+AQ	-690022+0393524	Asia/Riyadh	Syowa
 AQ	-720041+0023206	Antarctica/Troll	Troll
-AQ	-7824+10654	Etc/GMT-6	Vostok
+AQ	-7824+10654	Asia/Urumqi	Vostok
 AR	-3436-05827	America/Argentina/Buenos_Aires	Buenos Aires (BA, CF)
 AR	-3124-06411	America/Argentina/Cordoba	Argentina (most areas: CB, CC, CN, ER, FM, MN, SE, SF)
 AR	-2447-06525	America/Argentina/Salta	Salta (SA, LP, NQ, RN)
@@ -77,15 +77,15 @@ BA	+4352+01825	Europe/Belgrade
 BB	+1306-05937	America/Barbados
 BD	+2343+09025	Asia/Dhaka
 BE	+5050+00420	Europe/Brussels
-BF	+1222-00131	Etc/GMT
+BF	+1222-00131	Africa/Abidjan
 BG	+4241+02319	Europe/Sofia
 BH	+2623+05035	Asia/Qatar
 BI	-0323+02922	Africa/Maputo
 BJ	+0629+00237	Africa/Lagos
 BL	+1753-06251	America/Puerto_Rico
 BM	+3217-06446	Atlantic/Bermuda
-BN	+0456+11455	Etc/GMT-8
-BO	-1630-06809	Etc/GMT+4
+BN	+0456+11455	Asia/Kuching
+BO	-1630-06809	America/La_Paz
 BQ	+120903-0681636	America/Puerto_Rico
 BR	-0351-03225	America/Noronha	Atlantic islands
 BR	-0127-04829	America/Belem	Para (east); Amapa
@@ -142,20 +142,20 @@ CD	-1140+02728	Africa/Maputo	Dem. Rep. of Congo (east)
 CF	+0422+01835	Africa/Lagos
 CG	-0416+01517	Africa/Lagos
 CH	+4723+00832	Europe/Zurich
-CI	+0519-00402	Etc/GMT
+CI	+0519-00402	Africa/Abidjan
 CK	-2114-15946	Pacific/Rarotonga
 CL	-3327-07040	America/Santiago	Chile (most areas)
 CL	-5309-07055	America/Punta_Arenas	Region of Magallanes
 CL	-2709-10926	Pacific/Easter	Easter Island
 CM	+0403+00942	Africa/Lagos
 CN	+3114+12128	Asia/Shanghai	Beijing Time
-CN	+4348+08735	Etc/GMT-6	Xinjiang Time
+CN	+4348+08735	Asia/Urumqi	Xinjiang Time
 CO	+0436-07405	America/Bogota
 CR	+0956-08405	America/Costa_Rica
 CU	+2308-08222	America/Havana
 CV	+1455-02331	Atlantic/Cape_Verde
 CW	+1211-06900	America/Puerto_Rico
-CX	-1025+10543	Etc/GMT-7
+CX	-1025+10543	Asia/Bangkok
 CY	+3510+03322	Asia/Nicosia	Cyprus (most areas)
 CY	+3507+03357	Asia/Famagusta	Northern Cyprus
 CZ	+5005+01426	Europe/Prague
@@ -179,8 +179,8 @@ ET	+0902+03842	Africa/Nairobi
 FI	+6010+02458	Europe/Helsinki
 FJ	-1808+17825	Pacific/Fiji
 FK	-5142-05751	Atlantic/Stanley
-FM	+0725+15147	Etc/GMT-10	Chuuk/Truk, Yap
-FM	+0658+15813	Etc/GMT-11	Pohnpei/Ponape
+FM	+0725+15147	Pacific/Port_Moresby	Chuuk/Truk, Yap
+FM	+0658+15813	Pacific/Guadalcanal	Pohnpei/Ponape
 FM	+0519+16259	Pacific/Kosrae	Kosrae
 FO	+6201-00646	Atlantic/Faroe
 FR	+4852+00220	Europe/Paris
@@ -188,20 +188,20 @@ GA	+0023+00927	Africa/Lagos
 GB	+513030-0000731	Europe/London
 GD	+1203-06145	America/Puerto_Rico
 GE	+4143+04449	Asia/Tbilisi
-GF	+0456-05220	Etc/GMT+3
+GF	+0456-05220	America/Cayenne
 GG	+492717-0023210	Europe/London
-GH	+0533-00013	Etc/GMT
+GH	+0533-00013	Africa/Abidjan
 GI	+3608-00521	Europe/Gibraltar
 GL	+6411-05144	America/Nuuk	Greenland (most areas)
 GL	+7646-01840	America/Danmarkshavn	National Park (east coast)
 GL	+7029-02158	America/Scoresbysund	Scoresbysund/Ittoqqortoormiit
 GL	+7634-06847	America/Thule	Thule/Pituffik
-GM	+1328-01639	Etc/GMT
-GN	+0931-01343	Etc/GMT
+GM	+1328-01639	Africa/Abidjan
+GN	+0931-01343	Africa/Abidjan
 GP	+1614-06132	America/Puerto_Rico
 GQ	+0345+00847	Africa/Lagos
 GR	+3758+02343	Europe/Athens
-GS	-5416-03632	Etc/GMT+2
+GS	-5416-03632	Atlantic/South_Georgia
 GT	+1438-09031	America/Guatemala
 GU	+1328+14445	Pacific/Guam
 GW	+1151-01535	Africa/Bissau
@@ -222,7 +222,7 @@ IN	+2232+08822	Asia/Kolkata
 IO	-0720+07225	Indian/Chagos
 IQ	+3321+04425	Asia/Baghdad
 IR	+3540+05126	Asia/Tehran
-IS	+6409-02151	Etc/GMT
+IS	+6409-02151	Africa/Abidjan
 IT	+4154+01229	Europe/Rome
 JE	+491101-0020624	Europe/London
 JM	+175805-0764736	America/Jamaica
@@ -230,15 +230,15 @@ JO	+3157+03556	Asia/Amman
 JP	+353916+1394441	Asia/Tokyo
 KE	-0117+03649	Africa/Nairobi
 KG	+4254+07436	Asia/Bishkek
-KH	+1133+10455	Etc/GMT-7
-KI	+0125+17300	Etc/GMT-12	Gilbert Islands
+KH	+1133+10455	Asia/Bangkok
+KI	+0125+17300	Pacific/Tarawa	Gilbert Islands
 KI	-0308-17105	Pacific/Enderbury	Phoenix Islands
 KI	+0152-15720	Pacific/Kiritimati	Line Islands
 KM	-1141+04316	Africa/Nairobi
 KN	+1718-06243	America/Puerto_Rico
 KP	+3901+12545	Asia/Pyongyang
 KR	+3733+12658	Asia/Seoul
-KW	+2920+04759	Etc/GMT-3
+KW	+2920+04759	Asia/Riyadh
 KY	+1918-08123	America/Panama
 KZ	+4315+07657	Asia/Almaty	Kazakhstan (most areas)
 KZ	+4448+06528	Asia/Qyzylorda	Qyzylorda/Kyzylorda/Kzyl-Orda
@@ -247,7 +247,7 @@ KZ	+5017+05710	Asia/Aqtobe	Aqtobe/Aktobe
 KZ	+4431+05016	Asia/Aqtau	Mangghystau/Mankistau
 KZ	+4707+05156	Asia/Atyrau	Atyrau/Atirau/Gur'yev
 KZ	+5113+05121	Asia/Oral	West Kazakhstan
-LA	+1758+10236	Etc/GMT-7
+LA	+1758+10236	Asia/Bangkok
 LB	+3353+03530	Asia/Beirut
 LC	+1401-06100	America/Puerto_Rico
 LI	+4709+00931	Europe/Zurich
@@ -264,10 +264,10 @@ MD	+4700+02850	Europe/Chisinau
 ME	+4226+01916	Europe/Belgrade
 MF	+1804-06305	America/Puerto_Rico
 MG	-1855+04731	Africa/Nairobi
-MH	+0709+17112	Etc/GMT-12	Marshall Islands (most areas)
+MH	+0709+17112	Pacific/Tarawa	Marshall Islands (most areas)
 MH	+0905+16720	Pacific/Kwajalein	Kwajalein
 MK	+4159+02126	Europe/Belgrade
-ML	+1239-00800	Etc/GMT
+ML	+1239-00800	Africa/Abidjan
 MM	+1647+09610	Asia/Yangon
 MN	+4755+10653	Asia/Ulaanbaatar	Mongolia (most areas)
 MN	+4801+09139	Asia/Hovd	Bayan-Olgiy, Govi-Altai, Hovd, Uvs, Zavkhan
@@ -275,11 +275,11 @@ MN	+4804+11430	Asia/Choibalsan	Dornod, Sukhbaatar
 MO	+221150+1133230	Asia/Macau
 MP	+1512+14545	Pacific/Guam
 MQ	+1436-06105	America/Martinique
-MR	+1806-01557	Etc/GMT
+MR	+1806-01557	Africa/Abidjan
 MS	+1643-06213	America/Puerto_Rico
 MT	+3554+01431	Europe/Malta
 MU	-2010+05730	Indian/Mauritius
-MV	+0410+07330	Etc/GMT-5
+MV	+0410+07330	Indian/Maldives
 MW	-1547+03500	Africa/Maputo
 MX	+1924-09909	America/Mexico_City	Central Time
 MX	+2105-08646	America/Cancun	Eastern Standard Time - Quintana Roo
@@ -293,7 +293,7 @@ MX	+2904-11058	America/Hermosillo	Mountain Standard Time - Sonora
 MX	+3232-11701	America/Tijuana	Pacific Time US - Baja California
 MX	+2048-10515	America/Bahia_Banderas	Central Time - Bahia de Banderas
 MY	+0310+10142	Asia/Singapore	Malaysia (peninsula)
-MY	+0133+11020	Etc/GMT-8	Sabah, Sarawak
+MY	+0133+11020	Asia/Kuching	Sabah, Sarawak
 MZ	-2558+03235	Africa/Maputo
 NA	-2234+01706	Africa/Windhoek
 NC	-2216+16627	Pacific/Noumea
@@ -308,13 +308,13 @@ NR	-0031+16655	Pacific/Nauru
 NU	-1901-16955	Pacific/Niue
 NZ	-3652+17446	Pacific/Auckland	New Zealand (most areas)
 NZ	-4357-17633	Pacific/Chatham	Chatham Islands
-OM	+2336+05835	Etc/GMT-4
+OM	+2336+05835	Asia/Dubai
 PA	+0858-07932	America/Panama
 PE	-1203-07703	America/Lima
-PF	-1732-14934	Etc/GMT+10	Society Islands
+PF	-1732-14934	Pacific/Tahiti	Society Islands
 PF	-0900-13930	Pacific/Marquesas	Marquesas Islands
-PF	-2308-13457	Etc/GMT+9	Gambier Islands
-PG	-0930+14710	Etc/GMT-10	Papua New Guinea (most areas)
+PF	-2308-13457	Pacific/Gambier	Gambier Islands
+PG	-0930+14710	Pacific/Port_Moresby	Papua New Guinea (most areas)
 PG	-0613+15534	Pacific/Bougainville	Bougainville
 PH	+1435+12100	Asia/Manila
 PK	+2452+06703	Asia/Karachi
@@ -327,10 +327,10 @@ PS	+313200+0350542	Asia/Hebron	West Bank
 PT	+3843-00908	Europe/Lisbon	Portugal (mainland)
 PT	+3238-01654	Atlantic/Madeira	Madeira Islands
 PT	+3744-02540	Atlantic/Azores	Azores
-PW	+0720+13429	Etc/GMT-9
+PW	+0720+13429	Pacific/Palau
 PY	-2516-05740	America/Asuncion
 QA	+2517+05132	Asia/Qatar
-RE	-2052+05528	Etc/GMT-4
+RE	-2052+05528	Asia/Dubai
 RO	+4426+02606	Europe/Bucharest
 RS	+4450+02030	Europe/Belgrade
 RU	+5443+02030	Europe/Kaliningrad	MSK-01 - Kaliningrad
@@ -364,19 +364,19 @@ RU	+6728+15343	Asia/Srednekolymsk	MSK+08 - Sakha (E); North Kuril Is
 RU	+5301+15839	Asia/Kamchatka	MSK+09 - Kamchatka
 RU	+6445+17729	Asia/Anadyr	MSK+09 - Bering Sea
 RW	-0157+03004	Africa/Maputo
-SA	+2438+04643	Etc/GMT-3
-SB	-0932+16012	Etc/GMT-11
-SC	-0440+05528	Etc/GMT-4
+SA	+2438+04643	Asia/Riyadh
+SB	-0932+16012	Pacific/Guadalcanal
+SC	-0440+05528	Asia/Dubai
 SD	+1536+03232	Africa/Khartoum
 SE	+5920+01803	Europe/Berlin
 SG	+0117+10351	Asia/Singapore
-SH	-1555-00542	Etc/GMT
+SH	-1555-00542	Africa/Abidjan
 SI	+4603+01431	Europe/Belgrade
 SJ	+7800+01600	Europe/Berlin
 SK	+4809+01707	Europe/Prague
-SL	+0830-01315	Etc/GMT
+SL	+0830-01315	Africa/Abidjan
 SM	+4355+01228	Europe/Rome
-SN	+1440-01726	Etc/GMT
+SN	+1440-01726	Africa/Abidjan
 SO	+0204+04522	Africa/Nairobi
 SR	+0550-05510	America/Paramaribo
 SS	+0451+03137	Africa/Juba
@@ -387,9 +387,9 @@ SY	+3330+03618	Asia/Damascus
 SZ	-2618+03106	Africa/Johannesburg
 TC	+2128-07108	America/Grand_Turk
 TD	+1207+01503	Africa/Ndjamena
-TF	-492110+0701303	Etc/GMT-5
-TG	+0608+00113	Etc/GMT
-TH	+1345+10031	Etc/GMT-7
+TF	-492110+0701303	Indian/Maldives
+TG	+0608+00113	Africa/Abidjan
+TH	+1345+10031	Asia/Bangkok
 TJ	+3835+06848	Asia/Dushanbe
 TK	-0922-17114	Pacific/Fakaofo
 TL	-0833+12535	Asia/Dili
@@ -398,7 +398,7 @@ TN	+3648+01011	Africa/Tunis
 TO	-210800-1751200	Pacific/Tongatapu
 TR	+4101+02858	Europe/Istanbul
 TT	+1039-06131	America/Puerto_Rico
-TV	-0831+17913	Etc/GMT-12
+TV	-0831+17913	Pacific/Tarawa
 TW	+2503+12130	Asia/Taipei
 TZ	-0648+03917	Africa/Nairobi
 UA	+5026+03031	Europe/Kiev	Ukraine (most areas)
@@ -406,7 +406,7 @@ UA	+4837+02218	Europe/Uzhgorod	Transcarpathia
 UA	+4750+03510	Europe/Zaporozhye	Zaporozhye and east Lugansk
 UG	+0019+03225	Africa/Nairobi
 UM	+2813-17722	Pacific/Pago_Pago	Midway Islands
-UM	+1917+16637	Etc/GMT-12	Wake Island
+UM	+1917+16637	Pacific/Tarawa	Wake Island
 US	+404251-0740023	America/New_York	Eastern (most areas)
 US	+421953-0830245	America/Detroit	Eastern - MI (most areas)
 US	+381515-0854534	America/Kentucky/Louisville	Eastern - KY (Louisville area)
@@ -444,12 +444,12 @@ VC	+1309-06114	America/Puerto_Rico
 VE	+1030-06656	America/Caracas
 VG	+1827-06437	America/Puerto_Rico
 VI	+1821-06456	America/Puerto_Rico
-VN	+2102+10551	Etc/GMT-7	Vietnam (north)
+VN	+2102+10551	Asia/Bangkok	Vietnam (north)
 VN	+1045+10640	Asia/Ho_Chi_Minh	Vietnam (south)
 VU	-1740+16825	Pacific/Efate
-WF	-1318-17610	Etc/GMT-12
+WF	-1318-17610	Pacific/Tarawa
 WS	-1350-17144	Pacific/Apia
-YE	+1245+04512	Etc/GMT-3
+YE	+1245+04512	Asia/Riyadh
 YT	-1247+04514	Africa/Nairobi
 ZA	-2615+02800	Africa/Johannesburg
 ZM	-1525+02817	Africa/Maputo

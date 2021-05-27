@@ -476,7 +476,7 @@ in decreasing order of importance:
     <p>
     <small>These abbreviations are:
       AMT Asunción, Athens;
-      BMT Baghdad, Batavia, Bermuda, Bern, Bogotá, Bridgetown,
+      BMT Baghdad, Bangkok, Batavia, Bermuda, Bern, Bogotá, Bridgetown,
         Brussels, Bucharest;
       CMT Calamarca, Caracas, Chisinau, Colón, Córdoba;
       DMT Dublin/Dunsink;
@@ -493,6 +493,7 @@ in decreasing order of importance:
 	Moratuwa, Moscow;
       PLMT Phù Liễn;
       PMT Paramaribo, Paris, Perm, Pontianak, Prague;
+      PMMT Port Moresby;
       QMT Quito;
       RMT Rangoon, Riga, Rome;
       SDMT Santo Domingo;
@@ -754,7 +755,7 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
     such as that required by POSIX.
     If <abbr>DST</abbr> is not used a different time zone
     can often do the trick; for example, in Kenya a <code>TZ</code> setting
-    like <code>&lt;-03&gt;3</code> starts
+    like <code>&lt;-03&gt;3</code> or <code>America/Cayenne</code> starts
     the day six hours later than <code>Africa/Nairobi</code> does.
   </li>
   <li>
@@ -1235,11 +1236,11 @@ based on guesswork and these guesses may be corrected or improved.
 
 <p>
 Timezone boundaries are not part of the stable interface.
-For example, even though the <samp>Asia/Singapore</samp> timezone
-currently includes peninsular Malaysia as well as Singapore, this is not part
+For example, even though the <samp>Asia/Bangkok</samp> timezone
+currently includes Chang Mai, Hanoi, and Phnom Penh, this is not part
 of the stable interface and the timezone can split at any time.
 If a calendar application records a future event in some location other
-than Singapore by putting "<samp>Asia/Singapore</samp>" in the event's record,
+than Bangkok by putting "<samp>Asia/Bangkok</samp>" in the event's record,
 the application should be robust in the presence of timezone splits
 between now and the future time.
 </p>

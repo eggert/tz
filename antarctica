@@ -148,7 +148,7 @@ Zone Antarctica/Mawson	0	-	-00	1954 Feb 13
 #
 # Alfred Faure, Possession Island, Crozet Islands, -462551+0515152, since 1964;
 #	sealing & whaling stations operated variously 1802/1911+;
-#	see Etc/GMT-4.
+#	see Asia/Dubai.
 #
 # Martin-de-Viviès, Amsterdam Island, -374105+0773155, since 1950
 # Port-aux-Français, Kerguelen Islands, -492110+0701303, since 1951;
@@ -157,10 +157,10 @@ Zone Antarctica/Mawson	0	-	-00	1954 Feb 13
 # St Paul Island - near Amsterdam, uninhabited
 #	fishing stations operated variously 1819/1931
 #
-# Kerguelen - see Etc/GMT-5.
+# Kerguelen - see Indian/Maldives.
 #
 # year-round base in the main continent
-# Dumont d'Urville - see Etc/GMT-10.
+# Dumont d'Urville - see Pacific/Port_Moresby.
 
 # France & Italy - year-round base
 # Concordia, -750600+1232000, since 2005
@@ -176,7 +176,7 @@ Zone Antarctica/Mawson	0	-	-00	1954 Feb 13
 # Zuchelli, Terra Nova Bay, -744140+1640647, since 1986
 
 # Japan - year-round bases
-# See Etc/GMT-3.
+# See Asia/Riyadh.
 
 # S Korea - year-round base
 # Jang Bogo, Terra Nova Bay, -743700+1641205 since 2014
@@ -240,7 +240,7 @@ Zone Antarctica/Troll	0	-	-00	2005 Feb 12
 #	year-round from 1960/61 to 1992
 
 # Vostok, since 1957-12-16, temporarily closed 1994-02/1994-11
-# See Etc/GMT-6.
+# See Asia/Urumqi.
 
 # S Africa - year-round bases
 # Marion Island, -4653+03752

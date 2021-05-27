@@ -252,7 +252,7 @@ Zone Antarctica/Macquarie 0	-	-00	1899 Nov
 			10:00	AT	AE%sT
 
 # Christmas
-# See Etc/GMT-7.
+# See Asia/Bangkok.
 
 # Cocos (Keeling) Is
 # See Asia/Yangon.
@@ -403,9 +403,12 @@ Zone	Pacific/Fiji	11:55:44 -	LMT	1915 Oct 26 # Suva
 
 # French Polynesia
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+Zone	Pacific/Gambier	 -8:59:48 -	LMT	1912 Oct # Rikitea
+			 -9:00	-	-09
 Zone	Pacific/Marquesas -9:18:00 -	LMT	1912 Oct
 			 -9:30	-	-0930
-# See Etc/GMT+9 for the Gambier Islands and Etc/GMT+10 for the Society Islands.
+Zone	Pacific/Tahiti	 -9:58:16 -	LMT	1912 Oct # Papeete
+			-10:00	-	-10
 # Clipperton (near North America) is administered from French Polynesia;
 # it is uninhabited.
 
@@ -451,8 +454,9 @@ Zone	Pacific/Guam	-14:21:00 -	LMT	1844 Dec 31
 			10:00	-	ChST	# Chamorro Standard Time
 
 # Kiribati
-# See Etc/GMT-12 for the Gilbert Islands.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+Zone Pacific/Tarawa	 11:32:04 -	LMT	1901 # Bairiki
+			 12:00	-	+12
 Zone Pacific/Enderbury	-11:24:20 -	LMT	1901
 			-12:00	-	-12	1979 Oct
 			-11:00	-	-11	1994 Dec 31
@@ -466,7 +470,7 @@ Zone Pacific/Kiritimati	-10:29:20 -	LMT	1901
 # See Pacific/Guam.
 
 # Marshall Is
-# See Etc/GMT-12 for most locations.
+# See Pacific/Tarawa for most locations.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone Pacific/Kwajalein	 11:09:20 -	LMT	1901
 			 11:00	-	+11	1937
@@ -477,8 +481,8 @@ Zone Pacific/Kwajalein	 11:09:20 -	LMT	1901
 			 12:00	-	+12
 
 # Micronesia
-# For Chuuk and Yap see Etc/GMT-10.
-# For Pohnpei see Etc/GMT-11.
+# For Chuuk and Yap see Pacific/Port_Moresby.
+# For Pohnpei see Pacific/Guadalcanal.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone Pacific/Kosrae	-13:08:04 -	LMT	1844 Dec 31
 			 10:51:56 -	LMT	1901
@@ -628,10 +632,16 @@ Zone	Pacific/Norfolk	11:11:52 -	LMT	1901 # Kingston
 			11:00	AN	+11/+12
 
 # Palau (Belau)
-# See Etc/GMT-9.
+# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+Zone Pacific/Palau	-15:02:04 -	LMT	1844 Dec 31	# Koror
+			  8:57:56 -	LMT	1901
+			  9:00	-	+09
 
 # Papua New Guinea
-# See Etc/GMT-10 for most locations.
+# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+Zone Pacific/Port_Moresby 9:48:40 -	LMT	1880
+			9:48:32	-	PMMT	1895 # Port Moresby Mean Time
+			10:00	-	+10
 #
 # From Paul Eggert (2014-10-13):
 # Base the Bougainville entry on the Arawa-Kieta region, which appears to have
@@ -751,8 +761,9 @@ Zone Pacific/Apia	 12:33:04 -	LMT	1892 Jul  5
 
 # Solomon Is
 # excludes Bougainville, for which see Papua New Guinea
-# See Etc/GMT-11.
-
+# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+Zone Pacific/Guadalcanal 10:39:48 -	LMT	1912 Oct # Honiara
+			11:00	-	+11
 
 # Tokelau
 #
@@ -793,7 +804,7 @@ Zone Pacific/Tongatapu	12:19:12 -	LMT	1945 Sep 10
 			13:00	Tonga	+13/+14
 
 # Tuvalu
-# See Etc/GMT-12.
+# See Pacific/Tarawa.
 
 
 # US minor outlying islands
@@ -852,7 +863,7 @@ Zone Pacific/Tongatapu	12:19:12 -	LMT	1945 Sep 10
 # uninhabited since World War II; was probably like Pacific/Kiritimati
 
 # Wake
-# See Etc/GMT-12.
+# See Pacific/Tarawa.
 
 
 # Vanuatu
@@ -891,7 +902,7 @@ Zone	Pacific/Efate	11:13:16 -	LMT	1912 Jan 13 # Vila
 			11:00	Vanuatu	+11/+12
 
 # Wallis and Futuna
-# See Etc/GMT-12.
+# See Pacific/Tarawa.
 
 ###############################################################################
 
@@ -1950,6 +1961,9 @@ Zone	Pacific/Efate	11:13:16 -	LMT	1912 Jan 13 # Vila
 # https://www.legislation.gov.au/Details/F2018L01702
 # From Michael Deckers (2019-08-14):
 # https://www.legislation.gov.au/Details/F2019C00010
+
+# Palau
+# See commentary for Micronesia.
 
 # Pitcairn
 

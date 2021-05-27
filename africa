@@ -105,7 +105,7 @@ Zone	Africa/Algiers	0:12:12 -	LMT	1891 Mar 16
 # See Africa/Maputo.
 
 # Burkina Faso
-# See Etc/GMT.
+# See Africa/Abidjan.
 
 # Burundi
 # See Africa/Maputo.
@@ -147,7 +147,9 @@ Zone	Africa/Ndjamena	1:00:12 -	LMT	1912        # N'Djamena
 # See Africa/Lagos.
 
 # Côte d'Ivoire / Ivory Coast
-# See Etc/GMT.
+# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+Zone	Africa/Abidjan	-0:16:08 -	LMT	1912
+			 0:00	-	GMT
 
 # Djibouti
 # See Africa/Nairobi.
@@ -370,7 +372,7 @@ Zone	Africa/Cairo	2:05:09 -	LMT	1900 Oct
 # The Gambia
 # Ghana
 # Guinea
-# See Etc/GMT.
+# See Africa/Abidjan.
 
 # Guinea-Bissau
 #
@@ -525,7 +527,7 @@ Zone	Africa/Tripoli	0:52:44 -	LMT	1920
 
 # Mali
 # Mauritania
-# See Etc/GMT.
+# See Africa/Abidjan.
 
 # Mauritius
 
@@ -1269,7 +1271,7 @@ Zone	Africa/Lagos	0:13:35 -	LMT	1905 Jul  1
 			1:00	-	WAT
 
 # Réunion
-# See Etc/GMT-4.
+# See Asia/Dubai.
 #
 # Crozet Islands also observes Réunion time; see the 'antarctica' file.
 
@@ -1277,7 +1279,7 @@ Zone	Africa/Lagos	0:13:35 -	LMT	1905 Jul  1
 # See Africa/Maputo.
 
 # St Helena
-# See Etc/GMT.
+# See Africa/Abidjan.
 # The other parts of the St Helena territory are similar:
 #	Tristan da Cunha: on GMT, say Whitman and the CIA
 #	Ascension: on GMT, say the USNO (1995-12-21) and the CIA
@@ -1312,13 +1314,13 @@ Zone	Africa/Sao_Tome	 0:26:56 -	LMT	1884
 			 0:00	-	GMT
 
 # Senegal
-# See Etc/GMT.
+# See Africa/Abidjan.
 
 # Seychelles
-# See Etc/GMT-4.
+# See Asia/Dubai.
 
 # Sierra Leone
-# See Etc/GMT.
+# See Africa/Abidjan.
 
 # Somalia
 # See Africa/Nairobi.
@@ -1383,7 +1385,7 @@ Zone	Africa/Juba	2:06:28 -	LMT	1931
 # See Africa/Nairobi.
 
 # Togo
-# See Etc/GMT.
+# See Africa/Abidjan.
 
 # Tunisia
 

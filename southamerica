@@ -577,8 +577,11 @@ Zone America/Argentina/Ushuaia -4:33:12 - LMT	1894 Oct 31
 # See America/Puerto_Rico.
 
 # Bolivia
-# See Etc/GMT+4.
-
+# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+Zone	America/La_Paz	-4:32:36 -	LMT	1890
+			-4:32:36 -	CMT	1931 Oct 15 # Calamarca MT
+			-4:32:36 1:00	BST	1932 Mar 21 # Bolivia ST
+			-4:00	-	-04
 
 # Brazil
 
@@ -1510,8 +1513,10 @@ Zone Atlantic/Stanley	-3:51:24 -	LMT	1890
 			-3:00	-	-03
 
 # French Guiana
-# See Etc/GMT+3.
-
+# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+Zone America/Cayenne	-3:29:20 -	LMT	1911 Jul
+			-4:00	-	-04	1967 Oct
+			-3:00	-	-03
 
 # Guyana
 
@@ -1672,7 +1677,9 @@ Zone	America/Lima	-5:08:12 -	LMT	1890
 			-5:00	Peru	-05/-04
 
 # South Georgia
-# See Etc/GMT+2.
+# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+Zone Atlantic/South_Georgia -2:26:08 -	LMT	1890 # Grytviken
+			-2:00	-	-02
 
 # South Sandwich Is
 # uninhabited; scientific personnel have wintered

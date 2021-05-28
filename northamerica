@@ -729,7 +729,11 @@ Zone America/Adak	 12:13:22 -	LMT	1867 Oct 19 12:44:35
 			-11:00	US	B%sT	1983 Oct 30  2:00
 			-10:00	US	AH%sT	1983 Nov 30
 			-10:00	US	H%sT
-# The following switches don't quite make our 1970 cutoff.
+# The following switches don't make our 1970 cutoff.
+#
+# Kiska observed Tokyo date and time during Japanese occupation from
+# 1942-06-06 to 1943-07-29, and similarly for Attu from 1942-06-07 to
+# 1943-05-29 (all dates American).  Both islands are now uninhabited.
 #
 # Shanks writes that part of southwest Alaska (e.g. Aniak)
 # switched from -11:00 to -10:00 on 1968-09-22 at 02:00,

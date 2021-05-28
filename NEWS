@@ -2,6 +2,13 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to zone name
+
+    Rename Pacific/Enderbury to Pacific/Kanton.  When we added
+    Enderbury in 1993, we did not know that it is uninhabited and that
+    Kanton (population two dozen) is the only inhabited location in
+    that timezone.  The old name is now a backward-compatility link.
+
   Changes to past timestamps
 
     Correct many pre-1993 transitions, fixing entries originally
@@ -14,11 +21,13 @@ Unreleased, experimental changes
       - Guyana: corrected LMT for Georgetown; the introduction of
 	standard time in 1911, not 1915; and corrections to 1975 and
 	1992 transitions
+      - Kanton: uninhabited before 1937-08-31
       - Niue: observed -11:20 in 1951-1978
       - Portugal: DST was observed in 1950
       - Tonga: adopted standard time in 1945 not 1901, and moved from
 	+12:20 to +13 in 1961 not 1941
     Additional fixes to entries in the 'backzone' file include:
+      - Enderbury: inhabited only 1860/1885 and 1938-03-06/1942-02-09
       - The Gambia: 1933 and 1942 transitions
       - Malawi: several 1911 through 1925 transitions
       - Sierra Leone: several 1913 through 1941 transitions, and DST
@@ -955,8 +964,8 @@ Release 2018d - 2018-03-22 07:05:46 -0700
     Institute in Montevideo.
     (Thanks to Jeremie Bonjour, Tim Parenti, and Michael Deckers.)
 
-    Enderbury and Kiritimati skipped New Year's Eve 1994, not
-    New Year's Day 1995.  (Thanks to Kerry Shetline.)
+    East Kiribati skipped New Year's Eve 1994, not New Year's Day 1995.
+    (Thanks to Kerry Shetline.)
 
     Fix the 1912-01-01 transition for Portugal and its colonies.
     This transition was at 00:00 according to the new UT offset, not

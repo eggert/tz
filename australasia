@@ -457,7 +457,7 @@ Zone	Pacific/Guam	-14:21:00 -	LMT	1844 Dec 31
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone Pacific/Tarawa	 11:32:04 -	LMT	1901 # Bairiki
 			 12:00	-	+12
-Zone Pacific/Enderbury	-11:24:20 -	LMT	1901
+Zone Pacific/Kanton	  0	-	-00	1937 Aug 31
 			-12:00	-	-12	1979 Oct
 			-11:00	-	-11	1994 Dec 31
 			 13:00	-	+13
@@ -1734,6 +1734,23 @@ Zone	Pacific/Efate	11:13:16 -	LMT	1912 Jan 13 # Vila
 # From Paul Eggert (2018-02-04):
 # One source for this is page 202 of: Bartky IR. One Time Fits All:
 # The Campaigns for Global Uniformity (2007).
+
+# Kanton
+
+# From Paul Eggert (2021-05-27):
+# Kiribati's +13 timezone is represented by Kanton, its only populated
+# island.  (It was formerly spelled "Canton", but Gilbertese lacks "C".)
+# Kanton was settled on 1937-08-31 by two British radio operators
+# <https://history.state.gov/historicaldocuments/frus1937v02/d94>;
+# Americans came the next year and built an airfield, partly to
+# establish airline service and perhaps partly anticipating the
+# next war.  Aside from the war, the airfield was used by commercial
+# airlines until long-range jets became standard; although currently
+# for emergency use only, China says it is considering rebuilding the
+# airfield for high-end niche tourism.  Kanton has about two dozen
+# people, caretakers who rotate in from the rest of Kiribati in 2-5
+# year shifts, and who use some of the leftover structures
+# <http://pipa.neaq.org/2012/06/images-of-kanton-island.html>.
 
 # Kwajalein
 

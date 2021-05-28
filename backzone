@@ -1566,6 +1566,18 @@ Zone Pacific/Chuuk	-13:52:52 -	LMT	1844 Dec 31
 Link Pacific/Chuuk Pacific/Truk
 Link Pacific/Chuuk Pacific/Yap
 
+# Phoenix Islands, Kiribati
+# From Paul Eggert (2021-05-27):
+# Enderbury was inhabited 1860/1880s to mine guano, and 1938-03-06/1942-02-09
+# for aviation (ostensibly commercial, but military uses foreseen).
+# The 19th-century dates are approximate.  See Pacific/Kanton for
+# the currently-inhabited representative for this timezone.
+Zone Pacific/Enderbury	0	-	-00	1860
+			-11:24:20 -	LMT	1885
+			0	-	-00	1938 Mar  6
+			-12:00	-	-12	1942 Feb  9
+			0	-	-00
+
 # Tuvalu
 Zone Pacific/Funafuti	11:56:52 -	LMT	1901
 			12:00	-	+12

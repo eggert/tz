@@ -958,6 +958,12 @@ check_public: $(VERSION_DEPS)
 		  public.dir/zic -v -d public.dir/zoneinfo $$i 2>&1 || exit; \
 		done
 		public.dir/zic -v -d public.dir/zoneinfo-all $(TDATA_TO_CHECK)
+		:
+		: Also check 'backzone' syntax.
+		rm public.dir/main.zi
+		cd public.dir && $(MAKE) PACKRATDATA=backzone main.zi
+		public.dir/zic -d public.dir/zoneinfo main.zi
+		:
 		rm -fr public.dir
 		touch $@
 

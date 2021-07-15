@@ -90,10 +90,6 @@
 #define HAVE_SYS_STAT_H		1
 #endif /* !defined HAVE_SYS_STAT_H */
 
-#ifndef HAVE_SYS_WAIT_H
-#define HAVE_SYS_WAIT_H		1
-#endif /* !defined HAVE_SYS_WAIT_H */
-
 #ifndef HAVE_UNISTD_H
 #define HAVE_UNISTD_H		1
 #endif /* !defined HAVE_UNISTD_H */

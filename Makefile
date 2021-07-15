@@ -222,7 +222,6 @@ LDLIBS=
 #  -DHAVE_STRTOLL=0 if your system lacks the strtoll function
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
 #  -DHAVE_SYS_STAT_H=0 if your compiler lacks a <sys/stat.h>
-#  -DHAVE_SYS_WAIT_H=0 if your compiler lacks a <sys/wait.h>
 #  -DHAVE_TZSET=0 if your system lacks a tzset function
 #  -DHAVE_UNISTD_H=0 if your compiler lacks a <unistd.h>
 #  -Dlocale_t=XXX if your system uses XXX instead of locale_t

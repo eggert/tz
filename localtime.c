@@ -737,7 +737,7 @@ tzload(char const *name, struct state *sp, bool doextend)
 #ifdef ALL_STATE
   union local_storage *lsp = malloc(sizeof *lsp);
   if (!lsp)
-    return errno;
+    return errno != 0 ? errno : ENOMEM;
   else {
     int err = tzloadbody(name, sp, doextend, lsp);
     free(lsp);
@@ -1430,14 +1430,18 @@ gmtcheck(void)
 timezone_t
 tzalloc(char const *name)
 {
+  int err;
   timezone_t sp = malloc(sizeof *sp);
-  if (sp) {
-    int err = zoneinit(sp, name);
-    if (err != 0) {
-      free(sp);
-      errno = err;
-      return NULL;
-    }
+  if (!sp) {
+    if (errno == 0)
+      errno = ENOMEM;
+    return NULL;
+  }
+  err = zoneinit(sp, name);
+  if (err != 0) {
+    free(sp);
+    errno = err;
+    return NULL;
   }
   return sp;
 }

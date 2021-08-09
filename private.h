@@ -685,6 +685,19 @@ time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_PURE;
 # define UNINIT_TRAP 0
 #endif
 
+#ifdef DEBUG
+# define UNREACHABLE() abort()
+#elif 4 < __GNUC__ + (5 <= __GNUC_MINOR__)
+# define UNREACHABLE() __builtin_unreachable()
+#elif defined __has_builtin
+# if __has_builtin(__builtin_unreachable)
+#  define UNREACHABLE() __builtin_unreachable()
+# endif
+#endif
+#ifndef UNREACHABLE
+# define UNREACHABLE() ((void) 0)
+#endif
+
 /*
 ** For the benefit of GNU folk...
 ** '_(MSGID)' uses the current locale's message library string for MSGID.

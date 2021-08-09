@@ -164,7 +164,7 @@ static void	newabbr(const char * abbr);
 static zic_t	oadd(zic_t t1, zic_t t2);
 static void	outzone(const struct zone * zp, ptrdiff_t ntzones);
 static zic_t	rpytime(const struct rule * rp, zic_t wantedy);
-static void	rulesub(struct rule * rp,
+static bool	rulesub(struct rule * rp,
 			const char * loyearp, const char * hiyearp,
 			const char * typep, const char * monthp,
 			const char * dayp, const char * timep);
@@ -1374,11 +1374,7 @@ infile(const char *name)
 					inexpires(fields, nfields);
 					wantcont = false;
 					break;
-				default:	/* "cannot happen" */
-					fprintf(stderr,
-_("%s: panic: Invalid l_value %d\n"),
-						progname, lp->l_value);
-					exit(EXIT_FAILURE);
+				default: UNREACHABLE();
 			}
 		}
 		free(fields);
@@ -1489,8 +1485,10 @@ inrule(char **fields, int nfields)
 	r.r_filename = filename;
 	r.r_linenum = linenum;
 	r.r_save = getsave(fields[RF_SAVE], &r.r_isdst);
-	rulesub(&r, fields[RF_LOYEAR], fields[RF_HIYEAR], fields[RF_COMMAND],
-		fields[RF_MONTH], fields[RF_DAY], fields[RF_TOD]);
+	if (!rulesub(&r, fields[RF_LOYEAR], fields[RF_HIYEAR],
+		     fields[RF_COMMAND], fields[RF_MONTH], fields[RF_DAY],
+		     fields[RF_TOD]))
+	  return;
 	r.r_name = ecpyalloc(fields[RF_NAME]);
 	r.r_abbrvar = ecpyalloc(fields[RF_ABBRVAR]);
 	if (max_abbrvar_len < strlen(r.r_abbrvar))
@@ -1549,6 +1547,7 @@ inzsub(char **fields, int nfields, bool iscont)
 	register char *		cp;
 	char *			cp1;
 	struct zone z;
+	size_t format_len;
 	register int		i_stdoff, i_rule, i_format;
 	register int		i_untilyear, i_untilmonth;
 	register int		i_untilday, i_untiltime;
@@ -1562,7 +1561,6 @@ inzsub(char **fields, int nfields, bool iscont)
 		i_untilmonth = ZFC_TILMONTH;
 		i_untilday = ZFC_TILDAY;
 		i_untiltime = ZFC_TILTIME;
-		z.z_name = NULL;
 	} else if (!namecheck(fields[ZF_NAME]))
 		return false;
 	else {
@@ -1573,7 +1571,6 @@ inzsub(char **fields, int nfields, bool iscont)
 		i_untilmonth = ZF_TILMONTH;
 		i_untilday = ZF_TILDAY;
 		i_untiltime = ZF_TILTIME;
-		z.z_name = ecpyalloc(fields[ZF_NAME]);
 	}
 	z.z_filename = filename;
 	z.z_linenum = linenum;
@@ -1585,29 +1582,24 @@ inzsub(char **fields, int nfields, bool iscont)
 			return false;
 		}
 	}
-	z.z_rule = ecpyalloc(fields[i_rule]);
-	z.z_format = cp1 = ecpyalloc(fields[i_format]);
 	z.z_format_specifier = cp ? *cp : '\0';
-	if (z.z_format_specifier == 'z') {
-	  if (noise)
-	    warning(_("format '%s' not handled by pre-2015 versions of zic"),
-		    z.z_format);
-	  cp1[cp - fields[i_format]] = 's';
-	}
-	if (max_format_len < strlen(z.z_format))
-		max_format_len = strlen(z.z_format);
+	format_len = strlen(fields[i_format]);
+	if (max_format_len < format_len)
+	  max_format_len = format_len;
 	hasuntil = nfields > i_untilyear;
 	if (hasuntil) {
 		z.z_untilrule.r_filename = filename;
 		z.z_untilrule.r_linenum = linenum;
-		rulesub(&z.z_untilrule,
+		if (!rulesub(
+			&z.z_untilrule,
 			fields[i_untilyear],
 			"only",
 			"",
 			(nfields > i_untilmonth) ?
 			fields[i_untilmonth] : "Jan",
 			(nfields > i_untilday) ? fields[i_untilday] : "1",
-			(nfields > i_untiltime) ? fields[i_untiltime] : "0");
+			(nfields > i_untiltime) ? fields[i_untiltime] : "0"))
+		  return false;
 		z.z_untiltime = rpytime(&z.z_untilrule,
 			z.z_untilrule.r_loyear);
 		if (iscont && nzones > 0 &&
@@ -1621,6 +1613,15 @@ inzsub(char **fields, int nfields, bool iscont)
 					));
 				return false;
 		}
+	}
+	z.z_name = iscont ? NULL : ecpyalloc(fields[ZF_NAME]);
+	z.z_rule = ecpyalloc(fields[i_rule]);
+	z.z_format = cp1 = ecpyalloc(fields[i_format]);
+	if (z.z_format_specifier == 'z') {
+	  cp1[cp - fields[i_format]] = 's';
+	  if (noise)
+	    warning(_("format '%s' not handled by pre-2015 versions of zic"),
+		    fields[i_format]);
 	}
 	zones = growalloc(zones, sizeof *zones, nzones, &nzones_alloc);
 	zones[nzones++] = z;
@@ -1764,7 +1765,7 @@ inlink(char **fields, int nfields)
 	links[nlinks++] = l;
 }
 
-static void
+static bool
 rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 	const char *typep, const char *monthp, const char *dayp,
 	const char *timep)
@@ -1777,7 +1778,7 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 
 	if ((lp = byword(monthp, mon_names)) == NULL) {
 		error(_("invalid month name"));
-		return;
+		return false;
 	}
 	rp->r_month = lp->l_value;
 	rp->r_todisstd = false;
@@ -1820,14 +1821,10 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 		case YR_MAXIMUM:
 			rp->r_loyear = ZIC_MAX;
 			break;
-		default:	/* "cannot happen" */
-			fprintf(stderr,
-				_("%s: panic: Invalid l_value %d\n"),
-				progname, lp->l_value);
-			exit(EXIT_FAILURE);
+		default: UNREACHABLE();
 	} else if (sscanf(cp, "%"SCNdZIC"%c", &rp->r_loyear, &xs) != 1) {
 		error(_("invalid starting year"));
-		return;
+		return false;
 	}
 	cp = hiyearp;
 	lp = byword(cp, end_years);
@@ -1842,23 +1839,19 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 		case YR_ONLY:
 			rp->r_hiyear = rp->r_loyear;
 			break;
-		default:	/* "cannot happen" */
-			fprintf(stderr,
-				_("%s: panic: Invalid l_value %d\n"),
-				progname, lp->l_value);
-			exit(EXIT_FAILURE);
+		default: UNREACHABLE();
 	} else if (sscanf(cp, "%"SCNdZIC"%c", &rp->r_hiyear, &xs) != 1) {
 		error(_("invalid ending year"));
-		return;
+		return false;
 	}
 	if (rp->r_loyear > rp->r_hiyear) {
 		error(_("starting year greater than ending year"));
-		return;
+		return false;
 	}
 	if (*typep != '\0') {
 		error(_("year type \"%s\" is unsupported; use \"-\" instead"),
 			typep);
-		return;
+		return false;
 	}
 	/*
 	** Day work.
@@ -1888,12 +1881,12 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 			if (*ep++ != '=') {
 				error(_("invalid day of month"));
 				free(dp);
-				return;
+				return false;
 			}
 			if ((lp = byword(dp, wday_names)) == NULL) {
 				error(_("invalid weekday name"));
 				free(dp);
-				return;
+				return false;
 			}
 			rp->r_wday = lp->l_value;
 		}
@@ -1902,10 +1895,11 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 			(rp->r_dayofmonth > len_months[1][rp->r_month])) {
 				error(_("invalid day of month"));
 				free(dp);
-				return;
+				return false;
 		}
 	}
 	free(dp);
+	return true;
 }
 
 static void
@@ -3423,7 +3417,6 @@ rpytime(const struct rule *rp, zic_t wantedy)
 		return min_time;
 	if (wantedy == ZIC_MAX)
 		return max_time;
-	dayoff = 0;
 	m = TM_JANUARY;
 	y = EPOCH_YEAR;
 

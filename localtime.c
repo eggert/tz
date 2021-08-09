@@ -979,7 +979,6 @@ transtime(const int year, register const struct rule *const rulep,
 	register int	i;
 	int		d, m1, yy0, yy1, yy2, dow;
 
-	INITIALIZE(value);
 	leapyear = isleap(year);
 	switch (rulep->r_type) {
 
@@ -1045,6 +1044,8 @@ transtime(const int year, register const struct rule *const rulep,
 		for (i = 0; i < rulep->r_mon - 1; ++i)
 			value += mon_lengths[leapyear][i] * SECSPERDAY;
 		break;
+
+	default: UNREACHABLE();
 	}
 
 	/*
@@ -1274,7 +1275,6 @@ tzparse(const char *name, struct state *sp, struct state *basep)
 			** Initially we're assumed to be in standard time.
 			*/
 			isdst = false;
-			theiroffset = theirstdoffset;
 			/*
 			** Now juggle transition times and types
 			** tracking offsets as you do.

@@ -519,9 +519,12 @@ main(int argc, char *argv[])
 		}
 	}
 	gmtzinit();
-	INITIALIZE(now);
-	if (! (iflag | vflag | Vflag))
+	if (iflag | vflag | Vflag)
+	  now = 0;
+	else {
 	  now = time(NULL);
+	  now |= !now;
+	}
 	longest = 0;
 	for (i = optind; i < argc; i++) {
 	  size_t arglen = strlen(argv[i]);
@@ -539,7 +542,7 @@ main(int argc, char *argv[])
 		  perror(argv[i]);
 		  return EXIT_FAILURE;
 		}
-		if (! (iflag | vflag | Vflag)) {
+		if (now) {
 			show(tz, argv[i], now, false);
 			tzfree(tz);
 			continue;
@@ -557,7 +560,6 @@ main(int argc, char *argv[])
 		}
 		if (t + 1 < cutlotime)
 		  t = cutlotime - 1;
-		INITIALIZE (ab);
 		tm_ok = my_localtime_rz(tz, &t, &tm) != NULL;
 		if (tm_ok) {
 		  ab = saveabbr(&abbrev, &abbrevsize, &tm);
@@ -565,7 +567,8 @@ main(int argc, char *argv[])
 		    showtrans("\nTZ=%f", &tm, t, ab, argv[i]);
 		    showtrans("-\t-\t%Q", &tm, t, ab, argv[i]);
 		  }
-		}
+		} else
+		  ab = NULL;
 		while (t < cuthitime - 1) {
 		  time_t newt = ((t < absolute_max_time - SECSPERDAY / 2
 				  && t + SECSPERDAY / 2 < cuthitime - 1)
@@ -574,9 +577,9 @@ main(int argc, char *argv[])
 		  struct tm *newtmp = localtime_rz(tz, &newt, &newtm);
 		  bool newtm_ok = newtmp != NULL;
 		  if (tm_ok != newtm_ok
-		      || (tm_ok && (delta(&newtm, &tm) != newt - t
-				    || newtm.tm_isdst != tm.tm_isdst
-				    || strcmp(abbr(&newtm), ab) != 0))) {
+		      || (ab && (delta(&newtm, &tm) != newt - t
+				 || newtm.tm_isdst != tm.tm_isdst
+				 || strcmp(abbr(&newtm), ab) != 0))) {
 		    newt = hunt(tz, argv[i], t, newt, false);
 		    newtmp = localtime_rz(tz, &newt, &newtm);
 		    newtm_ok = newtmp != NULL;
@@ -669,7 +672,6 @@ hunt(timezone_t tz, char *name, time_t lot, time_t hit, bool only_ok)
 {
 	static char *		loab;
 	static size_t		loabsize;
-	char const *		ab;
 	struct tm		lotm;
 	struct tm		tm;
 
@@ -679,9 +681,8 @@ hunt(timezone_t tz, char *name, time_t lot, time_t hit, bool only_ok)
 	   LOT, and tzname needs to be changed back.  */
 	bool lotm_ok = my_localtime_rz(tz, &lot, &lotm) != NULL;
 	bool tm_ok;
+	char const *ab = lotm_ok ? saveabbr(&loab, &loabsize, &lotm) : NULL;
 
-	if (lotm_ok)
-	  ab = saveabbr(&loab, &loabsize, &lotm);
 	for ( ; ; ) {
 		/* T = average of LOT and HIT, rounding down.
 		   Avoid overflow, even on oddball C89 platforms
@@ -696,7 +697,7 @@ hunt(timezone_t tz, char *name, time_t lot, time_t hit, bool only_ok)
 		tm_ok = my_localtime_rz(tz, &t, &tm) != NULL;
 		if (lotm_ok == tm_ok
 		    && (only_ok
-			|| (lotm_ok && tm.tm_isdst == lotm.tm_isdst
+			|| (ab && tm.tm_isdst == lotm.tm_isdst
 			    && delta(&tm, &lotm) == t - lot
 			    && strcmp(abbr(&tm), ab) == 0))) {
 		  lot = t;

@@ -736,9 +736,9 @@ tzload(char const *name, struct state *sp, bool doextend)
 {
 #ifdef ALL_STATE
   union local_storage *lsp = malloc(sizeof *lsp);
-  if (!lsp)
-    return errno;
-  else {
+  if (!lsp) {
+    return HAVE_MALLOC_ERRNO ? errno : ENOMEM;
+  } else {
     int err = tzloadbody(name, sp, doextend, lsp);
     free(lsp);
     return err;
@@ -1438,7 +1438,8 @@ tzalloc(char const *name)
       errno = err;
       return NULL;
     }
-  }
+  } else if (!HAVE_MALLOC_ERRNO)
+    errno = ENOMEM;
   return sp;
 }
 

@@ -138,7 +138,7 @@ dogmt(void)
 			continue;
 		fakeenv = malloc((n + 2) * sizeof *fakeenv);
 		if (fakeenv == NULL) {
-			perror(_("Memory exhausted"));
+			fprintf(stderr, _("date: Memory exhausted\n"));
 			errensure();
 			exit(retval);
 		}

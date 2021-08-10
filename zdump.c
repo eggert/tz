@@ -140,7 +140,7 @@ xmalloc(size_t size)
 {
   void *p = malloc(size);
   if (!p) {
-    perror(progname);
+    fprintf(stderr, _("%s: Memory exhausted\n"), progname);
     exit(EXIT_FAILURE);
   }
   return p;

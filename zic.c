@@ -450,7 +450,7 @@ static void *
 memcheck(void *ptr)
 {
 	if (ptr == NULL)
-		memory_exhausted(strerror(errno));
+	  memory_exhausted(strerror(HAVE_MALLOC_ERRNO ? errno : ENOMEM));
 	return ptr;
 }
 

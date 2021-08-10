@@ -66,6 +66,10 @@
 #define HAVE_LINK		1
 #endif /* !defined HAVE_LINK */
 
+#ifndef HAVE_MALLOC_ERRNO
+#define HAVE_MALLOC_ERRNO 1
+#endif
+
 #ifndef HAVE_POSIX_DECLS
 #define HAVE_POSIX_DECLS 1
 #endif
@@ -160,8 +164,15 @@
 
 #include <errno.h>
 
+#ifndef EINVAL
+# define EINVAL ERANGE
+#endif
+
 #ifndef ENAMETOOLONG
 # define ENAMETOOLONG EINVAL
+#endif
+#ifndef ENOMEM
+# define ENOMEM EINVAL
 #endif
 #ifndef ENOTSUP
 # define ENOTSUP EINVAL

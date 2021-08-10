@@ -141,6 +141,12 @@ Unreleased, experimental changes
     lower time bound and exclusive for the upper.  Formerly they were
     inconsistent.  (Confusion noted by Martin Burnicki.)
 
+  Changes to build procedure
+
+    You can now compile with -DHAVE_MALLOC_ERRNO=0 to port to
+    non-POSIX hosts where malloc doesn't set errno.
+    (Problem reported by Jan Engelhardt.)
+
 
 Release 2021a - 2021-01-24 10:54:57 -0800
 

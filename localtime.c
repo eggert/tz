@@ -2379,7 +2379,7 @@ time(time_t *p)
   if (r != (time_t) -1) {
     int_fast32_t offset = EPOCH_LOCAL ? (daylight ? timezone : altzone) : 0;
     if (increment_overflow32(&offset, -EPOCH_OFFSET)
-	|| increment_overflow_time (&r, offset)) {
+	|| increment_overflow_time(&r, offset)) {
       errno = EOVERFLOW;
       r = -1;
     }

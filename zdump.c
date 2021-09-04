@@ -73,7 +73,7 @@ extern int	optind;
 #endif
 
 /* The minimum and maximum finite time values.  */
-enum { atime_shift = CHAR_BIT * sizeof (time_t) - 2 };
+enum { atime_shift = CHAR_BIT * sizeof(time_t) - 2 };
 static time_t const absolute_min_time =
   ((time_t) -1 < 0
    ? (- ((time_t) ~ (time_t) 0 < 0)

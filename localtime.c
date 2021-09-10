@@ -436,7 +436,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 	for (stored = 4; stored <= 8; stored *= 2) {
 		int_fast32_t ttisstdcnt = detzcode(up->tzhead.tzh_ttisstdcnt);
 		int_fast32_t ttisutcnt = detzcode(up->tzhead.tzh_ttisutcnt);
-		int_fast64_t prevtr = 0;
+		int_fast64_t prevtr = -1;
 		int_fast32_t prevcorr;
 		int_fast32_t leapcnt = detzcode(up->tzhead.tzh_leapcnt);
 		int_fast32_t timecnt = detzcode(up->tzhead.tzh_timecnt);
@@ -526,24 +526,21 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		  int_fast64_t tr = stored == 4 ? detzcode(p) : detzcode64(p);
 		  int_fast32_t corr = detzcode(p + stored);
 		  p += stored + 4;
-		  /* Leap seconds cannot occur before the Epoch.  */
-		  if (tr < 0)
+		  /* Leap seconds cannot occur before the Epoch,
+		     or out of order.  */
+		  if (tr <= prevtr)
 		    return EINVAL;
 		  if (tr <= TIME_T_MAX) {
-		    /* Leap seconds cannot occur more than once per UTC month,
-		       and UTC months are at least 28 days long (minus 1
-		       second for a negative leap second).  Each leap second's
+		    /* To avoid other botches in this code, each leap second's
 		       correction must differ from the previous one's by 1
 		       second or less, except that the first correction can be
 		       any value; these requirements are more generous than
 		       RFC 8536, to allow future RFC extensions.  */
-		    if (tr - prevtr < 28 * SECSPERDAY - 1
-			|| ((timecnt == 0 || sp->ats[0] < tr)
-			    && ! (i == 0
-				  || (prevcorr < corr
-				      ? corr == prevcorr + 1
-				      : (corr == prevcorr
-					 || corr == prevcorr - 1)))))
+		    if (! (i == 0
+			   || (prevcorr < corr
+			       ? corr == prevcorr + 1
+			       : (corr == prevcorr
+				  || corr == prevcorr - 1))))
 		      return EINVAL;
 		    sp->lsis[leapcnt].ls_trans = prevtr = tr;
 		    sp->lsis[leapcnt].ls_corr = prevcorr = corr;

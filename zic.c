@@ -1225,8 +1225,8 @@ itssymlink(char const *name)
 static int
 rcomp(const void *cp1, const void *cp2)
 {
-	return strcmp(((const struct rule *) cp1)->r_name,
-		((const struct rule *) cp2)->r_name);
+  struct rule const *r1 = cp1, *r2 = cp2;
+  return strcmp(r1->r_name, r2->r_name);
 }
 
 static void
@@ -1949,10 +1949,9 @@ puttzcodepass(zic_t val, FILE *fp, int pass)
 static int
 atcomp(const void *avp, const void *bvp)
 {
-	const zic_t	a = ((const struct attype *) avp)->at;
-	const zic_t	b = ((const struct attype *) bvp)->at;
-
-	return (a < b) ? -1 : (a > b);
+  struct attype const *ap = avp, *bp = bvp;
+  zic_t a = ap->at, b = bp->at;
+  return a < b ? -1 : a > b;
 }
 
 struct timerange {

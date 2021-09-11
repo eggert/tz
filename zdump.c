@@ -1155,8 +1155,6 @@ dumptime(register const struct tm *timeptr)
 		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 	};
-	register const char *	wn;
-	register const char *	mn;
 	register int		lead;
 	register int		trail;
 
@@ -1169,16 +1167,13 @@ dumptime(register const struct tm *timeptr)
 	** values in tm_wday or tm_mon, but since this code might be compiled
 	** with other (perhaps experimental) versions, paranoia is in order.
 	*/
-	if (timeptr->tm_wday < 0 || timeptr->tm_wday >=
-		(int) (sizeof wday_name / sizeof wday_name[0]))
-			wn = "???";
-	else		wn = wday_name[timeptr->tm_wday];
-	if (timeptr->tm_mon < 0 || timeptr->tm_mon >=
-		(int) (sizeof mon_name / sizeof mon_name[0]))
-			mn = "???";
-	else		mn = mon_name[timeptr->tm_mon];
 	printf("%s %s%3d %.2d:%.2d:%.2d ",
-		wn, mn,
+		((0 <= timeptr->tm_wday
+		  && timeptr->tm_wday < sizeof wday_name / sizeof wday_name[0])
+		 ? wday_name[timeptr->tm_wday] : "???"),
+		((0 <= timeptr->tm_mon
+		  && timeptr->tm_mon < sizeof mon_name / sizeof mon_name[0])
+		 ? mon_name[timeptr->tm_mon] : "???"),
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec);
 #define DIVISOR	10

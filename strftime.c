@@ -335,11 +335,13 @@ label:
 						&& tm.tm_sec == tm_1.tm_sec))
 					    return NULL;
 					}
-					if (TYPE_SIGNED(time_t))
-						sprintf(buf, "%"PRIdMAX,
-							(intmax_t) mkt);
-					else	sprintf(buf, "%"PRIuMAX,
-							(uintmax_t) mkt);
+					if (TYPE_SIGNED(time_t)) {
+					  intmax_t n = mkt;
+					  sprintf(buf, "%"PRIdMAX, n);
+					} else {
+					  uintmax_t n = mkt;
+					  sprintf(buf, "%"PRIuMAX, n);
+					}
 					pt = _add(buf, pt, ptlim);
 				}
 				continue;

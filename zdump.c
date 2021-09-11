@@ -99,8 +99,12 @@ static void showtrans(char const *, struct tm const *, time_t, char const *,
 static const char *tformat(void);
 static time_t yeartot(intmax_t) ATTRIBUTE_PURE;
 
-/* Unlike <ctype.h>'s isdigit, this also works if c < 0 | c > UCHAR_MAX. */
-#define is_digit(c) ((unsigned)(c) - '0' <= 9)
+/* Is C an ASCII digit?  */
+static bool
+is_digit(char c)
+{
+  return '0' <= c && c <= '9';
+}
 
 /* Is A an alphabetic character in the C locale?  */
 static bool

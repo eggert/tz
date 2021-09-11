@@ -778,6 +778,13 @@ static const int	year_lengths[2] = {
 	DAYSPERNYEAR, DAYSPERLYEAR
 };
 
+/* Is C an ASCII digit?  */
+static bool
+is_digit(char c)
+{
+  return '0' <= c && c <= '9';
+}
+
 /*
 ** Given a pointer into a timezone string, scan until a character that is not
 ** a valid character in a time zone abbreviation is found.

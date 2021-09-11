@@ -225,9 +225,6 @@
 #define R_OK	4
 #endif /* !defined R_OK */
 
-/* Unlike <ctype.h>'s isdigit, this also works if c < 0 | c > UCHAR_MAX. */
-#define is_digit(c) ((unsigned)(c) - '0' <= 9)
-
 /*
 ** Define HAVE_STDINT_H's default value here, rather than at the
 ** start, since __GLIBC__ and INTMAX_MAX's values depend on

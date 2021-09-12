@@ -279,6 +279,10 @@ the purpose of skipping over them.
 Readers should calculate the total lengths of the
 headers and data blocks and check that they all fit within
 the actual file size, as part of a validity check for the file.
+.PP
+When a positive leap second occurs, readers should append a 60th
+second to the local minute containing the second just before the leap
+second.
 .SS Common interoperability issues
 This section documents common problems in reading or writing TZif files.
 Most of these are problems in generating TZif files for use by
@@ -398,6 +402,14 @@ thus swapping standard and daylight saving time.
 Although this workaround misidentifies which part of the year
 uses daylight saving time, it records UT offsets and time zone
 abbreviations correctly.
+.IP *
+Some readers generate ambiguous timestamps for positive leap seconds
+that occur when the UTC offset is not a multiple of 60 seconds.
+For example, in a timezone with UTC offset +01:23:45 and with
+a positive leap second 78796801 (1972-06-30 23:59:60 UTC), they
+map both 78796800 and 78796801 to 01:23:45 local time the next day
+instead of mapping the latter to 01:23:46, and they map 78796815 to
+01:23:59 instead of to 01:23:60.
 .PP
 Some interoperability problems are reader bugs that
 are listed here mostly as warnings to developers of readers.

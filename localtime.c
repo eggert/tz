@@ -1681,20 +1681,23 @@ timesub(const time_t *timep, int_fast32_t offset,
 	register time_t			tdays;
 	register const int *		ip;
 	register int_fast32_t		corr;
-	register bool			hit;
 	register int			i;
 	int_fast32_t idays, rem, dayoff, dayrem;
 	time_t y;
 
+	/* If less than SECSPERMIN, the number of seconds since the
+	   most recent positive leap second; otherwise, do not add 1
+	   to localtime tm_sec because of leap seconds.  */
+	time_t secs_since_posleap = SECSPERMIN;
+
 	corr = 0;
-	hit = false;
 	i = (sp == NULL) ? 0 : sp->leapcnt;
 	while (--i >= 0) {
 		lp = &sp->lsis[i];
 		if (*timep >= lp->ls_trans) {
 			corr = lp->ls_corr;
-			hit = (*timep == lp->ls_trans
-			       && (i == 0 ? 0 : lp[-1].ls_corr) < corr);
+			if ((i == 0 ? 0 : lp[-1].ls_corr) < corr)
+			  secs_since_posleap = *timep - lp->ls_trans;
 			break;
 		}
 	}
@@ -1761,11 +1764,12 @@ timesub(const time_t *timep, int_fast32_t offset,
 	tmp->tm_hour = rem / SECSPERHOUR;
 	rem %= SECSPERHOUR;
 	tmp->tm_min = rem / SECSPERMIN;
-	/*
-	** A positive leap second requires a special
-	** representation. This uses "... ??:59:60" et seq.
-	*/
-	tmp->tm_sec = rem % SECSPERMIN + hit;
+	tmp->tm_sec = rem % SECSPERMIN;
+
+	/* Use "... ??:??:60" at the end of the localtime minute containing
+	   the second just before the positive leap second.  */
+	tmp->tm_sec += secs_since_posleap <= tmp->tm_sec;
+
 	ip = mon_lengths[isleap(y)];
 	for (tmp->tm_mon = 0; idays >= ip[tmp->tm_mon]; ++(tmp->tm_mon))
 		idays -= ip[tmp->tm_mon];

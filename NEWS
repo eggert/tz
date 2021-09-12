@@ -109,6 +109,24 @@ Unreleased, experimental changes
     transition in the table, or when handling far-future timestamps
     in slim TZif files lacking leap seconds.
 
+    Fix localtime misbehavior involving positive leap seconds in a
+    timezone with a UTC offset that is not on a minute boundary.
+    (No such timezone exists in tzdb, luckily.)  Without the fix,
+    the timestamp was ambiguous during a positive leap second.
+    With the fix, the localtime leap second appears at the end of the
+    localtime minute containing the UTC second just before the UTC
+    leap second, which means leapseconds roll slightly in these
+    oddball timezones.  Here is how the fix affects timestamps in a
+    timezone with UTC offset +01:23:45 and with a positive leap second
+    78796801 (1972-06-30 23:59:60 UTC):
+
+	time_t    without the fix      with the fix
+	78796800  1972-07-01 01:23:45  1972-07-01 01:23:45
+	78796801  1972-07-01 01:23:45  1972-07-01 01:23:46
+	...
+	78796815  1972-07-01 01:23:59  1972-07-01 01:23:60
+	78796816  1972-07-01 01:24:00  1972-07-01 01:24:00
+
     Fix an unlikely bug that caused 'localtime' etc. to misbehave if
     civil time changes a few seconds before time_t wraps around, when
     leap seconds are enabled.

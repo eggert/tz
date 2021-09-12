@@ -282,7 +282,10 @@ the actual file size, as part of a validity check for the file.
 .PP
 When a positive leap second occurs, readers should append a 60th
 second to the local minute containing the second just before the leap
-second.
+second.  If this occurs when the UTC offset is not a multiple of 60
+seconds, the leap second occurs earlier than the last second of the
+local minute and the minute's remaining local seconds are numbered
+through 60 instead of the usual 59; the UTC offset is unaffected.
 .SS Common interoperability issues
 This section documents common problems in reading or writing TZif files.
 Most of these are problems in generating TZif files for use by

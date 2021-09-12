@@ -49,7 +49,7 @@ Link	Etc/GMT				Etc/GMT0
 #		zic -l GMT-12
 # so we moved the names into the Etc subdirectory.
 # Also, the time zone abbreviations are now compatible with %z.
-Zone      Etc/GMT-15  15  - +15
+Zone  Etc/GMT-15  15  - +15
 Zone	Etc/GMT-14	14	-	+14
 Zone	Etc/GMT-13	13	-	+13
 Zone	Etc/GMT-12	12	-	+12

@@ -122,8 +122,8 @@ LIBDIR = $(TOPDIR)/$(USRDIR)/lib
 
 # Types to try, as an alternative to time_t.
 TIME_T_ALTERNATIVES = $(TIME_T_ALTERNATIVES_HEAD) $(TIME_T_ALTERNATIVES_TAIL)
-TIME_T_ALTERNATIVES_HEAD = int64_t
-TIME_T_ALTERNATIVES_TAIL = int32_t uint32_t uint64_t
+TIME_T_ALTERNATIVES_HEAD = int_least64_t
+TIME_T_ALTERNATIVES_TAIL = int_least32_t uint_least32_t uint_least64_t
 
 # What kind of TZif data files to generate.  (TZif is the binary time
 # zone data format that zic generates; see Internet RFC 8536.)
@@ -976,7 +976,7 @@ $(TIME_T_ALTERNATIVES): $(VERSION_DEPS)
 		mkdir $@.dir
 		ln $(VERSION_DEPS) $@.dir
 		case $@ in \
-		  int32_t) range=-2147483648,2147483648;; \
+		  int*32_t) range=-2147483648,2147483648;; \
 		  u*) range=0,4294967296;; \
 		  *) range=-4294967296,4294967296;; \
 		esac && \

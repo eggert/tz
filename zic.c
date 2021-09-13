@@ -1958,29 +1958,44 @@ struct timerange {
   int defaulttype;
   ptrdiff_t base, count;
   int leapbase, leapcount;
-  bool leapexpiry;
+  bool pretrans, leapexpiry;
 };
 
 static struct timerange
-limitrange(struct timerange r, zic_t lo, zic_t hi,
+limitrange(struct timerange r, bool locut, zic_t lo, zic_t hi,
 	   zic_t const *ats, unsigned char const *types)
 {
+  /* Omit ordinary transitions < LO.  */
   while (0 < r.count && ats[r.base] < lo) {
     r.defaulttype = types[r.base];
     r.count--;
     r.base++;
   }
+
+  /* Omit as many leap seconds < LO as possible, such that the first
+     leap second in the truncated list is <= LO.  */
   while (1 < r.leapcount && trans[r.leapbase + 1] <= lo) {
     r.leapcount--;
     r.leapbase++;
   }
 
+  /* Omit ordinary and leap second transitions greater than HI + 1.  */
   if (hi < ZIC_MAX) {
     while (0 < r.count && hi + 1 < ats[r.base + r.count - 1])
       r.count--;
     while (0 < r.leapcount && hi + 1 < trans[r.leapbase + r.leapcount - 1])
       r.leapcount--;
   }
+
+  /* Determine whether to keep the last too-low transition if no
+     transition is exactly at LO.  The kept transition will be output
+     as a LO "transition"; see "Output a LO_TIME transition" below.
+     This is needed when the output is truncated at the start, and is
+     also useful when catering to buggy 32-bit clients that do not use
+     time type 0 for timestamps before the first transition.  */
+  r.pretrans = locut && ! (r.count && ats[r.base] == lo);
+
+  /* Determine whether to append an expiration to the leap second table.  */
   r.leapexpiry = 0 <= leapexpires && leapexpires - 1 <= hi;
 
   return r;
@@ -2092,9 +2107,11 @@ writezone(const char *const name, const char *const string, char version,
 	rangeall.base = rangeall.leapbase = 0;
 	rangeall.count = timecnt;
 	rangeall.leapcount = leapcnt;
-	rangeall.leapexpiry = false;
-	range64 = limitrange(rangeall, lo_time, hi_time, ats, types);
-	range32 = limitrange(range64, INT32_MIN, INT32_MAX, ats, types);
+	rangeall.pretrans = rangeall.leapexpiry = false;
+	range64 = limitrange(rangeall, min_time < lo_time,
+			     lo_time, hi_time, ats, types);
+	range32 = limitrange(range64, INT32_MIN < lo_time,
+			     INT32_MIN, INT32_MAX, ats, types);
 
 	/* TZif version 4 is needed if a no-op transition is appended to
 	   indicate the expiration of the leap second table, or if the first
@@ -2129,7 +2146,7 @@ writezone(const char *const name, const char *const string, char version,
 		register int	thisleapi, thisleapcnt, thisleaplim;
 		struct tzhead tzh;
 		int currenttype, thisdefaulttype;
-		bool locut, hicut, thisleapexpiry;
+		bool hicut, pretrans, thisleapexpiry;
 		zic_t lo;
 		int old0;
 		char		omittype[TZ_MAX_TYPES];
@@ -2160,8 +2177,8 @@ writezone(const char *const name, const char *const string, char version,
 			toomanytimes = thistimecnt >> 31 >> 1 != 0;
 			thisleapi = range32.leapbase;
 			thisleapcnt = range32.leapcount;
+			pretrans = range32.pretrans;
 			thisleapexpiry = range32.leapexpiry;
-			locut = INT32_MIN < lo_time;
 			hicut = hi_time < INT32_MAX;
 		} else {
 			thisdefaulttype = range64.defaulttype;
@@ -2170,33 +2187,17 @@ writezone(const char *const name, const char *const string, char version,
 			toomanytimes = thistimecnt >> 31 >> 31 >> 2 != 0;
 			thisleapi = range64.leapbase;
 			thisleapcnt = range64.leapcount;
+			pretrans = range64.pretrans;
 			thisleapexpiry = range64.leapexpiry;
-			locut = min_time < lo_time;
 			hicut = hi_time < max_time;
 		}
 		if (toomanytimes)
 		  error(_("too many transition times"));
 
-		/* Keep the last too-low transition if no transition is
-		   exactly at LO.  The kept transition will be output as
-		   a LO "transition"; see "Output a LO_TIME transition"
-		   below.  This is needed when the output is truncated at
-		   the start, and is also useful when catering to buggy
-		   32-bit clients that do not use time type 0 for
-		   timestamps before the first transition.  */
-		if (0 < thistimei && ats[thistimei] != lo_time) {
-		  thistimei--;
-		  thistimecnt++;
-		  locut = false;
-		}
-
 		thistimelim = thistimei + thistimecnt;
-		if (thistimecnt != 0) {
-		  if (ats[thistimei] == lo_time)
-		    locut = false;
-		  if (hi_time < ZIC_MAX && ats[thistimelim - 1] == hi_time + 1)
-		    hicut = false;
-		}
+		if (thistimecnt && hi_time < ZIC_MAX
+		    && ats[thistimelim - 1] == hi_time + 1)
+		  hicut = false;
 		memset(omittype, true, typecnt);
 		omittype[thisdefaulttype] = false;
 		for (i = thistimei; i < thistimelim; i++)
@@ -2291,11 +2292,9 @@ writezone(const char *const name, const char *const string, char version,
 			indmap[desigidx[i]] = j;
 		}
 		if (pass == 1 && !want_bloat()) {
-		  thisleapcnt = 0;
-		  thisleapexpiry = false;
-		  thistimecnt = - (locut + hicut);
+		  pretrans = hicut = thisleapexpiry = false;
+		  thistimecnt = thisleapcnt = 0;
 		  thistypecnt = thischarcnt = 1;
-		  thistimelim = thistimei;
 		}
 #define DO(field)	fwrite(tzh.field, sizeof tzh.field, 1, fp)
 		memset(&tzh, 0, sizeof tzh);
@@ -2304,7 +2303,7 @@ writezone(const char *const name, const char *const string, char version,
 		convert(utcnt, tzh.tzh_ttisutcnt);
 		convert(stdcnt, tzh.tzh_ttisstdcnt);
 		convert(thisleapcnt + thisleapexpiry, tzh.tzh_leapcnt);
-		convert(locut + thistimecnt + hicut, tzh.tzh_timecnt);
+		convert(pretrans + thistimecnt + hicut, tzh.tzh_timecnt);
 		convert(thistypecnt, tzh.tzh_typecnt);
 		convert(thischarcnt, tzh.tzh_charcnt);
 		DO(tzh_magic);
@@ -2331,16 +2330,15 @@ writezone(const char *const name, const char *const string, char version,
 		   for this pass.  */
 		lo = pass == 1 && lo_time < INT32_MIN ? INT32_MIN : lo_time;
 
-		if (locut)
+		if (pretrans)
 		  puttzcodepass(lo, fp, pass);
 		for (i = thistimei; i < thistimelim; ++i) {
-		  zic_t at = ats[i] < lo ? lo : ats[i];
-		  puttzcodepass(at, fp, pass);
+		  puttzcodepass(ats[i], fp, pass);
 		}
 		if (hicut)
 		  puttzcodepass(hi_time + 1, fp, pass);
 		currenttype = 0;
-		if (locut)
+		if (pretrans)
 		  putc(currenttype, fp);
 		for (i = thistimei; i < thistimelim; ++i) {
 		  currenttype = typemap[types[i]];

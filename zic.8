@@ -709,9 +709,17 @@ or
 .q "Rolling"
 if the leap second time given by the other fields should be interpreted as
 local (wall clock) time.
-(Rolling leap seconds are not supported if the
+.PP
+Rolling leap seconds were meant to accommodate older New York
+Times Square ball drops where there'd be a
+.q "3... 2... 1... leap... Happy New Year"
+countdown, placing the leap second at
+midnight New York time rather than midnight UTC.
+This countdown style has fallen out of favor
+and rolling leap seconds are not used in practice;
+also, they are not supported if the
 .B \*-r
-option is used.)
+option is used.
 .PP
 The expiration line, if present, has the form:
 .nf

@@ -137,6 +137,9 @@ Unreleased, experimental changes
     last time transition disagreed with the TZ string, contrary to
     Internet RFC 8563 section 3.3.
 
+    zic -r now reports an error if given rolling leap seconds, as this
+    usage has never generally worked and is evidently unused.
+
     zic now generates a POSIX-conforming TZ string for TZif files
     where all-year DST is predicted for the indefinite future.
     For example, for all-year Eastern Daylight Time, zic now generates

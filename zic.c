@@ -3144,6 +3144,10 @@ leapadd(zic_t t, int correction, int rolling)
 		error(_("too many leap seconds"));
 		exit(EXIT_FAILURE);
 	}
+	if (rolling && (lo_time != min_time || hi_time != max_time)) {
+	  error(_("Rolling leap seconds not supported with -r"));
+	  exit(EXIT_FAILURE);
+	}
 	for (i = 0; i < leapcnt; ++i)
 		if (t <= trans[i])
 			break;

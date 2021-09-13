@@ -280,7 +280,7 @@ Readers should calculate the total lengths of the
 headers and data blocks and check that they all fit within
 the actual file size, as part of a validity check for the file.
 .PP
-When a positive leap second occurs, readers should append a 60th
+When a positive leap second occurs, readers should append an extra
 second to the local minute containing the second just before the leap
 second.  If this occurs when the UTC offset is not a multiple of 60
 seconds, the leap second occurs earlier than the last second of the

@@ -1972,12 +1972,22 @@ limitrange(struct timerange r, bool locut, zic_t lo, zic_t hi,
     r.base++;
   }
 
-  /* Omit as many leap seconds < LO as possible, such that the first
-     leap second in the truncated list is <= LO.  */
+  /* Omit as many initial leap seconds as possible, such that the
+     first leap second in the truncated list is <= LO, and is a
+     positive leap second if and only if it has a positive correction.
+     This supports common TZif readers that assume that the first leap
+     second is positive if and only if its correction is positive.  */
   while (1 < r.leapcount && trans[r.leapbase + 1] <= lo) {
     r.leapcount--;
     r.leapbase++;
   }
+  while (0 < r.leapbase
+	 && ((corr[r.leapbase - 1] < corr[r.leapbase])
+	     != (0 < corr[r.leapbase]))) {
+    r.leapcount++;
+    r.leapbase--;
+  }
+
 
   /* Omit ordinary and leap second transitions greater than HI + 1.  */
   if (hi < ZIC_MAX) {

@@ -139,6 +139,12 @@ Unreleased, experimental changes
     last time transition disagreed with the TZ string, contrary to
     Internet RFC 8563 section 3.3.
 
+    Fix a bug with 'zic -r @X' when X is a negative leap second that
+    has a nonnegative correction.  Without the fix, the output file
+    was truncated so that X appeared to be a positive leap second.
+    Fix a similar, even-less-likely bug when truncating at a positive
+    leap second that has a nonpositive correction.
+
     zic -r now reports an error if given rolling leap seconds, as this
     usage has never generally worked and is evidently unused.
 

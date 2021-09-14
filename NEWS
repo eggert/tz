@@ -156,7 +156,7 @@ Unreleased, experimental changes
 
     zdump -v now outputs timestamps at boundaries of what localtime
     and gmtime can represent, instead of the less-useful timestamps
-    one hour after the minimum and one hour before the maximum.
+    one day after the minimum and one day before the maximum.
     (Thanks to Arthur David Olson for prototype code, and to Manuela
     Friedrich for debugging help.)
 

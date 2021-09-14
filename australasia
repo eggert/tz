@@ -615,10 +615,18 @@ Zone Pacific/Rarotonga	13:20:56 -	LMT	1899 Dec 26 # Avarua
 
 
 # Niue
-# See Pacific/Raratonga comments.
+# See Pacific/Raratonga comments for 1952 transition.
+#
+# From Tim Parenti (2021-09-13):
+# Consecutive contemporaneous editions of The Air Almanac listed -11:20 for
+# Niue as of Apr 1964 but -11 as of Aug 1964:
+#   Apr 1964: https://books.google.com/books?id=_1So677Y5vUC&pg=SL1-PA23
+#   Aug 1964: https://books.google.com/books?id=MbJloqd-zyUC&pg=SL1-PA23
+# Without greater specificity, guess 1964-07-01 for this transition.
+
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Pacific/Niue	-11:19:40 -	LMT	1952 Oct 16	# Alofi
-			-11:20	-	-1120	1978 Oct  1
+			-11:20	-	-1120	1964 Jul
 			-11:00	-	-11
 
 # Norfolk

@@ -182,6 +182,11 @@ Unreleased, experimental changes
     non-POSIX hosts where malloc doesn't set errno.
     (Problem reported by Jan Engelhardt.)
 
+  Changes to documentation
+
+    tzfile.5 better matches a draft successor to RFC 8536
+    <https://datatracker.ietf.org/doc/draft-murchison-rfc8536bis/01/>.
+
 
 Release 2021a - 2021-01-24 10:54:57 -0800
 

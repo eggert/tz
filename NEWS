@@ -2,6 +2,10 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to future timestamps
+
+    Samoa no longer observes DST.  (Thanks to Geoffrey D. Bennett.)
+
   Changes to zone name
 
     Rename Pacific/Enderbury to Pacific/Kanton.  When we added

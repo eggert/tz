@@ -17,7 +17,7 @@
 # that of zone1970.tab.
 #
 # Unlike zone1970.tab, a row's third column can be a Link from
-# 'backward' instead of a Zone,
+# 'backward' instead of a Zone.
 #
 # This table is intended as an aid for users, to help them select timezones
 # appropriate for their practical needs.  It is not intended to take or

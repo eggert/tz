@@ -802,9 +802,10 @@ check_links:	checklinks.awk $(TDATA_TO_CHECK) tzdata.zi
 		$(AWK) -f checklinks.awk tzdata.zi
 		touch $@
 
-check_tables:	checktab.awk $(YDATA) $(ZONETABLES)
+check_tables:	checktab.awk $(YDATA) backward $(ZONETABLES)
 		for tab in $(ZONETABLES); do \
-		  $(AWK) -f checktab.awk -v zone_table=$$tab $(YDATA) \
+		  test "$$tab" = zone.tab && links='$(BACKWARD)' || links=''; \
+		  $(AWK) -f checktab.awk -v zone_table=$$tab $(YDATA) $$links \
 		    || exit; \
 		done
 		touch $@

@@ -148,7 +148,7 @@ $1 ~ /^#/ { next }
 		if ($3 ~ /%/) rulePercentUsed[$2] = 1
 	}
 	if (tz && tz ~ /\// && tz !~ /^Etc\//) {
-		if (!tztab[tz]) {
+		if (!tztab[tz] && FILENAME != "backward") {
 			printf "%s: no data for '%s'\n", zone_table, tz \
 				>>"/dev/stderr"
 			status = 1

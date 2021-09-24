@@ -1,6 +1,22 @@
 News for the tz database
 
-Unreleased, experimental changes
+Release 2021b - 2021-09-24 16:23:00 -0700
+
+  Briefly:
+    Jordan now starts DST on February's last Thursday.
+    Samoa no longer observes DST.
+    Merge more location-based Zones whose timestamps agree since 1970.
+    Move some backward-compatibility links to 'backward'.
+    Rename Pacific/Enderbury to Pacific/Kanton.
+    Correct many pre-1993 transitions in Malawi, Portugal, etc.
+    zic now creates each output file or link atomically.
+    zic -L no longer omits the POSIX TZ string in its output.
+    zic fixes for truncation and leap second table expiration.
+    zic now follows POSIX for TZ strings using all-year DST.
+    Fix some localtime crashes and bugs in obscure cases.
+    zdump -v now outputs more-useful boundary cases.
+    tzfile.5 better matches a draft successor to RFC 8536.
+    A new file SECURITY.
 
   This release is prompted by recent announcements by Jordan and Samoa.
   It incorporates many other changes that had accumulated since 2021a.

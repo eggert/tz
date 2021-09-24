@@ -2,6 +2,14 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  This release is prompted by recent announcements by Jordan and Samoa.
+  It incorporates many other changes that had accumulated since 2021a.
+  However, it omits most proposed changes that merged all Zones
+  agreeing since 1970, as concerns were raised about doing too many of
+  these changes at once.  It does keeps some of these changes in the
+  interest of making tzdb more equitable one step at a time; see
+  "Merge more location-based Zones" below.
+
   Changes to future timestamps
 
     Jordan now starts DST on February's last Thursday.
@@ -44,18 +52,22 @@ Unreleased, experimental changes
     (Thanks to P Chan, Michael Deckers, Alexander Krivenyshev and
     Alois Treindl.)
 
-    Merge location-based timezones whose timestamps agree since 1970,
-    as pre-1970 timestamps are out of scope.  This does not affect
+    Merge more location-based Zones whose timestamps agree since 1970,
+    as pre-1970 timestamps are out of scope.  This is part of a
+    process that has been ongoing since 2013.  This does not affect
     post-1970 timestamps, and timezone historians who build with 'make
     PACKRATDATA=backzone' should see no changes to pre-1970 timestamps.
     When merging, keep the most-populous location's data, and move
     data for other locations to 'backzone' with a backward
-    link in 'backward'.  For example, move Europe/Oslo data to
-    'backzone' with a link in 'backward' from Europe/Berlin because
+    link in 'backward'.  For example, move America/Creston data to
+    'backzone' with a link in 'backward' from America/Phoenix because
     the two timezones' timestamps agree since 1970; this change
-    affects some pre-1966 timestamps in Europe/Oslo because Berlin and
-    Oslo disagreed before 1966.  Affected entries range from
-    Africa/Accra to Pacific/Yap.
+    affects some pre-1968 timestamps in America/Creston because
+    Creston and Phoenix disagreed before 1968.  The affected Zones
+    are Africa/Accra, America/Atikokan, America/Blanc-Sablon,
+    America/Creston, America/Curacao, America/Nassau,
+    America/Port_of_Spain, Antarctica/DumontDUrville, and
+    Antarctica/Syowa.
 
   Changes to maintenance procedure
 

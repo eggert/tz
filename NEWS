@@ -4,6 +4,9 @@ Unreleased, experimental changes
 
   Changes to future timestamps
 
+    Jordan now starts DST on February's last Thursday.
+    (Thanks to Steffen Thorsen.)
+
     Samoa no longer observes DST.  (Thanks to Geoffrey D. Bennett.)
 
   Changes to zone name

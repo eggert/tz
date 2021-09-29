@@ -1,5 +1,19 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Briefly:
+    Revert most 2021b changes to 'backward'
+
+  Changes to Link directives' source files
+
+    Revert almost all of 2021b's changes to the 'backward' file,
+    by moving Link directives back to where they were in 2021a.
+    Although 'zic' doesn't care which source file contains a Link
+    directive, some downstream uses ran into trouble with the move.
+    (Problem reported by Stephen Colebourne for Joda-Time.)
+
+
 Release 2021b - 2021-09-24 16:23:00 -0700
 
   Briefly:

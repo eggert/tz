@@ -1990,7 +1990,7 @@ limitrange(struct timerange r, bool locut, zic_t lo, zic_t hi,
 
 
   /* Omit ordinary and leap second transitions greater than HI + 1.  */
-  if (hi < ZIC_MAX) {
+  if (hi < max_time) {
     while (0 < r.count && hi + 1 < ats[r.base + r.count - 1])
       r.count--;
     while (0 < r.leapcount && hi + 1 < trans[r.leapbase + r.leapcount - 1])
@@ -2205,7 +2205,7 @@ writezone(const char *const name, const char *const string, char version,
 		  error(_("too many transition times"));
 
 		thistimelim = thistimei + thistimecnt;
-		if (thistimecnt && hi_time < ZIC_MAX
+		if (thistimecnt && hi_time < max_time
 		    && ats[thistimelim - 1] == hi_time + 1)
 		  hicut = false;
 		memset(omittype, true, typecnt);

@@ -39,13 +39,13 @@ Release 2021b - 2021-09-24 16:23:00 -0700
     tzfile.5 better matches a draft successor to RFC 8536.
     A new file SECURITY.
 
-  This release is prompted by recent announcements by Jordan and Samoa.
-  It incorporates many other changes that had accumulated since 2021a.
-  However, it omits most proposed changes that merged all Zones
-  agreeing since 1970, as concerns were raised about doing too many of
-  these changes at once.  It does keeps some of these changes in the
-  interest of making tzdb more equitable one step at a time; see
-  "Merge more location-based Zones" below.
+    This release is prompted by recent announcements by Jordan and Samoa.
+    It incorporates many other changes that had accumulated since 2021a.
+    However, it omits most proposed changes that merged all Zones
+    agreeing since 1970, as concerns were raised about doing too many of
+    these changes at once.  It does keeps some of these changes in the
+    interest of making tzdb more equitable one step at a time; see
+    "Merge more location-based Zones" below.
 
   Changes to future timestamps
 

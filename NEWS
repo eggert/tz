@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     Revert most 2021b changes to 'backward'
+    Fix zic -b fat bug in pre-1970 32-bit data
 
   Changes to Link directives' source files
 
@@ -12,6 +13,12 @@ Unreleased, experimental changes
     Although 'zic' doesn't care which source file contains a Link
     directive, some downstream uses ran into trouble with the move.
     (Problem reported by Stephen Colebourne for Joda-Time.)
+
+  Changes to code
+
+    Fix a bug in 'zic -b fat' that caused old timestamps to be
+    mishandled in 32-bit-only readers.  (Problem reported by Daniel
+    Fischer.)
 
 
 Release 2021b - 2021-09-24 16:23:00 -0700

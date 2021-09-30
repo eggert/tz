@@ -2003,7 +2003,7 @@ limitrange(struct timerange r, bool locut, zic_t lo, zic_t hi,
      This is needed when the output is truncated at the start, and is
      also useful when catering to buggy 32-bit clients that do not use
      time type 0 for timestamps before the first transition.  */
-  r.pretrans = locut && ! (r.count && ats[r.base] == lo);
+  r.pretrans = locut && r.base && ! (r.count && ats[r.base] == lo);
 
   /* Determine whether to append an expiration to the leap second table.  */
   r.leapexpiry = 0 <= leapexpires && leapexpires - 1 <= hi;
@@ -2120,7 +2120,7 @@ writezone(const char *const name, const char *const string, char version,
 	rangeall.pretrans = rangeall.leapexpiry = false;
 	range64 = limitrange(rangeall, min_time < lo_time,
 			     lo_time, hi_time, ats, types);
-	range32 = limitrange(range64, INT32_MIN < lo_time,
+	range32 = limitrange(range64, INT32_MIN < lo_time || want_bloat(),
 			     INT32_MIN, INT32_MAX, ats, types);
 
 	/* TZif version 4 is needed if a no-op transition is appended to
@@ -2210,7 +2210,7 @@ writezone(const char *const name, const char *const string, char version,
 		  hicut = false;
 		memset(omittype, true, typecnt);
 		omittype[thisdefaulttype] = false;
-		for (i = thistimei; i < thistimelim; i++)
+		for (i = thistimei - pretrans; i < thistimelim; i++)
 		  omittype[types[i]] = false;
 
 		/* Reorder types to make THISDEFAULTTYPE type 0.
@@ -2232,7 +2232,7 @@ writezone(const char *const name, const char *const string, char version,
 			register int	mrudst, mrustd, hidst, histd, type;
 
 			hidst = histd = mrudst = mrustd = -1;
-			for (i = thistimei; i < thistimelim; ++i)
+			for (i = thistimei - pretrans; i < thistimelim; ++i)
 				if (isdsts[types[i]])
 					mrudst = types[i];
 				else	mrustd = types[i];
@@ -2348,9 +2348,7 @@ writezone(const char *const name, const char *const string, char version,
 		if (hicut)
 		  puttzcodepass(hi_time + 1, fp, pass);
 		currenttype = 0;
-		if (pretrans)
-		  putc(currenttype, fp);
-		for (i = thistimei; i < thistimelim; ++i) {
+		for (i = thistimei - pretrans; i < thistimelim; ++i) {
 		  currenttype = typemap[types[i]];
 		  putc(currenttype, fp);
 		}

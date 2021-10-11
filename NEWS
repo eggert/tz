@@ -1,5 +1,16 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Briefly:
+    Fiji suspends DST for the 2021/2022 season.
+
+  Changes to future timestamps
+
+    Fiji will suspend observance of DST for the 2021/2022 season.  Assume for
+    now that it will return next year.  (Thanks to Jashneel Kumar and P Chan.)
+
+
 Release 2021c - 2021-10-01 14:21:49 -0700
 
   Briefly:

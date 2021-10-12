@@ -118,7 +118,9 @@ and
 serves as an index into the array of time zone abbreviation bytes
 that follow the
 .B ttinfo
-structure(s) in the file.
+entries in the file; if the designated string is "\*-00", the
+.B ttinfo
+entry is a placeholder indicating that local time is unspecified.
 The
 .B tt_utoff
 value is never equal to \-2**31, to let 32-bit clients negate it without

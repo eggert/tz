@@ -2120,7 +2120,7 @@ writezone(const char *const name, const char *const string, char version,
 	rangeall.pretrans = rangeall.leapexpiry = false;
 	range64 = limitrange(rangeall, min_time < lo_time,
 			     lo_time, hi_time, ats, types);
-	range32 = limitrange(range64, INT32_MIN < lo_time || want_bloat(),
+	range32 = limitrange(range64, true,
 			     INT32_MIN, INT32_MAX, ats, types);
 
 	/* TZif version 4 is needed if a no-op transition is appended to

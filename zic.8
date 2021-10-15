@@ -122,7 +122,7 @@ is
 any already-existing link is removed.
 .TP
 .BR "\*-r " "[\fB@\fP\fIlo\fP][\fB/@\fP\fIhi\fP]"
-Reduce the size of output files by limiting their applicability
+Limit the applicability of output files
 to timestamps in the range from
 .I lo
 (inclusive) to
@@ -134,6 +134,10 @@ and
 are possibly-signed decimal counts of seconds since the Epoch
 (1970-01-01 00:00:00 UTC).
 Omitted counts default to extreme values.
+The output files use UT offset 0 and abbreviation
+.q "\*-00"
+in place of the omitted timestamp data;
+this typically reduces the files' sizes.
 For example,
 .q "zic \*-r @0"
 omits data intended for negative timestamps (i.e., before the Epoch), and

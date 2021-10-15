@@ -4,11 +4,18 @@ Unreleased, experimental changes
 
   Briefly:
     Fiji suspends DST for the 2021/2022 season.
+    'zic -r' marks unspecified timestamps with "-00".
 
   Changes to future timestamps
 
     Fiji will suspend observance of DST for the 2021/2022 season.  Assume for
     now that it will return next year.  (Thanks to Jashneel Kumar and P Chan.)
+
+  Changes to code
+
+    'zic -r' now uses "-00" time zone abbreviations for intervals
+    with UT offsets that are unspecified due to -r truncation.
+    This implements a change in draft Internet RFC 8536bis.
 
 
 Release 2021c - 2021-10-01 14:21:49 -0700

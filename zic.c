@@ -202,6 +202,7 @@ static const char *	progname;
 static ptrdiff_t	timecnt;
 static ptrdiff_t	timecnt_alloc;
 static int		typecnt;
+static int		unspecifiedtype;
 
 /*
 ** Line codes.
@@ -1972,6 +1973,10 @@ limitrange(struct timerange r, bool locut, zic_t lo, zic_t hi,
     r.base++;
   }
 
+  /* "-00" before any -r low cutoff.  */
+  if (min_time < lo_time)
+    r.defaulttype = unspecifiedtype;
+
   /* Omit as many initial leap seconds as possible, such that the
      first leap second in the truncated list is <= LO, and is a
      positive leap second if and only if it has a positive correction.
@@ -2155,7 +2160,7 @@ writezone(const char *const name, const char *const string, char version,
 		register ptrdiff_t thistimei, thistimecnt, thistimelim;
 		register int	thisleapi, thisleapcnt, thisleaplim;
 		struct tzhead tzh;
-		int currenttype, thisdefaulttype;
+		int thisdefaulttype;
 		bool hicut, pretrans, thisleapexpiry;
 		zic_t lo;
 		int old0;
@@ -2205,13 +2210,12 @@ writezone(const char *const name, const char *const string, char version,
 		  error(_("too many transition times"));
 
 		thistimelim = thistimei + thistimecnt;
-		if (thistimecnt && hi_time < max_time
-		    && ats[thistimelim - 1] == hi_time + 1)
-		  hicut = false;
 		memset(omittype, true, typecnt);
 		omittype[thisdefaulttype] = false;
 		for (i = thistimei - pretrans; i < thistimelim; i++)
 		  omittype[types[i]] = false;
+		if (hicut)
+		  omittype[unspecifiedtype] = false;
 
 		/* Reorder types to make THISDEFAULTTYPE type 0.
 		   Use TYPEMAP to swap OLD0 and THISDEFAULTTYPE so that
@@ -2347,13 +2351,10 @@ writezone(const char *const name, const char *const string, char version,
 		}
 		if (hicut)
 		  puttzcodepass(hi_time + 1, fp, pass);
-		currenttype = 0;
-		for (i = thistimei - pretrans; i < thistimelim; ++i) {
-		  currenttype = typemap[types[i]];
-		  putc(currenttype, fp);
-		}
+		for (i = thistimei - pretrans; i < thistimelim; ++i)
+		  putc(typemap[types[i]], fp);
 		if (hicut)
-		  putc(currenttype, fp);
+		  putc(typemap[unspecifiedtype], fp);
 
 		for (i = old0; i < typecnt; i++) {
 		  int h = (i == old0 ? thisdefaulttype
@@ -2867,6 +2868,9 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 	  if (max_year < 2038)
 		max_year = 2038;
 	}
+
+	if (min_time < lo_time || hi_time < max_time)
+	  unspecifiedtype = addtype(0, "-00", false, false, false);
 
 	for (i = 0; i < zonecount; ++i) {
 		struct rule *prevrp = NULL;

@@ -3402,8 +3402,12 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # http://wafa.ps/Pages/Details/34701
 # Palestine winter time will start from midnight 2021-10-29 (Thursday-Friday).
 #
-# From Paul Eggert (2021-10-18):
-# Guess future fall transitions on October's last Thursday at 24:00.
+# From Heba Hemad, Palestine Ministry of Telecom & IT (2021-10-20):
+# ... winter time will begin in Palestine from Friday 10-29, 01:00 AM
+# by 60 minutes backwards.
+#
+# From Paul Eggert (2021-10-20):
+# Guess future fall transitions on October's last Friday at 01:00.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule EgyptAsia	1957	only	-	May	10	0:00	1:00	S
@@ -3441,7 +3445,7 @@ Rule Palestine	2019	only	-	Mar	29	0:00	1:00	S
 Rule Palestine	2019	only	-	Oct	Sat>=24	0:00	0	-
 Rule Palestine	2020	max	-	Mar	Sat>=24	0:00	1:00	S
 Rule Palestine	2020	only	-	Oct	24	1:00	0	-
-Rule Palestine	2021	max	-	Oct	lastThu	24:00	0	-
+Rule Palestine	2021	max	-	Oct	lastFri	1:00	0	-
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct

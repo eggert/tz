@@ -3445,7 +3445,7 @@ Rule Palestine	2019	only	-	Mar	29	0:00	1:00	S
 Rule Palestine	2019	only	-	Oct	Sat>=24	0:00	0	-
 Rule Palestine	2020	max	-	Mar	Sat>=24	0:00	1:00	S
 Rule Palestine	2020	only	-	Oct	24	1:00	0	-
-Rule Palestine	2021	max	-	Oct	lastFri	1:00	0	-
+Rule Palestine	2021	max	-	Oct	Fri>=23	1:00	0	-
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct

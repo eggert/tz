@@ -1,5 +1,15 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to future timestamps
+
+    Predict Palestine fallbacks to be the first Friday on or after
+    October 23, not October's last Friday, to be more consistent with
+    past practice.  The first differing prediction is a fallback on
+    2025-10-24, not 2025-10-31.
+
+
 Release 2021e - 2021-10-21 18:41:00 -0700
 
   Changes to future timestamps

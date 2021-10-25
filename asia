@@ -3406,8 +3406,9 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # ... winter time will begin in Palestine from Friday 10-29, 01:00 AM
 # by 60 minutes backwards.
 #
-# From Paul Eggert (2021-10-20):
-# Guess future fall transitions on October's last Friday at 01:00.
+# From Tim Parenti (2021-10-25), per Paul Eggert (2021-10-24):
+# Guess future fall transitions at 01:00 on the Friday preceeding October's
+# last Sunday (i.e., Fri>=23), as this is more consistent with recent practice.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule EgyptAsia	1957	only	-	May	10	0:00	1:00	S

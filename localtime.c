@@ -526,24 +526,29 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		  int_fast64_t tr = stored == 4 ? detzcode(p) : detzcode64(p);
 		  int_fast32_t corr = detzcode(p + stored);
 		  p += stored + 4;
+
 		  /* Leap seconds cannot occur before the Epoch,
 		     or out of order.  */
 		  if (tr <= prevtr)
 		    return EINVAL;
+
+		  /* To avoid other botches in this code, each leap second's
+		     correction must differ from the previous one's by 1
+		     second or less, except that the first correction can be
+		     any value; these requirements are more generous than
+		     RFC 8536, to allow future RFC extensions.  */
+		  if (! (i == 0
+			 || (prevcorr < corr
+			     ? corr == prevcorr + 1
+			     : (corr == prevcorr
+				|| corr == prevcorr - 1))))
+		    return EINVAL;
+		  prevtr = tr;
+		  prevcorr = corr;
+
 		  if (tr <= TIME_T_MAX) {
-		    /* To avoid other botches in this code, each leap second's
-		       correction must differ from the previous one's by 1
-		       second or less, except that the first correction can be
-		       any value; these requirements are more generous than
-		       RFC 8536, to allow future RFC extensions.  */
-		    if (! (i == 0
-			   || (prevcorr < corr
-			       ? corr == prevcorr + 1
-			       : (corr == prevcorr
-				  || corr == prevcorr - 1))))
-		      return EINVAL;
-		    sp->lsis[leapcnt].ls_trans = prevtr = tr;
-		    sp->lsis[leapcnt].ls_corr = prevcorr = corr;
+		    sp->lsis[leapcnt].ls_trans = tr;
+		    sp->lsis[leapcnt].ls_corr = corr;
 		    leapcnt++;
 		  }
 		}

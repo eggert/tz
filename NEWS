@@ -14,6 +14,12 @@ Unreleased, experimental changes
     Fix bug when 32-bit time_t code reads malformed 64-bit TZif data.
     (Problem reported by Christos Zoulas.)
 
+    When reading a version 2 or later TZif file, the TZif reader now
+    validates the version 1 header and data block only enough to skip
+    over them, as recommended by RFC 8536 section 4.  Also, the TZif
+    reader no longer mistakenly attempts to parse a version 1 TZIf
+    file header as a TZ string.
+
 
 Release 2021e - 2021-10-21 18:41:00 -0700
 

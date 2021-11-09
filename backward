@@ -8,47 +8,68 @@
 # also present in the file 'backzone', which has data important only
 # for pre-1970 timestamps and so is out of scope for tzdb proper.
 
+# This file is formally divided into sections. The section names are stable.
+
 # Link	TARGET			LINK-NAME
+
+# CROSS-ISO
+# These link across an ISO-3166 boundary
 Link	Africa/Nairobi		Africa/Asmera
 Link	Africa/Abidjan		Africa/Timbuktu
-Link	America/Argentina/Catamarca	America/Argentina/ComodRivadavia
-Link	America/Adak		America/Atka
-Link	America/Argentina/Buenos_Aires	America/Buenos_Aires
-Link	America/Argentina/Catamarca	America/Catamarca
 Link	America/Panama		America/Coral_Harbour
-Link	America/Argentina/Cordoba	America/Cordoba
+Link	America/Puerto_Rico	America/Virgin
+Link	Pacific/Auckland	Antarctica/South_Pole
+Link	Europe/Oslo		Atlantic/Jan_Mayen
+
+# EXCESS
+# These were added despite the locations having the same timekeeping since 1970
+Link	America/Adak		America/Atka
+Link	America/Argentina/Catamarca	America/Argentina/ComodRivadavia
 Link	America/Tijuana		America/Ensenada
 Link	America/Indiana/Indianapolis	America/Fort_Wayne
+Link	America/Toronto		America/Montreal
+Link	America/Rio_Branco	America/Porto_Acre
+Link	America/Tijuana		America/Santa_Isabel
+Link	America/Denver		America/Shiprock
+Link	Asia/Shanghai		Asia/Chongqing
+Link	Asia/Shanghai		Asia/Chungking
+Link	Asia/Shanghai		Asia/Harbin
+Link	Asia/Urumqi		Asia/Kashgar
+Link	Asia/Jerusalem		Asia/Tel_Aviv
+Link	Europe/Chisinau		Europe/Tiraspol
+Link	Europe/London		Europe/Belfast
+Link	Pacific/Kanton		Pacific/Enderbury
+Link	Pacific/Honolulu	Pacific/Johnston
+Link	Pacific/Chuuk		Pacific/Yap
+
+# RENAMED
+# These are simple aliases/renames
 Link	America/Nuuk		America/Godthab
+Link	Asia/Ashgabat		Asia/Ashkhabad
+Link	Asia/Kolkata		Asia/Calcutta
+Link	Asia/Dhaka		Asia/Dacca
+Link	Asia/Kathmandu		Asia/Katmandu
+Link	Asia/Macau		Asia/Macao
+Link	Asia/Yangon		Asia/Rangoon
+Link	Asia/Ho_Chi_Minh	Asia/Saigon
+Link	Asia/Thimphu		Asia/Thimbu
+Link	Asia/Makassar		Asia/Ujung_Pandang
+Link	Asia/Ulaanbaatar	Asia/Ulan_Bator
+Link	Atlantic/Faroe		Atlantic/Faeroe
+Link	Pacific/Pohnpei		Pacific/Ponape
+Link	Pacific/Chuuk		Pacific/Truk
+
+# OBSOLETE
+# These are the most obsolete form of IDs
+Link	America/Argentina/Buenos_Aires	America/Buenos_Aires
+Link	America/Argentina/Catamarca	America/Catamarca
+Link	America/Argentina/Cordoba	America/Cordoba
 Link	America/Indiana/Indianapolis	America/Indianapolis
 Link	America/Argentina/Jujuy	America/Jujuy
 Link	America/Indiana/Knox	America/Knox_IN
 Link	America/Kentucky/Louisville	America/Louisville
 Link	America/Argentina/Mendoza	America/Mendoza
-Link	America/Toronto		America/Montreal
-Link	America/Rio_Branco	America/Porto_Acre
 Link	America/Argentina/Cordoba	America/Rosario
-Link	America/Tijuana		America/Santa_Isabel
-Link	America/Denver		America/Shiprock
-Link	America/Puerto_Rico	America/Virgin
-Link	Pacific/Auckland	Antarctica/South_Pole
-Link	Asia/Ashgabat		Asia/Ashkhabad
-Link	Asia/Kolkata		Asia/Calcutta
-Link	Asia/Shanghai		Asia/Chongqing
-Link	Asia/Shanghai		Asia/Chungking
-Link	Asia/Dhaka		Asia/Dacca
-Link	Asia/Shanghai		Asia/Harbin
-Link	Asia/Urumqi		Asia/Kashgar
-Link	Asia/Kathmandu		Asia/Katmandu
-Link	Asia/Macau		Asia/Macao
-Link	Asia/Yangon		Asia/Rangoon
-Link	Asia/Ho_Chi_Minh	Asia/Saigon
-Link	Asia/Jerusalem		Asia/Tel_Aviv
-Link	Asia/Thimphu		Asia/Thimbu
-Link	Asia/Makassar		Asia/Ujung_Pandang
-Link	Asia/Ulaanbaatar	Asia/Ulan_Bator
-Link	Atlantic/Faroe		Atlantic/Faeroe
-Link	Europe/Oslo		Atlantic/Jan_Mayen
 Link	Australia/Sydney	Australia/ACT
 Link	Australia/Sydney	Australia/Canberra
 Link	Australia/Hobart	Australia/Currie
@@ -81,15 +102,8 @@ Link	Pacific/Easter		Chile/EasterIsland
 Link	America/Havana		Cuba
 Link	Africa/Cairo		Egypt
 Link	Europe/Dublin		Eire
-Link	Etc/UTC			Etc/UCT
-Link	Europe/London		Europe/Belfast
-Link	Europe/Chisinau		Europe/Tiraspol
 Link	Europe/London		GB
 Link	Europe/London		GB-Eire
-Link	Etc/GMT			GMT+0
-Link	Etc/GMT			GMT-0
-Link	Etc/GMT			GMT0
-Link	Etc/GMT			Greenwich
 Link	Asia/Hong_Kong		Hongkong
 Link	Atlantic/Reykjavik	Iceland
 Link	Asia/Tehran		Iran
@@ -104,20 +118,14 @@ Link	America/Mexico_City	Mexico/General
 Link	Pacific/Auckland	NZ
 Link	Pacific/Chatham		NZ-CHAT
 Link	America/Denver		Navajo
-Link	Asia/Shanghai		PRC
-Link	Pacific/Kanton		Pacific/Enderbury
-Link	Pacific/Honolulu	Pacific/Johnston
-Link	Pacific/Pohnpei		Pacific/Ponape
 Link	Pacific/Pago_Pago	Pacific/Samoa
-Link	Pacific/Chuuk		Pacific/Truk
-Link	Pacific/Chuuk		Pacific/Yap
+Link	Asia/Shanghai		PRC
 Link	Europe/Warsaw		Poland
 Link	Europe/Lisbon		Portugal
 Link	Asia/Taipei		ROC
 Link	Asia/Seoul		ROK
 Link	Asia/Singapore		Singapore
 Link	Europe/Istanbul		Turkey
-Link	Etc/UTC			UCT
 Link	America/Anchorage	US/Alaska
 Link	America/Adak		US/Aleutian
 Link	America/Phoenix		US/Arizona
@@ -130,7 +138,16 @@ Link	America/Detroit		US/Michigan
 Link	America/Denver		US/Mountain
 Link	America/Los_Angeles	US/Pacific
 Link	Pacific/Pago_Pago	US/Samoa
+Link	Europe/Moscow		W-SU
+
+# FIXED
+# These are alternate names for fixed offsets
+Link	Etc/UTC			Etc/UCT
+Link	Etc/GMT			GMT+0
+Link	Etc/GMT			GMT-0
+Link	Etc/GMT			GMT0
+Link	Etc/GMT			Greenwich
+Link	Etc/UTC			UCT
 Link	Etc/UTC			UTC
 Link	Etc/UTC			Universal
-Link	Europe/Moscow		W-SU
 Link	Etc/UTC			Zulu

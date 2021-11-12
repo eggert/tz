@@ -752,7 +752,6 @@ Zone America/Port_of_Spain -4:06:04 -	LMT	1912 Mar 2
 			-4:00	-	AST
 Link America/Port_of_Spain America/Marigot
 Link America/Port_of_Spain America/St_Barthelemy
-Link America/Port_of_Spain America/Virgin
 
 # Argentina
 # This entry was intended for the following areas, but has been superseded by

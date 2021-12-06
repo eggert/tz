@@ -290,6 +290,7 @@ Rule	SL	1932	only	-	Dec	 1	 0:00	0:20	-0040
 Rule	SL	1933	1938	-	Mar	31	24:00	0	-01
 Rule	SL	1933	1939	-	Aug	31	24:00	0:20	-0040
 Rule	SL	1939	only	-	May	31	24:00	0	-01
+
 Zone	Africa/Freetown	-0:53:00 -	LMT	1882
 			-0:53:00 -	FMT	1913 Jul  1 # Freetown MT
 			-1:00	SL	%s	1939 Sep  5
@@ -814,11 +815,11 @@ Link Antarctica/McMurdo Antarctica/South_Pole
 # Syowa station, which is the first antarctic station of Japan,
 # was established on 1957-01-29.  Since Syowa station is still the main
 # station of Japan, it's appropriate for the principal location.
-Zone Antarctica/Syowa	0	-	-00	1957 Jan 29
-			3:00	-	+03
 # See:
 # NIPR Antarctic Research Activities (1999-08-17)
 # http://www.nipr.ac.jp/english/ara01.html
+Zone Antarctica/Syowa	0	-	-00	1957 Jan 29
+			3:00	-	+03
 
 # Yemen
 # Milne says 2:59:54 was the meridian of the saluting battery at Aden,

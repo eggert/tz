@@ -20,6 +20,10 @@ Unreleased, experimental changes
     reader no longer mistakenly attempts to parse a version 1 TZIf
     file header as a TZ string.
 
+  Changes affecting documentation and commentary
+
+    Rename CONTRIBUTING to CONTRIBUTING.md and use Markdown format.
+
 
 Release 2021e - 2021-10-21 18:41:00 -0700
 

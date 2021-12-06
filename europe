@@ -4092,8 +4092,8 @@ Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 # This represents most of Ukraine.  See above for the spelling of "Kiev".
-Zone Europe/Kiev	2:02:04 -	LMT	1880
-			2:02:04	-	KMT	1924 May  2 # Kiev Mean Time
+Zone Europe/Kyiv	2:02:04 -	LMT	1880
+			2:02:04	-	KMT	1924 May  2 # Kyiv Mean Time
 			2:00	-	EET	1930 Jun 21
 			3:00	-	MSK	1941 Sep 20
 			1:00	C-Eur	CE%sT	1943 Nov  6

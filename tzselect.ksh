@@ -101,14 +101,6 @@ then
 	esac
       done || exit
     }
-
-    # Work around a bug in bash 1.14.7 and earlier, where $PS3 is sent to stdout.
-    case $BASH_VERSION in
-    [01].*)
-      case `echo 1 | (select x in x; do break; done) 2>/dev/null` in
-      ?*) PS3=
-      esac
-    esac
   '
 else
   doselect() {

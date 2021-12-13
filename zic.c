@@ -3563,9 +3563,11 @@ mkdirs(char const *argname, bool ancestors)
 		if (mkdir(name, MKDIR_UMASK) != 0) {
 			/* Do not report an error if err == EEXIST, because
 			   some other process might have made the directory
-			   in the meantime.  */
+			   in the meantime.  Likewise for ENOSYS, because
+			   Solaris 10 mkdir fails with ENOSYS if the
+			   directory is an automounted mount point.  */
 			int err = errno;
-			if (err != EEXIST) {
+			if (err != EEXIST && err != ENOSYS) {
 				error(_("%s: Can't create directory %s: %s"),
 				      progname, name, strerror(err));
 				exit(EXIT_FAILURE);

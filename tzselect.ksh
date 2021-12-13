@@ -18,11 +18,13 @@ REPORT_BUGS_TO=tz@iana.org
 #
 #	Bash <https://www.gnu.org/software/bash/>
 #	Korn Shell <http://www.kornshell.com/>
-#	MirBSD Korn Shell <https://www.mirbsd.org/mksh.htm>
+#	MirBSD Korn Shell <http://www.mirbsd.org/mksh.htm>
 #
-# For portability to Solaris 9 /bin/sh this script avoids some POSIX
-# features and common extensions, such as $(...) (which works sometimes
-# but not others), $((...)), and $10.
+# For portability to Solaris 10 /bin/sh (supported by Oracle through
+# January 2024) this script avoids some POSIX features and common
+# extensions, such as $(...) (which works sometimes but not others),
+# $((...)), ! CMD, ${#ID}, ${ID##PAT}, ${ID%%PAT}, and $10.
+
 #
 # This script also uses several features of modern awk programs.
 # If your host lacks awk, or has an old awk that does not conform to Posix,
@@ -177,7 +179,7 @@ done
 # If the current locale does not support UTF-8, convert data to current
 # locale's format if possible, as the shell aligns columns better that way.
 # Check the UTF-8 of U+12345 CUNEIFORM SIGN URU TIMES KI.
-! $AWK 'BEGIN { u12345 = "\360\222\215\205"; exit length(u12345) != 1 }' &&
+$AWK 'BEGIN { u12345 = "\360\222\215\205"; exit length(u12345) != 1 }' || {
     { tmp=`(mktemp -d) 2>/dev/null` || {
 	tmp=${TMPDIR-/tmp}/tzselect.$$ &&
 	(umask 77 && mkdir -- "$tmp")
@@ -188,6 +190,7 @@ done
     TZ_COUNTRY_TABLE=$tmp/iso3166.tab &&
     iconv -f UTF-8 -t //TRANSLIT <"$TZ_ZONE_TABLE" >$tmp/$zonetabtype.tab &&
     TZ_ZONE_TABLE=$tmp/$zonetabtype.tab
+}
 
 newline='
 '

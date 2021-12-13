@@ -466,7 +466,8 @@ OK_LINE=	'^'$(OK_CHAR)'*$$'
 
 # Flags to give 'tar' when making a distribution.
 # Try to use flags appropriate for GNU tar.
-GNUTARFLAGS= --format=ustar --numeric-owner --owner=0 --group=0 \
+GNUTARFLAGS= --format=pax --pax-option='delete=atime,delete=ctime' \
+  --numeric-owner --owner=0 --group=0 \
   --mode=go+u,go-w --sort=name
 TARFLAGS=	`if tar $(GNUTARFLAGS) --version >/dev/null 2>&1; \
 		 then echo $(GNUTARFLAGS); \

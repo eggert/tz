@@ -26,9 +26,12 @@ Unreleased, experimental changes
     instead of GNU format.  Although the formats are almost identical
     for these tarballs, ustar headers' magic fields contain "ustar"
     instead of "ustar ", and their version fields contain "00" instead
-    of " ".  For details about ustar format, please see
+    of " ".  The two formats are planned to diverge more significantly
+    for tzdb releases after 2242-03-16 12:56:31 UTC, when the ustar
+    format becomes obsolete and the tarballs switch to pax format, an
+    extension of ustar.  For details about these formats, please see
     "pax - portable archive interchange", IEEE Std 1003.1-2017,
-    <https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html#tag_20_92_13_06>.
+    <https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html#tag_20_92_13>.
 
   Changes affecting documentation and commentary
 

@@ -20,6 +20,16 @@ Unreleased, experimental changes
     reader no longer mistakenly attempts to parse a version 1 TZIf
     file header as a TZ string.
 
+  Changes to build procedure
+
+    Distribution tarballs now use standard POSIX.1-1988 ustar format
+    instead of GNU format.  Although the formats are almost identical
+    for these tarballs, ustar headers' magic fields contain "ustar"
+    instead of "ustar ", and their version fields contain "00" instead
+    of " ".  For details about ustar format, please see
+    "pax - portable archive interchange", IEEE Std 1003.1-2017,
+    <https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html#tag_20_92_13_06>.
+
   Changes affecting documentation and commentary
 
     Rename CONTRIBUTING to CONTRIBUTING.md and use Markdown format.

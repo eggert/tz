@@ -33,10 +33,6 @@ Unreleased, experimental changes
     "pax - portable archive interchange", IEEE Std 1003.1-2017,
     <https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html#tag_20_92_13>.
 
-  Changes affecting documentation and commentary
-
-    Rename CONTRIBUTING to CONTRIBUTING.md and use Markdown format.
-
 
 Release 2021e - 2021-10-21 18:41:00 -0700
 

@@ -33,7 +33,7 @@ This database of historical local time information has several goals:
  * Test the generality of the local time rule description system.
 
 The information in the time zone data files is by no means authoritative;
-fixes and enhancements are welcome.  Please see the file CONTRIBUTING.md
+fixes and enhancements are welcome.  Please see the file CONTRIBUTING
 for details.
 
 Thanks to these Time Zone Caballeros who've made major contributions to the

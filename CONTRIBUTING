@@ -1,5 +1,9 @@
 # Contributing to the tz code and data
 
+Please do not create issues or pull requests on GitHub, as the
+proper procedure for proposing and distributing patches is via
+email as described below.
+
 The time zone database is by no means authoritative: governments
 change timekeeping rules erratically and sometimes with little
 warning, the data entries do not cover all of civil time before
@@ -87,10 +91,6 @@ If you use Git the following workflow may be helpful:
 
   * Start anew by getting current with the main branch again
     (the second step above).
-
-Please do not create issues or pull requests on GitHub, as the
-proper procedure for proposing and distributing patches is via
-email as illustrated above.
 
 -----
 

@@ -399,9 +399,10 @@ ZFLAGS=
 ZIC_INSTALL=	$(ZIC) -d '$(DESTDIR)$(TZDIR)' $(LEAPSECONDS)
 
 # The name of a Posix-compliant 'awk' on your system.
-# It is better (though not essential) if 'awk' supports UTF-8;
-# unfortunately, mawk and busybox awk do not support UTF-8.
-# Solaris 10 /usr/bin/awk does not work; try AWK=gawk or AWK=nawk.
+# mawk 1.3.3 and Solaris 10 /usr/bin/awk do not work.
+# Also, it is better (though not essential) if 'awk' supports UTF-8,
+# and unfortunately mawk and busybox awk do not support UTF-8.
+# Try AWK=gawk or AWK=nawk if your awk has the abovementioned problems.
 AWK=		awk
 
 # The full path name of a Posix-compliant shell, preferably one that supports

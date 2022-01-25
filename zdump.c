@@ -1148,12 +1148,8 @@ tformat(void)
 	/* C11-style _Generic is more likely to return the correct
 	   format when distinct types have the same size.  */
 	char const *fmt =
-	  _Generic((time_t) 0,
-		   signed char: "%d", short: "%d", int: "%d",
-		   long: "%ld", long long: "%lld",
-		   char: CHAR_MAX <= INT_MAX ? "%d" : "%u",
-		   unsigned char: UCHAR_MAX <= INT_MAX ? "%d" : "%u",
-		   unsigned short: USHRT_MAX <= INT_MAX ? "%d" : "%u",
+	  _Generic(+ (time_t) 0,
+		   int: "%d", long: "%ld", long long: "%lld",
 		   unsigned: "%u", unsigned long: "%lu",
 		   unsigned long long: "%llu",
 		   default: NULL);

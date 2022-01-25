@@ -56,6 +56,21 @@
 */
 enum { SECSPER400YEARS_FITS = SECSPERLYEAR <= INTMAX_MAX / 400 };
 
+#if !defined HAVE_GENERIC && defined __has_extension
+# if __has_extension(c_generic_selections)
+#  define HAVE_GENERIC 1
+# else
+#  define HAVE_GENERIC 0
+# endif
+#endif
+/* _Generic is buggy in pre-4.9 GCC.  */
+#if !defined HAVE_GENERIC && defined __GNUC__
+# define HAVE_GENERIC (4 < __GNUC__ + (9 <= __GNUC_MINOR__))
+#endif
+#ifndef HAVE_GENERIC
+# define HAVE_GENERIC (201112 <= __STDC_VERSION__)
+#endif
+
 #if HAVE_GETTEXT
 #include <locale.h>	/* for setlocale */
 #endif /* HAVE_GETTEXT */
@@ -1123,12 +1138,33 @@ abbr(struct tm const *tmp)
 
 /*
 ** The code below can fail on certain theoretical systems;
-** it works on all known real-world systems as of 2004-12-30.
+** it works on all known real-world systems as of 2021-01-25.
 */
 
 static const char *
 tformat(void)
 {
+#if HAVE_GENERIC
+	/* C11-style _Generic is more likely to return the correct
+	   format when distinct types have the same size.  */
+	char const *fmt =
+	  _Generic((time_t) 0,
+		   signed char: "%d", short: "%d", int: "%d",
+		   long: "%ld", long long: "%lld",
+		   char: CHAR_MAX <= INT_MAX ? "%d" : "%u",
+		   unsigned char: UCHAR_MAX <= INT_MAX ? "%d" : "%u",
+		   unsigned short: USHRT_MAX <= INT_MAX ? "%d" : "%u",
+		   unsigned: "%u", unsigned long: "%lu",
+		   unsigned long long: "%llu",
+		   default: NULL);
+	if (fmt)
+	  return fmt;
+	fmt = _Generic((time_t) 0,
+		       intmax_t: "%"PRIdMAX, uintmax_t: "%"PRIuMAX,
+		       default: NULL);
+	if (fmt)
+	  return fmt;
+#endif
 	if (0 > (time_t) -1) {		/* signed */
 		if (sizeof(time_t) == sizeof(intmax_t))
 			return "%"PRIdMAX;

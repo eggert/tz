@@ -20,6 +20,9 @@ Unreleased, experimental changes
     reader no longer mistakenly attempts to parse a version 1 TZIf
     file header as a TZ string.
 
+    zdump -v now outputs "(localtime failed)" and "(gmtime failed)"
+    when local time and UT cannot be determined for a timestamp.
+
   Changes to build procedure
 
     Distribution tarballs now use standard POSIX.1-1988 ustar format

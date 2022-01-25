@@ -798,6 +798,7 @@ show(timezone_t tz, char *zone, time_t t, bool v)
 		gmtmp = my_gmtime_r(&t, &gmtm);
 		if (gmtmp == NULL) {
 			printf(tformat(), t);
+			printf(" (gmtime failed)");
 		} else {
 			dumptime(gmtmp);
 			printf(" UT");
@@ -805,8 +806,11 @@ show(timezone_t tz, char *zone, time_t t, bool v)
 		printf(" = ");
 	}
 	tmp = my_localtime_rz(tz, &t, &tm);
-	dumptime(tmp);
-	if (tmp != NULL) {
+	if (tmp == NULL) {
+		printf(tformat(), t);
+		printf(" (localtime failed)");
+	} else {
+		dumptime(tmp);
 		if (*abbr(tmp) != '\0')
 			printf(" %s", abbr(tmp));
 		if (v) {

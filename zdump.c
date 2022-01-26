@@ -146,7 +146,7 @@ sumsize(size_t a, size_t b)
 {
   size_t sum = a + b;
   if (sum < a) {
-    fprintf(stderr, "%s: size overflow\n", progname);
+    fprintf(stderr, _("%s: size overflow\n"), progname);
     exit(EXIT_FAILURE);
   }
   return sum;
@@ -813,7 +813,7 @@ show(timezone_t tz, char *zone, time_t t, bool v)
 		gmtmp = my_gmtime_r(&t, &gmtm);
 		if (gmtmp == NULL) {
 			printf(tformat(), t);
-			printf(" (gmtime failed)");
+			printf(_(" (gmtime failed)"));
 		} else {
 			dumptime(gmtmp);
 			printf(" UT");
@@ -823,7 +823,7 @@ show(timezone_t tz, char *zone, time_t t, bool v)
 	tmp = my_localtime_rz(tz, &t, &tm);
 	if (tmp == NULL) {
 		printf(tformat(), t);
-		printf(" (localtime failed)");
+		printf(_(" (localtime failed)"));
 	} else {
 		dumptime(tmp);
 		if (*abbr(tmp) != '\0')

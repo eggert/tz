@@ -1194,10 +1194,6 @@ dumptime(register const struct tm *timeptr)
 	register int		lead;
 	register int		trail;
 
-	if (timeptr == NULL) {
-		printf("NULL");
-		return;
-	}
 	/*
 	** The packaged localtime_rz and gmtime_r never put out-of-range
 	** values in tm_wday or tm_mon, but since this code might be compiled

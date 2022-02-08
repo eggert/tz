@@ -9,6 +9,11 @@ Unreleased, experimental changes
     past practice.  The first differing prediction is a fallback on
     2025-10-24, not 2025-10-31.
 
+  Changes to past timestamps
+
+    From 1992 through spring 1996, Ukraine's DST transitions were at
+    02:00 standard time, not at 01:00 UTC.  (Thanks to Alois Treindl.)
+
   Changes to code
 
     Fix bug when 32-bit time_t code reads malformed 64-bit TZif data.

@@ -2785,8 +2785,26 @@ Zone Europe/Kaliningrad	 1:22:00 -	LMT	1893 Apr
 # says he remembers that Samara opted out of the 1992-01-19 exception
 # 2 days before the switch.
 #
+# From Alois Treindl (2022-02-15):
+# the Russian wikipedia page
+# https://ru.wikipedia.org/wiki/Московское_время#Перемещение_границы_применения_московского_времени_на_восток
+# contains the sentence (in Google translation) "In the autumn of
+# 1981, Arkhangelsk, Vologda, Yaroslavl, Ivanovo, Vladimir, Ryazan,
+# Lipetsk, Voronezh, Rostov-on-Don, Krasnodar and regions to the east
+# of those named (about 30 in total) parted ways with Moscow time.
+# However, the convenience of common time with Moscow turned out to be
+# decisive - in 1982, these regions again switched to Moscow time."
+# Shanks International atlas has similar information, and also the
+# Russian book Zaitsev A., Kutalev D. A new astrologer's reference
+# book. Coordinates of cities and time corrections, - The World of
+# Urania, 2012 (Russian: Зайцев А., Куталёв Д., Новый справочник
+# астролога. Координаты городов и временные поправки).
+# To me it seems that an extra zone is needed, which starts with LMT
+# util 1919, later follows Moscow since 1930, but deviates from it
+# between 1 October 1981 until 1 April 1982.
 #
-# From Paul Eggert (2016-03-18):
+#
+# From Paul Eggert (2022-02-15):
 # Given the above, we appear to be missing some Zone entries for the
 # chaotic early 1980s in Russia.  It's not clear what these entries
 # should be.  For now, sweep this under the rug and just document the

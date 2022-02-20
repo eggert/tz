@@ -105,6 +105,15 @@ struct lsinfo {				/* leap second information */
 #define SMALLEST(a, b)	(((a) < (b)) ? (a) : (b))
 #define BIGGEST(a, b)	(((a) > (b)) ? (a) : (b))
 
+/* This abbreviation means local time is unspecified.  */
+static char const UNSPEC[] = "-00";
+
+/* How many extra bytes are needed at the end of struct state's chars array.
+   This needs to be at least 1 for null termination in case the input
+   data isn't properly terminated, and it also needs to be big enough
+   for ttunspecified to work without crashing.  */
+enum { CHARS_EXTRA = BIGGEST(sizeof UNSPEC, 2) - 1 };
+
 #ifdef TZNAME_MAX
 #define MY_TZNAME_MAX	TZNAME_MAX
 #endif /* defined TZNAME_MAX */
@@ -122,7 +131,8 @@ struct state {
 	time_t		ats[TZ_MAX_TIMES];
 	unsigned char	types[TZ_MAX_TIMES];
 	struct ttinfo	ttis[TZ_MAX_TYPES];
-	char		chars[BIGGEST(BIGGEST(TZ_MAX_CHARS + 1, sizeof gmt),
+	char		chars[BIGGEST(BIGGEST(TZ_MAX_CHARS + CHARS_EXTRA,
+					      sizeof gmt),
 				(2 * (MY_TZNAME_MAX + 1)))];
 	struct lsinfo	lsis[TZ_MAX_LEAPS];
 
@@ -209,6 +219,15 @@ init_ttinfo(struct ttinfo *s, int_fast32_t utoff, bool isdst, int desigidx)
   s->tt_desigidx = desigidx;
   s->tt_ttisstd = false;
   s->tt_ttisut = false;
+}
+
+/* Return true if SP's time type I does not specify local time.  */
+static bool
+ttunspecified(struct state const *sp, int i)
+{
+  char const *abbr = &sp->chars[sp->ttis[i].tt_desigidx];
+  /* memcmp is likely faster than strcmp, and is safe due to CHARS_EXTRA.  */
+  return memcmp(abbr, UNSPEC, sizeof UNSPEC) == 0;
 }
 
 static int_fast32_t
@@ -528,7 +547,9 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		}
 		for (i = 0; i < sp->charcnt; ++i)
 			sp->chars[i] = *p++;
-		sp->chars[i] = '\0';	/* ensure '\0' at end */
+		/* Ensure '\0'-terminated, and make it safe to call
+		   ttunspecified later.  */
+		memset(&sp->chars[i], 0, CHARS_EXTRA);
 
 		/* Read leap seconds, discarding those out of time_t range.  */
 		leapcnt = 0;
@@ -698,13 +719,13 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 	   standard-time type.  See:
 	   https://mm.icann.org/pipermail/tz/2013-May/019368.html */
 	/*
-	** If type 0 is unused in transitions,
+	** If type 0 does not specify local time, or is unused in transitions,
 	** it's the type to use for early times.
 	*/
 	for (i = 0; i < sp->timecnt; ++i)
 		if (sp->types[i] == 0)
 			break;
-	i = i < sp->timecnt ? -1 : 0;
+	i = i < sp->timecnt && ! ttunspecified(sp, 0) ? -1 : 0;
 	/*
 	** Absent the above,
 	** if there are transition times
@@ -2089,6 +2110,8 @@ time2sub(struct tm *const tmp,
 			for (j = sp->typecnt - 1; j >= 0; --j) {
 				if (sp->ttis[j].tt_isdst == yourtm.tm_isdst)
 					continue;
+				if (ttunspecified(sp, j))
+				  continue;
 				newt = (t + sp->ttis[j].tt_utoff
 					- sp->ttis[i].tt_utoff);
 				if (! funcp(sp, &newt, offset, &mytm))
@@ -2181,7 +2204,7 @@ time1(struct tm *const tmp,
 		seen[i] = false;
 	nseen = 0;
 	for (i = sp->timecnt - 1; i >= 0; --i)
-		if (!seen[sp->types[i]]) {
+		if (!seen[sp->types[i]] && !ttunspecified(sp, sp->types[i])) {
 			seen[sp->types[i]] = true;
 			types[nseen++] = sp->types[i];
 		}

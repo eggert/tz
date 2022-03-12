@@ -89,7 +89,6 @@ title="Berkeley Software Distribution">BSD</abbr></a>,
 title="Web Operating System">webOS</abbr></a>,
 <a href="https://en.wikipedia.org/wiki/IBM_AIX"><abbr
 title="Advanced Interactive eXecutive">AIX</abbr></a>,
-<a href="https://en.wikipedia.org/wiki/BlackBerry_10">BlackBerry 10</a>,
 <a href="https://www.apple.com/ios"><abbr
 title="iPhone OS">iOS</abbr></a>,
 <a href="https://www.apple.com/macos">macOS</a>,
@@ -243,18 +242,18 @@ the process by tailoring the generic instructions in
 the <code><abbr>tz</abbr> README</code> file and installing the latest
 data yourself. System-specific instructions for installing the
 latest <code><abbr>tz</abbr></code> data have also been published
-for <a href="https://www.ibm.com/developerworks/aix/library/au-aix-olson-time-zone/index.html"><abbr>AIX</abbr></a>,
+for <a href="https://developer.ibm.com/articles/au-aix-olson-time-zone/"><abbr>AIX</abbr></a>,
 <a
 href="https://source.android.com/devices/tech/config/timezone-rules">Android</a>,
 <a
-href="http://userguide.icu-project.org/datetime/timezone"><abbr
+href="https://unicode-org.github.io/icu/userguide/datetime/timezone/"><abbr
 title="International Components for Unicode">ICU</abbr></a>,
-<a href="https://developer.ibm.com/javasdk/support/dst/jtzu/"><abbr>IBM</abbr>
+<a href="https://www.ibm.com/support/pages/java-sdk-time-zone-update-utility"><abbr>IBM</abbr>
 JDK</a>,
 <a href="https://www.joda.org/joda-time/tz_update.html">Joda-Time</a>, <a
 href="https://dev.mysql.com/doc/refman/en/time-zone-support.html">MySQL</a>,
 <a href="https://nodatime.org/userguide/tzdb">Noda Time</a>, and <a
-href="https://www.oracle.com/java/technologies/javase/tzupdater-readme.html#usage">OpenJDK/Oracle JDK</a>.
+href="https://www.oracle.com/java/technologies/javase/tzupdater-readme.html">OpenJDK/Oracle JDK</a>.
 </p>
 <p>Sources for the <code><abbr>tz</abbr></code> database are
 <a href="https://en.wikipedia.org/wiki/UTF-8"><abbr
@@ -488,11 +487,6 @@ many of which also support runtimes lacking the <samp>timeZone</samp> option.
 href="https://github.com/formatjs/date-time-format-timezone"><samp>Intl.DateTimeFormat</samp>
 timezone polyfill</a>
 is freely available under a <abbr>BSD</abbr>-style license.</li>
-<li><a
-href="https://github.com/kshetline/compact-time-zone-generator">CompactTimeZoneGenerator</a>
-compiles time zone data into a compact form designed for
-JavaScript. It is freely available under a combination of
-the <abbr>MIT</abbr> license and the Apache License.</li>
 <li>The <a href="https://date-fns.org/">date-fns</a>
 library manipulates timezone-aware timestamps in browsers and
 in <a href="https://nodejs.org/en/">Node.js</a>.
@@ -546,9 +540,9 @@ It is freely available under a <abbr>BSD</abbr>-style license.</li>
 Definitions for Python</a> compiles <code><abbr>tz</abbr></code> source into
 <a href="https://www.python.org">Python</a>.
 It is freely available under a <abbr>BSD</abbr>-style license.
-In code that can assume Python 3.9 or later it is superseded by
-<a href="#python-zoneinfo"><code>zoneinfo.ZoneInfo</code></a>
-and the <a href="#pypi-tzdata"><code>tzdata</code> Python package</a>.</li>
+In code that can assume Python 3.6 or later it is largely superseded; see <a
+href="https://blog.ganssle.io/articles/2018/03/pytz-fastest-footgun.html">pytz:
+The Fastest Footgun in the West</a>.</li>
 <li><a href="https://tzinfo.github.io">TZInfo &ndash;
 Ruby Timezone Library</a>
 compiles <code><abbr>tz</abbr></code> source into
@@ -610,11 +604,11 @@ is a <abbr>TZif</abbr> file reader written in Perl.
 It is freely available under the same terms as Perl
 (dual <abbr>GPL</abbr> and Artistic license).</li>
 <li>Python has a <a id="python-zoneinfo"
-href="https://docs.python.org/3.9/library/zoneinfo.html"><code>zoneinfo.ZoneInfo</code>
+href="https://docs.python.org/3/library/zoneinfo.html"><code>zoneinfo.ZoneInfo</code>
 class</a> that reads <abbr>TZif</abbr> data and creates objects
 that represent <code><abbr>tzdb</abbr></code> timezones.
 Python is freely available under the
-<a href="https://docs.python.org/3.9/license.html">Python Software Foundation
+<a href="https://docs.python.org/3/license.html">Python Software Foundation
 License</a>.
 A companion <a id="pypi-tzdata" href="https://pypi.org/">PyPI</a> module
 <a href="https://pypi.org/project/tzdata/"><code>tzdata</code></a>
@@ -641,7 +635,7 @@ available under a <abbr>BSD</abbr>-style license.</li>
 <li><a href="https://foxclocks.org">FoxClocks</a>
 is an extension for <a href="https://www.google.com/chrome/">Google
 Chrome</a> and for <a
-href="https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Toolkit_API">Mozilla
+href="https://wiki.mozilla.org/Modules/Toolkit">Mozilla
 Toolkit</a> applications like <a
 href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a> and <a
 href="https://www.mozilla.org/en-US/thunderbird/">Thunderbird</a>.
@@ -1010,14 +1004,11 @@ specifies a <a
 href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol"><abbr>DHCP</abbr></a>
 option for a server to configure
 a client's time zone and daylight saving settings automatically.</li>
-<li><a
-href="https://www.cv.nrao.edu/~rfisher/Ephemerides/times.html">Astronomical
-Times</a> explains more abstruse astronomical time scales like
+<li><a href="https://www.ucolick.org/~sla/leapsecs/timescales.html">Time
+Scales</a> describes astronomical time scales like
 <abbr title="Terrestrial Dynamic Time">TDT</abbr>,
 <abbr title="Geocentric Coordinate Time">TCG</abbr>, and
 <abbr title="Barycentric Dynamic Time">TDB</abbr>.
-<a href="https://www.ucolick.org/~sla/leapsecs/timescales.html">Time
-Scales</a> goes into more detail, particularly for historical variants.</li>
 <li>The <a href="https://www.iau.org"><abbr
 title="International Astronomical Union">IAU</abbr></a>'s <a
 href="http://www.iausofa.org"><abbr

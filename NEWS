@@ -18,9 +18,6 @@ Unreleased, experimental changes
     From 1992 through spring 1996, Ukraine's DST transitions were at
     02:00 standard time, not at 01:00 UTC.  (Thanks to Alois Treindl.)
 
-    The Magallanes region was like the rest of mainland Chile in
-    1946/7.  (Thanks to Alois Treindl.)
-
   Changes to code
 
     Fix bug when mktime gets confused by truncated TZif files with

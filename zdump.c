@@ -1138,7 +1138,7 @@ abbr(struct tm const *tmp)
 
 /*
 ** The code below can fail on certain theoretical systems;
-** it works on all known real-world systems as of 2021-01-25.
+** it works on all known real-world systems as of 2022-01-25.
 */
 
 static const char *

@@ -6,12 +6,10 @@ Unreleased, experimental changes
 
     Palestine will spring forward on 2022-03-27, not 2022-03-26.
     (Thanks to Heba Hamad.)  Predict future transitions for first
-    Sunday >= March 25.
-
-    Predict Palestine fallbacks to be the first Friday on or after
-    October 23, not October's last Friday, to be more consistent with
-    past practice.  The first differing prediction is a fallback on
-    2025-10-24, not 2025-10-31.
+    Sunday >= March 25.  Additionally, predict fallbacks to be the first
+    Friday on or after October 23, not October's last Friday, to be more
+    consistent with recent practice.  The first differing fallback
+    prediction is on 2025-10-24, not 2025-10-31.
 
   Changes to past timestamps
 

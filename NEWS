@@ -2,6 +2,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    Palestine will spring forward on 2022-03-27, not -03-26.
+    zdump -v now outputs better failure indications.
+    Bug fixes for code that reads corrupted TZif data.
+
   Changes to future timestamps
 
     Palestine will spring forward on 2022-03-27, not 2022-03-26.

@@ -18,6 +18,14 @@ Unreleased, experimental changes
     From 1992 through spring 1996, Ukraine's DST transitions were at
     02:00 standard time, not at 01:00 UTC.  (Thanks to Alois Treindl.)
 
+    Chile's Santiago Mean Time and its LMT precursor have been adjusted
+    eastward by 1 second to align with past and present law.
+
+  Changes to commentary
+
+    Add several references for Chile's 1946/1947 transitions, some of
+    which only affected portions of the country.
+
   Changes to code
 
     Fix bug when mktime gets confused by truncated TZif files with

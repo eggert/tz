@@ -1315,7 +1315,7 @@ Release 2018b - 2018-01-17 23:24:48 -0800
   Changes to build procedure
 
     The distribution now contains the file 'pacificnew' again.
-    This file was inadvertantly omitted in the 2018a distribution.
+    This file was inadvertently omitted in the 2018a distribution.
     (Problem reported by Matias Fonzo.)
 
 

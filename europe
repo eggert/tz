@@ -3353,7 +3353,7 @@ Zone Asia/Vladivostok	 8:47:31 -	LMT	1922 Nov 15
 # 14-30	****	Ust-Maysky District
 
 # From Arthur David Olson (2012-05-09):
-# Tomponskij and Ust'-Majskij switched from Vladivostok time to Yakutsk time
+# Tomponsky and Ust-Maysky switched from Vladivostok time to Yakutsk time
 # in 2011.
 
 # From Paul Eggert (2012-11-25):
@@ -3479,7 +3479,7 @@ Zone Asia/Srednekolymsk	10:14:52 -	LMT	1924 May  2
 # 14-22	****	Oymyakonsky District
 
 # From Arthur David Olson (2012-05-09):
-# Ojmyakonskij [and the Kuril Islands] switched from
+# Oymyakonsky [and the Kuril Islands] switched from
 # Magadan time to Vladivostok time in 2011.
 #
 # From Tim Parenti (2014-07-06), per Alexander Krivenyshev (2014-07-02):
@@ -4028,7 +4028,7 @@ Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 
 # Ukraine
 #
-# From Alois Triendl (2014-03-01):
+# From Alois Treindl (2014-03-01):
 # REGULATION A N O V A on March 20, 1992 N 139 ...  means that from
 # 1992 on, Ukraine had DST with begin time at 02:00 am, on last Sunday
 # in March, and end time 03:00 am, last Sunday in September....

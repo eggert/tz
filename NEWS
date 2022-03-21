@@ -161,7 +161,7 @@ Release 2021b - 2021-09-24 16:23:00 -0700
     Rename Pacific/Enderbury to Pacific/Kanton.  When we added
     Enderbury in 1993, we did not know that it is uninhabited and that
     Kanton (population two dozen) is the only inhabited location in
-    that timezone.  The old name is now a backward-compatility link.
+    that timezone.  The old name is now a backward-compatibility link.
 
   Changes to past timestamps
 
@@ -4387,7 +4387,7 @@ Release 2007a - 2007-01-08 12:28:29 -0500
 
   changes by Paul Eggert
 
-  Derick Rethan's Asmara change
+  Derick Rethans's Asmara change
 
   Oscar van Vlijmen's Easter Island local mean time change
 

@@ -1513,7 +1513,7 @@ tzfree(timezone_t sp)
 ** set the applicable parts of tzname, timezone and altzone;
 ** however, it's OK to omit this step if the timezone is POSIX-compatible,
 ** since in that case tzset should have already done this step correctly.
-** SETNAME's type is intfast32_t for compatibility with gmtsub,
+** SETNAME's type is int_fast32_t for compatibility with gmtsub,
 ** but it is actually a boolean and its value should be 0 or 1.
 */
 

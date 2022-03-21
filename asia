@@ -344,11 +344,11 @@ Rule	Shang	1919	only	-	Sep	30	24:00	0	S
 # in the city at the time for people who use different time standard to adjust
 # their clock to their preferred time.
 #
-# a. For the 1940 May 31 spring forward, the essay claim that it was
-# coordinared between the international settlement authority and the French
+# a. For the 1940 May 31 spring forward, the essay claims that it was
+# coordinated between the international settlement authority and the French
 # concession authority and have gathered support from Hong Kong and Xiamen,
 # that it would spring forward an hour from May 31 "midnight", and the essay
-# claim "Hong Kong government implemented the spring forward in the same time
+# claims "Hong Kong government implemented the spring forward in the same time
 # on the same date as Shanghai".
 #
 # b. For the 1940 fall back, it was said that they initially intended to do
@@ -2465,7 +2465,7 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # the third time belt (before 1930 this means +03).
 
 # From Alexander Konzurovski (2018-12-20):
-# Qyzyolrda Region (Asia/Qyzylorda) is changing its time zone from
+# Qyzylorda Region (Asia/Qyzylorda) is changing its time zone from
 # UTC+6 to UTC+5 effective December 21st, 2018. The legal document is
 # located here: http://adilet.zan.kz/rus/docs/P1800000817 (russian language).
 

@@ -658,7 +658,7 @@ Zone Pacific/Rarotonga	13:20:56 -	LMT	1899 Dec 26 # Avarua
 
 
 # Niue
-# See Pacific/Raratonga comments for 1952 transition.
+# See Pacific/Rarotonga comments for 1952 transition.
 #
 # From Tim Parenti (2021-09-13):
 # Consecutive contemporaneous editions of The Air Almanac listed -11:20 for
@@ -1829,8 +1829,8 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # From Phake Nick (2018-10-27):
 # <https://wiki.suikawiki.org/n/南洋群島の標準時> ... pointed out that
 # currently tzdata say Pacific/Kwajalein switched from GMT+11 to GMT-12 in
-# 1969 October without explanation, however an 1993 article from NYT say it
-# synchorized its day with US mainland about 40 years ago and thus the switch
+# 1969 October without explanation, however an 1993 article from NYT says it
+# synchronized its day with the US mainland about 40 years ago and thus the switch
 # should occur at around 1950s instead.
 #
 # From Paul Eggert (2018-11-18):

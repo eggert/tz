@@ -23,7 +23,7 @@ function record_hash(n, name)
 function gen_rule_name(name, \
 		       n)
 {
-  # Use a simple memonic: the first two letters.
+  # Use a simple mnemonic: the first two letters.
   n = substr(name, 1, 2)
   record_hash(n, name)
   # printf "# %s = %s\n", n, name

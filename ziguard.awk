@@ -104,7 +104,11 @@ DATAFORM != "main" {
   }
   if (!vanguard && $1 == "Rule" && $2 == "Morocco" && 2019 <= $3) {
     if ($9 == "0") {
-      last_std_date = $3 " " $6 " " $7 "  " $8
+      # Add a day, to insert an extra transition to work around a bug
+      # in Android's DST offset finding logic circa 2022.  See:
+      # https://mm.icann.org/pipermail/tz/2022-March/031352.html
+      # This does not affect the UTC offset, only the DST flag for that day.
+      last_std_date = $3 " " $6 " " ($7 + 1) "  " $8
       sub(/\t0\t/, "\t1:00\t")
     } else {
       sub(/\t-1:00\t/, "\t0\t")

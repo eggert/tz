@@ -1826,16 +1826,12 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 # "In Marshall Islands, Friday is followed by Sunday", NY Times. 1993-08-22.
 # https://www.nytimes.com/1993/08/22/world/in-marshall-islands-friday-is-followed-by-sunday.html
 
-# From Phake Nick (2018-10-27):
-# <https://wiki.suikawiki.org/n/南洋群島の標準時> ... pointed out that
-# currently tzdata say Pacific/Kwajalein switched from GMT+11 to GMT-12 in
-# 1969 October without explanation, however an 1993 article from NYT says it
-# synchronized its day with the US mainland about 40 years ago and thus the switch
-# should occur at around 1950s instead.
-#
-# From Paul Eggert (2018-11-18):
-# The NYT (actually, AP) article is vague and possibly wrong about this.
-# The article says the earlier switch was "40 years ago when the United States
+# From Paul Eggert (2022-03-31):
+# Phake Nick (2018-10-27) noted <https://wiki.suikawiki.org/n/南洋群島の標準時>'s
+# citation of a 1993 AP article published in the New York Times saying
+# Kwajalein synchronized its day with the US mainland about 40 years earlier.
+# However the AP article is vague and possibly wrong about this.  The article
+# says the earlier switch was "about 40 years ago when the United States
 # Army established a missile test range here".  However, the Kwajalein Test
 # Center was established on 1960-10-01 and was run by the US Navy.  It was
 # transferred to the US Army on 1964-07-01.  See "Seize the High Ground"

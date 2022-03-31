@@ -3352,7 +3352,7 @@ Zone Asia/Vladivostok	 8:47:31 -	LMT	1922 Nov 15
 # 14-28	****	Tomponsky District
 # 14-30	****	Ust-Maysky District
 
-# From Arthur David Olson (2012-05-09):
+# From Arthur David Olson (2022-03-21):
 # Tomponsky and Ust-Maysky switched from Vladivostok time to Yakutsk time
 # in 2011.
 
@@ -3478,8 +3478,8 @@ Zone Asia/Srednekolymsk	10:14:52 -	LMT	1924 May  2
 # Asia/Ust-Nera covers parts of (14, RU-SA) Sakha (Yakutia) Republic:
 # 14-22	****	Oymyakonsky District
 
-# From Arthur David Olson (2012-05-09):
-# Oymyakonsky [and the Kuril Islands] switched from
+# From Arthur David Olson (2022-03-21):
+# Oymyakonsky and the Kuril Islands switched from
 # Magadan time to Vladivostok time in 2011.
 #
 # From Tim Parenti (2014-07-06), per Alexander Krivenyshev (2014-07-02):

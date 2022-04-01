@@ -253,7 +253,8 @@ format.
 .PP
 Input files should be text files, that is, they should be a series of
 zero or more lines, each ending in a newline byte and containing at
-most 511 bytes, and without any NUL bytes.  The input text's encoding
+most 2048 bytes counting the newline, and without any NUL bytes.
+The input text's encoding
 is typically UTF-8 or ASCII; it should have a unibyte representation
 for the POSIX Portable Character Set (PPCS)
 \*<https://pubs\*:.opengroup\*:.org/\*:onlinepubs/\*:9699919799/\*:basedefs/\*:V1_chap06\*:.html\*>

@@ -58,6 +58,11 @@ static ptrdiff_t const PTRDIFF_MAX = MAXVAL(ptrdiff_t, TYPE_BIT(ptrdiff_t));
 # define _Alignof(type) offsetof(struct { char a; type b; }, b)
 #endif
 
+/* The maximum length of a text line, including the trailing newline.  */
+#ifndef _POSIX2_LINE_MAX
+# define _POSIX2_LINE_MAX 2048
+#endif
+
 /* The type for line numbers.  Use PRIdMAX to format them; formerly
    there was also "#define PRIdLINENO PRIdMAX" and formats used
    PRIdLINENO, but xgettext cannot grok that.  */
@@ -1304,17 +1309,49 @@ associate(void)
 		exit(EXIT_FAILURE);
 }
 
+/* Read a text line from FP into BUF, which is of size BUFSIZE.
+   Terminate it with a NUL byte instead of a newline.
+   Return the line's length, not counting the NUL byte.
+   On EOF, return a negative number.
+   On error, report the error and exit.  */
+static ptrdiff_t
+inputline(FILE *fp, char *buf, ptrdiff_t bufsize)
+{
+  ptrdiff_t linelen = 0, ch;
+  while ((ch = getc(fp)) != '\n') {
+    if (ch < 0) {
+      if (ferror(fp)) {
+	error(_("input error"));
+	exit(EXIT_FAILURE);
+      }
+      if (linelen == 0)
+	return -1;
+      error(_("unterminated line"));
+      exit(EXIT_FAILURE);
+    }
+    if (!ch) {
+      error(_("NUL input byte"));
+      exit(EXIT_FAILURE);
+    }
+    buf[linelen++] = ch;
+    if (linelen == bufsize) {
+      error(_("line too long"));
+      exit(EXIT_FAILURE);
+    }
+  }
+  buf[linelen] = '\0';
+  return linelen;
+}
+
 static void
 infile(const char *name)
 {
 	register FILE *			fp;
 	register char **		fields;
-	register char *			cp;
 	register const struct lookup *	lp;
 	register int			nfields;
 	register bool			wantcont;
 	register lineno			num;
-	char				buf[BUFSIZ];
 
 	if (strcmp(name, "-") == 0) {
 		name = _("standard input");
@@ -1328,15 +1365,12 @@ infile(const char *name)
 	}
 	wantcont = false;
 	for (num = 1; ; ++num) {
+		ptrdiff_t linelen;
+		char buf[_POSIX2_LINE_MAX];
 		eat(name, num);
-		if (fgets(buf, sizeof buf, fp) != buf)
-			break;
-		cp = strchr(buf, '\n');
-		if (cp == NULL) {
-			error(_("line too long"));
-			exit(EXIT_FAILURE);
-		}
-		*cp = '\0';
+		linelen = inputline(fp, buf, sizeof buf);
+		if (linelen < 0)
+		  break;
 		fields = getfields(buf);
 		nfields = 0;
 		while (fields[nfields] != NULL) {

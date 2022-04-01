@@ -1,5 +1,13 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to code
+
+    zic now checks its input for NUL bytes and unterminated lines, and
+    now supports input line lengths up to 2048 (not 512) bytes.
+
+
 Release 2022a - 2022-03-15 23:02:01 -0700
 
   Briefly:

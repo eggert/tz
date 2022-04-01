@@ -150,7 +150,7 @@ static void	leapadd(zic_t, int, int);
 static void	adjleap(void);
 static void	associate(void);
 static void	dolink(const char *, const char *, bool);
-static char **	getfields(char * buf);
+static int	getfields(char *, char **, int);
 static zic_t	gethms(const char * string, const char * errstring);
 static zic_t	getsave(char *, bool *);
 static void	inexpires(char **, int);
@@ -285,6 +285,9 @@ static int		unspecifiedtype;
 
 /* Expires lines are like Leap lines, except without CORR and ROLL fields.  */
 #define EXPIRES_FIELDS	5
+
+/* The maximum number of fields on any of the above lines.  */
+#define MAX_FIELDS RULE_FIELDS
 
 /*
 ** Year synonyms.
@@ -1347,9 +1350,7 @@ static void
 infile(const char *name)
 {
 	register FILE *			fp;
-	register char **		fields;
 	register const struct lookup *	lp;
-	register int			nfields;
 	register bool			wantcont;
 	register lineno			num;
 
@@ -1367,19 +1368,14 @@ infile(const char *name)
 	for (num = 1; ; ++num) {
 		ptrdiff_t linelen;
 		char buf[_POSIX2_LINE_MAX];
+		int nfields;
+		char *fields[MAX_FIELDS];
 		eat(name, num);
 		linelen = inputline(fp, buf, sizeof buf);
 		if (linelen < 0)
 		  break;
-		fields = getfields(buf);
-		nfields = 0;
-		while (fields[nfields] != NULL) {
-			static char	nada;
-
-			if (strcmp(fields[nfields], "-") == 0)
-				fields[nfields] = &nada;
-			++nfields;
-		}
+		nfields = getfields(buf, fields,
+				    sizeof fields / sizeof *fields);
 		if (nfields == 0) {
 			/* nothing to do */
 		} else if (wantcont) {
@@ -1413,7 +1409,6 @@ infile(const char *name)
 				default: UNREACHABLE();
 			}
 		}
-		free(fields);
 	}
 	close_file(fp, NULL, filename, NULL);
 	if (wantcont)
@@ -3378,23 +3373,20 @@ byword(const char *word, const struct lookup *table)
 	return foundlp;
 }
 
-static char **
-getfields(register char *cp)
+static int
+getfields(char *cp, char **array, int arrayelts)
 {
 	register char *		dp;
-	register char **	array;
 	register int		nsubs;
 
-	if (cp == NULL)
-		return NULL;
-	array = emalloc(size_product(strlen(cp) + 1, sizeof *array));
 	nsubs = 0;
 	for ( ; ; ) {
+		char *dstart;
 		while (is_space(*cp))
 				++cp;
 		if (*cp == '\0' || *cp == '#')
 			break;
-		array[nsubs++] = dp = cp;
+		dstart = dp = cp;
 		do {
 			if ((*dp = *cp++) != '"')
 				++dp;
@@ -3409,9 +3401,13 @@ getfields(register char *cp)
 		if (is_space(*cp))
 			++cp;
 		*dp = '\0';
+		if (nsubs == arrayelts) {
+		  error(_("Too many input fields"));
+		  exit(EXIT_FAILURE);
+		}
+		array[nsubs++] = dstart + (*dstart == '-' && dp == dstart + 1);
 	}
-	array[nsubs] = NULL;
-	return array;
+	return nsubs;
 }
 
 static _Noreturn void

@@ -2,6 +2,14 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    Rename Europe/Kiev to Europe/Kyiv.
+
+  Changes to zone name
+
+    Rename Europe/Kiev to Europe/Kyiv, as the latter name is
+    significantly more common in English now.
+
   Changes to code
 
     zic now checks its input for NUL bytes and unterminated lines, and

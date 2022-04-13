@@ -4121,12 +4121,12 @@ Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 # In particular, tzdb's name Europe/Kyiv uses the most common spelling in
 # English for Ukraine's capital.  Although tzdb's former name was Europe/Kiev,
 # "Kyiv" is now more common due to widespread reporting of the current conflict.
-# Conversely, tzdb continues to use traditional spellings in Europe/Uzhgorod and
+# Conversely, tzdb continues to use the names Europe/Uzhgorod and
 # Europe/Zaporozhye; this is similar to tzdb's use of Europe/Prague, which is
 # certainly wrong as a transliteration of the Czech "Praha".
 # English-language spelling of Ukrainian names is in flux, and
 # some day "Uzhhorod" or "Zaporizhzhia" may become substantially more
-# popular in English; in the meantime, stick with the traditional
+# common in English; in the meantime, do not change these
 # English spellings as that means less disruption for our users.
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]

@@ -2863,7 +2863,7 @@ Zone Europe/Simferopol	 2:16:24 -	LMT	1880
 # changed in May.  This change evidently didn't last long; see below.
 			 2:00	C-Eur	EE%sT	1994 May
 # From IATA SSIM (1994/1997), which also says that Kerch is still like Kiev.
-			 3:00	E-Eur	MSK/MSD	1996 Mar 31  0:00s
+			 3:00	C-Eur	MSK/MSD	1996 Mar 31  0:00s
 			 3:00	1:00	MSD	1996 Oct 27  3:00s
 # IATA SSIM (1997-09) says Crimea switched to EET/EEST.
 # Assume it happened in March by not changing the clocks.

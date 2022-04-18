@@ -2854,20 +2854,19 @@ Zone Europe/Simferopol	 2:16:24 -	LMT	1880
 			 2:00	-	EET	1992 Mar 20
 # Central Crimea used Moscow time 1994/1997.
 #
-# From Paul Eggert (2006-03-22):
+# From Paul Eggert (2022-04-18):
 # The _Economist_ (1994-05-28, p 45) reports that central Crimea switched
 # from Kiev to Moscow time sometime after the January 1994 elections.
 # Shanks (1999) says "date of change uncertain", but implies that it happened
 # sometime between the 1994 DST switches.  Shanks & Pottenger simply say
 # 1994-09-25 03:00, but that can't be right.  For now, guess it
-# changed in May.
+# changed in May.  This change evidently didn't last long; see below.
 			 2:00	C-Eur	EE%sT	1994 May
 # From IATA SSIM (1994/1997), which also says that Kerch is still like Kiev.
 			 3:00	E-Eur	MSK/MSD	1996 Mar 31  0:00s
 			 3:00	1:00	MSD	1996 Oct 27  3:00s
 # IATA SSIM (1997-09) says Crimea switched to EET/EEST.
 # Assume it happened in March by not changing the clocks.
-			 3:00	Russia	MSK/MSD	1997
 			 3:00	-	MSK	1997 Mar lastSun  1:00u
 # From Alexander Krivenyshev (2014-03-17):
 # time change at 2:00 (2am) on March 30, 2014

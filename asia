@@ -1438,63 +1438,6 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 #
 # From Paul Eggert (2018-11-30):
 # Go with Shanks & Pottenger before Sept. 1991, and with Pournader thereafter.
-# I used the following code in GNU Emacs 26.1 to generate the "Rule Iran"
-# lines from 2008 through 2087.  Emacs 26.1 uses Ed Reingold's
-# cal-persia implementation of Birashk's approximation, which in the
-# 2008-2087 range disagrees with the astronomical Persian calendar
-# for Persian years 1404 (Gregorian 2025) and 1437 (Gregorian 2058), so
-# the following code special-cases those years.  See Table 15.1, page 264, of:
-# Edward M. Reingold and Nachum Dershowitz, Calendrical Calculations:
-# The Ultimate Edition, Cambridge University Press (2018).
-# https://www.cambridge.org/fr/academic/subjects/computer-science/computing-general-interest/calendrical-calculations-ultimate-edition-4th-edition
-# Page 258, footnote 2, of this book says there is some dispute over what will
-# happen in 2091 (and some other years after that), so this code
-# stops in 2087, as 2088 and 2089 agree with the "max" rule below.
-# (cl-loop
-#  initially (require 'cal-persia)
-#  with first-persian-year = 1387
-#  with last-persian-year = 1466
-#  ;; Exceptional years in the above range,
-#  ;; from Reingold & Dershowitz Table 15.1, page 264:
-#  with exceptional-persian-years = '(1404 1437)
-#  with range-start = nil
-#  for persian-year from first-persian-year to last-persian-year
-#  do
-#  (let*
-#      ((exceptional-year-offset
-#        (if (member persian-year exceptional-persian-years) 1 0))
-#       (beg-dst-absolute
-#        (+ (calendar-persian-to-absolute (list 1 1 persian-year))
-#           exceptional-year-offset))
-#       (end-dst-absolute
-#        (+ (calendar-persian-to-absolute (list 6 30 persian-year))
-#           exceptional-year-offset))
-#       (next-year-beg-dst-absolute
-#        (+ (calendar-persian-to-absolute (list 1 1 (1+ persian-year)))
-#           (if (member (1+ persian-year) exceptional-persian-years) 1 0)))
-#       (beg-dst (calendar-gregorian-from-absolute beg-dst-absolute))
-#       (end-dst (calendar-gregorian-from-absolute end-dst-absolute))
-#       (next-year-beg-dst (calendar-gregorian-from-absolute
-#                           next-year-beg-dst-absolute))
-#       (year (calendar-extract-year beg-dst))
-#       (range-end (if range-start year "only")))
-#    (setq range-start (or range-start year))
-#    (when (or (/= (calendar-extract-day beg-dst)
-#                  (calendar-extract-day next-year-beg-dst))
-#              (= persian-year last-persian-year))
-#      (insert
-#       (format
-#        "Rule\tIran\t%d\t%s\t-\t%s\t%2d\t24:00\t1:00\t-\n"
-#        range-start range-end
-#        (calendar-month-name (calendar-extract-month beg-dst) t)
-#        (calendar-extract-day beg-dst)))
-#      (insert
-#       (format
-#        "Rule\tIran\t%d\t%s\t-\t%s\t%2d\t24:00\t0\t-\n"
-#        range-start range-end
-#        (calendar-month-name (calendar-extract-month end-dst) t)
-#        (calendar-extract-day end-dst)))
-#      (setq range-start nil))))
 #
 # From Oscar van Vlijmen (2005-03-30), writing about future
 # discrepancies between cal-persia and the Iranian calendar:
@@ -1527,6 +1470,12 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # on the 24 hours of the first day of the month of Farvardin and will
 # be changed back to its previous state on the 24 hours of the
 # thirtieth day of Shahrivar.
+#
+# From Ali Mirjamali (2022-05-10):
+# Official IR News Agency announcement: irna.ir/xjJ3TT
+# Iran Parliament (Majles) official announcement : shorturl.at/fhtIR
+# Highlights: DST will be cancelled for the next Iranian year 1402
+# (i.e 2023-March-21) and forthcoming years.
 #
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Iran	1978	1980	-	Mar	20	24:00	1:00	-
@@ -1562,80 +1511,8 @@ Rule	Iran	2017	2019	-	Mar	21	24:00	1:00	-
 Rule	Iran	2017	2019	-	Sep	21	24:00	0	-
 Rule	Iran	2020	only	-	Mar	20	24:00	1:00	-
 Rule	Iran	2020	only	-	Sep	20	24:00	0	-
-Rule	Iran	2021	2023	-	Mar	21	24:00	1:00	-
-Rule	Iran	2021	2023	-	Sep	21	24:00	0	-
-Rule	Iran	2024	only	-	Mar	20	24:00	1:00	-
-Rule	Iran	2024	only	-	Sep	20	24:00	0	-
-Rule	Iran	2025	2027	-	Mar	21	24:00	1:00	-
-Rule	Iran	2025	2027	-	Sep	21	24:00	0	-
-Rule	Iran	2028	2029	-	Mar	20	24:00	1:00	-
-Rule	Iran	2028	2029	-	Sep	20	24:00	0	-
-Rule	Iran	2030	2031	-	Mar	21	24:00	1:00	-
-Rule	Iran	2030	2031	-	Sep	21	24:00	0	-
-Rule	Iran	2032	2033	-	Mar	20	24:00	1:00	-
-Rule	Iran	2032	2033	-	Sep	20	24:00	0	-
-Rule	Iran	2034	2035	-	Mar	21	24:00	1:00	-
-Rule	Iran	2034	2035	-	Sep	21	24:00	0	-
-Rule	Iran	2036	2037	-	Mar	20	24:00	1:00	-
-Rule	Iran	2036	2037	-	Sep	20	24:00	0	-
-Rule	Iran	2038	2039	-	Mar	21	24:00	1:00	-
-Rule	Iran	2038	2039	-	Sep	21	24:00	0	-
-Rule	Iran	2040	2041	-	Mar	20	24:00	1:00	-
-Rule	Iran	2040	2041	-	Sep	20	24:00	0	-
-Rule	Iran	2042	2043	-	Mar	21	24:00	1:00	-
-Rule	Iran	2042	2043	-	Sep	21	24:00	0	-
-Rule	Iran	2044	2045	-	Mar	20	24:00	1:00	-
-Rule	Iran	2044	2045	-	Sep	20	24:00	0	-
-Rule	Iran	2046	2047	-	Mar	21	24:00	1:00	-
-Rule	Iran	2046	2047	-	Sep	21	24:00	0	-
-Rule	Iran	2048	2049	-	Mar	20	24:00	1:00	-
-Rule	Iran	2048	2049	-	Sep	20	24:00	0	-
-Rule	Iran	2050	2051	-	Mar	21	24:00	1:00	-
-Rule	Iran	2050	2051	-	Sep	21	24:00	0	-
-Rule	Iran	2052	2053	-	Mar	20	24:00	1:00	-
-Rule	Iran	2052	2053	-	Sep	20	24:00	0	-
-Rule	Iran	2054	2055	-	Mar	21	24:00	1:00	-
-Rule	Iran	2054	2055	-	Sep	21	24:00	0	-
-Rule	Iran	2056	2057	-	Mar	20	24:00	1:00	-
-Rule	Iran	2056	2057	-	Sep	20	24:00	0	-
-Rule	Iran	2058	2059	-	Mar	21	24:00	1:00	-
-Rule	Iran	2058	2059	-	Sep	21	24:00	0	-
-Rule	Iran	2060	2062	-	Mar	20	24:00	1:00	-
-Rule	Iran	2060	2062	-	Sep	20	24:00	0	-
-Rule	Iran	2063	only	-	Mar	21	24:00	1:00	-
-Rule	Iran	2063	only	-	Sep	21	24:00	0	-
-Rule	Iran	2064	2066	-	Mar	20	24:00	1:00	-
-Rule	Iran	2064	2066	-	Sep	20	24:00	0	-
-Rule	Iran	2067	only	-	Mar	21	24:00	1:00	-
-Rule	Iran	2067	only	-	Sep	21	24:00	0	-
-Rule	Iran	2068	2070	-	Mar	20	24:00	1:00	-
-Rule	Iran	2068	2070	-	Sep	20	24:00	0	-
-Rule	Iran	2071	only	-	Mar	21	24:00	1:00	-
-Rule	Iran	2071	only	-	Sep	21	24:00	0	-
-Rule	Iran	2072	2074	-	Mar	20	24:00	1:00	-
-Rule	Iran	2072	2074	-	Sep	20	24:00	0	-
-Rule	Iran	2075	only	-	Mar	21	24:00	1:00	-
-Rule	Iran	2075	only	-	Sep	21	24:00	0	-
-Rule	Iran	2076	2078	-	Mar	20	24:00	1:00	-
-Rule	Iran	2076	2078	-	Sep	20	24:00	0	-
-Rule	Iran	2079	only	-	Mar	21	24:00	1:00	-
-Rule	Iran	2079	only	-	Sep	21	24:00	0	-
-Rule	Iran	2080	2082	-	Mar	20	24:00	1:00	-
-Rule	Iran	2080	2082	-	Sep	20	24:00	0	-
-Rule	Iran	2083	only	-	Mar	21	24:00	1:00	-
-Rule	Iran	2083	only	-	Sep	21	24:00	0	-
-Rule	Iran	2084	2086	-	Mar	20	24:00	1:00	-
-Rule	Iran	2084	2086	-	Sep	20	24:00	0	-
-Rule	Iran	2087	only	-	Mar	21	24:00	1:00	-
-Rule	Iran	2087	only	-	Sep	21	24:00	0	-
-#
-# The following rules are approximations starting in the year 2088.
-# These are the best post-2088 approximations available, given the
-# restrictions of a single rule using ordinary Gregorian dates.
-# At some point this table will need to be extended, though quite
-# possibly Iran will change the rules first.
-Rule	Iran	2088	max	-	Mar	20	24:00	1:00	-
-Rule	Iran	2088	max	-	Sep	20	24:00	0	-
+Rule	Iran	2021	2022	-	Mar	21	24:00	1:00	-
+Rule	Iran	2021	2022	-	Sep	21	24:00	0	-
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Tehran	3:25:44	-	LMT	1916

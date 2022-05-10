@@ -3,7 +3,13 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Iran no longer observes DST after 2022.
     Rename Europe/Kiev to Europe/Kyiv.
+
+  Changes to future timestamps
+
+    Iran plans to stop observing DST permanently, after it falls back
+    on 2022-09-21.  (Thanks to Ali Mirjamali.)
 
   Changes to past timestamps
 

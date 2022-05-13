@@ -448,6 +448,9 @@ UNUSUAL_OK_IPA = u̯
 # useful in commentary.
 UNUSUAL_OK_CHARSET= $(UNUSUAL_OK_LATIN_1)$(UNUSUAL_OK_IPA)
 
+# Put this in a bracket expression to match spaces.
+s = [:space:]
+
 # OK_CHAR matches any character allowed in the distributed files.
 # This is the same as SAFE_CHAR, except that UNUSUAL_OK_CHARSET and
 # multibyte letters are also allowed so that commentary can contain a
@@ -755,7 +758,7 @@ tzselect:	tzselect.ksh version
 		mv $@.out $@
 
 check:		check_character_set check_white_space check_links \
-		  check_name_lengths check_sorted \
+		  check_name_lengths check_slashed_abbrs check_sorted \
 		  check_tables check_web check_zishrink check_tzs
 
 check_character_set: $(ENCHILADA)
@@ -780,17 +783,26 @@ check_white_space: $(ENCHILADA)
 		patfmt=' \t|[\f\r\v]' && pat=`printf "$$patfmt\\n"` && \
 		! grep -En "$$pat" \
 			$$(ls $(ENCHILADA) | grep -Fvx leap-seconds.list)
-		! grep -n '[[:space:]]$$' \
+		! grep -n '[$s]$$' \
 			$$(ls $(ENCHILADA) | grep -Fvx leap-seconds.list)
 		touch $@
 
-PRECEDES_FILE_NAME = ^(Zone|Link[[:space:]]+[^[:space:]]+)[[:space:]]+
-FILE_NAME_COMPONENT_TOO_LONG = \
-  $(PRECEDES_FILE_NAME)[^[:space:]]*[^/[:space:]]{15}
+PRECEDES_FILE_NAME = ^(Zone|Link[$s]+[^$s]+)[$s]+
+FILE_NAME_COMPONENT_TOO_LONG = $(PRECEDES_FILE_NAME)[^$s]*[^/$s]{15}
 
 check_name_lengths: $(TDATA_TO_CHECK) backzone
 		! grep -En '$(FILE_NAME_COMPONENT_TOO_LONG)' \
 			$(TDATA_TO_CHECK) backzone
+		touch $@
+
+PRECEDES_STDOFF = ^(Zone[$s]+[^$s]+)?[$s]+
+STDOFF = [-+]?[0-9:.]+
+RULELESS_SAVE = (-|$(STDOFF)[sd]?)
+RULELESS_SLASHED_ABBRS = \
+  $(PRECEDES_STDOFF)$(STDOFF)[$s]+$(RULELESS_SAVE)[$s]+[^$s]*/
+
+check_slashed_abbrs: $(TDATA_TO_CHECK)
+		! grep -En '$(RULELESS_SLASHED_ABBRS)' $(TDATA_TO_CHECK)
 		touch $@
 
 CHECK_CC_LIST = { n = split($$1,a,/,/); for (i=2; i<=n; i++) print a[1], a[i]; }

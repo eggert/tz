@@ -17,7 +17,7 @@ td.footnote {text-align: left;}
 <h2>How to Read the <a href="https://en.wikipedia.org/wiki/Tz_database">tz
 Database</a> Source Files</h2>
 <h3>by Bill Seymour</h3>
-<p>This page uses the <code>America/Chicago</code> and
+<p>This guide uses the <code>America/Chicago</code> and
 <code>Pacific/Honolulu</code> zones as examples of how to infer
 times of day from the <a href="tz-link.html">tz database</a>
 source files. It might be helpful, but not absolutely necessary,
@@ -25,7 +25,10 @@ for the reader to have already downloaded the
 latest release of the database and become familiar with the basic layout
 of the data files. The format is explained in the &ldquo;man
 page&rdquo; for the zic compiler, <code>zic.8.txt</code>, in
-the <code>code</code> subdirectory.</p>
+the <code>code</code> subdirectory.
+Although this guide covers many of the common cases, it is not a
+complete summary of what zic accepts; the man page is the
+authoritative reference.
 
 <p>We&rsquo;ll begin by talking about the rules for changing between standard
 and daylight saving time since we&rsquo;ll need that information when we talk
@@ -111,7 +114,8 @@ representable year.
 <p>The next column, <code>-</code>, is reserved; for compatibility with earlier
 releases, it always contains a hyphen, which acts as a kind of null value.
 Prior to the 2020b release, it was called the <code>TYPE</code> field, though
-it was never used in the main data.  An obsolescent supplementary file used the
+it had not been used in the main data since the 2000e release.
+An obsolescent supplementary file used the
 field as a proof-of-concept to allow <code>zic</code> to apply a given Rule
 line only to certain &ldquo;types&rdquo; of years within the specified range as
 dictated by the output of a separate script, such as: only years which would
@@ -490,21 +494,26 @@ offset, so the local (wall clock) time during this period was GMT &minus;
 10:30 + 1:00 = GMT &minus; 9:30.</p>
 
 <p>The <code>FORMAT</code> column specifies the usual abbreviation of
-the time zone name. It can have one of three forms:</p>
+the time zone name. It should have one of four forms:</p>
 <ul>
 
-<li>a string of three or more characters that are either ASCII alphanumerics,
-&ldquo;<code>+</code>&rdquo;, or &ldquo;<code>-</code>&rdquo;,
-in which case that&rsquo;s the abbreviation</li>
+<li>a time zone abbreviation that is a string of three or more
+characters that are either ASCII alphanumerics,
+&ldquo;<code>+</code>&rdquo;, or &ldquo;<code>-</code>&rdquo;</li>
 
-<li>a pair of strings separated by a slash
+<li>the string &ldquo;%z&rdquo;, in which case the
+&ldquo;<code>%z</code>&rdquo; will be replaced by a numeric time zone
+abbreviation</li>
+
+<li>a pair of time zone abbreviations separated by a slash
 (&lsquo;<code>/</code>&rsquo;), in which case the first string is the
 abbreviation for the standard time name and the second string is the
 abbreviation for the daylight saving time name</li>
 
-<li>a string containing &ldquo;<code>%s</code>,&rdquo; in which case
+<li>a string containing &ldquo;<code>%s</code>&rdquo;, in which case
 the &ldquo;<code>%s</code>&rdquo; will be replaced by the text in the
-appropriate Rule&rsquo;s <code>LETTER</code> column</li>
+appropriate Rule&rsquo;s <code>LETTER</code> column, and the resulting
+string should be a time zone abbreviation</li>
 </ul>
 
 <p>The last two make sense only if there&rsquo;s a named rule in effect.</p>

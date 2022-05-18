@@ -104,23 +104,13 @@ DATAFORM != "main" {
   }
   if (!vanguard && $1 == "Rule" && $2 == "Morocco" && 2019 <= $3) {
     if ($9 == "0") {
-      # Add a day, to insert an extra transition to work around a bug
-      # in Android's DST offset finding logic circa 2022.  See:
-      # https://mm.icann.org/pipermail/tz/2022-March/031352.html
-      # This does not affect the UTC offset, only the DST flag for that day.
-      last_std_date = $3 " " $6 " " ($7 + 1) "  " $8
       sub(/\t0\t/, "\t1:00\t")
     } else {
       sub(/\t-1:00\t/, "\t0\t")
     }
   }
   if (!vanguard && $1 == "1:00" && $2 == "Morocco" && $3 == "+01/+00") {
-    # This introduces a transition from 01:59:59 +00 to 03:00:00 +01
-    # with both times being standard (i.e., a change to standard UT offset).
-    # This is rearguard's way to approximate the actual prediction,
-    # which is that of an ordinary transition from DST to standard time.
-    sub(/1:00\tMorocco\t\+01\/\+00$/,
-	"0:00\tMorocco\t+00/+01\t" last_std_date "\n\t\t\t 1:00\t-\t+01")
+    sub(/1:00\tMorocco\t\+01\/\+00$/, "0:00\tMorocco\t+00/+01")
   }
 }
 

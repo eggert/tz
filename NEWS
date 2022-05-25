@@ -19,8 +19,11 @@ Unreleased, experimental changes
 
   Changes to zone name
 
-    Rename Europe/Kiev to Europe/Kyiv, as the latter name is
-    significantly more common in English now.
+    Rename Europe/Kiev to Europe/Kyiv, as "Kyiv" is more common in
+    English now.  Spelling of other names in Ukraine has not yet
+    demonstrably changed in common English practice so for now these
+    names retain old spellings, as in other countries (e.g.,
+    Europe/Prague not "Praha", and Europe/Sofia not "Sofiya").
 
   Changes to code
 

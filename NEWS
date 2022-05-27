@@ -30,6 +30,10 @@ Unreleased, experimental changes
     zic now checks its input for NUL bytes and unterminated lines, and
     now supports input line lengths up to 2048 (not 512) bytes.
 
+    When tzset and related functions set vestigial static variables
+    like tzname, they now prefer specified timestamps to unspecified ones.
+    (Problem reported by Almaz Mingaleev.)
+
 
 Release 2022a - 2022-03-15 23:02:01 -0700
 

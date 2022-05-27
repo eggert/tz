@@ -292,42 +292,58 @@ update_tzname_etc(struct state const *sp, struct ttinfo const *ttisp)
 #endif
 }
 
+/* If STDDST_MASK indicates that SP's TYPE provides useful info,
+   update tzname, timezone, and/or altzone and return STDDST_MASK,
+   diminished by the provided info if it is a specified local time.
+   Otherwise, return STDDST_MASK.  See settzname for STDDST_MASK.  */
+static int
+may_update_tzname_etc(int stddst_mask, struct state *sp, int type)
+{
+  struct ttinfo *ttisp = &sp->ttis[type];
+  int this_bit = 1 << ttisp->tt_isdst;
+  if (stddst_mask & this_bit) {
+    update_tzname_etc(sp, ttisp);
+    if (!ttunspecified(sp, type))
+      return stddst_mask & ~this_bit;
+  }
+  return stddst_mask;
+}
+
 static void
 settzname(void)
 {
 	register struct state * const	sp = lclptr;
 	register int			i;
 
+	/* If STDDST_MASK & 1 we need info about a standard time.
+	   If STDDST_MASK & 2 we need info about a daylight saving time.
+	   When STDDST_MASK becomes zero we can stop looking.  */
+	int stddst_mask = 0;
+
 #if HAVE_TZNAME
 	tzname[0] = tzname[1] = (char *) (sp ? wildabbr : gmt);
+	stddst_mask = 3;
 #endif
 #if USG_COMPAT
-	daylight = 0;
 	timezone = 0;
+	stddst_mask = 3;
 #endif
 #if ALTZONE
 	altzone = 0;
+	stddst_mask |= 2;
 #endif
-	if (sp == NULL) {
-		return;
-	}
 	/*
 	** And to get the latest time zone abbreviations into tzname. . .
 	*/
-	for (i = 0; i < sp->typecnt; ++i) {
-		register const struct ttinfo * const	ttisp = &sp->ttis[i];
-		update_tzname_etc(sp, ttisp);
+	if (sp) {
+	  for (i = sp->timecnt - 1; stddst_mask && 0 <= i; i--)
+	    stddst_mask = may_update_tzname_etc(stddst_mask, sp, sp->types[i]);
+	  for (i = sp->typecnt - 1; stddst_mask && 0 <= i; i--)
+	    stddst_mask = may_update_tzname_etc(stddst_mask, sp, i);
 	}
-	for (i = 0; i < sp->timecnt; ++i) {
-		register const struct ttinfo * const	ttisp =
-							&sp->ttis[
-								sp->types[i]];
-		update_tzname_etc(sp, ttisp);
 #if USG_COMPAT
-		if (ttisp->tt_isdst)
-			daylight = 1;
+	daylight = stddst_mask >> 1 ^ 1;
 #endif
-	}
 }
 
 static void

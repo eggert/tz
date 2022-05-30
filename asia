@@ -1402,6 +1402,30 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 
 # Iran
 
+# From Roozbeh Pournader (2022-05-30):
+# Here's an order from the Cabinet to the rest of the government to switch to
+# Tehran time, which is mentioned to be already at +03:30:
+# https://qavanin.ir/Law/TreeText/180138
+# Just in case that goes away, I also saved a copy at archive.org:
+# https://web.archive.org/web/20220530111940/https://qavanin.ir/Law/TreeText/180138
+# Here's my translation:
+#
+# "Circular on Matching the Hours of Governmental and Official Circles
+# in Provinces
+# Approved 1314/03/22 [=1935-06-13]
+# According to the ruling of the Honorable Cabinet, it is ordered that from
+# now on in all internal provinces of the country, governmental and official
+# circles set their time to match Tehran time (three hours and half before
+# Greenwich)....
+#
+# I still haven't found out when Tehran itself switched to +03:30 (let's
+# assume some time earlier in 1935), but it is clear that standard time in
+# Iran started on 1935-06-13 and not 1946.
+#
+# From Paul Eggert (2022-05-30):
+# For now use the same date for Tehran as for elsewhere in Iran.
+# This is most likely wrong, but we have no better info.
+
 # From Roozbeh Pournader (2003-03-15):
 # This is an English translation of what I just found (originally in Persian).
 # The Gregorian dates in brackets are mine:
@@ -1516,7 +1540,7 @@ Rule	Iran	2021	2022	-	Sep	21	24:00	0	-
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Tehran	3:25:44	-	LMT	1916
-			3:25:44	-	TMT	1946     # Tehran Mean Time
+			3:25:44	-	TMT	1935 Jun 13 # Tehran Mean Time
 			3:30	-	+0330	1977 Nov
 			4:00	Iran	+04/+05	1979
 			3:30	Iran	+0330/+0430

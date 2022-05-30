@@ -17,6 +17,9 @@ Unreleased, experimental changes
     DST transitions were at 02:00 standard time, not at 00:00.
     (Thanks to Michael Deckers.)
 
+    Iran adopted standard time in 1935, not 1946.
+    (Thanks to Roozbeh Pournader.)
+
   Changes to zone name
 
     Rename Europe/Kiev to Europe/Kyiv, as "Kyiv" is more common in

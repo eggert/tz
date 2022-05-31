@@ -1426,6 +1426,38 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # For now use the same date for Tehran as for elsewhere in Iran.
 # This is most likely wrong, but we have no better info.
 
+# From Roozbeh Pournader (2022-05-31):
+# [Movahedi S. Cultural preconceptions of time: Can we use operational time
+# to meddle in God's Time? Comp Stud Soc Hist. 1985;27(3):385-400]
+# https://www.jstor.org/stable/178704
+# Here's the quotes from the paper:
+# 1. '"Iran's official time keeper moved the clock one hour forward as from
+# March 22, 1977 (Farvardin 2, 2536) to make maximum use of daylight and save
+# in energy consumption. Thus Iran joined such other countries as Britain in
+# observing what is known as 'daylight saving.' The proposal was originally
+# put forward by the Ministry of Energy, in no way having any influence on
+# observing religious ceremonies. Moving time one hour forward in summer
+# means that at 11:00 o'clock on March 21, the official time was set as
+# midnight March 22. Then September 24 will actually begin one hour later
+# than the end of September 23 [...]." Iran's time base thus continued to be
+# Greenwich Mean Time plus three and one-half hours (plus four and one-half
+# hours in summer).'
+#
+# The article sources this from Iran Almanac and Book of Facts, 1977, Tehran:
+# Echo of Iran, which is on Google Books at
+# https://www.google.com/books/edition/Iran_Almanac_and_Book_of_Facts/9ybVAAAAMAAJ.
+# (I confirmed it by searching for snippets.)
+#
+# 2. "After the fall of the shah, the revolutionary government returned to
+# daylight-saving time (DST) on 26 May 1979."
+#
+# This seems to have been announced just one day in advance, on 25 May 1979.
+#
+# The change in 1977 clearly seems to be the first daylight savings effort in
+# Iran. But the article doesn't mention what happened in 1978 (which was
+# still during the shah's government), or how things continued in 1979
+# onwards (which was during the Islamic Republic).
+
 # From Roozbeh Pournader (2003-03-15):
 # This is an English translation of what I just found (originally in Persian).
 # The Gregorian dates in brackets are mine:
@@ -1460,8 +1492,9 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # leap year calculation involved.  There has never been any serious
 # plan to change that law....
 #
-# From Paul Eggert (2018-11-30):
-# Go with Shanks & Pottenger before Sept. 1991, and with Pournader thereafter.
+# From Paul Eggert (2022-05-31):
+# Go with Pournader for 1935 through 1977, for spring 1979, and for timestamps
+# after August 1991; go with with Shanks & Pottenger for other timestamps.
 #
 # From Oscar van Vlijmen (2005-03-30), writing about future
 # discrepancies between cal-persia and the Iranian calendar:
@@ -1502,9 +1535,13 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # (i.e 2023-March-21) and forthcoming years.
 #
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
-Rule	Iran	1978	1980	-	Mar	20	24:00	1:00	-
+Rule	Iran	1977	only	-	Mar	21	23:00	1:00	-
+Rule	Iran	1977	only	-	Sep	23	24:00	0	-
+Rule	Iran	1978	only	-	Mar	20	24:00	1:00	-
 Rule	Iran	1978	only	-	Oct	20	24:00	0	-
+Rule	Iran	1979	only	-	May	26	24:00	1:00	-
 Rule	Iran	1979	only	-	Sep	18	24:00	0	-
+Rule	Iran	1980	only	-	Mar	20	24:00	1:00	-
 Rule	Iran	1980	only	-	Sep	22	24:00	0	-
 Rule	Iran	1991	only	-	May	 2	24:00	1:00	-
 Rule	Iran	1992	1995	-	Mar	21	24:00	1:00	-
@@ -1541,7 +1578,7 @@ Rule	Iran	2021	2022	-	Sep	21	24:00	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Tehran	3:25:44	-	LMT	1916
 			3:25:44	-	TMT	1935 Jun 13 # Tehran Mean Time
-			3:30	-	+0330	1977 Nov
+			3:30	Iran	+0330/+0430 1977 Nov
 			4:00	Iran	+04/+05	1979
 			3:30	Iran	+0330/+0430
 

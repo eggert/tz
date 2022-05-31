@@ -17,7 +17,9 @@ Unreleased, experimental changes
     DST transitions were at 02:00 standard time, not at 00:00.
     (Thanks to Michael Deckers.)
 
-    Iran adopted standard time in 1935, not 1946.
+    Iran adopted standard time in 1935, not 1946.  It observed DST
+    from 1977-03-21 23:00 to 1977-09-23 24:00, and its spring 1979
+    transition was on 05-27, not 03-21.
     (Thanks to Roozbeh Pournader.)
 
   Changes to zone name

@@ -2768,18 +2768,10 @@ stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 static void
 outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 {
-	register const struct zone *	zp;
-	register struct rule *		rp;
 	register ptrdiff_t		i, j;
-	register bool			usestart, useuntil;
 	register zic_t			starttime, untiltime;
-	register zic_t			stdoff;
-	register zic_t			save;
-	register zic_t			year;
-	register zic_t			startoff;
 	register bool			startttisstd;
 	register bool			startttisut;
-	register int			type;
 	register char *			startbuf;
 	register char *			ab;
 	register char *			envvar;
@@ -2790,8 +2782,6 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 	register bool			do_extend;
 	register char			version;
 	ptrdiff_t lastatmax = -1;
-	zic_t one = 1;
-	zic_t y2038_boundary = one << 31;
 	zic_t max_year0;
 	int defaulttype = -1;
 
@@ -2823,11 +2813,11 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 		updateminmax(leapmaxyear + (leapmaxyear < ZIC_MAX));
 	}
 	for (i = 0; i < zonecount; ++i) {
-		zp = &zpfirst[i];
+		struct zone const *zp = &zpfirst[i];
 		if (i < zonecount - 1)
 			updateminmax(zp->z_untilrule.r_loyear);
 		for (j = 0; j < zp->z_nrules; ++j) {
-			rp = &zp->z_rules[j];
+			struct rule *rp = &zp->z_rules[j];
 			if (rp->r_lowasnum)
 				updateminmax(rp->r_loyear);
 			if (rp->r_hiwasnum)
@@ -2904,22 +2894,23 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 
 	for (i = 0; i < zonecount; ++i) {
 		struct rule *prevrp = NULL;
-		zic_t prevktime;
-		INITIALIZE(prevktime);
 		/*
 		** A guess that may well be corrected later.
 		*/
-		save = 0;
-		zp = &zpfirst[i];
-		usestart = i > 0 && (zp - 1)->z_untiltime > min_time;
-		useuntil = i < (zonecount - 1);
+		zic_t save = 0;
+		struct zone const *zp = &zpfirst[i];
+		bool usestart = i > 0 && (zp - 1)->z_untiltime > min_time;
+		bool useuntil = i < (zonecount - 1);
+		zic_t stdoff = zp->z_stdoff;
+		zic_t startoff = stdoff;
+		zic_t prevktime;
+		INITIALIZE(prevktime);
 		if (useuntil && zp->z_untiltime <= min_time)
 			continue;
-		stdoff = zp->z_stdoff;
 		eat(zp->z_filename, zp->z_linenum);
 		*startbuf = '\0';
-		startoff = zp->z_stdoff;
 		if (zp->z_nrules == 0) {
+			int type;
 			save = zp->z_save;
 			doabbr(startbuf, zp, NULL, zp->z_isdst, save, false);
 			type = addtype(oadd(zp->z_stdoff, save),
@@ -2930,7 +2921,9 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				usestart = false;
 			} else
 				defaulttype = type;
-		} else for (year = min_year; year <= max_year; ++year) {
+		} else {
+		  zic_t year;
+		  for (year = min_year; year <= max_year; ++year) {
 			if (useuntil && year > zp->z_untilrule.r_hiyear)
 				break;
 			/*
@@ -2939,7 +2932,9 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 			** The former TYPE field was also considered here.
 			*/
 			for (j = 0; j < zp->z_nrules; ++j) {
-				rp = &zp->z_rules[j];
+				zic_t one = 1;
+				zic_t y2038_boundary = one << 31;
+				struct rule *rp = &zp->z_rules[j];
 				eats(zp->z_filename, zp->z_linenum,
 					rp->r_filename, rp->r_linenum);
 				rp->r_todo = year >= rp->r_loyear &&
@@ -2955,6 +2950,8 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				register ptrdiff_t k;
 				register zic_t	jtime, ktime;
 				register zic_t	offset;
+				struct rule *rp;
+				int type;
 
 				INITIALIZE(ktime);
 				if (useuntil) {
@@ -2977,15 +2974,15 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				*/
 				k = -1;
 				for (j = 0; j < zp->z_nrules; ++j) {
-					rp = &zp->z_rules[j];
-					if (!rp->r_todo)
+					struct rule *r = &zp->z_rules[j];
+					if (!r->r_todo)
 						continue;
 					eats(zp->z_filename, zp->z_linenum,
-						rp->r_filename, rp->r_linenum);
-					offset = rp->r_todisut ? 0 : stdoff;
-					if (!rp->r_todisstd)
+						r->r_filename, r->r_linenum);
+					offset = r->r_todisut ? 0 : stdoff;
+					if (!r->r_todisstd)
 						offset = oadd(offset, save);
-					jtime = rp->r_temp;
+					jtime = r->r_temp;
 					if (jtime == min_time ||
 						jtime == max_time)
 							continue;
@@ -2997,11 +2994,11 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 					  char const *dup_rules_msg =
 					    _("two rules for same instant");
 					  eats(zp->z_filename, zp->z_linenum,
-					       rp->r_filename, rp->r_linenum);
+					       r->r_filename, r->r_linenum);
 					  warning("%s", dup_rules_msg);
-					  rp = &zp->z_rules[k];
+					  r = &zp->z_rules[k];
 					  eats(zp->z_filename, zp->z_linenum,
-					       rp->r_filename, rp->r_linenum);
+					       r->r_filename, r->r_linenum);
 					  error("%s", dup_rules_msg);
 					}
 				}
@@ -3058,6 +3055,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				prevrp = rp;
 				prevktime = ktime;
 			}
+		  }
 		}
 		if (usestart) {
 			if (*startbuf == '\0' &&
@@ -3070,8 +3068,8 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 error(_("can't determine time zone abbreviation to use just after until time"));
 			else {
 			  bool isdst = startoff != zp->z_stdoff;
-			  type = addtype(startoff, startbuf, isdst,
-					 startttisstd, startttisut);
+			  int type = addtype(startoff, startbuf, isdst,
+					     startttisstd, startttisut);
 			  if (defaulttype < 0 && !isdst)
 			    defaulttype = type;
 			  addtt(starttime, type);

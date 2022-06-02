@@ -2482,6 +2482,8 @@ abbroffset(char *buf, zic_t offset)
   }
 }
 
+static char const disable_percent_s[] = "";
+
 static size_t
 doabbr(char *abbr, struct zone const *zp, char const *letters,
        bool isdst, zic_t save, bool doquotes)
@@ -2498,6 +2500,8 @@ doabbr(char *abbr, struct zone const *zp, char const *letters,
 	    letters = abbroffset(letterbuf, zp->z_stdoff + save);
 	  else if (!letters)
 	    letters = "%s";
+	  else if (letters == disable_percent_s)
+	    return 0;
 	  sprintf(abbr, format, letters);
 	} else if (isdst) {
 		strcpy(abbr, slashp + 1);
@@ -3006,8 +3010,15 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 					break;	/* go on to next year */
 				rp = &zp->z_rules[k];
 				rp->r_todo = false;
-				if (useuntil && ktime >= untiltime)
+				if (useuntil && ktime >= untiltime) {
+					if (!*startbuf
+					    && (oadd(zp->z_stdoff, rp->r_save)
+						== startoff))
+					  doabbr(startbuf, zp, rp->r_abbrvar,
+						 rp->r_isdst, rp->r_save,
+						 false);
 					break;
+				}
 				save = rp->r_save;
 				if (usestart && ktime == starttime)
 					usestart = false;
@@ -3058,16 +3069,14 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 		  }
 		}
 		if (usestart) {
-			if (*startbuf == '\0' &&
-				zp->z_format != NULL &&
-				strchr(zp->z_format, '%') == NULL &&
-				strchr(zp->z_format, '/') == NULL)
-					strcpy(startbuf, zp->z_format);
+			bool isdst = startoff != zp->z_stdoff;
+			if (*startbuf == '\0' && zp->z_format)
+			  doabbr(startbuf, zp, disable_percent_s,
+				 isdst, save, false);
 			eat(zp->z_filename, zp->z_linenum);
 			if (*startbuf == '\0')
 error(_("can't determine time zone abbreviation to use just after until time"));
 			else {
-			  bool isdst = startoff != zp->z_stdoff;
 			  int type = addtype(startoff, startbuf, isdst,
 					     startttisstd, startttisut);
 			  if (defaulttype < 0 && !isdst)

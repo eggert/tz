@@ -39,6 +39,10 @@ Unreleased, experimental changes
     like tzname, they now prefer specified timestamps to unspecified ones.
     (Problem reported by Almaz Mingaleev.)
 
+    zic no longer complains "can't determine time zone abbreviation to
+    use just after until time" when a transition to a new standard
+    time occurs simultanously with the first DST fallback transition.
+
 
 Release 2022a - 2022-03-15 23:02:01 -0700
 

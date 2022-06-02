@@ -1426,6 +1426,51 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # For now use the same date for Tehran as for elsewhere in Iran.
 # This is most likely wrong, but we have no better info.
 
+# From Roozbeh Pournader (2022-06-01):
+# This is from Kayhan newspaper, one of the major Iranian newspapers, from
+# March 20, 1978, page 2:
+#
+# "Pull the clocks 60 minutes forward
+# As we informed before, from the fourth day of the month Farvardin of the
+# new year [=1978-03-24], clocks will be pulled forward, and people's daily
+# work and life program will start one hour earlier than the current program.
+# On the 1st day of the month Farvardin of this year [=1977-03-21], they had
+# pulled the clocks forward by one hour, but in the month of Mehr
+# [=1977-09-23], the clocks were pulled back by 30 minutes.
+# In this way, from the 4th day of the month Farvardin, clocks will be ahead
+# of the previous years by one hour and a half.
+# According to the new program, during the night of 4th of Farvardin, when
+# the midnight, meaning 24 o'clock is announced, the hands of the clock must
+# be pulled forward by one hour and thus consider midnight 1 o'clock in the
+# forenoon."
+#
+# This implies that in September 1977, when the daylight savings time was
+# done with, Iran didn't go back to +03:30, but immediately to +04:00.
+#
+#
+# This is from the major Iranian newspaper Ettela'at, dated 1968-08-03,
+# page 32. It looks like they decided to get the clocks back to +4:00
+# just in time for Ramadan that year:
+#
+# "Tomorrow Night, Pull the Clocks Back by One Hour
+# At 1 o'clock in the forenoon of Saturday 14 Mordad [=1978-08-05], the
+# clocks will be pulled one hour back and instead of 1 o'clock in the
+# forenoon, Radio Iran will announce 24 o'clock.
+# This decision was made in the Cabinet of Ministers meeting of 25 Tir
+# [=1978-07-16], [...]
+# At the beginning of the year 2537 [=March 1978: Iran was using a different
+# year number for a few years then, based on the Coronation of Cyrus the
+# Great], the country's official time was pulled forward by one hour and now
+# the official time is one hour and a half ahead compared to last year,
+# because in Farvardin of last year [=March 1977], the official time was
+# pulled forward one hour and this continued until the second half of last
+# year [=September 1977] until in the second half of last year the official
+# time was pulled back half an hour and that half hour still remains."
+#
+# This matches the time of the true noon published in the newspapers, as they
+# clearly go from +05:00 to +04:00 after that date (which happened during a
+# long weekend in Iran).
+
 # From Roozbeh Pournader (2022-05-31):
 # [Movahedi S. Cultural preconceptions of time: Can we use operational time
 # to meddle in God's Time? Comp Stud Soc Hist. 1985;27(3):385-400]
@@ -1492,8 +1537,8 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # leap year calculation involved.  There has never been any serious
 # plan to change that law....
 #
-# From Paul Eggert (2022-05-31):
-# Go with Pournader for 1935 through 1977, for spring 1979, and for timestamps
+# From Paul Eggert (2022-06-01):
+# Go with Pournader for 1935 through spring 1979, and for timestamps
 # after August 1991; go with with Shanks & Pottenger for other timestamps.
 #
 # From Oscar van Vlijmen (2005-03-30), writing about future
@@ -1535,10 +1580,13 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # (i.e 2023-March-21) and forthcoming years.
 #
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
+# Work around a bug in zic 2022a and earlier.
+Rule	Iran	1910	only	-	Jan	 1	00:00	0	-
+#
 Rule	Iran	1977	only	-	Mar	21	23:00	1:00	-
 Rule	Iran	1977	only	-	Sep	23	24:00	0	-
-Rule	Iran	1978	only	-	Mar	20	24:00	1:00	-
-Rule	Iran	1978	only	-	Oct	20	24:00	0	-
+Rule	Iran	1978	only	-	Mar	24	24:00	1:00	-
+Rule	Iran	1978	only	-	Aug	 5	01:00	0	-
 Rule	Iran	1979	only	-	May	26	24:00	1:00	-
 Rule	Iran	1979	only	-	Sep	18	24:00	0	-
 Rule	Iran	1980	only	-	Mar	20	24:00	1:00	-
@@ -1578,7 +1626,7 @@ Rule	Iran	2021	2022	-	Sep	21	24:00	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Tehran	3:25:44	-	LMT	1916
 			3:25:44	-	TMT	1935 Jun 13 # Tehran Mean Time
-			3:30	Iran	+0330/+0430 1977 Nov
+			3:30	Iran	+0330/+0430 1977 Sep 23 24:00
 			4:00	Iran	+04/+05	1979
 			3:30	Iran	+0330/+0430
 

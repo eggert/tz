@@ -1418,13 +1418,12 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # circles set their time to match Tehran time (three hours and half before
 # Greenwich)....
 #
-# I still haven't found out when Tehran itself switched to +03:30 (let's
-# assume some time earlier in 1935), but it is clear that standard time in
-# Iran started on 1935-06-13 and not 1946.
+# I still haven't found out when Tehran itself switched to +03:30....
 #
-# From Paul Eggert (2022-05-30):
-# For now use the same date for Tehran as for elsewhere in Iran.
-# This is most likely wrong, but we have no better info.
+# From Paul Eggert (2022-06-05):
+# Although the above says Tehran was at +03:30 before 1935-06-13, we don't
+# know when it switched to +03:30.  For now, use 1935-06-13 as the switch date.
+# Although most likely wrong, we have no better info.
 
 # From Roozbeh Pournader (2022-06-01):
 # This is from Kayhan newspaper, one of the major Iranian newspapers, from
@@ -1448,7 +1447,7 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # done with, Iran didn't go back to +03:30, but immediately to +04:00.
 #
 #
-# This is from the major Iranian newspaper Ettela'at, dated 1968-08-03,
+# This is from the major Iranian newspaper Ettela'at, dated [1978-08-03]...,
 # page 32. It looks like they decided to get the clocks back to +4:00
 # just in time for Ramadan that year:
 #

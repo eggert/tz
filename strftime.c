@@ -126,13 +126,6 @@ strftime_l(char *s, size_t maxsize, char const *format, struct tm const *t,
 }
 #endif
 
-/* Return -1, 0, 1 if n is negative, zero, positive.  */
-static int
-signum(int n)
-{
-  return (n > 0) - (n < 0);
-}
-
 size_t
 strftime(char *s, size_t maxsize, const char *format, const struct tm *t)
 {
@@ -327,35 +320,11 @@ label:
 					time_t		mkt;
 
 					tm = *t;
-					tm.tm_yday = -1;
 					mkt = mktime(&tm);
-					if (mkt == (time_t) -1) {
-					  /* Fail unless the -1 almost surely
-					     represents a valid time.  Do not
-					     rely on errno, since it can change
-					     even if mktime succeeds.  A
-					     non-TZDB failing mktime might
-					     set TM to junk values, so reject
-					     mktime's result unless it matches
-					     localtime_r so closely that it's
-					     unlikely to be junk.  */
-					  struct tm tm_1;
-					  if (!localtime_r(&mkt, &tm_1))
-					    return NULL;
-					  if (!(tm.tm_year == tm_1.tm_year
-						&& tm.tm_yday == tm_1.tm_yday
-						&& tm.tm_mon == tm_1.tm_mon
-						&& tm.tm_mday == tm_1.tm_mday
-						&& tm.tm_wday == tm_1.tm_wday
-						&& tm.tm_hour == tm_1.tm_hour
-						&& tm.tm_min == tm_1.tm_min
-						&& tm.tm_sec == tm_1.tm_sec
-						&& (signum(tm.tm_isdst)
-						    == signum(tm_1.tm_isdst))))
-					    return NULL;
-					  /* Guarantee that tm is not junk.  */
-					  tm = tm_1;
-					}
+					/* There is no portable, definitive
+					   test for whether whether mktime
+					   succeeded, so treat (time_t) -1 as
+					   the success that it might be.  */
 					if (TYPE_SIGNED(time_t)) {
 					  intmax_t n = mkt;
 					  sprintf(buf, "%"PRIdMAX, n);

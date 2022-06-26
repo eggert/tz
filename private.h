@@ -632,6 +632,11 @@ time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_PURE;
 #define TYPE_SIGNED(type) (((type) -1) < 0)
 #define TWOS_COMPLEMENT(t) ((t) ~ (t) 0 < 0)
 
+/* Minimum and maximum of two values.  Use lower case to avoid
+   naming clashes with standard include files.  */
+#define max(a, b) ((a) > (b) ? (a) : (b))
+#define min(a, b) ((a) < (b) ? (a) : (b))
+
 /* Max and min values of the integer type T, of which only the bottom
    B bits are used, and where the highest-order used bit is considered
    to be a sign bit if T is signed.  */

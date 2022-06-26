@@ -102,9 +102,6 @@ struct lsinfo {				/* leap second information */
 	int_fast32_t	ls_corr;	/* correction to apply */
 };
 
-#define SMALLEST(a, b)	(((a) < (b)) ? (a) : (b))
-#define BIGGEST(a, b)	(((a) > (b)) ? (a) : (b))
-
 /* This abbreviation means local time is unspecified.  */
 static char const UNSPEC[] = "-00";
 
@@ -112,7 +109,7 @@ static char const UNSPEC[] = "-00";
    This needs to be at least 1 for null termination in case the input
    data isn't properly terminated, and it also needs to be big enough
    for ttunspecified to work without crashing.  */
-enum { CHARS_EXTRA = BIGGEST(sizeof UNSPEC, 2) - 1 };
+enum { CHARS_EXTRA = max(sizeof UNSPEC, 2) - 1 };
 
 #ifdef TZNAME_MAX
 #define MY_TZNAME_MAX	TZNAME_MAX
@@ -131,9 +128,8 @@ struct state {
 	time_t		ats[TZ_MAX_TIMES];
 	unsigned char	types[TZ_MAX_TIMES];
 	struct ttinfo	ttis[TZ_MAX_TYPES];
-	char		chars[BIGGEST(BIGGEST(TZ_MAX_CHARS + CHARS_EXTRA,
-					      sizeof gmt),
-				(2 * (MY_TZNAME_MAX + 1)))];
+	char chars[max(max(TZ_MAX_CHARS + CHARS_EXTRA, sizeof gmt),
+		       2 * (MY_TZNAME_MAX + 1))];
 	struct lsinfo	lsis[TZ_MAX_LEAPS];
 
 	/* The time type to use for early times or if no transitions.
@@ -394,8 +390,7 @@ union local_storage {
   } u;
 
   /* The file name to be opened.  */
-  char fullname[BIGGEST(sizeof(struct file_analysis),
-			sizeof tzdirslash + 1024)];
+  char fullname[max(sizeof(struct file_analysis), sizeof tzdirslash + 1024)];
 };
 
 /* Load tz data from the file named NAME into *SP.  Read extended
@@ -2086,10 +2081,10 @@ time2sub(struct tm *const tmp,
 		    && (yourtm.TM_GMTOFF < 0
 			? (-SECSPERDAY <= yourtm.TM_GMTOFF
 			   && (mytm.TM_GMTOFF <=
-			       (SMALLEST(INT_FAST32_MAX, LONG_MAX)
+			       (min(INT_FAST32_MAX, LONG_MAX)
 				+ yourtm.TM_GMTOFF)))
 			: (yourtm.TM_GMTOFF <= SECSPERDAY
-			   && ((BIGGEST(INT_FAST32_MIN, LONG_MIN)
+			   && ((max(INT_FAST32_MIN, LONG_MIN)
 				+ yourtm.TM_GMTOFF)
 			       <= mytm.TM_GMTOFF)))) {
 		  /* MYTM matches YOURTM except with the wrong UT offset.

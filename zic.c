@@ -488,7 +488,7 @@ growalloc(void *ptr, size_t itemsize, ptrdiff_t nitems, ptrdiff_t *nitems_alloc)
 		return ptr;
 	else {
 		ptrdiff_t nitems_max = PTRDIFF_MAX - WORK_AROUND_QTBUG_53071;
-		ptrdiff_t amax = nitems_max < SIZE_MAX ? nitems_max : SIZE_MAX;
+		ptrdiff_t amax = min(nitems_max, SIZE_MAX);
 		if ((amax - 1) / 3 * 2 < *nitems_alloc)
 			memory_exhausted(_("integer overflow"));
 		*nitems_alloc += (*nitems_alloc >> 1) + 1;
@@ -707,8 +707,8 @@ timerange_option(char *timerange)
   }
   if (*hi_end || hi < lo || max_time < lo || hi < min_time)
     return false;
-  lo_time = lo < min_time ? min_time : lo;
-  hi_time = max_time < hi ? max_time : hi;
+  lo_time = max(lo, min_time);
+  hi_time = min(hi, max_time);
   return true;
 }
 

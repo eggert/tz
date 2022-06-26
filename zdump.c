@@ -548,7 +548,7 @@ main(int argc, char *argv[])
 	for (i = optind; i < argc; i++) {
 	  size_t arglen = strlen(argv[i]);
 	  if (longest < arglen)
-	    longest = arglen < INT_MAX ? arglen : INT_MAX;
+	    longest = min(arglen, INT_MAX);
 	}
 
 	for (i = optind; i < argc; ++i) {

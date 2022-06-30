@@ -136,8 +136,7 @@ are possibly-signed decimal counts of seconds since the Epoch
 Omitted counts default to extreme values.
 The output files use UT offset 0 and abbreviation
 .q "\*-00"
-in place of the omitted timestamp data;
-this typically reduces the files' sizes.
+in place of the omitted timestamp data.
 For example,
 .q "zic \*-r @0"
 omits data intended for negative timestamps (i.e., before the Epoch), and
@@ -148,6 +147,14 @@ On platforms with GNU
 .BR date ,
 .q "zic \-r @$(date +%s)"
 omits data intended for past timestamps.
+Although this option typically reduces the output file's size,
+the size can increase due to the need to represent the timestamp range
+boundaries, particularly if
+.I hi
+causes a TZif file to contain explicit entries for
+.RI pre- hi
+transitions rather than concisely representing them
+with an extended POSIX TZ string.
 Also see the
 .B "\*-b slim"
 option for another way to shrink output size.

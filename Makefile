@@ -264,7 +264,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
   $(GCC_INSTRUMENT) \
   -Wall -Wextra \
   -Walloc-size-larger-than=100000 -Warray-bounds=2 \
-  -Wbad-function-cast -Wcast-align=strict -Wdate-time \
+  -Wbad-function-cast -Wbidi-chars=any,ucn -Wcast-align=strict -Wdate-time \
   -Wdeclaration-after-statement -Wdouble-promotion \
   -Wduplicated-branches -Wduplicated-cond \
   -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation \
@@ -278,7 +278,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
   -Wsuggest-attribute=const -Wsuggest-attribute=format \
   -Wsuggest-attribute=malloc \
   -Wsuggest-attribute=noreturn -Wsuggest-attribute=pure \
-  -Wtrampolines -Wundef -Wuninitialized -Wunused-macros \
+  -Wtrampolines -Wundef -Wuninitialized -Wunused-macros -Wuse-after-free=3 \
   -Wvariadic-macros -Wvla -Wwrite-strings \
   -Wno-address -Wno-format-nonliteral -Wno-sign-compare \
   -Wno-type-limits -Wno-unused-parameter

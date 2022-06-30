@@ -1989,11 +1989,11 @@ struct timerange {
   int defaulttype;
   ptrdiff_t base, count;
   int leapbase, leapcount;
-  bool pretrans, leapexpiry;
+  bool leapexpiry;
 };
 
 static struct timerange
-limitrange(struct timerange r, bool locut, zic_t lo, zic_t hi,
+limitrange(struct timerange r, zic_t lo, zic_t hi,
 	   zic_t const *ats, unsigned char const *types)
 {
   /* Omit ordinary transitions < LO.  */
@@ -2002,10 +2002,6 @@ limitrange(struct timerange r, bool locut, zic_t lo, zic_t hi,
     r.count--;
     r.base++;
   }
-
-  /* "-00" before any -r low cutoff.  */
-  if (min_time < lo_time)
-    r.defaulttype = unspecifiedtype;
 
   /* Omit as many initial leap seconds as possible, such that the
      first leap second in the truncated list is <= LO, and is a
@@ -2032,14 +2028,6 @@ limitrange(struct timerange r, bool locut, zic_t lo, zic_t hi,
       r.leapcount--;
   }
 
-  /* Determine whether to keep the last too-low transition if no
-     transition is exactly at LO.  The kept transition will be output
-     as a LO "transition"; see "Output a LO_TIME transition" below.
-     This is needed when the output is truncated at the start, and is
-     also useful when catering to buggy 32-bit clients that do not use
-     time type 0 for timestamps before the first transition.  */
-  r.pretrans = locut && r.base && ! (r.count && ats[r.base] == lo);
-
   /* Determine whether to append an expiration to the leap second table.  */
   r.leapexpiry = 0 <= leapexpires && leapexpires - 1 <= hi;
 
@@ -2065,7 +2053,7 @@ writezone(const char *const name, const char *const string, char version,
 				      _Alignof(zic_t)));
 	void *typesptr = ats + nats;
 	unsigned char *types = typesptr;
-	struct timerange rangeall, range32, range64;
+	struct timerange rangeall = {0}, range32, range64;
 
 	/*
 	** Sort.
@@ -2149,14 +2137,10 @@ writezone(const char *const name, const char *const string, char version,
 	}
 
 	rangeall.defaulttype = defaulttype;
-	rangeall.base = rangeall.leapbase = 0;
 	rangeall.count = timecnt;
 	rangeall.leapcount = leapcnt;
-	rangeall.pretrans = rangeall.leapexpiry = false;
-	range64 = limitrange(rangeall, min_time < lo_time,
-			     lo_time, hi_time, ats, types);
-	range32 = limitrange(range64, true,
-			     INT32_MIN, INT32_MAX, ats, types);
+	range64 = limitrange(rangeall, lo_time, hi_time, ats, types);
+	range32 = limitrange(range64, INT32_MIN, INT32_MAX, ats, types);
 
 	/* TZif version 4 is needed if a no-op transition is appended to
 	   indicate the expiration of the leap second table, or if the first
@@ -2190,9 +2174,9 @@ writezone(const char *const name, const char *const string, char version,
 		register ptrdiff_t thistimei, thistimecnt, thistimelim;
 		register int	thisleapi, thisleapcnt, thisleaplim;
 		struct tzhead tzh;
-		int thisdefaulttype;
-		bool hicut, pretrans, thisleapexpiry;
-		zic_t lo;
+		int pretranstype = -1, thisdefaulttype;
+		bool locut, hicut, thisleapexpiry;
+		zic_t lo, thismin, thismax;
 		int old0;
 		char		omittype[TZ_MAX_TYPES];
 		int		typemap[TZ_MAX_TYPES];
@@ -2203,28 +2187,15 @@ writezone(const char *const name, const char *const string, char version,
 		int		indmap[TZ_MAX_CHARS];
 
 		if (pass == 1) {
-			/* Arguably the default time type in the 32-bit data
-			   should be range32.defaulttype, which is suited for
-			   timestamps just before INT32_MIN.  However, zic
-			   traditionally used the time type of the indefinite
-			   past instead.  Internet RFC 8532 says readers should
-			   ignore 32-bit data, so this discrepancy matters only
-			   to obsolete readers where the traditional type might
-			   be more appropriate even if it's "wrong".  So, use
-			   the historical zic value, unless -r specifies a low
-			   cutoff that excludes some 32-bit timestamps.  */
-			thisdefaulttype = (lo_time <= INT32_MIN
-					   ? range64.defaulttype
-					   : range32.defaulttype);
-
+			thisdefaulttype = range32.defaulttype;
 			thistimei = range32.base;
 			thistimecnt = range32.count;
 			toomanytimes = thistimecnt >> 31 >> 1 != 0;
 			thisleapi = range32.leapbase;
 			thisleapcnt = range32.leapcount;
-			pretrans = range32.pretrans;
 			thisleapexpiry = range32.leapexpiry;
-			hicut = hi_time < INT32_MAX;
+			thismin = INT32_MIN;
+			thismax = INT32_MAX;
 		} else {
 			thisdefaulttype = range64.defaulttype;
 			thistimei = range64.base;
@@ -2232,17 +2203,46 @@ writezone(const char *const name, const char *const string, char version,
 			toomanytimes = thistimecnt >> 31 >> 31 >> 2 != 0;
 			thisleapi = range64.leapbase;
 			thisleapcnt = range64.leapcount;
-			pretrans = range64.pretrans;
 			thisleapexpiry = range64.leapexpiry;
-			hicut = hi_time < max_time;
+			thismin = min_time;
+			thismax = max_time;
 		}
 		if (toomanytimes)
 		  error(_("too many transition times"));
 
+		locut = thismin < lo_time && lo_time <= thismax;
+		hicut = thismin <= hi_time && hi_time < thismax;
 		thistimelim = thistimei + thistimecnt;
 		memset(omittype, true, typecnt);
+
+		/* Determine whether to output a transition before the first
+		   transition in range.  This is needed when the output is
+		   truncated at the start, and is also useful when catering to
+		   buggy 32-bit clients that do not use time type 0 for
+		   timestamps before the first transition.  */
+		if ((locut || (pass == 1 && thistimei))
+		    && ! (thistimecnt && ats[thistimei] == lo_time)) {
+		  pretranstype = thisdefaulttype;
+		  omittype[pretranstype] = false;
+		}
+
+		/* Arguably the default time type in the 32-bit data
+		   should be range32.defaulttype, which is suited for
+		   timestamps just before INT32_MIN.  However, zic
+		   traditionally used the time type of the indefinite
+		   past instead.  Internet RFC 8532 says readers should
+		   ignore 32-bit data, so this discrepancy matters only
+		   to obsolete readers where the traditional type might
+		   be more appropriate even if it's "wrong".  So, use
+		   the historical zic value, unless -r specifies a low
+		   cutoff that excludes some 32-bit timestamps.  */
+		if (pass == 1 && lo_time <= thismin)
+		  thisdefaulttype = range64.defaulttype;
+
+		if (locut)
+		  thisdefaulttype = unspecifiedtype;
 		omittype[thisdefaulttype] = false;
-		for (i = thistimei - pretrans; i < thistimelim; i++)
+		for (i = thistimei; i < thistimelim; i++)
 		  omittype[types[i]] = false;
 		if (hicut)
 		  omittype[unspecifiedtype] = false;
@@ -2266,7 +2266,13 @@ writezone(const char *const name, const char *const string, char version,
 			register int	mrudst, mrustd, hidst, histd, type;
 
 			hidst = histd = mrudst = mrustd = -1;
-			for (i = thistimei - pretrans; i < thistimelim; ++i)
+			if (0 <= pretranstype) {
+			  if (isdsts[pretranstype])
+			    mrudst = pretranstype;
+			  else
+			    mrustd = pretranstype;
+			}
+			for (i = thistimei; i < thistimelim; i++)
 				if (isdsts[types[i]])
 					mrudst = types[i];
 				else	mrustd = types[i];
@@ -2336,7 +2342,8 @@ writezone(const char *const name, const char *const string, char version,
 			indmap[desigidx[i]] = j;
 		}
 		if (pass == 1 && !want_bloat()) {
-		  pretrans = hicut = thisleapexpiry = false;
+		  hicut = thisleapexpiry = false;
+		  pretranstype = -1;
 		  thistimecnt = thisleapcnt = 0;
 		  thistypecnt = thischarcnt = 1;
 		}
@@ -2347,7 +2354,8 @@ writezone(const char *const name, const char *const string, char version,
 		convert(utcnt, tzh.tzh_ttisutcnt);
 		convert(stdcnt, tzh.tzh_ttisstdcnt);
 		convert(thisleapcnt + thisleapexpiry, tzh.tzh_leapcnt);
-		convert(pretrans + thistimecnt + hicut, tzh.tzh_timecnt);
+		convert((0 <= pretranstype) + thistimecnt + hicut,
+			tzh.tzh_timecnt);
 		convert(thistypecnt, tzh.tzh_typecnt);
 		convert(thischarcnt, tzh.tzh_charcnt);
 		DO(tzh_magic);
@@ -2374,14 +2382,16 @@ writezone(const char *const name, const char *const string, char version,
 		   for this pass.  */
 		lo = pass == 1 && lo_time < INT32_MIN ? INT32_MIN : lo_time;
 
-		if (pretrans)
+		if (0 <= pretranstype)
 		  puttzcodepass(lo, fp, pass);
 		for (i = thistimei; i < thistimelim; ++i) {
 		  puttzcodepass(ats[i], fp, pass);
 		}
 		if (hicut)
 		  puttzcodepass(hi_time + 1, fp, pass);
-		for (i = thistimei - pretrans; i < thistimelim; ++i)
+		if (0 <= pretranstype)
+		  putc(typemap[pretranstype], fp);
+		for (i = thistimei; i < thistimelim; i++)
 		  putc(typemap[types[i]], fp);
 		if (hicut)
 		  putc(typemap[unspecifiedtype], fp);

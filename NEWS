@@ -33,6 +33,9 @@ Unreleased, experimental changes
 
   Changes to code
 
+    'zic -r @N' no longer outputs bad data when N < first transition.
+    (Problem introduced in 2021d and reported by Peter Krefting.)
+
     zic now checks its input for NUL bytes and unterminated lines, and
     now supports input line lengths up to 2048 (not 512) bytes.
 

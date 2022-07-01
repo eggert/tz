@@ -1167,6 +1167,17 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # on Monday 1947-05-19 and so took effect from Wednesday 1947-05-21 23:00.
 # https://www.diariooficial.interior.gob.cl/versiones-anteriores/do-h/19470519/#page/1
 
+# From Paul Eggert (2022-07-01):
+# Law 8,522 says it took effect on publication (1946-08-28) and set
+# the time zone to -04 with DST beginning 1946-08-31 at 23:00.
+# Strictly speaking, this meant Chilean citizens would have needed
+# to change their clocks twice, once on 08-28 and once late on 08-31.
+# This sounds unlikely, so for now guess there was just one change late
+# on 08-31, with clocks reading 1946-09-01 00:00 after the change.
+# In other words, guess a transition at 09-01 00:00 in Punta Arenas
+# (where only the tm_isdst flag changes) and at 09-01 01:00 in
+# Santiago (which changes from -03 to -04, both with DST).
+
 # From Eduardo Krell (1995-10-19):
 # The law says to switch to DST at midnight [24:00] on the second SATURDAY
 # of October....  The law is the same for March and October.
@@ -1335,8 +1346,8 @@ Zone America/Santiago	-4:42:45 -	LMT	1890
 			-4:00	-	-04	1942 Jun  1
 			-5:00	-	-05	1942 Aug  1
 			-4:00	-	-04	1946 Jul 15
-			-4:00	1:00	-03	1946 Sep  1 # central Chile
-			-4:00	-	-04	1947 Apr  1
+			-4:00	1:00	-03	1946 Sep  1  1:00
+			-5:00	1:00	-04	1947 Mar 31 24:00
 			-5:00	-	-05	1947 May 21 23:00
 			-4:00	Chile	-04/-03
 Zone America/Punta_Arenas -4:43:40 -	LMT	1890
@@ -1348,7 +1359,8 @@ Zone America/Punta_Arenas -4:43:40 -	LMT	1890
 			-5:00	Chile	-05/-04	1932 Sep  1
 			-4:00	-	-04	1942 Jun  1
 			-5:00	-	-05	1942 Aug  1
-			-4:00	-	-04	1947 Apr  1
+			-4:00	-	-04	1946 Sep  1
+			-5:00	1:00	-04	1947 Mar 31 24:00
 			-5:00	-	-05	1947 May 21 23:00
 			-4:00	Chile	-04/-03	2016 Dec  4
 			-3:00	-	-03

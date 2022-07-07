@@ -23,9 +23,10 @@ Unreleased, experimental changes
     transition was on 05-27, not 03-21.
     (Thanks to Roozbeh Pournader and Francis Santoni.)
 
-    Chile's time from 1946-09-01 through 1947-03-31 was DST, not
-    standard time.  (Thanks to Michael Deckers.)  On 1946-09-01
-    Santiago moved its clock back at 01:00, not at 00:00.
+    Chile's observance of -04 from 1946-08-29 through 1947-03-31 was
+    considered DST, not standard time.  Santiago and environs had moved
+    their clocks back to rejoin the rest of mainland Chile; put this
+    change at the end of 1946-08-28.  (Thanks to Michael Deckers.)
 
   Changes to zone name
 

@@ -159,6 +159,17 @@ Also see the
 .B "\*-b slim"
 option for another way to shrink output size.
 .TP
+.BI "\*-R @" hi
+Generate redundant trailing explicit transitions for timestamps
+that occur less than
+.I hi
+seconds since the Epoch, even though the transitions could be
+more concisely represented via the extended POSIX TZ string.
+This option does not affect the represented timestamps.
+Although it accommodates nonstandard TZif readers
+that ignore the extended POSIX TZ string,
+it increases the size of the altered output files.
+.TP
 .BI "\*-t " file
 When creating local time information, put the configuration link in
 the named file rather than in the standard location.

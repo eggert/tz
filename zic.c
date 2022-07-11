@@ -579,7 +579,8 @@ usage(FILE *stream, int status)
 	  _("%s: usage is %s [ --version ] [ --help ] [ -v ] \\\n"
 	    "\t[ -b {slim|fat} ] [ -d directory ] [ -l localtime ]"
 	    " [ -L leapseconds ] \\\n"
-	    "\t[ -p posixrules ] [ -r '[@lo][/@hi]' ] [ -t localtime-link ] \\\n"
+	    "\t[ -p posixrules ] [ -r '[@lo][/@hi]' ] [ -R '@hi' ] \\\n"
+	    "\t[ -t localtime-link ] \\\n"
 	    "\t[ filename ... ]\n\n"
 	    "Report bugs to %s.\n"),
 	  progname, progname, REPORT_BUGS_TO);
@@ -681,6 +682,9 @@ static zic_t const max_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
 static zic_t lo_time = MINVAL(zic_t, TIME_T_BITS_IN_FILE);
 static zic_t hi_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
 
+/* The time specified by the -R option, defaulting to MIN_TIME.  */
+static zic_t redundant_time = MINVAL(zic_t, TIME_T_BITS_IN_FILE);
+
 /* The time specified by an Expires line, or negative if no such line.  */
 static zic_t leapexpires = -1;
 
@@ -710,6 +714,22 @@ timerange_option(char *timerange)
   lo_time = max(lo, min_time);
   hi_time = min(hi, max_time);
   return true;
+}
+
+/* Generate redundant time stamps up to OPT.  Return true if successful.  */
+static bool
+redundant_time_option(char *opt)
+{
+  if (*opt == '@') {
+    intmax_t redundant;
+    char *opt_end;
+    redundant = strtoimax(opt + 1, &opt_end, 10);
+    if (opt_end != opt + 1 && !*opt_end) {
+      redundant_time = max(redundant_time, redundant);
+      return true;
+    }
+  }
+  return false;
 }
 
 static const char *	psxrules;
@@ -764,7 +784,8 @@ main(int argc, char **argv)
 		} else if (strcmp(argv[k], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
 		}
-	while ((c = getopt(argc, argv, "b:d:l:L:p:r:st:vy:")) != EOF && c != -1)
+	while ((c = getopt(argc, argv, "b:d:l:L:p:r:R:st:vy:")) != EOF
+	       && c != -1)
 		switch (c) {
 			default:
 				usage(stderr, EXIT_FAILURE);
@@ -851,12 +872,23 @@ _("%s: invalid time range: %s\n"),
 				}
 				timerange_given = true;
 				break;
+			case 'R':
+				if (! redundant_time_option(optarg)) {
+				  fprintf(stderr, _("%s: invalid time: %s\n"),
+					  progname, optarg);
+				  return EXIT_FAILURE;
+				}
+				break;
 			case 's':
 				warning(_("-s ignored"));
 				break;
 		}
 	if (optind == argc - 1 && strcmp(argv[optind], "=") == 0)
 		usage(stderr, EXIT_FAILURE);	/* usage message by request */
+	if (hi_time + (hi_time < ZIC_MAX) < redundant_time) {
+	  fprintf(stderr, _("%s: -R time exceeds -r cutoff\n"), progname);
+	  return EXIT_FAILURE;
+	}
 	if (bloat == 0) {
 	  static char const bloat_default[] = ZIC_BLOAT_DEFAULT;
 	  if (strcmp(bloat_default, "slim") == 0)
@@ -2139,7 +2171,10 @@ writezone(const char *const name, const char *const string, char version,
 	rangeall.defaulttype = defaulttype;
 	rangeall.count = timecnt;
 	rangeall.leapcount = leapcnt;
-	range64 = limitrange(rangeall, lo_time, hi_time, ats, types);
+	range64 = limitrange(rangeall, lo_time,
+			     max(hi_time,
+				 redundant_time - (ZIC_MIN < redundant_time)),
+			     ats, types);
 	range32 = limitrange(range64, INT32_MIN, INT32_MAX, ats, types);
 
 	/* TZif version 4 is needed if a no-op transition is appended to
@@ -2893,6 +2928,8 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 			max_year = min_year + years_of_observations;
 		}
 	}
+	max_year = max(max_year, (redundant_time / (SECSPERDAY * DAYSPERNYEAR)
+				  + EPOCH_YEAR + 1));
 	max_year0 = max_year;
 	if (want_bloat()) {
 	  /* For the benefit of older systems,
@@ -3061,6 +3098,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				offset = oadd(zp->z_stdoff, rp->r_save);
 				if (!want_bloat() && !useuntil && !do_extend
 				    && prevrp && lo_time <= prevktime
+				    && redundant_time <= ktime
 				    && rp->r_hiyear == ZIC_MAX
 				    && prevrp->r_hiyear == ZIC_MAX)
 				  break;

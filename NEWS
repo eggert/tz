@@ -5,6 +5,7 @@ Unreleased, experimental changes
   Briefly:
     Iran no longer observes DST after 2022.
     Rename Europe/Kiev to Europe/Kyiv.
+    New zic -R option
 
   Changes to future timestamps
 
@@ -37,6 +38,9 @@ Unreleased, experimental changes
     Europe/Prague not "Praha", and Europe/Sofia not "Sofiya").
 
   Changes to code
+
+    zic has a new option '-R @N' to output explicit transitions < N.
+    (Need suggested by Almaz Mingaleev.)
 
     'zic -r @N' no longer outputs bad data when N < first transition.
     (Problem introduced in 2021d and reported by Peter Krefting.)

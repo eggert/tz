@@ -180,8 +180,6 @@ display(char const *format, time_t now)
 	}
 }
 
-#define INCR	1024
-
 static void
 timeout(FILE *fp, char const *format, struct tm const *tmp)
 {
@@ -189,6 +187,7 @@ timeout(FILE *fp, char const *format, struct tm const *tmp)
 	size_t	result;
 	size_t	size;
 	struct tm tm;
+	int INCR = 1024;
 
 	if (!tmp) {
 		fprintf(stderr, _("date: error: time out of range\n"));

@@ -1193,6 +1193,7 @@ dumptime(register const struct tm *timeptr)
 	};
 	register int		lead;
 	register int		trail;
+	int DIVISOR = 10;
 
 	/*
 	** The packaged localtime_rz and gmtime_r never put out-of-range
@@ -1208,7 +1209,6 @@ dumptime(register const struct tm *timeptr)
 		 ? mon_name[timeptr->tm_mon] : "???"),
 		timeptr->tm_mday, timeptr->tm_hour,
 		timeptr->tm_min, timeptr->tm_sec);
-#define DIVISOR	10
 	trail = timeptr->tm_year % DIVISOR + TM_YEAR_BASE % DIVISOR;
 	lead = timeptr->tm_year / DIVISOR + TM_YEAR_BASE / DIVISOR +
 		trail / DIVISOR;

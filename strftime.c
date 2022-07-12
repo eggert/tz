@@ -56,8 +56,6 @@ struct lc_time_T {
 	const char *	date_fmt;
 };
 
-#define Locale	(&C_time_locale)
-
 static const struct lc_time_T	C_time_locale = {
 	{
 		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -164,6 +162,8 @@ static char *
 _fmt(const char *format, const struct tm *t, char *pt,
      const char *ptlim, enum warn *warnp)
 {
+	struct lc_time_T const *Locale = &C_time_locale;
+
 	for ( ; *format; ++format) {
 		if (*format == '%') {
 label:
@@ -626,7 +626,7 @@ _yconv(int a, int b, bool convert_top, bool convert_yy,
 	register int	lead;
 	register int	trail;
 
-#define DIVISOR	100
+	int DIVISOR = 100;
 	trail = a % DIVISOR + b % DIVISOR;
 	lead = a / DIVISOR + b / DIVISOR + trail / DIVISOR;
 	trail %= DIVISOR;

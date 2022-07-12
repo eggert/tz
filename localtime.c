@@ -42,15 +42,12 @@ static void unlock(void) { }
 #endif /* !defined TZ_ABBR_ERR_CHAR */
 
 /*
-** SunOS 4.1.1 headers lack O_BINARY.
+** Support non-POSIX platforms that distinguish between text and binary files.
 */
 
-#ifdef O_BINARY
-# define OPEN_MODE (O_RDONLY | O_BINARY)
-#endif /* defined O_BINARY */
 #ifndef O_BINARY
-# define OPEN_MODE O_RDONLY
-#endif /* !defined O_BINARY */
+# define O_BINARY 0
+#endif
 
 #ifndef WILDABBR
 /*
@@ -171,8 +168,8 @@ static struct state *	gmtptr;
 #ifndef ALL_STATE
 static struct state	lclmem;
 static struct state	gmtmem;
-# define lclptr (&lclmem)
-# define gmtptr (&gmtmem)
+static struct state *const lclptr = &lclmem;
+static struct state *const gmtptr = &gmtmem;
 #endif /* State Farm */
 
 #ifndef TZ_STRLEN_MAX
@@ -451,7 +448,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 	}
 	if (doaccess && access(name, R_OK) != 0)
 	  return errno;
-	fid = open(name, OPEN_MODE);
+	fid = open(name, O_RDONLY | O_BINARY);
 	if (fid < 0)
 	  return errno;
 

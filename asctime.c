@@ -35,10 +35,10 @@
 ** but many implementations pad anyway; most likely the standards are buggy.
 */
 #ifdef __GNUC__
-# define ASCTIME_FMT "%s %s%3d %2.2d:%2.2d:%2.2d %-4s\n"
-#else /* !defined __GNUC__ */
-# define ASCTIME_FMT "%s %s%3d %02.2d:%02.2d:%02.2d %-4s\n"
-#endif /* !defined __GNUC__ */
+static char const ASCTIME_FMT[] = "%s %s%3d %2.2d:%2.2d:%2.2d %-4s\n";
+#else
+static char const ASCTIME_FMT[] = "%s %s%3d %02.2d:%02.2d:%02.2d %-4s\n";
+#endif
 /*
 ** For years that are more than four digits we put extra spaces before the year
 ** so that code trying to overwrite the newline won't end up overwriting
@@ -46,12 +46,12 @@
 ** that no output is better than wrong output).
 */
 #ifdef __GNUC__
-# define ASCTIME_FMT_B "%s %s%3d %2.2d:%2.2d:%2.2d     %s\n"
-#else /* !defined __GNUC__ */
-# define ASCTIME_FMT_B "%s %s%3d %02.2d:%02.2d:%02.2d     %s\n"
-#endif /* !defined __GNUC__ */
+static char const ASCTIME_FMT_B[] = "%s %s%3d %2.2d:%2.2d:%2.2d     %s\n";
+#else
+static char const ASCTIME_FMT_B[] = "%s %s%3d %02.2d:%02.2d:%02.2d     %s\n";
+#endif
 
-#define STD_ASCTIME_BUF_SIZE	26
+enum { STD_ASCTIME_BUF_SIZE = 26 };
 /*
 ** Big enough for something such as
 ** ??? ???-2147483648 -2147483648:-2147483648:-2147483648     -2147483648\n
@@ -59,12 +59,10 @@
 ** seven explicit spaces, two explicit colons, a newline,
 ** and a trailing NUL byte).
 ** The values above are for systems where an int is 32 bits and are provided
-** as an example; the define below calculates the maximum for the system at
+** as an example; the size expression below is a bound for the system at
 ** hand.
 */
-#define MAX_ASCTIME_BUF_SIZE	(2*3+5*INT_STRLEN_MAXIMUM(int)+7+2+1+1)
-
-static char	buf_asctime[MAX_ASCTIME_BUF_SIZE];
+static char buf_asctime[2*3 + 5*INT_STRLEN_MAXIMUM(int) + 7 + 2 + 1 + 1];
 
 char *
 asctime_r(register const struct tm *timeptr, char *buf)
@@ -79,7 +77,7 @@ asctime_r(register const struct tm *timeptr, char *buf)
 	register const char *	wn;
 	register const char *	mn;
 	char			year[INT_STRLEN_MAXIMUM(int) + 2];
-	char			result[MAX_ASCTIME_BUF_SIZE];
+	char result[sizeof buf_asctime];
 
 	if (timeptr == NULL) {
 		errno = EINVAL;

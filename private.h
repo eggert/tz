@@ -742,47 +742,55 @@ char *ctime_r(time_t const *, char *);
 
 /* Handy macros that are independent of tzfile implementation.  */
 
-#define SECSPERMIN	60
-#define MINSPERHOUR	60
-#define HOURSPERDAY	24
-#define DAYSPERWEEK	7
-#define DAYSPERNYEAR	365
-#define DAYSPERLYEAR	366
-#define SECSPERHOUR	(SECSPERMIN * MINSPERHOUR)
-#define SECSPERDAY	((int_fast32_t) SECSPERHOUR * HOURSPERDAY)
-#define MONSPERYEAR	12
+enum {
+  SECSPERMIN = 60,
+  MINSPERHOUR = 60,
+  SECSPERHOUR = SECSPERMIN * MINSPERHOUR,
+  HOURSPERDAY = 24,
+  DAYSPERWEEK = 7,
+  DAYSPERNYEAR = 365,
+  DAYSPERLYEAR = DAYSPERNYEAR + 1,
+  MONSPERYEAR = 12,
+  YEARSPERREPEAT = 400	/* years before a Gregorian repeat */
+};
 
-#define YEARSPERREPEAT		400	/* years before a Gregorian repeat */
+#define SECSPERDAY	((int_fast32_t) SECSPERHOUR * HOURSPERDAY)
+
 #define DAYSPERREPEAT		((int_fast32_t) 400 * 365 + 100 - 4 + 1)
 #define SECSPERREPEAT		((int_fast64_t) DAYSPERREPEAT * SECSPERDAY)
 #define AVGSECSPERYEAR		(SECSPERREPEAT / YEARSPERREPEAT)
 
-#define TM_SUNDAY	0
-#define TM_MONDAY	1
-#define TM_TUESDAY	2
-#define TM_WEDNESDAY	3
-#define TM_THURSDAY	4
-#define TM_FRIDAY	5
-#define TM_SATURDAY	6
+enum {
+  TM_SUNDAY,
+  TM_MONDAY,
+  TM_TUESDAY,
+  TM_WEDNESDAY,
+  TM_THURSDAY,
+  TM_FRIDAY,
+  TM_SATURDAY
+};
 
-#define TM_JANUARY	0
-#define TM_FEBRUARY	1
-#define TM_MARCH	2
-#define TM_APRIL	3
-#define TM_MAY		4
-#define TM_JUNE		5
-#define TM_JULY		6
-#define TM_AUGUST	7
-#define TM_SEPTEMBER	8
-#define TM_OCTOBER	9
-#define TM_NOVEMBER	10
-#define TM_DECEMBER	11
+enum {
+  TM_JANUARY,
+  TM_FEBRUARY,
+  TM_MARCH,
+  TM_APRIL,
+  TM_MAY,
+  TM_JUNE,
+  TM_JULY,
+  TM_AUGUST,
+  TM_SEPTEMBER,
+  TM_OCTOBER,
+  TM_NOVEMBER,
+  TM_DECEMBER
+};
 
-#define TM_YEAR_BASE	1900
-#define TM_WDAY_BASE	TM_MONDAY
-
-#define EPOCH_YEAR	1970
-#define EPOCH_WDAY	TM_THURSDAY
+enum {
+  TM_YEAR_BASE = 1900,
+  TM_WDAY_BASE = TM_MONDAY,
+  EPOCH_YEAR = 1970,
+  EPOCH_WDAY = TM_THURSDAY
+};
 
 #define isleap(y) (((y) % 4) == 0 && (((y) % 100) != 0 || ((y) % 400) == 0))
 

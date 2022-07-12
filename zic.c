@@ -96,12 +96,13 @@ struct rule {
 };
 
 /*
-**	r_dycode		r_dayofmonth	r_wday
+** r_dycode	r_dayofmonth	r_wday
 */
-
-#define DC_DOM		0	/* 1..31 */	/* unused */
-#define DC_DOWGEQ	1	/* 1..31 */	/* 0..6 (Sun..Sat) */
-#define DC_DOWLEQ	2	/* 1..31 */	/* 0..6 (Sun..Sat) */
+enum {
+  DC_DOM,	/* 1..31 */	/* unused */
+  DC_DOWGEQ,	/* 1..31 */	/* 0..6 (Sun..Sat) */
+  DC_DOWLEQ	/* 1..31 */	/* 0..6 (Sun..Sat) */
+};
 
 struct zone {
 	const char *	z_filename;
@@ -213,89 +214,107 @@ static int		unspecifiedtype;
 ** Line codes.
 */
 
-#define LC_RULE		0
-#define LC_ZONE		1
-#define LC_LINK		2
-#define LC_LEAP		3
-#define LC_EXPIRES	4
+enum {
+  LC_RULE,
+  LC_ZONE,
+  LC_LINK,
+  LC_LEAP,
+  LC_EXPIRES
+};
 
 /*
 ** Which fields are which on a Zone line.
 */
 
-#define ZF_NAME		1
-#define ZF_STDOFF	2
-#define ZF_RULE		3
-#define ZF_FORMAT	4
-#define ZF_TILYEAR	5
-#define ZF_TILMONTH	6
-#define ZF_TILDAY	7
-#define ZF_TILTIME	8
-#define ZONE_MINFIELDS	5
-#define ZONE_MAXFIELDS	9
+enum {
+  ZF_NAME = 1,
+  ZF_STDOFF,
+  ZF_RULE,
+  ZF_FORMAT,
+  ZF_TILYEAR,
+  ZF_TILMONTH,
+  ZF_TILDAY,
+  ZF_TILTIME,
+  ZONE_MAXFIELDS,
+  ZONE_MINFIELDS = ZF_TILYEAR
+};
 
 /*
 ** Which fields are which on a Zone continuation line.
 */
 
-#define ZFC_STDOFF	0
-#define ZFC_RULE	1
-#define ZFC_FORMAT	2
-#define ZFC_TILYEAR	3
-#define ZFC_TILMONTH	4
-#define ZFC_TILDAY	5
-#define ZFC_TILTIME	6
-#define ZONEC_MINFIELDS	3
-#define ZONEC_MAXFIELDS	7
+enum {
+  ZFC_STDOFF,
+  ZFC_RULE,
+  ZFC_FORMAT,
+  ZFC_TILYEAR,
+  ZFC_TILMONTH,
+  ZFC_TILDAY,
+  ZFC_TILTIME,
+  ZONEC_MAXFIELDS,
+  ZONEC_MINFIELDS = ZFC_TILYEAR
+};
 
 /*
 ** Which files are which on a Rule line.
 */
 
-#define RF_NAME		1
-#define RF_LOYEAR	2
-#define RF_HIYEAR	3
-#define RF_COMMAND	4
-#define RF_MONTH	5
-#define RF_DAY		6
-#define RF_TOD		7
-#define RF_SAVE		8
-#define RF_ABBRVAR	9
-#define RULE_FIELDS	10
+enum {
+  RF_NAME = 1,
+  RF_LOYEAR,
+  RF_HIYEAR,
+  RF_COMMAND,
+  RF_MONTH,
+  RF_DAY,
+  RF_TOD,
+  RF_SAVE,
+  RF_ABBRVAR,
+  RULE_FIELDS
+};
 
 /*
 ** Which fields are which on a Link line.
 */
 
-#define LF_TARGET	1
-#define LF_LINKNAME	2
-#define LINK_FIELDS	3
+enum {
+  LF_TARGET = 1,
+  LF_LINKNAME,
+  LINK_FIELDS
+};
 
 /*
 ** Which fields are which on a Leap line.
 */
 
-#define LP_YEAR		1
-#define LP_MONTH	2
-#define LP_DAY		3
-#define LP_TIME		4
-#define LP_CORR		5
-#define LP_ROLL		6
-#define LEAP_FIELDS	7
+enum {
+  LP_YEAR = 1,
+  LP_MONTH,
+  LP_DAY,
+  LP_TIME,
+  LP_CORR,
+  LP_ROLL,
+  LEAP_FIELDS,
 
-/* Expires lines are like Leap lines, except without CORR and ROLL fields.  */
-#define EXPIRES_FIELDS	5
+  /* Expires lines are like Leap lines, except without CORR and ROLL fields.  */
+  EXPIRES_FIELDS = LP_TIME + 1
+};
 
-/* The maximum number of fields on any of the above lines.  */
-#define MAX_FIELDS RULE_FIELDS
+/* The maximum number of fields on any of the above lines.
+   (The "+"s pacify gcc -Wenum-compare.)  */
+enum {
+  MAX_FIELDS = max(max(+RULE_FIELDS, +LINK_FIELDS),
+		   max(+LEAP_FIELDS, +EXPIRES_FIELDS))
+};
 
 /*
 ** Year synonyms.
 */
 
-#define YR_MINIMUM	0
-#define YR_MAXIMUM	1
-#define YR_ONLY		2
+enum {
+  YR_MINIMUM,
+  YR_MAXIMUM,
+  YR_ONLY
+};
 
 static struct rule *	rules;
 static ptrdiff_t	nrules;	/* number of rules */
@@ -671,7 +690,7 @@ check_for_signal(void)
   }
 }
 
-#define TIME_T_BITS_IN_FILE 64
+enum { TIME_T_BITS_IN_FILE = 64 };
 
 /* The minimum and maximum values representable in a TZif file.  */
 static zic_t const min_time = MINVAL(zic_t, TIME_T_BITS_IN_FILE);

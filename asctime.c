@@ -17,12 +17,6 @@
 #include <stdio.h>
 
 /*
-** Some systems only handle "%.2d"; others only handle "%02d";
-** "%02.2d" makes (most) everybody happy.
-** At least some versions of gcc warn about the %02.2d;
-** we conditionalize below to avoid the warning.
-*/
-/*
 ** All years associated with 32-bit time_t values are exactly four digits long;
 ** some years associated with 64-bit time_t values are not.
 ** Vintage programs are coded for years that are always four digits long
@@ -34,22 +28,14 @@
 ** The ISO C and POSIX standards prohibit padding the year,
 ** but many implementations pad anyway; most likely the standards are buggy.
 */
-#ifdef __GNUC__
-static char const ASCTIME_FMT[] = "%s %s%3d %2.2d:%2.2d:%2.2d %-4s\n";
-#else
-static char const ASCTIME_FMT[] = "%s %s%3d %02.2d:%02.2d:%02.2d %-4s\n";
-#endif
+static char const ASCTIME_FMT[] = "%s %s%3d %.2d:%.2d:%.2d %-4s\n";
 /*
 ** For years that are more than four digits we put extra spaces before the year
 ** so that code trying to overwrite the newline won't end up overwriting
 ** a digit within a year and truncating the year (operating on the assumption
 ** that no output is better than wrong output).
 */
-#ifdef __GNUC__
-static char const ASCTIME_FMT_B[] = "%s %s%3d %2.2d:%2.2d:%2.2d     %s\n";
-#else
-static char const ASCTIME_FMT_B[] = "%s %s%3d %02.2d:%02.2d:%02.2d     %s\n";
-#endif
+static char const ASCTIME_FMT_B[] = "%s %s%3d %.2d:%.2d:%.2d     %s\n";
 
 enum { STD_ASCTIME_BUF_SIZE = 26 };
 /*

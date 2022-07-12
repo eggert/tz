@@ -29,16 +29,16 @@ static void unlock(void) { }
 #endif
 
 #ifndef TZ_ABBR_MAX_LEN
-#define TZ_ABBR_MAX_LEN	16
+# define TZ_ABBR_MAX_LEN 16
 #endif /* !defined TZ_ABBR_MAX_LEN */
 
 #ifndef TZ_ABBR_CHAR_SET
-#define TZ_ABBR_CHAR_SET \
+# define TZ_ABBR_CHAR_SET \
 	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 :+-._"
 #endif /* !defined TZ_ABBR_CHAR_SET */
 
 #ifndef TZ_ABBR_ERR_CHAR
-#define TZ_ABBR_ERR_CHAR	'_'
+# define TZ_ABBR_ERR_CHAR '_'
 #endif /* !defined TZ_ABBR_ERR_CHAR */
 
 /*
@@ -46,10 +46,10 @@ static void unlock(void) { }
 */
 
 #ifdef O_BINARY
-#define OPEN_MODE	(O_RDONLY | O_BINARY)
+# define OPEN_MODE (O_RDONLY | O_BINARY)
 #endif /* defined O_BINARY */
 #ifndef O_BINARY
-#define OPEN_MODE	O_RDONLY
+# define OPEN_MODE O_RDONLY
 #endif /* !defined O_BINARY */
 
 #ifndef WILDABBR
@@ -72,7 +72,7 @@ static void unlock(void) { }
 ** manual page of what this "time zone abbreviation" means (doing this so
 ** that tzname[0] has the "normal" length of three characters).
 */
-#define WILDABBR	"   "
+# define WILDABBR "   "
 #endif /* !defined WILDABBR */
 
 static const char	wildabbr[] = WILDABBR;
@@ -86,7 +86,7 @@ static const char	gmt[] = "GMT";
 ** for historical reasons, US rules are a common default.
 */
 #ifndef TZDEFRULESTRING
-#define TZDEFRULESTRING ",M3.2.0,M11.1.0"
+# define TZDEFRULESTRING ",M3.2.0,M11.1.0"
 #endif
 
 struct ttinfo {				/* time type information */
@@ -112,10 +112,10 @@ static char const UNSPEC[] = "-00";
 enum { CHARS_EXTRA = max(sizeof UNSPEC, 2) - 1 };
 
 #ifdef TZNAME_MAX
-#define MY_TZNAME_MAX	TZNAME_MAX
+# define MY_TZNAME_MAX TZNAME_MAX
 #endif /* defined TZNAME_MAX */
 #ifndef TZNAME_MAX
-#define MY_TZNAME_MAX	255
+# define MY_TZNAME_MAX 255
 #endif /* !defined TZNAME_MAX */
 
 struct state {
@@ -171,12 +171,12 @@ static struct state *	gmtptr;
 #ifndef ALL_STATE
 static struct state	lclmem;
 static struct state	gmtmem;
-#define lclptr		(&lclmem)
-#define gmtptr		(&gmtmem)
+# define lclptr (&lclmem)
+# define gmtptr (&gmtmem)
 #endif /* State Farm */
 
 #ifndef TZ_STRLEN_MAX
-#define TZ_STRLEN_MAX 255
+# define TZ_STRLEN_MAX 255
 #endif /* !defined TZ_STRLEN_MAX */
 
 static char		lcl_TZname[TZ_STRLEN_MAX + 1];
@@ -1860,7 +1860,7 @@ ctime_r(const time_t *timep, char *buf)
 */
 
 #ifndef WRONG
-#define WRONG	(-1)
+# define WRONG (-1)
 #endif /* !defined WRONG */
 
 /*

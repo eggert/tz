@@ -22,15 +22,15 @@
 */
 
 #ifndef TZDIR
-#define TZDIR	"/usr/share/zoneinfo" /* Time zone object file directory */
+# define TZDIR "/usr/share/zoneinfo" /* Time zone object file directory */
 #endif /* !defined TZDIR */
 
 #ifndef TZDEFAULT
-#define TZDEFAULT	"/etc/localtime"
+# define TZDEFAULT "/etc/localtime"
 #endif /* !defined TZDEFAULT */
 
 #ifndef TZDEFRULES
-#define TZDEFRULES	"posixrules"
+# define TZDEFRULES "posixrules"
 #endif /* !defined TZDEFRULES */
 
 
@@ -103,21 +103,21 @@ struct tzhead {
 */
 
 #ifndef TZ_MAX_TIMES
-#define TZ_MAX_TIMES	2000
+# define TZ_MAX_TIMES 2000
 #endif /* !defined TZ_MAX_TIMES */
 
 #ifndef TZ_MAX_TYPES
 /* This must be at least 17 for Europe/Samara and Europe/Vilnius.  */
-#define TZ_MAX_TYPES	256 /* Limited by what (unsigned char)'s can hold */
+# define TZ_MAX_TYPES 256 /* Limited by what (unsigned char)'s can hold */
 #endif /* !defined TZ_MAX_TYPES */
 
 #ifndef TZ_MAX_CHARS
-#define TZ_MAX_CHARS	50	/* Maximum number of abbreviation characters */
+# define TZ_MAX_CHARS 50	/* Maximum number of abbreviation characters */
 				/* (limited by what unsigned chars can hold) */
 #endif /* !defined TZ_MAX_CHARS */
 
 #ifndef TZ_MAX_LEAPS
-#define TZ_MAX_LEAPS	50	/* Maximum number of leap second corrections */
+# define TZ_MAX_LEAPS 50	/* Maximum number of leap second corrections */
 #endif /* !defined TZ_MAX_LEAPS */
 
 #endif /* !defined TZFILE_H */

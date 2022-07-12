@@ -113,7 +113,7 @@ static char *	_fmt(const char *, const struct tm *, char *, const char *,
 static char *	_yconv(int, int, bool, bool, char *, char const *);
 
 #ifndef YEAR_2000_NAME
-#define YEAR_2000_NAME	"CHECK_STRFTIME_FORMATS_FOR_TWO_DIGIT_YEARS"
+# define YEAR_2000_NAME "CHECK_STRFTIME_FORMATS_FOR_TWO_DIGIT_YEARS"
 #endif /* !defined YEAR_2000_NAME */
 
 #if HAVE_STRFTIME_L
@@ -551,15 +551,15 @@ label:
 # endif
 				negative = diff < 0;
 				if (diff == 0) {
-#ifdef TM_ZONE
+# ifdef TM_ZONE
 				  negative = t->TM_ZONE[0] == '-';
-#else
+# else
 				  negative = t->tm_isdst < 0;
-# if HAVE_TZNAME
+#  if HAVE_TZNAME
 				  if (tzname[t->tm_isdst != 0][0] == '-')
 				    negative = true;
+#  endif
 # endif
-#endif
 				}
 				if (negative) {
 					sign = "-";

@@ -35,11 +35,11 @@
 #endif
 
 #ifndef ZDUMP_LO_YEAR
-#define ZDUMP_LO_YEAR	(-500)
+# define ZDUMP_LO_YEAR (-500)
 #endif /* !defined ZDUMP_LO_YEAR */
 
 #ifndef ZDUMP_HI_YEAR
-#define ZDUMP_HI_YEAR	2500
+# define ZDUMP_HI_YEAR 2500
 #endif /* !defined ZDUMP_HI_YEAR */
 
 #define SECSPERNYEAR	(SECSPERDAY * DAYSPERNYEAR)
@@ -72,7 +72,7 @@ enum { SECSPER400YEARS_FITS = SECSPERLYEAR <= INTMAX_MAX / 400 };
 #endif
 
 #if HAVE_GETTEXT
-#include <locale.h>	/* for setlocale */
+# include <locale.h> /* for setlocale */
 #endif /* HAVE_GETTEXT */
 
 #if ! HAVE_LOCALTIME_RZ
@@ -450,9 +450,9 @@ main(int argc, char *argv[])
 	cuthitime = absolute_max_time;
 #if HAVE_GETTEXT
 	setlocale(LC_ALL, "");
-#ifdef TZ_DOMAINDIR
+# ifdef TZ_DOMAINDIR
 	bindtextdomain(TZ_DOMAIN, TZ_DOMAINDIR);
-#endif /* defined TEXTDOMAINDIR */
+# endif /* defined TEXTDOMAINDIR */
 	textdomain(TZ_DOMAIN);
 #endif /* HAVE_GETTEXT */
 	progname = argv[0];

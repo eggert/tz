@@ -35,9 +35,9 @@
 ** but many implementations pad anyway; most likely the standards are buggy.
 */
 #ifdef __GNUC__
-#define ASCTIME_FMT	"%s %s%3d %2.2d:%2.2d:%2.2d %-4s\n"
+# define ASCTIME_FMT "%s %s%3d %2.2d:%2.2d:%2.2d %-4s\n"
 #else /* !defined __GNUC__ */
-#define ASCTIME_FMT	"%s %s%3d %02.2d:%02.2d:%02.2d %-4s\n"
+# define ASCTIME_FMT "%s %s%3d %02.2d:%02.2d:%02.2d %-4s\n"
 #endif /* !defined __GNUC__ */
 /*
 ** For years that are more than four digits we put extra spaces before the year
@@ -46,9 +46,9 @@
 ** that no output is better than wrong output).
 */
 #ifdef __GNUC__
-#define ASCTIME_FMT_B	"%s %s%3d %2.2d:%2.2d:%2.2d     %s\n"
+# define ASCTIME_FMT_B "%s %s%3d %2.2d:%2.2d:%2.2d     %s\n"
 #else /* !defined __GNUC__ */
-#define ASCTIME_FMT_B	"%s %s%3d %02.2d:%02.2d:%02.2d     %s\n"
+# define ASCTIME_FMT_B "%s %s%3d %02.2d:%02.2d:%02.2d     %s\n"
 #endif /* !defined __GNUC__ */
 
 #define STD_ASCTIME_BUF_SIZE	26

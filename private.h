@@ -36,7 +36,7 @@
 */
 
 #ifndef HAVE_DECL_ASCTIME_R
-#define HAVE_DECL_ASCTIME_R 1
+# define HAVE_DECL_ASCTIME_R 1
 #endif
 
 #if !defined HAVE_GENERIC && defined __has_extension
@@ -55,51 +55,51 @@
 #endif
 
 #ifndef HAVE_GETTEXT
-#define HAVE_GETTEXT		0
+# define HAVE_GETTEXT 0
 #endif /* !defined HAVE_GETTEXT */
 
 #ifndef HAVE_INCOMPATIBLE_CTIME_R
-#define HAVE_INCOMPATIBLE_CTIME_R	0
+# define HAVE_INCOMPATIBLE_CTIME_R 0
 #endif
 
 #ifndef HAVE_LINK
-#define HAVE_LINK		1
+# define HAVE_LINK 1
 #endif /* !defined HAVE_LINK */
 
 #ifndef HAVE_MALLOC_ERRNO
-#define HAVE_MALLOC_ERRNO 1
+# define HAVE_MALLOC_ERRNO 1
 #endif
 
 #ifndef HAVE_POSIX_DECLS
-#define HAVE_POSIX_DECLS 1
+# define HAVE_POSIX_DECLS 1
 #endif
 
 #ifndef HAVE_STDBOOL_H
-#define HAVE_STDBOOL_H (199901 <= __STDC_VERSION__)
+# define HAVE_STDBOOL_H (199901 <= __STDC_VERSION__)
 #endif
 
 #ifndef HAVE_STRDUP
-#define HAVE_STRDUP 1
+# define HAVE_STRDUP 1
 #endif
 
 #ifndef HAVE_STRTOLL
-#define HAVE_STRTOLL 1
+# define HAVE_STRTOLL 1
 #endif
 
 #ifndef HAVE_SYMLINK
-#define HAVE_SYMLINK		1
+# define HAVE_SYMLINK 1
 #endif /* !defined HAVE_SYMLINK */
 
 #ifndef HAVE_SYS_STAT_H
-#define HAVE_SYS_STAT_H		1
+# define HAVE_SYS_STAT_H 1
 #endif /* !defined HAVE_SYS_STAT_H */
 
 #ifndef HAVE_UNISTD_H
-#define HAVE_UNISTD_H		1
+# define HAVE_UNISTD_H 1
 #endif /* !defined HAVE_UNISTD_H */
 
 #ifndef HAVE_UTMPX_H
-#define HAVE_UTMPX_H		1
+# define HAVE_UTMPX_H 1
 #endif /* !defined HAVE_UTMPX_H */
 
 #ifndef NETBSD_INSPIRED
@@ -107,8 +107,8 @@
 #endif
 
 #if HAVE_INCOMPATIBLE_CTIME_R
-#define asctime_r _incompatible_asctime_r
-#define ctime_r _incompatible_ctime_r
+# define asctime_r _incompatible_asctime_r
+# define ctime_r _incompatible_ctime_r
 #endif /* HAVE_INCOMPATIBLE_CTIME_R */
 
 /* Enable tm_gmtoff, tm_zone, and environ on GNUish systems.  */
@@ -182,11 +182,11 @@
 #endif
 
 #if HAVE_GETTEXT
-#include <libintl.h>
+# include <libintl.h>
 #endif /* HAVE_GETTEXT */
 
 #if HAVE_UNISTD_H
-#include <unistd.h>	/* for R_OK, and other POSIX goodness */
+# include <unistd.h> /* for R_OK, and other POSIX goodness */
 #endif /* HAVE_UNISTD_H */
 
 #ifndef HAVE_STRFTIME_L
@@ -222,7 +222,7 @@
 #endif
 
 #ifndef R_OK
-#define R_OK	4
+# define R_OK 4
 #endif /* !defined R_OK */
 
 /*
@@ -232,14 +232,14 @@
 ** stdint.h, even with pre-C99 compilers.
 */
 #ifndef HAVE_STDINT_H
-#define HAVE_STDINT_H \
+# define HAVE_STDINT_H \
    (199901 <= __STDC_VERSION__ \
-    || 2 < __GLIBC__ + (1 <= __GLIBC_MINOR__)	\
+    || 2 < __GLIBC__ + (1 <= __GLIBC_MINOR__) \
     || __CYGWIN__ || INTMAX_MAX)
 #endif /* !defined HAVE_STDINT_H */
 
 #if HAVE_STDINT_H
-#include <stdint.h>
+# include <stdint.h>
 #endif /* !HAVE_STDINT_H */
 
 #ifndef HAVE_INTTYPES_H
@@ -358,14 +358,14 @@ typedef unsigned long uintmax_t;
 #endif
 
 #ifndef INT32_MAX
-#define INT32_MAX 0x7fffffff
+# define INT32_MAX 0x7fffffff
 #endif /* !defined INT32_MAX */
 #ifndef INT32_MIN
-#define INT32_MIN (-1 - INT32_MAX)
+# define INT32_MIN (-1 - INT32_MAX)
 #endif /* !defined INT32_MIN */
 
 #ifndef SIZE_MAX
-#define SIZE_MAX ((size_t) -1)
+# define SIZE_MAX ((size_t) -1)
 #endif
 
 #if 3 <= __GNUC__

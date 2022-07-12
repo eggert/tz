@@ -29,7 +29,7 @@ typedef int_fast64_t	zic_t;
 #define SCNdZIC SCNdFAST64
 
 #ifndef ZIC_MAX_ABBR_LEN_WO_WARN
-#define ZIC_MAX_ABBR_LEN_WO_WARN	6
+# define ZIC_MAX_ABBR_LEN_WO_WARN 6
 #endif /* !defined ZIC_MAX_ABBR_LEN_WO_WARN */
 
 #ifdef HAVE_DIRECT_H
@@ -40,12 +40,12 @@ typedef int_fast64_t	zic_t;
 #endif
 
 #if HAVE_SYS_STAT_H
-#include <sys/stat.h>
+# include <sys/stat.h>
 #endif
 #ifdef S_IRUSR
-#define MKDIR_UMASK (S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH)
+# define MKDIR_UMASK (S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH)
 #else
-#define MKDIR_UMASK 0755
+# define MKDIR_UMASK 0755
 #endif
 
 /* The maximum ptrdiff_t value, for pre-C99 platforms.  */
@@ -765,9 +765,9 @@ main(int argc, char **argv)
 #endif
 #if HAVE_GETTEXT
 	setlocale(LC_ALL, "");
-#ifdef TZ_DOMAINDIR
+# ifdef TZ_DOMAINDIR
 	bindtextdomain(TZ_DOMAIN, TZ_DOMAINDIR);
-#endif /* defined TEXTDOMAINDIR */
+# endif /* defined TEXTDOMAINDIR */
 	textdomain(TZ_DOMAIN);
 #endif /* HAVE_GETTEXT */
 	progname = argv[0];

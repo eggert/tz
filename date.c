@@ -36,11 +36,11 @@
 */
 
 #ifndef TM_YEAR_BASE
-#define TM_YEAR_BASE	1900
+# define TM_YEAR_BASE	1900
 #endif /* !defined TM_YEAR_BASE */
 
 #ifndef SECSPERMIN
-#define SECSPERMIN	60
+# define SECSPERMIN	60
 #endif /* !defined SECSPERMIN */
 
 #if !HAVE_POSIX_DECLS
@@ -70,9 +70,9 @@ main(const int argc, char *argv[])
 	setlocale(LC_ALL, "");
 #endif /* defined(LC_ALL) */
 #if HAVE_GETTEXT
-#ifdef TZ_DOMAINDIR
+# ifdef TZ_DOMAINDIR
 	bindtextdomain(TZ_DOMAIN, TZ_DOMAINDIR);
-#endif /* defined(TEXTDOMAINDIR) */
+# endif /* defined(TEXTDOMAINDIR) */
 	textdomain(TZ_DOMAIN);
 #endif /* HAVE_GETTEXT */
 	t = time(NULL);

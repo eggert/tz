@@ -145,7 +145,7 @@ outputs data intended only for nonnegative timestamps that fit into
 31-bit signed integers.
 On platforms with GNU
 .BR date ,
-.q "zic \-r @$(date +%s)"
+.q "zic \*-r @$(date +%s)"
 omits data intended for past timestamps.
 Although this option typically reduces the output file's size,
 the size can increase due to the need to represent the timestamp range

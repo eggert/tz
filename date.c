@@ -31,18 +31,6 @@
 #include <locale.h>
 #include <stdio.h>
 
-/*
-** The two things date knows about time are. . .
-*/
-
-#ifndef TM_YEAR_BASE
-# define TM_YEAR_BASE	1900
-#endif /* !defined TM_YEAR_BASE */
-
-#ifndef SECSPERMIN
-# define SECSPERMIN	60
-#endif /* !defined SECSPERMIN */
-
 #if !HAVE_POSIX_DECLS
 extern char *		optarg;
 extern int		optind;

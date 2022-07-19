@@ -33,7 +33,7 @@ DATAFORM=		main
 #	make zonenames
 # to get a list of the values you can use for LOCALTIME.
 
-LOCALTIME=	GMT
+LOCALTIME=	Factory
 
 # The POSIXRULES macro controls interpretation of nonstandard and obsolete
 # POSIX-like TZ settings like TZ='EET-2EEST' that lack DST transition rules.

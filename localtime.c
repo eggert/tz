@@ -74,7 +74,8 @@ static void unlock(void) { }
 
 static const char	wildabbr[] = WILDABBR;
 
-static const char	gmt[] = "GMT";
+static char const etc_utc[] = "Etc/UTC";
+static char const *utc = etc_utc + sizeof "Etc/" - 1;
 
 /*
 ** The DST rules to use if TZ has no rules and we can't load TZDEFRULES.
@@ -125,7 +126,7 @@ struct state {
 	time_t		ats[TZ_MAX_TIMES];
 	unsigned char	types[TZ_MAX_TIMES];
 	struct ttinfo	ttis[TZ_MAX_TYPES];
-	char chars[max(max(TZ_MAX_CHARS + CHARS_EXTRA, sizeof gmt),
+	char chars[max(max(TZ_MAX_CHARS + CHARS_EXTRA, sizeof "UTC"),
 		       2 * (MY_TZNAME_MAX + 1))];
 	struct lsinfo	lsis[TZ_MAX_LEAPS];
 
@@ -314,7 +315,7 @@ settzname(void)
 	int stddst_mask = 0;
 
 #if HAVE_TZNAME
-	tzname[0] = tzname[1] = (char *) (sp ? wildabbr : gmt);
+	tzname[0] = tzname[1] = (char *) (sp ? wildabbr : utc);
 	stddst_mask = 3;
 #endif
 #if USG_COMPAT
@@ -1393,8 +1394,8 @@ tzparse(const char *name, struct state *sp, struct state *basep)
 static void
 gmtload(struct state *const sp)
 {
-	if (tzload(gmt, sp, true) != 0)
-	  tzparse("GMT0", sp, NULL);
+	if (tzload(etc_utc, sp, true) != 0)
+	  tzparse("UTC0", sp, NULL);
 }
 
 /* Initialize *SP to a value appropriate for the TZ setting NAME.
@@ -1412,7 +1413,7 @@ zoneinit(struct state *sp, char const *name)
     sp->charcnt = 0;
     sp->goback = sp->goahead = false;
     init_ttinfo(&sp->ttis[0], 0, false, 0);
-    strcpy(sp->chars, gmt);
+    strcpy(sp->chars, utc);
     sp->defaulttype = 0;
     return 0;
   } else {
@@ -1666,7 +1667,7 @@ gmtsub(struct state const *sp, time_t const *timep, int_fast32_t offset,
 	** but this is no time for a treasure hunt.
 	*/
 	tmp->TM_ZONE = ((char *)
-			(offset ? wildabbr : gmtptr ? gmtptr->chars : gmt));
+			(offset ? wildabbr : gmtptr ? gmtptr->chars : utc));
 #endif /* defined TM_ZONE */
 	return result;
 }

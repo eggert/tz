@@ -59,6 +59,11 @@ Unreleased, experimental changes
     use just after until time" when a transition to a new standard
     time occurs simultanously with the first DST fallback transition.
 
+  Changes to build procedure
+
+    'make install' now defaults LOCALTIME to Factory not GMT,
+    which means the default abbreviation is now "-00" not "GMT".
+
 
 Release 2022a - 2022-03-15 23:02:01 -0700
 

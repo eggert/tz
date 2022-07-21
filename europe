@@ -2845,18 +2845,18 @@ Zone Europe/Simferopol	 2:16:24 -	LMT	1880
 			 2:00	-	EET	1992 Mar 20
 # Central Crimea used Moscow time 1994/1997.
 #
-# From Paul Eggert (2022-04-18):
-# The _Economist_ (1994-05-28, p 45) reports that central Crimea switched
-# from Kiev to Moscow time sometime after the January 1994 elections.
+# From Paul Eggert (2022-07-21):
+# The _Economist_ (1994-05-28, p 45) reported that central Crimea switched
+# from Kyiv to Moscow time sometime after the January 1994 elections.
 # Shanks (1999) says "date of change uncertain", but implies that it happened
 # sometime between the 1994 DST switches.  Shanks & Pottenger simply say
 # 1994-09-25 03:00, but that can't be right.  For now, guess it
 # changed in May.  This change evidently didn't last long; see below.
 			 2:00	C-Eur	EE%sT	1994 May
-# From IATA SSIM (1994/1997), which also says that Kerch is still like Kiev.
+# From IATA SSIM (1994/1997), which also said that Kerch is still like Kyiv.
 			 3:00	C-Eur	MSK/MSD	1996 Mar 31  0:00s
 			 3:00	1:00	MSD	1996 Oct 27  3:00s
-# IATA SSIM (1997-09) says Crimea switched to EET/EEST.
+# IATA SSIM (1997-09) said Crimea switched to EET/EEST.
 # Assume it happened in March by not changing the clocks.
 			 3:00	-	MSK	1997 Mar lastSun  1:00u
 # From Alexander Krivenyshev (2014-03-17):
@@ -4078,7 +4078,7 @@ Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 # The law documents themselves are at
 # http://w1.c1.rada.gov.ua/pls/zweb_n/webproc4_1?id=&pf3511=41484
 
-# From Vladimir in Moscow via Alois Treindl re Kiev time 1991/2 (2014-02-28):
+# From Vladimir in Moscow via Alois Treindl re Kyiv time 1991/2 (2014-02-28):
 # First in Ukraine they changed Time zone from UTC+3 to UTC+2 with DST:
 #       03 25 1990 02:00 -03.00 1       Time Zone 3 with DST
 #       07 01 1990 02:00 -02.00 1       Time Zone 2 with DST

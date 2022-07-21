@@ -9,7 +9,11 @@
 # it does not do these nonessential tasks now.
 #
 # Although main and vanguard forms are currently equivalent,
-# this need not always be the case.
+# this need not always be the case.  When the two forms differ,
+# this script can convert either from main to vanguard form (needed then),
+# or from vanguard to main form (this conversion would be needed later,
+# after main became rearguard and vanguard became main).
+# There is no need to convert rearguard to other forms.
 #
 # When converting to vanguard form, the output can use negative SAVE
 # values.
@@ -26,7 +30,6 @@ BEGIN {
 
   # The command line should set DATAFORM.
   if (!dataform_type[DATAFORM]) exit 1
-  vanguard = DATAFORM == "vanguard"
 }
 
 /^Zone/ { zone = $2 }
@@ -38,7 +41,7 @@ DATAFORM != "main" {
   # If this line should differ due to Czechoslovakia using negative SAVE values,
   # uncomment the desired version and comment out the undesired one.
   if (zone == "Europe/Prague" && /^#?[\t ]+[01]:00[\t ]/ && /1947 Feb 23/) {
-    if (($(in_comment + 2) != "-") == vanguard) {
+    if (($(in_comment + 2) != "-") == (DATAFORM != "rearguard")) {
       uncomment = in_comment
     } else {
       comment_out = !in_comment
@@ -54,7 +57,7 @@ DATAFORM != "main" {
   if (Rule_Eire || Zone_Dublin_post_1968) {
     if ((Rule_Eire \
 	 || (Zone_Dublin_post_1968 && $(in_comment + 3) == "IST/GMT"))	\
-	== vanguard) {
+	== (DATAFORM != "rearguard")) {
       uncomment = in_comment
     } else {
       comment_out = !in_comment
@@ -71,11 +74,11 @@ DATAFORM != "main" {
 	       && ((1994 <= $(in_comment + 4) && $(in_comment + 4) <= 2017) \
 		   || in_comment + 3 == NF))))
   if (Rule_Namibia || Zone_using_Namibia_rule) {
-      if ((Rule_Namibia \
-	   ? ($(in_comment + 9) ~ /^-/ \
-	      || ($(in_comment + 9) == 0 && $(in_comment + 10) == "CAT")) \
-	   : $(in_comment + 1) == "2:00" && $(in_comment + 2) == "Namibia") \
-	  == vanguard) {
+    if ((Rule_Namibia \
+	 ? ($(in_comment + 9) ~ /^-/ \
+	    || ($(in_comment + 9) == 0 && $(in_comment + 10) == "CAT")) \
+	 : $(in_comment + 1) == "2:00" && $(in_comment + 2) == "Namibia") \
+	== (DATAFORM != "rearguard")) {
       uncomment = in_comment
     } else {
       comment_out = !in_comment
@@ -89,28 +92,36 @@ DATAFORM != "main" {
     sub(/^/, "#")
   }
 
-  # In rearguard format, change the Japan rule line with "Sat>=8 25:00"
-  # to "Sun>=9 1:00", to cater to zic before 2007 and to older Java.
-  if (!vanguard && $1 == "Rule" && $7 == "Sat>=8" && $8 == "25:00") {
-    sub(/Sat>=8/, "Sun>=9")
-    sub(/25:00/, " 1:00")
-  }
+  if (DATAFORM == "rearguard") {
 
-  # In rearguard format, change the Morocco lines with negative SAVE values
-  # to use positive SAVE values.
-  if (!vanguard && $1 == "Rule" && $2 == "Morocco" && $4 == 2018 \
-      && $6 == "Oct") {
-    sub(/\t2018\t/, "\t2017\t")
-  }
-  if (!vanguard && $1 == "Rule" && $2 == "Morocco" && 2019 <= $3) {
-    if ($9 == "0") {
-      sub(/\t0\t/, "\t1:00\t")
-    } else {
-      sub(/\t-1:00\t/, "\t0\t")
+    # In rearguard form, change the Japan rule line with "Sat>=8 25:00"
+    # to "Sun>=9 1:00", to cater to zic before 2007 and to older Java.
+    if (/^Rule/ && $2 == "Japan") {
+      if ($7 == "Sat>=8" && $8 == "25:00") {
+	sub(/Sat>=8/, "Sun>=9")
+	sub(/25:00/, " 1:00")
+      }
     }
-  }
-  if (!vanguard && $1 == "1:00" && $2 == "Morocco" && $3 == "+01/+00") {
-    sub(/1:00\tMorocco\t\+01\/\+00$/, "0:00\tMorocco\t+00/+01")
+
+    # In rearguard form, change the Morocco lines with negative SAVE values
+    # to use positive SAVE values.
+    if ($2 == "Morocco") {
+      if (/^Rule/) {
+	if ($4 == 2018 && $6 == "Oct") {
+	  sub(/\t2018\t/, "\t2017\t")
+	}
+	if (2019 <= $3) {
+	  if ($9 == "0") {
+	    sub(/\t0\t/, "\t1:00\t")
+	  } else {
+	    sub(/\t-1:00\t/, "\t0\t")
+	  }
+	}
+      }
+      if ($1 == "1:00" && $3 == "+01/+00") {
+	sub(/1:00\tMorocco\t\+01\/\+00$/, "0:00\tMorocco\t+00/+01")
+      }
+    }
   }
 }
 

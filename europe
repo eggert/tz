@@ -1892,15 +1892,6 @@ Zone	Europe/Riga	1:36:34	-	LMT	1880
 			2:00	EU	EE%sT
 
 # Liechtenstein
-
-# From Paul Eggert (2013-09-09):
-# Shanks & Pottenger say Vaduz is like Zurich.
-
-# From Alois Treindl (2019-07-04):
-# I was able to access the online archive of the Vaduz paper Vaterland ...
-# I could confirm from the paper that Liechtenstein did in fact follow
-# the same DST in 1941 and 1942 as Switzerland did.
-
 Link Europe/Zurich Europe/Vaduz
 
 

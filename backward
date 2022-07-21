@@ -8,6 +8,10 @@
 # also present in the file 'backzone', which has data important only
 # for pre-1970 timestamps and so is out of scope for tzdb proper.
 
+# Although this file is optional and tzdb will work if you omit it by
+# building with 'make BACKWARD=', in practice downstream users
+# typically use this file for backward compatibility.
+
 # Link	TARGET			LINK-NAME
 Link	Africa/Nairobi		Africa/Asmera
 Link	Africa/Abidjan		Africa/Timbuktu

@@ -6,6 +6,7 @@ Unreleased, experimental changes
     Iran no longer observes DST after 2022.
     Rename Europe/Kiev to Europe/Kyiv.
     New zic -R option
+    Vanguard form now uses %z.
 
   Changes to future timestamps
 
@@ -60,6 +61,14 @@ Unreleased, experimental changes
     time occurs simultanously with the first DST fallback transition.
 
   Changes to build procedure
+
+    Source data in vanguard form now uses the %z notation, introduced
+    in release 2015f.  For example, for America/Sao_Paulo vanguard
+    form contains the zone continuation line "-3:00 Brazil %z", which
+    is simpler and more reliable than the line "-3:00 Brazil -03/-02"
+    used in main and rearguard forms.  The plan is for the main form
+    to use %z eventually; in the meantime maintainers of zi parsers
+    are encouraged to test the parsers on vanguard.zi.
 
     'make install' now defaults LOCALTIME to Factory not GMT,
     which means the default abbreviation is now "-00" not "GMT".

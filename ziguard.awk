@@ -23,6 +23,33 @@
 # of the input data as best it can within the constraints of the
 # rearguard format.
 
+# Given a FIELD like "-0:30", return a minute count like -30.
+function get_minutes(field, \
+		     sign, hours, minutes)
+{
+  sign = field ~ /^-/ ? -1 : 1
+  hours = +field
+  if (field ~ /:/) {
+    minutes = field
+    sub(/[^:]*:/, "", minutes)
+  }
+  return 60 * hours + sign * minutes
+}
+
+# Given an OFFSET, which is a minute count like 300 or 330,
+# return a %z-style abbreviation like "+05" or "+0530".
+function offset_abbr(offset, \
+		     hours, minutes, sign)
+{
+  hours = int(offset / 60)
+  minutes = offset % 60
+  if (minutes) {
+    return sprintf("%+.4d", hours * 100 + minutes);
+  } else {
+    return sprintf("%+.2d", hours)
+  }
+}
+
 BEGIN {
   dataform_type["vanguard"] = 1
   dataform_type["main"] = 1
@@ -85,11 +112,67 @@ DATAFORM != "main" {
     }
   }
 
+  # If this line should differ due to Portugal benefiting from %z if supported,
+  # uncomment the desired version and comment out the undesired one.
+  if (/^#?[\t ]+-[12]:00[\t ]+Port[\t ]+[%+-]/) {
+    if (/%z/ == (DATAFORM == "vanguard")) {
+      uncomment = in_comment
+    } else {
+      comment_out = !in_comment
+    }
+  }
+
   if (uncomment) {
     sub(/^#/, "")
   }
   if (comment_out) {
     sub(/^/, "#")
+  }
+
+  # Prefer %z in vanguard form, explicit abbreviations otherwise.
+  if (DATAFORM == "vanguard") {
+    sub(/^(Zone[\t ]+[^\t ]+)?[\t ]+[^\t ]+[\t ]+[^\t ]+[\t ]+[-+][^\t ]+/, \
+	"&CHANGE-TO-%z")
+    sub(/-00CHANGE-TO-%z/, "-00")
+    sub(/[-+][^\t ]+CHANGE-TO-/, "")
+  } else {
+    if (/^[^#]*%z/) {
+      stdoff_column = 2 * /^Zone/ + 1
+      rules_column = stdoff_column + 1
+      stdoff = get_minutes($stdoff_column)
+      rules = $rules_column
+      stdabbr = offset_abbr(stdoff)
+      if (rules == "-") {
+	abbr = stdabbr
+      } else {
+	dstabbr_only = rules ~ /^[+0-9-]/
+	if (dstabbr_only) {
+	  dstoff = get_minutes(rules)
+	} else {
+	  # The DST offset is normally an hour, but there are special cases.
+	  if (rules == "Morocco" && NF == 3) {
+	    dstoff = -60
+	  } else if (rules == "NBorneo") {
+	    dstoff = 20
+	  } else if (((rules == "Cook" || rules == "LH") && NF == 3) \
+		     || (rules == "Uruguay" \
+			 && /[\t ](1942 Dec 14|1960|1970|1974 Dec 22)$/)) {
+	    dstoff = 30
+	  } else if (rules == "Uruguay" && /[\t ]1974 Mar 10$/) {
+	    dstoff = 90
+	  } else {
+	    dstoff = 60
+	  }
+	}
+	dstabbr = offset_abbr(stdoff + dstoff)
+	if (dstabbr_only) {
+	  abbr = dstabbr
+	} else {
+	  abbr = stdabbr "/" dstabbr
+	}
+      }
+      sub(/%z/, abbr)
+    }
   }
 
   if (DATAFORM == "rearguard") {

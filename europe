@@ -2399,9 +2399,13 @@ Zone	Europe/Lisbon	-0:36:45 -	LMT	1884
 			 0:00	W-Eur	WE%sT	1992 Sep 27  1:00s
 			 1:00	EU	CE%sT	1996 Mar 31  1:00u
 			 0:00	EU	WE%sT
-# This Zone can be simplified once we assume zic %z.
 Zone Atlantic/Azores	-1:42:40 -	LMT	1884        # Ponta Delgada
 			-1:54:32 -	HMT	1912 Jan  1  2:00u # Horta MT
+# Vanguard section, for zic and other parsers that support %z.
+#			-2:00	Port	%z	1966 Apr  3  2:00
+#			-1:00	Port	%z	1983 Sep 25  1:00s
+#			-1:00	W-Eur	%z	1992 Sep 27  1:00s
+# Rearguard section, for parsers lacking %z; see ziguard.awk.
 			-2:00	Port	-02/-01	1942 Apr 25 22:00s
 			-2:00	Port	+00	1942 Aug 15 22:00s
 			-2:00	Port	-02/-01	1943 Apr 17 22:00s
@@ -2413,11 +2417,14 @@ Zone Atlantic/Azores	-1:42:40 -	LMT	1884        # Ponta Delgada
 			-2:00	Port	-02/-01	1966 Apr  3  2:00
 			-1:00	Port	-01/+00	1983 Sep 25  1:00s
 			-1:00	W-Eur	-01/+00	1992 Sep 27  1:00s
+# End of rearguard section.
 			 0:00	EU	WE%sT	1993 Mar 28  1:00u
 			-1:00	EU	-01/+00
-# This Zone can be simplified once we assume zic %z.
 Zone Atlantic/Madeira	-1:07:36 -	LMT	1884        # Funchal
 			-1:07:36 -	FMT	1912 Jan  1  1:00u # Funchal MT
+# Vanguard section, for zic and other parsers that support %z.
+#			-1:00	Port	%z
+# Rearguard section, for parsers lacking %z; see ziguard.awk.
 			-1:00	Port	-01/+00	1942 Apr 25 22:00s
 			-1:00	Port	+01	1942 Aug 15 22:00s
 			-1:00	Port	-01/+00	1943 Apr 17 22:00s
@@ -2427,6 +2434,7 @@ Zone Atlantic/Madeira	-1:07:36 -	LMT	1884        # Funchal
 			-1:00	Port	-01/+00	1945 Apr 21 22:00s
 			-1:00	Port	+01	1945 Aug 25 22:00s
 			-1:00	Port	-01/+00	1966 Apr  3  2:00
+# End of rearguard section.
 			 0:00	Port	WE%sT	1983 Sep 25  1:00s
 			 0:00	EU	WE%sT
 

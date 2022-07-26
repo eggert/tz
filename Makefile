@@ -693,11 +693,6 @@ posix_right:	posix_only
 		  $(MAKE) $(INSTALLARGS) TZDIR='$(TZDIR)-posix' posix_only
 		$(MAKE) $(INSTALLARGS) TZDIR='$(TZDIR)-leaps' right_only
 
-# This obsolescent rule is present for backwards compatibility with
-# tz releases 2014g through 2015g.  It should go away eventually.
-posix_packrat: $(INSTALL_DATA_DEPS)
-		$(MAKE) $(INSTALLARGS) PACKRATDATA=backzone posix_only
-
 zones:		$(REDO)
 
 # dummy.zd is not a real file; it is mentioned here only so that the
@@ -1183,7 +1178,7 @@ zic.o:		private.h tzfile.h version.h
 .PHONY: check_web check_zishrink
 .PHONY: clean clean_misc dummy.zd force_tzs
 .PHONY: install install_data maintainer-clean names
-.PHONY: posix_only posix_packrat posix_right public
+.PHONY: posix_only posix_right public
 .PHONY: rearguard_signatures rearguard_signatures_version
 .PHONY: rearguard_tarballs rearguard_tarballs_version
 .PHONY: right_only right_posix signatures signatures_version

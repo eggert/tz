@@ -2297,6 +2297,8 @@ Release 2016a - 2016-01-26 23:28:02 -0800
     The old 'make posix_packrat' rule is now marked as obsolescent.
     (Thanks to Ian Abbott for an initial implementation.)
 
+    Remove the posix_packrat target, marked obsolescent in 2016a.
+
   Changes affecting documentation and commentary
 
     A new file LICENSE makes it easier to see that the code and data

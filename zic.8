@@ -778,15 +778,13 @@ The
 .BR DAY ,
 and
 .B HH:MM:SS
-fields give the expiration timestamp in UTC for the leap second table;
+fields give the expiration timestamp in UTC for the leap second table.
+.br
+.ne 22
 .SH "EXTENDED EXAMPLE"
 Here is an extended example of
 .B zic
 input, intended to illustrate many of its features.
-In this example, the EU rules are for the European Union
-and for its predecessor organization, the European Communities.
-.br
-.ne 22
 .nf
 .in +2m
 .ta \w'# Rule\0\0'u +\w'NAME\0\0'u +\w'FROM\0\0'u +\w'1973\0\0'u +\w'\*-\0\0'u +\w'Apr\0\0'u +\w'lastSun\0\0'u +\w'2:00\0\0'u +\w'SAVE\0\0'u
@@ -813,8 +811,10 @@ Link	Europe/Zurich	Europe/Vaduz
 .sp
 .in
 .fi
-In this example, the timezone is named Europe/Zurich but it has an alias
-as Europe/Vaduz.  This example says that Zurich was 34 minutes and 8
+In this example, the EU rules are for the European Union
+and for its predecessor organization, the European Communities.
+The timezone is named Europe/Zurich and it has the alias Europe/Vaduz.
+This example says that Zurich was 34 minutes and 8
 seconds east of UT until 1853-07-16 at 00:00, when the legal offset
 was changed to
 7\*d\*_26\*m\*_22.50\*s,

@@ -7,6 +7,7 @@ Unreleased, experimental changes
     Rename Europe/Kiev to Europe/Kyiv.
     New zic -R option
     Vanguard form now uses %z.
+    New tailored_tarballs target, replacing rearguard_tarballs
 
   Changes to future timestamps
 
@@ -69,6 +70,11 @@ Unreleased, experimental changes
     used in main and rearguard forms.  The plan is for the main form
     to use %z eventually; in the meantime maintainers of zi parsers
     are encouraged to test the parsers on vanguard.zi.
+
+    The Makefile has a new tailored_tarballs target for generating
+    special-purpose tarballs.  It generalizes and replaces the
+    rearguard_tarballs target and related targets and macros, which
+    are now obsolescent.
 
     'make install' now defaults LOCALTIME to Factory not GMT,
     which means the default abbreviation is now "-00" not "GMT".

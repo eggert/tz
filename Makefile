@@ -1039,9 +1039,9 @@ REARGUARD_ASC = \
 ALL_ASC = $(TRADITIONAL_ASC) $(REARGUARD_ASC) \
   tzdb-$(VERSION).tar.lz.asc
 
-tarballs rearguard_tarballs traditional_tarballs \
+tarballs rearguard_tarballs tailored_tarballs traditional_tarballs \
 signatures rearguard_signatures traditional_signatures: \
-  version set-timestamps.out rearguard.zi
+  version set-timestamps.out rearguard.zi vanguard.zi
 		VERSION=`cat version` && \
 		$(MAKE) AWK='$(AWK)' VERSION="$$VERSION" $@_version
 
@@ -1054,6 +1054,8 @@ rearguard_tarballs_version: \
   tzdata$(VERSION)-rearguard.tar.gz
 traditional_tarballs_version: \
   tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz
+tailored_tarballs_version: \
+  tzdata$(VERSION)-tailored.tar.gz
 signatures_version: $(ALL_ASC)
 rearguard_signatures_version: $(REARGUARD_ASC)
 traditional_signatures_version: $(TRADITIONAL_ASC)
@@ -1071,27 +1073,62 @@ tzdata$(VERSION).tar.gz: set-timestamps.out
 		  gzip $(GZIPFLAGS) >$@.out
 		mv $@.out $@
 
+# Create empty files with a reproducible timestamp.
+CREATE_EMPTY = TZ=UTC0 touch -mt 202010122253.00
+
+# The obsolescent *rearguard* targets and related macros are present
+# for backwards compatibility with tz releases 2018e through 2022a.
+# They should go away eventually.  To build rearguard tarballs you
+# can instead use 'make DATAFORM=rearguard tailored_tarballs'.
 tzdata$(VERSION)-rearguard.tar.gz: rearguard.zi set-timestamps.out
-		rm -fr tzdata$(VERSION)-rearguard.dir
-		mkdir tzdata$(VERSION)-rearguard.dir
-		ln $(COMMON) $(DATA) $(MISC) tzdata$(VERSION)-rearguard.dir
-		cd tzdata$(VERSION)-rearguard.dir && \
-		  rm -f $(TDATA) $(PACKRATDATA) version
+		rm -fr $@.dir
+		mkdir $@.dir
+		ln $(COMMON) $(DATA) $(MISC) $@.dir
+		cd $@.dir && rm -f $(TDATA) $(PACKRATDATA) version
 		for f in $(TDATA) $(PACKRATDATA); do \
-		  rearf=tzdata$(VERSION)-rearguard.dir/$$f; \
+		  rearf=$@.dir/$$f; \
 		  $(AWK) -v DATAFORM=rearguard -f ziguard.awk $$f >$$rearf && \
 		  $(SET_TIMESTAMP_DEP) $$rearf ziguard.awk $$f || exit; \
 		done
-		sed '1s/$$/-rearguard/' \
-		  <version >tzdata$(VERSION)-rearguard.dir/version
+		sed '1s/$$/-rearguard/' <version >$@.dir/version
 		: The dummy pacificnew pacifies TZUpdater 2.3.1 and earlier.
-		TZ=UTC0 touch -mt 202010122253.00 \
-		  tzdata$(VERSION)-rearguard.dir/pacificnew
-		touch -cmr version tzdata$(VERSION)-rearguard.dir/version
+		$(CREATE_EMPTY) $@.dir/pacificnew
+		touch -cmr version $@.dir/version
 		LC_ALL=C && export LC_ALL && \
-		  (cd tzdata$(VERSION)-rearguard.dir && \
+		  (cd $@.dir && \
 		   tar $(TARFLAGS) -cf - \
 			$(COMMON) $(DATA) $(MISC) pacificnew | \
+		     gzip $(GZIPFLAGS)) >$@.out
+		mv $@.out $@
+
+# Create a tailored tarball suitable for TZUpdater and compatible tools.
+# For example, 'make DATAFORM=vanguard tailored_tarballs' makes a tarball
+# useful for testing whether TZUpdater supports vanguard form.
+tzdata$(VERSION)-tailored.tar.gz: set-timestamps.out
+		rm -fr $@.dir
+		mkdir $@.dir
+		: The dummy pacificnew pacifies TZUpdater 2.3.1 and earlier.
+		cd $@.dir && \
+		  $(CREATE_EMPTY) $(PRIMARY_YDATA) $(NDATA) backward pacificnew
+		(grep '^#' tzdata.zi && echo && cat $(DATAFORM).zi) \
+		  >$@.dir/etcetera
+		touch -cmr tzdata.zi $@.dir/etcetera
+		sed -n \
+		  -e '/^# *version  *\(.*\)/h' \
+		  -e '/^# *ddeps  */H' \
+		  -e '$$!d' \
+		  -e 'g' \
+		  -e 's/^# *version  *//' \
+		  -e 's/\n# *ddeps  */-/' \
+		  -e 's/ /-/g' \
+		  -e 'p' \
+		  <tzdata.zi >$@.dir/version
+		touch -cmr version $@.dir/version
+		LC_ALL=C && export LC_ALL && \
+		  (cd $@.dir && \
+		   tar $(TARFLAGS) -cf - \
+			$(TDATA_TO_CHECK) version \
+			`test $(DATAFORM) = vanguard || echo pacificnew` | \
 		     gzip $(GZIPFLAGS)) >$@.out
 		mv $@.out $@
 
@@ -1153,6 +1190,7 @@ zic.o:		private.h tzfile.h version.h
 .PHONY: tarballs tarballs_version
 .PHONY: traditional_signatures traditional_signatures_version
 .PHONY: traditional_tarballs traditional_tarballs_version
+.PHONY: tailored_tarballs tailored_tarballs_version
 .PHONY: typecheck
 .PHONY: zonenames zones
 .PHONY: $(ZDS)

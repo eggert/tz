@@ -1061,7 +1061,9 @@ half second, even though every <abbr>POSIX</abbr> minute has exactly
 sixty seconds. This approach works with the default <code><abbr>tz</abbr></code>
 "<code>posix</code>" configuration, is <a
 href="http://bk1.ntp.org/ntp-stable/README.leapsmear">supported</a> by
-the <abbr>NTP</abbr> reference implementation, and is used by major
+the <abbr>NTP</abbr> reference implementation, <a
+href="https://github.com/google/unsmear">supports</a> conversion between
+<abbr>UTC</abbr> and smeared <abbr>POSIX</abbr> timestamps, and is used by major
 cloud service providers. However, according to
 <a href="https://tools.ietf.org/html/rfc8633#section-3.7.1">&sect;3.7.1 of
 Network Time Protocol Best Current Practices</a>

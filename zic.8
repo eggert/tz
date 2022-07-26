@@ -28,6 +28,16 @@ zic \- timezone compiler
 .  ds :
 .  ds - \-
 .\}
+.ds d " degrees
+.ds m " minutes
+.ds s " seconds
+.ds _ " \"
+.if t .if \n(.g .if c \(de .if c \(fm .if c \(sd \{\
+.  ds d \(de
+.  ds m \(fm
+.  ds s \(sd
+.  ds _ \|
+.\}
 The
 .B zic
 program reads text from the file(s) named on the command line
@@ -807,9 +817,7 @@ In this example, the timezone is named Europe/Zurich but it has an alias
 as Europe/Vaduz.  This example says that Zurich was 34 minutes and 8
 seconds east of UT until 1853-07-16 at 00:00, when the legal offset
 was changed to
-.ds o 7 degrees 26 minutes 22.50 seconds
-.if \n(.g .if c \(de .if c \(fm .if c \(sd .ds o 7\(de\|26\(fm\|22.50\(sd
-\*o,
+7\*d\*_26\*m\*_22.50\*s,
 which works out to 0:29:45.50;
 .B zic
 treats this by rounding it to 0:29:46.

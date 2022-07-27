@@ -79,6 +79,8 @@ Unreleased, experimental changes
     'make install' now defaults LOCALTIME to Factory not GMT,
     which means the default abbreviation is now "-00" not "GMT".
 
+    Remove the posix_packrat target, marked obsolescent in 2016a.
+
 
 Release 2022a - 2022-03-15 23:02:01 -0700
 
@@ -2296,8 +2298,6 @@ Release 2016a - 2016-01-26 23:28:02 -0800
     e.g., with 'make PACKRATDATA=backzone REDO=posix_right zones'.
     The old 'make posix_packrat' rule is now marked as obsolescent.
     (Thanks to Ian Abbott for an initial implementation.)
-
-    Remove the posix_packrat target, marked obsolescent in 2016a.
 
   Changes affecting documentation and commentary
 

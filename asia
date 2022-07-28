@@ -542,7 +542,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=11	 2:00	1:00	D
 # Zhongyuan Time ("Central plain Time") UT +08
 # Now part of Asia/Shanghai.
 # most of China
-# Milne gives 8:05:43.2 for Xujiahui Observatory time; round to nearest.
+# Milne gives 8:05:43.2 for Xujiahui Observatory time....
 # Guo says Shanghai switched to UT +08 "from the end of the 19th century".
 #
 # Long-shu Time (probably as Long and Shu were two names of the area) UT +07
@@ -661,6 +661,7 @@ Rule	PRC	1987	1991	-	Apr	Sun>=11	 2:00	1:00	D
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 # Beijing time, used throughout China; represented by Shanghai.
+		#STDOFF	8:05:43.2
 Zone	Asia/Shanghai	8:05:43	-	LMT	1901
 			8:00	Shang	C%sT	1949 May 28
 			8:00	PRC	C%sT
@@ -672,7 +673,7 @@ Zone	Asia/Urumqi	5:50:20	-	LMT	1928
 
 # Hong Kong
 
-# Milne gives 7:36:41.7; round this.
+# Milne gives 7:36:41.7.
 
 # From Lee Yiu Chung (2009-10-24):
 # I found there are some mistakes for the...DST rule for Hong
@@ -856,6 +857,7 @@ Rule	HK	1973	only	-	Dec	30	3:30	1:00	S
 Rule	HK	1979	only	-	May	13	3:30	1:00	S
 Rule	HK	1979	only	-	Oct	21	3:30	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+		#STDOFF	7:36:41.7			     0:36:41.7
 Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30  0:36:42
 			8:00	-	HKT	1941 Jun 15  3:00
 			8:00	1:00	HKST	1941 Oct  1  4:00
@@ -1331,7 +1333,7 @@ Zone	Asia/Kolkata	5:53:28 -	LMT	1854 Jun 28 # Kolkata
 #
 # From Paul Eggert (2014-09-06):
 # The 1876 Report of the Secretary of the [US] Navy, p 306 says that Batavia
-# civil time was 7:07:12.5; round to even for Jakarta.
+# civil time was 7:07:12.5.
 #
 # From Gwillim Law (2001-05-28), overriding Shanks & Pottenger:
 # http://www.sumatera-inc.com/go_to_invest/about_indonesia.asp#standtime
@@ -1367,6 +1369,7 @@ Zone	Asia/Kolkata	5:53:28 -	LMT	1854 Jun 28 # Kolkata
 #
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 # Java, Sumatra
+		#STDOFF	7:07:12.5
 Zone Asia/Jakarta	7:07:12 -	LMT	1867 Aug 10
 # Shanks & Pottenger say the next transition was at 1924 Jan 1 0:13,
 # but this must be a typo.
@@ -3868,7 +3871,8 @@ Zone	Asia/Samarkand	4:27:53 -	LMT	1924 May  2
 			6:00	-	+06	1982 Apr  1
 			5:00 RussiaAsia	+05/+06	1992
 			5:00	-	+05
-# Milne says Tashkent was 4:37:10.8; round to nearest.
+# Milne says Tashkent was 4:37:10.8.
+		#STDOFF	4:37:10.8
 Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 			5:00	-	+05	1930 Jun 21
 			6:00 RussiaAsia	+06/+07	1991 Mar 31  2:00
@@ -3887,7 +3891,7 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # The English-language name of Vietnam's most populous city is "Ho Chi Minh
 # City"; use Ho_Chi_Minh below to avoid a name of more than 14 characters.
 
-# From Paul Eggert (2014-10-21) after a heads-up from Trần Ngọc Quân:
+# From Paul Eggert (2022-07-27) after a 2014 heads-up from Trần Ngọc Quân:
 # Trần Tiến Bình's authoritative book "Lịch Việt Nam: thế kỷ XX-XXI (1901-2100)"
 # (Nhà xuất bản Văn Hoá - Thông Tin, Hanoi, 2005), pp 49-50,
 # is quoted verbatim in:
@@ -3899,8 +3903,8 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # The 1906 transition was effective July 1 and standardized Indochina to
 # Phù Liễn Observatory, legally 104° 17' 17" east of Paris.
 # It's unclear whether this meant legal Paris Mean Time (00:09:21) or
-# the Paris Meridian (2° 20' 14.03" E); the former yields 07:06:30.1333...
-# and the latter 07:06:29.333... so either way it rounds to 07:06:30,
+# the Paris Meridian (2° 20' 14.03" E); the former yields 07:06:30.1333...,
+# the latter 07:06:29.333..., and for now guess the former,
 # which is used below even though the modern-day Phù Liễn Observatory
 # is closer to 07:06:31.  Abbreviate Phù Liễn Mean Time as PLMT.
 #
@@ -3927,6 +3931,7 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # NXB Thuận Hoá, Huế, 1995.
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+		#STDOFF	7:06:30.133333333
 Zone Asia/Ho_Chi_Minh	7:06:40 -	LMT	1906 Jul  1
 			7:06:30	-	PLMT	1911 May  1 # Phù Liễn MT
 			7:00	-	+07	1942 Dec 31 23:00

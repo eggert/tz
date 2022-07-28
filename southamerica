@@ -400,6 +400,7 @@ Rule	Arg	2008	only	-	Oct	Sun>=15	0:00	1:00	-
 #
 # Buenos Aires (BA), Capital Federal (CF),
 Zone America/Argentina/Buenos_Aires -3:53:48 - LMT	1894 Oct 31
+		#STDOFF	-4:16:48.25
 			-4:16:48 -	CMT	1920 May    # Córdoba Mean Time
 			-4:00	-	-04	1930 Dec
 			-4:00	Arg	-04/-03	1969 Oct  5
@@ -417,6 +418,7 @@ Zone America/Argentina/Buenos_Aires -3:53:48 - LMT	1894 Oct 31
 # - Santiago del Estero switched to -4:00 on 1991-04-01,
 #   then to -3:00 on 1991-04-26.
 #
+		#STDOFF	       -4:16:48.25
 Zone America/Argentina/Cordoba -4:16:48 - LMT	1894 Oct 31
 			-4:16:48 -	CMT	1920 May
 			-4:00	-	-04	1930 Dec
@@ -429,6 +431,7 @@ Zone America/Argentina/Cordoba -4:16:48 - LMT	1894 Oct 31
 #
 # Salta (SA), La Pampa (LP), Neuquén (NQ), Rio Negro (RN)
 Zone America/Argentina/Salta -4:21:40 - LMT	1894 Oct 31
+		#STDOFF	-4:16:48.25
 			-4:16:48 -	CMT	1920 May
 			-4:00	-	-04	1930 Dec
 			-4:00	Arg	-04/-03	1969 Oct  5
@@ -441,6 +444,7 @@ Zone America/Argentina/Salta -4:21:40 - LMT	1894 Oct 31
 #
 # Tucumán (TM)
 Zone America/Argentina/Tucuman -4:20:52 - LMT	1894 Oct 31
+		#STDOFF	-4:16:48.25
 			-4:16:48 -	CMT	1920 May
 			-4:00	-	-04	1930 Dec
 			-4:00	Arg	-04/-03	1969 Oct  5
@@ -454,6 +458,7 @@ Zone America/Argentina/Tucuman -4:20:52 - LMT	1894 Oct 31
 #
 # La Rioja (LR)
 Zone America/Argentina/La_Rioja -4:27:24 - LMT	1894 Oct 31
+		#STDOFF	-4:16:48.25
 			-4:16:48 -	CMT	1920 May
 			-4:00	-	-04	1930 Dec
 			-4:00	Arg	-04/-03	1969 Oct  5
@@ -468,6 +473,7 @@ Zone America/Argentina/La_Rioja -4:27:24 - LMT	1894 Oct 31
 #
 # San Juan (SJ)
 Zone America/Argentina/San_Juan -4:34:04 - LMT	1894 Oct 31
+		#STDOFF	-4:16:48.25
 			-4:16:48 -	CMT	1920 May
 			-4:00	-	-04	1930 Dec
 			-4:00	Arg	-04/-03	1969 Oct  5
@@ -482,6 +488,7 @@ Zone America/Argentina/San_Juan -4:34:04 - LMT	1894 Oct 31
 #
 # Jujuy (JY)
 Zone America/Argentina/Jujuy -4:21:12 -	LMT	1894 Oct 31
+		#STDOFF	-4:16:48.25
 			-4:16:48 -	CMT	1920 May
 			-4:00	-	-04	1930 Dec
 			-4:00	Arg	-04/-03	1969 Oct  5
@@ -497,6 +504,7 @@ Zone America/Argentina/Jujuy -4:21:12 -	LMT	1894 Oct 31
 #
 # Catamarca (CT), Chubut (CH)
 Zone America/Argentina/Catamarca -4:23:08 - LMT	1894 Oct 31
+		#STDOFF	-4:16:48.25
 			-4:16:48 -	CMT	1920 May
 			-4:00	-	-04	1930 Dec
 			-4:00	Arg	-04/-03	1969 Oct  5
@@ -511,6 +519,7 @@ Zone America/Argentina/Catamarca -4:23:08 - LMT	1894 Oct 31
 #
 # Mendoza (MZ)
 Zone America/Argentina/Mendoza -4:35:16 - LMT	1894 Oct 31
+		#STDOFF	-4:16:48.25
 			-4:16:48 -	CMT	1920 May
 			-4:00	-	-04	1930 Dec
 			-4:00	Arg	-04/-03	1969 Oct  5
@@ -533,6 +542,7 @@ Rule	SanLuis	2008	2009	-	Mar	Sun>=8	0:00	0	-
 Rule	SanLuis	2007	2008	-	Oct	Sun>=8	0:00	1:00	-
 
 Zone America/Argentina/San_Luis -4:25:24 - LMT	1894 Oct 31
+		#STDOFF	-4:16:48.25
 			-4:16:48 -	CMT	1920 May
 			-4:00	-	-04	1930 Dec
 			-4:00	Arg	-04/-03	1969 Oct  5
@@ -551,6 +561,7 @@ Zone America/Argentina/San_Luis -4:25:24 - LMT	1894 Oct 31
 #
 # Santa Cruz (SC)
 Zone America/Argentina/Rio_Gallegos -4:36:52 - LMT	1894 Oct 31
+		#STDOFF	-4:16:48.25
 			-4:16:48 -	CMT	1920 May
 			-4:00	-	-04	1930 Dec
 			-4:00	Arg	-04/-03	1969 Oct  5
@@ -563,6 +574,7 @@ Zone America/Argentina/Rio_Gallegos -4:36:52 - LMT	1894 Oct 31
 #
 # Tierra del Fuego, Antártida e Islas del Atlántico Sur (TF)
 Zone America/Argentina/Ushuaia -4:33:12 - LMT	1894 Oct 31
+		#STDOFF	-4:16:48.25
 			-4:16:48 -	CMT	1920 May
 			-4:00	-	-04	1930 Dec
 			-4:00	Arg	-04/-03	1969 Oct  5
@@ -1390,13 +1402,14 @@ Zone Antarctica/Palmer	0	-	-00	1965
 
 # Colombia
 
-# Milne gives 4:56:16.4 for Bogotá time in 1899; round to nearest.  He writes,
+# Milne gives 4:56:16.4 for Bogotá time in 1899.  He writes,
 # "A variation of fifteen minutes in the public clocks of Bogota is not rare."
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	CO	1992	only	-	May	 3	0:00	1:00	-
 Rule	CO	1993	only	-	Apr	 4	0:00	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+		#STDOFF	-4:56:16.4
 Zone	America/Bogota	-4:56:16 -	LMT	1884 Mar 13
 			-4:56:16 -	BMT	1914 Nov 23 # Bogotá Mean Time
 			-5:00	CO	-05/-04

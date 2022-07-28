@@ -169,7 +169,7 @@ Link Africa/Abidjan Atlantic/St_Helena	# St Helena
 # Egypt
 
 # Milne says Cairo used 2:05:08.9, the local mean time of the Abbasizeh
-# observatory; round to nearest.  Milne also says that the official time for
+# observatory.  Milne also says that the official time for
 # Egypt was mean noon at the Great Pyramid, 2:04:30.5, but apparently this
 # did not apply to Cairo, Alexandria, or Port Said.
 
@@ -354,6 +354,7 @@ Rule	Egypt	2014	only	-	Jul	31	24:00	1:00	S
 Rule	Egypt	2014	only	-	Sep	lastThu	24:00	0	-
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+		#STDOFF	2:05:08.9
 Zone	Africa/Cairo	2:05:09 -	LMT	1900 Oct
 			2:00	Egypt	EE%sT
 

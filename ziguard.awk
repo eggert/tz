@@ -50,6 +50,35 @@ function offset_abbr(offset, \
   }
 }
 
+# Round TIMESTAMP (a +-hh:mm:ss.dddd string) to the nearest second.
+function round_to_second(timestamp, \
+			 hh, mm, ss, seconds, dot_dddd, subseconds)
+{
+  dot_dddd = timestamp
+  if (!sub(/^[+-]?[0-9]+:[0-9]+:[0-9]+\./, ".", dot_dddd))
+    return timestamp
+  hh = mm = ss = timestamp
+  sub(/^[-+]?[0-9]+:[0-9]+:/, "", ss)
+  sub(/^[-+]?[0-9]+:/, "", mm)
+  sub(/^[-+]?/, "", hh)
+  seconds = 3600 * hh + 60 * mm + ss
+  subseconds = +dot_dddd
+  seconds += 0.5 < subseconds || ((subseconds == 0.5) && (seconds % 2));
+  return sprintf("%s%d:%.2d:%.2d", timestamp ~ /^-/ ? "-" : "", \
+		 seconds / 3600, seconds / 60 % 60, seconds % 60)
+}
+
+function get_rounding_subst(time, subst)
+{
+  if (DATAFORM == "vanguard") {
+    subst[0] = round_to_second(time)
+    subst[1] = time
+  } else {
+    subst[0] = time
+    subst[1] = round_to_second(time)
+  }
+}
+
 BEGIN {
   dataform_type["vanguard"] = 1
   dataform_type["main"] = 1
@@ -57,6 +86,9 @@ BEGIN {
 
   # The command line should set DATAFORM.
   if (!dataform_type[DATAFORM]) exit 1
+
+  stdoff_subst[0] = 0
+  until_subst[0] = 0
 }
 
 /^Zone/ { zone = $2 }
@@ -172,6 +204,27 @@ DATAFORM != "main" {
 	}
       }
       sub(/%z/, abbr)
+    }
+  }
+
+  # Prefer subseconds in vanguard form, whole seconds otherwise.
+  if ($1 == "#STDOFF") {
+    get_rounding_subst($2, stdoff_subst)
+    if ($3) {
+      get_rounding_subst($3, until_subst)
+    } else {
+      until_subst[0] = 0
+    }
+  } else if (stdoff_subst[0]) {
+    stdoff_column = 2 * /^Zone/ + 1
+    stdoff_column_val = $stdoff_column
+    if (stdoff_column_val == stdoff_subst[0]) {
+      $stdoff_column = stdoff_subst[1]
+      if (until_subst[0] && $NF == until_subst[0]) {
+	$NF = until_subst[1]
+      }
+    } else if (stdoff_column_val != stdoff_subst[1]) {
+      stdoff_subst[0] = 0
     }
   }
 

@@ -303,8 +303,7 @@
 # UT-00:25:22 and cites the International Telegraph Bureau.  As it is
 # not clear that there was any practical significance to the change
 # from UT-00:25:22 to UT-00:25:21.1 in civil timekeeping, omit this
-# transition for now and just use the latter value, omitting its
-# fraction since our format cannot represent fractions.
+# transition for now and just use the latter value.
 
 # "Countess Markievicz ... claimed that the [1916] abolition of Dublin Mean Time
 # was among various actions undertaken by the 'English' government that
@@ -538,6 +537,7 @@ Rule	Eire	1990	1995	-	Oct	Sun>=22	 1:00u	-1:00	-
 Rule	Eire	1996	max	-	Oct	lastSun	 1:00u	-1:00	-
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+		#STDOFF	-0:25:21.1
 Zone	Europe/Dublin	-0:25:21 -	LMT	1880 Aug  2
 			-0:25:21 -	DMT	1916 May 21  2:00s
 			-0:25:21 1:00	IST	1916 Oct  1  2:00s
@@ -1298,10 +1298,10 @@ Rule	Finland	1942	only	-	Oct	4	1:00	0	-
 Rule	Finland	1981	1982	-	Mar	lastSun	2:00	1:00	S
 Rule	Finland	1981	1982	-	Sep	lastSun	3:00	0	-
 
-# Milne says Helsinki (Helsingfors) time was 1:39:49.2 (official document);
-# round to nearest.
+# Milne says Helsinki (Helsingfors) time was 1:39:49.2 (official document).
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+		#STDOFF	1:39:49.2
 Zone	Europe/Helsinki	1:39:49 -	LMT	1878 May 31
 			1:39:49	-	HMT	1921 May    # Helsinki Mean Time
 			2:00	Finland	EE%sT	1983
@@ -2304,7 +2304,6 @@ Zone	Europe/Warsaw	1:24:00 -	LMT	1880
 # According to a Portuguese decree (1911-05-26)
 # https://dre.pt/application/dir/pdf1sdip/1911/05/12500/23132313.pdf
 # Lisbon was at -0:36:44.68, but switched to GMT on 1912-01-01 at 00:00.
-# Round the old offset to -0:36:45.  This agrees with Willett....
 #
 # From Michael Deckers (2018-02-15):
 # article 5 [of the 1911 decree; Deckers's translation] ...:
@@ -2391,6 +2390,7 @@ Rule	Port	1981	1982	-	Mar	lastSun	 1:00s	1:00	S
 Rule	Port	1983	only	-	Mar	lastSun	 2:00s	1:00	S
 #
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+		#STDOFF	-0:36:44.68
 Zone	Europe/Lisbon	-0:36:45 -	LMT	1884
 			-0:36:45 -	LMT	1912 Jan  1  0:00u # Lisbon MT
 			 0:00	Port	WE%sT	1966 Apr  3  2:00
@@ -3034,11 +3034,12 @@ Zone Europe/Ulyanovsk	 3:13:36 -	LMT	1919 Jul  1  0:00u
 # Note: Effective 2005-12-01, (59) Perm Oblast and (81) Komi-Permyak
 # Autonomous Okrug merged to form (90, RU-PER) Perm Krai.
 
-# Milne says Yekaterinburg was 4:02:32.9; round to nearest.
+# Milne says Yekaterinburg was 4:02:32.9.
 # Byalokoz 1919 says its provincial time was based on Perm, at 3:45:05.
 # Assume it switched on 1916-07-03, the time of the new standard.
 # The 1919 and 1930 transitions are from Shanks.
 
+		#STDOFF	 4:02:32.9
 Zone Asia/Yekaterinburg	 4:02:33 -	LMT	1916 Jul  3
 			 3:45:05 -	PMT	1919 Jul 15  4:00
 			 4:00	-	+04	1930 Jun 21

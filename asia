@@ -3903,8 +3903,8 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # The 1906 transition was effective July 1 and standardized Indochina to
 # Phù Liễn Observatory, legally 104° 17' 17" east of Paris.
 # It's unclear whether this meant legal Paris Mean Time (00:09:21) or
-# the Paris Meridian (2° 20' 14.03" E); the former yields 07:06:30.1333...,
-# the latter 07:06:29.333..., and for now guess the former,
+# the Paris Meridian; for now guess the former and round the exact
+# 07:06:30.1333... to 07:06:30.13 as the legal spec used 66 2/3 ms precision.
 # which is used below even though the modern-day Phù Liễn Observatory
 # is closer to 07:06:31.  Abbreviate Phù Liễn Mean Time as PLMT.
 #
@@ -3931,8 +3931,8 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # NXB Thuận Hoá, Huế, 1995.
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-		#STDOFF	7:06:30.133333333
-Zone Asia/Ho_Chi_Minh	7:06:40 -	LMT	1906 Jul  1
+		#STDOFF	7:06:30.13
+Zone Asia/Ho_Chi_Minh	7:06:30 -	LMT	1906 Jul  1
 			7:06:30	-	PLMT	1911 May  1 # Phù Liễn MT
 			7:00	-	+07	1942 Dec 31 23:00
 			8:00	-	+08	1945 Mar 14 23:00

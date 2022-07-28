@@ -2174,10 +2174,8 @@ Rule	Neth	1937	1939	-	Oct	Sun>=2	2:00s	0	-
 Rule	Neth	1938	1939	-	May	15	2:00s	1:00	S
 Rule	Neth	1945	only	-	Apr	 2	2:00s	1:00	S
 Rule	Neth	1945	only	-	Sep	16	2:00s	0	-
-#
-# Amsterdam Mean Time was +00:19:32.13, but the .13 is omitted
-# below because the current format requires STDOFF to be an integer.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+		#STDOFF	0:19:32.13
 Zone Europe/Amsterdam	0:19:32 -	LMT	1835
 			0:19:32	Neth	%s	1937 Jul  1
 			0:20	Neth +0020/+0120 1940 May 16  0:00

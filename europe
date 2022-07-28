@@ -2423,7 +2423,7 @@ Zone Atlantic/Azores	-1:42:40 -	LMT	1884        # Ponta Delgada
 Zone Atlantic/Madeira	-1:07:36 -	LMT	1884        # Funchal
 			-1:07:36 -	FMT	1912 Jan  1  1:00u # Funchal MT
 # Vanguard section, for zic and other parsers that support %z.
-#			-1:00	Port	%z
+#			-1:00	Port	%z	1966 Apr  3  2:00
 # Rearguard section, for parsers lacking %z; see ziguard.awk.
 			-1:00	Port	-01/+00	1942 Apr 25 22:00s
 			-1:00	Port	+01	1942 Aug 15 22:00s

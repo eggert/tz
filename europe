@@ -538,7 +538,7 @@ Rule	Eire	1990	1995	-	Oct	Sun>=22	 1:00u	-1:00	-
 Rule	Eire	1996	max	-	Oct	lastSun	 1:00u	-1:00	-
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Dublin	-0:25:00 -	LMT	1880 Aug  2
+Zone	Europe/Dublin	-0:25:21 -	LMT	1880 Aug  2
 			-0:25:21 -	DMT	1916 May 21  2:00s
 			-0:25:21 1:00	IST	1916 Oct  1  2:00s
 			 0:00	GB-Eire	%s	1921 Dec  6 # independence

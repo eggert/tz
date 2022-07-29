@@ -134,8 +134,7 @@ DATAFORM != "main" {
 		   || in_comment + 3 == NF))))
   if (Rule_Namibia || Zone_using_Namibia_rule) {
     if ((Rule_Namibia \
-	 ? ($(in_comment + 9) ~ /^-/ \
-	    || ($(in_comment + 9) == 0 && $(in_comment + 10) == "CAT")) \
+	 ? ($9 ~ /^-/ || ($9 == 0 && $10 == "CAT")) \
 	 : $(in_comment + 1) == "2:00" && $(in_comment + 2) == "Namibia") \
 	== (DATAFORM != "rearguard")) {
       uncomment = in_comment
@@ -219,43 +218,66 @@ DATAFORM != "main" {
     stdoff_column = 2 * /^Zone/ + 1
     stdoff_column_val = $stdoff_column
     if (stdoff_column_val == stdoff_subst[0]) {
-      $stdoff_column = stdoff_subst[1]
+      sub(stdoff_subst[0], stdoff_subst[1])
       if (until_subst[0] && $NF == until_subst[0]) {
-	$NF = until_subst[1]
+	sub(until_subst[0], until_subst[1])
       }
     } else if (stdoff_column_val != stdoff_subst[1]) {
       stdoff_subst[0] = 0
     }
   }
 
-  if (DATAFORM == "rearguard") {
-
-    # In rearguard form, change the Japan rule line with "Sat>=8 25:00"
-    # to "Sun>=9 1:00", to cater to zic before 2007 and to older Java.
-    if (/^Rule/ && $2 == "Japan") {
+  # In rearguard form, change the Japan rule line with "Sat>=8 25:00"
+  # to "Sun>=9 1:00", to cater to zic before 2007 and to older Java.
+  if (/^Rule/ && $2 == "Japan") {
+    if (DATAFORM == "rearguard") {
       if ($7 == "Sat>=8" && $8 == "25:00") {
 	sub(/Sat>=8/, "Sun>=9")
 	sub(/25:00/, " 1:00")
       }
+    } else {
+      if ($7 == "Sun>=9" && $8 == "1:00") {
+	sub(/Sun>=9/, "Sat>=8")
+	sub(/ 1:00/, "25:00")
+      }
     }
+  }
 
-    # In rearguard form, change the Morocco lines with negative SAVE values
-    # to use positive SAVE values.
-    if ($2 == "Morocco") {
-      if (/^Rule/) {
-	if ($4 == 2018 && $6 == "Oct") {
+  # In rearguard form, change the Morocco lines with negative SAVE values
+  # to use positive SAVE values.
+  if ($2 == "Morocco") {
+    if (/^Rule/) {
+      if ($4 ~ /^201[78]$/ && $6 == "Oct") {
+	if (DATAFORM == "rearguard") {
 	  sub(/\t2018\t/, "\t2017\t")
+	} else {
+	  sub(/\t2017\t/, "\t2018\t")
 	}
-	if (2019 <= $3) {
-	  if ($9 == "0") {
+      }
+
+      if (2019 <= $3) {
+	if ($8 == "2:00") {
+	  if (DATAFORM == "rearguard") {
 	    sub(/\t0\t/, "\t1:00\t")
 	  } else {
+	    sub(/\t1:00\t/, "\t0\t")
+	  }
+	} else {
+	  if (DATAFORM == "rearguard") {
 	    sub(/\t-1:00\t/, "\t0\t")
+	  } else {
+	    sub(/\t0\t/, "\t-1:00\t")
 	  }
 	}
       }
-      if ($1 == "1:00" && $3 == "+01/+00") {
-	sub(/1:00\tMorocco\t\+01\/\+00$/, "0:00\tMorocco\t+00/+01")
+    }
+    if ($1 ~ /^[+0-9-]/ && NF == 3) {
+      if (DATAFORM == "rearguard") {
+	sub(/1:00\tMorocco/, "0:00\tMorocco")
+	sub(/\t\+01\/\+00$/, "\t+00/+01")
+      } else {
+	sub(/0:00\tMorocco/, "1:00\tMorocco")
+	sub(/\t\+00\/+01$/, "\t+01/+00")
       }
     }
   }

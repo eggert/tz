@@ -754,7 +754,7 @@ tzselect:	tzselect.ksh version
 
 check:		check_character_set check_white_space check_links \
 		  check_name_lengths check_slashed_abbrs check_sorted \
-		  check_tables check_web check_zishrink check_tzs
+		  check_tables check_web check_ziguard check_zishrink check_tzs
 
 check_character_set: $(ENCHILADA)
 	test ! '$(UTF8_LOCALE)' || \
@@ -838,6 +838,13 @@ check_theory.html check_tz-art.html check_tz-how-to.html check_tz-link.html:
 		    -F file=@$$(expr $@ : 'check_\(.*\)') -o $@.out && \
 		  test ! -s $@.out || { cat $@.out; exit 1; }
 		mv $@.out $@
+
+check_ziguard: rearguard.zi vanguard.zi ziguard.awk
+		$(AWK) -v DATAFORM=rearguard -f ziguard.awk vanguard.zi | \
+		  diff -u rearguard.zi -
+		$(AWK) -v DATAFORM=vanguard -f ziguard.awk rearguard.zi | \
+		  diff -u vanguard.zi -
+		touch $@
 
 # Check that zishrink.awk does not alter the data, and that ziguard.awk
 # preserves main-format data.

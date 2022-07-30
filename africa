@@ -1360,6 +1360,7 @@ Zone	Indian/Reunion	3:41:52 -	LMT	1911 Jun # Saint-Denis
 # coordinated time, will be reinstituted at 2 o'clock on day 1 of January, 2019.]
 
 Zone	Africa/Sao_Tome	 0:26:56 -	LMT	1884
+		#STDOFF	-0:36:44.68
 			-0:36:45 -	LMT	1912 Jan  1 00:00u # Lisbon MT
 			 0:00	-	GMT	2018 Jan  1 01:00
 			 1:00	-	WAT	2019 Jan  1 02:00

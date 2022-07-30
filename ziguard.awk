@@ -192,11 +192,18 @@ DATAFORM != "main" {
     }
   }
 
-  # Prefer subseconds in vanguard form, whole seconds otherwise.
+  # Normally, prefer whole seconds.  However, prefer subseconds
+  # if generating vanguard form and the otherwise-undocumented
+  # VANGUARD_SUBSECONDS environment variable is set.
+  # This relies on #STDOFF comment lines in the data.
+  # It is for hypothetical clients that support UT offsets that are
+  # not integer multiples of one second (e.g., Europe/Lisbon, 1884 to 1912).
+  # No known clients need this currently, and this experimental
+  # feature may be changed or withdrawn in future releases.
   if ($1 == "#STDOFF") {
     stdoff = $2
     rounded_stdoff = round_to_second(stdoff)
-    if (DATAFORM == "vanguard") {
+    if (DATAFORM == "vanguard" && ENVIRON["VANGUARD_SUBSECONDS"]) {
       stdoff_subst[0] = rounded_stdoff
       stdoff_subst[1] = stdoff
     } else {

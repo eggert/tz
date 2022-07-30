@@ -6,7 +6,7 @@ Unreleased, experimental changes
     Iran no longer observes DST after 2022.
     Rename Europe/Kiev to Europe/Kyiv.
     New zic -R option
-    Vanguard form now uses %z and subsecond precision.
+    Vanguard form now uses %z.
     New tailored_tarballs target, replacing rearguard_tarballs
 
   Changes to future timestamps
@@ -30,6 +30,10 @@ Unreleased, experimental changes
     considered DST, not standard time.  Santiago and environs had moved
     their clocks back to rejoin the rest of mainland Chile; put this
     change at the end of 1946-08-28.  (Thanks to Michael Deckers.)
+
+    Some old, small clock transitions have been removed, as people at
+    the time did not change their clocks.  This affects Asia/Hong_Kong
+    in 1904, Asia/Ho_Chi_Minh in 1906, and Europe/Dublin in 1880.
 
   Changes to zone name
 
@@ -70,14 +74,6 @@ Unreleased, experimental changes
     used in main and rearguard forms.  The plan is for the main form
     to use %z eventually; in the meantime maintainers of zi parsers
     are encouraged to test the parsers on vanguard.zi.
-
-    Source data in vanguard form now uses subsecond precision,
-    introduced in release 2018d.  For example, for America/New_York
-    the UT offset before 1883-11-18 is now -4:56:01.6, and the
-    transition time that day is now 12:03:58.4.  Although TZif files
-    have only 1-second resolution so zic rounds these values to
-    -4:56:02 and 12:03:58 respectively, programs other than zic can
-    use the extra precision in the few cases where it is available.
 
     The Makefile has a new tailored_tarballs target for generating
     special-purpose tarballs.  It generalizes and replaces the

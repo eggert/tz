@@ -68,17 +68,6 @@ function round_to_second(timestamp, \
 		 seconds / 3600, seconds / 60 % 60, seconds % 60)
 }
 
-function get_rounding_subst(time, subst)
-{
-  if (DATAFORM == "vanguard") {
-    subst[0] = round_to_second(time)
-    subst[1] = time
-  } else {
-    subst[0] = time
-    subst[1] = round_to_second(time)
-  }
-}
-
 BEGIN {
   dataform_type["vanguard"] = 1
   dataform_type["main"] = 1
@@ -86,9 +75,6 @@ BEGIN {
 
   # The command line should set DATAFORM.
   if (!dataform_type[DATAFORM]) exit 1
-
-  stdoff_subst[0] = 0
-  until_subst[0] = 0
 }
 
 /^Zone/ { zone = $2 }
@@ -208,20 +194,20 @@ DATAFORM != "main" {
 
   # Prefer subseconds in vanguard form, whole seconds otherwise.
   if ($1 == "#STDOFF") {
-    get_rounding_subst($2, stdoff_subst)
-    if ($3) {
-      get_rounding_subst($3, until_subst)
+    stdoff = $2
+    rounded_stdoff = round_to_second(stdoff)
+    if (DATAFORM == "vanguard") {
+      stdoff_subst[0] = rounded_stdoff
+      stdoff_subst[1] = stdoff
     } else {
-      until_subst[0] = 0
+      stdoff_subst[0] = stdoff
+      stdoff_subst[1] = rounded_stdoff
     }
   } else if (stdoff_subst[0]) {
     stdoff_column = 2 * /^Zone/ + 1
     stdoff_column_val = $stdoff_column
     if (stdoff_column_val == stdoff_subst[0]) {
       sub(stdoff_subst[0], stdoff_subst[1])
-      if (until_subst[0] && $NF == until_subst[0]) {
-	sub(until_subst[0], until_subst[1])
-      }
     } else if (stdoff_column_val != stdoff_subst[1]) {
       stdoff_subst[0] = 0
     }

@@ -353,8 +353,8 @@ Rule	NYC	1921	1966	-	Apr	lastSun	2:00	1:00	D
 Rule	NYC	1921	1954	-	Sep	lastSun	2:00	0	S
 Rule	NYC	1955	1966	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-		#STDOFF	-4:56:01.6			    12:03:58.4
-Zone America/New_York	-4:56:02 -	LMT	1883 Nov 18 12:03:58
+		#STDOFF	-4:56:01.6
+Zone America/New_York	-4:56:02 -	LMT	1883 Nov 18 17:00u
 			-5:00	US	E%sT	1920
 			-5:00	NYC	E%sT	1942
 			-5:00	US	E%sT	1946

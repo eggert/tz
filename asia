@@ -857,8 +857,8 @@ Rule	HK	1973	only	-	Dec	30	3:30	1:00	S
 Rule	HK	1979	only	-	May	13	3:30	1:00	S
 Rule	HK	1979	only	-	Oct	21	3:30	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-		#STDOFF	7:36:41.7			     0:36:41.7
-Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 30  0:36:42
+		#STDOFF	7:36:41.7
+Zone	Asia/Hong_Kong	7:36:42 -	LMT	1904 Oct 29 17:00u
 			8:00	-	HKT	1941 Jun 15  3:00
 			8:00	1:00	HKST	1941 Oct  1  4:00
 			8:00	0:30	HKWT	1941 Dec 25

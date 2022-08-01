@@ -1373,7 +1373,7 @@ Zone	Asia/Kolkata	5:53:28 -	LMT	1854 Jun 28 # Kolkata
 Zone Asia/Jakarta	7:07:12 -	LMT	1867 Aug 10
 # Shanks & Pottenger say the next transition was at 1924 Jan 1 0:13,
 # but this must be a typo.
-			7:07:12	-	BMT	1923 Dec 31 23:47:12 # Batavia
+			7:07:12	-	BMT	1923 Dec 31 16:40u # Batavia
 			7:20	-	+0720	1932 Nov
 			7:30	-	+0730	1942 Mar 23
 			9:00	-	+09	1945 Sep 23

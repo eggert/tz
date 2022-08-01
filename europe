@@ -499,7 +499,7 @@ Rule	GB-Eire 1990	1995	-	Oct	Sun>=22	1:00u	0	GMT
 # Use Europe/London for Jersey, Guernsey, and the Isle of Man.
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/London	-0:01:15 -	LMT	1847 Dec  1  0:00s
+Zone	Europe/London	-0:01:15 -	LMT	1847 Dec  1
 			 0:00	GB-Eire	%s	1968 Oct 27
 			 1:00	-	BST	1971 Oct 31  2:00u
 			 0:00	GB-Eire	%s	1996
@@ -1514,7 +1514,7 @@ Link	Europe/Zurich	Europe/Busingen
 
 # Gibraltar
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Europe/Gibraltar	-0:21:24 -	LMT	1880 Aug  2  0:00s
+Zone Europe/Gibraltar	-0:21:24 -	LMT	1880 Aug  2
 			0:00	GB-Eire	%s	1957 Apr 14  2:00
 			1:00	-	CET	1982
 			1:00	EU	CE%sT
@@ -1796,7 +1796,7 @@ Rule	Italy	1978	only	-	Oct	 1	 0:00s	0	-
 Rule	Italy	1979	only	-	Sep	30	 0:00s	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Rome	0:49:56 -	LMT	1866 Dec 12
-			0:49:56	-	RMT	1893 Oct 31 23:49:56 # Rome Mean
+			0:49:56	-	RMT	1893 Oct 31 23:00u # Rome Mean
 			1:00	Italy	CE%sT	1943 Sep 10
 			1:00	C-Eur	CE%sT	1944 Jun  4
 			1:00	Italy	CE%sT	1980
@@ -2000,7 +2000,7 @@ Rule	Malta	1975	1979	-	Apr	Sun>=15	2:00	1:00	S
 Rule	Malta	1975	1980	-	Sep	Sun>=15	2:00	0	-
 Rule	Malta	1980	only	-	Mar	31	2:00	1:00	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Malta	0:58:04 -	LMT	1893 Nov  2  0:00s # Valletta
+Zone	Europe/Malta	0:58:04 -	LMT	1893 Nov  2 # Valletta
 			1:00	Italy	CE%sT	1973 Mar 31
 			1:00	Malta	CE%sT	1981
 			1:00	EU	CE%sT
@@ -3639,7 +3639,7 @@ Rule SpainAfrica 1977	only	-	Sep	28	 0:00	0	-
 Rule SpainAfrica 1978	only	-	Jun	 1	 0:00	1:00	S
 Rule SpainAfrica 1978	only	-	Aug	 4	 0:00	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Europe/Madrid	-0:14:44 -	LMT	1900 Dec 31 23:45:16
+Zone	Europe/Madrid	-0:14:44 -	LMT	1901 Jan  1  0:00u
 			 0:00	Spain	WE%sT	1940 Mar 16 23:00
 			 1:00	Spain	CE%sT	1979
 			 1:00	EU	CE%sT

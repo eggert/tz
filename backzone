@@ -65,6 +65,11 @@
 # Zones are sorted by zone name.  Each zone is preceded by the
 # name of the country that the zone is in, along with any other
 # commentary and rules associated with the entry.
+# If the zone overrides links in the main data, it
+# is followed by the corresponding Link lines.
+# If the zone overrides main-data links only when building with
+# PACKRATLIST=zone.tab, it is followed by a commented-out Link line
+# that starts with "#PACKRATLIST zone.tab".
 #
 # As explained in the zic man page, the zone columns are:
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
@@ -181,6 +186,7 @@ Zone	Africa/Bamako	-0:32:00 -	LMT	1912
 			 0:00	-	GMT	1934 Feb 26
 			-1:00	-	-01	1960 Jun 20
 			 0:00	-	GMT
+#PACKRATLIST zone.tab Link Africa/Bamako Africa/Timbuktu
 
 # Central African Republic
 Zone	Africa/Bangui	1:14:20	-	LMT	1912
@@ -498,6 +504,7 @@ Zone America/Atikokan	-6:06:28 -	LMT	1895
 			-6:00	1:00	CDT	1942 Feb  9  2:00s
 			-6:00	Canada	C%sT	1945 Sep 30  2:00
 			-5:00	-	EST
+#PACKRATLIST zone.tab Link America/Atikokan America/Coral_Harbour
 
 # Quebec east of Natashquan
 

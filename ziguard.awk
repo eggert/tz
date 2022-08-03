@@ -73,8 +73,19 @@ BEGIN {
   dataform_type["main"] = 1
   dataform_type["rearguard"] = 1
 
+  if (PACKRATLIST) {
+    while (getline <PACKRATLIST) {
+      if ($0 ~ /^#/) continue
+      packratlist[$3] = 1
+    }
+  }
+
   # The command line should set DATAFORM.
   if (!dataform_type[DATAFORM]) exit 1
+}
+
+$1 == "#PACKRATLIST" && $2 == PACKRATLIST {
+  sub(/^#PACKRATLIST[\t ]+[^\t ]+[\t ]+/, "")
 }
 
 /^Zone/ { zone = $2 }
@@ -274,6 +285,13 @@ DATAFORM != "main" {
       }
     }
   }
+}
+
+/^Zone/ {
+  packrat_ignored = FILENAME == PACKRATDATA && PACKRATLIST && !packratlist[$2];
+}
+packrat_ignored && !/^Rule/ {
+  sub(/^/, "#")
 }
 
 # If a Link line is followed by a Link or Zone line for the same data, comment

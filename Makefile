@@ -176,12 +176,19 @@ TZDATA_TEXT=	leapseconds tzdata.zi
 
 BACKWARD=	backward
 
-# If you want out-of-scope and often-wrong data from the file 'backzone', use
+# If you want out-of-scope and often-wrong data from the file 'backzone',
+# but only for entries listed in the backward-compatibility file zone.tab, use
 #	PACKRATDATA=	backzone
+#	PACKRATLIST=	zone.tab
+# If you want all the 'backzone' data, use
+#	PACKRATDATA=	backzone
+#	PACKRATLIST=
 # To omit this data, use
 #	PACKRATDATA=
+#	PACKRATLIST=
 
 PACKRATDATA=
+PACKRATLIST=
 
 # The name of a locale using the UTF-8 encoding, used during self-tests.
 # The tests are skipped if the name does not appear to work on this system.
@@ -524,8 +531,9 @@ TDATA=		$(YDATA) $(NDATA) $(BACKWARD)
 ZONETABLES=	zone1970.tab zone.tab
 TABDATA=	iso3166.tab $(TZDATA_TEXT) $(ZONETABLES)
 LEAP_DEPS=	leapseconds.awk leap-seconds.list
-TZDATA_ZI_DEPS=	ziguard.awk zishrink.awk version $(TDATA) $(PACKRATDATA)
-DSTDATA_ZI_DEPS= ziguard.awk $(TDATA) $(PACKRATDATA)
+TZDATA_ZI_DEPS=	ziguard.awk zishrink.awk version $(TDATA) \
+		  $(PACKRATDATA) $(PACKRATLIST)
+DSTDATA_ZI_DEPS= ziguard.awk $(TDATA) $(PACKRATDATA) $(PACKRATLIST)
 DATA=		$(TDATA_TO_CHECK) backzone iso3166.tab leap-seconds.list \
 			leapseconds $(ZONETABLES)
 AWK_SCRIPTS=	checklinks.awk checktab.awk leapseconds.awk \
@@ -611,13 +619,17 @@ version:	$(VERSION_DEPS)
 		printf '%s\n' "$$V" >$@.out
 		mv $@.out $@
 
-# These files can be tailored by setting BACKWARD and PACKRATDATA.
+# These files can be tailored by setting BACKWARD, PACKRATDATA, PACKRATLIST.
 vanguard.zi main.zi rearguard.zi: $(DSTDATA_ZI_DEPS)
-		$(AWK) -v DATAFORM=`expr $@ : '\(.*\).zi'` -f ziguard.awk \
+		$(AWK) \
+		  -v DATAFORM=`expr $@ : '\(.*\).zi'` \
+		  -v PACKRATDATA='$(PACKRATDATA)' \
+		  -v PACKRATLIST='$(PACKRATLIST)' \
+		  -f ziguard.awk \
 		  $(TDATA) $(PACKRATDATA) >$@.out
 		mv $@.out $@
 # This file has a version comment that attempts to capture any tailoring
-# via BACKWARD, DATAFORM, PACKRATDATA, and REDO.
+# via BACKWARD, DATAFORM, PACKRATDATA, PACKRATLIST, and REDO.
 tzdata.zi:	$(DATAFORM).zi version zishrink.awk
 		version=`sed 1q version` && \
 		  LC_ALL=C $(AWK) \
@@ -655,6 +667,7 @@ INSTALLARGS = \
  DESTDIR='$(DESTDIR)' \
  LEAPSECONDS='$(LEAPSECONDS)' \
  PACKRATDATA='$(PACKRATDATA)' \
+ PACKRATLIST='$(PACKRATLIST)' \
  TZDEFAULT='$(TZDEFAULT)' \
  TZDIR='$(TZDIR)' \
  ZIC='$(ZIC)'
@@ -850,7 +863,8 @@ check_ziguard: rearguard.zi vanguard.zi ziguard.awk
 # preserves main-format data.
 check_zishrink: check_zishrink_posix check_zishrink_right
 check_zishrink_posix check_zishrink_right: \
-  zic leapseconds $(PACKRATDATA) $(TDATA) $(DATAFORM).zi tzdata.zi
+  zic leapseconds $(PACKRATDATA) $(PACKRATLIST) \
+  $(TDATA) $(DATAFORM).zi tzdata.zi
 		rm -fr $@.dir $@-t.dir $@-shrunk.dir
 		mkdir $@.dir $@-t.dir $@-shrunk.dir
 		case $@ in \
@@ -859,8 +873,8 @@ check_zishrink_posix check_zishrink_right: \
 		esac && \
 		  $(ZIC) $$leap -d $@.dir $(DATAFORM).zi && \
 		  $(ZIC) $$leap -d $@-shrunk.dir tzdata.zi && \
-		  case $(DATAFORM) in \
-		    main) \
+		  case $(DATAFORM),$(PACKRATLIST) in \
+		    main,) \
 		      $(ZIC) $$leap -d $@-t.dir $(TDATA) && \
 		      $(AWK) '/^Rule/' $(TDATA) | \
 			$(ZIC) $$leap -d $@-t.dir - $(PACKRATDATA) && \
@@ -980,6 +994,10 @@ check_public: $(VERSION_DEPS)
 		: Also check 'backzone' syntax.
 		rm public.dir/main.zi
 		cd public.dir && $(MAKE) PACKRATDATA=backzone main.zi
+		public.dir/zic -d public.dir/zoneinfo main.zi
+		rm public.dir/main.zi
+		cd public.dir && \
+		  $(MAKE) PACKRATDATA=backzone PACKRATLIST=zone.tab main.zi
 		public.dir/zic -d public.dir/zoneinfo main.zi
 		:
 		rm -fr public.dir

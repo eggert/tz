@@ -255,10 +255,7 @@ Zone	Indian/Chagos	4:49:40	-	LMT	1907
 			6:00	-	+06
 
 # Brunei
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Brunei	7:39:40 -	LMT	1926 Mar # Bandar Seri Begawan
-			7:30	-	+0730	1933
-			8:00	-	+08
+# See Asia/Kuching.
 
 # Burma / Myanmar
 
@@ -669,6 +666,7 @@ Zone	Asia/Shanghai	8:05:43	-	LMT	1901
 # / Wulumuqi.  (Please use Asia/Shanghai if you prefer Beijing time.)
 Zone	Asia/Urumqi	5:50:20	-	LMT	1928
 			6:00	-	+06
+Link Asia/Urumqi Antarctica/Vostok
 
 
 # Hong Kong
@@ -2737,20 +2735,8 @@ Zone	Asia/Beirut	2:22:00 -	LMT	1880
 Rule	NBorneo	1935	1941	-	Sep	14	0:00	0:20	-
 Rule	NBorneo	1935	1941	-	Dec	14	0:00	0	-
 #
-# peninsular Malaysia
-# taken from Mok Ly Yng (2003-10-30)
-# https://web.archive.org/web/20190822231045/http://www.math.nus.edu.sg/~mathelmr/teaching/timezone.html
-# This agrees with Singapore since 1905-06-01.
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Asia/Kuala_Lumpur	6:46:46 -	LMT	1901 Jan  1
-			6:55:25	-	SMT	1905 Jun  1 # Singapore M.T.
-			7:00	-	+07	1933 Jan  1
-			7:00	0:20	+0720	1936 Jan  1
-			7:20	-	+0720	1941 Sep  1
-			7:30	-	+0730	1942 Feb 16
-			9:00	-	+09	1945 Sep 12
-			7:30	-	+0730	1982 Jan  1
-			8:00	-	+08
+# For peninsular Malaysia see Asia/Singapore.
+#
 # Sabah & Sarawak
 # From Paul Eggert (2014-08-12):
 # The data entries here are mostly from Shanks & Pottenger, but the 1942, 1945
@@ -2761,6 +2747,7 @@ Zone Asia/Kuching	7:21:20	-	LMT	1926 Mar
 			8:00 NBorneo  +08/+0820	1942 Feb 16
 			9:00	-	+09	1945 Sep 12
 			8:00	-	+08
+Link Asia/Kuching Asia/Brunei
 
 # Maldives
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
@@ -3601,6 +3588,7 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 			9:00	-	+09	1945 Sep 12
 			7:30	-	+0730	1982 Jan  1
 			8:00	-	+08
+Link Asia/Singapore Asia/Kuala_Lumpur
 
 # Spratly Is
 # no information

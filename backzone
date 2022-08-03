@@ -836,6 +836,35 @@ Link Antarctica/McMurdo Antarctica/South_Pole
 Zone Antarctica/Syowa	0	-	-00	1957 Jan 29
 			3:00	-	+03
 
+# Vostok, Antarctica
+#
+# Vostok, since 1957-12-16, temporarily closed 1994-02/1994-11
+# From Craig Mundell (1994-12-15):
+# http://quest.arc.nasa.gov/antarctica/QA/computers/Directions,Time,ZIP
+# Vostok, which is one of the Russian stations, is set on the same
+# time as Moscow, Russia.
+#
+# From Lee Hotz (2001-03-08):
+# I queried the folks at Columbia who spent the summer at Vostok and this is
+# what they had to say about time there:
+# "in the US Camp (East Camp) we have been on New Zealand (McMurdo)
+# time, which is 12 hours ahead of GMT. The Russian Station Vostok was
+# 6 hours behind that (although only 2 miles away, i.e. 6 hours ahead
+# of GMT). This is a time zone I think two hours east of Moscow. The
+# natural time zone is in between the two: 8 hours ahead of GMT."
+#
+# From Paul Eggert (2001-05-04):
+# This seems to be hopelessly confusing, so I asked Lee Hotz about it
+# in person.  He said that some Antarctic locations set their local
+# time so that noon is the warmest part of the day, and that this
+# changes during the year and does not necessarily correspond to mean
+# solar noon.  So the Vostok time might have been whatever the clocks
+# happened to be during their visit.  So we still don't really know what time
+# it is at Vostok.  But we'll guess +06.
+#
+Zone Antarctica/Vostok	0	-	-00	1957 Dec 16
+			6:00	-	+06
+
 # Yemen
 # Milne says 2:59:54 was the meridian of the saluting battery at Aden,
 # and that Yemen was at 1:55:56, the meridian of the Hagia Sophia.
@@ -873,6 +902,11 @@ Zone	Asia/Bahrain	3:22:20 -	LMT	1941 Jul 20  # Manamah
 			3:30	-	+0330	1944 Jan  1
 			4:00	-	+04	1972 Jun
 			3:00	-	+03
+
+# Brunei
+Zone	Asia/Brunei	7:39:40 -	LMT	1926 Mar # Bandar Seri Begawan
+			7:30	-	+0730	1933
+			8:00	-	+08
 
 # India
 #
@@ -928,6 +962,20 @@ Zone	Asia/Kashgar	5:03:56	-	LMT	1928     # or Kashi or Kaxgar
 			5:30	-	+0530	1940
 			5:00	-	+05	1980 May
 			8:00	PRC	C%sT
+
+# peninsular Malaysia
+# taken from Mok Ly Yng (2003-10-30)
+# https://web.archive.org/web/20190822231045/http://www.math.nus.edu.sg/~mathelmr/teaching/timezone.html
+# This agrees with Singapore since 1905-06-01.
+Zone Asia/Kuala_Lumpur	6:46:46 -	LMT	1901 Jan  1
+			6:55:25	-	SMT	1905 Jun  1 # Singapore M.T.
+			7:00	-	+07	1933 Jan  1
+			7:00	0:20	+0720	1936 Jan  1
+			7:20	-	+0720	1941 Sep  1
+			7:30	-	+0730	1942 Feb 16
+			9:00	-	+09	1945 Sep 12
+			7:30	-	+0730	1982 Jan  1
+			8:00	-	+08
 
 # Kuwait
 Zone	Asia/Kuwait	3:11:56 -	LMT	1950
@@ -1002,6 +1050,64 @@ Zone	Asia/Vientiane	6:50:24 -	LMT	1906 Jul  1
 # From Whitman:
 Zone Atlantic/Jan_Mayen	-1:00	-	-01
 
+# Iceland
+#
+# From Adam David (1993-11-06):
+# The name of the timezone in Iceland for system / mail / news purposes is GMT.
+#
+# (1993-12-05):
+# This material is paraphrased from the 1988 edition of the University of
+# Iceland Almanak.
+#
+# From January 1st, 1908 the whole of Iceland was standardised at 1 hour
+# behind GMT. Previously, local mean solar time was used in different parts
+# of Iceland, the almanak had been based on Reykjavík mean solar time which
+# was 1 hour and 28 minutes behind GMT.
+#
+# "first day of winter" referred to [below] means the first day of the 26 weeks
+# of winter, according to the old icelandic calendar that dates back to the
+# time the norsemen first settled Iceland.  The first day of winter is always
+# Saturday, but is not dependent on the Julian or Gregorian calendars.
+#
+# (1993-12-10):
+# I have a reference from the Oxford Icelandic-English dictionary for the
+# beginning of winter, which ties it to the ecclesiastical calendar (and thus
+# to the julian/gregorian calendar) over the period in question.
+#	the winter begins on the Saturday next before St. Luke's day
+#	(old style), or on St. Luke's day, if a Saturday.
+# St. Luke's day ought to be traceable from ecclesiastical sources. "old style"
+# might be a reference to the Julian calendar as opposed to Gregorian, or it
+# might mean something else (???).
+#
+# From Paul Eggert (2014-11-22):
+# The information below is taken from the 1988 Almanak; see
+# http://www.almanak.hi.is/klukkan.html
+#
+Rule	Iceland	1917	1919	-	Feb	19	23:00	1:00	-
+Rule	Iceland	1917	only	-	Oct	21	 1:00	0	-
+Rule	Iceland	1918	1919	-	Nov	16	 1:00	0	-
+Rule	Iceland	1921	only	-	Mar	19	23:00	1:00	-
+Rule	Iceland	1921	only	-	Jun	23	 1:00	0	-
+Rule	Iceland	1939	only	-	Apr	29	23:00	1:00	-
+Rule	Iceland	1939	only	-	Oct	29	 2:00	0	-
+Rule	Iceland	1940	only	-	Feb	25	 2:00	1:00	-
+Rule	Iceland	1940	1941	-	Nov	Sun>=2	 1:00s	0	-
+Rule	Iceland	1941	1942	-	Mar	Sun>=2	 1:00s	1:00	-
+# 1943-1946 - first Sunday in March until first Sunday in winter
+Rule	Iceland	1943	1946	-	Mar	Sun>=1	 1:00s	1:00	-
+Rule	Iceland	1942	1948	-	Oct	Sun>=22	 1:00s	0	-
+# 1947-1967 - first Sunday in April until first Sunday in winter
+Rule	Iceland	1947	1967	-	Apr	Sun>=1	 1:00s	1:00	-
+# 1949 and 1967 Oct transitions delayed by 1 week
+Rule	Iceland	1949	only	-	Oct	30	 1:00s	0	-
+Rule	Iceland	1950	1966	-	Oct	Sun>=22	 1:00s	0	-
+Rule	Iceland	1967	only	-	Oct	29	 1:00s	0	-
+
+Zone Atlantic/Reykjavik	-1:28	-	LMT	1908
+			-1:00	Iceland	-01/+00	1968 Apr  7  1:00s
+			 0:00	-	GMT
+Link Atlantic/Reykjavik Iceland
+
 # St Helena
 Zone Atlantic/St_Helena	-0:22:48 -	LMT	1890 # Jamestown
 			-0:22:48 -	JMT	1951 # Jamestown Mean Time
@@ -1013,6 +1119,82 @@ Zone Australia/Currie	9:35:28	-	LMT	1895 Sep
 			10:00	Aus	AE%sT	1968 Oct 15
 			10:00	AT	AE%sT
 
+
+# Netherlands
+
+# Howse writes that the Netherlands' railways used GMT between 1892 and 1940,
+# but for other purposes the Netherlands used Amsterdam mean time.
+
+# However, Robert H. van Gent writes (2001-04-01):
+# Howse's statement is only correct up to 1909. From 1909-05-01 (00:00:00
+# Amsterdam mean time) onwards, the whole of the Netherlands (including
+# the Dutch railways) was required by law to observe Amsterdam mean time
+# (19 minutes 32.13 seconds ahead of GMT). This had already been the
+# common practice (except for the railways) for many decades but it was
+# not until 1909 when the Dutch government finally defined this by law.
+# On 1937-07-01 this was changed to 20 minutes (exactly) ahead of GMT and
+# was generally known as Dutch Time ("Nederlandse Tijd").
+#
+# (2001-04-08):
+# 1892-05-01 was the date when the Dutch railways were by law required to
+# observe GMT while the remainder of the Netherlands adhered to the common
+# practice of following Amsterdam mean time.
+#
+# (2001-04-09):
+# In 1835 the authorities of the province of North Holland requested the
+# municipal authorities of the towns and cities in the province to observe
+# Amsterdam mean time but I do not know in how many cases this request was
+# actually followed.
+#
+# From 1852 onwards the Dutch telegraph offices were by law required to
+# observe Amsterdam mean time. As the time signals from the observatory of
+# Leiden were also distributed by the telegraph system, I assume that most
+# places linked up with the telegraph (and railway) system automatically
+# adopted Amsterdam mean time.
+#
+# Although the early Dutch railway companies initially observed a variety
+# of times, most of them had adopted Amsterdam mean time by 1858 but it
+# was not until 1866 when they were all required by law to observe
+# Amsterdam mean time.
+
+# The data entries before 1945 are taken from
+# https://www.staff.science.uu.nl/~gent0113/wettijd/wettijd.htm
+
+# From Paul Eggert (2021-05-09):
+# I invented the abbreviations AMT for Amsterdam Mean Time and NST for
+# Netherlands Summer Time, used in the Netherlands from 1835 to 1937.
+
+Rule	Neth	1916	only	-	May	 1	0:00	1:00	NST	# Netherlands Summer Time
+Rule	Neth	1916	only	-	Oct	 1	0:00	0	AMT	# Amsterdam Mean Time
+Rule	Neth	1917	only	-	Apr	16	2:00s	1:00	NST
+Rule	Neth	1917	only	-	Sep	17	2:00s	0	AMT
+Rule	Neth	1918	1921	-	Apr	Mon>=1	2:00s	1:00	NST
+Rule	Neth	1918	1921	-	Sep	lastMon	2:00s	0	AMT
+Rule	Neth	1922	only	-	Mar	lastSun	2:00s	1:00	NST
+Rule	Neth	1922	1936	-	Oct	Sun>=2	2:00s	0	AMT
+Rule	Neth	1923	only	-	Jun	Fri>=1	2:00s	1:00	NST
+Rule	Neth	1924	only	-	Mar	lastSun	2:00s	1:00	NST
+Rule	Neth	1925	only	-	Jun	Fri>=1	2:00s	1:00	NST
+# From 1926 through 1939 DST began 05-15, except that it was delayed by a week
+# in years when 05-15 fell in the Pentecost weekend.
+Rule	Neth	1926	1931	-	May	15	2:00s	1:00	NST
+Rule	Neth	1932	only	-	May	22	2:00s	1:00	NST
+Rule	Neth	1933	1936	-	May	15	2:00s	1:00	NST
+Rule	Neth	1937	only	-	May	22	2:00s	1:00	NST
+Rule	Neth	1937	only	-	Jul	 1	0:00	1:00	S
+Rule	Neth	1937	1939	-	Oct	Sun>=2	2:00s	0	-
+Rule	Neth	1938	1939	-	May	15	2:00s	1:00	S
+Rule	Neth	1945	only	-	Apr	 2	2:00s	1:00	S
+Rule	Neth	1945	only	-	Sep	16	2:00s	0	-
+		#STDOFF	0:19:32.13
+Zone Europe/Amsterdam	0:19:32 -	LMT	1835
+			0:19:32	Neth	%s	1937 Jul  1
+			0:20	Neth +0020/+0120 1940 May 16  0:00
+			1:00	C-Eur	CE%sT	1945 Apr  2  2:00
+			1:00	Neth	CE%sT	1977
+			1:00	EU	CE%sT
+
+
 # Northern Ireland
 Zone	Europe/Belfast	-0:23:40 -	LMT	1880 Aug  2
 			-0:25:21 -	DMT	1916 May 21  2:00
@@ -1023,6 +1205,60 @@ Zone	Europe/Belfast	-0:23:40 -	LMT	1880 Aug  2
 			 1:00	-	BST	1971 Oct 31  2:00u
 			 0:00	GB-Eire	%s	1996
 			 0:00	EU	GMT/BST
+
+
+# Denmark
+
+# From Jesper Nørgaard Welen (2005-04-26):
+# the law [introducing standard time] was in effect from 1894-01-01....
+# The page https://www.retsinformation.dk/eli/lta/1893/83
+# confirms this, and states that the law was put forth 1893-03-29.
+#
+# The EU [actually, EEC and Euratom] treaty with effect from 1973:
+# https://www.retsinformation.dk/eli/lta/1972/21100
+#
+# This provoked a new law from 1974 to make possible summer time changes
+# in subsequent decrees with the law
+# https://www.retsinformation.dk/eli/lta/1974/223
+#
+# It seems however that no decree was set forward until 1980.  I have
+# not found any decree, but in another related law, the effecting DST
+# changes are stated explicitly to be from 1980-04-06 at 02:00 to
+# 1980-09-28 at 02:00.  If this is true, this differs slightly from
+# the EU rule in that DST runs to 02:00, not 03:00.  We don't know
+# when Denmark began using the EU rule correctly, but we have only
+# confirmation of the 1980-time, so I presume it was correct in 1981:
+# The law is about the management of the extra hour, concerning
+# working hours reported and effect on obligatory-rest rules (which
+# was suspended on that night):
+# https://web.archive.org/web/20140104053304/https://www.retsinformation.dk/Forms/R0710.aspx?id=60267
+
+# From Jesper Nørgaard Welen (2005-06-11):
+# The Herning Folkeblad (1980-09-26) reported that the night between
+# Saturday and Sunday the clock is set back from three to two.
+
+# From Paul Eggert (2005-06-11):
+# Hence the "02:00" of the 1980 law refers to standard time, not
+# wall-clock time, and so the EU rules were in effect in 1980.
+
+Rule	Denmark	1916	only	-	May	14	23:00	1:00	S
+Rule	Denmark	1916	only	-	Sep	30	23:00	0	-
+Rule	Denmark	1940	only	-	May	15	 0:00	1:00	S
+Rule	Denmark	1945	only	-	Apr	 2	 2:00s	1:00	S
+Rule	Denmark	1945	only	-	Aug	15	 2:00s	0	-
+Rule	Denmark	1946	only	-	May	 1	 2:00s	1:00	S
+Rule	Denmark	1946	only	-	Sep	 1	 2:00s	0	-
+Rule	Denmark	1947	only	-	May	 4	 2:00s	1:00	S
+Rule	Denmark	1947	only	-	Aug	10	 2:00s	0	-
+Rule	Denmark	1948	only	-	May	 9	 2:00s	1:00	S
+Rule	Denmark	1948	only	-	Aug	 8	 2:00s	0	-
+#
+Zone Europe/Copenhagen	 0:50:20 -	LMT	1890
+			 0:50:20 -	CMT	1894 Jan  1 # Copenhagen MT
+			 1:00	Denmark	CE%sT	1942 Nov  2  2:00s
+			 1:00	C-Eur	CE%sT	1945 Apr  2  2:00
+			 1:00	Denmark	CE%sT	1980
+			 1:00	EU	CE%sT
 
 # Guernsey
 # Data from Joseph S. Myers
@@ -1078,6 +1314,86 @@ Zone Europe/Ljubljana	0:58:04	-	LMT	1884
 			1:00	1:00	CEST	1945 Sep 16  2:00s
 			1:00	-	CET	1982 Nov 27
 			1:00	EU	CE%sT
+
+
+# Luxembourg
+
+# Whitman disagrees with most of these dates in minor ways;
+# go with Shanks & Pottenger.
+Rule	Lux	1916	only	-	May	14	23:00	1:00	S
+Rule	Lux	1916	only	-	Oct	 1	 1:00	0	-
+Rule	Lux	1917	only	-	Apr	28	23:00	1:00	S
+Rule	Lux	1917	only	-	Sep	17	 1:00	0	-
+Rule	Lux	1918	only	-	Apr	Mon>=15	 2:00s	1:00	S
+Rule	Lux	1918	only	-	Sep	Mon>=15	 2:00s	0	-
+Rule	Lux	1919	only	-	Mar	 1	23:00	1:00	S
+Rule	Lux	1919	only	-	Oct	 5	 3:00	0	-
+Rule	Lux	1920	only	-	Feb	14	23:00	1:00	S
+Rule	Lux	1920	only	-	Oct	24	 2:00	0	-
+Rule	Lux	1921	only	-	Mar	14	23:00	1:00	S
+Rule	Lux	1921	only	-	Oct	26	 2:00	0	-
+Rule	Lux	1922	only	-	Mar	25	23:00	1:00	S
+Rule	Lux	1922	only	-	Oct	Sun>=2	 1:00	0	-
+Rule	Lux	1923	only	-	Apr	21	23:00	1:00	S
+Rule	Lux	1923	only	-	Oct	Sun>=2	 2:00	0	-
+Rule	Lux	1924	only	-	Mar	29	23:00	1:00	S
+Rule	Lux	1924	1928	-	Oct	Sun>=2	 1:00	0	-
+Rule	Lux	1925	only	-	Apr	 5	23:00	1:00	S
+Rule	Lux	1926	only	-	Apr	17	23:00	1:00	S
+Rule	Lux	1927	only	-	Apr	 9	23:00	1:00	S
+Rule	Lux	1928	only	-	Apr	14	23:00	1:00	S
+Rule	Lux	1929	only	-	Apr	20	23:00	1:00	S
+
+Zone Europe/Luxembourg	0:24:36 -	LMT	1904 Jun
+			1:00	Lux	CE%sT	1918 Nov 25
+			0:00	Lux	WE%sT	1929 Oct  6  2:00s
+			0:00	Belgium	WE%sT	1940 May 14  3:00
+			1:00	C-Eur	WE%sT	1944 Sep 18  3:00
+			1:00	Belgium	CE%sT	1977
+			1:00	EU	CE%sT
+
+# Monaco
+#
+# From Michael Deckers (2020-06-12):
+# In the "Journal de Monaco" of 1892-05-24, online at
+# https://journaldemonaco.gouv.mc/var/jdm/storage/original/application/b1c67c12c5af11b41ea888fb048e4fe8.pdf
+# we read: ...
+#  [In virtue of a Sovereign Ordinance of the May 13 of the current [year],
+#   legal time in the Principality will be set to, from the date of June 1,
+#   1892 onwards, to the meridian of Paris, as in France.]
+# In the "Journal de Monaco" of 1911-03-28, online at
+# https://journaldemonaco.gouv.mc/var/jdm/storage/original/application/de74ffb7db53d4f599059fe8f0ed482a.pdf
+# we read an ordinance of 1911-03-16: ...
+#  [Legal time in the Principality will be set, from the date of promulgation
+#   of the present ordinance, to legal time in France....  Consequently, legal
+#   time will be retarded by 9 minutes and 21 seconds.]
+#
+Zone	Europe/Monaco	0:29:32 -	LMT	1892 Jun  1
+			0:09:21	-	PMT	1911 Mar 29 # Paris Mean Time
+			0:00	France	WE%sT	1945 Sep 16  3:00
+			1:00	France	CE%sT	1977
+			1:00	EU	CE%sT
+
+
+# Norway
+
+# http://met.no/met/met_lex/q_u/sommertid.html (2004-01) agrees with Shanks &
+# Pottenger.
+Rule	Norway	1916	only	-	May	22	1:00	1:00	S
+Rule	Norway	1916	only	-	Sep	30	0:00	0	-
+Rule	Norway	1945	only	-	Apr	 2	2:00s	1:00	S
+Rule	Norway	1945	only	-	Oct	 1	2:00s	0	-
+Rule	Norway	1959	1964	-	Mar	Sun>=15	2:00s	1:00	S
+Rule	Norway	1959	1965	-	Sep	Sun>=15	2:00s	0	-
+Rule	Norway	1965	only	-	Apr	25	2:00s	1:00	S
+
+Zone	Europe/Oslo	0:43:00 -	LMT	1895 Jan  1
+			1:00	Norway	CE%sT	1940 Aug 10 23:00
+			1:00	C-Eur	CE%sT	1945 Apr  2  2:00
+			1:00	Norway	CE%sT	1980
+			1:00	EU	CE%sT
+Link	Europe/Oslo	Arctic/Longyearbyen
+#PACKRATLIST zone.tab Link Europe/Oslo Atlantic/Jan_Mayen
 
 # Bosnia and Herzegovina
 Zone	Europe/Sarajevo	1:13:40	-	LMT	1884

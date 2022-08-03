@@ -44,7 +44,6 @@ AQ	-6736+06253	Antarctica/Mawson	Mawson
 AQ	-6448-06406	Antarctica/Palmer	Palmer
 AQ	-6734-06808	Antarctica/Rothera	Rothera
 AQ	-720041+0023206	Antarctica/Troll	Troll
-AQ	-7824+10654	Antarctica/Vostok	Vostok
 AR	-3436-05827	America/Argentina/Buenos_Aires	Buenos Aires (BA, CF)
 AR	-3124-06411	America/Argentina/Cordoba	Argentina (most areas: CB, CC, CN, ER, FM, MN, SE, SF)
 AR	-2447-06525	America/Argentina/Salta	Salta (SA, LP, NQ, RN)
@@ -74,10 +73,9 @@ AU	-3143+12852	Australia/Eucla	Western Australia (Eucla)
 AZ	+4023+04951	Asia/Baku
 BB	+1306-05937	America/Barbados
 BD	+2343+09025	Asia/Dhaka
-BE	+5050+00420	Europe/Brussels
+BE,LU,NL	+5050+00420	Europe/Brussels
 BG	+4241+02319	Europe/Sofia
 BM	+3217-06446	Atlantic/Bermuda
-BN	+0456+11455	Asia/Brunei
 BO	-1630-06809	America/La_Paz
 BR	-0351-03225	America/Noronha	Atlantic islands
 BR	-0127-04829	America/Belem	Pará (east); Amapá
@@ -125,13 +123,13 @@ CA	+6404-13925	America/Dawson	MST - Yukon (west)
 CA	+4916-12307	America/Vancouver	Pacific - BC (most areas)
 CC	-1210+09655	Indian/Cocos
 CH,DE,LI	+4723+00832	Europe/Zurich	Swiss time
-CI,BF,GH,GM,GN,ML,MR,SH,SL,SN,TG	+0519-00402	Africa/Abidjan
+CI,BF,GH,GM,GN,IS,ML,MR,SH,SL,SN,TG	+0519-00402	Africa/Abidjan
 CK	-2114-15946	Pacific/Rarotonga
 CL	-3327-07040	America/Santiago	Chile (most areas)
 CL	-5309-07055	America/Punta_Arenas	Region of Magallanes
 CL	-2709-10926	Pacific/Easter	Easter Island
 CN	+3114+12128	Asia/Shanghai	Beijing Time
-CN	+4348+08735	Asia/Urumqi	Xinjiang Time
+CN,AQ	+4348+08735	Asia/Urumqi	Xinjiang Time, Vostok
 CO	+0436-07405	America/Bogota
 CR	+0956-08405	America/Costa_Rica
 CU	+2308-08222	America/Havana
@@ -140,8 +138,7 @@ CX	-1025+10543	Indian/Christmas
 CY	+3510+03322	Asia/Nicosia	Cyprus (most areas)
 CY	+3507+03357	Asia/Famagusta	Northern Cyprus
 CZ,SK	+5005+01426	Europe/Prague
-DE	+5230+01322	Europe/Berlin	Germany (most areas)
-DK	+5540+01235	Europe/Copenhagen
+DE,DK,NO,SJ	+5230+01322	Europe/Berlin	Germany (most areas), Scandinavia
 DO	+1828-06954	America/Santo_Domingo
 DZ	+3647+00303	Africa/Algiers
 EC	-0210-07950	America/Guayaquil	Ecuador (mainland)
@@ -159,7 +156,7 @@ FM	+0725+15147	Pacific/Chuuk	Chuuk/Truk, Yap
 FM	+0658+15813	Pacific/Pohnpei	Pohnpei/Ponape
 FM	+0519+16259	Pacific/Kosrae	Kosrae
 FO	+6201-00646	Atlantic/Faroe
-FR	+4852+00220	Europe/Paris
+FR,MC	+4852+00220	Europe/Paris
 GB,GG,IM,JE	+513030-0000731	Europe/London
 GE	+4143+04449	Asia/Tbilisi
 GF	+0456-05220	America/Cayenne
@@ -188,7 +185,6 @@ IN	+2232+08822	Asia/Kolkata
 IO	-0720+07225	Indian/Chagos
 IQ	+3321+04425	Asia/Baghdad
 IR	+3540+05126	Asia/Tehran
-IS	+6409-02151	Atlantic/Reykjavik
 IT,SM,VA	+4154+01229	Europe/Rome
 JM	+175805-0764736	America/Jamaica
 JO	+3157+03556	Asia/Amman
@@ -211,11 +207,9 @@ LB	+3353+03530	Asia/Beirut
 LK	+0656+07951	Asia/Colombo
 LR	+0618-01047	Africa/Monrovia
 LT	+5441+02519	Europe/Vilnius
-LU	+4936+00609	Europe/Luxembourg
 LV	+5657+02406	Europe/Riga
 LY	+3254+01311	Africa/Tripoli
 MA	+3339-00735	Africa/Casablanca
-MC	+4342+00723	Europe/Monaco
 MD	+4700+02850	Europe/Chisinau
 MH	+0709+17112	Pacific/Majuro	Marshall Islands (most areas)
 MH	+0905+16720	Pacific/Kwajalein	Kwajalein
@@ -239,16 +233,13 @@ MX	+2934-10425	America/Ojinaga	Mountain Time US - Chihuahua (US border)
 MX	+2904-11058	America/Hermosillo	Mountain Standard Time - Sonora
 MX	+3232-11701	America/Tijuana	Pacific Time US - Baja California
 MX	+2048-10515	America/Bahia_Banderas	Central Time - Bahía de Banderas
-MY	+0310+10142	Asia/Kuala_Lumpur	Malaysia (peninsula)
-MY	+0133+11020	Asia/Kuching	Sabah, Sarawak
+MY,BN	+0133+11020	Asia/Kuching	Sabah, Sarawak, Brunei
 MZ,BI,BW,CD,MW,RW,ZM,ZW	-2558+03235	Africa/Maputo	Central Africa Time
 NA	-2234+01706	Africa/Windhoek
 NC	-2216+16627	Pacific/Noumea
 NF	-2903+16758	Pacific/Norfolk
 NG,AO,BJ,CD,CF,CG,CM,GA,GQ,NE	+0627+00324	Africa/Lagos	West Africa Time
 NI	+1209-08617	America/Managua
-NL	+5222+00454	Europe/Amsterdam
-NO,SJ	+5955+01045	Europe/Oslo
 NP	+2743+08519	Asia/Kathmandu
 NR	-0031+16655	Pacific/Nauru
 NU	-1901-16955	Pacific/Niue

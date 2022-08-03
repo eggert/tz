@@ -7,6 +7,7 @@ Unreleased, experimental changes
     Rename Europe/Kiev to Europe/Kyiv.
     New zic -R option
     Vanguard form now uses %z.
+    Move nine more duplicate-since-1970 zones to 'backzone'.
     New build option PACKRATLIST
     New tailored_tarballs target, replacing rearguard_tarballs
 
@@ -16,6 +17,16 @@ Unreleased, experimental changes
     on 2022-09-21.  (Thanks to Ali Mirjamali.)
 
   Changes to past timestamps
+
+    Continue moving to 'backzone' location-based zones whose
+    timestamps since 1970 are duplicates; adjust links accordingly.
+    This change ordinarily affects only pre-1970 timestamps, and with
+    the new PACKRATLIST option it does not affect any timestamps.
+    In this round the affected zones are Antarctica/Vostok,
+    Asia/Brunei, Asia/Kuala_Lumpur, Atlantic/Reykjavik,
+    Europe/Amsterdam, Europe/Copenhagen, Europe/Luxembourg,
+    Europe/Monaco, Europe/Oslo, and the affected links are
+    Arctic/Longyearbyen, Atlantic/Jan_Mayen, and Iceland.
 
     From fall 1994 through fall 1995, Shanks wrote that Crimea's
     DST transitions were at 02:00 standard time, not at 00:00.

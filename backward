@@ -113,10 +113,10 @@ Link	America/Denver		Navajo
 Link	Asia/Shanghai		PRC
 Link	Pacific/Kanton		Pacific/Enderbury
 Link	Pacific/Honolulu	Pacific/Johnston
-Link	Pacific/Pohnpei		Pacific/Ponape
+Link	Pacific/Guadalcanal	Pacific/Ponape
 Link	Pacific/Pago_Pago	Pacific/Samoa
-Link	Pacific/Chuuk		Pacific/Truk
-Link	Pacific/Chuuk		Pacific/Yap
+Link	Pacific/Port_Moresby	Pacific/Truk
+Link	Pacific/Port_Moresby	Pacific/Yap
 Link	Europe/Warsaw		Poland
 Link	Europe/Lisbon		Portugal
 Link	Asia/Taipei		ROC

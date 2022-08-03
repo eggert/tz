@@ -1025,7 +1025,8 @@ Zone	Europe/Prague	0:57:44 -	LMT	1850
 # End of rearguard section.
 			1:00	Czech	CE%sT	1979
 			1:00	EU	CE%sT
-# Use Europe/Prague also for Slovakia.
+Link Europe/Prague Europe/Bratislava
+
 
 # Denmark, Faroe Islands, and Greenland
 # For Denmark see Europe/Berlin.
@@ -1446,21 +1447,8 @@ Zone	Europe/Berlin	0:53:28 -	LMT	1893 Apr
 Link Europe/Berlin Arctic/Longyearbyen
 Link Europe/Berlin Europe/Copenhagen
 Link Europe/Berlin Europe/Oslo
+Link Europe/Berlin Europe/Stockholm
 
-# From Tobias Conradi (2011-09-12):
-# Büsingen <http://www.buesingen.de>, surrounded by the Swiss canton
-# Schaffhausen, did not start observing DST in 1980 as the rest of DE
-# (West Germany at that time) and DD (East Germany at that time) did.
-# DD merged into DE, the area is currently covered by code DE in ISO 3166-1,
-# which in turn is covered by the zone Europe/Berlin.
-#
-# Source for the time in Büsingen 1980:
-# http://www.srf.ch/player/video?id=c012c029-03b7-4c2b-9164-aa5902cd58d3
-
-# From Arthur David Olson (2012-03-03):
-# Büsingen and Zurich have shared clocks since 1970.
-
-Link	Europe/Zurich	Europe/Busingen
 
 # Georgia
 # Please see the "asia" file for Asia/Tbilisi.
@@ -1701,13 +1689,13 @@ Zone	Europe/Rome	0:49:56 -	LMT	1866 Dec 12
 			1:00	C-Eur	CE%sT	1944 Jun  4
 			1:00	Italy	CE%sT	1980
 			1:00	EU	CE%sT
+Link Europe/Rome Europe/Vatican
+Link Europe/Rome Europe/San_Marino
+
 
 # Kosovo
 # See Europe/Belgrade.
 
-
-Link	Europe/Rome	Europe/Vatican
-Link	Europe/Rome	Europe/San_Marino
 
 # Latvia
 
@@ -1792,7 +1780,7 @@ Zone	Europe/Riga	1:36:34	-	LMT	1880
 			2:00	EU	EE%sT
 
 # Liechtenstein
-Link Europe/Zurich Europe/Vaduz
+# See Europe/Zurich.
 
 
 # Lithuania
@@ -3309,7 +3297,7 @@ Link Europe/Belgrade Europe/Skopje	# North Macedonia
 Link Europe/Belgrade Europe/Zagreb	# Croatia
 
 # Slovakia
-Link Europe/Prague Europe/Bratislava
+# See Europe/Prague.
 
 # Slovenia
 # See Europe/Belgrade.
@@ -3420,61 +3408,7 @@ Zone	Atlantic/Canary	-1:01:36 -	LMT	1922 Mar # Las Palmas de Gran C.
 # Ignore this for now, as the Canaries are part of the EU.
 
 # Sweden
-
-# From Ivan Nilsson (2001-04-13), superseding Shanks & Pottenger:
-#
-# The law "Svensk författningssamling 1878, no 14" about standard time in 1879:
-# From the beginning of 1879 (that is 01-01 00:00) the time for all
-# places in the country is "the mean solar time for the meridian at
-# three degrees, or twelve minutes of time, to the west of the
-# meridian of the Observatory of Stockholm".  The law is dated 1878-05-31.
-#
-# The observatory at that time had the meridian 18° 03' 30"
-# eastern longitude = 01:12:14 in time.  Less 12 minutes gives the
-# national standard time as 01:00:14 ahead of GMT....
-#
-# About the beginning of CET in Sweden. The lawtext ("Svensk
-# författningssamling 1899, no 44") states, that "from the beginning
-# of 1900... ... the same as the mean solar time for the meridian at
-# the distance of one hour of time from the meridian of the English
-# observatory at Greenwich, or at 12 minutes 14 seconds to the west
-# from the meridian of the Observatory of Stockholm". The law is dated
-# 1899-06-16.  In short: At 1900-01-01 00:00:00 the new standard time
-# in Sweden is 01:00:00 ahead of GMT.
-#
-# 1916: The lawtext ("Svensk författningssamling 1916, no 124") states
-# that "1916-05-15 is considered to begin one hour earlier". It is
-# pretty obvious that at 05-14 23:00 the clocks are set to 05-15 00:00....
-# Further the law says, that "1916-09-30 is considered to end one hour later".
-#
-# The laws regulating [DST] are available on the site of the Swedish
-# Parliament beginning with 1985 - the laws regulating 1980/1984 are
-# not available on the site (to my knowledge they are only available
-# in Swedish): <http://www.riksdagen.se/english/work/sfst.asp> (type
-# "sommartid" without the quotes in the field "Fritext" and then click
-# the Sök-button).
-#
-# (2001-05-13):
-#
-# I have now found a newspaper stating that at 1916-10-01 01:00
-# summertime the church-clocks etc were set back one hour to show
-# 1916-10-01 00:00 standard time.  The article also reports that some
-# people thought the switch to standard time would take place already
-# at 1916-10-01 00:00 summer time, but they had to wait for another
-# hour before the event took place.
-#
-# Source: The newspaper "Dagens Nyheter", 1916-10-01, page 7 upper left.
-
-# An extra-special abbreviation style is SET for Swedish Time (svensk
-# normaltid) 1879-1899, 3° west of the Stockholm Observatory.
-
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone Europe/Stockholm	1:12:12 -	LMT	1879 Jan  1
-			1:00:14	-	SET	1900 Jan  1 # Swedish Time
-			1:00	-	CET	1916 May 14 23:00
-			1:00	1:00	CEST	1916 Oct  1  1:00
-			1:00	-	CET	1980
-			1:00	EU	CE%sT
+# See Europe/Berlin.
 
 # Switzerland
 # From Howse:
@@ -3568,6 +3502,19 @@ Zone Europe/Stockholm	1:12:12 -	LMT	1879 Jan  1
 # 1853-07-16, though it probably occurred at some other date in Zurich, and
 # legal civil time probably changed at still some other transition date.
 
+# From Tobias Conradi (2011-09-12):
+# Büsingen <http://www.buesingen.de>, surrounded by the Swiss canton
+# Schaffhausen, did not start observing DST in 1980 as the rest of DE
+# (West Germany at that time) and DD (East Germany at that time) did.
+# DD merged into DE, the area is currently covered by code DE in ISO 3166-1,
+# which in turn is covered by the zone Europe/Berlin.
+#
+# Source for the time in Büsingen 1980:
+# http://www.srf.ch/player/video?id=c012c029-03b7-4c2b-9164-aa5902cd58d3
+#
+# From Arthur David Olson (2012-03-03):
+# Büsingen and Zurich have shared clocks since 1970.
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Swiss	1941	1942	-	May	Mon>=1	1:00	1:00	S
 Rule	Swiss	1941	1942	-	Oct	Mon>=1	2:00	0	-
@@ -3576,6 +3523,9 @@ Zone	Europe/Zurich	0:34:08 -	LMT	1853 Jul 16 # See above comment.
 			0:29:46	-	BMT	1894 Jun    # Bern Mean Time
 			1:00	Swiss	CE%sT	1981
 			1:00	EU	CE%sT
+Link Europe/Zurich Europe/Busingen
+Link Europe/Zurich Europe/Vaduz
+
 
 # Turkey
 

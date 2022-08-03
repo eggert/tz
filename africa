@@ -1312,21 +1312,9 @@ Link Africa/Lagos Africa/Niamey		# Niger
 Link Africa/Lagos Africa/Porto-Novo	# Benin
 
 # Réunion
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Indian/Reunion	3:41:52 -	LMT	1911 Jun # Saint-Denis
-			4:00	-	+04
+# See Asia/Dubai.
 #
-# Scattered Islands (Îles Éparses) administered from Réunion are as follows.
-# The following information about them is taken from
-# Îles Éparses (<http://www.outre-mer.gouv.fr/domtom/ile.htm>, 1997-07-22,
-# in French; no longer available as of 1999-08-17).
-# We have no info about their time zone histories.
-#
-# Bassas da India - uninhabited
-# Europa Island - inhabited from 1905 to 1910 by two families
-# Glorioso Is - inhabited until at least 1958
-# Juan de Nova - uninhabited
-# Tromelin - inhabited until at least 1958
+# The Crozet Islands also observe Réunion time; see the 'antarctica' file.
 
 # Rwanda
 # See Africa/Maputo.
@@ -1371,28 +1359,7 @@ Zone	Africa/Sao_Tome	 0:26:56 -	LMT	1884
 # See Africa/Abidjan.
 
 # Seychelles
-
-# From P Chan (2020-11-27):
-# Standard Time was adopted on 1907-01-01.
-#
-# Standard Time Ordinance (Chapter 237)
-# The Laws of Seychelles in Force on the 31st December, 1971, Vol. 6, p 571
-# https://books.google.com/books?id=efE-AQAAIAAJ&pg=PA571
-#
-# From Tim Parenti (2020-12-05):
-# A footnote on https://books.google.com/books?id=DYdDAQAAMAAJ&pg=PA1689
-# confirms that Ordinance No. 9 of 1906 "was brought into force on the 1st
-# January, 1907."
-
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Indian/Mahe	3:41:48 -	LMT	1907 Jan  1 # Victoria
-			4:00	-	+04
-# From Paul Eggert (2001-05-30):
-# Aldabra, Farquhar, and Desroches, originally dependencies of the
-# Seychelles, were transferred to the British Indian Ocean Territory
-# in 1965 and returned to Seychelles control in 1976.  We don't know
-# whether this affected their time zone, so omit this for now.
-# Possibly the islands were uninhabited.
+# See Asia/Dubai.
 
 # Sierra Leone
 # See Africa/Abidjan.

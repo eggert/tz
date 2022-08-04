@@ -545,8 +545,9 @@ TZS=		to$(TZS_YEAR).tzs
 TZS_NEW=	to$(TZS_YEAR)new.tzs
 TZS_DEPS=	$(YDATA) asctime.c localtime.c \
 			private.h tzfile.h zdump.c zic.c
+TZDATA_DIST = $(COMMON) $(DATA) $(MISC)
 # EIGHT_YARDS is just a yard short of the whole ENCHILADA.
-EIGHT_YARDS = $(COMMON) $(DOCS) $(SOURCES) $(DATA) $(MISC) tzdata.zi
+EIGHT_YARDS = $(TZDATA_DIST) $(DOCS) $(SOURCES) tzdata.zi
 ENCHILADA = $(EIGHT_YARDS) $(TZS)
 
 # Consult these files when deciding whether to rebuild the 'version' file.
@@ -1089,7 +1090,7 @@ tzcode$(VERSION).tar.gz: set-timestamps.out
 
 tzdata$(VERSION).tar.gz: set-timestamps.out
 		LC_ALL=C && export LC_ALL && \
-		tar $(TARFLAGS) -cf - $(COMMON) $(DATA) $(MISC) | \
+		tar $(TARFLAGS) -cf - $(TZDATA_DIST) | \
 		  gzip $(GZIPFLAGS) >$@.out
 		mv $@.out $@
 
@@ -1103,7 +1104,7 @@ CREATE_EMPTY = TZ=UTC0 touch -mt 202010122253.00
 tzdata$(VERSION)-rearguard.tar.gz: rearguard.zi set-timestamps.out
 		rm -fr $@.dir
 		mkdir $@.dir
-		ln $(COMMON) $(DATA) $(MISC) $@.dir
+		ln $(TZDATA_DIST) $@.dir
 		cd $@.dir && rm -f $(TDATA) $(PACKRATDATA) version
 		for f in $(TDATA) $(PACKRATDATA); do \
 		  rearf=$@.dir/$$f; \
@@ -1117,13 +1118,17 @@ tzdata$(VERSION)-rearguard.tar.gz: rearguard.zi set-timestamps.out
 		LC_ALL=C && export LC_ALL && \
 		  (cd $@.dir && \
 		   tar $(TARFLAGS) -cf - \
-			$(COMMON) $(DATA) $(MISC) pacificnew | \
+			$(TZDATA_DIST) pacificnew | \
 		     gzip $(GZIPFLAGS)) >$@.out
 		mv $@.out $@
 
 # Create a tailored tarball suitable for TZUpdater and compatible tools.
 # For example, 'make DATAFORM=vanguard tailored_tarballs' makes a tarball
 # useful for testing whether TZUpdater supports vanguard form.
+# The generated tarball is not byte-for-byte equivalent to a hand-tailored
+# traditional tarball, as data entries are put into 'etcetera' even if they
+# came from some other source file.  However, the effect should be the same
+# for ordinary use, which reads all the source files.
 tzdata$(VERSION)-tailored.tar.gz: set-timestamps.out
 		rm -fr $@.dir
 		mkdir $@.dir
@@ -1144,12 +1149,14 @@ tzdata$(VERSION)-tailored.tar.gz: set-timestamps.out
 		  -e 'p' \
 		  <tzdata.zi >$@.dir/version
 		touch -cmr version $@.dir/version
+		links= && \
+		  for file in $(TZDATA_DIST); do \
+		    test -f $@.dir/$$file || links="$$links $$file"; \
+		  done && \
+		  ln $$links $@.dir
 		LC_ALL=C && export LC_ALL && \
 		  (cd $@.dir && \
-		   tar $(TARFLAGS) -cf - \
-			$(TDATA_TO_CHECK) version \
-			`test $(DATAFORM) = vanguard || echo pacificnew` | \
-		     gzip $(GZIPFLAGS)) >$@.out
+		   tar $(TARFLAGS) -cf - * | gzip $(GZIPFLAGS)) >$@.out
 		mv $@.out $@
 
 tzdb-$(VERSION).tar.lz: set-timestamps.out set-tzs-timestamp.out

@@ -1134,7 +1134,8 @@ tzdata$(VERSION)-tailored.tar.gz: set-timestamps.out
 		mkdir $@.dir
 		: The dummy pacificnew pacifies TZUpdater 2.3.1 and earlier.
 		cd $@.dir && \
-		  $(CREATE_EMPTY) $(PRIMARY_YDATA) $(NDATA) backward pacificnew
+		  $(CREATE_EMPTY) $(PRIMARY_YDATA) $(NDATA) backward \
+		  `test $(DATAFORM) = vanguard || echo pacificnew`
 		(grep '^#' tzdata.zi && echo && cat $(DATAFORM).zi) \
 		  >$@.dir/etcetera
 		touch -cmr tzdata.zi $@.dir/etcetera

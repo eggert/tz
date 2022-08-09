@@ -3,6 +3,7 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Chile's DST is delayed by a week in September 2022.
     Iran no longer observes DST after 2022.
     Rename Europe/Kiev to Europe/Kyiv.
     New zic -R option
@@ -12,6 +13,9 @@ Unreleased, experimental changes
     New tailored_tarballs target, replacing rearguard_tarballs
 
   Changes to future timestamps
+
+    Chile's 2022 DST start is delayed from September 2 to September 11.
+    (Thanks to Juan Correa.)
 
     Iran plans to stop observing DST permanently, after it falls back
     on 2022-09-21.  (Thanks to Ali Mirjamali.)

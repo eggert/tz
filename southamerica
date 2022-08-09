@@ -1304,6 +1304,14 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # Magallanes region to UTC -3 "indefinitely". The decree is available at
 # https://www.diariooficial.interior.gob.cl/publicaciones/2022/03/31/43217-B/01/2108910.pdf
 
+# From Juan Correa (2022-08-09):
+# the Internal Affairs Ministry (Ministerio del Interior) informed DST
+# for America/Santiago will start on midnight of September 11th;
+# and will end on April 1st, 2023. Magallanes region (America/Punta_Arenas)
+# will keep UTC -3 "indefinitely"...  This is because on September 4th
+# we will have a voting whether to approve a new Constitution.
+# https://twitter.com/min_interior/status/1556981967551209472
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Chile	1927	1931	-	Sep	 1	0:00	1:00	-
 Rule	Chile	1928	1932	-	Apr	 1	0:00	0	-
@@ -1340,7 +1348,9 @@ Rule	Chile	2012	2014	-	Sep	Sun>=2	4:00u	1:00	-
 Rule	Chile	2016	2018	-	May	Sun>=9	3:00u	0	-
 Rule	Chile	2016	2018	-	Aug	Sun>=9	4:00u	1:00	-
 Rule	Chile	2019	max	-	Apr	Sun>=2	3:00u	0	-
-Rule	Chile	2019	max	-	Sep	Sun>=2	4:00u	1:00	-
+Rule	Chile	2019	2021	-	Sep	Sun>=2	4:00u	1:00	-
+Rule	Chile	2022	only	-	Sep	Sun>=9	4:00u	1:00	-
+Rule	Chile	2023	max	-	Sep	Sun>=2	4:00u	1:00	-
 # IATA SSIM anomalies: (1992-02) says 1992-03-14;
 # (1996-09) says 1998-03-08.  Ignore these.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]

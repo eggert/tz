@@ -1,5 +1,13 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to code
+
+    Work around a bug in macOS 'awk' that broke commands like 'make
+    traditional_tarballs'.  (Problem reported by Deborah Goldsmith.)
+
+
 Release 2022b - 2022-08-10 15:38:32 -0700
 
   Briefly:

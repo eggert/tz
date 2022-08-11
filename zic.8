@@ -31,12 +31,14 @@ zic \- timezone compiler
 .ds d " degrees
 .ds m " minutes
 .ds s " seconds
-.ds _ " \"
-.if t .if \n(.g .if c \(de .if c \(fm .if c \(sd \{\
+.ds _ " \&
+.if t \{\
+. if \n(.g .if c \(de .if c \(fm .if c \(sd \{\
 .  ds d \(de
 .  ds m \(fm
 .  ds s \(sd
 .  ds _ \|
+. \}
 .\}
 The
 .B zic

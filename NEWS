@@ -14,6 +14,9 @@ Unreleased, experimental changes
     Fix bug with 'zic -d /a/b/c' when /a is unwritable but the
     directory /a/b already exists.
 
+    The script zoneinfo2tdf.pl has been removed, as it was unused and
+    triggered false malware alarms on some email servers.
+
 
 Release 2022b - 2022-08-10 15:38:32 -0700
 

@@ -168,6 +168,9 @@
 # define EINVAL ERANGE
 #endif
 
+#ifndef ELOOP
+# define ELOOP EINVAL
+#endif
 #ifndef ENAMETOOLONG
 # define ENAMETOOLONG EINVAL
 #endif

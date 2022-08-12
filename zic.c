@@ -3670,9 +3670,14 @@ mkdirs(char const *argname, bool ancestors)
 			   some other process might have made the directory
 			   in the meantime.  Likewise for ENOSYS, because
 			   Solaris 10 mkdir fails with ENOSYS if the
-			   directory is an automounted mount point.  */
+			   directory is an automounted mount point.
+			   Likewise for EACCES, since mkdir can fail
+			   with EACCES merely because the parent directory
+			   is unwritable.  Likewise for most other error
+			   numbers.  */
 			int err = errno;
-			if (err != EEXIST && err != ENOSYS) {
+			if (err == ELOOP || err == ENAMETOOLONG
+			    || err == ENOENT || err == ENOTDIR) {
 				error(_("%s: Can't create directory %s: %s"),
 				      progname, name, strerror(err));
 				exit(EXIT_FAILURE);

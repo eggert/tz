@@ -7,6 +7,8 @@ Unreleased, experimental changes
     Work around a bug in macOS 'awk' that broke commands like 'make
     traditional_tarballs'.  (Problem reported by Deborah Goldsmith.)
 
+    Fix bug with 'zic -d /a/b/c' when /a is unwritable but the
+    directory /a/b already exists.
 
 Release 2022b - 2022-08-10 15:38:32 -0700
 

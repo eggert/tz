@@ -303,15 +303,24 @@ while
 
         quoted_continents=`
 	  $AWK '
+	    function handle_entry(entry) {
+	      entry = substr(entry, 1, index(entry, "/") - 1)
+	      if (entry == "America")
+	       entry = entry "s"
+	      if (entry ~ /^(Arctic|Atlantic|Indian|Pacific)$/)
+	       entry = entry " Ocean"
+	      printf "'\''%s'\''\n", entry
+	    }
 	    BEGIN { FS = "\t" }
 	    /^[^#]/ {
-              entry = substr($3, 1, index($3, "/") - 1)
-              if (entry == "America")
-		entry = entry "s"
-              if (entry ~ /^(Arctic|Atlantic|Indian|Pacific)$/)
-		entry = entry " Ocean"
-              printf "'\''%s'\''\n", entry
+              handle_entry($3)
             }
+	    /^#@/ {
+	      ncont = split($2, cont, /,/)
+	      for (ci = 1; ci <= ncont; ci++) {
+	        handle_entry(cont[ci])
+	      }
+	    }
           ' <"$TZ_ZONE_TABLE" |
 	  sort -u |
 	  tr '\n' ' '
@@ -395,15 +404,37 @@ while
 		*)
 		# Get list of names of countries in the continent or ocean.
 		countries=`$AWK \
-			-v continent="$continent" \
+			-v continent_re="^$continent/" \
 			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
 		'
 			BEGIN { FS = "\t" }
-			/^#/ { next }
-			$3 ~ ("^" continent "/") {
-			    ncc = split($1, cc, /,/)
-			    for (i = 1; i <= ncc; i++)
+			/^#$/ { next }
+			/^#[^@]/ { next }
+			{
+			  commentary = $0 ~ /^#@/
+			  if (commentary) {
+			    col1ccs = substr($1, 3)
+			    conts = $2
+			  } else {
+			    col1ccs = $1
+			    conts = $3
+			  }
+			  ncc = split(col1ccs, cc, /,/)
+			  ncont = split(conts, cont, /,/)
+			  for (i = 1; i <= ncc; i++) {
+			    elsewhere = commentary
+			    for (ci = 1; ci <= ncont; ci++) {
+			      if (cont[ci] ~ continent_re) {
 				if (!cc_seen[cc[i]]++) cc_list[++ccs] = cc[i]
+				elsewhere = 0
+			      }
+			    }
+			    if (elsewhere) {
+			      for (i = 1; i <= ncc; i++) {
+			        cc_elsewhere[cc[i]] = 1
+			      }
+			    }
+			  }
 			}
 			END {
 				while (getline <TZ_COUNTRY_TABLE) {
@@ -411,6 +442,7 @@ while
 				}
 				for (i = 1; i <= ccs; i++) {
 					country = cc_list[i]
+					if (cc_elsewhere[country]) continue
 					if (cc_name[country]) {
 					  country = cc_name[country]
 					}

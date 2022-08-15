@@ -298,8 +298,9 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # guess TM_GMTOFF from other macros; define NO_TM_GMTOFF to suppress this.
 # Similarly, if your system has a "zone abbreviation" field, define
 #	-DTM_ZONE=tm_zone
-# and define NO_TM_ZONE to suppress any guessing.  These two fields are not
-# required by POSIX, but are widely available on GNU/Linux and BSD systems.
+# and define NO_TM_ZONE to suppress any guessing.  Although these two fields
+# not required by POSIX, a future version of POSIX is planned to require them
+# and they are widely available on GNU/Linux and BSD systems.
 #
 # The next batch of options control support for external variables
 # exported by tzcode.  In practice these variables are less useful

@@ -2,20 +2,26 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    Work around awk bug in FreeBSD, macOS, etc.
+    Improve tzselect on intercontinental Zones.
+
   Changes to code
 
-    Work around a bug in macOS 'awk' that broke commands like 'make
-    traditional_tarballs'.  (Problem reported by Deborah Goldsmith.)
+    Work around a bug in onetrueawk that broke commands like
+    'make traditional_tarballs' on FreeBSD, macOS, etc.
+    (Problem reported by Deborah Goldsmith.)
 
-    Add structured comments to zone1970.tab that clarify whether Zones
-    like Europe/Istanbul cross continent or ocean boundaries.
+    Add code to tzselect that uses experimental structured comments in
+    zone1970.tab to clarify whether Zones like Africa/Abidjan and
+    Europe/Istanbul cross continent or ocean boundaries.
     (Inspired by a problem reported by Peter Krefting.)
 
     Fix bug with 'zic -d /a/b/c' when /a is unwritable but the
     directory /a/b already exists.
 
-    The script zoneinfo2tdf.pl has been removed, as it was unused and
-    triggered false malware alarms on some email servers.
+    Remove zoneinfo2tdf.pl, as it was unused and triggered false
+    malware alarms on some email servers.
 
 
 Release 2022b - 2022-08-10 15:38:32 -0700

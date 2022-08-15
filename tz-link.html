@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Sources for time zone and daylight saving time data</title>
+<title>Time zone and daylight saving time data</title>
 <meta charset="UTF-8">
 <style>
 pre {margin-left: 2em; white-space: pre-wrap;}
 </style>
 </head>
 <body>
-<h1>Sources for time zone and daylight saving time data</h1>
+<h1>Time zone and daylight saving time data</h1>
 <p>
 <a href="https://en.wikipedia.org/wiki/Time_zone">Time zone</a> and
 <a href="https://en.wikipedia.org/wiki/Daylight_saving_time">daylight-saving</a>
@@ -52,9 +52,9 @@ area.
 	  <li><a href="#costs">Costs and benefits of time shifts</a></li>
 	  <li><a href="#precision">Precision timekeeping</a></li>
 	  <li><a href="#notation">Time notation</a></li>
-	  <li><a href="#see-also">See also</a></li>
 	</ul>
       </li>
+      <li><a href="#see-also">See also</a></li>
     </ul>
   </nav>
 
@@ -80,7 +80,7 @@ C Library</a> (used in
 title="Berkeley Software Distribution">BSD</abbr></a>,
 <a href="https://netbsd.org">Net<abbr>BSD</abbr></a>,
 <a href="https://www.openbsd.org">Open<abbr>BSD</abbr></a>,
-<a href="https://www.chromium.org/chromium-os">Chromium OS</a>,
+<a href="https://www.chromium.org/chromium-os/">Chromium OS</a>,
 <a href="https://cygwin.com">Cygwin</a>,
 <a href="https://mariadb.org">MariaDB</a>,
 <a href="https://en.wikipedia.org/wiki/MINIX">MINIX</a>,
@@ -166,7 +166,7 @@ Since 1996, each version has been a four-digit year followed by
 lower-case letter (<samp>a</samp> through <samp>z</samp>,
 then <samp>za</samp> through <samp>zz</samp>, then <samp>zza</samp>
 through <samp>zzz</samp>, and so on).
-Since version 1999g, each release has been distributed in
+Since version 2022a, each release has been distributed in
 <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html#tag_20_92_13_06">POSIX
 ustar interchange format</a>, compressed as described above;
 older releases use a nearly-compatible format.
@@ -192,7 +192,7 @@ After obtaining the code and data files, see the
 The code lets you compile the <code><abbr>tz</abbr></code> source files into
 machine-readable binary files, one for each location. The binary files
 are in a special timezone information format (<dfn><abbr>TZif</abbr></dfn>)
-specified by <a href="https://tools.ietf.org/html/8536">Internet
+specified by <a href="https://datatracker.ietf.org/doc/html/8536">Internet
 <abbr>RFC</abbr> 8536</a>.
 The code also lets
 you read a <abbr>TZif</abbr> file and interpret timestamps for that
@@ -276,7 +276,7 @@ Studio Code</a>.
 </p>
 <p>
 For further information about updates, please see
-<a href="https://tools.ietf.org/html/rfc6557">Procedures for
+<a href="https://datatracker.ietf.org/doc/html/rfc6557">Procedures for
 Maintaining the Time Zone Database</a> (Internet <abbr
 title="Request For Comments">RFC</abbr> 6557). More detail can be
 found in <a href="theory.html">Theory and pragmatics of the
@@ -327,10 +327,8 @@ title="Structured Query Language">SQL</abbr></a> form.</li>
 href="https://twiki.org/cgi-bin/xtra/tzdatepick.html">Date and Time Gateway</a>
 lets you see the <code><abbr>TZ</abbr></code> values directly.</li>
 <li><a
-href="http://www.convertit.com/Go/ConvertIt/World_Time/Current_Time.ASP">Current
+href="https://www.convertit.com/Go/ConvertIt/World_Time/Current_Time.ASP">Current
 Time in 1000 Places</a> uses descriptions of the values.</li>
-<li><a href="https://timezoneconverterapp.com/">Time Zone Converter</a>
-uses a pulldown menu.</li>
 <li><a href="https://home.kpn.nl/vanadovv/time/TZworld.html">Complete
 timezone information for all countries</a>
 displays tables of <abbr>DST</abbr> rules.
@@ -340,8 +338,8 @@ Worldwide</a> lets you sort zone names and convert times.</li>
 time map and a time converter.</li>
 <li><a href="https://www.zeitverschiebung.net/en/">Time Difference</a>
 calculates the current time difference between locations.</li>
-<li><a href="http://www.wx-now.com">Weather Now</a> and
-<a href="http://www.thetimenow.com">The Time Now</a> list the weather too.</li>
+<li><a href="https://www.wx-now.com">Weather Now</a> and
+<a href="https://www.thetimenow.com">The Time Now</a> list the weather too.</li>
 </ul>
 </section>
 
@@ -351,26 +349,26 @@ calculates the current time difference between locations.</li>
 <li>The <a href="https://www.ietf.org">Internet Engineering Task Force</a>'s
 <a href="https://datatracker.ietf.org/wg/tzdist/charter/">Time Zone Data
 Distribution Service (tzdist) working group</a> defined <a
-href="https://tools.ietf.org/html/rfc7808">TZDIST</a>
+href="https://datatracker.ietf.org/doc/html/rfc7808">TZDIST</a>
 (Internet <abbr>RFC</abbr> 7808), a time zone data distribution service,
-along with <a href="https://tools.ietf.org/html/rfc7809">CalDAV</a>
+along with <a href="https://datatracker.ietf.org/doc/html/rfc7809">CalDAV</a>
 (Internet <abbr>RFC</abbr> 7809), a calendar access protocol for
 transferring time zone data by reference.
 <a href="https://devguide.calconnect.org/Time-Zones/TZDS/">TZDIST
 implementations</a> are available.
 The <a href="https://www.ietf.org/mailman/listinfo/tzdist-bis">tzdist-bis
 mailing list</a> discusses possible extensions.</li>
-<li>The <a href="https://tools.ietf.org/html/rfc5545">
+<li>The <a href="https://datatracker.ietf.org/doc/html/rfc5545">
 Internet Calendaring and Scheduling Core Object Specification
 (iCalendar)</a> (Internet <abbr>RFC</abbr> 5445)
 covers time zone
 data; see its VTIMEZONE calendar component.
 The iCalendar format requires specialized parsers and generators; a
-variant <a href="https://tools.ietf.org/html/rfc6321">xCal</a>
+variant <a href="https://datatracker.ietf.org/doc/html/rfc6321">xCal</a>
 (Internet <abbr>RFC</abbr> 6321) uses
 <a href="https://www.w3.org/XML/"><abbr
 title="Extensible Markup Language">XML</abbr></a> format, and a variant
-<a href="https://tools.ietf.org/html/rfc7265">jCal</a>
+<a href="https://datatracker.ietf.org/doc/html/rfc7265">jCal</a>
 (Internet <abbr>RFC</abbr> 7265)
 uses <a href="https://www.json.org"><abbr
 title="JavaScript Object Notation">JSON</abbr></a> format.</li>
@@ -413,13 +411,13 @@ transition in the <code><abbr>tz</abbr></code> database.</li>
 Database Parser</a> is a
 <a href="https://en.wikipedia.org/wiki/C%2B%2B">C++</a> parser and
 runtime library with <a
-href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0355r7.html">API</a>
+href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0355r7.html">API</a>
 adopted by
 <a href="https://en.wikipedia.org/wiki/C++20">C++20</a>,
 the current iteration of the C++ standard.
 It is freely available under the
 <abbr title="Massachusetts Institute of Technology">MIT</abbr> license.</li>
-<li><a id="ICU" href="http://site.icu-project.org">International Components for
+<li><a id="ICU" href="https://icu.unicode.org">International Components for
 Unicode (<abbr>ICU</abbr>)</a> contains C/C++ and <a
 href="https://en.wikipedia.org/wiki/Java_%28programming_language%29">Java</a>
 libraries for internationalization that
@@ -549,7 +547,7 @@ Ruby Timezone Library</a>
 compiles <code><abbr>tz</abbr></code> source into
 <a href="https://www.ruby-lang.org/en/">Ruby</a>.
 It is freely available under the <abbr>MIT</abbr> license.</li>
-<li>The <a href="http://www.squeaksource.com/Chronos/">Chronos Date/Time
+<li>The <a href="https://www.squeaksource.com/Chronos/">Chronos Date/Time
 Library</a> is
 a <a href="https://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a> class
 library that compiles <code><abbr>tz</abbr></code> source into a time
@@ -798,7 +796,7 @@ political subdivision data related to time zones.</li>
 <li><a href="https://home.kpn.nl/vanadovv/time/Multizones.html">Time
 zone boundaries for multizone countries</a> summarizes legal
 boundaries between time zones within countries.</li>
-<li><a href="http://manifold.net/info/freestuff.shtml">Manifold Software
+<li><a href="https://manifold.net/info/freestuff.shtml">Manifold Software
 &ndash; GIS and Database Tools</a> includes a Manifold-format map of
 world time zone boundaries distributed under the
 <abbr>GPL</abbr>.</li>
@@ -895,7 +893,7 @@ hreflang="he">announcements (in Hebrew)</a>.</dd>
 <dt>Mexico</dt>
 <dd>The Investigation and Analysis Service of the Mexican Library of
 Congress has published a <a
-href="http://www.diputados.gob.mx/bibliot/publica/inveyana/polisoc/horver/index.htm"
+href="https://www.diputados.gob.mx/bibliot/publica/inveyana/polisoc/horver/index.htm"
 hreflang="es">history of Mexican local time (in Spanish)</a>.</dd>
 <dt>Netherlands</dt>
 <dd><a href="https://www.staff.science.uu.nl/~gent0113/wettijd/wettijd.htm"
@@ -926,7 +924,7 @@ Time Zone Proceedings</a> lists changes to time zone boundaries.</dd>
 <dt>Uruguay</dt>
 <dd>The Oceanography, Hydrography, and Meteorology Service of the Uruguayan
 Navy (SOHMA) publishes an annual <a
-href="http://sohma.armada.mil.uy/index.php/servicios/datos-astronomicos" hreflang="es">almanac
+href="https://sohma.armada.mil.uy/index.php/servicios/datos-astronomicos" hreflang="es">almanac
 (in Spanish)</a>.</dd>
 </dl>
 </section>
@@ -947,9 +945,9 @@ This reviews research literature and concludes that the evidence
 neither supports nor refutes road safety benefits from
 shifts in time zones.</li>
 <li>Havranek T, Herman D, Irsova D.
-<a href="https://www.econstor.eu/handle/10419/174191">Does daylight
-saving save electricity? A meta-analysis</a>. <em>Energy J.</em>
-2018;39(2).
+<a href="https://www.iaee.org/en/publications/ejarticle.aspx?id=3051">Does
+daylight saving save electricity? A meta-analysis.</a>
+<em>Energy J.</em> 2018;39(2):35&ndash;61.
 doi:<a href="https://doi.org/10.5547/01956574.39.2.thav">10.5547/01956574.39.2.thav</a>.
 This analyzes research literature and concludes, "Electricity savings
 are larger for countries farther away from the equator, while
@@ -961,16 +959,14 @@ an American Academy of Sleep Medicine position statement</a>.
 2020;<a href="https://doi.org/10.5664/jcsm.8780">10.5664/jcsm.8780</a>.
 This argues for permanent standard time due to health risks of both
 <abbr>DST</abbr> transitions and permanent <abbr>DST</abbr>.</li>
-<li>Roenneberg T, Winnebeck EC, Klerman EB.
-<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6692659/">Daylight
-saving time and artificial time zones &ndash; a battle between
-biological and social times</a>. <em>Front Physiol.</em> 2019;10:944.
-doi:<a href="https://doi.org/10.3389/fphys.2019.00944">10.3389/fphys.2019.00944</a>.
-This reviews evidence about the health effects of <abbr>DST</abbr>
-and concludes,
-"In summary, the scientific literature strongly argues against the
-switching between <abbr>DST</abbr> and Standard Time and even more so against
-adopting <abbr>DST</abbr> permanently."</li>
+<li>Roenneberg T, Wirz-Justice A, Skene DJ <em>et al</em>.
+<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7205184/">Why
+should we abolish Daylight Saving Time?</a>
+<em>J Biol Rhythms</em>. 2019;34(3):227&ndash;230.
+doi:<a href="https://doi.org/10.1177/0748730419854197">10.1177/0748730419854197</a>.
+This position paper of the Society for Research on Biological Rhythms
+opposes DST changes and permanent DST, and advocates that governments adopt
+"permanent Standard Time for the health and safety of their citizens".</li>
 </ul>
 </section>
 
@@ -983,7 +979,7 @@ Science of Timekeeping</a> is a thorough introduction
 to the theory and practice of precision timekeeping.</li>
 <li><a href="https://doi.org/10.1007/978-3-319-59909-0">The Science of
 Time 2016</a> contains several freely-readable papers.</li>
-<li><a href="http://www.ntp.org"><abbr
+<li><a href="https://www.ntp.org"><abbr
 title="Network Time Protocol">NTP</abbr>: The Network
 Time Protocol</a> (Internet <abbr>RFC</abbr> 5905)
 discusses how to synchronize clocks of
@@ -998,7 +994,7 @@ title="Institute of Electrical and Electronics Engineers">IEEE</abbr> 1588)
 can achieve submicrosecond clock accuracy on a local area network
 with special-purpose hardware.</li>
 <li><a
-href="https://tools.ietf.org/html/rfc4833">Timezone
+href="https://datatracker.ietf.org/doc/html/rfc4833">Timezone
 Options for <abbr title="Dynamic Host Configuration Protocol">DHCP</abbr></a>
 (Internet <abbr>RFC</abbr> 4833)
 specifies a <a
@@ -1012,14 +1008,15 @@ Scales</a> describes astronomical time scales like
 <abbr title="Barycentric Dynamic Time">TDB</abbr>.
 <li>The <a href="https://www.iau.org"><abbr
 title="International Astronomical Union">IAU</abbr></a>'s <a
-href="http://www.iausofa.org"><abbr
+href="https://www.iausofa.org"><abbr
 title="Standards Of Fundamental Astronomy">SOFA</abbr></a>
 collection contains C and <a
 href="https://en.wikipedia.org/wiki/Fortran">Fortran</a>
 code for converting among time scales like
 <abbr title="International Atomic Time">TAI</abbr>,
 <abbr>TDB</abbr>, <abbr>TDT</abbr> and
-<abbr>UTC</abbr>.</li>
+<abbr>UTC</abbr>. It is freely available under the
+<a href="https://www.iausofa.org/tandc.html">SOFA license</a>.</li>
 <li><a
 href="https://www.giss.nasa.gov/tools/mars24/help/notes.html">Mars24 Sunclock
 &ndash; Time on Mars</a> describes Airy Mean Time (<abbr>AMT</abbr>) and the
@@ -1065,7 +1062,7 @@ the <abbr>NTP</abbr> reference implementation, <a
 href="https://github.com/google/unsmear">supports</a> conversion between
 <abbr>UTC</abbr> and smeared <abbr>POSIX</abbr> timestamps, and is used by major
 cloud service providers. However, according to
-<a href="https://tools.ietf.org/html/rfc8633#section-3.7.1">&sect;3.7.1 of
+<a href="https://datatracker.ietf.org/doc/html/rfc8633#section-3.7.1">&sect;3.7.1 of
 Network Time Protocol Best Current Practices</a>
 (Internet <abbr>RFC</abbr> 8633), leap smearing is not suitable for
 applications requiring accurate <abbr>UTC</abbr> or civil time,
@@ -1089,7 +1086,7 @@ again.</li>
 <section>
 <h2 id="notation">Time notation</h2>
 <ul>
-<li>The <a id="CLDR" href="http://cldr.unicode.org">Unicode Common Locale Data
+<li>The <a id="CLDR" href="https://cldr.unicode.org">Unicode Common Locale Data
 Repository (<abbr>CLDR</abbr>) Project</a> has localizations for time
 zone names, abbreviations, identifiers, and formats. For example, it
 contains French translations for "Eastern European Summer Time",
@@ -1111,13 +1108,13 @@ interchange &ndash; Part 1: Basic rules</em></a>.</li>
 <a href="https://www.w3.org/TR/xmlschema/#dateTime"><abbr>XML</abbr>
 Schema: Datatypes &ndash; dateTime</a> specifies a format inspired by
 <abbr>ISO</abbr> 8601 that is in common use in <abbr>XML</abbr> data.</li>
-<li><a href="https://tools.ietf.org/html/rfc5322#section-3.3">&sect;3.3 of
+<li><a href="https://datatracker.ietf.org/doc/html/rfc5322#section-3.3">&sect;3.3 of
 Internet Message Format</a> (Internet <abbr>RFC</abbr> 5322)
 specifies the time notation used in email and <a
 href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol"><abbr>HTTP</abbr></a>
 headers.</li>
 <li>
-<a href="https://tools.ietf.org/html/rfc3339">Date and Time
+<a href="https://datatracker.ietf.org/doc/html/rfc3339">Date and Time
 on the Internet: Timestamps</a> (Internet <abbr>RFC</abbr> 3339)
 specifies an <abbr>ISO</abbr> 8601
 profile for use in new Internet

@@ -107,7 +107,7 @@ Release 2022b - 2022-08-10 15:38:32 -0700
 
     zic no longer complains "can't determine time zone abbreviation to
     use just after until time" when a transition to a new standard
-    time occurs simultanously with the first DST fallback transition.
+    time occurs simultaneously with the first DST fallback transition.
 
   Changes to build procedure
 

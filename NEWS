@@ -1,6 +1,6 @@
 News for the tz database
 
-Unreleased, experimental changes
+Release 2022c - 2022-08-15 17:47:18 -0700
 
   Briefly:
     Work around awk bug in FreeBSD, macOS, etc.

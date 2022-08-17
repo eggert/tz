@@ -301,7 +301,7 @@ Zone	Africa/Freetown	-0:53:00 -	LMT	1882
 			-0:53:00 -	FMT	1913 Jul  1 # Freetown MT
 			-1:00	SL	%s	1939 Sep  5
 			-1:00	-	-01	1941 Dec  6 24:00
-			 0:00	SL	GMT/+01
+			 0:00	-	GMT
 
 # Botswana
 # From Paul Eggert (2013-02-21):
@@ -1633,7 +1633,7 @@ Zone Pacific/Majuro	 11:24:48 -	LMT	1901
 Zone Pacific/Midway	-11:49:28 -	LMT	1901
 			-11:00	-	-11	1956 Jun  3
 			-11:00	1:00	-10	1956 Sep  2
-			-11:00	-	-11
+			-11:00	-	SST	# S=Samoa
 
 # Micronesia
 # Also see Pacific/Chuuk and commentary for Micronesia in 'australasia'.
@@ -1648,10 +1648,20 @@ Zone Pacific/Pohnpei	-13:27:08 -	LMT	1844 Dec 31	# Kolonia
 Link Pacific/Pohnpei Pacific/Ponape
 
 # N Mariana Is
+#
+# From Paul Eggert (2022-08-16):
+# Although Shanks & Pottenger say Saipan used +09 and then switched
+# to Guam time in October 1969, this is surely wrong.
+# Saipan used Guam time in the late 1950s; see page 4 of the minutes on the
+# conference of the 12th Saipan Legislature and the Select Committee on
+# Saipan Mission, 5th Guam Legislature (1959-09-11):
+# http://www.nmhcouncil.org/nmhc_archives/U.S.%20Navy%20Civil%20Affairs%20Files%201944-1962/1959/1959%2009%2017%20letter,%20minutes%20of%20conference,%20Borja.pdf
+# For now, assume Saipan switched to Guam time after the Battle of Saipan.
+#
 Zone Pacific/Saipan	-14:17:00 -	LMT	1844 Dec 31
 			 9:43:00 -	LMT	1901
-			 9:00	-	+09	1969 Oct
-			10:00	-	+10	2000 Dec 23
+			 9:00	-	+09	1944 Jul  9
+			10:00	Guam	G%sT	2000 Dec 23
 			10:00	-	ChST	# Chamorro Standard Time
 
 

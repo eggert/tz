@@ -3826,21 +3826,7 @@ Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 # * Ukrainian Government's Resolution of 20.03.1992, No. 139.
 # http://www.uazakon.com/documents/date_8u/pg_grcasa.htm
 
-# From Paul Eggert (2022-04-12):
-# As is usual in tzdb, Ukrainian zones use the most common English spellings.
-# In particular, tzdb's name Europe/Kyiv uses the most common spelling in
-# English for Ukraine's capital.  Although tzdb's former name was Europe/Kiev,
-# "Kyiv" is now more common due to widespread reporting of the current conflict.
-# Conversely, tzdb continues to use the names Europe/Uzhgorod and
-# Europe/Zaporozhye; this is similar to tzdb's use of Europe/Prague, which is
-# certainly wrong as a transliteration of the Czech "Praha".
-# English-language spelling of Ukrainian names is in flux, and
-# some day "Uzhhorod" or "Zaporizhzhia" may become substantially more
-# common in English; in the meantime, do not change these
-# English spellings as that means less disruption for our users.
-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-# This represents most of Ukraine.  See above for the spelling of "Kyiv".
 Zone Europe/Kyiv	2:02:04 -	LMT	1880
 			2:02:04	-	KMT	1924 May  2 # Kyiv Mean Time
 			2:00	-	EET	1930 Jun 21
@@ -3848,34 +3834,6 @@ Zone Europe/Kyiv	2:02:04 -	LMT	1880
 			1:00	C-Eur	CE%sT	1943 Nov  6
 			3:00	Russia	MSK/MSD	1990 Jul  1  2:00
 			2:00	1:00	EEST	1991 Sep 29  3:00
-			2:00	C-Eur	EE%sT	1996 May 13
-			2:00	EU	EE%sT
-# Transcarpathia used CET 1990/1991.
-# "Uzhhorod" is the transliteration of the Rusyn/Ukrainian pronunciation, but
-# "Uzhgorod" is more common in English.
-Zone Europe/Uzhgorod	1:29:12 -	LMT	1890 Oct
-			1:00	-	CET	1940
-			1:00	C-Eur	CE%sT	1944 Oct
-			1:00	1:00	CEST	1944 Oct 26
-			1:00	-	CET	1945 Jun 29
-			3:00	Russia	MSK/MSD	1990
-			3:00	-	MSK	1990 Jul  1  2:00
-			1:00	-	CET	1991 Mar 31  3:00
-			2:00	-	EET	1992 Mar 20
-			2:00	C-Eur	EE%sT	1996 May 13
-			2:00	EU	EE%sT
-# Zaporozh'ye and eastern Lugansk oblasts observed DST 1990/1991.
-# "Zaporizhzhia" is the transliteration of the Ukrainian name, but
-# "Zaporozh'ye" is more common in English.  Use the common English
-# spelling, except omit the apostrophe as it is not allowed in
-# portable Posix file names.
-Zone Europe/Zaporozhye	2:20:40 -	LMT	1880
-			2:20	-	+0220	1924 May  2
-			2:00	-	EET	1930 Jun 21
-			3:00	-	MSK	1941 Aug 25
-			1:00	C-Eur	CE%sT	1943 Oct 25
-			3:00	Russia	MSK/MSD	1991 Mar 31  2:00
-			2:00	E-Eur	EE%sT	1992 Mar 20
 			2:00	C-Eur	EE%sT	1996 May 13
 			2:00	EU	EE%sT
 

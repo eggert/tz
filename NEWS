@@ -1,5 +1,18 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Briefly:
+    Simplify three Ukraine zones into one.
+
+  Changes to past timestamps
+
+    Simplify three Ukraine zones to one, since the post-1970
+    differences seem to have been imaginary.  Move Europe/Uzhgorod and
+    Europe/Zaporozhye to 'backzone'; backward-compatibility links
+    still work, albeit with different timestamps before October 1991.
+
+
 Release 2022c - 2022-08-15 17:47:18 -0700
 
   Briefly:
@@ -30,7 +43,6 @@ Release 2022b - 2022-08-10 15:38:32 -0700
     Chile's DST is delayed by a week in September 2022.
     Iran no longer observes DST after 2022.
     Rename Europe/Kiev to Europe/Kyiv.
-    Simplify three Ukraine zones into one.
     New zic -R option
     Vanguard form now uses %z.
     Finish moving duplicate-since-1970 zones to 'backzone'.
@@ -46,11 +58,6 @@ Release 2022b - 2022-08-10 15:38:32 -0700
     on 2022-09-21.  (Thanks to Ali Mirjamali.)
 
   Changes to past timestamps
-
-    Simplify three Ukraine zones to one, since the post-1970
-    differences seem to have been imaginary.  Move Europe/Uzhgorod and
-    Europe/Zaporozhye to 'backzone'; backward-compatibility links
-    still work, albeit with different timestamps before October 1991.
 
     Finish moving to 'backzone' the location-based zones whose
     timestamps since 1970 are duplicates; adjust links accordingly.

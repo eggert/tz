@@ -1484,6 +1484,7 @@ Zone	Europe/Tiraspol	1:58:32	-	LMT	1880
 #
 # Although Shanks & Pottenger say Transcarpathia used CET 1990/1991,
 # this unreliable source contradicts contemporaneous government resolutions
+# (see the commentary for Ukraine in the 'europe' file)
 # so for now this dubious zone is in 'backzone'.
 # "Uzhhorod" is the transliteration of the Rusyn/Ukrainian pronunciation, but
 # "Uzhgorod" was a common English spelling when this dubious zone was
@@ -1526,7 +1527,8 @@ Zone	Europe/Zagreb	1:03:52	-	LMT	1884
 
 # Although Shanks & Pottenger say Zaporizhzhia and eastern Lugansk
 # observed DST 1990/1991, this unreliable source contradicts contemporaneous
-# government resolutions so for now this dubious zone is in 'backzone'.
+# government resolutions (see the commentary for Ukraine in the 'europe' file)
+# so for now this dubious zone is in 'backzone'.
 # "Zaporizhzhia" is the transliteration of the Ukrainian name, but
 # "Zaporozhye" was a common English spelling when this dubious zone was
 # added to TZDB in 1999.

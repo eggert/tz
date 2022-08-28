@@ -3755,8 +3755,8 @@ Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 # US colleague David Cochrane) are still trying to get more
 # information upon these local deviations from Kiev rules.
 #
-# From Paul Eggert (2022-02-08):
-# For now, assume that Ukraine's other three zones followed the same rules,
+# From Paul Eggert (2022-08-27):
+# For now, assume that Ukraine's zones all followed the same rules,
 # except that Crimea switched to Moscow time in 1994 as described elsewhere.
 
 # From Igor Karpov, who works for the Ukrainian Ministry of Justice,

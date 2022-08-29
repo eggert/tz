@@ -1486,7 +1486,7 @@ Zone	Europe/Tiraspol	1:58:32	-	LMT	1880
 # this unreliable source contradicts contemporaneous government resolutions
 # (see the commentary for Ukraine in the 'europe' file)
 # so for now this dubious zone is in 'backzone'.
-# "Uzhhorod" is the transliteration of the Rusyn/Ukrainian pronunciation, but
+# "Uzhhorod" is the transliteration of the Ukrainian spelling, but
 # "Uzhgorod" was a common English spelling when this dubious zone was
 # added to TZDB in 1999.
 Zone Europe/Uzhgorod	1:29:12 -	LMT	1890 Oct

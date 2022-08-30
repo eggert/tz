@@ -8,9 +8,9 @@ Unreleased, experimental changes
 
   Changes to future timestamps
 
-    Palestine now springs forward and falls back at 02:00 on the first
-    Saturday on or after March 24 and October 24, respectively.  This
-    this means 2022 falls back 10-29 at 02:00, not 10-28 at 01:00.
+    Palestine now springs forward and falls back at 02:00 on the
+    first Saturday on or after March 24 and October 24, respectively.
+    This means 2022 falls back 10-29 at 02:00, not 10-28 at 01:00.
     (Thanks to Heba Hamad.)
 
   Changes to past timestamps

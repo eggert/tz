@@ -3395,6 +3395,17 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # From Heba Hamad (2022-03-10):
 # summer time will begin in Palestine from Sunday 03-27-2022, 00:00 AM.
 
+# From Heba Hamad (2022-08-30):
+# winter time will begin in Palestine from Saturday 10-29, 02:00 AM by
+# 60 minutes backwards.  Also the state of Palestine adopted the summer
+# and winter time for the years: 2023,2024,2025,2026 ...
+# https://mm.icann.org/pipermail/tz/attachments/20220830/9f024566/Time-0001.pdf
+#
+# From Paul Eggert (2022-08-30):
+# Guess they spring forward on the first Saturday on or after March 24,
+# and fall back on the first Saturday on or after October 24, as this is
+# consistent with the given transitions and with previous date practice.
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule EgyptAsia	1957	only	-	May	10	0:00	1:00	S
 Rule EgyptAsia	1957	1958	-	Oct	 1	0:00	0	-
@@ -3431,8 +3442,10 @@ Rule Palestine	2019	only	-	Mar	29	0:00	1:00	S
 Rule Palestine	2019	only	-	Oct	Sat>=24	0:00	0	-
 Rule Palestine	2020	2021	-	Mar	Sat>=24	0:00	1:00	S
 Rule Palestine	2020	only	-	Oct	24	1:00	0	-
-Rule Palestine	2021	max	-	Oct	Fri>=23	1:00	0	-
-Rule Palestine	2022	max	-	Mar	Sun>=25	0:00	1:00	S
+Rule Palestine	2021	only	-	Oct	29	1:00	0	-
+Rule Palestine	2022	only	-	Mar	27	0:00	1:00	S
+Rule Palestine	2022	max	-	Oct	Sat>=24	2:00	0	-
+Rule Palestine	2023	max	-	Mar	Sat>=24	2:00	1:00	S
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Gaza	2:17:52	-	LMT	1900 Oct

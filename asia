@@ -3398,6 +3398,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # https://mm.icann.org/pipermail/tz/attachments/20220830/9f024566/Time-0001.pdf
 # (2022-08-31): ... the Saturday before the last Sunday in March and October
 # at 2:00 AM ,for the years from 2023 to 2026.
+# (2022-09-05): https://mtit.pna.ps/Site/New/1453
 #
 # From Paul Eggert (2022-08-31):
 # For now, assume that this rule will also be used after 2026.

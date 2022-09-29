@@ -1,5 +1,14 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to past time zone abbreviations and DST flags
+
+    The temporary advancement of clocks in central Mexico in summer
+    1931 is now treated as daylight saving time, instead of as two
+    changes to standard time.
+
+
 Release 2022d - 2022-09-23 12:02:57 -0700
 
   Briefly:

@@ -2,6 +2,10 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to past timestamps
+
+    On 1922-01-01 Tijuana adopted standard time at 00:00, not 01:00.
+
   Changes to past time zone abbreviations and DST flags
 
     The temporary advancement of clocks in central Mexico in summer

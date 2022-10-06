@@ -2231,6 +2231,15 @@ Zone	Asia/Tokyo	9:18:59	-	LMT	1887 Dec 31 15:00u
 # From the Arabic version, it seems to say it would be at midnight
 # (assume 24:00) on the last Thursday in February, starting from 2022.
 
+# From Issam Al-Zuwairi (2022-10-05):
+# The Council of Ministers in Jordan decided Wednesday 5th October 2022,
+# that daylight saving time (DST) will be throughout the year....
+# https://en.royanews.tv/news/37769/2022-10-05
+#
+# From Paul Eggert (2022-10-05):
+# Like Syria, model this as a transition from EEST +03 (DST) to plain +03
+# (non-DST) at the point where DST would otherwise have ended.
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Jordan	1973	only	-	Jun	6	0:00	1:00	S
 Rule	Jordan	1973	1975	-	Oct	1	0:00	0	-
@@ -2262,11 +2271,12 @@ Rule	Jordan	2005	only	-	Sep	lastFri	0:00s	0	-
 Rule	Jordan	2006	2011	-	Oct	lastFri	0:00s	0	-
 Rule	Jordan	2013	only	-	Dec	20	0:00	0	-
 Rule	Jordan	2014	2021	-	Mar	lastThu	24:00	1:00	S
-Rule	Jordan	2014	max	-	Oct	lastFri	0:00s	0	-
-Rule	Jordan	2022	max	-	Feb	lastThu	24:00	1:00	S
+Rule	Jordan	2014	2022	-	Oct	lastFri	0:00s	0	-
+Rule	Jordan	2022	only	-	Feb	lastThu	24:00	1:00	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Amman	2:23:44 -	LMT	1931
-			2:00	Jordan	EE%sT
+			2:00	Jordan	EE%sT	2022 Oct 28 0:00s
+			3:00	-	+03
 
 
 # Kazakhstan
@@ -3822,7 +3832,7 @@ Rule	Syria	2007	only	-	Nov	 Fri>=1	0:00	0	-
 # Tuesday 4 October ..."
 #
 # From Paul Eggert (2022-10-05):
-# Model this as a transition from EEST +03 (DST) to plain +03
+# Like Jordan, model this as a transition from EEST +03 (DST) to plain +03
 # (non-DST) at the point where DST would otherwise have ended.
 
 Rule	Syria	2008	only	-	Apr	Fri>=1	0:00	1:00	S

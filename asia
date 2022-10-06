@@ -3815,19 +3815,27 @@ Rule	Syria	2007	only	-	Nov	 Fri>=1	0:00	0	-
 # Our brief summary:
 # https://www.timeanddate.com/news/time/syria-dst-2012.html
 
-# From Arthur David Olson (2012-03-27):
-# Assume last Friday in March going forward XXX.
+# From Steffen Thorsen (2022-10-05):
+# Syria is adopting year-round DST, starting this autumn....
+# From https://www.enabbaladi.net/archives/607812
+# "This [the decision] came after the weekly government meeting today,
+# Tuesday 4 October ..."
+#
+# From Paul Eggert (2022-10-05):
+# Model this as a transition from EEST +03 (DST) to plain +03
+# (non-DST) at the point where DST would otherwise have ended.
 
 Rule	Syria	2008	only	-	Apr	Fri>=1	0:00	1:00	S
 Rule	Syria	2008	only	-	Nov	1	0:00	0	-
 Rule	Syria	2009	only	-	Mar	lastFri	0:00	1:00	S
 Rule	Syria	2010	2011	-	Apr	Fri>=1	0:00	1:00	S
-Rule	Syria	2012	max	-	Mar	lastFri	0:00	1:00	S
-Rule	Syria	2009	max	-	Oct	lastFri	0:00	0	-
+Rule	Syria	2012	2022	-	Mar	lastFri	0:00	1:00	S
+Rule	Syria	2009	2022	-	Oct	lastFri	0:00	0	-
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Damascus	2:25:12 -	LMT	1920 # Dimashq
-			2:00	Syria	EE%sT
+			2:00	Syria	EE%sT	2022 Oct 28 0:00
+			3:00	-	+03
 
 # Tajikistan
 # From Shanks & Pottenger.

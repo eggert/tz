@@ -2,6 +2,15 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    Syria is switching from +02/+03 with DST to year-round +03.
+
+  Changes to future timestamps
+
+    Syria is abandoning the DST regime and is changing to permanent
+    +03, so it will not fall back from +03 to +02 on 2022-10-28.
+    (Thanks to Steffen Thorsen.)
+
   Changes to past timestamps
 
     On 1922-01-01 Tijuana adopted standard time at 00:00, not 01:00.

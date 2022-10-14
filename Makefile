@@ -254,10 +254,11 @@ LDLIBS=
 #	Also set TZDOBJS=zdump.o and CHECK_TIME_T_ALTERNATIVES= below.
 #  -DZIC_BLOAT_DEFAULT=\"fat\" to default zic's -b option to "fat", and
 #	similarly for "slim".  Fat TZif files work around incompatibilities
-#	and bugs in some TZif readers, notably readers that mishandle 64-bit
-#	data in TZif files.  Slim TZif files are more efficient and do not
-#	work around these incompatibilities and bugs.  If not given, the
-#	default is "slim".
+#	and bugs in some TZif readers, notably older ones that
+#	ignore or otherwise mishandle 64-bit data in TZif files;
+#	however, fat TZif files may trigger bugs in newer TZif readers.
+#	Slim TZif files are more efficient, and are the default.
+
 #  -DZIC_MAX_ABBR_LEN_WO_WARN=3
 #	(or some other number) to set the maximum time zone abbreviation length
 #	that zic will accept without a warning (the default is 6)
@@ -397,8 +398,9 @@ ZIC=		$(zic) $(ZFLAGS)
 
 # To shrink the size of installed TZif files,
 # append "-r @N" to omit data before N-seconds-after-the-Epoch.
-# To grow the files and work around older application bugs, append "-b fat";
-# see ZIC_BLOAT_DEFAULT above.
+# To grow the files and work around bugs in older applications,
+# possibly at the expense of introducing bugs in newer ones,
+# append "-b fat"; see ZIC_BLOAT_DEFAULT above.
 # See the zic man page for more about -b and -r.
 ZFLAGS=
 

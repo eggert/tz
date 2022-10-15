@@ -31,10 +31,13 @@ Link	America/Indiana/Knox	America/Knox_IN
 Link	America/Kentucky/Louisville	America/Louisville
 Link	America/Argentina/Mendoza	America/Mendoza
 Link	America/Toronto		America/Montreal
+Link	America/Toronto		America/Nipigon
 Link	America/Rio_Branco	America/Porto_Acre
+Link	America/Toronto		America/Rainy_River
 Link	America/Argentina/Cordoba	America/Rosario
 Link	America/Tijuana		America/Santa_Isabel
 Link	America/Denver		America/Shiprock
+Link	America/Toronto		America/Thunder_Bay
 Link	America/Puerto_Rico	America/Virgin
 Link	Pacific/Auckland	Antarctica/South_Pole
 Link	Asia/Ashgabat		Asia/Ashkhabad

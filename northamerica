@@ -1603,23 +1603,6 @@ Zone America/Moncton	-4:19:08 -	LMT	1883 Dec  9
 
 # Ontario
 
-# From Paul Eggert (2006-07-09):
-# Shanks & Pottenger write that since 1970 most of Ontario has been like
-# Toronto.
-# Thunder Bay skipped DST in 1973.
-# Many smaller locales did not observe peacetime DST until 1974;
-# Nipigon (EST) and Rainy River (CST) are the largest that we know of.
-# Far west Ontario is like Winnipeg; far east Quebec is like Halifax.
-
-# From Jeffery Nichols (2020-02-06):
-# According to the [Shanks] atlas, those western Ontario zones are huge,
-# covering most of Ontario northwest of Sault Ste Marie and Timmins.
-# The zones seem to include towns bigger than the ones they're named after,
-# like Dryden in America/Rainy_River and Wawa (and maybe Attawapiskat) in
-# America/Nipigon.  I assume it's too much trouble to change the name of the
-# zone (like when you found out that America/Glace_Bay includes Sydney, Nova
-# Scotia)....
-
 # From Mark Brader (2003-07-26):
 # [According to the Toronto Star] Orillia, Ontario, adopted DST
 # effective Saturday, 1912-06-22, 22:00; the article mentions that
@@ -1640,17 +1623,6 @@ Zone America/Moncton	-4:19:08 -	LMT	1883 Dec  9
 
 # From Mark Brader (2010-03-06):
 #
-# Currently the database has:
-#
-# # Ontario
-#
-# # From Paul Eggert (2006-07-09):
-# # Shanks & Pottenger write that since 1970 most of Ontario has been like
-# # Toronto.
-# # Thunder Bay skipped DST in 1973.
-# # Many smaller locales did not observe peacetime DST until 1974;
-# # Nipigon (EST) and Rainy River (CST) are the largest that we know of.
-#
 # In the (Toronto) Globe and Mail for Saturday, 1955-09-24, in the bottom
 # right corner of page 1, it says that Toronto will return to standard
 # time at 2 am Sunday morning (which agrees with the database), and that:
@@ -1658,10 +1630,8 @@ Zone America/Moncton	-4:19:08 -	LMT	1883 Dec  9
 #     The one-hour setback will go into effect throughout most of Ontario,
 #     except in areas like Windsor which remains on standard time all year.
 #
-# Windsor is, of course, a lot larger than Nipigon.
-#
-# I only came across this incidentally.  I don't know if Windsor began
-# observing DST when Detroit did, or in 1974, or on some other date.
+# ... I don't know if Windsor began observing DST when Detroit did,
+# or in 1974, or on some other date.
 #
 # By the way, the article continues by noting that:
 #
@@ -1743,24 +1713,6 @@ Rule	Toronto	1951	1956	-	Sep	lastSun	2:00	0	S
 # Toronto Star, which said that DST was ending 1971-10-31 as usual.
 Rule	Toronto	1957	1973	-	Oct	lastSun	2:00	0	S
 
-# From Paul Eggert (2003-07-27):
-# Willett (1914-03) writes (p. 17) "In the Cities of Fort William, and
-# Port Arthur, Ontario, the principle of the Bill has been in
-# operation for the past three years, and in the City of Moose Jaw,
-# Saskatchewan, for one year."
-
-# From David Bryan via Tory Tronrud, Director/Curator,
-# Thunder Bay Museum (2003-11-12):
-# There is some suggestion, however, that, by-law or not, daylight
-# savings time was being practiced in Fort William and Port Arthur
-# before 1909.... [I]n 1910, the line between the Eastern and Central
-# Time Zones was permanently moved about two hundred miles west to
-# include the Thunder Bay area....  When Canada adopted daylight
-# savings time in 1916, Fort William and Port Arthur, having done so
-# already, did not change their clocks....  During the Second World
-# War,... [t]he cities agreed to implement DST during the summer
-# months for the remainder of the war years.
-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Toronto	-5:17:32 -	LMT	1895
 			-5:00	Canada	E%sT	1919
@@ -1769,21 +1721,6 @@ Zone America/Toronto	-5:17:32 -	LMT	1895
 			-5:00	Toronto	E%sT	1974
 			-5:00	Canada	E%sT
 Link America/Toronto America/Nassau
-Zone America/Thunder_Bay -5:57:00 -	LMT	1895
-			-6:00	-	CST	1910
-			-5:00	-	EST	1942
-			-5:00	Canada	E%sT	1970
-			-5:00	Toronto	E%sT	1973
-			-5:00	-	EST	1974
-			-5:00	Canada	E%sT
-Zone America/Nipigon	-5:53:04 -	LMT	1895
-			-5:00	Canada	E%sT	1940 Sep 29
-			-5:00	1:00	EDT	1942 Feb  9  2:00s
-			-5:00	Canada	E%sT
-Zone America/Rainy_River -6:18:16 -	LMT	1895
-			-6:00	Canada	C%sT	1940 Sep 29
-			-6:00	1:00	CDT	1942 Feb  9  2:00s
-			-6:00	Canada	C%sT
 # For Atikokan see America/Panama.
 
 

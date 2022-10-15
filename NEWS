@@ -3,7 +3,16 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
-    Fix a Y2438 bug when reading TZif data
+    Simplify four Ontario zones into one.
+    Fix a Y2438 bug when reading TZif data.
+
+  Changes to past timestamps
+
+    Simplify four Ontario zones to one, as the post-1970 differences
+    seem to have been imaginary.  (Problem reported by Chris Walton.)
+    Move America/Nipigon, America/Rainy_River, and America/Thunder_Bay
+    to 'backzone'; backward-compatibility links still work, albeit
+    with different timestamps before November 1973.
 
   Changes to code
 

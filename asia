@@ -273,7 +273,6 @@ Zone	Asia/Yangon	6:24:47 -	LMT	1880        # or Rangoon
 			6:30	-	+0630	1942 May
 			9:00	-	+09	1945 May  3
 			6:30	-	+0630
-Link Asia/Yangon Indian/Cocos
 
 # Cambodia
 # See Asia/Bangkok.
@@ -667,8 +666,6 @@ Zone	Asia/Shanghai	8:05:43	-	LMT	1901
 # / Wulumuqi.  (Please use Asia/Shanghai if you prefer Beijing time.)
 Zone	Asia/Urumqi	5:50:20	-	LMT	1928
 			6:00	-	+06
-Link Asia/Urumqi Antarctica/Vostok
-
 
 # Hong Kong
 
@@ -2756,14 +2753,12 @@ Zone Asia/Kuching	7:21:20	-	LMT	1926 Mar
 			8:00 NBorneo  +08/+0820	1942 Feb 16
 			9:00	-	+09	1945 Sep 12
 			8:00	-	+08
-Link Asia/Kuching Asia/Brunei
 
 # Maldives
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Indian/Maldives	4:54:00 -	LMT	1880 # Malé
 			4:54:00	-	MMT	1960 # Malé Mean Time
 			5:00	-	+05
-Link Indian/Maldives Indian/Kerguelen
 
 # Mongolia
 
@@ -3544,7 +3539,6 @@ Zone	Asia/Manila	-15:56:00 -	LMT	1844 Dec 31
 Zone	Asia/Qatar	3:26:08 -	LMT	1920     # Al Dawhah / Doha
 			4:00	-	+04	1972 Jun
 			3:00	-	+03
-Link Asia/Qatar Asia/Bahrain
 
 # Saudi Arabia
 #
@@ -3591,9 +3585,6 @@ Link Asia/Qatar Asia/Bahrain
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Riyadh	3:06:52 -	LMT	1947 Mar 14
 			3:00	-	+03
-Link Asia/Riyadh Antarctica/Syowa
-Link Asia/Riyadh Asia/Aden	# Yemen
-Link Asia/Riyadh Asia/Kuwait
 
 # Singapore
 # taken from Mok Ly Yng (2003-10-30)
@@ -3608,7 +3599,6 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 			9:00	-	+09	1945 Sep 12
 			7:30	-	+0730	1982 Jan  1
 			8:00	-	+08
-Link Asia/Singapore Asia/Kuala_Lumpur
 
 # Spratly Is
 # no information
@@ -3859,9 +3849,6 @@ Zone	Asia/Dushanbe	4:35:12 -	LMT	1924 May  2
 Zone	Asia/Bangkok	6:42:04	-	LMT	1880
 			6:42:04	-	BMT	1920 Apr # Bangkok Mean Time
 			7:00	-	+07
-Link Asia/Bangkok Asia/Phnom_Penh	# Cambodia
-Link Asia/Bangkok Asia/Vientiane	# Laos
-Link Asia/Bangkok Indian/Christmas
 
 # Turkmenistan
 # From Shanks & Pottenger.
@@ -3876,9 +3863,6 @@ Zone	Asia/Ashgabat	3:53:32 -	LMT	1924 May  2 # or Ashkhabad
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Dubai	3:41:12 -	LMT	1920
 			4:00	-	+04
-Link Asia/Dubai Asia/Muscat	# Oman
-Link Asia/Dubai Indian/Mahe
-Link Asia/Dubai Indian/Reunion
 
 # Uzbekistan
 # Byalokoz 1919 says Uzbekistan was 4:27:53.

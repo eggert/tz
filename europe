@@ -504,9 +504,6 @@ Zone	Europe/London	-0:01:15 -	LMT	1847 Dec  1
 			 1:00	-	BST	1971 Oct 31  2:00u
 			 0:00	GB-Eire	%s	1996
 			 0:00	EU	GMT/BST
-Link	Europe/London	Europe/Jersey
-Link	Europe/London	Europe/Guernsey
-Link	Europe/London	Europe/Isle_of_Man
 
 # From Paul Eggert (2018-02-15):
 # In January 2018 we discovered that the negative SAVE values in the
@@ -961,8 +958,6 @@ Zone	Europe/Brussels	0:17:30 -	LMT	1880
 			1:00	C-Eur	CE%sT	1944 Sep  3
 			1:00	Belgium	CE%sT	1977
 			1:00	EU	CE%sT
-Link Europe/Brussels Europe/Amsterdam
-Link Europe/Brussels Europe/Luxembourg
 
 # Bosnia and Herzegovina
 # See Europe/Belgrade.
@@ -1025,8 +1020,6 @@ Zone	Europe/Prague	0:57:44 -	LMT	1850
 # End of rearguard section.
 			1:00	Czech	CE%sT	1979
 			1:00	EU	CE%sT
-Link Europe/Prague Europe/Bratislava
-
 
 # Denmark, Faroe Islands, and Greenland
 # For Denmark see Europe/Berlin.
@@ -1259,10 +1252,6 @@ Zone	Europe/Helsinki	1:39:49 -	LMT	1878 May 31
 			2:00	Finland	EE%sT	1983
 			2:00	EU	EE%sT
 
-# Åland Is
-Link	Europe/Helsinki	Europe/Mariehamn
-
-
 # France
 
 # From Ciro Discepolo (2000-12-20):
@@ -1400,7 +1389,6 @@ Zone	Europe/Paris	0:09:21 -	LMT	1891 Mar 16
 			0:00	France	WE%sT	1945 Sep 16  3:00
 			1:00	France	CE%sT	1977
 			1:00	EU	CE%sT
-Link Europe/Paris Europe/Monaco
 
 # Germany
 
@@ -1444,11 +1432,6 @@ Zone	Europe/Berlin	0:53:28 -	LMT	1893 Apr
 			1:00 SovietZone	CE%sT	1946
 			1:00	Germany	CE%sT	1980
 			1:00	EU	CE%sT
-Link Europe/Berlin Arctic/Longyearbyen
-Link Europe/Berlin Europe/Copenhagen
-Link Europe/Berlin Europe/Oslo
-Link Europe/Berlin Europe/Stockholm
-
 
 # Georgia
 # Please see the "asia" file for Asia/Tbilisi.
@@ -1689,9 +1672,6 @@ Zone	Europe/Rome	0:49:56 -	LMT	1866 Dec 12
 			1:00	C-Eur	CE%sT	1944 Jun  4
 			1:00	Italy	CE%sT	1980
 			1:00	EU	CE%sT
-Link Europe/Rome Europe/Vatican
-Link Europe/Rome Europe/San_Marino
-
 
 # Kosovo
 # See Europe/Belgrade.
@@ -3294,11 +3274,6 @@ Zone	Europe/Belgrade	1:22:00	-	LMT	1884
 # Shanks & Pottenger don't give as much detail, so go with Koželj.
 			1:00	-	CET	1982 Nov 27
 			1:00	EU	CE%sT
-Link Europe/Belgrade Europe/Ljubljana	# Slovenia
-Link Europe/Belgrade Europe/Podgorica	# Montenegro
-Link Europe/Belgrade Europe/Sarajevo	# Bosnia and Herzegovina
-Link Europe/Belgrade Europe/Skopje	# North Macedonia
-Link Europe/Belgrade Europe/Zagreb	# Croatia
 
 # Slovakia
 # See Europe/Prague.
@@ -3527,9 +3502,6 @@ Zone	Europe/Zurich	0:34:08 -	LMT	1853 Jul 16 # See above comment.
 			0:29:46	-	BMT	1894 Jun    # Bern Mean Time
 			1:00	Swiss	CE%sT	1981
 			1:00	EU	CE%sT
-Link Europe/Zurich Europe/Busingen
-Link Europe/Zurich Europe/Vaduz
-
 
 # Turkey
 

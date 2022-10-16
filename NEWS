@@ -12,7 +12,7 @@ Unreleased, experimental changes
     seem to have been imaginary.  (Problem reported by Chris Walton.)
     Move America/Nipigon, America/Rainy_River, and America/Thunder_Bay
     to 'backzone'; backward-compatibility links still work, albeit
-    with different timestamps before November 1973.
+    with some different timestamps before November 2005.
 
   Changes to code
 

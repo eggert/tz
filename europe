@@ -3734,7 +3734,6 @@ Zone	Europe/Istanbul	1:55:52 -	LMT	1880
 			2:00	1:00	EEST	2015 Nov  8  1:00u
 			2:00	EU	EE%sT	2016 Sep  7
 			3:00	-	+03
-Link	Europe/Istanbul	Asia/Istanbul	# Istanbul is in both continents.
 
 # Ukraine
 #

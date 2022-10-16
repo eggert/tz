@@ -15,6 +15,9 @@
 # after main became rearguard and vanguard became main).
 # There is no need to convert rearguard to other forms.
 #
+# When converting to vanguard form, the output can use the line
+# "Zone GMT 0 - GMT" which TZUpdater 2.3.2 mistakenly rejects.
+#
 # When converting to vanguard form, the output can use negative SAVE
 # values.
 #
@@ -145,6 +148,17 @@ DATAFORM != "main" {
   # uncomment the desired version and comment out the undesired one.
   if ($0 ~ /^#?[\t ]+-[12]:00[\t ]+Port[\t ]+[%+-]/) {
     if (($0 ~ /%z/) == (DATAFORM == "vanguard")) {
+      uncomment = in_comment
+    } else {
+      comment_out = !in_comment
+    }
+  }
+
+  # In vanguard form, use the line "Zone GMT 0 - GMT" instead of
+  # "Zone Etc/GMT 0 - GMT" and adjust Link lines accordingly.
+  # This works around a bug in TZUpdater 2.3.2.
+  if (/^#?(Zone|Link)[\t ]+(Etc\/)?GMT[\t ]/) {
+    if (($2 == "GMT") == (DATAFORM == "vanguard")) {
       uncomment = in_comment
     } else {
       comment_out = !in_comment

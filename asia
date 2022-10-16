@@ -1172,10 +1172,6 @@ Zone	Asia/Famagusta	2:15:48	-	LMT	1921 Nov 14
 			3:00	-	+03	2017 Oct 29 1:00u
 			2:00	EUAsia	EE%sT
 
-# Classically, Cyprus belongs to Asia; e.g. see Herodotus, Histories, I.72.
-# However, for various reasons many users expect to find it under Europe.
-Link	Asia/Nicosia	Europe/Nicosia
-
 # Georgia
 # From Paul Eggert (1994-11-19):
 # Today's _Economist_ (p 60) reports that Georgia moved its clocks forward

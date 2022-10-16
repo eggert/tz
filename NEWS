@@ -3,8 +3,20 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Move links to 'backward'.
+    In vanguard form, GMT is now a Zone and Etc/GMT a link.
     Simplify four Ontario zones into one.
     Fix a Y2438 bug when reading TZif data.
+
+  Changes to data
+
+    Move links to 'backward' to ease and simplify link maintenance.
+    This affects generated data only if you use 'make BACKWARD='.
+
+    GMT is now a Zone and Etc/GMT a link instead of vice versa,
+    as GMT is needed for leap second support whereas Etc/GMT is not.
+    However, this change exposes a bug in TZUpdater 2.3.2 so it is
+    present only in vanguard form for now.
 
   Changes to past timestamps
 

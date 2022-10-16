@@ -825,7 +825,8 @@ check_sorted: backward backzone iso3166.tab zone.tab zone1970.tab
 		touch $@
 
 check_links:	checklinks.awk $(TDATA_TO_CHECK) tzdata.zi
-		$(AWK) -f checklinks.awk $(TDATA_TO_CHECK)
+		$(AWK) -f checklinks.awk -v backcheck=backward \
+		  $(TDATA_TO_CHECK)
 		$(AWK) -f checklinks.awk tzdata.zi
 		touch $@
 

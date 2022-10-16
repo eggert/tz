@@ -1712,6 +1712,8 @@ Rule	Toronto	1951	1956	-	Sep	lastSun	2:00	0	S
 # Toronto Star, which said that DST was ending 1971-10-31 as usual.
 Rule	Toronto	1957	1973	-	Oct	lastSun	2:00	0	S
 
+# The Bahamas match Toronto since 1970.
+
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Toronto	-5:17:32 -	LMT	1895
 			-5:00	Canada	E%sT	1919
@@ -2733,14 +2735,6 @@ Zone America/Tijuana	-7:48:04 -	LMT	1922 Jan  1  7:00u
 
 ###############################################################################
 
-# Anguilla
-# Antigua and Barbuda
-# See America/Puerto_Rico.
-
-# The Bahamas
-# See America/Toronto.
-
-
 # Barbados
 
 # For 1899 Milne gives -3:58:29.2.
@@ -2952,12 +2946,6 @@ Zone Atlantic/Bermuda	-4:19:18 -	LMT	1890	# Hamilton
 			-4:00	Bermuda	A%sT	1974 Apr 28  2:00
 			-4:00	Canada	A%sT	1976
 			-4:00	US	A%sT
-
-# Caribbean Netherlands
-# See America/Puerto_Rico.
-
-# Cayman Is
-# See America/Panama.
 
 # Costa Rica
 
@@ -3184,9 +3172,6 @@ Zone	America/Havana	-5:29:28 -	LMT	1890
 			-5:29:36 -	HMT	1925 Jul 19 12:00 # Havana MT
 			-5:00	Cuba	C%sT
 
-# Dominica
-# See America/Puerto_Rico.
-
 # Dominican Republic
 
 # From Steffen Thorsen (2000-10-30):
@@ -3232,12 +3217,6 @@ Rule	Salv	1987	1988	-	Sep	lastSun	0:00	0	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/El_Salvador -5:56:48 -	LMT	1921 # San Salvador
 			-6:00	Salv	C%sT
-
-# Grenada
-# Guadeloupe
-# St Barthélemy
-# St Martin (French part)
-# See America/Puerto_Rico.
 
 # Guatemala
 #
@@ -3424,9 +3403,6 @@ Zone America/Martinique	-4:04:20 -      LMT	1890        # Fort-de-France
 			-4:00	1:00	ADT	1980 Sep 28
 			-4:00	-	AST
 
-# Montserrat
-# See America/Puerto_Rico.
-
 # Nicaragua
 #
 # This uses Shanks & Pottenger for times before 2005.
@@ -3492,23 +3468,39 @@ Zone	America/Managua	-5:45:08 -	LMT	1890
 			-5:00	-	EST	1997
 			-6:00	Nic	C%sT
 
+# Cayman Is
 # Panama
+#
+# Atikokan and Coral Harbour, Canada, match Panama since 1970.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Panama	-5:18:08 -	LMT	1890
 			-5:19:36 -	CMT	1908 Apr 22 # Colón Mean Time
 			-5:00	-	EST
 
+# Anguilla
+# Antigua & Barbuda
+# Aruba
+# Caribbean Netherlands
+# Curaçao
+# Dominica
+# Grenada
+# Guadeloupe
+# Montserrat
 # Puerto Rico
+# St Barthélemy
+# St Kitts-Nevis
+# Sint Maarten / St Martin
+# St Lucia
+# St Vincent & the Grenadines
+# Trinidad & Tobago
+# Virgin Is (UK & US)
+#
 # There are too many San Juans elsewhere, so we'll use 'Puerto_Rico'.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Puerto_Rico -4:24:25 -	LMT	1899 Mar 28 12:00 # San Juan
 			-4:00	-	AST	1942 May  3
 			-4:00	US	A%sT	1946
 			-4:00	-	AST
-
-# St Kitts-Nevis
-# St Lucia
-# See America/Puerto_Rico.
 
 # St Pierre and Miquelon
 # There are too many St Pierres elsewhere, so we'll use 'Miquelon'.
@@ -3517,12 +3509,6 @@ Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15 # St Pierre
 			-4:00	-	AST	1980 May
 			-3:00	-	-03	1987
 			-3:00	Canada	-03/-02
-
-# St Vincent and the Grenadines
-# See America/Puerto_Rico.
-
-# Sint Maarten
-# See America/Puerto_Rico.
 
 # Turks and Caicos
 #
@@ -3592,11 +3578,6 @@ Zone America/Grand_Turk	-4:44:32 -	LMT	1890
 			-5:00	US	E%sT	2015 Mar  8  2:00
 			-4:00	-	AST	2018 Mar 11  3:00
 			-5:00	US	E%sT
-
-# British Virgin Is
-# US Virgin Is
-# See America/Puerto_Rico.
-
 
 # Local Variables:
 # coding: utf-8

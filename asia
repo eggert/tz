@@ -149,9 +149,6 @@ Zone	Asia/Baku	3:19:24 -	LMT	1924 May  2
 			4:00	EUAsia	+04/+05	1997
 			4:00	Azer	+04/+05
 
-# Bahrain
-# See Asia/Qatar.
-
 # Bangladesh
 # From Alexander Krivenyshev (2009-05-13):
 # According to newspaper Asian Tribune (May 6, 2009) Bangladesh may introduce
@@ -254,10 +251,8 @@ Zone	Indian/Chagos	4:49:40	-	LMT	1907
 			5:00	-	+05	1996
 			6:00	-	+06
 
-# Brunei
-# See Asia/Kuching.
-
-# Burma / Myanmar
+# Cocos (Keeling) Islands
+# Myanmar (Burma)
 
 # Milne says 6:24:40 was the meridian of the time ball observatory at Rangoon.
 
@@ -273,10 +268,6 @@ Zone	Asia/Yangon	6:24:47 -	LMT	1880        # or Rangoon
 			6:30	-	+0630	1942 May
 			9:00	-	+09	1945 May  3
 			6:30	-	+0630
-
-# Cambodia
-# See Asia/Bangkok.
-
 
 # China
 
@@ -664,6 +655,7 @@ Zone	Asia/Shanghai	8:05:43	-	LMT	1901
 			8:00	PRC	C%sT
 # Xinjiang time, used by many in western China; represented by Ürümqi / Ürümchi
 # / Wulumuqi.  (Please use Asia/Shanghai if you prefer Beijing time.)
+# Vostok base in Antarctica matches this since 1970.
 Zone	Asia/Urumqi	5:50:20	-	LMT	1928
 			6:00	-	+06
 
@@ -2697,14 +2689,6 @@ Zone	Asia/Pyongyang	8:23:00 -	LMT	1908 Apr  1
 			8:30	-	KST	2018 May  4 23:30
 			9:00	-	KST
 
-###############################################################################
-
-# Kuwait
-# See Asia/Riyadh.
-
-# Laos
-# See Asia/Bangkok.
-
 
 # Lebanon
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
@@ -2736,7 +2720,9 @@ Rule	Lebanon	1999	max	-	Oct	lastSun	0:00	0	-
 Zone	Asia/Beirut	2:22:00 -	LMT	1880
 			2:00	Lebanon	EE%sT
 
-# Malaysia
+# Brunei
+# Malaysia (eastern)
+#
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	NBorneo	1935	1941	-	Sep	14	0:00	0:20	-
 Rule	NBorneo	1935	1941	-	Dec	14	0:00	0	-
@@ -2920,9 +2906,6 @@ Zone	Asia/Choibalsan	7:38:00 -	LMT	1905 Aug
 Zone	Asia/Kathmandu	5:41:16 -	LMT	1920
 			5:30	-	+0530	1986
 			5:45	-	+0545
-
-# Oman
-# See Asia/Dubai.
 
 # Pakistan
 
@@ -3534,13 +3517,18 @@ Zone	Asia/Manila	-15:56:00 -	LMT	1844 Dec 31
 			9:00	-	JST	1944 Nov
 			8:00	Phil	P%sT
 
+# Bahrain
 # Qatar
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Qatar	3:26:08 -	LMT	1920     # Al Dawhah / Doha
 			4:00	-	+04	1972 Jun
 			3:00	-	+03
 
+# Kuwait
 # Saudi Arabia
+# Yemen
+#
+# Japan's year-round bases in Antarctica match this since 1970.
 #
 # From Paul Eggert (2018-08-29):
 # Time in Saudi Arabia and other countries in the Arabian peninsula was not
@@ -3844,7 +3832,11 @@ Zone	Asia/Dushanbe	4:35:12 -	LMT	1924 May  2
 			5:00	1:00	+06	1991 Sep  9  2:00s
 			5:00	-	+05
 
+# Cambodia
+# Christmas I
+# Laos
 # Thailand
+# Vietnam (northern)
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Bangkok	6:42:04	-	LMT	1880
 			6:42:04	-	BMT	1920 Apr # Bangkok Mean Time
@@ -3859,7 +3851,12 @@ Zone	Asia/Ashgabat	3:53:32 -	LMT	1924 May  2 # or Ashkhabad
 			4:00 RussiaAsia	+04/+05	1992 Jan 19  2:00
 			5:00	-	+05
 
+# Oman
+# Réunion
+# Seychelles
 # United Arab Emirates
+#
+# The Crozet Is also observe Réunion time; see the 'antarctica' file.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Dubai	3:41:12 -	LMT	1920
 			4:00	-	+04
@@ -3882,7 +3879,7 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 			5:00 RussiaAsia	+05/+06	1992
 			5:00	-	+05
 
-# Vietnam
+# Vietnam (southern)
 
 # From Paul Eggert (2014-10-04):
 # Milne gives 7:16:56 for the meridian of Saigon in 1899, as being
@@ -3956,7 +3953,3 @@ Zone Asia/Ho_Chi_Minh	7:06:30 -	LMT	1906 Jul  1
 # For timestamps in north Vietnam back to 1970 (the tzdb cutoff),
 # use Asia/Bangkok; see the VN entries in the file zone1970.tab.
 # For timestamps before 1970, see Asia/Hanoi in the file 'backzone'.
-
-
-# Yemen
-# See Asia/Riyadh.

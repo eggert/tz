@@ -37,6 +37,9 @@ Unreleased, experimental changes
     number 2438 comes from the 32-bit limit in the year 2038, plus the
     400-year Gregorian cycle.  (Problem reported by Bradley White.)
 
+    Take advantage of the following C23 features if available:
+    bool/true/false keywords.
+
 
 Release 2022e - 2022-10-11 11:13:02 -0700
 

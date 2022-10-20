@@ -74,10 +74,6 @@
 # define HAVE_POSIX_DECLS 1
 #endif
 
-#ifndef HAVE_STDBOOL_H
-# define HAVE_STDBOOL_H (199901 <= __STDC_VERSION__)
-#endif
-
 #ifndef HAVE_STRDUP
 # define HAVE_STRDUP 1
 #endif
@@ -623,12 +619,12 @@ time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_PURE;
 ** Finally, some convenience items.
 */
 
-#if HAVE_STDBOOL_H
-# include <stdbool.h>
-#else
+#if __STDC_VERSION__ < 199901
 # define true 1
 # define false 0
 # define bool int
+#elif __STDC_VERSION__ < 202311
+# include <stdbool.h>
 #endif
 
 #define TYPE_BIT(type)	(sizeof(type) * CHAR_BIT)

@@ -72,7 +72,7 @@ static ptrdiff_t const PTRDIFF_MAX = MAXVAL(ptrdiff_t, TYPE_BIT(ptrdiff_t));
 typedef intmax_t lineno;
 
 struct rule {
-	const char *	r_filename;
+	int		r_filenum;
 	lineno		r_linenum;
 	const char *	r_name;
 
@@ -108,7 +108,7 @@ enum {
 };
 
 struct zone {
-	const char *	z_filename;
+	int		z_filenum;
 	lineno		z_linenum;
 
 	const char *	z_name;
@@ -158,7 +158,7 @@ static int	getfields(char *, char **, int);
 static zic_t	gethms(const char * string, const char * errstring);
 static zic_t	getsave(char *, bool *);
 static void	inexpires(char **, int);
-static void	infile(const char * filename);
+static void	infile(int, char const *);
 static void	inleap(char ** fields, int nfields);
 static void	inlink(char ** fields, int nfields);
 static void	inrule(char ** fields, int nfields);
@@ -194,7 +194,7 @@ enum { WORK_AROUND_QTBUG_53071 = true };
 static int		charcnt;
 static bool		errors;
 static bool		warnings;
-static const char *	filename;
+static int		filenum;
 static int		leapcnt;
 static bool		leapseen;
 static zic_t		leapminyear;
@@ -205,9 +205,11 @@ static int		max_format_len;
 static zic_t		max_year;
 static zic_t		min_year;
 static bool		noise;
-static const char *	rfilename;
+static int		rfilenum;
 static lineno		rlinenum;
 static const char *	progname;
+static char const *	leapsec;
+static char *const *	main_argv;
 static ptrdiff_t	timecnt;
 static ptrdiff_t	timecnt_alloc;
 static int		typecnt;
@@ -328,7 +330,7 @@ static ptrdiff_t	nzones;	/* number of zones */
 static ptrdiff_t	nzones_alloc;
 
 struct link {
-	const char *	l_filename;
+	int		l_filenum;
 	lineno		l_linenum;
 	const char *	l_target;
 	const char *	l_linkname;
@@ -522,19 +524,36 @@ growalloc(void *ptr, size_t itemsize, ptrdiff_t nitems, ptrdiff_t *nitems_alloc)
 ** Error handling.
 */
 
-static void
-eats(char const *name, lineno num, char const *rname, lineno rnum)
+/* In most of the code, an input file name is represented by its index
+   into the main argument vector, except that LEAPSEC_FILENUM stands
+   for leapsec and COMMAND_LINE_FILENUM stands for the command line.  */
+enum { LEAPSEC_FILENUM = -2, COMMAND_LINE_FILENUM = -1 };
+
+/* Return the name of the Ith input file, for diagnostics.  */
+static char const *
+filename(int i)
 {
-	filename = name;
+  if (i == COMMAND_LINE_FILENUM)
+    return _("command line");
+  else {
+    char const *fname = i == LEAPSEC_FILENUM ? leapsec : main_argv[i];
+    return strcmp(fname, "-") == 0 ? _("standard input") : fname;
+  }
+}
+
+static void
+eats(int fnum, lineno num, int rfnum, lineno rnum)
+{
+	filenum = fnum;
 	linenum = num;
-	rfilename = rname;
+	rfilenum = rfnum;
 	rlinenum = rnum;
 }
 
 static void
-eat(char const *name, lineno num)
+eat(int fnum, lineno num)
 {
-	eats(name, num, NULL, -1);
+	eats(fnum, num, 0, -1);
 }
 
 static void ATTRIBUTE_FORMAT((printf, 1, 0))
@@ -545,12 +564,13 @@ verror(const char *const string, va_list args)
 	**	zic ... 2>&1 | error -t "*" -v
 	** on BSD systems.
 	*/
-	if (filename)
-	  fprintf(stderr, _("\"%s\", line %"PRIdMAX": "), filename, linenum);
+	if (filenum)
+	  fprintf(stderr, _("\"%s\", line %"PRIdMAX": "),
+		  filename(filenum), linenum);
 	vfprintf(stderr, string, args);
-	if (rfilename != NULL)
+	if (rfilenum)
 		fprintf(stderr, _(" (rule from \"%s\", line %"PRIdMAX")"),
-			rfilename, rlinenum);
+			filename(rfilenum), rlinenum);
 	fprintf(stderr, "\n");
 }
 
@@ -757,7 +777,6 @@ redundant_time_option(char *opt)
 static const char *	psxrules;
 static const char *	lcltime;
 static const char *	directory;
-static const char *	leapsec;
 static const char *	tzdefault;
 
 /* -1 if the TZif output file should be slim, 0 if default, 1 if the
@@ -792,6 +811,7 @@ main(int argc, char **argv)
 # endif /* defined TEXTDOMAINDIR */
 	textdomain(TZ_DOMAIN);
 #endif /* HAVE_GETTEXT */
+	main_argv = argv;
 	progname = argv[0];
 	if (TYPE_BIT(zic_t) < 64) {
 		fprintf(stderr, "%s: %s\n", progname,
@@ -926,12 +946,12 @@ _("%s: invalid time range: %s\n"),
 		tzdefault = TZDEFAULT;
 
 	if (optind < argc && leapsec != NULL) {
-		infile(leapsec);
+		infile(LEAPSEC_FILENUM, leapsec);
 		adjleap();
 	}
 
 	for (k = optind; k < argc; k++)
-		infile(argv[k]);
+	  infile(k, argv[k]);
 	if (errors)
 		return EXIT_FAILURE;
 	associate();
@@ -949,7 +969,7 @@ _("%s: invalid time range: %s\n"),
 	** Make links.
 	*/
 	for (i = 0; i < nlinks; ++i) {
-		eat(links[i].l_filename, links[i].l_linenum);
+		eat(links[i].l_filenum, links[i].l_linenum);
 		dolink(links[i].l_target, links[i].l_linkname, false);
 		if (noise)
 			for (j = 0; j < nlinks; ++j)
@@ -961,11 +981,11 @@ _("%s: invalid time range: %s\n"),
 				}
 	}
 	if (lcltime != NULL) {
-		eat(_("command line"), 1);
+		eat(COMMAND_LINE_FILENUM, 1);
 		dolink(lcltime, tzdefault, true);
 	}
 	if (psxrules != NULL) {
-		eat(_("command line"), 1);
+		eat(COMMAND_LINE_FILENUM, 1);
 		dolink(psxrules, TZDEFRULES, true);
 	}
 	if (warnings && (ferror(stderr) || fclose(stderr) != 0))
@@ -1378,22 +1398,20 @@ associate(void)
 			if (strcmp(rules[i].r_name,
 				rules[i + 1].r_name) != 0)
 					continue;
-			if (strcmp(rules[i].r_filename,
-				rules[i + 1].r_filename) == 0)
+			if (rules[i].r_filenum == rules[i + 1].r_filenum)
 					continue;
-			eat(rules[i].r_filename, rules[i].r_linenum);
+			eat(rules[i].r_filenum, rules[i].r_linenum);
 			warning(_("same rule name in multiple files"));
-			eat(rules[i + 1].r_filename, rules[i + 1].r_linenum);
+			eat(rules[i + 1].r_filenum, rules[i + 1].r_linenum);
 			warning(_("same rule name in multiple files"));
 			for (j = i + 2; j < nrules; ++j) {
 				if (strcmp(rules[i].r_name,
 					rules[j].r_name) != 0)
 						break;
-				if (strcmp(rules[i].r_filename,
-					rules[j].r_filename) == 0)
+				if (rules[i].r_filenum == rules[j].r_filenum)
 						continue;
-				if (strcmp(rules[i + 1].r_filename,
-					rules[j].r_filename) == 0)
+				if (rules[i + 1].r_filenum
+				    == rules[j].r_filenum)
 						continue;
 				break;
 			}
@@ -1424,7 +1442,7 @@ associate(void)
 			/*
 			** Maybe we have a local standard time offset.
 			*/
-			eat(zp->z_filename, zp->z_linenum);
+			eat(zp->z_filenum, zp->z_linenum);
 			zp->z_save = getsave(zp->z_rule, &zp->z_isdst);
 			/*
 			** Note, though, that if there's no rule,
@@ -1473,7 +1491,7 @@ inputline(FILE *fp, char *buf, ptrdiff_t bufsize)
 }
 
 static void
-infile(const char *name)
+infile(int fnum, char const *name)
 {
 	register FILE *			fp;
 	register const struct lookup *	lp;
@@ -1481,7 +1499,6 @@ infile(const char *name)
 	register lineno			num;
 
 	if (strcmp(name, "-") == 0) {
-		name = _("standard input");
 		fp = stdin;
 	} else if ((fp = fopen(name, "r")) == NULL) {
 		const char *e = strerror(errno);
@@ -1496,7 +1513,7 @@ infile(const char *name)
 		char buf[_POSIX2_LINE_MAX];
 		int nfields;
 		char *fields[MAX_FIELDS];
-		eat(name, num);
+		eat(fnum, num);
 		linelen = inputline(fp, buf, sizeof buf);
 		if (linelen < 0)
 		  break;
@@ -1508,7 +1525,7 @@ infile(const char *name)
 			wantcont = inzcont(fields, nfields);
 		} else {
 			struct lookup const *line_codes
-			  = name == leapsec ? leap_line_codes : zi_line_codes;
+			  = fnum < 0 ? leap_line_codes : zi_line_codes;
 			lp = byword(fields[0], line_codes);
 			if (lp == NULL)
 				error(_("input line of unknown type"));
@@ -1536,7 +1553,7 @@ infile(const char *name)
 			}
 		}
 	}
-	close_file(fp, NULL, filename, NULL);
+	close_file(fp, NULL, filename(fnum), NULL);
 	if (wantcont)
 		error(_("expected continuation line not found"));
 }
@@ -1639,7 +1656,7 @@ inrule(char **fields, int nfields)
 		error(_("Invalid rule name \"%s\""), fields[RF_NAME]);
 		return;
 	}
-	r.r_filename = filename;
+	r.r_filenum = filenum;
 	r.r_linenum = linenum;
 	r.r_save = getsave(fields[RF_SAVE], &r.r_isdst);
 	if (!rulesub(&r, fields[RF_LOYEAR], fields[RF_HIYEAR],
@@ -1680,9 +1697,9 @@ _("\"Zone %s\" line and -p option are mutually exclusive"),
 			strcmp(zones[i].z_name, fields[ZF_NAME]) == 0) {
 				error(_("duplicate zone name %s"
 					" (file \"%s\", line %"PRIdMAX")"),
-					fields[ZF_NAME],
-					zones[i].z_filename,
-					zones[i].z_linenum);
+				      fields[ZF_NAME],
+				      filename(zones[i].z_filenum),
+				      zones[i].z_linenum);
 				return false;
 		}
 	return inzsub(fields, nfields, false);
@@ -1729,7 +1746,7 @@ inzsub(char **fields, int nfields, bool iscont)
 		i_untilday = ZF_TILDAY;
 		i_untiltime = ZF_TILTIME;
 	}
-	z.z_filename = filename;
+	z.z_filenum = filenum;
 	z.z_linenum = linenum;
 	z.z_stdoff = gethms(fields[i_stdoff], _("invalid UT offset"));
 	if ((cp = strchr(fields[i_format], '%')) != 0) {
@@ -1745,7 +1762,7 @@ inzsub(char **fields, int nfields, bool iscont)
 	  max_format_len = format_len;
 	hasuntil = nfields > i_untilyear;
 	if (hasuntil) {
-		z.z_untilrule.r_filename = filename;
+		z.z_untilrule.r_filenum = filenum;
 		z.z_untilrule.r_linenum = linenum;
 		if (!rulesub(
 			&z.z_untilrule,
@@ -1914,7 +1931,7 @@ inlink(char **fields, int nfields)
 	}
 	if (! namecheck(fields[LF_LINKNAME]))
 	  return;
-	l.l_filename = filename;
+	l.l_filenum = filenum;
 	l.l_linenum = linenum;
 	l.l_target = ecpyalloc(fields[LF_TARGET]);
 	l.l_linkname = ecpyalloc(fields[LF_LINKNAME]);
@@ -3052,7 +3069,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 		INITIALIZE(prevktime);
 		if (useuntil && zp->z_untiltime <= min_time)
 			continue;
-		eat(zp->z_filename, zp->z_linenum);
+		eat(zp->z_filenum, zp->z_linenum);
 		*startbuf = '\0';
 		if (zp->z_nrules == 0) {
 			int type;
@@ -3080,8 +3097,8 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				zic_t one = 1;
 				zic_t y2038_boundary = one << 31;
 				struct rule *rp = &zp->z_rules[j];
-				eats(zp->z_filename, zp->z_linenum,
-					rp->r_filename, rp->r_linenum);
+				eats(zp->z_filenum, zp->z_linenum,
+				     rp->r_filenum, rp->r_linenum);
 				rp->r_todo = year >= rp->r_loyear &&
 						year <= rp->r_hiyear;
 				if (rp->r_todo) {
@@ -3122,8 +3139,8 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 					struct rule *r = &zp->z_rules[j];
 					if (!r->r_todo)
 						continue;
-					eats(zp->z_filename, zp->z_linenum,
-						r->r_filename, r->r_linenum);
+					eats(zp->z_filenum, zp->z_linenum,
+					     r->r_filenum, r->r_linenum);
 					offset = r->r_todisut ? 0 : stdoff;
 					if (!r->r_todisstd)
 						offset = oadd(offset, save);
@@ -3138,12 +3155,12 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 					} else if (jtime == ktime) {
 					  char const *dup_rules_msg =
 					    _("two rules for same instant");
-					  eats(zp->z_filename, zp->z_linenum,
-					       r->r_filename, r->r_linenum);
+					  eats(zp->z_filenum, zp->z_linenum,
+					       r->r_filenum, r->r_linenum);
 					  warning("%s", dup_rules_msg);
 					  r = &zp->z_rules[k];
-					  eats(zp->z_filename, zp->z_linenum,
-					       r->r_filename, r->r_linenum);
+					  eats(zp->z_filenum, zp->z_linenum,
+					       r->r_filenum, r->r_linenum);
 					  error("%s", dup_rules_msg);
 					}
 				}
@@ -3185,8 +3202,8 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 								false);
 					}
 				}
-				eats(zp->z_filename, zp->z_linenum,
-					rp->r_filename, rp->r_linenum);
+				eats(zp->z_filenum, zp->z_linenum,
+				     rp->r_filenum, rp->r_linenum);
 				doabbr(ab, zp, rp->r_abbrvar,
 				       rp->r_isdst, rp->r_save, false);
 				offset = oadd(zp->z_stdoff, rp->r_save);
@@ -3215,7 +3232,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 			if (*startbuf == '\0' && zp->z_format)
 			  doabbr(startbuf, zp, disable_percent_s,
 				 isdst, save, false);
-			eat(zp->z_filename, zp->z_linenum);
+			eat(zp->z_filenum, zp->z_linenum);
 			if (*startbuf == '\0')
 error(_("can't determine time zone abbreviation to use just after until time"));
 			else {

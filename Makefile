@@ -210,7 +210,7 @@ LDLIBS=
 #  -DHAVE_DECL_ENVIRON if <unistd.h> declares 'environ'
 #  -DHAVE_DIRECT_H if mkdir needs <direct.h> (MS-Windows)
 #  -DHAVE_GENERIC=0 if _Generic does not work
-#  -DHAVE_GETTEXT if 'gettext' works (e.g., GNU/Linux, FreeBSD, Solaris)
+#  -DHAVE_GETTEXT if 'gettext' works (e.g., GNU/Linux, FreeBSD, Solaris)*
 #  -DHAVE_INCOMPATIBLE_CTIME_R if your system's time.h declares
 #	ctime_r and asctime_r incompatibly with the POSIX standard
 #	(Solaris when _POSIX_PTHREAD_SEMANTICS is not defined).
@@ -223,14 +223,15 @@ LDLIBS=
 #  -DHAVE_POSIX_DECLS=0 if your system's include files do not declare
 #	functions like 'link' or variables like 'tzname' required by POSIX
 #  -DHAVE_SNPRINTF=0 if your system lacks the snprintf function
-#  -DHAVE_STDINT_H if you have a non-C99 compiler with <stdint.h>
+#  -DHAVE_STDINT_H if you have a non-C99 compiler with <stdint.h>*
 #  -DHAVE_STRFTIME_L if <time.h> declares locale_t and strftime_l
 #  -DHAVE_STRDUP=0 if your system lacks the strdup function
 #  -DHAVE_STRTOLL=0 if your system lacks the strtoll function
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
-#  -DHAVE_SYS_STAT_H=0 if your compiler lacks a <sys/stat.h>
+#  -DHAVE_SYS_STAT_H=0 if your compiler lacks a <sys/stat.h>*
 #  -DHAVE_TZSET=0 if your system lacks a tzset function
-#  -DHAVE_UNISTD_H=0 if your compiler lacks a <unistd.h>
+#  -DHAVE_UNISTD_H=0 if your compiler lacks a <unistd.h>*
+#  -DHAVE_UTMPX_H=0 if your compiler lacks a <utmpx.h>*
 #  -Dlocale_t=XXX if your system uses XXX instead of locale_t
 #  -DRESERVE_STD_EXT_IDS if your platform reserves standard identifiers
 #	with external linkage, e.g., applications cannot define 'localtime'.
@@ -257,11 +258,13 @@ LDLIBS=
 #	ignore or otherwise mishandle 64-bit data in TZif files;
 #	however, fat TZif files may trigger bugs in newer TZif readers.
 #	Slim TZif files are more efficient, and are the default.
-
 #  -DZIC_MAX_ABBR_LEN_WO_WARN=3
 #	(or some other number) to set the maximum time zone abbreviation length
 #	that zic will accept without a warning (the default is 6)
 #  $(GCC_DEBUG_FLAGS) if you are using recent GCC and want lots of checking
+#
+# * Options marked "*" can be omitted if your compiler is C23 compatible.
+#
 # Select instrumentation via "make GCC_INSTRUMENT='whatever'".
 GCC_INSTRUMENT = \
   -fsanitize=undefined -fsanitize-address-use-after-scope \

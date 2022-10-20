@@ -30,6 +30,14 @@
 /* This string was in the Factory zone through version 2016f.  */
 #define GRANDPARENTED	"Local time zone must be set--see zic manual page"
 
+/* True if "#include INCLUDE" includes something, false otherwise.
+   Yield DEFAULT on pre-C23 platforms that lack __has_include.  */
+#ifdef __has_include
+# define HAS_INCLUDE(include, default) __has_include(include)
+#else
+# define HAS_INCLUDE(include, default) (default)
+#endif
+
 /*
 ** Defaults for preprocessor symbols.
 ** You can override these in your C compiler options, e.g. '-DHAVE_GETTEXT=1'.
@@ -55,8 +63,8 @@
 #endif
 
 #ifndef HAVE_GETTEXT
-# define HAVE_GETTEXT 0
-#endif /* !defined HAVE_GETTEXT */
+# define HAVE_GETTEXT HAS_INCLUDE(<libintl.h>, false)
+#endif
 
 #ifndef HAVE_INCOMPATIBLE_CTIME_R
 # define HAVE_INCOMPATIBLE_CTIME_R 0
@@ -87,16 +95,16 @@
 #endif /* !defined HAVE_SYMLINK */
 
 #ifndef HAVE_SYS_STAT_H
-# define HAVE_SYS_STAT_H 1
-#endif /* !defined HAVE_SYS_STAT_H */
+# define HAVE_SYS_STAT_H HAS_INCLUDE(<sys/stat.h>, true)
+#endif
 
 #ifndef HAVE_UNISTD_H
-# define HAVE_UNISTD_H 1
-#endif /* !defined HAVE_UNISTD_H */
+# define HAVE_UNISTD_H HAS_INCLUDE(<unistd.h>, true)
+#endif
 
 #ifndef HAVE_UTMPX_H
-# define HAVE_UTMPX_H 1
-#endif /* !defined HAVE_UTMPX_H */
+# define HAVE_UTMPX_H HAS_INCLUDE(<utmpx.h>, true)
+#endif
 
 #ifndef NETBSD_INSPIRED
 # define NETBSD_INSPIRED 1
@@ -231,18 +239,17 @@
 ** stdint.h, even with pre-C99 compilers.
 */
 #ifndef HAVE_STDINT_H
-# define HAVE_STDINT_H \
-   (199901 <= __STDC_VERSION__ \
-    || 2 < __GLIBC__ + (1 <= __GLIBC_MINOR__) \
-    || __CYGWIN__ || INTMAX_MAX)
-#endif /* !defined HAVE_STDINT_H */
-
+# define HAVE_STDINT_H HAS_INCLUDE(<stdint.h>, \
+				   (199901 <= __STDC_VERSION__ \
+				    || 2 < __GLIBC__ + (1 <= __GLIBC_MINOR__) \
+				    || __CYGWIN__ || INTMAX_MAX))
+#endif
 #if HAVE_STDINT_H
 # include <stdint.h>
-#endif /* !HAVE_STDINT_H */
+#endif
 
 #ifndef HAVE_INTTYPES_H
-# define HAVE_INTTYPES_H HAVE_STDINT_H
+# define HAVE_INTTYPES_H HAS_INCLUDE(<inttypes.h>, HAVE_STDINT_H)
 #endif
 #if HAVE_INTTYPES_H
 # include <inttypes.h>

@@ -651,6 +651,33 @@ change_directory(char const *dir)
   }
 }
 
+/* Compare the two links A and B, for a stable sort by link name.  */
+static int
+qsort_linkcmp(void const *a, void const *b)
+{
+  struct link const *l = a;
+  struct link const *m = b;
+  int cmp = strcmp(l->l_linkname, m->l_linkname);
+  if (cmp)
+    return cmp;
+
+  /* The link names are the same.  Make the sort stable by comparing
+     file numbers (where subtraction cannot overflow) and possibly
+     line numbers (where it can).  */
+  cmp = l->l_filenum - m->l_filenum;
+  if (cmp)
+    return cmp;
+  return (l->l_linenum > m->l_linenum) - (l->l_linenum < m->l_linenum);
+}
+
+/* Compare the string KEY to the link B, for bsearch.  */
+static int
+bsearch_linkcmp(void const *key, void const *b)
+{
+  struct link const *m = b;
+  return strcmp(key, m->l_linkname);
+}
+
 /* Simple signal handling: just set a flag that is checked
    periodically outside critical sections.  To set up the handler,
    prefer sigaction if available to close a signal race.  */
@@ -968,17 +995,15 @@ _("%s: invalid time range: %s\n"),
 	/*
 	** Make links.
 	*/
+	if (noise)
+	  qsort(links, nlinks, sizeof *links, qsort_linkcmp);
 	for (i = 0; i < nlinks; ++i) {
 		eat(links[i].l_filenum, links[i].l_linenum);
 		dolink(links[i].l_target, links[i].l_linkname, false);
-		if (noise)
-			for (j = 0; j < nlinks; ++j)
-				if (strcmp(links[i].l_linkname,
-					   links[j].l_target) == 0) {
-						eat(links[j].l_filename,
-						    links[j].l_linenum);
-						warning(_("link to link"));
-				}
+		if (noise
+		    && bsearch(links[i].l_target, links, nlinks, sizeof *links,
+			       bsearch_linkcmp))
+		  warning(_("link to link"));
 	}
 	if (lcltime != NULL) {
 		eat(COMMAND_LINE_FILENUM, 1);

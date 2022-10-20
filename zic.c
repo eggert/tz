@@ -20,7 +20,6 @@
 #include <locale.h>
 #include <signal.h>
 #include <stdarg.h>
-#include <stddef.h>
 #include <stdio.h>
 
 typedef int_fast64_t	zic_t;
@@ -1457,7 +1456,7 @@ infile(const char *name)
 					inexpires(fields, nfields);
 					wantcont = false;
 					break;
-				default: UNREACHABLE();
+				default: unreachable();
 			}
 		}
 	}
@@ -1903,7 +1902,7 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 		case YR_MAXIMUM:
 			rp->r_loyear = ZIC_MAX;
 			break;
-		default: UNREACHABLE();
+		default: unreachable();
 	} else if (sscanf(cp, "%"SCNdZIC"%c", &rp->r_loyear, &xs) != 1) {
 		error(_("invalid starting year"));
 		return false;
@@ -1921,7 +1920,7 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 		case YR_ONLY:
 			rp->r_hiyear = rp->r_loyear;
 			break;
-		default: UNREACHABLE();
+		default: unreachable();
 	} else if (sscanf(cp, "%"SCNdZIC"%c", &rp->r_hiyear, &xs) != 1) {
 		error(_("invalid ending year"));
 		return false;

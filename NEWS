@@ -38,7 +38,7 @@ Unreleased, experimental changes
     400-year Gregorian cycle.  (Problem reported by Bradley White.)
 
     Take advantage of the following C23 features if available:
-    bool/true/false keywords and __has_include.
+    bool/true/false keywords, __has_include, unreachable.
 
 
 Release 2022e - 2022-10-11 11:13:02 -0700

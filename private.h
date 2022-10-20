@@ -161,6 +161,7 @@
 #undef tzalloc
 #undef tzfree
 
+#include <stddef.h>
 #include <sys/types.h>	/* for time_t */
 #include <string.h>
 #include <limits.h>	/* for CHAR_BIT et al. */
@@ -711,16 +712,19 @@ time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_PURE;
 #endif
 
 #ifdef DEBUG
-# define UNREACHABLE() abort()
-#elif 4 < __GNUC__ + (5 <= __GNUC_MINOR__)
-# define UNREACHABLE() __builtin_unreachable()
-#elif defined __has_builtin
-# if __has_builtin(__builtin_unreachable)
-#  define UNREACHABLE() __builtin_unreachable()
+# undef unreachable
+# define unreachable() abort()
+#elif !defined unreachable
+# ifdef __has_builtin
+#  if __has_builtin(__builtin_unreachable)
+#   define unreachable() __builtin_unreachable()
+#  endif
+# elif 4 < __GNUC__ + (5 <= __GNUC_MINOR__)
+#  define unreachable() __builtin_unreachable()
 # endif
-#endif
-#ifndef UNREACHABLE
-# define UNREACHABLE() ((void) 0)
+# ifndef unreachable
+#  define unreachable() ((void) 0)
+# endif
 #endif
 
 /*

@@ -1098,7 +1098,7 @@ transtime(const int year, register const struct rule *const rulep,
 			value += mon_lengths[leapyear][i] * SECSPERDAY;
 		break;
 
-	default: UNREACHABLE();
+	default: unreachable();
 	}
 
 	/*

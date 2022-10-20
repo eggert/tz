@@ -38,6 +38,10 @@ typedef int_fast64_t	zic_t;
 # define mkdir(name, mode) _mkdir(name)
 #endif
 
+#if HAVE_GETRANDOM
+# include <sys/random.h>
+#endif
+
 #if HAVE_SYS_STAT_H
 # include <sys/stat.h>
 #endif
@@ -1037,6 +1041,63 @@ namecheck(const char *name)
 	return componentcheck(name, component, cp);
 }
 
+/* Return a random uint_fast64_t.  */
+static uint_fast64_t
+get_rand_u64(void)
+{
+#if HAVE_GETRANDOM
+  static uint_fast64_t entropy_buffer[max(1, 256 / sizeof (uint_fast64_t))];
+  static int nwords;
+  if (!nwords) {
+    ssize_t s;
+    do
+      s = getrandom(entropy_buffer, sizeof entropy_buffer, 0);
+    while (s < 0 && errno == EINTR);
+
+    nwords = s < 0 ? -1 : s / sizeof *entropy_buffer;
+  }
+  if (0 < nwords)
+    return entropy_buffer[--nwords];
+#endif
+
+  /* getrandom didn't work, so fall back on portable code that is
+     not the best because the seed doesn't necessarily have enough bits,
+     the seed isn't cryptographically random on platforms lacking
+     getrandom, and 'rand' might not be cryptographically secure.  */
+  {
+    static bool initialized;
+    if (!initialized) {
+      unsigned seed;
+#ifdef CLOCK_REALTIME
+      struct timespec now;
+      clock_gettime (CLOCK_REALTIME, &now);
+      seed = now.tv_sec ^ now.tv_nsec;
+#else
+      seed = time(NULL);
+#endif
+      srand(seed);
+      initialized = true;
+    }
+  }
+
+  /* Return a random number if rand() yields a random number and in
+     the typical case where RAND_MAX is one less than a power of two.
+     In other cases this code yields a sort-of-random number.  */
+  {
+    uint_fast64_t
+      rand_max = RAND_MAX,
+      multiplier = rand_max + 1, /* It's OK if this overflows to 0.  */
+      r = 0, rmax = 0;
+    do {
+      uint_fast64_t rmax1 = rmax * multiplier + rand_max;
+      r = r * multiplier + rand();
+      rmax = rmax < rmax1 ? rmax1 : UINT_FAST64_MAX;
+    } while (rmax < UINT_FAST64_MAX);
+
+    return r;
+  }
+}
+
 /* Generate a randomish name in the same directory as *NAME.  If
    *NAMEALLOC, put the name into *NAMEALLOC which is assumed to be
    that returned by a previous call and is thus already almost set up
@@ -1056,8 +1117,19 @@ random_dirent(char const **name, char **namealloc)
   int suffixlen = 6;
   char const *lastslash = strrchr(src, '/');
   ptrdiff_t dirlen = lastslash ? lastslash + 1 - src : 0;
-  static unsigned short initialized;
   int i;
+  uint_fast64_t r;
+  uint_fast64_t base = alphabetlen;
+
+  /* BASE**6 */
+  uint_fast64_t base__6 = base * base * base * base * base * base;
+
+  /* The largest uintmax_t that is a multiple of BASE**6.  Any random
+     uintmax_t value that is this value or greater, yields a biased
+     remainder when divided by BASE**6.  UNFAIR_MIN equals the
+     mathematical value of ((UINTMAX_MAX + 1) - (UINTMAX_MAX + 1) % BASE**6)
+     computed without overflow.  */
+  uint_fast64_t unfair_min = - ((UINTMAX_MAX % base__6 + 1) % base__6);
 
   if (!dst) {
     dst = emalloc(dirlen + prefixlen + suffixlen + 1);
@@ -1067,13 +1139,14 @@ random_dirent(char const **name, char **namealloc)
     *name = *namealloc = dst;
   }
 
-  /* This randomization is not the best, but is portable to C89.  */
-  if (!initialized++) {
-    unsigned now = time(NULL);
-    srand(rand() ^ now);
+  do
+    r = get_rand_u64();
+  while (unfair_min <= r);
+
+  for (i = 0; i < suffixlen; i++) {
+    dst[dirlen + prefixlen + i] = alphabet[r % alphabetlen];
+    r /= alphabetlen;
   }
-  for (i = 0; i < suffixlen; i++)
-    dst[dirlen + prefixlen + i] = alphabet[rand() % alphabetlen];
 }
 
 /* Prepare to write to the file *OUTNAME, using *TEMPNAME to store the

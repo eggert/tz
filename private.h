@@ -62,6 +62,11 @@
 # define HAVE_GENERIC (201112 <= __STDC_VERSION__)
 #endif
 
+#ifndef HAVE_GETRANDOM
+# define HAVE_GETRANDOM HAS_INCLUDE(<sys/random.h>, \
+				    (2 < __GLIBC__ + (25 <= __GLIBC_MINOR__)))
+#endif
+
 #ifndef HAVE_GETTEXT
 # define HAVE_GETTEXT HAS_INCLUDE(<libintl.h>, false)
 #endif

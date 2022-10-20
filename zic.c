@@ -954,8 +954,11 @@ _("%s: invalid time range: %s\n"),
 		if (noise)
 			for (j = 0; j < nlinks; ++j)
 				if (strcmp(links[i].l_linkname,
-					links[j].l_target) == 0)
+					   links[j].l_target) == 0) {
+						eat(links[j].l_filename,
+						    links[j].l_linenum);
 						warning(_("link to link"));
+				}
 	}
 	if (lcltime != NULL) {
 		eat(_("command line"), 1);

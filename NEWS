@@ -5,6 +5,7 @@ Unreleased, experimental changes
   Briefly:
     Move links to 'backward'.
     In vanguard form, GMT is now a Zone and Etc/GMT a link.
+    zic now supports links to links.
     Simplify four Ontario zones into one.
     Fix a Y2438 bug when reading TZif data.
 
@@ -27,6 +28,19 @@ Unreleased, experimental changes
     with some different timestamps before November 2005.
 
   Changes to code
+
+    zic now supports links to links regardless of input line order.
+    For example, if Australia/Sydney is a Zone, the lines
+      Link Australia/Canberra Australia/ACT
+      Link Australia/Sydney Australia/Canberra
+    now work correctly, even though the shell commands
+      ln Australia/Canberra Australia/ACT
+      ln Australia/Sydney Australia/Canberra
+    would fail because the first command attempts to use a link
+    Australia/Canberra that does not exist until after the second
+    command is executed.  Previously, zic had unspecified behavior if
+    a Link line's target was another link, and zic often misbehaved if
+    a Link line's target was a later Link line.
 
     Fix line number in zic's diagnostic for a link to a link.
 

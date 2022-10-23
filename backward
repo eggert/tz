@@ -17,9 +17,9 @@
 # backward compatibility link.  Each section is sorted by link name.
 
 # A "#= TARGET1" comment labels each link inserted only because some
-# .zi parsers mishandle links to links.  The comment says what the
-# target would be if these parsers were fixed so that data could
-# contain links to links.  For example, the line
+# .zi parsers (including tzcode through 2022e) mishandle links to links.
+# The comment says what the target would be if these parsers were fixed
+# so that data could contain links to links.  For example, the line
 # "Link Australia/Sydney Australia/ACT #= Australia/Canberra" would be
 # "Link Australia/Canberra Australia/ACT" were it not that data lines
 # refrain from linking to links like Australia/Canberra, which means

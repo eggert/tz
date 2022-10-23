@@ -678,6 +678,89 @@ bsearch_linkcmp(void const *key, void const *b)
   return strcmp(key, m->l_linkname);
 }
 
+/* Make the links specified by the Link lines.  */
+static void
+make_links(void)
+{
+  ptrdiff_t i, j, nalinks;
+  qsort(links, nlinks, sizeof *links, qsort_linkcmp);
+
+  /* Ignore each link superseded by a later link with the same name.  */
+  j = 0;
+  for (i = 0; i < nlinks; i++) {
+    while (i + 1 < nlinks
+	   && strcmp(links[i].l_linkname, links[i + 1].l_linkname) == 0)
+      i++;
+    links[j++] = links[i];
+  }
+  nlinks = j;
+
+  /* Walk through the link array making links.  However,
+     if a link's target has not been made yet, append a copy to the
+     end of the array.  The end of the array will gradually fill
+     up with a small sorted subsequence of not-yet-made links.
+     nalinks counts all the links in the array, including copies.
+     When we reach the copied subsequence, it may still contain
+     a link to a not-yet-made link, so the process repeats.
+     At any given point in time, the link array consists of the
+     following subregions, where 0 <= i <= j <= nalinks and
+     0 <= nlinks <= nalinks:
+
+       0 .. (i - 1):
+	 links that either have been made, or have been copied to a
+	 later point point in the array (this later point can be in
+	 any of the three subregions)
+       i .. (j - 1):
+	 not-yet-made links for this pass
+       j .. (nalinks - 1):
+	 not-yet-made links that this pass has skipped because
+	 they were links to not-yet-made links
+
+     The first subregion might not be sorted if nlinks < i;
+     the other two subregions are sorted.  This algorithm does
+     not alter entries 0 .. (nlinks - 1), which remain sorted.
+
+     If there are L links, this algorithm is O(C*L*log(L)) where
+     C is the length of the longest link chain.  Usually C is
+     short (e.g., 3) though its worst-case value is L.  */
+
+  j = nalinks = nlinks;
+
+  for (i = 0; i < nalinks; i++) {
+    struct link *l;
+
+    eat(links[i].l_filenum, links[i].l_linenum);
+
+    /* If this pass examined all its links, start the next pass.  */
+    if (i == j)
+      j = nalinks;
+
+    /* Make this link unless its target has not been made yet.  */
+    l = bsearch(links[i].l_target, &links[i + 1], j - (i + 1),
+		sizeof *links, bsearch_linkcmp);
+    if (!l)
+      l = bsearch(links[i].l_target, &links[j], nalinks - j,
+		  sizeof *links, bsearch_linkcmp);
+    if (!l)
+      dolink(links[i].l_target, links[i].l_linkname, false);
+    else {
+      /* The link target has not been made yet; copy the link to the end.  */
+      links = growalloc (links, sizeof *links, nalinks, &nlinks_alloc);
+      links[nalinks++] = links[i];
+    }
+
+    if (noise && i < nlinks) {
+      if (l)
+	warning(_("link %s targeting link %s mishandled by pre-2023 zic"),
+		links[i].l_linkname, links[i].l_target);
+      else if (bsearch(links[i].l_target, links, nlinks, sizeof *links,
+		       bsearch_linkcmp))
+	warning(_("link %s targeting link %s"),
+		links[i].l_linkname, links[i].l_target);
+    }
+  }
+}
+
 /* Simple signal handling: just set a flag that is checked
    periodically outside critical sections.  To set up the handler,
    prefer sigaction if available to close a signal race.  */
@@ -992,19 +1075,7 @@ _("%s: invalid time range: %s\n"),
 			continue;
 		outzone(&zones[i], j - i);
 	}
-	/*
-	** Make links.
-	*/
-	if (noise)
-	  qsort(links, nlinks, sizeof *links, qsort_linkcmp);
-	for (i = 0; i < nlinks; ++i) {
-		eat(links[i].l_filenum, links[i].l_linenum);
-		dolink(links[i].l_target, links[i].l_linkname, false);
-		if (noise
-		    && bsearch(links[i].l_target, links, nlinks, sizeof *links,
-			       bsearch_linkcmp))
-		  warning(_("link to link"));
-	}
+	make_links();
 	if (lcltime != NULL) {
 		eat(COMMAND_LINE_FILENUM, 1);
 		dolink(lcltime, tzdefault, true);

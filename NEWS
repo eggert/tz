@@ -5,7 +5,7 @@ Unreleased, experimental changes
   Briefly:
     Move links to 'backward'.
     In vanguard form, GMT is now a Zone and Etc/GMT a link.
-    zic now supports links to links.
+    zic now supports links to links, and vanguard form uses this.
     Simplify four Ontario zones into one.
     Fix a Y2438 bug when reading TZif data.
 
@@ -18,6 +18,8 @@ Unreleased, experimental changes
     as GMT is needed for leap second support whereas Etc/GMT is not.
     However, this change exposes a bug in TZUpdater 2.3.2 so it is
     present only in vanguard form for now.
+
+    Vanguard form now uses links to links, as zic now supports this.
 
   Changes to past timestamps
 

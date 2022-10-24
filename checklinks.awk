@@ -46,8 +46,13 @@ BEGIN {
 END {
     for (tz in used) {
 	if (defined[tz] != Zone) {
-	    printf "%s: Link to non-zone\n", tz
+	  if (!defined[tz]) {
+	    printf "%s: Link to nowhere\n", tz
 	    status = 1
+	  } else if (DATAFORM != "vanguard") {
+	    printf "%s: Link to link\n", tz
+	    status = 1
+	  }
 	}
     }
     for (tz in shortcut) {

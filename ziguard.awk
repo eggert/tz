@@ -311,6 +311,10 @@ DATAFORM != "main" {
   }
 }
 
+/^Link/ && $4 == "#=" && DATAFORM == "vanguard" {
+  $0 = "Link\t" $5 "\t" $3
+}
+
 # If a Link line is followed by a Link or Zone line for the same data, comment
 # out the Link line.  This can happen if backzone overrides a Link
 # with a Zone or a different Link.
@@ -320,11 +324,28 @@ DATAFORM != "main" {
 /^Link/ {
   sub(/^Link/, "#Link", line[linkline[$3]])
   linkline[$3] = NR
+  linktarget[$3] = $2
 }
 
 { line[NR] = $0 }
 
+function cut_link_chains_short(\
+			       linkname, target, t, u)
+{
+  for (linkname in linktarget) {
+    target = linktarget[linkname]
+    for (t = target; (u = linktarget[t]); t = u)
+      continue;
+    if (t != target) {
+      line[linkline[linkname]] = "Link\t" t "\t" linkname "\t#= " target
+    }
+  }
+}
+
 END {
+  if (DATAFORM != "vanguard") {
+    cut_link_chains_short()
+  }
   for (i = 1; i <= NR; i++)
     print line[i]
 }

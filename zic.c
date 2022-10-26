@@ -56,9 +56,11 @@ typedef int_fast64_t	zic_t;
 static ptrdiff_t const PTRDIFF_MAX = MAXVAL(ptrdiff_t, TYPE_BIT(ptrdiff_t));
 #endif
 
-/* The minimum alignment of a type, for pre-C11 platforms.  */
+/* The minimum alignment of a type, for pre-C23 platforms.  */
 #if __STDC_VERSION__ < 201112
-# define _Alignof(type) offsetof(struct { char a; type b; }, b)
+# define alignof(type) offsetof(struct { char a; type b; }, b)
+#elif __STDC_VERSION__ < 202311
+# include <stdalign.h>
 #endif
 
 /* The maximum length of a text line, including the trailing newline.  */
@@ -2290,7 +2292,7 @@ writezone(const char *const name, const char *const string, char version,
 	/* Allocate the ATS and TYPES arrays via a single malloc,
 	   as this is a bit faster.  */
 	zic_t *ats = emalloc(align_to(size_product(nats, sizeof *ats + 1),
-				      _Alignof(zic_t)));
+				      alignof(zic_t)));
 	void *typesptr = ats + nats;
 	unsigned char *types = typesptr;
 	struct timerange rangeall = {0}, range32, range64;

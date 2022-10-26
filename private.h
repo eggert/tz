@@ -127,8 +127,9 @@
 /* Enable strtoimax on pre-C99 Solaris 11.  */
 #define __EXTENSIONS__ 1
 
-/* To avoid having 'stat' fail unnecessarily with errno == EOVERFLOW,
-   enable large files on GNUish systems ...  */
+/* Although tzcode does not call 'stat'-like functions directly, stdio
+   functions may call them.  To avoid having them fail unnecessarily
+   with errno == EOVERFLOW, enable large files on GNUish systems ...  */
 #ifndef _FILE_OFFSET_BITS
 # define _FILE_OFFSET_BITS 64
 #endif
@@ -136,6 +137,13 @@
 #define _LARGE_FILES 1
 /* ... and enable large inode numbers on Mac OS X 10.5 and later.  */
 #define _DARWIN_USE_64_BIT_INODE 1
+
+/* On GNUish systems where time_t might be 32 or 64 bits, use 64.
+   This supports a wider time range, and avoids having 'stat'-like
+   functions fail unnecessarily with errno == EOVERFLOW.  */
+#ifndef _TIME_BITS
+# define _TIME_BITS 64
+#endif
 
 /*
 ** Nested includes

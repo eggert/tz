@@ -57,6 +57,14 @@ Unreleased, experimental changes
     number 2438 comes from the 32-bit limit in the year 2038, plus the
     400-year Gregorian cycle.  (Problem reported by Bradley White.)
 
+    On glibc 2.34 and later, which optionally supports 64-bit time_t
+    on platforms like x86 where time_t was traditionally 32 bits,
+    default time_t to 64 instead of 32 bits.  This lets functions like
+    localtime support timestamps after the year 2038, and fixes
+    year-2038 problems in zic when accessing files dated after 2038.
+    To continue to limit time_t to 32 bits on these platforms, use
+    "make CFLAGS='-D_TIME_BITS=32'".
+
     In C code, prefer C23 keywords to pre-C23 macros for alignof,
     bool, false, and true.  Also, use the following C23 features if
     available: __has_include, unreachable.

@@ -311,8 +311,37 @@ DATAFORM != "main" {
   }
 }
 
+# Return a link line resulting by changing OLDLINE to link to TARGET
+# from LINKNAME, instead of linking to OLDTARGET from LINKNAME.
+# Align data columns the same as they were in OLDLINE.
+# Also, replace any existing white space followed by comment with COMMENT.
+function make_linkline(oldline, target, linkname, oldtarget, comment, \
+		       oldprefix, oldprefixlen, oldtargettabs, \
+		       replsuffix, targettabs)
+{
+  oldprefix = "Link\t" oldtarget "\t"
+  oldprefixlen = length(oldprefix)
+  if (substr(oldline, 1, oldprefixlen) == oldprefix) {
+    # Use tab stops to preserve LINKNAME's column.
+    replsuffix = substr(oldline, oldprefixlen + 1)
+    sub(/[\t ]*#.*/, "", replsuffix)
+    oldtargettabs = int(length(oldtarget) / 8) + 1
+    targettabs = int(length(target) / 8) + 1
+    for (; targettabs < oldtargettabs; targettabs++) {
+      replsuffix = "\t" replsuffix
+    }
+    for (; oldtargettabs < targettabs && replsuffix ~ /^\t/; targettabs--) {
+      replsuffix = substr(replsuffix, 2)
+    }
+  } else {
+    # Odd format line; don't bother lining up its replacement nicely.
+    replsuffix = linkname
+  }
+  return "Link\t" target "\t" replsuffix comment
+}
+
 /^Link/ && $4 == "#=" && DATAFORM == "vanguard" {
-  $0 = "Link\t" $5 "\t" $3
+  $0 = make_linkline($0, $5, $3, $2)
 }
 
 # If a Link line is followed by a Link or Zone line for the same data, comment
@@ -329,15 +358,21 @@ DATAFORM != "main" {
 
 { line[NR] = $0 }
 
-function cut_link_chains_short(\
-			       linkname, target, t, u)
+function cut_link_chains_short( \
+			       l, linkname, t, target)
 {
   for (linkname in linktarget) {
     target = linktarget[linkname]
-    for (t = target; (u = linktarget[t]); t = u)
-      continue;
-    if (t != target) {
-      line[linkline[linkname]] = "Link\t" t "\t" linkname "\t#= " target
+    t = linktarget[target]
+    if (t) {
+      # TARGET is itself a link name.  Replace the line "Link TARGET LINKNAME"
+      # with "Link T LINKNAME #= TARGET", where T is at the end of the chain
+      # of links that LINKNAME points to.
+      while ((u = linktarget[t])) {
+	t = u
+      }
+      l = linkline[linkname]
+      line[l] = make_linkline(line[l], t, linkname, target, "\t#= " target)
     }
   }
 }

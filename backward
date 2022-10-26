@@ -89,7 +89,7 @@ Link	Etc/GMT			GMT0
 Link	Etc/GMT			Greenwich
 # End of rearguard section.
 Link	Asia/Hong_Kong		Hongkong
-Link	Africa/Abidjan	Iceland	#= Atlantic/Reykjavik
+Link	Africa/Abidjan		Iceland	#= Atlantic/Reykjavik
 Link	Asia/Tehran		Iran
 Link	Asia/Jerusalem		Israel
 Link	America/Jamaica		Jamaica
@@ -101,7 +101,7 @@ Link	America/Mazatlan	Mexico/BajaSur
 Link	America/Mexico_City	Mexico/General
 Link	Pacific/Auckland	NZ
 Link	Pacific/Chatham		NZ-CHAT
-Link	America/Denver	Navajo	#= America/Shiprock
+Link	America/Denver		Navajo	#= America/Shiprock
 Link	Asia/Shanghai		PRC
 Link	Europe/Warsaw		Poland
 Link	Europe/Lisbon		Portugal
@@ -139,7 +139,7 @@ Link	America/Argentina/Jujuy		America/Jujuy
 Link	America/Indiana/Knox		America/Knox_IN
 Link	America/Kentucky/Louisville	America/Louisville
 Link	America/Argentina/Mendoza	America/Mendoza
-Link	America/Puerto_Rico	America/Virgin	#= America/St_Thomas
+Link	America/Puerto_Rico		America/Virgin	#= America/St_Thomas
 Link	Pacific/Pago_Pago		Pacific/Samoa
 
 
@@ -293,11 +293,11 @@ Link	Pacific/Port_Moresby	Pacific/Yap
 # Alternate names for the same location
 
 # Link	TARGET			LINK-NAME	#= TARGET1
-Link	Africa/Nairobi	Africa/Asmera	#= Africa/Asmara
+Link	Africa/Nairobi		Africa/Asmera	#= Africa/Asmara
 Link	America/Nuuk		America/Godthab
 Link	Asia/Ashgabat		Asia/Ashkhabad
 Link	Asia/Kolkata		Asia/Calcutta
-Link	Asia/Shanghai	Asia/Chungking	#= Asia/Chongqing
+Link	Asia/Shanghai		Asia/Chungking	#= Asia/Chongqing
 Link	Asia/Dhaka		Asia/Dacca
 # Istanbul is in both continents.
 Link	Europe/Istanbul		Asia/Istanbul

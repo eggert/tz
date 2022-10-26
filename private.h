@@ -369,13 +369,6 @@ typedef unsigned long uintmax_t;
 # endif
 #endif
 
-#ifndef INT32_MAX
-# define INT32_MAX 0x7fffffff
-#endif /* !defined INT32_MAX */
-#ifndef INT32_MIN
-# define INT32_MIN (-1 - INT32_MAX)
-#endif /* !defined INT32_MIN */
-
 #ifndef SIZE_MAX
 # define SIZE_MAX ((size_t) -1)
 #endif

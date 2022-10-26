@@ -25,7 +25,9 @@
 typedef int_fast64_t	zic_t;
 static zic_t const
   ZIC_MIN = INT_FAST64_MIN,
-  ZIC_MAX = INT_FAST64_MAX;
+  ZIC_MAX = INT_FAST64_MAX,
+  ZIC32_MIN = -1 - (zic_t) 0x7fffffff,
+  ZIC32_MAX = 0x7fffffff;
 #define SCNdZIC SCNdFAST64
 
 #ifndef ZIC_MAX_ABBR_LEN_WO_WARN
@@ -2398,7 +2400,7 @@ writezone(const char *const name, const char *const string, char version,
 			     max(hi_time,
 				 redundant_time - (ZIC_MIN < redundant_time)),
 			     ats, types);
-	range32 = limitrange(range64, INT32_MIN, INT32_MAX, ats, types);
+	range32 = limitrange(range64, ZIC32_MIN, ZIC32_MAX, ats, types);
 
 	/* TZif version 4 is needed if a no-op transition is appended to
 	   indicate the expiration of the leap second table, or if the first
@@ -2452,8 +2454,8 @@ writezone(const char *const name, const char *const string, char version,
 			thisleapi = range32.leapbase;
 			thisleapcnt = range32.leapcount;
 			thisleapexpiry = range32.leapexpiry;
-			thismin = INT32_MIN;
-			thismax = INT32_MAX;
+			thismin = ZIC32_MIN;
+			thismax = ZIC32_MAX;
 		} else {
 			thisdefaulttype = range64.defaulttype;
 			thistimei = range64.base;
@@ -2486,7 +2488,7 @@ writezone(const char *const name, const char *const string, char version,
 
 		/* Arguably the default time type in the 32-bit data
 		   should be range32.defaulttype, which is suited for
-		   timestamps just before INT32_MIN.  However, zic
+		   timestamps just before ZIC32_MIN.  However, zic
 		   traditionally used the time type of the indefinite
 		   past instead.  Internet RFC 8532 says readers should
 		   ignore 32-bit data, so this discrepancy matters only
@@ -2638,7 +2640,7 @@ writezone(const char *const name, const char *const string, char version,
 		/* Output a LO_TIME transition if needed; see limitrange.
 		   But do not go below the minimum representable value
 		   for this pass.  */
-		lo = pass == 1 && lo_time < INT32_MIN ? INT32_MIN : lo_time;
+		lo = pass == 1 && lo_time < ZIC32_MIN ? ZIC32_MIN : lo_time;
 
 		if (0 <= pretranstype)
 		  puttzcodepass(lo, fp, pass);

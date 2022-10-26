@@ -9,6 +9,7 @@ Unreleased, experimental changes
     Simplify four Ontario zones into one.
     Fix a Y2438 bug when reading TZif data.
     In C code, use some C23 features if available.
+    Remove no-longer-needed workaround for Qt bug 53071.
 
   Changes to data
 
@@ -59,6 +60,10 @@ Unreleased, experimental changes
     In C code, prefer C23 keywords to pre-C23 macros for alignof,
     bool, false, and true.  Also, use the following C23 features if
     available: __has_include, unreachable.
+
+    zic no longer works around Qt bug 53071, as the relevant Qt
+    releases have been out of support since 2019.  This change affects
+    only fat TZif files, as thin files never had the workaround.
 
 
 Release 2022e - 2022-10-11 11:13:02 -0700

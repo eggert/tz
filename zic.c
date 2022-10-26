@@ -199,15 +199,6 @@ static zic_t	tadd(zic_t t1, zic_t t2);
 /* Bound on length of what %z can expand to.  */
 enum { PERCENT_Z_LEN_BOUND = sizeof "+995959" - 1 };
 
-/* If true, work around a bug in Qt 5.6.1 and earlier, which mishandles
-   TZif files whose POSIX-TZ-style strings contain '<'; see
-   QTBUG-53071 <https://bugreports.qt.io/browse/QTBUG-53071>.  This
-   workaround will no longer be needed when Qt 5.6.1 and earlier are
-   obsolete, say in the year 2021.  */
-#ifndef WORK_AROUND_QTBUG_53071
-enum { WORK_AROUND_QTBUG_53071 = true };
-#endif
-
 static int		charcnt;
 static bool		errors;
 static bool		warnings;
@@ -528,8 +519,7 @@ growalloc(void *ptr, size_t itemsize, ptrdiff_t nitems, ptrdiff_t *nitems_alloc)
 	if (nitems < *nitems_alloc)
 		return ptr;
 	else {
-		ptrdiff_t nitems_max = PTRDIFF_MAX - WORK_AROUND_QTBUG_53071;
-		ptrdiff_t amax = min(nitems_max, SIZE_MAX);
+		ptrdiff_t amax = min(PTRDIFF_MAX, SIZE_MAX);
 		if ((amax - 1) / 3 * 2 < *nitems_alloc)
 			memory_exhausted(_("integer overflow"));
 		*nitems_alloc += (*nitems_alloc >> 1) + 1;
@@ -2298,17 +2288,14 @@ writezone(const char *const name, const char *const string, char version,
 	register FILE *			fp;
 	register ptrdiff_t		i, j;
 	register int			pass;
-	zic_t one = 1;
-	zic_t y2038_boundary = one << 31;
-	ptrdiff_t nats = timecnt + WORK_AROUND_QTBUG_53071;
 	char *tempname = NULL;
 	char const *outname = name;
 
 	/* Allocate the ATS and TYPES arrays via a single malloc,
 	   as this is a bit faster.  */
-	zic_t *ats = emalloc(align_to(size_product(nats, sizeof *ats + 1),
+	zic_t *ats = emalloc(align_to(size_product(timecnt, sizeof *ats + 1),
 				      alignof(zic_t)));
-	void *typesptr = ats + nats;
+	void *typesptr = ats + timecnt;
 	unsigned char *types = typesptr;
 	struct timerange rangeall = {0}, range32, range64;
 
@@ -2376,21 +2363,6 @@ writezone(const char *const name, const char *const string, char version,
 				ats[i] = tadd(ats[i], corr[j]);
 				break;
 			}
-	}
-
-	/* Work around QTBUG-53071 for timestamps less than y2038_boundary - 1,
-	   by inserting a no-op transition at time y2038_boundary - 1.
-	   This works only for timestamps before the boundary, which
-	   should be good enough in practice as QTBUG-53071 should be
-	   long-dead by 2038.  Do this after correcting for leap
-	   seconds, as the idea is to insert a transition just before
-	   32-bit time_t rolls around, and this occurs at a slightly
-	   different moment if transitions are leap-second corrected.  */
-	if (WORK_AROUND_QTBUG_53071 && timecnt != 0 && want_bloat()
-	    && ats[timecnt - 1] < y2038_boundary - 1 && strchr(string, '<')) {
-	  ats[timecnt] = y2038_boundary - 1;
-	  types[timecnt] = types[timecnt - 1];
-	  timecnt++;
 	}
 
 	rangeall.defaulttype = defaulttype;

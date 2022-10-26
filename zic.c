@@ -753,7 +753,7 @@ make_links(void)
       dolink(links[i].l_target, links[i].l_linkname, false);
     else {
       /* The link target has not been made yet; copy the link to the end.  */
-      links = growalloc (links, sizeof *links, nalinks, &nlinks_alloc);
+      links = growalloc(links, sizeof *links, nalinks, &nlinks_alloc);
       links[nalinks++] = links[i];
     }
 
@@ -1173,7 +1173,7 @@ static uint_fast64_t
 get_rand_u64(void)
 {
 #if HAVE_GETRANDOM
-  static uint_fast64_t entropy_buffer[max(1, 256 / sizeof (uint_fast64_t))];
+  static uint_fast64_t entropy_buffer[max(1, 256 / sizeof(uint_fast64_t))];
   static int nwords;
   if (!nwords) {
     ssize_t s;

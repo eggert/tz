@@ -683,7 +683,8 @@ static void
 make_links(void)
 {
   ptrdiff_t i, j, nalinks;
-  qsort(links, nlinks, sizeof *links, qsort_linkcmp);
+  if (nlinks)
+    qsort(links, nlinks, sizeof *links, qsort_linkcmp);
 
   /* Ignore each link superseded by a later link with the same name.  */
   j = 0;

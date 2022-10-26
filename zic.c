@@ -23,8 +23,9 @@
 #include <stdio.h>
 
 typedef int_fast64_t	zic_t;
-#define ZIC_MIN INT_FAST64_MIN
-#define ZIC_MAX INT_FAST64_MAX
+static zic_t const
+  ZIC_MIN = INT_FAST64_MIN,
+  ZIC_MAX = INT_FAST64_MAX;
 #define SCNdZIC SCNdFAST64
 
 #ifndef ZIC_MAX_ABBR_LEN_WO_WARN
@@ -137,17 +138,29 @@ extern char *	optarg;
 extern int	optind;
 #endif
 
-#if ! HAVE_LINK
-# define link(target, linkname) (errno = ENOTSUP, -1)
-#endif
 #if ! HAVE_SYMLINK
-# define readlink(file, buf, size) (errno = ENOTSUP, -1)
-# define symlink(target, linkname) (errno = ENOTSUP, -1)
+static ssize_t
+readlink(char const *restrict file, char *restrict buf, size_t size)
+{
+  errno = ENOTSUP;
+  return -1;
+}
+static int
+symlink(char const *target, char const *linkname)
+{
+  errno = ENOTSUP;
+  return -1;
+}
 # define S_ISLNK(m) 0
 #endif
 #ifndef AT_SYMLINK_FOLLOW
-# define linkat(targetdir, target, linknamedir, linkname, flag) \
-    (itssymlink(target) ? (errno = ENOTSUP, -1) : link(target, linkname))
+# if HAVE_LINK
+#  define linkat(targetdir, target, linknamedir, linkname, flag) \
+     (itssymlink(target) ? (errno = ENOTSUP, -1) : link(target, linkname))
+# else
+#  define linkat(targetdir, target, linknamedir, linkname, flag) \
+     (errno = ENOTSUP, -1)
+# endif
 #endif
 
 static void	addtt(zic_t starttime, int type);

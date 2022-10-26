@@ -56,21 +56,6 @@
 */
 enum { SECSPER400YEARS_FITS = SECSPERLYEAR <= INTMAX_MAX / 400 };
 
-#if !defined HAVE_GENERIC && defined __has_extension
-# if __has_extension(c_generic_selections)
-#  define HAVE_GENERIC 1
-# else
-#  define HAVE_GENERIC 0
-# endif
-#endif
-/* _Generic is buggy in pre-4.9 GCC.  */
-#if !defined HAVE_GENERIC && defined __GNUC__
-# define HAVE_GENERIC (4 < __GNUC__ + (9 <= __GNUC_MINOR__))
-#endif
-#ifndef HAVE_GENERIC
-# define HAVE_GENERIC (201112 <= __STDC_VERSION__)
-#endif
-
 #if HAVE_GETTEXT
 # include <locale.h> /* for setlocale */
 #endif /* HAVE_GETTEXT */

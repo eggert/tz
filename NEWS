@@ -73,6 +73,10 @@ Unreleased, experimental changes
     releases have been out of support since 2019.  This change affects
     only fat TZif files, as thin files never had the workaround.
 
+    zdump no longer modifies the environ vector when compiled on
+    platforms lacking tm_zone or when compiled with -DUSE_LTZ=0.
+    This avoid undefined behavior on POSIX platforms.
+
 
 Release 2022e - 2022-10-11 11:13:02 -0700
 

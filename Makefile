@@ -223,6 +223,7 @@ LDLIBS=
 #  -DHAVE_MALLOC_ERRNO=0 if malloc etc. do not set errno on failure.
 #  -DHAVE_POSIX_DECLS=0 if your system's include files do not declare
 #	functions like 'link' or variables like 'tzname' required by POSIX
+#  -DHAVE_SETENV=0 if your system lacks the setenv function
 #  -DHAVE_SNPRINTF=0 if your system lacks the snprintf function
 #  -DHAVE_STDINT_H if you have a non-C99 compiler with <stdint.h>*
 #  -DHAVE_STRFTIME_L if <time.h> declares locale_t and strftime_l

@@ -87,6 +87,10 @@
 # define HAVE_POSIX_DECLS 1
 #endif
 
+#ifndef HAVE_SETENV
+# define HAVE_SETENV 1
+#endif
+
 #ifndef HAVE_STRDUP
 # define HAVE_STRDUP 1
 #endif

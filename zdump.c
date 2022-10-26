@@ -228,33 +228,56 @@ mktime_z(timezone_t tz, struct tm *tmp)
 static timezone_t
 tzalloc(char const *val)
 {
+# if HAVE_SETENV
+  if (setenv("TZ", val, 1) != 0) {
+    perror("setenv");
+    exit(EXIT_FAILURE);
+  }
+  tzset();
+  return NULL;
+# else
+  enum { TZeqlen = 3 };
+  static char const TZeq[TZeqlen] = "TZ=";
   static char **fakeenv;
-  char **env = fakeenv;
-  char *env0;
-  if (! env) {
-    char **e = environ;
-    int to;
+  static size_t fakeenv0size;
+  void *freeable = NULL;
+  char **env = fakeenv, **initial_environ;
+  size_t valsize = strlen(val) + 1;
+  if (fakeenv0size < valsize) {
+    char **e = environ, **to;
+    ptrdiff_t initial_nenvptrs;  /* Counting the trailing NULL pointer.  */
 
     while (*e++)
       continue;
-    env = xmalloc(sumsize(sizeof *environ,
-			  (e - environ) * sizeof *environ));
-    to = 1;
-    for (e = environ; (env[to] = *e); e++)
-      to += strncmp(*e, "TZ=", 3) != 0;
+    initial_nenvptrs = e - environ;
+    fakeenv0size = sumsize(valsize, valsize);
+    fakeenv0size = max(fakeenv0size, 64);
+    freeable = env;
+    fakeenv = env =
+      xmalloc(sumsize(sumsize(sizeof *environ,
+			      initial_nenvptrs * sizeof *environ),
+		      sumsize(TZeqlen, fakeenv0size)));
+    to = env + 1;
+    for (e = environ; (*to = *e); e++)
+      to += strncmp(*e, TZeq, TZeqlen) != 0;
+    env[0] = memcpy(to + 1, TZeq, TZeqlen);
   }
-  env0 = xmalloc(sumsize(sizeof "TZ=", strlen(val)));
-  env[0] = strcat(strcpy(env0, "TZ="), val);
-  environ = fakeenv = env;
+  memcpy(env[0] + TZeqlen, val, valsize);
+  initial_environ = environ;
+  environ = env;
   tzset();
-  return env;
+  free(freeable);
+  return initial_environ;
+# endif
 }
 
 static void
-tzfree(timezone_t env)
+tzfree(timezone_t initial_environ)
 {
-  environ = env + 1;
-  free(env[0]);
+# if !HAVE_SETENV
+  environ = initial_environ;
+  tzset();
+# endif
 }
 #endif /* ! USE_LOCALTIME_RZ */
 

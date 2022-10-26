@@ -153,7 +153,6 @@ symlink(char const *target, char const *linkname)
   errno = ENOTSUP;
   return -1;
 }
-# define S_ISLNK(m) 0
 #endif
 #ifndef AT_SYMLINK_FOLLOW
 # if HAVE_LINK

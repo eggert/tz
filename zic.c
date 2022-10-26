@@ -690,7 +690,7 @@ static void
 make_links(void)
 {
   ptrdiff_t i, j, nalinks;
-  if (nlinks)
+  if (1 < nlinks)
     qsort(links, nlinks, sizeof *links, qsort_linkcmp);
 
   /* Ignore each link superseded by a later link with the same name.  */
@@ -1496,7 +1496,7 @@ associate(void)
 	register struct rule *	rp;
 	register ptrdiff_t i, j, base, out;
 
-	if (nrules != 0) {
+	if (1 < nrules) {
 		qsort(rules, nrules, sizeof *rules, rcomp);
 		for (i = 0; i < nrules - 1; ++i) {
 			if (strcmp(rules[i].r_name,

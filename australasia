@@ -386,8 +386,14 @@ Zone Antarctica/Macquarie 0	-	-00	1899 Nov
 # concerned shifting arrival and departure times, which may look like a simple
 # thing but requires some significant logistical adjustments domestically and
 # internationally."
-# Assume for now that DST will resume with the recent pre-2020 rules for the
-# 2022/2023 season.
+
+# From Shalvin Narayan (2022-10-27):
+# Please note that there will not be any daylight savings time change
+# in Fiji for 2022-2023....
+# https://www.facebook.com/FijianGovernment/posts/pfbid0mmWVTYmTibn66ybpFda75pDcf34SSpoSaskJW5gXwaKo5Sgc7273Q4fXWc6kQV6Hl
+#
+# From Paul Eggert (2022-10-27):
+# For now, assume DST is suspended indefinitely.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Fiji	1998	1999	-	Nov	Sun>=1	2:00	1:00	-
@@ -402,8 +408,6 @@ Rule	Fiji	2014	2018	-	Nov	Sun>=1	2:00	1:00	-
 Rule	Fiji	2015	2021	-	Jan	Sun>=12	3:00	0	-
 Rule	Fiji	2019	only	-	Nov	Sun>=8	2:00	1:00	-
 Rule	Fiji	2020	only	-	Dec	20	2:00	1:00	-
-Rule	Fiji	2022	max	-	Nov	Sun>=8	2:00	1:00	-
-Rule	Fiji	2023	max	-	Jan	Sun>=12	3:00	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Pacific/Fiji	11:55:44 -	LMT	1915 Oct 26 # Suva
 			12:00	Fiji	+12/+13

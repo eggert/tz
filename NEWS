@@ -3,6 +3,7 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Fiji no longer observes DST.
     Move links to 'backward'.
     In vanguard form, GMT is now a Zone and Etc/GMT a link.
     zic now supports links to links, and vanguard form uses this.
@@ -10,6 +11,11 @@ Unreleased, experimental changes
     Fix a Y2438 bug when reading TZif data.
     In C code, use some C23 features if available.
     Remove no-longer-needed workaround for Qt bug 53071.
+
+  Changes to future timestamps.
+
+    Fiji will not observe DST in 2022/3.  (Thanks to Shalvin Narayan.)
+    For now, assume DST is suspended indefinitely.
 
   Changes to data
 

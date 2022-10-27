@@ -179,7 +179,6 @@
 #undef tzfree
 
 #include <stddef.h>
-#include <sys/types.h>	/* for time_t */
 #include <string.h>
 #include <limits.h>	/* for CHAR_BIT et al. */
 #include <stdlib.h>

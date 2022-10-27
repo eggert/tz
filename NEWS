@@ -9,6 +9,8 @@ Unreleased, experimental changes
     zic now supports links to links, and vanguard form uses this.
     Simplify four Ontario zones into one.
     Fix a Y2438 bug when reading TZif data.
+    Enable 64-bit time_t on 32-bit glibc platforms.
+    Omit large-file support when no longer needed.
     In C code, use some C23 features if available.
     Remove no-longer-needed workaround for Qt bug 53071.
 
@@ -70,6 +72,12 @@ Unreleased, experimental changes
     year-2038 problems in zic when accessing files dated after 2038.
     To continue to limit time_t to 32 bits on these platforms, use
     "make CFLAGS='-D_TIME_BITS=32'".
+
+    In C code, do not enable large-file support on platforms like AIX
+    and macOS that no longer need it now that tzcode does not use
+    off_t or related functions like 'stat'.  Large-file support is
+    still enabled by default on GNU/Linux, as it is needed for 64-bit
+    time_t support.
 
     In C code, prefer C23 keywords to pre-C23 macros for alignof,
     bool, false, and true.  Also, use the following C23 features if

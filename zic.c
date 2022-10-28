@@ -688,7 +688,7 @@ bsearch_linkcmp(void const *key, void const *b)
 static void
 make_links(void)
 {
-  ptrdiff_t i, j, nalinks;
+  ptrdiff_t i, j, nalinks, pass_size;
   if (1 < nlinks)
     qsort(links, nlinks, sizeof *links, qsort_linkcmp);
 
@@ -700,7 +700,7 @@ make_links(void)
       i++;
     links[j++] = links[i];
   }
-  nlinks = j;
+  nlinks = pass_size = j;
 
   /* Walk through the link array making links.  However,
      if a link's target has not been made yet, append a copy to the
@@ -739,8 +739,22 @@ make_links(void)
     eat(links[i].l_filenum, links[i].l_linenum);
 
     /* If this pass examined all its links, start the next pass.  */
-    if (i == j)
+    if (i == j) {
+      if (nalinks - i == pass_size) {
+	error(_("\"Link %s %s\" is part of a link cycle"),
+	      links[i].l_target, links[i].l_linkname);
+	break;
+      }
       j = nalinks;
+      pass_size = nalinks - i;
+    }
+
+    /* Diagnose self links, which the cycle detection algorithm would not
+       otherwise catch.  */
+    if (strcmp(links[i].l_target, links[i].l_linkname) == 0) {
+      error(_("link %s targets itself"), links[i].l_target);
+      continue;
+    }
 
     /* Make this link unless its target has not been made yet.  */
     l = bsearch(links[i].l_target, &links[i + 1], j - (i + 1),

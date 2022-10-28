@@ -17,6 +17,15 @@
 ** Thank you!
 */
 
+/* Define true, false and bool if they don't work out of the box.  */
+#if __STDC_VERSION__ < 199901
+# define true 1
+# define false 0
+# define bool int
+#elif __STDC_VERSION__ < 202311
+# include <stdbool.h>
+#endif
+
 /*
 ** zdump has been made independent of the rest of the time
 ** conversion package to increase confidence in the verification it provides.
@@ -29,14 +38,6 @@
 
 /* This string was in the Factory zone through version 2016f.  */
 #define GRANDPARENTED	"Local time zone must be set--see zic manual page"
-
-/* True if "#include INCLUDE" includes something, false otherwise.
-   Yield DEFAULT on pre-C23 platforms that lack __has_include.  */
-#ifdef __has_include
-# define HAS_INCLUDE(include, default) __has_include(include)
-#else
-# define HAS_INCLUDE(include, default) (default)
-#endif
 
 /*
 ** Defaults for preprocessor symbols.
@@ -62,13 +63,24 @@
 # define HAVE_GENERIC (201112 <= __STDC_VERSION__)
 #endif
 
+#if !defined HAVE_GETRANDOM && defined __has_include
+# if __has_include(<sys/random.h>)
+#  define HAVE_GETRANDOM true
+# else
+#  define HAVE_GETRANDOM false
+# endif
+#endif
 #ifndef HAVE_GETRANDOM
-# define HAVE_GETRANDOM HAS_INCLUDE(<sys/random.h>, \
-				    (2 < __GLIBC__ + (25 <= __GLIBC_MINOR__)))
+# define HAVE_GETRANDOM (2 < __GLIBC__ + (25 <= __GLIBC_MINOR__))
 #endif
 
+#if !defined HAVE_GETTEXT && defined __has_include
+# if __has_include(<libintl.h>)
+#  define HAVE_GETTEXT true
+# endif
+#endif
 #ifndef HAVE_GETTEXT
-# define HAVE_GETTEXT HAS_INCLUDE(<libintl.h>, false)
+# define HAVE_GETTEXT false
 #endif
 
 #ifndef HAVE_INCOMPATIBLE_CTIME_R
@@ -103,16 +115,22 @@
 # define HAVE_SYMLINK 1
 #endif /* !defined HAVE_SYMLINK */
 
+#if !defined HAVE_SYS_STAT_H && defined __has_include
+# if !__has_include(<sys/stat.h>)
+#  define HAVE_SYS_STAT_H false
+# endif
+#endif
 #ifndef HAVE_SYS_STAT_H
-# define HAVE_SYS_STAT_H HAS_INCLUDE(<sys/stat.h>, true)
+# define HAVE_SYS_STAT_H true
 #endif
 
+#if !defined HAVE_UNISTD_H && defined __has_include
+# if !__has_include(<unistd.h>)
+#  define HAVE_UNISTD_H false
+# endif
+#endif
 #ifndef HAVE_UNISTD_H
-# define HAVE_UNISTD_H HAS_INCLUDE(<unistd.h>, true)
-#endif
-
-#ifndef HAVE_UTMPX_H
-# define HAVE_UTMPX_H HAS_INCLUDE(<utmpx.h>, true)
+# define HAVE_UNISTD_H true
 #endif
 
 #ifndef NETBSD_INSPIRED
@@ -249,18 +267,22 @@
 ** previously-included files.  glibc 2.1 and Solaris 10 and later have
 ** stdint.h, even with pre-C99 compilers.
 */
-#ifndef HAVE_STDINT_H
-# define HAVE_STDINT_H HAS_INCLUDE(<stdint.h>, \
-				   (199901 <= __STDC_VERSION__ \
-				    || 2 < __GLIBC__ + (1 <= __GLIBC_MINOR__) \
-				    || __CYGWIN__ || INTMAX_MAX))
+#if !defined HAVE_STDINT_H && defined __has_include
+# define HAVE_STDINT_H true /* C23 __has_include implies C99 stdint.h.  */
 #endif
+#ifndef HAVE_STDINT_H
+# define HAVE_STDINT_H \
+   (199901 <= __STDC_VERSION__ \
+    || 2 < __GLIBC__ + (1 <= __GLIBC_MINOR__) \
+    || __CYGWIN__ || INTMAX_MAX)
+#endif /* !defined HAVE_STDINT_H */
+
 #if HAVE_STDINT_H
 # include <stdint.h>
-#endif
+#endif /* !HAVE_STDINT_H */
 
 #ifndef HAVE_INTTYPES_H
-# define HAVE_INTTYPES_H HAS_INCLUDE(<inttypes.h>, HAVE_STDINT_H)
+# define HAVE_INTTYPES_H HAVE_STDINT_H
 #endif
 #if HAVE_INTTYPES_H
 # include <inttypes.h>
@@ -629,14 +651,6 @@ time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_PURE;
 /*
 ** Finally, some convenience items.
 */
-
-#if __STDC_VERSION__ < 199901
-# define true 1
-# define false 0
-# define bool int
-#elif __STDC_VERSION__ < 202311
-# include <stdbool.h>
-#endif
 
 #define TYPE_BIT(type)	(sizeof(type) * CHAR_BIT)
 #define TYPE_SIGNED(type) (((type) -1) < 0)

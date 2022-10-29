@@ -214,17 +214,17 @@ MQ	+1436-06105	America/Martinique
 MT	+3554+01431	Europe/Malta
 MU	-2010+05730	Indian/Mauritius
 MV,TF	+0410+07330	Indian/Maldives	Maldives, Kerguelen, St Paul I, Amsterdam I
-MX	+1924-09909	America/Mexico_City	Central Time
-MX	+2105-08646	America/Cancun	Eastern Standard Time - Quintana Roo
-MX	+2058-08937	America/Merida	Central Time - Campeche, Yucatán
-MX	+2540-10019	America/Monterrey	Central Time - Durango; Coahuila, Nuevo León, Tamaulipas (most areas)
-MX	+2550-09730	America/Matamoros	Central Time US - Coahuila, Nuevo León, Tamaulipas (US border)
-MX	+2313-10625	America/Mazatlan	Mountain Time - Baja California Sur, Nayarit, Sinaloa
-MX	+2838-10605	America/Chihuahua	Mountain Time - Chihuahua (most areas)
-MX	+2934-10425	America/Ojinaga	Mountain Time US - Chihuahua (US border)
-MX	+2904-11058	America/Hermosillo	Mountain Standard Time - Sonora
-MX	+3232-11701	America/Tijuana	Pacific Time US - Baja California
-MX	+2048-10515	America/Bahia_Banderas	Central Time - Bahía de Banderas
+MX	+1924-09909	America/Mexico_City	Central Mexico
+MX	+2105-08646	America/Cancun	Quintana Roo
+MX	+2058-08937	America/Merida	Campeche, Yucatán
+MX	+2540-10019	America/Monterrey	Durango; Coahuila, Nuevo León, Tamaulipas (most areas)
+MX	+2550-09730	America/Matamoros	Coahuila, Nuevo León, Tamaulipas (US border)
+MX	+2838-10605	America/Chihuahua	Chihuahua (most areas)
+MX	+2934-10425	America/Ojinaga	Chihuahua (US border)
+MX	+2048-10515	America/Bahia_Banderas	Bahía de Banderas
+MX	+2313-10625	America/Mazatlan	Baja California Sur, Nayarit, Sinaloa
+MX	+2904-11058	America/Hermosillo	Sonora
+MX	+3232-11701	America/Tijuana	Baja California
 MY,BN	+0133+11020	Asia/Kuching	Sabah, Sarawak, Brunei
 MZ,BI,BW,CD,MW,RW,ZM,ZW	-2558+03235	Africa/Maputo	Central Africa Time
 NA	-2234+01706	Africa/Windhoek

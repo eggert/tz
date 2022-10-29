@@ -943,7 +943,7 @@ main(int argc, char **argv)
 	textdomain(TZ_DOMAIN);
 #endif /* HAVE_GETTEXT */
 	main_argv = argv;
-	progname = argv[0];
+	progname = argv[0] ? argv[0] : "zic";
 	if (TYPE_BIT(zic_t) < 64) {
 		fprintf(stderr, "%s: %s\n", progname,
 			_("wild compilation-time specification of zic_t"));

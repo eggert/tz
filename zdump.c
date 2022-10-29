@@ -84,7 +84,7 @@ static time_t const absolute_max_time =
    ? (((time_t) 1 << atime_shift) - 1 + ((time_t) 1 << atime_shift))
    : -1);
 static int	longest;
-static char *	progname;
+static char const *progname;
 static bool	warned;
 static bool	errout;
 
@@ -234,7 +234,7 @@ tzalloc(char const *val)
     exit(EXIT_FAILURE);
   }
   tzset();
-  return &progname;  /* Any valid non-null char ** will do.  */
+  return &optarg;  /* Any valid non-null char ** will do.  */
 # else
   enum { TZeqlen = 3 };
   static char const TZeq[TZeqlen] = "TZ=";
@@ -463,7 +463,7 @@ main(int argc, char *argv[])
 # endif /* defined TEXTDOMAINDIR */
 	textdomain(TZ_DOMAIN);
 #endif /* HAVE_GETTEXT */
-	progname = argv[0];
+	progname = argv[0] ? argv[0] : "zdump";
 	for (i = 1; i < argc; ++i)
 		if (strcmp(argv[i], "--version") == 0) {
 			printf("zdump %s%s\n", PKGVERSION, TZVERSION);

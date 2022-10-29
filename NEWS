@@ -4,8 +4,8 @@ Unreleased, experimental changes
 
   Changes to code
 
-    Fix bug in zdump's tzalloc emulation on hosts like musl that lack
-    support for tm_zone.  (Problem reported by Đoàn Trần Công Danh.)
+    Fix bug in zdump's tzalloc emulation on hosts that lack tm_zone.
+    (Problem reported by Đoàn Trần Công Danh.)
 
 
 Release 2022f - 2022-10-28 18:04:57 -0700

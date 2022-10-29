@@ -16,7 +16,7 @@ Release 2022f - 2022-10-28 18:04:57 -0700
     In C code, use some C23 features if available.
     Remove no-longer-needed workaround for Qt bug 53071.
 
-  Changes to future timestamps.
+  Changes to future timestamps
 
     Mexico will no longer observe DST after 2022, except for areas
     near the US border that continue to observe US DST rules.
@@ -24,6 +24,7 @@ Release 2022f - 2022-10-28 18:04:57 -0700
     from -07 (-06 with DST) to year-round -06, thus not changing
     its clocks that day.  The new law states that Chihuahua
     near the US border no longer observes US DST.
+    (Thanks to gera for the heads-up about Chihuahua.)
 
     Fiji will not observe DST in 2022/3.  (Thanks to Shalvin Narayan.)
     For now, assume DST is suspended indefinitely.

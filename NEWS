@@ -3,6 +3,8 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Mexico will no longer observe DST except near the US border.
+    Chihuahua moves to year-round -06 on 2022-10-30.
     Fiji no longer observes DST.
     Move links to 'backward'.
     In vanguard form, GMT is now a Zone and Etc/GMT a link.
@@ -15,6 +17,13 @@ Unreleased, experimental changes
     Remove no-longer-needed workaround for Qt bug 53071.
 
   Changes to future timestamps.
+
+    Mexico will no longer observe DST after 2022, except for areas
+    near the US border that continue to observe US DST rules.
+    On 2022-10-30 at 02:00 the Mexican state of Chihuahua moves
+    from -07 (-06 with DST) to year-round -06, thus not changing
+    its clocks that day.  The new law states that Chihuahua
+    near the US border no longer observes US DST.
 
     Fiji will not observe DST in 2022/3.  (Thanks to Shalvin Narayan.)
     For now, assume DST is suspended indefinitely.

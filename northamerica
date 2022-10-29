@@ -2553,6 +2553,12 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # 5- The islands, reefs and keys shall take their timezone from the
 #    longitude they are located at.
 
+# From Paul Eggert (2022-10-28):
+# The new Mexican law was published today:
+# https://www.dof.gob.mx/nota_detalle.php?codigo=5670045&fecha=28/10/2022
+# This abolishes DST except where US DST rules are observed,
+# and in addition changes all of Chihuahua to -06 with no DST.
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Mexico	1931	only	-	May	1	23:00	1:00	D
 Rule	Mexico	1931	only	-	Oct	1	0:00	0	S
@@ -2568,8 +2574,8 @@ Rule	Mexico	1996	2000	-	Apr	Sun>=1	2:00	1:00	D
 Rule	Mexico	1996	2000	-	Oct	lastSun	2:00	0	S
 Rule	Mexico	2001	only	-	May	Sun>=1	2:00	1:00	D
 Rule	Mexico	2001	only	-	Sep	lastSun	2:00	0	S
-Rule	Mexico	2002	max	-	Apr	Sun>=1	2:00	1:00	D
-Rule	Mexico	2002	max	-	Oct	lastSun	2:00	0	S
+Rule	Mexico	2002	2022	-	Apr	Sun>=1	2:00	1:00	D
+Rule	Mexico	2002	2022	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 # Quintana Roo; represented by Cancún
 Zone America/Cancun	-5:47:04 -	LMT	1922 Jan  1  6:00u
@@ -2622,7 +2628,8 @@ Zone America/Ojinaga	-6:57:40 -	LMT	1922 Jan  1  7:00u
 			-6:00	Mexico	C%sT	1998
 			-6:00	-	CST	1998 Apr Sun>=1  3:00
 			-7:00	Mexico	M%sT	2010
-			-7:00	US	M%sT
+			-7:00	US	M%sT	2022 Oct 30  2:00
+			-6:00	-	CST
 # Chihuahua (away from US border)
 Zone America/Chihuahua	-7:04:20 -	LMT	1922 Jan  1  7:00u
 			-7:00	-	MST	1927 Jun 10 23:00
@@ -2631,7 +2638,8 @@ Zone America/Chihuahua	-7:04:20 -	LMT	1922 Jan  1  7:00u
 			-6:00	-	CST	1996
 			-6:00	Mexico	C%sT	1998
 			-6:00	-	CST	1998 Apr Sun>=1  3:00
-			-7:00	Mexico	M%sT
+			-7:00	Mexico	M%sT	2022 Oct 30  2:00
+			-6:00	-	CST
 # Sonora
 Zone America/Hermosillo	-7:23:52 -	LMT	1922 Jan  1  7:00u
 			-7:00	-	MST	1927 Jun 10 23:00
@@ -2728,6 +2736,10 @@ Zone America/Tijuana	-7:48:04 -	LMT	1922 Jan  1  7:00u
 # have come from a misreading of
 # http://dof.gob.mx/nota_detalle.php?codigo=5127480&fecha=06/01/2010
 # It has been moved to the 'backward' file.
+#
+# From Paul Eggert (2022-10-28):
+# Today's new law states that the entire state of Baja California
+# follows US DST rules, which agrees with simplifications noted above.
 #
 #
 # Revillagigedo Is

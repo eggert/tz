@@ -234,7 +234,7 @@ tzalloc(char const *val)
     exit(EXIT_FAILURE);
   }
   tzset();
-  return NULL;
+  return &progname;  /* Any valid non-null char ** will do.  */
 # else
   enum { TZeqlen = 3 };
   static char const TZeq[TZeqlen] = "TZ=";

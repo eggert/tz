@@ -2590,14 +2590,12 @@ Zone America/Merida	-5:58:28 -	LMT	1922 Jan  1  6:00u
 			-6:00	Mexico	C%sT
 # Coahuila, Nuevo León, Tamaulipas (near US border)
 # This includes the following municipalities:
-#   in Coahuila: Ocampo, Acuña, Zaragoza, Jiménez, Piedras Negras, Nava,
-#     Guerrero, Hidalgo.
-#   in Nuevo León: Anáhuac, Los Aldama.
+#   in Coahuila: Acuña, Allende, Guerrero, Hidalgo, Jiménez, Morelos, Nava,
+#     Ocampo, Piedras Negras, Villa Unión, Zaragoza
+#   in Nuevo León: Anáhuac
 #   in Tamaulipas: Nuevo Laredo, Guerrero, Mier, Miguel Alemán, Camargo,
 #     Gustavo Díaz Ordaz, Reynosa, Río Bravo, Valle Hermoso, Matamoros.
-# See: Inicia mañana Horario de Verano en zona fronteriza, El Universal,
-# 2016-03-12
-# http://www.eluniversal.com.mx/articulo/estados/2016/03/12/inicia-manana-horario-de-verano-en-zona-fronteriza
+# https://www.dof.gob.mx/nota_detalle.php?codigo=5670045&fecha=28/10/2022
 Zone America/Matamoros	-6:30:00 -	LMT	1922 Jan  1  6:00u
 			-6:00	-	CST	1988
 			-6:00	US	C%sT	1989
@@ -2619,7 +2617,9 @@ Zone America/Mexico_City -6:36:36 -	LMT	1922 Jan  1  7:00u
 # Chihuahua (near US border)
 # This includes the municipalities of Janos, Ascensión, Juárez, Guadalupe,
 # Práxedis G Guerrero, Coyame del Sotol, Ojinaga, and Manuel Benavides.
-# (See the 2016-03-12 El Universal source mentioned above.)
+# See: Inicia mañana Horario de Verano en zona fronteriza, El Universal,
+# 2016-03-12
+# https://www.eluniversal.com.mx/articulo/estados/2016/03/12/inicia-manana-horario-de-verano-en-zona-fronteriza
 Zone America/Ojinaga	-6:57:40 -	LMT	1922 Jan  1  7:00u
 			-7:00	-	MST	1927 Jun 10 23:00
 			-6:00	-	CST	1930 Nov 15
@@ -2651,6 +2651,18 @@ Zone America/Hermosillo	-7:23:52 -	LMT	1922 Jan  1  7:00u
 			-7:00	Mexico	M%sT	1999
 			-7:00	-	MST
 
+# Baja California Sur, Nayarit (except Bahía de Banderas), Sinaloa
+Zone America/Mazatlan	-7:05:40 -	LMT	1922 Jan  1  7:00u
+			-7:00	-	MST	1927 Jun 10 23:00
+			-6:00	-	CST	1930 Nov 15
+			-7:00	Mexico	M%sT	1932 Apr  1
+			-6:00	-	CST	1942 Apr 24
+			-7:00	-	MST	1949 Jan 14
+			-8:00	-	PST	1970
+			-7:00	Mexico	M%sT
+
+# Bahía de Banderas
+
 # From Alexander Krivenyshev (2010-04-21):
 # According to news, Bahía de Banderas (Mexican state of Nayarit)
 # changed time zone UTC-7 to new time zone UTC-6 on April 4, 2010 (to
@@ -2678,17 +2690,6 @@ Zone America/Hermosillo	-7:23:52 -	LMT	1922 Jan  1  7:00u
 # From Arthur David Olson (2010-05-01):
 # Use "Bahia_Banderas" to keep the name to fourteen characters.
 
-# Mazatlán
-Zone America/Mazatlan	-7:05:40 -	LMT	1922 Jan  1  7:00u
-			-7:00	-	MST	1927 Jun 10 23:00
-			-6:00	-	CST	1930 Nov 15
-			-7:00	Mexico	M%sT	1932 Apr  1
-			-6:00	-	CST	1942 Apr 24
-			-7:00	-	MST	1949 Jan 14
-			-8:00	-	PST	1970
-			-7:00	Mexico	M%sT
-
-# Bahía de Banderas
 Zone America/Bahia_Banderas -7:01:00 -	LMT	1922 Jan  1  7:00u
 			-7:00	-	MST	1927 Jun 10 23:00
 			-6:00	-	CST	1930 Nov 15

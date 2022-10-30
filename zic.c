@@ -41,9 +41,7 @@ static zic_t const
 # define mkdir(name, mode) _mkdir(name)
 #endif
 
-#if HAVE_GETRANDOM
-# include <sys/random.h>
-#elif !defined HAVE_GETRANDOM
+#ifndef HAVE_GETRANDOM
 # ifdef __has_include
 #  if __has_include(<sys/random.h>)
 #   include <sys/random.h>
@@ -52,6 +50,8 @@ static zic_t const
 #  include <sys/random.h>
 # endif
 # define HAVE_GETRANDOM GRND_RANDOM
+#elif HAVE_GETRANDOM
+# include <sys/random.h>
 #endif
 
 #if HAVE_SYS_STAT_H

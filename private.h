@@ -63,7 +63,11 @@
 # define HAVE_GENERIC (201112 <= __STDC_VERSION__)
 #endif
 
-#if !defined HAVE_GETTEXT && defined __has_include
+/* Disable gettext by default on macOS, because too many macOS
+   installations are so messed up that '#include <libintl.h>' compiles
+   but 'gettext ("hello")' does not link.  */
+#if (!defined HAVE_GETTEXT && defined __has_include \
+     && ! (defined __APPLE__ && defined __MACH__))
 # if __has_include(<libintl.h>)
 #  define HAVE_GETTEXT true
 # endif

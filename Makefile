@@ -209,13 +209,15 @@ LDLIBS=
 #  -DHAVE_DECL_ASCTIME_R=0 if <time.h> does not declare asctime_r
 #  -DHAVE_DECL_ENVIRON if <unistd.h> declares 'environ'
 #  -DHAVE_DIRECT_H if mkdir needs <direct.h> (MS-Windows)
-#  -DHAVE_GENERIC=0 if _Generic does not work
-#  -DHAVE_GETRANDOM if getgrandom works (e.g., GNU/Linux)*
-#  -DHAVE_GETTEXT if 'gettext' works (e.g., GNU/Linux, FreeBSD, Solaris)*
+#  -DHAVE_GENERIC=0 if _Generic does not work*
+#  -DHAVE_GETRANDOM if getrandom works (e.g., GNU/Linux),
+#	-DHAVE_GETRANDOM=0 to avoid using getrandom
+#  -DHAVE_GETTEXT if gettext works (e.g., GNU/Linux, FreeBSD, Solaris),
+#	-DHAVE_GETTEXT=0 to avoid using gettext
 #  -DHAVE_INCOMPATIBLE_CTIME_R if your system's time.h declares
 #	ctime_r and asctime_r incompatibly with the POSIX standard
 #	(Solaris when _POSIX_PTHREAD_SEMANTICS is not defined).
-#  -DHAVE_INTTYPES_H if you have a non-C99 compiler with <inttypes.h>
+#  -DHAVE_INTTYPES_H=0 if <inttypes.h> does not work*
 #  -DHAVE_LINK=0 if your system lacks a link function
 #  -DHAVE_LOCALTIME_R=0 if your system lacks a localtime_r function
 #  -DHAVE_LOCALTIME_RZ=0 if you do not want zdump to use localtime_rz
@@ -225,15 +227,15 @@ LDLIBS=
 #	functions like 'link' or variables like 'tzname' required by POSIX
 #  -DHAVE_SETENV=0 if your system lacks the setenv function
 #  -DHAVE_SNPRINTF=0 if your system lacks the snprintf function
-#  -DHAVE_STDINT_H if you have a non-C99 compiler with <stdint.h>*
+#  -DHAVE_STDINT_H=0 if <stdint.h> does not work*
 #  -DHAVE_STRFTIME_L if <time.h> declares locale_t and strftime_l
 #  -DHAVE_STRDUP=0 if your system lacks the strdup function
 #  -DHAVE_STRTOLL=0 if your system lacks the strtoll function
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
-#  -DHAVE_SYS_STAT_H=0 if your compiler lacks a <sys/stat.h>*
+#  -DHAVE_SYS_STAT_H=0 if <sys/stat.h> does not work*
 #  -DHAVE_TZSET=0 if your system lacks a tzset function
-#  -DHAVE_UNISTD_H=0 if your compiler lacks a <unistd.h>*
-#  -DHAVE_UTMPX_H=0 if your compiler lacks a <utmpx.h>*
+#  -DHAVE_UNISTD_H=0 if <unistd.h> does not work*
+#  -DHAVE_UTMPX_H=0 if <utmpx.h> does not work*
 #  -Dlocale_t=XXX if your system uses XXX instead of locale_t
 #  -DRESERVE_STD_EXT_IDS if your platform reserves standard identifiers
 #	with external linkage, e.g., applications cannot define 'localtime'.

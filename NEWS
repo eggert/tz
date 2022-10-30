@@ -7,6 +7,10 @@ Unreleased, experimental changes
     Fix bug in zdump's tzalloc emulation on hosts that lack tm_zone.
     (Problem reported by Đoàn Trần Công Danh.)
 
+    Fix zic's default configuration to not use getrandom on macOS,
+    which has sys/random.h but lacks getrandom.  (Problem reported by
+    Gilmore Davidson.)
+
 
 Release 2022f - 2022-10-28 18:04:57 -0700
 

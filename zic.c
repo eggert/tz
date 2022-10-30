@@ -43,6 +43,15 @@ static zic_t const
 
 #if HAVE_GETRANDOM
 # include <sys/random.h>
+#elif !defined HAVE_GETRANDOM
+# ifdef __has_include
+#  if __has_include(<sys/random.h>)
+#   include <sys/random.h>
+#  endif
+# elif 2 < __GLIBC__ + (25 <= __GLIBC_MINOR__)
+#  include <sys/random.h>
+# endif
+# define HAVE_GETRANDOM GRND_RANDOM
 #endif
 
 #if HAVE_SYS_STAT_H

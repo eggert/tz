@@ -775,7 +775,8 @@ tzselect:	tzselect.ksh version
 		chmod +x $@.out
 		mv $@.out $@
 
-check:		check_character_set check_white_space check_links \
+check: check_back check_mild
+check_mild:	check_character_set check_white_space check_links \
 		  check_name_lengths check_slashed_abbrs check_sorted \
 		  check_tables check_web check_ziguard check_zishrink check_tzs
 
@@ -831,11 +832,14 @@ check_sorted: backward backzone iso3166.tab zone.tab zone1970.tab
 		$(AWK) '/^Zone/ {print $$2}' backzone | LC_ALL=C sort -cu
 		touch $@
 
-check_links:	checklinks.awk $(TDATA_TO_CHECK) tzdata.zi
+check_back:	checklinks.awk $(TDATA_TO_CHECK)
 		$(AWK) \
 		  -v DATAFORM=$(DATAFORM) \
 		  -v backcheck=backward \
 		  -f checklinks.awk $(TDATA_TO_CHECK)
+		touch $@
+
+check_links:	checklinks.awk tzdata.zi
 		$(AWK) \
 		  -v DATAFORM=$(DATAFORM) \
 		  -f checklinks.awk tzdata.zi
@@ -1222,7 +1226,7 @@ zdump.o:	version.h
 zic.o:		private.h tzfile.h version.h
 
 .PHONY: ALL INSTALL all
-.PHONY: check check_time_t_alternatives
+.PHONY: check check_mild check_time_t_alternatives
 .PHONY: check_web check_zishrink
 .PHONY: clean clean_misc dummy.zd force_tzs
 .PHONY: install install_data maintainer-clean names

@@ -11,6 +11,12 @@ Unreleased, experimental changes
     which has sys/random.h but lacks getrandom.  (Problem reported by
     Gilmore Davidson.)
 
+  Changes to build procedure
+
+    New Makefile rule check_mild that skips checking whether Link
+    lines are in the file 'backward'.  (Inspired by a suggestion from
+    Stephen Colebourne.)
+
 
 Release 2022f - 2022-10-28 18:04:57 -0700
 

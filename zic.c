@@ -1210,21 +1210,12 @@ get_rand_u64(void)
 #endif
 
   /* getrandom didn't work, so fall back on portable code that is
-     not the best because the seed doesn't necessarily have enough bits,
-     the seed isn't cryptographically random on platforms lacking
-     getrandom, and 'rand' might not be cryptographically secure.  */
+     not the best because the seed isn't cryptographically random and
+     'rand' might not be cryptographically secure.  */
   {
     static bool initialized;
     if (!initialized) {
-      unsigned seed;
-#ifdef CLOCK_REALTIME
-      struct timespec now;
-      clock_gettime (CLOCK_REALTIME, &now);
-      seed = now.tv_sec ^ now.tv_nsec;
-#else
-      seed = time(NULL);
-#endif
-      srand(seed);
+      srand(time(NULL));
       initialized = true;
     }
   }

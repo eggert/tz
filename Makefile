@@ -196,6 +196,7 @@ PACKRATLIST=
 UTF8_LOCALE=	en_US.utf8
 
 # Non-default libraries needed to link.
+# On some hosts, this should have -lintl unless CFLAGS has -DHAVE_GETTEXT=0.
 LDLIBS=
 
 # Add the following to the end of the "CFLAGS=" line as needed to override
@@ -213,6 +214,7 @@ LDLIBS=
 #  -DHAVE_GETRANDOM if getrandom works (e.g., GNU/Linux),
 #	-DHAVE_GETRANDOM=0 to avoid using getrandom
 #  -DHAVE_GETTEXT if gettext works (e.g., GNU/Linux, FreeBSD, Solaris),
+#	where LDLIBS also needs to contain -lintl on some hosts;
 #	-DHAVE_GETTEXT=0 to avoid using gettext
 #  -DHAVE_INCOMPATIBLE_CTIME_R if your system's time.h declares
 #	ctime_r and asctime_r incompatibly with the POSIX standard

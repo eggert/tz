@@ -829,7 +829,7 @@ check_slashed_abbrs: $(TDATA_TO_CHECK)
 CHECK_CC_LIST = { n = split($$1,a,/,/); for (i=2; i<=n; i++) print a[1], a[i]; }
 
 check_sorted: backward backzone iso3166.tab zone.tab zone1970.tab
-		$(AWK) '/^Link/ {printf "%.5d %s\n", g, $$3} /^$$/ {g++}' \
+		$(AWK) '/^Link/ {printf "%.5d %s\n", g, $$3} !/./ {g++}' \
 		  backward | LC_ALL=C sort -cu
 		$(AWK) '/^Zone/ {print $$2}' backzone | LC_ALL=C sort -cu
 		touch $@

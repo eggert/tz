@@ -10,6 +10,9 @@ Unreleased, experimental changes
     Fix zic configuration to avoid linkage failures on some platforms.
     (Problems reported by Gilmore Davidson and Igor Ivanov.)
 
+    Work around MS-Windows nmake incompatibility with POSIX.
+    (Problem reported by Manuela Friedrich.)
+
   Changes to build procedure
 
     New Makefile rule check_mild that skips checking whether Link

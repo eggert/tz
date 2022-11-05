@@ -2216,7 +2216,7 @@ convert64(uint_fast64_t val, char *buf)
 }
 
 static void
-puttzcode(const int_fast32_t val, FILE *const fp)
+puttzcode(zic_t val, FILE *fp)
 {
 	char	buf[4];
 

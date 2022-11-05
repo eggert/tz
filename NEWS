@@ -7,6 +7,9 @@ Unreleased, experimental changes
     Fix bug in zdump's tzalloc emulation on hosts that lack tm_zone.
     (Problem reported by Đoàn Trần Công Danh.)
 
+    Fix bug in zic on hosts where malloc(0) yields NULL on success.
+    (Problem reported by Tim McBrayer for AIX 6.1.)
+
     Fix zic configuration to avoid linkage failures on some platforms.
     (Problems reported by Gilmore Davidson and Igor Ivanov.)
 

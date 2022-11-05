@@ -2305,8 +2305,10 @@ writezone(const char *const name, const char *const string, char version,
 	char const *outname = name;
 
 	/* Allocate the ATS and TYPES arrays via a single malloc,
-	   as this is a bit faster.  */
-	zic_t *ats = emalloc(align_to(size_product(timecnt, sizeof *ats + 1),
+	   as this is a bit faster.  Do not malloc(0) if !timecnt,
+	   as that might return NULL even on success.  */
+	zic_t *ats = emalloc(align_to(size_product(timecnt + !timecnt,
+						   sizeof *ats + 1),
 				      alignof(zic_t)));
 	void *typesptr = ats + timecnt;
 	unsigned char *types = typesptr;

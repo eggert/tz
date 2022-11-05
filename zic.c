@@ -516,7 +516,7 @@ erealloc(void *ptr, size_t size)
 }
 
 static char * ATTRIBUTE_MALLOC
-ecpyalloc(char const *str)
+estrdup(char const *str)
 {
   return memcheck(strdup(str));
 }
@@ -1780,8 +1780,8 @@ inrule(char **fields, int nfields)
 		     fields[RF_COMMAND], fields[RF_MONTH], fields[RF_DAY],
 		     fields[RF_TOD]))
 	  return;
-	r.r_name = ecpyalloc(fields[RF_NAME]);
-	r.r_abbrvar = ecpyalloc(fields[RF_ABBRVAR]);
+	r.r_name = estrdup(fields[RF_NAME]);
+	r.r_abbrvar = estrdup(fields[RF_ABBRVAR]);
 	if (max_abbrvar_len < strlen(r.r_abbrvar))
 		max_abbrvar_len = strlen(r.r_abbrvar);
 	rules = growalloc(rules, sizeof *rules, nrules, &nrules_alloc);
@@ -1905,9 +1905,9 @@ inzsub(char **fields, int nfields, bool iscont)
 				return false;
 		}
 	}
-	z.z_name = iscont ? NULL : ecpyalloc(fields[ZF_NAME]);
-	z.z_rule = ecpyalloc(fields[i_rule]);
-	z.z_format = cp1 = ecpyalloc(fields[i_format]);
+	z.z_name = iscont ? NULL : estrdup(fields[ZF_NAME]);
+	z.z_rule = estrdup(fields[i_rule]);
+	z.z_format = cp1 = estrdup(fields[i_format]);
 	if (z.z_format_specifier == 'z') {
 	  cp1[cp - fields[i_format]] = 's';
 	  if (noise)
@@ -2050,8 +2050,8 @@ inlink(char **fields, int nfields)
 	  return;
 	l.l_filenum = filenum;
 	l.l_linenum = linenum;
-	l.l_target = ecpyalloc(fields[LF_TARGET]);
-	l.l_linkname = ecpyalloc(fields[LF_LINKNAME]);
+	l.l_target = estrdup(fields[LF_TARGET]);
+	l.l_linkname = estrdup(fields[LF_LINKNAME]);
 	links = growalloc(links, sizeof *links, nlinks, &nlinks_alloc);
 	links[nlinks++] = l;
 }
@@ -2074,7 +2074,7 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 	rp->r_month = lp->l_value;
 	rp->r_todisstd = false;
 	rp->r_todisut = false;
-	dp = ecpyalloc(timep);
+	dp = estrdup(timep);
 	if (*dp != '\0') {
 		ep = dp + strlen(dp) - 1;
 		switch (lowerit(*ep)) {
@@ -2153,7 +2153,7 @@ rulesub(struct rule *rp, const char *loyearp, const char *hiyearp,
 	**	Sun<=20
 	**	Sun>=7
 	*/
-	dp = ecpyalloc(dayp);
+	dp = estrdup(dayp);
 	if ((lp = byword(dp, lasts)) != NULL) {
 		rp->r_dycode = DC_DOWLEQ;
 		rp->r_wday = lp->l_value;
@@ -3832,10 +3832,8 @@ mp = _("time zone abbreviation differs from POSIX standard");
 static void
 mkdirs(char const *argname, bool ancestors)
 {
-	register char *	name;
-	register char *	cp;
-
-	cp = name = ecpyalloc(argname);
+	char *name = estrdup(argname);
+	char *cp = name;
 
 	/* On MS-Windows systems, do not worry about drive letters or
 	   backslashes, as this should suffice in practice.  Time zone

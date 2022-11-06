@@ -1,6 +1,24 @@
 News for the tz database
 
+  Briefly:
+    Fix some pre-1996 timestamps in northern Canada
+
 Unreleased, experimental changes
+
+  Changes to past timestamps
+
+    Changes for pre-1996 northern Canada (thanks to Chris Walton):
+
+      Merge America/Iqaluit and America/Pangnirtung into the former,
+      with a backward compatibility link for the latter name.
+      There is no good evidence the two locations differ since 1970.
+      This change affects pre-1996 America/Pangnirtung timestamps.
+
+      Cambridge Bay, Inuvik, Iqaluit, Rankin Inlet, Resolute and
+      Yellowknife did not observe DST in 1965, and did observe DST
+      from 1972 through 1979.
+
+      Whitehorse moved from -09 to -08 on 1966-02-27, not 1967-05-28.
 
   Changes to code
 

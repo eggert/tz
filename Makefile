@@ -499,6 +499,11 @@ TARFLAGS=	`if tar $(GNUTARFLAGS) --version >/dev/null 2>&1; \
 # Flags to give 'gzip' when making a distribution.
 GZIPFLAGS=	-9n
 
+# When comparing .tzs files, use GNU diff's -F'^TZ=' option if supported.
+# This makes it easier to see which Zone has been affected.
+DIFF_TZS=	 diff -u$$(! diff -u -F'^TZ=' - - <>/dev/null >&0 2>&1 \
+			   || echo ' -F^TZ=')
+
 ###############################################################################
 
 #MAKE=		make
@@ -857,7 +862,7 @@ check_tables:	checktab.awk $(YDATA) backward $(ZONETABLES)
 
 check_tzs:	$(TZS) $(TZS_NEW)
 		if test -s $(TZS); then \
-		  diff -u $(TZS) $(TZS_NEW); \
+		  $(DIFF_TZS) $(TZS) $(TZS_NEW); \
 		else \
 		  cp $(TZS_NEW) $(TZS); \
 		fi
@@ -1058,7 +1063,7 @@ $(TIME_T_ALTERNATIVES): $(VERSION_DEPS)
 		      TZS_YEAR="$$range" TZS_CUTOFF_FLAG="-t $$range" \
 			D=$$wd/$@.dir \
 		      to$$range.tzs) && \
-		  diff -u $(TIME_T_ALTERNATIVES_HEAD).dir/to$$range.tzs \
+		  $(DIFF_TZS) $(TIME_T_ALTERNATIVES_HEAD).dir/to$$range.tzs \
 			  $@.dir/to$$range.tzs && \
 		  if diff -q Makefile Makefile 2>/dev/null; then \
 		    quiet_option='-q'; \

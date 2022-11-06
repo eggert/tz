@@ -1997,7 +1997,7 @@ Zone America/Fort_Nelson	-8:10:47 -	LMT	1884
 #
 #
 # From Paul Eggert (2022-11-06):
-# For now, assume Yukon's 2022-04-22 spring forward 00:00 -> 02:00, as this
+# For now, assume Yukon's 1965-04-22 spring forward was 00:00 -> 02:00, as this
 # seems likely than 02:00 -> 04:00 and matches "after midnight".
 
 # From Paul Eggert (2006-03-22):

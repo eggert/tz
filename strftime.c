@@ -319,7 +319,16 @@ label:
 								time_t) + 1];
 					time_t		mkt;
 
-					tm = *t;
+					tm.tm_sec = t->tm_sec;
+					tm.tm_min = t->tm_min;
+					tm.tm_hour = t->tm_hour;
+					tm.tm_mday = t->tm_mday;
+					tm.tm_mon = t->tm_mon;
+					tm.tm_year = t->tm_year;
+					tm.tm_isdst = t->tm_isdst;
+#if defined TM_GMTOFF && ! UNINIT_TRAP
+					tm.TM_GMTOFF = t->TM_GMTOFF;
+#endif
 					mkt = mktime(&tm);
 					/* There is no portable, definitive
 					   test for whether whether mktime

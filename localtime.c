@@ -1972,7 +1972,18 @@ time2sub(struct tm *const tmp,
 	struct tm			yourtm, mytm;
 
 	*okayp = false;
-	yourtm = *tmp;
+
+	yourtm.tm_sec = tmp->tm_sec;
+	yourtm.tm_min = tmp->tm_min;
+	yourtm.tm_hour = tmp->tm_hour;
+	yourtm.tm_mday = tmp->tm_mday;
+	yourtm.tm_mon = tmp->tm_mon;
+	yourtm.tm_year = tmp->tm_year;
+	yourtm.tm_isdst = tmp->tm_isdst;
+#if defined TM_GMTOFF && ! UNINIT_TRAP
+	yourtm.TM_GMTOFF = tmp->TM_GMTOFF;
+#endif
+
 	if (do_norm_secs) {
 		if (normalize_overflow(&yourtm.tm_min, &yourtm.tm_sec,
 			SECSPERMIN))

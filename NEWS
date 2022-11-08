@@ -34,6 +34,10 @@ Unreleased, experimental changes
     Work around MS-Windows nmake incompatibility with POSIX.
     (Problem reported by Manuela Friedrich.)
 
+    Port mktime and strftime to debugging platforms where accessing
+    uninitialized data has undefined behavior (strftime problem
+    reported by Robert Elz).
+
   Changes to build procedure
 
     New Makefile rule check_mild that skips checking whether Link

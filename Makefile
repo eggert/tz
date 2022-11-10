@@ -209,6 +209,7 @@ LDLIBS=
 #	For example, N is 252460800 on AmigaOS.
 #  -DHAVE_DECL_ASCTIME_R=0 if <time.h> does not declare asctime_r
 #  -DHAVE_DECL_ENVIRON if <unistd.h> declares 'environ'
+#  -DHAVE_DECL_TIMEGM=0 if <time.h> does not declare timegm
 #  -DHAVE_DIRECT_H if mkdir needs <direct.h> (MS-Windows)
 #  -DHAVE_GENERIC=0 if _Generic does not work*
 #  -DHAVE_GETRANDOM if getrandom works (e.g., GNU/Linux),
@@ -344,14 +345,11 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # If you want functions that were inspired by early versions of X3J11's work,
 # add
 #	-DSTD_INSPIRED
-# to the end of the "CFLAGS=" line.  This arranges for the functions
-# "offtime", "timelocal", "timegm", "timeoff",
-# "posix2time", and "time2posix" to be added to the time conversion library.
+# to the end of the "CFLAGS=" line.  This arranges for the following
+# functions to be added to the time conversion library.
 # "offtime" is like "gmtime" except that it accepts a second (long) argument
 # that gives an offset to add to the time_t when converting it.
 # "timelocal" is equivalent to "mktime".
-# "timegm" is like "timelocal" except that it turns a struct tm into
-# a time_t using UT (rather than local time as "timelocal" does).
 # "timeoff" is like "timegm" except that it accepts a second (long) argument
 # that gives an offset to use when converting to a time_t.
 # "posix2time" and "time2posix" are described in an included manual page.

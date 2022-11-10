@@ -2,6 +2,7 @@ News for the tz database
 
   Briefly:
     Fix some pre-1996 timestamps in northern Canada
+    C23 timegm now supported by default
 
 Unreleased, experimental changes
 
@@ -21,6 +22,10 @@ Unreleased, experimental changes
       Whitehorse moved from -09 to -08 on 1966-02-27, not 1967-05-28.
 
   Changes to code
+
+    timegm, which tzcode implemented in 1989, will finally be
+    standardized 34 years later as part of C23, so timegm is now
+    supported even if STD_INSPIRED is not defined.
 
     Fix bug in zdump's tzalloc emulation on hosts that lack tm_zone.
     (Problem reported by Đoàn Trần Công Danh.)

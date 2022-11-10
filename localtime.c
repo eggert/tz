@@ -1951,6 +1951,23 @@ tmcomp(register const struct tm *const atmp,
 	return result;
 }
 
+/* Copy to *DEST from *SRC.  Copy only the members needed for mktime,
+   as other members might not be initialized.  */
+static void
+mktmcpy(struct tm *dest, struct tm *const src)
+{
+  dest->tm_sec = src->tm_sec;
+  dest->tm_min = src->tm_min;
+  dest->tm_hour = src->tm_hour;
+  dest->tm_mday = src->tm_mday;
+  dest->tm_mon = src->tm_mon;
+  dest->tm_year = src->tm_year;
+  dest->tm_isdst = src->tm_isdst;
+#if defined TM_GMTOFF && ! UNINIT_TRAP
+  dest->TM_GMTOFF = src->TM_GMTOFF;
+#endif
+}
+
 static time_t
 time2sub(struct tm *const tmp,
 	 struct tm *(*funcp)(struct state const *, time_t const *,
@@ -1972,17 +1989,7 @@ time2sub(struct tm *const tmp,
 	struct tm			yourtm, mytm;
 
 	*okayp = false;
-
-	yourtm.tm_sec = tmp->tm_sec;
-	yourtm.tm_min = tmp->tm_min;
-	yourtm.tm_hour = tmp->tm_hour;
-	yourtm.tm_mday = tmp->tm_mday;
-	yourtm.tm_mon = tmp->tm_mon;
-	yourtm.tm_year = tmp->tm_year;
-	yourtm.tm_isdst = tmp->tm_isdst;
-#if defined TM_GMTOFF && ! UNINIT_TRAP
-	yourtm.TM_GMTOFF = tmp->TM_GMTOFF;
-#endif
+	mktmcpy(&yourtm, tmp);
 
 	if (do_norm_secs) {
 		if (normalize_overflow(&yourtm.tm_min, &yourtm.tm_sec,
@@ -2289,7 +2296,6 @@ mktime(struct tm *tmp)
 }
 
 #ifdef STD_INSPIRED
-
 time_t
 timelocal(struct tm *tmp)
 {
@@ -2297,13 +2303,9 @@ timelocal(struct tm *tmp)
 		tmp->tm_isdst = -1;	/* in case it wasn't initialized */
 	return mktime(tmp);
 }
-
-time_t
-timegm(struct tm *tmp)
-{
-  return timeoff(tmp, 0);
-}
-
+#else
+static
+#endif
 time_t
 timeoff(struct tm *tmp, long offset)
 {
@@ -2313,7 +2315,18 @@ timeoff(struct tm *tmp, long offset)
   return time1(tmp, gmtsub, gmtptr, offset);
 }
 
-#endif /* defined STD_INSPIRED */
+time_t
+timegm(struct tm *tmp)
+{
+  time_t t;
+  struct tm tmcpy;
+  mktmcpy(&tmcpy, tmp);
+  tmcpy.tm_wday = -1;
+  t = timeoff(&tmcpy, 0);
+  if (0 <= tmcpy.tm_wday)
+    *tmp = tmcpy;
+  return t;
+}
 
 static int_fast32_t
 leapcorr(struct state const *sp, time_t t)

@@ -543,7 +543,22 @@ struct tm *localtime(time_t const *);
 struct tm *localtime_r(time_t const *restrict, struct tm *restrict);
 time_t mktime(struct tm *);
 time_t time(time_t *);
+time_t timegm(struct tm *);
 void tzset(void);
+#endif
+
+#ifndef HAVE_DECL_TIMEGM
+# if (202311 <= __STDC_VERSION__ \
+      || defined __GLIBC__ || defined __tm_zone /* musl */ \
+      || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
+      || (defined __APPLE__ && defined __MACH__))
+#  define HAVE_DECL_TIMEGM true
+# else
+#  define HAVE_DECL_TIMEGM false
+# endif
+#endif
+#if !HAVE_DECL_TIMEGM && !defined timegm
+time_t timegm(struct tm *);
 #endif
 
 #if !HAVE_DECL_ASCTIME_R && !defined asctime_r
@@ -581,9 +596,6 @@ extern long altzone;
 #ifdef STD_INSPIRED
 # if TZ_TIME_T || !defined offtime
 struct tm *offtime(time_t const *, long);
-# endif
-# if TZ_TIME_T || !defined timegm
-time_t timegm(struct tm *);
 # endif
 # if TZ_TIME_T || !defined timelocal
 time_t timelocal(struct tm *);

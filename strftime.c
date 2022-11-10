@@ -330,10 +330,10 @@ label:
 					tm.TM_GMTOFF = t->TM_GMTOFF;
 #endif
 					mkt = mktime(&tm);
-					/* There is no portable, definitive
-					   test for whether whether mktime
-					   succeeded, so treat (time_t) -1 as
-					   the success that it might be.  */
+					/* If mktime fails, %s expands to the
+					   value of (time_t) -1 as a failure
+					   marker; this is better in practice
+					   than strftime failing.  */
 					if (TYPE_SIGNED(time_t)) {
 					  intmax_t n = mkt;
 					  sprintf(buf, "%"PRIdMAX, n);

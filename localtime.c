@@ -1954,7 +1954,7 @@ tmcomp(register const struct tm *const atmp,
 /* Copy to *DEST from *SRC.  Copy only the members needed for mktime,
    as other members might not be initialized.  */
 static void
-mktmcpy(struct tm *dest, struct tm *const src)
+mktmcpy(struct tm *dest, struct tm const *src)
 {
   dest->tm_sec = src->tm_sec;
   dest->tm_min = src->tm_min;

@@ -21,6 +21,9 @@ Unreleased, experimental changes
 
       Whitehorse moved from -09 to -08 on 1966-02-27, not 1967-05-28.
 
+    Colombia's 1993 fallback was 02-06 24:00, not 04-04 00:00.
+    (Thanks to Alois Treindl.)
+
   Changes to code
 
     timegm, which tzcode implemented in 1989, will finally be

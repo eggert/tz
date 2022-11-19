@@ -361,14 +361,13 @@ typedef unsigned long uint_fast32_t;
 #endif
 
 #ifndef UINT_FAST64_MAX
-# ifdef ULLONG_MAX
-typedef unsigned long long uint_fast64_t;
+# if 3 <= ULONG_MAX >> 31 >> 31
+typedef unsigned long uint_fast64_t;
+#  define UINT_FAST64_MAX ULONG_MAX
 # else
-#  if ULONG_MAX >> 31 >> 1 < 0xffffffff
-Please use a compiler that supports a 64-bit integer type (or wider);
-you may need to compile with "-DHAVE_STDINT_H".
-#  endif
-typedef unsigned long	uint_fast64_t;
+/* If this fails, compile with -DHAVE_STDINT_H or with a better compiler.  */
+typedef unsigned long long uint_fast64_t;
+#  define UINT_FAST64_MAX ULLONG_MAX
 # endif
 #endif
 

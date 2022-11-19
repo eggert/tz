@@ -2,6 +2,7 @@ News for the tz database
 
   Briefly:
     Fix some pre-1996 timestamps in northern Canada.
+    C89 is now deprecated; please use C99 or later.
     Portability fixes for AIX, libintl, MS-Windows, musl, z/OS
     C23 timegm now supported by default
 
@@ -26,6 +27,12 @@ Unreleased, experimental changes
     (Thanks to Alois Treindl.)
 
   Changes to code
+
+    Although tzcode still works with C89, bugs found in recent routine
+    maintenance indicate that bitrot has set in and that in practice
+    C89 is no longer used to build tzcode.  As it is a maintenance
+    burden, support for C89 is planned to be removed soon.  Instead,
+    please use compilers compatible with C99, C11, C17, or C23.
 
     timegm, which tzcode implemented in 1989, will finally be
     standardized 34 years later as part of C23, so timegm is now

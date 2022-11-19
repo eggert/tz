@@ -56,7 +56,7 @@
 # endif
 #endif
 /* _Generic is buggy in pre-4.9 GCC.  */
-#if !defined HAVE_GENERIC && defined __GNUC__
+#if !defined HAVE_GENERIC && defined __GNUC__ && !defined __STRICT_ANSI__
 # define HAVE_GENERIC (4 < __GNUC__ + (9 <= __GNUC_MINOR__))
 #endif
 #ifndef HAVE_GENERIC
@@ -278,12 +278,15 @@
 #endif
 
 /* Pre-C99 GCC compilers define __LONG_LONG_MAX__ instead of LLONG_MAX.  */
-#ifdef __LONG_LONG_MAX__
+#if defined __LONG_LONG_MAX__ && !defined __STRICT_ANSI__
 # ifndef LLONG_MAX
 #  define LLONG_MAX __LONG_LONG_MAX__
 # endif
 # ifndef LLONG_MIN
 #  define LLONG_MIN (-1 - LLONG_MAX)
+# endif
+# ifndef ULLONG_MAX
+#  define ULLONG_MAX (LLONG_MAX * 2ull + 1)
 # endif
 #endif
 
@@ -358,7 +361,7 @@ typedef unsigned long uint_fast32_t;
 #endif
 
 #ifndef UINT_FAST64_MAX
-# if defined ULLONG_MAX || defined __LONG_LONG_MAX__
+# ifdef ULLONG_MAX
 typedef unsigned long long uint_fast64_t;
 # else
 #  if ULONG_MAX >> 31 >> 1 < 0xffffffff
@@ -370,7 +373,7 @@ typedef unsigned long	uint_fast64_t;
 #endif
 
 #ifndef UINTMAX_MAX
-# if defined ULLONG_MAX || defined __LONG_LONG_MAX__
+# ifdef ULLONG_MAX
 typedef unsigned long long uintmax_t;
 # else
 typedef unsigned long uintmax_t;
@@ -378,7 +381,7 @@ typedef unsigned long uintmax_t;
 #endif
 
 #ifndef PRIuMAX
-# if defined ULLONG_MAX || defined __LONG_LONG_MAX__
+# ifdef ULLONG_MAX
 #  define PRIuMAX "llu"
 # else
 #  define PRIuMAX "lu"

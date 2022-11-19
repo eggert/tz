@@ -1,7 +1,8 @@
 News for the tz database
 
   Briefly:
-    Fix some pre-1996 timestamps in northern Canada
+    Fix some pre-1996 timestamps in northern Canada.
+    Portability fixes for AIX, libintl, MS-Windows, musl, z/OS
     C23 timegm now supported by default
 
 Unreleased, experimental changes

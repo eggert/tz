@@ -291,26 +291,23 @@
 #endif
 
 #ifndef INT_FAST64_MAX
-# ifdef LLONG_MAX
-typedef long long	int_fast64_t;
-#  define INT_FAST64_MIN LLONG_MIN
-#  define INT_FAST64_MAX LLONG_MAX
-# else
-#  if LONG_MAX >> 31 < 0xffffffff
-Please use a compiler that supports a 64-bit integer type (or wider);
-you may need to compile with "-DHAVE_STDINT_H".
-#  endif
-typedef long		int_fast64_t;
+# if 1 <= LONG_MAX >> 31 >> 31
+typedef long int_fast64_t;
 #  define INT_FAST64_MIN LONG_MIN
 #  define INT_FAST64_MAX LONG_MAX
+# else
+/* If this fails, compile with -DHAVE_STDINT_H or with a better compiler.  */
+typedef long long int_fast64_t;
+#  define INT_FAST64_MIN LLONG_MIN
+#  define INT_FAST64_MAX LLONG_MAX
 # endif
 #endif
 
 #ifndef PRIdFAST64
-# if INT_FAST64_MAX == LLONG_MAX
-#  define PRIdFAST64 "lld"
-# else
+# if INT_FAST64_MAX == LONG_MAX
 #  define PRIdFAST64 "ld"
+# else
+#  define PRIdFAST64 "lld"
 # endif
 #endif
 

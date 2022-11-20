@@ -137,9 +137,15 @@ size_overflow(void)
 static ATTRIBUTE_PURE ptrdiff_t
 sumsize(size_t a, size_t b)
 {
+#ifdef ckd_add
+  ptrdiff_t sum;
+  if (!ckd_add(&sum, a, b) && sum <= SIZE_MAX)
+    return sum;
+#else
   ptrdiff_t sum_max = min(PTRDIFF_MAX, SIZE_MAX);
   if (a <= sum_max && b <= sum_max - a)
     return a + b;
+#endif
   size_overflow();
 }
 
@@ -254,9 +260,15 @@ tzalloc(char const *val)
     ptrdiff_t initial_nenvptrs = 1;  /* Counting the trailing NULL pointer.  */
 
     while (*e++) {
+#  ifdef ckd_add
+      if (ckd_add(&initial_nenvptrs, initial_envptrs, 1)
+	  || SIZE_MAX < initial_envptrs)
+	size_overflow();
+#  else
       if (initial_nenvptrs == min(PTRDIFF_MAX, SIZE_MAX) / sizeof *environ)
 	size_overflow();
       initial_nenvptrs++;
+#  endif
     }
     fakeenv0size = sumsize(valsize, valsize);
     fakeenv0size = max(fakeenv0size, 64);

@@ -1565,6 +1565,14 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 					return NULL;	/* "cannot happen" */
 			result = localsub(sp, &newt, setname, tmp);
 			if (result) {
+#if defined ckd_add && defined ckd_sub
+				if (t < sp->ats[0]
+				    ? ckd_sub(&result->tm_year,
+					      result->tm_year, years)
+				    : ckd_add(&result->tm_year,
+					      result->tm_year, years))
+				  return NULL;
+#else
 				register int_fast64_t newy;
 
 				newy = result->tm_year;
@@ -1574,6 +1582,7 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 				if (! (INT_MIN <= newy && newy <= INT_MAX))
 					return NULL;
 				result->tm_year = newy;
+#endif
 			}
 			return result;
 	}
@@ -1783,6 +1792,12 @@ timesub(const time_t *timep, int_fast32_t offset,
 		y = newy;
 	}
 
+#ifdef ckd_add
+	if (ckd_add(&tmp->tm_year, y, -TM_YEAR_BASE)) {
+	  errno = EOVERFLOW;
+	  return NULL;
+	}
+#else
 	if (!TYPE_SIGNED(time_t) && y < TM_YEAR_BASE) {
 	  int signed_y = y;
 	  tmp->tm_year = signed_y - TM_YEAR_BASE;
@@ -1793,6 +1808,7 @@ timesub(const time_t *timep, int_fast32_t offset,
 	  errno = EOVERFLOW;
 	  return NULL;
 	}
+#endif
 	tmp->tm_yday = idays;
 	/*
 	** The "extra" mods below avoid overflow problems.
@@ -1867,6 +1883,9 @@ ctime_r(const time_t *timep, char *buf)
 static bool
 increment_overflow(int *ip, int j)
 {
+#ifdef ckd_add
+	return ckd_add(ip, *ip, j);
+#else
 	register int const	i = *ip;
 
 	/*
@@ -1879,22 +1898,30 @@ increment_overflow(int *ip, int j)
 		return true;
 	*ip += j;
 	return false;
+#endif
 }
 
 static bool
 increment_overflow32(int_fast32_t *const lp, int const m)
 {
+#ifdef ckd_add
+	return ckd_add(lp, *lp, m);
+#else
 	register int_fast32_t const	l = *lp;
 
 	if ((l >= 0) ? (m > INT_FAST32_MAX - l) : (m < INT_FAST32_MIN - l))
 		return true;
 	*lp += m;
 	return false;
+#endif
 }
 
 static bool
 increment_overflow_time(time_t *tp, int_fast32_t j)
 {
+#ifdef ckd_add
+	return ckd_add(tp, *tp, j);
+#else
 	/*
 	** This is like
 	** 'if (! (TIME_T_MIN <= *tp + j && *tp + j <= TIME_T_MAX)) ...',
@@ -1906,6 +1933,7 @@ increment_overflow_time(time_t *tp, int_fast32_t j)
 		return true;
 	*tp += j;
 	return false;
+#endif
 }
 
 static bool
@@ -2029,11 +2057,16 @@ time2sub(struct tm *const tmp,
 				return WRONG;
 		}
 	}
+#ifdef ckd_add
+	if (ckd_add(&yourtm.tm_year, y, -TM_YEAR_BASE))
+	  return WRONG;
+#else
 	if (increment_overflow32(&y, -TM_YEAR_BASE))
 		return WRONG;
 	if (! (INT_MIN <= y && y <= INT_MAX))
 		return WRONG;
 	yourtm.tm_year = y;
+#endif
 	if (yourtm.tm_sec >= 0 && yourtm.tm_sec < SECSPERMIN)
 		saved_seconds = 0;
 	else if (yourtm.tm_year < EPOCH_YEAR - TM_YEAR_BASE) {

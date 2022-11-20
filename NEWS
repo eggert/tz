@@ -4,6 +4,7 @@ News for the tz database
     Fix some pre-1996 timestamps in northern Canada.
     C89 is now deprecated; please use C99 or later.
     Portability fixes for AIX, libintl, MS-Windows, musl, z/OS
+    In C code, use more C23 features if available.
     C23 timegm now supported by default
     Fixes for unlikely integer overflows
 
@@ -55,7 +56,9 @@ Unreleased, experimental changes
     uninitialized data has undefined behavior (strftime problem
     reported by Robert Elz).
 
-    Check more carefully for unlikely integer overflows.
+    Check more carefully for unlikely integer overflows, preferring
+    C23 <stdckdint.h> to overflow checking by hand, as the latter has
+    had obscure bugs.
 
   Changes to build procedure
 

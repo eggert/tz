@@ -230,6 +230,8 @@ LDLIBS=
 #	functions like 'link' or variables like 'tzname' required by POSIX
 #  -DHAVE_SETENV=0 if your system lacks the setenv function
 #  -DHAVE_SNPRINTF=0 if your system lacks the snprintf function
+#  -DHAVE_STDCKDINT_H=0 if neither <stdckdint.h> nor substitutes like
+#	__builtin_add_overflow work*
 #  -DHAVE_STDINT_H=0 if <stdint.h> does not work*
 #  -DHAVE_STRFTIME_L if <time.h> declares locale_t and strftime_l
 #  -DHAVE_STRDUP=0 if your system lacks the strdup function

@@ -392,6 +392,35 @@ typedef unsigned long uintmax_t;
 # define SIZE_MAX ((size_t) -1)
 #endif
 
+/* Support ckd_add, ckd_sub, ckd_mul on C23 or recent-enough GCC-like
+   hosts, unless compiled with -DHAVE_STDCKDINT_H=0 or with pre-C23 EDG.  */
+#if !defined HAVE_STDCKDINT_H && defined __has_include
+# if __has_include(<stdckdint.h>)
+#  define HAVE_STDCKDINT_H true
+# endif
+#endif
+#ifdef HAVE_STDCKDINT_H
+# if HAVE_STDCKDINT_H
+#  include <stdckdint.h>
+# endif
+#elif defined __EDG__
+/* Do nothing, to work around EDG bug <https://bugs.gnu.org/53256>.  */
+#elif defined __has_builtin
+# if __has_builtin(__builtin_add_overflow)
+#  define ckd_add(r, a, b) __builtin_add_overflow(a, b, r)
+# endif
+# if __has_builtin(__builtin_sub_overflow)
+#  define ckd_sub(r, a, b) __builtin_sub_overflow(a, b, r)
+# endif
+# if __has_builtin(__builtin_mul_overflow)
+#  define ckd_mul(r, a, b) __builtin_mul_overflow(a, b, r)
+# endif
+#elif 7 <= __GNUC__
+# define ckd_add(r, a, b) __builtin_add_overflow(a, b, r)
+# define ckd_sub(r, a, b) __builtin_sub_overflow(a, b, r)
+# define ckd_mul(r, a, b) __builtin_mul_overflow(a, b, r)
+#endif
+
 #if 3 <= __GNUC__
 # define ATTRIBUTE_CONST __attribute__((const))
 # define ATTRIBUTE_MALLOC __attribute__((__malloc__))

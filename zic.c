@@ -475,18 +475,30 @@ size_overflow(void)
 static ATTRIBUTE_PURE ptrdiff_t
 size_sum(size_t a, size_t b)
 {
+#ifdef ckd_add
+  ptrdiff_t sum;
+  if (!ckd_add(&sum, a, b) && sum <= SIZE_MAX)
+    return sum;
+#else
   ptrdiff_t sum_max = min(PTRDIFF_MAX, SIZE_MAX);
   if (a <= sum_max && b <= sum_max - a)
     return a + b;
+#endif
   size_overflow();
 }
 
 static ATTRIBUTE_PURE ptrdiff_t
 size_product(ptrdiff_t nitems, ptrdiff_t itemsize)
 {
+#ifdef ckd_mul
+  ptrdiff_t product;
+  if (!ckd_mul(&product, nitems, itemsize) && product <= SIZE_MAX)
+    return product;
+#else
   ptrdiff_t nitems_max = min(PTRDIFF_MAX, SIZE_MAX) / itemsize;
   if (nitems <= nitems_max)
     return nitems * itemsize;
+#endif
   size_overflow();
 }
 
@@ -536,11 +548,18 @@ static ptrdiff_t
 grow_nitems_alloc(ptrdiff_t *nitems_alloc, ptrdiff_t itemsize)
 {
   ptrdiff_t addend = (*nitems_alloc >> 1) + 1;
+#if defined ckd_add && defined ckd_mul
+  ptrdiff_t product;
+  if (!ckd_add(nitems_alloc, *nitems_alloc, addend)
+      && !ckd_mul(&product, *nitems_alloc, itemsize) && product <= SIZE_MAX)
+    return product;
+#else
   ptrdiff_t amax = min(PTRDIFF_MAX, SIZE_MAX);
   if (*nitems_alloc <= ((amax - 1) / 3 * 2) / itemsize) {
     *nitems_alloc += addend;
     return *nitems_alloc * itemsize;
   }
+#endif
   memory_exhausted(_("integer overflow"));
 }
 
@@ -3716,16 +3735,28 @@ time_overflow(void)
 static ATTRIBUTE_PURE zic_t
 oadd(zic_t t1, zic_t t2)
 {
+#ifdef ckd_add
+  zic_t sum;
+  if (!ckd_add(&sum, t1, t2))
+    return sum;
+#else
   if (t1 < 0 ? ZIC_MIN - t1 <= t2 : t2 <= ZIC_MAX - t1)
     return t1 + t2;
+#endif
   time_overflow();
 }
 
 static ATTRIBUTE_PURE zic_t
 tadd(zic_t t1, zic_t t2)
 {
+#ifdef ckd_add
+  zic_t sum;
+  if (!ckd_add(&sum, t1, t2) && min_time <= sum && sum <= max_time)
+    return sum;
+#else
   if (t1 < 0 ? min_time - t1 <= t2 : t2 <= max_time - t1)
     return t1 + t2;
+#endif
   if (t1 == min_time || t1 == max_time)
     return t1;
   time_overflow();

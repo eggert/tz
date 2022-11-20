@@ -2039,7 +2039,7 @@ time2sub(struct tm *const tmp,
 	yourtm.tm_year = y;
 	if (yourtm.tm_sec >= 0 && yourtm.tm_sec < SECSPERMIN)
 		saved_seconds = 0;
-	else if (y + TM_YEAR_BASE < EPOCH_YEAR) {
+	else if (yourtm.tm_year < EPOCH_YEAR - TM_YEAR_BASE) {
 		/*
 		** We can't set tm_sec to 0, because that might push the
 		** time below the minimum representable time.

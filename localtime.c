@@ -425,8 +425,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 #endif
 	if (!doaccess) {
 		char const *dot;
-		size_t namelen = strlen(name);
-		if (sizeof lsp->fullname - sizeof tzdirslash <= namelen)
+		if (sizeof lsp->fullname - sizeof tzdirslash <= strlen(name))
 		  return ENAMETOOLONG;
 
 		/* Create a string "TZDIR/NAME".  Using sprintf here
@@ -1120,13 +1119,11 @@ tzparse(const char *name, struct state *sp, struct state *basep)
 {
 	const char *			stdname;
 	const char *			dstname;
-	size_t				stdlen;
-	size_t				dstlen;
-	size_t				charcnt;
 	int_fast32_t			stdoffset;
 	int_fast32_t			dstoffset;
 	register char *			cp;
 	register bool			load_ok;
+	ptrdiff_t stdlen, dstlen, charcnt;
 	time_t atlo = TIME_T_MIN, leaplo = TIME_T_MIN;
 
 	stdname = name;

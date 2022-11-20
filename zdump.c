@@ -91,7 +91,7 @@ static bool	errout;
 static char const *abbr(struct tm const *);
 static intmax_t	delta(struct tm *, struct tm *) ATTRIBUTE_PURE;
 static void dumptime(struct tm const *);
-static time_t hunt(timezone_t, char *, time_t, time_t, bool);
+static time_t hunt(timezone_t, time_t, time_t, bool);
 static void show(timezone_t, char *, time_t, bool);
 static void showextrema(timezone_t, char *, time_t, struct tm *, time_t);
 static void showtrans(char const *, struct tm const *, time_t, char const *,
@@ -627,7 +627,7 @@ main(int argc, char *argv[])
 		      || (ab && (delta(&newtm, &tm) != newt - t
 				 || newtm.tm_isdst != tm.tm_isdst
 				 || strcmp(abbr(&newtm), ab) != 0))) {
-		    newt = hunt(tz, argv[i], t, newt, false);
+		    newt = hunt(tz, t, newt, false);
 		    newtmp = localtime_rz(tz, &newt, &newtm);
 		    newtm_ok = newtmp != NULL;
 		    if (iflag)
@@ -707,7 +707,7 @@ yeartot(intmax_t y)
 	return t;
 }
 
-/* Search for a discontinuity in timezone TZ with name NAME, in the
+/* Search for a discontinuity in timezone TZ, in the
    timestamps ranging from LOT through HIT.  LOT and HIT disagree
    about some aspect of timezone.  If ONLY_OK, search only for
    definedness changes, i.e., localtime succeeds on one side of the
@@ -715,7 +715,7 @@ yeartot(intmax_t y)
    before the transition from LOT's settings.  */
 
 static time_t
-hunt(timezone_t tz, char *name, time_t lot, time_t hit, bool only_ok)
+hunt(timezone_t tz, time_t lot, time_t hit, bool only_ok)
 {
 	static char *		loab;
 	static ptrdiff_t	loabsize;
@@ -807,7 +807,8 @@ adjusted_yday(struct tm const *a, struct tm const *b)
    my_gmtime_r and use its result instead of B.  Otherwise, B is the
    possibly nonnull result of an earlier call to my_gmtime_r.  */
 static long
-gmtoff(struct tm const *a, time_t *t, struct tm const *b)
+gmtoff(struct tm const *a, ATTRIBUTE_MAYBE_UNUSED time_t *t,
+       ATTRIBUTE_MAYBE_UNUSED struct tm const *b)
 {
 #ifdef TM_GMTOFF
   return a->TM_GMTOFF;
@@ -878,7 +879,7 @@ static void
 showextrema(timezone_t tz, char *zone, time_t lo, struct tm *lotmp, time_t hi)
 {
   struct tm localtm[2], gmtm[2];
-  time_t t, boundary = hunt(tz, zone, lo, hi, true);
+  time_t t, boundary = hunt(tz, lo, hi, true);
   bool old = false;
   hi = (SECSPERDAY < hi - boundary
 	? boundary + SECSPERDAY

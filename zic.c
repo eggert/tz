@@ -1970,7 +1970,7 @@ inzsub(char **fields, int nfields, bool iscont)
 }
 
 static zic_t
-getleapdatetime(char **fields, int nfields, bool expire_line)
+getleapdatetime(char **fields, bool expire_line)
 {
 	register const char *		cp;
 	register const struct lookup *	lp;
@@ -2048,7 +2048,7 @@ inleap(char **fields, int nfields)
   if (nfields != LEAP_FIELDS)
     error(_("wrong number of fields on Leap line"));
   else {
-    zic_t t = getleapdatetime(fields, nfields, false);
+    zic_t t = getleapdatetime(fields, false);
     if (0 <= t) {
       struct lookup const *lp = byword(fields[LP_ROLL], leap_types);
       if (!lp)
@@ -2076,7 +2076,7 @@ inexpires(char **fields, int nfields)
   else if (0 <= leapexpires)
     error(_("multiple Expires lines"));
   else
-    leapexpires = getleapdatetime(fields, nfields, true);
+    leapexpires = getleapdatetime(fields, true);
 }
 
 static void

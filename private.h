@@ -433,6 +433,19 @@ typedef unsigned long uintmax_t;
 # define ATTRIBUTE_FORMAT(spec) /* empty */
 #endif
 
+#ifdef __has_c_attribute
+# if __has_c_attribute(__maybe_unused__)
+#  define ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
+# endif
+#endif
+#ifndef ATTRIBUTE_MAYBE_UNUSED
+# if 2 < __GNUC__ + (7 <= __GNUC_MINOR__)
+#  define ATTRIBUTE_MAYBE_UNUSED __attribute__ ((__unused__))
+# else
+#  define ATTRIBUTE_MAYBE_UNUSED /* empty */
+# endif
+#endif
+
 #if !defined _Noreturn && __STDC_VERSION__ < 201112
 # if 2 < __GNUC__ + (8 <= __GNUC_MINOR__)
 #  define _Noreturn __attribute__((__noreturn__))

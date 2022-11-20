@@ -117,7 +117,7 @@ static char *	_yconv(int, int, bool, bool, char *, char const *);
 #if HAVE_STRFTIME_L
 size_t
 strftime_l(char *s, size_t maxsize, char const *format, struct tm const *t,
-	   locale_t locale)
+	   ATTRIBUTE_MAYBE_UNUSED locale_t locale)
 {
   /* Just call strftime, as only the C locale is supported.  */
   return strftime(s, maxsize, format, t);

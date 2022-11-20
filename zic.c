@@ -466,22 +466,35 @@ memory_exhausted(const char *msg)
 	exit(EXIT_FAILURE);
 }
 
+static _Noreturn void
+size_overflow(void)
+{
+  memory_exhausted(_("size overflow"));
+}
+
 static ATTRIBUTE_PURE ptrdiff_t
-size_product(ptrdiff_t nitems, size_t itemsize)
+size_sum(size_t a, size_t b)
+{
+  ptrdiff_t sum_max = min(PTRDIFF_MAX, SIZE_MAX);
+  if (a <= sum_max && b <= sum_max - a)
+    return a + b;
+  size_overflow();
+}
+
+static ATTRIBUTE_PURE ptrdiff_t
+size_product(ptrdiff_t nitems, ptrdiff_t itemsize)
 {
   ptrdiff_t nitems_max = min(PTRDIFF_MAX, SIZE_MAX) / itemsize;
   if (nitems <= nitems_max)
     return nitems * itemsize;
-  memory_exhausted(_("size overflow"));
+  size_overflow();
 }
 
-static ATTRIBUTE_PURE size_t
-align_to(size_t size, size_t alignment)
+static ATTRIBUTE_PURE ptrdiff_t
+align_to(ptrdiff_t size, ptrdiff_t alignment)
 {
-  size_t lo_bits = alignment - 1;
-  if (size <= SIZE_MAX - lo_bits)
-    return size + (-size & lo_bits);
-  memory_exhausted(_("alignment overflow"));
+  ptrdiff_t lo_bits = alignment - 1, sum = size_sum(size, lo_bits);
+  return sum & ~lo_bits;
 }
 
 #if !HAVE_STRDUP
@@ -532,7 +545,8 @@ grow_nitems_alloc(ptrdiff_t *nitems_alloc, ptrdiff_t itemsize)
 }
 
 static void *
-growalloc(void *ptr, size_t itemsize, ptrdiff_t nitems, ptrdiff_t *nitems_alloc)
+growalloc(void *ptr, ptrdiff_t itemsize, ptrdiff_t nitems,
+	  ptrdiff_t *nitems_alloc)
 {
   return (nitems < *nitems_alloc
 	  ? ptr
@@ -1284,7 +1298,7 @@ random_dirent(char const **name, char **namealloc)
   uint_fast64_t unfair_min = - ((UINTMAX_MAX % base__6 + 1) % base__6);
 
   if (!dst) {
-    dst = emalloc(dirlen + prefixlen + suffixlen + 1);
+    dst = emalloc(size_sum(dirlen, prefixlen + suffixlen + 1));
     memcpy(dst, src, dirlen);
     memcpy(dst + dirlen, prefix, prefixlen);
     dst[dirlen + prefixlen + suffixlen] = '\0';
@@ -1363,19 +1377,20 @@ rename_dest(char *tempname, char const *name)
 static char *
 relname(char const *target, char const *linkname)
 {
-  size_t i, taillen, dotdotetcsize;
-  size_t dir_len = 0, dotdots = 0, linksize = SIZE_MAX;
+  size_t i, taillen, dir_len = 0, dotdots = 0;
+  ptrdiff_t dotdotetcsize, linksize = min(PTRDIFF_MAX, SIZE_MAX);
   char const *f = target;
   char *result = NULL;
   if (*linkname == '/') {
     /* Make F absolute too.  */
     size_t len = strlen(directory);
-    bool needslash = len && directory[len - 1] != '/';
-    linksize = len + needslash + strlen(target) + 1;
+    size_t lenslash = len + (len && directory[len - 1] != '/');
+    size_t targetsize = strlen(target) + 1;
+    linksize = size_sum(lenslash, targetsize);
     f = result = emalloc(linksize);
-    strcpy(result, directory);
+    memcpy(result, directory, len);
     result[len] = '/';
-    strcpy(result + len + needslash, target);
+    memcpy(result + lenslash, target, targetsize);
   }
   for (i = 0; f[i] && f[i] == linkname[i]; i++)
     if (f[i] == '/')
@@ -1383,7 +1398,7 @@ relname(char const *target, char const *linkname)
   for (; linkname[i]; i++)
     dotdots += linkname[i] == '/' && linkname[i - 1] != '/';
   taillen = strlen(f + dir_len);
-  dotdotetcsize = 3 * dotdots + taillen + 1;
+  dotdotetcsize = size_sum(size_product(dotdots, 3), taillen + 1);
   if (dotdotetcsize <= linksize) {
     if (!result)
       result = emalloc(dotdotetcsize);

@@ -468,22 +468,22 @@ memory_exhausted(const char *msg)
 	exit(EXIT_FAILURE);
 }
 
-static ATTRIBUTE_PURE size_t
-size_product(size_t nitems, size_t itemsize)
+static ATTRIBUTE_PURE ptrdiff_t
+size_product(ptrdiff_t nitems, size_t itemsize)
 {
-	if (SIZE_MAX / itemsize < nitems)
-		memory_exhausted(_("size overflow"));
-	return nitems * itemsize;
+  ptrdiff_t nitems_max = min(PTRDIFF_MAX, SIZE_MAX) / itemsize;
+  if (nitems <= nitems_max)
+    return nitems * itemsize;
+  memory_exhausted(_("size overflow"));
 }
 
 static ATTRIBUTE_PURE size_t
 align_to(size_t size, size_t alignment)
 {
-  size_t aligned_size = size + alignment - 1;
-  aligned_size -= aligned_size % alignment;
-  if (aligned_size < size)
-    memory_exhausted(_("alignment overflow"));
-  return aligned_size;
+  size_t lo_bits = alignment - 1, addend = -size & lo_bits;
+  if (size <= SIZE_MAX - lo_bits)
+    return size + addend;
+  memory_exhausted(_("alignment overflow"));
 }
 
 #if !HAVE_STRDUP
@@ -521,18 +521,24 @@ estrdup(char const *str)
   return memcheck(strdup(str));
 }
 
+static ptrdiff_t
+grow_nitems_alloc(ptrdiff_t *nitems_alloc, ptrdiff_t itemsize)
+{
+  ptrdiff_t addend = (*nitems_alloc >> 1) + 1;
+  ptrdiff_t amax = min(PTRDIFF_MAX, SIZE_MAX);
+  if (*nitems_alloc <= ((amax - 1) / 3 * 2) / itemsize) {
+    *nitems_alloc += addend;
+    return *nitems_alloc * itemsize;
+  }
+  memory_exhausted(_("integer overflow"));
+}
+
 static void *
 growalloc(void *ptr, size_t itemsize, ptrdiff_t nitems, ptrdiff_t *nitems_alloc)
 {
-	if (nitems < *nitems_alloc)
-		return ptr;
-	else {
-		ptrdiff_t amax = min(PTRDIFF_MAX, SIZE_MAX);
-		if ((amax - 1) / 3 * 2 < *nitems_alloc)
-			memory_exhausted(_("integer overflow"));
-		*nitems_alloc += (*nitems_alloc >> 1) + 1;
-		return erealloc(ptr, size_product(*nitems_alloc, itemsize));
-	}
+  return (nitems < *nitems_alloc
+	  ? ptr
+	  : erealloc(ptr, grow_nitems_alloc(nitems_alloc, itemsize)));
 }
 
 /*

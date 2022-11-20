@@ -1575,10 +1575,9 @@ associate(void)
 
 /* Read a text line from FP into BUF, which is of size BUFSIZE.
    Terminate it with a NUL byte instead of a newline.
-   Return the line's length, not counting the NUL byte.
-   On EOF, return a negative number.
+   Return true if successful, false if EOF.
    On error, report the error and exit.  */
-static ptrdiff_t
+static bool
 inputline(FILE *fp, char *buf, ptrdiff_t bufsize)
 {
   ptrdiff_t linelen = 0, ch;
@@ -1589,7 +1588,7 @@ inputline(FILE *fp, char *buf, ptrdiff_t bufsize)
 	exit(EXIT_FAILURE);
       }
       if (linelen == 0)
-	return -1;
+	return false;
       error(_("unterminated line"));
       exit(EXIT_FAILURE);
     }
@@ -1604,7 +1603,7 @@ inputline(FILE *fp, char *buf, ptrdiff_t bufsize)
     }
   }
   buf[linelen] = '\0';
-  return linelen;
+  return true;
 }
 
 static void
@@ -1626,13 +1625,11 @@ infile(int fnum, char const *name)
 	}
 	wantcont = false;
 	for (num = 1; ; ++num) {
-		ptrdiff_t linelen;
 		char buf[_POSIX2_LINE_MAX];
 		int nfields;
 		char *fields[MAX_FIELDS];
 		eat(fnum, num);
-		linelen = inputline(fp, buf, sizeof buf);
-		if (linelen < 0)
+		if (!inputline(fp, buf, sizeof buf))
 		  break;
 		nfields = getfields(buf, fields,
 				    sizeof fields / sizeof *fields);

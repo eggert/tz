@@ -1230,13 +1230,21 @@ get_rand_u64(void)
      the typical case where RAND_MAX is one less than a power of two.
      In other cases this code yields a sort-of-random number.  */
   {
-    uint_fast64_t
-      rand_max = RAND_MAX,
-      multiplier = rand_max + 1, /* It's OK if this overflows to 0.  */
+    uint_fast64_t rand_max = RAND_MAX,
+      nrand = rand_max < UINT_FAST64_MAX ? rand_max + 1 : 0,
+      rmod = INT_MAX < UINT_FAST64_MAX ? 0 : UINT_FAST64_MAX / nrand + 1,
       r = 0, rmax = 0;
+
     do {
-      uint_fast64_t rmax1 = rmax * multiplier + rand_max;
-      r = r * multiplier + rand();
+      uint_fast64_t rmax1 = rmax;
+      if (rmod) {
+	/* Avoid signed integer overflow on theoretical platforms
+	   where uint_fast64_t promotes to int.  */
+	rmax1 %= rmod;
+	r %= rmod;
+      }
+      rmax1 = nrand * rmax1 + rand_max;
+      r = nrand * r + rand();
       rmax = rmax < rmax1 ? rmax1 : UINT_FAST64_MAX;
     } while (rmax < UINT_FAST64_MAX);
 

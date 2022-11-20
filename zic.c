@@ -480,9 +480,9 @@ size_product(ptrdiff_t nitems, size_t itemsize)
 static ATTRIBUTE_PURE size_t
 align_to(size_t size, size_t alignment)
 {
-  size_t lo_bits = alignment - 1, addend = -size & lo_bits;
+  size_t lo_bits = alignment - 1;
   if (size <= SIZE_MAX - lo_bits)
-    return size + addend;
+    return size + (-size & lo_bits);
   memory_exhausted(_("alignment overflow"));
 }
 

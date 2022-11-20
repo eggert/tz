@@ -129,12 +129,10 @@ is_alpha(char a)
 static size_t
 sumsize(size_t a, size_t b)
 {
-  size_t sum = a + b;
-  if (sum < a) {
-    fprintf(stderr, _("%s: size overflow\n"), progname);
-    exit(EXIT_FAILURE);
-  }
-  return sum;
+  if (SIZE_MAX - a < b)
+    return a + b;
+  fprintf(stderr, _("%s: size overflow\n"), progname);
+  exit(EXIT_FAILURE);
 }
 
 /* Return a pointer to a newly allocated buffer of size SIZE, exiting

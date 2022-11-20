@@ -5,6 +5,7 @@ News for the tz database
     C89 is now deprecated; please use C99 or later.
     Portability fixes for AIX, libintl, MS-Windows, musl, z/OS
     C23 timegm now supported by default
+    Fixes for unlikely integer overflows
 
 Unreleased, experimental changes
 
@@ -53,6 +54,8 @@ Unreleased, experimental changes
     Port mktime and strftime to debugging platforms where accessing
     uninitialized data has undefined behavior (strftime problem
     reported by Robert Elz).
+
+    Check more carefully for unlikely integer overflows.
 
   Changes to build procedure
 

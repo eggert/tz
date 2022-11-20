@@ -117,14 +117,13 @@ dogmt(void)
 	static char **	fakeenv;
 
 	if (fakeenv == NULL) {
-		register int	from;
-		register int	to;
-		register int	n;
 		static char	tzeutc0[] = "TZ=UTC0";
+		ptrdiff_t from, to, n;
 
 		for (n = 0;  environ[n] != NULL;  ++n)
 			continue;
-		fakeenv = malloc((n + 2) * sizeof *fakeenv);
+		if (n <= min(PTRDIFF_MAX, SIZE_MAX) / sizeof *fakeenv - 2)
+		  fakeenv = malloc((n + 2) * sizeof *fakeenv);
 		if (fakeenv == NULL) {
 			fprintf(stderr, _("date: Memory exhausted\n"));
 			errensure();
@@ -183,33 +182,24 @@ display(char const *format, time_t now)
 static void
 timeout(FILE *fp, char const *format, struct tm const *tmp)
 {
-	char *	cp;
-	size_t	result;
-	size_t	size;
-	struct tm tm;
-	int INCR = 1024;
+	char *cp = NULL;
+	ptrdiff_t result;
+	ptrdiff_t size = 1024 / 2;
 
-	if (!tmp) {
-		fprintf(stderr, _("date: error: time out of range\n"));
-		errensure();
-		return;
-	}
-	tm = *tmp;
-	tmp = &tm;
-	size = INCR;
-	cp = malloc(size);
 	for ( ; ; ) {
-		if (cp == NULL) {
+		bool bigger = (size <= min(PTRDIFF_MAX, SIZE_MAX) / 2
+			       && (size *= 2, true));
+		char *newcp = bigger ? realloc(cp, size) : NULL;
+		if (!newcp) {
 			fprintf(stderr,
 				_("date: error: can't get memory\n"));
 			errensure();
 			exit(retval);
 		}
+		cp = newcp;
 		result = strftime(cp, size, format, tmp);
 		if (result != 0)
 			break;
-		size += INCR;
-		cp = realloc(cp, size);
 	}
 	fwrite(cp + 1, 1, result - 1, fp);
 	free(cp);

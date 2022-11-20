@@ -63,11 +63,6 @@ static zic_t const
 # define MKDIR_UMASK 0755
 #endif
 
-/* The maximum ptrdiff_t value, for pre-C99 platforms.  */
-#ifndef PTRDIFF_MAX
-static ptrdiff_t const PTRDIFF_MAX = MAXVAL(ptrdiff_t, TYPE_BIT(ptrdiff_t));
-#endif
-
 /* The minimum alignment of a type, for pre-C23 platforms.  */
 #if __STDC_VERSION__ < 201112
 # define alignof(type) offsetof(struct { char a; type b; }, b)

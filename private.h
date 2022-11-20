@@ -353,6 +353,10 @@ typedef long intmax_t;
 # endif
 #endif
 
+#ifndef PTRDIFF_MAX
+# define PTRDIFF_MAX MAXVAL(ptrdiff_t, TYPE_BIT(ptrdiff_t))
+#endif
+
 #ifndef UINT_FAST32_MAX
 typedef unsigned long uint_fast32_t;
 #endif

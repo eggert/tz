@@ -34,6 +34,9 @@ static zic_t const
 # define ZIC_MAX_ABBR_LEN_WO_WARN 6
 #endif /* !defined ZIC_MAX_ABBR_LEN_WO_WARN */
 
+/* An upper bound on how much a format might grow due to concatenation.  */
+enum { FORMAT_LEN_GROWTH_BOUND = 5 };
+
 #ifdef HAVE_DIRECT_H
 # include <direct.h>
 # include <io.h>
@@ -1634,7 +1637,10 @@ infile(int fnum, char const *name)
 	}
 	wantcont = false;
 	for (num = 1; ; ++num) {
-		char buf[_POSIX2_LINE_MAX];
+		enum { bufsize_bound
+		  = (min(INT_MAX, min(PTRDIFF_MAX, SIZE_MAX))
+		     / FORMAT_LEN_GROWTH_BOUND) };
+		char buf[min(_POSIX2_LINE_MAX, bufsize_bound)];
 		int nfields;
 		char *fields[MAX_FIELDS];
 		eat(fnum, num);
@@ -1748,7 +1754,7 @@ getsave(char *field, bool *isdst)
 {
   int dst = -1;
   zic_t save;
-  size_t fieldlen = strlen(field);
+  ptrdiff_t fieldlen = strlen(field);
   if (fieldlen != 0) {
     char *ep = field + fieldlen - 1;
     switch (*ep) {
@@ -1844,7 +1850,7 @@ inzsub(char **fields, int nfields, bool iscont)
 	register char *		cp;
 	char *			cp1;
 	struct zone z;
-	size_t format_len;
+	int format_len;
 	register int		i_stdoff, i_rule, i_format;
 	register int		i_untilyear, i_untilmonth;
 	register int		i_untilday, i_untiltime;
@@ -2747,13 +2753,13 @@ abbroffset(char *buf, zic_t offset)
 
 static char const disable_percent_s[] = "";
 
-static size_t
+static ptrdiff_t
 doabbr(char *abbr, struct zone const *zp, char const *letters,
        bool isdst, zic_t save, bool doquotes)
 {
 	register char *	cp;
 	register char *	slashp;
-	register size_t	len;
+	ptrdiff_t len;
 	char const *format = zp->z_format;
 
 	slashp = strchr(format, '/');
@@ -2919,9 +2925,9 @@ stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 	register ptrdiff_t		i;
 	register int			compat = 0;
 	register int			c;
-	size_t				len;
 	int				offsetlen;
 	struct rule			stdr, dstr;
+	ptrdiff_t len;
 	int dstcmp;
 	struct rule *lastrp[2] = { NULL, NULL };
 	struct zone zstr[2];
@@ -3054,8 +3060,10 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 
 	check_for_signal();
 
+	/* This cannot overflow; see FORMAT_LEN_GROWTH_BOUND.  */
 	max_abbr_len = 2 + max_format_len + max_abbrvar_len;
 	max_envvar_len = 2 * max_abbr_len + 5 * 9;
+
 	startbuf = emalloc(max_abbr_len + 1);
 	ab = emalloc(max_abbr_len + 1);
 	envvar = emalloc(max_envvar_len + 1);

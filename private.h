@@ -423,9 +423,9 @@ typedef unsigned long uintmax_t;
 
 #if 3 <= __GNUC__
 # define ATTRIBUTE_CONST __attribute__((const))
-# define ATTRIBUTE_MALLOC __attribute__((__malloc__))
-# define ATTRIBUTE_PURE __attribute__((__pure__))
-# define ATTRIBUTE_FORMAT(spec) __attribute__((__format__ spec))
+# define ATTRIBUTE_MALLOC __attribute__((malloc))
+# define ATTRIBUTE_PURE __attribute__((pure))
+# define ATTRIBUTE_FORMAT(spec) __attribute__((format spec))
 #else
 # define ATTRIBUTE_CONST /* empty */
 # define ATTRIBUTE_MALLOC /* empty */
@@ -434,13 +434,13 @@ typedef unsigned long uintmax_t;
 #endif
 
 #ifdef __has_c_attribute
-# if __has_c_attribute(__maybe_unused__)
-#  define ATTRIBUTE_MAYBE_UNUSED [[__maybe_unused__]]
+# if __has_c_attribute(maybe_unused)
+#  define ATTRIBUTE_MAYBE_UNUSED [[maybe_unused]]
 # endif
 #endif
 #ifndef ATTRIBUTE_MAYBE_UNUSED
 # if 2 < __GNUC__ + (7 <= __GNUC_MINOR__)
-#  define ATTRIBUTE_MAYBE_UNUSED __attribute__ ((__unused__))
+#  define ATTRIBUTE_MAYBE_UNUSED __attribute__((unused))
 # else
 #  define ATTRIBUTE_MAYBE_UNUSED /* empty */
 # endif
@@ -448,7 +448,7 @@ typedef unsigned long uintmax_t;
 
 #if !defined _Noreturn && __STDC_VERSION__ < 201112
 # if 2 < __GNUC__ + (8 <= __GNUC_MINOR__)
-#  define _Noreturn __attribute__((__noreturn__))
+#  define _Noreturn __attribute__((noreturn))
 # else
 #  define _Noreturn
 # endif

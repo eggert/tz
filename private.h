@@ -446,11 +446,18 @@ typedef unsigned long uintmax_t;
 # endif
 #endif
 
-#if !defined _Noreturn && __STDC_VERSION__ < 201112
-# if 2 < __GNUC__ + (8 <= __GNUC_MINOR__)
-#  define _Noreturn __attribute__((noreturn))
+#ifdef __has_c_attribute
+# if __has_c_attribute(noreturn)
+#  define ATTRIBUTE_NORETURN [[noreturn]]
+# endif
+#endif
+#ifndef ATTRIBUTE_NORETURN
+# if 201112 <= __STDC_VERSION__
+#  define ATTRIBUTE_NORETURN _Noreturn
+# elif 2 < __GNUC__ + (8 <= __GNUC_MINOR__)
+#  define ATTRIBUTE_NORETURN __attribute__((noreturn))
 # else
-#  define _Noreturn
+#  define ATTRIBUTE_NORETURN /* empty */
 # endif
 #endif
 

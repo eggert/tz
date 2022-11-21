@@ -125,7 +125,7 @@ is_alpha(char a)
 	}
 }
 
-static _Noreturn void
+static ATTRIBUTE_NORETURN void
 size_overflow(void)
 {
   fprintf(stderr, _("%s: size overflow\n"), progname);

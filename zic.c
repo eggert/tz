@@ -459,14 +459,14 @@ static char		roll[TZ_MAX_LEAPS];
 ** Memory allocation.
 */
 
-static _Noreturn void
+static ATTRIBUTE_NORETURN void
 memory_exhausted(const char *msg)
 {
 	fprintf(stderr, _("%s: Memory exhausted: %s\n"), progname, msg);
 	exit(EXIT_FAILURE);
 }
 
-static _Noreturn void
+static ATTRIBUTE_NORETURN void
 size_overflow(void)
 {
   memory_exhausted(_("size overflow"));
@@ -666,7 +666,7 @@ close_file(FILE *stream, char const *dir, char const *name,
   }
 }
 
-static _Noreturn void
+static ATTRIBUTE_NORETURN void
 usage(FILE *stream, int status)
 {
   fprintf(stream,
@@ -3725,7 +3725,7 @@ getfields(char *cp, char **array, int arrayelts)
 	return nsubs;
 }
 
-static _Noreturn void
+static ATTRIBUTE_NORETURN void
 time_overflow(void)
 {
   error(_("time overflow"));

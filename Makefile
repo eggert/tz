@@ -287,7 +287,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
   -Wdeclaration-after-statement -Wdouble-promotion \
   -Wduplicated-branches -Wduplicated-cond \
   -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation \
-  -Winit-self -Wlogical-op \
+  -Wimplicit-fallthrough=5 -Winit-self -Wlogical-op \
   -Wmissing-declarations -Wmissing-prototypes -Wnested-externs \
   -Wnull-dereference \
   -Wold-style-definition -Woverlength-strings -Wpointer-arith \

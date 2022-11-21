@@ -441,6 +441,19 @@ typedef unsigned long uintmax_t;
 #endif
 
 #if HAVE_HAS_C_ATTRIBUTE
+# if __has_c_attribute(fallthrough)
+#  define ATTRIBUTE_FALLTHROUGH [[fallthrough]]
+# endif
+#endif
+#ifndef ATTRIBUTE_FALLTHROUGH
+# if 7 <= __GNUC__
+#  define ATTRIBUTE_FALLTHROUGH __attribute__((fallthrough))
+# else
+#  define ATTRIBUTE_FALLTHROUGH ((void) 0)
+# endif
+#endif
+
+#if HAVE_HAS_C_ATTRIBUTE
 # if __has_c_attribute(maybe_unused)
 #  define ATTRIBUTE_MAYBE_UNUSED [[maybe_unused]]
 # endif

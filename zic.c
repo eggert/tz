@@ -1750,15 +1750,15 @@ gethms(char const *string, char const *errstring)
 	  default: ok = false; break;
 	  case 8:
 	    ok = '0' <= xr && xr <= '9';
-	    /* fallthrough */
+	    ATTRIBUTE_FALLTHROUGH;
 	  case 7:
 	    ok &= ssx == '.';
 	    if (ok && noise)
 	      warning(_("fractional seconds rejected by"
 			" pre-2018 versions of zic"));
-	    /* fallthrough */
-	  case 5: ok &= mmx == ':'; /* fallthrough */
-	  case 3: ok &= hhx == ':'; /* fallthrough */
+	    ATTRIBUTE_FALLTHROUGH;
+	  case 5: ok &= mmx == ':'; ATTRIBUTE_FALLTHROUGH;
+	  case 3: ok &= hhx == ':'; ATTRIBUTE_FALLTHROUGH;
 	  case 1: break;
 	}
 	if (!ok) {

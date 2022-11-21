@@ -503,7 +503,7 @@ main(int argc, char *argv[])
 	  case -1:
 	    if (! (optind == argc - 1 && strcmp(argv[optind], "=") == 0))
 	      goto arg_processing_done;
-	    /* Fall through.  */
+	    ATTRIBUTE_FALLTHROUGH;
 	  default:
 	    usage(stderr, EXIT_FAILURE);
 	  }

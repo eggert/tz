@@ -17,6 +17,10 @@
 ** Thank you!
 */
 
+#ifndef __STDC_VERSION__
+# define __STDC_VERSION__ 0
+#endif
+
 /* Define true, false and bool if they don't work out of the box.  */
 #if __STDC_VERSION__ < 199901
 # define true 1
@@ -433,7 +437,14 @@ typedef unsigned long uintmax_t;
 # define ATTRIBUTE_FORMAT(spec) /* empty */
 #endif
 
-#ifdef __has_c_attribute
+#if (defined __has_c_attribute \
+     && (202311 <= __STDC_VERSION__ || !defined __STRICT_ANSI__))
+# define HAVE_HAS_C_ATTRIBUTE true
+#else
+# define HAVE_HAS_C_ATTRIBUTE false
+#endif
+
+#if HAVE_HAS_C_ATTRIBUTE
 # if __has_c_attribute(maybe_unused)
 #  define ATTRIBUTE_MAYBE_UNUSED [[maybe_unused]]
 # endif
@@ -446,7 +457,7 @@ typedef unsigned long uintmax_t;
 # endif
 #endif
 
-#ifdef __has_c_attribute
+#if HAVE_HAS_C_ATTRIBUTE
 # if __has_c_attribute(noreturn)
 #  define ATTRIBUTE_NORETURN [[noreturn]]
 # endif

@@ -428,12 +428,10 @@ typedef unsigned long uintmax_t;
 #if 3 <= __GNUC__
 # define ATTRIBUTE_CONST __attribute__((const))
 # define ATTRIBUTE_MALLOC __attribute__((malloc))
-# define ATTRIBUTE_PURE __attribute__((pure))
 # define ATTRIBUTE_FORMAT(spec) __attribute__((format spec))
 #else
 # define ATTRIBUTE_CONST /* empty */
 # define ATTRIBUTE_MALLOC /* empty */
-# define ATTRIBUTE_PURE /* empty */
 # define ATTRIBUTE_FORMAT(spec) /* empty */
 #endif
 
@@ -469,6 +467,19 @@ typedef unsigned long uintmax_t;
 #  define ATTRIBUTE_NORETURN __attribute__((noreturn))
 # else
 #  define ATTRIBUTE_NORETURN /* empty */
+# endif
+#endif
+
+#if HAVE_HAS_C_ATTRIBUTE
+# if __has_c_attribute(reproducible)
+#  define ATTRIBUTE_REPRODUCIBLE [[reproducible]]
+# endif
+#endif
+#ifndef ATTRIBUTE_REPRODUCIBLE
+# if 3 <= __GNUC__
+#  define ATTRIBUTE_REPRODUCIBLE __attribute__((pure))
+# else
+#  define ATTRIBUTE_REPRODUCIBLE /* empty */
 # endif
 #endif
 
@@ -705,10 +716,10 @@ timezone_t tzalloc(char const *);
 void tzfree(timezone_t);
 # ifdef STD_INSPIRED
 #  if TZ_TIME_T || !defined posix2time_z
-time_t posix2time_z(timezone_t, time_t) ATTRIBUTE_PURE;
+time_t posix2time_z(timezone_t, time_t) ATTRIBUTE_REPRODUCIBLE;
 #  endif
 #  if TZ_TIME_T || !defined time2posix_z
-time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_PURE;
+time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_REPRODUCIBLE;
 #  endif
 # endif
 #endif

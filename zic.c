@@ -472,7 +472,7 @@ size_overflow(void)
   memory_exhausted(_("size overflow"));
 }
 
-static ATTRIBUTE_PURE ptrdiff_t
+static ATTRIBUTE_REPRODUCIBLE ptrdiff_t
 size_sum(size_t a, size_t b)
 {
 #ifdef ckd_add
@@ -487,7 +487,7 @@ size_sum(size_t a, size_t b)
   size_overflow();
 }
 
-static ATTRIBUTE_PURE ptrdiff_t
+static ATTRIBUTE_REPRODUCIBLE ptrdiff_t
 size_product(ptrdiff_t nitems, ptrdiff_t itemsize)
 {
 #ifdef ckd_mul
@@ -502,7 +502,7 @@ size_product(ptrdiff_t nitems, ptrdiff_t itemsize)
   size_overflow();
 }
 
-static ATTRIBUTE_PURE ptrdiff_t
+static ATTRIBUTE_REPRODUCIBLE ptrdiff_t
 align_to(ptrdiff_t size, ptrdiff_t alignment)
 {
   ptrdiff_t lo_bits = alignment - 1, sum = size_sum(size, lo_bits);
@@ -3597,7 +3597,7 @@ lowerit(char a)
 }
 
 /* case-insensitive equality */
-static ATTRIBUTE_PURE bool
+static ATTRIBUTE_REPRODUCIBLE bool
 ciequal(register const char *ap, register const char *bp)
 {
 	while (lowerit(*ap) == lowerit(*bp++))
@@ -3606,7 +3606,7 @@ ciequal(register const char *ap, register const char *bp)
 	return false;
 }
 
-static ATTRIBUTE_PURE bool
+static ATTRIBUTE_REPRODUCIBLE bool
 itsabbr(register const char *abbr, register const char *word)
 {
 	if (lowerit(*abbr) != lowerit(*word))
@@ -3622,7 +3622,7 @@ itsabbr(register const char *abbr, register const char *word)
 
 /* Return true if ABBR is an initial prefix of WORD, ignoring ASCII case.  */
 
-static ATTRIBUTE_PURE bool
+static ATTRIBUTE_REPRODUCIBLE bool
 ciprefix(char const *abbr, char const *word)
 {
   do
@@ -3732,7 +3732,7 @@ time_overflow(void)
   exit(EXIT_FAILURE);
 }
 
-static ATTRIBUTE_PURE zic_t
+static ATTRIBUTE_REPRODUCIBLE zic_t
 oadd(zic_t t1, zic_t t2)
 {
 #ifdef ckd_add
@@ -3746,7 +3746,7 @@ oadd(zic_t t1, zic_t t2)
   time_overflow();
 }
 
-static ATTRIBUTE_PURE zic_t
+static ATTRIBUTE_REPRODUCIBLE zic_t
 tadd(zic_t t1, zic_t t2)
 {
 #ifdef ckd_add

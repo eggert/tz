@@ -426,11 +426,9 @@ typedef unsigned long uintmax_t;
 #endif
 
 #if 3 <= __GNUC__
-# define ATTRIBUTE_CONST __attribute__((const))
 # define ATTRIBUTE_MALLOC __attribute__((malloc))
 # define ATTRIBUTE_FORMAT(spec) __attribute__((format spec))
 #else
-# define ATTRIBUTE_CONST /* empty */
 # define ATTRIBUTE_MALLOC /* empty */
 # define ATTRIBUTE_FORMAT(spec) /* empty */
 #endif
@@ -480,6 +478,19 @@ typedef unsigned long uintmax_t;
 #  define ATTRIBUTE_REPRODUCIBLE __attribute__((pure))
 # else
 #  define ATTRIBUTE_REPRODUCIBLE /* empty */
+# endif
+#endif
+
+#if HAVE_HAS_C_ATTRIBUTE
+# if __has_c_attribute(unsequenced)
+#  define ATTRIBUTE_UNSEQUENCED [[unsequenced]]
+# endif
+#endif
+#ifndef ATTRIBUTE_UNSEQUENCED
+# if 3 <= __GNUC__
+#  define ATTRIBUTE_UNSEQUENCED __attribute__((const))
+# else
+#  define ATTRIBUTE_UNSEQUENCED /* empty */
 # endif
 #endif
 
@@ -604,7 +615,7 @@ char *asctime(struct tm const *);
 char *asctime_r(struct tm const *restrict, char *restrict);
 char *ctime(time_t const *);
 char *ctime_r(time_t const *, char *);
-double difftime(time_t, time_t) ATTRIBUTE_CONST;
+double difftime(time_t, time_t) ATTRIBUTE_UNSEQUENCED;
 size_t strftime(char *restrict, size_t, char const *restrict,
 		struct tm const *restrict);
 # if HAVE_STRFTIME_L

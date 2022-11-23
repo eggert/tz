@@ -28,6 +28,9 @@ Unreleased, experimental changes
     Colombia's 1993 fallback was 02-06 24:00, not 04-04 00:00.
     (Thanks to Alois Treindl.)
 
+    Singapore's 1981-12-31 change was at 16:00 UTC (23:30 local time),
+    not 24:00 local time.  (Thanks to Geoff Clare via Robert Elz.)
+
   Changes to code
 
     Although tzcode still works with C89, bugs found in recent routine

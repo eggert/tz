@@ -1103,7 +1103,19 @@ Zone Atlantic/Faroe	-0:27:04 -	LMT	1908 Jan 11 # Tórshavn
 # "National Park" by Executive Order:
 # http://naalakkersuisut.gl/~/media/Nanoq/Files/Attached%20Files/Engelske-tekster/Legislation/Executive%20Order%20National%20Park.rtf
 # It is their only National Park.
+
+# From Jürgen Appel (2022-11-25):
+# https://ina.gl/samlinger/oversigt-over-samlinger/samling/dagsordener/dagsorden.aspx?lang=da&day=24-11-2022
+# If I understand this correctly, from the next planned switch to
+# summer time, Greenland will permanently stay at that time, i.e. no
+# switch back to winter time in 2023 will occur.
 #
+# From Paul Eggert (2022-11-25):
+# For now, assume that this applies simultaneously to Ittoqqortoormiit
+# (currently -01) as well as to Nuuk (currently -03), and that
+# Danmarkshavn and Thule are unaffected since they are not using EU
+# rules anyway and some of the remarks were about EU rules.
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Thule	1991	1992	-	Mar	lastSun	2:00	1:00	D
 Rule	Thule	1991	1992	-	Sep	lastSun	2:00	0	S
@@ -1123,10 +1135,12 @@ Zone America/Danmarkshavn -1:14:40 -	LMT	1916 Jul 28
 Zone America/Scoresbysund -1:27:52 -	LMT	1916 Jul 28 # Ittoqqortoormiit
 			-2:00	-	-02	1980 Apr  6  2:00
 			-2:00	C-Eur	-02/-01	1981 Mar 29
-			-1:00	EU	-01/+00
+			-1:00	EU	-01/+00	2023 Mar 25 24:00
+			 0:00	-	+00
 Zone America/Nuuk	-3:26:56 -	LMT	1916 Jul 28 # Godthåb
 			-3:00	-	-03	1980 Apr  6  2:00
-			-3:00	EU	-03/-02
+			-3:00	EU	-03/-02	2023 Mar 25 22:00
+			-2:00	-	-02
 Zone America/Thule	-4:35:08 -	LMT	1916 Jul 28 # Pituffik
 			-4:00	Thule	A%sT
 

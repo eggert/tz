@@ -25,10 +25,12 @@ zic \- timezone compiler
 .ie \n(.g \{\
 .  ds : \:
 .  ds - \f(CR-\fP
+.  ds ' \(aq
 .\}
 .el \{\
 .  ds :
 .  ds - \-
+.  ds ' '
 .\}
 .ds d " degrees
 .ds m " minutes
@@ -349,7 +351,7 @@ nor
 .q + .
 To allow for future extensions,
 an unquoted name should not contain characters from the set
-.q !$%&\(aq()*,/:;<=>?@[\e]\(ha\(ga{|}\(ti .
+.q !$%&\*'()*,/:;<=>?@[\e]\(ha\(ga{|}\(ti .
 .TP
 .B FROM
 Gives the first year in which the rule applies.

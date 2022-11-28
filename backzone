@@ -7,6 +7,10 @@
 # tz@iana.org for general use in the future).  For more, please see
 # the file CONTRIBUTING in the tz distribution.
 
+# When proposing changes to this file, please use 'git format-patch'
+# format, either by attaching the resulting .patch file to your email,
+# or by using 'git send-email'.  This will help maintainers save time.
+
 
 # From Paul Eggert (2014-10-31):
 

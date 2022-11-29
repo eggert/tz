@@ -1,7 +1,7 @@
 News for the tz database
 
   Briefly:
-    Most of Greenland stops changing clocks after March 2023.
+    Much of Greenland stops changing clocks after March 2023.
     Fix some pre-1996 timestamps in northern Canada.
     C89 is now deprecated; please use C99 or later.
     Portability fixes for AIX, libintl, MS-Windows, musl, z/OS
@@ -13,9 +13,9 @@ Unreleased, experimental changes
 
   Changes to future timestamps
 
-    Most of Greenland stops observing winter time after March 2023,
-    so its daylight saving time becomes standard time.  This affects
-    America/Nuuk and America/Scoresbysund.  (Thanks to Jürgen Appel.)
+    Much of Greenland, represented by America/Nuuk, stops observing
+    winter time after March 2023, so its daylight saving time becomes
+    standard time.  (Thanks to Jonas Nyrup and Jürgen Appel.)
 
   Changes to past timestamps
 

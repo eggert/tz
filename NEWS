@@ -1,5 +1,7 @@
 News for the tz database
 
+Release 2022g - 2022-11-29 08:58:31 -0800
+
   Briefly:
     The northern edge of Chihuahua changes to US timekeeping.
     Much of Greenland stops changing clocks after March 2023.
@@ -9,8 +11,6 @@ News for the tz database
     In C code, use more C23 features if available.
     C23 timegm now supported by default
     Fixes for unlikely integer overflows
-
-Unreleased, experimental changes
 
   Changes to future timestamps
 

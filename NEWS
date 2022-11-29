@@ -1,6 +1,7 @@
 News for the tz database
 
   Briefly:
+    The northern edge of Chihuahua changes to US timekeeping.
     Much of Greenland stops changing clocks after March 2023.
     Fix some pre-1996 timestamps in northern Canada.
     C89 is now deprecated; please use C99 or later.
@@ -12,6 +13,14 @@ News for the tz database
 Unreleased, experimental changes
 
   Changes to future timestamps
+
+    In the Mexican state of Chihuahua, the border strip near the US
+    will change to agree with nearby US locations on 2022-11-30.
+    The strip's western part, represented by Ciudad Juárez, switches
+    from -06 all year to -07/-06 with US DST rules, like El Paso, TX.
+    The eastern part, represented by Ojinaga, will observe US DST next
+    year, like Presidio, TX.  (Thanks to Heitor David Pinto.)
+    A new Zone America/Ciudad_Juarez splits from America/Ojinaga.
 
     Much of Greenland, represented by America/Nuuk, stops observing
     winter time after March 2023, so its daylight saving time becomes

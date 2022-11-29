@@ -2560,6 +2560,14 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # This abolishes DST except where US DST rules are observed,
 # and in addition changes all of Chihuahua to -06 with no DST.
 
+# From Heitor David Pinto (2022-11-28):
+# Now the northern municipalities want to have the same time zone as the
+# respective neighboring cities in the US, for example Juárez in UTC-7 with
+# DST, matching El Paso, and Ojinaga in UTC-6 with DST, matching Presidio....
+# the president authorized the publication of the decree for November 29,
+# so the time change would occur on November 30 at 0:00.
+# http://puentelibre.mx/noticia/ciudad_juarez_cambio_horario_noviembre_2022/
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Mexico	1931	only	-	May	1	23:00	1:00	D
 Rule	Mexico	1931	only	-	Oct	1	0:00	0	S
@@ -2615,12 +2623,24 @@ Zone America/Mexico_City -6:36:36 -	LMT	1922 Jan  1  7:00u
 			-6:00	Mexico	C%sT	2001 Sep 30  2:00
 			-6:00	-	CST	2002 Feb 20
 			-6:00	Mexico	C%sT
-# Chihuahua (near US border)
+# Chihuahua (near US border - western side)
 # This includes the municipalities of Janos, Ascensión, Juárez, Guadalupe,
-# Práxedis G Guerrero, Coyame del Sotol, Ojinaga, and Manuel Benavides.
-# See: Inicia mañana Horario de Verano en zona fronteriza, El Universal,
-# 2016-03-12
-# https://www.eluniversal.com.mx/articulo/estados/2016/03/12/inicia-manana-horario-de-verano-en-zona-fronteriza
+# and Práxedis G Guerrero.
+# http://gaceta.diputados.gob.mx/PDF/65/2a022/nov/20221124-VII.pdf
+Zone America/Ciudad_Juarez -7:05:56 -	LMT	1922 Jan  1  7:00u
+			-7:00	-	MST	1927 Jun 10 23:00
+			-6:00	-	CST	1930 Nov 15
+			-7:00	Mexico	M%sT	1932 Apr  1
+			-6:00	-	CST	1996
+			-6:00	Mexico	C%sT	1998
+			-6:00	-	CST	1998 Apr Sun>=1  3:00
+			-7:00	Mexico	M%sT	2010
+			-7:00	US	M%sT	2022 Oct 30  2:00
+			-6:00	-	CST	2022 Nov 30  0:00
+			-7:00	US	M%sT
+# Chihuahua (near US border - eastern side)
+# The municipalities of Coyame del Sotol, Ojinaga, and Manuel Benavides.
+# http://gaceta.diputados.gob.mx/PDF/65/2a022/nov/20221124-VII.pdf
 Zone America/Ojinaga	-6:57:40 -	LMT	1922 Jan  1  7:00u
 			-7:00	-	MST	1927 Jun 10 23:00
 			-6:00	-	CST	1930 Nov 15
@@ -2630,7 +2650,8 @@ Zone America/Ojinaga	-6:57:40 -	LMT	1922 Jan  1  7:00u
 			-6:00	-	CST	1998 Apr Sun>=1  3:00
 			-7:00	Mexico	M%sT	2010
 			-7:00	US	M%sT	2022 Oct 30  2:00
-			-6:00	-	CST
+			-6:00	-	CST	2022 Nov 30  0:00
+			-6:00	US	C%sT
 # Chihuahua (away from US border)
 Zone America/Chihuahua	-7:04:20 -	LMT	1922 Jan  1  7:00u
 			-7:00	-	MST	1927 Jun 10 23:00

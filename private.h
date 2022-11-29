@@ -52,19 +52,19 @@
 # define HAVE_DECL_ASCTIME_R 1
 #endif
 
-#if !defined HAVE_GENERIC && defined __has_extension
+#if !defined HAVE__GENERIC && defined __has_extension
 # if __has_extension(c_generic_selections)
-#  define HAVE_GENERIC 1
+#  define HAVE__GENERIC 1
 # else
-#  define HAVE_GENERIC 0
+#  define HAVE__GENERIC 0
 # endif
 #endif
 /* _Generic is buggy in pre-4.9 GCC.  */
-#if !defined HAVE_GENERIC && defined __GNUC__ && !defined __STRICT_ANSI__
-# define HAVE_GENERIC (4 < __GNUC__ + (9 <= __GNUC_MINOR__))
+#if !defined HAVE__GENERIC && defined __GNUC__ && !defined __STRICT_ANSI__
+# define HAVE__GENERIC (4 < __GNUC__ + (9 <= __GNUC_MINOR__))
 #endif
-#ifndef HAVE_GENERIC
-# define HAVE_GENERIC (201112 <= __STDC_VERSION__)
+#ifndef HAVE__GENERIC
+# define HAVE__GENERIC (201112 <= __STDC_VERSION__)
 #endif
 
 #if !defined HAVE_GETTEXT && defined __has_include
@@ -435,12 +435,12 @@ typedef unsigned long uintmax_t;
 
 #if (defined __has_c_attribute \
      && (202311 <= __STDC_VERSION__ || !defined __STRICT_ANSI__))
-# define HAVE_HAS_C_ATTRIBUTE true
+# define HAVE___HAS_C_ATTRIBUTE true
 #else
-# define HAVE_HAS_C_ATTRIBUTE false
+# define HAVE___HAS_C_ATTRIBUTE false
 #endif
 
-#if HAVE_HAS_C_ATTRIBUTE
+#if HAVE___HAS_C_ATTRIBUTE
 # if __has_c_attribute(fallthrough)
 #  define ATTRIBUTE_FALLTHROUGH [[fallthrough]]
 # endif
@@ -453,7 +453,7 @@ typedef unsigned long uintmax_t;
 # endif
 #endif
 
-#if HAVE_HAS_C_ATTRIBUTE
+#if HAVE___HAS_C_ATTRIBUTE
 # if __has_c_attribute(maybe_unused)
 #  define ATTRIBUTE_MAYBE_UNUSED [[maybe_unused]]
 # endif
@@ -466,7 +466,7 @@ typedef unsigned long uintmax_t;
 # endif
 #endif
 
-#if HAVE_HAS_C_ATTRIBUTE
+#if HAVE___HAS_C_ATTRIBUTE
 # if __has_c_attribute(noreturn)
 #  define ATTRIBUTE_NORETURN [[noreturn]]
 # endif
@@ -481,7 +481,7 @@ typedef unsigned long uintmax_t;
 # endif
 #endif
 
-#if HAVE_HAS_C_ATTRIBUTE
+#if HAVE___HAS_C_ATTRIBUTE
 # if __has_c_attribute(reproducible)
 #  define ATTRIBUTE_REPRODUCIBLE [[reproducible]]
 # endif
@@ -494,7 +494,7 @@ typedef unsigned long uintmax_t;
 # endif
 #endif
 
-#if HAVE_HAS_C_ATTRIBUTE
+#if HAVE___HAS_C_ATTRIBUTE
 # if __has_c_attribute(unsequenced)
 #  define ATTRIBUTE_UNSEQUENCED [[unsequenced]]
 # endif
@@ -780,7 +780,7 @@ time_t time2posix_z(timezone_t, time_t) ATTRIBUTE_REPRODUCIBLE;
    This implementation assumes no padding if time_t is signed and
    either the compiler lacks support for _Generic or time_t is not one
    of the standard signed integer types.  */
-#if HAVE_GENERIC
+#if HAVE__GENERIC
 # define TIME_T_MIN \
     _Generic((time_t) 0, \
 	     signed char: SCHAR_MIN, short: SHRT_MIN, \

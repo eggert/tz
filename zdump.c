@@ -1173,7 +1173,7 @@ abbr(struct tm const *tmp)
 static const char *
 tformat(void)
 {
-#if HAVE_GENERIC
+#if HAVE__GENERIC
 	/* C11-style _Generic is more likely to return the correct
 	   format when distinct types have the same size.  */
 	char const *fmt =

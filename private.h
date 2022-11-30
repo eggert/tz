@@ -441,6 +441,19 @@ typedef unsigned long uintmax_t;
 #endif
 
 #if HAVE___HAS_C_ATTRIBUTE
+# if __has_c_attribute(deprecated)
+#  define ATTRIBUTE_DEPRECATED [[deprecated]]
+# endif
+#endif
+#ifndef ATTRIBUTE_DEPRECATED
+# if 3 < __GNUC__ + (2 <= __GNUC_MINOR__)
+#  define ATTRIBUTE_DEPRECATED __attribute__((deprecated))
+# else
+#  define ATTRIBUTE_DEPRECATED /* empty */
+# endif
+#endif
+
+#if HAVE___HAS_C_ATTRIBUTE
 # if __has_c_attribute(fallthrough)
 #  define ATTRIBUTE_FALLTHROUGH [[fallthrough]]
 # endif
@@ -624,9 +637,14 @@ typedef time_tz tz_time_t;
 #  define altzone tz_altzone
 # endif
 
-char *asctime(struct tm const *);
+# if __STDC_VERSION__ < 202311
+#  define DEPRECATED_IN_C23 /* empty */
+# else
+#  define DEPRECATED_IN_C23 ATTRIBUTE_DEPRECATED
+# endif
+DEPRECATED_IN_C23 char *asctime(struct tm const *);
 char *asctime_r(struct tm const *restrict, char *restrict);
-char *ctime(time_t const *);
+DEPRECATED_IN_C23 char *ctime(time_t const *);
 char *ctime_r(time_t const *, char *);
 double difftime(time_t, time_t) ATTRIBUTE_UNSEQUENCED;
 size_t strftime(char *restrict, size_t, char const *restrict,

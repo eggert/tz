@@ -104,3 +104,18 @@ asctime(register const struct tm *timeptr)
 {
 	return asctime_r(timeptr, buf_asctime);
 }
+
+char *
+ctime_r(const time_t *timep, char *buf)
+{
+  struct tm mytm;
+  struct tm *tmp = localtime_r(timep, &mytm);
+  return tmp ? asctime_r(tmp, buf) : NULL;
+}
+
+char *
+ctime(const time_t *timep)
+{
+  struct tm *tmp = localtime(timep);
+  return tmp ? asctime(tmp) : NULL;
+}

@@ -691,7 +691,10 @@ extern long altzone;
 ** declarations if time_tz is defined.
 */
 
-#ifdef STD_INSPIRED
+#ifndef STD_INSPIRED
+# define STD_INSPIRED 0
+#endif
+#if STD_INSPIRED
 # if TZ_TIME_T || !defined offtime
 struct tm *offtime(time_t const *, long);
 # endif
@@ -738,7 +741,7 @@ struct tm *localtime_rz(timezone_t restrict, time_t const *restrict,
 time_t mktime_z(timezone_t restrict, struct tm *restrict);
 timezone_t tzalloc(char const *);
 void tzfree(timezone_t);
-# ifdef STD_INSPIRED
+# if STD_INSPIRED
 #  if TZ_TIME_T || !defined posix2time_z
 time_t posix2time_z(timezone_t, time_t) ATTRIBUTE_REPRODUCIBLE;
 #  endif

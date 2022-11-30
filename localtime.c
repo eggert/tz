@@ -1697,7 +1697,7 @@ gmtime(const time_t *timep)
   return gmtime_r(timep, &tm);
 }
 
-#ifdef STD_INSPIRED
+#if STD_INSPIRED
 
 struct tm *
 offtime(const time_t *timep, long offset)
@@ -1706,7 +1706,7 @@ offtime(const time_t *timep, long offset)
   return gmtsub(gmtptr, timep, offset, &tm);
 }
 
-#endif /* defined STD_INSPIRED */
+#endif
 
 /*
 ** Return the number of leap years through the end of the given year
@@ -2325,7 +2325,7 @@ mktime(struct tm *tmp)
   return t;
 }
 
-#ifdef STD_INSPIRED
+#if STD_INSPIRED
 time_t
 timelocal(struct tm *tmp)
 {
@@ -2377,7 +2377,7 @@ leapcorr(struct state const *sp, time_t t)
 ** XXX--is the below the right way to conditionalize??
 */
 
-#ifdef STD_INSPIRED
+#if STD_INSPIRED
 
 /* NETBSD_INSPIRED_EXTERN functions are exported to callers if
    NETBSD_INSPIRED is defined, and are private otherwise.  */
@@ -2462,7 +2462,7 @@ posix2time(time_t t)
   return t;
 }
 
-#endif /* defined STD_INSPIRED */
+#endif /* STD_INSPIRED */
 
 #if TZ_TIME_T
 

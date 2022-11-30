@@ -363,7 +363,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 #	-DNETBSD_INSPIRED=0
 # to the end of the "CFLAGS=" line.  Otherwise, the functions
 # "localtime_rz", "mktime_z", "tzalloc", and "tzfree" are added to the
-# time library, and if STD_INSPIRED is also defined the functions
+# time library, and if STD_INSPIRED is also defined to nonzero the functions
 # "posix2time_z" and "time2posix_z" are added as well.
 # The functions ending in "_z" (or "_rz") are like their unsuffixed
 # (or suffixed-by-"_r") counterparts, except with an extra first

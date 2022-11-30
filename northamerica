@@ -2561,7 +2561,7 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # and in addition changes all of Chihuahua to -06 with no DST.
 
 # From Heitor David Pinto (2022-11-28):
-# Now the northern municipalities want to have the same time zone as the
+# Now the northern [municipios] want to have the same time zone as the
 # respective neighboring cities in the US, for example Juárez in UTC-7 with
 # DST, matching El Paso, and Ojinaga in UTC-6 with DST, matching Presidio....
 # the president authorized the publication of the decree for November 29,
@@ -2598,7 +2598,7 @@ Zone America/Merida	-5:58:28 -	LMT	1922 Jan  1  6:00u
 			-5:00	-	EST	1982 Dec  2
 			-6:00	Mexico	C%sT
 # Coahuila, Nuevo León, Tamaulipas (near US border)
-# This includes the following municipalities:
+# This includes the following municipios:
 #   in Coahuila: Acuña, Allende, Guerrero, Hidalgo, Jiménez, Morelos, Nava,
 #     Ocampo, Piedras Negras, Villa Unión, Zaragoza
 #   in Nuevo León: Anáhuac
@@ -2624,8 +2624,8 @@ Zone America/Mexico_City -6:36:36 -	LMT	1922 Jan  1  7:00u
 			-6:00	-	CST	2002 Feb 20
 			-6:00	Mexico	C%sT
 # Chihuahua (near US border - western side)
-# This includes the municipalities of Janos, Ascensión, Juárez, Guadalupe,
-# and Práxedis G Guerrero.
+# This includes the municipios of Janos, Ascensión, Juárez, Guadalupe, and
+# Práxedis G Guerrero.
 # http://gaceta.diputados.gob.mx/PDF/65/2a022/nov/20221124-VII.pdf
 Zone America/Ciudad_Juarez -7:05:56 -	LMT	1922 Jan  1  7:00u
 			-7:00	-	MST	1927 Jun 10 23:00
@@ -2639,7 +2639,8 @@ Zone America/Ciudad_Juarez -7:05:56 -	LMT	1922 Jan  1  7:00u
 			-6:00	-	CST	2022 Nov 30  0:00
 			-7:00	US	M%sT
 # Chihuahua (near US border - eastern side)
-# The municipalities of Coyame del Sotol, Ojinaga, and Manuel Benavides.
+# This includes the municipios of Coyame del Sotol, Ojinaga, and Manuel
+# Benavides.
 # http://gaceta.diputados.gob.mx/PDF/65/2a022/nov/20221124-VII.pdf
 Zone America/Ojinaga	-6:57:40 -	LMT	1922 Jan  1  7:00u
 			-7:00	-	MST	1927 Jun 10 23:00

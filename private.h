@@ -704,6 +704,10 @@ extern int daylight;
 extern long altzone;
 #endif
 
+#ifndef SUPPORT_C89
+# define SUPPORT_C89 0
+#endif
+
 /*
 ** The STD_INSPIRED functions are similar, but most also need
 ** declarations if time_tz is defined.

@@ -186,9 +186,14 @@ static int		lcl_is_set;
 **	ctime, gmtime, localtime] return values in one of two static
 **	objects: a broken-down time structure and an array of char.
 ** Thanks to Paul Eggert for noting this.
+**
+** This requirement was removed in C99, so support it only if requested,
+** as support is more likely to lead to bugs in badly-written programs.
 */
 
+#if SUPPORT_C89
 static struct tm	tm;
+#endif
 
 #if 2 <= HAVE_TZNAME + TZ_TIME_T
 char *			tzname[2] = {
@@ -1648,6 +1653,9 @@ localtime_tzset(time_t const *timep, struct tm *tmp, bool setname)
 struct tm *
 localtime(const time_t *timep)
 {
+#if !SUPPORT_C89
+  static struct tm tm;
+#endif
   return localtime_tzset(timep, &tm, true);
 }
 
@@ -1694,6 +1702,9 @@ gmtime_r(const time_t *timep, struct tm *tmp)
 struct tm *
 gmtime(const time_t *timep)
 {
+#if !SUPPORT_C89
+  static struct tm tm;
+#endif
   return gmtime_r(timep, &tm);
 }
 
@@ -1703,6 +1714,10 @@ struct tm *
 offtime(const time_t *timep, long offset)
 {
   gmtcheck();
+
+#if !SUPPORT_C89
+  static struct tm tm;
+#endif
   return gmtsub(gmtptr, timep, offset, &tm);
 }
 

@@ -1,5 +1,18 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Briefly:
+    tzcode no longer supports C89 unless built with -DSUPPORT_C89
+
+  Changes to code
+
+    tzcode no longer supports C89 by default.  To build or run in a
+    C89 environment, compile with -DSUPPORT_C89, a transitional aid
+    that is planned to be removed in a near-future version, when C99
+    or later will be required.
+
+
 Release 2022g - 2022-11-29 08:58:31 -0800
 
   Briefly:

@@ -245,6 +245,8 @@ LDLIBS=
 #  -DRESERVE_STD_EXT_IDS if your platform reserves standard identifiers
 #	with external linkage, e.g., applications cannot define 'localtime'.
 #  -Dssize_t=long on hosts like MS-Windows that lack ssize_t
+#  -DSUPPORT_C89 if you build or run tzcode on a C89 platform; this option
+#	is obsolescent and is planned to be removed when C99+ is required.
 #  -DSUPPRESS_TZDIR to not prepend TZDIR to file names; this has
 #	security implications and is not recommended for general use
 #  -DTHREAD_SAFE to make localtime.c thread-safe, as POSIX requires;

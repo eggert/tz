@@ -42,7 +42,7 @@ static void		display(const char *, time_t);
 static void		dogmt(void);
 static void		errensure(void);
 static void		timeout(FILE *, const char *, const struct tm *);
-static ATTRIBUTE_NORETURN void usage(void);
+ATTRIBUTE_NORETURN static void usage(void);
 
 int
 main(const int argc, char *argv[])

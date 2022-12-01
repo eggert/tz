@@ -459,20 +459,20 @@ static char		roll[TZ_MAX_LEAPS];
 ** Memory allocation.
 */
 
-static ATTRIBUTE_NORETURN void
+ATTRIBUTE_NORETURN static void
 memory_exhausted(const char *msg)
 {
 	fprintf(stderr, _("%s: Memory exhausted: %s\n"), progname, msg);
 	exit(EXIT_FAILURE);
 }
 
-static ATTRIBUTE_NORETURN void
+ATTRIBUTE_NORETURN static void
 size_overflow(void)
 {
   memory_exhausted(_("size overflow"));
 }
 
-static ATTRIBUTE_REPRODUCIBLE ptrdiff_t
+ATTRIBUTE_REPRODUCIBLE static ptrdiff_t
 size_sum(size_t a, size_t b)
 {
 #ifdef ckd_add
@@ -487,7 +487,7 @@ size_sum(size_t a, size_t b)
   size_overflow();
 }
 
-static ATTRIBUTE_REPRODUCIBLE ptrdiff_t
+ATTRIBUTE_REPRODUCIBLE static ptrdiff_t
 size_product(ptrdiff_t nitems, ptrdiff_t itemsize)
 {
 #ifdef ckd_mul
@@ -502,7 +502,7 @@ size_product(ptrdiff_t nitems, ptrdiff_t itemsize)
   size_overflow();
 }
 
-static ATTRIBUTE_REPRODUCIBLE ptrdiff_t
+ATTRIBUTE_REPRODUCIBLE static ptrdiff_t
 align_to(ptrdiff_t size, ptrdiff_t alignment)
 {
   ptrdiff_t lo_bits = alignment - 1, sum = size_sum(size, lo_bits);
@@ -526,7 +526,7 @@ memcheck(void *ptr)
 	return ptr;
 }
 
-static void * ATTRIBUTE_MALLOC
+ATTRIBUTE_MALLOC static void *
 emalloc(size_t size)
 {
   return memcheck(malloc(size));
@@ -538,7 +538,7 @@ erealloc(void *ptr, size_t size)
   return memcheck(realloc(ptr, size));
 }
 
-static char * ATTRIBUTE_MALLOC
+ATTRIBUTE_MALLOC static char *
 estrdup(char const *str)
 {
   return memcheck(strdup(str));
@@ -608,7 +608,7 @@ eat(int fnum, lineno num)
 	eats(fnum, num, 0, -1);
 }
 
-static void ATTRIBUTE_FORMAT((printf, 1, 0))
+ATTRIBUTE_FORMAT((printf, 1, 0)) static void
 verror(const char *const string, va_list args)
 {
 	/*
@@ -626,7 +626,7 @@ verror(const char *const string, va_list args)
 	fprintf(stderr, "\n");
 }
 
-static void ATTRIBUTE_FORMAT((printf, 1, 2))
+ATTRIBUTE_FORMAT((printf, 1, 2)) static void
 error(const char *const string, ...)
 {
 	va_list args;
@@ -636,7 +636,7 @@ error(const char *const string, ...)
 	errors = true;
 }
 
-static void ATTRIBUTE_FORMAT((printf, 1, 2))
+ATTRIBUTE_FORMAT((printf, 1, 2)) static void
 warning(const char *const string, ...)
 {
 	va_list args;
@@ -666,7 +666,7 @@ close_file(FILE *stream, char const *dir, char const *name,
   }
 }
 
-static ATTRIBUTE_NORETURN void
+ATTRIBUTE_NORETURN static void
 usage(FILE *stream, int status)
 {
   fprintf(stream,
@@ -3597,7 +3597,7 @@ lowerit(char a)
 }
 
 /* case-insensitive equality */
-static ATTRIBUTE_REPRODUCIBLE bool
+ATTRIBUTE_REPRODUCIBLE static bool
 ciequal(register const char *ap, register const char *bp)
 {
 	while (lowerit(*ap) == lowerit(*bp++))
@@ -3606,7 +3606,7 @@ ciequal(register const char *ap, register const char *bp)
 	return false;
 }
 
-static ATTRIBUTE_REPRODUCIBLE bool
+ATTRIBUTE_REPRODUCIBLE static bool
 itsabbr(register const char *abbr, register const char *word)
 {
 	if (lowerit(*abbr) != lowerit(*word))
@@ -3622,7 +3622,7 @@ itsabbr(register const char *abbr, register const char *word)
 
 /* Return true if ABBR is an initial prefix of WORD, ignoring ASCII case.  */
 
-static ATTRIBUTE_REPRODUCIBLE bool
+ATTRIBUTE_REPRODUCIBLE static bool
 ciprefix(char const *abbr, char const *word)
 {
   do
@@ -3725,14 +3725,14 @@ getfields(char *cp, char **array, int arrayelts)
 	return nsubs;
 }
 
-static ATTRIBUTE_NORETURN void
+ATTRIBUTE_NORETURN static void
 time_overflow(void)
 {
   error(_("time overflow"));
   exit(EXIT_FAILURE);
 }
 
-static ATTRIBUTE_REPRODUCIBLE zic_t
+ATTRIBUTE_REPRODUCIBLE static zic_t
 oadd(zic_t t1, zic_t t2)
 {
 #ifdef ckd_add
@@ -3746,7 +3746,7 @@ oadd(zic_t t1, zic_t t2)
   time_overflow();
 }
 
-static ATTRIBUTE_REPRODUCIBLE zic_t
+ATTRIBUTE_REPRODUCIBLE static zic_t
 tadd(zic_t t1, zic_t t2)
 {
 #ifdef ckd_add

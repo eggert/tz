@@ -843,7 +843,7 @@ is_digit(char c)
 ** Return a pointer to that character.
 */
 
-static ATTRIBUTE_REPRODUCIBLE const char *
+ATTRIBUTE_REPRODUCIBLE static const char *
 getzname(register const char *strp)
 {
 	register char	c;
@@ -864,7 +864,7 @@ getzname(register const char *strp)
 ** We don't do any checking here; checking is done later in common-case code.
 */
 
-static ATTRIBUTE_REPRODUCIBLE const char *
+ATTRIBUTE_REPRODUCIBLE static const char *
 getqzname(register const char *strp, const int delim)
 {
 	register int	c;

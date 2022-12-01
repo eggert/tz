@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     tzcode no longer supports C89 unless built with -DSUPPORT_C89
+    Fix use of C23 attributes.
 
   Changes to code
 
@@ -11,6 +12,11 @@ Unreleased, experimental changes
     C89 environment, compile with -DSUPPORT_C89, a transitional aid
     that is planned to be removed in a near-future version, when C99
     or later will be required.
+
+    On C23-compatible platforms tzcode no longer uses syntax like
+    'static [[noreturn]] void usage(void);'.  Instead, it uses
+    '[[noreturn]] static void usage(void);' as strict C23 requires.
+    (Problem reported by Houge Langley.)
 
 
 Release 2022g - 2022-11-29 08:58:31 -0800

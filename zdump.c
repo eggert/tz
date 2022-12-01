@@ -89,7 +89,7 @@ static bool	warned;
 static bool	errout;
 
 static char const *abbr(struct tm const *);
-static intmax_t	delta(struct tm *, struct tm *) ATTRIBUTE_REPRODUCIBLE;
+ATTRIBUTE_REPRODUCIBLE static intmax_t delta(struct tm *, struct tm *);
 static void dumptime(struct tm const *);
 static time_t hunt(timezone_t, time_t, time_t, bool);
 static void show(timezone_t, char *, time_t, bool);
@@ -97,7 +97,7 @@ static void showextrema(timezone_t, char *, time_t, struct tm *, time_t);
 static void showtrans(char const *, struct tm const *, time_t, char const *,
 		      char const *);
 static const char *tformat(void);
-static time_t yeartot(intmax_t) ATTRIBUTE_REPRODUCIBLE;
+ATTRIBUTE_REPRODUCIBLE static time_t yeartot(intmax_t);
 
 /* Is C an ASCII digit?  */
 static bool
@@ -125,7 +125,7 @@ is_alpha(char a)
 	}
 }
 
-static ATTRIBUTE_NORETURN void
+ATTRIBUTE_NORETURN static void
 size_overflow(void)
 {
   fprintf(stderr, _("%s: size overflow\n"), progname);
@@ -134,7 +134,7 @@ size_overflow(void)
 
 /* Return A + B, exiting if the result would overflow either ptrdiff_t
    or size_t.  */
-static ATTRIBUTE_REPRODUCIBLE ptrdiff_t
+ATTRIBUTE_REPRODUCIBLE static ptrdiff_t
 sumsize(size_t a, size_t b)
 {
 #ifdef ckd_add
@@ -151,7 +151,7 @@ sumsize(size_t a, size_t b)
 
 /* Return a pointer to a newly allocated buffer of size SIZE, exiting
    on failure.  SIZE should be nonzero.  */
-static void * ATTRIBUTE_MALLOC
+ATTRIBUTE_MALLOC static void *
 xmalloc(size_t size)
 {
   void *p = malloc(size);
@@ -916,7 +916,7 @@ showextrema(timezone_t tz, char *zone, time_t lo, struct tm *lotmp, time_t hi)
 # include <stdarg.h>
 
 /* A substitute for snprintf that is good enough for zdump.  */
-static int ATTRIBUTE_FORMAT((printf, 3, 4))
+ATTRIBUTE_FORMAT((printf, 3, 4)) static int
 my_snprintf(char *s, size_t size, char const *format, ...)
 {
   int n;

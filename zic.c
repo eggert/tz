@@ -67,7 +67,7 @@ enum { FORMAT_LEN_GROWTH_BOUND = 5 };
 #endif
 
 /* The minimum alignment of a type, for pre-C23 platforms.  */
-#if __STDC_VERSION__ < 201112
+#if __STDC_VERSION__ < 201112 || defined __SUNPRO_C
 # define alignof(type) offsetof(struct { char a; type b; }, b)
 #elif __STDC_VERSION__ < 202311
 # include <stdalign.h>

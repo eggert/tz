@@ -732,13 +732,9 @@ hunt(timezone_t tz, time_t lot, time_t hit, bool only_ok)
 
 	for ( ; ; ) {
 		/* T = average of LOT and HIT, rounding down.
-		   Avoid overflow, even on oddball C89 platforms
-		   where / rounds down and TIME_T_MIN == -TIME_T_MAX
-		   so lot / 2 + hit / 2 might overflow.  */
-		time_t t = (lot / 2
-			    - ((lot % 2 + hit % 2) < 0)
-			    + ((lot % 2 + hit % 2) == 2)
-			    + hit / 2);
+		   Avoid overflow.  */
+		int rem_sum = lot % 2 + hit % 2;
+		time_t t = (rem_sum == 2) - (rem_sum < 0) + lot / 2 + hit / 2;
 		if (t == lot)
 			break;
 		tm_ok = my_localtime_rz(tz, &t, &tm) != NULL;

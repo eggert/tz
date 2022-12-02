@@ -3,8 +3,19 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Much of Greenland still uses DST from 2024 on.
     The code now defaults to C99 or later.
     Fix use of C23 attributes.
+
+  Changes to future timestamps
+
+    Much of Greenland, represented by America/Nuuk, will continue to
+    observe DST using European Union rules.  When combined with
+    Greenland's decision not to change the clocks in fall 2023,
+    America/Nuuk therefore changes from -03/-02 to -02/-01 effective
+    2023-10-29 at 01:00 UTC.  (Thanks to Thomas M. Steenholdt.)
+    This change from 2022g doesn't affect timestamps until 2024-03-30,
+    and doesn't affect tm_isdst until 2023-03-25.
 
   Changes to code
 

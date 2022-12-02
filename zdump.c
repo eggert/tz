@@ -15,7 +15,7 @@
 #include <stdio.h>
 
 #ifndef HAVE_SNPRINTF
-# define HAVE_SNPRINTF (199901 <= __STDC_VERSION__)
+# define HAVE_SNPRINTF (!PORT_TO_C89 || 199901 <= __STDC_VERSION__)
 #endif
 
 #ifndef HAVE_LOCALTIME_R

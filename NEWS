@@ -3,15 +3,16 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
-    tzcode no longer supports C89 unless built with -DSUPPORT_C89
+    The code now defaults to C99 or later.
     Fix use of C23 attributes.
 
   Changes to code
 
-    tzcode no longer supports C89 by default.  To build or run in a
-    C89 environment, compile with -DSUPPORT_C89, a transitional aid
-    that is planned to be removed in a near-future version, when C99
-    or later will be required.
+    The code by default is now designed for C99 or later.  To build in
+    a C89 environment, compile with -DPORT_TO_C89.  To support C89
+    callers of the tzcode library, compile with -DSUPPORT_C89.  The
+    two new macros are transitional aids planned to be removed in a
+    future version, when C99 or later will be required.
 
     On C23-compatible platforms tzcode no longer uses syntax like
     'static [[noreturn]] void usage(void);'.  Instead, it uses

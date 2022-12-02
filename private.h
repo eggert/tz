@@ -17,12 +17,25 @@
 ** Thank you!
 */
 
+/* PORT_TO_C89 means the code should work even if the underlying
+   compiler and library support only C89.  SUPPORT_C89 means the
+   tzcode library should support C89 callers in addition to the usual
+   support for C99-and-later callers.  These macros are obsolescent,
+   and the plan is to remove them along with any code needed only when
+   they are nonzero.  */
+#ifndef PORT_TO_C89
+# define PORT_TO_C89 0
+#endif
+#ifndef SUPPORT_C89
+# define SUPPORT_C89 0
+#endif
+
 #ifndef __STDC_VERSION__
 # define __STDC_VERSION__ 0
 #endif
 
 /* Define true, false and bool if they don't work out of the box.  */
-#if __STDC_VERSION__ < 199901
+#if PORT_TO_C89 && __STDC_VERSION__ < 199901
 # define true 1
 # define false 0
 # define bool int
@@ -98,10 +111,6 @@
 
 #ifndef HAVE_STRDUP
 # define HAVE_STRDUP 1
-#endif
-
-#ifndef HAVE_STRTOLL
-# define HAVE_STRTOLL 1
 #endif
 
 #ifndef HAVE_SYMLINK
@@ -185,6 +194,9 @@
 
 #include <stddef.h>
 #include <string.h>
+#if !PORT_TO_C89
+# include <inttypes.h>
+#endif
 #include <limits.h>	/* for CHAR_BIT et al. */
 #include <stdlib.h>
 
@@ -253,6 +265,8 @@
 #ifndef R_OK
 # define R_OK 4
 #endif /* !defined R_OK */
+
+#if PORT_TO_C89
 
 /*
 ** Define HAVE_STDINT_H's default value here, rather than at the
@@ -334,6 +348,9 @@ typedef int int_fast32_t;
 #ifndef INTMAX_MAX
 # ifdef LLONG_MAX
 typedef long long intmax_t;
+#  ifndef HAVE_STRTOLL
+#   define HAVE_STRTOLL true
+#  endif
 #  if HAVE_STRTOLL
 #   define strtoimax strtoll
 #  endif
@@ -395,6 +412,8 @@ typedef unsigned long uintmax_t;
 #ifndef SIZE_MAX
 # define SIZE_MAX ((size_t) -1)
 #endif
+
+#endif /* PORT_TO_C89 */
 
 /* Support ckd_add, ckd_sub, ckd_mul on C23 or recent-enough GCC-like
    hosts, unless compiled with -DHAVE_STDCKDINT_H=0 or with pre-C23 EDG.  */
@@ -520,7 +539,7 @@ typedef unsigned long uintmax_t;
 # endif
 #endif
 
-#if __STDC_VERSION__ < 199901 && !defined restrict
+#if PORT_TO_C89 && __STDC_VERSION__ < 199901 && !defined restrict
 # define restrict /* empty */
 #endif
 
@@ -702,10 +721,6 @@ extern int daylight;
 #endif
 #if 2 <= ALTZONE + (TZ_TIME_T || !HAVE_POSIX_DECLS)
 extern long altzone;
-#endif
-
-#ifndef SUPPORT_C89
-# define SUPPORT_C89 0
 #endif
 
 /*

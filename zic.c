@@ -66,7 +66,9 @@ enum { FORMAT_LEN_GROWTH_BOUND = 5 };
 # define MKDIR_UMASK 0755
 #endif
 
-/* The minimum alignment of a type, for pre-C23 platforms.  */
+/* The minimum alignment of a type, for pre-C23 platforms.
+   The __SUNPRO_C test is because Oracle Developer Studio 12.6 lacks
+   <stdalign.h> even though __STDC_VERSION__ == 201112.  */
 #if __STDC_VERSION__ < 201112 || defined __SUNPRO_C
 # define alignof(type) offsetof(struct { char a; type b; }, b)
 #elif __STDC_VERSION__ < 202311

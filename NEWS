@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     Much of Greenland still uses DST from 2024 on.
+    America/Yellowknife now links to America/Edmonton.
     The code now defaults to C99 or later.
     Fix use of C23 attributes.
 
@@ -16,6 +17,13 @@ Unreleased, experimental changes
     2023-10-29 at 01:00 UTC.  (Thanks to Thomas M. Steenholdt.)
     This change from 2022g doesn't affect timestamps until 2024-03-30,
     and doesn't affect tm_isdst until 2023-03-25.
+
+  Changes to past timestamps
+
+    America/Yellowknife has changed from a Zone to a backward
+    compatibility Link, as it no longer differs from America/Edmonton
+    since 1970.  (Thanks to Almaz Mingaleev.)  This affects some
+    pre-1948 timestamps.  The old data are now in 'backzone'.
 
   Changes to code
 

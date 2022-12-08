@@ -43,6 +43,10 @@
 # include <stdbool.h>
 #endif
 
+#if __STDC_VERSION__ < 202311
+# define static_assert(cond) extern int static_assert_check[(cond) ? 1 : -1]
+#endif
+
 /*
 ** zdump has been made independent of the rest of the time
 ** conversion package to increase confidence in the verification it provides.
@@ -833,10 +837,23 @@ ATTRIBUTE_REPRODUCIBLE time_t time2posix_z(timezone_t, time_t);
 		int: INT_MAX, long: LONG_MAX, long long: LLONG_MAX, \
 		default: TIME_T_MAX_NO_PADDING)			    \
      : (time_t) -1)
+enum { SIGNED_PADDING_CHECK_NEEDED
+         = _Generic((time_t) 0,
+		    signed char: false, short: false,
+		    int: false, long: false, long long: false,
+		    default: true) };
 #else
 # define TIME_T_MIN TIME_T_MIN_NO_PADDING
 # define TIME_T_MAX TIME_T_MAX_NO_PADDING
+enum { SIGNED_PADDING_CHECK_NEEDED = true };
 #endif
+/* Try to check the padding assumptions.  Although TIME_T_MAX and the
+   following check can both have undefined behavior on oddball
+   platforms due to shifts exceeding widths of signed integers, these
+   platforms' compilers are likely to diagnose these issues in integer
+   constant expressions, so it shouldn't hurt to check statically.  */
+static_assert(! TYPE_SIGNED(time_t) || ! SIGNED_PADDING_CHECK_NEEDED
+	      || TIME_T_MAX >> (TYPE_BIT(time_t) - 2) == 1);
 
 /*
 ** 302 / 1000 is log10(2.0) rounded up.

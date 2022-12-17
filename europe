@@ -517,9 +517,7 @@ Zone	Europe/London	-0:01:15 -	LMT	1847 Dec  1
 # other form with a traditional approximation for Irish timestamps
 # after 1971-10-31 02:00 UTC; although this approximation has tm_isdst
 # flags that are reversed, its UTC offsets are correct and this often
-# suffices.  This source file currently uses only nonnegative SAVE
-# values, but this is intended to change and downstream code should
-# not rely on it.
+# suffices....
 #
 # The following is like GB-Eire and EU, except with standard time in
 # summer and negative daylight saving time in winter.  It is for when

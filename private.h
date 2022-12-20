@@ -543,7 +543,8 @@ typedef unsigned long uintmax_t;
 # endif
 #endif
 
-#if PORT_TO_C89 && __STDC_VERSION__ < 199901 && !defined restrict
+#if (__STDC_VERSION__ < 199901 && !defined restrict \
+     && (PORT_TO_C89 || defined _MSC_VER))
 # define restrict /* empty */
 #endif
 

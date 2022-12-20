@@ -38,6 +38,10 @@ Unreleased, experimental changes
     '[[noreturn]] static void usage(void);' as strict C23 requires.
     (Problem reported by Houge Langley.)
 
+    The code's functions now constrain their arguments with the C
+    'restrict' keyword consistently with their documentation.
+    This may allow future optimizations.
+
 
 Release 2022g - 2022-11-29 08:58:31 -0800
 

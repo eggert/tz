@@ -1628,7 +1628,8 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 #if NETBSD_INSPIRED
 
 struct tm *
-localtime_rz(struct state *sp, time_t const *timep, struct tm *tmp)
+localtime_rz(struct state *restrict sp, time_t const *restrict timep,
+	     struct tm *restrict tmp)
 {
   return localsub(sp, timep, 0, tmp);
 }
@@ -1660,7 +1661,7 @@ localtime(const time_t *timep)
 }
 
 struct tm *
-localtime_r(const time_t *timep, struct tm *tmp)
+localtime_r(const time_t *restrict timep, struct tm *restrict tmp)
 {
   return localtime_tzset(timep, tmp, false);
 }
@@ -1693,7 +1694,7 @@ gmtsub(ATTRIBUTE_MAYBE_UNUSED struct state const *sp, time_t const *timep,
 */
 
 struct tm *
-gmtime_r(const time_t *timep, struct tm *tmp)
+gmtime_r(time_t const *restrict timep, struct tm *restrict tmp)
 {
   gmtcheck();
   return gmtsub(gmtptr, timep, 0, tmp);
@@ -2297,7 +2298,7 @@ mktime_tzname(struct state *sp, struct tm *tmp, bool setname)
 #if NETBSD_INSPIRED
 
 time_t
-mktime_z(struct state *sp, struct tm *tmp)
+mktime_z(struct state *restrict sp, struct tm *restrict tmp)
 {
   return mktime_tzname(sp, tmp, false);
 }

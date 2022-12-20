@@ -61,7 +61,7 @@ static char buf_ctime[sizeof buf_asctime];
 #endif
 
 char *
-asctime_r(register const struct tm *timeptr, char *buf)
+asctime_r(struct tm const *restrict timeptr, char *restrict buf)
 {
 	static const char	wday_name[][4] = {
 		"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"

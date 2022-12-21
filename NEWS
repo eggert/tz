@@ -42,6 +42,10 @@ Unreleased, experimental changes
     'restrict' keyword consistently with their documentation.
     This may allow future optimizations.
 
+  Changes to commentary
+
+    Note that leap seconds are planned to be discontinued by 2035.
+
 
 Release 2022g - 2022-11-29 08:58:31 -0800
 

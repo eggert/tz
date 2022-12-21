@@ -818,7 +818,8 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
   <li>
     The relationship between POSIX time (that is, <abbr>UTC</abbr> but
     ignoring <a href="https://en.wikipedia.org/wiki/Leap_second">leap
-    seconds</a>) and <abbr>UTC</abbr> is not agreed upon after 1972.
+    seconds</a>) and <abbr>UTC</abbr> is not agreed upon.
+    This affects time stamps during the leap second era (1972&ndash;2035).
     Although the POSIX
     clock officially stops during an inserted leap second, at least one
     proposed standard has it jumping back a second instead; and in
@@ -1268,6 +1269,18 @@ between now and the future time.
 
 <section>
   <h2 id="leapsec">Leap seconds</h2>
+<p>
+Leap seconds were introduced in 1972 to accommodate the
+difference between atomic time and the less-regular rotation of the earth.
+Unfortunately they caused so many problems with civil
+timekeeping that they
+are <a href="https://www.bipm.org/en/cgpm-2022/resolution-4">planned
+to be discontinued by 2035</a>, with some as-yet-undetermined
+mechanism replacing them, perhaps after the year 2135.
+Despite their impending obsolescence, a record of leap seconds is still
+needed to resolve timestamps from 1972 through 2035.
+</p>
+
 <p>
 The <code><abbr>tz</abbr></code> code and data can account for leap seconds,
 thanks to code contributed by Bradley White.

@@ -42,6 +42,9 @@ Unreleased, experimental changes
     'restrict' keyword consistently with their documentation.
     This may allow future optimizations.
 
+    leapseconds.awk can now process a leap seconds file that never
+    expires; this might be useful if leap seconds are discontinued.
+
   Changes to commentary
 
     Note that leap seconds are planned to be discontinued by 2035.

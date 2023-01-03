@@ -479,11 +479,10 @@ size_sum(size_t a, size_t b)
 {
 #ifdef ckd_add
   ptrdiff_t sum;
-  if (!ckd_add(&sum, a, b) && sum <= SIZE_MAX)
+  if (!ckd_add(&sum, a, b) && sum <= INDEX_MAX)
     return sum;
 #else
-  ptrdiff_t sum_max = min(PTRDIFF_MAX, SIZE_MAX);
-  if (a <= sum_max && b <= sum_max - a)
+  if (a <= INDEX_MAX && b <= INDEX_MAX - a)
     return a + b;
 #endif
   size_overflow();
@@ -494,10 +493,10 @@ size_product(ptrdiff_t nitems, ptrdiff_t itemsize)
 {
 #ifdef ckd_mul
   ptrdiff_t product;
-  if (!ckd_mul(&product, nitems, itemsize) && product <= SIZE_MAX)
+  if (!ckd_mul(&product, nitems, itemsize) && product <= INDEX_MAX)
     return product;
 #else
-  ptrdiff_t nitems_max = min(PTRDIFF_MAX, SIZE_MAX) / itemsize;
+  ptrdiff_t nitems_max = INDEX_MAX / itemsize;
   if (nitems <= nitems_max)
     return nitems * itemsize;
 #endif
@@ -553,11 +552,10 @@ grow_nitems_alloc(ptrdiff_t *nitems_alloc, ptrdiff_t itemsize)
 #if defined ckd_add && defined ckd_mul
   ptrdiff_t product;
   if (!ckd_add(nitems_alloc, *nitems_alloc, addend)
-      && !ckd_mul(&product, *nitems_alloc, itemsize) && product <= SIZE_MAX)
+      && !ckd_mul(&product, *nitems_alloc, itemsize) && product <= INDEX_MAX)
     return product;
 #else
-  ptrdiff_t amax = min(PTRDIFF_MAX, SIZE_MAX);
-  if (*nitems_alloc <= ((amax - 1) / 3 * 2) / itemsize) {
+  if (*nitems_alloc <= ((INDEX_MAX - 1) / 3 * 2) / itemsize) {
     *nitems_alloc += addend;
     return *nitems_alloc * itemsize;
   }
@@ -1399,7 +1397,7 @@ static char *
 relname(char const *target, char const *linkname)
 {
   size_t i, taillen, dir_len = 0, dotdots = 0;
-  ptrdiff_t dotdotetcsize, linksize = min(PTRDIFF_MAX, SIZE_MAX);
+  ptrdiff_t dotdotetcsize, linksize = INDEX_MAX;
   char const *f = target;
   char *result = NULL;
   if (*linkname == '/') {
@@ -1674,8 +1672,7 @@ infile(int fnum, char const *name)
 	wantcont = false;
 	for (num = 1; ; ++num) {
 		enum { bufsize_bound
-		  = (min(INT_MAX, min(PTRDIFF_MAX, SIZE_MAX))
-		     / FORMAT_LEN_GROWTH_BOUND) };
+		  = (min(INT_MAX, INDEX_MAX) / FORMAT_LEN_GROWTH_BOUND) };
 		char buf[min(_POSIX2_LINE_MAX, bufsize_bound)];
 		int nfields;
 		char *fields[MAX_FIELDS];

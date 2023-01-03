@@ -139,11 +139,10 @@ sumsize(size_t a, size_t b)
 {
 #ifdef ckd_add
   ptrdiff_t sum;
-  if (!ckd_add(&sum, a, b) && sum <= SIZE_MAX)
+  if (!ckd_add(&sum, a, b) && sum <= INDEX_MAX)
     return sum;
 #else
-  ptrdiff_t sum_max = min(PTRDIFF_MAX, SIZE_MAX);
-  if (a <= sum_max && b <= sum_max - a)
+  if (a <= INDEX_MAX && b <= INDEX_MAX - a)
     return a + b;
 #endif
   size_overflow();
@@ -262,10 +261,10 @@ tzalloc(char const *val)
     while (*e++) {
 #  ifdef ckd_add
       if (ckd_add(&initial_nenvptrs, initial_envptrs, 1)
-	  || SIZE_MAX < initial_envptrs)
+	  || INDEX_MAX < initial_envptrs)
 	size_overflow();
 #  else
-      if (initial_nenvptrs == min(PTRDIFF_MAX, SIZE_MAX) / sizeof *environ)
+      if (initial_nenvptrs == INDEX_MAX / sizeof *environ)
 	size_overflow();
       initial_nenvptrs++;
 #  endif

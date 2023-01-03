@@ -124,10 +124,10 @@ dogmt(void)
 			continue;
 #if defined ckd_add && defined ckd_mul
 		if (!ckd_add(&n, n, 2) && !ckd_mul(&n, n, sizeof *fakeenv)
-		    && n <= SIZE_MAX)
+		    && n <= INDEX_MAX)
 		  fakeenv = malloc(n);
 #else
-		if (n <= min(PTRDIFF_MAX, SIZE_MAX) / sizeof *fakeenv - 2)
+		if (n <= INDEX_MAX / sizeof *fakeenv - 2)
 		  fakeenv = malloc((n + 2) * sizeof *fakeenv);
 #endif
 		if (fakeenv == NULL) {
@@ -194,10 +194,9 @@ timeout(FILE *fp, char const *format, struct tm const *tmp)
 
 	for ( ; ; ) {
 #ifdef ckd_mul
-		bool bigger = !ckd_mul(&size, size, 2) && size <= SIZE_MAX;
+		bool bigger = !ckd_mul(&size, size, 2) && size <= INDEX_MAX;
 #else
-		bool bigger = (size <= min(PTRDIFF_MAX, SIZE_MAX) / 2
-			       && (size *= 2, true));
+		bool bigger = size <= INDEX_MAX / 2 && (size *= 2, true);
 #endif
 		char *newcp = bigger ? realloc(cp, size) : NULL;
 		if (!newcp) {

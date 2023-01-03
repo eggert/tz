@@ -419,6 +419,14 @@ typedef unsigned long uintmax_t;
 
 #endif /* PORT_TO_C89 */
 
+/* The maximum size of any created object, as a signed integer.
+   Although the C standard does not outright prohibit larger objects,
+   behavior is undefined if the result of pointer subtraction does not
+   fit into ptrdiff_t, and the code assumes in several places that
+   pointer subtraction works.  As a practical matter it's OK to not
+   support objects larger than this.  */
+#define INDEX_MAX ((ptrdiff_t) min(PTRDIFF_MAX, SIZE_MAX))
+
 /* Support ckd_add, ckd_sub, ckd_mul on C23 or recent-enough GCC-like
    hosts, unless compiled with -DHAVE_STDCKDINT_H=0 or with pre-C23 EDG.  */
 #if !defined HAVE_STDCKDINT_H && defined __has_include

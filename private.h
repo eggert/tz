@@ -805,7 +805,7 @@ ATTRIBUTE_REPRODUCIBLE time_t time2posix_z(timezone_t, time_t);
 ** Finally, some convenience items.
 */
 
-#define TYPE_BIT(type)	(sizeof(type) * CHAR_BIT)
+#define TYPE_BIT(type) (CHAR_BIT * (ptrdiff_t) sizeof(type))
 #define TYPE_SIGNED(type) (((type) -1) < 0)
 #define TWOS_COMPLEMENT(t) ((t) ~ (t) 0 < 0)
 

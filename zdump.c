@@ -133,9 +133,9 @@ size_overflow(void)
 }
 
 /* Return A + B, exiting if the result would overflow either ptrdiff_t
-   or size_t.  */
+   or size_t.  A and B are both nonnegative.  */
 ATTRIBUTE_REPRODUCIBLE static ptrdiff_t
-sumsize(size_t a, size_t b)
+sumsize(ptrdiff_t a, ptrdiff_t b)
 {
 #ifdef ckd_add
   ptrdiff_t sum;
@@ -148,10 +148,22 @@ sumsize(size_t a, size_t b)
   size_overflow();
 }
 
+/* Return the size of of the string STR, including its trailing NUL.
+   Report an error and exit if this would exceed INDEX_MAX which means
+   pointer subtraction wouldn't work.  */
+static ptrdiff_t
+xstrsize(char const *str)
+{
+  size_t len = strlen(str);
+  if (len < INDEX_MAX)
+    return len + 1;
+  size_overflow();
+}
+
 /* Return a pointer to a newly allocated buffer of size SIZE, exiting
-   on failure.  SIZE should be nonzero.  */
+   on failure.  SIZE should be positive.  */
 ATTRIBUTE_MALLOC static void *
-xmalloc(size_t size)
+xmalloc(ptrdiff_t size)
 {
   void *p = malloc(size);
   if (!p) {
@@ -253,7 +265,7 @@ tzalloc(char const *val)
   static ptrdiff_t fakeenv0size;
   void *freeable = NULL;
   char **env = fakeenv, **initial_environ;
-  size_t valsize = strlen(val) + 1;
+  ptrdiff_t valsize = xstrsize(val);
   if (fakeenv0size < valsize) {
     char **e = environ, **to;
     ptrdiff_t initial_nenvptrs = 1;  /* Counting the trailing NULL pointer.  */
@@ -410,13 +422,13 @@ saveabbr(char **buf, ptrdiff_t *bufalloc, struct tm const *tmp)
   if (HAVE_LOCALTIME_RZ)
     return ab;
   else {
-    size_t ablen = strlen(ab);
-    if (*bufalloc <= ablen) {
+    ptrdiff_t absize = xstrsize(ab);
+    if (*bufalloc < absize) {
       free(*buf);
 
       /* Make the new buffer at least twice as long as the old,
 	 to avoid O(N**2) behavior on repeated calls.  */
-      *bufalloc = sumsize(*bufalloc, ablen + 1);
+      *bufalloc = sumsize(*bufalloc, absize);
 
       *buf = xmalloc(*bufalloc);
     }

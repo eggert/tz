@@ -86,7 +86,9 @@ main(const int argc, char *argv[])
 			else if (! (TIME_T_MIN <= secs && secs <= TIME_T_MAX))
 				errno = ERANGE;
 			if (errno) {
-				perror(optarg);
+				char const *e = strerror(errno);
+				fprintf(stderr, _("date: %s: %s\n"),
+					optarg, e);
 				errensure();
 				exit(retval);
 			}

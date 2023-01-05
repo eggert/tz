@@ -253,7 +253,8 @@ tzalloc(char const *val)
 {
 # if HAVE_SETENV
   if (setenv("TZ", val, 1) != 0) {
-    perror("setenv");
+    char const *e = strerror(errno);
+    fprintf(stderr, _("%s: setenv: %s\n"), progname, e);
     exit(EXIT_FAILURE);
   }
   tzset();
@@ -332,7 +333,9 @@ gmtzinit(void)
       static char const gmt0[] = "GMT0";
       gmtz = tzalloc(gmt0);
       if (!gmtz) {
-	perror(gmt0);
+	char const *e = strerror(errno);
+	fprintf(stderr, _("%s: unknown timezone '%s': %s\n"),
+		progname, gmt0, e);
 	exit(EXIT_FAILURE);
       }
     }
@@ -597,7 +600,9 @@ main(int argc, char *argv[])
 		struct tm tm, newtm;
 		bool tm_ok;
 		if (!tz) {
-		  perror(argv[i]);
+		  char const *e = strerror(errno);
+		  fprintf(stderr, _("%s: unknown timezone '%s': %s\n"),
+			  progname, argv[1], e);
 		  return EXIT_FAILURE;
 		}
 		if (now) {

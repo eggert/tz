@@ -490,9 +490,7 @@ while
 		*"$newline"*)
 			echo >&2 'Please select one of the following timezones.'
 			doselect $regions
-			region=$select_result;;
-		*)
-			region=$regions
+			region=$select_result
 		esac
 
 		# Determine TZ from country and region.
@@ -512,7 +510,7 @@ while
 				}
 			}
 			/^#/ { next }
-			$1 ~ cc && $4 == region { print $3 }
+			$1 ~ cc && ($4 == region || !region) { print $3 }
 		' <"$TZ_ZONE_TABLE"`
 		esac
 

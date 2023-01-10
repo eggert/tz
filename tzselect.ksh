@@ -268,18 +268,27 @@ output_distances='
     coord_long = convert_longitude(coord)
   }
   /^[^#]/ {
+    inline[inlines++] = $0
+    ncc = split($1, cc, /,/)
+    for (i = 1; i <= ncc; i++)
+      cc_used[cc[i]]++
+  }
+  END {
+   for (h = 0; h < inlines; h++) {
+    $0 = inline[h]
     here_lat = convert_latitude($2)
     here_long = convert_longitude($2)
     line = $1 "\t" $2 "\t" $3
     sep = "\t"
     ncc = split($1, cc, /,/)
     for (i = 1; i <= ncc; i++) {
-      line = line sep country[cc[i]]
-      sep = ", "
+      item = cc_used[cc[i]] <= 1 ? country[cc[i]] : $4
+      if (!item) continue
+      line = line sep item
+      sep = "; "
     }
-    if (NF == 4)
-      line = line " - " $4
     printf "%g\t%s\n", dist(coord_lat, coord_long, here_lat, here_long), line
+   }
   }
 '
 

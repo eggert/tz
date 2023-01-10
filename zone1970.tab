@@ -48,7 +48,7 @@ AQ	-6448-06406	Antarctica/Palmer	Palmer
 AQ	-6734-06808	Antarctica/Rothera	Rothera
 AQ	-720041+0023206	Antarctica/Troll	Troll
 AR	-3436-05827	America/Argentina/Buenos_Aires	Buenos Aires (BA, CF)
-AR	-3124-06411	America/Argentina/Cordoba	Argentina (most areas: CB, CC, CN, ER, FM, MN, SE, SF)
+AR	-3124-06411	America/Argentina/Cordoba	most areas: CB, CC, CN, ER, FM, MN, SE, SF
 AR	-2447-06525	America/Argentina/Salta	Salta (SA, LP, NQ, RN)
 AR	-2411-06518	America/Argentina/Jujuy	Jujuy (JY)
 AR	-2649-06513	America/Argentina/Tucuman	Tucumán (TM)
@@ -122,7 +122,7 @@ CA	+4916-12307	America/Vancouver	Pacific - BC (most areas)
 CH,DE,LI	+4723+00832	Europe/Zurich	Büsingen
 CI,BF,GH,GM,GN,IS,ML,MR,SH,SL,SN,TG	+0519-00402	Africa/Abidjan
 CK	-2114-15946	Pacific/Rarotonga
-CL	-3327-07040	America/Santiago	Chile (most areas)
+CL	-3327-07040	America/Santiago	most of Chile
 CL	-5309-07055	America/Punta_Arenas	Region of Magallanes
 CL	-2709-10926	Pacific/Easter	Easter Island
 CN	+3114+12128	Asia/Shanghai	Beijing Time
@@ -131,10 +131,10 @@ CO	+0436-07405	America/Bogota
 CR	+0956-08405	America/Costa_Rica
 CU	+2308-08222	America/Havana
 CV	+1455-02331	Atlantic/Cape_Verde
-CY	+3510+03322	Asia/Nicosia	Cyprus (most areas)
+CY	+3510+03322	Asia/Nicosia	most of Cyprus
 CY	+3507+03357	Asia/Famagusta	Northern Cyprus
 CZ,SK	+5005+01426	Europe/Prague
-DE,DK,NO,SE,SJ	+5230+01322	Europe/Berlin	Germany (all other areas)
+DE,DK,NO,SE,SJ	+5230+01322	Europe/Berlin	most of Germany
 DO	+1828-06954	America/Santo_Domingo
 DZ	+3647+00303	Africa/Algiers
 EC	-0210-07950	America/Guayaquil	Ecuador (mainland)
@@ -155,7 +155,7 @@ GB,GG,IM,JE	+513030-0000731	Europe/London
 GE	+4143+04449	Asia/Tbilisi
 GF	+0456-05220	America/Cayenne
 GI	+3608-00521	Europe/Gibraltar
-GL	+6411-05144	America/Nuuk	Greenland (most areas)
+GL	+6411-05144	America/Nuuk	most of Greenland
 GL	+7646-01840	America/Danmarkshavn	National Park (east coast)
 GL	+7029-02158	America/Scoresbysund	Scoresbysund/Ittoqqortoormiit
 GL	+7634-06847	America/Thule	Thule/Pituffik
@@ -190,7 +190,7 @@ KI	-0247-17143	Pacific/Kanton	Phoenix Islands
 KI	+0152-15720	Pacific/Kiritimati	Line Islands
 KP	+3901+12545	Asia/Pyongyang
 KR	+3733+12658	Asia/Seoul
-KZ	+4315+07657	Asia/Almaty	Kazakhstan (most areas)
+KZ	+4315+07657	Asia/Almaty	most of Kazakhstan
 KZ	+4448+06528	Asia/Qyzylorda	Qyzylorda/Kyzylorda/Kzyl-Orda
 KZ	+5312+06337	Asia/Qostanay	Qostanay/Kostanay/Kustanay
 KZ	+5017+05710	Asia/Aqtobe	Aqtöbe/Aktobe
@@ -207,7 +207,7 @@ MA	+3339-00735	Africa/Casablanca
 MD	+4700+02850	Europe/Chisinau
 MH	+0905+16720	Pacific/Kwajalein	Kwajalein
 MM,CC	+1647+09610	Asia/Yangon
-MN	+4755+10653	Asia/Ulaanbaatar	Mongolia (most areas)
+MN	+4755+10653	Asia/Ulaanbaatar	most of Mongolia
 MN	+4801+09139	Asia/Hovd	Bayan-Ölgii, Govi-Altai, Hovd, Uvs, Zavkhan
 MN	+4804+11430	Asia/Choibalsan	Dornod, Sükhbaatar
 MO	+221150+1133230	Asia/Macau
@@ -310,7 +310,7 @@ TN	+3648+01011	Africa/Tunis
 TO	-210800-1751200	Pacific/Tongatapu
 TR	+4101+02858	Europe/Istanbul
 TW	+2503+12130	Asia/Taipei
-UA	+5026+03031	Europe/Kyiv	Ukraine (most areas)
+UA	+5026+03031	Europe/Kyiv	most of Ukraine
 US	+404251-0740023	America/New_York	Eastern (most areas)
 US	+421953-0830245	America/Detroit	Eastern - MI (most areas)
 US	+381515-0854534	America/Kentucky/Louisville	Eastern - KY (Louisville area)

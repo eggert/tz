@@ -397,18 +397,33 @@ while
 		      sort -n |
 		      sed "${location_limit}q"
 		    `
-		    regions=`say "$distance_table" | $AWK '
-		      BEGIN { FS = "\t" }
-		      { print $NF }
+		    regions=`$AWK \
+		      -v distance_table="$distance_table" '
+		      BEGIN {
+		        nlines = split(distance_table, line, /\n/)
+			for (nr = 1; nr <= nlines; nr++) {
+			  nf = split(line[nr], f, /\t/)
+			  print f[nf]
+			}
+		      }
 		    '`
 		    echo >&2 'Please select one of the following timezones,'
 		    echo >&2 'listed roughly in increasing order' \
 			    "of distance from $coord".
 		    doselect $regions
 		    region=$select_result
-		    TZ=`say "$distance_table" | $AWK -v region="$region" '
-		      BEGIN { FS="\t" }
-		      $NF == region { print $4 }
+		    TZ=`$AWK \
+		      -v distance_table="$distance_table" \
+		      -v region="$region" '
+		      BEGIN {
+		        nlines = split(distance_table, line, /\n/)
+			for (nr = 1; nr <= nlines; nr++) {
+			  nf = split(line[nr], f, /\t/)
+			  if (f[nf] == region) {
+			    print f[4]
+			  }
+			}
+		      }
 		    '`
 		    ;;
 		*)

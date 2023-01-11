@@ -401,7 +401,7 @@ while
 		      BEGIN { FS = "\t" }
 		      { print $NF }
 		    '`
-		    echo >&2 'Please select one of the following timezones,' \
+		    echo >&2 'Please select one of the following timezones,'
 		    echo >&2 'listed roughly in increasing order' \
 			    "of distance from $coord".
 		    doselect $regions

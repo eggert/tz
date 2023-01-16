@@ -197,6 +197,51 @@ newline='
 '
 IFS=$newline
 
+# Awk script to output a country list.
+output_country_list='
+  BEGIN { FS = "\t" }
+  /^#$/ { next }
+  /^#[^@]/ { next }
+  {
+    commentary = $0 ~ /^#@/
+    if (commentary) {
+      col1ccs = substr($1, 3)
+      conts = $2
+    } else {
+      col1ccs = $1
+      conts = $3
+    }
+    ncc = split(col1ccs, cc, /,/)
+    ncont = split(conts, cont, /,/)
+    for (i = 1; i <= ncc; i++) {
+      elsewhere = commentary
+      for (ci = 1; ci <= ncont; ci++) {
+	if (cont[ci] ~ continent_re) {
+	  if (!cc_seen[cc[i]]++) cc_list[++ccs] = cc[i]
+	  elsewhere = 0
+	}
+      }
+      if (elsewhere) {
+	for (i = 1; i <= ncc; i++) {
+	  cc_elsewhere[cc[i]] = 1
+	}
+      }
+    }
+  }
+  END {
+	  while (getline <TZ_COUNTRY_TABLE) {
+		  if ($0 !~ /^#/) cc_name[$1] = $2
+	  }
+	  for (i = 1; i <= ccs; i++) {
+		  country = cc_list[i]
+		  if (cc_elsewhere[country]) continue
+		  if (cc_name[country]) {
+		    country = cc_name[country]
+		  }
+		  print country
+	  }
+  }
+'
 
 # Awk script to read a time zone table and output the same table,
 # with each column preceded by its distance from 'here'.
@@ -431,51 +476,9 @@ while
 		countries=`$AWK \
 			-v continent_re="^$continent/" \
 			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
-		'
-			BEGIN { FS = "\t" }
-			/^#$/ { next }
-			/^#[^@]/ { next }
-			{
-			  commentary = $0 ~ /^#@/
-			  if (commentary) {
-			    col1ccs = substr($1, 3)
-			    conts = $2
-			  } else {
-			    col1ccs = $1
-			    conts = $3
-			  }
-			  ncc = split(col1ccs, cc, /,/)
-			  ncont = split(conts, cont, /,/)
-			  for (i = 1; i <= ncc; i++) {
-			    elsewhere = commentary
-			    for (ci = 1; ci <= ncont; ci++) {
-			      if (cont[ci] ~ continent_re) {
-				if (!cc_seen[cc[i]]++) cc_list[++ccs] = cc[i]
-				elsewhere = 0
-			      }
-			    }
-			    if (elsewhere) {
-			      for (i = 1; i <= ncc; i++) {
-			        cc_elsewhere[cc[i]] = 1
-			      }
-			    }
-			  }
-			}
-			END {
-				while (getline <TZ_COUNTRY_TABLE) {
-					if ($0 !~ /^#/) cc_name[$1] = $2
-				}
-				for (i = 1; i <= ccs; i++) {
-					country = cc_list[i]
-					if (cc_elsewhere[country]) continue
-					if (cc_name[country]) {
-					  country = cc_name[country]
-					}
-					print country
-				}
-			}
-		' <"$TZ_ZONE_TABLE" | sort -f`
-
+			"$output_country_list" \
+			<"$TZ_ZONE_TABLE" | sort -f
+		`
 
 		# If there's more than one country, ask the user which one.
 		case $countries in

@@ -39,7 +39,7 @@ REPORT_BUGS_TO=tz@iana.org
 : ${AWK=awk}
 : ${TZDIR=`pwd`}
 
-# Output one argument as-is to standard output.
+# Output one argument as-is to standard output, with trailing newline.
 # Safer than 'echo', which can mishandle '\' or leading '-'.
 say() {
     printf '%s\n' "$1"

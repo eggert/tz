@@ -487,7 +487,8 @@ while
 		*)
 		case $continent in
 		time)
-		  old_minute=`date -u +%Y%m%d%H%M`
+		  minute_format='%a %b %d %H:%M'
+		  old_minute=`TZ=UTC0 date +"$minute_format"`
 		  for i in 1 2 3
 		  do
 		    time_table_command=`
@@ -495,13 +496,14 @@ while
 			  "$output_distances_or_times" <"$TZ_ZONE_TABLE"
 		    `
 		    time_table=`eval "$time_table_command"`
-		    new_minute=`date -u +%Y%m%d%H%M`
+		    new_minute=`TZ=UTC0 date +"$minute_format"`
 		    case $old_minute in
 		    "$new_minute") break;;
 		    esac
 		    old_minute=$new_minute
 		  done
-		  echo >&2 'What is the current date and 24-hour time?'
+		  echo >&2 "The system says Universal Time is $new_minute."
+		  echo >&2 "Assuming that's correct, what is the local time?"
 		  eval doselect `
 		    say "$time_table" |
 		    sort -k2n -k2,5 -k1n |

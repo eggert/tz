@@ -26,6 +26,12 @@ Unreleased, experimental changes
     since 1970.  (Thanks to Almaz Mingaleev.)  This affects some
     pre-1948 timestamps.  The old data are now in 'backzone'.
 
+  Changes to past time zone abbreviations
+
+    When observing Moscow time, Europe/Kirov and Europe/Volgograd now
+    use the abbreviations MSK/MSD instead of numeric abbreviations,
+    for consistency with other timezones observing Moscow time.
+
   Changes to code
 
     You can now tell tzselect local time, to simplify later choices.

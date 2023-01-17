@@ -2656,13 +2656,13 @@ Zone Europe/Volgograd	 2:57:40 -	LMT	1920 Jan  3
 			 3:00	-	+03	1930 Jun 21
 			 4:00	-	+04	1961 Nov 11
 			 4:00	Russia	+04/+05	1988 Mar 27  2:00s
-			 3:00	Russia	+03/+04	1991 Mar 31  2:00s
+			 3:00	Russia	MSK/MSD	1991 Mar 31  2:00s
 			 4:00	-	+04	1992 Mar 29  2:00s
-			 3:00	Russia	+03/+04	2011 Mar 27  2:00s
-			 4:00	-	+04	2014 Oct 26  2:00s
-			 3:00	-	+03	2018 Oct 28  2:00s
+			 3:00	Russia	MSK/MSD	2011 Mar 27  2:00s
+			 4:00	-	MSK	2014 Oct 26  2:00s
+			 3:00	-	MSK	2018 Oct 28  2:00s
 			 4:00	-	+04	2020 Dec 27  2:00s
-			 3:00	-	+03
+			 3:00	-	MSK
 
 # From Paul Eggert (2016-11-11):
 # Europe/Saratov covers:
@@ -2693,11 +2693,11 @@ Zone Europe/Saratov	 3:04:18 -	LMT	1919 Jul  1  0:00u
 Zone Europe/Kirov	 3:18:48 -	LMT	1919 Jul  1  0:00u
 			 3:00	-	+03	1930 Jun 21
 			 4:00	Russia	+04/+05	1989 Mar 26  2:00s
-			 3:00	Russia	+03/+04	1991 Mar 31  2:00s
+			 3:00	Russia	MSK/MSD	1991 Mar 31  2:00s
 			 4:00	-	+04	1992 Mar 29  2:00s
-			 3:00	Russia	+03/+04	2011 Mar 27  2:00s
-			 4:00	-	+04	2014 Oct 26  2:00s
-			 3:00	-	+03
+			 3:00	Russia	MSK/MSD	2011 Mar 27  2:00s
+			 4:00	-	MSK	2014 Oct 26  2:00s
+			 3:00	-	MSK
 
 # From Tim Parenti (2014-07-03), per Oscar van Vlijmen (2001-08-25):
 # Europe/Samara covers...

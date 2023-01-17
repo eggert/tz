@@ -244,7 +244,9 @@ output_country_list='
 '
 
 # Awk script to read a time zone table and output the same table,
-# with each column preceded by its distance from 'here' or by its local time.
+# with each row preceded by its distance from 'here'.
+# If output_times is set, each row is instead preceded by its local time
+# and any apostrophes are escaped for the shell.
 output_distances_or_times='
   BEGIN {
     FS = "\t"

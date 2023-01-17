@@ -244,14 +244,16 @@ output_country_list='
 '
 
 # Awk script to read a time zone table and output the same table,
-# with each column preceded by its distance from 'here'.
-output_distances='
+# with each column preceded by its distance from 'here' or by its local time.
+output_distances_or_times='
   BEGIN {
     FS = "\t"
-    while (getline <TZ_COUNTRY_TABLE)
-      if ($0 ~ /^[^#]/)
-        country[$1] = $2
-    country["US"] = "US" # Otherwise the strings get too long.
+    if (!output_times) {
+      while (getline <TZ_COUNTRY_TABLE)
+	if ($0 ~ /^[^#]/)
+	  country[$1] = $2
+      country["US"] = "US" # Otherwise the strings get too long.
+    }
   }
   function abs(x) {
     return x < 0 ? -x : x;
@@ -321,18 +323,26 @@ output_distances='
   END {
    for (h = 0; h < inlines; h++) {
     $0 = inline[h]
-    here_lat = convert_latitude($2)
-    here_long = convert_longitude($2)
     line = $1 "\t" $2 "\t" $3
     sep = "\t"
     ncc = split($1, cc, /,/)
+    split("", item_seen)
+    item_seen[""] = 1
     for (i = 1; i <= ncc; i++) {
       item = cc_used[cc[i]] <= 1 ? country[cc[i]] : $4
-      if (!item) continue
+      if (item_seen[item]++) continue
       line = line sep item
       sep = "; "
     }
-    printf "%g\t%s\n", dist(coord_lat, coord_long, here_lat, here_long), line
+    if (output_times) {
+      fmt = "TZ='\''%s'\'' date +'\''%d %%Y %%m %%d %%H:%%M %%a %%b\t%s'\''\n"
+      gsub(/'\''/, "&\\\\&&", line)
+      printf fmt, $3, h, line
+    } else {
+      here_lat = convert_latitude($2)
+      here_long = convert_longitude($2)
+      printf "%g\t%s\n", dist(coord_lat, coord_long, here_lat, here_long), line
+    }
    }
   }
 '
@@ -354,7 +364,7 @@ while
 
 	# Ask the user for continent or ocean.
 
-	echo >&2 'Please select a continent, ocean, "coord", or "TZ".'
+	echo >&2 'Please select a continent, ocean, "coord", "TZ", or "time".'
 
         quoted_continents=`
 	  $AWK '
@@ -385,7 +395,8 @@ while
 	eval '
 	    doselect '"$quoted_continents"' \
 		"coord - I want to use geographical coordinates." \
-		"TZ - I want to specify the timezone using the Posix TZ format."
+		"TZ - I want to specify the timezone using the Posix TZ format." \
+		"time - I know local time already."
 	    continent=$select_result
 	    case $continent in
 	    Americas) continent=America;;
@@ -438,7 +449,7 @@ while
 		    distance_table=`$AWK \
 			    -v coord="$coord" \
 			    -v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
-			    "$output_distances" <"$TZ_ZONE_TABLE" |
+			    "$output_distances_or_times" <"$TZ_ZONE_TABLE" |
 		      sort -n |
 		      sed "${location_limit}q"
 		    `
@@ -472,13 +483,63 @@ while
 		    '`
 		    ;;
 		*)
-		# Get list of names of countries in the continent or ocean.
-		countries=`$AWK \
+		case $continent in
+		time)
+		  old_minute=`date -u +%Y%m%d%H%M`
+		  for i in 1 2 3
+		  do
+		    time_table_command=`
+		      $AWK -v output_times=1 \
+			  "$output_distances_or_times" <"$TZ_ZONE_TABLE"
+		    `
+		    time_table=`eval "$time_table_command"`
+		    new_minute=`date -u +%Y%m%d%H%M`
+		    case $old_minute in
+		    "$new_minute") break;;
+		    esac
+		    old_minute=$new_minute
+		  done
+		  echo >&2 'What is the current date and 24-hour time?'
+		  eval doselect `
+		    say "$time_table" |
+		    sort -k2n -k2,5 -k1n |
+		    $AWK '{
+		      line = $6 " " $7 " " $4 " " $5
+		      if (line == oldline) next
+		      oldline = line
+		      gsub(/'\''/, "&\\\\&&", line)
+		      printf "'\''%s'\''\n", line
+		    }'
+		  `
+		  time=$select_result
+		  zone_table=`
+		    say "$time_table" |
+		    $AWK -v time="$time" '{
+		      if ($6 " " $7 " " $4 " " $5 == time) {
+			sub(/[^\t]*\t/, "")
+			print
+		      }
+		    }'
+		  `
+		  countries=`
+		     say "$zone_table" |
+		     $AWK \
+			-v continent_re='' \
+			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
+			"$output_country_list" |
+		     sort -f
+		  `
+		  ;;
+		*)
+		  zone_table=file
+		  # Get list of names of countries in the continent or ocean.
+		  countries=`$AWK \
 			-v continent_re="^$continent/" \
 			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
 			"$output_country_list" \
 			<"$TZ_ZONE_TABLE" | sort -f
-		`
+		  `;;
+		esac
 
 		# If there's more than one country, ask the user which one.
 		case $countries in
@@ -493,10 +554,15 @@ while
 
 
 		# Get list of timezones in the country.
-		regions=`$AWK \
+		regions=`
+		  case $zone_table in
+		  file) cat -- "$TZ_ZONE_TABLE";;
+		  *) say "$zone_table";;
+		  esac |
+		  $AWK \
 			-v country="$country" \
 			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
-		'
+		    '
 			BEGIN {
 				FS = "\t"
 				cc = country
@@ -509,7 +575,8 @@ while
 			}
 			/^#/ { next }
 			$1 ~ cc { print $4 }
-		' <"$TZ_ZONE_TABLE"`
+		    '
+		`
 
 
 		# If there's more than one region, ask the user which one.
@@ -521,11 +588,16 @@ while
 		esac
 
 		# Determine TZ from country and region.
-		TZ=`$AWK \
+		TZ=`
+		  case $zone_table in
+		  file) cat -- "$TZ_ZONE_TABLE";;
+		  *) say "$zone_table";;
+		  esac |
+		  $AWK \
 			-v country="$country" \
 			-v region="$region" \
 			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
-		'
+		    '
 			BEGIN {
 				FS = "\t"
 				cc = country
@@ -538,7 +610,8 @@ while
 			}
 			/^#/ { next }
 			$1 ~ cc && ($4 == region || !region) { print $3 }
-		' <"$TZ_ZONE_TABLE"`
+		    '
+		`;;
 		esac
 
 		# Make sure the corresponding zoneinfo file exists.
@@ -574,17 +647,20 @@ Universal Time is now:	$UTdate."
 	# Output TZ info and ask the user to confirm.
 
 	echo >&2 ""
-	echo >&2 "The following information has been given:"
+	echo >&2 "Based on the following information:"
 	echo >&2 ""
-	case $country%$region%$coord in
-	?*%?*%)	say >&2 "	$country$newline	$region";;
-	?*%%)	say >&2 "	$country";;
-	%?*%?*) say >&2 "	coord $coord$newline	$region";;
-	%%?*)	say >&2 "	coord $coord";;
+	case $time%$country%$region%$coord in
+	?*%?*%?*%)
+	  say >&2 "	$time$newline	$country$newline	$region";;
+	?*%?*%%) say >&2 "	$time$newline	$country";;
+	%?*%?*%) say >&2 "	$country$newline	$region";;
+	%?*%%)	say >&2 "	$country";;
+	%%?*%?*) say >&2 "	coord $coord$newline	$region";;
+	%%%?*)	say >&2 "	coord $coord";;
 	*)	say >&2 "	TZ='$TZ'"
 	esac
 	say >&2 ""
-	say >&2 "Therefore TZ='$TZ' will be used.$extra_info"
+	say >&2 "TZ='$TZ' will be used.$extra_info"
 	say >&2 "Is the above information OK?"
 
 	doselect Yes No

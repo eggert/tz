@@ -5,6 +5,7 @@ Unreleased, experimental changes
   Briefly:
     Much of Greenland still uses DST from 2024 on.
     America/Yellowknife now links to America/Edmonton.
+    tzselect can now use current time to help infer timezone.
     The code now defaults to C99 or later.
     Fix use of C23 attributes.
 
@@ -26,6 +27,9 @@ Unreleased, experimental changes
     pre-1948 timestamps.  The old data are now in 'backzone'.
 
   Changes to code
+
+    You can now tell tzselect local time, to simplify later choices.
+    Select the 'time' option in its first prompt.
 
     The code by default is now designed for C99 or later.  To build in
     a C89 environment, compile with -DPORT_TO_C89.  To support C89

@@ -1808,7 +1808,7 @@ Zone	Pacific/Efate	11:13:16 -	LMT	1912 Jan 13 # Vila
 # period.  It would probably be reasonable to assume Guam use GMT+9 during
 # that period of time like the surrounding area.
 
-# From Paul Eggert (2018-11-18):
+# From Paul Eggert (2023-01-23):
 # Howse writes (p 153) "The Spaniards, on the other hand, reached the
 # Philippines and the Ladrones from America," and implies that the Ladrones
 # (now called the Marianas) kept American date for quite some time.
@@ -1821,7 +1821,7 @@ Zone	Pacific/Efate	11:13:16 -	LMT	1912 Jan 13 # Vila
 # they did as that avoids the need for a separate zone due to our 1970 cutoff.
 #
 # US Public Law 106-564 (2000-12-23) made UT +10 the official standard time,
-# under the name "Chamorro Standard Time".  There is no official abbreviation,
+# under the name "Chamorro standard time".  There is no official abbreviation,
 # but Congressman Robert A. Underwood, author of the bill that became law,
 # wrote in a press release (2000-12-27) that he will seek the use of "ChST".
 

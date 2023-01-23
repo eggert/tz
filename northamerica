@@ -276,9 +276,10 @@ Zone	PST8PDT		 -8:00	US	P%sT
 #  -10	Standard Alaska Time (AST)	Alaska-Hawaii standard time (AHST)
 #  -11	(unofficial) Nome (NST)		Bering standard time (BST)
 #
-# From Paul Eggert (2000-01-08), following a heads-up from Rives McDow:
-# Public law 106-564 (2000-12-23) introduced ... "Chamorro Standard Time"
+# From Paul Eggert (2023-01-23), from a 2001-01-08 heads-up from Rives McDow:
+# Public law 106-564 (2000-12-23) introduced "Chamorro standard time"
 # for time in Guam and the Northern Marianas.  See the file "australasia".
+# Also see 15 U.S.C. §263 <https://www.law.cornell.edu/uscode/text/15/263>.
 #
 # From Paul Eggert (2015-04-17):
 # HST and HDT are standardized abbreviations for Hawaii-Aleutian

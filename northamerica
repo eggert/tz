@@ -668,6 +668,10 @@ Zone America/Los_Angeles -7:52:58 -	LMT	1883 Nov 18 20:00u
 # So they won't be waiting for Alaska to join them on 2019-03-10, but will
 # rather change their clocks twice in seven weeks.
 
+# From Paul Eggert (2023-01-23):
+# America/Adak is for the Aleutian Islands that are part of Alaska
+# and are west of 169.5° W.
+
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Juneau	 15:02:19 -	LMT	1867 Oct 19 15:33:32
 			 -8:57:41 -	LMT	1900 Aug 20 12:00

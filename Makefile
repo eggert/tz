@@ -461,8 +461,8 @@ SAFE_CHAR=	'[]'$(SAFE_CHARSET)'-]'
 
 # These non-alphabetic, non-ASCII printable characters are Latin-1,
 # and so are likely displayable even in editors like XEmacs 21
-# that have limited character sets.
-UNUSUAL_OK_LATIN_1 = ¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿×÷
+# that have limited display capabilities.
+UNUSUAL_OK_LATIN_1 = ¡¢£¤¥¦§¨©«¬®¯°±²³´¶·¸¹»¼½¾¿×÷
 # This IPA symbol is represented in Unicode as the composition of
 # U+0075 and U+032F, and U+032F is not considered alphabetic by some
 # grep implementations that do not grok composition.

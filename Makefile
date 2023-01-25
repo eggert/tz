@@ -463,13 +463,9 @@ SAFE_CHAR=	'[]'$(SAFE_CHARSET)'-]'
 # and so are likely displayable even in editors like XEmacs 21
 # that have limited display capabilities.
 UNUSUAL_OK_LATIN_1 = ¡¢£¤¥¦§¨©«¬®¯°±²³´¶·¸¹»¼½¾¿×÷
-# This IPA symbol is represented in Unicode as the composition of
-# U+0075 and U+032F, and U+032F is not considered alphabetic by some
-# grep implementations that do not grok composition.
-UNUSUAL_OK_IPA = u̯
 # Non-ASCII non-letters that OK_CHAR allows, as these characters are
 # useful in commentary.
-UNUSUAL_OK_CHARSET= $(UNUSUAL_OK_LATIN_1)$(UNUSUAL_OK_IPA)
+UNUSUAL_OK_CHARSET= $(UNUSUAL_OK_LATIN_1)
 
 # Put this in a bracket expression to match spaces.
 s = [:space:]

@@ -1483,9 +1483,9 @@ Zone	Europe/Paris	0:09:21 -	LMT	1891 Mar 16
 Rule	Germany	1946	only	-	Apr	14	2:00s	1:00	S
 Rule	Germany	1946	only	-	Oct	 7	2:00s	0	-
 Rule	Germany	1947	1949	-	Oct	Sun>=1	2:00s	0	-
-# http://www.ptb.de/de/org/4/44/441/salt.htm says the following transition
-# occurred at 3:00 MEZ, not the 2:00 MEZ given in Shanks & Pottenger.
-# Go with the PTB.
+# https://www.ptb.de/cms/en/ptb/fachabteilungen/abt4/fb-44/ag-441/realisation-of-legal-time-in-germany/dst-and-midsummer-dst-in-germany-until-1979.html
+# says the following transition occurred at 3:00 MEZ, not the 2:00 MEZ
+# given in Shanks & Pottenger. Go with the PTB.
 Rule	Germany	1947	only	-	Apr	 6	3:00s	1:00	S
 Rule	Germany	1947	only	-	May	11	2:00s	2:00	M
 Rule	Germany	1947	only	-	Jun	29	3:00	1:00	S

@@ -400,8 +400,10 @@ typedef unsigned long long uint_fast64_t;
 #ifndef UINTMAX_MAX
 # ifdef ULLONG_MAX
 typedef unsigned long long uintmax_t;
+#  define UINTMAX_MAX ULLONG_MAX
 # else
 typedef unsigned long uintmax_t;
+#  define UINTMAX_MAX ULONG_MAX
 # endif
 #endif
 

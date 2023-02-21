@@ -43,6 +43,9 @@ Unreleased, experimental changes
     two new macros are transitional aids planned to be removed in a
     future version, when C99 or later will be required.
 
+    The code now builds again on pre-C99 platforms, if you compile
+    with -DPORT_TO_C89.  This fixes a bug introduced in 2022f.
+
     On C23-compatible platforms tzcode no longer uses syntax like
     'static [[noreturn]] void usage(void);'.  Instead, it uses
     '[[noreturn]] static void usage(void);' as strict C23 requires.

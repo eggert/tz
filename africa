@@ -321,6 +321,13 @@ Rule	Egypt	2007	only	-	Sep	Thu>=1	24:00	0	-
 # From Mina Samuel (2016-07-04):
 # Egyptian government took the decision to cancel the DST,
 
+# From Ahmad ElDardiry (2023-03-01):
+# Egypt officially announced today that daylight savings will be
+# applied from last Friday of April to last Thursday of October.
+# https://www.mena.org.eg/ar/news/dbcall/table/textnews/id/10044253
+# From Paul Eggert (2023-03-01):
+# Assume transitions are at 00:00 and 24:00 respectively.
+
 Rule	Egypt	2008	only	-	Aug	lastThu	24:00	0	-
 Rule	Egypt	2009	only	-	Aug	20	24:00	0	-
 Rule	Egypt	2010	only	-	Aug	10	24:00	0	-
@@ -330,6 +337,8 @@ Rule	Egypt	2014	only	-	May	15	24:00	1:00	S
 Rule	Egypt	2014	only	-	Jun	26	24:00	0	-
 Rule	Egypt	2014	only	-	Jul	31	24:00	1:00	S
 Rule	Egypt	2014	only	-	Sep	lastThu	24:00	0	-
+Rule	Egypt	2023	max	-	Apr	lastFri	 0:00	1:00	S
+Rule	Egypt	2023	Max	-	Oct	lastThu	24:00	0	-
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 		#STDOFF	2:05:08.9

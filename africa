@@ -338,7 +338,7 @@ Rule	Egypt	2014	only	-	Jun	26	24:00	0	-
 Rule	Egypt	2014	only	-	Jul	31	24:00	1:00	S
 Rule	Egypt	2014	only	-	Sep	lastThu	24:00	0	-
 Rule	Egypt	2023	max	-	Apr	lastFri	 0:00	1:00	S
-Rule	Egypt	2023	Max	-	Oct	lastThu	24:00	0	-
+Rule	Egypt	2023	max	-	Oct	lastThu	24:00	0	-
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 		#STDOFF	2:05:08.9

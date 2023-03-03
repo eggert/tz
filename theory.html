@@ -878,7 +878,7 @@ an older <code>zic</code>.
     is error-prone in practice.
     Also, POSIX <code>TZ</code> strings cannot deal with daylight
     saving time rules not based on the Gregorian calendar (as in
-    Iran), or with situations where more than two time zone
+    Morocco), or with situations where more than two time zone
     abbreviations or <abbr>UT</abbr> offsets are used in an area.
     </p>
 
@@ -914,8 +914,8 @@ an older <code>zic</code>.
       <dt><var>date</var>[<code>/</code><var>time</var>]<code>,</code><var>date</var>[<code>/</code><var>time</var>]</dt><dd>
 	specifies the beginning and end of <abbr>DST</abbr>.
 	If this is absent, the system supplies its own ruleset
-	for <abbr>DST</abbr>, and its rules can differ from year to year;
-	typically <abbr>US</abbr> <abbr>DST</abbr> rules are used.
+	for <abbr>DST</abbr>, typically	current <abbr>US</abbr>
+	<abbr>DST</abbr> rules.
       </dd>
       <dt><var>time</var></dt><dd>
 	takes the form
@@ -975,10 +975,11 @@ an older <code>zic</code>.
     Traditionally the current <abbr>US</abbr> <abbr>DST</abbr> rules
     were used to interpret such values, but this meant that the
     <abbr>US</abbr> <abbr>DST</abbr> rules were compiled into each
-    program that did time conversion. This meant that when
+    time conversion package, and when
     <abbr>US</abbr> time conversion rules changed (as in the United
-    States in 1987), all programs that did time conversion had to be
-    recompiled to ensure proper results.
+    States in 1987 and again in 2007), all packages that
+    interpreted <code>TZ</code> values had to be updated
+    to ensure proper results.
   </li>
   <li>
     The <code>TZ</code> environment variable is process-global, which

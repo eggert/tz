@@ -551,6 +551,7 @@ while
 			echo >&2 'Please select a country' \
 				'whose clocks agree with yours.'
 			doselect $countries
+			country_result=$select_result
 			country=$select_result;;
 		*)
 			country=$countries
@@ -653,12 +654,13 @@ Universal Time is now:	$UTdate."
 	echo >&2 ""
 	echo >&2 "Based on the following information:"
 	echo >&2 ""
-	case $time%$country%$region%$coord in
+	case $time%$country_result%$region%$coord in
 	?*%?*%?*%)
-	  say >&2 "	$time$newline	$country$newline	$region";;
-	?*%?*%%) say >&2 "	$time$newline	$country";;
-	%?*%?*%) say >&2 "	$country$newline	$region";;
-	%?*%%)	say >&2 "	$country";;
+	  say >&2 "	$time$newline	$country_result$newline	$region";;
+	?*%?*%%|?*%%?*%) say >&2 "	$time$newline	$country_result$region";;
+	?*%%%) say >&2 "	$time";;
+	%?*%?*%) say >&2 "	$country_result$newline	$region";;
+	%?*%%)	say >&2 "	$country_result";;
 	%%?*%?*) say >&2 "	coord $coord$newline	$region";;
 	%%%?*)	say >&2 "	coord $coord";;
 	*)	say >&2 "	TZ='$TZ'"

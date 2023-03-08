@@ -3632,7 +3632,7 @@ Zone	Asia/Singapore	6:55:25 -	LMT	1901 Jan  1
 # standard time is SLST.
 #
 # From Paul Eggert (2016-10-18):
-# "SLST" seems to be reasonably recent and rarely-used outside time
+# "SLST" seems to be reasonably recent and rarely used outside time
 # zone nerd sources.  I searched Google News and found three uses of
 # it in the International Business Times of India in February and
 # March of this year when discussing cricket match times, but nothing

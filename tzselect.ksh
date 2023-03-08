@@ -82,8 +82,8 @@ Report bugs to $REPORT_BUGS_TO."
 
 # Ask the user to select from the function's arguments,
 # and assign the selected argument to the variable 'select_result'.
-# Exit on EOF or I/O error.  Use the shell's 'select' builtin if available,
-# falling back on a less-nice but portable substitute otherwise.
+# Exit on EOF or I/O error.  Use the shell's nicer 'select' builtin if
+# available, falling back on a portable substitute otherwise.
 if
   case $BASH_VERSION in
   ?*) : ;;

@@ -188,7 +188,7 @@ static int		lcl_is_set;
 ** Thanks to Paul Eggert for noting this.
 **
 ** This requirement was removed in C99, so support it only if requested,
-** as support is more likely to lead to bugs in badly-written programs.
+** as support is more likely to lead to bugs in badly written programs.
 */
 
 #if SUPPORT_C89

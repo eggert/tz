@@ -326,7 +326,7 @@ gmtzinit(void)
        "Link GMT GMT0" line in the "backward" file, and which
        should work on all POSIX platforms.  The rest of zdump does not
        use the "GMT" abbreviation that comes from this setting, so it
-       is OK to use "GMT" here rather than the more-modern "UTC" which
+       is OK to use "GMT" here rather than the modern "UTC" which
        would not work on platforms that omit the "backward" file.  */
     gmtz = tzalloc("GMT");
     if (!gmtz) {
@@ -415,7 +415,7 @@ abbrok(const char *const abbrp, const char *const zone)
 
 /* Return a time zone abbreviation.  If the abbreviation needs to be
    saved, use *BUF (of size *BUFALLOC) to save it, and return the
-   abbreviation in the possibly-reallocated *BUF.  Otherwise, just
+   abbreviation in the possibly reallocated *BUF.  Otherwise, just
    return the abbreviation.  Get the abbreviation from TMP.
    Exit on memory allocation failure.  */
 static char const *

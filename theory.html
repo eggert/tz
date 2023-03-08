@@ -791,7 +791,7 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
     with days starting at midnight.
     Although <abbr>UT</abbr> equals <abbr>UTC</abbr> for modern
     timestamps, <abbr>UTC</abbr> was not defined until 1960, so
-    commentary uses the more-general abbreviation <abbr>UT</abbr> for
+    commentary uses the more general abbreviation <abbr>UT</abbr> for
     timestamps that might predate 1960.
     Since <abbr>UT</abbr>, <abbr>UT1</abbr>, etc. disagree slightly,
     and since pre-1972 <abbr>UTC</abbr> seconds varied in length,
@@ -1242,7 +1242,7 @@ The <code><abbr>tz</abbr></code> code and data supply the following interfaces:
 Interface changes in a release attempt to preserve compatibility with
 recent releases.
 For example, <code><abbr>tz</abbr></code> data files typically do not
-rely on recently-added <code>zic</code> features, so that users can
+rely on recently added <code>zic</code> features, so that users can
 run older <code>zic</code> versions to process newer data files.
 <a href="tz-link.html#download">Downloading
 the <code><abbr>tz</abbr></code> database</a> describes how releases
@@ -1272,7 +1272,7 @@ between now and the future time.
   <h2 id="leapsec">Leap seconds</h2>
 <p>
 Leap seconds were introduced in 1972 to accommodate the
-difference between atomic time and the less-regular rotation of the earth.
+difference between atomic time and the less regular rotation of the earth.
 Unfortunately they caused so many problems with civil
 timekeeping that they
 are <a href="https://www.bipm.org/en/cgpm-2022/resolution-4">planned
@@ -1296,12 +1296,12 @@ commonly used by
 <a href="https://www.ntp.org"><abbr title="Network Time Protocol">NTP</abbr></a>
 software that adjusts the kernel clock.
 However, kernel-clock twiddling approximates UTC only roughly,
-and systems needing more-precise UTC can use this package's leap
+and systems needing more precise UTC can use this package's leap
 second support directly.
 </p>
 
 <p>
-The directly-supported mechanism assumes that <code>time_t</code>
+The directly supported mechanism assumes that <code>time_t</code>
 counts of seconds since the POSIX epoch normally include leap seconds,
 as opposed to POSIX <code>time_t</code> counts which exclude leap seconds.
 This modified timescale is converted to <abbr>UTC</abbr>

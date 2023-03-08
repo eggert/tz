@@ -53,7 +53,7 @@ static char buf_asctime[2*3 + 5*INT_STRLEN_MAXIMUM(int) + 7 + 2 + 1 + 1];
 /* A similar buffer for ctime.
    C89 requires that they be the same buffer.
    This requirement was removed in C99, so support it only if requested,
-   as support is more likely to lead to bugs in badly-written programs.  */
+   as support is more likely to lead to bugs in badly written programs.  */
 #if SUPPORT_C89
 # define buf_ctime buf_asctime
 #else

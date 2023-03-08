@@ -275,7 +275,7 @@
 /*
 ** Define HAVE_STDINT_H's default value here, rather than at the
 ** start, since __GLIBC__ and INTMAX_MAX's values depend on
-** previously-included files.  glibc 2.1 and Solaris 10 and later have
+** previously included files.  glibc 2.1 and Solaris 10 and later have
 ** stdint.h, even with pre-C99 compilers.
 */
 #if !defined HAVE_STDINT_H && defined __has_include

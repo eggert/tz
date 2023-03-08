@@ -65,6 +65,9 @@ Unreleased, experimental changes
 
   Changes to commentary
 
+    tz-link.html has a new section "Coordinating with governments and
+    distributors".  (Thanks to Neil Fuller for some of the text.)
+
     To improve tzselect diagnostics, zone1970.tab's comments column is
     now limited to countries that have multiple timezones.
 

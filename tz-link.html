@@ -26,6 +26,7 @@ area.
 	  <li><a href="#tzdb">The <code><abbr>tz</abbr></code> database</a></li>
 	  <li><a href="#download">Downloading the <code><abbr>tz</abbr></code> database</a></li>
 	  <li><a href="#changes">Changes to the <code><abbr>tz</abbr></code> database</a></li>
+	  <li><a href="#coordinating">Coordinating with governments and distributors</li>
 	  <li><a href="#commentary">Commentary on the <code><abbr>tz</abbr></code> database</a></li>
 	</ul>
       </li>
@@ -215,23 +216,6 @@ discussions</a> and corresponding data changes can be
 generated <a href="https://github.com/timparenti/tzdata-meta">automatically</a>.
 </p>
 <p>
-If your government plans to change its time zone boundaries or
-daylight saving rules, inform <code>tz@iana.org</code> well in
-advance, as this will coordinate updates to many cell phones,
-computers, and other devices around the world.
-The change should be officially announced at least a year before it affects
-how clocks operate; otherwise, there is a good chance that some
-clocks will operate incorrectly after the change, due
-to delays in propagating updates to software and data. The shorter
-the notice, the more likely clock problems will arise; see "<a
-href="https://codeofmatt.com/2016/04/23/on-the-timing-of-time-zone-changes/">On
-the Timing of Time Zone Changes</a>" for examples.
-The <code><abbr>tz</abbr></code> data can represent planned changes
-far into the future, and a long-planned change can easily be reverted
-or otherwise altered with a year's notice before the change would have
-affected clocks.
-</p>
-<p>
 Changes to the <code><abbr>tz</abbr></code> code and data are often
 propagated to clients via operating system updates, so
 client <code><abbr>tz</abbr></code> data can often be corrected by
@@ -283,6 +267,49 @@ found in <a href="theory.html">Theory and pragmatics of the
 <code><abbr>tz</abbr></code> code and data</a>.
 <a href="https://a0.github.io/a0-tzmigration/">A0 TimeZone Migration</a>
 displays changes between recent <code><abbr>tzdb</abbr></code> versions.
+</p>
+</section>
+
+<section>
+<h2 id="coordinating">Coordinating with governments and distributors</h2>
+<p>
+If your government plans to change its time zone boundaries or
+daylight saving rules, please send email to <a
+href="mailto:tz@iana.org"><code>tz@iana.org</code></a> well in advance,
+as this will coordinate updates to many cell phones,
+computers, and other devices around the world.
+In your email, please cite the legislation or regulation that specifies
+the change, so that it can be checked for details such as the exact times
+when clock transitions occur.
+It is OK if a rule change is planned to affect clocks
+far into the future, as a long-planned change can easily be reverted
+or otherwise altered with a year's notice before the change would have
+affected clocks.</p>
+<p>
+There is no fixed schedule for <code><abbr>tzdb</abbr></code> releases.
+However, typically a release occurs every few months.
+Many downstream timezone data distributors wait for
+a <code><abbr>tzdb</abbr></code> release before they produce an update
+to time zone behavior in consumer devices and software products.
+After a release, various parties must integrate, test,
+and roll out an update before <a
+href="https://en.wikipedia.org/wiki/End_user">end users</a> see changes.
+These updates can be expensive, for both the <a
+href="https://en.wikipedia.org/wiki/Quality_assurance">quality
+assurance</a> process and the overall cost of shipping and installing
+updates to each device's copy of <code><abbr>tzdb</abbr></code>.
+Updates may be batched with other updates and may take substantial
+time to reach end users after a release.
+Older devices may no longer be supported and thus may never be updated,
+which means they will continue to use out-of-date rules.</p>
+<p>
+For these reasons any rule change should be promulgated at least a
+year before it affects how clocks operate; otherwise, there is a good
+chance that many clocks will operate incorrectly after the change, due
+to delays in propagating updates to software and data.
+The shorter the notice, the more likely clock problems will arise; see "<a
+href="https://codeofmatt.com/2016/04/23/on-the-timing-of-time-zone-changes/">On
+the Timing of Time Zone Changes</a>" for examples.
 </p>
 </section>
 

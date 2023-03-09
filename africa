@@ -324,9 +324,10 @@ Rule	Egypt	2007	only	-	Sep	Thu>=1	24:00	0	-
 # From Ahmad ElDardiry (2023-03-01):
 # Egypt officially announced today that daylight savings will be
 # applied from last Friday of April to last Thursday of October.
-# https://www.mena.org.eg/ar/news/dbcall/table/textnews/id/10044253
 # From Paul Eggert (2023-03-01):
 # Assume transitions are at 00:00 and 24:00 respectively.
+# From Amir Adib (2023-03-07):
+# https://www.facebook.com/EgyptianCabinet/posts/638829614954129/
 
 Rule	Egypt	2008	only	-	Aug	lastThu	24:00	0	-
 Rule	Egypt	2009	only	-	Aug	20	24:00	0	-

@@ -28,10 +28,6 @@ static int lock(void) { return 0; }
 static void unlock(void) { }
 #endif
 
-#ifndef TZ_ABBR_MAX_LEN
-# define TZ_ABBR_MAX_LEN 16
-#endif /* !defined TZ_ABBR_MAX_LEN */
-
 #ifndef TZ_ABBR_CHAR_SET
 # define TZ_ABBR_CHAR_SET \
 	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 :+-._"
@@ -361,10 +357,12 @@ scrub_abbrs(struct state *sp)
 	for (i = 0; i < sp->typecnt; ++i) {
 		register const struct ttinfo * const	ttisp = &sp->ttis[i];
 		char *cp = &sp->chars[ttisp->tt_desigidx];
+		size_t cplen = strlen(cp);
+		static char const gp[sizeof GRANDPARENTED - 1] = GRANDPARENTED;
 
-		if (strlen(cp) > TZ_ABBR_MAX_LEN &&
-			strcmp(cp, GRANDPARENTED) != 0)
-				*(cp + TZ_ABBR_MAX_LEN) = '\0';
+		if (MY_TZNAME_MAX < cplen
+		    && ! (cplen == sizeof gp && memcmp(cp, gp, sizeof gp) == 0))
+				*(cp + MY_TZNAME_MAX) = '\0';
 	}
 }
 

@@ -105,12 +105,11 @@ static char const UNSPEC[] = "-00";
    for ttunspecified to work without crashing.  */
 enum { CHARS_EXTRA = max(sizeof UNSPEC, 2) - 1 };
 
-#ifdef TZNAME_MAX
-# define MY_TZNAME_MAX TZNAME_MAX
-#endif /* defined TZNAME_MAX */
-#ifndef TZNAME_MAX
-# define MY_TZNAME_MAX 255
-#endif /* !defined TZNAME_MAX */
+/* Limit to time zone abbreviation length in POSIX-style TZ strings.
+   This is distinct from TZ_MAX_CHARS, which limits TZif file contents.  */
+#ifndef TZNAME_MAXIMUM
+# define TZNAME_MAXIMUM 255
+#endif
 
 struct state {
 	int		leapcnt;
@@ -123,7 +122,7 @@ struct state {
 	unsigned char	types[TZ_MAX_TIMES];
 	struct ttinfo	ttis[TZ_MAX_TYPES];
 	char chars[max(max(TZ_MAX_CHARS + CHARS_EXTRA, sizeof "UTC"),
-		       2 * (MY_TZNAME_MAX + 1))];
+		       2 * (TZNAME_MAXIMUM + 1))];
 	struct lsinfo	lsis[TZ_MAX_LEAPS];
 
 	/* The time type to use for early times or if no transitions.
@@ -341,29 +340,28 @@ settzname(void)
 #endif
 }
 
-static void
+/* Replace bogus characters in time zone abbreviations.
+   Return 0 on success, an errno value if a time zone abbreviation is
+   too long.  */
+static int
 scrub_abbrs(struct state *sp)
 {
 	int i;
-	/*
-	** First, replace bogus characters.
-	*/
+
+	/* Reject overlong abbreviations.  */
+	for (i = 0; i < sp->charcnt - (TZNAME_MAXIMUM + 1); ) {
+	  int len = strlen(&sp->chars[i]);
+	  if (TZNAME_MAXIMUM < len)
+	    return EOVERFLOW;
+	  i += len + 1;
+	}
+
+	/* Replace bogus characters.  */
 	for (i = 0; i < sp->charcnt; ++i)
 		if (strchr(TZ_ABBR_CHAR_SET, sp->chars[i]) == NULL)
 			sp->chars[i] = TZ_ABBR_ERR_CHAR;
-	/*
-	** Second, truncate long abbreviations.
-	*/
-	for (i = 0; i < sp->typecnt; ++i) {
-		register const struct ttinfo * const	ttisp = &sp->ttis[i];
-		char *cp = &sp->chars[ttisp->tt_desigidx];
-		size_t cplen = strlen(cp);
-		static char const gp[sizeof GRANDPARENTED - 1] = GRANDPARENTED;
 
-		if (MY_TZNAME_MAX < cplen
-		    && ! (cplen == sizeof gp && memcmp(cp, gp, sizeof gp) == 0))
-				*(cp + MY_TZNAME_MAX) = '\0';
-	}
+	return 0;
 }
 
 /* Input buffer for data read from a compiled tz file.  */
@@ -1142,14 +1140,12 @@ tzparse(const char *name, struct state *sp, struct state *basep)
 	  name = getzname(name);
 	  stdlen = name - stdname;
 	}
-	if (!stdlen)
+	if (! (0 < stdlen && stdlen <= TZNAME_MAXIMUM))
 	  return false;
 	name = getoffset(name, &stdoffset);
 	if (name == NULL)
 	  return false;
 	charcnt = stdlen + 1;
-	if (sizeof sp->chars < charcnt)
-	  return false;
 	if (basep) {
 	  if (0 < basep->timecnt)
 	    atlo = basep->ats[basep->timecnt - 1];
@@ -1176,11 +1172,9 @@ tzparse(const char *name, struct state *sp, struct state *basep)
 			name = getzname(name);
 			dstlen = name - dstname; /* length of DST abbr. */
 		}
-		if (!dstlen)
+		if (! (0 < dstlen && dstlen <= TZNAME_MAXIMUM))
 		  return false;
 		charcnt += dstlen + 1;
-		if (sizeof sp->chars < charcnt)
-		  return false;
 		if (*name != '\0' && *name != ',' && *name != ';') {
 			name = getoffset(name, &dstoffset);
 			if (name == NULL)
@@ -1423,7 +1417,7 @@ zoneinit(struct state *sp, char const *name)
     if (err != 0 && name && name[0] != ':' && tzparse(name, sp, NULL))
       err = 0;
     if (err == 0)
-      scrub_abbrs(sp);
+      err = scrub_abbrs(sp);
     return err;
   }
 }

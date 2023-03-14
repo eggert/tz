@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     Egypt now uses DST again, from April through October.
+    This year Morocco springs forward April 23, not April 30.
     Much of Greenland still uses DST from 2024 on.
     America/Yellowknife now links to America/Edmonton.
     tzselect can now use current time to help infer timezone.
@@ -15,6 +16,11 @@ Unreleased, experimental changes
     Starting in 2023, Egypt will observe DST from April's last Friday
     through October's last Thursday.  (Thanks to Ahmad ElDardiry.)
     Assume the transition times are 00:00 and 24:00, respectively.
+
+    In 2023 Morocco's spring-forward transition after Ramadan
+    will occur April 23, not April 30.  (Thanks to Milamber.)
+    Adjust predictions for future years accordingly.  This affects
+    predictions for 2023, 2031, 2038, and later years.
 
     Much of Greenland, represented by America/Nuuk, will continue to
     observe DST using European Union rules.  When combined with

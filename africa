@@ -847,19 +847,28 @@ Zone Indian/Mauritius	3:50:00 -	LMT	1907 # Port Louis
 # Friday or Saturday (and so the 2 days off are on a weekend), the next time
 # shift will be the next weekend.
 #
-# From Paul Eggert (2020-05-31):
+# From Milamber (2021-03-31, 2022-03-10):
+# https://www.mmsp.gov.ma/fr/actualites.aspx?id=2076
+# https://www.ecoactu.ma/horaires-administration-ramadan-gmtheure-gmt-a-partir-de-dimanche-27-mars/
+#
+# From Milamber (2023-03-14):
+# https://fr.le360.ma/societe/ramadan-2023-retour-a-lheure-gmt-a-partir-de-ce-dimanche-19-mars_6ARLYJJ4ZNHCFGOYEJ3LVIVZPQ/
+# The return to legal GMT time will take place this Sunday, March 19 at 3 a.m.
+# ... the return to GMT+1 will be made on Sunday April 23, 2023 at 2 a.m.
+#
+# From Paul Eggert (2023-03-14):
 # For now, guess that in the future Morocco will fall back at 03:00
 # the last Sunday before Ramadan, and spring forward at 02:00 the
-# first Sunday after two days after Ramadan.  To implement this,
+# first Sunday after one day after Ramadan.  To implement this,
 # transition dates and times for 2019 through 2087 were determined by
-# running the following program under GNU Emacs 26.3.  (This algorithm
+# running the following program under GNU Emacs 28.2.  (This algorithm
 # also produces the correct transition dates for 2016 through 2018,
 # though the times differ due to Morocco's time zone change in 2018.)
 # (let ((islamic-year 1440))
 #   (require 'cal-islam)
 #   (while (< islamic-year 1511)
 #     (let ((a (calendar-islamic-to-absolute (list 9 1 islamic-year)))
-#           (b (+ 2 (calendar-islamic-to-absolute (list 10 1 islamic-year))))
+#           (b (+ 1 (calendar-islamic-to-absolute (list 10 1 islamic-year))))
 #           (sunday 0))
 #       (while (/= sunday (mod (setq a (1- a)) 7)))
 #       (while (/= sunday (mod b 7))
@@ -873,10 +882,6 @@ Zone Indian/Mauritius	3:50:00 -	LMT	1907 # Port Louis
 #         (car (cdr (cdr a))) (calendar-month-name (car a) t) (car (cdr a))
 #         (car (cdr (cdr b))) (calendar-month-name (car b) t) (car (cdr b)))))
 #     (setq islamic-year (+ 1 islamic-year))))
-#
-# From Milamber (2021-03-31, 2022-03-10), confirming these predictions:
-# https://www.mmsp.gov.ma/fr/actualites.aspx?id=2076
-# https://www.ecoactu.ma/horaires-administration-ramadan-gmtheure-gmt-a-partir-de-dimanche-27-mars/
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Morocco	1939	only	-	Sep	12	 0:00	1:00	-
@@ -929,7 +934,7 @@ Rule	Morocco	2021	only	-	May	16	 2:00	0	-
 Rule	Morocco	2022	only	-	Mar	27	 3:00	-1:00	-
 Rule	Morocco	2022	only	-	May	 8	 2:00	0	-
 Rule	Morocco	2023	only	-	Mar	19	 3:00	-1:00	-
-Rule	Morocco	2023	only	-	Apr	30	 2:00	0	-
+Rule	Morocco	2023	only	-	Apr	23	 2:00	0	-
 Rule	Morocco	2024	only	-	Mar	10	 3:00	-1:00	-
 Rule	Morocco	2024	only	-	Apr	14	 2:00	0	-
 Rule	Morocco	2025	only	-	Feb	23	 3:00	-1:00	-
@@ -945,7 +950,7 @@ Rule	Morocco	2029	only	-	Feb	18	 2:00	0	-
 Rule	Morocco	2029	only	-	Dec	30	 3:00	-1:00	-
 Rule	Morocco	2030	only	-	Feb	10	 2:00	0	-
 Rule	Morocco	2030	only	-	Dec	22	 3:00	-1:00	-
-Rule	Morocco	2031	only	-	Feb	 2	 2:00	0	-
+Rule	Morocco	2031	only	-	Jan	26	 2:00	0	-
 Rule	Morocco	2031	only	-	Dec	14	 3:00	-1:00	-
 Rule	Morocco	2032	only	-	Jan	18	 2:00	0	-
 Rule	Morocco	2032	only	-	Nov	28	 3:00	-1:00	-
@@ -961,7 +966,7 @@ Rule	Morocco	2036	only	-	Nov	23	 2:00	0	-
 Rule	Morocco	2037	only	-	Oct	 4	 3:00	-1:00	-
 Rule	Morocco	2037	only	-	Nov	15	 2:00	0	-
 Rule	Morocco	2038	only	-	Sep	26	 3:00	-1:00	-
-Rule	Morocco	2038	only	-	Nov	 7	 2:00	0	-
+Rule	Morocco	2038	only	-	Oct	31	 2:00	0	-
 Rule	Morocco	2039	only	-	Sep	18	 3:00	-1:00	-
 Rule	Morocco	2039	only	-	Oct	23	 2:00	0	-
 Rule	Morocco	2040	only	-	Sep	 2	 3:00	-1:00	-
@@ -977,7 +982,7 @@ Rule	Morocco	2044	only	-	Aug	28	 2:00	0	-
 Rule	Morocco	2045	only	-	Jul	 9	 3:00	-1:00	-
 Rule	Morocco	2045	only	-	Aug	20	 2:00	0	-
 Rule	Morocco	2046	only	-	Jul	 1	 3:00	-1:00	-
-Rule	Morocco	2046	only	-	Aug	12	 2:00	0	-
+Rule	Morocco	2046	only	-	Aug	 5	 2:00	0	-
 Rule	Morocco	2047	only	-	Jun	23	 3:00	-1:00	-
 Rule	Morocco	2047	only	-	Jul	28	 2:00	0	-
 Rule	Morocco	2048	only	-	Jun	 7	 3:00	-1:00	-
@@ -993,7 +998,7 @@ Rule	Morocco	2052	only	-	Jun	 2	 2:00	0	-
 Rule	Morocco	2053	only	-	Apr	13	 3:00	-1:00	-
 Rule	Morocco	2053	only	-	May	25	 2:00	0	-
 Rule	Morocco	2054	only	-	Apr	 5	 3:00	-1:00	-
-Rule	Morocco	2054	only	-	May	17	 2:00	0	-
+Rule	Morocco	2054	only	-	May	10	 2:00	0	-
 Rule	Morocco	2055	only	-	Mar	28	 3:00	-1:00	-
 Rule	Morocco	2055	only	-	May	 2	 2:00	0	-
 Rule	Morocco	2056	only	-	Mar	12	 3:00	-1:00	-
@@ -1009,7 +1014,7 @@ Rule	Morocco	2060	only	-	Mar	 7	 2:00	0	-
 Rule	Morocco	2061	only	-	Jan	16	 3:00	-1:00	-
 Rule	Morocco	2061	only	-	Feb	27	 2:00	0	-
 Rule	Morocco	2062	only	-	Jan	 8	 3:00	-1:00	-
-Rule	Morocco	2062	only	-	Feb	19	 2:00	0	-
+Rule	Morocco	2062	only	-	Feb	12	 2:00	0	-
 Rule	Morocco	2062	only	-	Dec	31	 3:00	-1:00	-
 Rule	Morocco	2063	only	-	Feb	 4	 2:00	0	-
 Rule	Morocco	2063	only	-	Dec	16	 3:00	-1:00	-
@@ -1025,7 +1030,7 @@ Rule	Morocco	2067	only	-	Dec	11	 2:00	0	-
 Rule	Morocco	2068	only	-	Oct	21	 3:00	-1:00	-
 Rule	Morocco	2068	only	-	Dec	 2	 2:00	0	-
 Rule	Morocco	2069	only	-	Oct	13	 3:00	-1:00	-
-Rule	Morocco	2069	only	-	Nov	24	 2:00	0	-
+Rule	Morocco	2069	only	-	Nov	17	 2:00	0	-
 Rule	Morocco	2070	only	-	Oct	 5	 3:00	-1:00	-
 Rule	Morocco	2070	only	-	Nov	 9	 2:00	0	-
 Rule	Morocco	2071	only	-	Sep	20	 3:00	-1:00	-
@@ -1041,7 +1046,7 @@ Rule	Morocco	2075	only	-	Sep	15	 2:00	0	-
 Rule	Morocco	2076	only	-	Jul	26	 3:00	-1:00	-
 Rule	Morocco	2076	only	-	Sep	 6	 2:00	0	-
 Rule	Morocco	2077	only	-	Jul	18	 3:00	-1:00	-
-Rule	Morocco	2077	only	-	Aug	29	 2:00	0	-
+Rule	Morocco	2077	only	-	Aug	22	 2:00	0	-
 Rule	Morocco	2078	only	-	Jul	10	 3:00	-1:00	-
 Rule	Morocco	2078	only	-	Aug	14	 2:00	0	-
 Rule	Morocco	2079	only	-	Jun	25	 3:00	-1:00	-
@@ -1051,13 +1056,13 @@ Rule	Morocco	2080	only	-	Jul	21	 2:00	0	-
 Rule	Morocco	2081	only	-	Jun	 1	 3:00	-1:00	-
 Rule	Morocco	2081	only	-	Jul	13	 2:00	0	-
 Rule	Morocco	2082	only	-	May	24	 3:00	-1:00	-
-Rule	Morocco	2082	only	-	Jul	 5	 2:00	0	-
+Rule	Morocco	2082	only	-	Jun	28	 2:00	0	-
 Rule	Morocco	2083	only	-	May	16	 3:00	-1:00	-
 Rule	Morocco	2083	only	-	Jun	20	 2:00	0	-
 Rule	Morocco	2084	only	-	Apr	30	 3:00	-1:00	-
 Rule	Morocco	2084	only	-	Jun	11	 2:00	0	-
 Rule	Morocco	2085	only	-	Apr	22	 3:00	-1:00	-
-Rule	Morocco	2085	only	-	Jun	 3	 2:00	0	-
+Rule	Morocco	2085	only	-	May	27	 2:00	0	-
 Rule	Morocco	2086	only	-	Apr	14	 3:00	-1:00	-
 Rule	Morocco	2086	only	-	May	19	 2:00	0	-
 Rule	Morocco	2087	only	-	Mar	30	 3:00	-1:00	-

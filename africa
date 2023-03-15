@@ -576,8 +576,8 @@ Zone	Africa/Tripoli	0:52:44 -	LMT	1920
 # DST the coming summer...
 #
 # Some sources, in French:
-# http://www.defimedia.info/news/946/Rashid-Beebeejaun-:-%C2%AB-L%E2%80%99heure-d%E2%80%99%C3%A9t%C3%A9-ne-sera-pas-appliqu%C3%A9e-cette-ann%C3%A9e-%C2%BB
-# http://lexpress.mu/Story/3398~Beebeejaun---Les-objectifs-d-%C3%A9conomie-d-%C3%A9nergie-de-l-heure-d-%C3%A9t%C3%A9-ont-%C3%A9t%C3%A9-atteints-
+# http://www.defimedia.info/news/946/Rashid-Beebeejaun-:-«-L%E2%80%99heure-d%E2%80%99été-ne-sera-pas-appliquée-cette-année-»
+# http://lexpress.mu/Story/3398~Beebeejaun---Les-objectifs-d-économie-d-énergie-de-l-heure-d-été-ont-été-atteints-
 #
 # Our wrap-up:
 # https://www.timeanddate.com/news/time/mauritius-dst-will-not-repeat.html
@@ -708,7 +708,7 @@ Zone Indian/Mauritius	3:50:00 -	LMT	1907 # Port Louis
 # More articles in the press
 # https://www.yabiladi.com/articles/details/5058/secret-l-heure-d-ete-maroc-leve.html
 # http://www.lematin.ma/Actualite/Express/Article.asp?id=148923
-# http://www.lavieeco.com/actualite/Le-Maroc-passe-sur-GMT%2B1-a-partir-de-dim
+# http://www.lavieeco.com/actualite/Le-Maroc-passe-sur-GMT+1-a-partir-de-dim
 
 # From Petr Machata (2011-03-30):
 # They have it written in English here:
@@ -723,7 +723,7 @@ Zone Indian/Mauritius	3:50:00 -	LMT	1907 # Port Louis
 # According to Infomédiaire web site from Morocco (infomediaire.ma),
 # on March 9, 2012, (in French) Heure légale:
 # Le Maroc adopte officiellement l'heure d'été
-# http://www.infomediaire.ma/news/maroc/heure-l%C3%A9gale-le-maroc-adopte-officiellement-lheure-d%C3%A9t%C3%A9
+# http://www.infomediaire.ma/news/maroc/heure-légale-le-maroc-adopte-officiellement-lheure-dété
 # Governing Council adopted draft decree, that Morocco DST starts on
 # the last Sunday of March (March 25, 2012) and ends on
 # last Sunday of September (September 30, 2012)
@@ -1205,7 +1205,7 @@ Zone	Africa/Windhoek	1:08:24 -	LMT	1892 Feb 8
 # From P Chan (2020-12-03):
 # GMT was adopted as the standard time of Lagos on 1905-07-01.
 # Lagos Weekly Record, 1905-06-24, p 3
-# http://ddsnext.crl.edu/titles/31558#?c=0&m=668&s=0&cv=2&r=0&xywh=1446%2C5221%2C1931%2C1235
+# http://ddsnext.crl.edu/titles/31558#?c=0&m=668&s=0&cv=2&r=0&xywh=1446,5221,1931,1235
 # says "It is officially notified that on and after the 1st of July 1905
 # Greenwich Mean Solar Time will be adopted thought the Colony and
 # Protectorate, and that it will be necessary to put all clocks 13 minutes and
@@ -1213,7 +1213,7 @@ Zone	Africa/Windhoek	1:08:24 -	LMT	1892 Feb 8
 #
 # It seemed that Lagos returned to LMT on 1908-07-01.
 # [The Lagos Standard], 1908-07-01, p 5
-# http://ddsnext.crl.edu/titles/31556#?c=0&m=78&s=0&cv=4&r=0&xywh=-92%2C3590%2C3944%2C2523
+# http://ddsnext.crl.edu/titles/31556#?c=0&m=78&s=0&cv=4&r=0&xywh=-92,3590,3944,2523
 # says "Scarcely have the people become accustomed to this new time, when
 # another official notice has now appeared announcing that from and after the
 # 1st July next, return will be made to local mean time."
@@ -1243,7 +1243,7 @@ Zone	Africa/Windhoek	1:08:24 -	LMT	1892 Feb 8
 # The Lagos Weekly Record, 1919-09-20, p 3 details discussion on the first
 # reading of this Bill by the Legislative Council of the Colony of Nigeria on
 # Thursday 1919-08-28:
-# http://ddsnext.crl.edu/titles/31558?terms&item_id=303484#?m=1118&c=1&s=0&cv=2&r=0&xywh=1261%2C3408%2C2994%2C1915
+# http://ddsnext.crl.edu/titles/31558?terms&item_id=303484#?m=1118&c=1&s=0&cv=2&r=0&xywh=1261,3408,2994,1915
 # "The proposal is that the Globe should be divided into twelve zones East and
 # West of Greenwich, of one hour each, Nigeria falling into the zone with a
 # standard of one hour fast on Greenwich Mean Time.  Nigeria standard time is

@@ -2954,7 +2954,7 @@ Zone	Asia/Kathmandu	5:41:16 -	LMT	1920
 # 9pm and moving clocks forward by one hour for the next three months. ...."
 #
 # http://www.worldtimezone.com/dst_news/dst_news_pakistan01.html
-# http://www.dailytimes.com.pk/default.asp?page=2008%5C05%5C15%5Cstory_15-5-2008_pg1_4
+# http://www.dailytimes.com.pk/default.asp?page=2008\05\15\story_15-5-2008_pg1_4
 
 # From Arthur David Olson (2008-05-19):
 # XXX--midnight transitions is a guess; 2008 only is a guess.
@@ -3277,7 +3277,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # Some of many sources in Arabic:
 # http://www.samanews.com/index.php?act=Show&id=122638
 #
-# http://safa.ps/details/news/74352/%D8%A8%D8%AF%D8%A1-%D8%A7%D9%84%D8%AA%D9%88%D9%82%D9%8A%D8%AA-%D8%A7%D9%84%D8%B5%D9%8A%D9%81%D9%8A-%D8%A8%D8%A7%D9%84%D8%B6%D9%81%D8%A9-%D9%88%D8%BA%D8%B2%D8%A9-%D9%84%D9%8A%D9%84%D8%A9-%D8%A7%D9%84%D8%AC%D9%85%D8%B9%D8%A9.html
+# http://safa.ps/details/news/74352/بدء-التوقيت-الصيفي-بالضفة-وغزة-ليلة-الجمعة.html
 #
 # Our brief summary:
 # https://www.timeanddate.com/news/time/gaza-west-bank-dst-2012.html
@@ -3287,7 +3287,7 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # time from midnight on Friday, March 29, 2013" (translated).
 # [These are in Arabic and are for Gaza and for Ramallah, respectively.]
 # http://www.samanews.com/index.php?act=Show&id=154120
-# http://safa.ps/details/news/99844/%D8%B1%D8%A7%D9%85-%D8%A7%D9%84%D9%84%D9%87-%D8%A8%D8%AF%D8%A1-%D8%A7%D9%84%D8%AA%D9%88%D9%82%D9%8A%D8%AA-%D8%A7%D9%84%D8%B5%D9%8A%D9%81%D9%8A-29-%D8%A7%D9%84%D8%AC%D8%A7%D8%B1%D9%8A.html
+# http://safa.ps/details/news/99844/رام-الله-بدء-التوقيت-الصيفي-29-الجاري.html
 
 # From Steffen Thorsen (2013-09-24):
 # The Gaza and West Bank are ending DST Thursday at midnight

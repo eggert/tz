@@ -23,10 +23,9 @@ Unreleased, experimental changes
     Adjust predictions for future years accordingly.  This affects
     predictions for 2023, 2031, 2038, and later years.
 
-    Palestine no longer observes DST during Ramadan.  (Thanks to Heba
-    Hamad.)  Although transition dates are not yet known, for now
-    guess that this year Palestine will delay its spring forward from
-    March 25 to April 29, and make guesses for future years too.
+    This year Palestine will delay its spring forward from
+    March 25 to April 29 due to Ramadan.  (Thanks to Heba Hamad.)
+    Make guesses for future Ramadans too.
 
     Much of Greenland, represented by America/Nuuk, will continue to
     observe DST using European Union rules.  When combined with

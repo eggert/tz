@@ -3386,14 +3386,11 @@ Zone	Asia/Karachi	4:28:12 -	LMT	1907
 # at 2:00 AM ,for the years from 2023 to 2026.
 # (2022-09-05): https://mtit.pna.ps/Site/New/1453
 
-# From Heba Hamad (2023-03-13):
-# the Palestinian cabinet decided to extend the work in winter time
-# during the month of Ramadan and the Eid period.
-# I will later send to you the new date....
+# From Heba Hamad (2023-03-22):
+# ... summer time will begin in Palestine from Saturday 04-29-2023,
+# 02:00 AM by 60 minutes forward.
 #
-# From Paul Eggert (2023-03-17):
-# Although we don't yet know the new date, it appears that our
-# previous guess of springing forward March 25 is incorrect.
+# From Paul Eggert (2023-03-22):
 # For now, guess that spring and fall transitions will normally
 # continue to use 2022's rules, that during DST Palestine will switch
 # to standard time at 02:00 the last Saturday before Ramadan and back

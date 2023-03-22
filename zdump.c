@@ -273,8 +273,8 @@ tzalloc(char const *val)
 
     while (*e++) {
 #  ifdef ckd_add
-      if (ckd_add(&initial_nenvptrs, initial_envptrs, 1)
-	  || INDEX_MAX < initial_envptrs)
+      if (ckd_add(&initial_nenvptrs, initial_nenvptrs, 1)
+	  || INDEX_MAX < initial_nenvptrs)
 	size_overflow();
 #  else
       if (initial_nenvptrs == INDEX_MAX / sizeof *environ)

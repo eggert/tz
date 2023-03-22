@@ -79,6 +79,9 @@ Unreleased, experimental changes
     'restrict' keyword consistently with their documentation.
     This may allow future optimizations.
 
+    zdump again builds standalone with ckdadd and without setenv,
+    fixing a bug introduced in 2022g.  (Problem reported by panic.)
+
     leapseconds.awk can now process a leap seconds file that never
     expires; this might be useful if leap seconds are discontinued.
 

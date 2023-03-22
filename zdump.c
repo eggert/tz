@@ -228,7 +228,7 @@ localtime_r(time_t *tp, struct tm *tmp)
 # undef localtime_rz
 # define localtime_rz zdump_localtime_rz
 static struct tm *
-localtime_rz(timezone_t rz, time_t *tp, struct tm *tmp)
+localtime_rz(ATTRIBUTE_MAYBE_UNUSED timezone_t rz, time_t *tp, struct tm *tmp)
 {
   return localtime_r(tp, tmp);
 }
@@ -304,7 +304,7 @@ tzalloc(char const *val)
 }
 
 static void
-tzfree(timezone_t initial_environ)
+tzfree(ATTRIBUTE_MAYBE_UNUSED timezone_t initial_environ)
 {
 # if !HAVE_SETENV
   environ = initial_environ;

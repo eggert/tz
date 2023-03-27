@@ -2750,8 +2750,9 @@ Rule	Lebanon	1992	only	-	Oct	4	0:00	0	-
 Rule	Lebanon	1993	max	-	Mar	lastSun	0:00	1:00	S
 Rule	Lebanon	1993	1998	-	Sep	lastSun	0:00	0	-
 Rule	Lebanon	1999	max	-	Oct	lastSun	0:00	0	-
-# This one-time rule was announced by the prime minister but soon withdrawn.
-#Rule	Lebanon	2023	only	-	Apr	21	0:00	1:00	S
+# This one-time rule, announced by the prime minister first for April 21
+# then for March 30, is commented out for reasons described above.
+#Rule	Lebanon	2023	only	-	Mar	30	0:00	1:00	S
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Beirut	2:22:00 -	LMT	1880

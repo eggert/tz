@@ -5,7 +5,7 @@ Unreleased, experimental changes
   Changes to past and future timestamps
 
     Model Lebanon's DST chaos by reverting data to tzdb 2023a.
-    (Thanks to Jad Baz for the heads-up.)
+    (Thanks to Rany Hany for the heads-up.)
 
 
 Release 2023b - 2023-03-23 19:50:38 -0700

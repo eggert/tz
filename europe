@@ -1123,6 +1123,12 @@ Zone Atlantic/Faroe	-0:27:04 -	LMT	1908 Jan 11 # Tórshavn
 # 2. The shift *from* DST in 2023 happens as normal, but coincides with the
 #    shift to UTC-02 normaltime (people will not change their clocks here).
 # 3. After this, DST is still observed, but as -02/-01 instead of -03/-02.
+#
+# From Múte Bourup Egede via Jógvan Svabo Samuelsen (2023-03-15):
+# Greenland will not switch to Daylight Saving Time this year, 2023,
+# because the standard time for Greenland will change from UTC -3 to UTC -2.
+# However, Greenland will change to Daylight Saving Time again in 2024
+# and onwards.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Thule	1991	1992	-	Mar	lastSun	2:00	1:00	D
@@ -1146,7 +1152,8 @@ Zone America/Scoresbysund -1:27:52 -	LMT	1916 Jul 28 # Ittoqqortoormiit
 			-1:00	EU	-01/+00
 Zone America/Nuuk	-3:26:56 -	LMT	1916 Jul 28 # Godthåb
 			-3:00	-	-03	1980 Apr  6  2:00
-			-3:00	EU	-03/-02	2023 Oct 29  1:00u
+			-3:00	EU	-03/-02	2023 Mar 26  1:00u
+			-2:00	-	-02	2023 Oct 29  1:00u
 			-2:00	EU	-02/-01
 Zone America/Thule	-4:35:08 -	LMT	1916 Jul 28 # Pituffik
 			-4:00	Thule	A%sT

@@ -1,5 +1,15 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to past and future tm_isdst flags
+
+    Much of Greenland, represented by America/Nuuk, changed its
+    standard time from -03 to -02 on 2023-03-25, not on 2023-10-28.
+    This does not affect UTC offsets, only the tm_isdst flag.
+    (Thanks to Thomas M. Steenholdt.)
+
+
 Release 2023c - 2023-03-28 12:42:14 -0700
 
   Changes to past and future timestamps

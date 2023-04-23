@@ -353,9 +353,11 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # functions to be added to the time conversion library.
 # "offtime" is like "gmtime" except that it accepts a second (long) argument
 # that gives an offset to add to the time_t when converting it.
-# "timelocal" is equivalent to "mktime".
+# I.e., "offtime" is like calling "localtime_rz" with a fixed-offset zone.
+# "timelocal" is nearly equivalent to "mktime".
 # "timeoff" is like "timegm" except that it accepts a second (long) argument
 # that gives an offset to use when converting to a time_t.
+# I.e., "timeoff" is like calling "mktime_z" with a fixed-offset zone.
 # "posix2time" and "time2posix" are described in an included manual page.
 # X3J11's work does not describe any of these functions.
 # These functions may well disappear in future releases of the time

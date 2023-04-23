@@ -1703,6 +1703,9 @@ gmtime(const time_t *timep)
 
 #if STD_INSPIRED
 
+/* This function is obsolescent and may disappear in future releases.
+   Callers can instead use localtime_rz with a fixed-offset zone.  */
+
 struct tm *
 offtime(const time_t *timep, long offset)
 {
@@ -2313,6 +2316,8 @@ mktime(struct tm *tmp)
 }
 
 #if STD_INSPIRED
+/* This function is obsolescent and may disapper in future releases.
+   Callers can instead use mktime.  */
 time_t
 timelocal(struct tm *tmp)
 {
@@ -2323,6 +2328,8 @@ timelocal(struct tm *tmp)
 #else
 static
 #endif
+/* This function is obsolescent and may disapper in future releases.
+   Callers can instead use mktime_z with a fixed-offset zone.  */
 time_t
 timeoff(struct tm *tmp, long offset)
 {

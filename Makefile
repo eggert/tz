@@ -988,8 +988,11 @@ set-timestamps.out: $(EIGHT_YARDS)
 		  rm -f test.out && \
 		  for file in $$files; do \
 		    if git diff --quiet $$file; then \
-		      time=`git log -1 --format='tformat:%ct' $$file` && \
-		      touch -cmd @$$time $$file; \
+		      time=`TZ=UTC0 git log -1 \
+			--format='tformat:%cd' \
+			--date='format:%Y-%m-%dT%H:%M:%SZ' \
+			$$file` && \
+		      touch -cmd $$time $$file; \
 		    else \
 		      echo >&2 "$$file: warning: does not match repository"; \
 		    fi || exit; \

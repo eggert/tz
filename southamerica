@@ -1701,8 +1701,8 @@ Rule	Para	2010	2012	-	Apr	Sun>=8	0:00	0	-
 # From Paul Eggert (2023-07-26):
 # Transition dates are now set by Law No. 7115, not by presidential decree.
 # https://www.abc.com.py/politica/2023/07/12/promulgacion-el-cambio-de-hora-sera-por-ley/
-# Although Google indexed this government URL, it did not work for me:
-# https://www.bacn.gov.py/leyes-paraguayas/11831/ley-n-7115-establece-el-horario-oficial-en-la-republica-del-paraguay
+# From Carlos Raúl Perasso (2023-07-27):
+# http://silpy.congreso.gov.py/descarga/ley-144138
 Rule	Para	2013	max	-	Mar	Sun>=22	0:00	0	-
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]

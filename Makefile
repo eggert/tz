@@ -958,12 +958,18 @@ $(MANTXTS):	workman.sh
 # plus N if GNU ls and touch are available.
 SET_TIMESTAMP_N = sh -c '\
   n=$$0 dest=$$1; shift; \
-  touch -cmr `ls -t "$$@" | sed 1q` "$$dest" && \
+  <"$$dest" && \
   if test $$n != 0 && \
-     lsout=`ls -n --time-style="+%s" "$$dest" 2>/dev/null`; then \
+     lsout=`ls -nt --time-style="+%s" "$$@" 2>/dev/null`; then \
     set x $$lsout && \
-    touch -cmd @`expr $$7 + $$n` "$$dest"; \
-  else :; fi'
+    timestamp=`expr $$7 + $$n` && \
+    echo "+ touch -md @$$timestamp $$dest" && \
+    touch -md @$$timestamp "$$dest"; \
+  else \
+    newest=`ls -t "$$@" | sed 1q` && \
+    echo "+ touch -mr $$newest $$dest" && \
+    touch -mr "$$newest" "$$dest"; \
+  fi'
 # If DEST depends on A B C ... in this Makefile, callers should use
 # $(SET_TIMESTAMP_DEP) DEST A B C ..., for the benefit of any
 # downstream 'make' that considers equal timestamps to be out of date.
@@ -992,7 +998,8 @@ set-timestamps.out: $(EIGHT_YARDS)
 			--format='tformat:%cd' \
 			--date='format:%Y-%m-%dT%H:%M:%SZ' \
 			$$file` && \
-		      touch -cmd $$time $$file; \
+		      echo "+ touch -md $$time $$file" && \
+		      touch -md $$time $$file; \
 		    else \
 		      echo >&2 "$$file: warning: does not match repository"; \
 		    fi || exit; \
@@ -1148,7 +1155,7 @@ tzdata$(VERSION)-rearguard.tar.gz: rearguard.zi set-timestamps.out
 		sed '1s/$$/-rearguard/' <version >$@.dir/version
 		: The dummy pacificnew pacifies TZUpdater 2.3.1 and earlier.
 		$(CREATE_EMPTY) $@.dir/pacificnew
-		touch -cmr version $@.dir/version
+		touch -mr version $@.dir/version
 		LC_ALL=C && export LC_ALL && \
 		  (cd $@.dir && \
 		   tar $(TARFLAGS) -cf - \
@@ -1172,7 +1179,7 @@ tzdata$(VERSION)-tailored.tar.gz: set-timestamps.out
 		  `test $(DATAFORM) = vanguard || echo pacificnew`
 		(grep '^#' tzdata.zi && echo && cat $(DATAFORM).zi) \
 		  >$@.dir/etcetera
-		touch -cmr tzdata.zi $@.dir/etcetera
+		touch -mr tzdata.zi $@.dir/etcetera
 		sed -n \
 		  -e '/^# *version  *\(.*\)/h' \
 		  -e '/^# *ddeps  */H' \
@@ -1183,7 +1190,7 @@ tzdata$(VERSION)-tailored.tar.gz: set-timestamps.out
 		  -e 's/ /-/g' \
 		  -e 'p' \
 		  <tzdata.zi >$@.dir/version
-		touch -cmr version $@.dir/version
+		touch -mr version $@.dir/version
 		links= && \
 		  for file in $(TZDATA_DIST); do \
 		    test -f $@.dir/$$file || links="$$links $$file"; \

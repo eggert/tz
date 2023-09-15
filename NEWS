@@ -9,6 +9,11 @@ Unreleased, experimental changes
     This does not affect UTC offsets, only the tm_isdst flag.
     (Thanks to Thomas M. Steenholdt.)
 
+  Changes to code
+
+    zic now works again on Linux 2.6.16 and 2.6.17 (2006).
+    (Problem reported by Rune Torgersen.)
+
 
 Release 2023c - 2023-03-28 12:42:14 -0700
 

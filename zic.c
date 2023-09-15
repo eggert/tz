@@ -164,13 +164,8 @@ symlink(char const *target, char const *linkname)
 }
 #endif
 #ifndef AT_SYMLINK_FOLLOW
-# if HAVE_LINK
-#  define linkat(targetdir, target, linknamedir, linkname, flag) \
-     (itssymlink(target) ? (errno = ENOTSUP, -1) : link(target, linkname))
-# else
 #  define linkat(targetdir, target, linknamedir, linkname, flag) \
      (errno = ENOTSUP, -1)
-# endif
 #endif
 
 static void	addtt(zic_t starttime, int type);
@@ -190,7 +185,7 @@ static void	inrule(char ** fields, int nfields);
 static bool	inzcont(char ** fields, int nfields);
 static bool	inzone(char ** fields, int nfields);
 static bool	inzsub(char **, int, bool);
-static bool	itssymlink(char const *);
+static int	itssymlink(char const *, int *);
 static bool	is_alpha(char a);
 static char	lowerit(char);
 static void	mkdirs(char const *, bool);
@@ -1428,6 +1423,18 @@ relname(char const *target, char const *linkname)
   return result;
 }
 
+/* Return true if A and B must have the same parent dir if A and B exist.
+   Return false if this is not necessarily true (though it might be true).
+   Keep it simple, and do not inspect the file system.  */
+static bool
+same_parent_dirs(char const *a, char const *b)
+{
+  for (; *a == *b; a++, b++)
+    if (!*a)
+      return true;
+  return ! (strchr(a, '/') || strchr(b, '/'));
+}
+
 static void
 dolink(char const *target, char const *linkname, bool staysymlink)
 {
@@ -1435,6 +1442,7 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 	int link_errno;
 	char *tempname = NULL;
 	char const *outname = linkname;
+	int targetissym = -2, linknameissym = -2;
 
 	check_for_signal();
 
@@ -1456,13 +1464,32 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 	    break;
 	  }
 	  link_errno = errno;
+	  /* Linux 2.6.16 and 2.6.17 mishandle AT_SYMLINK_FOLLOW.  */
+	  if (link_errno == EINVAL)
+	    link_errno = ENOTSUP;
+#if HAVE_LINK
+	  /* If linkat is not supported, fall back on link(A, B).
+	     However, skip this if A is a relative symlink
+	     and A and B might not have the same parent directory.
+	     On some platforms link(A, B) does not follow a symlink A,
+	     and if A is relative it might misbehave elsewhere.  */
+	  if (link_errno == ENOTSUP
+	      && (same_parent_dirs(target, outname)
+		  || 0 <= itssymlink(target, &targetissym))) {
+	    if (link(target, outname) == 0) {
+	      link_errno = 0;
+	      break;
+	    }
+	    link_errno = errno;
+	  }
+#endif
 	  if (link_errno == EXDEV || link_errno == ENOTSUP)
 	    break;
 
 	  if (link_errno == EEXIST) {
 	    staysymlink &= !tempname;
 	    random_dirent(&outname, &tempname);
-	    if (staysymlink && itssymlink(linkname))
+	    if (staysymlink && itssymlink(linkname, &linknameissym))
 	      break;
 	  } else if (link_errno == ENOENT && !linkdirs_made) {
 	    mkdirs(linkname, true);
@@ -1525,12 +1552,17 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 	rename_dest(tempname, linkname);
 }
 
-/* Return true if NAME is a symbolic link.  */
-static bool
-itssymlink(char const *name)
+/* Return 1 if NAME is an absolute symbolic link, -1 if it is relative,
+   0 if it is not a symbolic link.  If *CACHE is not -2, it is the
+   cached result of a previous call to this function with the same NAME.  */
+static int
+itssymlink(char const *name, int *cache)
 {
-  char c;
-  return 0 <= readlink(name, &c, 1);
+  if (*cache == -2) {
+    char c = '\0';
+    *cache = readlink(name, &c, 1) < 0 ? 0 : c == '/' ? 1 : -1;
+  }
+  return *cache;
 }
 
 /*

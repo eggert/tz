@@ -1384,9 +1384,9 @@ rename_dest(char *tempname, char const *name)
   }
 }
 
-/* Create symlink contents suitable for symlinking FROM to TO, as a
-   freshly allocated string.  FROM should be a relative file name, and
-   is relative to the global variable DIRECTORY.  TO can be either
+/* Create symlink contents suitable for symlinking TARGET to LINKNAME, as a
+   freshly allocated string.  TARGET should be a relative file name, and
+   is relative to the global variable DIRECTORY.  LINKNAME can be either
    relative or absolute.  */
 static char *
 relname(char const *target, char const *linkname)

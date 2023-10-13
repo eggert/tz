@@ -11,6 +11,10 @@ Unreleased, experimental changes
 
   Changes to code
 
+    localtime.c no longer mishandles TZif files that contain a single
+    transition into a DST regime.  Previously, it incorrectly assumed
+    DST was in effect before the transition too.
+
     zic now works again on Linux 2.6.16 and 2.6.17 (2006).
     (Problem reported by Rune Torgersen.)
 

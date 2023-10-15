@@ -15,6 +15,10 @@ Unreleased, experimental changes
     transition into a DST regime.  Previously, it incorrectly assumed
     DST was in effect before the transition too.
 
+    zic no longer mishandles data for Palestine after the year 2075.
+    Previously, it incorrectly omitted post-2075 transitions that are
+    predicted for just before and just after Ramadan.
+
     zic now works again on Linux 2.6.16 and 2.6.17 (2006).
     (Problem reported by Rune Torgersen.)
 

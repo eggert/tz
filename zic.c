@@ -1020,7 +1020,8 @@ main(int argc, char **argv)
 					directory = optarg;
 				else {
 					fprintf(stderr,
-_("%s: More than one -d option specified\n"),
+						_("%s: More than one -d option"
+						  " specified\n"),
 						progname);
 					return EXIT_FAILURE;
 				}
@@ -1030,7 +1031,8 @@ _("%s: More than one -d option specified\n"),
 					lcltime = optarg;
 				else {
 					fprintf(stderr,
-_("%s: More than one -l option specified\n"),
+						_("%s: More than one -l option"
+						  " specified\n"),
 						progname);
 					return EXIT_FAILURE;
 				}
@@ -1040,7 +1042,8 @@ _("%s: More than one -l option specified\n"),
 					psxrules = optarg;
 				else {
 					fprintf(stderr,
-_("%s: More than one -p option specified\n"),
+						_("%s: More than one -p option"
+						  " specified\n"),
 						progname);
 					return EXIT_FAILURE;
 				}
@@ -1063,7 +1066,8 @@ _("%s: More than one -p option specified\n"),
 					leapsec = optarg;
 				else {
 					fprintf(stderr,
-_("%s: More than one -L option specified\n"),
+						_("%s: More than one -L option"
+						  " specified\n"),
 						progname);
 					return EXIT_FAILURE;
 				}
@@ -1074,13 +1078,14 @@ _("%s: More than one -L option specified\n"),
 			case 'r':
 				if (timerange_given) {
 				  fprintf(stderr,
-_("%s: More than one -r option specified\n"),
+					  _("%s: More than one -r option"
+					    " specified\n"),
 					  progname);
 				  return EXIT_FAILURE;
 				}
 				if (! timerange_option(optarg)) {
 				  fprintf(stderr,
-_("%s: invalid time range: %s\n"),
+					  _("%s: invalid time range: %s\n"),
 					  progname, optarg);
 				  return EXIT_FAILURE;
 				}
@@ -1875,16 +1880,14 @@ inzone(char **fields, int nfields)
 		return false;
 	}
 	if (lcltime != NULL && strcmp(fields[ZF_NAME], tzdefault) == 0) {
-		error(
-_("\"Zone %s\" line and -l option are mutually exclusive"),
-			tzdefault);
-		return false;
+	  error(_("\"Zone %s\" line and -l option are mutually exclusive"),
+		tzdefault);
+	  return false;
 	}
 	if (strcmp(fields[ZF_NAME], TZDEFRULES) == 0 && psxrules != NULL) {
-		error(
-_("\"Zone %s\" line and -p option are mutually exclusive"),
-			TZDEFRULES);
-		return false;
+	  error(_("\"Zone %s\" line and -p option are mutually exclusive"),
+		TZDEFRULES);
+	  return false;
 	}
 	for (i = 0; i < nzones; ++i)
 		if (zones[i].z_name != NULL &&
@@ -1976,10 +1979,9 @@ inzsub(char **fields, int nfields, bool iscont)
 			zones[nzones - 1].z_untiltime > min_time &&
 			zones[nzones - 1].z_untiltime < max_time &&
 			zones[nzones - 1].z_untiltime >= z.z_untiltime) {
-				error(_(
-"Zone continuation line end time is not after end time of previous line"
-					));
-				return false;
+		  error(_("Zone continuation line end time is"
+			  " not after end time of previous line"));
+		  return false;
 		}
 	}
 	z.z_name = iscont ? NULL : estrdup(fields[ZF_NAME]);
@@ -3413,7 +3415,8 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				 isdst, save, false);
 			eat(zp->z_filenum, zp->z_linenum);
 			if (*startbuf == '\0')
-error(_("can't determine time zone abbreviation to use just after until time"));
+			  error(_("can't determine time zone abbreviation"
+				  " to use just after until time"));
 			else {
 			  int type = addtype(startoff, startbuf, isdst,
 					     startttisstd, startttisut);

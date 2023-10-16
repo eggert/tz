@@ -3551,13 +3551,13 @@ Rule Palestine	2070	only	-	Oct	 4	2:00	0	-
 Rule Palestine	2071	only	-	Sep	19	2:00	0	-
 Rule Palestine	2072	only	-	Sep	10	2:00	0	-
 Rule Palestine	2072	only	-	Oct	15	2:00	1:00	S
+Rule Palestine	2072	max	-	Oct	Sat<=30	2:00	0	-
 Rule Palestine	2073	only	-	Sep	 2	2:00	0	-
 Rule Palestine	2073	only	-	Oct	 7	2:00	1:00	S
 Rule Palestine	2074	only	-	Aug	18	2:00	0	-
 Rule Palestine	2074	only	-	Sep	29	2:00	1:00	S
 Rule Palestine	2075	only	-	Aug	10	2:00	0	-
 Rule Palestine	2075	only	-	Sep	14	2:00	1:00	S
-Rule Palestine	2075	max	-	Oct	Sat<=30	2:00	0	-
 Rule Palestine	2076	only	-	Jul	25	2:00	0	-
 Rule Palestine	2076	only	-	Sep	 5	2:00	1:00	S
 Rule Palestine	2077	only	-	Jul	17	2:00	0	-

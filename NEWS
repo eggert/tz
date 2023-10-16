@@ -2,6 +2,14 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    Code and data fixes for Palestine timestamps starting in 2072.
+
+  Changes to future timestamps
+
+    Fix predictions for DST transitions in Palestine in 2072-2075,
+    correcting a typo introduced in 2023a.
+
   Changes to past and future tm_isdst flags
 
     Much of Greenland, represented by America/Nuuk, changed its

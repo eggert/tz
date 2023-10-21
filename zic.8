@@ -121,6 +121,12 @@ will act as if the input contained a link line of the form
 .ti +.5i
 Link	\fItimezone\fP		posixrules
 .sp
+If
+.I timezone
+is
+.q "\*-"
+(the default), any already-existing link is removed.
+.sp
 Unless
 .I timezone is
 .q "\*-" ,
@@ -131,12 +137,6 @@ and it should not be combined with
 if
 .IR timezone 's
 transitions are at standard time or Universal Time (UT) instead of local time.
-.sp
-If
-.I timezone
-is
-.BR \*- ,
-any already-existing link is removed.
 .TP
 .BR "\*-r " "[\fB@\fP\fIlo\fP][\fB/@\fP\fIhi\fP]"
 Limit the applicability of output files

@@ -306,21 +306,31 @@ The abbreviations for standard and daylight saving time are
 and
 .q "\*-02".
 .PP
-If no
-.I rule
-is present in
-.BR TZ ,
-the rules specified
-by the
+If
+.B TZ
+specifies daylight saving time but does not specify a
+.IR rule ,
+and the optional
 .BR tzfile (5)-format
 file
 .B posixrules
-in the system time conversion information directory are used, with the
-standard and daylight saving time offsets from UT replaced by those specified by
-the
+is present in the system time conversion information directory, the
+rules in
+.B posixrules
+are used, with the
+.B posixrules
+standard and daylight saving time offsets from UT
+replaced by those specified by the
 .I offset
 values in
 .BR TZ .
+However, the
+.B posixrules
+file is obsolete: if it is present it is only for backward compatibility,
+and it does not work reliably.
+Therefore, applications that specify a
+.B TZ
+string with daylight saving time should specify rules explicitly.
 .PP
 For compatibility with System V Release 3.1, a semicolon
 .RB ( ; )
@@ -329,20 +339,16 @@ may be used to separate the
 from the rest of the specification.
 .SH FILES
 .ta \w'/usr/share/zoneinfo/posixrules\0\0'u
-/usr/share/zoneinfo	timezone information directory
+/etc/localtime	local timezone file
 .br
-/usr/share/zoneinfo/localtime	local timezone file
+/usr/share/zoneinfo	timezone directory
 .br
-/usr/share/zoneinfo/posixrules	default DST rules (obsolete,
-	and can cause bugs if present)
+/usr/share/zoneinfo/posixrules	default DST rules (obsolete)
 .br
 /usr/share/zoneinfo/GMT	for UTC leap seconds
-.sp
-If
-.B /usr/share/zoneinfo/GMT
-is absent,
-UTC leap seconds are loaded from
-.BR /usr/share/zoneinfo/posixrules .
+.PP
+If /usr/share/zoneinfo/GMT is absent,
+UTC leap seconds are loaded from /usr/share/zoneinfo/GMT0 if present.
 .SH SEE ALSO
 getenv(3),
 newctime(3),

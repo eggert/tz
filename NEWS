@@ -3,9 +3,17 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Ittoqqortoormiit, Greenland changes time zones on 2024-03-31.
     Code and data fixes for Palestine timestamps starting in 2072.
 
   Changes to future timestamps
+
+    Ittoqqortoormiit, Greenland (America/Scoresbysund) joins most of
+    the rest of Greenland's timekeeping practice on 2024-03-31, by
+    changing its time zone from -01/+00 to -02/-01 at the same moment
+    as the spring-forward transition.  Its clocks will therefore not
+    spring forward as previously scheduled.  The time zone change
+    reverts to its common practice before 1981.
 
     Fix predictions for DST transitions in Palestine in 2072-2075,
     correcting a typo introduced in 2023a.

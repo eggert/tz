@@ -1130,6 +1130,17 @@ Zone Atlantic/Faroe	-0:27:04 -	LMT	1908 Jan 11 # Tórshavn
 # However, Greenland will change to Daylight Saving Time again in 2024
 # and onwards.
 
+# From an contributor who wishes to remain anonymous for now (2023-10-29):
+# https://www.dr.dk/nyheder/seneste/i-nat-skal-uret-stilles-en-time-tilbage-men-foerste-gang-sker-det-ikke-i-groenland
+# with a link to that page:
+# https://naalakkersuisut.gl/Nyheder/2023/10/2710_sommertid
+# ... Ittoqqortoormiit joins the time of Nuuk at March 2024.
+# What would mean that America/Scoresbysund would either be in -01 year round
+# or in -02/-01 like America/Nuuk, but no longer in -01/+00.
+#
+# From Paul Eggert (2023-10-29):
+# For now, assume it will be like America/Nuuk.
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Thule	1991	1992	-	Mar	lastSun	2:00	1:00	D
 Rule	Thule	1991	1992	-	Sep	lastSun	2:00	0	S
@@ -1149,7 +1160,8 @@ Zone America/Danmarkshavn -1:14:40 -	LMT	1916 Jul 28
 Zone America/Scoresbysund -1:27:52 -	LMT	1916 Jul 28 # Ittoqqortoormiit
 			-2:00	-	-02	1980 Apr  6  2:00
 			-2:00	C-Eur	-02/-01	1981 Mar 29
-			-1:00	EU	-01/+00
+			-1:00	EU	-01/+00 2024 Mar 31
+			-2:00	EU	-02/-01
 Zone America/Nuuk	-3:26:56 -	LMT	1916 Jul 28 # Godthåb
 			-3:00	-	-03	1980 Apr  6  2:00
 			-3:00	EU	-03/-02	2023 Mar 26  1:00u

@@ -3730,11 +3730,7 @@ Zone	Europe/Istanbul	1:55:52 -	LMT	1880
 # and not at 3:00 as would have been under EU rules.
 # This is why I have set the change to EU rules into May 1996,
 # so that the change in March is stil covered by the Ukraine rule.
-# The next change in October 1996 happened under EU rules....
-# TZ database holds three other zones for Ukraine.... I have not yet
-# worked out the consequences for these three zones, as we (me and my
-# US colleague David Cochrane) are still trying to get more
-# information upon these local deviations from Kiev rules.
+# The next change in October 1996 happened under EU rules.
 #
 # From Paul Eggert (2022-08-27):
 # For now, assume that Ukraine's zones all followed the same rules,

@@ -4506,8 +4506,8 @@ Release data2011m - 2011-10-24 21:42:16 +0700
   In particular, the typos in comments in the data (2011-11-17 should have
   been 2011-10-17 as Alan Barrett noted, and spelling of Tiraspol that
   Tim Parenti noted) have been fixed, and the change for Ukraine has been
-  made in all 4 Ukrainian zones, rather than just Kiev (again, thanks to
-  Tim Parenti, and also Denys Gavrysh)
+  made in all 4 Ukrainian zones, rather than just Europe/Kiev
+  (again, thanks to Tim Parenti, and also Denys Gavrysh).
 
   In addition, I added Europe/Tiraspol to zone.tab.
 

@@ -18,7 +18,7 @@ Unreleased, experimental changes
     Fix predictions for DST transitions in Palestine in 2072-2075,
     correcting a typo introduced in 2023a.
 
-  Changes to past and future tm_isdst flags
+  Changes to past tm_isdst flags
 
     Much of Greenland, represented by America/Nuuk, changed its
     standard time from -03 to -02 on 2023-03-25, not on 2023-10-28.

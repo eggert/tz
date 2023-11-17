@@ -22,7 +22,9 @@
    tzcode library should support C89 callers in addition to the usual
    support for C99-and-later callers.  These macros are obsolescent,
    and the plan is to remove them along with any code needed only when
-   they are nonzero.  */
+   they are nonzero.  A good time to do that might be in the year 2029
+   because RHEL 7 (whose GCC defaults to C89) extended life cycle
+   support (ELS) is scheduled to end on 2028-06-30.  */
 #ifndef PORT_TO_C89
 # define PORT_TO_C89 0
 #endif

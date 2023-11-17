@@ -278,7 +278,7 @@ LDLIBS=
 #
 # * Options marked "*" can be omitted if your compiler is C23 compatible.
 # * Options marked "+" are obsolescent and are planned to be removed
-#   once the code assumes C99 or later.
+#   once the code assumes C99 or later, say in the year 2029.
 #
 # Select instrumentation via "make GCC_INSTRUMENT='whatever'".
 GCC_INSTRUMENT = \

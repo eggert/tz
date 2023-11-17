@@ -119,7 +119,7 @@ Release 2023a - 2023-03-22 12:39:33 -0700
     a C89 environment, compile with -DPORT_TO_C89.  To support C89
     callers of the tzcode library, compile with -DSUPPORT_C89.  The
     two new macros are transitional aids planned to be removed in a
-    future version, when C99 or later will be required.
+    future version (say, in 2029), when C99 or later will be required.
 
     The code now builds again on pre-C99 platforms, if you compile
     with -DPORT_TO_C89.  This fixes a bug introduced in 2022f.

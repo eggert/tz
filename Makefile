@@ -1,9 +1,8 @@
 # Make and install tzdb code and data.
-# Request POSIX conformance; this must be the first non-comment line.
-.POSIX:
-
 # This file is in the public domain, so clarified as of
 # 2009-05-17 by Arthur David Olson.
+# Request POSIX conformance; this must be the first non-comment line.
+.POSIX:
 
 # Package name for the code distribution.
 PACKAGE=	tzcode

@@ -4341,7 +4341,7 @@ Release 2012j - 2012-11-12 18:34:49 -0800
   now uses tz@iana.org rather than the old elsie address.
 
   zic -v now complains about abbreviations that are less than 3
-  or more than 6 characters, as per Posix.  Formerly, it checked
+  or more than 6 characters, as per POSIX.  Formerly, it checked
   for abbreviations that were more than 3.
 
   'make public' no longer puts its temporary directory under /tmp,

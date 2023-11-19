@@ -869,8 +869,8 @@ getsecs(register const char *strp, int_fast32_t *const secsp)
 	int_fast32_t secsperhour = SECSPERHOUR;
 
 	/*
-	** 'HOURSPERDAY * DAYSPERWEEK - 1' allows quasi-Posix rules like
-	** "M10.4.6/26", which does not conform to Posix,
+	** 'HOURSPERDAY * DAYSPERWEEK - 1' allows quasi-POSIX rules like
+	** "M10.4.6/26", which does not conform to POSIX,
 	** but which specifies the equivalent of
 	** "02:00 on the first Sunday on or after 23 Oct".
 	*/

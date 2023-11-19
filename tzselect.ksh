@@ -10,7 +10,7 @@ REPORT_BUGS_TO=tz@iana.org
 
 # Porting notes:
 #
-# This script requires a Posix-like shell and prefers the extension of a
+# This script requires a POSIX-like shell and prefers the extension of a
 # 'select' statement.  The 'select' statement was introduced in the
 # Korn shell and is available in Bash and other shell implementations.
 # If your host lacks both Bash and the Korn shell, you can get their
@@ -27,7 +27,7 @@ REPORT_BUGS_TO=tz@iana.org
 
 #
 # This script also uses several features of modern awk programs.
-# If your host lacks awk, or has an old awk that does not conform to Posix,
+# If your host lacks awk, or has an old awk that does not conform to POSIX,
 # you can use either of the following free programs instead:
 #
 #	Gawk (GNU awk) <https://www.gnu.org/software/gawk/>
@@ -45,10 +45,10 @@ say() {
     printf '%s\n' "$1"
 }
 
-# Check for awk Posix compliance.
+# Check for awk POSIX compliance.
 ($AWK -v x=y 'BEGIN { exit 123 }') </dev/null >/dev/null 2>&1
 [ $? = 123 ] || {
-	say >&2 "$0: Sorry, your '$AWK' program is not Posix compatible."
+	say >&2 "$0: Sorry, your '$AWK' program is not POSIX compatible."
 	exit 1
 }
 
@@ -397,7 +397,7 @@ while
 	eval '
 	    doselect '"$quoted_continents"' \
 		"coord - I want to use geographical coordinates." \
-		"TZ - I want to specify the timezone using the Posix TZ format." \
+		"TZ - I want to specify the timezone using the POSIX TZ format." \
 		"time - I know local time already."
 	    continent=$select_result
 	    case $continent in
@@ -409,7 +409,7 @@ while
 
 	case $continent in
 	TZ)
-		# Ask the user for a Posix TZ string.  Check that it conforms.
+		# Ask the user for a POSIX TZ string.  Check that it conforms.
 		while
 			echo >&2 'Please enter the desired value' \
 				'of the TZ environment variable.'
@@ -433,7 +433,7 @@ while
 				exit 0
 			}'
 		do
-		    say >&2 "'$TZ' is not a conforming Posix timezone string."
+		    say >&2 "'$TZ' is not a conforming POSIX timezone string."
 		done
 		TZ_for_date=$TZ;;
 	*)

@@ -384,7 +384,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 #
 # NIST-PCTS:151-2, Version 1.4, (1993-12-03) is a test suite put
 # out by the National Institute of Standards and Technology
-# which claims to test C and Posix conformance.  If you want to pass PCTS, add
+# which claims to test C and POSIX conformance.  If you want to pass PCTS, add
 #	-DPCTS
 # to the end of the "CFLAGS=" line.
 #
@@ -424,18 +424,18 @@ ZFLAGS=
 
 ZIC_INSTALL=	$(ZIC) -d '$(DESTDIR)$(TZDIR)' $(LEAPSECONDS)
 
-# The name of a Posix-compliant 'awk' on your system.
+# The name of a POSIX-compliant 'awk' on your system.
 # mawk 1.3.3 and Solaris 10 /usr/bin/awk do not work.
 # Also, it is better (though not essential) if 'awk' supports UTF-8,
 # and unfortunately mawk and busybox awk do not support UTF-8.
 # Try AWK=gawk or AWK=nawk if your awk has the abovementioned problems.
 AWK=		awk
 
-# The full path name of a Posix-compliant shell, preferably one that supports
+# The full path name of a POSIX-compliant shell, preferably one that supports
 # the Korn shell's 'select' statement as an extension.
 # These days, Bash is the most popular.
 # It should be OK to set this to /bin/sh, on platforms where /bin/sh
-# lacks 'select' or doesn't completely conform to Posix, but /bin/bash
+# lacks 'select' or doesn't completely conform to POSIX, but /bin/bash
 # is typically nicer if it works.
 KSHELL=		/bin/bash
 

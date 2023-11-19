@@ -46,6 +46,12 @@ Unreleased, experimental changes
      * It now uses ARFLAGS, with default specified by POSIX.
      * It does not use LFLAGS incompatibly with POSIX.
 
+  Changes to commentary
+
+     Limitations and hazards of the optional support for obsolescent
+     C89 platforms are documented better, along with a tentative
+     schedule for removing this support.
+
 
 Release 2023c - 2023-03-28 12:42:14 -0700
 
@@ -123,11 +129,14 @@ Release 2023a - 2023-03-22 12:39:33 -0700
     platform dependent and abbreviations were silently truncated to
     16 bytes even when the limit was greater than 16.
 
-    The code by default is now designed for C99 or later.  To build in
-    a C89 environment, compile with -DPORT_TO_C89.  To support C89
-    callers of the tzcode library, compile with -DSUPPORT_C89.  The
-    two new macros are transitional aids planned to be removed in a
-    future version (say, in 2029), when C99 or later will be required.
+    The code by default is now designed for C99 or later.  To build on
+    a mostly-C89 platform, compile with -DPORT_TO_C89; this should
+    work on C89 platforms that also support C99 'long long' and
+    perhaps a few other extensions to C89.  To support C89 callers of
+    tzcode's library, compile with -DSUPPORT_C89; however, this could
+    trigger latent bugs in C99-or-later callers.  The two new macros
+    are transitional aids planned to be removed in a future version
+    (say, in 2029), when C99 or later will be required.
 
     The code now builds again on pre-C99 platforms, if you compile
     with -DPORT_TO_C89.  This fixes a bug introduced in 2022f.

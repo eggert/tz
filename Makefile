@@ -250,13 +250,16 @@ LDLIBS=
 #  -DHAVE_UNISTD_H=0 if <unistd.h> does not work*
 #  -DHAVE_UTMPX_H=0 if <utmpx.h> does not work*
 #  -Dlocale_t=XXX if your system uses XXX instead of locale_t
-#  -DPORT_TO_C89 if tzcode should also run on C89 platforms+
+#  -DPORT_TO_C89 if tzcode should also run on mostly-C89 platforms+
 #	Typically it is better to use a later standard.  For example,
 #	with GCC 4.9.4 (2016), prefer '-std=gnu11' to '-DPORT_TO_C89'.
+#	Even with -DPORT_TO_C89, the code needs at least one C99
+#	feature (64-bit integers) and maybe more.
 #  -DRESERVE_STD_EXT_IDS if your platform reserves standard identifiers
 #	with external linkage, e.g., applications cannot define 'localtime'.
 #  -Dssize_t=long on hosts like MS-Windows that lack ssize_t
 #  -DSUPPORT_C89 if the tzcode library should support C89 callers+
+#	However, this might trigger latent bugs in C99-or-later callers.
 #  -DSUPPRESS_TZDIR to not prepend TZDIR to file names; this has
 #	security implications and is not recommended for general use
 #  -DTHREAD_SAFE to make localtime.c thread-safe, as POSIX requires;

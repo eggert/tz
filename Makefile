@@ -4,6 +4,20 @@
 # Request POSIX conformance; this must be the first non-comment line.
 .POSIX:
 
+# To affect how this Makefile works, you can run a shell script like this:
+#
+#	#!/bin/sh
+#	make CC='gcc -std=gnu11' "$@"
+#
+# This example script is appropriate for a pre-2017 GNU/Linux system
+# where a non-default setting is needed to support this package's use of C99.
+#
+# Alternatively, you can simply edit this Makefile to tailor the following
+# macro definitions.
+
+###############################################################################
+# Start of macros that one plausibly might want to tailor.
+
 # Package name for the code distribution.
 PACKAGE=	tzcode
 
@@ -192,8 +206,9 @@ UTF8_LOCALE=	en_US.utf8
 # On some hosts, this should have -lintl unless CFLAGS has -DHAVE_GETTEXT=0.
 LDLIBS=
 
-# Add the following to the end of the "CFLAGS=" line as needed to override
-# defaults specified in the source code.  "-DFOO" is equivalent to "-DFOO=1".
+# Add the following to an uncommented "CFLAGS=" line as needed
+# to override defaults specified in the source code or by the system.
+# "-DFOO" is equivalent to "-DFOO=1".
 #  -DDEPRECATE_TWO_DIGIT_YEARS for optional runtime warnings about strftime
 #	formats that generate only the last two digits of year numbers
 #  -DEPOCH_LOCAL if the 'time' function returns local time not UT
@@ -273,6 +288,10 @@ LDLIBS=
 #  -DZIC_MAX_ABBR_LEN_WO_WARN=3
 #	(or some other number) to set the maximum time zone abbreviation length
 #	that zic will accept without a warning (the default is 6)
+#  -g to generate symbolic debugging info
+#  -Idir to include from directory 'dir'
+#  -O0 to disable optimization; other -O options to enable more optimization
+#  -Uname to remove any definition of the macro 'name'
 #  $(GCC_DEBUG_FLAGS) if you are using recent GCC and want lots of checking
 #
 # * Options marked "*" can be omitted if your compiler is C23 compatible.
@@ -393,13 +412,21 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # 53 as a week number (rather than 52 or 53) for January days before
 # January's first Monday when a "%V" format is used and January 1
 # falls on a Friday, Saturday, or Sunday.
+#
+# POSIX says CFLAGS defaults to "-O 1".
+# Uncomment the following line and edit its contents as needed.
 
-CFLAGS=
+#CFLAGS= -O 1
 
-# Linker flags.  Default to $(LFLAGS) for backwards compatibility
-# to release 2012h and earlier.
 
-LDFLAGS=	$(LFLAGS)
+# The name of a POSIX-like library archiver, its flags, C compiler,
+# linker flags, and 'make' utility.  Ordinarily the defaults suffice.
+# The commented-out values are the defaults specified by POSIX 202x/D3.
+#AR = ar
+#ARFLAGS = -rv
+#CC = c17
+#LDFLAGS =
+#MAKE = make
 
 # For leap seconds, this Makefile uses LEAPSECONDS='-L leapseconds' in
 # submake command lines.  The default is no leap seconds.
@@ -508,17 +535,20 @@ GZIPFLAGS=	-9n
 DIFF_TZS=	 diff -u$$(! diff -u -F'^TZ=' - - <>/dev/null >&0 2>&1 \
 			   || echo ' -F^TZ=')
 
-###############################################################################
-
-#MAKE=		make
-
-cc=		cc
-CC=		$(cc) -DTZDIR='"$(TZDIR)"'
-
-AR=		ar
-
 # ':' on typical hosts; 'ranlib' on the ancient hosts that still need ranlib.
 RANLIB=		:
+
+# POSIX prohibits defining or using SHELL.  However, csh users on systems
+# that use the user shell for Makefile commands may need to define SHELL.
+#SHELL=		/bin/sh
+
+# End of macros that one plausibly might want to tailor.
+###############################################################################
+
+
+# $(CC) option to specify TZDIR, appropriately quoted.
+# It is separate from CFLAGS so that CFLAGS and TZDIR can be set independently.
+DTZDIR = -DTZDIR='"$(TZDIR)"'
 
 TZCOBJS=	zic.o
 TZDOBJS=	zdump.o localtime.o asctime.o strftime.o
@@ -588,11 +618,6 @@ VERSION_DEPS= \
 		workman.sh zdump.8 zdump.c zic.8 zic.c \
 		ziguard.awk zishrink.awk \
 		zone.tab zone1970.tab
-
-# And for the benefit of csh users on systems that assume the user
-# shell should be used to handle commands in Makefiles. . .
-
-SHELL=		/bin/sh
 
 all:		tzselect zic zdump libtz.a $(TABDATA) \
 		  vanguard.zi main.zi rearguard.zi
@@ -671,10 +696,10 @@ version.h:	version
 		mv $@.out $@
 
 zdump:		$(TZDOBJS)
-		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(TZDOBJS) $(LDLIBS)
+		$(CC) -o $@ $(DTZDIR) $(CFLAGS) $(LDFLAGS) $(TZDOBJS) $(LDLIBS)
 
 zic:		$(TZCOBJS)
-		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(TZCOBJS) $(LDLIBS)
+		$(CC) -o $@ $(DTZDIR) $(CFLAGS) $(LDFLAGS) $(TZCOBJS) $(LDLIBS)
 
 leapseconds:	$(LEAP_DEPS)
 		$(AWK) -v EXPIRES_LINE=$(EXPIRES_LINE) \
@@ -768,11 +793,11 @@ force_tzs:	$(TZS_NEW)
 
 libtz.a:	$(LIBOBJS)
 		rm -f $@
-		$(AR) -rc $@ $(LIBOBJS)
+		$(AR) $(ARFLAGS) $@ $(LIBOBJS)
 		$(RANLIB) $@
 
 date:		$(DATEOBJS)
-		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(DATEOBJS) $(LDLIBS)
+		$(CC) -o $@ $(DTZDIR) $(CFLAGS) $(LDFLAGS) $(DATEOBJS) $(LDLIBS)
 
 tzselect:	tzselect.ksh version
 		VERSION=`cat version` && sed \
@@ -1023,7 +1048,8 @@ check_public: $(VERSION_DEPS)
 		rm -fr public.dir
 		mkdir public.dir
 		ln $(VERSION_DEPS) public.dir
-		cd public.dir && $(MAKE) CFLAGS='$(GCC_DEBUG_FLAGS)' ALL
+		cd public.dir \
+		  && $(MAKE) CFLAGS='$(GCC_DEBUG_FLAGS)' DTZDIR=$(DTZDIR) ALL
 		for i in $(TDATA_TO_CHECK) public.dir/tzdata.zi \
 		    public.dir/vanguard.zi public.dir/main.zi \
 		    public.dir/rearguard.zi; \
@@ -1067,6 +1093,7 @@ $(TIME_T_ALTERNATIVES): $(VERSION_DEPS)
 		(cd $@.dir && \
 		  $(MAKE) TOPDIR="$$wd/$@.dir" \
 		    CFLAGS='$(CFLAGS) -Dtime_tz='"'$@'" \
+		    DTZDIR=$(DTZDIR) \
 		    REDO='$(REDO)' \
 			D=$$wd/$@.dir \
 		    TZS_YEAR="$$range" TZS_CUTOFF_FLAG="-t $$range" \
@@ -1230,6 +1257,7 @@ typecheck_long_long typecheck_unsigned: $(VERSION_DEPS)
 		  typecheck_cflags='' && \
 		  $(MAKE) \
 		    CFLAGS="$(TYPECHECK_CFLAGS) \"-Dtime_t=$$i\"" \
+		    DTZDIR=$(DTZDIR) \
 		    TOPDIR="`pwd`" \
 		    install
 		$@.dir/zdump -i -c 1970,1971 Europe/Rome

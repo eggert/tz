@@ -38,6 +38,14 @@ Unreleased, experimental changes
     zic now works again on Linux 2.6.16 and 2.6.17 (2006).
     (Problem reported by Rune Torgersen.)
 
+  Changes to build procedure
+
+    The Makefile is now more compatible with POSIX:
+     * It no longer defines AR, CC, CFLAGS, LDFLAGS, and SHELL.
+     * It no longer uses its own 'cc' in place of CC.
+     * It now uses ARFLAGS, with default specified by POSIX.
+     * It does not use LFLAGS incompatibly with POSIX.
+
 
 Release 2023c - 2023-03-28 12:42:14 -0700
 

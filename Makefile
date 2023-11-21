@@ -254,7 +254,7 @@ LDLIBS=
 #	Typically it is better to use a later standard.  For example,
 #	with GCC 4.9.4 (2016), prefer '-std=gnu11' to '-DPORT_TO_C89'.
 #	Even with -DPORT_TO_C89, the code needs at least one C99
-#	feature (64-bit integers) and maybe more.
+#	feature (integers at least 64 bits wide) and maybe more.
 #  -DRESERVE_STD_EXT_IDS if your platform reserves standard identifiers
 #	with external linkage, e.g., applications cannot define 'localtime'.
 #  -Dssize_t=long on hosts like MS-Windows that lack ssize_t

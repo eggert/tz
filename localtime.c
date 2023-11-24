@@ -1115,6 +1115,7 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 	}
 	if (0 < sp->leapcnt)
 	  leaplo = sp->lsis[sp->leapcnt - 1].ls_trans;
+	sp->goback = sp->goahead = false;
 	if (*name != '\0') {
 		if (*name == '<') {
 			dstname = ++name;

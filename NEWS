@@ -29,7 +29,8 @@ Unreleased, experimental changes
 
     localtime.c no longer mishandles TZif files that contain a single
     transition into a DST regime.  Previously, it incorrectly assumed
-    DST was in effect before the transition too.
+    DST was in effect before the transition too.  (Thanks to Alois
+    Treindl for debugging help.)
 
     zic no longer mishandles data for Palestine after the year 2075.
     Previously, it incorrectly omitted post-2075 transitions that are

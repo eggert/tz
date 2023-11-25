@@ -46,6 +46,8 @@ Unreleased, experimental changes
      * It no longer uses its own 'cc' in place of CC.
      * It now uses ARFLAGS, with default specified by POSIX.
      * It does not use LFLAGS incompatibly with POSIX.
+    Due to the CC changes, TZDIR is now #defined in a file tzfile.h
+    built by 'make', not in a $(CC) -D option.
 
   Changes to commentary
 

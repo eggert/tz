@@ -549,10 +549,6 @@ RANLIB=		:
 ###############################################################################
 
 
-# $(CC) option to specify TZDIR, appropriately quoted.
-# It is separate from CFLAGS so that CFLAGS and TZDIR can be set independently.
-DTZDIR = -DTZDIR='"$(TZDIR)"'
-
 TZCOBJS=	zic.o
 TZDOBJS=	zdump.o localtime.o asctime.o strftime.o
 DATEOBJS=	date.o localtime.o strftime.o asctime.o
@@ -690,6 +686,13 @@ tzdata.zi:	$(DATAFORM).zi version zishrink.awk
 		    $(DATAFORM).zi >$@.out
 		mv $@.out $@
 
+tzdir.h:
+		printf '%s\n' >$@.out \
+		  '#ifndef TZDIR' \
+		  '# define TZDIR "$(TZDIR)" /* TZif directory */' \
+		  '#endif'
+		mv $@.out $@
+
 version.h:	version
 		VERSION=`cat version` && printf '%s\n' \
 		  'static char const PKGVERSION[]="($(PACKAGE)) ";' \
@@ -699,10 +702,10 @@ version.h:	version
 		mv $@.out $@
 
 zdump:		$(TZDOBJS)
-		$(CC) -o $@ $(DTZDIR) $(CFLAGS) $(LDFLAGS) $(TZDOBJS) $(LDLIBS)
+		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(TZDOBJS) $(LDLIBS)
 
 zic:		$(TZCOBJS)
-		$(CC) -o $@ $(DTZDIR) $(CFLAGS) $(LDFLAGS) $(TZCOBJS) $(LDLIBS)
+		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(TZCOBJS) $(LDLIBS)
 
 leapseconds:	$(LEAP_DEPS)
 		$(AWK) -v EXPIRES_LINE=$(EXPIRES_LINE) \
@@ -800,7 +803,7 @@ libtz.a:	$(LIBOBJS)
 		$(RANLIB) $@
 
 date:		$(DATEOBJS)
-		$(CC) -o $@ $(DTZDIR) $(CFLAGS) $(LDFLAGS) $(DATEOBJS) $(LDLIBS)
+		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(DATEOBJS) $(LDLIBS)
 
 tzselect:	tzselect.ksh version
 		VERSION=`cat version` && sed \
@@ -947,7 +950,7 @@ clean_misc:
 		rm -fr check_*.dir typecheck_*.dir
 		rm -f *.o *.out $(TIME_T_ALTERNATIVES) \
 		  check_* core typecheck_* \
-		  date tzselect version.h zdump zic libtz.a
+		  date tzdir.h tzselect version.h zdump zic libtz.a
 clean:		clean_misc
 		rm -fr *.dir tzdb-*/
 		rm -f *.zi $(TZS_NEW)
@@ -1052,7 +1055,7 @@ check_public: $(VERSION_DEPS)
 		mkdir public.dir
 		ln $(VERSION_DEPS) public.dir
 		cd public.dir \
-		  && $(MAKE) CFLAGS='$(GCC_DEBUG_FLAGS)' DTZDIR=$(DTZDIR) ALL
+		  && $(MAKE) CFLAGS='$(GCC_DEBUG_FLAGS)' TZDIR='$(TZDIR)' ALL
 		for i in $(TDATA_TO_CHECK) public.dir/tzdata.zi \
 		    public.dir/vanguard.zi public.dir/main.zi \
 		    public.dir/rearguard.zi; \
@@ -1096,7 +1099,6 @@ $(TIME_T_ALTERNATIVES): $(VERSION_DEPS)
 		(cd $@.dir && \
 		  $(MAKE) TOPDIR="$$wd/$@.dir" \
 		    CFLAGS='$(CFLAGS) -Dtime_tz='"'$@'" \
-		    DTZDIR=$(DTZDIR) \
 		    REDO='$(REDO)' \
 			D=$$wd/$@.dir \
 		    TZS_YEAR="$$range" TZS_CUTOFF_FLAG="-t $$range" \
@@ -1260,7 +1262,6 @@ typecheck_long_long typecheck_unsigned: $(VERSION_DEPS)
 		  typecheck_cflags='' && \
 		  $(MAKE) \
 		    CFLAGS="$(TYPECHECK_CFLAGS) \"-Dtime_t=$$i\"" \
-		    DTZDIR=$(DTZDIR) \
 		    TOPDIR="`pwd`" \
 		    install
 		$@.dir/zdump -i -c 1970,1971 Europe/Rome
@@ -1272,10 +1273,10 @@ zonenames:	tzdata.zi
 asctime.o:	private.h tzfile.h
 date.o:		private.h
 difftime.o:	private.h
-localtime.o:	private.h tzfile.h
+localtime.o:	private.h tzfile.h tzdir.h
 strftime.o:	private.h tzfile.h
 zdump.o:	version.h
-zic.o:		private.h tzfile.h version.h
+zic.o:		private.h tzfile.h tzdir.h version.h
 
 .PHONY: ALL INSTALL all
 .PHONY: check check_mild check_time_t_alternatives

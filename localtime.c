@@ -15,6 +15,7 @@
 #define LOCALTIME_IMPLEMENTATION
 #include "private.h"
 
+#include "tzdir.h"
 #include "tzfile.h"
 #include <fcntl.h>
 

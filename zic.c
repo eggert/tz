@@ -14,6 +14,7 @@
 
 #include "version.h"
 #include "private.h"
+#include "tzdir.h"
 #include "tzfile.h"
 
 #include <fcntl.h>

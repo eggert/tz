@@ -18,6 +18,7 @@ ChangeLog
 check_*
 date
 leapseconds
+tzdir.h
 tzselect
 version
 version.h

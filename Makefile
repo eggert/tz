@@ -810,13 +810,13 @@ date:		$(DATEOBJS)
 
 tzselect:	tzselect.ksh version
 		VERSION=`cat version` && sed \
-			-e 's|#!/bin/bash|#!$(KSHELL)|g' \
-			-e 's|AWK=[^}]*|AWK='\''$(AWK)'\''|g' \
-			-e 's|\(PKGVERSION\)=.*|\1='\''($(PACKAGE)) '\''|' \
-			-e 's|\(REPORT_BUGS_TO\)=.*|\1=$(BUGEMAIL)|' \
-			-e 's|TZDIR=[^}]*|TZDIR=$(TZDIR)|' \
-			-e 's|\(TZVERSION\)=.*|\1='"$$VERSION"'|' \
-			<$@.ksh >$@.out
+		  -e "s'#!/bin/bash'#!"'$(KSHELL)'\' \
+		  -e s\''\(AWK\)=[^}]*'\''\1=\'\''$(AWK)\'\'\' \
+		  -e s\''\(PKGVERSION\)=.*'\''\1=\'\''($(PACKAGE)) \'\'\' \
+		  -e s\''\(REPORT_BUGS_TO\)=.*'\''\1=\'\''$(BUGEMAIL)\'\'\' \
+		  -e s\''\(TZDIR\)=[^}]*'\''\1=\'\''$(TZDIR)\'\'\' \
+		  -e s\''\(TZVERSION\)=.*'\''\1=\'"'$$VERSION\\''" \
+		  <$@.ksh >$@.out
 		chmod +x $@.out
 		mv $@.out $@
 

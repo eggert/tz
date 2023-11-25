@@ -169,7 +169,7 @@ esac
 # Make sure the tables are readable.
 TZ_COUNTRY_TABLE=$TZDIR/iso3166.tab
 TZ_ZONE_TABLE=$TZDIR/$zonetabtype.tab
-for f in $TZ_COUNTRY_TABLE $TZ_ZONE_TABLE
+for f in "$TZ_COUNTRY_TABLE" "$TZ_ZONE_TABLE"
 do
 	<"$f" || {
 		say >&2 "$0: time zone files are not set up correctly"

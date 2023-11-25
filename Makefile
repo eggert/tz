@@ -944,7 +944,7 @@ check_zishrink_posix check_zishrink_right: \
 		touch $@
 
 clean_misc:
-		rm -fr check_*.dir
+		rm -fr check_*.dir typecheck_*.dir
 		rm -f *.o *.out $(TIME_T_ALTERNATIVES) \
 		  check_* core typecheck_* \
 		  date tzselect version.h zdump zic libtz.a

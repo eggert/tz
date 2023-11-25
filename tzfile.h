@@ -21,10 +21,6 @@
 ** Information about time zone files.
 */
 
-#ifndef TZDEFAULT
-# define TZDEFAULT "/etc/localtime"
-#endif /* !defined TZDEFAULT */
-
 #ifndef TZDEFRULES
 # define TZDEFRULES "posixrules"
 #endif /* !defined TZDEFRULES */

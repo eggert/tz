@@ -688,6 +688,9 @@ tzdata.zi:	$(DATAFORM).zi version zishrink.awk
 
 tzdir.h:
 		printf '%s\n' >$@.out \
+		  '#ifndef TZDEFAULT' \
+		  '# define TZDEFAULT "$(TZDEFAULT)" /* default zone */' \
+		  '#endif' \
 		  '#ifndef TZDIR' \
 		  '# define TZDIR "$(TZDIR)" /* TZif directory */' \
 		  '#endif'

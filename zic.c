@@ -897,7 +897,8 @@ static zic_t const max_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
 static zic_t lo_time = MINVAL(zic_t, TIME_T_BITS_IN_FILE);
 static zic_t hi_time = MAXVAL(zic_t, TIME_T_BITS_IN_FILE);
 
-/* The time specified by the -R option, defaulting to MIN_TIME.  */
+/* The time specified by the -R option, defaulting to MIN_TIME;
+   or lo_time, whichever is greater.  */
 static zic_t redundant_time = MINVAL(zic_t, TIME_T_BITS_IN_FILE);
 
 /* The time specified by an Expires line, or negative if no such line.  */
@@ -1109,6 +1110,8 @@ main(int argc, char **argv)
 	  fprintf(stderr, _("%s: -R time exceeds -r cutoff\n"), progname);
 	  return EXIT_FAILURE;
 	}
+	if (redundant_time < lo_time)
+	  redundant_time = lo_time;
 	if (bloat == 0) {
 	  static char const bloat_default[] = ZIC_BLOAT_DEFAULT;
 	  if (strcmp(bloat_default, "slim") == 0)
@@ -3442,6 +3445,9 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 	if (defaulttype < 0)
 	  defaulttype = 0;
 	if (!do_extend && !want_bloat()) {
+	  /* Keep trailing transitions that are no greater than this.  */
+	  zic_t keep_at_max;
+
 	  /* The earliest transition into a time governed by the TZ string.  */
 	  zic_t TZstarttime = ZIC_MAX;
 	  for (i = 0; i < timecnt; i++) {
@@ -3452,10 +3458,11 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 	  if (TZstarttime == ZIC_MAX)
 	    TZstarttime = nonTZlimtime;
 
-	  /* Omit trailing transitions deducible from the TZ string.  */
+	  /* Omit trailing transitions deducible from the TZ string,
+	     and not needed for -r or -R.  */
+	  keep_at_max = max(TZstarttime, redundant_time);
 	  for (i = j = 0; i < timecnt; i++)
-	    if (redundant_time <= attypes[i].at
-		&& attypes[i].at <= TZstarttime) {
+	    if (attypes[i].at <= keep_at_max) {
 	      attypes[j].at = attypes[i].at;
 	      attypes[j].dontmerge = (attypes[i].at == TZstarttime
 				      && (nonTZlimtype != attypes[i].type

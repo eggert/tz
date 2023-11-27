@@ -37,7 +37,8 @@ Unreleased, experimental changes
 
     zic no longer mishandles data for Palestine after the year 2075.
     Previously, it incorrectly omitted post-2075 transitions that are
-    predicted for just before and just after Ramadan.
+    predicted for just before and just after Ramadan.  (Thanks to Ken
+    Murchison for debugging help.)
 
     zic now works again on Linux 2.6.16 and 2.6.17 (2006).
     (Problem reported by Rune Torgersen.)

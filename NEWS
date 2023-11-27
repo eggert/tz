@@ -787,6 +787,8 @@ Release 2021b - 2021-09-24 16:23:00 -0700
     them, set the EXPIRES_LINE Makefile variable.  If a TZif file uses
     this new feature it is marked with a new TZif version number 4,
     a format intended to be documented in a successor to RFC 8536.
+    The old-format "#expires" comments are now treated solely as
+    comments and have no effect on the TZif files.
 
     zic -L LEAPFILE -r @LO no longer generates an invalid TZif file
     that omits leap second information for the range LO..B when LO

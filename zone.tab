@@ -107,7 +107,7 @@ BT	+2728+08939	Asia/Thimphu
 BW	-2439+02555	Africa/Gaborone
 BY	+5354+02734	Europe/Minsk
 BZ	+1730-08812	America/Belize
-CA	+4734-05243	America/St_Johns	Newfoundland, Labrador (southeast)
+CA	+4734-05243	America/St_Johns	Newfoundland, Labrador (SE)
 CA	+4439-06336	America/Halifax	Atlantic - NS (most areas), PE
 CA	+4612-05957	America/Glace_Bay	Atlantic - NS (Cape Breton)
 CA	+4606-06447	America/Moncton	Atlantic - New Brunswick
@@ -121,7 +121,7 @@ CA	+744144-0944945	America/Resolute	Central - NU (Resolute)
 CA	+624900-0920459	America/Rankin_Inlet	Central - NU (central)
 CA	+5024-10439	America/Regina	CST - SK (most areas)
 CA	+5017-10750	America/Swift_Current	CST - SK (midwest)
-CA	+5333-11328	America/Edmonton	Mountain - AB, BC (E), NT (E), SK (W)
+CA	+5333-11328	America/Edmonton	Mountain - AB, BC(E), NT(E), SK(W)
 CA	+690650-1050310	America/Cambridge_Bay	Mountain - NU (west)
 CA	+682059-1334300	America/Inuvik	Mountain - NT (west)
 CA	+4906-11631	America/Creston	MST - BC (Creston)

@@ -46,7 +46,7 @@ say() {
 }
 
 # Check for awk POSIX compliance.
-($AWK -v x=y 'BEGIN { exit 123 }') </dev/null >/dev/null 2>&1
+($AWK -v x=y 'BEGIN { exit 123 }') <>/dev/null >&0 2>&0
 [ $? = 123 ] || {
 	say >&2 "$0: Sorry, your '$AWK' program is not POSIX compatible."
 	exit 1
@@ -89,7 +89,7 @@ if
   ?*) : ;;
   '')
     # '; exit' should be redundant, but Dash doesn't properly fail without it.
-    (eval 'set --; select x; do break; done; exit') </dev/null 2>/dev/null
+    (eval 'set --; select x; do break; done; exit') <>/dev/null 2>&0
   esac
 then
   # Do this inside 'eval', as otherwise the shell might exit when parsing it

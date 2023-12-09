@@ -3,6 +3,9 @@
 # 2009-05-17 by Arthur David Olson.
 # Request POSIX conformance; this must be the first non-comment line.
 .POSIX:
+# On older platforms you may need to scrounge for a POSIX-conforming 'make'.
+# For example, on Solaris 10 (2005), use /usr/sfw/bin/gmake or
+# /usr/xpg4/bin/make, not /usr/ccs/bin/make.
 
 # To affect how this Makefile works, you can run a shell script like this:
 #

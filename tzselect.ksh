@@ -419,8 +419,8 @@ while
 				'AEST and is 10 hours'
 			echo >&2 'ahead (east) of Greenwich,' \
 				'with no daylight saving time.'
-			read TZ
-			$AWK -v TZ="$TZ" 'BEGIN {
+			read tz
+			$AWK -v tz="$tz" 'BEGIN {
 				tzname = "(<[[:alnum:]+-]{3,}>|[[:alpha:]]{3,})"
 				time = "(2[0-4]|[0-1]?[0-9])" \
 				  "(:[0-5][0-9](:[0-5][0-9])?)?"
@@ -431,13 +431,13 @@ while
 				datetime = ",(" mdate "|" jdate ")(/" time ")?"
 				tzpattern = "^(:.*|" tzname offset "(" tzname \
 				  "(" offset ")?(" datetime datetime ")?)?)$"
-				if (TZ ~ tzpattern) exit 1
+				if (tz ~ tzpattern) exit 1
 				exit 0
 			}'
 		do
-		    say >&2 "'$TZ' is not a conforming POSIX timezone string."
+		    say >&2 "'$tz' is not a conforming POSIX timezone string."
 		done
-		TZ_for_date=$TZ;;
+		TZ_for_date=$tz;;
 	*)
 		case $continent in
 		coord)
@@ -472,7 +472,7 @@ while
 			    "of distance from $coord".
 		    doselect $regions
 		    region=$select_result
-		    TZ=`$AWK \
+		    tz=`$AWK \
 		      -v distance_table="$distance_table" \
 		      -v region="$region" '
 		      BEGIN {
@@ -594,8 +594,8 @@ while
 			region=$select_result
 		esac
 
-		# Determine TZ from country and region.
-		TZ=`
+		# Determine tz from country and region.
+		tz=`
 		  case $zone_table in
 		  file) cat -- "$TZ_ZONE_TABLE";;
 		  *) say "$zone_table";;
@@ -622,7 +622,7 @@ while
 		esac
 
 		# Make sure the corresponding zoneinfo file exists.
-		TZ_for_date=$TZDIR/$TZ
+		TZ_for_date=$TZDIR/$tz
 		<"$TZ_for_date" || {
 			say >&2 "$0: time zone files are not set up correctly"
 			exit 1
@@ -665,10 +665,10 @@ Universal Time is now:	$UTdate."
 	%?*%%)	say >&2 "	$country_result";;
 	%%?*%?*) say >&2 "	coord $coord$newline	$region";;
 	%%%?*)	say >&2 "	coord $coord";;
-	*)	say >&2 "	TZ='$TZ'"
+	*)	say >&2 "	TZ='$tz'"
 	esac
 	say >&2 ""
-	say >&2 "TZ='$TZ' will be used.$extra_info"
+	say >&2 "TZ='$tz' will be used.$extra_info"
 	say >&2 "Is the above information OK?"
 
 	doselect Yes No
@@ -680,8 +680,8 @@ do coord=
 done
 
 case $SHELL in
-*csh) file=.login line="setenv TZ '$TZ'";;
-*) file=.profile line="TZ='$TZ'; export TZ"
+*csh) file=.login line="setenv TZ '$tz'";;
+*) file=.profile line="TZ='$tz'; export TZ"
 esac
 
 test -t 1 && say >&2 "
@@ -692,4 +692,4 @@ to the file '$file' in your home directory; then log out and log in again.
 Here is that TZ value again, this time on standard output so that you
 can use the $0 command in shell scripts:"
 
-say "$TZ"
+say "$tz"

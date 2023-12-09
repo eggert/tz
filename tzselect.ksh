@@ -530,7 +530,7 @@ while
 		  countries=`
 		     say "$zone_table" |
 		     $AWK \
-			-v continent_re='' \
+			-v continent_re='^' \
 			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
 			"$output_country_list" |
 		     sort -f

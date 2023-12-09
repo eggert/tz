@@ -357,7 +357,9 @@ while
 
 	continent=
 	country=
+	country_result=
 	region=
+	time=
 
 	case $coord in
 	?*)

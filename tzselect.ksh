@@ -33,7 +33,12 @@ REPORT_BUGS_TO=tz@iana.org
 #	Gawk (GNU awk) <https://www.gnu.org/software/gawk/>
 #	mawk <https://invisible-island.net/mawk/>
 #	nawk <https://github.com/onetrueawk/awk>
-
+#
+# Because 'awk "VAR=VALUE" ...' and 'awk -v "VAR=VALUE" ...' are not portable
+# if VALUE contains \, ", or newline, awk scripts in this file use:
+#   awk 'BEGIN { VAR = substr(ARGV[1], 2); ARGV[1] = "" } ...' ="VALUE"
+# The substr avoids problems when VALUE is of the form X=Y and would be
+# misinterpreted as an assignment.
 
 # Specify default values for environment variables if they are unset.
 : ${AWK=awk}
@@ -199,7 +204,12 @@ IFS=$newline
 
 # Awk script to output a country list.
 output_country_list='
-  BEGIN { FS = "\t" }
+ BEGIN {
+  continent_re = substr(ARGV[1], 2)
+  TZ_COUNTRY_TABLE = substr(ARGV[2], 2)
+  ARGV[1] = ARGV[2] = ""
+  FS = "\t"
+ }
   /^#$/ { next }
   /^#[^@]/ { next }
   {
@@ -249,6 +259,9 @@ output_country_list='
 # and any apostrophes are escaped for the shell.
 output_distances_or_times='
   BEGIN {
+    coord = substr(ARGV[1], 2)
+    TZ_COUNTRY_TABLE = substr(ARGV[2], 2)
+    ARGV[1] = ARGV[2] = ""
     FS = "\t"
     if (!output_times) {
       while (getline <TZ_COUNTRY_TABLE)
@@ -420,7 +433,9 @@ while
 			echo >&2 'ahead (east) of Greenwich,' \
 				'with no daylight saving time.'
 			read tz
-			$AWK -v tz="$tz" 'BEGIN {
+			$AWK 'BEGIN {
+				tz = substr(ARGV[1], 2)
+				ARGV[1] = ""
 				tzname = "(<[[:alnum:]+-]{3,}>|[[:alpha:]]{3,})"
 				time = "(2[0-4]|[0-1]?[0-9])" \
 				  "(:[0-5][0-9](:[0-5][0-9])?)?"
@@ -433,7 +448,7 @@ while
 				  "(" offset ")?(" datetime datetime ")?)?)$"
 				if (tz ~ tzpattern) exit 1
 				exit 0
-			}'
+			}' ="$tz"
 		do
 		    say >&2 "'$tz' is not a conforming POSIX timezone string."
 		done
@@ -451,31 +466,32 @@ while
 			read coord;;
 		    esac
 		    distance_table=`$AWK \
-			    -v coord="$coord" \
-			    -v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
-			    "$output_distances_or_times" <"$TZ_ZONE_TABLE" |
+			    "$output_distances_or_times" \
+			    ="$coord" ="$TZ_COUNTRY_TABLE" <"$TZ_ZONE_TABLE" |
 		      sort -n |
 		      sed "${location_limit}q"
 		    `
-		    regions=`$AWK \
-		      -v distance_table="$distance_table" '
+		    regions=`$AWK '
 		      BEGIN {
+		        distance_table = substr(ARGV[1], 2)
+			ARGV[1] = ""
 		        nlines = split(distance_table, line, /\n/)
 			for (nr = 1; nr <= nlines; nr++) {
 			  nf = split(line[nr], f, /\t/)
 			  print f[nf]
 			}
 		      }
-		    '`
+		    ' ="$distance_table"`
 		    echo >&2 'Please select one of the following timezones,'
 		    echo >&2 'listed roughly in increasing order' \
 			    "of distance from $coord".
 		    doselect $regions
 		    region=$select_result
-		    tz=`$AWK \
-		      -v distance_table="$distance_table" \
-		      -v region="$region" '
+		    tz=`$AWK '
 		      BEGIN {
+		        distance_table = substr(ARGV[1], 2)
+			region = substr(ARGV[2], 2)
+			ARGV[1] = ARGV[2] = ""
 		        nlines = split(distance_table, line, /\n/)
 			for (nr = 1; nr <= nlines; nr++) {
 			  nf = split(line[nr], f, /\t/)
@@ -484,7 +500,7 @@ while
 			  }
 			}
 		      }
-		    '`
+		    ' ="$distance_table" ="$region"`
 		    ;;
 		*)
 		case $continent in
@@ -493,9 +509,10 @@ while
 		  old_minute=`TZ=UTC0 date +"$minute_format"`
 		  for i in 1 2 3
 		  do
-		    time_table_command=`
-		      $AWK -v output_times=1 \
-			  "$output_distances_or_times" <"$TZ_ZONE_TABLE"
+		    time_table_command=`$AWK \
+		          -v output_times=1 \
+			  "$output_distances_or_times" \
+			  = = <"$TZ_ZONE_TABLE"
 		    `
 		    time_table=`eval "$time_table_command"`
 		    new_minute=`TZ=UTC0 date +"$minute_format"`
@@ -520,30 +537,28 @@ while
 		  time=$select_result
 		  zone_table=`
 		    say "$time_table" |
-		    $AWK -v time="$time" '{
+		    $AWK 'BEGIN { time = substr(ARGV[1], 2); ARGV[1] = "" } {
 		      if ($6 " " $7 " " $4 " " $5 == time) {
 			sub(/[^\t]*\t/, "")
 			print
 		      }
-		    }'
+		    }' ="$time"
 		  `
 		  countries=`
 		     say "$zone_table" |
 		     $AWK \
-			-v continent_re='^' \
-			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
-			"$output_country_list" |
+			="$output_country_list" ='^' ="$TZ_COUNTRY_TABLE" |
 		     sort -f
 		  `
 		  ;;
 		*)
 		  zone_table=file
 		  # Get list of names of countries in the continent or ocean.
-		  countries=`$AWK \
-			-v continent_re="^$continent/" \
-			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
+		  countries=`
+		    $AWK \
 			"$output_country_list" \
-			<"$TZ_ZONE_TABLE" | sort -f
+			"=^$continent/" ="$TZ_COUNTRY_TABLE" <"$TZ_ZONE_TABLE" |
+		    sort -f
 		  `;;
 		esac
 
@@ -567,10 +582,11 @@ while
 		  *) say "$zone_table";;
 		  esac |
 		  $AWK \
-			-v country="$country" \
-			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
 		    '
 			BEGIN {
+				country = substr(ARGV[1], 2)
+				TZ_COUNTRY_TABLE = substr(ARGV[2], 2)
+				ARGV[1] = ARGV[2] = ""
 				FS = "\t"
 				cc = country
 				while (getline <TZ_COUNTRY_TABLE) {
@@ -582,7 +598,7 @@ while
 			}
 			/^#/ { next }
 			$1 ~ cc { print $4 }
-		    '
+		    ' ="$country" ="$TZ_COUNTRY_TABLE"
 		`
 
 
@@ -601,11 +617,12 @@ while
 		  *) say "$zone_table";;
 		  esac |
 		  $AWK \
-			-v country="$country" \
-			-v region="$region" \
-			-v TZ_COUNTRY_TABLE="$TZ_COUNTRY_TABLE" \
 		    '
 			BEGIN {
+				country = substr(ARGV[1], 2)
+				region = substr(ARGV[2], 2)
+				TZ_COUNTRY_TABLE = substr(ARGV[3], 2)
+				ARGV[1] = ARGV[2] = ARGV[3] = ""
 				FS = "\t"
 				cc = country
 				while (getline <TZ_COUNTRY_TABLE) {
@@ -617,7 +634,7 @@ while
 			}
 			/^#/ { next }
 			$1 ~ cc && ($4 == region || !region) { print $3 }
-		    '
+		    ' ="$country" ="$region" ="$TZ_COUNTRY_TABLE"
 		`;;
 		esac
 

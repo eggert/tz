@@ -38,6 +38,9 @@ Unreleased, experimental changes
     tzselect no longer mishandles ISO 6709 coordinates when using
     an awk that does not support newlines in -v option-arguments.
 
+    tzselect no longer mishandles TZ strings when using mawk 1.4.3,
+    which mishandles regular expressions of the form /X{2,}/.
+
     zic no longer mishandles data for Palestine after the year 2075.
     Previously, it incorrectly omitted post-2075 transitions that are
     predicted for just before and just after Ramadan.  (Thanks to Ken

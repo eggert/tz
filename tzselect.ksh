@@ -425,6 +425,24 @@ while
 	case $continent in
 	TZ)
 		# Ask the user for a POSIX TZ string.  Check that it conforms.
+		check_POSIX_TZ_string='BEGIN {
+		  tz = substr(ARGV[1], 2)
+		  ARGV[1] = ""
+		  tzname = ("(<[[:alnum:]+-][[:alnum:]+-][[:alnum:]+-]+>" \
+			    "|[[:alpha:]][[:alpha:]][[:alpha:]]+)")
+		  time = ("(2[0-4]|[0-1]?[0-9])" \
+			  "(:[0-5][0-9](:[0-5][0-9])?)?")
+		  offset = "[-+]?" time
+		  mdate = "M([1-9]|1[0-2])\\.[1-5]\\.[0-6]"
+		  jdate = ("((J[1-9]|[0-9]|J?[1-9][0-9]" \
+			   "|J?[1-2][0-9][0-9])|J?3[0-5][0-9]|J?36[0-5])")
+		  datetime = ",(" mdate "|" jdate ")(/" time ")?"
+		  tzpattern = ("^(:.*|" tzname offset "(" tzname \
+			       "(" offset ")?(" datetime datetime ")?)?)$")
+		  if (tz ~ tzpattern) exit 1
+		  exit 0
+		}'
+
 		while
 			echo >&2 'Please enter the desired value' \
 				'of the TZ environment variable.'
@@ -433,22 +451,7 @@ while
 			echo >&2 'ahead (east) of Greenwich,' \
 				'with no daylight saving time.'
 			read tz
-			$AWK 'BEGIN {
-				tz = substr(ARGV[1], 2)
-				ARGV[1] = ""
-				tzname = "(<[[:alnum:]+-]{3,}>|[[:alpha:]]{3,})"
-				time = "(2[0-4]|[0-1]?[0-9])" \
-				  "(:[0-5][0-9](:[0-5][0-9])?)?"
-				offset = "[-+]?" time
-				mdate = "M([1-9]|1[0-2])\\.[1-5]\\.[0-6]"
-				jdate = "((J[1-9]|[0-9]|J?[1-9][0-9]" \
-				  "|J?[1-2][0-9][0-9])|J?3[0-5][0-9]|J?36[0-5])"
-				datetime = ",(" mdate "|" jdate ")(/" time ")?"
-				tzpattern = "^(:.*|" tzname offset "(" tzname \
-				  "(" offset ")?(" datetime datetime ")?)?)$"
-				if (tz ~ tzpattern) exit 1
-				exit 0
-			}' ="$tz"
+			$AWK "$check_POSIX_TZ_string" ="$tz"
 		do
 		    say >&2 "'$tz' is not a conforming POSIX timezone string."
 		done

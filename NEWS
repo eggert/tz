@@ -32,6 +32,8 @@ Unreleased, experimental changes
     DST was in effect before the transition too.  (Thanks to Alois
     Treindl for debugging help.)
 
+    tzselect no longer creates temporary files.
+
     tzselect no longer mishandles the following:
 
       Spaces and most other special characters in BUGEMAIL, PACKAGE,

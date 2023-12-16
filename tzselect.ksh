@@ -180,35 +180,23 @@ else
     translit=false
 fi
 
-# Make sure the tables are readable.
-TZ_COUNTRY_TABLE=$TZDIR/iso3166.tab
-TZ_ZONE_TABLE=$TZDIR/$zonetabtype.tab
-for f in "$TZ_COUNTRY_TABLE" "$TZ_ZONE_TABLE"
-do
-	<"$f" || {
-		say >&2 "$0: time zone files are not set up correctly"
-		exit 1
-	}
-done
-
-# If the current locale does not support UTF-8, convert data to current
-# locale's format if possible, as the shell aligns columns better that way.
-# Check the UTF-8 of U+12345 CUNEIFORM SIGN URU TIMES KI.
-$translit && {
-    { tmp=`(mktemp -d) 2>/dev/null` || {
-	tmp=${TMPDIR-/tmp}/tzselect.$$ &&
-	(umask 77 && mkdir -- "$tmp")
-    };} &&
-    trap 'status=$?; rm -fr -- "$tmp"; exit $status' 0 HUP INT PIPE TERM &&
-    { (iconv -f UTF-8 -t //TRANSLIT <"$TZ_COUNTRY_TABLE" >$tmp/iso3166.tab) \
-        2>/dev/null ||
-      (iconv -f UTF-8 <"$TZ_COUNTRY_TABLE" >$tmp/iso3166.tab) \
-        2>/dev/null
-    } &&
-    TZ_COUNTRY_TABLE=$tmp/iso3166.tab &&
-    iconv -f UTF-8 -t //TRANSLIT <"$TZ_ZONE_TABLE" >$tmp/$zonetabtype.tab &&
-    TZ_ZONE_TABLE=$tmp/$zonetabtype.tab
+# Read into shell variable $1 the contents of file $2.
+# Convert to the current locale's encoding if possible,
+# as the shell aligns columns better that way.
+# If GNU iconv's //TRANSLIT does not work, fall back on POSIXish iconv;
+# if that does not work, fall back on 'cat'.
+read_file() {
+    { $translit && {
+	eval "$1=\`(iconv -f UTF-8 -t //TRANSLIT) 2>/dev/null <\"\$2\"\`" ||
+	eval "$1=\`(iconv -f UTF-8) 2>/dev/null <\"\$2\"\`"
+    }; } ||
+    eval "$1=\`cat <\"\$2\"\`" || {
+	say >&2 "$0: time zone files are not set up correctly"
+	exit 1
+    }
 }
+read_file TZ_COUNTRY_TABLE "$TZDIR/iso3166.tab"
+read_file TZ_ZONE_TABLE "$TZDIR/$zonetabtype.tab"
 
 newline='
 '
@@ -219,14 +207,15 @@ output_country_list='
  BEGIN {
   continent_re = substr(ARGV[1], 2)
   TZ_COUNTRY_TABLE = substr(ARGV[2], 2)
-  ARGV[1] = ARGV[2] = ""
+  TZ_ZONE_TABLE = substr(ARGV[3], 2)
+  ARGV[1] = ARGV[2] = ARGV[3] = ""
   FS = "\t"
- }
-  /^#$/ { next }
-  /^#[^@]/ { next }
-  {
+  nlines = split(TZ_ZONE_TABLE, line, /\n/)
+  for (iline = 1; iline <= nlines; iline++) {
+    $0 = line[iline]
     commentary = $0 ~ /^#@/
     if (commentary) {
+      if ($0 !~ /^#@/) continue
       col1ccs = substr($1, 3)
       conts = $2
     } else {
@@ -250,8 +239,10 @@ output_country_list='
       }
     }
   }
-  END {
-	  while (getline <TZ_COUNTRY_TABLE) {
+  {
+	  nlines = split(TZ_COUNTRY_TABLE, line, /\n/)
+	  for (i = 1; i <= nlines; i++) {
+		  $0 = line[i]
 		  if ($0 !~ /^#/) cc_name[$1] = $2
 	  }
 	  for (i = 1; i <= ccs; i++) {
@@ -263,9 +254,10 @@ output_country_list='
 		  print country
 	  }
   }
+ }
 '
 
-# Awk script to read a time zone table and output the same table,
+# Awk script to process a time zone table and output the same table,
 # with each row preceded by its distance from 'here'.
 # If output_times is set, each row is instead preceded by its local time
 # and any apostrophes are escaped for the shell.
@@ -273,12 +265,16 @@ output_distances_or_times='
   BEGIN {
     coord = substr(ARGV[1], 2)
     TZ_COUNTRY_TABLE = substr(ARGV[2], 2)
-    ARGV[1] = ARGV[2] = ""
+    TZ_ZONE_TABLE = substr(ARGV[3], 2)
+    ARGV[1] = ARGV[2] = ARGV[3] = ""
     FS = "\t"
     if (!output_times) {
-      while (getline <TZ_COUNTRY_TABLE)
-	if ($0 ~ /^[^#]/)
-	  country[$1] = $2
+      nlines = split(TZ_COUNTRY_TABLE, line, /\n/)
+      for (i = 1; i <= nlines; i++) {
+	$0 = line[i]
+	if ($0 ~ /^#/) continue
+	country[$1] = $2
+      }
       country["US"] = "US" # Otherwise the strings get too long.
     }
   }
@@ -338,19 +334,20 @@ output_distances_or_times='
     return gcdist(lat1, long1, lat2, long2) + pardist(lat1, long1, lat2, long2)
   }
   BEGIN {
-    coord_lat = convert_latitude(coord)
-    coord_long = convert_longitude(coord)
-  }
-  /^[^#]/ {
-    inline[inlines++] = $0
-    ncc = split($1, cc, /,/)
-    for (i = 1; i <= ncc; i++)
-      cc_used[cc[i]]++
-  }
-  END {
+   coord_lat = convert_latitude(coord)
+   coord_long = convert_longitude(coord)
+   nlines = split(TZ_ZONE_TABLE, line, /\n/)
+   for (h = 1; h <= nlines; h++) {
+     $0 = line[h]
+     if ($0 ~ /^#/) continue
+     inline[inlines++] = $0
+     ncc = split($1, cc, /,/)
+     for (i = 1; i <= ncc; i++)
+       cc_used[cc[i]]++
+   }
    for (h = 0; h < inlines; h++) {
     $0 = inline[h]
-    line = $1 "\t" $2 "\t" $3
+    outline = $1 "\t" $2 "\t" $3
     sep = "\t"
     ncc = split($1, cc, /,/)
     split("", item_seen)
@@ -358,17 +355,18 @@ output_distances_or_times='
     for (i = 1; i <= ncc; i++) {
       item = cc_used[cc[i]] <= 1 ? country[cc[i]] : $4
       if (item_seen[item]++) continue
-      line = line sep item
+      outline = outline sep item
       sep = "; "
     }
     if (output_times) {
       fmt = "TZ='\''%s'\'' date +'\''%d %%Y %%m %%d %%H:%%M %%a %%b\t%s'\''\n"
-      gsub(/'\''/, "&\\\\&&", line)
-      printf fmt, $3, h, line
+      gsub(/'\''/, "&\\\\&&", outline)
+      printf fmt, $3, h, outline
     } else {
       here_lat = convert_latitude($2)
       here_long = convert_longitude($2)
-      printf "%g\t%s\n", dist(coord_lat, coord_long, here_lat, here_long), line
+      printf "%g\t%s\n", dist(coord_lat, coord_long, here_lat, here_long), \
+	outline
     }
    }
   }
@@ -405,17 +403,23 @@ while
 	       entry = entry " Ocean"
 	      printf "'\''%s'\''\n", entry
 	    }
-	    BEGIN { FS = "\t" }
-	    /^[^#]/ {
-              handle_entry($3)
-            }
-	    /^#@/ {
-	      ncont = split($2, cont, /,/)
-	      for (ci = 1; ci <= ncont; ci++) {
-	        handle_entry(cont[ci])
+	    BEGIN {
+	      TZ_ZONE_TABLE = substr(ARGV[1], 2)
+	      ARGV[1] = ""
+	      FS = "\t"
+	      nlines = split(TZ_ZONE_TABLE, line, /\n/)
+	      for (i = 1; i <= nlines; i++) {
+		$0 = line[i]
+	        if ($0 ~ /^[^#]/)
+		  handle_entry($3)
+		else if ($0 ~ /^#@/) {
+		  ncont = split($2, cont, /,/)
+		  for (ci = 1; ci <= ncont; ci++)
+		    handle_entry(cont[ci])
+		}
 	      }
 	    }
-          ' <"$TZ_ZONE_TABLE" |
+          ' ="$TZ_ZONE_TABLE" |
 	  sort -u |
 	  tr '\n' ' '
 	  echo ''
@@ -482,7 +486,7 @@ while
 		    esac
 		    distance_table=`$AWK \
 			    "$output_distances_or_times" \
-			    ="$coord" ="$TZ_COUNTRY_TABLE" <"$TZ_ZONE_TABLE" |
+			    ="$coord" ="$TZ_COUNTRY_TABLE" ="$TZ_ZONE_TABLE" |
 		      sort -n |
 		      sed "${location_limit}q"
 		    `
@@ -527,7 +531,7 @@ while
 		    time_table_command=`$AWK \
 		          -v output_times=1 \
 			  "$output_distances_or_times" \
-			  = = <"$TZ_ZONE_TABLE"
+			  = = ="$TZ_ZONE_TABLE"
 		    `
 		    time_table=`eval "$time_table_command"`
 		    new_minute=`TZ=UTC0 date +"$minute_format"`
@@ -538,44 +542,61 @@ while
 		  done
 		  echo >&2 "The system says Universal Time is $new_minute."
 		  echo >&2 "Assuming that's correct, what is the local time?"
+		  sorted_table=`say "$time_table" | sort -k2n -k2,5 -k1n` || {
+		      say >&2 "$0: cannot sort time table"
+		      exit 1
+		  }
 		  eval doselect `
-		    say "$time_table" |
-		    sort -k2n -k2,5 -k1n |
-		    $AWK '{
-		      line = $6 " " $7 " " $4 " " $5
-		      if (line == oldline) next
-		      oldline = line
-		      gsub(/'\''/, "&\\\\&&", line)
-		      printf "'\''%s'\''\n", line
-		    }'
+		    $AWK 'BEGIN {
+		     sorted_table = substr(ARGV[1], 2)
+		     ARGV[1] = ""
+		     nlines = split(sorted_table, line, /\n/)
+		     for (i = 1; i <= nlines; i++) {
+		      $0 = line[i]
+		      outline = $6 " " $7 " " $4 " " $5
+		      if (outline == oldline) continue
+		      oldline = outline
+		      gsub(/'\''/, "&\\\\&&", outline)
+		      printf "'\''%s'\''\n", outline
+		     }
+		    }' ="$sorted_table"
 		  `
 		  time=$select_result
+		  continent_re='^'
 		  zone_table=`
-		    say "$time_table" |
-		    $AWK 'BEGIN { time = substr(ARGV[1], 2); ARGV[1] = "" } {
+		    $AWK 'BEGIN {
+		     time = substr(ARGV[1], 2)
+		     time_table = substr(ARGV[2], 2)
+		     ARGV[1] = ARGV[2] = ""
+		     nlines = split(time_table, line, /\n/)
+		     for (i = 1; i <= nlines; i++) {
+		      $0 = line[i]
 		      if ($6 " " $7 " " $4 " " $5 == time) {
 			sub(/[^\t]*\t/, "")
 			print
 		      }
-		    }' ="$time"
+		     }
+		    }' ="$time" ="$time_table"
 		  `
 		  countries=`
-		     say "$zone_table" |
 		     $AWK \
-			="$output_country_list" ='^' ="$TZ_COUNTRY_TABLE" |
+			"$output_country_list" \
+			="$continent_re" ="$TZ_COUNTRY_TABLE" ="$zone_table" |
 		     sort -f
 		  `
 		  ;;
 		*)
-		  zone_table=file
-		  # Get list of names of countries in the continent or ocean.
-		  countries=`
+		  continent_re="^$continent/"
+		  zone_table=$TZ_ZONE_TABLE
+		esac
+
+		# Get list of names of countries in the continent or ocean.
+		countries=`
 		    $AWK \
 			"$output_country_list" \
-			"=^$continent/" ="$TZ_COUNTRY_TABLE" <"$TZ_ZONE_TABLE" |
+			="$continent_re" ="$TZ_COUNTRY_TABLE" ="$zone_table" |
 		    sort -f
-		  `;;
-		esac
+		`
 
 		# If there's more than one country, ask the user which one.
 		case $countries in
@@ -592,28 +613,32 @@ while
 
 		# Get list of timezones in the country.
 		regions=`
-		  case $zone_table in
-		  file) cat -- "$TZ_ZONE_TABLE";;
-		  *) say "$zone_table";;
-		  esac |
 		  $AWK \
 		    '
 			BEGIN {
 				country = substr(ARGV[1], 2)
 				TZ_COUNTRY_TABLE = substr(ARGV[2], 2)
-				ARGV[1] = ARGV[2] = ""
+				TZ_ZONE_TABLE = substr(ARGV[3], 2)
+				ARGV[1] = ARGV[2] = ARGV[3] = ""
 				FS = "\t"
 				cc = country
-				while (getline <TZ_COUNTRY_TABLE) {
+				nlines = split(TZ_COUNTRY_TABLE, line, /\n/)
+				for (i = 1; i <= nlines; i++) {
+					$0 = line[i]
 					if ($0 !~ /^#/  &&  country == $2) {
 						cc = $1
 						break
 					}
 				}
+				nlines = split(TZ_ZONE_TABLE, line, /\n/)
+				for (i = 1; i <= nlines; i++) {
+				  $0 = line[i]
+				  if ($0 ~ /^#/) continue
+				  if ($1 ~ cc)
+				    print $4
+				}
 			}
-			/^#/ { next }
-			$1 ~ cc { print $4 }
-		    ' ="$country" ="$TZ_COUNTRY_TABLE"
+		    ' ="$country" ="$TZ_COUNTRY_TABLE" ="$zone_table"
 		`
 
 
@@ -627,29 +652,33 @@ while
 
 		# Determine tz from country and region.
 		tz=`
-		  case $zone_table in
-		  file) cat -- "$TZ_ZONE_TABLE";;
-		  *) say "$zone_table";;
-		  esac |
 		  $AWK \
 		    '
 			BEGIN {
 				country = substr(ARGV[1], 2)
 				region = substr(ARGV[2], 2)
 				TZ_COUNTRY_TABLE = substr(ARGV[3], 2)
-				ARGV[1] = ARGV[2] = ARGV[3] = ""
+				TZ_ZONE_TABLE = substr(ARGV[4], 2)
+				ARGV[1] = ARGV[2] = ARGV[3] = ARGV[4] = ""
 				FS = "\t"
 				cc = country
-				while (getline <TZ_COUNTRY_TABLE) {
+				nlines = split(TZ_COUNTRY_TABLE, line, /\n/)
+				for (i = 1; i <= nlines; i++) {
+					$0 = line[i]
 					if ($0 !~ /^#/  &&  country == $2) {
 						cc = $1
 						break
 					}
 				}
+				nlines = split(TZ_ZONE_TABLE, line, /\n/)
+				for (i = 1; i <= nlines; i++) {
+				  $0 = line[i]
+				  if ($0 ~ /^#/) continue
+				  if ($1 ~ cc && ($4 == region || !region))
+				    print $3
+				}
 			}
-			/^#/ { next }
-			$1 ~ cc && ($4 == region || !region) { print $3 }
-		    ' ="$country" ="$region" ="$TZ_COUNTRY_TABLE"
+		    ' ="$country" ="$region" ="$TZ_COUNTRY_TABLE" ="$zone_table"
 		`;;
 		esac
 

@@ -161,14 +161,14 @@ do
   -*)
     say >&2 "$0: -$opt$OPTARG: unknown option; try '$0 --help'"; exit 1;;
   *)
-    say >&2 "$0: try '$0 --help'"; exit 1;;
+    say >&2 "$0: try '$0 --help'"; exit 1
   esac
 done
 
 shift `expr $OPTIND - 1`
 case $# in
 0) ;;
-*) say >&2 "$0: $1: unknown argument"; exit 1;;
+*) say >&2 "$0: $1: unknown argument"; exit 1
 esac
 
 # translit=true to try transliteration.
@@ -482,7 +482,7 @@ while
 	echo >&2 'For example, +4042-07403 stands for'
 	echo >&2 '40 degrees 42 minutes north,' \
 	  '74 degrees 3 minutes west.'
-	read coord;;
+	read coord
       esac
       distance_table=`$AWK \
 	  "$output_distances_or_times" \
@@ -536,7 +536,7 @@ while
 	  time_table=`eval "$time_table_command"`
 	  new_minute=`TZ=UTC0 date +"$minute_format"`
 	  case $old_minute in
-	  "$new_minute") break;;
+	  "$new_minute") break
 	  esac
 	  old_minute=$new_minute
 	done
@@ -679,7 +679,7 @@ while
 	      }
 	    }
 	  ' ="$country" ="$region" ="$TZ_COUNTRY_TABLE" ="$zone_table"
-      `;;
+      `
     esac
 
     # Make sure the corresponding zoneinfo file exists.

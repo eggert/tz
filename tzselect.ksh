@@ -200,8 +200,11 @@ $translit && {
 	(umask 77 && mkdir -- "$tmp")
     };} &&
     trap 'status=$?; rm -fr -- "$tmp"; exit $status' 0 HUP INT PIPE TERM &&
-    (iconv -f UTF-8 -t //TRANSLIT <"$TZ_COUNTRY_TABLE" >$tmp/iso3166.tab) \
-        2>/dev/null &&
+    { (iconv -f UTF-8 -t //TRANSLIT <"$TZ_COUNTRY_TABLE" >$tmp/iso3166.tab) \
+        2>/dev/null ||
+      (iconv -f UTF-8 <"$TZ_COUNTRY_TABLE" >$tmp/iso3166.tab) \
+        2>/dev/null
+    } &&
     TZ_COUNTRY_TABLE=$tmp/iso3166.tab &&
     iconv -f UTF-8 -t //TRANSLIT <"$TZ_ZONE_TABLE" >$tmp/$zonetabtype.tab &&
     TZ_ZONE_TABLE=$tmp/$zonetabtype.tab

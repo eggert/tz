@@ -41,6 +41,9 @@ Unreleased, experimental changes
     tzselect no longer mishandles TZ strings when using mawk 1.4.3,
     which mishandles regular expressions of the form /X{2,}/.
 
+    tzselect no longer mishandles non-UTF-8 locales on platforms
+    where the iconv command lacks the GNU //TRANSLIT extension.
+
     zic no longer mishandles data for Palestine after the year 2075.
     Previously, it incorrectly omitted post-2075 transitions that are
     predicted for just before and just after Ramadan.  (Thanks to Ken

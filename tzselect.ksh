@@ -22,13 +22,13 @@ REPORT_BUGS_TO=tz@iana.org
 #
 # For portability to Solaris 10 /bin/sh (supported by Oracle through
 # January 2025) this script avoids some POSIX features and common
-# extensions, such as $(...) (which works sometimes but not others),
-# $((...)), ! CMD, ${#ID}, ${ID##PAT}, ${ID%%PAT}, and $10.
-
+# extensions, such as $(...), $((...)), ! CMD, unquoted ^, ${#ID},
+# ${ID##PAT}, ${ID%%PAT}, and $10.  Although some of these constructs
+# work sometimes, it's simpler to avoid them entirely.
 #
-# This script also uses several features of modern awk programs.
+# This script also uses several features of POSIX awk.
 # If your host lacks awk, or has an old awk that does not conform to POSIX,
-# you can use either of the following free programs instead:
+# you can use any of the following free programs instead:
 #
 #	Gawk (GNU awk) <https://www.gnu.org/software/gawk/>
 #	mawk <https://invisible-island.net/mawk/>

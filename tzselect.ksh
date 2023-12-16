@@ -171,6 +171,15 @@ case $# in
 *) say >&2 "$0: $1: unknown argument"; exit 1 ;;
 esac
 
+# translit=true to try transliteration.
+# This is false if U+12345 CUNEIFORM SIGN URU TIMES KI has length 1
+# which means awk (and presumably the shell) do not need transliteration.
+if $AWK 'BEGIN { u12345 = "\360\222\215\205"; exit length(u12345) == 1 }'; then
+    translit=true
+else
+    translit=false
+fi
+
 # Make sure the tables are readable.
 TZ_COUNTRY_TABLE=$TZDIR/iso3166.tab
 TZ_ZONE_TABLE=$TZDIR/$zonetabtype.tab
@@ -185,7 +194,7 @@ done
 # If the current locale does not support UTF-8, convert data to current
 # locale's format if possible, as the shell aligns columns better that way.
 # Check the UTF-8 of U+12345 CUNEIFORM SIGN URU TIMES KI.
-$AWK 'BEGIN { u12345 = "\360\222\215\205"; exit length(u12345) != 1 }' || {
+$translit && {
     { tmp=`(mktemp -d) 2>/dev/null` || {
 	tmp=${TMPDIR-/tmp}/tzselect.$$ &&
 	(umask 77 && mkdir -- "$tmp")

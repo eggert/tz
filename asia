@@ -655,7 +655,6 @@ Zone	Asia/Shanghai	8:05:43	-	LMT	1901
 			8:00	PRC	C%sT
 # Xinjiang time, used by many in western China; represented by Ürümqi / Ürümchi
 # / Wulumuqi.  (Please use Asia/Shanghai if you prefer Beijing time.)
-# Vostok base in Antarctica matches this since 1970.
 Zone	Asia/Urumqi	5:50:20	-	LMT	1928
 			6:00	-	+06
 

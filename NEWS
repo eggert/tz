@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     Ittoqqortoormiit, Greenland changes time zones on 2024-03-31.
+    Vostok, Antarctica changed time zones on 2023-12-18.
     Code and data fixes for Palestine timestamps starting in 2072.
     A new data file zonenow.tab for timestamps starting now.
 
@@ -18,6 +19,11 @@ Unreleased, experimental changes
 
     Fix predictions for DST transitions in Palestine in 2072-2075,
     correcting a typo introduced in 2023a.
+
+  Changes to past and future timestamps
+
+    Vostok, Antarctica changed to +05 on 2023-12-18.  It had been at
+    +07 (not +06) for years.  (Thanks to Zakhary V. Akulov.)
 
   Changes to past tm_isdst flags
 

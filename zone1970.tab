@@ -47,6 +47,7 @@ AQ	-6736+06253	Antarctica/Mawson	Mawson
 AQ	-6448-06406	Antarctica/Palmer	Palmer
 AQ	-6734-06808	Antarctica/Rothera	Rothera
 AQ	-720041+0023206	Antarctica/Troll	Troll
+AQ	-7824+10654	Antarctica/Vostok	Vostok
 AR	-3436-05827	America/Argentina/Buenos_Aires	Buenos Aires (BA, CF)
 AR	-3124-06411	America/Argentina/Cordoba	most areas: CB, CC, CN, ER, FM, MN, SE, SF
 AR	-2447-06525	America/Argentina/Salta	Salta (SA, LP, NQ, RN)
@@ -126,7 +127,7 @@ CL	-3327-07040	America/Santiago	most of Chile
 CL	-5309-07055	America/Punta_Arenas	Region of Magallanes
 CL	-2709-10926	Pacific/Easter	Easter Island
 CN	+3114+12128	Asia/Shanghai	Beijing Time
-CN,AQ	+4348+08735	Asia/Urumqi	Xinjiang Time, Vostok
+CN	+4348+08735	Asia/Urumqi	Xinjiang Time
 CO	+0436-07405	America/Bogota
 CR	+0956-08405	America/Costa_Rica
 CU	+2308-08222	America/Havana

@@ -588,7 +588,7 @@ TZDATA_ZI_DEPS=	ziguard.awk zishrink.awk version $(TDATA) \
 DSTDATA_ZI_DEPS= ziguard.awk $(TDATA) $(PACKRATDATA) $(PACKRATLIST)
 DATA=		$(TDATA_TO_CHECK) backzone iso3166.tab leap-seconds.list \
 			leapseconds $(ZONETABLES)
-AWK_SCRIPTS=	checklinks.awk checktab.awk leapseconds.awk \
+AWK_SCRIPTS=	checklinks.awk checknow.awk checktab.awk leapseconds.awk \
 			ziguard.awk zishrink.awk
 MISC=		$(AWK_SCRIPTS)
 TZS_YEAR=	2050
@@ -609,7 +609,7 @@ VERSION_DEPS= \
 		calendars CONTRIBUTING LICENSE Makefile NEWS README SECURITY \
 		africa antarctica asctime.c asia australasia \
 		backward backzone \
-		checklinks.awk checktab.awk \
+		checklinks.awk checknow.awk checktab.awk \
 		date.1 date.c difftime.c \
 		etcetera europe factory iso3166.tab \
 		leap-seconds.list leapseconds.awk localtime.c \

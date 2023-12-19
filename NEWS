@@ -5,6 +5,7 @@ Unreleased, experimental changes
   Briefly:
     Ittoqqortoormiit, Greenland changes time zones on 2024-03-31.
     Code and data fixes for Palestine timestamps starting in 2072.
+    A new data file zonenow.tab for timestamps starting now.
 
   Changes to future timestamps
 
@@ -25,12 +26,22 @@ Unreleased, experimental changes
     This does not affect UTC offsets, only the tm_isdst flag.
     (Thanks to Thomas M. Steenholdt.)
 
+  New data file
+
+    A new data file zonenow.tab helps configure applications that use
+    timestamps dated from now on.  This simplifies configuration,
+    since users choose from a smaller Zone set.  The file's format is
+    experimental and subject to change.
+
   Changes to code
 
     localtime.c no longer mishandles TZif files that contain a single
     transition into a DST regime.  Previously, it incorrectly assumed
     DST was in effect before the transition too.  (Thanks to Alois
     Treindl for debugging help.)
+
+    tzselect now optionally reads zonenow.tab, to simplify when
+    configuring only for timestamps dated from now on.
 
     tzselect no longer creates temporary files.
 

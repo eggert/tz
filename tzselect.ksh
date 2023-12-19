@@ -196,7 +196,8 @@ read_file() {
   }
 }
 read_file TZ_COUNTRY_TABLE "$TZDIR/iso3166.tab"
-read_file TZ_ZONE_TABLE "$TZDIR/$zonetabtype.tab"
+read_file TZ_ZONETABTYPE_TABLE "$TZDIR/$zonetabtype.tab"
+TZ_ZONENOW_TABLE=
 
 newline='
 '
@@ -385,6 +386,7 @@ while
   country_result=
   region=
   time=
+  TZ_ZONE_TABLE=$TZ_ZONETABTYPE_TABLE
 
   case $coord in
   ?*)
@@ -393,7 +395,8 @@ while
 
     # Ask the user for continent or ocean.
 
-    echo >&2 'Please select a continent, ocean, "coord", "TZ", or "time".'
+    echo >&2 \
+      'Please select a continent, ocean, "coord", "TZ", "time", or "now".'
 
     quoted_continents=`
       $AWK '
@@ -406,10 +409,10 @@ while
 	  printf "'\''%s'\''\n", entry
 	}
 	BEGIN {
-	  TZ_ZONE_TABLE = substr(ARGV[1], 2)
+	  TZ_ZONETABTYPE_TABLE = substr(ARGV[1], 2)
 	  ARGV[1] = ""
 	  FS = "\t"
-	  nlines = split(TZ_ZONE_TABLE, line, /\n/)
+	  nlines = split(TZ_ZONETABTYPE_TABLE, line, /\n/)
 	  for (i = 1; i <= nlines; i++) {
 	    $0 = line[i]
 	    if ($0 ~ /^[^#]/)
@@ -421,7 +424,7 @@ while
 	    }
 	  }
 	}
-      ' ="$TZ_ZONE_TABLE" |
+      ' ="$TZ_ZONETABTYPE_TABLE" |
       sort -u |
       tr '\n' ' '
       echo ''
@@ -431,11 +434,18 @@ while
       doselect '"$quoted_continents"' \
 	"coord - I want to use geographical coordinates." \
 	"TZ - I want to specify the timezone using the POSIX TZ format." \
-	"time - I know local time already."
+	"time - I know local time already." \
+	"now - Like \"time\", but configure only for timestamps from now on."
       continent=$select_result
       case $continent in
       Americas) continent=America;;
       *" "*)    continent=`expr "$continent" : '\''\([^ ]*\)'\''`
+      esac
+      case $zonetabtype,$continent in
+      zonenow,*) ;;
+      *,now)
+	${TZ_ZONENOW_TABLE:+:} read_file TZ_ZONENOW_TABLE "$TZDIR/zonenow.tab"
+	TZ_ZONE_TABLE=$TZ_ZONENOW_TABLE
       esac
     '
   esac
@@ -529,7 +539,7 @@ while
       `;;
     *)
       case $continent in
-      time)
+      now|time)
 	minute_format='%a %b %d %H:%M'
 	old_minute=`TZ=UTC0 date +"$minute_format"`
 	for i in 1 2 3
@@ -608,6 +618,31 @@ while
 	  "$output_country_list" \
 	  ="$continent_re" ="$TZ_COUNTRY_TABLE" ="$zone_table" |
 	sort -f
+      `
+      # If all zone table entries have comments, and there are
+      # at most 22 entries, asked based on those comments.
+      # This fits the prompt onto old-fashioned 24-line screens.
+      regions=`
+	$AWK '
+	  BEGIN {
+	    TZ_ZONE_TABLE = substr(ARGV[1], 2)
+	    ARGV[1] = ""
+	    FS = "\t"
+	    nlines = split(TZ_ZONE_TABLE, line, /\n/)
+	    for (i = 1; i <= nlines; i++) {
+	      $0 = line[i]
+	      if ($0 ~ /^[^#]/ && !missing_comment) {
+		if ($4)
+		  comment[++inlines] = $4
+		else
+		  missing_comment = 1
+	      }
+	    }
+	    if (!missing_comment && inlines <= 22)
+	      for (i = 1; i <= inlines; i++)
+		print comment[i]
+	  }
+	' ="$zone_table"
       `
 
       # If there's more than one country, ask the user which one.

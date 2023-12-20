@@ -2293,6 +2293,9 @@ timelocal(struct tm *tmp)
 	return mktime(tmp);
 }
 #else
+# ifndef timeoff
+#  define timeoff my_timeoff /* Don't collide with OpenBSD 7.4 <time.h>.  */
+# endif
 static
 #endif
 /* This function is obsolescent and may disapper in future releases.

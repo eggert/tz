@@ -5,6 +5,7 @@ Unreleased, experimental changes
   Briefly:
     Ittoqqortoormiit, Greenland changes time zones on 2024-03-31.
     Vostok, Antarctica changed time zones on 2023-12-18.
+    Casey, Antarctica changed time zones five times since 2020.
     Code and data fixes for Palestine timestamps starting in 2072.
     A new data file zonenow.tab for timestamps starting now.
 
@@ -24,6 +25,10 @@ Unreleased, experimental changes
 
     Vostok, Antarctica changed to +05 on 2023-12-18.  It had been at
     +07 (not +06) for years.  (Thanks to Zakhary V. Akulov.)
+
+    Change data for Casey, Antarctica to agree with timeanddate.com,
+    by adding five time zone changes since 2020.  Casey is now at +08
+    instead of +11.
 
   Changes to past tm_isdst flags
 

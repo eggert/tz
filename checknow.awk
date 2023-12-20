@@ -15,6 +15,7 @@ BEGIN {
       record_zone(zone, data)
       zone = $0
       sub(/.*\.dir\//, "", zone)
+      sub(/\/\//, "/", zone)
       sub(/"/, "", zone)
       data = ""
     } else if ($0 ~ /./)

@@ -74,9 +74,7 @@
 #endif
 
 #if !defined HAVE__GENERIC && defined __has_extension
-# if __has_extension(c_generic_selections)
-#  define HAVE__GENERIC 1
-# else
+# if !__has_extension(c_generic_selections)
 #  define HAVE__GENERIC 0
 # endif
 #endif

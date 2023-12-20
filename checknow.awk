@@ -28,7 +28,7 @@ BEGIN {
   zone = $3
   data = zone_data[zone]
   if (!data) {
-    printf "%s: no data\n"
+    printf "%s: no data\n", zone
     status = 1
   } else {
     zone2 = zonenow[data]

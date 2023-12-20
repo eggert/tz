@@ -21,7 +21,7 @@ REPORT_BUGS_TO=tz@iana.org
 #	MirBSD Korn Shell <http://www.mirbsd.org/mksh.htm>
 #
 # For portability to Solaris 10 /bin/sh (supported by Oracle through
-# January 2025) this script avoids some POSIX features and common
+# January 2027) this script avoids some POSIX features and common
 # extensions, such as $(...), $((...)), ! CMD, unquoted ^, ${#ID},
 # ${ID##PAT}, ${ID%%PAT}, and $10.  Although some of these constructs
 # work sometimes, it's simpler to avoid them entirely.

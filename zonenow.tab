@@ -16,6 +16,9 @@
 #     first by standard time UTC offset;
 #     then, if DST is used, by daylight saving UTC offset;
 #     then by time zone abbreviation.
+# 4.  Every timezone has a nonempty comments column, with wording
+#     distinguishing the timezone only from other timezones with the
+#     same UTC offset at some point during the year.
 #
 # The format of this table is experimental, and may change in future versions.
 #

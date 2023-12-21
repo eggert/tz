@@ -51,6 +51,11 @@ Unreleased, experimental changes
     DST was in effect before the transition too.  (Thanks to Alois
     Treindl for debugging help.)
 
+    localtime.c's timeoff no longer collides with OpenBSD 7.4.
+
+    The C code now uses _Generic only if __STDC_VERSION__ says the
+    compiler is C11 or later.
+
     tzselect now optionally reads zonenow.tab, to simplify when
     configuring only for timestamps dated from now on.
 
@@ -85,6 +90,9 @@ Unreleased, experimental changes
      * It no longer uses its own 'cc' in place of CC.
      * It now uses ARFLAGS, with default specified by POSIX.
      * It does not use LFLAGS incompatibly with POSIX.
+     * It uses the special .POSIX target.
+     * It quotes special characters more carefully.
+     * It no longer mishandles builds in an ISO 8859 locale.
     Due to the CC changes, TZDIR is now #defined in a file tzfile.h
     built by 'make', not in a $(CC) -D option.  Also, TZDEFAULT is
     now treated like TZDIR as they have similar roles.

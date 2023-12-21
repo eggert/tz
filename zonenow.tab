@@ -132,7 +132,7 @@ XX	+513030-0000731	Europe/London	United Kingdom ("GMT/BST")
 # +00/+01 - WET/WEST (EU DST)
 XX	+3843-00908	Europe/Lisbon	western Europe ("WET/WEST")
 #
-# +00/+01 - Troll DST
+# +00/+02 - Troll DST
 XX	-720041+0023206	Antarctica/Troll	Troll Station in Antarctica
 #
 # +01 - CET

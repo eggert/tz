@@ -3198,21 +3198,6 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 		}
 	}
 	if (do_extend) {
-		/*
-		** Search through a couple of extra years past the obvious
-		** 400, to avoid edge cases.  For example, suppose a non-POSIX
-		** rule applies from 2012 onwards and has transitions in March
-		** and September, plus some one-off transitions in November
-		** 2013.  If zic looked only at the last 400 years, it would
-		** set max_year=2413, with the intent that the 400 years 2014
-		** through 2413 will be repeated.  The last transition listed
-		** in the tzfile would be in 2413-09, less than 400 years
-		** after the last one-off transition in 2013-11.  Two years
-		** might be overkill, but with the kind of edge cases
-		** available we're not sure that one year would suffice.
-		*/
-		enum { years_of_observations = YEARSPERREPEAT + 2 };
-
 		if (min_year >= ZIC_MIN + years_of_observations)
 			min_year -= years_of_observations;
 		else	min_year = ZIC_MIN;

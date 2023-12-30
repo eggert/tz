@@ -1204,7 +1204,7 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 			}
 
 			yearlim = yearbeg;
-			if (increment_overflow(&yearlim, YEARSPERREPEAT + 1))
+			if (increment_overflow(&yearlim, years_of_observations))
 			  yearlim = INT_MAX;
 			for (year = yearbeg; year < yearlim; year++) {
 				int_fast32_t
@@ -1241,7 +1241,7 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 				if (endtime < leaplo) {
 				  yearlim = year;
 				  if (increment_overflow(&yearlim,
-							 YEARSPERREPEAT + 1))
+							 years_of_observations))
 				    yearlim = INT_MAX;
 				}
 				if (increment_overflow_time
@@ -1253,7 +1253,7 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 			if (! timecnt) {
 				sp->ttis[0] = sp->ttis[1];
 				sp->typecnt = 1;	/* Perpetual DST.  */
-			} else if (YEARSPERREPEAT < year - yearbeg)
+			} else if (years_of_observations <= year - yearbeg)
 				sp->goback = sp->goahead = true;
 		} else {
 			register int_fast32_t	theirstdoffset;

@@ -957,6 +957,18 @@ enum {
 #define SECSPERREPEAT		((int_fast64_t) DAYSPERREPEAT * SECSPERDAY)
 #define AVGSECSPERYEAR		(SECSPERREPEAT / YEARSPERREPEAT)
 
+/* How many years to generate (in zic.c) or search through (in localtime.c).
+   This is two years larger than the obvious 400, to avoid edge cases.
+   E.g., suppose a non-POSIX rule applies from 2012 on and has transitions
+   in March and September, plus one-off transitions in November 2013.
+   If zic looked only at the last 400 years, it would set max_year=2413,
+   with the intent that the 400 years 2014 through 2413 will be repeated.
+   The last transition listed in the tzfile would be in 2413-09,
+   less than 400 years after the last one-off transition in 2013-11.
+   Two years is not overkill for localtime.c, as a one-year bump
+   would mishandle 2023d's America/Ciudad_Juarez for November 2422.  */
+enum { years_of_observations = YEARSPERREPEAT + 2 };
+
 enum {
   TM_SUNDAY,
   TM_MONDAY,

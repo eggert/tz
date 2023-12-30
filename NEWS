@@ -1,5 +1,19 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Briefly:
+    localtime no longer mishandles Ciudad Juárez in 2422.
+
+  Changes to code
+
+    localtime and related functions no longer mishandle some
+    timestamps that occur about 400 years after a switch to a time
+    zone with a DST schedule.  In 2023d data this problem was visible
+    only for some November 2422 timestamps in America/Ciudad_Juarez.
+    (Problem reported by Gilmore Davidson.)
+
+
 Release 2023d - 2023-12-21 20:02:24 -0800
 
   Briefly:

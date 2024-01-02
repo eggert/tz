@@ -511,7 +511,7 @@ while
 	  "$output_distances_or_times" \
 	  ="$coord" ="$TZ_COUNTRY_TABLE" ="$TZ_ZONE_TABLE" |
 	sort -n |
-	sed "${location_limit}q"
+	$AWK "{print} NR == $location_limit { exit }"
       `
       regions=`
 	$AWK '

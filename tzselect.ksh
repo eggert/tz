@@ -40,6 +40,9 @@ REPORT_BUGS_TO=tz@iana.org
 # The substr avoids problems when VALUE is of the form X=Y and would be
 # misinterpreted as an assignment.
 
+# This script does not want path expansion.
+set -f
+
 # Specify default values for environment variables if they are unset.
 : ${AWK=awk}
 : ${TZDIR=`pwd`}
@@ -113,7 +116,8 @@ then
 else
   doselect() {
     # Field width of the prompt numbers.
-    select_width=`expr $# : '.*'`
+    print_nargs_length="BEGIN {print length(\"$#\");}"
+    select_width=`$AWK "$print_nargs_length"`
 
     select_i=
 
@@ -124,14 +128,14 @@ else
 	select_i=0
 	for select_word
 	do
-	  select_i=`expr $select_i + 1`
+	  select_i=`$AWK "BEGIN { print $select_i + 1 }"`
 	  printf >&2 "%${select_width}d) %s\\n" $select_i "$select_word"
 	done;;
       *[!0-9]*)
 	echo >&2 'Please enter a number in range.';;
       *)
 	if test 1 -le $select_i && test $select_i -le $#; then
-	  shift `expr $select_i - 1`
+	  shift `$AWK "BEGIN { print $select_i - 1 }"`
 	  select_result=$1
 	  break
 	fi
@@ -165,7 +169,7 @@ do
   esac
 done
 
-shift `expr $OPTIND - 1`
+shift `$AWK "BEGIN { print $OPTIND - 1 }"`
 case $# in
 0) ;;
 *) say >&2 "$0: $1: unknown argument"; exit 1
@@ -439,7 +443,12 @@ while
       continent=$select_result
       case $continent in
       Americas) continent=America;;
-      *" "*)    continent=`expr "$continent" : '\''\([^ ]*\)'\''`
+      *)
+	# Get the first word of $continent.  Path expansion is disabled
+	# so this works even with "*", which should not happen.
+	IFS=" "
+	for continent in $continent ""; do break; done
+	IFS=$newline;;
       esac
       case $zonetabtype,$continent in
       zonenow,*) ;;
@@ -746,15 +755,18 @@ while
   do
     TZdate=`LANG=C TZ="$TZ_for_date" date`
     UTdate=`LANG=C TZ=UTC0 date`
-    TZsec=`expr "$TZdate" : '.*:\([0-5][0-9]\)'`
-    UTsec=`expr "$UTdate" : '.*:\([0-5][0-9]\)'`
-    case $TZsec in
-    $UTsec)
+    if $AWK '
+	  function getsecs(d) {
+	    return match(d, /.*:[0-5][0-9]/) ? substr(d, RLENGTH - 1, 2) : ""
+	  }
+	  BEGIN { exit getsecs(ARGV[1]) != getsecs(ARGV[2]) }
+       ' ="$TZdate" ="$UTdate"
+    then
       extra_info="
 Selected time is now:	$TZdate.
 Universal Time is now:	$UTdate."
       break
-    esac
+    fi
   done
 
 

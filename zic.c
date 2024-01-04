@@ -35,6 +35,9 @@ static zic_t const
 # define ZIC_MAX_ABBR_LEN_WO_WARN 6
 #endif /* !defined ZIC_MAX_ABBR_LEN_WO_WARN */
 
+/* Minimum and maximum years, assuming signed 32-bit time_t.  */
+enum { YEAR_32BIT_MIN = 1901, YEAR_32BIT_MAX = 2038 };
+
 /* An upper bound on how much a format might grow due to concatenation.  */
 enum { FORMAT_LEN_GROWTH_BOUND = 5 };
 
@@ -3211,7 +3214,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 		** we only need one cycle to define the zone.
 		*/
 		if (prodstic) {
-			min_year = 1900;
+			min_year = YEAR_32BIT_MIN - 1;
 			max_year = min_year + years_of_observations;
 		}
 	}
@@ -3221,10 +3224,10 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 	if (want_bloat()) {
 	  /* For the benefit of older systems,
 	     generate data from 1900 through 2038.  */
-	  if (min_year > 1900)
-		min_year = 1900;
-	  if (max_year < 2038)
-		max_year = 2038;
+	  if (min_year > YEAR_32BIT_MIN - 1)
+		min_year = YEAR_32BIT_MIN - 1;
+	  if (max_year < YEAR_32BIT_MAX)
+		max_year = YEAR_32BIT_MAX;
 	}
 
 	if (min_time < lo_time || hi_time < max_time)

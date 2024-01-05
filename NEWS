@@ -3,9 +3,23 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    zic no longer pretends to support indefinite-past DST.
     localtime no longer mishandles Ciudad Juárez in 2422.
 
   Changes to code
+
+    The FROM and TO columns of Rule lines can no longer be "minimum"
+    or an abbreviation of "minimum", because TZif files do not support
+    DST rules that extend into the indefinite past - although these
+    rules were supported when TZif files had only 32-bit data, this
+    stopped working when 64-bit TZif files were introduced in 1995.
+    This should not be a problem for realistic data, since DST was
+    first used in the 20th century.  As a transition aid, FROM columns
+    like "minimum" are now diagnosed and then treated as if they were
+    the year 1900; this should suffice for TZif files on old systems
+    with only 32-bit time_t, and it is more compatible with bugs in
+    2023c-and-earlier localtime.c.  (Problem reported by Yoshito
+    Umaoka.)
 
     localtime and related functions no longer mishandle some
     timestamps that occur about 400 years after a switch to a time

@@ -360,24 +360,15 @@ an unquoted name should not contain characters from the set
 Gives the first year in which the rule applies.
 Any signed integer year can be supplied; the proleptic Gregorian calendar
 is assumed, with year 0 preceding year 1.
-The word
-.B minimum
-(or an abbreviation) means the indefinite past.
-The word
-.B maximum
-(or an abbreviation) means the indefinite future.
 Rules can describe times that are not representable as time values,
 with the unrepresentable times ignored; this allows rules to be portable
 among hosts with differing time value types.
 .TP
 .B TO
 Gives the final year in which the rule applies.
-In addition to
-.B minimum
-and
+The word
 .B maximum
-(as above),
-the word
+(or an abbreviation) means the indefinite future, and the word
 .B only
 (or an abbreviation)
 may be used to repeat the value of the

@@ -6,6 +6,11 @@ Unreleased, experimental changes
     zic no longer pretends to support indefinite-past DST.
     localtime no longer mishandles Ciudad Juárez in 2422.
 
+  Changes to past timestamps
+
+    From 1947 through 1949, Toronto's transitions occurred at 02:00
+    not 00:00.  (Thanks to Chris Walton.)
+
   Changes to code
 
     The FROM and TO columns of Rule lines can no longer be "minimum"

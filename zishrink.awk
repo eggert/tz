@@ -199,6 +199,9 @@ function process_input_line(line, \
   }
 
   # Abbreviate "max", "min", "only" and month names.
+  # Although "max" and "min" can both be abbreviated to just "m",
+  # use the longer forms "ma" and "mi" for now,
+  # for compatibility with zic 2023d and earlier.
   gsub(/ max /, " ma ", line)
   gsub(/ min /, " mi ", line)
   gsub(/ only /, " o ", line)

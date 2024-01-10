@@ -11,6 +11,8 @@ Unreleased, experimental changes
     From 1947 through 1949, Toronto's transitions occurred at 02:00
     not 00:00.  (Thanks to Chris Walton.)
 
+    In 1911 Miquelon adopted standard time on June 15, not May 15.
+
   Changes to code
 
     The FROM and TO columns of Rule lines can no longer be "minimum"

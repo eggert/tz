@@ -1268,6 +1268,10 @@ Zone America/Menominee	-5:50:27 -	LMT	1885 Sep 18 12:00
 #	<http://cs.ucla.edu/~eggert/The-Waste-of-Daylight-19th.pdf>
 #	[PDF] (1914-03)
 #
+# For the 1911/1912 establishment of standard time in French possessions, see:
+# Société Française de Physique, Recueil de constantes physiques (1913),
+# page 752, 18b.
+#
 # See the 'europe' file for Greenland.
 
 # Canada
@@ -3437,7 +3441,7 @@ Zone	America/Jamaica	-5:07:10 -	LMT	1890        # Kingston
 # Martinique
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Martinique	-4:04:20 -      LMT	1890        # Fort-de-France
-			-4:04:20 -	FFMT	1911 May    # Fort-de-France MT
+			-4:04:20 -	FFMT	1911 May  1 # Fort-de-France MT
 			-4:00	-	AST	1980 Apr  6
 			-4:00	1:00	ADT	1980 Sep 28
 			-4:00	-	AST
@@ -3544,7 +3548,7 @@ Zone America/Puerto_Rico -4:24:25 -	LMT	1899 Mar 28 12:00 # San Juan
 # St Pierre and Miquelon
 # There are too many St Pierres elsewhere, so we'll use 'Miquelon'.
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone America/Miquelon	-3:44:40 -	LMT	1911 May 15 # St Pierre
+Zone America/Miquelon	-3:44:40 -	LMT	1911 Jun 15 # St Pierre
 			-4:00	-	AST	1980 May
 			-3:00	-	-03	1987
 			-3:00	Canada	-03/-02

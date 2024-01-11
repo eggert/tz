@@ -247,9 +247,13 @@ function process_input_line(line, \
   outline = make_line(n, field)
   if (ruleline)
     rule_output_line[nrule_out++] = outline
-  else if (linkline)
-    link_output_line[nlink_out++] = outline
-  else
+  else if (linkline) {
+    # In vanguard format with Gawk, links are output sorted by destination.
+    if (dataform == "vanguard" && PROCINFO["version"])
+      linkdef[zonename] = field[2]
+    else
+      link_output_line[nlink_out++] = outline
+  }else
     zonedef[zonename] = (zoneline ? "" : zonedef[zonename] "\n") outline
 }
 
@@ -312,8 +316,16 @@ function output_saved_lines( \
   for (zonename in zonedef)
     print zonedef[zonename]
 
-  for (i = 0; i < nlink_out; i++)
-    print link_output_line[i]
+  if (nlink_out)
+    for (i = 0; i < nlink_out; i++)
+      print link_output_line[i]
+  else {
+    # When using gawk, output links sorted by destination.
+    # This also helps compressibility a bit.
+    PROCINFO["sorted_in"] = "@val_type_asc"
+    for (zonename in linkdef)
+      printf "L %s %s\n", linkdef[zonename], zonename
+  }
 }
 
 BEGIN {

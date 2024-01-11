@@ -162,7 +162,7 @@ function make_line(n, field, \
 # Process the input line LINE and save it for later output.
 
 function process_input_line(line, \
-			    f, field, end, i, n, r, startdef, \
+			    f, field, end, n, r, \
 			    linkline, ruleline, zoneline)
 {
   # Remove comments, normalize spaces, and append a space to each line.
@@ -235,25 +235,6 @@ function process_input_line(line, \
   if (r ~ /^[^-+0-9]/) {
     rule_used[r] = 1
   }
-
-  # If this zone supersedes an earlier one, delete the earlier one
-  # from the saved output lines.
-  startdef = ""
-  if (zoneline)
-    zonename = startdef = field[2]
-  else if (linkline)
-    zonename = startdef = field[3]
-  else if (ruleline)
-    zonename = ""
-  if (startdef) {
-    i = zonedef[startdef]
-    if (i) {
-      do
-	output_line[i - 1] = ""
-      while (output_line[i++] ~ /^[-+0-9]/);
-    }
-  }
-  zonedef[zonename] = nout + 1
 
   # Save the line for later output.
   output_line[nout++] = make_line(n, field)

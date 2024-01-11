@@ -305,8 +305,13 @@ function output_saved_lines( \
   for (i = 0; i < nrule_out; i++)
     if (rule_output_line[i])
       print rule_output_line[i]
+
+  # When using gawk, output zones sorted by name.
+  # This makes the output a bit more compressible.
+  PROCINFO["sorted_in"] = "@ind_str_asc"
   for (zonename in zonedef)
     print zonedef[zonename]
+
   for (i = 0; i < nlink_out; i++)
     print link_output_line[i]
 }

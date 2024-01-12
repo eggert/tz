@@ -768,7 +768,8 @@ time_t posix2time(time_t);
 
 /* Infer TM_ZONE on systems where this information is known, but suppress
    guessing if NO_TM_ZONE is defined.  Similarly for TM_GMTOFF.  */
-#if (defined __GLIBC__ \
+#if (200809 < _POSIX_VERSION \
+     || defined __GLIBC__ \
      || defined __tm_zone /* musl */ \
      || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
      || (defined __APPLE__ && defined __MACH__))

@@ -2292,15 +2292,18 @@ timelocal(struct tm *tmp)
 		tmp->tm_isdst = -1;	/* in case it wasn't initialized */
 	return mktime(tmp);
 }
-#else
+#endif
+
+#ifndef EXTERN_TIMEOFF
 # ifndef timeoff
 #  define timeoff my_timeoff /* Don't collide with OpenBSD 7.4 <time.h>.  */
 # endif
-static
+# define EXTERN_TIMEOFF static
 #endif
+
 /* This function is obsolescent and may disapper in future releases.
    Callers can instead use mktime_z with a fixed-offset zone.  */
-time_t
+EXTERN_TIMEOFF time_t
 timeoff(struct tm *tmp, long offset)
 {
   if (tmp)

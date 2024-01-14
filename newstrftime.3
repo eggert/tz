@@ -64,7 +64,7 @@ strftime \- format date and time
 The
 .B strftime
 function formats the information from
-.I timeptr
+.BI * timeptr
 into the array pointed to by
 .I buf
 according to the string pointed to by
@@ -97,14 +97,14 @@ if the name is followed by
 .B strftime
 ignores the member even though POSIX-2017 lists it
 which means portable code should set it.
-(On older platforms lacking
-.I tm_gmtoff
-or
-.IR tm_zone ,
-.B strftime
-can use
-.I tm_isdst
-instead of these two members.)
+For portability,
+.BI * timeptr
+should be initialized as if by a successful call to
+.BR gmtime ,
+.BR localtime ,
+.BR mktime ,
+.BR timegm ,
+or similar functions.
 .TP
 %A
 is replaced by the locale's full weekday name.
@@ -248,6 +248,18 @@ of leap seconds.
 %s
 is replaced by the number of seconds since the Epoch (see
 .BR ctime (3)).
+Although %s is reliable in this implementation,
+it can have glitches on other platforms (notably platforms lacking
+.IR tm_gmtoff ),
+so portable code should format a
+.B time_t
+value directly via something like
+.B sprintf
+instead of via
+.B localtime
+followed by
+.B strftime
+with "%s".
 .RI [ tm_year ,
 .IR tm_mon ,
 .IR tm_mday ,
@@ -378,6 +390,16 @@ format.
 .IR tm_sec ,
 .IR tm_gmtoff ,
 .IR tm_zone ]
+.PP
+As a side effect,
+.B strftime
+also behaves as if
+.B tzset
+were called.
+This is for compatibility with older platforms, as required by POSIX;
+it is not needed for
+.BR tzset 's
+own use.
 .SH "RETURN VALUE"
 If the conversion is successful,
 .B strftime

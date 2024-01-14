@@ -47,7 +47,8 @@ Unreleased, experimental changes
   Changes to documentation
 
     The strftime man page documents which struct tm members affect
-    which conversion specs.
+    which conversion specs, and that tzset is called.  (Problems
+    reported by Robert Elz and Steve Summit.)
 
 
 Release 2023d - 2023-12-21 20:02:24 -0800

@@ -4058,6 +4058,15 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # which is used below even though the modern-day Phù Liễn Observatory
 # is closer to 07:06:31.  Abbreviate Phù Liễn Mean Time as PLMT.
 #
+# In September 1, 1945, Vietnam moved back 2 hours, back to GMT+7.
+# In that very decision, they mentioned an old decision to change timezone
+# in March 29, 1945. It's unknown whether Vietnam moved to GMT+9 either on
+# or after March 29, 1945; or the decision (by a Japanese Goveror-General)
+# only legalised the change to GMT+9 earlier.
+# Source: Việt Nam Dân Quốc Công Báo, No. 1, September 29, 1945
+# Archived by National Library of Viet Nam
+# http://baochi.nlv.gov.vn/baochi/cgi-bin/baochi?a=d&d=JwvzO19450929.2.5&srpos=&dliv=none&e=-------vi-20--1--img-txIN------
+#
 # The following transitions occurred in Indochina in general (before 1954)
 # and in South Vietnam in particular (after 1954):
 # To 07:00 on 1911-05-01.

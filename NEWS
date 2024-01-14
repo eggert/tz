@@ -44,6 +44,11 @@ Unreleased, experimental changes
     now in the public domain too and tends to be more up-to-date.
     (Thanks to Martin Burnicki for liaisoning with the IERS.)
 
+  Changes to documentation
+
+    The strftime man page documents which struct tm members affect
+    which conversion specs.
+
 
 Release 2023d - 2023-12-21 20:02:24 -0800
 

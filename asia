@@ -4041,7 +4041,8 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # The English-language name of Vietnam's most populous city is "Ho Chi Minh
 # City"; use Ho_Chi_Minh below to avoid a name of more than 14 characters.
 
-# From Paul Eggert (2022-07-27) after a 2014 heads-up from Trần Ngọc Quân:
+# From Paul Eggert (2024-01-14) after a 2014 heads-up from Trần Ngọc Quân
+# and a 2024-01-14 heads-up from Đoàn Trần Công Danh:
 # Trần Tiến Bình's authoritative book "Lịch Việt Nam: thế kỷ XX-XXI (1901-2100)"
 # (Nhà xuất bản Văn Hoá - Thông Tin, Hanoi, 2005), pp 49-50,
 # is quoted verbatim in:
@@ -4058,15 +4059,6 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # which is used below even though the modern-day Phù Liễn Observatory
 # is closer to 07:06:31.  Abbreviate Phù Liễn Mean Time as PLMT.
 #
-# In September 1, 1945, Vietnam moved back 2 hours, back to GMT+7.
-# In that very decision, they mentioned an old decision to change timezone
-# in March 29, 1945. It's unknown whether Vietnam moved to GMT+9 either on
-# or after March 29, 1945; or the decision (by a Japanese Goveror-General)
-# only legalised the change to GMT+9 earlier.
-# Source: Việt Nam Dân Quốc Công Báo, No. 1, September 29, 1945
-# Archived by National Library of Viet Nam
-# http://baochi.nlv.gov.vn/baochi/cgi-bin/baochi?a=d&d=JwvzO19450929.2.5&srpos=&dliv=none&e=-------vi-20--1--img-txIN------
-#
 # The following transitions occurred in Indochina in general (before 1954)
 # and in South Vietnam in particular (after 1954):
 # To 07:00 on 1911-05-01.
@@ -4080,14 +4072,23 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 #
 # Trần cites the following sources; it's unclear which supplied the info above.
 #
-# Hoàng Xuân Hãn: "Lịch và lịch Việt Nam". Tập san Khoa học Xã hội,
-# No. 9, Paris, February 1982.
+#   Hoàng Xuân Hãn: "Lịch và lịch Việt Nam". Tập san Khoa học Xã hội,
+#   No. 9, Paris, February 1982.
 #
-# Lê Thành Lân: "Lịch và niên biểu lịch sử hai mươi thế kỷ (0001-2010)",
-# NXB Thống kê, Hanoi, 2000.
+#   Lê Thành Lân: "Lịch và niên biểu lịch sử hai mươi thế kỷ (0001-2010)",
+#   NXB Thống kê, Hanoi, 2000.
 #
-# Lê Thành Lân: "Lịch hai thế kỷ (1802-2010) và các lịch vĩnh cửu",
-# NXB Thuận Hoá, Huế, 1995.
+#   Lê Thành Lân: "Lịch hai thế kỷ (1802-2010) và các lịch vĩnh cửu",
+#   NXB Thuận Hoá, Huế, 1995.
+#
+# Here is the decision for the September 1945 transition:
+# Võ Nguyên Giáp, Việt Nam Dân Quốc Công Báo, No. 1 (1945-09-29), page 13
+# http://baochi.nlv.gov.vn/baochi/cgi-bin/baochi?a=d&d=JwvzO19450929.2.5&dliv=none
+# It says that on 1945-09-01 at 24:00, Vietnam moved back two hours, to +07.
+# It also mentions a 1945-03-29 decree (by a Japanese Goveror-General)
+# to set the time zone to +09, but does not say whether that decree
+# merely legalized an earlier change to +09.
+
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 		#STDOFF	7:06:30.13
@@ -4095,7 +4096,7 @@ Zone Asia/Ho_Chi_Minh	7:06:30 -	LMT	1906 Jul  1
 			7:06:30	-	PLMT	1911 May  1 # Phù Liễn MT
 			7:00	-	+07	1942 Dec 31 23:00
 			8:00	-	+08	1945 Mar 14 23:00
-			9:00	-	+09	1945 Sep  2
+			9:00	-	+09	1945 Sep  1 24:00
 			7:00	-	+07	1947 Apr  1
 			8:00	-	+08	1955 Jul  1
 			7:00	-	+07	1959 Dec 31 23:00

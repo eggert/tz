@@ -2470,8 +2470,13 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 #
 # Almaty (formerly Alma-Ata), representing most locations in Kazakhstan
-# This includes KZ-AKM, KZ-ALA, KZ-ALM, KZ-AST, KZ-BAY, KZ-VOS, KZ-ZHA,
-# KZ-KAR, KZ-SEV, KZ-PAV, and KZ-YUZ.
+# This includes Aqmola/Akmola (ISO 3166-2 code KZ-AKM), Almaty city (KZ-ALA),
+# Almaty (KZ-ALM), Astana city (KZ-AST), Baikonur city (KZ-BAY),
+# East Kazkhstan (KZ-VOS), Jambyl/Zhambyl (KZ-ZHA), Karaganda (KZ-KAR),
+# North Kazakhstan (KZ-SEV), Pavlodar (KZ-PAV), and Turkistan (KZ-YUZ).
+# It also includes the following for which ISO 3166-2 codes are
+# not yet assigned, or are unknown because ISO does not publish codes freely:
+# Abai/Abay, Jetisu/Zhetysu, Shyumkent city, and Ulytau.
 Zone	Asia/Almaty	5:07:48 -	LMT	1924 May  2 # or Alma-Ata
 			5:00	-	+05	1930 Jun 21
 			6:00 RussiaAsia +06/+07	1991 Mar 31  2:00s

@@ -4104,6 +4104,18 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # It also mentions a 1945-03-29 decree (by a Japanese Goveror-General)
 # to set the time zone to +09, but does not say whether that decree
 # merely legalized an earlier change to +09.
+#
+# July 1955 transition:
+# Ngô Đình Diệm, Công Báo Việt Nam, No. 92 (1955-07-02), page 1780-1781
+# Ordinance (Dụ) No. 46 (1955-06-25)
+# http://ddsnext.crl.edu/titles/32341#?c=0&m=29&s=0&cv=4&r=0&xywh=-89%2C342%2C1724%2C1216
+# It says that on 1955-07-01 at 01:00, South Vietnam moved back 1 hour (to +07).
+#
+# December 1959 transition:
+# Ngô Đình Diệm, Công Báo Việt Nam Cộng Hòa, 1960 part 1 (1960-01-02), page 62
+# Decree (Sắc lệnh) No. 362-TTP (1959-12-30)
+# http://ddsnext.crl.edu/titles/32341#?c=0&m=138&s=0&cv=793&r=0&xywh=-54%2C1504%2C1705%2C1202
+# It says that on 1959-12-31 at 23:00, South Vietnam moved forward 1 hour (to +08).
 
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
@@ -4114,7 +4126,7 @@ Zone Asia/Ho_Chi_Minh	7:06:30 -	LMT	1906 Jul  1
 			8:00	-	+08	1945 Mar 14 23:00
 			9:00	-	+09	1945 Sep  1 24:00
 			7:00	-	+07	1947 Apr  1
-			8:00	-	+08	1955 Jul  1
+			8:00	-	+08	1955 Jul  1 01:00
 			7:00	-	+07	1959 Dec 31 23:00
 			8:00	-	+08	1975 Jun 13
 			7:00	-	+07

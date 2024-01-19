@@ -16,6 +16,9 @@ Unreleased, experimental changes
 
   Changes to past timestamps
 
+    Asia/Ho_Chi_Minh's 1955-07-01 transition occurred at 01:00
+    not 00:00.  (Thanks to Đoàn Trần Công Danh.)
+
     From 1947 through 1949, Toronto's transitions occurred at 02:00
     not 00:00.  (Thanks to Chris Walton.)
 

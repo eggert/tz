@@ -2457,6 +2457,16 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # effective December 21st, 2018....
 # http://adilet.zan.kz/rus/docs/P1800000817 (russian language).
 
+# From Zhanbolat Raimbekov (2024-01-19):
+# Kazakhstan (all parts) switching to UTC+5 on March 1, 2024
+# https://www.gov.kz/memleket/entities/mti/press/news/details/688998?lang=ru
+# [in Russian]
+#
+# From Alexander Krivenyshev (2024-01-19):
+# According to a different news and the official web site for the Ministry of
+# Trade and Integration of the Republic of Kazakhstan:
+# https://en.inform.kz/news/kazakhstan-to-switch-to-single-hour-zone-mar-1-54ad0b/
+
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 #
 # Almaty (formerly Alma-Ata), representing most locations in Kazakhstan
@@ -2467,7 +2477,8 @@ Zone	Asia/Almaty	5:07:48 -	LMT	1924 May  2 # or Alma-Ata
 			6:00 RussiaAsia +06/+07	1991 Mar 31  2:00s
 			5:00 RussiaAsia	+05/+06	1992 Jan 19  2:00s
 			6:00 RussiaAsia	+06/+07	2004 Oct 31  2:00s
-			6:00	-	+06
+			6:00	-	+06	2024 Mar  1  0:00
+			5:00	-	+05
 # Qyzylorda (aka Kyzylorda, Kizilorda, Kzyl-Orda, etc.) (KZ-KZY)
 Zone	Asia/Qyzylorda	4:21:52 -	LMT	1924 May  2
 			4:00	-	+04	1930 Jun 21
@@ -2481,7 +2492,6 @@ Zone	Asia/Qyzylorda	4:21:52 -	LMT	1924 May  2
 			5:00 RussiaAsia	+05/+06	2004 Oct 31  2:00s
 			6:00	-	+06	2018 Dec 21  0:00
 			5:00	-	+05
-#
 # Qostanay (aka Kostanay, Kustanay) (KZ-KUS)
 # The 1991/2 rules are unclear partly because of the 1997 Turgai
 # reorganization.
@@ -2493,8 +2503,8 @@ Zone	Asia/Qostanay	4:14:28 -	LMT	1924 May  2
 			5:00 RussiaAsia	+05/+06	1991 Mar 31  2:00s
 			4:00 RussiaAsia	+04/+05	1992 Jan 19  2:00s
 			5:00 RussiaAsia	+05/+06	2004 Oct 31  2:00s
-			6:00	-	+06
-
+			6:00	-	+06	2024 Mar  1  0:00
+			5:00	-	+05
 # Aqtöbe (aka Aktobe, formerly Aktyubinsk) (KZ-AKT)
 Zone	Asia/Aqtobe	3:48:40	-	LMT	1924 May  2
 			4:00	-	+04	1930 Jun 21

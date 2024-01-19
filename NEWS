@@ -3,8 +3,16 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Kazakhstan unifies on UTC+5 beginning 2024-03-01.
     zic no longer pretends to support indefinite-past DST.
     localtime no longer mishandles Ciudad Juárez in 2422.
+
+  Changes to future timestamps
+
+    Kazakhstan unifies on UTC+5.  This affects Asia/Almaty and
+    Asia/Qostanay which together represent the eastern portion of the
+    country that will transition from UTC+6 on 2024-03-01 at 00:00 to
+    join the western portion.  (Thanks to Zhanbolat Raimbekov.)
 
   Changes to past timestamps
 

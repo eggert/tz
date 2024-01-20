@@ -2471,13 +2471,11 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 #
 # Almaty (formerly Alma-Ata), representing most locations in Kazakhstan
-# This includes Aqmola/Akmola (ISO 3166-2 code KZ-AKM), Almaty city (KZ-ALA),
-# Almaty (KZ-ALM), Astana city (KZ-AST), Baikonur city (KZ-BAY),
-# East Kazkhstan (KZ-VOS), Jambyl/Zhambyl (KZ-ZHA), Karaganda (KZ-KAR),
-# North Kazakhstan (KZ-SEV), Pavlodar (KZ-PAV), and Turkistan (KZ-YUZ).
-# It also includes the following for which ISO 3166-2 codes are
-# not yet assigned, or are unknown because ISO does not publish codes freely:
-# Abai/Abay, Jetisu/Zhetysu, Shyumkent city, and Ulytau.
+# This includes Abai/Abay (ISO 3166-2 code KZ-10), Aqmola/Akmola (KZ-11),
+# Almaty (KZ-19), Almaty city (KZ-75), Astana city (KZ-71),
+# East Kazkhstan (KZ-63), Jambyl/Zhambyl (KZ-31), Jetisu/Zhetysu (KZ-33),
+# Karaganda (KZ-35), North Kazakhstan (KZ-59), Pavlodar (KZ-55),
+# Shyumkent city (KZ-79), Turkistan (KZ-61), and Ulytau (KZ-62).
 Zone	Asia/Almaty	5:07:48 -	LMT	1924 May  2 # or Alma-Ata
 			5:00	-	+05	1930 Jun 21
 			6:00 RussiaAsia +06/+07	1991 Mar 31  2:00s
@@ -2485,7 +2483,7 @@ Zone	Asia/Almaty	5:07:48 -	LMT	1924 May  2 # or Alma-Ata
 			6:00 RussiaAsia	+06/+07	2004 Oct 31  2:00s
 			6:00	-	+06	2024 Mar  1  0:00
 			5:00	-	+05
-# Qyzylorda (aka Kyzylorda, Kizilorda, Kzyl-Orda, etc.) (KZ-KZY)
+# Qyzylorda (aka Kyzylorda, Kizilorda, Kzyl-Orda, etc.) (KZ-43)
 Zone	Asia/Qyzylorda	4:21:52 -	LMT	1924 May  2
 			4:00	-	+04	1930 Jun 21
 			5:00	-	+05	1981 Apr  1
@@ -2498,7 +2496,7 @@ Zone	Asia/Qyzylorda	4:21:52 -	LMT	1924 May  2
 			5:00 RussiaAsia	+05/+06	2004 Oct 31  2:00s
 			6:00	-	+06	2018 Dec 21  0:00
 			5:00	-	+05
-# Qostanay (aka Kostanay, Kustanay) (KZ-KUS)
+# Qostanay (aka Kostanay, Kustanay) (KZ-39)
 # The 1991/2 rules are unclear partly because of the 1997 Turgai
 # reorganization.
 Zone	Asia/Qostanay	4:14:28 -	LMT	1924 May  2
@@ -2511,7 +2509,7 @@ Zone	Asia/Qostanay	4:14:28 -	LMT	1924 May  2
 			5:00 RussiaAsia	+05/+06	2004 Oct 31  2:00s
 			6:00	-	+06	2024 Mar  1  0:00
 			5:00	-	+05
-# Aqtöbe (aka Aktobe, formerly Aktyubinsk) (KZ-AKT)
+# Aqtöbe (aka Aktobe, formerly Aktyubinsk) (KZ-15)
 Zone	Asia/Aqtobe	3:48:40	-	LMT	1924 May  2
 			4:00	-	+04	1930 Jun 21
 			5:00	-	+05	1981 Apr  1
@@ -2521,7 +2519,7 @@ Zone	Asia/Aqtobe	3:48:40	-	LMT	1924 May  2
 			4:00 RussiaAsia	+04/+05	1992 Jan 19  2:00s
 			5:00 RussiaAsia	+05/+06	2004 Oct 31  2:00s
 			5:00	-	+05
-# Mangghystaū (KZ-MAN)
+# Mangghystaū (KZ-47)
 # Aqtau was not founded until 1963, but it represents an inhabited region,
 # so include timestamps before 1963.
 Zone	Asia/Aqtau	3:21:04	-	LMT	1924 May  2
@@ -2533,7 +2531,7 @@ Zone	Asia/Aqtau	3:21:04	-	LMT	1924 May  2
 			5:00 RussiaAsia	+05/+06	1994 Sep 25  2:00s
 			4:00 RussiaAsia	+04/+05	2004 Oct 31  2:00s
 			5:00	-	+05
-# Atyraū (KZ-ATY) is like Mangghystaū except it switched from
+# Atyraū (KZ-23) is like Mangghystaū except it switched from
 # +04/+05 to +05/+06 in spring 1999, not fall 1994.
 Zone	Asia/Atyrau	3:27:44	-	LMT	1924 May  2
 			3:00	-	+03	1930 Jun 21
@@ -2544,7 +2542,7 @@ Zone	Asia/Atyrau	3:27:44	-	LMT	1924 May  2
 			5:00 RussiaAsia	+05/+06	1999 Mar 28  2:00s
 			4:00 RussiaAsia	+04/+05	2004 Oct 31  2:00s
 			5:00	-	+05
-# West Kazakhstan (KZ-ZAP)
+# West Kazakhstan (KZ-27)
 # From Paul Eggert (2016-03-18):
 # The 1989 transition is from USSR act No. 227 (1989-03-14).
 Zone	Asia/Oral	3:25:24	-	LMT	1924 May  2 # or Ural'sk

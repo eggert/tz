@@ -3620,7 +3620,7 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 
 # Philippines
 
-# From Paul Eggert (2018-11-18):
+# From Paul Eggert (2024-01-21):
 # The Spanish initially used American (west-of-Greenwich) time.
 # It is unknown what time Manila kept when the British occupied it from
 # 1762-10-06 through 1764-04; for now assume it kept American time.
@@ -3628,7 +3628,7 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 # Philippines, issued a proclamation announcing that 1844-12-30 was to
 # be immediately followed by 1845-01-01; see R.H. van Gent's
 # History of the International Date Line
-# https://www.staff.science.uu.nl/~gent0113/idl/idl_philippines.htm
+# https://webspace.science.uu.nl/~gent0113/idl/idl_philippines.htm
 # The rest of the data entries are from Shanks & Pottenger.
 
 # From Jesper Nørgaard Welen (2006-04-26):

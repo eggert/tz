@@ -362,6 +362,11 @@ The backward-compatibility file <code>zone.tab</code> is similar
 but conforms to the older-version guidelines related to <abbr>ISO</abbr> 3166-1;
 it lists only one country code per entry and unlike <code>zone1970.tab</code>
 it can list names defined in <code>backward</code>.
+Applications that process only timestamps from now on can instead use the file
+<code>zonenow.tab</code>, which partitions the world more coarsely,
+into regions where clocks agree now and in the predicted future;
+this file is smaller and simpler than <code>zone1970.tab</code>
+and <code>zone.tab</code>.
 </p>
 
 <p>

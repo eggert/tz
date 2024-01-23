@@ -45,7 +45,7 @@ Unreleased, experimental changes
     for some timestamps in November 2422, November 2822, etc. in
     America/Ciudad_Juarez.  (Problem reported by Gilmore Davidson.)
 
-    strftime %z now uses tm_gmtoff if available.  (Problem and draft
+    strftime %s now uses tm_gmtoff if available.  (Problem and draft
     patch reported by Dag-Erling Smørgrav.)
 
   Changes to build procedure

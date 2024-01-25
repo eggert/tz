@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     Kazakhstan unifies on UTC+5 beginning 2024-03-01.
+    Palestine springs forward a week later after Ramadan.
     zic no longer pretends to support indefinite-past DST.
     localtime no longer mishandles Ciudad Juárez in 2422.
 
@@ -13,6 +14,11 @@ Unreleased, experimental changes
     Asia/Qostanay which together represent the eastern portion of the
     country that will transition from UTC+6 on 2024-03-01 at 00:00 to
     join the western portion.  (Thanks to Zhanbolat Raimbekov.)
+
+    Palestine springs forward a week later than previously predicted
+    in 2024 and 2025.  (Thanks to Heba Hamad.)  Change spring-forward
+    predictions to the second Saturday after Ramadan, not the first;
+    this also affects other predictions starting in 2039.
 
   Changes to past timestamps
 

@@ -617,6 +617,16 @@ the Apache License.</li>
 library that translates between <abbr>UT</abbr> and civil time and
 can read <abbr>TZif</abbr> files. It is freely available under the Apache
 License.</li>
+<li>The
+<a href="https://github.com/nayarsystems/posix_tz_db"><code>posix_tz_db</code>
+package</a> contains Python code
+to generate <abbr>CSV</abbr> and <abbr>JSON</abbr> tables that map
+<code><abbr>tz</abbr></code> settings to POSIX.1-2017-like approximations.
+For example, it maps <code>"Africa/Cairo"</code>
+to <code>"EET-2EEST,M4.5.5/0,M10.5.4/24"</code>,
+an approximation valid for Cairo timestamps from 2023 on.
+This can help porting to platforms that support only POSIX.1-2017.
+The package is freely available under the MIT license.</li>
 <li><a href="https://github.com/derickr/timelib">Timelib</a> is a C
 library that reads <abbr>TZif</abbr> files and converts
 timestamps from one time zone or format to another.

@@ -438,7 +438,7 @@ while
     eval '
       doselect '"$quoted_continents"' \
 	"coord - I want to use geographical coordinates." \
-	"TZ - I want to specify the timezone using the POSIX TZ format." \
+	"TZ - I want to specify the timezone using a POSIX.1-2017 TZ string." \
 	"time - I know local time already." \
 	"now - Like \"time\", but configure only for timestamps from now on."
       continent=$select_result
@@ -462,7 +462,7 @@ while
 
   case $continent in
   TZ)
-    # Ask the user for a POSIX TZ string.  Check that it conforms.
+    # Ask the user for a POSIX.1-2017 TZ string.  Check that it conforms.
     check_POSIX_TZ_string='
       BEGIN {
 	tz = substr(ARGV[1], 2)
@@ -492,7 +492,7 @@ while
       read tz
       $AWK "$check_POSIX_TZ_string" ="$tz"
     do
-      say >&2 "'$tz' is not a conforming POSIX timezone string."
+      say >&2 "'$tz' is not a conforming POSIX.1-2017 timezone string."
     done
     TZ_for_date=$tz;;
   *)

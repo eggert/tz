@@ -53,7 +53,7 @@ DATAFORM=		main
 
 LOCALTIME=	Factory
 
-# The POSIXRULES macro controls interpretation of POSIX-like TZ
+# The POSIXRULES macro controls interpretation of POSIX-2017.1-like TZ
 # settings like TZ='EET-2EEST' that lack DST transition rules.
 # If POSIXRULES is '-', no template is installed; this is the default.
 # Any other value for POSIXRULES is obsolete and should not be relied on, as:
@@ -274,7 +274,7 @@ LDLIBS=
 #  -DTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
 #	the default is system-supplied, typically "/usr/lib/locale"
 #  -DTZDEFRULESTRING=\",date/time,date/time\" to default to the specified
-#	DST transitions for POSIX-style TZ strings lacking them,
+#	DST transitions for POSIX.1-2017-style TZ strings lacking them,
 #	in the usual case where POSIXRULES is '-'.  If not specified,
 #	TZDEFRULESTRING defaults to US rules for future DST transitions.
 #	This mishandles some past timestamps, as US DST rules have changed.
@@ -340,9 +340,10 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # guess TM_GMTOFF from other macros; define NO_TM_GMTOFF to suppress this.
 # Similarly, if your system has a "zone abbreviation" field, define
 #	-DTM_ZONE=tm_zone
-# and define NO_TM_ZONE to suppress any guessing.  Although these two fields
-# not required by POSIX, a future version of POSIX is planned to require them
-# and they are widely available on GNU/Linux and BSD systems.
+# and define NO_TM_ZONE to suppress any guessing.
+# Although these two fields are not required by POSIX.1-2017,
+# POSIX 202x/D4 requires them and they are widely available
+# on GNU/Linux and BSD systems.
 #
 # The next batch of options control support for external variables
 # exported by tzcode.  In practice these variables are less useful
@@ -352,7 +353,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # #	-DHAVE_TZNAME=0 # do not support "tzname"
 # #	-DHAVE_TZNAME=1 # support "tzname", which is defined by system library
 # #	-DHAVE_TZNAME=2 # support and define "tzname"
-# # to the "CFLAGS=" line.  "tzname" is required by POSIX 1988 and later.
+# # to the "CFLAGS=" line.  "tzname" is required by POSIX.1-1988 and later.
 # # If not defined, the code attempts to guess HAVE_TZNAME from other macros.
 # # Warning: unless time_tz is also defined, HAVE_TZNAME=1 can cause
 # # crashes when combined with some platforms' standard libraries,
@@ -362,8 +363,8 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 # #	-DUSG_COMPAT=0 # do not support
 # #	-DUSG_COMPAT=1 # support, and variables are defined by system library
 # #	-DUSG_COMPAT=2 # support and define variables
-# # to the "CFLAGS=" line; "timezone" and "daylight" are inspired by
-# # Unix Systems Group code and are required by POSIX 2008 (with XSI) and later.
+# # to the "CFLAGS=" line; "timezone" and "daylight" are inspired by Unix
+# # Systems Group code and are required by POSIX.1-2008 and later (with XSI).
 # # If not defined, the code attempts to guess USG_COMPAT from other macros.
 # #
 # # To support the external variable "altzone", add
@@ -427,7 +428,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
 
 # The name of a POSIX-like library archiver, its flags, C compiler,
 # linker flags, and 'make' utility.  Ordinarily the defaults suffice.
-# The commented-out values are the defaults specified by POSIX 202x/D3.
+# The commented-out values are the defaults specified by POSIX.1-202x/D4.
 #AR = ar
 #ARFLAGS = -rv
 #CC = c17

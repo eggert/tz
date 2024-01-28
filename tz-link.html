@@ -172,7 +172,7 @@ Since version 2022a, each release has been distributed in
 ustar interchange format</a>, compressed as described above;
 older releases use a nearly compatible format.
 Since version 2016h, each release has contained a text file named
-"<samp>version</samp>" whose first (and currently only) line is the version.
+"<code>version</code>" whose first (and currently only) line is the version.
 Older releases are <a href="https://ftp.iana.org/tz/releases/">archived</a>,
 and are also available in an
 <a href="ftp://ftp.iana.org/tz/releases/"><abbr
@@ -508,12 +508,12 @@ It is freely available under the Apache License.</li>
 <li>Many modern
 <a href="https://en.wikipedia.org/wiki/JavaScript">JavaScript</a>
 runtimes support <code><abbr>tz</abbr></code> natively via the
-<samp>timeZone</samp> option of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat"><samp>Intl.DateTimeFormat</samp></a>.
+<code>timeZone</code> option of <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat"><code>Intl.DateTimeFormat</code></a>.
 This can be used as-is or with most of the following libraries,
-many of which also support runtimes lacking the <samp>timeZone</samp> option.
+many of which also support runtimes lacking the <code>timeZone</code> option.
 <ul>
 <li>The <a
-href="https://github.com/formatjs/date-time-format-timezone"><samp>Intl.DateTimeFormat</samp>
+href="https://github.com/formatjs/date-time-format-timezone"><code>Intl.DateTimeFormat</code>
 timezone polyfill</a>
 is freely available under a <abbr>BSD</abbr>-style license.</li>
 <li>The <a href="https://date-fns.org/">date-fns</a>
@@ -526,7 +526,7 @@ the <a href="https://momentjs.com/docs/">now-legacy Moment.js</a> date
 manipulation library.
 It is freely available under the <abbr>MIT</abbr> license.</li>
 <li><a href="https://moment.github.io/luxon/">Luxon</a> improves
-timezone support for the <samp>Intl</samp> API.
+timezone support for the <code>Intl</code> API.
 It is freely available under the <abbr>MIT</abbr> license.</li>
 <li><a href="https://momentjs.com/timezone/">Moment Timezone</a> is a
 Moment.js plugin.
@@ -547,11 +547,11 @@ convert timestamps, view transition histories, and download code and data.
 It is freely available under the <abbr>MIT</abbr> license.</li>
 </ul>
 The proposed <a
-href="https://github.com/tc39/proposal-temporal"><samp>Temporal</samp>
+href="https://github.com/tc39/proposal-temporal"><code>Temporal</code>
 objects</a> let programs access an abstract view of
 <code><abbr>tzdb</abbr></code> data, and are designed to replace <a
 href="https://codeofmatt.com/javascript-date-type-is-horribly-broken/">JavaScript's
-problematic <samp>Date</samp> objects</a> when working with dates and times.
+problematic <code>Date</code> objects</a> when working with dates and times.
 <li><a href="https://github.com/JuliaTime/">JuliaTime</a> contains a
 compiler from <code><abbr>tz</abbr></code> source into
 <a href="https://julialang.org/">Julia</a>. It is freely available

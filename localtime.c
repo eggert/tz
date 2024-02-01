@@ -936,7 +936,7 @@ getoffset(register const char *strp, int_fast32_t *const offsetp)
 /*
 ** Given a pointer into a timezone string, extract a rule in the form
 ** date[/time]. See POSIX Base Definitions section 8.3 variable TZ
-#  for the format of "date" and "time".
+** for the format of "date" and "time".
 ** If a valid rule is not found, return NULL.
 ** Otherwise, return a pointer to the first character not part of the rule.
 */

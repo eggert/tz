@@ -1082,6 +1082,20 @@ In practice the two configurations also agree for timestamps before
 1972 even though the historical situation is messy, partly because
 neither <abbr>UTC</abbr> nor <abbr>TAI</abbr>
 is well-defined for sufficiently old timestamps.</li>
+<li><a href="https://kb.meinbergglobal.com/kb/time_sync/ntp/configuration/ntp_leap_second_file">The
+<abbr>NTP</abbr> Leap Second File</a> covers the text file
+<code>leap-seconds.list</code>, which lists the currently known leap seconds.
+The <abbr>IERS</abbr> maintains this file, and a copy is distributed by
+<code><abbr>tzdb</abbr></code> for use by <abbr>NTP</abbr> implementations like
+<a href="https://www.ntp.org/">classic
+<code><abbr title="Network Time Protocol Daemon">ntpd</abbr></code></a>
+and <a href="https://ntpsec.org/">NTPsec</a>.
+The <code><abbr>tz</abbr></code> database also distributes leap second
+information in a differently-formatted <code>leapseconds</code> text file,
+as well as in the "<code>right</code>" configuration in binary form; for
+example, <code>right/UTC</code> can be used
+by <a href="https://chrony-project.org"><code>chrony</code></a>,
+another <abbr>NTP</abbr> implementation.</li>
 <li><a href="https://developers.google.com/time/smear">Leap Smear</a>
 discusses how to gradually adjust <abbr>POSIX</abbr> clocks near a
 leap second so that they disagree with <abbr>UTC</abbr> by at most a
@@ -1089,7 +1103,7 @@ half second, even though every <abbr>POSIX</abbr> minute has exactly
 sixty seconds. This approach works with the default <code><abbr>tz</abbr></code>
 "<code>posix</code>" configuration, is <a
 href="http://bk1.ntp.org/ntp-stable/README.leapsmear">supported</a> by
-the <abbr>NTP</abbr> reference implementation, <a
+the abovementioned <abbr>NTP</abbr> implementations, <a
 href="https://github.com/google/unsmear">supports</a> conversion between
 <abbr>UTC</abbr> and smeared <abbr>POSIX</abbr> timestamps, and is used by major
 cloud service providers. However, according to

@@ -161,7 +161,7 @@ Release 2023d - 2023-12-21 20:02:24 -0800
      * It uses the special .POSIX target.
      * It quotes special characters more carefully.
      * It no longer mishandles builds in an ISO 8859 locale.
-    Due to the CC changes, TZDIR is now #defined in a file tzfile.h
+    Due to the CC changes, TZDIR is now #defined in a file tzdir.h
     built by 'make', not in a $(CC) -D option.  Also, TZDEFAULT is
     now treated like TZDIR as they have similar roles.
 

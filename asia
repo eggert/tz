@@ -3653,14 +3653,14 @@ Zone	Asia/Hebron	2:20:23	-	LMT	1900 Oct
 # Philippine Star 2014-08-05
 # http://www.philstar.com/headlines/2014/08/05/1354152/pnoy-urged-declare-use-daylight-saving-time
 
-# From Paul Goyette (2018-06-15):
+# From Paul Goyette (2018-06-15) with URLs updated by Guy Harris (2024-02-15):
 # In the Philippines, there is a national law, Republic Act No. 10535
 # which declares the official time here as "Philippine Standard Time".
 # The act [1] even specifies use of PST as the abbreviation, although
 # the FAQ provided by PAGASA [2] uses the "acronym PhST to distinguish
 # it from the Pacific Standard Time (PST)."
-# [1] http://www.officialgazette.gov.ph/2013/05/15/republic-act-no-10535/
-# [2] https://www1.pagasa.dost.gov.ph/index.php/astronomy/philippine-standard-time#republic-act-10535
+# [1] https://www.officialgazette.gov.ph/2013/05/15/republic-act-no-10535/
+# [2] https://prsd.pagasa.dost.gov.ph/index.php/28-astronomy/302-philippine-standard-time
 #
 # From Paul Eggert (2018-06-19):
 # I surveyed recent news reports, and my impression is that "PST" is

@@ -1,5 +1,14 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to data
+
+    Asia/Almaty has been removed from zonenow.tab as it now agrees
+    with Asia/Tashkent for future timestamps, due to Kazakhstan's
+    2024-02-29 time zone change.
+
+
 Release 2024a - 2024-02-01 09:28:56 -0800
 
   Briefly:

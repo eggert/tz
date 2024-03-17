@@ -42,7 +42,7 @@ or
 Fifteen bytes containing zeros reserved for future use.
 .IP \(bu
 Six four-byte integer values, in the following order:
-.RS "\w'  \(bu  'u"
+.RS "\w'\(bu    'u"
 .TP "\w'  'u"
 .B tzh_ttisutcnt
 The number of UT/local indicators stored in the file.
@@ -135,7 +135,7 @@ Also, in realistic applications
 is in the range [\-89999, 93599] (i.e., more than \-25 hours and less
 than 26 hours); this allows easy support by implementations that
 already support the POSIX-required range [\-24:59:59, 25:59:59].
-.IP \(bu "\w'\(bu  'u"
+.IP \(bu
 .B tzh_charcnt
 bytes that represent time zone designations,
 which are null-terminated byte strings, each indexed by the

@@ -191,9 +191,19 @@ are determined.
 The
 .B mktime
 function
-returns the specified calendar time;
+returns the specified calendar time.
 If the calendar time cannot be represented,
-it returns \-1.
+it returns \-1 without updating the structure.
+To distinguish failure from a valid \-1 return,
+you can set
+.B tm_mday
+or
+.B tm_yday
+to a negative value before calling
+.BR mktime ;
+if that value is still negative when
+.B mktime
+returns, the calendar time could not be represented.
 .PP
 The
 .B difftime

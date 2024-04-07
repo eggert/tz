@@ -7,7 +7,10 @@
 *.o
 *.orig
 *.patch
+*.pdf
+*.ps
 *.rej
+*.s
 *.tar
 *.tar.*
 *.txt
@@ -22,6 +25,5 @@ tzdir.h
 tzselect
 version
 version.h
-yearistype
 zdump
 zic

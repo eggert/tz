@@ -141,12 +141,12 @@ DATAFORM != "main" {
   }
 
   # If this line should differ due to Portugal benefiting from %z if supported,
-  # uncomment the desired version and comment out the undesired one.
+  # comment out the undesired version and uncomment the desired one.
   if ($0 ~ /^#?[\t ]+-[12]:00[\t ]+((Port|W-Eur)[\t ]+[%+-]|-[\t ]+(%z|-01)[\t ]+1982 Mar 28)/) {
-    if (($0 ~ /%z/) == (DATAFORM == "vanguard")) {
-      uncomment = in_comment
-    } else {
+    if (($0 ~ /%z/) == (DATAFORM == "rearguard")) {
       comment_out = !in_comment
+    } else {
+      uncomment = in_comment
     }
   }
 
@@ -168,13 +168,8 @@ DATAFORM != "main" {
     sub(/^/, "#")
   }
 
-  # Prefer %z in vanguard form, explicit abbreviations otherwise.
-  if (DATAFORM == "vanguard") {
-    sub(/^(Zone[\t ]+[^\t ]+)?[\t ]+[^\t ]+[\t ]+[^\t ]+[\t ]+[-+][^\t ]+/, \
-	"&CHANGE-TO-%z")
-    sub(/-00CHANGE-TO-%z/, "-00")
-    sub(/[-+][^\t ]+CHANGE-TO-/, "")
-  } else {
+  # Prefer explicit abbreviations in rearguard form, %z otherwise.
+  if (DATAFORM == "rearguard") {
     if ($0 ~ /^[^#]*%z/) {
       stdoff_column = 2 * ($0 ~ /^Zone/) + 1
       rules_column = stdoff_column + 1
@@ -212,6 +207,11 @@ DATAFORM != "main" {
       }
       sub(/%z/, abbr)
     }
+  } else {
+    sub(/^(Zone[\t ]+[^\t ]+)?[\t ]+[^\t ]+[\t ]+[^\t ]+[\t ]+[-+][^\t ]+/, \
+	"&CHANGE-TO-%z")
+    sub(/-00CHANGE-TO-%z/, "-00")
+    sub(/[-+][^\t ]+CHANGE-TO-/, "")
   }
 
   # Normally, prefer whole seconds.  However, prefer subseconds

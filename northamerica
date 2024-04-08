@@ -3550,8 +3550,8 @@ Zone America/Puerto_Rico -4:24:25 -	LMT	1899 Mar 28 12:00 # San Juan
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Miquelon	-3:44:40 -	LMT	1911 Jun 15 # St Pierre
 			-4:00	-	AST	1980 May
-			-3:00	-	-03	1987
-			-3:00	Canada	-03/-02
+			-3:00	-	%z	1987
+			-3:00	Canada	%z
 
 # Turks and Caicos
 #

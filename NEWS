@@ -2,7 +2,18 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    The main data form now uses %z.
+
   Changes to data
+
+    The main source files' time zone abbreviations now use %z,
+    supported by zic since release 2015f and used in vanguard form
+    since release 2022b.  For example, America/Sao_Paulo now contains
+    the zone continuation line "-3:00 Brazil %z", which is less error
+    prone than the old "-3:00 Brazil -03/-02".  This does not change
+    the represented data: the generated TZif files are unchanged.
+    Rearguard form still avoids %z, to support obsolescent parsers.
 
     Asia/Almaty has been removed from zonenow.tab as it now agrees
     with Asia/Tashkent for future timestamps, due to Kazakhstan's

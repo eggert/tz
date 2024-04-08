@@ -142,7 +142,7 @@ DATAFORM != "main" {
 
   # If this line should differ due to Portugal benefiting from %z if supported,
   # uncomment the desired version and comment out the undesired one.
-  if ($0 ~ /^#?[\t ]+-[12]:00[\t ]+(Port[\t ]+[%+-]|-[\t ]+(%z|-01)[\t ]+1982 Mar 28)/) {
+  if ($0 ~ /^#?[\t ]+-[12]:00[\t ]+((Port|W-Eur)[\t ]+[%+-]|-[\t ]+(%z|-01)[\t ]+1982 Mar 28)/) {
     if (($0 ~ /%z/) == (DATAFORM == "vanguard")) {
       uncomment = in_comment
     } else {

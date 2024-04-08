@@ -855,7 +855,7 @@ tzselect:	tzselect.ksh version
 
 check: check_back check_mild
 check_mild:	check_character_set check_white_space check_links \
-		  check_name_lengths check_now \
+		  check_mainguard check_name_lengths check_now \
 		  check_slashed_abbrs check_sorted \
 		  check_tables check_web check_ziguard check_zishrink check_tzs
 
@@ -896,6 +896,11 @@ FILE_NAME_COMPONENT_TOO_LONG = $(PRECEDES_FILE_NAME)[^$s]*[^/$s]{15}
 check_name_lengths: $(TDATA_TO_CHECK) backzone
 		! grep -En '$(FILE_NAME_COMPONENT_TOO_LONG)' \
 			$(TDATA_TO_CHECK) backzone
+		touch $@
+
+check_mainguard: main.zi
+		test '$(PACKRATLIST)' || \
+		  cat $(TDATA) $(PACKRATDATA) | diff -u - main.zi
 		touch $@
 
 PRECEDES_STDOFF = ^(Zone[$s]+[^$s]+)?[$s]+

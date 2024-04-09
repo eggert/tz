@@ -1101,13 +1101,22 @@ Zone Africa/El_Aaiun	-0:52:48 -	LMT	1934 Jan # El Aaiún
 # Zambia
 # Zimbabwe
 #
-# Shanks gives 1903-03-01 for the transition to CAT.
-# Perhaps the 1911-05-26 Portuguese decree
-# https://dre.pt/pdf1sdip/1911/05/12500/23132313.pdf
-# merely made it official?
+# From Paul Eggert (2024-04-09):
+# The London Gazette, 1903-04-03, page 2245, says that
+# as of 1903-03-03 a time ball at the port of Lourenço Marques
+# (as Maputo was then called) was dropped daily at 13:00:00 LMT,
+# corresponding to 22:49:41.7 GMT; round this to UT+2:10:18.
+# Conversely, the newspaper South Africa, 1909-02-09, page 321,
+# says the port had just installed an apparatus that communicated
+# "from the controlling clock in the new Observatory at Reuben Point ...
+# exact mean South African time, i.e., 30 deg., or 2 hours East of Greenwich".
+# Although Shanks gives 1903-03-01 for the transition to CAT,
+# evidently the port transitioned to CAT after 1903-03-03 but before
+# the Portuguese legal transition of 1912-01-01 (see Europe/Lisbon commentary).
+# For lack of better info, list 1909 as the transition date.
 #
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Africa/Maputo	2:10:20 -	LMT	1903 Mar
+Zone	Africa/Maputo	2:10:18 -	LMT	1909
 			2:00	-	CAT
 
 # Namibia

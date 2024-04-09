@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     The main data form now uses %z.
+    Improve historical data for Portugal and possessions.
 
   Changes to data
 
@@ -14,6 +15,9 @@ Unreleased, experimental changes
     prone than the old "-3:00 Brazil -03/-02".  This does not change
     the represented data: the generated TZif files are unchanged.
     Rearguard form still avoids %z, to support obsolescent parsers.
+
+    Some transitions for Portugal and possessions have been changed.
+    This affects timestamps for Africa/Maputo before 1909.
 
     Asia/Almaty has been removed from zonenow.tab as it now agrees
     with Asia/Tashkent for future timestamps, due to Kazakhstan's

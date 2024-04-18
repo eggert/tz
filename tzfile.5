@@ -386,6 +386,18 @@ timestamps from the time type of the last transition.
 As a partial workaround, a writer can output more transitions
 than necessary.
 .IP \(bu
+Some stripped-down readers ignore everything but the footer,
+and use its POSIX.1-2017 TZ string to calculate all timestamps.
+Although this approach often works for current and future timestamps,
+it obviously has problems with past timestamps,
+and even for current timestamps it can fail for settings like
+TZ="Africa/Casablanca".  This corresponds to a TZif file
+containing explicit transitions through the year 2087,
+followed by a footer containing the TZ string
+.q <+01>\*-1 ,
+which should be used only for timestamps after the last
+explicit transition.
+.IP \(bu
 Some readers do not use time type 0 for timestamps before
 the first transition, in that they infer a time type using a
 heuristic that does not always select time type 0.

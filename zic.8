@@ -561,9 +561,9 @@ The name of the rules that apply in the timezone or,
 alternatively, a field in the same format as a rule-line SAVE column,
 giving the amount of time to be added to local standard time
 and whether the resulting time is standard or daylight saving.
-If this field is
+Standard time applies if this field is
 .B \*-
-then standard time always applies.
+or for timestamps occurring before any rule takes effect.
 When an amount of time is given, only the sum of standard time and
 this amount matters.
 .TP
@@ -571,9 +571,13 @@ this amount matters.
 The format for time zone abbreviations.
 The pair of characters
 .B %s
-is used to show where the
-.q "variable part"
-of the time zone abbreviation goes.
+shows where to put the time zone abbreviation's variable part,
+which is taken from the
+.B LETTER/S
+field of the corresponding rule;
+any timestamps that precede the earliest rule use the
+.B LETTER/S
+of the earliest standard-time rule (which in this case must exist).
 Alternatively, a format can use the pair of characters
 .B %z
 to stand for the UT offset in the form

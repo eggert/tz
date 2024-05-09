@@ -81,7 +81,7 @@ C Library</a> (used in
 title="Berkeley Software Distribution">BSD</abbr></a>,
 <a href="https://netbsd.org">Net<abbr>BSD</abbr></a>,
 <a href="https://www.openbsd.org">Open<abbr>BSD</abbr></a>,
-<a href="https://www.chromium.org/chromium-os/">Chromium OS</a>,
+<a href="https://www.chromium.org/chromium-os/">ChromiumOS</a>,
 <a href="https://cygwin.com">Cygwin</a>,
 <a href="https://mariadb.org">MariaDB</a>,
 <a href="https://en.wikipedia.org/wiki/MINIX">MINIX</a>,
@@ -211,7 +211,7 @@ href="https://mm.icann.org/mailman/listinfo/tz">subscribe</a> to it
 and browse the <a
 href="https://mm.icann.org/pipermail/tz/">archive of old
 messages</a>.
-<a href="https://tzdata-meta.timtimeonline.com/">Metadata for mailing list
+<a href="https://tzdata-meta.timtimeonline.com">Metadata for mailing list
 discussions</a> and corresponding data changes can be
 generated <a href="https://github.com/timparenti/tzdata-meta">automatically</a>.
 </p>
@@ -226,7 +226,7 @@ the process by tailoring the generic instructions in
 the <code><abbr>tz</abbr> README</code> file and installing the latest
 data yourself. System-specific instructions for installing the
 latest <code><abbr>tz</abbr></code> data have also been published
-for <a href="https://developer.ibm.com/articles/au-aix-olson-time-zone/"><abbr>AIX</abbr></a>,
+for <a href="https://www.ibm.com/support/pages/aix-time-zone-olson-tzdata-updates"><abbr>AIX</abbr></a>,
 <a
 href="https://source.android.com/devices/tech/config/timezone-rules">Android</a>,
 <a
@@ -248,7 +248,7 @@ with lines terminated by <a href="https://en.wikipedia.org/wiki/Newline"><abbr
 title="linefeed">LF</abbr></a>,
 which can be modified by common text editors such
 as <a href="https://www.gnu.org/software/emacs/">GNU Emacs</a>,
-<a href="https://wiki.gnome.org/Apps/Gedit">gedit</a>, and
+<a href="https://gedit-technology.github.io/apps/gedit/">gedit</a>, and
 <a href="https://www.vim.org">vim</a>.
 Specialized source-file editing can be done via the
 <a href="https://packagecontrol.io/packages/zoneinfo">Sublime
@@ -400,7 +400,7 @@ variant <a href="https://datatracker.ietf.org/doc/html/rfc6321">xCal</a>
 title="Extensible Markup Language">XML</abbr></a> format, and a variant
 <a href="https://datatracker.ietf.org/doc/html/rfc7265">jCal</a>
 (Internet <abbr>RFC</abbr> 7265)
-uses <a href="https://www.json.org"><abbr
+uses <a href="https://www.json.org/json-en.html"><abbr
 title="JavaScript Object Notation">JSON</abbr></a> format.</li>
 </ul>
 </section>
@@ -440,11 +440,9 @@ transition in the <code><abbr>tz</abbr></code> database.</li>
 <li>The <a href="https://howardhinnant.github.io/date/tz.html">Time Zone
 Database Parser</a> is a
 <a href="https://en.wikipedia.org/wiki/C++">C++</a> parser and
-runtime library with <a
-href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0355r7.html">API</a>
-adopted by
-<a href="https://en.wikipedia.org/wiki/C++20">C++20</a>,
-the current iteration of the C++ standard.
+runtime library with a <a
+href="https://en.cppreference.com/w/cpp/chrono"><code>std::chrono</code> API</a>
+that is a standard part of C++.
 It is freely available under the
 <abbr title="Massachusetts Institute of Technology">MIT</abbr> license.</li>
 <li><a id="ICU" href="https://icu.unicode.org">International Components for
@@ -467,8 +465,8 @@ freely available under the <abbr>MIT</abbr> license.</li>
 <li>The <a
 href="https://www.oracle.com/java/technologies/javase/tzupdater-readme.html">TZUpdater
 tool</a> compiles <code><abbr>tz</abbr></code> source into the format used by
-<a href="https://openjdk.java.net/">OpenJDK</a> and
-<a href="https://jdk.java.net/">Oracle JDK</a>.
+<a href="https://openjdk.org">OpenJDK</a> and
+<a href="https://jdk.java.net">Oracle JDK</a>.
 Although its source code is proprietary, its executable is available under the
 <a href="https://www.oracle.com/a/tech/docs/tzupdater-lic.html">Java SE
 Timezone Updater License Agreement</a>.</li>
@@ -490,7 +488,7 @@ are alternatives to TZUpdater. IANA Updater's license is unclear;
 ZIUpdater is licensed under the <abbr>GPL</abbr>.</li>
 <li><a href="https://github.com/MenoData/Time4A">Time4A: Advanced date and
 time library for Android</a> and
-<a href="https://github.com/MenoData/Time4J/">Time4J: Advanced date,
+<a href="https://github.com/MenoData/Time4J">Time4J: Advanced date,
 time and interval library for Java</a> compile
 <code><abbr>tz</abbr></code> source into a binary format.
 Time4A is available under the Apache License and Time4J is
@@ -516,7 +514,7 @@ many of which also support runtimes lacking the <code>timeZone</code> option.
 href="https://github.com/formatjs/date-time-format-timezone"><code>Intl.DateTimeFormat</code>
 timezone polyfill</a>
 is freely available under a <abbr>BSD</abbr>-style license.</li>
-<li>The <a href="https://date-fns.org/">date-fns</a>
+<li>The <a href="https://date-fns.org">date-fns</a>
 library manipulates timezone-aware timestamps in browsers and
 in <a href="https://nodejs.org/en/">Node.js</a>.
 It is freely available under the <abbr>MIT</abbr> license.</li>
@@ -552,9 +550,9 @@ objects</a> let programs access an abstract view of
 <code><abbr>tzdb</abbr></code> data, and are designed to replace <a
 href="https://codeofmatt.com/javascript-date-type-is-horribly-broken/">JavaScript's
 problematic <code>Date</code> objects</a> when working with dates and times.
-<li><a href="https://github.com/JuliaTime/">JuliaTime</a> contains a
+<li><a href="https://github.com/JuliaTime">JuliaTime</a> contains a
 compiler from <code><abbr>tz</abbr></code> source into
-<a href="https://julialang.org/">Julia</a>. It is freely available
+<a href="https://julialang.org">Julia</a>. It is freely available
 under the <abbr>MIT</abbr> license.</li>
 <li><a href="https://github.com/pavkam/tzdb"><abbr>TZDB</abbr> &ndash;
 <abbr>IANA</abbr> Time Zone Database for Delphi/<abbr
@@ -565,7 +563,7 @@ as compiled by <a href="https://en.wikipedia.org/wiki/Delphi_(IDE)">Delphi</a>
 and <a
 href="https://en.wikipedia.org/wiki/Free_Pascal"><abbr>FPC</abbr></a>.
 It is freely available under a <abbr>BSD</abbr>-style license.</li>
-<li><a href="http://pytz.sourceforge.net">pytz &ndash; World Timezone
+<li><a href="https://pythonhosted.org/pytz/">pytz &ndash; World Timezone
 Definitions for Python</a> compiles <code><abbr>tz</abbr></code> source into
 <a href="https://www.python.org">Python</a>.
 It is freely available under a <abbr>BSD</abbr>-style license.
@@ -649,7 +647,7 @@ that represent <code><abbr>tzdb</abbr></code> timezones.
 Python is freely available under the
 <a href="https://docs.python.org/3/license.html">Python Software Foundation
 License</a>.
-A companion <a id="pypi-tzdata" href="https://pypi.org/">PyPI</a> module
+A companion <a id="pypi-tzdata" href="https://pypi.org">PyPI</a> module
 <a href="https://pypi.org/project/tzdata/"><code>tzdata</code></a>
 supplies TZif data if the underlying system data cannot be found;
 it is freely available under the Apache License.</li>
@@ -898,7 +896,7 @@ href="https://www.ptb.de/cms/en/fachabteilungen/abt4/fb-44/ag-441/realisation-of
 of Legal Time in Germany</a>.</dd>
 <dt>Israel</dt>
 <dd><a
-href="https://tz.cs.huji.ac.il/">Israel Timezone Files</a>
+href="https://tz.cs.huji.ac.il">Israel Timezone Files</a>
 lists official time-change announcements and laws since 1940,
 almost all in Hebrew.</dd>
 <dt>Malaysia</dt>
@@ -1087,9 +1085,9 @@ is well-defined for sufficiently old timestamps.</li>
 <code>leap-seconds.list</code>, which lists the currently known leap seconds.
 The <abbr>IERS</abbr> maintains this file, and a copy is distributed by
 <code><abbr>tzdb</abbr></code> for use by <abbr>NTP</abbr> implementations like
-<a href="https://www.ntp.org/">classic
+<a href="https://www.ntp.org">classic
 <code><abbr title="Network Time Protocol Daemon">ntpd</abbr></code></a>
-and <a href="https://ntpsec.org/">NTPsec</a>.
+and <a href="https://ntpsec.org">NTPsec</a>.
 The <code><abbr>tz</abbr></code> database also distributes leap second
 information in a differently-formatted <code>leapseconds</code> text file,
 as well as in the "<code>right</code>" configuration in binary form; for

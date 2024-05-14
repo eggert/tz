@@ -322,7 +322,7 @@ Release 2023a - 2023-03-22 12:39:33 -0700
     To improve tzselect diagnostics, zone1970.tab's comments column is
     now limited to countries that have multiple timezones.
 
-    Note that leap seconds are planned to be discontinued by 2035.
+    Note that there are plans to discontinue leap seconds by 2035.
 
 
 Release 2022g - 2022-11-29 08:58:31 -0800

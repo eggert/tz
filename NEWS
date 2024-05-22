@@ -14,8 +14,11 @@ Unreleased, experimental changes
     (last released in the 1990s) have been moved to 'backward'.
     These names, which for post-1970 timestamps mostly just duplicate
     data of geographical names, were confusing downstream uses.
-    Names moved to 'backward' are now Links to geographical names if
-    there is an exact match since 1970, and remain Zones otherwise.
+    Names moved to 'backward' are now links to geographical names.
+    This affects behavior for TZ='EET' for some pre-1981 timestamps,
+    for TZ='CET' for some pre-1947 timestamps, and for TZ='WET' for
+    some pre-1996 timestamps.  Also, TZ='MET' now behaves like
+    TZ='CET' and so uses the abbreviation "CET" rather than "MET".
     Those needing the previous TZDB behavior, which does not match any
     real-world clocks, can find the old entries in 'backzone'.
     (Problem reported by Justin Grant.)

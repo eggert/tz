@@ -1845,7 +1845,10 @@ Zone	MST7MDT		 -7:00	US	M%sT
 Zone	CST6CDT		 -6:00	US	C%sT
 Zone	EST		 -5:00	-	EST
 Zone	EST5EDT		 -5:00	US	E%sT
+Zone	WET		  0:00	EU	WE%sT
 Zone	CET		  1:00	C-Eur	CE%sT
+Zone	MET		  1:00	C-Eur	ME%sT
+Zone	EET		  2:00	EU	EE%sT
 
 # Local Variables:
 # coding: utf-8

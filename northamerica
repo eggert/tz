@@ -185,26 +185,6 @@ Rule	US	1987	2006	-	Apr	Sun>=1	2:00	1:00	D
 Rule	US	2007	max	-	Mar	Sun>=8	2:00	1:00	D
 Rule	US	2007	max	-	Nov	Sun>=1	2:00	0	S
 
-# From Arthur David Olson, 2005-12-19
-# We generate the files specified below to guard against old files with
-# obsolete information being left in the time zone binary directory.
-# We limit the list to names that have appeared in previous versions of
-# this time zone package.
-# We do these as separate Zones rather than as Links to avoid problems if
-# a particular place changes whether it observes DST.
-# We put these specifications here in the northamerica file both to
-# increase the chances that they'll actually get compiled and to
-# avoid the need to duplicate the US rules in another file.
-
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	EST		 -5:00	-	EST
-Zone	MST		 -7:00	-	MST
-Zone	HST		-10:00	-	HST
-Zone	EST5EDT		 -5:00	US	E%sT
-Zone	CST6CDT		 -6:00	US	C%sT
-Zone	MST7MDT		 -7:00	US	M%sT
-Zone	PST8PDT		 -8:00	US	P%sT
-
 # From U. S. Naval Observatory (1989-01-19):
 # USA  EASTERN       5 H  BEHIND UTC    NEW YORK, WASHINGTON
 # USA  EASTERN       4 H  BEHIND UTC    APR 3 - OCT 30

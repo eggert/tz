@@ -3,11 +3,22 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    System V names are now obsolescent.
     The main data form now uses %z.
     The code now conforms to RFC 8536 for early timestamps.
     Improve historical data for Portugal and possessions.
 
   Changes to data
+
+    Names present only for compatibility with UNIX System V
+    (last released in the 1990s) have been moved to 'backward'.
+    These names, which for post-1970 timestamps mostly just duplicate
+    data of geographical names, were confusing downstream uses.
+    Names moved to 'backward' are now Links to geographical names if
+    there is an exact match since 1970, and remain Zones otherwise.
+    Those needing the previous TZDB behavior, which does not match any
+    real-world clocks, can find the old entries in 'backzone'.
+    (Problem reported by Justin Grant.)
 
     The main source files' time zone abbreviations now use %z,
     supported by zic since release 2015f and used in vanguard form

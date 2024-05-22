@@ -1,9 +1,10 @@
-# tzdb links for backward compatibility
+# Links and zones for backward compatibility
 
 # This file is in the public domain, so clarified as of
 # 2009-05-17 by Arthur David Olson.
 
 # This file provides links from old or merged timezone names to current ones.
+# It also provides a few zone entries for old naming conventions.
 # Many names changed in 1993 and in 1995, and many merged names moved here
 # in the period from 2013 through 2022.  Several of these names are
 # also present in the file 'backzone', which has data important only
@@ -44,6 +45,8 @@ Link	America/Rio_Branco	Brazil/Acre	#= America/Porto_Acre
 Link	America/Noronha		Brazil/DeNoronha
 Link	America/Sao_Paulo	Brazil/East
 Link	America/Manaus		Brazil/West
+Link	Europe/Brussels		CET
+Link	America/Chicago		CST6CDT
 Link	America/Halifax		Canada/Atlantic
 Link	America/Winnipeg	Canada/Central
 # This line is commented out, as the name exceeded the 14-character limit
@@ -58,6 +61,8 @@ Link	America/Whitehorse	Canada/Yukon
 Link	America/Santiago	Chile/Continental
 Link	Pacific/Easter		Chile/EasterIsland
 Link	America/Havana		Cuba
+Link	America/Panama		EST
+Link	America/New_York	EST5EDT
 Link	Africa/Cairo		Egypt
 Link	Europe/Dublin		Eire
 # Vanguard section, for most .zi parsers.
@@ -96,6 +101,8 @@ Link	America/Jamaica		Jamaica
 Link	Asia/Tokyo		Japan
 Link	Pacific/Kwajalein	Kwajalein
 Link	Africa/Tripoli		Libya
+Link	America/Phoenix		MST
+Link	America/Denver		MST7MDT
 Link	America/Tijuana		Mexico/BajaNorte
 Link	America/Mazatlan	Mexico/BajaSur
 Link	America/Mexico_City	Mexico/General
@@ -314,5 +321,28 @@ Link	Europe/Kyiv		Europe/Kiev
 # Classically, Cyprus is in Asia; e.g. see Herodotus, Histories, I.72.
 # However, for various reasons many users expect to find it under Europe.
 Link	Asia/Nicosia		Europe/Nicosia
+Link	Pacific/Honolulu	HST
+Link	America/Los_Angeles	PST8PDT
 Link	Pacific/Guadalcanal	Pacific/Ponape	#= Pacific/Pohnpei
 Link	Pacific/Port_Moresby	Pacific/Truk	#= Pacific/Chuuk
+
+# These rules are stolen from the 'europe' file.
+# Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
+Rule	EUbackw	1977	1980	-	Apr	Sun>=1	 1:00u	1:00	S
+Rule	EUbackw	1977	only	-	Sep	lastSun	 1:00u	0	-
+Rule	EUbackw	1978	only	-	Oct	 1	 1:00u	0	-
+Rule	EUbackw	1979	1995	-	Sep	lastSun	 1:00u	0	-
+Rule	EUbackw	1981	max	-	Mar	lastSun	 1:00u	1:00	S
+Rule	EUbackw	1996	max	-	Oct	lastSun	 1:00u	0	-
+
+# From Paul Eggert (2024-05-22):
+# The following zones pretend that standard time extends backward
+# indefinitely into the past, and so are ahistorical.
+# They are present for backward compatibility with older TZDB versions.
+# They are Zones (instead of being a Link like CET)
+# because they are not equivalent to any current Zone since 1970.
+
+# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+Zone	WET		0:00	EUbackw	WE%sT
+Zone	MET		1:00	EUbackw	ME%sT
+Zone	EET		2:00	EUbackw	EE%sT

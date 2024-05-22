@@ -730,14 +730,6 @@ Rule	Russia	1996	2010	-	Oct	lastSun	 2:00s	0	-
 # Take "abolishing daylight saving time" to mean that time is now considered
 # to be standard.
 
-# These are for backward compatibility with older versions.
-
-# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	WET		0:00	EU	WE%sT
-Zone	CET		1:00	C-Eur	CE%sT
-Zone	MET		1:00	C-Eur	ME%sT
-Zone	EET		2:00	EU	EE%sT
-
 # Previous editions of this database used abbreviations like MET DST
 # for Central European Summer Time, but this didn't agree with common usage.
 

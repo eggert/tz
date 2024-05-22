@@ -918,7 +918,7 @@ CHECK_CC_LIST = { n = split($$1,a,/,/); for (i=2; i<=n; i++) print a[1], a[i]; }
 check_sorted: backward backzone
 		$(AWK) '/^Link/ {printf "%.5d %s\n", g, $$3} !/./ {g++}' \
 		  backward | LC_ALL=C sort -cu
-		$(AWK) '/^Zone/ {print $$2}' backzone | LC_ALL=C sort -cu
+		$(AWK) '/^Zone.*\// {print $$2}' backzone | LC_ALL=C sort -cu
 		touch $@
 
 check_back:	checklinks.awk $(TDATA_TO_CHECK)
@@ -937,7 +937,7 @@ check_links:	checklinks.awk tzdata.zi
 # Check timestamps from now through 28 years from now, to make sure
 # that zonenow.tab contains all sequences of planned timestamps,
 # without any duplicate sequences.  In theory this might require
-# 2800 years but that would take a long time to check.
+# 2800+ years but that would take a long time to check.
 CHECK_NOW_TIMESTAMP = `./date +%s`
 CHECK_NOW_FUTURE_YEARS = 28
 CHECK_NOW_FUTURE_SECS = $(CHECK_NOW_FUTURE_YEARS) '*' 366 '*' 24 '*' 60 '*' 60
@@ -949,10 +949,20 @@ check_now:	checknow.awk date tzdata.zi zdump zic zone1970.tab zonenow.tab
 		  future=`expr $(CHECK_NOW_FUTURE_SECS) + $$now` && \
 		  ./zdump -i -t $$now,$$future \
 		     $$(find $$PWD/$@.dir/????*/ -type f) \
-		     >$@.dir/zdump.tab
+		     >$@.dir/zdump-now.tab && \
+		  ./zdump -i -t 0,$$future \
+		     $$(find $$PWD/$@.dir -name Etc -prune \
+			  -o -type f ! -name '*.tab' -print) \
+		     >$@.dir/zdump-1970.tab
 		$(AWK) \
-		  -v zdump_table=$@.dir/zdump.tab \
+		  -v zdump_table=$@.dir/zdump-now.tab \
 		  -f checknow.awk zonenow.tab
+		$(AWK) \
+		  'BEGIN {print "-\t-\tUTC"} /^Zone/ {print "-\t-\t" $$2}' \
+		  $(PRIMARY_YDATA) backward factory | \
+		 $(AWK) \
+		   -v zdump_table=$@.dir/zdump-1970.tab \
+		   -f checknow.awk
 		rm -fr $@.dir
 		touch $@
 

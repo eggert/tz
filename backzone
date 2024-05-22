@@ -1829,6 +1829,24 @@ Zone	Pacific/Wake	11:06:28 -	LMT	1901
 Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 			12:00	-	+12
 
+
+# From Paul Eggert (2024-05-22):
+# The following zones pretend that standard time extends backward
+# indefinitely into the past, and so are ahistorical.
+# In current TZDB these entries are links to geographical locations
+# that agree with the ahistorical zones since 1970.
+# These are in numeric rather than alphabetic order.
+
+# Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
+Zone	HST		-10:00	-	HST
+Zone	PST8PDT		 -8:00	US	P%sT
+Zone	MST		 -7:00	-	MST
+Zone	MST7MDT		 -7:00	US	M%sT
+Zone	CST6CDT		 -6:00	US	C%sT
+Zone	EST		 -5:00	-	EST
+Zone	EST5EDT		 -5:00	US	E%sT
+Zone	CET		  1:00	C-Eur	CE%sT
+
 # Local Variables:
 # coding: utf-8
 # End:

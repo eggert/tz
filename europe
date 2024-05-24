@@ -3486,8 +3486,8 @@ Zone	Atlantic/Canary	-1:01:36 -	LMT	1922 Mar # Las Palmas de Gran C.
 # but if no one is present after 11 at night, could be postponed until one
 # hour before the beginning of service.
 
-# From Paul Eggert (2013-09-11):
-# Round BMT to the nearest even second, 0:29:46.
+# From Paul Eggert (2024-05-24):
+# Express BMT as 0:29:45.500, approximately the same precision 7° 26' 22.50".
 #
 # We can find no reliable source for Shanks's assertion that all of Switzerland
 # except Geneva switched to Bern Mean Time at 00:00 on 1848-09-12.  This book:
@@ -3526,6 +3526,7 @@ Rule	Swiss	1941	1942	-	May	Mon>=1	1:00	1:00	S
 Rule	Swiss	1941	1942	-	Oct	Mon>=1	2:00	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Europe/Zurich	0:34:08 -	LMT	1853 Jul 16 # See above comment.
+		#STDOFF	0:29:45.500
 			0:29:46	-	BMT	1894 Jun    # Bern Mean Time
 			1:00	Swiss	CE%sT	1981
 			1:00	EU	CE%sT

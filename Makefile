@@ -315,10 +315,11 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
   -Walloc-size-larger-than=100000 -Warray-bounds=2 \
   -Wbad-function-cast -Wbidi-chars=any,ucn -Wcast-align=strict -Wdate-time \
   -Wdeclaration-after-statement -Wdouble-promotion \
-  -Wduplicated-branches -Wduplicated-cond \
+  -Wduplicated-branches -Wduplicated-cond -Wflex-array-member-not-at-end \
   -Wformat=2 -Wformat-overflow=2 -Wformat-signedness -Wformat-truncation \
   -Wimplicit-fallthrough=5 -Winit-self -Wlogical-op \
-  -Wmissing-declarations -Wmissing-prototypes -Wnested-externs \
+  -Wmissing-declarations -Wmissing-prototypes \
+  -Wmissing-variable-declarations -Wnested-externs \
   -Wnull-dereference \
   -Wold-style-definition -Woverlength-strings -Wpointer-arith \
   -Wshadow -Wshift-overflow=2 -Wstrict-overflow \

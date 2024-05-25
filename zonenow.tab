@@ -5,7 +5,7 @@
 # From Paul Eggert (2023-12-18):
 # This file contains a table where each row stands for a timezone
 # where civil timestamps are predicted to agree from now on.
-# This file is like zone1970.tab (see zone1970.tab's coments),
+# This file is like zone1970.tab (see zone1970.tab's comments),
 # but with the following changes:
 #
 # 1.  Each timezone corresponds to a set of clocks that are planned

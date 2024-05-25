@@ -2985,7 +2985,7 @@ rule_cmp(struct rule const *a, struct rule const *b)
 /* Store into RESULT a POSIX.1-2017 TZ string that represent the future
    predictions for the zone ZPFIRST with ZONECOUNT entries.  Return a
    compatibility indicator (a TZDB release year) if successful, a
-   negative integer if no such TZ string exissts.  */
+   negative integer if no such TZ string exists.  */
 static int
 stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 {

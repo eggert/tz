@@ -2473,9 +2473,9 @@ Zone	Asia/Amman	2:23:44 -	LMT	1931
 # Almaty (formerly Alma-Ata), representing most locations in Kazakhstan
 # This includes Abai/Abay (ISO 3166-2 code KZ-10), Aqmola/Akmola (KZ-11),
 # Almaty (KZ-19), Almaty city (KZ-75), Astana city (KZ-71),
-# East Kazkhstan (KZ-63), Jambyl/Zhambyl (KZ-31), Jetisu/Zhetysu (KZ-33),
+# East Kazakhstan (KZ-63), Jambyl/Zhambyl (KZ-31), Jetisu/Zhetysu (KZ-33),
 # Karaganda (KZ-35), North Kazakhstan (KZ-59), Pavlodar (KZ-55),
-# Shyumkent city (KZ-79), Turkistan (KZ-61), and Ulytau (KZ-62).
+# Shymkent city (KZ-79), Turkistan (KZ-61), and Ulytau (KZ-62).
 Zone	Asia/Almaty	5:07:48 -	LMT	1924 May  2 # or Alma-Ata
 			5:00	-	%z	1930 Jun 21
 			6:00 RussiaAsia %z	1991 Mar 31  2:00s
@@ -4107,7 +4107,7 @@ Zone	Asia/Tashkent	4:37:11 -	LMT	1924 May  2
 # Võ Nguyên Giáp, Việt Nam Dân Quốc Công Báo, No. 1 (1945-09-29), page 13
 # http://baochi.nlv.gov.vn/baochi/cgi-bin/baochi?a=d&d=JwvzO19450929.2.5&dliv=none
 # It says that on 1945-09-01 at 24:00, Vietnam moved back two hours, to +07.
-# It also mentions a 1945-03-29 decree (by a Japanese Goveror-General)
+# It also mentions a 1945-03-29 decree (by a Japanese Governor-General)
 # to set the time zone to +09, but does not say whether that decree
 # merely legalized an earlier change to +09.
 #

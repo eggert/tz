@@ -10,10 +10,10 @@
 # To affect how this Makefile works, you can run a shell script like this:
 #
 #	#!/bin/sh
-#	make CC='gcc -std=gnu11' "$@"
+#	make CC='gcc -std=gnu23' "$@"
 #
-# This example script is appropriate for a pre-2017 GNU/Linux system
-# where a non-default setting is needed to support this package's use of C99.
+# This example script is appropriate for a circa 2024 GNU/Linux system
+# where a non-default setting enables this package's optional use of C23.
 #
 # Alternatively, you can simply edit this Makefile to tailor the following
 # macro definitions.
@@ -53,7 +53,7 @@ DATAFORM=		main
 
 LOCALTIME=	Factory
 
-# The POSIXRULES macro controls interpretation of POSIX-2017.1-like TZ
+# The POSIXRULES macro controls interpretation of POSIX-like TZ
 # settings like TZ='EET-2EEST' that lack DST transition rules.
 # If POSIXRULES is '-', no template is installed; this is the default.
 # Any other value for POSIXRULES is obsolete and should not be relied on, as:
@@ -219,6 +219,7 @@ LDLIBS=
 #	than what POSIX specifies, assuming local time is UT.
 #	For example, N is 252460800 on AmigaOS.
 #  -DHAVE_DECL_ASCTIME_R=0 if <time.h> does not declare asctime_r
+#	on POSIX platforms predating POSIX.1-2024
 #  -DHAVE_DECL_ENVIRON if <unistd.h> declares 'environ'
 #  -DHAVE_DECL_TIMEGM=0 if <time.h> does not declare timegm
 #  -DHAVE_DIRECT_H if mkdir needs <direct.h> (MS-Windows)
@@ -229,7 +230,7 @@ LDLIBS=
 #	where LDLIBS also needs to contain -lintl on some hosts;
 #	-DHAVE_GETTEXT=0 to avoid using gettext
 #  -DHAVE_INCOMPATIBLE_CTIME_R if your system's time.h declares
-#	ctime_r and asctime_r incompatibly with the POSIX standard
+#	ctime_r and asctime_r incompatibly with POSIX.1-2017
 #	(Solaris when _POSIX_PTHREAD_SEMANTICS is not defined).
 #  -DHAVE_INTTYPES_H=0 if <inttypes.h> does not work*+
 #  -DHAVE_LINK=0 if your system lacks a link function
@@ -263,6 +264,8 @@ LDLIBS=
 #  -Dssize_t=long on hosts like MS-Windows that lack ssize_t
 #  -DSUPPORT_C89 if the tzcode library should support C89 callers+
 #	However, this might trigger latent bugs in C99-or-later callers.
+#  -DSUPPORT_POSIX2008 if the library should support older POSIX callers+
+#	However, this might cause problems in POSIX.1-2024-or-later callers.
 #  -DSUPPRESS_TZDIR to not prepend TZDIR to file names; this has
 #	security implications and is not recommended for general use
 #  -DTHREAD_SAFE to make localtime.c thread-safe, as POSIX requires;
@@ -302,7 +305,8 @@ LDLIBS=
 #
 # * Options marked "*" can be omitted if your compiler is C23 compatible.
 # * Options marked "+" are obsolescent and are planned to be removed
-#   once the code assumes C99 or later, say in the year 2029.
+#   once the code assumes C99 or later (say in the year 2029)
+#   and POSIX.1-2024 or later (say in the year 2034).
 #
 # Select instrumentation via "make GCC_INSTRUMENT='whatever'".
 GCC_INSTRUMENT = \

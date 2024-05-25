@@ -13,12 +13,14 @@ asctime, ctime, difftime, gmtime, localtime, mktime \- convert date and time
 .PP
 .B [[deprecated]] char *ctime(time_t const *clock);
 .PP
+/* Only in POSIX.1-2017 and earlier.  */
 .B char *ctime_r(time_t const *clock, char *buf);
 .PP
 .B double difftime(time_t time1, time_t time0);
 .PP
 .B [[deprecated]] char *asctime(struct tm const *tm);
 .PP
+/* Only in POSIX.1-2017 and earlier.  */
 .B "char *asctime_r(struct tm const *restrict tm,"
 .B "    char *restrict result);"
 .PP
@@ -223,6 +225,13 @@ and
 functions
 are like their unsuffixed counterparts, except that they accept an
 additional argument specifying where to store the result if successful.
+The
+.B ctime_r
+and
+.B asctime_r
+functions are present only on systems supporting POSIX.1-2017 and earlier,
+as they are removed in POSIX.1-2024 and user code can define these
+functions with other meanings.
 .PP
 The
 .B localtime_rz

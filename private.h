@@ -69,10 +69,6 @@
 ** You can override these in your C compiler options, e.g. '-DHAVE_GETTEXT=1'.
 */
 
-#ifndef HAVE_DECL_ASCTIME_R
-# define HAVE_DECL_ASCTIME_R 1
-#endif
-
 #if !defined HAVE__GENERIC && defined __has_extension
 # if !__has_extension(c_generic_selections)
 #  define HAVE__GENERIC 0
@@ -235,6 +231,31 @@
 #if HAVE_UNISTD_H
 # include <unistd.h> /* for R_OK, and other POSIX goodness */
 #endif /* HAVE_UNISTD_H */
+
+/* SUPPORT_POSIX2008 means the tzcode library should support
+   POSIX.1-2017-and-earlier callers in addition to the usual support for
+   POSIX.1-2024-and-later callers; however, this can be
+   incompatible with POSIX.1-2024-and-later callers.
+   This macro is obsolescent, and the plan is to remove it
+   along with any code needed only when it is nonzero.
+   A good time to do that might be in the year 2034.
+   This macro's name is SUPPORT_POSIX2008 because _POSIX_VERSION == 200809
+   in POSIX.1-2017, a minor revision of POSIX.1-2008.  */
+#ifndef SUPPORT_POSIX2008
+# if defined _POSIX_VERSION && _POSIX_VERSION <= 200809
+#  define SUPPORT_POSIX2008 1
+# else
+#  define SUPPORT_POSIX2008 0
+# endif
+#endif
+
+#ifndef HAVE_DECL_ASCTIME_R
+# if SUPPORT_POSIX2008
+#  define HAVE_DECL_ASCTIME_R 1
+# else
+#  define HAVE_DECL_ASCTIME_R 0
+# endif
+#endif
 
 #ifndef HAVE_STRFTIME_L
 # if _POSIX_VERSION < 200809
@@ -604,12 +625,8 @@ typedef time_tz tz_time_t;
 
 # undef  asctime
 # define asctime tz_asctime
-# undef  asctime_r
-# define asctime_r tz_asctime_r
 # undef  ctime
 # define ctime tz_ctime
-# undef  ctime_r
-# define ctime_r tz_ctime_r
 # undef  difftime
 # define difftime tz_difftime
 # undef  gmtime
@@ -654,6 +671,12 @@ typedef time_tz tz_time_t;
 # define tzfree tz_tzfree
 # undef  tzset
 # define tzset tz_tzset
+# if SUPPORT_POSIX2008
+#  undef  asctime_r
+#  define asctime_r tz_asctime_r
+#  undef  ctime_r
+#  define ctime_r tz_ctime_r
+# endif
 # if HAVE_STRFTIME_L
 #  undef  strftime_l
 #  define strftime_l tz_strftime_l
@@ -679,9 +702,11 @@ typedef time_tz tz_time_t;
 #  define DEPRECATED_IN_C23 ATTRIBUTE_DEPRECATED
 # endif
 DEPRECATED_IN_C23 char *asctime(struct tm const *);
-char *asctime_r(struct tm const *restrict, char *restrict);
 DEPRECATED_IN_C23 char *ctime(time_t const *);
+#if SUPPORT_POSIX2008
+char *asctime_r(struct tm const *restrict, char *restrict);
 char *ctime_r(time_t const *, char *);
+#endif
 ATTRIBUTE_UNSEQUENCED double difftime(time_t, time_t);
 size_t strftime(char *restrict, size_t, char const *restrict,
 		struct tm const *restrict);
@@ -713,7 +738,7 @@ void tzset(void);
 time_t timegm(struct tm *);
 #endif
 
-#if !HAVE_DECL_ASCTIME_R && !defined asctime_r
+#if !HAVE_DECL_ASCTIME_R && !defined asctime_r && SUPPORT_POSIX2008
 extern char *asctime_r(struct tm const *restrict, char *restrict);
 #endif
 

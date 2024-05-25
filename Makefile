@@ -562,8 +562,8 @@ RANLIB=		:
 
 
 TZCOBJS=	zic.o
-TZDOBJS=	zdump.o localtime.o asctime.o strftime.o
-DATEOBJS=	date.o localtime.o strftime.o asctime.o
+TZDOBJS=	zdump.o localtime.o strftime.o
+DATEOBJS=	date.o localtime.o strftime.o
 LIBSRCS=	localtime.c asctime.c difftime.c strftime.c
 LIBOBJS=	localtime.o asctime.o difftime.o strftime.o
 HEADERS=	tzfile.h private.h

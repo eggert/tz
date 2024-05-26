@@ -313,7 +313,7 @@ GCC_INSTRUMENT = \
   -fsanitize=undefined -fsanitize-address-use-after-scope \
   -fsanitize-undefined-trap-on-error -fstack-protector
 # Omit -fanalyzer from GCC_DEBUG_FLAGS, as it makes GCC too slow.
-GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
+GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 \
   $(GCC_INSTRUMENT) \
   -Wall -Wextra \
   -Walloc-size-larger-than=100000 -Warray-bounds=2 \
@@ -332,10 +332,9 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 -fno-common \
   -Wsuggest-attribute=const -Wsuggest-attribute=format \
   -Wsuggest-attribute=malloc \
   -Wsuggest-attribute=noreturn -Wsuggest-attribute=pure \
-  -Wtrampolines -Wundef -Wuninitialized -Wunused-macros -Wuse-after-free=3 \
+  -Wtrampolines -Wundef -Wunused-macros -Wuse-after-free=3 \
   -Wvariadic-macros -Wvla -Wwrite-strings \
-  -Wno-address -Wno-format-nonliteral -Wno-sign-compare \
-  -Wno-type-limits
+  -Wno-format-nonliteral -Wno-sign-compare
 #
 # If your system has a "GMT offset" field in its "struct tm"s
 # (or if you decide to add such a field in your system's "time.h" file),

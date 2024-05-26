@@ -551,27 +551,14 @@ typedef unsigned long uintmax_t;
 # define ATTRIBUTE_REPRODUCIBLE /* empty */
 #endif
 
-#if HAVE___HAS_C_ATTRIBUTE
-# if __has_c_attribute(unsequenced)
-#  define ATTRIBUTE_UNSEQUENCED [[unsequenced]]
-# endif
-#endif
-#ifndef ATTRIBUTE_UNSEQUENCED
-# define ATTRIBUTE_UNSEQUENCED /* empty */
-#endif
-
-/* __attribute__((const)) is stricter than [[unsequenced]] and
+/* GCC attributes that are useful in tzcode.
    __attribute__((pure)) is stricter than [[reproducible]],
-   so the latter are adequate substitutes in non-GCC C23 platforms.  */
+   so the latter is an adequate substitute in non-GCC C23 platforms.  */
 #if __GNUC__ < 3
-# define ATTRIBUTE_CONST ATTRIBUTE_UNSEQUENCED
 # define ATTRIBUTE_FORMAT(spec) /* empty */
-# define ATTRIBUTE_MALLOC /* empty */
 # define ATTRIBUTE_PURE ATTRIBUTE_REPRODUCIBLE
 #else
-# define ATTRIBUTE_CONST __attribute__((const))
 # define ATTRIBUTE_FORMAT(spec) __attribute__((format spec))
-# define ATTRIBUTE_MALLOC __attribute__((malloc))
 # define ATTRIBUTE_PURE __attribute__((pure))
 #endif
 
@@ -706,7 +693,7 @@ DEPRECATED_IN_C23 char *ctime(time_t const *);
 char *asctime_r(struct tm const *restrict, char *restrict);
 char *ctime_r(time_t const *, char *);
 #endif
-ATTRIBUTE_CONST double difftime(time_t, time_t);
+ATTRIBUTE_PURE double difftime(time_t, time_t);
 size_t strftime(char *restrict, size_t, char const *restrict,
 		struct tm const *restrict);
 # if HAVE_STRFTIME_L

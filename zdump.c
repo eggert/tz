@@ -89,7 +89,7 @@ static bool	warned;
 static bool	errout;
 
 static char const *abbr(struct tm const *);
-ATTRIBUTE_PURE static intmax_t delta(struct tm *, struct tm *);
+static intmax_t delta(struct tm *, struct tm *);
 static void dumptime(struct tm const *);
 static time_t hunt(timezone_t, time_t, time_t, bool);
 static void show(timezone_t, char *, time_t, bool);
@@ -151,7 +151,7 @@ sumsize(ptrdiff_t a, ptrdiff_t b)
 /* Return the size of of the string STR, including its trailing NUL.
    Report an error and exit if this would exceed INDEX_MAX which means
    pointer subtraction wouldn't work.  */
-static ptrdiff_t
+ATTRIBUTE_PURE static ptrdiff_t
 xstrsize(char const *str)
 {
   size_t len = strlen(str);
@@ -162,7 +162,7 @@ xstrsize(char const *str)
 
 /* Return a pointer to a newly allocated buffer of size SIZE, exiting
    on failure.  SIZE should be positive.  */
-ATTRIBUTE_MALLOC static void *
+static void *
 xmalloc(ptrdiff_t size)
 {
   void *p = malloc(size);
@@ -932,7 +932,7 @@ showextrema(timezone_t tz, char *zone, time_t lo, struct tm *lotmp, time_t hi)
 # include <stdarg.h>
 
 /* A substitute for snprintf that is good enough for zdump.  */
-ATTRIBUTE_FORMAT((printf, 3, 4)) static int
+static int
 my_snprintf(char *s, size_t size, char const *format, ...)
 {
   int n;

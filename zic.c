@@ -523,7 +523,7 @@ memcheck(void *ptr)
 	return ptr;
 }
 
-ATTRIBUTE_MALLOC static void *
+static void *
 emalloc(size_t size)
 {
   return memcheck(malloc(size));
@@ -535,7 +535,7 @@ erealloc(void *ptr, size_t size)
   return memcheck(realloc(ptr, size));
 }
 
-ATTRIBUTE_MALLOC static char *
+static char *
 estrdup(char const *str)
 {
   return memcheck(strdup(str));

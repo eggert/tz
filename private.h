@@ -481,14 +481,6 @@ typedef unsigned long uintmax_t;
 # define ckd_mul(r, a, b) __builtin_mul_overflow(a, b, r)
 #endif
 
-#if 3 <= __GNUC__
-# define ATTRIBUTE_MALLOC __attribute__((malloc))
-# define ATTRIBUTE_FORMAT(spec) __attribute__((format spec))
-#else
-# define ATTRIBUTE_MALLOC /* empty */
-# define ATTRIBUTE_FORMAT(spec) /* empty */
-#endif
-
 #if (defined __has_c_attribute \
      && (202311 <= __STDC_VERSION__ || !defined __STRICT_ANSI__))
 # define HAVE___HAS_C_ATTRIBUTE true
@@ -556,11 +548,7 @@ typedef unsigned long uintmax_t;
 # endif
 #endif
 #ifndef ATTRIBUTE_REPRODUCIBLE
-# if 3 <= __GNUC__
-#  define ATTRIBUTE_REPRODUCIBLE __attribute__((pure))
-# else
-#  define ATTRIBUTE_REPRODUCIBLE /* empty */
-# endif
+# define ATTRIBUTE_REPRODUCIBLE /* empty */
 #endif
 
 #if HAVE___HAS_C_ATTRIBUTE
@@ -569,11 +557,22 @@ typedef unsigned long uintmax_t;
 # endif
 #endif
 #ifndef ATTRIBUTE_UNSEQUENCED
-# if 3 <= __GNUC__
-#  define ATTRIBUTE_UNSEQUENCED __attribute__((const))
-# else
-#  define ATTRIBUTE_UNSEQUENCED /* empty */
-# endif
+# define ATTRIBUTE_UNSEQUENCED /* empty */
+#endif
+
+/* __attribute__((const)) is stricter than [[unsequenced]] and
+   __attribute__((pure)) is stricter than [[reproducible]],
+   so the latter are adequate substitutes in non-GCC C23 platforms.  */
+#if __GNUC__ < 3
+# define ATTRIBUTE_CONST ATTRIBUTE_UNSEQUENCED
+# define ATTRIBUTE_FORMAT(spec) /* empty */
+# define ATTRIBUTE_MALLOC /* empty */
+# define ATTRIBUTE_PURE ATTRIBUTE_REPRODUCIBLE
+#else
+# define ATTRIBUTE_CONST __attribute__((const))
+# define ATTRIBUTE_FORMAT(spec) __attribute__((format spec))
+# define ATTRIBUTE_MALLOC __attribute__((malloc))
+# define ATTRIBUTE_PURE __attribute__((pure))
 #endif
 
 #if (__STDC_VERSION__ < 199901 && !defined restrict \
@@ -707,7 +706,7 @@ DEPRECATED_IN_C23 char *ctime(time_t const *);
 char *asctime_r(struct tm const *restrict, char *restrict);
 char *ctime_r(time_t const *, char *);
 #endif
-ATTRIBUTE_UNSEQUENCED double difftime(time_t, time_t);
+ATTRIBUTE_CONST double difftime(time_t, time_t);
 size_t strftime(char *restrict, size_t, char const *restrict,
 		struct tm const *restrict);
 # if HAVE_STRFTIME_L
@@ -823,10 +822,10 @@ timezone_t tzalloc(char const *);
 void tzfree(timezone_t);
 # if STD_INSPIRED
 #  if TZ_TIME_T || !defined posix2time_z
-ATTRIBUTE_REPRODUCIBLE time_t posix2time_z(timezone_t, time_t);
+ATTRIBUTE_PURE time_t posix2time_z(timezone_t, time_t);
 #  endif
 #  if TZ_TIME_T || !defined time2posix_z
-ATTRIBUTE_REPRODUCIBLE time_t time2posix_z(timezone_t, time_t);
+ATTRIBUTE_PURE time_t time2posix_z(timezone_t, time_t);
 #  endif
 # endif
 #endif

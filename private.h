@@ -562,6 +562,15 @@ typedef unsigned long uintmax_t;
 # define ATTRIBUTE_PURE __attribute__((pure))
 #endif
 
+/* Avoid GCC bug 114833 <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114833>.
+   Remove this macro and its uses when the bug is fixed in a GCC release,
+   because only the latest GCC matters for $(GCC_DEBUG_FLAGS).  */
+#ifdef GCC_LINT
+# define ATTRIBUTE_PURE_114833 ATTRIBUTE_PURE
+#else
+# define ATTRIBUTE_PURE_114833 /* empty */
+#endif
+
 #if (__STDC_VERSION__ < 199901 && !defined restrict \
      && (PORT_TO_C89 || defined _MSC_VER))
 # define restrict /* empty */

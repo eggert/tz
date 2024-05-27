@@ -97,7 +97,7 @@ static void showextrema(timezone_t, char *, time_t, struct tm *, time_t);
 static void showtrans(char const *, struct tm const *, time_t, char const *,
 		      char const *);
 static const char *tformat(void);
-ATTRIBUTE_PURE static time_t yeartot(intmax_t);
+ATTRIBUTE_PURE_114833 static time_t yeartot(intmax_t);
 
 /* Is C an ASCII digit?  */
 static bool
@@ -134,7 +134,7 @@ size_overflow(void)
 
 /* Return A + B, exiting if the result would overflow either ptrdiff_t
    or size_t.  A and B are both nonnegative.  */
-ATTRIBUTE_PURE static ptrdiff_t
+ATTRIBUTE_PURE_114833 static ptrdiff_t
 sumsize(ptrdiff_t a, ptrdiff_t b)
 {
 #ifdef ckd_add
@@ -151,7 +151,7 @@ sumsize(ptrdiff_t a, ptrdiff_t b)
 /* Return the size of of the string STR, including its trailing NUL.
    Report an error and exit if this would exceed INDEX_MAX which means
    pointer subtraction wouldn't work.  */
-ATTRIBUTE_PURE static ptrdiff_t
+static ptrdiff_t
 xstrsize(char const *str)
 {
   size_t len = strlen(str);

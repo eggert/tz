@@ -63,11 +63,15 @@ If you use Git the following workflow may be helpful:
   * Edit source files.  Include commentary that justifies the
     changes by citing reliable sources.
 
-  * Debug the changes, e.g.:
+  * Debug the changes locally, e.g.:
 
-        make check
-        make install
+        make TOPDIR=$PWD/tz clean check install
         ./zdump -v America/Los_Angeles
+
+    Although builds assume only basic POSIX, they use extra features
+    if available.  'make check' accesses validator.w3.org unless you
+    lack 'curl' or use 'make CURL=:'.  If you have the latest GCC,
+    "make CFLAGS='$(GCC_DEBUG_FLAGS)'" does extra checking.
 
   * For each separable change, commit it in the new branch, e.g.:
 

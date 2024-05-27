@@ -484,6 +484,7 @@ KSHELL=		/bin/bash
 
 # Name of curl <https://curl.haxx.se/>, used for HTML validation
 # and to fetch leap-seconds.list from upstream.
+# Set CURL=: to disable use of the Internet.
 CURL=		curl
 
 # Name of GNU Privacy Guard <https://gnupg.org/>, used to sign distributions.
@@ -992,8 +993,9 @@ check_tz-art.html: tz-art.html
 check_tz-how-to.html: tz-how-to.html
 check_tz-link.html: tz-link.html
 check_theory.html check_tz-art.html check_tz-how-to.html check_tz-link.html:
-		$(CURL) -sS --url https://validator.w3.org/nu/ -F out=gnu \
-		    -F file=@$$(expr $@ : 'check_\(.*\)') -o $@.out && \
+		{ ! ($(CURL) --version) >/dev/null 2>&1 || \
+		    $(CURL) -sS --url https://validator.w3.org/nu/ -F out=gnu \
+		          -F file=@$$(expr $@ : 'check_\(.*\)'); } >$@.out && \
 		  test ! -s $@.out || { cat $@.out; exit 1; }
 		mv $@.out $@
 

@@ -59,6 +59,10 @@ Unreleased, experimental changes
     can overrun user buffers.  If you still need them, add
     -DSUPPORT_POSIX2008 to CFLAGS.
 
+  Changes to build procedure
+
+    'make check' no longer requires curl and Internet access.
+
 
 Release 2024a - 2024-02-01 09:28:56 -0800
 

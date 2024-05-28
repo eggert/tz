@@ -702,7 +702,7 @@ DEPRECATED_IN_C23 char *ctime(time_t const *);
 char *asctime_r(struct tm const *restrict, char *restrict);
 char *ctime_r(time_t const *, char *);
 #endif
-ATTRIBUTE_PURE double difftime(time_t, time_t);
+double difftime(time_t, time_t);
 size_t strftime(char *restrict, size_t, char const *restrict,
 		struct tm const *restrict);
 # if HAVE_STRFTIME_L

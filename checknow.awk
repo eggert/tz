@@ -14,7 +14,7 @@ BEGIN {
     if ($0 ~ /^TZ/) {
       record_zone(zone, data)
       zone = $0
-      sub(/.*\.dir\//, "", zone)
+      sub(/.*\.ckd\//, "", zone)
       sub(/\/\//, "/", zone)
       sub(/"/, "", zone)
       data = ""

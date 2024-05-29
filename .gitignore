@@ -2,7 +2,10 @@
 # This file is in the public domain.
 *.a
 *.asc
+*.ck
+*.ckd/
 *.diff
+*.dir/
 *.i
 *.o
 *.orig
@@ -18,7 +21,6 @@
 *.zi
 *~
 ChangeLog
-check_*
 date
 leapseconds
 tzdir.h

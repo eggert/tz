@@ -63,6 +63,10 @@ Unreleased, experimental changes
 
     'make check' no longer requires curl and Internet access.
 
+    The build procedure now assumes POSIX.2-1992 or later, to simplify
+    maintenance.  To build on Solaris 10, the only extant system still
+    defaulting to pre-POSIX, prepend /usr/xpg4/bin to PATH.
+
 
 Release 2024a - 2024-02-01 09:28:56 -0800
 

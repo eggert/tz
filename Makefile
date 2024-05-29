@@ -542,10 +542,10 @@ OK_LINE=	'^'$(OK_CHAR)'*$$'
 GNUTARFLAGS= --format=pax --pax-option='delete=atime,delete=ctime' \
   --numeric-owner --owner=0 --group=0 \
   --mode=go+u,go-w --sort=name
-TARFLAGS=	`if tar $(GNUTARFLAGS) --version >/dev/null 2>&1; \
-		 then echo $(GNUTARFLAGS); \
-		 else :; \
-		 fi`
+TARFLAGS=	$$(if tar $(GNUTARFLAGS) --version >/dev/null 2>&1; \
+		   then echo $(GNUTARFLAGS); \
+		   else :; \
+		   fi)
 
 # Flags to give 'gzip' when making a distribution.
 GZIPFLAGS=	-9n
@@ -646,8 +646,8 @@ install:	all $(DATA) $(REDO) $(MANS)
 			'$(DESTDIR)$(MANDIR)/man3' '$(DESTDIR)$(MANDIR)/man5' \
 			'$(DESTDIR)$(MANDIR)/man8'
 		$(ZIC_INSTALL) -l $(LOCALTIME) \
-			`case '$(POSIXRULES)' in ?*) echo '-p';; esac \
-			` $(POSIXRULES) \
+			$$(case '$(POSIXRULES)' in ?*) echo ' -p';; esac) \
+			$(POSIXRULES) \
 			-t '$(DESTDIR)$(TZDEFAULT)'
 		cp -f $(TABDATA) '$(DESTDIR)$(TZDIR)/.'
 		cp tzselect '$(DESTDIR)$(BINDIR)/.'
@@ -670,9 +670,9 @@ INSTALL:	ALL install date.1
 # and append "-dirty" if the contents do not already end in "-dirty".
 version:	$(VERSION_DEPS)
 		{ (type git) >/dev/null 2>&1 && \
-		  V=`git describe --match '[0-9][0-9][0-9][0-9][a-z]*' \
-				--abbrev=7 --dirty` || \
-		  if test '$(VERSION)' = unknown && V=`cat $@`; then \
+		  V=$$(git describe --match '[0-9][0-9][0-9][0-9][a-z]*' \
+				--abbrev=7 --dirty) || \
+		  if test '$(VERSION)' = unknown && V=$$(cat $@); then \
 		    case $$V in *-dirty);; *) V=$$V-dirty;; esac; \
 		  else \
 		    V='$(VERSION)'; \
@@ -692,7 +692,7 @@ vanguard.zi main.zi rearguard.zi: $(DSTDATA_ZI_DEPS)
 # This file has a version comment that attempts to capture any tailoring
 # via BACKWARD, DATAFORM, PACKRATDATA, PACKRATLIST, and REDO.
 tzdata.zi:	$(DATAFORM).zi version zishrink.awk
-		version=`sed 1q version` && \
+		version=$$(sed 1q version) && \
 		  LC_ALL=C $(AWK) \
 		    -v dataform='$(DATAFORM)' \
 		    -v deps='$(DSTDATA_ZI_DEPS) zishrink.awk' \
@@ -713,7 +713,7 @@ tzdir.h:
 		mv $@.out $@
 
 version.h:	version
-		VERSION=`cat version` && printf '%s\n' \
+		VERSION=$$(cat version) && printf '%s\n' \
 		  'static char const PKGVERSION[]="($(PACKAGE)) ";' \
 		  "static char const TZVERSION[]=\"$$VERSION\";" \
 		  'static char const REPORT_BUGS_TO[]="$(BUGEMAIL)";' \
@@ -816,10 +816,10 @@ $(TZS_NEW): $(TZS_NEW_DEPS)
 		$(zic) -d tzs$(TZS_YEAR).dir tzdata.zi
 		$(AWK) '/^L/{print "Link\t" $$2 "\t" $$3}' \
 		   tzdata.zi | LC_ALL=C sort >$@.out
-		wd=`pwd` && \
-		x=`$(AWK) '/^Z/{print "tzs$(TZS_YEAR).dir/" $$2 ".zd"}' \
+		wd=$$(pwd) && \
+		x=$$($(AWK) '/^Z/{print "tzs$(TZS_YEAR).dir/" $$2 ".zd"}' \
 				tzdata.zi \
-			| LC_ALL=C sort -t . -k 2,2` && \
+		     | LC_ALL=C sort -t . -k 2,2) && \
 		set x $$x && \
 		shift && \
 		ZDS=$$* && \
@@ -846,7 +846,7 @@ date:		$(DATEOBJS)
 		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(DATEOBJS) $(LDLIBS)
 
 tzselect:	tzselect.ksh version
-		VERSION=`cat version` && sed \
+		VERSION=$$(cat version) && sed \
 		  -e "s'#!/bin/bash'#!"'$(KSHELL)'\' \
 		  -e s\''\(AWK\)=[^}]*'\''\1=\'\''$(AWK)\'\'\' \
 		  -e s\''\(PKGVERSION\)=.*'\''\1=\'\''($(PACKAGE)) \'\'\' \
@@ -888,7 +888,7 @@ character-set.ck: $(ENCHILADA)
 
 white-space.ck: $(ENCHILADA)
 	$(UTF8_LOCALE_MISSING) || { \
-		patfmt=' \t|[\f\r\v]' && pat=`printf "$$patfmt\\n"` && \
+		patfmt=' \t|[\f\r\v]' && pat=$$(printf "$$patfmt\\n") && \
 		! grep -En "$$pat|[$s]\$$" \
 			$$(ls $(ENCHILADA) | grep -Fvx leap-seconds.list); \
 	}
@@ -942,7 +942,7 @@ links.ck: checklinks.awk tzdata.zi
 # that zonenow.tab contains all sequences of planned timestamps,
 # without any duplicate sequences.  In theory this might require
 # 2800+ years but that would take a long time to check.
-CHECK_NOW_TIMESTAMP = `./date +%s`
+CHECK_NOW_TIMESTAMP = $$(./date +%s)
 CHECK_NOW_FUTURE_YEARS = 28
 CHECK_NOW_FUTURE_SECS = $(CHECK_NOW_FUTURE_YEARS) * 366 * 24 * 60 * 60
 now.ck: checknow.awk date tzdata.zi zdump zic zone1970.tab zonenow.tab
@@ -1070,13 +1070,13 @@ SET_TIMESTAMP_N = sh -c '\
   n=$$0 dest=$$1; shift; \
   <"$$dest" && \
   if test $$n != 0 && \
-     lsout=`ls -nt --time-style="+%s" "$$@" 2>/dev/null`; then \
+     lsout=$$(ls -nt --time-style="+%s" "$$@" 2>/dev/null); then \
     set x $$lsout && \
     timestamp=$$(($$7 + $$n)) && \
     echo "+ touch -md @$$timestamp $$dest" && \
     touch -md @$$timestamp "$$dest"; \
   else \
-    newest=`ls -t "$$@" | sed 1q` && \
+    newest=$$(ls -t "$$@" | sed 1q) && \
     echo "+ touch -mr $$newest $$dest" && \
     touch -mr "$$newest" "$$dest"; \
   fi'
@@ -1099,15 +1099,15 @@ SET_TIMESTAMP_DEP = $(SET_TIMESTAMP_N) 1
 set-timestamps.out: $(EIGHT_YARDS)
 		rm -f $@
 		if (type git) >/dev/null 2>&1 && \
-		   files=`git ls-files $(EIGHT_YARDS)` && \
+		   files=$$(git ls-files $(EIGHT_YARDS)) && \
 		   touch -md @1 test.out; then \
 		  rm -f test.out && \
 		  for file in $$files; do \
 		    if git diff --quiet $$file; then \
-		      time=`TZ=UTC0 git log -1 \
+		      time=$$(TZ=UTC0 git log -1 \
 			--format='tformat:%cd' \
 			--date='format:%Y-%m-%dT%H:%M:%SZ' \
-			$$file` && \
+			$$file) && \
 		      echo "+ touch -md $$time $$file" && \
 		      touch -md $$time $$file; \
 		    else \
@@ -1116,7 +1116,7 @@ set-timestamps.out: $(EIGHT_YARDS)
 		  done; \
 		fi
 		$(SET_TIMESTAMP_DEP) leapseconds $(LEAP_DEPS)
-		for file in `ls $(MANTXTS) | sed 's/\.txt$$//'`; do \
+		for file in $$(ls $(MANTXTS) | sed 's/\.txt$$//'); do \
 		  $(SET_TIMESTAMP_DEP) $$file.txt $$file workman.sh || \
 		    exit; \
 		done
@@ -1168,8 +1168,8 @@ $(TIME_T_ALTERNATIVES): $(VERSION_DEPS)
 		  u*) range=0,4294967296;; \
 		  *) range=-4294967296,4294967296;; \
 		esac && \
-		wd=`pwd` && \
-		zones=`$(AWK) '/^[^#]/ { print $$3 }' <zone1970.tab` && \
+		wd=$$(pwd) && \
+		zones=$$($(AWK) '/^[^#]/ { print $$3 }' <zone1970.tab) && \
 		if test $@ = $(TIME_T_ALTERNATIVES_HEAD); then \
 		  range_target=; \
 		else \
@@ -1214,7 +1214,7 @@ ALL_ASC = $(TRADITIONAL_ASC) $(REARGUARD_ASC) \
 tarballs rearguard_tarballs tailored_tarballs traditional_tarballs \
 signatures rearguard_signatures traditional_signatures: \
   version set-timestamps.out rearguard.zi vanguard.zi
-		VERSION=`cat version` && \
+		VERSION=$$(cat version) && \
 		$(MAKE) AWK='$(AWK)' VERSION="$$VERSION" $@_version
 
 # These *_version rules are intended for use if VERSION is set by some
@@ -1286,7 +1286,7 @@ tzdata$(VERSION)-tailored.tar.gz: set-timestamps.out
 		: The dummy pacificnew pacifies TZUpdater 2.3.1 and earlier.
 		cd $@.dir && \
 		  $(CREATE_EMPTY) $(PRIMARY_YDATA) $(NDATA) backward \
-		  `test $(DATAFORM) = vanguard || echo pacificnew`
+		  $$(test $(DATAFORM) = vanguard || echo pacificnew)
 		(grep '^#' tzdata.zi && echo && cat $(DATAFORM).zi) \
 		  >$@.dir/etcetera
 		touch -mr tzdata.zi $@.dir/etcetera
@@ -1340,7 +1340,7 @@ long-long.ck unsigned.ck: $(VERSION_DEPS)
 		  esac && \
 		  $(MAKE) \
 		    CFLAGS="$(TYPECHECK_CFLAGS) \"-Dtime_t=$$i\"" \
-		    TOPDIR="`pwd`" \
+		    TOPDIR="$$(pwd)" \
 		    install
 		$@d/zdump -i -c 1970,1971 Europe/Rome
 		touch $@

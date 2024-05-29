@@ -807,7 +807,7 @@ ZDS = dummy.zd
 # Rule used only by submakes invoked by the $(TZS_NEW) rule.
 # It is separate so that GNU 'make -j' can run instances in parallel.
 $(ZDS): zdump
-		./zdump -i $(TZS_CUTOFF_FLAG) '$(wd)/'$(@:.zd=) >$@
+		./zdump -i $(TZS_CUTOFF_FLAG) "$$PWD/$(@:.zd=)" >$@
 
 TZS_NEW_DEPS = tzdata.zi zdump zic
 $(TZS_NEW): $(TZS_NEW_DEPS)
@@ -816,14 +816,13 @@ $(TZS_NEW): $(TZS_NEW_DEPS)
 		$(zic) -d tzs$(TZS_YEAR).dir tzdata.zi
 		$(AWK) '/^L/{print "Link\t" $$2 "\t" $$3}' \
 		   tzdata.zi | LC_ALL=C sort >$@.out
-		wd=$$(pwd) && \
 		x=$$($(AWK) '/^Z/{print "tzs$(TZS_YEAR).dir/" $$2 ".zd"}' \
 				tzdata.zi \
 		     | LC_ALL=C sort -t . -k 2,2) && \
 		set x $$x && \
 		shift && \
 		ZDS=$$* && \
-		$(MAKE) wd="$$wd" TZS_CUTOFF_FLAG="$(TZS_CUTOFF_FLAG)" \
+		$(MAKE) TZS_CUTOFF_FLAG="$(TZS_CUTOFF_FLAG)" \
 		  ZDS="$$ZDS" $$ZDS && \
 		sed 's,^TZ=".*\.dir/,TZ=",' $$ZDS >>$@.out
 		rm -fr tzs$(TZS_YEAR).dir
@@ -1168,7 +1167,7 @@ $(TIME_T_ALTERNATIVES): $(VERSION_DEPS)
 		  u*) range=0,4294967296;; \
 		  *) range=-4294967296,4294967296;; \
 		esac && \
-		wd=$$(pwd) && \
+		wd=$$PWD && \
 		zones=$$($(AWK) '/^[^#]/ { print $$3 }' <zone1970.tab) && \
 		if test $@ = $(TIME_T_ALTERNATIVES_HEAD); then \
 		  range_target=; \
@@ -1179,14 +1178,14 @@ $(TIME_T_ALTERNATIVES): $(VERSION_DEPS)
 		  $(MAKE) TOPDIR="$$wd/$@d" \
 		    CFLAGS='$(CFLAGS) -Dtime_tz='"'$(@:.ck=)'" \
 		    REDO='$(REDO)' \
-			D=$$wd/$@d \
+		    D="$$wd/$@d" \
 		    TZS_YEAR="$$range" TZS_CUTOFF_FLAG="-t $$range" \
 		    install $$range_target) && \
 		test $@ = $(TIME_T_ALTERNATIVES_HEAD) || { \
 		  (cd $(TIME_T_ALTERNATIVES_HEAD)d && \
 		    $(MAKE) TOPDIR="$$wd/$@d" \
 		      TZS_YEAR="$$range" TZS_CUTOFF_FLAG="-t $$range" \
-			D=$$wd/$@d \
+		      D="$$wd/$@d" \
 		      to$$range.tzs) && \
 		  $(DIFF_TZS) $(TIME_T_ALTERNATIVES_HEAD)d/to$$range.tzs \
 			  $@d/to$$range.tzs && \
@@ -1340,7 +1339,7 @@ long-long.ck unsigned.ck: $(VERSION_DEPS)
 		  esac && \
 		  $(MAKE) \
 		    CFLAGS="$(TYPECHECK_CFLAGS) \"-Dtime_t=$$i\"" \
-		    TOPDIR="$$(pwd)" \
+		    TOPDIR="$$PWD" \
 		    install
 		$@d/zdump -i -c 1970,1971 Europe/Rome
 		touch $@

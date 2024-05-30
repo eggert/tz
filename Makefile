@@ -539,21 +539,28 @@ OK_LINE=	'^'$(OK_CHAR)'*$$'
 
 # Flags to give 'tar' when making a distribution.
 # Try to use flags appropriate for GNU tar.
-GNUTARFLAGS= --format=pax --pax-option='delete=atime,delete=ctime' \
+GNUTARFLAGS= --format=pax --pax-option=delete=atime,delete=ctime \
   --numeric-owner --owner=0 --group=0 \
   --mode=go+u,go-w --sort=name
-TARFLAGS=	$$(if tar $(GNUTARFLAGS) --version >/dev/null 2>&1; \
-		   then echo $(GNUTARFLAGS); \
-		   else :; \
-		   fi)
+SETUP_TAR= \
+  LC_ALL=C && export LC_ALL && \
+  if tar $(GNUTARFLAGS) --version >/dev/null 2>&1; then \
+    TAR='tar $(GNUTARFLAGS)'; \
+  else \
+    TAR=tar; \
+  fi
 
 # Flags to give 'gzip' when making a distribution.
 GZIPFLAGS=	-9n
 
 # When comparing .tzs files, use GNU diff's -F'^TZ=' option if supported.
 # This makes it easier to see which Zone has been affected.
-DIFF_TZS=	 diff -u$$(! diff -u -F'^TZ=' - - <>/dev/null >&0 2>&1 \
-			   || echo ' -F^TZ=')
+SETUP_DIFF_TZS = \
+  if diff -u -F'^TZ=' - - <>/dev/null >&0 2>&1; then \
+    DIFF_TZS='diff -u -F^TZ='; \
+  else \
+    DIFF_TZS='diff -u'; \
+  fi
 
 # ':' on typical hosts; 'ranlib' on the ancient hosts that still need ranlib.
 RANLIB=		:
@@ -646,8 +653,7 @@ install:	all $(DATA) $(REDO) $(MANS)
 			'$(DESTDIR)$(MANDIR)/man3' '$(DESTDIR)$(MANDIR)/man5' \
 			'$(DESTDIR)$(MANDIR)/man8'
 		$(ZIC_INSTALL) -l $(LOCALTIME) \
-			$$(case '$(POSIXRULES)' in ?*) echo ' -p';; esac) \
-			$(POSIXRULES) \
+			-p $(POSIXRULES) \
 			-t '$(DESTDIR)$(TZDEFAULT)'
 		cp -f $(TABDATA) '$(DESTDIR)$(TZDIR)/.'
 		cp tzselect '$(DESTDIR)$(BINDIR)/.'
@@ -672,8 +678,8 @@ version:	$(VERSION_DEPS)
 		{ (type git) >/dev/null 2>&1 && \
 		  V=$$(git describe --match '[0-9][0-9][0-9][0-9][a-z]*' \
 				--abbrev=7 --dirty) || \
-		  if test '$(VERSION)' = unknown && V=$$(cat $@); then \
-		    case $$V in *-dirty);; *) V=$$V-dirty;; esac; \
+		  if test '$(VERSION)' = unknown && read -r V <$@; then \
+		    V=$${V%-dirty}-dirty; \
 		  else \
 		    V='$(VERSION)'; \
 		  fi; } && \
@@ -692,7 +698,7 @@ vanguard.zi main.zi rearguard.zi: $(DSTDATA_ZI_DEPS)
 # This file has a version comment that attempts to capture any tailoring
 # via BACKWARD, DATAFORM, PACKRATDATA, PACKRATLIST, and REDO.
 tzdata.zi:	$(DATAFORM).zi version zishrink.awk
-		version=$$(sed 1q version) && \
+		read -r version <version && \
 		  LC_ALL=C $(AWK) \
 		    -v dataform='$(DATAFORM)' \
 		    -v deps='$(DSTDATA_ZI_DEPS) zishrink.awk' \
@@ -713,7 +719,7 @@ tzdir.h:
 		mv $@.out $@
 
 version.h:	version
-		VERSION=$$(cat version) && printf '%s\n' \
+		read -r VERSION <version && printf '%s\n' \
 		  'static char const PKGVERSION[]="($(PACKAGE)) ";' \
 		  "static char const TZVERSION[]=\"$$VERSION\";" \
 		  'static char const REPORT_BUGS_TO[]="$(BUGEMAIL)";' \
@@ -845,7 +851,7 @@ date:		$(DATEOBJS)
 		$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $(DATEOBJS) $(LDLIBS)
 
 tzselect:	tzselect.ksh version
-		VERSION=$$(cat version) && sed \
+		read -r VERSION <version && sed \
 		  -e "s'#!/bin/bash'#!"'$(KSHELL)'\' \
 		  -e s\''\(AWK\)=[^}]*'\''\1=\'\''$(AWK)\'\'\' \
 		  -e s\''\(PKGVERSION\)=.*'\''\1=\'\''($(PACKAGE)) \'\'\' \
@@ -887,9 +893,11 @@ character-set.ck: $(ENCHILADA)
 
 white-space.ck: $(ENCHILADA)
 	$(UTF8_LOCALE_MISSING) || { \
+		enchilada='$(ENCHILADA)' && \
 		patfmt=' \t|[\f\r\v]' && pat=$$(printf "$$patfmt\\n") && \
 		! grep -En "$$pat|[$s]\$$" \
-			$$(ls $(ENCHILADA) | grep -Fvx leap-seconds.list); \
+		    $${enchilada%leap-seconds.list*} \
+		    $${enchilada#*leap-seconds.list}; \
 	}
 	touch $@
 
@@ -979,7 +987,7 @@ tables.ck: checktab.awk $(YDATA) backward zone.tab zone1970.tab
 
 tzs.ck: $(TZS) $(TZS_NEW)
 		if test -s $(TZS); then \
-		  $(DIFF_TZS) $(TZS) $(TZS_NEW); \
+		  $(SETUP_DIFF_TZS) && $$DIFF_TZS $(TZS) $(TZS_NEW); \
 		else \
 		  cp $(TZS_NEW) $(TZS); \
 		fi
@@ -1115,8 +1123,8 @@ set-timestamps.out: $(EIGHT_YARDS)
 		  done; \
 		fi
 		$(SET_TIMESTAMP_DEP) leapseconds $(LEAP_DEPS)
-		for file in $$(ls $(MANTXTS) | sed 's/\.txt$$//'); do \
-		  $(SET_TIMESTAMP_DEP) $$file.txt $$file workman.sh || \
+		for file in $(MANTXTS); do \
+		  $(SET_TIMESTAMP_DEP) $$file $${file%.txt} workman.sh || \
 		    exit; \
 		done
 		$(SET_TIMESTAMP_DEP) version $(VERSION_DEPS)
@@ -1187,7 +1195,8 @@ $(TIME_T_ALTERNATIVES): $(VERSION_DEPS)
 		      TZS_YEAR="$$range" TZS_CUTOFF_FLAG="-t $$range" \
 		      D="$$wd/$@d" \
 		      to$$range.tzs) && \
-		  $(DIFF_TZS) $(TIME_T_ALTERNATIVES_HEAD)d/to$$range.tzs \
+		  $(SETUP_DIFF_TZS) && \
+		  $$DIFF_TZS $(TIME_T_ALTERNATIVES_HEAD)d/to$$range.tzs \
 			  $@d/to$$range.tzs && \
 		  if diff -q Makefile Makefile 2>/dev/null; then \
 		    quiet_option='-q'; \
@@ -1213,7 +1222,7 @@ ALL_ASC = $(TRADITIONAL_ASC) $(REARGUARD_ASC) \
 tarballs rearguard_tarballs tailored_tarballs traditional_tarballs \
 signatures rearguard_signatures traditional_signatures: \
   version set-timestamps.out rearguard.zi vanguard.zi
-		VERSION=$$(cat version) && \
+		read -r VERSION <version && \
 		$(MAKE) AWK='$(AWK)' VERSION="$$VERSION" $@_version
 
 # These *_version rules are intended for use if VERSION is set by some
@@ -1232,15 +1241,15 @@ rearguard_signatures_version: $(REARGUARD_ASC)
 traditional_signatures_version: $(TRADITIONAL_ASC)
 
 tzcode$(VERSION).tar.gz: set-timestamps.out
-		LC_ALL=C && export LC_ALL && \
-		tar $(TARFLAGS) -cf - \
+		$(SETUP_TAR) && \
+		$$TAR -cf - \
 		    $(COMMON) $(DOCS) $(SOURCES) | \
 		  gzip $(GZIPFLAGS) >$@.out
 		mv $@.out $@
 
 tzdata$(VERSION).tar.gz: set-timestamps.out
-		LC_ALL=C && export LC_ALL && \
-		tar $(TARFLAGS) -cf - $(TZDATA_DIST) | \
+		$(SETUP_TAR) && \
+		$$TAR -cf - $(TZDATA_DIST) | \
 		  gzip $(GZIPFLAGS) >$@.out
 		mv $@.out $@
 
@@ -1265,9 +1274,9 @@ tzdata$(VERSION)-rearguard.tar.gz: rearguard.zi set-timestamps.out
 		: The dummy pacificnew pacifies TZUpdater 2.3.1 and earlier.
 		$(CREATE_EMPTY) $@.dir/pacificnew
 		touch -mr version $@.dir/version
-		LC_ALL=C && export LC_ALL && \
+		$(SETUP_TAR) && \
 		  (cd $@.dir && \
-		   tar $(TARFLAGS) -cf - \
+		   $$TAR -cf - \
 			$(TZDATA_DIST) pacificnew | \
 		     gzip $(GZIPFLAGS)) >$@.out
 		mv $@.out $@
@@ -1283,9 +1292,14 @@ tzdata$(VERSION)-tailored.tar.gz: set-timestamps.out
 		rm -fr $@.dir
 		mkdir $@.dir
 		: The dummy pacificnew pacifies TZUpdater 2.3.1 and earlier.
+		if test $(DATAFORM) = vanguard; then \
+		  pacificnew=; \
+		else \
+		  pacificnew=pacificnew; \
+		fi && \
 		cd $@.dir && \
 		  $(CREATE_EMPTY) $(PRIMARY_YDATA) $(NDATA) backward \
-		  $$(test $(DATAFORM) = vanguard || echo pacificnew)
+		  $$pacificnew
 		(grep '^#' tzdata.zi && echo && cat $(DATAFORM).zi) \
 		  >$@.dir/etcetera
 		touch -mr tzdata.zi $@.dir/etcetera
@@ -1305,9 +1319,9 @@ tzdata$(VERSION)-tailored.tar.gz: set-timestamps.out
 		    test -f $@.dir/$$file || links="$$links $$file"; \
 		  done && \
 		  ln $$links $@.dir
-		LC_ALL=C && export LC_ALL && \
+		$(SETUP_TAR) && \
 		  (cd $@.dir && \
-		   tar $(TARFLAGS) -cf - * | gzip $(GZIPFLAGS)) >$@.out
+		   $$TAR -cf - * | gzip $(GZIPFLAGS)) >$@.out
 		mv $@.out $@
 
 tzdb-$(VERSION).tar.lz: set-timestamps.out set-tzs-timestamp.out
@@ -1315,8 +1329,8 @@ tzdb-$(VERSION).tar.lz: set-timestamps.out set-tzs-timestamp.out
 		mkdir tzdb-$(VERSION)
 		ln $(ENCHILADA) tzdb-$(VERSION)
 		$(SET_TIMESTAMP) tzdb-$(VERSION) tzdb-$(VERSION)/*
-		LC_ALL=C && export LC_ALL && \
-		tar $(TARFLAGS) -cf - tzdb-$(VERSION) | lzip -9 >$@.out
+		$(SETUP_TAR) && \
+		$$TAR -cf - tzdb-$(VERSION) | lzip -9 >$@.out
 		mv $@.out $@
 
 tzcode$(VERSION).tar.gz.asc: tzcode$(VERSION).tar.gz

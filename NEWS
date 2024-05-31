@@ -61,7 +61,8 @@ Unreleased, experimental changes
     -DSUPPORT_POSIX2008 to CFLAGS.
 
     tzselect now assumes POSIX.2-1992 or later, as practical porting
-    targets now all support this.
+    targets now all support this.  Also, tzselect uses some features
+    from POSIX.1-2024 if available.
 
   Changes to build procedure
 

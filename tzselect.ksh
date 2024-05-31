@@ -47,13 +47,6 @@ say() {
   printf '%s\n' "$1"
 }
 
-# Check for awk POSIX compliance.
-($AWK -v x=y 'BEGIN { exit 123 }') <>/dev/null >&0 2>&0
-[ $? = 123 ] || {
-  say >&2 "$0: Sorry, your '$AWK' program is not POSIX compatible."
-  exit 1
-}
-
 coord=
 location_limit=10
 zonetabtype=zone1970

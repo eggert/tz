@@ -7,6 +7,7 @@ Unreleased, experimental changes
     The main data form now uses %z.
     The code now conforms to RFC 8536 for early timestamps.
     Support POSIX.1-2024, which removes asctime_r and ctime_r.
+    Assume POSIX.2-1992 or later for shell scripts.
     Improve historical data for Portugal and possessions.
 
   Changes to data
@@ -58,6 +59,9 @@ Unreleased, experimental changes
     conform to earlier POSIX.  These functions are dangerous as they
     can overrun user buffers.  If you still need them, add
     -DSUPPORT_POSIX2008 to CFLAGS.
+
+    tzselect now assumes POSIX.2-1992 or later, as practical porting
+    targets now all support this.
 
   Changes to build procedure
 

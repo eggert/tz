@@ -39,7 +39,6 @@ set -f
 
 # Specify default values for environment variables if they are unset.
 : ${AWK=awk}
-: ${PWD=$(pwd)}
 : ${TZDIR=$PWD}
 
 # Output one argument as-is to standard output, with trailing newline.

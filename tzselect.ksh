@@ -103,8 +103,7 @@ then
 else
   doselect() {
     # Field width of the prompt numbers.
-    print_nargs_length="BEGIN {print length(\"$#\");}"
-    select_width=$($AWK "$print_nargs_length")
+    select_width=${##}
 
     select_i=
 
@@ -115,14 +114,14 @@ else
 	select_i=0
 	for select_word
 	do
-	  select_i=$($AWK "BEGIN { print $select_i + 1 }")
+	  select_i=$(($select_i + 1))
 	  printf >&2 "%${select_width}d) %s\\n" $select_i "$select_word"
 	done;;
       *[!0-9]*)
 	echo >&2 'Please enter a number in range.';;
       *)
 	if test 1 -le $select_i && test $select_i -le $#; then
-	  shift $($AWK "BEGIN { print $select_i - 1 }")
+	  shift $(($select_i - 1))
 	  select_result=$1
 	  break
 	fi
@@ -156,7 +155,7 @@ do
   esac
 done
 
-shift $($AWK "BEGIN { print $OPTIND - 1 }")
+shift $(($OPTIND - 1))
 case $# in
 0) ;;
 *) say >&2 "$0: $1: unknown argument"; exit 1
@@ -742,12 +741,9 @@ while
   do
     TZdate=$(LANG=C TZ="$TZ_for_date" date)
     UTdate=$(LANG=C TZ=UTC0 date)
-    if $AWK '
-	  function getsecs(d) {
-	    return match(d, /.*:[0-5][0-9]/) ? substr(d, RLENGTH - 1, 2) : ""
-	  }
-	  BEGIN { exit getsecs(ARGV[1]) != getsecs(ARGV[2]) }
-       ' ="$TZdate" ="$UTdate"
+    TZsecsetc=${TZdate##*[0-5][0-9]:}
+    UTsecsetc=${UTdate##*[0-5][0-9]:}
+    if test "${TZsecsetc%%[!0-9]*}" = "${UTsecsetc%%[!0-9]*}"
     then
       extra_info="
 Selected time is now:	$TZdate.

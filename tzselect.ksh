@@ -785,7 +785,7 @@ done
 
 case $SHELL in
 *csh) file=.login line="setenv TZ '$tz'";;
-*)    file=.profile line="TZ='$tz'; export TZ"
+*)    file=.profile line="export TZ='$tz'"
 esac
 
 test -t 1 && say >&2 "

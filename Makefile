@@ -543,7 +543,7 @@ GNUTARFLAGS= --format=pax --pax-option=delete=atime,delete=ctime \
   --numeric-owner --owner=0 --group=0 \
   --mode=go+u,go-w --sort=name
 SETUP_TAR= \
-  LC_ALL=C && export LC_ALL && \
+  export LC_ALL=C && \
   if tar $(GNUTARFLAGS) --version >/dev/null 2>&1; then \
     TAR='tar $(GNUTARFLAGS)'; \
   else \
@@ -874,7 +874,7 @@ UTF8_LOCALE_MISSING = \
   { test ! '$(UTF8_LOCALE)' \
     || ! printf 'A\304\200B\n' \
          | LC_ALL='$(UTF8_LOCALE)' grep -q '^A.B$$' >/dev/null 2>&1 \
-    || { LC_ALL='$(UTF8_LOCALE)'; export LC_ALL; false; }; }
+    || { export LC_ALL='$(UTF8_LOCALE)'; false; }; }
 
 character-set.ck: $(ENCHILADA)
 	$(UTF8_LOCALE_MISSING) || { \

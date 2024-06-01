@@ -440,11 +440,6 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 \
 #LDFLAGS =
 #MAKE = make
 
-# For leap seconds, this Makefile uses LEAPSECONDS='-L leapseconds' in
-# submake command lines.  The default is no leap seconds.
-
-LEAPSECONDS=
-
 # Where to fetch leap-seconds.list from.
 leaplist_URI = \
   https://hpiers.obspm.fr/iers/bul/bulc/ntp/leap-seconds.list
@@ -466,7 +461,7 @@ ZFLAGS=
 
 # How to use zic to install TZif files.
 
-ZIC_INSTALL=	$(ZIC) -d '$(DESTDIR)$(TZDIR)' $(LEAPSECONDS)
+ZIC_INSTALL=	$(ZIC) -d '$(DESTDIR)$(TZDIR)'
 
 # The name of a POSIX-compliant 'awk' on your system.
 # mawk 1.3.3 and Solaris 10 /usr/bin/awk do not work.
@@ -759,12 +754,11 @@ commit-leap-seconds.list: fetch-leap-seconds.list
 		git commit --author="$$author" --date="$$date" -m'make $@' \
 		  leap-seconds.list
 
-# Arguments to pass to submakes of install_data.
+# Arguments to pass to submakes.
 # They can be overridden by later submake arguments.
 INSTALLARGS = \
  BACKWARD='$(BACKWARD)' \
  DESTDIR='$(DESTDIR)' \
- LEAPSECONDS='$(LEAPSECONDS)' \
  PACKRATDATA='$(PACKRATDATA)' \
  PACKRATLIST='$(PACKRATLIST)' \
  TZDEFAULT='$(TZDEFAULT)' \
@@ -773,16 +767,11 @@ INSTALLARGS = \
 
 INSTALL_DATA_DEPS = zic leapseconds tzdata.zi
 
-# 'make install_data' installs one set of TZif files.
-install_data: $(INSTALL_DATA_DEPS)
+posix_only: $(INSTALL_DATA_DEPS)
 		$(ZIC_INSTALL) tzdata.zi
 
-posix_only: $(INSTALL_DATA_DEPS)
-		$(MAKE) $(INSTALLARGS) LEAPSECONDS= install_data
-
 right_only: $(INSTALL_DATA_DEPS)
-		$(MAKE) $(INSTALLARGS) LEAPSECONDS='-L leapseconds' \
-			install_data
+		$(ZIC_INSTALL) -L leapseconds tzdata.zi
 
 # In earlier versions of this makefile, the other two directories were
 # subdirectories of $(TZDIR).  However, this led to configuration errors.
@@ -1374,7 +1363,7 @@ zic.o:		private.h tzfile.h tzdir.h version.h
 .PHONY: check_web check_zishrink
 .PHONY: clean clean_misc commit-leap-seconds.list dummy.zd
 .PHONY: fetch-leap-seconds.list force_tzs
-.PHONY: install install_data maintainer-clean names
+.PHONY: install maintainer-clean names
 .PHONY: posix_only posix_right public
 .PHONY: rearguard_signatures rearguard_signatures_version
 .PHONY: rearguard_tarballs rearguard_tarballs_version

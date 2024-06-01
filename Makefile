@@ -894,7 +894,7 @@ PRECEDES_FILE_NAME = ^(Zone|Link[$s]+[^$s]+)[$s]+
 FILE_NAME_COMPONENT_TOO_LONG = $(PRECEDES_FILE_NAME)[^$s]*[^/$s]{15}
 
 name-lengths.ck: $(TDATA_TO_CHECK) backzone
-		! grep -En '$(FILE_NAME_COMPONENT_TOO_LONG)' \
+		:;! grep -En '$(FILE_NAME_COMPONENT_TOO_LONG)' \
 			$(TDATA_TO_CHECK) backzone
 		touch $@
 
@@ -910,7 +910,7 @@ RULELESS_SLASHED_ABBRS = \
   $(PRECEDES_STDOFF)$(STDOFF)[$s]+$(RULELESS_SAVE)[$s]+[^$s]*/
 
 slashed-abbrs.ck: $(TDATA_TO_CHECK)
-		! grep -En '$(RULELESS_SLASHED_ABBRS)' $(TDATA_TO_CHECK)
+		:;! grep -En '$(RULELESS_SLASHED_ABBRS)' $(TDATA_TO_CHECK)
 		touch $@
 
 CHECK_CC_LIST = { n = split($$1,a,/,/); for (i=2; i<=n; i++) print a[1], a[i]; }

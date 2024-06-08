@@ -263,8 +263,9 @@ LDLIBS=
 #  -DRESERVE_STD_EXT_IDS if your platform reserves standard identifiers
 #	with external linkage, e.g., applications cannot define 'localtime'.
 #  -Dssize_t=long on hosts like MS-Windows that lack ssize_t
-#  -DSUPPORT_C89 if the tzcode library should support C89 callers+
-#	However, this might trigger latent bugs in C99-or-later callers.
+#  -DSUPPORT_C89=0 if the tzcode library should not support C89 callers
+#	Although -DSUPPORT_C89=0 might work around latent bugs in callers,
+#	it does not conform to POSIX.
 #  -DSUPPORT_POSIX2008 if the library should support older POSIX callers+
 #	However, this might cause problems in POSIX.1-2024-or-later callers.
 #  -DSUPPRESS_TZDIR to not prepend TZDIR to file names; this has

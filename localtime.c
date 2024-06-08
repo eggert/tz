@@ -182,8 +182,9 @@ static int		lcl_is_set;
 **	objects: a broken-down time structure and an array of char.
 ** Thanks to Paul Eggert for noting this.
 **
-** This requirement was removed in C99, so support it only if requested,
-** as support is more likely to lead to bugs in badly written programs.
+** Although this requirement was removed in C99 it is still present in POSIX.
+** Follow the requirement if SUPPORT_C89, even though this is more likely to
+** trigger latent bugs in programs.
 */
 
 #if SUPPORT_C89

@@ -8,6 +8,7 @@ Unreleased, experimental changes
     The code now conforms to RFC 8536 for early timestamps.
     Support POSIX.1-2024, which removes asctime_r and ctime_r.
     Assume POSIX.2-1992 or later for shell scripts.
+    SUPPORT_C89 now defaults to 1.
     Improve historical data for Portugal and possessions.
 
   Changes to data
@@ -59,6 +60,9 @@ Unreleased, experimental changes
     conform to earlier POSIX.  These functions are dangerous as they
     can overrun user buffers.  If you still need them, add
     -DSUPPORT_POSIX2008 to CFLAGS.
+
+    The SUPPORT_C89 option now defaults to 1 instead of 0, fixing a
+    POSIX-conformance bug introduced in 2023a.
 
     tzselect now assumes POSIX.2-1992 or later, as practical porting
     targets now all support this.  Also, tzselect uses some features

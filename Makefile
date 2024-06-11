@@ -1054,7 +1054,7 @@ zdump.8.txt:	zdump.8
 zic.8.txt:	zic.8
 
 $(MANTXTS):	workman.sh
-		LC_ALL=C sh workman.sh $(@.txt=) >$@.out
+		LC_ALL=C sh workman.sh $(@:.txt=) >$@.out
 		mv $@.out $@
 
 # Set file timestamps deterministically if possible,

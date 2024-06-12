@@ -425,7 +425,7 @@ while
     eval '
       doselect '"$quoted_continents"' \
 	"coord - I want to use geographical coordinates." \
-	"TZ - I want to specify the timezone using a POSIX.1-2017 TZ string." \
+	"TZ - I want to specify the timezone using a proleptic TZ string." \
 	"time - I know local time already." \
 	"now - Like \"time\", but configure only for timestamps from now on."
       continent=$select_result
@@ -449,16 +449,17 @@ while
 
   case $continent in
   TZ)
-    # Ask the user for a POSIX.1-2017 TZ string.  Check that it conforms.
+    # Ask the user for a proleptic TZ string.  Check that it conforms.
     check_POSIX_TZ_string='
       BEGIN {
 	tz = substr(ARGV[1], 2)
 	ARGV[1] = ""
 	tzname = ("(<[[:alnum:]+-][[:alnum:]+-][[:alnum:]+-]+>" \
 		  "|[[:alpha:]][[:alpha:]][[:alpha:]]+)")
-	time = ("(2[0-4]|[0-1]?[0-9])" \
-		"(:[0-5][0-9](:[0-5][0-9])?)?")
-	offset = "[-+]?" time
+	sign = "[-+]?"
+	hhmm = "(:[0-5][0-9](:[0-5][0-9])?)?"
+	offset = sign "(2[0-4]|[0-1]?[0-9])" hhmm
+	time = sign "(16[0-7]|(1[0-5]|[0-9]?)[0-9])" hhmm
 	mdate = "M([1-9]|1[0-2])\\.[1-5]\\.[0-6]"
 	jdate = ("((J[1-9]|[0-9]|J?[1-9][0-9]" \
 		 "|J?[1-2][0-9][0-9])|J?3[0-5][0-9]|J?36[0-5])")
@@ -479,7 +480,7 @@ while
       read tz
       $AWK "$check_POSIX_TZ_string" ="$tz"
     do
-      say >&2 "'$tz' is not a conforming POSIX.1-2017 timezone string."
+      say >&2 "'$tz' is not a conforming POSIX proleptic TZ string."
     done
     TZ_for_date=$tz;;
   *)

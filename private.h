@@ -996,8 +996,9 @@ enum {
 
 /* How many years to generate (in zic.c) or search through (in localtime.c).
    This is two years larger than the obvious 400, to avoid edge cases.
-   E.g., suppose a non-POSIX.1-2017 rule applies from 2012 on with transitions
-   in March and September, plus one-off transitions in November 2013.
+   E.g., suppose a rule applies from 2012 on with transitions
+   in March and September, plus one-off transitions in November 2013,
+   and suppose the rule cannot be expressed as a proleptic TZ string.
    If zic looked only at the last 400 years, it would set max_year=2413,
    with the intent that the 400 years 2014 through 2413 will be repeated.
    The last transition listed in the tzfile would be in 2413-09,

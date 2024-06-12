@@ -231,7 +231,7 @@ LDLIBS=
 #	where LDLIBS also needs to contain -lintl on some hosts;
 #	-DHAVE_GETTEXT=0 to avoid using gettext
 #  -DHAVE_INCOMPATIBLE_CTIME_R if your system's time.h declares
-#	ctime_r and asctime_r incompatibly with POSIX.1-2017
+#	ctime_r and asctime_r incompatibly with POSIX.1-2017 and earlier
 #	(Solaris when _POSIX_PTHREAD_SEMANTICS is not defined).
 #  -DHAVE_INTTYPES_H=0 if <inttypes.h> does not work*+
 #  -DHAVE_LINK=0 if your system lacks a link function
@@ -279,7 +279,7 @@ LDLIBS=
 #  -DTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
 #	the default is system-supplied, typically "/usr/lib/locale"
 #  -DTZDEFRULESTRING=\",date/time,date/time\" to default to the specified
-#	DST transitions for POSIX.1-2017-style TZ strings lacking them,
+#	DST transitions for proleptic format TZ strings lacking them,
 #	in the usual case where POSIXRULES is '-'.  If not specified,
 #	TZDEFRULESTRING defaults to US rules for future DST transitions.
 #	This mishandles some past timestamps, as US DST rules have changed.
@@ -347,9 +347,8 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 \
 # Similarly, if your system has a "zone abbreviation" field, define
 #	-DTM_ZONE=tm_zone
 # and define NO_TM_ZONE to suppress any guessing.
-# Although these two fields are not required by POSIX.1-2017,
-# POSIX 202x/D4 requires them and they are widely available
-# on GNU/Linux and BSD systems.
+# Although POSIX.1-2024 requires these fields and they are widely available
+# on GNU/Linux and BSD systems, some older systems lack them.
 #
 # The next batch of options control support for external variables
 # exported by tzcode.  In practice these variables are less useful
@@ -434,7 +433,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 \
 
 # The name of a POSIX-like library archiver, its flags, C compiler,
 # linker flags, and 'make' utility.  Ordinarily the defaults suffice.
-# The commented-out values are the defaults specified by POSIX.1-202x/D4.
+# The commented-out values are the defaults specified by POSIX.1-2024.
 #AR = ar
 #ARFLAGS = -rv
 #CC = c17

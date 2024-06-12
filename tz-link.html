@@ -112,9 +112,9 @@ eastern time but with different <abbr>DST</abbr> rules in 1975;
 and other entries represent smaller regions like Starke County,
 Indiana, which switched from central to eastern time in 1991
 and switched back in 2006.
-To use the database on an extended <a
+To use the database on a <a
 href="https://en.wikipedia.org/wiki/POSIX"><abbr
-title="Portable Operating System Interface">POSIX</abbr>.1-2017</a>
+title="Portable Operating System Interface">POSIX</abbr>.1-2024</a>
 implementation set the <code><abbr>TZ</abbr></code>
 environment variable to the location's full name,
 e.g., <code><abbr>TZ</abbr>="America/New_York"</code>.</p>
@@ -619,11 +619,11 @@ License.</li>
 <a href="https://github.com/nayarsystems/posix_tz_db"><code>posix_tz_db</code>
 package</a> contains Python code
 to generate <abbr>CSV</abbr> and <abbr>JSON</abbr> tables that map
-<code><abbr>tz</abbr></code> settings to POSIX.1-2017-like approximations.
+<code><abbr>tz</abbr></code> settings to proleptic TZ approximations.
 For example, it maps <code>"Africa/Cairo"</code>
 to <code>"EET-2EEST,M4.5.5/0,M10.5.4/24"</code>,
 an approximation valid for Cairo timestamps from 2023 on.
-This can help porting to platforms that support only POSIX.1-2017.
+This can help porting to platforms that support only proleptic TZ.
 The package is freely available under the MIT license.</li>
 <li><a href="https://github.com/derickr/timelib">Timelib</a> is a C
 library that reads <abbr>TZif</abbr> files and converts
@@ -1187,8 +1187,8 @@ unfortunately some of these abbreviations were merely the database maintainers'
 inventions, and these have been removed when possible.</li>
 <li>Numeric time zone abbreviations typically count hours east of
 <abbr>UT</abbr>, e.g., +09 for Japan and
-&minus;10 for Hawaii. However, the <abbr>POSIX</abbr>
-<code><abbr>TZ</abbr></code> environment variable uses the opposite convention.
+&minus;10 for Hawaii. However, <abbr>POSIX</abbr> proleptic
+<code><abbr>TZ</abbr></code> settings use the opposite convention.
 For example, one might use <code><abbr>TZ</abbr>="<abbr
 title="Japan Standard Time">JST</abbr>-9"</code> and
 <code><abbr>TZ</abbr>="<abbr title="Hawaii Standard Time">HST</abbr>10"</code>

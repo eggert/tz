@@ -76,6 +76,10 @@ Unreleased, experimental changes
     maintenance.  To build on Solaris 10, the only extant system still
     defaulting to pre-POSIX, prepend /usr/xpg4/bin to PATH.
 
+  Changes to documentation
+
+    The documentation now reflects POSIX.1-2024.
+
 
 Release 2024a - 2024-02-01 09:28:56 -0800
 

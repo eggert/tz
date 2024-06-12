@@ -165,7 +165,7 @@ describes when the change back happens.  Each
 .I time
 field describes when, in current local time, the change to the other
 time is made.
-As an extension to POSIX.1-2017, daylight saving is assumed to be in effect
+Daylight saving is assumed to be in effect
 all year if it begins January 1 at 00:00 and ends December 31 at
 24:00 plus the difference between daylight saving and standard time,
 leaving no room for standard time in the calendar.
@@ -212,11 +212,7 @@ The
 .I time
 has the same format as
 .I offset
-except that POSIX.1-2017 does not allow a leading sign (\c
-.q "\*-"
-or
-.q "+" ).
-As an extension to POSIX.1-2017, the hours part of
+except that the hours part of
 .I time
 can range from \-167 through 167; this allows for unusual rules such
 as
@@ -229,8 +225,7 @@ is not given, is
 .LP
 Here are some examples of
 .I TZ
-values that directly specify the timezone; they use some of the
-extensions to POSIX.1-2017.
+values that directly specify the timezone.
 .TP
 .B EST5
 stands for US Eastern Standard

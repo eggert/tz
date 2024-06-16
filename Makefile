@@ -373,7 +373,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 \
 # # to the "CFLAGS=" line; "timezone" and "daylight" are inspired by Unix
 # # Systems Group code and are required by POSIX.1-2008 and later (with XSI),
 # # although their contents are unspecified if you use a geographical TZ
-# # and the variables are planned to be rmeoved in a future edition of POSIX.
+# # and the variables are planned to be removed in a future edition of POSIX.
 # # If not defined, the code attempts to guess USG_COMPAT from other macros.
 # #
 # # To support the external variable "altzone", add

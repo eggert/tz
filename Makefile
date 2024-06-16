@@ -358,7 +358,9 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 \
 # #	-DHAVE_TZNAME=0 # do not support "tzname"
 # #	-DHAVE_TZNAME=1 # support "tzname", which is defined by system library
 # #	-DHAVE_TZNAME=2 # support and define "tzname"
-# # to the "CFLAGS=" line.  "tzname" is required by POSIX.1-1988 and later.
+# # to the "CFLAGS=" line.  Although "tzname" is required by POSIX.1-1988
+# # and later, its contents are unspecified if you use a geographical TZ
+# # and the variable is planned to be removed in a future POSIX edition.
 # # If not defined, the code attempts to guess HAVE_TZNAME from other macros.
 # # Warning: unless time_tz is also defined, HAVE_TZNAME=1 can cause
 # # crashes when combined with some platforms' standard libraries,
@@ -369,7 +371,9 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 \
 # #	-DUSG_COMPAT=1 # support, and variables are defined by system library
 # #	-DUSG_COMPAT=2 # support and define variables
 # # to the "CFLAGS=" line; "timezone" and "daylight" are inspired by Unix
-# # Systems Group code and are required by POSIX.1-2008 and later (with XSI).
+# # Systems Group code and are required by POSIX.1-2008 and later (with XSI),
+# # although their contents are unspecified if you use a geographical TZ
+# # and the variables are planned to be rmeoved in a future edition of POSIX.
 # # If not defined, the code attempts to guess USG_COMPAT from other macros.
 # #
 # # To support the external variable "altzone", add

@@ -398,7 +398,7 @@ also behaves as if
 were called.
 This is for compatibility with older platforms, as required by POSIX;
 it is not needed for
-.BR tzset 's
+.BR strftime 's
 own use.
 .SH "RETURN VALUE"
 If the conversion is successful,
@@ -428,11 +428,11 @@ conversion and the number of seconds since the Epoch cannot be represented
 in a
 .c time_t .
 .SH SEE ALSO
-date(1),
-getenv(3),
-newctime(3),
-newtzset(3),
-time(2),
-tzfile(5)
+.BR date (1),
+.BR getenv (3),
+.BR newctime (3),
+.BR newtzset (3),
+.BR time (2),
+.BR tzfile (5).
 .SH BUGS
 There is no conversion specification for the phase of the moon.

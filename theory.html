@@ -381,7 +381,7 @@ and no great weight should be attached to whether a link
 is defined in <code>backward</code> or in some other file.
 The source file <code>etcetera</code> defines names that may be useful
 on platforms that do not support proleptic <code>TZ</code> strings
-like <code><+08>-8</code>;
+like <code>&lt;+08&gt;-8</code>;
 no other source file other than <code>backward</code>
 contains links to its zones.
 One of <code>etcetera</code>'s names is <code>Etc/UTC</code>,
@@ -892,7 +892,7 @@ environment variable <code>TZ</code>, which can have two forms:
     civil time near that location, which can have more than
     one standard time and more than one set of daylight saving rules,
     to record timekeeping practice more accurately.
-    These names are defined by the <code><abbr>tz</abbr></code> database</a>.
+    These names are defined by the <code><abbr>tz</abbr></code> database.
   </li>
 </ul>
 
@@ -1028,7 +1028,7 @@ POSIX.1-2024 extends POSIX.1-2017 in the following significant ways:
   <li>
     POSIX.1-2024 requires <code>struct tm</code>
     to have a <abbr>UT</abbr> offset member <code>tm_gmtoff</code>
-    and a time zone abbreviation member <codce>tm_zone</code>.
+    and a time zone abbreviation member <code>tm_zone</code>.
     Earlier POSIX editions lack this requirement.
   </li>
   <li>

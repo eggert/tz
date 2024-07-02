@@ -346,10 +346,8 @@ Zone	Africa/Lome	0:04:52 -	LMT	1893
 
 # Angola
 #
-# From Paul Eggert (2018-02-16):
-# Shanks gives 1911-05-26 for the transition to WAT,
-# evidently confusing the date of the Portuguese decree
-# (see Europe/Lisbon) with the date that it took effect.
+# From Tim Parenti (2024-07-01), per Paul Eggert (2018-02-16):
+# For timestamps before independence, see commentary for Europe/Lisbon.
 #
 Zone	Africa/Luanda	0:52:56	-	LMT	1892
 			0:52:04	-	LMT	1911 Dec 31 23:00u # Luanda MT?
@@ -1086,10 +1084,10 @@ Zone	Asia/Muscat	3:54:24 -	LMT	1920
 			4:00	-	+04
 
 # India
-# From Paul Eggert (2014-08-11), after a heads-up from Stephen Colebourne:
-# According to a Portuguese decree (1911-05-26)
-# https://dre.pt/pdf1sdip/1911/05/12500/23132313.pdf
-# Portuguese India switched to UT +05 on 1912-01-01.
+# From Tim Parenti (2024-07-01), per Paul Eggert (2014-08-11), after a
+# heads-up from Stephen Colebourne:
+# According to a Portuguese decree (1911-05-24), Portuguese India switched to
+# UT +05 on 1912-01-01 (see Europe/Lisbon).
 #Zone	Asia/Panaji	[not enough info to complete]
 
 # Cambodia

@@ -103,10 +103,9 @@ Zone	Africa/Algiers	0:12:12 -	LMT	1891 Mar 16
 
 # Cape Verde / Cabo Verde
 #
-# From Paul Eggert (2018-02-16):
-# Shanks gives 1907 for the transition to +02.
-# For now, ignore that and follow the 1911-05-26 Portuguese decree
-# (see Europe/Lisbon).
+# From Tim Parenti (2024-07-01), per Paul Eggert (2018-02-16):
+# For timestamps before independence, see commentary for Europe/Lisbon.
+# Shanks gives 1907 instead for the transition to -02.
 #
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone Atlantic/Cape_Verde -1:34:04 -	LMT	1912 Jan 01  2:00u # Praia
@@ -345,10 +344,8 @@ Zone	Africa/Cairo	2:05:09 -	LMT	1900 Oct
 
 # Guinea-Bissau
 #
-# From Paul Eggert (2018-02-16):
-# Shanks gives 1911-05-26 for the transition to WAT,
-# evidently confusing the date of the Portuguese decree
-# (see Europe/Lisbon) with the date that it took effect.
+# From Tim Parenti (2024-07-01), per Paul Eggert (2018-02-16):
+# For timestamps before independence, see commentary for Europe/Lisbon.
 #
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Africa/Bissau	-1:02:20 -	LMT	1912 Jan  1  1:00u
@@ -1100,6 +1097,10 @@ Zone Africa/El_Aaiun	-0:52:48 -	LMT	1934 Jan # El Aaiún
 # Rwanda
 # Zambia
 # Zimbabwe
+#
+# From Tim Parenti (2024-07-01):
+# For timestamps before Mozambique's independence, see commentary for
+# Europe/Lisbon.
 #
 # From Paul Eggert (2024-05-24):
 # The London Gazette, 1903-04-03, page 2245, says that

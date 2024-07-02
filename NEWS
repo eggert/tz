@@ -3,13 +3,34 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Improve historical data for Portugal and possessions.
     System V names are now obsolescent.
     The main data form now uses %z.
     The code now conforms to RFC 8536 for early timestamps.
     Support POSIX.1-2024, which removes asctime_r and ctime_r.
     Assume POSIX.2-1992 or later for shell scripts.
     SUPPORT_C89 now defaults to 1.
-    Improve historical data for Portugal and possessions.
+
+  Changes to past timestamps
+
+    Historical transitions for Portugal, represented by Europe/Lisbon,
+    Atlantic/Azores, and Atlantic/Madeira, have been updated based on a
+    close reading of old Portuguese legislation, replacing previous data
+    mainly originating from Whitman and Shanks & Pottenger.  These
+    changes affect a few transitions in 1917-1921, 1924, and 1940
+    throughout these regions by a few hours or days, and various
+    timestamps between 1977 and 1993 depending on the region.  In
+    particular, the Azores and Madeira did not observe DST from 1977 to
+    1981.  Additionally, the adoption of standard zonal time in former
+    Portuguese colonies have been adjusted: Africa/Maputo in 1909, and
+    Asia/Dili by 22 minutes at the start of 1912.
+    (Thanks to Tim Parenti.)
+
+  Changes to past tm_isdst flags
+
+    The period from 1966-04-03 through 1966-10-02 in Portugal is now
+    modeled as DST, to more closely reflect how contemporaneous changes
+    in law entered into force.
 
   Changes to data
 
@@ -33,9 +54,6 @@ Unreleased, experimental changes
     prone than the old "-3:00 Brazil -03/-02".  This does not change
     the represented data: the generated TZif files are unchanged.
     Rearguard form still avoids %z, to support obsolescent parsers.
-
-    Some transitions for Portugal and possessions have been changed.
-    This affects timestamps for Africa/Maputo before 1909.
 
     Asia/Almaty has been removed from zonenow.tab as it now agrees
     with Asia/Tashkent for future timestamps, due to Kazakhstan's
@@ -80,6 +98,12 @@ Unreleased, experimental changes
   Changes to documentation
 
     The documentation now reflects POSIX.1-2024.
+
+  Changes to commentary
+
+    Commentary about historical transitions in Portugal and her former
+    colonies has been expanded with links to many relevant legislation.
+    (Thanks to Tim Parenti.)
 
 
 Release 2024a - 2024-02-01 09:28:56 -0800

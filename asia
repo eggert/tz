@@ -1210,6 +1210,13 @@ Zone	Asia/Tbilisi	2:59:11 -	LMT	1880
 
 # East Timor
 
+# From Tim Parenti (2024-07-01):
+# The 1912-01-01 transition occurred at 00:00 new time, per the 1911-05-24
+# Portuguese decree (see Europe/Lisbon).  A provision in article 5(c) of the
+# decree prescribed that Timor "will keep counting time in harmony with
+# neighboring foreign colonies, [for] as long as they do not adopt the time
+# that belongs to them in [the Washington Convention] system."
+
 # See Indonesia for the 1945 transition.
 
 # From João Carrascalão, brother of the former governor of East Timor, in
@@ -1233,7 +1240,7 @@ Zone	Asia/Tbilisi	2:59:11 -	LMT	1880
 # midnight on Saturday, September 16.
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone	Asia/Dili	8:22:20 -	LMT	1912 Jan  1
+Zone	Asia/Dili	8:22:20 -	LMT	1911 Dec 31 16:00u
 			8:00	-	%z	1942 Feb 21 23:00
 			9:00	-	%z	1976 May  3
 			8:00	-	%z	2000 Sep 17  0:00

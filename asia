@@ -2904,9 +2904,37 @@ Zone	Indian/Maldives	4:54:00 -	LMT	1880 # Malé
 
 # From Arthur David Olson (2008-05-19):
 # Assume that Choibalsan is indeed offset by 8:00.
-# XXX--in the absence of better information, assume that transition
-# was at the start of 2008-03-31 (the day of Steffen Thorsen's report);
-# this is almost surely wrong.
+
+# From Heitor David Pinto (2024-06-23):
+# Sources about time zones in Mongolia seem to list one of two conflicting
+# configurations.  The first configuration, mentioned in a comment to the TZ
+# database in 1999, citing a Mongolian government website, lists the provinces
+# of Bayan-Ölgii, Khovd and Uvs in UTC+7, and the rest of the country in
+# UTC+8.  The second configuration, mentioned in a comment to the database in
+# 2001, lists Bayan-Ölgii, Khovd, Uvs, Govi-Altai and Zavkhan in UTC+7, Dornod
+# and Sükhbaatar in UTC+9, and the rest of the country in UTC+8.
+#
+# The first configuration is still mentioned by several Mongolian travel
+# agencies:
+# https://www.adventurerider.mn/en/page/about_mongolia
+# http://www.naturetours.mn/nt/mongolia.php
+# https://www.newjuulchin.mn/web/content/7506?unique=fa24a0f6e96e022a3578ee5195ac879638c734ce
+#
+# It also matches these flight schedules in 2013:
+# http://web.archive.org/web/20130722023600/https://www.hunnuair.com/en/timetabled
+# The flight times imply that the airports of Uliastai (Zavkhan), Choibalsan
+# (Dornod) and Altai (Govi-Altai) are in the same time zone as Ulaanbaatar,
+# and Khovd is one hour behind....
+#
+# The second configuration was mentioned by an official of the Mongolian
+# standards agency in an interview in 2014: https://ikon.mn/n/9v6
+# And it's still listed by the Mongolian aviation agency:
+# https://ais.mn/files/aip/eAIP/2023-12-25/html/eSUP/ZM-eSUP-23-04-en-MN.html
+#
+# ... I believe that the first configuration is what is actually observed in
+# Mongolia and has been so all along, at least since 1999.  The second
+# configuration closely matches the ideal time zone boundaries at 97.5° E and
+# 112.5° E but it doesn't seem to be used in practice.
 
 # From Ganbold Tsagaankhuu (2015-03-10):
 # It seems like yesterday Mongolian Government meeting has concluded to use
@@ -2950,13 +2978,6 @@ Zone	Asia/Hovd	6:06:36 -	LMT	1905 Aug
 # Ulaanbaatar, a.k.a. Ulan Bataar, Ulan Bator, Urga
 Zone	Asia/Ulaanbaatar 7:07:32 -	LMT	1905 Aug
 			7:00	-	%z	1978
-			8:00	Mongol	%z
-# Choibalsan, a.k.a. Bajan Tümen, Bajan Tumen, Chojbalsan,
-# Choybalsan, Sanbejse, Tchoibalsan
-Zone	Asia/Choibalsan	7:38:00 -	LMT	1905 Aug
-			7:00	-	%z	1978
-			8:00	-	%z	1983 Apr
-			9:00	Mongol	%z	2008 Mar 31
 			8:00	Mongol	%z
 
 # Nepal

@@ -3,7 +3,7 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
-    Improve historical data for Portugal and possessions.
+    Improve historical data for Mongolia, Portugal and possessions.
     System V names are now obsolescent.
     The main data form now uses %z.
     The code now conforms to RFC 8536 for early timestamps.
@@ -12,6 +12,11 @@ Unreleased, experimental changes
     SUPPORT_C89 now defaults to 1.
 
   Changes to past timestamps
+
+    Asia/Choibalsan is now an alias for Asia/Ulaanbaatar rather than
+    being a separate Zone with differing behavior before April 2008.
+    This seems better given our wildly conflicting information about
+    Mongolia's time zone history.  (Thanks to Heitor David Pinto.)
 
     Historical transitions for Portugal, represented by Europe/Lisbon,
     Atlantic/Azores, and Atlantic/Madeira, have been updated based on a

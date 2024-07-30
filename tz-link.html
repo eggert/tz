@@ -85,6 +85,7 @@ title="Berkeley Software Distribution">BSD</abbr></a>,
 <a href="https://cygwin.com">Cygwin</a>,
 <a href="https://mariadb.org">MariaDB</a>,
 <a href="https://en.wikipedia.org/wiki/MINIX">MINIX</a>,
+<a href="https://musl.libc.org">musl libc</a>,
 <a href="https://www.mysql.com">MySQL</a>,
 <a href="https://en.wikipedia.org/wiki/WebOS"><abbr
 title="Web Operating System">webOS</abbr></a>,
@@ -205,7 +206,7 @@ location.</p>
 <p>
 The <code><abbr>tz</abbr></code> code and data
 are by no means authoritative. If you find errors, please
-send changes to <a href="mailto:tz@iana.org"><code>tz@iana.org</code></a>,
+email changes to <a href="mailto:tz@iana.org"><code>tz@iana.org</code></a>,
 the time zone mailing list. You can also <a
 href="https://mm.icann.org/mailman/listinfo/tz">subscribe</a> to it
 and browse the <a
@@ -1129,7 +1130,13 @@ discontinuous adjustments be made to UTC for at least a century.
 The World Radiocommunication Conference <a
 href="https://www.itu.int/dms_pub/itu-r/opb/act/R-ACT-WRC.15-2023-PDF-E.pdf">resolved
 in 2023</a> to cooperate with this process.
-However, there is still no consensus on how exactly to get rid of them.
+<a href="https://www.preprints.org/manuscript/202406.0043/v1">A proposal
+to change the leap-second adjustments to Coordinated Universal Time</a>
+(doi:<a href="https://doi.org/10.1088/1681-7575/ad6266">10.1088/1681-7575/ad6266</a>)
+would replace leap seconds with 13-second leap smears occurring once per
+decade until 2100, with leap smears after that gradually increasing in size.
+However, there is still no consensus on whether this is the best way
+to replace leap seconds.
 </li>
 </ul>
 </section>

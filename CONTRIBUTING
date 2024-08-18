@@ -23,10 +23,10 @@ such as renaming, adding or removing zones, please read
 "Theory and pragmatics of the tz code and data"
 <https://www.iana.org/time-zones/repository/theory.html>.
 It is also good to browse the mailing list archives
-<https://mm.icann.org/pipermail/tz/> for examples of patches that tend
-to work well.  Additions to data should contain commentary citing
-reliable sources as justification.  Citations should use "https:" URLs
-if available.
+<https://lists.iana.org/hyperkitty/list/tz@iana.org/>
+for examples of patches that tend to work well.
+Changes should contain commentary citing reliable sources.
+Citations should use "https:" URLs if available.
 
 For changes that fix sensitive security-related bugs, please see the
 distribution's 'SECURITY' file.

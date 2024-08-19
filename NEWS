@@ -3,7 +3,7 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
-    Improve historical data for Mongolia, Portugal and possessions.
+    Improve historical data for Mexico, Mongolia, and Portugal.
     System V names are now obsolescent.
     The main data form now uses %z.
     The code now conforms to RFC 8536 for early timestamps.
@@ -17,6 +17,15 @@ Unreleased, experimental changes
     being a separate Zone with differing behavior before April 2008.
     This seems better given our wildly conflicting information about
     Mongolia's time zone history.  (Thanks to Heitor David Pinto.)
+
+    Historical transitions for Mexico have been updated based on
+    official Mexican decrees.  The affected timestamps occur during
+    the years 1921-1927, 1931, 1945, 1949-1970, and 1981-1997.
+    The affected zones are America/Bahia_Banderas, America/Cancun,
+    America/Chihuahua, America/Ciudad_Juarez, America/Hermosillo,
+    America/Mazatlan, America/Merida, America/Mexico_City,
+    America/Monterrey, America/Ojinaga, and America/Tijuana.
+    (Thanks to Heitor David Pinto.)
 
     Historical transitions for Portugal, represented by Europe/Lisbon,
     Atlantic/Azores, and Atlantic/Madeira, have been updated based on a

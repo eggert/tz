@@ -1,5 +1,21 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Briefly:
+    Improve pre-1991 data for the Philippines.
+
+  Changes to past timestamps
+
+    Correct timestamps for the Philippines before 1900, and from 1937
+    through 1990.  (Thanks to P Chan for the heads-up and citations.)
+    This includes adjusting local mean time before 1899; fixing
+    transitions in September 1899, January 1937, and June 1954; adding
+    transitions in December 1941, November 1945, March and September
+    1977, and May and July 1990; and removing incorrect transitions in
+    March and September 1978.
+
+
 Release 2024b - 2024-09-04 12:27:47 -0700
 
   Briefly:

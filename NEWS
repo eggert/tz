@@ -12,7 +12,7 @@ Unreleased, experimental changes
     transition on 2024-10-06, so it is now permanently at -03.
     (Thanks to Heitor David Pinto and Even Scharning.)
     This affects timestamps starting 2025-03-22, as well as the
-    obsolescent tm_isdst flags starting 2024-10-06.
+    obsolescent tm_isdst flags starting 2024-10-15.
 
   Changes to past timestamps
 

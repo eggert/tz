@@ -51,6 +51,7 @@
 #endif
 
 #if __STDC_VERSION__ < 202311
+# undef static_assert
 # define static_assert(cond) extern int static_assert_check[(cond) ? 1 : -1]
 #endif
 

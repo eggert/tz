@@ -1201,12 +1201,15 @@ The vestigial <abbr>API</abbr>s are:
     The <code>tm_isdst</code> member is almost never needed and most of
     its uses should be discouraged in favor of the abovementioned
     <abbr>API</abbr>s.
+    It was intended as an index into the <code>tzname</code> variable,
+    but as mentioned previously that usage is obsolete.
     Although it can still be used in arguments to
     <code>mktime</code> to disambiguate timestamps near
     a <abbr>DST</abbr> transition when the clock jumps back on
     platforms lacking <code>tm_gmtoff</code>, this
-    disambiguation does not work when standard time itself jumps back,
-    which can occur when a location changes to a time zone with a
+    disambiguation works only for proleptic <code>TZ</code> strings;
+    it does not work in general for geographical timezones,
+    such as when a location changes to a time zone with a
     lesser <abbr>UT</abbr> offset.
   </li>
 </ul>
@@ -1223,8 +1226,8 @@ The vestigial <abbr>API</abbr>s are:
     Programs that in the past used the <code>timezone</code> function
     may now examine <code>localtime(&amp;clock)-&gt;tm_zone</code>
     (if <code>TM_ZONE</code> is defined) or
-    <code>tzname[localtime(&amp;clock)-&gt;tm_isdst]</code>
-    (if <code>HAVE_TZNAME</code> is nonzero) to learn the correct time
+    use <code>strftime</code> with a <code>%Z</code> conversion specification
+    to learn the correct time
     zone abbreviation to use.
   </li>
   <li>

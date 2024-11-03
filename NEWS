@@ -24,6 +24,10 @@ Unreleased, experimental changes
     1977, and May and July 1990; and removing incorrect transitions in
     March and September 1978.
 
+  Changes to documentation
+
+    Cite Internet RFC 9636, which obsoletes RFC 8536 for TZif format.
+
 
 Release 2024b - 2024-09-04 12:27:47 -0700
 

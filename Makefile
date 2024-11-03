@@ -137,7 +137,7 @@ TIME_T_ALTERNATIVES_TAIL = int_least32_t.ck uint_least32_t.ck \
   uint_least64_t.ck
 
 # What kind of TZif data files to generate.  (TZif is the binary time
-# zone data format that zic generates; see Internet RFC 8536.)
+# zone data format that zic generates; see Internet RFC 9636.)
 # If you want only POSIX time, with time values interpreted as
 # seconds since the epoch (not counting leap seconds), use
 #	REDO=		posix_only

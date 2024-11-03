@@ -17,7 +17,7 @@ The timezone information files used by
 .BR tzset (3)
 are typically found under a directory with a name like
 .IR /usr/share/zoneinfo .
-These files use the format described in Internet RFC 8536.
+These files use the format described in Internet RFC 9636.
 Each file is a sequence of 8-bit bytes.
 In a file, a binary integer is represented by a sequence of one or
 more bytes in network order (bigendian, or high-order byte first),
@@ -380,7 +380,7 @@ for permanent
 Atlantic Standard Time (\-04).
 .IP \(bu
 Some readers designed for version 2 or 3 and that require strict
-conformance to RFC 8536 reject version 4 files whose leap second
+conformance to RFC 9636 reject version 4 files whose leap second
 tables are truncated at the start or end in expiration times.
 .IP \(bu
 Some readers ignore the footer, and instead predict future
@@ -514,9 +514,9 @@ of one hour, or of 15 minutes, or of 1 minute.
 .PP
 Olson A, Eggert P, Murchison K. The Time Zone Information Format (TZif).
 2019 Feb.
-.UR https://\:datatracker.ietf.org/\:doc/\:html/\:rfc8536
-Internet RFC 8536
+.UR https://\:datatracker.ietf.org/\:doc/\:html/\:rfc9636
+Internet RFC 9636
 .UE
-.UR https://\:doi.org/\:10.17487/\:RFC8536
-doi:10.17487/RFC8536
+.UR https://\:doi.org/\:10.17487/\:RFC9636
+doi:10.17487/RFC9636
 .UE .

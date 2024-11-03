@@ -583,7 +583,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 		     correction must differ from the previous one's by 1
 		     second or less, except that the first correction can be
 		     any value; these requirements are more generous than
-		     RFC 8536, to allow future RFC extensions.  */
+		     RFC 9636, to allow future RFC extensions.  */
 		  if (! (i == 0
 			 || (prevcorr < corr
 			     ? corr == prevcorr + 1

@@ -2761,7 +2761,7 @@ writezone(const char *const name, const char *const string, char version,
 		if (thisleapexpiry) {
 		  /* Append a no-op leap correction indicating when the leap
 		     second table expires.  Although this does not conform to
-		     Internet RFC 8536, most clients seem to accept this and
+		     Internet RFC 9636, most clients seem to accept this and
 		     the plan is to amend the RFC to allow this in version 4
 		     TZif files.  */
 		  puttzcodepass(leapexpires, fp, pass);
@@ -3007,7 +3007,7 @@ stringzone(char *result, struct zone const *zpfirst, ptrdiff_t zonecount)
 
 	result[0] = '\0';
 
-	/* Internet RFC 8536 section 5.1 says to use an empty TZ string if
+	/* Internet RFC 9636 section 6.1 says to use an empty TZ string if
 	   future timestamps are truncated.  */
 	if (hi_time < max_time)
 	  return -1;

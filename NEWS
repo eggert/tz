@@ -233,7 +233,7 @@ Release 2023d - 2023-12-21 20:02:24 -0800
     changing its time zone from -01/+00 to -02/-01 at the same moment
     as the spring-forward transition.  Its clocks will therefore not
     spring forward as previously scheduled.  The time zone change
-    reverts to its common practice before 1981.
+    reverts to its common practice before 1981.  (Thanks to Jule Dabars.)
 
     Fix predictions for DST transitions in Palestine in 2072-2075,
     correcting a typo introduced in 2023a.  (Thanks to Jule Dabars.)

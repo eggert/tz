@@ -3760,7 +3760,7 @@ Rule	Phil	1954	only	-	Jun	 4	24:00	0	S
 Rule	Phil	1977	only	-	Mar	27	24:00	1:00	D
 Rule	Phil	1977	only	-	Sep	21	24:00	0	S
 Rule	Phil	1990	only	-	May	21	 0:00	1:00	D
-Rule	Phil	1990	only	-	Jul	28	24:00	0	D
+Rule	Phil	1990	only	-	Jul	28	24:00	0	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	Asia/Manila	-15:56:08 -	LMT	1844 Dec 31
 			8:03:52 -	LMT	1899 Sep  6  4:00u

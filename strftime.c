@@ -135,10 +135,6 @@ strftime(char *restrict s, size_t maxsize, char const *restrict format,
 
 	tzset();
 	p = _fmt(format, t, s, s + maxsize, &warn);
-	if (!p) {
-	  errno = EOVERFLOW;
-	  return 0;
-	}
 	if (DEPRECATE_TWO_DIGIT_YEARS
 	    && warn != IN_NONE && getenv(YEAR_2000_NAME)) {
 		fprintf(stderr, "\n");

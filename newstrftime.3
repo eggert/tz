@@ -247,11 +247,25 @@ of leap seconds.
 .TP
 %s
 is replaced by the number of seconds since the Epoch (see
-.BR ctime (3)).
+.BR ctime (3));
+on the mostly-obsolescent platforms where this number can be out of range for
+.BR time_t ,
+any out-of-range number is treated as if it were
+.BR "((time_t) \*-1)" .
 Although %s is reliable in this implementation,
 it can have glitches on other platforms (notably platforms lacking
 .IR tm_gmtoff ),
-so portable code should format a
+and POSIX also allows
+.B strftime
+to set
+.B errno
+to
+.B EINVAL
+or
+.B EOVERFLOW
+and return 0 if the number of seconds would be negative or out of range for
+.BR time_t .
+Portable code should therefore format a
 .B time_t
 value directly via something like
 .B sprintf
@@ -418,15 +432,6 @@ This function fails if:
 The total number of resulting bytes, including the terminating
 NUL character, is more than
 .IR maxsize .
-.PP
-This function may fail if:
-.TP
-[EOVERFLOW]
-The format includes an
-.c %s
-conversion and the number of seconds since the Epoch cannot be represented
-in a
-.c time_t .
 .SH SEE ALSO
 .BR date (1),
 .BR getenv (3),

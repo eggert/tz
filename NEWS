@@ -24,6 +24,11 @@ Unreleased, experimental changes
     1977, and May and July 1990; and removing incorrect transitions in
     March and September 1978.
 
+  Changes to code
+
+    strftime now outputs an invalid conversion specifier as-is,
+    instead of eliding the leading '%', which confused debugging.
+
   Changes to documentation
 
     Cite Internet RFC 9636, which obsoletes RFC 8536 for TZif format.

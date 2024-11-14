@@ -166,7 +166,12 @@ _fmt(const char *format, const struct tm *t, char *pt,
 		if (*format == '%') {
 label:
 			switch (*++format) {
-			case '\0':
+			default:
+				/* Output unknown conversion specifiers as-is,
+				   to aid debugging.  This includes '%' at
+				   format end.  This conforms to C23 section
+				   7.29.3.5 paragraph 6, which says behavior
+				   is undefined here.  */
 				--format;
 				break;
 			case 'A':
@@ -586,12 +591,6 @@ label:
 					warnp);
 				continue;
 			case '%':
-			/*
-			** X311J/88-090 (4.12.3.5): if conversion char is
-			** undefined, behavior is undefined. Print out the
-			** character itself as printf(3) also does.
-			*/
-			default:
 				break;
 			}
 		}

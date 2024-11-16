@@ -148,17 +148,6 @@ sumsize(ptrdiff_t a, ptrdiff_t b)
   size_overflow();
 }
 
-/* Return the size of of the string STR, including its trailing NUL.
-   Report an error and exit if this would exceed INDEX_MAX which means
-   pointer subtraction wouldn't work.  */
-static ptrdiff_t
-xstrsize(char const *str)
-{
-  size_t len = strlen(str);
-  if (len < INDEX_MAX)
-    return len + 1;
-  size_overflow();
-}
 
 /* Return a pointer to a newly allocated buffer of size SIZE, exiting
    on failure.  SIZE should be positive.  */
@@ -266,7 +255,7 @@ tzalloc(char const *val)
   static ptrdiff_t fakeenv0size;
   void *freeable = NULL;
   char **env = fakeenv, **initial_environ;
-  ptrdiff_t valsize = xstrsize(val);
+  ptrdiff_t valsize = strlen(val) + 1;
   if (fakeenv0size < valsize) {
     char **e = environ, **to;
     ptrdiff_t initial_nenvptrs = 1;  /* Counting the trailing NULL pointer.  */
@@ -425,7 +414,7 @@ saveabbr(char **buf, ptrdiff_t *bufalloc, struct tm const *tmp)
   if (HAVE_LOCALTIME_RZ)
     return ab;
   else {
-    ptrdiff_t absize = xstrsize(ab);
+    ptrdiff_t absize = strlen(ab) + 1;
     if (*bufalloc < absize) {
       free(*buf);
 
@@ -487,6 +476,7 @@ main(int argc, char *argv[])
 	register time_t		cuthitime;
 	time_t			now;
 	bool iflag = false;
+	size_t arglenmax = 0;
 
 	cutlotime = absolute_min_time;
 	cuthitime = absolute_max_time;
@@ -586,12 +576,14 @@ main(int argc, char *argv[])
 	  now = time(NULL);
 	  now |= !now;
 	}
-	longest = 0;
 	for (i = optind; i < argc; i++) {
 	  size_t arglen = strlen(argv[i]);
-	  if (longest < arglen)
-	    longest = min(arglen, INT_MAX);
+	  if (arglenmax < arglen)
+	    arglenmax = arglen;
 	}
+	if (!HAVE_SETENV && INDEX_MAX <= arglenmax)
+	  size_overflow();
+	longest = min(arglenmax, INT_MAX - 2);
 
 	for (i = optind; i < argc; ++i) {
 		timezone_t tz = tzalloc(argv[i]);

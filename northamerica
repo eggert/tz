@@ -27,9 +27,12 @@
 # in New York City (1869-10).  His 1870 proposal was based on Washington, DC,
 # but in 1872-05 he moved the proposed origin to Greenwich.
 
-# From Paul Eggert (2018-03-20):
+# From Paul Eggert (2024-11-18):
 # Dowd's proposal left many details unresolved, such as where to draw
-# lines between time zones.  The key individual who made time zones
+# lines between time zones.  Sandford Fleming of the Canadian Pacific Railway
+# argued for Dowd's proposal in 1876, and Cleveland Abbe of the American
+# Meteorology Society published a report in 1879 recommending four US time
+# zones based on GMT.  However, the key individual who made time zones
 # work in the US was William Frederick Allen - railway engineer,
 # managing editor of the Travelers' Guide, and secretary of the
 # General Time Convention, a railway standardization group.  Allen

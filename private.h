@@ -162,11 +162,13 @@
    setting _TIME_BITS to 64 does not work.  The code does not
    otherwise rely on _FILE_OFFSET_BITS being 64, since it does not
    use off_t or functions like 'stat' that depend on off_t.  */
-#ifndef _FILE_OFFSET_BITS
-# define _FILE_OFFSET_BITS 64
-#endif
-#if !defined _TIME_BITS && _FILE_OFFSET_BITS == 64
-# define _TIME_BITS 64
+#ifndef _TIME_BITS
+# ifndef _FILE_OFFSET_BITS
+#  define _FILE_OFFSET_BITS 64
+# endif
+# if _FILE_OFFSET_BITS == 64
+#  define _TIME_BITS 64
+# endif
 #endif
 
 /*

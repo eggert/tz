@@ -29,6 +29,46 @@ static int lock(void) { return 0; }
 static void unlock(void) { }
 #endif
 
+/* On platforms where offtime or mktime might overflow,
+   strftime.c defines USE_TIMEX_T to be true and includes us.
+   This tells us to #define time_t to an internal type timex_t that is
+   wide enough so that strftime %s never suffers from integer overflow,
+   and to #define offtime (if TM_GMTOFF is defined) or mktime (otherwise)
+   to a static function that returns the redefined time_t.
+   It also tells us to define only data and code needed
+   to support the offtime or mktime variant.  */
+#ifndef USE_TIMEX_T
+# define USE_TIMEX_T false
+#endif
+#if USE_TIMEX_T
+# undef TIME_T_MIN
+# undef TIME_T_MAX
+# undef time_t
+# define time_t timex_t
+# if MKTIME_FITS_IN(LONG_MIN, LONG_MAX)
+typedef long timex_t;
+# define TIME_T_MIN LONG_MIN
+# define TIME_T_MAX LONG_MAX
+# elif MKTIME_FITS_IN(LLONG_MIN, LLONG_MAX)
+typedef long long timex_t;
+# define TIME_T_MIN LLONG_MIN
+# define TIME_T_MAX LLONG_MAX
+# else
+typedef intmax_t timex_t;
+# define TIME_T_MIN INTMAX_MIN
+# define TIME_T_MAX INTMAX_MAX
+# endif
+
+# ifdef TM_GMTOFF
+#  undef timeoff
+#  define timeoff timex_timeoff
+#  undef EXTERN_TIMEOFF
+# else
+#  undef mktime
+#  define mktime timex_mktime
+# endif
+#endif
+
 #ifndef TZ_ABBR_CHAR_SET
 # define TZ_ABBR_CHAR_SET \
 	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 :+-._"
@@ -72,7 +112,10 @@ static void unlock(void) { }
 static const char	wildabbr[] = WILDABBR;
 
 static char const etc_utc[] = "Etc/UTC";
+
+#if defined TM_ZONE || ((!USE_TIMEX_T || !defined TM_GMTOFF) && defined TZ_NAME)
 static char const *utc = etc_utc + sizeof "Etc/" - 1;
+#endif
 
 /*
 ** The DST rules to use if TZ has no rules and we can't load TZDEFRULES.
@@ -172,8 +215,10 @@ static struct state *const gmtptr = &gmtmem;
 # define TZ_STRLEN_MAX 255
 #endif /* !defined TZ_STRLEN_MAX */
 
+#if !USE_TIMEX_T || !defined TM_GMTOFF
 static char		lcl_TZname[TZ_STRLEN_MAX + 1];
 static int		lcl_is_set;
+#endif
 
 /*
 ** Section 4.12.3 of X3.159-1989 requires that
@@ -187,22 +232,26 @@ static int		lcl_is_set;
 ** trigger latent bugs in programs.
 */
 
-#if SUPPORT_C89
+#if !USE_TIMEX_T
+
+# if SUPPORT_C89
 static struct tm	tm;
 #endif
 
-#if 2 <= HAVE_TZNAME + TZ_TIME_T
+# if 2 <= HAVE_TZNAME + TZ_TIME_T
 char *			tzname[2] = {
 	(char *) wildabbr,
 	(char *) wildabbr
 };
-#endif
-#if 2 <= USG_COMPAT + TZ_TIME_T
+# endif
+# if 2 <= USG_COMPAT + TZ_TIME_T
 long			timezone;
 int			daylight;
-#endif
-#if 2 <= ALTZONE + TZ_TIME_T
+# endif
+# if 2 <= ALTZONE + TZ_TIME_T
 long			altzone;
+# endif
+
 #endif
 
 /* Initialize *S to a value based on UTOFF, ISDST, and DESIGIDX.  */
@@ -271,20 +320,22 @@ detzcode64(const char *const codep)
 	return result;
 }
 
+#if !USE_TIMEX_T || !defined TM_GMTOFF
+
 static void
 update_tzname_etc(struct state const *sp, struct ttinfo const *ttisp)
 {
-#if HAVE_TZNAME
+# if HAVE_TZNAME
   tzname[ttisp->tt_isdst] = (char *) &sp->chars[ttisp->tt_desigidx];
-#endif
-#if USG_COMPAT
+# endif
+# if USG_COMPAT
   if (!ttisp->tt_isdst)
     timezone = - ttisp->tt_utoff;
-#endif
-#if ALTZONE
+# endif
+# if ALTZONE
   if (ttisp->tt_isdst)
     altzone = - ttisp->tt_utoff;
-#endif
+# endif
 }
 
 /* If STDDST_MASK indicates that SP's TYPE provides useful info,
@@ -315,18 +366,18 @@ settzname(void)
 	   When STDDST_MASK becomes zero we can stop looking.  */
 	int stddst_mask = 0;
 
-#if HAVE_TZNAME
+# if HAVE_TZNAME
 	tzname[0] = tzname[1] = (char *) (sp ? wildabbr : utc);
 	stddst_mask = 3;
-#endif
-#if USG_COMPAT
+# endif
+# if USG_COMPAT
 	timezone = 0;
 	stddst_mask = 3;
-#endif
-#if ALTZONE
+# endif
+# if ALTZONE
 	altzone = 0;
 	stddst_mask |= 2;
-#endif
+# endif
 	/*
 	** And to get the latest time zone abbreviations into tzname. . .
 	*/
@@ -336,9 +387,9 @@ settzname(void)
 	  for (i = sp->typecnt - 1; stddst_mask && 0 <= i; i--)
 	    stddst_mask = may_update_tzname_etc(stddst_mask, sp, i);
 	}
-#if USG_COMPAT
+# if USG_COMPAT
 	daylight = stddst_mask >> 1 ^ 1;
-#endif
+# endif
 }
 
 /* Replace bogus characters in time zone abbreviations.
@@ -364,6 +415,8 @@ scrub_abbrs(struct state *sp)
 
 	return 0;
 }
+
+#endif
 
 /* Input buffer for data read from a compiled tz file.  */
 union input_buffer {
@@ -1307,6 +1360,8 @@ gmtload(struct state *const sp)
 	  tzparse("UTC0", sp, NULL);
 }
 
+#if !USE_TIMEX_T || !defined TM_GMTOFF
+
 /* Initialize *SP to a value appropriate for the TZ setting NAME.
    Return 0 on success, an errno value on failure.  */
 static int
@@ -1344,10 +1399,10 @@ tzset_unlocked(void)
       ? lcl_is_set < 0
       : 0 < lcl_is_set && strcmp(lcl_TZname, name) == 0)
     return;
-#ifdef ALL_STATE
+# ifdef ALL_STATE
   if (! sp)
     lclptr = sp = malloc(sizeof *lclptr);
-#endif /* defined ALL_STATE */
+# endif
   if (sp) {
     if (zoneinit(sp, name) != 0)
       zoneinit(sp, "");
@@ -1358,6 +1413,9 @@ tzset_unlocked(void)
   lcl_is_set = lcl;
 }
 
+#endif
+
+#if !USE_TIMEX_T
 void
 tzset(void)
 {
@@ -1366,6 +1424,7 @@ tzset(void)
   tzset_unlocked();
   unlock();
 }
+#endif
 
 static void
 gmtcheck(void)
@@ -1384,7 +1443,7 @@ gmtcheck(void)
   unlock();
 }
 
-#if NETBSD_INSPIRED
+#if NETBSD_INSPIRED && !USE_TIMEX_T
 
 timezone_t
 tzalloc(char const *name)
@@ -1419,6 +1478,8 @@ tzfree(timezone_t sp)
 */
 
 #endif
+
+#if !USE_TIMEX_T || !defined TM_GMTOFF
 
 /*
 ** The easy way to behave "as if no library function calls" localtime
@@ -1474,14 +1535,14 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 					return NULL;	/* "cannot happen" */
 			result = localsub(sp, &newt, setname, tmp);
 			if (result) {
-#if defined ckd_add && defined ckd_sub
+# if defined ckd_add && defined ckd_sub
 				if (t < sp->ats[0]
 				    ? ckd_sub(&result->tm_year,
 					      result->tm_year, years)
 				    : ckd_add(&result->tm_year,
 					      result->tm_year, years))
 				  return NULL;
-#else
+# else
 				register int_fast64_t newy;
 
 				newy = result->tm_year;
@@ -1491,7 +1552,7 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 				if (! (INT_MIN <= newy && newy <= INT_MAX))
 					return NULL;
 				result->tm_year = newy;
-#endif
+# endif
 			}
 			return result;
 	}
@@ -1520,25 +1581,26 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 	result = timesub(&t, ttisp->tt_utoff, sp, tmp);
 	if (result) {
 	  result->tm_isdst = ttisp->tt_isdst;
-#ifdef TM_ZONE
+# ifdef TM_ZONE
 	  result->TM_ZONE = (char *) &sp->chars[ttisp->tt_desigidx];
-#endif /* defined TM_ZONE */
+# endif
 	  if (setname)
 	    update_tzname_etc(sp, ttisp);
 	}
 	return result;
 }
+#endif
 
-#if NETBSD_INSPIRED
+#if !USE_TIMEX_T
 
+# if NETBSD_INSPIRED
 struct tm *
 localtime_rz(struct state *restrict sp, time_t const *restrict timep,
 	     struct tm *restrict tmp)
 {
   return localsub(sp, timep, 0, tmp);
 }
-
-#endif
+# endif
 
 static struct tm *
 localtime_tzset(time_t const *timep, struct tm *tmp, bool setname)
@@ -1558,9 +1620,9 @@ localtime_tzset(time_t const *timep, struct tm *tmp, bool setname)
 struct tm *
 localtime(const time_t *timep)
 {
-#if !SUPPORT_C89
+# if !SUPPORT_C89
   static struct tm tm;
-#endif
+# endif
   return localtime_tzset(timep, &tm, true);
 }
 
@@ -1569,6 +1631,7 @@ localtime_r(const time_t *restrict timep, struct tm *restrict tmp)
 {
   return localtime_tzset(timep, tmp, false);
 }
+#endif
 
 /*
 ** gmtsub is to gmtime as localsub is to localtime.
@@ -1593,6 +1656,8 @@ gmtsub(ATTRIBUTE_MAYBE_UNUSED struct state const *sp, time_t const *timep,
 	return result;
 }
 
+#if !USE_TIMEX_T
+
 /*
 * Re-entrant version of gmtime.
 */
@@ -1607,13 +1672,13 @@ gmtime_r(time_t const *restrict timep, struct tm *restrict tmp)
 struct tm *
 gmtime(const time_t *timep)
 {
-#if !SUPPORT_C89
+# if !SUPPORT_C89
   static struct tm tm;
-#endif
+# endif
   return gmtime_r(timep, &tm);
 }
 
-#if STD_INSPIRED
+# if STD_INSPIRED
 
 /* This function is obsolescent and may disappear in future releases.
    Callers can instead use localtime_rz with a fixed-offset zone.  */
@@ -1623,12 +1688,13 @@ offtime(const time_t *timep, long offset)
 {
   gmtcheck();
 
-#if !SUPPORT_C89
+#  if !SUPPORT_C89
   static struct tm tm;
-#endif
+#  endif
   return gmtsub(gmtptr, timep, offset, &tm);
 }
 
+# endif
 #endif
 
 /*
@@ -2189,6 +2255,8 @@ time1(struct tm *const tmp,
 	return WRONG;
 }
 
+#if !defined TM_GMTOFF || !USE_TIMEX_T
+
 static time_t
 mktime_tzname(struct state *sp, struct tm *tmp, bool setname)
 {
@@ -2200,16 +2268,9 @@ mktime_tzname(struct state *sp, struct tm *tmp, bool setname)
   }
 }
 
-#if NETBSD_INSPIRED
-
-time_t
-mktime_z(struct state *restrict sp, struct tm *restrict tmp)
-{
-  return mktime_tzname(sp, tmp, false);
-}
-
-#endif
-
+# if USE_TIMEX_T
+static
+# endif
 time_t
 mktime(struct tm *tmp)
 {
@@ -2225,7 +2286,17 @@ mktime(struct tm *tmp)
   return t;
 }
 
-#if STD_INSPIRED
+#endif
+
+#if NETBSD_INSPIRED && !USE_TIMEX_T
+time_t
+mktime_z(struct state *restrict sp, struct tm *restrict tmp)
+{
+  return mktime_tzname(sp, tmp, false);
+}
+#endif
+
+#if STD_INSPIRED && !USE_TIMEX_T
 /* This function is obsolescent and may disappear in future releases.
    Callers can instead use mktime.  */
 time_t
@@ -2237,12 +2308,14 @@ timelocal(struct tm *tmp)
 }
 #endif
 
-#ifndef EXTERN_TIMEOFF
-# ifndef timeoff
-#  define timeoff my_timeoff /* Don't collide with OpenBSD 7.4 <time.h>.  */
+#if defined TM_GMTOFF || !USE_TIMEX_T
+
+# ifndef EXTERN_TIMEOFF
+#  ifndef timeoff
+#   define timeoff my_timeoff /* Don't collide with OpenBSD 7.4 <time.h>.  */
+#  endif
+#  define EXTERN_TIMEOFF static
 # endif
-# define EXTERN_TIMEOFF static
-#endif
 
 /* This function is obsolescent and may disappear in future releases.
    Callers can instead use mktime_z with a fixed-offset zone.  */
@@ -2254,7 +2327,9 @@ timeoff(struct tm *tmp, long offset)
   gmtcheck();
   return time1(tmp, gmtsub, gmtptr, offset);
 }
+#endif
 
+#if !USE_TIMEX_T
 time_t
 timegm(struct tm *tmp)
 {
@@ -2267,6 +2342,7 @@ timegm(struct tm *tmp)
     *tmp = tmcpy;
   return t;
 }
+#endif
 
 static int_fast32_t
 leapcorr(struct state const *sp, time_t t)
@@ -2287,15 +2363,16 @@ leapcorr(struct state const *sp, time_t t)
 ** XXX--is the below the right way to conditionalize??
 */
 
-#if STD_INSPIRED
+#if !USE_TIMEX_T
+# if STD_INSPIRED
 
 /* NETBSD_INSPIRED_EXTERN functions are exported to callers if
    NETBSD_INSPIRED is defined, and are private otherwise.  */
-# if NETBSD_INSPIRED
-#  define NETBSD_INSPIRED_EXTERN
-# else
-#  define NETBSD_INSPIRED_EXTERN static
-# endif
+#  if NETBSD_INSPIRED
+#   define NETBSD_INSPIRED_EXTERN
+#  else
+#   define NETBSD_INSPIRED_EXTERN static
+#  endif
 
 /*
 ** IEEE Std 1003.1 (POSIX) says that 536457599
@@ -2372,13 +2449,13 @@ posix2time(time_t t)
   return t;
 }
 
-#endif /* STD_INSPIRED */
+# endif /* STD_INSPIRED */
 
-#if TZ_TIME_T
+# if TZ_TIME_T
 
-# if !USG_COMPAT
-#  define timezone 0
-# endif
+#  if !USG_COMPAT
+#   define timezone 0
+#  endif
 
 /* Convert from the underlying system's time_t to the ersatz time_tz,
    which is called 'time_t' in this file.  Typically, this merely
@@ -2409,4 +2486,5 @@ time(time_t *p)
   return r;
 }
 
+# endif
 #endif

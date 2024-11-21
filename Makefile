@@ -255,6 +255,7 @@ LDLIBS=
 #  -DHAVE_UNISTD_H=0 if <unistd.h> does not work*
 #  -DHAVE_UTMPX_H=0 if <utmpx.h> does not work*
 #  -Dlocale_t=XXX if your system uses XXX instead of locale_t
+#  -DMKTIME_MIGHT_OVERFLOW if mktime might fail due to time_t overflow
 #  -DPORT_TO_C89 if tzcode should also run on mostly-C89 platforms+
 #	Typically it is better to use a later standard.  For example,
 #	with GCC 4.9.4 (2016), prefer '-std=gnu11' to '-DPORT_TO_C89'.
@@ -1358,7 +1359,7 @@ asctime.o:	private.h tzfile.h
 date.o:		private.h
 difftime.o:	private.h
 localtime.o:	private.h tzfile.h tzdir.h
-strftime.o:	private.h tzfile.h
+strftime.o:	localtime.c private.h tzfile.h
 zdump.o:	version.h
 zic.o:		private.h tzfile.h tzdir.h version.h
 

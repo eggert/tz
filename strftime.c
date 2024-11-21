@@ -39,6 +39,12 @@
 #include <locale.h>
 #include <stdio.h>
 
+#if MKTIME_MIGHT_OVERFLOW
+/* Do this after system includes as it redefines time_t, mktime, timeoff.  */
+# define USE_TIMEX_T true
+# include "localtime.c"
+#endif
+
 #ifndef DEPRECATE_TWO_DIGIT_YEARS
 # define DEPRECATE_TWO_DIGIT_YEARS false
 #endif
@@ -328,16 +334,17 @@ label:
 					tm.tm_mday = t->tm_mday;
 					tm.tm_mon = t->tm_mon;
 					tm.tm_year = t->tm_year;
+
+					/* Get the time_t value for TM.
+					   Native time_t, or its redefinition
+					   by localtime.c above, is wide enough
+					   so that this cannot overflow.  */
 #ifdef TM_GMTOFF
 					mkt = timeoff(&tm, t->TM_GMTOFF);
 #else
 					tm.tm_isdst = t->tm_isdst;
 					mkt = mktime(&tm);
 #endif
-					/* If mktime fails, %s expands to the
-					   value of (time_t) -1 as a failure
-					   marker; this is better in practice
-					   than strftime failing.  */
 					if (TYPE_SIGNED(time_t)) {
 					  intmax_t n = mkt;
 					  sprintf(buf, "%"PRIdMAX, n);

@@ -247,15 +247,14 @@ of leap seconds.
 .TP
 %s
 is replaced by the number of seconds since the Epoch (see
-.BR ctime (3));
-on the mostly-obsolescent platforms where this number can be out of range for
-.BR time_t ,
-any out-of-range number is treated as if it were
-.BR "((time_t) \*-1)" .
+.BR ctime (3)).
 Although %s is reliable in this implementation,
-it can have glitches on other platforms (notably platforms lacking
-.IR tm_gmtoff ),
-and POSIX also allows
+it can have glitches on other platforms
+(notably obsolescent platforms lacking
+.I tm_gmtoff
+or where
+.B time_t
+is no wider than int), and POSIX allows
 .B strftime
 to set
 .B errno

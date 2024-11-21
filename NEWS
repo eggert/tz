@@ -26,6 +26,13 @@ Unreleased, experimental changes
 
   Changes to code
 
+    strftime %s now generates the correct numeric string even when the
+    represented number does not fit into time_t.  This is better than
+    generating the numeric equivalent of (time_t) -1, as strftime did
+    in TZDB releases 96a (when %s was introduced) through 2020a and in
+    releases 2022b through 2024b.  It is also better than failing and
+    returning 0, as strftime did in releases 2020b through 2022a.
+
     strftime now outputs an invalid conversion specifier as-is,
     instead of eliding the leading '%', which confused debugging.
 

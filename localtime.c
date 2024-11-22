@@ -151,7 +151,7 @@ static struct tm *gmtsub(struct state const *, time_t const *, int_fast32_t,
 static bool increment_overflow(int *, int);
 static bool increment_overflow_time(time_t *, int_fast32_t);
 static int_fast32_t leapcorr(struct state const *, time_t);
-static bool normalize_overflow32(int_fast32_t *, int *, int);
+static bool normalize_overflow_iinntt(iinntt *, int *, int);
 static struct tm *timesub(time_t const *, int_fast32_t, struct state const *,
 			  struct tm *);
 static bool tzparse(char const *, struct state *, struct state const *);
@@ -1819,6 +1819,19 @@ increment_overflow32(int_fast32_t *const lp, int const m)
 }
 
 static bool
+increment_overflow_iinntt(iinntt *lp, int m)
+{
+#ifdef ckd_add
+  return ckd_add(lp, *lp, m);
+#else
+  if (*lp < 0 ? m < IINNTT_MIN - *lp : IINNTT_MAX - *lp < m)
+    return true;
+  *lp += m;
+  return false;
+#endif
+}
+
+static bool
 increment_overflow_time(time_t *tp, int_fast32_t j)
 {
 #ifdef ckd_add
@@ -1851,7 +1864,7 @@ normalize_overflow(int *const tensptr, int *const unitsptr, const int base)
 }
 
 static bool
-normalize_overflow32(int_fast32_t *tensptr, int *unitsptr, int base)
+normalize_overflow_iinntt(iinntt *tensptr, int *unitsptr, int base)
 {
 	register int	tensdelta;
 
@@ -1859,7 +1872,7 @@ normalize_overflow32(int_fast32_t *tensptr, int *unitsptr, int base)
 		(*unitsptr / base) :
 		(-1 - (-1 - *unitsptr) / base);
 	*unitsptr -= tensdelta * base;
-	return increment_overflow32(tensptr, tensdelta);
+	return increment_overflow_iinntt(tensptr, tensdelta);
 }
 
 static int
@@ -1910,7 +1923,7 @@ time2sub(struct tm *const tmp,
 	register int_fast32_t		li;
 	register time_t			lo;
 	register time_t			hi;
-	int_fast32_t			y;
+	iinntt y;
 	time_t				newt;
 	time_t				t;
 	struct tm			yourtm, mytm;
@@ -1928,16 +1941,16 @@ time2sub(struct tm *const tmp,
 	if (normalize_overflow(&yourtm.tm_mday, &yourtm.tm_hour, HOURSPERDAY))
 		return WRONG;
 	y = yourtm.tm_year;
-	if (normalize_overflow32(&y, &yourtm.tm_mon, MONSPERYEAR))
+	if (normalize_overflow_iinntt(&y, &yourtm.tm_mon, MONSPERYEAR))
 		return WRONG;
 	/*
 	** Turn y into an actual year number for now.
 	** It is converted back to an offset from TM_YEAR_BASE later.
 	*/
-	if (increment_overflow32(&y, TM_YEAR_BASE))
+	if (increment_overflow_iinntt(&y, TM_YEAR_BASE))
 		return WRONG;
 	while (yourtm.tm_mday <= 0) {
-		if (increment_overflow32(&y, -1))
+		if (increment_overflow_iinntt(&y, -1))
 			return WRONG;
 		li = y + (1 < yourtm.tm_mon);
 		yourtm.tm_mday += year_lengths[isleap(li)];
@@ -1945,7 +1958,7 @@ time2sub(struct tm *const tmp,
 	while (yourtm.tm_mday > DAYSPERLYEAR) {
 		li = y + (1 < yourtm.tm_mon);
 		yourtm.tm_mday -= year_lengths[isleap(li)];
-		if (increment_overflow32(&y, 1))
+		if (increment_overflow_iinntt(&y, 1))
 			return WRONG;
 	}
 	for ( ; ; ) {
@@ -1955,7 +1968,7 @@ time2sub(struct tm *const tmp,
 		yourtm.tm_mday -= i;
 		if (++yourtm.tm_mon >= MONSPERYEAR) {
 			yourtm.tm_mon = 0;
-			if (increment_overflow32(&y, 1))
+			if (increment_overflow_iinntt(&y, 1))
 				return WRONG;
 		}
 	}
@@ -1963,7 +1976,7 @@ time2sub(struct tm *const tmp,
 	if (ckd_add(&yourtm.tm_year, y, -TM_YEAR_BASE))
 	  return WRONG;
 #else
-	if (increment_overflow32(&y, -TM_YEAR_BASE))
+	if (increment_overflow_iinntt(&y, -TM_YEAR_BASE))
 		return WRONG;
 	if (! (INT_MIN <= y && y <= INT_MAX))
 		return WRONG;

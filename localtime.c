@@ -1883,6 +1883,21 @@ increment_overflow_iinntt(iinntt *lp, int m)
 }
 
 static bool
+increment_overflow_time_int(time_t *tp, int j)
+{
+#ifdef ckd_add
+  return ckd_add(tp, *tp, j);
+#else
+  if (j < 0
+      ? (TYPE_SIGNED(time_t) ? *tp < TIME_T_MIN - j : *tp <= -1 - j)
+      : TIME_T_MAX - j < *tp)
+    return true;
+  *tp += j;
+  return false;
+#endif
+}
+
+static bool
 increment_overflow_time(time_t *tp, int_fast32_t j)
 {
 #ifdef ckd_add
@@ -2155,10 +2170,8 @@ time2sub(struct tm *const tmp,
 		return WRONG;
 	}
 label:
-	newt = t + saved_seconds;
-	if ((newt < t) != (saved_seconds < 0))
+	if (increment_overflow_time_int(&t, saved_seconds))
 		return WRONG;
-	t = newt;
 	if (funcp(sp, &t, offset, tmp))
 		*okayp = true;
 	return t;

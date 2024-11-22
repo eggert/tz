@@ -1804,21 +1804,6 @@ increment_overflow(int *ip, int j)
 }
 
 static bool
-increment_overflow32(int_fast32_t *const lp, int const m)
-{
-#ifdef ckd_add
-	return ckd_add(lp, *lp, m);
-#else
-	register int_fast32_t const	l = *lp;
-
-	if ((l >= 0) ? (m > INT_FAST32_MAX - l) : (m < INT_FAST32_MIN - l))
-		return true;
-	*lp += m;
-	return false;
-#endif
-}
-
-static bool
 increment_overflow_iinntt(iinntt *lp, int m)
 {
 #ifdef ckd_add
@@ -2392,11 +2377,7 @@ posix2time(time_t t)
 #if TZ_TIME_T
 
 # if !USG_COMPAT
-#  define daylight 0
 #  define timezone 0
-# endif
-# if !ALTZONE
-#  define altzone 0
 # endif
 
 /* Convert from the underlying system's time_t to the ersatz time_tz,
@@ -2415,8 +2396,9 @@ time(time_t *p)
 {
   time_t r = sys_time(0);
   if (r != (time_t) -1) {
-    int_fast32_t offset = EPOCH_LOCAL ? (daylight ? timezone : altzone) : 0;
-    if (increment_overflow32(&offset, -EPOCH_OFFSET)
+    iinntt offset = EPOCH_LOCAL ? timezone : 0;
+    if (increment_overflow_iinntt(&offset, -EPOCH_OFFSET)
+	|| ! (INT_FAST32_MIN <= offset && offset <= INT_FAST32_MAX)
 	|| increment_overflow_time(&r, offset)) {
       errno = EOVERFLOW;
       r = -1;

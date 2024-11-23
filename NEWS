@@ -24,6 +24,11 @@ Unreleased, experimental changes
     1977, and May and July 1990; and removing incorrect transitions in
     March and September 1978.
 
+  Changes to data
+
+    Add zone*.tab lines for the Concordia and Eyre Bird Observatory
+    research stations.  (Thanks to Derick Rethans.)
+
   Changes to code
 
     strftime %s now generates the correct numeric string even when the

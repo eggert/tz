@@ -48,6 +48,7 @@ AQ	-6448-06406	Antarctica/Palmer	Palmer
 AQ	-6734-06808	Antarctica/Rothera	Rothera
 AQ	-720041+0023206	Antarctica/Troll	Troll
 AQ	-7824+10654	Antarctica/Vostok	Vostok
+AQ	-750600+1232000	Asia/Singapore	Concordia
 AR	-3436-05827	America/Argentina/Buenos_Aires	Buenos Aires (BA, CF)
 AR	-3124-06411	America/Argentina/Cordoba	most areas: CB, CC, CN, ER, FM, MN, SE, SF
 AR	-2447-06525	America/Argentina/Salta	Salta (SA, LP, NQ, RN)
@@ -74,6 +75,7 @@ AU	-3455+13835	Australia/Adelaide	South Australia
 AU	-1228+13050	Australia/Darwin	Northern Territory
 AU	-3157+11551	Australia/Perth	Western Australia (most areas)
 AU	-3143+12852	Australia/Eucla	Western Australia (Eucla)
+AU	-321447+1261806	Asia/Tokyo	Eyre Bird Observatory
 AZ	+4023+04951	Asia/Baku
 BB	+1306-05937	America/Barbados
 BD	+2343+09025	Asia/Dhaka

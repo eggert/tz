@@ -221,7 +221,7 @@ XX	+1345+10031	Asia/Bangkok	Russia; Indochina; Christmas Island
 XX	-0610+10648	Asia/Jakarta	Indonesia ("WIB")
 #
 # +08
-XX	+0117+10351	Asia/Singapore	Russia; Brunei; Malaysia; Singapore
+XX	+0117+10351	Asia/Singapore	Russia; Brunei; Malaysia; Singapore; Concordia
 #
 # +08 - AWST
 XX	-3157+11551	Australia/Perth	Western Australia ("AWST")
@@ -245,7 +245,7 @@ XX	-3143+12852	Australia/Eucla	Eucla
 XX	+5203+11328	Asia/Chita	Russia; Palau; East Timor
 #
 # +09 - JST
-XX	+353916+1394441	Asia/Tokyo	Japan ("JST")
+XX	+353916+1394441	Asia/Tokyo	Japan ("JST"); Eyre Bird Observatory
 #
 # +09 - KST
 XX	+3733+12658	Asia/Seoul	Korea ("KST")

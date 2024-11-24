@@ -41,6 +41,10 @@ Unreleased, experimental changes
     strftime now outputs an invalid conversion specifier as-is,
     instead of eliding the leading '%', which confused debugging.
 
+    mktime and timeoff no longer incorrectly fail merely because a
+    struct tm component near INT_MIN or INT_MAX overflows when a
+    lower-order component carries into it.
+
   Changes to documentation
 
     Cite Internet RFC 9636, which obsoletes RFC 8536 for TZif format.

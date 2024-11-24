@@ -212,7 +212,6 @@ static struct tm *gmtsub(struct state const *, time_t const *, int_fast32_t,
 static bool increment_overflow(int *, int);
 static bool increment_overflow_time(time_t *, int_fast32_t);
 static int_fast32_t leapcorr(struct state const *, time_t);
-static bool normalize_overflow_iinntt(iinntt *, int *, int);
 static struct tm *timesub(time_t const *, int_fast32_t, struct state const *,
 			  struct tm *);
 static bool tzparse(char const *, struct state *, struct state const *);
@@ -1888,20 +1887,7 @@ increment_overflow(int *ip, int j)
 }
 
 static bool
-increment_overflow_iinntt(iinntt *lp, int m)
-{
-#ifdef ckd_add
-  return ckd_add(lp, *lp, m);
-#else
-  if (*lp < 0 ? m < IINNTT_MIN - *lp : IINNTT_MAX - *lp < m)
-    return true;
-  *lp += m;
-  return false;
-#endif
-}
-
-static bool
-increment_overflow_time_int(time_t *tp, int j)
+increment_overflow_time_iinntt(time_t *tp, iinntt j)
 {
 #ifdef ckd_add
   return ckd_add(tp, *tp, j);
@@ -1933,30 +1919,6 @@ increment_overflow_time(time_t *tp, int_fast32_t j)
 	*tp += j;
 	return false;
 #endif
-}
-
-static bool
-normalize_overflow(int *const tensptr, int *const unitsptr, const int base)
-{
-	register int	tensdelta;
-
-	tensdelta = (*unitsptr >= 0) ?
-		(*unitsptr / base) :
-		(-1 - (-1 - *unitsptr) / base);
-	*unitsptr -= tensdelta * base;
-	return increment_overflow(tensptr, tensdelta);
-}
-
-static bool
-normalize_overflow_iinntt(iinntt *tensptr, int *unitsptr, int base)
-{
-	register int	tensdelta;
-
-	tensdelta = (*unitsptr >= 0) ?
-		(*unitsptr / base) :
-		(-1 - (-1 - *unitsptr) / base);
-	*unitsptr -= tensdelta * base;
-	return increment_overflow_iinntt(tensptr, tensdelta);
 }
 
 static int
@@ -2003,11 +1965,9 @@ time2sub(struct tm *const tmp,
 {
 	register int			dir;
 	register int			i, j;
-	register int			saved_seconds;
-	register int_fast32_t		li;
 	register time_t			lo;
 	register time_t			hi;
-	iinntt y;
+	iinntt y, mday, hour, min, saved_seconds;
 	time_t				newt;
 	time_t				t;
 	struct tm			yourtm, mytm;
@@ -2015,36 +1975,57 @@ time2sub(struct tm *const tmp,
 	*okayp = false;
 	mktmcpy(&yourtm, tmp);
 
+	min = yourtm.tm_min;
 	if (do_norm_secs) {
-		if (normalize_overflow(&yourtm.tm_min, &yourtm.tm_sec,
-			SECSPERMIN))
-				return WRONG;
+	  min += yourtm.tm_sec / SECSPERMIN;
+	  yourtm.tm_sec %= SECSPERMIN;
+	  if (yourtm.tm_sec < 0) {
+	    yourtm.tm_sec += SECSPERMIN;
+	    min--;
+	  }
 	}
-	if (normalize_overflow(&yourtm.tm_hour, &yourtm.tm_min, MINSPERHOUR))
-		return WRONG;
-	if (normalize_overflow(&yourtm.tm_mday, &yourtm.tm_hour, HOURSPERDAY))
-		return WRONG;
+
+	hour = yourtm.tm_hour;
+	hour += min / MINSPERHOUR;
+	yourtm.tm_min = min % MINSPERHOUR;
+	if (yourtm.tm_min < 0) {
+	  yourtm.tm_min += MINSPERHOUR;
+	  hour--;
+	}
+
+	mday = yourtm.tm_mday;
+	mday += hour / HOURSPERDAY;
+	yourtm.tm_hour = hour % HOURSPERDAY;
+	if (yourtm.tm_hour < 0) {
+	  yourtm.tm_hour += HOURSPERDAY;
+	  mday--;
+	}
+
 	y = yourtm.tm_year;
-	if (normalize_overflow_iinntt(&y, &yourtm.tm_mon, MONSPERYEAR))
-		return WRONG;
+	y += yourtm.tm_mon / MONSPERYEAR;
+	yourtm.tm_mon %= MONSPERYEAR;
+	if (yourtm.tm_mon < 0) {
+	  yourtm.tm_mon += MONSPERYEAR;
+	  y--;
+	}
+
 	/*
 	** Turn y into an actual year number for now.
 	** It is converted back to an offset from TM_YEAR_BASE later.
 	*/
-	if (increment_overflow_iinntt(&y, TM_YEAR_BASE))
-		return WRONG;
-	while (yourtm.tm_mday <= 0) {
-		if (increment_overflow_iinntt(&y, -1))
-			return WRONG;
-		li = y + (1 < yourtm.tm_mon);
-		yourtm.tm_mday += year_lengths[isleap(li)];
+	y += TM_YEAR_BASE;
+
+	while (mday <= 0) {
+	  iinntt li = y - (yourtm.tm_mon <= 1);
+	  mday += year_lengths[isleap(li)];
+	  y--;
 	}
-	while (yourtm.tm_mday > DAYSPERLYEAR) {
-		li = y + (1 < yourtm.tm_mon);
-		yourtm.tm_mday -= year_lengths[isleap(li)];
-		if (increment_overflow_iinntt(&y, 1))
-			return WRONG;
+	while (DAYSPERLYEAR < mday) {
+	  iinntt li = y + (1 < yourtm.tm_mon);
+	  mday -= year_lengths[isleap(li)];
+	  y++;
 	}
+	yourtm.tm_mday = mday;
 	for ( ; ; ) {
 		i = mon_lengths[isleap(y)][yourtm.tm_mon];
 		if (yourtm.tm_mday <= i)
@@ -2052,16 +2033,14 @@ time2sub(struct tm *const tmp,
 		yourtm.tm_mday -= i;
 		if (++yourtm.tm_mon >= MONSPERYEAR) {
 			yourtm.tm_mon = 0;
-			if (increment_overflow_iinntt(&y, 1))
-				return WRONG;
+			y++;
 		}
 	}
 #ifdef ckd_add
 	if (ckd_add(&yourtm.tm_year, y, -TM_YEAR_BASE))
 	  return WRONG;
 #else
-	if (increment_overflow_iinntt(&y, -TM_YEAR_BASE))
-		return WRONG;
+	y -= TM_YEAR_BASE;
 	if (! (INT_MIN <= y && y <= INT_MAX))
 		return WRONG;
 	yourtm.tm_year = y;
@@ -2077,9 +2056,8 @@ time2sub(struct tm *const tmp,
 		** not in the same minute that a leap second was deleted from,
 		** which is a safer assumption than using 58 would be.
 		*/
-		if (increment_overflow(&yourtm.tm_sec, 1 - SECSPERMIN))
-			return WRONG;
 		saved_seconds = yourtm.tm_sec;
+		saved_seconds -= SECSPERMIN - 1;
 		yourtm.tm_sec = SECSPERMIN - 1;
 	} else {
 		saved_seconds = yourtm.tm_sec;
@@ -2188,7 +2166,7 @@ time2sub(struct tm *const tmp,
 		return WRONG;
 	}
 label:
-	if (increment_overflow_time_int(&t, saved_seconds))
+	if (increment_overflow_time_iinntt(&t, saved_seconds))
 		return WRONG;
 	if (funcp(sp, &t, offset, tmp))
 		*okayp = true;
@@ -2505,9 +2483,8 @@ time(time_t *p)
   time_t r = sys_time(0);
   if (r != (time_t) -1) {
     iinntt offset = EPOCH_LOCAL ? timezone : 0;
-    if (increment_overflow_iinntt(&offset, -EPOCH_OFFSET)
-	|| ! (INT_FAST32_MIN <= offset && offset <= INT_FAST32_MAX)
-	|| increment_overflow_time(&r, offset)) {
+    if (offset < IINNTT_MIN + EPOCH_OFFSET
+	|| increment_overflow_time_iinntt(&r, offset - EPOCH_OFFSET)) {
       errno = EOVERFLOW;
       r = -1;
     }

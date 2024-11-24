@@ -29,6 +29,24 @@ static int lock(void) { return 0; }
 static void unlock(void) { }
 #endif
 
+/* A signed type wider than int, so that we can add 1900 + tm_mon/12 to tm_year
+   without overflow.  The static_assert checks that it is indeed wider
+   than int; if this fails on your platform please let us know.  */
+#if INT_MAX < LONG_MAX
+typedef long iinntt;
+# define IINNTT_MIN LONG_MIN
+# define IINNTT_MAX LONG_MAX
+#elif INT_MAX < LLONG_MAX
+typedef long long iinntt;
+# define IINNTT_MIN LLONG_MIN
+# define IINNTT_MAX LLONG_MAX
+#else
+typedef intmax_t iinntt;
+# define IINNTT_MIN INTMAX_MIN
+# define IINNTT_MAX INTMAX_MAX
+#endif
+static_assert(IINNTT_MIN < INT_MIN && INT_MAX < IINNTT_MAX);
+
 /* On platforms where offtime or mktime might overflow,
    strftime.c defines USE_TIMEX_T to be true and includes us.
    This tells us to #define time_t to an internal type timex_t that is

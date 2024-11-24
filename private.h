@@ -450,23 +450,6 @@ typedef unsigned long uintmax_t;
 
 #endif /* PORT_TO_C89 */
 
-/* A signed type wider than int, so that we can add 1900 to tm_year
-   without overflow.  */
-#if INT_MAX < LONG_MAX
-typedef long iinntt;
-# define IINNTT_MIN LONG_MIN
-# define IINNTT_MAX LONG_MAX
-#elif INT_MAX < LLONG_MAX
-typedef long long iinntt;
-# define IINNTT_MIN LLONG_MIN
-# define IINNTT_MAX LLONG_MAX
-#else
-typedef intmax_t iinntt;
-# define IINNTT_MIN INTMAX_MIN
-# define IINNTT_MAX INTMAX_MAX
-#endif
-static_assert(IINNTT_MIN < INT_MIN && INT_MAX < IINNTT_MAX);
-
 /* The maximum size of any created object, as a signed integer.
    Although the C standard does not outright prohibit larger objects,
    behavior is undefined if the result of pointer subtraction does not

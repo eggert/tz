@@ -26,8 +26,8 @@ Unreleased, experimental changes
 
   Changes to data
 
-    Add zone*.tab lines for the Concordia and Eyre Bird Observatory
-    research stations.  (Thanks to Derick Rethans.)
+    Add zone1970.tab lines for the Concordia and Eyre Bird Observatory
+    research stations.  (Thanks to Derick Rethans and Jule Dabars.)
 
   Changes to code
 

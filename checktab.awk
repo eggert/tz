@@ -78,6 +78,12 @@ BEGIN {
 		split(ccs, cca, /,/)
 		cc = cca[1]
 
+		if (tztab[tz]) {
+		  printf "%s:%d: %s: duplicate Zone from line %d\n", \
+		    zone_table, zone_NR, tz, tz2NR[tz]
+		  status = 1
+		}
+
 		# Don't complain about a special case for Crimea in zone.tab.
 		# FIXME: zone.tab should be removed, since it is obsolete.
 		# Or at least put just "XX" in its country-code column.

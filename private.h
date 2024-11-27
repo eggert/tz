@@ -946,7 +946,7 @@ static_assert(! TYPE_SIGNED(time_t) || ! SIGNED_PADDING_CHECK_NEEDED
 
 /* strftime.c sometimes needs access to timeoff if it is not already public.
    tz_private_timeoff should be used only by localtime.c and strftime.c.  */
-#if (!defined EXTERN_TIMEOFF && ! (defined USE_TIMEX_T && USE_TIMEX_T) \
+#if (!defined EXTERN_TIMEOFF \
      && defined TM_GMTOFF && (200809 < _POSIX_VERSION || ! UNINIT_TRAP))
 # ifndef timeoff
 #  define timeoff tz_private_timeoff

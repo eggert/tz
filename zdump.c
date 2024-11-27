@@ -687,7 +687,7 @@ yeartot(intmax_t y)
 				return absolute_max_time;
 			seconds = diff400 * SECSPER400YEARS;
 			years = diff400 * 400;
-                } else {
+		} else {
 			seconds = isleap(myy) ? SECSPERLYEAR : SECSPERNYEAR;
 			years = 1;
 		}

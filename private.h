@@ -263,6 +263,10 @@
 # endif
 #endif
 
+#ifndef HAVE_SNPRINTF
+# define HAVE_SNPRINTF (!PORT_TO_C89 || 199901 <= __STDC_VERSION__)
+#endif
+
 #ifndef HAVE_STRFTIME_L
 # if _POSIX_VERSION < 200809
 #  define HAVE_STRFTIME_L 0

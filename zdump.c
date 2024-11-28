@@ -14,10 +14,6 @@
 #include "private.h"
 #include <stdio.h>
 
-#ifndef HAVE_SNPRINTF
-# define HAVE_SNPRINTF (!PORT_TO_C89 || 199901 <= __STDC_VERSION__)
-#endif
-
 #ifndef HAVE_LOCALTIME_R
 # define HAVE_LOCALTIME_R 1
 #endif

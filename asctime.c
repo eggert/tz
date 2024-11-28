@@ -80,8 +80,11 @@ asctime_r(struct tm const *restrict timeptr, char *restrict buf)
 #endif
 
 	if (timeptr == NULL) {
+		strcpy(buf, "??? ??? ?? ??:??:?? ????\n");
+		/* Set errno now, since strcpy might change it in
+		   POSIX.1-2017 and earlier.  */
 		errno = EINVAL;
-		return strcpy(buf, "??? ??? ?? ??:??:?? ????\n");
+		return buf;
 	}
 	if (timeptr->tm_wday < 0 || timeptr->tm_wday >= DAYSPERWEEK)
 		wn = "???";

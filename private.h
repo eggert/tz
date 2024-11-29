@@ -88,11 +88,11 @@
 
 #if !defined HAVE_GETTEXT && defined __has_include
 # if __has_include(<libintl.h>)
-#  define HAVE_GETTEXT true
+#  define HAVE_GETTEXT 1
 # endif
 #endif
 #ifndef HAVE_GETTEXT
-# define HAVE_GETTEXT false
+# define HAVE_GETTEXT 0
 #endif
 
 #ifndef HAVE_INCOMPATIBLE_CTIME_R
@@ -125,20 +125,20 @@
 
 #if !defined HAVE_SYS_STAT_H && defined __has_include
 # if !__has_include(<sys/stat.h>)
-#  define HAVE_SYS_STAT_H false
+#  define HAVE_SYS_STAT_H 0
 # endif
 #endif
 #ifndef HAVE_SYS_STAT_H
-# define HAVE_SYS_STAT_H true
+# define HAVE_SYS_STAT_H 1
 #endif
 
 #if !defined HAVE_UNISTD_H && defined __has_include
 # if !__has_include(<unistd.h>)
-#  define HAVE_UNISTD_H false
+#  define HAVE_UNISTD_H 0
 # endif
 #endif
 #ifndef HAVE_UNISTD_H
-# define HAVE_UNISTD_H true
+# define HAVE_UNISTD_H 1
 #endif
 
 #ifndef NETBSD_INSPIRED
@@ -312,7 +312,7 @@
 ** stdint.h, even with pre-C99 compilers.
 */
 #if !defined HAVE_STDINT_H && defined __has_include
-# define HAVE_STDINT_H true /* C23 __has_include implies C99 stdint.h.  */
+# define HAVE_STDINT_H 1 /* C23 __has_include implies C99 stdint.h.  */
 #endif
 #ifndef HAVE_STDINT_H
 # define HAVE_STDINT_H \
@@ -386,7 +386,7 @@ typedef int int_fast32_t;
 # ifdef LLONG_MAX
 typedef long long intmax_t;
 #  ifndef HAVE_STRTOLL
-#   define HAVE_STRTOLL true
+#   define HAVE_STRTOLL 1
 #  endif
 #  if HAVE_STRTOLL
 #   define strtoimax strtoll
@@ -466,7 +466,7 @@ typedef unsigned long uintmax_t;
    hosts, unless compiled with -DHAVE_STDCKDINT_H=0 or with pre-C23 EDG.  */
 #if !defined HAVE_STDCKDINT_H && defined __has_include
 # if __has_include(<stdckdint.h>)
-#  define HAVE_STDCKDINT_H true
+#  define HAVE_STDCKDINT_H 1
 # endif
 #endif
 #ifdef HAVE_STDCKDINT_H
@@ -634,9 +634,9 @@ typedef unsigned long uintmax_t;
 ** typical platforms.
 */
 #if defined time_tz || EPOCH_LOCAL || EPOCH_OFFSET != 0
-# define TZ_TIME_T 1
+# define TZ_TIME_T true
 #else
-# define TZ_TIME_T 0
+# define TZ_TIME_T false
 #endif
 
 #if defined LOCALTIME_IMPLEMENTATION && TZ_TIME_T
@@ -753,9 +753,9 @@ void tzset(void);
       || defined __GLIBC__ || defined __tm_zone /* musl */ \
       || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
       || (defined __APPLE__ && defined __MACH__))
-#  define HAVE_DECL_TIMEGM true
+#  define HAVE_DECL_TIMEGM 1
 # else
-#  define HAVE_DECL_TIMEGM false
+#  define HAVE_DECL_TIMEGM 0
 # endif
 #endif
 #if !HAVE_DECL_TIMEGM && !defined timegm

@@ -286,7 +286,7 @@ LDLIBS=
 #	This mishandles some past timestamps, as US DST rules have changed.
 #	It also mishandles settings like TZ='EET-2EEST' for eastern Europe,
 #	as Europe and US DST rules differ.
-#  -DTZNAME_MAXIMUM=N to limit time zone abbreviations to N bytes (default 255)
+#  -DTZNAME_MAXIMUM=N to limit time zone abbreviations to N bytes (default 254)
 #  -DUNINIT_TRAP if reading uninitialized storage can cause problems
 #	other than simply getting garbage data
 #  -DUSE_LTZ=0 to build zdump with the system time zone library

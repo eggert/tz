@@ -45,6 +45,16 @@ Unreleased, experimental changes
     struct tm component near INT_MIN or INT_MAX overflows when a
     lower-order component carries into it.
 
+    TZNAME_MAXIMUM, the maximum number of bytes in a proleptic TZ
+    string's time zone abbreviation, now defaults to 254 not 255.
+    This helps reduce the size of internal state from 25480 to 21384
+    on common platforms.  This change should not be a problem, as
+    nobody uses such long "abbreviations" and the longstanding tzcode
+    maximum was 16 until release 2023a.  For those who prefer no
+    arbitrary limits, you can now specify TZNAME_MAXIMUM values up to
+    PTRDIFF_MAX, a limit forced by C anyway; formerly tzcode silently
+    misbehaved unless TZNAME_MAXIMUM was less than INT_MAX.
+
   Changes to documentation
 
     Cite Internet RFC 9636, which obsoletes RFC 8536 for TZif format.

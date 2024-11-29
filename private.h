@@ -382,6 +382,10 @@ typedef int int_fast32_t;
 # endif
 #endif
 
+#ifndef INT_LEAST32_MAX
+typedef int_fast32_t int_least32_t;
+#endif
+
 #ifndef INTMAX_MAX
 # ifdef LLONG_MAX
 typedef long long intmax_t;

@@ -914,13 +914,10 @@ showextrema(timezone_t tz, char *zone, time_t lo, struct tm *lotmp, time_t hi)
   }
 }
 
-#if HAVE_SNPRINTF
-# define my_snprintf snprintf
-#else
+/* On pre-C99 platforms, a snprintf substitute good enough for us.  */
+#if !HAVE_SNPRINTF
 # include <stdarg.h>
-
-/* A substitute for snprintf that is good enough for zdump.  */
-static int
+ATTRIBUTE_FORMAT((printf, 3, 4)) static int
 my_snprintf(char *s, size_t size, char const *format, ...)
 {
   int n;
@@ -948,6 +945,7 @@ my_snprintf(char *s, size_t size, char const *format, ...)
   va_end(args);
   return n;
 }
+# define snprintf my_snprintf
 #endif
 
 /* Store into BUF, of size SIZE, a formatted local time taken from *TM.
@@ -962,10 +960,10 @@ format_local_time(char *buf, ptrdiff_t size, struct tm const *tm)
 {
   int ss = tm->tm_sec, mm = tm->tm_min, hh = tm->tm_hour;
   return (ss
-	  ? my_snprintf(buf, size, "%02d:%02d:%02d", hh, mm, ss)
+	  ? snprintf(buf, size, "%02d:%02d:%02d", hh, mm, ss)
 	  : mm
-	  ? my_snprintf(buf, size, "%02d:%02d", hh, mm)
-	  : my_snprintf(buf, size, "%02d", hh));
+	  ? snprintf(buf, size, "%02d:%02d", hh, mm)
+	  : snprintf(buf, size, "%02d", hh));
 }
 
 /* Store into BUF, of size SIZE, a formatted UT offset for the
@@ -1000,10 +998,10 @@ format_utc_offset(char *buf, ptrdiff_t size, struct tm const *tm, time_t t)
   mm = off / 60 % 60;
   hh = off / 60 / 60;
   return (ss || 100 <= hh
-	  ? my_snprintf(buf, size, "%c%02ld%02d%02d", sign, hh, mm, ss)
+	  ? snprintf(buf, size, "%c%02ld%02d%02d", sign, hh, mm, ss)
 	  : mm
-	  ? my_snprintf(buf, size, "%c%02ld%02d", sign, hh, mm)
-	  : my_snprintf(buf, size, "%c%02ld", sign, hh));
+	  ? snprintf(buf, size, "%c%02ld%02d", sign, hh, mm)
+	  : snprintf(buf, size, "%c%02ld", sign, hh));
 }
 
 /* Store into BUF (of size SIZE) a quoted string representation of P.
@@ -1106,7 +1104,7 @@ istrftime(char *buf, ptrdiff_t size, char const *time_fmt,
 	    for (abp = ab; is_alpha(*abp); abp++)
 	      continue;
 	    len = (!*abp && *ab
-		   ? my_snprintf(b, s, "%s", ab)
+		   ? snprintf(b, s, "%s", ab)
 		   : format_quoted_string(b, s, ab));
 	    if (s <= len)
 	      return false;
@@ -1114,7 +1112,7 @@ istrftime(char *buf, ptrdiff_t size, char const *time_fmt,
 	  }
 	  formatted_len
 	    = (tm->tm_isdst
-	       ? my_snprintf(b, s, &"\t\t%d"[show_abbr], tm->tm_isdst)
+	       ? snprintf(b, s, &"\t\t%d"[show_abbr], tm->tm_isdst)
 	       : 0);
 	}
 	break;

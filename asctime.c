@@ -40,6 +40,26 @@ static char buf_asctime[2*3 + 5*INT_STRLEN_MAXIMUM(int) + 7 + 2 + 1 + 1];
 static char buf_ctime[sizeof buf_asctime];
 #endif
 
+/* On pre-C99 platforms, a snprintf substitute good enough for us.  */
+#if !HAVE_SNPRINTF
+# include <stdarg.h>
+ATTRIBUTE_FORMAT((printf, 3, 4)) static int
+my_snprintf(char *s, size_t size, char const *format, ...)
+{
+  int n;
+  va_list args;
+  char stackbuf[sizeof buf_asctime];
+  va_start(args, format);
+  n = vsprintf(stackbuf, format, args);
+  va_end (args);
+  if (0 <= n && n < size)
+    memcpy (s, stackbuf, n + 1);
+  return n;
+}
+# undef snprintf
+# define snprintf my_snprintf
+#endif
+
 /* Publish asctime_r and ctime_r only when supporting older POSIX.  */
 #if SUPPORT_POSIX2008
 # define asctime_static
@@ -68,16 +88,6 @@ asctime_r(struct tm const *restrict timeptr, char *restrict buf)
 	size_t bufsize = ((buf == buf_ctime
 			   || (!SUPPORT_C89 && buf == buf_asctime))
 			  ? sizeof buf_asctime : STD_ASCTIME_BUF_SIZE);
-#if HAVE_SNPRINTF
-	char *result = buf;
-# define SNPRINTF snprintf
-# define SNPRINTFBUF(buf, bufsize) buf, bufsize
-#else
-	char stackbuf[sizeof buf_asctime];
-	char *result = stackbuf;
-# define SNPRINTF sprintf
-# define SNPRINTFBUF(buf, bufsize) buf
-#endif
 
 	if (timeptr == NULL) {
 		strcpy(buf, "??? ??? ?? ??:??:?? ????\n");
@@ -113,25 +123,21 @@ asctime_r(struct tm const *restrict timeptr, char *restrict buf)
 	   Also, avoid overflow when formatting tm_year + TM_YEAR_BASE.  */
 
 	if ((year <= INT_MAX - TM_YEAR_BASE
-	     ? SNPRINTF (SNPRINTFBUF(result, bufsize),
+	     ? snprintf (buf, bufsize,
 			 ((-999 - TM_YEAR_BASE <= year
 			   && year <= 9999 - TM_YEAR_BASE)
 			  ? "%s %s%3d %.2d:%.2d:%.2d %04d\n"
 			  : "%s %s%3d %.2d:%.2d:%.2d     %d\n"),
 			 wn, mn, mday, hour, min, sec,
 			 year + TM_YEAR_BASE)
-	     : SNPRINTF (SNPRINTFBUF(result, bufsize),
+	     : snprintf (buf, bufsize,
 			 "%s %s%3d %.2d:%.2d:%.2d     %d%d\n",
 			 wn, mn, mday, hour, min, sec,
 			 year / 10 + TM_YEAR_BASE / 10,
 			 year % 10))
-	    < bufsize) {
-#if HAVE_SNPRINTF
+	    < bufsize)
 		return buf;
-#else
-		return strcpy(buf, result);
-#endif
-	} else {
+	else {
 		errno = EOVERFLOW;
 		return NULL;
 	}

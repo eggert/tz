@@ -85,6 +85,7 @@ asctime_r(struct tm const *restrict timeptr, char *restrict buf)
 	register const char *	wn;
 	register const char *	mn;
 	int year, mday, hour, min, sec;
+	long long_TM_YEAR_BASE = TM_YEAR_BASE;
 	size_t bufsize = ((buf == buf_ctime
 			   || (!SUPPORT_C89 && buf == buf_asctime))
 			  ? sizeof buf_asctime : STD_ASCTIME_BUF_SIZE);
@@ -122,14 +123,14 @@ asctime_r(struct tm const *restrict timeptr, char *restrict buf)
 
 	   Also, avoid overflow when formatting tm_year + TM_YEAR_BASE.  */
 
-	if ((year <= INT_MAX - TM_YEAR_BASE
+	if ((year <= LONG_MAX - TM_YEAR_BASE
 	     ? snprintf (buf, bufsize,
 			 ((-999 - TM_YEAR_BASE <= year
 			   && year <= 9999 - TM_YEAR_BASE)
-			  ? "%s %s%3d %.2d:%.2d:%.2d %04d\n"
-			  : "%s %s%3d %.2d:%.2d:%.2d     %d\n"),
+			  ? "%s %s%3d %.2d:%.2d:%.2d %04ld\n"
+			  : "%s %s%3d %.2d:%.2d:%.2d     %ld\n"),
 			 wn, mn, mday, hour, min, sec,
-			 year + TM_YEAR_BASE)
+			 year + long_TM_YEAR_BASE)
 	     : snprintf (buf, bufsize,
 			 "%s %s%3d %.2d:%.2d:%.2d     %d%d\n",
 			 wn, mn, mday, hour, min, sec,

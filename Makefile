@@ -337,7 +337,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 \
   -Wsuggest-attribute=noreturn -Wsuggest-attribute=pure \
   -Wtrampolines -Wundef -Wunused-macros -Wuse-after-free=3 \
   -Wvariadic-macros -Wvla -Wwrite-strings \
-  -Wno-format-nonliteral -Wno-sign-compare
+  -Wno-format-nonliteral -Wno-sign-compare -Wno-type-limits
 #
 # If your system has a "GMT offset" field in its "struct tm"s
 # (or if you decide to add such a field in your system's "time.h" file),

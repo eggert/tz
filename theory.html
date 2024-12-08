@@ -123,8 +123,9 @@ If geolocation information is available, a selection interface can
 locate the user on a timezone map or prioritize names that are
 geographically close. For an example selection interface, see the
 <code>tzselect</code> program in the <code><abbr>tz</abbr></code> code.
-The <a href="https://cldr.unicode.org">Unicode Common Locale Data
-Repository</a> contains data that may be useful for other selection
+Unicode's <a href="https://cldr.unicode.org">Common Locale Data
+Repository (<abbr>CLDR</abbr>)</a>
+contains data that may be useful for other selection
 interfaces; it maps timezone names like <code>Europe/Prague</code> to
 locale-dependent strings like "Prague", "Praha", "Прага", and "布拉格".
 </p>
@@ -200,6 +201,8 @@ in decreasing order of importance:
   <li>
     A name must not be empty, or contain '<code>//</code>', or
     start or end with '<code>/</code>'.
+    Also, a name must not be '<code>Etc/Unknown</code>', as
+    <abbr>CLDR</abbr> uses that string for an unknown or invalid timezone.
   </li>
   <li>
     Do not use names that differ only in case.

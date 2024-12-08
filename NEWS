@@ -5,6 +5,7 @@ Unreleased, experimental changes
   Briefly:
     Paraguay adopts permanent -03 starting spring 2024.
     Improve pre-1991 data for the Philippines.
+    Etc/Unknown is now reserved.
 
   Changes to future timestamps
 
@@ -56,6 +57,11 @@ Unreleased, experimental changes
     misbehaved unless TZNAME_MAXIMUM was less than INT_MAX.
 
   Changes to documentation
+
+    The name Etc/Unknown is now reserved: it will not be used by TZDB.
+    This is for compatibility with CLDR, which uses the string
+    "Etc/Unknown" for an unknown or invalid timezone.  (Thanks to
+    Justin Grant, Mark Davis, and Guy Harris.)
 
     Cite Internet RFC 9636, which obsoletes RFC 8536 for TZif format.
 

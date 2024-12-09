@@ -1468,8 +1468,10 @@ tzset_unlocked(void)
     lclptr = sp = malloc(sizeof *lclptr);
 # endif
   if (sp) {
-    if (zoneinit(sp, name) != 0)
+    if (zoneinit(sp, name) != 0) {
       zoneinit(sp, "");
+      strcpy(sp->chars, UNSPEC);
+    }
     if (0 < lcl)
       strcpy(lcl_TZname, name);
   }

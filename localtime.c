@@ -19,6 +19,10 @@
 #include "tzfile.h"
 #include <fcntl.h>
 
+#if HAVE_SYS_STAT_H
+# include <sys/stat.h>
+#endif
+
 #if defined THREAD_SAFE && THREAD_SAFE
 # include <pthread.h>
 static pthread_mutex_t locallock = PTHREAD_MUTEX_INITIALIZER;
@@ -551,8 +555,23 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 
 		name = lsp->fullname;
 	}
-	if (doaccess && access(name, R_OK) != 0)
-	  return errno;
+	if (doaccess) {
+	  /* Check for security violations and for devices whose mere
+	     opening could have unwanted side effects.  Although these
+	     checks are racy, they're better than nothing and there is
+	     no portable way to fix the races.  */
+	  if (access(name, R_OK) < 0)
+	    return errno;
+#if HAVE_SYS_STAT_H
+	  {
+	    struct stat st;
+	    if (stat(name, &st) < 0)
+	      return errno;
+	    if (!S_ISREG(st.st_mode))
+	      return EINVAL;
+	  }
+#endif
+	}
 	fid = open(name, (O_RDONLY | O_BINARY | O_CLOEXEC | O_CLOFORK
 			  | O_IGNORE_CTTY | O_NOCTTY));
 	if (fid < 0)

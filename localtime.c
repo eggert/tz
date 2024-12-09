@@ -96,12 +96,23 @@ typedef intmax_t timex_t;
 # define TZ_ABBR_ERR_CHAR '_'
 #endif /* !defined TZ_ABBR_ERR_CHAR */
 
-/*
-** Support non-POSIX platforms that distinguish between text and binary files.
-*/
+/* Port to platforms that lack some O_* flags.  Unless otherwise
+   specified, the flags are standardized by POSIX.  */
 
 #ifndef O_BINARY
-# define O_BINARY 0
+# define O_BINARY 0 /* MS-Windows */
+#endif
+#ifndef O_CLOEXEC
+# define O_CLOEXEC 0
+#endif
+#ifndef O_CLOFORK
+# define O_CLOFORK 0
+#endif
+#ifndef O_IGNORE_CTTY
+# define O_IGNORE_CTTY 0 /* GNU/Hurd */
+#endif
+#ifndef O_NOCTTY
+# define O_NOCTTY 0
 #endif
 
 #ifndef WILDABBR
@@ -542,7 +553,8 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 	}
 	if (doaccess && access(name, R_OK) != 0)
 	  return errno;
-	fid = open(name, O_RDONLY | O_BINARY);
+	fid = open(name, (O_RDONLY | O_BINARY | O_CLOEXEC | O_CLOFORK
+			  | O_IGNORE_CTTY | O_NOCTTY));
 	if (fid < 0)
 	  return errno;
 

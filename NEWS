@@ -56,6 +56,11 @@ Unreleased, experimental changes
     PTRDIFF_MAX, a limit forced by C anyway; formerly tzcode silently
     misbehaved unless TZNAME_MAXIMUM was less than INT_MAX.
 
+    tzset and related functions no longer leak a file descriptor if
+    another thread forks or execs at about the same time and if the
+    platform has O_CLOFORK and O_CLOEXEC respectively.  Also, the
+    functions no longer let a TZif file become a controlling terminal.
+
   Changes to documentation
 
     The name Etc/Unknown is now reserved: it will not be used by TZDB.

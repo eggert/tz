@@ -500,11 +500,15 @@ union local_storage {
   char fullname[max(sizeof(struct file_analysis), sizeof tzdirslash + 1024)];
 };
 
-/* Load tz data from the file named NAME into *SP.  Read extended
-   format if DOEXTEND.  Use *LSP for temporary storage.  Return 0 on
+/* These tzload flags can be ORed together, and fit into 'char'.  */
+enum { TZLOAD_FROMENV = 1 }; /* The TZ string came from the environment.  */
+enum { TZLOAD_TZSTRING = 2 }; /* Read any newline-surrounded TZ string.  */
+
+/* Load tz data from the file named NAME into *SP.  Respect TZLOADFLAGS.
+   Use *LSP for temporary storage.  Return 0 on
    success, an errno value on failure.  */
 static int
-tzloadbody(char const *name, struct state *sp, bool doextend,
+tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	   union local_storage *lsp)
 {
 	register int			i;
@@ -555,7 +559,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 
 		name = lsp->fullname;
 	}
-	if (doaccess) {
+	if (doaccess && (tzloadflags & TZLOAD_FROMENV)) {
 	  /* Check for security violations and for devices whose mere
 	     opening could have unwanted side effects.  Although these
 	     checks are racy, they're better than nothing and there is
@@ -751,7 +755,7 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 	    if (!version)
 	      break;
 	}
-	if (doextend && nread > 2 &&
+	if ((tzloadflags & TZLOAD_TZSTRING) && nread > 2 &&
 		up->buf[0] == '\n' && up->buf[nread - 1] == '\n' &&
 		sp->typecnt + 2 <= TZ_MAX_TYPES) {
 			struct state	*ts = &lsp->u.st;
@@ -826,23 +830,23 @@ tzloadbody(char const *name, struct state *sp, bool doextend,
 	return 0;
 }
 
-/* Load tz data from the file named NAME into *SP.  Read extended
-   format if DOEXTEND.  Return 0 on success, an errno value on failure.  */
+/* Load tz data from the file named NAME into *SP.  Respect TZLOADFLAGS.
+   Return 0 on success, an errno value on failure.  */
 static int
-tzload(char const *name, struct state *sp, bool doextend)
+tzload(char const *name, struct state *sp, char tzloadflags)
 {
 #ifdef ALL_STATE
   union local_storage *lsp = malloc(sizeof *lsp);
   if (!lsp) {
     return HAVE_MALLOC_ERRNO ? errno : ENOMEM;
   } else {
-    int err = tzloadbody(name, sp, doextend, lsp);
+    int err = tzloadbody(name, sp, tzloadflags, lsp);
     free(lsp);
     return err;
   }
 #else
   union local_storage ls;
-  return tzloadbody(name, sp, doextend, &ls);
+  return tzloadbody(name, sp, tzloadflags, &ls);
 #endif
 }
 
@@ -1183,7 +1187,7 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 	  sp->leapcnt = basep->leapcnt;
 	  memcpy(sp->lsis, basep->lsis, sp->leapcnt * sizeof *sp->lsis);
 	} else {
-	  load_ok = tzload(TZDEFRULES, sp, false) == 0;
+	  load_ok = tzload(TZDEFRULES, sp, 0) == 0;
 	  if (!load_ok)
 	    sp->leapcnt = 0;	/* So, we're off a little.  */
 	}
@@ -1420,16 +1424,17 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 static void
 gmtload(struct state *const sp)
 {
-	if (tzload(etc_utc, sp, true) != 0)
+	if (tzload(etc_utc, sp, TZLOAD_TZSTRING) != 0)
 	  tzparse("UTC0", sp, NULL);
 }
 
 #if !USE_TIMEX_T || !defined TM_GMTOFF
 
 /* Initialize *SP to a value appropriate for the TZ setting NAME.
+   Respect TZLOADFLAGS.
    Return 0 on success, an errno value on failure.  */
 static int
-zoneinit(struct state *sp, char const *name)
+zoneinit(struct state *sp, char const *name, char tzloadflags)
 {
   if (name && ! name[0]) {
     /*
@@ -1444,7 +1449,7 @@ zoneinit(struct state *sp, char const *name)
     strcpy(sp->chars, utc);
     return 0;
   } else {
-    int err = tzload(name, sp, true);
+    int err = tzload(name, sp, tzloadflags);
     if (err != 0 && name && name[0] != ':' && tzparse(name, sp, NULL))
       err = 0;
     if (err == 0)
@@ -1468,8 +1473,8 @@ tzset_unlocked(void)
     lclptr = sp = malloc(sizeof *lclptr);
 # endif
   if (sp) {
-    if (zoneinit(sp, name) != 0) {
-      zoneinit(sp, "");
+    if (zoneinit(sp, name, TZLOAD_FROMENV | TZLOAD_TZSTRING) != 0) {
+      zoneinit(sp, "", 0);
       strcpy(sp->chars, UNSPEC);
     }
     if (0 < lcl)
@@ -1516,7 +1521,7 @@ tzalloc(char const *name)
 {
   timezone_t sp = malloc(sizeof *sp);
   if (sp) {
-    int err = zoneinit(sp, name);
+    int err = zoneinit(sp, name, TZLOAD_TZSTRING);
     if (err != 0) {
       free(sp);
       errno = err;

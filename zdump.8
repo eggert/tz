@@ -25,6 +25,13 @@ The
 program prints the current time in each
 .I timezone
 named on the command line.
+A
+.I timezone
+of
+.B \*-
+is treated as if it were /dev/stdin;
+this can be used to pipe TZif data into
+.BR zdump .
 .SH OPTIONS
 .TP
 .B \*-\*-version

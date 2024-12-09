@@ -582,7 +582,11 @@ main(int argc, char *argv[])
 	longest = min(arglenmax, INT_MAX - 2);
 
 	for (i = optind; i < argc; ++i) {
-		timezone_t tz = tzalloc(argv[i]);
+		/* Treat "-" as standard input on platforms with /dev/stdin.
+		   It's not worth the bother of supporting "-" on other
+		   platforms, as that would need temp files.  */
+		timezone_t tz = tzalloc(strcmp(argv[i], "-") == 0
+					? "/dev/stdin" : argv[i]);
 		char const *ab;
 		time_t t;
 		struct tm tm, newtm;

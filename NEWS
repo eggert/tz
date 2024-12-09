@@ -65,6 +65,9 @@ Unreleased, experimental changes
     platform has O_CLOFORK and O_CLOEXEC respectively.  Also, the
     functions no longer let a TZif file become a controlling terminal.
 
+    'zdump -' now reads TZif data from /dev/stdin.
+    (From a question by Arthur David Olson.)
+
   Changes to documentation
 
     The name Etc/Unknown is now reserved: it will not be used by TZDB.

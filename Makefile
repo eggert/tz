@@ -1355,11 +1355,11 @@ long-long.ck unsigned.ck: $(VERSION_DEPS)
 zonenames:	tzdata.zi
 		@$(AWK) '/^Z/ { print $$2 } /^L/ { print $$3 }' tzdata.zi
 
-asctime.o:	private.h tzfile.h
+asctime.o:	private.h
 date.o:		private.h
 difftime.o:	private.h
-localtime.o:	private.h tzfile.h tzdir.h
-strftime.o:	localtime.c private.h tzfile.h
+localtime.o:	private.h tzdir.h tzfile.h
+strftime.o:	localtime.c private.h tzdir.h tzfile.h
 zdump.o:	version.h
 zic.o:		private.h tzfile.h tzdir.h version.h
 

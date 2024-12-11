@@ -615,8 +615,8 @@ TZS_YEAR=	2050
 TZS_CUTOFF_FLAG=	-c $(TZS_YEAR)
 TZS=		to$(TZS_YEAR).tzs
 TZS_NEW=	to$(TZS_YEAR)new.tzs
-TZS_DEPS=	$(YDATA) asctime.c localtime.c \
-			private.h tzfile.h zdump.c zic.c
+TZS_DEPS=	$(YDATA) localtime.c private.h \
+			strftime.c tzfile.h zdump.c zic.c
 TZDATA_DIST = $(COMMON) $(DATA) $(MISC)
 # EIGHT_YARDS is just a yard short of the whole ENCHILADA.
 EIGHT_YARDS = $(TZDATA_DIST) $(DOCS) $(SOURCES) tzdata.zi

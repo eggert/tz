@@ -37,6 +37,36 @@
 # define SUPPORT_C89 1
 #endif
 
+
+/* The following feature-test macros should be defined before
+   any #include of a system header.  */
+
+/* Enable tm_gmtoff, tm_zone, and environ on GNUish systems.  */
+#define _GNU_SOURCE 1
+/* Fix asctime_r on Solaris 11.  */
+#define _POSIX_PTHREAD_SEMANTICS 1
+/* Enable strtoimax on pre-C99 Solaris 11.  */
+#define __EXTENSIONS__ 1
+/* Prevent MS-Windows headers from defining min and max.  */
+#define NOMINMAX 1
+
+/* On GNUish systems where time_t might be 32 or 64 bits, use 64.
+   On these platforms _FILE_OFFSET_BITS must also be 64; otherwise
+   setting _TIME_BITS to 64 does not work.  The code does not
+   otherwise rely on _FILE_OFFSET_BITS being 64, since it does not
+   use off_t or functions like 'stat' that depend on off_t.  */
+#ifndef _TIME_BITS
+# ifndef _FILE_OFFSET_BITS
+#  define _FILE_OFFSET_BITS 64
+# endif
+# if _FILE_OFFSET_BITS == 64
+#  define _TIME_BITS 64
+# endif
+#endif
+
+/* End of feature-test macro definitions.  */
+
+
 #ifndef __STDC_VERSION__
 # define __STDC_VERSION__ 0
 #endif
@@ -149,27 +179,6 @@
 # define asctime_r _incompatible_asctime_r
 # define ctime_r _incompatible_ctime_r
 #endif /* HAVE_INCOMPATIBLE_CTIME_R */
-
-/* Enable tm_gmtoff, tm_zone, and environ on GNUish systems.  */
-#define _GNU_SOURCE 1
-/* Fix asctime_r on Solaris 11.  */
-#define _POSIX_PTHREAD_SEMANTICS 1
-/* Enable strtoimax on pre-C99 Solaris 11.  */
-#define __EXTENSIONS__ 1
-
-/* On GNUish systems where time_t might be 32 or 64 bits, use 64.
-   On these platforms _FILE_OFFSET_BITS must also be 64; otherwise
-   setting _TIME_BITS to 64 does not work.  The code does not
-   otherwise rely on _FILE_OFFSET_BITS being 64, since it does not
-   use off_t or functions like 'stat' that depend on off_t.  */
-#ifndef _TIME_BITS
-# ifndef _FILE_OFFSET_BITS
-#  define _FILE_OFFSET_BITS 64
-# endif
-# if _FILE_OFFSET_BITS == 64
-#  define _TIME_BITS 64
-# endif
-#endif
 
 /*
 ** Nested includes

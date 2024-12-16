@@ -146,7 +146,7 @@ static const char	wildabbr[] = WILDABBR;
 
 static char const etc_utc[] = "Etc/UTC";
 
-#if defined TM_ZONE || ((!USE_TIMEX_T || !defined TM_GMTOFF) && defined TZ_NAME)
+#if !USE_TIMEX_T || defined TM_ZONE || !defined TM_GMTOFF
 static char const *utc = etc_utc + sizeof "Etc/" - 1;
 #endif
 

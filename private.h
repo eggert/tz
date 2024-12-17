@@ -810,7 +810,11 @@ extern long altzone;
 */
 
 #ifndef STD_INSPIRED
-# define STD_INSPIRED 0
+# ifdef __NetBSD__
+#  define STD_INSPIRED 1
+# else
+#  define STD_INSPIRED 0
+# endif
 #endif
 #if STD_INSPIRED
 # if TZ_TIME_T || !defined offtime

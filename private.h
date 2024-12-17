@@ -47,6 +47,8 @@
 #define _POSIX_PTHREAD_SEMANTICS 1
 /* Enable strtoimax on pre-C99 Solaris 11.  */
 #define __EXTENSIONS__ 1
+/* Cause MS-Windows headers to define POSIX names.  */
+#define _CRT_DECLARE_NONSTDC_NAMES 1
 /* Prevent MS-Windows headers from defining min and max.  */
 #define NOMINMAX 1
 

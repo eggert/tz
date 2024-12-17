@@ -1360,8 +1360,8 @@ date.o:		private.h
 difftime.o:	private.h
 localtime.o:	private.h tzdir.h tzfile.h
 strftime.o:	localtime.c private.h tzdir.h tzfile.h
-zdump.o:	version.h
-zic.o:		private.h tzfile.h tzdir.h version.h
+zdump.o:	private.h version.h
+zic.o:		private.h tzdir.h tzfile.h version.h
 
 .PHONY: ALL INSTALL all
 .PHONY: check check_mild check_time_t_alternatives

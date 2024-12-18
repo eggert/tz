@@ -22,6 +22,10 @@
 #if HAVE_SYS_STAT_H
 # include <sys/stat.h>
 #endif
+#if !defined S_ISREG && defined S_IFREG
+/* Ancient UNIX or recent MS-Windows.  */
+# define S_ISREG(mode) (((mode) & S_IFMT) == S_IFREG)
+#endif
 
 #if defined THREAD_SAFE && THREAD_SAFE
 # include <pthread.h>
@@ -566,7 +570,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	     no portable way to fix the races.  */
 	  if (access(name, R_OK) < 0)
 	    return errno;
-#if HAVE_SYS_STAT_H
+#ifdef S_ISREG
 	  {
 	    struct stat st;
 	    if (stat(name, &st) < 0)

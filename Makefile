@@ -263,7 +263,7 @@ LDLIBS=
 #	feature (integers at least 64 bits wide) and maybe more.
 #  -DRESERVE_STD_EXT_IDS if your platform reserves standard identifiers
 #	with external linkage, e.g., applications cannot define 'localtime'.
-#  -Dssize_t=long on hosts like MS-Windows that lack ssize_t
+#  -Dssize_t=int on hosts like MS-Windows that lack ssize_t
 #  -DSUPPORT_C89=0 if the tzcode library should not support C89 callers
 #	Although -DSUPPORT_C89=0 might work around latent bugs in callers,
 #	it does not conform to POSIX.

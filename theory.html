@@ -223,10 +223,18 @@ in decreasing order of importance:
     do not need locations, since local time is not defined there.
   </li>
   <li>
-    If all the clocks in a timezone have agreed since 1970,
-    do not bother to include more than one timezone
-    even if some of the clocks disagreed before 1970.
+    If all clocks in a region have agreed since 1970,
+    give them just one name even if some of the clocks disagreed before 1970,
+    or reside in different countries or in notable or faraway locations.
     Otherwise these tables would become annoyingly large.
+    For example, do not create a name <code>Indian/Crozet</code>
+    as a near-duplicate or alias of <code>Asia/Dubai</code>
+    merely because they are different countries or territories,
+    or their clocks disagreed before 1970, or the
+    <a href="https://en.wikipedia.org/wiki/Crozet_Islands">Crozet Islands</a>
+    are notable in their own right,
+    or the Crozet Islands are not adjacent to other locations
+    that use <code>Asia/Dubai</code>.
   </li>
   <li>
     If boundaries between regions are fluid, such as during a war or

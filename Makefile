@@ -1104,7 +1104,7 @@ set-timestamps.out: $(EIGHT_YARDS)
 		   touch -md @1 test.out; then \
 		  rm -f test.out && \
 		  for file in $$files; do \
-		    if git diff --quiet $$file; then \
+		    if git diff --quiet HEAD $$file; then \
 		      time=$$(TZ=UTC0 git log -1 \
 			--format='tformat:%cd' \
 			--date='format:%Y-%m-%dT%H:%M:%SZ' \

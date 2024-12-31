@@ -162,5 +162,8 @@ ctime_r(const time_t *timep, char *buf)
 char *
 ctime(const time_t *timep)
 {
-  return ctime_r(timep, buf_ctime);
+  /* Do not call localtime_r, as C23 requires ctime to initialize the
+     static storage that localtime updates.  */
+  struct tm *tmp = localtime(timep);
+  return tmp ? asctime(tmp) : NULL;
 }

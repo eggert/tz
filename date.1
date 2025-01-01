@@ -6,15 +6,13 @@ date \- show and set date and time
 .SH SYNOPSIS
 .if n .nh
 .if n .na
-.ie \n(.g .ds - \f(CR-\fP
-.el .ds - \-
 .B date
 [
-.B \*-u
+.B \-u
 ] [
-.B \*-c
+.B \-c
 ] [
-.B \*-r
+.B \-r
 .I seconds
 ] [
 .BI + format
@@ -55,18 +53,18 @@ to determine what to output;
 a newline character is appended.
 For example, the shell command:
 .ce 1
-date +"%Y\*-%m\*-%d %H:%M:%S %z"
+date +"%Y\-%m\-%d %H:%M:%S %z"
 .br
 outputs a line like
-.q "2025\*-03\*-08 14:54:40 \*-0500"
+.q "2025\-03\-08 14:54:40 \-0500"
 instead.
 .PP
 These options are available:
 .TP
-.BR \*-u " or " \*-c
+.BR \-u " or " \-c
 Use Universal Time when setting and showing the date and time.
 .TP
-.BI "\*-r " seconds
+.BI "\-r " seconds
 Output the date that corresponds to
 .I seconds
 past the epoch of 1970-01-01 00:00:00 UTC, where

@@ -18,8 +18,6 @@ zdump \- timezone dumper
 .de q
 \\$3\*(lq\\$1\*(rq\\$2
 ..
-.ie \n(.g .ds - \f(CR-\fP
-.el .ds - \-
 The
 .B zdump
 program prints the current time in each
@@ -28,19 +26,19 @@ named on the command line.
 A
 .I timezone
 of
-.B \*-
+.B \-
 is treated as if it were /dev/stdin;
 this can be used to pipe TZif data into
 .BR zdump .
 .SH OPTIONS
 .TP
-.B \*-\*-version
+.B \-\-version
 Output version information and exit.
 .TP
-.B \*-\*-help
+.B \-\-help
 Output short usage message and exit.
 .TP
-.B \*-i
+.B \-i
 Output a description of time intervals.  For each
 .I timezone
 on the command line, output an interval-format description of the
@@ -48,7 +46,7 @@ timezone.  See
 .q "INTERVAL FORMAT"
 below.
 .TP
-.B \*-v
+.B \-v
 Output a verbose description of time intervals.
 For each
 .I timezone
@@ -74,26 +72,26 @@ if the given local time is known to be
 .I N
 seconds east of Greenwich.
 .TP
-.B \*-V
+.B \-V
 Like
-.BR \*-v ,
+.BR \-v ,
 except omit output concerning extreme time and year values.
 This generates output that is easier to compare to that of
 implementations with different time representations.
 .TP
-.BI "\*-c " \fR[\fIloyear , \fR]\fIhiyear
+.BI "\-c " \fR[\fIloyear , \fR]\fIhiyear
 Cut off interval output at the given year(s).
 Cutoff times are computed using the proleptic Gregorian calendar with year 0
 and with Universal Time (UT) ignoring leap seconds.
 Cutoffs are at the start of each year, where the lower-bound
 timestamp is inclusive and the upper is exclusive; for example,
-.B "\*-c 1970,2070"
+.B "\-c 1970,2070"
 selects transitions on or after 1970-01-01 00:00:00 UTC
 and before 2070-01-01 00:00:00 UTC.
 The default cutoff is
-.BR \*-500,2500 .
+.BR \-500,2500 .
 .TP
-.BI "\*-t " \fR[\fIlotime , \fR]\fIhitime
+.BI "\-t " \fR[\fIlotime , \fR]\fIhitime
 Cut off interval output at the given time(s),
 given in decimal seconds since 1970-01-01 00:00:00
 Coordinated Universal Time (UTC).
@@ -101,7 +99,7 @@ The
 .I timezone
 determines whether the count includes leap seconds.
 As with
-.BR \*-c ,
+.BR \-c ,
 the cutoff's lower bound is inclusive and its upper bound is exclusive.
 .SH "INTERVAL FORMAT"
 The interval format is a compact text representation that is intended
@@ -111,7 +109,7 @@ then a line
 where
 .I string
 is a double-quoted string giving the timezone, a second line
-.q "\*- \*- \fIinterval\fP"
+.q "\- \- \fIinterval\fP"
 describing the time interval before the first transition if any, and
 zero or more following lines
 .q "\fIdate time interval\fP",
@@ -137,11 +135,11 @@ daylight saving time and negative for unknown.
 In times and in UT offsets with absolute value less than 100 hours,
 the seconds are omitted if they are zero, and
 the minutes are also omitted if they are also zero.  Positive UT
-offsets are east of Greenwich.  The UT offset \*-00 denotes a UT
+offsets are east of Greenwich.  The UT offset \-00 denotes a UT
 placeholder in areas where the actual offset is unspecified; by
 convention, this occurs when the UT offset is zero and the time zone
 abbreviation begins with
-.q "\*-"
+.q "\-"
 or is
 .q "zzz".
 .PP
@@ -218,9 +216,9 @@ This works in all real-world cases;
 one can construct artificial time zones for which this fails.
 .PP
 In the
-.B \*-v
+.B \-v
 and
-.B \*-V
+.B \-V
 output,
 .q "UT"
 denotes the value returned by

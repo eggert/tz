@@ -11,8 +11,6 @@ tzfile \- timezone information
 .de q
 \\$3\*(lq\\$1\*(rq\\$2
 ..
-.ie \n(.g .ds - \f(CR-\fP
-.el .ds - \-
 The timezone information files used by
 .BR tzset (3)
 are typically found under a directory with a name like
@@ -123,7 +121,7 @@ and
 serves as an index into the array of time zone abbreviation bytes
 that follow the
 .B ttinfo
-entries in the file; if the designated string is "\*-00", the
+entries in the file; if the designated string is "\-00", the
 .B ttinfo
 entry is a placeholder indicating that local time is unspecified.
 The
@@ -188,7 +186,7 @@ The standard/wall and UT/local indicators were designed for
 transforming a TZif file's transition times into transitions appropriate
 for another time zone specified via
 a proleptic TZ string that lacks rules.
-For example, when TZ="EET\*-2EEST" and there is no TZif file "EET\*-2EEST",
+For example, when TZ="EET\-2EEST" and there is no TZif file "EET\-2EEST",
 the idea was to adapt the transition times from a TZif file with the
 well-known name "posixrules" that is present only for this purpose and
 is a copy of the file "Europe/Brussels", a file with a different UT offset.
@@ -197,7 +195,7 @@ the default rules are installation-dependent, and no implementation
 is known to support this feature for timestamps past 2037,
 so users desiring (say) Greek time should instead specify
 TZ="Europe/Athens" for better historical coverage, falling back on
-TZ="EET\*-2EEST,M3.5.0/3,M10.5.0/4" if POSIX conformance is required
+TZ="EET\-2EEST,M3.5.0/3,M10.5.0/4" if POSIX conformance is required
 and older timestamps need not be handled accurately.
 .PP
 The
@@ -238,7 +236,7 @@ the earliest transition time.
 For version-3-format timezone files, a TZ string (see
 .BR newtzset (3))
 may use the following POSIX.1-2024 extensions to POSIX.1-2017:
-First, as in TZ="<\*-02>2<\*-01>,M3.5.0/\*-1,M10.5.0/0",
+First, as in TZ="<\-02>2<\-01>,M3.5.0/\-1,M10.5.0/0",
 the hours part of its transition times may be signed and range from
 \-167 through 167 instead of being limited to unsigned values
 from 0 through 24.
@@ -294,7 +292,7 @@ time did not exist (possibly with an error indication).
 Time zone designations should consist of at least three (3)
 and no more than six (6) ASCII characters from the set of
 alphanumerics,
-.q "\*-",
+.q "\-",
 and
 .q "+".
 This is for compatibility with POSIX requirements for
@@ -396,7 +394,7 @@ and even for current timestamps it can fail for settings like
 TZ="Africa/Casablanca".  This corresponds to a TZif file
 containing explicit transitions through the year 2087,
 followed by a footer containing the TZ string
-.q <+01>\*-1 ,
+.q <+01>\-1 ,
 which should be used only for timestamps after the last
 explicit transition.
 .IP \(bu
@@ -438,7 +436,7 @@ These characters are not recommended.
 Some readers may mishandle time zone abbreviations that
 contain fewer than 3 or more than 6 characters or that
 contain ASCII characters other than alphanumerics,
-.q "\*-",
+.q "\-",
 and
 .q "+".
 These abbreviations are not recommended.
@@ -448,7 +446,7 @@ daylight-saving time UT offsets that are less than the UT
 offsets for the corresponding standard time.
 These readers do not support locations like Ireland, which
 uses the equivalent of the TZ string
-.q "IST\*-1GMT0,M10.5.0,M3.5.0/1",
+.q "IST\-1GMT0,M10.5.0,M3.5.0/1",
 observing standard time
 (IST, +01) in summer and daylight saving time (GMT, +00) in winter.
 As a partial workaround, a writer can output data for the
@@ -485,10 +483,10 @@ Readers that do not support negative timestamps are likely to
 be more prone to this problem.
 .IP \(bu
 Some readers mishandle time zone abbreviations like
-.q "\*-08"
+.q "\-08"
 that contain
 .q "+",
-.q "\*-",
+.q "\-",
 or digits.
 .IP \(bu
 Some readers mishandle UT offsets that are out of the

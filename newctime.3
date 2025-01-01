@@ -5,8 +5,6 @@
 asctime, ctime, difftime, gmtime, localtime, mktime \- convert date and time
 .SH SYNOPSIS
 .nf
-.ie \n(.g .ds - \f(CR-\fP
-.el .ds - \-
 .B #include <time.h>
 .PP
 .B [[deprecated]] char *ctime(time_t const *clock);
@@ -41,7 +39,7 @@ asctime, ctime, difftime, gmtime, localtime, mktime \- convert date and time
 .B "time_t mktime_z(timezone_t restrict zone,"
 .B "    struct tm *restrict tm);"
 .PP
-.B cc ... \*-ltz
+.B cc ... \-ltz
 .fi
 .SH DESCRIPTION
 .ie '\(en'' .ds en \-

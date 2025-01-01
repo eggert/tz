@@ -40,8 +40,6 @@
 strftime \- format date and time
 .SH SYNOPSIS
 .nf
-.ie \n(.g .ds - \f(CR-\fP
-.el .ds - \-
 .B #include <time.h>
 .PP
 .B "size_t strftime(char *restrict buf, size_t maxsize,"
@@ -93,7 +91,7 @@ If a bracketed member name is followed by
 .B strftime
 can use the named member even though POSIX.1-2024 does not list it;
 if the name is followed by
-.q \*- ,
+.q \- ,
 .B strftime
 ignores the member even though POSIX.1-2024 lists it
 which means portable code should set it.
@@ -139,7 +137,7 @@ is replaced by the locale's appropriate date and time representation.
 .IR tm_sec ,
 .IR tm_gmtoff ,
 .IR tm_zone ,
-.IR tm_isdst \*-].
+.IR tm_isdst \-].
 .TP
 %D
 is equivalent to
@@ -281,7 +279,7 @@ with "%s".
 .IR tm_min ,
 .IR tm_sec ,
 .IR tm_gmtoff +,
-.IR tm_isdst \*-].
+.IR tm_isdst \-].
 .TP
 %T
 is replaced by the time in the format
@@ -298,7 +296,7 @@ is replaced by the week number of the year (Sunday as the first day of
 the week) as a decimal number [00,53].
 .RI [ tm_wday ,
 .IR tm_yday ,
-.IR tm_year \*-]
+.IR tm_year \-]
 .TP
 %u
 is replaced by the weekday (Monday as the first day of the week)
@@ -332,17 +330,17 @@ as a decimal number [0,6].
 .TP
 %X
 is replaced by the locale's appropriate time representation.
-.RI [ tm_year \*-,
-.IR tm_yday \*-,
-.IR tm_mon \*-,
-.IR tm_mday \*-,
-.IR tm_wday \*-,
+.RI [ tm_year \-,
+.IR tm_yday \-,
+.IR tm_mon \-,
+.IR tm_mday \-,
+.IR tm_wday \-,
 .IR tm_hour ,
 .IR tm_min ,
 .IR tm_sec ,
 .IR tm_gmtoff ,
 .IR tm_zone ,
-.IR tm_isdst \*-].
+.IR tm_isdst \-].
 .TP
 %x
 is replaced by the locale's appropriate date representation.
@@ -353,12 +351,12 @@ it can generate "01/02/03" in the C locale.
 .IR tm_mon ,
 .IR tm_mday ,
 .IR tm_wday ,
-.IR tm_hour \*-,
-.IR tm_min \*-,
-.IR tm_sec \*-,
-.IR tm_gmtoff \*-,
-.IR tm_zone \*-,
-.IR tm_isdst \*-].
+.IR tm_hour \-,
+.IR tm_min \-,
+.IR tm_sec \-,
+.IR tm_gmtoff \-,
+.IR tm_zone \-,
+.IR tm_isdst \-].
 .TP
 %Y
 is replaced by the year with century as a decimal number.
@@ -373,22 +371,22 @@ Since it omits the century, it is ambiguous for dates.
 is replaced by the time zone abbreviation,
 or by the empty string if this is not determinable.
 .RI [ tm_zone ,
-.IR tm_isdst \*-]
+.IR tm_isdst \-]
 .TP
 %z
 is replaced by the offset from the Prime Meridian
-in the format +HHMM or \*-HHMM (ISO 8601) as appropriate,
+in the format +HHMM or \-HHMM (ISO 8601) as appropriate,
 with positive values representing locations east of Greenwich,
 or by the empty string if this is not determinable.
-The numeric time zone abbreviation \*-0000 is used when the time is
+The numeric time zone abbreviation \-0000 is used when the time is
 Universal Time
 but local time is indeterminate; by convention this is used for
 locations while uninhabited, and corresponds to a zero offset when the
 time zone abbreviation begins with
-.q "\*-" .
+.q "\-" .
 .RI [ tm_gmtoff ,
 .IR tm_zone +,
-.IR tm_isdst \*-]
+.IR tm_isdst \-]
 .TP
 %%
 is replaced by a single %.

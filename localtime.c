@@ -37,6 +37,22 @@ static int lock(void) { return 0; }
 static void unlock(void) { }
 #endif
 
+/* Convert to TYPE the value of the expression EXPR.  Use C99+ implicit
+   conversion if available, as it is less powerful and therefore safer.  */
+#if PORT_TO_C89
+# define TYPECVT(type, expr) ((type) (expr))
+#else
+# define TYPECVT(type, expr) ((type) {expr})
+#endif
+
+/* Unless intptr_t is missing, pacify gcc -Wcast-qual on char const * exprs.
+   This is a macro so that it can be used in static initializers.  */
+#ifdef INTPTR_MAX
+# define UNCONST(a) ((char *) (intptr_t) TYPECVT (char const *, a))
+#else
+# define UNCONST(a) TYPECVT (char const *, a)
+#endif
+
 /* A signed type wider than int, so that we can add 1900 + tm_mon/12 to tm_year
    without overflow.  The static_assert checks that it is indeed wider
    than int; if this fails on your platform please let us know.  */
@@ -290,10 +306,7 @@ static struct tm	tm;
 #endif
 
 # if 2 <= HAVE_TZNAME + TZ_TIME_T
-char *			tzname[2] = {
-	(char *) wildabbr,
-	(char *) wildabbr
-};
+char *tzname[2] = { UNCONST(wildabbr), UNCONST(wildabbr) };
 # endif
 # if 2 <= USG_COMPAT + TZ_TIME_T
 long			timezone;
@@ -378,7 +391,7 @@ static void
 update_tzname_etc(struct state const *sp, struct ttinfo const *ttisp)
 {
 # if HAVE_TZNAME
-  tzname[ttisp->tt_isdst] = (char *) &sp->chars[ttisp->tt_desigidx];
+  tzname[ttisp->tt_isdst] = UNCONST(&sp->chars[ttisp->tt_desigidx]);
 # endif
 # if USG_COMPAT
   if (!ttisp->tt_isdst)
@@ -419,7 +432,7 @@ settzname(void)
 	int stddst_mask = 0;
 
 # if HAVE_TZNAME
-	tzname[0] = tzname[1] = (char *) (sp ? wildabbr : utc);
+	tzname[0] = tzname[1] = UNCONST(sp ? wildabbr : utc);
 	stddst_mask = 3;
 # endif
 # if USG_COMPAT
@@ -1657,7 +1670,7 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 	if (result) {
 	  result->tm_isdst = ttisp->tt_isdst;
 # ifdef TM_ZONE
-	  result->TM_ZONE = (char *) &sp->chars[ttisp->tt_desigidx];
+	  result->TM_ZONE = UNCONST(&sp->chars[ttisp->tt_desigidx]);
 # endif
 	  if (setname)
 	    update_tzname_etc(sp, ttisp);
@@ -1725,8 +1738,8 @@ gmtsub(ATTRIBUTE_MAYBE_UNUSED struct state const *sp, time_t const *timep,
 	** "+xx" or "-xx" if offset is non-zero,
 	** but this is no time for a treasure hunt.
 	*/
-	tmp->TM_ZONE = ((char *)
-			(offset ? wildabbr : gmtptr ? gmtptr->chars : utc));
+	tmp->TM_ZONE = UNCONST(offset ? wildabbr
+			       : gmtptr ? gmtptr->chars : utc);
 #endif /* defined TM_ZONE */
 	return result;
 }

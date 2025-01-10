@@ -30,16 +30,6 @@ enum { STD_ASCTIME_BUF_SIZE = 26 };
 */
 static char buf_asctime[2*3 + 5*INT_STRLEN_MAXIMUM(int) + 7 + 2 + 1 + 1];
 
-/* A similar buffer for ctime.
-   C89 requires that they be the same buffer.
-   This requirement was removed in C99, so support it only if requested,
-   as support is more likely to lead to bugs in badly written programs.  */
-#if SUPPORT_C89
-# define buf_ctime buf_asctime
-#else
-static char buf_ctime[sizeof buf_asctime];
-#endif
-
 /* On pre-C99 platforms, a snprintf substitute good enough for us.  */
 #if !HAVE_SNPRINTF
 # include <stdarg.h>
@@ -86,8 +76,7 @@ asctime_r(struct tm const *restrict timeptr, char *restrict buf)
 	register const char *	mn;
 	int year, mday, hour, min, sec;
 	long long_TM_YEAR_BASE = TM_YEAR_BASE;
-	size_t bufsize = ((buf == buf_ctime
-			   || (!SUPPORT_C89 && buf == buf_asctime))
+	size_t bufsize = (buf == buf_asctime
 			  ? sizeof buf_asctime : STD_ASCTIME_BUF_SIZE);
 
 	if (timeptr == NULL) {

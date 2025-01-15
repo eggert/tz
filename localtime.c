@@ -37,20 +37,13 @@ static int lock(void) { return 0; }
 static void unlock(void) { }
 #endif
 
-/* Convert to TYPE the value of the expression EXPR.  Use C99+ implicit
-   conversion if available, as it is less powerful and therefore safer.  */
-#if PORT_TO_C89
-# define TYPECVT(type, expr) ((type) (expr))
-#else
-# define TYPECVT(type, expr) ((type) {expr})
-#endif
-
 /* Unless intptr_t is missing, pacify gcc -Wcast-qual on char const * exprs.
+   Use this carefully, as the casts disable type checking.
    This is a macro so that it can be used in static initializers.  */
 #ifdef INTPTR_MAX
-# define UNCONST(a) ((char *) (intptr_t) TYPECVT (char const *, a))
+# define UNCONST(a) ((char *) (intptr_t) (a))
 #else
-# define UNCONST(a) TYPECVT (char const *, a)
+# define UNCONST(a) ((char *) (a))
 #endif
 
 /* A signed type wider than int, so that we can add 1900 + tm_mon/12 to tm_year

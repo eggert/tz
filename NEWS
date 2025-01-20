@@ -3,13 +3,13 @@ News for the tz database
 Release 2025a - 2025-01-15 10:47:24 -0800
 
   Briefly:
-    Paraguay adopts permanent -03 starting spring 2024.
+    Paraguay adopted permanent -03 starting spring 2024.
     Improve pre-1991 data for the Philippines.
     Etc/Unknown is now reserved.
 
   Changes to future timestamps
 
-    Paraguay will stop changing its clocks after the spring-forward
+    Paraguay stopped changing its clocks after the spring-forward
     transition on 2024-10-06, so it is now permanently at -03.
     (Thanks to Heitor David Pinto and Even Scharning.)
     This affects timestamps starting 2025-03-22, as well as the

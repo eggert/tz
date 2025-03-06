@@ -1,5 +1,13 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to code
+
+    'zic -l TIMEZONE -d . -l /some/other/file/system' no longer has a
+    read buffer underflow.  (Problem reported by Evgeniy Gorbanev.)
+
+
 Release 2025a - 2025-01-15 10:47:24 -0800
 
   Briefly:

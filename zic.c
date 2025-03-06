@@ -1345,7 +1345,7 @@ random_dirent(char const **name, char **namealloc)
 }
 
 /* For diagnostics the directory, and file name relative to that
-   directory, respectively.  A diagnostic routne can name FILENAME by
+   directory, respectively.  A diagnostic routine can name FILENAME by
    outputting diagdir(FILENAME), then diagslash(FILENAME), then FILENAME.  */
 static char const *
 diagdir(char const *filename)

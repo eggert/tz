@@ -2,6 +2,11 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to past timestamps
+
+    Iran switched from +04 to +0330 on 1978-11-10 at 24:00, not at
+    year end.  (Thanks to Roozbeh Pournader.)
+
   Changes to code
 
     'zic -l TIMEZONE -d . -l /some/other/file/system' no longer has a

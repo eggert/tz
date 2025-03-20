@@ -96,6 +96,8 @@ XX	+1828-06954	America/Santo_Domingo	Atlantic Standard ("AST") - eastern Caribbe
 #
 # -04/-03 (Chile DST)
 XX	-3327-07040	America/Santiago	most of Chile
+# -04/-03 (Chile DST) until 2025-04-06; then -03
+XX	-4534-07204	America/Coyhaique	Aysén Region
 #
 # -04/-03 - AST/ADT (North America DST)
 XX	+4439-06336	America/Halifax	Atlantic ("AST/ADT") - Canada; Bermuda

@@ -1315,6 +1315,19 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # Although the presidential decree stops at fall 2026, assume that
 # similar DST rules will continue thereafter.
 
+# From Paul Eggert (2025-01-15):
+# Diario Regional Aysén's Sebastián Martel reports that 94% of Aysén
+# citizens polled in November favored changing the rules from
+# -04/-03-with-DST to -03 all year...
+# https://www.diarioregionalaysen.cl/noticia/actualidad/2024/12/presentan-decision-que-gano-la-votacion-sobre-el-cambio-del-huso-horario-en-aysen
+#
+# From Yonathan Dossow (2025-03-20):
+# [T]oday we have more confirmation of the change.  Aysen region will keep
+# UTC-3 all year...
+# https://www.cnnchile.com/pais/region-de-aysen-mantendra-horario-de-verano-todo-el-ano_20250320/
+# https://www.latercera.com/nacional/noticia/tras-consulta-ciudadana-region-de-aysen-mantendra-el-horario-de-verano-durante-todo-el-ano/
+# https://x.com/min_interior/status/1902692504270672098
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Chile	1927	1931	-	Sep	 1	0:00	1:00	-
 Rule	Chile	1928	1932	-	Apr	 1	0:00	0	-
@@ -1371,6 +1384,20 @@ Zone America/Santiago	-4:42:45 -	LMT	1890
 			-5:00	1:00	%z	1947 Mar 31 24:00
 			-5:00	-	%z	1947 May 21 23:00
 			-4:00	Chile	%z
+Zone America/Coyhaique	-4:48:16 -	LMT	1890
+			-4:42:45 -	SMT	1910 Jan 10
+			-5:00	-	%z	1916 Jul  1
+			-4:42:45 -	SMT	1918 Sep 10
+			-4:00	-	%z	1919 Jul  1
+			-4:42:45 -	SMT	1927 Sep  1
+			-5:00	Chile	%z	1932 Sep  1
+			-4:00	-	%z	1942 Jun  1
+			-5:00	-	%z	1942 Aug  1
+			-4:00	-	%z	1946 Aug 28 24:00
+			-5:00	1:00	%z	1947 Mar 31 24:00
+			-5:00	-	%z	1947 May 21 23:00
+			-4:00	Chile	%z	2025 Apr  6
+			-3:00	-	%z
 Zone America/Punta_Arenas -4:43:40 -	LMT	1890
 			-4:42:45 -	SMT	1910 Jan 10
 			-5:00	-	%z	1916 Jul  1

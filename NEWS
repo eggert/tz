@@ -2,6 +2,16 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    New zone for Aysén Region in Chile which moves from -04/-03 to -03.
+
+  Changes to future timestamps
+
+    Chile's Aysén Region moves from -04/-03 to -03 year-round, joining
+    Magallanes Region.  The region will not change its clocks on
+    2025-04-05 at 24:00, diverging from America/Santiago and creating a
+    new zone America/Coyhaique.  (Thanks to Yonathan Dossow.)
+
   Changes to past timestamps
 
     Iran switched from +04 to +0330 on 1978-11-10 at 24:00, not at

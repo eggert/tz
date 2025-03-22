@@ -10,7 +10,8 @@ Unreleased, experimental changes
     Chile's Aysén Region moves from -04/-03 to -03 year-round, joining
     Magallanes Region.  The region will not change its clocks on
     2025-04-05 at 24:00, diverging from America/Santiago and creating a
-    new zone America/Coyhaique.  (Thanks to Yonathan Dossow.)
+    new zone America/Coyhaique.  (Thanks to Yonathan Dossow.)  Model
+    this as a change to standard offset effective 2025-03-20.
 
   Changes to past timestamps
 

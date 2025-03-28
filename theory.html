@@ -89,15 +89,16 @@ The <code><abbr>tz</abbr></code> code is upwards compatible with <a
 href="https://en.wikipedia.org/wiki/POSIX">POSIX</a>, an international
 standard for <a
 href="https://en.wikipedia.org/wiki/Unix">UNIX</a>-like systems.
-As of this writing, the current edition of POSIX is POSIX.1-2024,
-which has been published but not yet in HTML form.
-Unlike its predecessor POSIX.1-2017 (<a
-href="https://pubs.opengroup.org/onlinepubs/9699919799/"> The Open
-Group Base Specifications Issue 7</a>, IEEE Std 1003.1-2017, 2018
-Edition), POSIX.1-2024 requires support for the
+As of this writing, the current edition of POSIX is
+<a href="https://pubs.opengroup.org/onlinepubs/9799919799/">POSIX.1-2024</a>
+(The Open Group Base Specifications Issue 8, IEEE Std 1003.1-2024).
+Unlike its predecessors
+<a href="https://archive.org/details/POSIX.1-1988">POSIX.1-1988</a> through
+<a href="https://pubs.opengroup.org/onlinepubs/9699919799/">POSIX.1-2017</a>,
+POSIX.1-2024 requires support for the
 <code><abbr>tz</abbr></code> database, which has a
 model for describing civil time that is more complex than the
-standard and daylight saving times required by POSIX.1-2017.
+standard and daylight saving times required by earlier POSIX editions.
 A <code><abbr>tz</abbr></code> timezone corresponds to a ruleset that can
 have more than two changes per year, these changes need not merely
 flip back and forth between two alternatives, and the rules themselves
@@ -914,7 +915,8 @@ environment variable <code>TZ</code>, which can have two forms:
 
 <h3 id="POSIX.1-2017">POSIX.1-2017 properties and limitations</h3>
 <p>
-Some platforms support only the features required by POSIX.1-2017,
+Some platforms support only the features required by POSIX.1-2017
+and earlier editions,
 and have not yet upgraded to POSIX.1-2024.
 Code intended to be portable to these platforms must deal
 with problems that were fixed in later POSIX editions.

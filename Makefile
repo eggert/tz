@@ -1032,7 +1032,7 @@ zishrink-posix.ck zishrink-right.ck: \
 
 clean_misc:
 		rm -fr *.ckd *.dir
-		rm -f *.ck *.core *.o *.out core core.* \
+		rm -f *.ck *.core *.o *.out *.t core core.* \
 		  date tzdir.h tzselect version.h zdump zic libtz.a
 clean:		clean_misc
 		rm -fr tzdb-*/
@@ -1208,12 +1208,12 @@ $(TIME_T_ALTERNATIVES): $(VERSION_DEPS)
 		touch $@
 
 TRADITIONAL_ASC = \
-  tzcode$(VERSION).tar.gz.asc \
-  tzdata$(VERSION).tar.gz.asc
+  tzcode$(VERSION).tar.gz.asc.t \
+  tzdata$(VERSION).tar.gz.asc.t
 REARGUARD_ASC = \
-  tzdata$(VERSION)-rearguard.tar.gz.asc
+  tzdata$(VERSION)-rearguard.tar.gz.asc.t
 ALL_ASC = $(TRADITIONAL_ASC) $(REARGUARD_ASC) \
-  tzdb-$(VERSION).tar.lz.asc
+  tzdb-$(VERSION).tar.lz.asc.t
 
 tarballs rearguard_tarballs tailored_tarballs traditional_tarballs \
 signatures rearguard_signatures traditional_signatures: \
@@ -1225,29 +1225,31 @@ signatures rearguard_signatures traditional_signatures: \
 # other means.  Ordinarily these rules are used only by the above
 # non-_version rules, which set VERSION on the 'make' command line.
 tarballs_version: traditional_tarballs_version rearguard_tarballs_version \
-  tzdb-$(VERSION).tar.lz
+  tzdb-$(VERSION).tar.lz.t
 rearguard_tarballs_version: \
-  tzdata$(VERSION)-rearguard.tar.gz
+  tzdata$(VERSION)-rearguard.tar.gz.t
 traditional_tarballs_version: \
-  tzcode$(VERSION).tar.gz tzdata$(VERSION).tar.gz
+  tzcode$(VERSION).tar.gz.t tzdata$(VERSION).tar.gz.t
 tailored_tarballs_version: \
-  tzdata$(VERSION)-tailored.tar.gz
+  tzdata$(VERSION)-tailored.tar.gz.t
 signatures_version: $(ALL_ASC)
 rearguard_signatures_version: $(REARGUARD_ASC)
 traditional_signatures_version: $(TRADITIONAL_ASC)
 
-tzcode$(VERSION).tar.gz: set-timestamps.out
+tzcode$(VERSION).tar.gz.t: set-timestamps.out
 		$(SETUP_TAR) && \
 		$$TAR -cf - \
 		    $(COMMON) $(DOCS) $(SOURCES) | \
-		  gzip $(GZIPFLAGS) >$@.out
-		mv $@.out $@
+		  gzip $(GZIPFLAGS) >$(@:.t=)
+		$(SET_TIMESTAMP) $(@:.t=) $(COMMON) $(DOCS) $(SOURCES)
+		touch $@
 
-tzdata$(VERSION).tar.gz: set-timestamps.out
+tzdata$(VERSION).tar.gz.t: set-timestamps.out
 		$(SETUP_TAR) && \
 		$$TAR -cf - $(TZDATA_DIST) | \
-		  gzip $(GZIPFLAGS) >$@.out
-		mv $@.out $@
+		  gzip $(GZIPFLAGS) >$(@:.t=)
+		$(SET_TIMESTAMP) $(@:.t=) $(TZDATA_DIST)
+		touch $@
 
 # Create empty files with a reproducible timestamp.
 CREATE_EMPTY = TZ=UTC0 touch -mt 202010122253.00
@@ -1256,7 +1258,7 @@ CREATE_EMPTY = TZ=UTC0 touch -mt 202010122253.00
 # for backwards compatibility with tz releases 2018e through 2022a.
 # They should go away eventually.  To build rearguard tarballs you
 # can instead use 'make DATAFORM=rearguard tailored_tarballs'.
-tzdata$(VERSION)-rearguard.tar.gz: rearguard.zi set-timestamps.out
+tzdata$(VERSION)-rearguard.tar.gz.t: rearguard.zi set-timestamps.out
 		rm -fr $@.dir
 		mkdir $@.dir
 		ln $(TZDATA_DIST) $@.dir
@@ -1274,8 +1276,11 @@ tzdata$(VERSION)-rearguard.tar.gz: rearguard.zi set-timestamps.out
 		  (cd $@.dir && \
 		   $$TAR -cf - \
 			$(TZDATA_DIST) pacificnew | \
-		     gzip $(GZIPFLAGS)) >$@.out
-		mv $@.out $@
+		     gzip $(GZIPFLAGS)) >$(@:.t=)
+		$(SET_TIMESTAMP) $(@:.t=) \
+		  $$(cd $@.dir && \
+		       ls $(TZDATA_DIST) pacificnew | sed 's,^,$@.dir/,')
+		touch $@
 
 # Create a tailored tarball suitable for TZUpdater and compatible tools.
 # For example, 'make DATAFORM=vanguard tailored_tarballs' makes a tarball
@@ -1284,7 +1289,7 @@ tzdata$(VERSION)-rearguard.tar.gz: rearguard.zi set-timestamps.out
 # traditional tarball, as data entries are put into 'etcetera' even if they
 # came from some other source file.  However, the effect should be the same
 # for ordinary use, which reads all the source files.
-tzdata$(VERSION)-tailored.tar.gz: set-timestamps.out
+tzdata$(VERSION)-tailored.tar.gz.t: set-timestamps.out
 		rm -fr $@.dir
 		mkdir $@.dir
 		: The dummy pacificnew pacifies TZUpdater 2.3.1 and earlier.
@@ -1317,24 +1322,29 @@ tzdata$(VERSION)-tailored.tar.gz: set-timestamps.out
 		  ln $$links $@.dir
 		$(SETUP_TAR) && \
 		  (cd $@.dir && \
-		   $$TAR -cf - * | gzip $(GZIPFLAGS)) >$@.out
-		mv $@.out $@
+		   $$TAR -cf - *) | gzip $(GZIPFLAGS) >$(@:.t=)
+		$(SET_TIMESTAMP) $(@:.t=) \
+		  $$(cd $@.dir && ls * | sed 's,^,$@.dir/,')
+		touch $@
 
-tzdb-$(VERSION).tar.lz: set-timestamps.out set-tzs-timestamp.out
+tzdb-$(VERSION).tar.lz.t: set-timestamps.out set-tzs-timestamp.out
 		rm -fr tzdb-$(VERSION)
 		mkdir tzdb-$(VERSION)
 		ln $(ENCHILADA) tzdb-$(VERSION)
 		$(SET_TIMESTAMP) tzdb-$(VERSION) tzdb-$(VERSION)/*
 		$(SETUP_TAR) && \
-		$$TAR -cf - tzdb-$(VERSION) | lzip -9 >$@.out
-		mv $@.out $@
+		  $$TAR -cf - tzdb-$(VERSION) | lzip -9 >$(@:.t=)
+		$(SET_TIMESTAMP) $(@:.t=) tzdb-$(VERSION)
+		touch $@
 
-tzcode$(VERSION).tar.gz.asc: tzcode$(VERSION).tar.gz
-tzdata$(VERSION).tar.gz.asc: tzdata$(VERSION).tar.gz
-tzdata$(VERSION)-rearguard.tar.gz.asc: tzdata$(VERSION)-rearguard.tar.gz
-tzdb-$(VERSION).tar.lz.asc: tzdb-$(VERSION).tar.lz
+tzcode$(VERSION).tar.gz.asc.t: tzcode$(VERSION).tar.gz.t
+tzdata$(VERSION).tar.gz.asc.t: tzdata$(VERSION).tar.gz.t
+tzdata$(VERSION)-rearguard.tar.gz.asc.t: tzdata$(VERSION)-rearguard.tar.gz.t
+tzdb-$(VERSION).tar.lz.asc.t: tzdb-$(VERSION).tar.lz.t
 $(ALL_ASC):
-		$(GPG) --armor --detach-sign $?
+		$(GPG) --armor --detach-sign $(?:.t=)
+		$(SET_TIMESTAMP) $(@:.t=) $(?:.t=)
+		touch $@
 
 TYPECHECK_CFLAGS = $(CFLAGS) -DTYPECHECK -D__time_t_defined -D_TIME_T
 typecheck: long-long.ck unsigned.ck

@@ -3,9 +3,21 @@
 # 2009-05-17 by Arthur David Olson.
 # Request POSIX conformance; this must be the first non-comment line.
 .POSIX:
+# By default, builds of code and data assume POSIX.1-2001 or later;
+# this assumption can be relaxed by tailoring the build as described below.
 # On older platforms you may need to scrounge for POSIX conformance.
 # For example, on Solaris 10 (2005) with Sun Studio 12 aka Sun C 5.9 (2007),
 # use 'PATH=/usr/xpg4/bin:$PATH make CC=c99'.
+# Reproducible builds of distribution tarballs also need a copy of the
+# Git repository, and assume the behavior of the following programs
+# (or later versions):
+#	Git 2.7.0 (2016)
+#	GNU Coreutils 6.3 (2006)
+#	GNU Tar 1.14 (2004)
+#	GnuPG 1.4 (2004)
+# Although tzdb does not come with a software bill of materials,
+# you should be able to construct one based on the above information,
+# your platform, and the way you use this Makefile.
 
 # To affect how this Makefile works, you can run a shell script like this:
 #

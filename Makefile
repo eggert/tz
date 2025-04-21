@@ -889,11 +889,9 @@ character-set.ck: $(ENCHILADA)
 
 white-space.ck: $(ENCHILADA)
 	$(UTF8_LOCALE_MISSING) || { \
-		enchilada='$(ENCHILADA)' && \
 		patfmt=' \t|[\f\r\v]' && pat=$$(printf "$$patfmt\\n") && \
 		! grep -En "$$pat|[$s]\$$" \
-		    $${enchilada%leap-seconds.list*} \
-		    $${enchilada#*leap-seconds.list}; \
+		    $(ENCHILADA:leap-seconds.list=); \
 	}
 	touch $@
 

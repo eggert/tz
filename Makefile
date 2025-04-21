@@ -26,7 +26,7 @@
 #
 # This example script is appropriate for a GNU/Linux system
 # which needs more optimization than default, and which does not want
-# gettext's internationalion of diagnostics.
+# gettext's internationalization of diagnostics.
 #
 # Alternatively, you can simply edit this Makefile to tailor the following
 # macro definitions.

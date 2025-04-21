@@ -4,6 +4,9 @@ Unreleased, experimental changes
 
   Changes to build procedure
 
+    Files in distributed tarballs now have correct commit times.
+    Formerly, the committer's time zone was incorrectly ignored.
+
     Distribution products (*.asc, *.gz, and *.lz) now have
     reproducible timestamps.  Formerly, only the contents of the
     compressed tarballs had reproducible timestamps.

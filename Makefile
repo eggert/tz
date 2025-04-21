@@ -1109,7 +1109,7 @@ set-timestamps.out: $(EIGHT_YARDS)
 		    if git diff --quiet HEAD $$file; then \
 		      time=$$(TZ=UTC0 git log -1 \
 			--format='tformat:%cd' \
-			--date='format:%Y-%m-%dT%H:%M:%SZ' \
+			--date='format-local:%Y-%m-%dT%H:%M:%SZ' \
 			$$file) && \
 		      echo "+ touch -md $$time $$file" && \
 		      touch -md $$time $$file; \

@@ -1299,7 +1299,7 @@ tzdata$(VERSION)-tailored.tar.gz.t: set-timestamps.out
 		cd $@.dir && \
 		  $(CREATE_EMPTY) $(PRIMARY_YDATA) $(NDATA) backward \
 		  $$pacificnew
-		(grep '^#' tzdata.zi && echo && cat $(DATAFORM).zi) \
+		(sed '/^#/!d' tzdata.zi && echo && cat $(DATAFORM).zi) \
 		  >$@.dir/etcetera
 		touch -mr tzdata.zi $@.dir/etcetera
 		sed -n \

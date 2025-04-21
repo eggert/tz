@@ -10,10 +10,11 @@
 # To affect how this Makefile works, you can run a shell script like this:
 #
 #	#!/bin/sh
-#	make CC='gcc -std=gnu23' "$@"
+#	make CFLAGS='-O2 -DHAVE_GETTEXT=0' "$@"
 #
-# This example script is appropriate for a circa 2024 GNU/Linux system
-# where a non-default setting enables this package's optional use of C23.
+# This example script is appropriate for a GNU/Linux system
+# which needs more optimization than default, and which does not want
+# gettext's internationalion of diagnostics.
 #
 # Alternatively, you can simply edit this Makefile to tailor the following
 # macro definitions.

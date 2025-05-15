@@ -2,14 +2,14 @@
 #
 # This file is in the public domain.
 #
-# From Paul Eggert (2018-06-27):
+# From Paul Eggert (2025-05-15):
 # This file contains a table where each row stands for a timezone where
 # civil timestamps have agreed since 1970.  Columns are separated by
 # a single tab.  Lines beginning with '#' are comments.  All text uses
 # UTF-8 encoding.  The columns of the table are as follows:
 #
 # 1.  The countries that overlap the timezone, as a comma-separated list
-#     of ISO 3166 2-character country codes.  See the file 'iso3166.tab'.
+#     of ISO 3166 2-character country codes.
 # 2.  Latitude and longitude of the timezone's principal location
 #     in ISO 6709 sign-degrees-minutes-seconds format,
 #     either ±DDMM±DDDMM or ±DDMMSS±DDDMMSS,

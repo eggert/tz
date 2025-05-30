@@ -681,11 +681,14 @@ Zone	America/Menominee	\-5:00	\-	EST	1973 Apr 29 2:00
 .in
 .fi
 Here, an incorrect reading would be there were two clock changes on 1973-04-29,
-the first from 02:00 EST (\-05) to 01:00 CST (\-06),
-and the second an hour later from 02:00 CST (\-06) to 03:00 CDT (\-05).
+the first from 02:00 EST (\-05) to 01:00 CST (\-06) according to the
+.q "until"
+value in the zone line,
+and the second an hour later from 02:00 CST (\-06) to 03:00 CDT (\-05)
+according to the values in the April rule line.
 However,
 .B zic
-interprets this more sensibly as a single transition from 02:00 CST (\-05) to
+interprets this more sensibly as a single transition from 02:00 EST (\-05) to
 02:00 CDT (\-05).
 .PP
 A link line has the form

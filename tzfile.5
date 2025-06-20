@@ -138,7 +138,7 @@ already support the POSIX-required range [\-24:59:59, 25:59:59].
 bytes that represent time zone designations,
 which are null-terminated byte strings, each indexed by the
 .B tt_desigidx
-values mentioned above.
+values mentioned above, and each corresponding to a time zone abbreviation.
 The byte strings can overlap if one is a suffix of the other.
 The encoding of these strings is not specified.
 .IP \(bu
@@ -221,6 +221,7 @@ after the last transition time stored in the file
 or for all instants if the file has no transitions.
 The TZ string is empty (i.e., nothing between the newlines)
 if there is no proleptic representation for such instants.
+.PP
 If non-empty, the TZ string must agree with the local time
 type after the last transition time if present in the eight-byte data;
 for example, given the string
@@ -229,6 +230,10 @@ then if a last transition time is in July, the transition's local time
 type must specify a daylight-saving time abbreviated
 .q "WEST"
 that is one hour east of UT.
+.PP
+The TZ string can contain time zone abbreviations and UT offsets that
+do not appear elsewhere in the TZif file.
+.PP
 Also, if there is at least one transition, time type 0 is associated
 with the time period from the indefinite past up to but not including
 the earliest transition time.
@@ -289,7 +294,7 @@ time, TZif readers should either refuse to process
 post-expiration timestamps, or process them as if the expiration
 time did not exist (possibly with an error indication).
 .PP
-Time zone designations should consist of at least three (3)
+Time zone abbreviations should consist of at least three (3)
 and no more than six (6) ASCII characters from the set of
 alphanumerics,
 .q "\-",
@@ -297,6 +302,10 @@ and
 .q "+".
 This is for compatibility with POSIX requirements for
 time zone abbreviations.
+.PP
+A numeric time zone abbreviation should match the UT offset.
+For example, "+0530" should be used only if the UT offset is 5.5 hours
+ahead of UT, and "\-00" should be used only if the UT offset is zero.
 .PP
 When reading a version 2 or higher file, readers
 should ignore the version 1 header and data block except for

@@ -63,7 +63,7 @@ is
 .BR fat ,
 generate additional data entries that work around potential bugs or
 incompatibilities in older software, such as software that mishandles
-the 64-bit generated data.
+a TZif file's 64-bit data or proleptic TZ string.
 If
 .I bloat
 is
@@ -72,8 +72,9 @@ keep the output files small; this can help check for the bugs
 and incompatibilities.
 The default is
 .BR slim ,
-as software that mishandles 64-bit data typically
-mishandles timestamps after the year 2038 anyway.
+as the
+.B fat
+workarounds are typically good only until the year 2038 anyway.
 Also see the
 .B \-r
 option for another way to alter output size.

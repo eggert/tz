@@ -368,6 +368,14 @@ As a partial workaround, a writer can output more transitions
 than necessary, so that only far-future timestamps are
 mishandled by version 2 readers.
 .IP \(bu
+Some readers might mishandle timestamps after a file's last transition,
+because they require that all abbreviations or UT offsets
+in the proleptic TZ string must also occur somewhere in the file's tables
+of time zone designations and local time type records.
+As a workaround, a writer can output more transitions than necessary,
+so that the other tables contain duplicates of the proleptic TZ string's
+abbreviations and offsets.
+.IP \(bu
 Some readers designed for version 2 do not support
 permanent daylight saving time with transitions after 24:00
 \(en e.g., a TZ string

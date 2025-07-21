@@ -1310,6 +1310,13 @@ Zone	Europe/Helsinki	1:39:49 -	LMT	1878 May 31
 # France
 # Monaco
 
+# From Robert H. van Gent (2025-07-21):
+# The most recent issue of the Annuaire [par le Bureau des Longitudes]
+# on Gallica (2021) ... lists information for France
+# https://gallica.bnf.fr/ark:/12148/bpt6k9127672b/f52.item
+# From Paul Eggert (2025-07-21):
+# Go with the 2020 Annuaire (published 2021) except as noted below.
+
 # From Ciro Discepolo (2000-12-20):
 #
 # Henri Le Corre, Régimes horaires pour le monde entier, Éditions
@@ -1371,7 +1378,6 @@ Zone	Europe/Helsinki	1:39:49 -	LMT	1878 May 31
 # problems in Algiers, Monaco and Tunis.
 
 #
-# Shank & Pottenger seem to use '24:00' ambiguously; resolve it with Whitman.
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	France	1916	only	-	Jun	14	23:00s	1:00	S
 Rule	France	1916	1919	-	Oct	Sun>=1	23:00s	0	-
@@ -1385,7 +1391,13 @@ Rule	France	1921	only	-	Oct	25	23:00s	0	-
 Rule	France	1922	only	-	Mar	25	23:00s	1:00	S
 # DISHO writes that a law of 1923-05-24 specified 3rd Sat in Apr at 23:00 to 1st
 # Sat in Oct at 24:00; and that in 1930, because of Easter, the transitions
-# were Apr 12 and Oct 5.  Go with Shanks & Pottenger.
+# were Apr 12 and Oct 5.  Apparently spring 1923 was tricky: the New York
+# Times (1923-05-16 p 12 c 2) reported that the Chamber of Deputies on May 15
+# "after a strong appeal by Premier Poincaré, consented at last to
+# pass the bill authorizing daylight saving time for this year in
+# France.... The bill must now go before the Senate ...".
+# Use the 2020 Annuaire dates, except for spring 1923 where
+# Shanks & Pottenger's May 26 seems more plausible.
 Rule	France	1922	1938	-	Oct	Sat>=1	23:00s	0	-
 Rule	France	1923	only	-	May	26	23:00s	1:00	S
 Rule	France	1924	only	-	Mar	29	23:00s	1:00	S

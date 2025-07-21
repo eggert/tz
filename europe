@@ -54,7 +54,7 @@
 #	Десятая гос. тип., 1919.
 #	http://resolver.gpntb.ru/purl?docushare/dsweb/Get/Resource-2011/Byalokoz__E.L.__Novyy__schet__vremeni__v__techenie__sutok__izd__2(1).pdf
 #
-#	Brazil's Divisão Serviço da Hora (DSHO),
+#	Brazil's Divisão de Serviços da Hora (DISHO)
 #	History of Summer Time
 #	<http://pcdsh01.on.br/HISTHV.htm>
 #	(1998-09-21, in Portuguese)
@@ -914,7 +914,7 @@ Rule	Belgium	1922	1927	-	Oct	Sat>=1	23:00s	0	-
 Rule	Belgium	1923	only	-	Apr	21	23:00s	1:00	S
 Rule	Belgium	1924	only	-	Mar	29	23:00s	1:00	S
 Rule	Belgium	1925	only	-	Apr	 4	23:00s	1:00	S
-# DSH writes that a royal decree of 1926-02-22 specified the Sun following 3rd
+# DISHO writes that a royal decree of 1926-02-22 specified the Sun following 3rd
 # Sat in Apr (except if it's Easter, in which case it's one Sunday earlier),
 # to Sun following 1st Sat in Oct, and that a royal decree of 1928-09-15
 # changed the transition times to 02:00 GMT.
@@ -1383,7 +1383,7 @@ Rule	France	1920	only	-	Oct	23	23:00s	0	-
 Rule	France	1921	only	-	Mar	14	23:00s	1:00	S
 Rule	France	1921	only	-	Oct	25	23:00s	0	-
 Rule	France	1922	only	-	Mar	25	23:00s	1:00	S
-# DSH writes that a law of 1923-05-24 specified 3rd Sat in Apr at 23:00 to 1st
+# DISHO writes that a law of 1923-05-24 specified 3rd Sat in Apr at 23:00 to 1st
 # Sat in Oct at 24:00; and that in 1930, because of Easter, the transitions
 # were Apr 12 and Oct 5.  Go with Shanks & Pottenger.
 Rule	France	1922	1938	-	Oct	Sat>=1	23:00s	0	-
@@ -2096,12 +2096,10 @@ Zone	Europe/Warsaw	1:24:00 -	LMT	1880
 # all clocks therefore having to be advanced or set back correspondingly ...
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
-# From Tim Parenti (2024-07-01), per Paul Eggert (1999-01-30):
-# DSH writes in their history that Decreto 1469 of 1915-03-30 established
-# summer time and that, "despite" this, the change to the clocks was not done
-# every year, depending on what Spain did, because of railroad schedules.
-# In fact, that decree had nothing to do with DST; rather, it regulated the
-# sending of time signals.  But we do see linkage to Spain in the 1920s below.
+# From Tim Parenti (2024-07-01):
+# Decreto 1469 of 1915-03-30 ... had nothing to do with DST;
+# rather it regulated the sending of time signals.
+# But we do see linkage to Spain in the 1920s below.
 # https://dre.pt/dr/detalhe/decreto/1469-1915-285721
 # https://dre.pt/application/conteudo/285721
 #

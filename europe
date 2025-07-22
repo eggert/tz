@@ -1389,6 +1389,12 @@ Rule	France	1920	only	-	Oct	23	23:00s	0	-
 Rule	France	1921	only	-	Mar	14	23:00s	1:00	S
 Rule	France	1921	only	-	Oct	25	23:00s	0	-
 Rule	France	1922	only	-	Mar	25	23:00s	1:00	S
+# From Robert H. van Gent (2025-07-22):
+# There is a curious history behind the erroneous date for the start of
+# daylight saving in France in 1923 as listed in the current issues of
+# the Annuaire du Bureau des Longitudes.  [See:]
+# https://lists.iana.org/hyperkitty/list/tz@iana.org/message/MYQEJMSXO2AIEZ3UIXZKMTTAIPY7KNT2/
+# From Paul Eggert (2025-07-22):
 # DISHO writes that a law of 1923-05-24 specified 3rd Sat in Apr at 23:00 to 1st
 # Sat in Oct at 24:00; and that in 1930, because of Easter, the transitions
 # were Apr 12 and Oct 5.  Apparently spring 1923 was tricky: the New York
@@ -1397,7 +1403,8 @@ Rule	France	1922	only	-	Mar	25	23:00s	1:00	S
 # pass the bill authorizing daylight saving time for this year in
 # France.... The bill must now go before the Senate ...".
 # Use the 2020 Annuaire dates, except for spring 1923 where
-# Shanks & Pottenger's May 26 seems more plausible.
+# Shanks & Pottenger's May 26 matches the dates given in the 1924 and
+# 1961-2001 issues of the Annuaire.
 Rule	France	1922	1938	-	Oct	Sat>=1	23:00s	0	-
 Rule	France	1923	only	-	May	26	23:00s	1:00	S
 Rule	France	1924	only	-	Mar	29	23:00s	1:00	S

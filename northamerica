@@ -2705,7 +2705,7 @@ Zone America/Mexico_City -6:36:36 -	LMT	1922 Jan  1  7:00u
 # Chihuahua (near US border - western side)
 # This includes the municipios of Janos, Ascensión, Juárez, Guadalupe, and
 # Práxedis G Guerrero.
-# http://gaceta.diputados.gob.mx/PDF/65/2a022/nov/20221124-VII.pdf
+# https://gaceta.diputados.gob.mx/PDF/65/2022/nov/20221124-VII.pdf
 Zone America/Ciudad_Juarez -7:05:56 -	LMT	1922 Jan  1  7:00u
 			-7:00	-	MST	1927 Jun 10
 			-6:00	-	CST	1930 Nov 15
@@ -2720,7 +2720,7 @@ Zone America/Ciudad_Juarez -7:05:56 -	LMT	1922 Jan  1  7:00u
 # Chihuahua (near US border - eastern side)
 # This includes the municipios of Coyame del Sotol, Ojinaga, and Manuel
 # Benavides.
-# http://gaceta.diputados.gob.mx/PDF/65/2a022/nov/20221124-VII.pdf
+# https://gaceta.diputados.gob.mx/PDF/65/2022/nov/20221124-VII.pdf
 Zone America/Ojinaga	-6:57:40 -	LMT	1922 Jan  1  7:00u
 			-7:00	-	MST	1927 Jun 10
 			-6:00	-	CST	1930 Nov 15

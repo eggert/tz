@@ -2444,9 +2444,23 @@ Zone America/Dawson	-9:17:40 -	LMT	1900 Aug 20
 # on the same dates or with a difference of one day.
 # So it may be easier to implement these changes as DST with rule CA
 # during this whole period.
+
+# From Alois Treindl (2025-07-29):
+# I did a quick newspaper archive research on https://hndm.iib.unam.mx/
+# and found that Periódico Oficial del Estado de Baja California Norte
+# (1973-04-20) states clearly that DST was observed from last Sunday
+# in April to last Sunday in October....  I have a few more data from the
+# official bulletin for DST begin or end in Baja California 1964 1967 1969
+# 1972 1973 (already sent) 1974 1975 1976 I do not know whether it is safe to
+# assume that it also applied in the years where I did not yet find proof.
+# The 1974 end of DST contains a reference to an Acuerdo of 1973-dec-20 which
+# I could not find....  One might assume that Baja California, which followed
+# US-CA in all these other yours, did the same.
 #
-# From Paul Eggert (2024-08-18):
-# For now, maintain the slightly-different history for Baja California,
+# From Paul Eggert (2025-08-04):
+# Assume that Tijuana agreed with San Diego from 1953 through 1996,
+# as this agrees with Alois Treindl's data and with Shanks.
+# For now, keep the slightly-different 1948/1952 history for Baja California,
 # as we have no information on whether 1948/1952 clocks in Tijuana followed
 # the decrees or followed San Diego.
 
@@ -2827,9 +2841,7 @@ Zone America/Tijuana	-7:48:04 -	LMT	1922 Jan  1  7:00u
 			-8:00	1:00	PDT	1951 Sep 30  2:00
 			-8:00	-	PST	1952 Apr 27  2:00
 			-8:00	1:00	PDT	1952 Sep 28  2:00
-			-8:00	-	PST	1954
-			-8:00	CA	P%sT	1961
-			-8:00	-	PST	1976
+			-8:00	CA	P%sT	1967
 			-8:00	US	P%sT	1996
 			-8:00	Mexico	P%sT	2001
 			-8:00	US	P%sT	2002 Feb 20

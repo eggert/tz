@@ -2,6 +2,12 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Changes to past timestamps
+
+    Baja California agreed with California's DST rules in 1953 and in
+    1961 through 1975, instead of observing standard time all year.
+    (Thanks to Alois Treindl.)
+
   Changes to build procedure
 
     Files in distributed tarballs now have correct commit times.

@@ -9,12 +9,24 @@ if (type nroff && type perl) >/dev/null 2>&1; then
   # Tell groff not to emit SGR escape sequences (ANSI color escapes).
   export GROFF_NO_SGR=1
 
-  echo ".am TH
-.hy 0
+  printf '%s\n' '.
+.\" -- Tailor groff -man --
+.
+.\" Left-adjust and do not hyphenate.
+.ds AD l
+.nr HY 0
+.
+.\" -- Tailor traditional troff -man --
+.
+.\" Left-adjust and do not hyphenate.
+.am TH
 .na
+.hy 0
 ..
+.\" Omit page headers and footers.
 .rm }H
-.rm }F" | nroff -man - ${1+"$@"} | perl -ne '
+.rm }F
+.' | nroff -man - ${1+"$@"} | perl -ne '
 	binmode STDIN, '\'':encoding(utf8)'\'';
 	binmode STDOUT, '\'':encoding(utf8)'\'';
 	chomp;

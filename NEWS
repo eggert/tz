@@ -17,6 +17,11 @@ Unreleased, experimental changes
     reproducible timestamps.  Formerly, only the contents of the
     compressed tarballs had reproducible timestamps.
 
+    By default, distributed formatted man pages (*.txt) now use UTF-8
+    and are left-adjusted more consistently.  A new Makefile macro
+    MANFLAGS can override these defaults.  (Thanks to G. Branden
+    Robinson for inspiring these changes.)
+
   Changes to commentary
 
     The leapseconds file contains commentary about the IERS and NIST

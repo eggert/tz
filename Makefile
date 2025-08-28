@@ -219,6 +219,12 @@ PACKRATLIST=
 
 UTF8_LOCALE=	en_US.utf8
 
+# Extra flags for producing man page files like tzfile.5.txt.
+# These flags are used only if groff (or mandoc) is present.
+# Each option should begin with "-" and should lack shell metacharacters.
+# Plausible options include -Tascii and -Tutf8.
+MANFLAGS=	-Tutf8
+
 # Non-default libraries needed to link.
 # On some hosts, this should have -lintl unless CFLAGS has -DHAVE_GETTEXT=0.
 LDLIBS=
@@ -1075,7 +1081,7 @@ zdump.8.txt:	zdump.8
 zic.8.txt:	zic.8
 
 $(MANTXTS):	workman.sh
-		LC_ALL=C sh workman.sh $(@:.txt=) >$@.out
+		LC_ALL=C sh workman.sh $(MANFLAGS) $(@:.txt=) >$@.out
 		mv $@.out $@
 
 # Set file timestamps deterministically if possible,

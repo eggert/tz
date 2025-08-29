@@ -534,13 +534,10 @@ SAFE_CHARSET3=	'abcdefghijklmnopqrstuvwxyz{|}~'
 SAFE_CHARSET=	$(SAFE_CHARSET1)$(SAFE_CHARSET2)$(SAFE_CHARSET3)
 SAFE_CHAR=	'[]'$(SAFE_CHARSET)'-]'
 
-# These non-alphabetic, non-ASCII printable characters are Latin-1,
-# and so are likely displayable even in editors like XEmacs 21
-# that have limited display capabilities.
-UNUSUAL_OK_LATIN_1 = ¡¢£¤¥¦§¨©«¬®¯°±²³´¶·¸¹»¼½¾¿×÷
-# Non-ASCII non-letters that OK_CHAR allows, as these characters are
-# useful in commentary.
-UNUSUAL_OK_CHARSET= $(UNUSUAL_OK_LATIN_1)
+# These non-alphabetic, non-ASCII printable characters are
+# used in commentary or in generated *.txt files
+# and are not likely to cause confusion.
+UNUSUAL_OK_CHARSET= §«°±»½¾×–‘’“”•≤
 
 # Put this in a bracket expression to match spaces.
 s = [:space:]
@@ -549,9 +546,6 @@ s = [:space:]
 # This is the same as SAFE_CHAR, except that UNUSUAL_OK_CHARSET and
 # multibyte letters are also allowed so that commentary can contain a
 # few safe symbols and people's names and can quote non-English sources.
-# Other non-letters are limited to ASCII renderings for the
-# convenience of maintainers using XEmacs 21.5.34, which by default
-# mishandles Unicode characters U+0100 and greater.
 OK_CHAR=	'[][:alpha:]$(UNUSUAL_OK_CHARSET)'$(SAFE_CHARSET)'-]'
 
 # SAFE_LINE matches a line of safe characters.
@@ -898,8 +892,8 @@ UTF8_LOCALE_MISSING = \
 character-set.ck: $(ENCHILADA)
 	$(UTF8_LOCALE_MISSING) || { \
 		sharp='#' && \
-		! grep -Env $(SAFE_LINE) $(MANS) date.1 $(MANTXTS) \
-			$(MISC) $(SOURCES) $(WEB_PAGES) \
+		! grep -Env $(SAFE_LINE) $(MANS) date.1 \
+			$(MISC) $(SOURCES) \
 			CONTRIBUTING LICENSE README SECURITY \
 			version tzdata.zi && \
 		! grep -Env $(SAFE_LINE)'|^UNUSUAL_OK_'$(OK_CHAR)'*$$' \

@@ -28,6 +28,9 @@ Unreleased, experimental changes
     last-modified and expiration timestamps for leap second data.
     (Thanks to Judah Levine.)
 
+    Commentary now also uses characters from the set –‘’“”•≤ as this
+    can be useful and should work with current text editors.
+
 
 Release 2025b - 2025-03-22 13:40:46 -0700
 

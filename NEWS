@@ -4,14 +4,14 @@ Unreleased, experimental changes
 
   Changes to past timestamps
 
-    Baja California agreed with California's DST rules in 1953 and in
+    Baja California agreed with California’s DST rules in 1953 and in
     1961 through 1975, instead of observing standard time all year.
     (Thanks to Alois Treindl.)
 
   Changes to build procedure
 
     Files in distributed tarballs now have correct commit times.
-    Formerly, the committer's time zone was incorrectly ignored.
+    Formerly, the committer’s time zone was incorrectly ignored.
 
     Distribution products (*.asc, *.gz, and *.lz) now have
     reproducible timestamps.  Formerly, only the contents of the
@@ -29,7 +29,9 @@ Unreleased, experimental changes
     (Thanks to Judah Levine.)
 
     Commentary now also uses characters from the set –‘’“”•≤ as this
-    can be useful and should work with current text editors.
+    can be useful and should work with current applications.  This
+    also affects data in iso3166.tab and zone1970.tab, which now
+    contain strings like “Côte d’Ivoire” instead of “Côte d'Ivoire”.
 
 
 Release 2025b - 2025-03-22 13:40:46 -0700

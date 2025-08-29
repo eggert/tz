@@ -149,7 +149,7 @@ among the following goals:
     Be robust in the presence of political changes.
     For example, names are typically not tied to countries, to avoid
     incompatibilities when countries change their name (e.g.,
-    Swaziland&rarr;Eswatini) or when locations change countries (e.g., Hong
+    Swaziland→Eswatini) or when locations change countries (e.g., Hong
     Kong from UK colony to China).
     There is no requirement that every country or national
     capital must have a timezone name.
@@ -370,7 +370,7 @@ Although a <code>zone1970.tab</code> location’s
 <a href="https://en.wikipedia.org/wiki/Longitude">longitude</a>
 corresponds to
 its <a href="https://en.wikipedia.org/wiki/Local_mean_time">local mean
-time (<abbr>LMT</abbr>)</a> offset with one hour for every 15&deg;
+time (<abbr>LMT</abbr>)</a> offset with one hour for every 15°
 east longitude, this relationship is not exact.
 The backward-compatibility file <code>zone.tab</code> is similar
 but conforms to the older-version guidelines related to <abbr>ISO</abbr> 3166-1;
@@ -483,7 +483,7 @@ in decreasing order of importance:
       NST/NDT/NWT/NPT/NDDT Newfoundland,
       NST/NDT/NWT/NPT Nome,
       NZMT/NZST New Zealand through 1945,
-      NZST/NZDT New Zealand 1946&ndash;present,
+      NZST/NZDT New Zealand 1946–present,
       PKT/PKST Pakistan,
       PST/PDT/PWT/PPT Pacific,
       PST/PDT Philippine,
@@ -546,13 +546,13 @@ in decreasing order of importance:
     <small>A few abbreviations also follow the pattern that
     <abbr>GMT</abbr>/<abbr>BST</abbr> established for time in the UK.
     They are:
-      BMT/BST for Bermuda 1890&ndash;1930,
+      BMT/BST for Bermuda 1890–1930,
       CMT/BST for Calamarca Mean Time and Bolivian Summer Time
-	1890&ndash;1932,
+	1890–1932,
       DMT/IST for Dublin/Dunsink Mean Time and Irish Summer Time
-	1880&ndash;1916,
-      MMT/MST/MDST for Moscow 1880&ndash;1919, and
-      RMT/LST for Riga Mean Time and Latvian Summer time 1880&ndash;1926.
+	1880–1916,
+      MMT/MST/MDST for Moscow 1880–1919, and
+      RMT/LST for Riga Mean Time and Latvian Summer time 1880–1926.
     </small>
     </p>
   </li>
@@ -649,7 +649,7 @@ Errors in the <code><abbr>tz</abbr></code> database arise from many sources:
     In her 2015 book
     <cite><a
     href="https://www.hup.harvard.edu/catalog.php?isbn=9780674286146">The
-    Global Transformation of Time, 1870&ndash;1950</a></cite>,
+    Global Transformation of Time, 1870–1950</a></cite>,
     Vanessa Ogle writes
     “Outside of Europe and North America there was no system of time
     zones at all, often not even a stable landscape of mean times,
@@ -747,7 +747,7 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
     than what the <code><abbr>tz</abbr></code> code can handle.
     For example, from 1880 to 1916 clocks in Ireland observed Dublin Mean
     Time (estimated to be <abbr>UT</abbr>
-    &minus;00:25:21.1); although the <code><abbr>tz</abbr></code>
+    −00:25:21.1); although the <code><abbr>tz</abbr></code>
     source data can represent the .1 second, TZif files and the code cannot.
     In practice these old specifications were rarely if ever
     implemented to subsecond precision.
@@ -843,7 +843,7 @@ href="https://www.dissentmagazine.org/blog/booked-a-global-history-of-time-vanes
     The relationship between POSIX time (that is, <abbr>UTC</abbr> but
     ignoring <a href="https://en.wikipedia.org/wiki/Leap_second">leap
     seconds</a>) and <abbr>UTC</abbr> is not agreed upon.
-    This affects time stamps during the leap second era (1972&ndash;2035).
+    This affects time stamps during the leap second era (1972–2035).
     Although the POSIX
     clock officially stops during an inserted leap second, at least one
     proposed standard has it jumping back a second instead; and in
@@ -962,7 +962,7 @@ with problems that were fixed in later POSIX editions.
       </dd>
       <dt><var>offset</var></dt><dd>
 	is of the form
-	<code>[&plusmn;]<var>hh</var>:[<var>mm</var>[:<var>ss</var>]]</code>
+	<code>[±]<var>hh</var>:[<var>mm</var>[:<var>ss</var>]]</code>
 	and specifies the offset west of <abbr>UT</abbr>.
 	<var>hh</var> may be a single digit;
 	0&le;<var>hh</var>&le;24.
@@ -1049,11 +1049,11 @@ POSIX.1-2024 extends POSIX.1-2017 in the following significant ways:
     Earlier POSIX editions lack this requirement.
   </li>
   <li>
-    DST transition times can range from &minus;167:59:59
+    DST transition times can range from −167:59:59
     to 167:59:59 instead of merely from 00:00:00 to 24:59:59.
     This allows for proleptic TZ strings
     like <code>"&lt;-02&gt;2&lt;-01&gt;,M3.5.0/-1,M10.5.0/0"</code>
-    where the transition time &minus;1:00 means 23:00 the previous day.
+    where the transition time −1:00 means 23:00 the previous day.
   </li>
 </ul>
 <p>
@@ -1068,12 +1068,12 @@ However POSIX.1-2024, like earlier POSIX editions, has some limitations:
     In POSIX, there is no tamper-proof way for a process to learn the
     system’s best idea of local (wall clock) time.
     This is important for applications that an administrator wants
-    used only at certain times &ndash; without regard to whether the
+    used only at certain times – without regard to whether the
     user has fiddled the
     <code>TZ</code> environment variable.
     While an administrator can “do everything in <abbr>UT</abbr>” to
     get around the problem, doing so is inconvenient and precludes
-    handling daylight saving time shifts &ndash; as might be required to
+    handling daylight saving time shifts – as might be required to
     limit phone calls to off-peak hours.
   </li>
   <li>
@@ -1262,7 +1262,7 @@ The vestigial <abbr>API</abbr>s are:
     The functions that are conditionally compiled
     if <code>STD_INSPIRED</code> is nonzero should, at this point, be
     looked on primarily as food for thought.
-    They are not in any sense “standard compatible” &ndash; some are
+    They are not in any sense “standard compatible” – some are
     not, in fact, specified in <em>any</em> standard.
     They do, however, represent responses of various authors to
     standardization proposals.
@@ -1391,8 +1391,8 @@ counts of seconds since the POSIX epoch normally include leap seconds,
 as opposed to POSIX <code>time_t</code> counts which exclude leap seconds.
 This modified timescale is converted to <abbr>UTC</abbr>
 at the same point that time zone and <abbr>DST</abbr>
-adjustments are applied &ndash;
-namely, at calls to <code>localtime</code> and analogous functions &ndash;
+adjustments are applied –
+namely, at calls to <code>localtime</code> and analogous functions –
 and the process is driven by leap second information
 stored in alternate versions of the <abbr>TZif</abbr> files.
 Because a leap second adjustment may be needed even
@@ -1473,7 +1473,7 @@ Some of their family members also adapted to Mars time.
 Dozens of special Mars watches were built for JPL workers who kept
 Mars time during the
 <a href="https://en.wikipedia.org/wiki/Mars_Exploration_Rover">Mars
-Exploration Rovers (MER)</a> mission (2004&ndash;2018).
+Exploration Rovers (MER)</a> mission (2004–2018).
 These timepieces looked like normal Seikos and Citizens but were adjusted
 to use Mars seconds rather than terrestrial seconds, although
 unfortunately the adjusted watches were unreliable and appear to have
@@ -1567,7 +1567,7 @@ Sources for time on other planets:
     Jia-Rui Chong,
     “<a href="https://www.latimes.com/archives/la-xpm-2004-jan-14-sci-marstime14-story.html">Workdays
     Fit for a Martian</a>”, <cite>Los Angeles Times</cite>
-    (2004-01-14), pp A1, A20&ndash;A21.
+    (2004-01-14), pp A1, A20–A21.
   </li>
   <li>
     Tom Chmielewski,

@@ -246,17 +246,17 @@ includes the following fields:
 .PP
 .nf
 .ta 2n +\w'long tm_gmtoff;nn'u
-	int tm_sec;	/\(** seconds (0\*(en60) \(**/
-	int tm_min;	/\(** minutes (0\*(en59) \(**/
-	int tm_hour;	/\(** hours (0\*(en23) \(**/
-	int tm_mday;	/\(** day of month (1\*(en31) \(**/
-	int tm_mon;	/\(** month of year (0\*(en11) \(**/
-	int tm_year;	/\(** year \- 1900 \(**/
-	int tm_wday;	/\(** day of week (Sunday = 0) \(**/
-	int tm_yday;	/\(** day of year (0\*(en365) \(**/
-	int tm_isdst;	/\(** is daylight saving time in effect? \(**/
-	char \(**tm_zone;	/\(** time zone abbreviation (optional) \(**/
-	long tm_gmtoff;	/\(** offset from UT in seconds (optional) \(**/
+	int tm_sec;	/* seconds (0\*(en60) */
+	int tm_min;	/* minutes (0\*(en59) */
+	int tm_hour;	/* hours (0\*(en23) */
+	int tm_mday;	/* day of month (1\*(en31) */
+	int tm_mon;	/* month of year (0\*(en11) */
+	int tm_year;	/* year \- 1900 */
+	int tm_wday;	/* day of week (Sunday = 0) */
+	int tm_yday;	/* day of year (0\*(en365) */
+	int tm_isdst;	/* is daylight saving time in effect? */
+	char *tm_zone;	/* time zone abbreviation (optional) */
+	long tm_gmtoff;	/* offset from UT in seconds (optional) */
 .fi
 .RE
 .PP

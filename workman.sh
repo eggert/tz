@@ -17,10 +17,7 @@ done
 
 groff="groff -dAD=l -rHY=0 $manflags -mtty-char -man -ww -P-bcou"
 if ($groff) </dev/null >/dev/null 2>&1; then
-  # Repair groff 1.23 -Tutf8 misfeature: it renders "*" as U+2217.  Do not put
-  # the bad character directly in this file, to pacify "make character-set.ck".
-  ASTERISK_OPERATOR=`printf '\342\210\227\n'` # U+2217
-  $groff "$@" | sed "s/$ASTERISK_OPERATOR/*/g"
+  $groff "$@"
 elif (type mandoc && type col) >/dev/null 2>&1; then
   mandoc $manflags -man "$@" | col -bx
 elif (type nroff && type perl) >/dev/null 2>&1; then

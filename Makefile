@@ -894,7 +894,7 @@ character-set.ck: $(ENCHILADA)
 		sharp='#' && \
 		! grep -Env $(SAFE_LINE) $(MANS) date.1 \
 			$(MISC) $(SOURCES) \
-			CONTRIBUTING LICENSE README SECURITY \
+			LICENSE \
 			version tzdata.zi && \
 		! grep -Env $(SAFE_LINE)'|^UNUSUAL_OK_'$(OK_CHAR)'*$$' \
 			Makefile && \

@@ -535,6 +535,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		name = TZDEFAULT;
 		if (! name)
 		  return EINVAL;
+		tzloadflags &= ~TZLOAD_FROMENV;
 	}
 
 	if (name[0] == ':')

@@ -22,6 +22,12 @@ Unreleased, experimental changes
     MANFLAGS can override these defaults.  (Thanks to G. Branden
     Robinson for inspiring these changes.)
 
+  Changes to code
+
+    An unset TZ is no longer invalid when /etc/localtime is missing,
+    and is abbreviated "UTC" not "-00".  This reverts to 2024b behavior.
+    (Problem and patch reported by Dag-Erling Smørgrav.)
+
   Changes to commentary
 
     The leapseconds file contains commentary about the IERS and NIST

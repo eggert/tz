@@ -412,7 +412,9 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 \
 # functions to be added to the time conversion library.
 # "offtime" is like "gmtime" except that it accepts a second (long) argument
 # that gives an offset to add to the time_t when converting it.
-# I.e., "offtime" is like calling "localtime_rz" with a fixed-offset zone.
+# "offtime_r" is to "offtime" what "gmtime_r" is to "gmtime".
+# I.e., "offtime" and "offtime_r" are like calling "localtime_rz"
+# with a fixed-offset zone.
 # "timelocal" is nearly equivalent to "mktime".
 # "timeoff" is like "timegm" except that it accepts a second (long) argument
 # that gives an offset to use when converting to a time_t.

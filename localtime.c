@@ -1770,14 +1770,19 @@ gmtime(const time_t *timep)
    Callers can instead use localtime_rz with a fixed-offset zone.  */
 
 struct tm *
-offtime(const time_t *timep, long offset)
+offtime_r(time_t const *restrict timep, long offset, struct tm *restrict tmp)
 {
   gmtcheck();
+  return gmtsub(gmtptr, timep, offset, tmp);
+}
 
+struct tm *
+offtime(time_t const *timep, long offset)
+{
 #  if !SUPPORT_C89
   static struct tm tm;
 #  endif
-  return gmtsub(gmtptr, timep, offset, &tm);
+  return offtime_r(timep, offset, &tm);
 }
 
 # endif

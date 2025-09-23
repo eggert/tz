@@ -28,6 +28,10 @@ Unreleased, experimental changes
     and is abbreviated "UTC" not "-00".  This reverts to 2024b behavior.
     (Problem and patch reported by Dag-Erling Smørgrav.)
 
+    New function offtime_r, short for fixed-offset localtime_rz.
+    It is defined if STD_INSPIRED is defined.
+    (Patch from Dag-Erling Smørgrav.)
+
   Changes to commentary
 
     The leapseconds file contains commentary about the IERS and NIST

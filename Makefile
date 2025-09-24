@@ -267,6 +267,7 @@ LDLIBS=
 #  -DHAVE_STDINT_H=0 if <stdint.h> does not work*+
 #  -DHAVE_STRFTIME_L if <time.h> declares locale_t and strftime_l
 #  -DHAVE_STRDUP=0 if your system lacks the strdup function
+#  -DHAVE_STRNLEN=0 if your system lacks the strnlen function+
 #  -DHAVE_STRTOLL=0 if your system lacks the strtoll function+
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
 #  -DHAVE_SYS_STAT_H=0 if <sys/stat.h> does not work*

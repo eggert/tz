@@ -32,6 +32,9 @@ Unreleased, experimental changes
     It is defined if STD_INSPIRED is defined.
     (Patch from Dag-Erling Smørgrav.)
 
+    tzcode now uses strnlen to improve asymptotic performance a bit.
+    Compile with -DHAVE_STRNLEN=0 if your platform lacks it.
+
   Changes to commentary
 
     The leapseconds file contains commentary about the IERS and NIST

@@ -212,7 +212,19 @@
 #undef tzfree
 
 #include <stddef.h>
+
 #include <string.h>
+#if defined HAVE_STRNLEN && !HAVE_STRNLEN
+static size_t
+strnlen (char const *s, size_t maxlen)
+{
+  size_t i;
+  for (i = 0; i < maxlen && s[i]; i++)
+    continue;
+  return i;
+}
+#endif
+
 #if !PORT_TO_C89
 # include <inttypes.h>
 #endif

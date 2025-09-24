@@ -460,7 +460,7 @@ scrub_abbrs(struct state *sp)
 
 	/* Reject overlong abbreviations.  */
 	for (i = 0; i < sp->charcnt - (TZNAME_MAXIMUM + 1); ) {
-	  int len = strlen(&sp->chars[i]);
+	  int len = strnlen(&sp->chars[i], TZNAME_MAXIMUM + 1);
 	  if (TZNAME_MAXIMUM < len)
 	    return EOVERFLOW;
 	  i += len + 1;
@@ -549,7 +549,8 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 #endif
 	if (!doaccess) {
 		char const *dot;
-		if (sizeof lsp->fullname - sizeof tzdirslash <= strlen(name))
+		if (sizeof lsp->fullname - sizeof tzdirslash
+		    <= strnlen(name, sizeof lsp->fullname - sizeof tzdirslash))
 		  return ENAMETOOLONG;
 
 		/* Create a string "TZDIR/NAME".  Using sprintf here
@@ -793,7 +794,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 				break;
 			      }
 			    if (! (j < charcnt)) {
-			      int tsabbrlen = strlen(tsabbr);
+			      int tsabbrlen = strnlen(tsabbr, TZ_MAX_CHARS - j);
 			      if (j + tsabbrlen < TZ_MAX_CHARS) {
 				strcpy(sp->chars + j, tsabbr);
 				charcnt = j + tsabbrlen + 1;
@@ -1474,7 +1475,7 @@ tzset_unlocked(void)
 {
   char const *name = getenv("TZ");
   struct state *sp = lclptr;
-  int lcl = name ? strlen(name) < sizeof lcl_TZname : -1;
+  int lcl = name ? strnlen(name, sizeof lcl_TZname) < sizeof lcl_TZname : -1;
   if (lcl < 0
       ? lcl_is_set < 0
       : 0 < lcl_is_set && strcmp(lcl_TZname, name) == 0)

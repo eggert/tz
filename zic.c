@@ -3932,7 +3932,7 @@ mp = _("time zone abbreviation differs from POSIX standard");
 		if (mp != NULL)
 			warning("%s (%s)", mp, string);
 	}
-	i = strlen(string) + 1;
+	i = strnlen(string, TZ_MAX_CHARS - charcnt) + 1;
 	if (charcnt + i > TZ_MAX_CHARS) {
 		error(_("too many, or too long, time zone abbreviations"));
 		exit(EXIT_FAILURE);

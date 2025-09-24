@@ -32,7 +32,7 @@
 ** Each file begins with. . .
 */
 
-#define	TZ_MAGIC	"TZif"
+#define TZ_MAGIC "TZif"
 
 struct tzhead {
 	char	tzh_magic[4];		/* TZ_MAGIC */

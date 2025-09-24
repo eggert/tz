@@ -82,16 +82,16 @@ static_assert(IINNTT_MIN < INT_MIN && INT_MAX < IINNTT_MAX);
 # define time_t timex_t
 # if MKTIME_FITS_IN(LONG_MIN, LONG_MAX)
 typedef long timex_t;
-# define TIME_T_MIN LONG_MIN
-# define TIME_T_MAX LONG_MAX
+#  define TIME_T_MIN LONG_MIN
+#  define TIME_T_MAX LONG_MAX
 # elif MKTIME_FITS_IN(LLONG_MIN, LLONG_MAX)
 typedef long long timex_t;
-# define TIME_T_MIN LLONG_MIN
-# define TIME_T_MAX LLONG_MAX
+#  define TIME_T_MIN LLONG_MIN
+#  define TIME_T_MAX LLONG_MAX
 # else
 typedef intmax_t timex_t;
-# define TIME_T_MIN INTMAX_MIN
-# define TIME_T_MAX INTMAX_MAX
+#  define TIME_T_MIN INTMAX_MIN
+#  define TIME_T_MAX INTMAX_MAX
 # endif
 
 # ifdef TM_GMTOFF
@@ -296,7 +296,7 @@ static int		lcl_is_set;
 
 # if SUPPORT_C89
 static struct tm	tm;
-#endif
+# endif
 
 # if 2 <= HAVE_TZNAME + TZ_TIME_T
 char *tzname[2] = { UNCONST(wildabbr), UNCONST(wildabbr) };

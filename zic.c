@@ -167,8 +167,8 @@ symlink(char const *target, char const *linkname)
 }
 #endif
 #ifndef AT_SYMLINK_FOLLOW
-#  define linkat(targetdir, target, linknamedir, linkname, flag) \
-     (errno = ENOTSUP, -1)
+# define linkat(targetdir, target, linknamedir, linkname, flag) \
+   (errno = ENOTSUP, -1)
 #endif
 
 static void	addtt(zic_t starttime, int type);

@@ -322,150 +322,150 @@
 ** previously included files.  glibc 2.1 and Solaris 10 and later have
 ** stdint.h, even with pre-C99 compilers.
 */
-#if !defined HAVE_STDINT_H && defined __has_include
-# define HAVE_STDINT_H 1 /* C23 __has_include implies C99 stdint.h.  */
-#endif
-#ifndef HAVE_STDINT_H
-# define HAVE_STDINT_H \
-   (199901 <= __STDC_VERSION__ \
-    || 2 < __GLIBC__ + (1 <= __GLIBC_MINOR__) \
-    || __CYGWIN__ || INTMAX_MAX)
-#endif /* !defined HAVE_STDINT_H */
+# if !defined HAVE_STDINT_H && defined __has_include
+#  define HAVE_STDINT_H 1 /* C23 __has_include implies C99 stdint.h.  */
+# endif
+# ifndef HAVE_STDINT_H
+#  define HAVE_STDINT_H \
+    (199901 <= __STDC_VERSION__ \
+     || 2 < __GLIBC__ + (1 <= __GLIBC_MINOR__) \
+     || __CYGWIN__ || INTMAX_MAX)
+# endif /* !defined HAVE_STDINT_H */
 
-#if HAVE_STDINT_H
-# include <stdint.h>
-#endif /* !HAVE_STDINT_H */
+# if HAVE_STDINT_H
+#  include <stdint.h>
+# endif /* !HAVE_STDINT_H */
 
-#ifndef HAVE_INTTYPES_H
-# define HAVE_INTTYPES_H HAVE_STDINT_H
-#endif
-#if HAVE_INTTYPES_H
-# include <inttypes.h>
-#endif
+# ifndef HAVE_INTTYPES_H
+#  define HAVE_INTTYPES_H HAVE_STDINT_H
+# endif
+# if HAVE_INTTYPES_H
+#  include <inttypes.h>
+# endif
 
 /* Pre-C99 GCC compilers define __LONG_LONG_MAX__ instead of LLONG_MAX.  */
-#if defined __LONG_LONG_MAX__ && !defined __STRICT_ANSI__
-# ifndef LLONG_MAX
-#  define LLONG_MAX __LONG_LONG_MAX__
+# if defined __LONG_LONG_MAX__ && !defined __STRICT_ANSI__
+#  ifndef LLONG_MAX
+#   define LLONG_MAX __LONG_LONG_MAX__
+#  endif
+#  ifndef LLONG_MIN
+#   define LLONG_MIN (-1 - LLONG_MAX)
+#  endif
+#  ifndef ULLONG_MAX
+#   define ULLONG_MAX (LLONG_MAX * 2ull + 1)
+#  endif
 # endif
-# ifndef LLONG_MIN
-#  define LLONG_MIN (-1 - LLONG_MAX)
-# endif
-# ifndef ULLONG_MAX
-#  define ULLONG_MAX (LLONG_MAX * 2ull + 1)
-# endif
-#endif
 
-#ifndef INT_FAST64_MAX
-# if 1 <= LONG_MAX >> 31 >> 31
+# ifndef INT_FAST64_MAX
+#  if 1 <= LONG_MAX >> 31 >> 31
 typedef long int_fast64_t;
-#  define INT_FAST64_MIN LONG_MIN
-#  define INT_FAST64_MAX LONG_MAX
-# else
+#   define INT_FAST64_MIN LONG_MIN
+#   define INT_FAST64_MAX LONG_MAX
+#  else
 /* If this fails, compile with -DHAVE_STDINT_H or with a better compiler.  */
 typedef long long int_fast64_t;
-#  define INT_FAST64_MIN LLONG_MIN
-#  define INT_FAST64_MAX LLONG_MAX
+#   define INT_FAST64_MIN LLONG_MIN
+#   define INT_FAST64_MAX LLONG_MAX
+#  endif
 # endif
-#endif
 
-#ifndef PRIdFAST64
-# if INT_FAST64_MAX == LONG_MAX
-#  define PRIdFAST64 "ld"
-# else
-#  define PRIdFAST64 "lld"
+# ifndef PRIdFAST64
+#  if INT_FAST64_MAX == LONG_MAX
+#   define PRIdFAST64 "ld"
+#  else
+#   define PRIdFAST64 "lld"
+#  endif
 # endif
-#endif
 
-#ifndef SCNdFAST64
-# define SCNdFAST64 PRIdFAST64
-#endif
+# ifndef SCNdFAST64
+#  define SCNdFAST64 PRIdFAST64
+# endif
 
-#ifndef INT_FAST32_MAX
-# if INT_MAX >> 31 == 0
+# ifndef INT_FAST32_MAX
+#  if INT_MAX >> 31 == 0
 typedef long int_fast32_t;
-#  define INT_FAST32_MAX LONG_MAX
-#  define INT_FAST32_MIN LONG_MIN
-# else
+#   define INT_FAST32_MAX LONG_MAX
+#   define INT_FAST32_MIN LONG_MIN
+#  else
 typedef int int_fast32_t;
-#  define INT_FAST32_MAX INT_MAX
-#  define INT_FAST32_MIN INT_MIN
+#   define INT_FAST32_MAX INT_MAX
+#   define INT_FAST32_MIN INT_MIN
+#  endif
 # endif
-#endif
 
-#ifndef INT_LEAST32_MAX
+# ifndef INT_LEAST32_MAX
 typedef int_fast32_t int_least32_t;
-#endif
+# endif
 
-#ifndef INTMAX_MAX
-# ifdef LLONG_MAX
+# ifndef INTMAX_MAX
+#  ifdef LLONG_MAX
 typedef long long intmax_t;
-#  ifndef HAVE_STRTOLL
-#   define HAVE_STRTOLL 1
-#  endif
-#  if HAVE_STRTOLL
-#   define strtoimax strtoll
-#  endif
-#  define INTMAX_MAX LLONG_MAX
-#  define INTMAX_MIN LLONG_MIN
-# else
+#   ifndef HAVE_STRTOLL
+#    define HAVE_STRTOLL 1
+#   endif
+#   if HAVE_STRTOLL
+#    define strtoimax strtoll
+#   endif
+#   define INTMAX_MAX LLONG_MAX
+#   define INTMAX_MIN LLONG_MIN
+#  else
 typedef long intmax_t;
-#  define INTMAX_MAX LONG_MAX
-#  define INTMAX_MIN LONG_MIN
+#   define INTMAX_MAX LONG_MAX
+#   define INTMAX_MIN LONG_MIN
+#  endif
+#  ifndef strtoimax
+#   define strtoimax strtol
+#  endif
 # endif
-# ifndef strtoimax
-#  define strtoimax strtol
+
+# ifndef PRIdMAX
+#  if INTMAX_MAX == LLONG_MAX
+#   define PRIdMAX "lld"
+#  else
+#   define PRIdMAX "ld"
+#  endif
 # endif
-#endif
 
-#ifndef PRIdMAX
-# if INTMAX_MAX == LLONG_MAX
-#  define PRIdMAX "lld"
-# else
-#  define PRIdMAX "ld"
+# ifndef PTRDIFF_MAX
+#  define PTRDIFF_MAX MAXVAL(ptrdiff_t, TYPE_BIT(ptrdiff_t))
 # endif
-#endif
 
-#ifndef PTRDIFF_MAX
-# define PTRDIFF_MAX MAXVAL(ptrdiff_t, TYPE_BIT(ptrdiff_t))
-#endif
-
-#ifndef UINT_FAST32_MAX
+# ifndef UINT_FAST32_MAX
 typedef unsigned long uint_fast32_t;
-#endif
+# endif
 
-#ifndef UINT_FAST64_MAX
-# if 3 <= ULONG_MAX >> 31 >> 31
+# ifndef UINT_FAST64_MAX
+#  if 3 <= ULONG_MAX >> 31 >> 31
 typedef unsigned long uint_fast64_t;
-#  define UINT_FAST64_MAX ULONG_MAX
-# else
+#   define UINT_FAST64_MAX ULONG_MAX
+#  else
 /* If this fails, compile with -DHAVE_STDINT_H or with a better compiler.  */
 typedef unsigned long long uint_fast64_t;
-#  define UINT_FAST64_MAX ULLONG_MAX
+#   define UINT_FAST64_MAX ULLONG_MAX
+#  endif
 # endif
-#endif
 
-#ifndef UINTMAX_MAX
-# ifdef ULLONG_MAX
+# ifndef UINTMAX_MAX
+#  ifdef ULLONG_MAX
 typedef unsigned long long uintmax_t;
-#  define UINTMAX_MAX ULLONG_MAX
-# else
+#   define UINTMAX_MAX ULLONG_MAX
+#  else
 typedef unsigned long uintmax_t;
-#  define UINTMAX_MAX ULONG_MAX
+#   define UINTMAX_MAX ULONG_MAX
+#  endif
 # endif
-#endif
 
-#ifndef PRIuMAX
-# ifdef ULLONG_MAX
-#  define PRIuMAX "llu"
-# else
-#  define PRIuMAX "lu"
+# ifndef PRIuMAX
+#  ifdef ULLONG_MAX
+#   define PRIuMAX "llu"
+#  else
+#   define PRIuMAX "lu"
+#  endif
 # endif
-#endif
 
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
-#endif
+# ifndef SIZE_MAX
+#  define SIZE_MAX ((size_t) -1)
+# endif
 
 #endif /* PORT_TO_C89 */
 
@@ -744,10 +744,10 @@ typedef time_tz tz_time_t;
 # endif
 DEPRECATED_IN_C23 char *asctime(struct tm const *);
 DEPRECATED_IN_C23 char *ctime(time_t const *);
-#if SUPPORT_POSIX2008
+# if SUPPORT_POSIX2008
 char *asctime_r(struct tm const *restrict, char *restrict);
 char *ctime_r(time_t const *, char *);
-#endif
+# endif
 ATTRIBUTE_CONST double difftime(time_t, time_t);
 size_t strftime(char *restrict, size_t, char const *restrict,
 		struct tm const *restrict);
@@ -1008,9 +1008,9 @@ time_t timeoff(struct tm *, long);
 */
 
 #if HAVE_GETTEXT
-#define _(msgid) gettext(msgid)
+# define _(msgid) gettext(msgid)
 #else /* !HAVE_GETTEXT */
-#define _(msgid) msgid
+# define _(msgid) msgid
 #endif /* !HAVE_GETTEXT */
 
 #if !defined TZ_DOMAIN && defined HAVE_GETTEXT
@@ -1018,8 +1018,8 @@ time_t timeoff(struct tm *, long);
 #endif
 
 #if HAVE_INCOMPATIBLE_CTIME_R
-#undef asctime_r
-#undef ctime_r
+# undef asctime_r
+# undef ctime_r
 char *asctime_r(struct tm const *restrict, char *restrict);
 char *ctime_r(time_t const *, char *);
 #endif /* HAVE_INCOMPATIBLE_CTIME_R */

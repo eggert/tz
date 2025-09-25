@@ -513,6 +513,7 @@ union local_storage {
 /* These tzload flags can be ORed together, and fit into 'char'.  */
 enum { TZLOAD_FROMENV = 1 }; /* The TZ string came from the environment.  */
 enum { TZLOAD_TZSTRING = 2 }; /* Read any newline-surrounded TZ string.  */
+enum { TZLOAD_TZDIR_SUB = 4 }; /* TZ should be a file under TZDIR.  */
 
 /* Load tz data from the file named NAME into *SP.  Respect TZLOADFLAGS.
    Use *LSP for temporary storage.  Return 0 on
@@ -1462,7 +1463,8 @@ zoneinit(struct state *sp, char const *name, char tzloadflags)
     return 0;
   } else {
     int err = tzload(name, sp, tzloadflags);
-    if (err != 0 && name && name[0] != ':' && tzparse(name, sp, NULL))
+    if (err != 0 && name && name[0] != ':' && !(tzloadflags & TZLOAD_TZDIR_SUB)
+	&& tzparse(name, sp, NULL))
       err = 0;
     if (err == 0)
       err = scrub_abbrs(sp);
@@ -1475,17 +1477,37 @@ tzset_unlocked(void)
 {
   char const *name = getenv("TZ");
   struct state *sp = lclptr;
-  int lcl = name ? strnlen(name, sizeof lcl_TZname) < sizeof lcl_TZname : -1;
-  if (lcl < 0
-      ? lcl_is_set < 0
-      : 0 < lcl_is_set && strcmp(lcl_TZname, name) == 0)
+  char tzloadflags = TZLOAD_FROMENV | TZLOAD_TZSTRING;
+  size_t namelen = sizeof lcl_TZname + 1; /* placeholder for no name */
+
+  if (name) {
+    namelen = strnlen(name, sizeof lcl_TZname);
+
+    /* Abbreviate a string like "/usr/share/zoneinfo/America/Los_Angeles"
+       to its shorter equivalent "America/Los_Angeles".  */
+    if (sizeof tzdirslash < namelen
+	&& memcmp(name, tzdirslash, sizeof tzdirslash) == 0) {
+      char const *p = name + sizeof tzdirslash;
+      while (*p == '/')
+	p++;
+      if (*p && *p != ':') {
+	name = p;
+	namelen = strnlen(name, sizeof lcl_TZname);
+	tzloadflags |= TZLOAD_TZDIR_SUB;
+      }
+    }
+  }
+
+  if (name
+      ? 0 < lcl_is_set && strcmp(lcl_TZname, name) == 0
+      : lcl_is_set < 0)
     return;
 # ifdef ALL_STATE
   if (! sp)
     lclptr = sp = malloc(sizeof *lclptr);
 # endif
   if (sp) {
-    int err = zoneinit(sp, name, TZLOAD_FROMENV | TZLOAD_TZSTRING);
+    int err = zoneinit(sp, name, tzloadflags);
     if (err != 0) {
       zoneinit(sp, "", 0);
       /* Abbreviate with "-00" if there was an error.
@@ -1493,11 +1515,11 @@ tzset_unlocked(void)
       if (name || err != ENOENT)
 	strcpy(sp->chars, UNSPEC);
     }
-    if (0 < lcl)
-      strcpy(lcl_TZname, name);
+    if (namelen < sizeof lcl_TZname)
+      memcpy(lcl_TZname, name, namelen + 1);
   }
   settzname();
-  lcl_is_set = lcl;
+  lcl_is_set = (sizeof lcl_TZname > namelen) - (sizeof lcl_TZname < namelen);
 }
 
 #endif

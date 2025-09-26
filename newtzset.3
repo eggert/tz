@@ -78,7 +78,17 @@ contents are used as a pathname, a pathname beginning with
 is used as-is; otherwise
 the pathname is relative to a system time conversion information
 directory.
-The file must be in the format specified in
+In a privileged program the pathname must be relative.
+Relative pathnames must not contain
+.q "..\&"
+components.
+For the purpose of these checks, a file name beginning with
+.q "/"
+is considered to be relative if it is the
+.B localtime
+file's name, or if it starts with the
+system timezone directory's name followed by one more more slashes.
+The file must be a regular file in the format specified in
 .BR tzfile (5).
 .PP
 When

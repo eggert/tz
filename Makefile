@@ -244,8 +244,11 @@ LDLIBS=
 #  -DHAVE_DECL_TIMEGM=0 if <time.h> does not declare timegm
 #  -DHAVE_DIRECT_H if mkdir needs <direct.h> (MS-Windows)
 #  -DHAVE__GENERIC=0 if _Generic does not work*
+#  -DHAVE_GETAUXVAL=1 if getauxval works, 0 otherwise (default is guessed)
+#  -DHAVE_GETEUID=0 if gete?[ug]id do not work
 #  -DHAVE_GETRANDOM if getrandom works (e.g., GNU/Linux),
 #	-DHAVE_GETRANDOM=0 to avoid using getrandom
+#  -DHAVE_GETRESUID=0 if getres[ug]id do not work
 #  -DHAVE_GETTEXT if gettext works (e.g., GNU/Linux, FreeBSD, Solaris),
 #	where LDLIBS also needs to contain -lintl on some hosts;
 #	-DHAVE_GETTEXT=0 to avoid using gettext
@@ -253,6 +256,7 @@ LDLIBS=
 #	ctime_r and asctime_r incompatibly with POSIX.1-2017 and earlier
 #	(Solaris when _POSIX_PTHREAD_SEMANTICS is not defined).
 #  -DHAVE_INTTYPES_H=0 if <inttypes.h> does not work*+
+#  -DHAVE_ISSETUID=1 if issetugid works, 0 otherwise (default is guessed)
 #  -DHAVE_LINK=0 if your system lacks a link function
 #  -DHAVE_LOCALTIME_R=0 if your system lacks a localtime_r function
 #  -DHAVE_LOCALTIME_RZ=0 if you do not want zdump to use localtime_rz

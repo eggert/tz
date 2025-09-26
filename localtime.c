@@ -19,6 +19,10 @@
 #include "tzfile.h"
 #include <fcntl.h>
 
+#if HAVE_GETAUXVAL && !HAVE_ISSETUGID
+# include <sys/auxv.h>
+#endif
+
 #if HAVE_SYS_STAT_H
 # include <sys/stat.h>
 #endif
@@ -130,6 +134,38 @@ typedef intmax_t timex_t;
 #endif
 #ifndef O_NOCTTY
 # define O_NOCTTY 0
+#endif
+
+/* Return 1 if the process is privileged, 0 otherwise.  */
+#if !HAVE_ISSETUGID
+static int
+issetugid(void)
+{
+# if HAVE_GETAUXVAL && defined AT_SECURE
+  unsigned long val;
+  errno = 0;
+  val = getauxval(AT_SECURE);
+  if (val || errno != ENOENT)
+    return !!val;
+# endif
+# if HAVE_GETRESUID
+  {
+    uid_t ruid, euid, suid;
+    gid_t rgid, egid, sgid;
+    if (0 <= getresuid (&ruid, &euid, &suid)) {
+      if ((ruid ^ euid) | (ruid ^ suid))
+	return 1;
+      if (0 <= getresgid (&rgid, &egid, &sgid))
+	return !!((rgid ^ egid) | (rgid ^ sgid));
+    }
+  }
+# endif
+# if HAVE_GETEUID
+  return geteuid() != getuid() || getegid() != getgid();
+# else
+  return 0;
+# endif
+}
 #endif
 
 #ifndef WILDABBR
@@ -511,9 +547,8 @@ union local_storage {
 };
 
 /* These tzload flags can be ORed together, and fit into 'char'.  */
-enum { TZLOAD_FROMENV = 1 }; /* The TZ string came from the environment.  */
+enum { TZLOAD_TZDIR_SUB = 1 }; /* TZ should be a file under TZDIR.  */
 enum { TZLOAD_TZSTRING = 2 }; /* Read any newline-surrounded TZ string.  */
-enum { TZLOAD_TZDIR_SUB = 4 }; /* TZ should be a file under TZDIR.  */
 
 /* Load tz data from the file named NAME into *SP.  Respect TZLOADFLAGS.
    Use *LSP for temporary storage.  Return 0 on
@@ -526,7 +561,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	register int			fid;
 	register int			stored;
 	register ssize_t		nread;
-	register bool doaccess;
+	char const *relname;
 	register union input_buffer *up = &lsp->u.u;
 	register int tzheadsize = sizeof(struct tzhead);
 
@@ -536,20 +571,55 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		name = TZDEFAULT;
 		if (! name)
 		  return EINVAL;
-		tzloadflags &= ~TZLOAD_FROMENV;
 	}
 
 	if (name[0] == ':')
 		++name;
+
+	relname = name;
+
+	/* If the program is privileged, NAME is TZDEFAULT or
+	   subsidiary to TZDIR.  Also, NAME is not a device.  */
+	if (name[0] == '/' && strcmp(name, TZDEFAULT) != 0) {
+	  if (strncmp(relname, tzdirslash, sizeof tzdirslash) == 0)
+	    for (relname += sizeof tzdirslash; *relname == '/'; relname++)
+	      continue;
+	  else if (issetugid())
+	    return ENOTCAPABLE;
+	  else {
+#ifdef S_ISREG
+	    /* Check for devices, as their mere opening could have
+	       unwanted side effects.  Though racy, there is no
+	       portable way to fix the races.  This check is needed
+	       only for files not otherwise known to be non-devices.  */
+	    struct stat st;
+	    if (stat(name, &st) < 0)
+	      return errno;
+	    if (!S_ISREG(st.st_mode))
+	      return EINVAL;
+#endif
+	  }
+	}
+
+	/* Fail if a relative name contains a ".." component,
+	   as such a name could read a file outside TZDIR.  */
+	if (relname[0] != '/') {
+	  char const *component;
+	  for (component = relname; ; component++) {
+	    if (component[0] == '.' && component[1] == '.'
+		&& ((component[2] == '/') | !component[2]))
+	      return ENOTCAPABLE;
+	    component = strchr(component, '/');
+	    if (!component)
+	      break;
+	  }
+	}
+
 #ifdef SUPPRESS_TZDIR
 	/* Do not prepend TZDIR.  This is intended for specialized
 	   applications only, due to its security implications.  */
-	doaccess = true;
 #else
-	doaccess = name[0] == '/';
-#endif
-	if (!doaccess) {
-		char const *dot;
+	if (name[0] != '/') {
 		if (sizeof lsp->fullname - sizeof tzdirslash
 		    <= strnlen(name, sizeof lsp->fullname - sizeof tzdirslash))
 		  return ENAMETOOLONG;
@@ -559,36 +629,10 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		   resulting string length exceeded INT_MAX!).  */
 		memcpy(lsp->fullname, tzdirslash, sizeof tzdirslash);
 		strcpy(lsp->fullname + sizeof tzdirslash, name);
-
-		/* Set doaccess if NAME contains a ".." file name
-		   component, as such a name could read a file outside
-		   the TZDIR virtual subtree.  */
-		for (dot = name; (dot = strchr(dot, '.')); dot++)
-		  if ((dot == name || dot[-1] == '/') && dot[1] == '.'
-		      && (dot[2] == '/' || !dot[2])) {
-		    doaccess = true;
-		    break;
-		  }
-
 		name = lsp->fullname;
 	}
-	if (doaccess && (tzloadflags & TZLOAD_FROMENV)) {
-	  /* Check for security violations and for devices whose mere
-	     opening could have unwanted side effects.  Although these
-	     checks are racy, they're better than nothing and there is
-	     no portable way to fix the races.  */
-	  if (access(name, R_OK) < 0)
-	    return errno;
-#ifdef S_ISREG
-	  {
-	    struct stat st;
-	    if (stat(name, &st) < 0)
-	      return errno;
-	    if (!S_ISREG(st.st_mode))
-	      return EINVAL;
-	  }
 #endif
-	}
+
 	fid = open(name, (O_RDONLY | O_BINARY | O_CLOEXEC | O_CLOFORK
 			  | O_IGNORE_CTTY | O_NOCTTY));
 	if (fid < 0)
@@ -1477,7 +1521,7 @@ tzset_unlocked(void)
 {
   char const *name = getenv("TZ");
   struct state *sp = lclptr;
-  char tzloadflags = TZLOAD_FROMENV | TZLOAD_TZSTRING;
+  char tzloadflags = TZLOAD_TZSTRING;
   size_t namelen = sizeof lcl_TZname + 1; /* placeholder for no name */
 
   if (name) {

@@ -118,6 +118,14 @@
 # define HAVE__GENERIC (201112 <= __STDC_VERSION__)
 #endif
 
+#ifndef HAVE_GETEUID
+# define HAVE_GETEUID 1
+#endif
+
+#ifndef HAVE_GETRESUID
+# define HAVE_GETRESUID 1
+#endif
+
 #if !defined HAVE_GETTEXT && defined __has_include
 # if __has_include(<libintl.h>)
 #  define HAVE_GETTEXT 1
@@ -246,6 +254,9 @@ strnlen (char const *s, size_t maxlen)
 #ifndef ENOMEM
 # define ENOMEM EINVAL
 #endif
+#ifndef ENOTCAPABLE
+# define ENOTCAPABLE EINVAL
+#endif
 #ifndef ENOTSUP
 # define ENOTSUP EINVAL
 #endif
@@ -258,7 +269,7 @@ strnlen (char const *s, size_t maxlen)
 #endif /* HAVE_GETTEXT */
 
 #if HAVE_UNISTD_H
-# include <unistd.h> /* for R_OK, and other POSIX goodness */
+# include <unistd.h>
 #endif /* HAVE_UNISTD_H */
 
 /* SUPPORT_POSIX2008 means the tzcode library should support
@@ -283,6 +294,29 @@ strnlen (char const *s, size_t maxlen)
 #  define HAVE_DECL_ASCTIME_R 1
 # else
 #  define HAVE_DECL_ASCTIME_R 0
+# endif
+#endif
+
+#if !defined HAVE_GETAUXVAL && defined __has_include
+# if __has_include(<sys/auxv.h>)
+#  define HAVE_GETAUXVAL 1
+# endif
+#endif
+#ifndef HAVE_GETAUXVAL
+# if defined __GLIBC__ && 2 < __GLIBC__ + (19 <= __GLIBC_MINOR__)
+#  define HAVE_GETAUXVAL 1
+# else
+#  define HAVE_GETAUXVAL 0
+# endif
+#endif
+
+#ifndef HAVE_ISSETUGID
+# if (defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
+      || (defined __linux__ && !defined __GLIBC__) /* Android, musl, etc. */ \
+      || (defined __APPLE__ && defined __MACH__) || defined __sun)
+#  define HAVE_ISSETUGID 1
+# else
+#  define HAVE_ISSETUGID 0
 # endif
 #endif
 
@@ -321,10 +355,6 @@ strnlen (char const *s, size_t maxlen)
 #  define ALTZONE 0
 # endif
 #endif
-
-#ifndef R_OK
-# define R_OK 4
-#endif /* !defined R_OK */
 
 #if PORT_TO_C89
 

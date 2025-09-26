@@ -108,6 +108,12 @@ typedef intmax_t timex_t;
 # endif
 #endif
 
+/* Placeholders for platforms lacking openat.  */
+#ifndef AT_FDCWD
+# define AT_FDCWD (-1) /* any negative value will do */
+static int openat(int dd, char const *path, int oflag) { unreachable (); }
+#endif
+
 /* Port to platforms that lack some O_* flags.  Unless otherwise
    specified, the flags are standardized by POSIX.  */
 
@@ -120,11 +126,20 @@ typedef intmax_t timex_t;
 #ifndef O_CLOFORK
 # define O_CLOFORK 0
 #endif
+#ifndef O_DIRECTORY
+# define O_DIRECTORY 0
+#endif
 #ifndef O_IGNORE_CTTY
 # define O_IGNORE_CTTY 0 /* GNU/Hurd */
 #endif
 #ifndef O_NOCTTY
 # define O_NOCTTY 0
+#endif
+#ifndef O_PATH
+# define O_PATH 0
+#endif
+#ifndef O_SEARCH
+# define O_SEARCH 0
 #endif
 
 /* Return 1 if the process is privileged, 0 otherwise.  */
@@ -198,6 +213,19 @@ static char const *utc = etc_utc + sizeof "Etc/" - 1;
 */
 #ifndef TZDEFRULESTRING
 # define TZDEFRULESTRING ",M3.2.0,M11.1.0"
+#endif
+
+/* If compiled with -DOPENAT_TZDIR, then when accessing a relative
+   name like "America/Los_Angeles", first open TZDIR (default
+   "/usr/share/zoneinfo") as a directory and then use the result in
+   openat with "America/Los_Angeles", rather than the traditional
+   approach of opening "/usr/share/zoneinfo/America/Los_Angeles".
+   Although the OPENAT_TZDIR approach is less efficient, suffers from
+   spurious EMFILE and ENFILE failures, and is no more secure in practice,
+   it is how bleeding edge FreeBSD did things from August 2025
+   through at least September 2025.  */
+#ifndef OPENAT_TZDIR
+# define OPENAT_TZDIR 0
 #endif
 
 /* If compiled with -DSUPPRESS_TZDIR, do not prepend TZDIR to relative TZ.
@@ -539,8 +567,9 @@ union input_buffer {
 	   + 4 * TZ_MAX_TIMES];
 };
 
-/* TZDIR with a trailing '/' rather than a trailing '\0'.  */
-static char const tzdirslash[sizeof TZDIR] = TZDIR "/";
+/* TZDIR with a trailing '/'.  It is null-terminated if OPENAT_TZDIR.  */
+static char const tzdirslash[sizeof TZDIR + OPENAT_TZDIR] = TZDIR "/";
+static size_t const tzdirslashlen = sizeof TZDIR;
 
 /* Local storage needed for 'tzloadbody'.  */
 union local_storage {
@@ -580,6 +609,10 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	char const *relname;
 	register union input_buffer *up = &lsp->u.u;
 	register int tzheadsize = sizeof(struct tzhead);
+	int dd = AT_FDCWD;
+	int oflags = (O_RDONLY | O_BINARY | O_CLOEXEC | O_CLOFORK
+		      | O_IGNORE_CTTY | O_NOCTTY);
+	int open_err;
 
 	sp->goback = sp->goahead = false;
 
@@ -598,8 +631,8 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	   subsidiary to TZDIR.  Also, NAME is not a device.  */
 	if (name[0] == '/' && strcmp(name, TZDEFAULT) != 0) {
 	  if (!SUPPRESS_TZDIR
-	      && strncmp(relname, tzdirslash, sizeof tzdirslash) == 0)
-	    for (relname += sizeof tzdirslash; *relname == '/'; relname++)
+	      && strncmp(relname, tzdirslash, tzdirslashlen) == 0)
+	    for (relname += tzdirslashlen; *relname == '/'; relname++)
 	      continue;
 	  else if (issetugid())
 	    return ENOTCAPABLE;
@@ -618,18 +651,30 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	  }
 	}
 
-	/* Fail if a relative name contains a ".." component,
-	   as such a name could read a file outside TZDIR.  */
 	if (relname[0] != '/') {
+	  /* Fail if a relative name contains a ".." component,
+	     as such a name could read a file outside TZDIR.  */
 	  char const *component;
 	  for (component = relname; component[0]; component++)
 	    if (component[0] == '.' && component[1] == '.'
 		&& ((component[2] == '/') | !component[2])
 		&& (component == relname || component[-1] == '/'))
 	      return ENOTCAPABLE;
+
+	  if (OPENAT_TZDIR) {
+	    /* Prefer O_SEARCH or O_PATH if available;
+	       O_RDONLY should be OK too, as TZDIR is invariably readable.
+	       O_DIRECTORY should be redundant but might help
+	       on old platforms that mishandle trailing '/'.  */
+	    dd = open(tzdirslash,
+		      ((O_SEARCH ? O_SEARCH : O_PATH ? O_PATH : O_RDONLY)
+		       | O_BINARY | O_CLOEXEC | O_CLOFORK | O_DIRECTORY));
+	    if (dd < 0)
+	      return errno;
+	  }
 	}
 
-	if (!SUPPRESS_TZDIR && name[0] != '/') {
+	if (!OPENAT_TZDIR && !SUPPRESS_TZDIR && name[0] != '/') {
 		char *cp;
 		size_t namesizemax = sizeof lsp->fullname - sizeof tzdirslash;
 		size_t namelen = strnlen (name, namesizemax);
@@ -640,16 +685,18 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		   would pull in stdio (and would fail if the
 		   resulting string length exceeded INT_MAX!).  */
 		cp = lsp->fullname;
-		cp = mempcpy(cp, tzdirslash, sizeof tzdirslash);
+		cp = mempcpy(cp, tzdirslash, tzdirslashlen);
 		cp = mempcpy(cp, name, namelen);
 		*cp = '\0';
 		name = lsp->fullname;
 	}
 
-	fid = open(name, (O_RDONLY | O_BINARY | O_CLOEXEC | O_CLOFORK
-			  | O_IGNORE_CTTY | O_NOCTTY));
+	fid = OPENAT_TZDIR ? openat(dd, relname, oflags) : open(name, oflags);
+	open_err = errno;
+	if (0 <= dd)
+	  close(dd);
 	if (fid < 0)
-	  return errno;
+	  return open_err;
 
 	nread = read(fid, up->buf, sizeof up->buf);
 	if (nread < tzheadsize) {
@@ -1543,9 +1590,9 @@ tzset_unlocked(void)
 
     /* Abbreviate a string like "/usr/share/zoneinfo/America/Los_Angeles"
        to its shorter equivalent "America/Los_Angeles".  */
-    if (!SUPPRESS_TZDIR && sizeof tzdirslash < namelen
-	&& memcmp(name, tzdirslash, sizeof tzdirslash) == 0) {
-      char const *p = name + sizeof tzdirslash;
+    if (!SUPPRESS_TZDIR && tzdirslashlen < namelen
+	&& memcmp(name, tzdirslash, tzdirslashlen) == 0) {
+      char const *p = name + tzdirslashlen;
       while (*p == '/')
 	p++;
       if (*p && *p != ':') {

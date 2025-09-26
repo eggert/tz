@@ -281,6 +281,8 @@ LDLIBS=
 #  -DHAVE_UTMPX_H=0 if <utmpx.h> does not work*
 #  -Dlocale_t=XXX if your system uses XXX instead of locale_t
 #  -DMKTIME_MIGHT_OVERFLOW if mktime might fail due to time_t overflow
+#  -DOPENAT_TZDIR if tzset should use openat on TZDIR then a relative open.
+#	See localtime.c for details.
 #  -DPORT_TO_C89 if tzcode should also run on mostly-C89 platforms+
 #	Typically it is better to use a later standard.  For example,
 #	with GCC 4.9.4 (2016), prefer '-std=gnu11' to '-DPORT_TO_C89'.

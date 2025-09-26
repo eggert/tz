@@ -62,6 +62,9 @@ Unreleased, experimental changes
     tzcode now uses strnlen to improve asymptotic performance a bit.
     Compile with -DHAVE_STRNLEN=0 if your platform lacks it.
 
+    tzset etc. now have an experimental OPENAT_TZDIR option;
+    see Makefile and localtime.c for details.
+
   Changes to commentary
 
     The leapseconds file contains commentary about the IERS and NIST

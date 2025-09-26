@@ -209,6 +209,13 @@ static char const *utc = etc_utc + sizeof "Etc/" - 1;
 # define TZDEFRULESTRING ",M3.2.0,M11.1.0"
 #endif
 
+/* If compiled with -DSUPPRESS_TZDIR, do not prepend TZDIR to relative TZ.
+   This is intended for specialized applications only, due to its
+   security implications.  */
+#ifndef SUPPRESS_TZDIR
+# define SUPPRESS_TZDIR 0
+#endif
+
 /* Limit to time zone abbreviation length in proleptic TZ strings.
    This is distinct from TZ_MAX_CHARS, which limits TZif file contents.
    It defaults to 254, not 255, so that desigidx_type can be an unsigned char.
@@ -581,7 +588,8 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	/* If the program is privileged, NAME is TZDEFAULT or
 	   subsidiary to TZDIR.  Also, NAME is not a device.  */
 	if (name[0] == '/' && strcmp(name, TZDEFAULT) != 0) {
-	  if (strncmp(relname, tzdirslash, sizeof tzdirslash) == 0)
+	  if (!SUPPRESS_TZDIR
+	      && strncmp(relname, tzdirslash, sizeof tzdirslash) == 0)
 	    for (relname += sizeof tzdirslash; *relname == '/'; relname++)
 	      continue;
 	  else if (issetugid())
@@ -615,11 +623,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	  }
 	}
 
-#ifdef SUPPRESS_TZDIR
-	/* Do not prepend TZDIR.  This is intended for specialized
-	   applications only, due to its security implications.  */
-#else
-	if (name[0] != '/') {
+	if (!SUPPRESS_TZDIR && name[0] != '/') {
 		if (sizeof lsp->fullname - sizeof tzdirslash
 		    <= strnlen(name, sizeof lsp->fullname - sizeof tzdirslash))
 		  return ENAMETOOLONG;
@@ -631,7 +635,6 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		strcpy(lsp->fullname + sizeof tzdirslash, name);
 		name = lsp->fullname;
 	}
-#endif
 
 	fid = open(name, (O_RDONLY | O_BINARY | O_CLOEXEC | O_CLOFORK
 			  | O_IGNORE_CTTY | O_NOCTTY));
@@ -1529,7 +1532,7 @@ tzset_unlocked(void)
 
     /* Abbreviate a string like "/usr/share/zoneinfo/America/Los_Angeles"
        to its shorter equivalent "America/Los_Angeles".  */
-    if (sizeof tzdirslash < namelen
+    if (!SUPPRESS_TZDIR && sizeof tzdirslash < namelen
 	&& memcmp(name, tzdirslash, sizeof tzdirslash) == 0) {
       char const *p = name + sizeof tzdirslash;
       while (*p == '/')

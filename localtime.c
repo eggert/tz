@@ -138,6 +138,9 @@ static int openat(int dd, char const *path, int oflag) { unreachable (); }
 #ifndef O_PATH
 # define O_PATH 0
 #endif
+#ifndef O_RESOLVE_BENEATH
+# define O_RESOLVE_BENEATH 0
+#endif
 #ifndef O_SEARCH
 # define O_SEARCH 0
 #endif
@@ -652,14 +655,17 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	}
 
 	if (relname[0] != '/') {
-	  /* Fail if a relative name contains a ".." component,
-	     as such a name could read a file outside TZDIR.  */
-	  char const *component;
-	  for (component = relname; component[0]; component++)
-	    if (component[0] == '.' && component[1] == '.'
-		&& ((component[2] == '/') | !component[2])
-		&& (component == relname || component[-1] == '/'))
-	      return ENOTCAPABLE;
+	  if (!OPENAT_TZDIR || !O_RESOLVE_BENEATH) {
+	    /* Fail if a relative name contains a ".." component,
+	       as such a name could read a file outside TZDIR
+	       when AT_FDCWD and O_RESOLVE_BENEATH are not available.  */
+	    char const *component;
+	    for (component = relname; component[0]; component++)
+	      if (component[0] == '.' && component[1] == '.'
+		  && ((component[2] == '/') | !component[2])
+		  && (component == relname || component[-1] == '/'))
+		return ENOTCAPABLE;
+	  }
 
 	  if (OPENAT_TZDIR) {
 	    /* Prefer O_SEARCH or O_PATH if available;
@@ -671,6 +677,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		       | O_BINARY | O_CLOEXEC | O_CLOFORK | O_DIRECTORY));
 	    if (dd < 0)
 	      return errno;
+	    oflags |= O_RESOLVE_BENEATH;
 	  }
 	}
 

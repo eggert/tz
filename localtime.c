@@ -108,15 +108,6 @@ typedef intmax_t timex_t;
 # endif
 #endif
 
-#ifndef TZ_ABBR_CHAR_SET
-# define TZ_ABBR_CHAR_SET \
-	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 :+-._"
-#endif /* !defined TZ_ABBR_CHAR_SET */
-
-#ifndef TZ_ABBR_ERR_CHAR
-# define TZ_ABBR_ERR_CHAR '_'
-#endif /* !defined TZ_ABBR_ERR_CHAR */
-
 /* Port to platforms that lack some O_* flags.  Unless otherwise
    specified, the flags are standardized by POSIX.  */
 
@@ -511,8 +502,27 @@ scrub_abbrs(struct state *sp)
 
 	/* Replace bogus characters.  */
 	for (i = 0; i < sp->charcnt; ++i)
-		if (strchr(TZ_ABBR_CHAR_SET, sp->chars[i]) == NULL)
-			sp->chars[i] = TZ_ABBR_ERR_CHAR;
+	  switch (sp->chars[i]) {
+	  case '\0':
+	  case ' ':
+	  case '+': case '-': case '.':
+	  case '0': case '1': case '2': case '3': case '4':
+	  case '5': case '6': case '7': case '8': case '9':
+	  case ':':
+	  case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G':
+	  case 'H': case 'I': case 'J': case 'K': case 'L': case 'M': case 'N':
+	  case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T': case 'U':
+	  case 'V': case 'W': case 'X': case 'Y': case 'Z':
+	  case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g':
+	  case 'h': case 'i': case 'j': case 'k': case 'l': case 'm': case 'n':
+	  case 'o': case 'p': case 'q': case 'r': case 's': case 't': case 'u':
+	  case 'v': case 'w': case 'x': case 'y': case 'z':
+	    break;
+
+	  default:
+	    sp->chars[i] = '_';
+	    break;
+	  }
 
 	return 0;
 }
@@ -613,14 +623,11 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	   as such a name could read a file outside TZDIR.  */
 	if (relname[0] != '/') {
 	  char const *component;
-	  for (component = relname; ; component++) {
+	  for (component = relname; component[0]; component++)
 	    if (component[0] == '.' && component[1] == '.'
-		&& ((component[2] == '/') | !component[2]))
+		&& ((component[2] == '/') | !component[2])
+		&& (component == relname || component[-1] == '/'))
 	      return ENOTCAPABLE;
-	    component = strchr(component, '/');
-	    if (!component)
-	      break;
-	  }
 	}
 
 	if (!SUPPRESS_TZDIR && name[0] != '/') {

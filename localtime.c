@@ -625,8 +625,9 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 
 	if (!SUPPRESS_TZDIR && name[0] != '/') {
 		char *cp;
-		if (sizeof lsp->fullname - sizeof tzdirslash
-		    <= strnlen(name, sizeof lsp->fullname - sizeof tzdirslash))
+		size_t namesizemax = sizeof lsp->fullname - sizeof tzdirslash;
+		size_t namelen = strnlen (name, namesizemax);
+		if (namesizemax <= namelen)
 		  return ENAMETOOLONG;
 
 		/* Create a string "TZDIR/NAME".  Using sprintf here
@@ -634,7 +635,8 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		   resulting string length exceeded INT_MAX!).  */
 		cp = lsp->fullname;
 		cp = mempcpy(cp, tzdirslash, sizeof tzdirslash);
-		strcpy(cp, name);
+		cp = mempcpy(cp, name, namelen);
+		*cp = '\0';
 		name = lsp->fullname;
 	}
 
@@ -846,7 +848,9 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 			    if (! (j < charcnt)) {
 			      int tsabbrlen = strnlen(tsabbr, TZ_MAX_CHARS - j);
 			      if (j + tsabbrlen < TZ_MAX_CHARS) {
-				strcpy(sp->chars + j, tsabbr);
+				char *cp = sp->chars + j;
+				cp = mempcpy(cp, tsabbr, tsabbrlen);
+				*cp = '\0';
 				charcnt = j + tsabbrlen + 1;
 				ts->ttis[i].tt_desigidx = j;
 				gotabbr++;
@@ -1563,8 +1567,11 @@ tzset_unlocked(void)
       if (name || err != ENOENT)
 	strcpy(sp->chars, UNSPEC);
     }
-    if (namelen < sizeof lcl_TZname)
-      memcpy(lcl_TZname, name, namelen + 1);
+    if (namelen < sizeof lcl_TZname) {
+      char *cp = lcl_TZname;
+      cp = mempcpy(cp, name, namelen);
+      *cp = '\0';
+    }
   }
   settzname();
   lcl_is_set = (sizeof lcl_TZname > namelen) - (sizeof lcl_TZname < namelen);

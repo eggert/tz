@@ -837,6 +837,23 @@ extern char *asctime_r(struct tm const *restrict, char *restrict);
 extern char **environ;
 #endif
 
+#ifndef HAVE_MEMPCPY
+# if (defined mempcpy \
+      || defined __FreeBSD__ || defined __NetBSD__ || defined __linux__)
+#  define HAVE_MEMPCPY 1
+# else
+#  define HAVE_MEMPCPY 0
+# endif
+#endif
+#if !HAVE_MEMPCPY
+static void *
+mempcpy(char *restrict s1, char const *restrict s2, size_t n)
+{
+  char *p = memcpy(s1, s2, n);
+  return p + n;
+}
+#endif
+
 #if 2 <= HAVE_TZNAME + (TZ_TIME_T || !HAVE_POSIX_DECLS)
 extern char *tzname[];
 #endif

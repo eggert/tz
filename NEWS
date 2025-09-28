@@ -51,6 +51,9 @@ Unreleased, experimental changes
     -DHAVE_GETRESUID=[01], and -DHAVE_GETEUID=[01] to enable or
     disable these system calls' use.
 
+    tzcode now uses mempcpy if available, guessing its availability.
+    Compile with -DHAVE_MEMPCPY=1 or 0 to override the guess.
+
     tzcode now uses strnlen to improve asymptotic performance a bit.
     Compile with -DHAVE_STRNLEN=0 if your platform lacks it.
 

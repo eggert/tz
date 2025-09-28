@@ -927,6 +927,7 @@ my_snprintf(char *s, size_t size, char const *format, ...)
   int n;
   va_list args;
   char const *arg;
+  char *cp;
   size_t arglen, slen;
   char buf[1024];
   va_start(args, format);
@@ -943,8 +944,9 @@ my_snprintf(char *s, size_t size, char const *format, ...)
     arglen = n;
   }
   slen = arglen < size ? arglen : size - 1;
-  memcpy(s, arg, slen);
-  s[slen] = '\0';
+  cp = s;
+  cp = mempcpy(cp, arg, slen);
+  *cp = '\0';
   n = arglen <= INT_MAX ? arglen : -1;
   va_end(args);
   return n;
@@ -1073,8 +1075,9 @@ istrftime(char *buf, ptrdiff_t size, char const *time_fmt,
       char fbuf[100];
       bool oversized = sizeof fbuf <= f_prefix_copy_size;
       char *f_prefix_copy = oversized ? xmalloc(f_prefix_copy_size) : fbuf;
-      memcpy(f_prefix_copy, f, f_prefix_len);
-      strcpy(f_prefix_copy + f_prefix_len, "X");
+      char *cp = f_prefix_copy;
+      cp = mempcpy(cp, f, f_prefix_len);
+      strcpy(cp, "X");
       formatted_len = strftime(b, s, f_prefix_copy, tm);
       if (oversized)
 	free(f_prefix_copy);

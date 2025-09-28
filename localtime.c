@@ -624,6 +624,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	}
 
 	if (!SUPPRESS_TZDIR && name[0] != '/') {
+		char *cp;
 		if (sizeof lsp->fullname - sizeof tzdirslash
 		    <= strnlen(name, sizeof lsp->fullname - sizeof tzdirslash))
 		  return ENAMETOOLONG;
@@ -631,8 +632,9 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		/* Create a string "TZDIR/NAME".  Using sprintf here
 		   would pull in stdio (and would fail if the
 		   resulting string length exceeded INT_MAX!).  */
-		memcpy(lsp->fullname, tzdirslash, sizeof tzdirslash);
-		strcpy(lsp->fullname + sizeof tzdirslash, name);
+		cp = lsp->fullname;
+		cp = mempcpy(cp, tzdirslash, sizeof tzdirslash);
+		strcpy(cp, name);
 		name = lsp->fullname;
 	}
 
@@ -1471,12 +1473,11 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 	}
 	sp->charcnt = charcnt;
 	cp = sp->chars;
-	memcpy(cp, stdname, stdlen);
-	cp += stdlen;
+	cp = mempcpy(cp, stdname, stdlen);
 	*cp++ = '\0';
 	if (dstlen != 0) {
-		memcpy(cp, dstname, dstlen);
-		*(cp + dstlen) = '\0';
+	  cp = mempcpy(cp, dstname, dstlen);
+	  *cp = '\0';
 	}
 	return true;
 }

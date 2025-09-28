@@ -1327,10 +1327,10 @@ random_dirent(char const **name, char **namealloc)
   uint_fast64_t unfair_min = - ((UINTMAX_MAX % base__6 + 1) % base__6);
 
   if (!dst) {
-    dst = xmalloc(size_sum(dirlen, prefixlen + suffixlen + 1));
-    memcpy(dst, src, dirlen);
-    memcpy(dst + dirlen, prefix, prefixlen);
-    dst[dirlen + prefixlen + suffixlen] = '\0';
+    char *cp = dst = xmalloc(size_sum(dirlen, prefixlen + suffixlen + 1));
+    cp = mempcpy(cp, src, dirlen);
+    cp = mempcpy(cp, prefix, prefixlen);
+    cp[suffixlen] = '\0';
     *name = *namealloc = dst;
   }
 
@@ -1430,15 +1430,17 @@ relname(char const *target, char const *linkname)
   if (*linkname == '/') {
     /* Make F absolute too.  */
     size_t len = strlen(directory);
-    size_t lenslash = len + (len && directory[len - 1] != '/');
+    bool needs_slash = len && directory[len - 1] != '/';
+    size_t lenslash = len + needs_slash;
     size_t targetsize = strlen(target) + 1;
+    char *cp;
     if (*directory != '/')
       return NULL;
     linksize = size_sum(lenslash, targetsize);
-    f = result = xmalloc(linksize);
-    memcpy(result, directory, len);
-    result[len] = '/';
-    memcpy(result + lenslash, target, targetsize);
+    f = cp = result = xmalloc(linksize);
+    cp = mempcpy(cp, directory, len);
+    *cp = '/';
+    memcpy(cp + needs_slash, target, targetsize);
   }
   for (i = 0; f[i] && f[i] == linkname[i]; i++)
     if (f[i] == '/')
@@ -1448,11 +1450,13 @@ relname(char const *target, char const *linkname)
   taillen = strlen(f + dir_len);
   dotdotetcsize = size_sum(size_product(dotdots, 3), taillen + 1);
   if (dotdotetcsize <= linksize) {
+    char *cp;
     if (!result)
       result = xmalloc(dotdotetcsize);
+    cp = result;
     for (i = 0; i < dotdots; i++)
-      memcpy(result + 3 * i, "../", 3);
-    memmove(result + 3 * dotdots, f + dir_len, taillen + 1);
+      cp = mempcpy(cp, "../", 3);
+    memmove(cp, f + dir_len, taillen + 1);
   }
   return result;
 }
@@ -2875,11 +2879,11 @@ doabbr(char *abbr, struct zone const *zp, char const *letters,
 	  else if (letters == disable_percent_s)
 	    return 0;
 	  sprintf(abbr, format, letters);
-	} else if (isdst) {
-		strcpy(abbr, slashp + 1);
-	} else {
-		memcpy(abbr, format, slashp - format);
-		abbr[slashp - format] = '\0';
+	} else if (isdst)
+	  strcpy(abbr, slashp + 1);
+	else {
+	  char *abbrend = mempcpy(abbr, format, slashp - format);
+	  *abbrend = '\0';
 	}
 	len = strlen(abbr);
 	if (!doquotes)

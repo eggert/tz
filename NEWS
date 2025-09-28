@@ -51,6 +51,11 @@ Unreleased, experimental changes
     -DHAVE_GETRESUID=[01], and -DHAVE_GETEUID=[01] to enable or
     disable these system calls' use.
 
+    tzset etc. now treat ' ' like '_' in time zone abbreviations,
+    just as they treat other invalid bytes.  This continues the
+    transition begun in release 96k, which removed spaces in tzdata
+    because the spaces break time string parsers.
+
     tzcode now uses mempcpy if available, guessing its availability.
     Compile with -DHAVE_MEMPCPY=1 or 0 to override the guess.
 

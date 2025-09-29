@@ -32,7 +32,7 @@ Unreleased, experimental changes
     It is defined if STD_INSPIRED is defined.
     (Patch from Dag-Erling Smørgrav.)
 
-    tzcode is now more cautious about questionable TZ settings.
+    tzset etc. are now more cautious about questionable TZ settings.
     Privileged programs now reject TZ settings that start with '/',
     unless they are TZDEFAULT (default "/etc/localtime") or
     start with TZDIR then "/" (default "/usr/share/zoneinfo/").
@@ -40,14 +40,14 @@ Unreleased, experimental changes
     and reject relative names containing ".." directory components;
     formerly, only privileged programs did those two things.
     These changes were inspired by similar behavior in FreeBSD.
-    The code no longer treat TZ strings taken from tzalloc arguments
-    with less caution than TZ strings taken from the environment, as
-    this was undocumented and would have been hard to explain anyway.
-    tzcode no longer uses the 'access' system call to check access;
-    Instead it now uses the system calls issetuid, getauxval,
+    TZ strings taken from tzalloc arguments are now treated with
+    no less caution than TZ strings taken from the environment, as
+    thoe old undocumented behavior would have been hard to explain.
+    tzset etc. no longer use the 'access' system call to check access;
+    instead they now use the system calls issetuid, getauxval,
     getresuid/getresgid, and geteuid/getegid/getuid/getgid (whichever
-    first works) to test whether a program is privileged;
-    compile with -DHAVE_ISSETUID=[01], -DHAVE_GETAUXVAL=[01],
+    first works) to test whether a program is privileged.
+    Compile with -DHAVE_ISSETUID=[01], -DHAVE_GETAUXVAL=[01],
     -DHAVE_GETRESUID=[01], and -DHAVE_GETEUID=[01] to enable or
     disable these system calls' use.
 

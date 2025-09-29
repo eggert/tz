@@ -591,7 +591,7 @@ union local_storage {
      However, there is no need for this to be smaller than struct
      file_analysis as that struct is allocated anyway, as the other
      union member.  */
-  char fullname[max(sizeof(struct file_analysis), sizeof tzdirslash + 1024)];
+  char fullname[max(sizeof(struct file_analysis), sizeof TZDIR + 1024)];
 };
 
 /* These tzload flags can be ORed together, and fit into 'char'.  */
@@ -683,7 +683,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 
 	if (!OPENAT_TZDIR && !SUPPRESS_TZDIR && name[0] != '/') {
 		char *cp;
-		size_t namesizemax = sizeof lsp->fullname - sizeof tzdirslash;
+		size_t namesizemax = sizeof lsp->fullname - tzdirslashlen;
 		size_t namelen = strnlen (name, namesizemax);
 		if (namesizemax <= namelen)
 		  return ENAMETOOLONG;

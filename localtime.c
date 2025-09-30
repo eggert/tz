@@ -667,7 +667,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		return ENOTCAPABLE;
 	  }
 
-	  if (OPENAT_TZDIR) {
+	  if (OPENAT_TZDIR && !SUPPRESS_TZDIR) {
 	    /* Prefer O_SEARCH or O_PATH if available;
 	       O_RDONLY should be OK too, as TZDIR is invariably readable.
 	       O_DIRECTORY should be redundant but might help

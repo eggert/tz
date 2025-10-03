@@ -148,6 +148,12 @@ struct zone {
 extern int	getopt(int argc, char * const argv[],
 			const char * options);
 extern int	link(const char * target, const char * linkname);
+# ifndef mkdir
+extern int	mkdir(char const *, mode_t);
+# endif
+# ifdef S_IWGRP
+extern mode_t	umask(mode_t);
+# endif
 extern char *	optarg;
 extern int	optind;
 #endif

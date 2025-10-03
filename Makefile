@@ -547,7 +547,7 @@ SAFE_CHAR=	'[]'$(SAFE_CHARSET)'-]'
 # These non-alphabetic, non-ASCII printable characters are
 # used in commentary or in generated *.txt files
 # and are not likely to cause confusion.
-UNUSUAL_OK_CHARSET= §«°±»½¾×–‘’“”•→−≤★⯪
+UNUSUAL_OK_CHARSET= §«°±»½¾×–‘’“”•→−≤★⟨⟩⯪
 
 # Put this in a bracket expression to match spaces.
 s = [:space:]

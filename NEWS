@@ -42,7 +42,7 @@ Unreleased, experimental changes
     These changes were inspired by similar behavior in FreeBSD.
     TZ strings taken from tzalloc arguments are now treated with
     no less caution than TZ strings taken from the environment, as
-    thoe old undocumented behavior would have been hard to explain.
+    the old undocumented behavior would have been hard to explain.
     tzset etc. no longer use the 'access' system call to check access;
     instead they now use the system calls issetuid, getauxval,
     getresuid/getresgid, and geteuid/getegid/getuid/getgid (whichever

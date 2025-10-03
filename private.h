@@ -555,6 +555,12 @@ typedef unsigned long uintmax_t;
 # define HAVE___HAS_C_ATTRIBUTE false
 #endif
 
+#if 8 <= __GNUC__
+# define ATTRIBUTE_NONSTRING __attribute__((__nonstring__))
+#else
+# define ATTRIBUTE_NONSTRING
+#endif
+
 #if HAVE___HAS_C_ATTRIBUTE
 # if __has_c_attribute(deprecated)
 #  define ATTRIBUTE_DEPRECATED [[deprecated]]

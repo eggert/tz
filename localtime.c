@@ -571,6 +571,9 @@ union input_buffer {
 };
 
 /* TZDIR with a trailing '/'.  It is null-terminated if OPENAT_TZDIR.  */
+#if !OPENAT_TZDIR
+ATTRIBUTE_NONSTRING
+#endif
 static char const tzdirslash[sizeof TZDIR + OPENAT_TZDIR] = TZDIR "/";
 static size_t const tzdirslashlen = sizeof TZDIR;
 

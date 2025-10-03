@@ -336,6 +336,8 @@ static struct state *const lclptr = &lclmem;
 static struct state *const gmtptr = &gmtmem;
 #endif /* State Farm */
 
+/* Maximum number of bytes in an efficiently-handled TZ string.
+   Longer strings work, albeit less efficiently.  */
 #ifndef TZ_STRLEN_MAX
 # define TZ_STRLEN_MAX 255
 #endif /* !defined TZ_STRLEN_MAX */

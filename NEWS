@@ -51,6 +51,18 @@ Unreleased, experimental changes
     -DHAVE_GETRESUID=[01], and -DHAVE_GETEUID=[01] to enable or
     disable these system calls' use.
 
+    The new CFLAGS option -DTZ_CHANGE_INTERVAL=N makes tzset etc.
+    check for TZif file changes if the in-memory data are N seconds
+    old or more, and are derived from the TZ environment variable.
+    This is intended for platforms that want tzset etc. to reflect
+    changes to whatever file TZ selects (including changes to
+    /etc/localtime if TZ is unset).  If N is negative (the default)
+    these checks are omitted; this is the traditional behavior.
+
+    The new CFLAGS options -DHAVE_STRUCT_STAT_ST_CTIM=0 and
+    -DHAVE_STRUCT_TIMESPEC=0 port to non-POSIX.1-2008 platforms
+    that lack st_ctim and struct timespec, respectively.
+
     tzset etc. now treat ' ' like '_' in time zone abbreviations,
     just as they treat other invalid bytes.  This continues the
     transition begun in release 96k, which removed spaces in tzdata

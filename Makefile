@@ -163,8 +163,9 @@ TIME_T_ALTERNATIVES_TAIL = int_least32_t.ck uint_least32_t.ck \
 # below.  If you want both sets of data available, with leap seconds counted
 # normally, use
 #	REDO=		right_posix
-# below.  POSIX mandates that leap seconds not be counted; for compatibility
-# with it, use "posix_only" or "posix_right".  Use POSIX time on systems with
+# below.  POSIX mandates that leap seconds not be counted, and a
+# nonnegative TZ_CHANGE_INTERVAL also assumes this, so to be compatible with
+# these, use "posix_only" or "posix_right".  Use POSIX time on systems with
 # leap smearing; this can work better than unsmeared "right" time with
 # applications that are not leap second aware, and is closer to unsmeared
 # "right" time than unsmeared POSIX time is (e.g., 0.5 vs 1.0 s max error).
@@ -274,6 +275,8 @@ LDLIBS=
 #  -DHAVE_STRDUP=0 if your system lacks the strdup function
 #  -DHAVE_STRNLEN=0 if your system lacks the strnlen function+
 #  -DHAVE_STRTOLL=0 if your system lacks the strtoll function+
+#  -DHAVE_STRUCT_STAT_ST_CTIM=0 if struct stat lacks a member st_ctim+
+#  -DHAVE_STRUCT_TIMESPEC=0 if your system lacks struct timespec+
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
 #  -DHAVE_SYS_STAT_H=0 if <sys/stat.h> does not work*
 #  -DHAVE_TZSET=0 if your system lacks a tzset function
@@ -303,6 +306,14 @@ LDLIBS=
 #	Append other compiler flags as needed, e.g., -pthread on GNU/Linux.
 #  -Dtime_tz=\"T\" to use T as the time_t type, rather than the system time_t
 #	This is intended for internal use only; it mangles external names.
+#  -DTZ_CHANGE_INTERVAL=N if functions depending on TZ should check
+#	no more often than every N seconds for TZif file changes.
+#	If N is negative (the default), no such checking is done.
+#	This option is intended for platforms that want localtime etc.
+#	to respond to changes to a file selected by TZ, including to
+#	TZDEFAULT (normally /etc/localtime) if TZ is unset.
+#	On these platforms, REDO should be "posix_only" or "posix_right".
+#	This option does not affect tzalloc-allocated objects.
 #  -DTZ_DOMAIN=\"foo\" to use "foo" for gettext domain name; default is "tz"
 #  -DTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
 #	the default is system-supplied, typically "/usr/lib/locale"

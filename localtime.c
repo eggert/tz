@@ -25,10 +25,23 @@
 
 #if HAVE_SYS_STAT_H
 # include <sys/stat.h>
+# ifndef S_ISREG
+#  define S_ISREG(mode) (((mode) & S_IFMT) == S_IFREG) /* Ancient UNIX.  */
+# endif
+#else
+struct stat { char st_ctime, st_dev, st_ino; }
+# define dev_t char
+# define ino_t char
+# define fstat(fd, st) (memset(st, 0, sizeof *(st)), 0)
+# define stat(name, st) fstat(0, st)
+# define S_ISREG(mode) 1
 #endif
-#if !defined S_ISREG && defined S_IFREG
-/* Ancient UNIX or recent MS-Windows.  */
-# define S_ISREG(mode) (((mode) & S_IFMT) == S_IFREG)
+
+#ifndef HAVE_STRUCT_STAT_ST_CTIM
+# define HAVE_STRUCT_STAT_ST_CTIM 1
+#endif
+#if !defined st_ctim && defined __APPLE__ && defined __MACH__
+# define st_ctim st_ctimespec
 #endif
 
 #if defined THREAD_SAFE && THREAD_SAFE
@@ -67,6 +80,47 @@ typedef intmax_t iinntt;
 # define IINNTT_MAX INTMAX_MAX
 #endif
 static_assert(IINNTT_MIN < INT_MIN && INT_MAX < IINNTT_MAX);
+
+#ifndef HAVE_STRUCT_TIMESPEC
+# define HAVE_STRUCT_TIMESPEC 1
+#endif
+#if !HAVE_STRUCT_TIMESPEC
+struct timespec { time_t tv_sec; long tv_nsec; };
+#endif
+
+#if !defined CLOCK_MONOTONIC_COARSE && defined CLOCK_MONOTONIC
+# define CLOCK_MONOTONIC_COARSE CLOCK_MONOTONIC
+#endif
+#ifndef CLOCK_MONOTONIC_COARSE
+# undef clock_gettime
+# define clock_gettime(id, t) ((t)->tv_sec = time(NULL), (t)->tv_nsec = 0, 0)
+#endif
+
+/* How many seconds to wait before checking the default TZif file again.
+   Negative means no checking.  Default to 61 if DETECT_TZ_CHANGES
+   (as circa 2025 FreeBSD builds its localtime.c with -DDETECT_TZ_CHANGES),
+   and to -1 otherwise.  */
+#ifndef TZ_CHANGE_INTERVAL
+# ifdef DETECT_TZ_CHANGES
+#  define TZ_CHANGE_INTERVAL 61
+# else
+#  define TZ_CHANGE_INTERVAL (-1)
+#endif
+#endif
+static_assert(TZ_CHANGE_INTERVAL < 0 || HAVE_SYS_STAT_H);
+
+/* The change detection interval.  */
+#if TZ_CHANGE_INTERVAL < 0 || !defined __FreeBSD__
+enum { tz_change_interval = TZ_CHANGE_INTERVAL };
+#else
+/* FreeBSD uses this private-but-extern var in its internal test suite.  */
+int __tz_change_interval = TZ_CHANGE_INTERVAL;
+# define tz_change_interval __tz_change_interval
+#endif
+
+/* The type of monotonic times.
+   This is the system time_t, even if USE_TIMEX_T #defines time_t below.  */
+typedef time_t monotime_t;
 
 /* On platforms where offtime or mktime might overflow,
    strftime.c defines USE_TIMEX_T to be true and includes us.
@@ -561,6 +615,49 @@ scrub_abbrs(struct state *sp)
 
 #endif
 
+/* Return true if the TZif file with descriptor FD changed,
+   or may have changed, since the last time we were called.
+   Return false if it did not change.
+   If *ST is valid it is the file's current status;
+   otherwise, update *ST to the status if possible.  */
+static bool
+tzfile_changed(int fd, struct stat *st)
+{
+  /* If old_ctim.tv_sec, these variables hold the corresponding part
+     of the file's metadata the last time this function was called.  */
+  static struct timespec old_ctim;
+  static dev_t old_dev;
+  static ino_t old_ino;
+
+  if (!st->st_ctime && fstat(fd, st) < 0) {
+    /* We do not know the file's state, so reset.  */
+    old_ctim.tv_sec = 0;
+    return true;
+  } else {
+    /* Use the change time, as it changes more reliably; mod time can
+       be set back with futimens etc.  Use subsecond timestamp
+       resolution if available, as this can help distinguish files on
+       non-POSIX platforms where st_dev and st_ino are unreliable.  */
+    struct timespec ctim;
+#if HAVE_STRUCT_STAT_ST_CTIM
+    ctim = st->st_ctim;
+#else
+    ctim.tv_sec = st->st_ctime;
+    ctim.tv_nsec = 0;
+#endif
+
+    if ((ctim.tv_sec ^ old_ctim.tv_sec) | (ctim.tv_nsec ^ old_ctim.tv_nsec)
+	| (st->st_dev ^ old_dev) | (st->st_ino ^ old_ino)) {
+      old_ctim = ctim;
+      old_dev = st->st_dev;
+      old_ino = st->st_ino;
+      return true;
+    }
+
+    return false;
+  }
+}
+
 /* Input buffer for data read from a compiled tz file.  */
 union input_buffer {
   /* The first part of the buffer, interpreted as a header.  */
@@ -600,8 +697,9 @@ union local_storage {
 };
 
 /* These tzload flags can be ORed together, and fit into 'char'.  */
-enum { TZLOAD_TZDIR_SUB = 1 }; /* TZ should be a file under TZDIR.  */
+enum { TZLOAD_FROMENV = 1 }; /* The TZ string came from the environment.  */
 enum { TZLOAD_TZSTRING = 2 }; /* Read any newline-surrounded TZ string.  */
+enum { TZLOAD_TZDIR_SUB = 4 }; /* TZ should be a file under TZDIR.  */
 
 /* Load tz data from the file named NAME into *SP.  Respect TZLOADFLAGS.
    Use *LSP for temporary storage.  Return 0 on
@@ -620,7 +718,9 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	int dd = AT_FDCWD;
 	int oflags = (O_RDONLY | O_BINARY | O_CLOEXEC | O_CLOFORK
 		      | O_IGNORE_CTTY | O_NOCTTY);
-	int open_err;
+	int err;
+	struct stat st;
+	st.st_ctime = 0;
 
 	sp->goback = sp->goahead = false;
 
@@ -645,17 +745,14 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	  else if (issetugid())
 	    return ENOTCAPABLE;
 	  else {
-#ifdef S_ISREG
 	    /* Check for devices, as their mere opening could have
 	       unwanted side effects.  Though racy, there is no
 	       portable way to fix the races.  This check is needed
 	       only for files not otherwise known to be non-devices.  */
-	    struct stat st;
 	    if (stat(name, &st) < 0)
 	      return errno;
 	    if (!S_ISREG(st.st_mode))
 	      return EINVAL;
-#endif
 	  }
 	}
 
@@ -704,20 +801,26 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	}
 
 	fid = OPENAT_TZDIR ? openat(dd, relname, oflags) : open(name, oflags);
-	open_err = errno;
+	err = errno;
 	if (0 <= dd)
 	  close(dd);
 	if (fid < 0)
-	  return open_err;
-
-	nread = read(fid, up->buf, sizeof up->buf);
-	if (nread < tzheadsize) {
-	  int err = nread < 0 ? errno : EINVAL;
-	  close(fid);
 	  return err;
+
+	/* If detecting changes to the the primary TZif file's state and
+	   the file's status is unchanged, save time by returning now.
+	   Otherwise read the file's contents.  Close the file either way.  */
+	if (0 <= tz_change_interval && (tzloadflags & TZLOAD_FROMENV)
+	    && !tzfile_changed(fid, &st))
+	  err = -1;
+	else {
+	  nread = read(fid, up->buf, sizeof up->buf);
+	  err = tzheadsize <= nread ? 0 : nread < 0 ? errno : EINVAL;
 	}
-	if (close(fid) < 0)
-	  return errno;
+	close(fid);
+	if (err)
+	  return err < 0 ? 0 : err;
+
 	for (stored = 4; stored <= 8; stored *= 2) {
 	    char version = up->tzhead.tzh_version[0];
 	    bool skip_datablock = stored == 4 && version;
@@ -1560,6 +1663,22 @@ gmtload(struct state *const sp)
 
 #if !USE_TIMEX_T || !defined TM_GMTOFF
 
+/* Return true if primary cached time zone data are fresh,
+   i.e., if this function is known to have recently returned false.
+   A call is recent if it occurred less than tz_change_interval seconds ago.
+   NOW should be the current time.  */
+static bool
+fresh_tzdata(monotime_t now)
+{
+  /* If nonzero, the time of the last false return.  */
+  static monotime_t last_checked;
+
+  if (last_checked && now - last_checked < tz_change_interval)
+    return true;
+  last_checked = now;
+  return false;
+}
+
 /* Initialize *SP to a value appropriate for the TZ setting NAME.
    Respect TZLOADFLAGS.
    Return 0 on success, an errno value on failure.  */
@@ -1589,12 +1708,14 @@ zoneinit(struct state *sp, char const *name, char tzloadflags)
   }
 }
 
+/* Like tzset(), but in a critical section.
+   If tz_change_interval is positive the time is NOW; otherwise ignore NOW.  */
 static void
-tzset_unlocked(void)
+tzset_unlocked(monotime_t now)
 {
   char const *name = getenv("TZ");
   struct state *sp = lclptr;
-  char tzloadflags = TZLOAD_TZSTRING;
+  char tzloadflags = TZLOAD_FROMENV | TZLOAD_TZSTRING;
   size_t namelen = sizeof lcl_TZname + 1; /* placeholder for no name */
 
   if (name) {
@@ -1615,9 +1736,10 @@ tzset_unlocked(void)
     }
   }
 
-  if (name
-      ? 0 < lcl_is_set && strcmp(lcl_TZname, name) == 0
-      : lcl_is_set < 0)
+  if ((tz_change_interval <= 0 ? tz_change_interval < 0 : fresh_tzdata(now))
+      && (name
+	  ? 0 < lcl_is_set && strcmp(lcl_TZname, name) == 0
+	  : lcl_is_set < 0))
     return;
 # ifdef ALL_STATE
   if (! sp)
@@ -1644,13 +1766,31 @@ tzset_unlocked(void)
 
 #endif
 
+#if !defined TM_GMTOFF || !USE_TIMEX_T
+
+/* If tz_change_interval is positive,
+   return the current time as a monotonically nondecreasing value.
+   Otherwise the return value does not matter.  */
+static monotime_t
+get_monotonic_time(void)
+{
+  struct timespec now;
+  now.tv_sec = 0;
+  if (0 < tz_change_interval)
+    clock_gettime(CLOCK_MONOTONIC_COARSE, &now);
+  return now.tv_sec;
+}
+#endif
+
 #if !USE_TIMEX_T
+
 void
 tzset(void)
 {
+  monotime_t now = get_monotonic_time();
   if (lock() != 0)
     return;
-  tzset_unlocked();
+  tzset_unlocked(now);
   unlock();
 }
 #endif
@@ -1834,13 +1974,14 @@ localtime_rz(struct state *restrict sp, time_t const *restrict timep,
 static struct tm *
 localtime_tzset(time_t const *timep, struct tm *tmp, bool setname)
 {
+  monotime_t now = get_monotonic_time();
   int err = lock();
   if (err) {
     errno = err;
     return NULL;
   }
-  if (setname || !lcl_is_set)
-    tzset_unlocked();
+  if (0 <= tz_change_interval || setname || !lcl_is_set)
+    tzset_unlocked(now);
   tmp = localsub(lclptr, timep, setname, tmp);
   unlock();
   return tmp;
@@ -2500,13 +2641,14 @@ static
 time_t
 mktime(struct tm *tmp)
 {
+  monotime_t now = get_monotonic_time();
   time_t t;
   int err = lock();
   if (err) {
     errno = err;
     return -1;
   }
-  tzset_unlocked();
+  tzset_unlocked(now);
   t = mktime_tzname(lclptr, tmp, true);
   unlock();
   return t;
@@ -2617,13 +2759,14 @@ time2posix_z(struct state *sp, time_t t)
 time_t
 time2posix(time_t t)
 {
+  monotime_t now = get_monotonic_time();
   int err = lock();
   if (err) {
     errno = err;
     return -1;
   }
-  if (!lcl_is_set)
-    tzset_unlocked();
+  if (0 <= tz_change_interval || !lcl_is_set)
+    tzset_unlocked(now);
   if (lclptr)
     t = time2posix_z(lclptr, t);
   unlock();
@@ -2662,13 +2805,14 @@ posix2time_z(struct state *sp, time_t t)
 time_t
 posix2time(time_t t)
 {
+  monotime_t now = get_monotonic_time();
   int err = lock();
   if (err) {
     errno = err;
     return -1;
   }
-  if (!lcl_is_set)
-    tzset_unlocked();
+  if (0 <= tz_change_interval || !lcl_is_set)
+    tzset_unlocked(now);
   if (lclptr)
     t = posix2time_z(lclptr, t);
   unlock();

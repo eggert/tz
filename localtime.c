@@ -44,6 +44,15 @@ struct stat { char st_ctime, st_dev, st_ino; }
 # define st_ctim st_ctimespec
 #endif
 
+#ifndef HAVE_STRUCT_STAT_ST_GEN
+# if (defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
+      || (defined __APPLE__ && defined __MACH__))
+#  define HAVE_STRUCT_STAT_ST_GEN 1
+# else
+#  define HAVE_STRUCT_STAT_ST_GEN 0
+# endif
+#endif
+
 #if defined THREAD_SAFE && THREAD_SAFE
 # include <pthread.h>
 static pthread_mutex_t locallock = PTHREAD_MUTEX_INITIALIZER;
@@ -628,12 +637,22 @@ tzfile_changed(int fd, struct stat *st)
   static struct timespec old_ctim;
   static dev_t old_dev;
   static ino_t old_ino;
+#if HAVE_STRUCT_STAT_ST_GEN
+  static uint_fast64_t old_gen;
+  static_assert(sizeof st->st_gen <= sizeof old_gen);
+#endif
 
   if (!st->st_ctime && fstat(fd, st) < 0) {
     /* We do not know the file's state, so reset.  */
     old_ctim.tv_sec = 0;
     return true;
   } else {
+#if HAVE_STRUCT_STAT_ST_GEN
+    uint_fast64_t xor_gen = st->st_gen ^ old_gen;
+#else
+    int xor_gen = 0;
+#endif
+
     /* Use the change time, as it changes more reliably; mod time can
        be set back with futimens etc.  Use subsecond timestamp
        resolution if available, as this can help distinguish files on
@@ -647,10 +666,13 @@ tzfile_changed(int fd, struct stat *st)
 #endif
 
     if ((ctim.tv_sec ^ old_ctim.tv_sec) | (ctim.tv_nsec ^ old_ctim.tv_nsec)
-	| (st->st_dev ^ old_dev) | (st->st_ino ^ old_ino)) {
+	| (st->st_dev ^ old_dev) | (st->st_ino ^ old_ino) | xor_gen) {
       old_ctim = ctim;
       old_dev = st->st_dev;
       old_ino = st->st_ino;
+#if HAVE_STRUCT_STAT_ST_GEN
+      old_gen = st->st_gen;
+#endif
       return true;
     }
 

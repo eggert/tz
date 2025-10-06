@@ -276,6 +276,8 @@ LDLIBS=
 #  -DHAVE_STRNLEN=0 if your system lacks the strnlen function+
 #  -DHAVE_STRTOLL=0 if your system lacks the strtoll function+
 #  -DHAVE_STRUCT_STAT_ST_CTIM=0 if struct stat lacks a member st_ctim+
+#  -DHAVE_STRUCT_STAT_ST_GEN=1 if struct stat has a member st_gen, 0 if not
+#	(default is guessed)
 #  -DHAVE_STRUCT_TIMESPEC=0 if your system lacks struct timespec+
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
 #  -DHAVE_SYS_STAT_H=0 if <sys/stat.h> does not work*

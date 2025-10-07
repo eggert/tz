@@ -194,30 +194,15 @@
 ** Nested includes
 */
 
-/* Avoid clashes with NetBSD by renaming NetBSD's declarations.
-   If defining the 'timezone' variable, avoid a clash with FreeBSD's
+/* If defining the 'timezone' variable, avoid a clash with FreeBSD's
    'timezone' function by renaming its declaration.  */
-#define localtime_rz sys_localtime_rz
-#define mktime_z sys_mktime_z
-#define posix2time_z sys_posix2time_z
-#define time2posix_z sys_time2posix_z
 #if defined USG_COMPAT && USG_COMPAT == 2
 # define timezone sys_timezone
 #endif
-#define timezone_t sys_timezone_t
-#define tzalloc sys_tzalloc
-#define tzfree sys_tzfree
 #include <time.h>
-#undef localtime_rz
-#undef mktime_z
-#undef posix2time_z
-#undef time2posix_z
 #if defined USG_COMPAT && USG_COMPAT == 2
 # undef timezone
 #endif
-#undef timezone_t
-#undef tzalloc
-#undef tzfree
 
 #include <stddef.h>
 
@@ -920,15 +905,16 @@ time_t posix2time(time_t);
 #endif
 
 /*
-** Define functions that are ABI compatible with NetBSD but have
-** better prototypes.  NetBSD 6.1.4 defines a pointer type timezone_t
-** and labors under the misconception that 'const timezone_t' is a
-** pointer to a constant.  This use of 'const' is ineffective, so it
-** is not done here.  What we call 'struct state' NetBSD calls
+** Define functions that are ABI compatible with NetBSD.
+** What we call 'struct state' NetBSD calls
 ** 'struct __state', but this is a private name so it doesn't matter.
 */
 #if NETBSD_INSPIRED
+# ifdef _NETBSD_SOURCE
+#  define state __state
+# else
 typedef struct state *timezone_t;
+# endif
 struct tm *localtime_rz(timezone_t restrict, time_t const *restrict,
 			struct tm *restrict);
 time_t mktime_z(timezone_t restrict, struct tm *restrict);

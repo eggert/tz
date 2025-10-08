@@ -1788,8 +1788,11 @@ void
 tzset(void)
 {
   monotime_t now = get_monotonic_time();
-  if (lock() != 0)
+  int err = lock();
+  if (err != 0) {
+    errno = err;
     return;
+  }
   tzset_unlocked(now);
   unlock();
 }

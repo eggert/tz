@@ -194,17 +194,23 @@
 ** Nested includes
 */
 
-/* If defining the 'timezone' variable, avoid a clash with FreeBSD's
-   'timezone' function by renaming its declaration.  */
-#if defined USG_COMPAT && USG_COMPAT == 2
+#include <stddef.h>
+
+/* If defining the 'timezone' variable a la POSIX, avoid clashing with the old
+   'timezone' function of FreeBSD <= 14, by renaming the latter's declaration.
+   This hack can be removed after 2028-11-30, FreeBSD 14's expected EOL.  */
+#if (defined __FreeBSD__  && __FreeBSD__ < 15 && defined __BSD_VISIBLE \
+     && defined USG_COMPAT  && USG_COMPAT == 2)
 # define timezone sys_timezone
-#endif
-#include <time.h>
-#if defined USG_COMPAT && USG_COMPAT == 2
-# undef timezone
+# define timezone_defined
 #endif
 
-#include <stddef.h>
+#include <time.h>
+
+#ifdef timezone_defined
+# undef timezone
+# undef timezone_defined
+#endif
 
 #include <string.h>
 #if defined HAVE_STRNLEN && !HAVE_STRNLEN

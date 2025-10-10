@@ -800,7 +800,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		/* Create a string "TZDIR/NAME".  Using sprintf here
 		   would pull in stdio (and would fail if the
 		   resulting string length exceeded INT_MAX!).  */
-		if (ALL_STATE || sizeof *lsp <= fullnamesize) {
+		if (ALL_STATE || sizeof *lsp < fullnamesize) {
 		  lsp = malloc(max(sizeof *lsp, fullnamesize));
 		  if (!lsp)
 		    return HAVE_MALLOC_ERRNO ? errno : ENOMEM;

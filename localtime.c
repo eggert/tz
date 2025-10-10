@@ -378,12 +378,14 @@ static struct tm *timesub(time_t const *, int_fast32_t, struct state const *,
 			  struct tm *);
 static bool tzparse(char const *, struct state *, struct state const *);
 
-#ifdef ALL_STATE
+#ifndef ALL_STATE
+# define ALL_STATE 0
+#endif
+
+#if ALL_STATE
 static struct state *	lclptr;
 static struct state *	gmtptr;
-#endif /* defined ALL_STATE */
-
-#ifndef ALL_STATE
+#else
 static struct state	lclmem;
 static struct state	gmtmem;
 static struct state *const lclptr = &lclmem;
@@ -702,18 +704,19 @@ enum { TZLOAD_TZSTRING = 2 }; /* Read any newline-surrounded TZ string.  */
 enum { TZLOAD_TZDIR_SUB = 4 }; /* TZ should be a file under TZDIR.  */
 
 /* Load tz data from the file named NAME into *SP.  Respect TZLOADFLAGS.
-   Use *LSP for temporary storage.  Return 0 on
+   Use **LSPP for temporary storage.  Return 0 on
    success, an errno value on failure.  */
 static int
 tzloadbody(char const *name, struct state *sp, char tzloadflags,
-	   union local_storage *lsp)
+	   union local_storage **lspp)
 {
 	register int			i;
 	register int			fid;
 	register int			stored;
 	register ssize_t		nread;
 	char const *relname;
-	register union input_buffer *up = &lsp->u.u;
+	union local_storage *lsp = *lspp;
+	union input_buffer *up;
 	register int tzheadsize = sizeof(struct tzhead);
 	int dd = AT_FDCWD;
 	int oflags = (O_RDONLY | O_BINARY | O_CLOEXEC | O_CLOFORK
@@ -793,6 +796,12 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		/* Create a string "TZDIR/NAME".  Using sprintf here
 		   would pull in stdio (and would fail if the
 		   resulting string length exceeded INT_MAX!).  */
+		if (ALL_STATE) {
+		  lsp = malloc(sizeof *lsp);
+		  if (!lsp)
+		    return HAVE_MALLOC_ERRNO ? errno : ENOMEM;
+		  *lspp = lsp;
+		}
 		cp = lsp->fullname;
 		cp = mempcpy(cp, tzdirslash, tzdirslashlen);
 		cp = mempcpy(cp, name, namelen);
@@ -814,6 +823,13 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	    && !tzfile_changed(fid, &st))
 	  err = -1;
 	else {
+	  if (ALL_STATE && !lsp) {
+	    lsp = malloc(sizeof *lsp);
+	    if (!lsp)
+	      return HAVE_MALLOC_ERRNO ? errno : ENOMEM;
+	    *lspp = lsp;
+	  }
+	  up = &lsp->u.u;
 	  nread = read(fid, up->buf, sizeof up->buf);
 	  err = tzheadsize <= nread ? 0 : nread < 0 ? errno : EINVAL;
 	}
@@ -1069,19 +1085,18 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 static int
 tzload(char const *name, struct state *sp, char tzloadflags)
 {
-#ifdef ALL_STATE
-  union local_storage *lsp = malloc(sizeof *lsp);
-  if (!lsp) {
-    return HAVE_MALLOC_ERRNO ? errno : ENOMEM;
-  } else {
-    int err = tzloadbody(name, sp, tzloadflags, lsp);
-    free(lsp);
-    return err;
-  }
+  int r;
+  union local_storage *lsp;
+#if ALL_STATE
+  lsp = NULL;
 #else
   union local_storage ls;
-  return tzloadbody(name, sp, tzloadflags, &ls);
+  lsp = &ls;
 #endif
+  r = tzloadbody(name, sp, tzloadflags, &lsp);
+  if (ALL_STATE)
+    free(lsp);
+  return r;
 }
 
 static const int	mon_lengths[2][MONSPERYEAR] = {
@@ -1741,7 +1756,7 @@ tzset_unlocked(monotime_t now)
 	  ? 0 < lcl_is_set && strcmp(lcl_TZname, name) == 0
 	  : lcl_is_set < 0))
     return;
-# ifdef ALL_STATE
+# if ALL_STATE
   if (! sp)
     lclptr = sp = malloc(sizeof *lclptr);
 # endif
@@ -1805,7 +1820,7 @@ gmtcheck(void)
   if (lock() != 0)
     return;
   if (! gmt_is_set) {
-#ifdef ALL_STATE
+#if ALL_STATE
     gmtptr = malloc(sizeof *gmtptr);
 #endif
     if (gmtptr)

@@ -77,6 +77,10 @@ Unreleased, experimental changes
     tzset etc. now have an experimental OPENAT_TZDIR option;
     see Makefile and localtime.c for details.
 
+    On platforms like GNU/Hurd that do not define PATH_MAX,
+    exceedingly long TZ strings no longer fail merely because they
+    exceed an arbitrary file name length limit imposed by tzcode.
+
   Changes to commentary
 
     The leapseconds file contains commentary about the IERS and NIST

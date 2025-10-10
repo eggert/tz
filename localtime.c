@@ -689,13 +689,10 @@ union local_storage {
     struct state st;
   } u;
 
-  /* The name of the file to be opened.  Ideally this would have no
-     size limits, to support arbitrarily long Zone names.
-     Limiting Zone names to 1024 bytes should suffice for practical use.
-     However, there is no need for this to be smaller than struct
-     file_analysis as that struct is allocated anyway, as the other
-     union member.  */
-  char fullname[max(sizeof(struct file_analysis), sizeof TZDIR + 1024)];
+#ifdef PATH_MAX
+  /* The name of the file to be opened.  */
+  char fullname[PATH_MAX];
+#endif
 };
 
 /* These tzload flags can be ORed together, and fit into 'char'.  */
@@ -788,25 +785,35 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 
 	if (!OPENAT_TZDIR && !SUPPRESS_TZDIR && name[0] != '/') {
 		char *cp;
-		size_t namesizemax = sizeof lsp->fullname - tzdirslashlen;
+		size_t fullnamesize;
+#ifdef PATH_MAX
+		static_assert(tzdirslashlen <= PATH_MAX);
+		size_t namesizemax = PATH_MAX - tzdirslashlen;
 		size_t namelen = strnlen (name, namesizemax);
 		if (namesizemax <= namelen)
 		  return ENAMETOOLONG;
+#else
+		size_t namelen = strlen (name);
+#endif
+		fullnamesize = tzdirslashlen + namelen + 1;
 
 		/* Create a string "TZDIR/NAME".  Using sprintf here
 		   would pull in stdio (and would fail if the
 		   resulting string length exceeded INT_MAX!).  */
-		if (ALL_STATE) {
-		  lsp = malloc(sizeof *lsp);
+		if (ALL_STATE || sizeof *lsp <= fullnamesize) {
+		  lsp = malloc(max(sizeof *lsp, fullnamesize));
 		  if (!lsp)
 		    return HAVE_MALLOC_ERRNO ? errno : ENOMEM;
 		  *lspp = lsp;
 		}
-		cp = lsp->fullname;
-		cp = mempcpy(cp, tzdirslash, tzdirslashlen);
+		cp = mempcpy(lsp, tzdirslash, tzdirslashlen);
 		cp = mempcpy(cp, name, namelen);
 		*cp = '\0';
+#ifdef PATH_MAX
 		name = lsp->fullname;
+#else
+		name = (char *) lsp;
+#endif
 	}
 
 	fid = OPENAT_TZDIR ? openat(dd, relname, oflags) : open(name, oflags);
@@ -1086,6 +1093,7 @@ static int
 tzload(char const *name, struct state *sp, char tzloadflags)
 {
   int r;
+  union local_storage *lsp0;
   union local_storage *lsp;
 #if ALL_STATE
   lsp = NULL;
@@ -1093,8 +1101,9 @@ tzload(char const *name, struct state *sp, char tzloadflags)
   union local_storage ls;
   lsp = &ls;
 #endif
+  lsp0 = lsp;
   r = tzloadbody(name, sp, tzloadflags, &lsp);
-  if (ALL_STATE)
+  if (lsp != lsp0)
     free(lsp);
   return r;
 }

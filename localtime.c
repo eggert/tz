@@ -676,7 +676,7 @@ union input_buffer {
 ATTRIBUTE_NONSTRING
 #endif
 static char const tzdirslash[sizeof TZDIR + OPENAT_TZDIR] = TZDIR "/";
-static size_t const tzdirslashlen = sizeof TZDIR;
+enum { tzdirslashlen = sizeof TZDIR };
 
 /* Local storage needed for 'tzloadbody'.  */
 union local_storage {

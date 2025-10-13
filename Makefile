@@ -304,6 +304,11 @@ LDLIBS=
 #  -DTHREAD_SAFE to make localtime.c thread-safe, as POSIX requires;
 #	not needed by the main-program tz code, which is single-threaded.
 #	Append other compiler flags as needed, e.g., -pthread on GNU/Linux.
+#	The following option can also be used:
+#	  -DTHREAD_RWLOCK to use read-write locks intead of mutexes.
+#	    This can improve paralellism and thus save real time
+#	    if many threads call tzcode functions simultaneously.
+#	    It also costs CPU time and thus energy.
 #  -Dtime_tz=\"T\" to use T as the time_t type, rather than the system time_t
 #	This is intended for internal use only; it mangles external names.
 #  -DTZ_CHANGE_INTERVAL=N if functions depending on TZ should check

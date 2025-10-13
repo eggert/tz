@@ -44,15 +44,38 @@ struct stat { char st_ctime, st_dev, st_ino; }
 # define st_ctim st_ctimespec
 #endif
 
+#ifndef THREAD_RWLOCK
+# define THREAD_RWLOCK 0
+#endif
+
 #if defined THREAD_SAFE && THREAD_SAFE
 # include <pthread.h>
+# if THREAD_RWLOCK
+static pthread_rwlock_t locallock = PTHREAD_RWLOCK_INITIALIZER;
+static int lock(void) { return pthread_rwlock_rdlock(&locallock); }
+static void unlock(void) { pthread_rwlock_unlock(&locallock); }
+# else
 static pthread_mutex_t locallock = PTHREAD_MUTEX_INITIALIZER;
 static int lock(void) { return pthread_mutex_lock(&locallock); }
 static void unlock(void) { pthread_mutex_unlock(&locallock); }
+# endif
 #else
 static int lock(void) { return 0; }
 static void unlock(void) { }
 #endif
+
+/* Upgrade a read lock to a write lock.
+   Return 0 on success, an errno value otherwise.  */
+static int
+rd2wrlock(void)
+{
+# if THREAD_RWLOCK
+  unlock();
+  return pthread_rwlock_wrlock(&locallock);
+# else
+  return 0;
+# endif
+}
 
 /* Unless intptr_t is missing, pacify gcc -Wcast-qual on char const * exprs.
    Use this carefully, as the casts disable type checking.
@@ -1733,38 +1756,55 @@ zoneinit(struct state *sp, char const *name, char tzloadflags)
 }
 
 /* Like tzset(), but in a critical section.
+   If THREAD_RWLOCK the caller has a read lock,
+   and this function might ugrade it to a write lock.
    If tz_change_interval is positive the time is NOW; otherwise ignore NOW.  */
 static void
 tzset_unlocked(monotime_t now)
 {
-  char const *name = getenv("TZ");
-  struct state *sp = lclptr;
-  char tzloadflags = TZLOAD_FROMENV | TZLOAD_TZSTRING;
-  size_t namelen = sizeof lcl_TZname + 1; /* placeholder for no name */
+  char const *name;
+  struct state *sp;
+  char tzloadflags;
+  size_t namelen;
+  bool writing = false;
 
-  if (name) {
-    namelen = strnlen(name, sizeof lcl_TZname);
+  for (;;) {
+    name = getenv("TZ");
+    sp = lclptr;
+    tzloadflags = TZLOAD_FROMENV | TZLOAD_TZSTRING;
+    namelen = sizeof lcl_TZname + 1; /* placeholder for no name */
 
-    /* Abbreviate a string like "/usr/share/zoneinfo/America/Los_Angeles"
-       to its shorter equivalent "America/Los_Angeles".  */
-    if (!SUPPRESS_TZDIR && tzdirslashlen < namelen
-	&& memcmp(name, tzdirslash, tzdirslashlen) == 0) {
-      char const *p = name + tzdirslashlen;
-      while (*p == '/')
-	p++;
-      if (*p && *p != ':') {
-	name = p;
-	namelen = strnlen(name, sizeof lcl_TZname);
-	tzloadflags |= TZLOAD_TZDIR_SUB;
+    if (name) {
+      namelen = strnlen(name, sizeof lcl_TZname);
+
+      /* Abbreviate a string like "/usr/share/zoneinfo/America/Los_Angeles"
+	 to its shorter equivalent "America/Los_Angeles".  */
+      if (!SUPPRESS_TZDIR && tzdirslashlen < namelen
+	  && memcmp(name, tzdirslash, tzdirslashlen) == 0) {
+	char const *p = name + tzdirslashlen;
+	while (*p == '/')
+	  p++;
+	if (*p && *p != ':') {
+	  name = p;
+	  namelen = strnlen(name, sizeof lcl_TZname);
+	  tzloadflags |= TZLOAD_TZDIR_SUB;
+	}
       }
     }
+
+    if ((tz_change_interval <= 0 ? tz_change_interval < 0 : fresh_tzdata(now))
+	&& (name
+	    ? 0 < lcl_is_set && strcmp(lcl_TZname, name) == 0
+	    : lcl_is_set < 0))
+      return;
+
+    if (!THREAD_RWLOCK || writing)
+      break;
+    if (rd2wrlock() != 0)
+      return;
+    writing = true;
   }
 
-  if ((tz_change_interval <= 0 ? tz_change_interval < 0 : fresh_tzdata(now))
-      && (name
-	  ? 0 < lcl_is_set && strcmp(lcl_TZname, name) == 0
-	  : lcl_is_set < 0))
-    return;
 # if ALL_STATE
   if (! sp)
     lclptr = sp = malloc(sizeof *lclptr);
@@ -1829,12 +1869,16 @@ gmtcheck(void)
   if (lock() != 0)
     return;
   if (! gmt_is_set) {
+    if (rd2wrlock() != 0)
+      return;
+    if (!THREAD_RWLOCK || !gmt_is_set) {
 #if ALL_STATE
-    gmtptr = malloc(sizeof *gmtptr);
+      gmtptr = malloc(sizeof *gmtptr);
 #endif
-    if (gmtptr)
-      gmtload(gmtptr);
-    gmt_is_set = true;
+      if (gmtptr)
+	gmtload(gmtptr);
+      gmt_is_set = true;
+    }
   }
   unlock();
 }

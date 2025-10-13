@@ -68,6 +68,11 @@ Unreleased, experimental changes
     transition begun in release 96k, which removed spaces in tzdata
     because the spaces break time string parsers.
 
+    The new CFLAGS option -DTHREAD_RWLOCK uses read-write locks, as
+    macOS does, instead of mutexes.  This saves real time when TZ is
+    rarely changing and many threads call tzcode simultaneously.
+    It costs more CPU time and energy.
+
     tzcode now uses mempcpy if available, guessing its availability.
     Compile with -DHAVE_MEMPCPY=1 or 0 to override the guess.
 

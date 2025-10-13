@@ -844,7 +844,7 @@ extern char **environ;
 #endif
 #if !HAVE_MEMPCPY
 static void *
-mempcpy(char *restrict s1, char const *restrict s2, size_t n)
+mempcpy(void *restrict s1, void const *restrict s2, size_t n)
 {
   char *p = memcpy(s1, s2, n);
   return p + n;

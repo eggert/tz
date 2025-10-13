@@ -50,31 +50,87 @@ struct stat { char st_ctime, st_dev, st_ino; }
 
 #if defined THREAD_SAFE && THREAD_SAFE
 # include <pthread.h>
+
+# ifndef THREAD_PREFER_SINGLE
+#  define THREAD_PREFER_SINGLE 0
+# endif
+# if THREAD_PREFER_SINGLE
+#  ifndef HAVE___ISTHREADED
+#   if defined __FreeBSD__ || defined __OpenBSD__
+#    define HAVE___ISTHREADED 1
+#   else
+#    define HAVE___ISTHREADED 0
+#   endif
+#  endif
+#  if HAVE___ISTHREADED
+extern int __isthreaded;
+#  else
+#   if !defined HAVE_SYS_SINGLE_THREADED_H && defined __has_include
+#    if __has_include(<sys/single_threaded.h>)
+#     define HAVE_SYS_SINGLE_THREADED_H 1
+#    else
+#     define HAVE_SYS_SINGLE_THREADED_H 0
+#    endif
+#   endif
+#   ifndef HAVE_SYS_SINGLE_THREADED_H
+#    if defined __GLIBC__ && 2 < __GLIBC__ + (32 <= __GLIBC_MINOR__)
+#     define HAVE_SYS_SINGLE_THREADED_H 1
+#    else
+#     define HAVE_SYS_SINGLE_THREADED_H 0
+#    endif
+#   endif
+#   if HAVE_SYS_SINGLE_THREADED_H
+#    include <sys/single_threaded.h>
+#   endif
+#  endif
+# endif
+
 # if THREAD_RWLOCK
 static pthread_rwlock_t locallock = PTHREAD_RWLOCK_INITIALIZER;
-static int lock(void) { return pthread_rwlock_rdlock(&locallock); }
-static void unlock(void) { pthread_rwlock_unlock(&locallock); }
+static int dolock(void) { return pthread_rwlock_rdlock(&locallock); }
+static void dounlock(void) { pthread_rwlock_unlock(&locallock); }
 # else
 static pthread_mutex_t locallock = PTHREAD_MUTEX_INITIALIZER;
-static int lock(void) { return pthread_mutex_lock(&locallock); }
-static void unlock(void) { pthread_mutex_unlock(&locallock); }
+static int dolock(void) { return pthread_mutex_lock(&locallock); }
+static void dounlock(void) { pthread_mutex_unlock(&locallock); }
 # endif
+/* Get a lock.  Return 0 on success, a positive errno value on failure,
+   negative if known to be single-threaded so no lock is needed.  */
+static int
+lock(void)
+{
+# if THREAD_PREFER_SINGLE && HAVE___ISTHREADED
+  if (!__isthreaded)
+    return -1;
+# elif THREAD_PREFER_SINGLE && HAVE_SYS_SINGLE_THREADED_H
+  if (__libc_single_threaded)
+    return -1;
+# endif
+  return dolock();
+}
+static void
+unlock(bool threaded)
+{
+  if (threaded)
+    dounlock();
+}
 #else
-static int lock(void) { return 0; }
-static void unlock(void) { }
+static int lock(void) { return -1; }
+static void unlock(ATTRIBUTE_MAYBE_UNUSED bool threaded) { }
 #endif
 
-/* Upgrade a read lock to a write lock.
-   Return 0 on success, an errno value otherwise.  */
+/* If THREADED, upgrade a read lock to a write lock.
+   Return 0 on success, a positive errno value otherwise.  */
 static int
-rd2wrlock(void)
+rd2wrlock(ATTRIBUTE_MAYBE_UNUSED bool threaded)
 {
 # if THREAD_RWLOCK
-  unlock();
-  return pthread_rwlock_wrlock(&locallock);
-# else
-  return 0;
+  if (threaded) {
+    dounlock();
+    return pthread_rwlock_wrlock(&locallock);
+  }
 # endif
+  return 0;
 }
 
 /* Unless intptr_t is missing, pacify gcc -Wcast-qual on char const * exprs.
@@ -1756,11 +1812,11 @@ zoneinit(struct state *sp, char const *name, char tzloadflags)
 }
 
 /* Like tzset(), but in a critical section.
-   If THREAD_RWLOCK the caller has a read lock,
+   If THREADED && THREAD_RWLOCK the caller has a read lock,
    and this function might ugrade it to a write lock.
    If tz_change_interval is positive the time is NOW; otherwise ignore NOW.  */
 static void
-tzset_unlocked(monotime_t now)
+tzset_unlocked(bool threaded, monotime_t now)
 {
   char const *name;
   struct state *sp;
@@ -1800,7 +1856,7 @@ tzset_unlocked(monotime_t now)
 
     if (!THREAD_RWLOCK || writing)
       break;
-    if (rd2wrlock() != 0)
+    if (rd2wrlock(threaded) != 0)
       return;
     writing = true;
   }
@@ -1853,12 +1909,12 @@ tzset(void)
 {
   monotime_t now = get_monotonic_time();
   int err = lock();
-  if (err != 0) {
+  if (0 < err) {
     errno = err;
     return;
   }
-  tzset_unlocked(now);
-  unlock();
+  tzset_unlocked(!err, now);
+  unlock(!err);
 }
 #endif
 
@@ -1866,10 +1922,11 @@ static void
 gmtcheck(void)
 {
   static bool gmt_is_set;
-  if (lock() != 0)
+  int err = lock();
+  if (0 < err)
     return;
   if (! gmt_is_set) {
-    if (rd2wrlock() != 0)
+    if (rd2wrlock(!err) != 0)
       return;
     if (!THREAD_RWLOCK || !gmt_is_set) {
 #if ALL_STATE
@@ -1880,7 +1937,7 @@ gmtcheck(void)
       gmt_is_set = true;
     }
   }
-  unlock();
+  unlock(!err);
 }
 
 #if NETBSD_INSPIRED && !USE_TIMEX_T
@@ -2047,14 +2104,14 @@ localtime_tzset(time_t const *timep, struct tm *tmp, bool setname)
 {
   monotime_t now = get_monotonic_time();
   int err = lock();
-  if (err) {
+  if (0 < err) {
     errno = err;
     return NULL;
   }
   if (0 <= tz_change_interval || setname || !lcl_is_set)
-    tzset_unlocked(now);
+    tzset_unlocked(!err, now);
   tmp = localsub(lclptr, timep, setname, tmp);
-  unlock();
+  unlock(!err);
   return tmp;
 }
 
@@ -2715,13 +2772,13 @@ mktime(struct tm *tmp)
   monotime_t now = get_monotonic_time();
   time_t t;
   int err = lock();
-  if (err) {
+  if (0 < err) {
     errno = err;
     return -1;
   }
-  tzset_unlocked(now);
+  tzset_unlocked(!err, now);
   t = mktime_tzname(lclptr, tmp, true);
-  unlock();
+  unlock(!err);
   return t;
 }
 
@@ -2832,15 +2889,15 @@ time2posix(time_t t)
 {
   monotime_t now = get_monotonic_time();
   int err = lock();
-  if (err) {
+  if (0 < err) {
     errno = err;
     return -1;
   }
   if (0 <= tz_change_interval || !lcl_is_set)
-    tzset_unlocked(now);
+    tzset_unlocked(!err, now);
   if (lclptr)
     t = time2posix_z(lclptr, t);
-  unlock();
+  unlock(!err);
   return t;
 }
 
@@ -2878,15 +2935,15 @@ posix2time(time_t t)
 {
   monotime_t now = get_monotonic_time();
   int err = lock();
-  if (err) {
+  if (0 < err) {
     errno = err;
     return -1;
   }
   if (0 <= tz_change_interval || !lcl_is_set)
-    tzset_unlocked(now);
+    tzset_unlocked(!err, now);
   if (lclptr)
     t = posix2time_z(lclptr, t);
-  unlock();
+  unlock(!err);
   return t;
 }
 

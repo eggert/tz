@@ -304,7 +304,14 @@ LDLIBS=
 #  -DTHREAD_SAFE to make localtime.c thread-safe, as POSIX requires;
 #	not needed by the main-program tz code, which is single-threaded.
 #	Append other compiler flags as needed, e.g., -pthread on GNU/Linux.
-#	The following option can also be used:
+#	The following options can also be used:
+#	  -DTHREAD_PREFER_SINGLE to prefer speed in single-threaded apps,
+#	    at some cost in CPU time and energy in multi-threaded apps.
+#	    The following options can also be used:
+#	      -DHAVE___ISTHREADED=1 if there is an extern int __isthreaded
+#		variable, 0 otherwise (default is guessed)
+#	      -DHAVE_SYS_SINGLE_THREADED_H=0 if <sys/single_threaded.h> works,
+#		0 otherwise (default is guessed)
 #	  -DTHREAD_RWLOCK to use read-write locks intead of mutexes.
 #	    This can improve paralellism and thus save real time
 #	    if many threads call tzcode functions simultaneously.

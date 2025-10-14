@@ -124,12 +124,12 @@ static void unlock(ATTRIBUTE_MAYBE_UNUSED bool threaded) { }
 static int
 rd2wrlock(ATTRIBUTE_MAYBE_UNUSED bool threaded)
 {
-# if THREAD_RWLOCK
+#if THREAD_RWLOCK
   if (threaded) {
     dounlock();
     return pthread_rwlock_wrlock(&locallock);
   }
-# endif
+#endif
   return 0;
 }
 

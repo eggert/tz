@@ -2442,8 +2442,8 @@ mktmcpy(struct tm *dest, struct tm const *src)
 
 static time_t
 time2sub(struct tm *const tmp,
-	 struct tm *(*funcp)(struct state const *, time_t const *,
-			     int_fast32_t, struct tm *),
+	 struct tm *funcp(struct state const *, time_t const *,
+			  int_fast32_t, struct tm *),
 	 struct state const *sp,
 	 const int_fast32_t offset,
 	 bool *okayp,
@@ -2661,8 +2661,8 @@ label:
 
 static time_t
 time2(struct tm * const	tmp,
-      struct tm *(*funcp)(struct state const *, time_t const *,
-			  int_fast32_t, struct tm *),
+      struct tm *funcp(struct state const *, time_t const *,
+		       int_fast32_t, struct tm *),
       struct state const *sp,
       const int_fast32_t offset,
       bool *okayp)
@@ -2680,8 +2680,8 @@ time2(struct tm * const	tmp,
 
 static time_t
 time1(struct tm *const tmp,
-      struct tm *(*funcp)(struct state const *, time_t const *,
-			  int_fast32_t, struct tm *),
+      struct tm *funcp(struct state const *, time_t const *,
+		       int_fast32_t, struct tm *),
       struct state const *sp,
       const int_fast32_t offset)
 {

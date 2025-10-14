@@ -756,6 +756,9 @@ ATTRIBUTE_NONSTRING
 #endif
 static char const tzdirslash[sizeof TZDIR + OPENAT_TZDIR] = TZDIR "/";
 enum { tzdirslashlen = sizeof TZDIR };
+#ifdef PATH_MAX
+static_assert(tzdirslashlen <= PATH_MAX);  /* Sanity check; assumed below.  */
+#endif
 
 /* Local storage needed for 'tzloadbody'.  */
 union local_storage {
@@ -866,7 +869,6 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		char *cp;
 		size_t fullnamesize;
 #ifdef PATH_MAX
-		static_assert(tzdirslashlen <= PATH_MAX);
 		size_t namesizemax = PATH_MAX - tzdirslashlen;
 		size_t namelen = strnlen (name, namesizemax);
 		if (namesizemax <= namelen)

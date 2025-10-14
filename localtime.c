@@ -89,6 +89,24 @@ extern int __isthreaded;
 #  endif
 # endif
 
+/* True if the current process might be multi-threaded,
+   false if it is definitely single-threaded.
+   If false, it will be false the next time it is called
+   unless the caller creates a thread in the meantime.
+   If true, it might become false the next time it is called
+   if all other threads exit in the meantime.  */
+static bool
+is_threaded(void)
+{
+# if THREAD_PREFER_SINGLE && HAVE___ISTHREADED
+  return !!__isthreaded;
+# elif THREAD_PREFER_SINGLE && HAVE_SYS_SINGLE_THREADED_H
+  return !__libc_single_threaded;
+# else
+  return true;
+# endif
+}
+
 # if THREAD_RWLOCK
 static pthread_rwlock_t locallock = PTHREAD_RWLOCK_INITIALIZER;
 static int dolock(void) { return pthread_rwlock_rdlock(&locallock); }
@@ -103,13 +121,8 @@ static void dounlock(void) { pthread_mutex_unlock(&locallock); }
 static int
 lock(void)
 {
-# if THREAD_PREFER_SINGLE && HAVE___ISTHREADED
-  if (!__isthreaded)
+  if (!is_threaded())
     return -1;
-# elif THREAD_PREFER_SINGLE && HAVE_SYS_SINGLE_THREADED_H
-  if (__libc_single_threaded)
-    return -1;
-# endif
   return dolock();
 }
 static void

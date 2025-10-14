@@ -80,6 +80,15 @@ Unreleased, experimental changes
     rarely changing and many threads call tzcode simultaneously.
     It costs more CPU time and energy.
 
+    The new CFLAGS option -TTHREAD_TM_MULTI causes localtime to return
+    a pointer to thread-specific memory, as FreeBSD does, instead of
+    to the same memory in all threads.  This supports unportable
+    programs that incorrectly use localtime instead of localtime_r.
+    This option affects gmtime and offtime similarly to localtime.
+    Because the corresponding storage is freed on thread exit, this
+    option is incompatible with POSIX.1-2024 and earlier.  It also
+    costs CPU time and memory.
+
     tzcode now uses mempcpy if available, guessing its availability.
     Compile with -DHAVE_MEMPCPY=1 or 0 to override the guess.
 

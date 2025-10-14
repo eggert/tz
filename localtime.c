@@ -52,6 +52,10 @@ struct stat { char st_ctime, st_dev, st_ino; }
 # define THREAD_RWLOCK 0
 #endif
 
+#ifndef THREAD_TM_MULTI
+# define THREAD_TM_MULTI 0
+#endif
+
 #if THREAD_SAFE
 # include <pthread.h>
 
@@ -169,6 +173,52 @@ once(once_t *once_control, void (*init_routine)(void))
     init_routine();
   }
 #endif
+}
+
+enum tm_multi { LOCALTIME_TM_MULTI, GMTIME_TM_MULTI, OFFTIME_TM_MULTI };
+
+#if THREAD_SAFE && THREAD_TM_MULTI
+
+enum { N_TM_MULTI = OFFTIME_TM_MULTI + 1 };
+static pthread_key_t tm_multi_key;
+static int tm_multi_key_err;
+
+static void
+tm_multi_key_init(void)
+{
+  tm_multi_key_err = pthread_key_create(&tm_multi_key, free);
+}
+
+#endif
+
+/* Return TMP, or a thread-specific struct tm * selected by WHICH.  */
+static struct tm *
+tm_multi(struct tm *tmp, ATTRIBUTE_MAYBE_UNUSED enum tm_multi which)
+{
+#if THREAD_SAFE && THREAD_TM_MULTI
+  /* It is OK to check is_threaded() separately here; even if it
+     returns a different value in other places in the caller,
+     this function's behavior is still valid.  */
+  if (is_threaded()) {
+    /* Try to get a thread-specific struct tm *.
+       Fall back on TMP if this fails.  */
+    static pthread_once_t tm_multi_once = PTHREAD_ONCE_INIT;
+    pthread_once(&tm_multi_once, tm_multi_key_init);
+    if (!tm_multi_key_err) {
+      struct tm *p = pthread_getspecific(tm_multi_key);
+      if (!p) {
+	p = malloc(N_TM_MULTI * sizeof *p);
+	if (p && pthread_setspecific(tm_multi_key, p) != 0) {
+	  free(p);
+	  p = NULL;
+	}
+      }
+      if (p)
+	return &p[which];
+    }
+  }
+#endif
+  return tmp;
 }
 
 /* Unless intptr_t is missing, pacify gcc -Wcast-qual on char const * exprs.
@@ -2156,7 +2206,7 @@ localtime(const time_t *timep)
 # if !SUPPORT_C89
   static struct tm tm;
 # endif
-  return localtime_tzset(timep, &tm, true);
+  return localtime_tzset(timep, tm_multi(&tm, LOCALTIME_TM_MULTI), true);
 }
 
 struct tm *
@@ -2208,7 +2258,7 @@ gmtime(const time_t *timep)
 # if !SUPPORT_C89
   static struct tm tm;
 # endif
-  return gmtime_r(timep, &tm);
+  return gmtime_r(timep, tm_multi(&tm, GMTIME_TM_MULTI));
 }
 
 # if STD_INSPIRED
@@ -2229,7 +2279,7 @@ offtime(time_t const *timep, long offset)
 #  if !SUPPORT_C89
   static struct tm tm;
 #  endif
-  return offtime_r(timep, offset, &tm);
+  return offtime_r(timep, offset, tm_multi(&tm, OFFTIME_TM_MULTI));
 }
 
 # endif

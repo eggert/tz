@@ -316,6 +316,14 @@ LDLIBS=
 #	    This can improve paralellism and thus save real time
 #	    if many threads call tzcode functions simultaneously.
 #	    It also costs CPU time and thus energy.
+#	  -DTHREAD_TM_MULTI to have gmtime, localtime, and offtime
+#	    return different struct tm * addresses in different threads.
+#	    This supports unportable programs that call
+#	    gmtime/localtime/offtime when they should call
+#	    gmtime_r/localtime_r/offtime_r to avoid races.
+#	    Because the corresponding storage is freed on thread exit,
+#	    this option is incompatible with POSIX.1-2024 and earlier.
+#	    It also costs CPU time and memory.
 #  -Dtime_tz=\"T\" to use T as the time_t type, rather than the system time_t
 #	This is intended for internal use only; it mangles external names.
 #  -DTZ_CHANGE_INTERVAL=N if functions depending on TZ should check

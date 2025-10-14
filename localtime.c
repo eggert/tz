@@ -1813,7 +1813,7 @@ zoneinit(struct state *sp, char const *name, char tzloadflags)
 
 /* Like tzset(), but in a critical section.
    If THREADED && THREAD_RWLOCK the caller has a read lock,
-   and this function might ugrade it to a write lock.
+   and this function might upgrade it to a write lock.
    If tz_change_interval is positive the time is NOW; otherwise ignore NOW.  */
 static void
 tzset_unlocked(bool threaded, monotime_t now)

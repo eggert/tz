@@ -44,11 +44,15 @@ struct stat { char st_ctime, st_dev, st_ino; }
 # define st_ctim st_ctimespec
 #endif
 
+#ifndef THREAD_SAFE
+# define THREAD_SAFE 0
+#endif
+
 #ifndef THREAD_RWLOCK
 # define THREAD_RWLOCK 0
 #endif
 
-#if defined THREAD_SAFE && THREAD_SAFE
+#if THREAD_SAFE
 # include <pthread.h>
 
 # ifndef THREAD_PREFER_SINGLE
@@ -131,6 +135,27 @@ rd2wrlock(ATTRIBUTE_MAYBE_UNUSED bool threaded)
   }
 #endif
   return 0;
+}
+
+#if THREAD_SAFE
+typedef pthread_once_t once_t;
+# define ONCE_INIT PTHREAD_ONCE_INIT
+#else
+typedef bool once_t;
+# define ONCE_INIT false
+#endif
+
+static void
+once(once_t *once_control, void (*init_routine)(void))
+{
+#if THREAD_SAFE
+  pthread_once(once_control, init_routine);
+#else
+  if (!*once_control) {
+    *once_control = true;
+    init_routine();
+  }
+#endif
 }
 
 /* Unless intptr_t is missing, pacify gcc -Wcast-qual on char const * exprs.
@@ -1921,25 +1946,20 @@ tzset(void)
 #endif
 
 static void
+gmtcheck1(void)
+{
+#if ALL_STATE
+  gmtptr = malloc(sizeof *gmtptr);
+#endif
+  if (gmtptr)
+    gmtload(gmtptr);
+}
+
+static void
 gmtcheck(void)
 {
-  static bool gmt_is_set;
-  int err = lock();
-  if (0 < err)
-    return;
-  if (! gmt_is_set) {
-    if (rd2wrlock(!err) != 0)
-      return;
-    if (!THREAD_RWLOCK || !gmt_is_set) {
-#if ALL_STATE
-      gmtptr = malloc(sizeof *gmtptr);
-#endif
-      if (gmtptr)
-	gmtload(gmtptr);
-      gmt_is_set = true;
-    }
-  }
-  unlock(!err);
+  static once_t gmt_once = ONCE_INIT;
+  once(&gmt_once, gmtcheck1);
 }
 
 #if NETBSD_INSPIRED && !USE_TIMEX_T

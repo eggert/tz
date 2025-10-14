@@ -771,7 +771,7 @@ union local_storage {
     struct state st;
   } u;
 
-#ifdef PATH_MAX
+#if defined PATH_MAX && !OPENAT_TZDIR && !SUPPRESS_TZDIR
   /* The name of the file to be opened.  */
   char fullname[PATH_MAX];
 #endif
@@ -890,7 +890,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		cp = mempcpy(lsp, tzdirslash, tzdirslashlen);
 		cp = mempcpy(cp, name, namelen);
 		*cp = '\0';
-#ifdef PATH_MAX
+#if defined PATH_MAX && !OPENAT_TZDIR && !SUPPRESS_TZDIR
 		name = lsp->fullname;
 #else
 		name = (char *) lsp;

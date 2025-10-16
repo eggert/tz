@@ -247,6 +247,7 @@ static int		max_format_len;
 static zic_t		max_year;
 static zic_t		min_year;
 static bool		noise;
+static bool		skip_mkdir;
 static int		rfilenum;
 static lineno		rlinenum;
 static const char *	progname;
@@ -704,8 +705,8 @@ usage(FILE *stream, int status)
 {
   fprintf(stream,
 	  _("%s: usage is %s [ --version ] [ --help ] [ -v ] \\\n"
-	    "\t[ -b {slim|fat} ] [ -d directory ] [ -l localtime ]"
-	    " [ -L leapseconds ] \\\n"
+	    "\t[ -b {slim|fat} ] [ -d directory ] [ -D ] \\\n"
+	    "\t[ -l localtime ] [ -L leapseconds ] \\\n"
 	    "\t[ -p posixrules ] [ -r '[@lo][/@hi]' ] [ -R @hi ] \\\n"
 	    "\t[ -t localtime-link ] \\\n"
 	    "\t[ filename ... ]\n\n"
@@ -1037,7 +1038,7 @@ main(int argc, char **argv)
 		} else if (strcmp(argv[k], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
 		}
-	while ((c = getopt(argc, argv, "b:d:l:L:p:r:R:st:vy:")) != -1)
+	while ((c = getopt(argc, argv, "b:d:Dl:L:p:r:R:st:vy:")) != -1)
 		switch (c) {
 			default:
 				usage(stderr, EXIT_FAILURE);
@@ -1057,6 +1058,9 @@ main(int argc, char **argv)
 				if (directory)
 				  duplicate_options("-d");
 				directory = optarg;
+				break;
+			case 'D':
+				skip_mkdir = true;
 				break;
 			case 'l':
 				if (lcltime)
@@ -3951,6 +3955,11 @@ mp = _("time zone abbreviation differs from POSIX standard");
 static void
 mkdirs(char const *argname, bool ancestors)
 {
+    /* If -D was specified, do not create directories.
+       If a file operation's parent directory is missing,
+       the operation will fail and be diagnosed.  */
+    if (!skip_mkdir) {
+
 	char *name = xstrdup(argname);
 	char *cp = name;
 
@@ -3997,4 +4006,5 @@ mkdirs(char const *argname, bool ancestors)
 		  *cp++ = '/';
 	}
 	free(name);
+    }
 }

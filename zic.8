@@ -77,6 +77,12 @@ Also see the
 .B \-r
 option for another way to alter output size.
 .TP
+.BI \-D
+Do not create ancestor directories of output files,
+For example, for a zone named America/Los_Angeles
+the directory America should already exist.
+By default, the directory and its ancestors are created
+if they do not already exist.
 .BI "\-d " directory
 Create time conversion information files in the named directory rather than
 in the standard directory named below.

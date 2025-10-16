@@ -163,7 +163,7 @@ typedef bool once_t;
 #endif
 
 static void
-once(once_t *once_control, void (*init_routine)(void))
+once(once_t *once_control, void init_routine(void))
 {
 #if THREAD_SAFE
   pthread_once(once_control, init_routine);

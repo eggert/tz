@@ -203,6 +203,19 @@ it increases the size of the altered output files.
 When creating local time information, put the configuration link in
 the named file rather than in the standard location.
 .TP
+.BI "\-u " owner\fR[:\fPgroup\fR]\fP
+Change the output regular files' owner and group to those specified.
+The
+.I owner
+is either a user name, or an unsigned decimal integer user ID,
+or an empty string meaning no change to the owner.
+The
+.I group
+is similar for group names and IDs.
+This option does not affect directories or hard or symbolic links.
+It typically needs special privileges to change ownership,
+and is ignored on platforms that lack the notions of owners and groups.
+.TP
 .B \-v
 Be more verbose, and complain about the following situations:
 .RS

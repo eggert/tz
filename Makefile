@@ -267,6 +267,9 @@ LDLIBS=
 #  -DHAVE_MEMPCPY=1 if your system has mempcpy, 0 if not (default is guessed)
 #  -DHAVE_POSIX_DECLS=0 if your system's include files do not declare
 #	variables like 'tzname' required by POSIX
+#  -DHAVE_PWD_H=0 if your system lacks pwd.h, grp.h and corresponding functions
+#	The following additional options may be needed:
+#	-Dgid_t=T, -Duid_t=T to define gid_t, uid_t to be type T (default int)
 #  -DHAVE_SETENV=0 if your system lacks the setenv function
 #  -DHAVE_SETMODE=[01] if your system lacks or has the setmode and getmode
 #	functions (default is guessed)

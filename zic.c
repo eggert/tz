@@ -101,7 +101,68 @@ enum { FORMAT_LEN_GROWTH_BOUND = 5 };
 /* File permission bits for making regular files.
    The umask modifies these bits.  */
 #define CREAT_PERMS (MKDIR_PERMS & ~(S_IXUSR | S_IXGRP | S_IXOTH))
+static mode_t creat_perms = CREAT_PERMS;
 
+#ifndef HAVE_PWD_H
+# ifdef __has_include
+#  if __has_include(<pwd.h>) && __has_include(<grp.h>)
+#   define HAVE_PWD_H 1
+#  else
+#   define HAVE_PWD_H 0
+#  endif
+# endif
+#endif
+#ifndef HAVE_PWD_H
+# define HAVE_PWD_H 1
+#endif
+#if HAVE_PWD_H
+# include <grp.h>
+# include <pwd.h>
+#else
+# ifndef gid_t
+#  define gid_t int
+# endif
+# ifndef uid_t
+#  define uid_t int
+# endif
+struct group { gid_t gr_gid; };
+struct passwd { uid_t pw_uid; };
+# define getgrnam(arg) NULL
+# define getpwnam(arg) NULL
+# define fchown(fd, owner, group) ((fd) < 0 ? -1 : 0)
+#endif
+static gid_t const no_gid = -1;
+static uid_t const no_uid = -1;
+static gid_t output_group = -1;
+static uid_t output_owner = -1;
+#ifndef GID_T_MAX
+# define GID_T_MAX_NO_PADDING MAXVAL(gid_t, TYPE_BIT(gid_t))
+# if HAVE__GENERIC
+#  define GID_T_MAX \
+    (TYPE_SIGNED(gid_t) \
+     ? _Generic((gid_t) 0, \
+		signed char: SCHAR_MAX, short: SHRT_MAX, \
+		int: INT_MAX, long: LONG_MAX, long long: LLONG_MAX, \
+		default: GID_T_MAX_NO_PADDING) \
+     : (gid_t) -1)
+# else
+#  define GID_T_MAX GID_T_MAX_NO_PADDING
+# endif
+#endif
+#ifndef UID_T_MAX
+# define UID_T_MAX_NO_PADDING MAXVAL(uid_t, TYPE_BIT(uid_t))
+# if HAVE__GENERIC
+#  define UID_T_MAX \
+    (TYPE_SIGNED(uid_t) \
+     ? _Generic((uid_t) 0, \
+		signed char: SCHAR_MAX, short: SHRT_MAX, \
+		int: INT_MAX, long: LONG_MAX, long long: LLONG_MAX, \
+		default: UID_T_MAX_NO_PADDING) \
+     : (uid_t) -1)
+# else
+#  define UID_T_MAX UID_T_MAX_NO_PADDING
+# endif
+#endif
 
 /* The minimum alignment of a type, for pre-C23 platforms.
    The __SUNPRO_C test is because Oracle Developer Studio 12.6 lacks
@@ -738,12 +799,17 @@ mode_option(char const *arg)
   }
 #endif
   return arg2num(arg, 8, min(MODE_T_MAX, ULONG_MAX),
-		 "%s: -m '%s': invalid mode\n");
+		 N_("%s: -m '%s': invalid mode\n"));
 }
 
 static int
 chmetadata(FILE *stream)
 {
+  if (output_owner != no_uid || output_group != no_gid) {
+    int r = fchown(fileno(stream), output_owner, output_group);
+    if (r < 0)
+      return r;
+  }
   return output_mode == no_mode ? 0 : fchmod(fileno(stream), output_mode);
 }
 
@@ -789,13 +855,78 @@ usage(FILE *stream, int status)
 	    "\t[ -b {slim|fat} ] [ -d directory ] [ -D ] \\\n"
 	    "\t[ -l localtime ] [ -L leapseconds ] [ -m mode ] \\\n"
 	    "\t[ -p posixrules ] [ -r '[@lo][/@hi]' ] [ -R @hi ] \\\n"
-	    "\t[ -t localtime-link ] \\\n"
+	    "\t[ -t localtime-link ] [ -u 'owner[:group]' ] \\\n"
 	    "\t[ filename ... ]\n\n"
 	    "Report bugs to %s.\n"),
 	  progname, progname, REPORT_BUGS_TO);
   if (status == EXIT_SUCCESS)
     close_file(stream, NULL, NULL, NULL);
   exit(status);
+}
+
+static void
+group_option(char const *arg)
+{
+  if (*arg) {
+    if (output_group != no_gid) {
+      fprintf(stderr, _("multiple groups specified"));
+      exit(EXIT_FAILURE);
+    } else {
+      struct group *gr = getgrnam(arg);
+      output_group = (gr ? gr->gr_gid
+		      : arg2num(arg, 10, min(GID_T_MAX, ULONG_MAX),
+				N_("%s: invalid group: %s\n")));
+    }
+  }
+}
+
+static void
+owner_option(char const *arg)
+{
+  if (*arg) {
+    if (output_owner != no_uid) {
+      fprintf(stderr, _("multiple owners specified"));
+      exit(EXIT_FAILURE);
+    } else {
+      struct passwd *pw = getpwnam(arg);
+      output_owner = (pw ? pw->pw_uid
+		      : arg2num(arg, 10, min(UID_T_MAX, ULONG_MAX),
+				N_("%s: invalid owner: %s\n")));
+    }
+  }
+}
+
+/* If setting owner or group, use temp file permissions that avoid
+   security races before the fchmod at the end.  */
+static void
+use_safe_temp_permissions(void)
+{
+  if (output_owner != no_uid || output_group != no_gid) {
+
+    /* The mode when done with the file.  */
+    mode_t omode;
+    if (output_mode == no_mode) {
+      mode_t cmask = umask(0);
+      umask(cmask);
+      omode = CREAT_PERMS & ~cmask;
+    } else
+      omode = output_mode;
+
+    /* The mode passed to open+O_CREAT.  Do not bother with executable
+       permissions, as they should not be used and this mode is merely
+       a nicety (even a mode of 0 still work).  */
+    creat_perms = ((((omode & (S_IRUSR | S_IRGRP | S_IROTH))
+		     == (S_IRUSR | S_IRGRP | S_IROTH))
+		    ? S_IRUSR | S_IRGRP | S_IROTH : 0)
+		   | (((omode & (S_IWUSR | S_IWGRP | S_IWOTH))
+		       == (S_IWUSR | S_IWGRP | S_IWOTH))
+		      ? S_IWUSR | S_IWGRP | S_IWOTH : 0));
+
+    /* If creat_perms is not the final mode, arrange to run
+       fchmod later, even if -m was not used.  */
+    if (creat_perms != omode)
+      output_mode = omode;
+  }
 }
 
 /* Change the working directory to DIR, possibly creating DIR and its
@@ -1119,7 +1250,7 @@ main(int argc, char **argv)
 		} else if (strcmp(argv[k], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
 		}
-	while ((c = getopt(argc, argv, "b:d:Dl:L:m:p:r:R:st:vy:")) != -1)
+	while ((c = getopt(argc, argv, "b:d:Dg:l:L:m:p:r:R:st:u:vy:")) != -1)
 		switch (c) {
 			default:
 				usage(stderr, EXIT_FAILURE);
@@ -1143,6 +1274,11 @@ main(int argc, char **argv)
 			case 'D':
 				skip_mkdir = true;
 				break;
+			case 'g':
+				/* This undocumented option is present for
+				   compatibility with FreeBSD 14.  */
+				group_option(optarg);
+				break;
 			case 'l':
 				if (lcltime)
 				  duplicate_options("-l");
@@ -1162,6 +1298,16 @@ main(int argc, char **argv)
 				if (tzdefault)
 				  duplicate_options("-t");
 				tzdefault = optarg;
+				break;
+			case 'u':
+				{
+				  char *colon = strchr(optarg, ':');
+				  if (colon)
+				    *colon = '\0';
+				  owner_option(optarg);
+				  if (colon)
+				    group_option(colon + 1);
+				}
 				break;
 			case 'y':
 				warning(_("-y ignored"));
@@ -1228,6 +1374,7 @@ main(int argc, char **argv)
 	if (errors)
 		return EXIT_FAILURE;
 	associate();
+	use_safe_temp_permissions();
 	change_directory(directory);
 	directory_ends_in_slash = directory[strlen(directory) - 1] == '/';
 	catch_signals();
@@ -1460,7 +1607,7 @@ open_outfile(char const **outname, char **tempname)
 
   while (true) {
     int oflags = O_WRONLY | O_BINARY | O_CREAT | O_EXCL;
-    int fd = open(*outname, oflags, CREAT_PERMS);
+    int fd = open(*outname, oflags, creat_perms);
     int err;
     if (fd < 0)
       err = errno;

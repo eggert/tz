@@ -229,6 +229,13 @@ static bool	rulesub(struct rule * rp,
 			const char * dayp, const char * timep);
 static zic_t	tadd(zic_t t1, zic_t t2);
 
+/* Is C an ASCII digit?  */
+static bool
+is_digit(char c)
+{
+  return '0' <= c && c <= '9';
+}
+
 /* Bound on length of what %z can expand to.  */
 enum { PERCENT_Z_LEN_BOUND = sizeof "+995959" - 1 };
 
@@ -1852,7 +1859,7 @@ gethms(char const *string, char const *errstring)
 		       &hh, &hhx, &mm, &mmx, &ss, &ssx, &tenths, &xr, &xs)) {
 	  default: ok = false; break;
 	  case 8:
-	    ok = '0' <= xr && xr <= '9';
+	    ok = is_digit(xr);
 	    ATTRIBUTE_FALLTHROUGH;
 	  case 7:
 	    ok &= ssx == '.';
@@ -3952,7 +3959,7 @@ newabbr(const char *string)
 
 		cp = string;
 		mp = NULL;
-		while (is_alpha(*cp) || ('0' <= *cp && *cp <= '9')
+		while (is_alpha(*cp) || is_digit(*cp)
 		       || *cp == '-' || *cp == '+')
 				++cp;
 		if (noise && cp - string < 3)

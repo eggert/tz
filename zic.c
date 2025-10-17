@@ -705,7 +705,7 @@ usage(FILE *stream, int status)
 	  _("%s: usage is %s [ --version ] [ --help ] [ -v ] \\\n"
 	    "\t[ -b {slim|fat} ] [ -d directory ] [ -l localtime ]"
 	    " [ -L leapseconds ] \\\n"
-	    "\t[ -p posixrules ] [ -r '[@lo][/@hi]' ] [ -R '@hi' ] \\\n"
+	    "\t[ -p posixrules ] [ -r '[@lo][/@hi]' ] [ -R @hi ] \\\n"
 	    "\t[ -t localtime-link ] \\\n"
 	    "\t[ filename ... ]\n\n"
 	    "Report bugs to %s.\n"),

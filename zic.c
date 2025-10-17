@@ -1040,8 +1040,7 @@ main(int argc, char **argv)
 		} else if (strcmp(argv[k], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
 		}
-	while ((c = getopt(argc, argv, "b:d:l:L:p:r:R:st:vy:")) != EOF
-	       && c != -1)
+	while ((c = getopt(argc, argv, "b:d:l:L:p:r:R:st:vy:")) != -1)
 		switch (c) {
 			default:
 				usage(stderr, EXIT_FAILURE);

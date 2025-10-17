@@ -64,7 +64,7 @@ main(const int argc, char *argv[])
 	textdomain(TZ_DOMAIN);
 #endif /* HAVE_GETTEXT */
 	t = time(NULL);
-	while ((ch = getopt(argc, argv, "ucr:")) != EOF && ch != -1) {
+	while ((ch = getopt(argc, argv, "ucr:")) != -1) {
 		switch (ch) {
 		default:
 			usage();

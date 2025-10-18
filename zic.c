@@ -44,8 +44,15 @@ enum { FORMAT_LEN_GROWTH_BOUND = 5 };
 #ifdef HAVE_DIRECT_H
 # include <direct.h>
 # include <io.h>
-# undef mkdir
-# define mkdir(name, mode) _mkdir(name)
+# ifndef mode_t
+#  define mode_t int
+# endif
+# ifndef mkdir
+#  define mkdir(name, mode) _mkdir(name)
+# endif
+# ifndef umask
+#  define umask(mode) _umask(mode)
+# endif
 #endif
 
 #ifndef HAVE_GETRANDOM
@@ -151,7 +158,7 @@ extern int	link(const char * target, const char * linkname);
 # ifndef mkdir
 extern int	mkdir(char const *, mode_t);
 # endif
-# ifdef S_IWGRP
+# ifndef umask
 extern mode_t	umask(mode_t);
 # endif
 extern char *	optarg;

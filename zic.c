@@ -68,14 +68,28 @@ enum { FORMAT_LEN_GROWTH_BOUND = 5 };
 # include <sys/random.h>
 #endif
 
+
 #if HAVE_SYS_STAT_H
 # include <sys/stat.h>
 #endif
-#ifdef S_IRUSR
-# define MKDIR_PERMS (S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH)
+
+#ifdef S_IRWXU
+/* All file permission bits.  */
+# define ALL_PERMS (S_IRWXU | S_IRWXG | S_IRWXO)
+
+/* Troublesome file permission bits.  */
+# define TROUBLE_PERMS (S_IWGRP | S_IWOTH)
 #else
-# define MKDIR_PERMS 0755
+# define ALL_PERMS	0777
+# define TROUBLE_PERMS	0022
 #endif
+
+/* File permission bits for making directories.
+   The initial umask modifies these bits.
+   Although the "& ~TROUBLE_PERMS" is redundant because we remove
+   TROUBLE_PERMS from the umask early on, the redundancy does not hurt.  */
+#define MKDIR_PERMS (ALL_PERMS & ~TROUBLE_PERMS)
+
 
 /* The minimum alignment of a type, for pre-C23 platforms.
    The __SUNPRO_C test is because Oracle Developer Studio 12.6 lacks
@@ -993,9 +1007,10 @@ main(int argc, char **argv)
 	register ptrdiff_t i, j;
 	bool timerange_given = false;
 
-#ifdef S_IWGRP
-	umask(umask(S_IWGRP | S_IWOTH) | (S_IWGRP | S_IWOTH));
-#endif
+	/* Adjust umask so that created files lack troublesome permission bits.
+	   Needed because regular files are created via fopen not openat.  */
+	umask(umask(TROUBLE_PERMS) | TROUBLE_PERMS);
+
 #if HAVE_GETTEXT
 	setlocale(LC_ALL, "");
 # ifdef TZ_DOMAINDIR

@@ -65,9 +65,9 @@ enum { FORMAT_LEN_GROWTH_BOUND = 5 };
 # include <sys/stat.h>
 #endif
 #ifdef S_IRUSR
-# define MKDIR_UMASK (S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH)
+# define MKDIR_PERMS (S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH)
 #else
-# define MKDIR_UMASK 0755
+# define MKDIR_PERMS 0755
 #endif
 
 /* The minimum alignment of a type, for pre-C23 platforms.
@@ -3982,7 +3982,7 @@ mkdirs(char const *argname, bool ancestors)
 		** not check first whether it already exists, as that
 		** is checked anyway if the mkdir fails.
 		*/
-		if (mkdir(name, MKDIR_UMASK) != 0) {
+		if (mkdir(name, MKDIR_PERMS) < 0) {
 			/* Do not report an error if err == EEXIST, because
 			   some other process might have made the directory
 			   in the meantime.  Likewise for ENOSYS, because

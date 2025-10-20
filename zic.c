@@ -18,6 +18,10 @@
 #include "tzfile.h"
 
 #include <fcntl.h>
+#ifndef O_BINARY
+# define O_BINARY 0 /* MS-Windows */
+#endif
+
 #include <locale.h>
 #include <signal.h>
 #include <stdarg.h>
@@ -50,9 +54,6 @@ enum { FORMAT_LEN_GROWTH_BOUND = 5 };
 # ifndef mkdir
 #  define mkdir(name, mode) _mkdir(name)
 # endif
-# ifndef umask
-#  define umask(mode) _umask(mode)
-# endif
 #endif
 
 #ifndef HAVE_GETRANDOM
@@ -73,22 +74,34 @@ enum { FORMAT_LEN_GROWTH_BOUND = 5 };
 # include <sys/stat.h>
 #endif
 
-#ifdef S_IRWXU
-/* All file permission bits.  */
-# define ALL_PERMS (S_IRWXU | S_IRWXG | S_IRWXO)
-
-/* Troublesome file permission bits.  */
-# define TROUBLE_PERMS (S_IWGRP | S_IWOTH)
-#else
-# define ALL_PERMS	0777
-# define TROUBLE_PERMS	0022
+#ifndef S_IRWXU
+# define S_IRUSR 0400
+# define S_IWUSR 0200
+# define S_IXUSR 0100
+# define S_IRGRP 0040
+# define S_IWGRP 0020
+# define S_IXGRP 0010
+# define S_IROTH 0004
+# define S_IWOTH 0002
+# define S_IXOTH 0001
+# define S_IRWXU (S_IRUSR | S_IWUSR | S_IXUSR)
+# define S_IRWXG (S_IRGRP | S_IWGRP | S_IXGRP)
+# define S_IRWXO (S_IROTH | S_IWOTH | S_IXOTH)
 #endif
 
+/* All file permission bits.  */
+#define ALL_PERMS (S_IRWXU | S_IRWXG | S_IRWXO)
+
+/* Troublesome file permission bits.  */
+#define TROUBLE_PERMS (S_IWGRP | S_IWOTH)
+
 /* File permission bits for making directories.
-   The initial umask modifies these bits.
-   Although the "& ~TROUBLE_PERMS" is redundant because we remove
-   TROUBLE_PERMS from the umask early on, the redundancy does not hurt.  */
+   The umask modifies these bits.  */
 #define MKDIR_PERMS (ALL_PERMS & ~TROUBLE_PERMS)
+
+/* File permission bits for making regular files.
+   The umask modifies these bits.  */
+#define CREAT_PERMS (MKDIR_PERMS & ~(S_IXUSR | S_IXGRP | S_IXOTH))
 
 
 /* The minimum alignment of a type, for pre-C23 platforms.
@@ -171,9 +184,6 @@ extern int	getopt(int argc, char * const argv[],
 extern int	link(const char * target, const char * linkname);
 # ifndef mkdir
 extern int	mkdir(char const *, mode_t);
-# endif
-# ifndef umask
-extern mode_t	umask(mode_t);
 # endif
 extern char *	optarg;
 extern int	optind;
@@ -1014,10 +1024,6 @@ main(int argc, char **argv)
 	register ptrdiff_t i, j;
 	bool timerange_given = false;
 
-	/* Adjust umask so that created files lack troublesome permission bits.
-	   Needed because regular files are created via fopen not openat.  */
-	umask(umask(TROUBLE_PERMS) | TROUBLE_PERMS);
-
 #if HAVE_GETTEXT
 	setlocale(LC_ALL, "");
 # ifdef TZ_DOMAINDIR
@@ -1401,33 +1407,35 @@ diagslash(char const *filename)
 static FILE *
 open_outfile(char const **outname, char **tempname)
 {
-#if __STDC_VERSION__ < 201112
-  static char const fopen_mode[] = "wb";
-#else
-  static char const fopen_mode[] = "wbx";
-#endif
-
-  FILE *fp;
   bool dirs_made = false;
   if (!*tempname)
     random_dirent(outname, tempname);
 
-  while (! (fp = fopen(*outname, fopen_mode))) {
-    int fopen_errno = errno;
-    if (fopen_errno == ENOENT && !dirs_made) {
+  while (true) {
+    int oflags = O_WRONLY | O_BINARY | O_CREAT | O_EXCL;
+    int fd = open(*outname, oflags, CREAT_PERMS);
+    int err;
+    if (fd < 0)
+      err = errno;
+    else {
+      FILE *fp = fdopen(fd, "wb");
+      if (fp)
+	return fp;
+      err = errno;
+      close(fd);
+    }
+    if (err == ENOENT && !dirs_made) {
       mkdirs(*outname, true);
       dirs_made = true;
-    } else if (fopen_errno == EEXIST)
+    } else if (err == EEXIST)
       random_dirent(outname, tempname);
     else {
       fprintf(stderr, _("%s: Can't create %s%s%s: %s\n"),
 	      progname, diagdir(*outname), diagslash(*outname), *outname,
-	      strerror(fopen_errno));
+	      strerror(err));
       exit(EXIT_FAILURE);
     }
   }
-
-  return fp;
 }
 
 /* If TEMPNAME, the result is in the temporary file TEMPNAME even

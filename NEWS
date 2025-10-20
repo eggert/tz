@@ -102,6 +102,11 @@ Unreleased, experimental changes
     exceedingly long TZ strings no longer fail merely because they
     exceed an arbitrary file name length limit imposed by tzcode.
 
+    zic now uses the fdopen function, which was standardized by
+    POSIX.1-1988 and is now safe to use in portable code.
+    This replaces its use of the older umask function, which
+    complicated maintenance.
+
   Changes to commentary
 
     The leapseconds file contains commentary about the IERS and NIST

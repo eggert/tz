@@ -709,6 +709,13 @@ close_file(FILE *stream, char const *dir, char const *name,
 }
 
 ATTRIBUTE_NORETURN static void
+duplicate_options(char const *opt)
+{
+  fprintf(stderr, _("%s: More than one %s option specified\n"), progname, opt);
+  exit(EXIT_FAILURE);
+}
+
+ATTRIBUTE_NORETURN static void
 usage(FILE *stream, int status)
 {
   fprintf(stream,
@@ -1063,73 +1070,39 @@ main(int argc, char **argv)
 				  error(_("invalid option: -b '%s'"), optarg);
 				break;
 			case 'd':
-				if (directory == NULL)
-					directory = optarg;
-				else {
-					fprintf(stderr,
-						_("%s: More than one -d option"
-						  " specified\n"),
-						progname);
-					return EXIT_FAILURE;
-				}
+				if (directory)
+				  duplicate_options("-d");
+				directory = optarg;
 				break;
 			case 'l':
-				if (lcltime == NULL)
-					lcltime = optarg;
-				else {
-					fprintf(stderr,
-						_("%s: More than one -l option"
-						  " specified\n"),
-						progname);
-					return EXIT_FAILURE;
-				}
+				if (lcltime)
+				  duplicate_options("-l");
+				lcltime = optarg;
 				break;
 			case 'p':
-				if (psxrules == NULL)
-					psxrules = optarg;
-				else {
-					fprintf(stderr,
-						_("%s: More than one -p option"
-						  " specified\n"),
-						progname);
-					return EXIT_FAILURE;
-				}
+				if (psxrules)
+				  duplicate_options("-p");
+				psxrules = optarg;
 				break;
 			case 't':
-				if (tzdefault != NULL) {
-				  fprintf(stderr,
-					  _("%s: More than one -t option"
-					    " specified\n"),
-					  progname);
-				  return EXIT_FAILURE;
-				}
+				if (tzdefault)
+				  duplicate_options("-t");
 				tzdefault = optarg;
 				break;
 			case 'y':
 				warning(_("-y ignored"));
 				break;
 			case 'L':
-				if (leapsec == NULL)
-					leapsec = optarg;
-				else {
-					fprintf(stderr,
-						_("%s: More than one -L option"
-						  " specified\n"),
-						progname);
-					return EXIT_FAILURE;
-				}
+				if (leapsec)
+				  duplicate_options("-L");
+				leapsec = optarg;
 				break;
 			case 'v':
 				noise = true;
 				break;
 			case 'r':
-				if (timerange_given) {
-				  fprintf(stderr,
-					  _("%s: More than one -r option"
-					    " specified\n"),
-					  progname);
-				  return EXIT_FAILURE;
-				}
+				if (timerange_given)
+				  duplicate_options("-r");
 				if (! timerange_option(optarg)) {
 				  fprintf(stderr,
 					  _("%s: invalid time range: %s\n"),

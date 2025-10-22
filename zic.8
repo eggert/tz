@@ -137,6 +137,19 @@ if
 .IR timezone 's
 transitions are at standard time or Universal Time (UT) instead of local time.
 .TP
+.BI "\-m " mode
+Create TZif files with the given file mode bits.
+By default the files are created with mode 644 as modified by the umask.
+With this option they are created with the given mode instead.
+For portability the mode should be an unsigned octal integer,
+typically 644 or 444;
+some platforms also support
+.BR chmod (1)-style
+symbolic modes.
+This option does not affect created ancestor directories,
+which have mode 755 as modified by the umask.
+The option is ignored on platforms lacking the notion of file mode bits.
+.TP
 .BR "\-r " "[\fB@\fP\fIlo\fP][\fB/@\fP\fIhi\fP]"
 Limit the applicability of output files
 to timestamps in the range from

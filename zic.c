@@ -67,6 +67,10 @@ enum { FORMAT_LEN_GROWTH_BOUND = 5 };
 
 #if HAVE_SYS_STAT_H
 # include <sys/stat.h>
+#else
+# ifndef mode_t
+#  define mode_t int
+# endif
 #endif
 
 #ifndef S_IRWXU
@@ -672,14 +676,91 @@ warning(const char *const string, ...)
 	warnings = true;
 }
 
-/* Close STREAM.  If it had an I/O error, report it against DIR/NAME,
-   remove TEMPNAME if nonnull, and then exit.  */
+/* Convert ARG, a string in base BASE, to an unsigned long value no
+   greater than MAXVAL.  On failure, diagnose with MSGID and exit.  */
+static unsigned long
+arg2num(char const *arg, int base, unsigned long maxval, char const *msgid)
+{
+  unsigned long n;
+  char *ep;
+  errno = 0;
+  n = strtoul(arg, &ep, base);
+  if (ep == arg || *ep || maxval < n || errno) {
+    fprintf(stderr, _(msgid), progname, arg);
+    exit(EXIT_FAILURE);
+  }
+  return n;
+}
+
+#ifndef MODE_T_MAX
+# define MODE_T_MAX_NO_PADDING MAXVAL(mode_t, TYPE_BIT(mode_t))
+# if HAVE__GENERIC
+#  define MODE_T_MAX \
+    (TYPE_SIGNED(mode_t) \
+     ? _Generic((mode_t) 0, \
+		signed char: SCHAR_MAX, short: SHRT_MAX, \
+		int: INT_MAX, long: LONG_MAX, long long: LLONG_MAX, \
+		default: MODE_T_MAX_NO_PADDING) \
+     : (mode_t) -1)
+# else
+#  define MODE_T_MAX MODE_T_MAX_NO_PADDING
+# endif
+#endif
+
+#ifndef HAVE_FCHMOD
+# define HAVE_FCHMOD 1
+#endif
+#if !HAVE_FCHMOD
+# define fchmod(fd, mode) 0
+#endif
+
+#ifndef HAVE_SETMODE
+# if (defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
+      || (defined __APPLE__ && defined __MACH__))
+#  define HAVE_SETMODE 1
+# else
+#  define HAVE_SETMODE 0
+# endif
+#endif
+
+static mode_t const no_mode = -1;
+static mode_t output_mode = -1;
+
+static mode_t
+mode_option(char const *arg)
+{
+#if HAVE_SETMODE
+  void *set = setmode(arg);
+  if (set) {
+    mode_t mode = getmode(set, CREAT_PERMS);
+    free(set);
+    return mode;
+  }
+#endif
+  return arg2num(arg, 8, min(MODE_T_MAX, ULONG_MAX),
+		 "%s: -m '%s': invalid mode\n");
+}
+
+static int
+chmetadata(FILE *stream)
+{
+  return output_mode == no_mode ? 0 : fchmod(fileno(stream), output_mode);
+}
+
+/* Close STREAM.
+   If it had an I/O error, report it against DIR/NAME,
+   remove TEMPNAME if nonnull, and then exit.
+   If TEMPNAME is nonnull, and if requested,
+   change the stream's metadata before closing.  */
 static void
 close_file(FILE *stream, char const *dir, char const *name,
 	   char const *tempname)
 {
   char const *e = (ferror(stream) ? _("I/O error")
-		   : fclose(stream) != 0 ? strerror(errno) : NULL);
+		   : (fflush(stream) < 0
+		      || (tempname && chmetadata(stream) < 0)
+		      || fclose(stream) < 0)
+		   ? strerror(errno) : NULL);
   if (e) {
     if (name && *name == '/')
       dir = NULL;
@@ -706,7 +787,7 @@ usage(FILE *stream, int status)
   fprintf(stream,
 	  _("%s: usage is %s [ --version ] [ --help ] [ -v ] \\\n"
 	    "\t[ -b {slim|fat} ] [ -d directory ] [ -D ] \\\n"
-	    "\t[ -l localtime ] [ -L leapseconds ] \\\n"
+	    "\t[ -l localtime ] [ -L leapseconds ] [ -m mode ] \\\n"
 	    "\t[ -p posixrules ] [ -r '[@lo][/@hi]' ] [ -R @hi ] \\\n"
 	    "\t[ -t localtime-link ] \\\n"
 	    "\t[ filename ... ]\n\n"
@@ -1038,7 +1119,7 @@ main(int argc, char **argv)
 		} else if (strcmp(argv[k], "--help") == 0) {
 			usage(stdout, EXIT_SUCCESS);
 		}
-	while ((c = getopt(argc, argv, "b:d:Dl:L:p:r:R:st:vy:")) != -1)
+	while ((c = getopt(argc, argv, "b:d:Dl:L:m:p:r:R:st:vy:")) != -1)
 		switch (c) {
 			default:
 				usage(stderr, EXIT_FAILURE);
@@ -1066,6 +1147,11 @@ main(int argc, char **argv)
 				if (lcltime)
 				  duplicate_options("-l");
 				lcltime = optarg;
+				break;
+			case 'm':
+				if (output_mode != no_mode)
+				  duplicate_options("-m");
+				output_mode = mode_option(optarg);
 				break;
 			case 'p':
 				if (psxrules)

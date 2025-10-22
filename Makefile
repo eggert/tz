@@ -244,6 +244,7 @@ LDLIBS=
 #  -DHAVE_DECL_ENVIRON if <unistd.h> declares 'environ'
 #  -DHAVE_DECL_TIMEGM=0 if <time.h> does not declare timegm
 #  -DHAVE_DIRECT_H if mkdir needs <direct.h> (MS-Windows)
+#  -DHAVE_FCHMOD=0 if your system lacks the fchmod function
 #  -DHAVE__GENERIC=0 if _Generic does not work*
 #  -DHAVE_GETAUXVAL=1 if getauxval works, 0 otherwise (default is guessed)
 #  -DHAVE_GETEUID=0 if gete?[ug]id do not work
@@ -267,6 +268,8 @@ LDLIBS=
 #  -DHAVE_POSIX_DECLS=0 if your system's include files do not declare
 #	variables like 'tzname' required by POSIX
 #  -DHAVE_SETENV=0 if your system lacks the setenv function
+#  -DHAVE_SETMODE=[01] if your system lacks or has the setmode and getmode
+#	functions (default is guessed)
 #  -DHAVE_SNPRINTF=0 if your system lacks the snprintf function+
 #  -DHAVE_STDCKDINT_H=0 if neither <stdckdint.h> nor substitutes like
 #	__builtin_add_overflow work*
@@ -279,6 +282,8 @@ LDLIBS=
 #  -DHAVE_STRUCT_TIMESPEC=0 if your system lacks struct timespec+
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
 #  -DHAVE_SYS_STAT_H=0 if <sys/stat.h> does not work*
+#	The following additional option may be needed:
+#	-Dmode_t=T to define mode_t to be type T (default int)
 #  -DHAVE_TZSET=0 if your system lacks a tzset function
 #  -DHAVE_UNISTD_H=0 if <unistd.h> does not work*
 #  -DHAVE_UTMPX_H=0 if <utmpx.h> does not work*

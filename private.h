@@ -1068,8 +1068,9 @@ time_t timeoff(struct tm *, long);
 #if HAVE_GETTEXT
 # define _(msgid) gettext(msgid)
 #else /* !HAVE_GETTEXT */
-# define _(msgid) msgid
+# define _(msgid) (msgid)
 #endif /* !HAVE_GETTEXT */
+#define N_(msgid) (msgid)
 
 #if !defined TZ_DOMAIN && defined HAVE_GETTEXT
 # define TZ_DOMAIN "tz"

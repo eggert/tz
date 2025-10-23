@@ -265,7 +265,7 @@ LDLIBS=
 #  -DHAVE_MALLOC_ERRNO=0 if malloc etc. do not set errno on failure.
 #  -DHAVE_MEMPCPY=1 if your system has mempcpy, 0 if not (default is guessed)
 #  -DHAVE_POSIX_DECLS=0 if your system's include files do not declare
-#	functions like 'link' or variables like 'tzname' required by POSIX
+#	variables like 'tzname' required by POSIX
 #  -DHAVE_SETENV=0 if your system lacks the setenv function
 #  -DHAVE_SNPRINTF=0 if your system lacks the snprintf function+
 #  -DHAVE_STDCKDINT_H=0 if neither <stdckdint.h> nor substitutes like

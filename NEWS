@@ -95,6 +95,9 @@ Unreleased, experimental changes
     tzcode now uses strnlen to improve asymptotic performance a bit.
     Compile with -DHAVE_STRNLEN=0 if your platform lacks it.
 
+    tzcode now hand-declares unistd.h-provided symbols like getopt
+    if HAVE_UNISTD_H=0, not if HAVE_POSIX_DECLS=0.
+
     tzset etc. now have an experimental OPENAT_TZDIR option;
     see Makefile and localtime.c for details.
 

@@ -31,11 +31,6 @@
 #include <locale.h>
 #include <stdio.h>
 
-#if !HAVE_POSIX_DECLS
-extern char *		optarg;
-extern int		optind;
-#endif
-
 static int		retval = EXIT_SUCCESS;
 
 static void		display(const char *, time_t);

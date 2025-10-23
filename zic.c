@@ -178,17 +178,6 @@ struct zone {
 	zic_t		z_untiltime;
 };
 
-#if !HAVE_POSIX_DECLS
-extern int	getopt(int argc, char * const argv[],
-			const char * options);
-extern int	link(const char * target, const char * linkname);
-# ifndef mkdir
-extern int	mkdir(char const *, mode_t);
-# endif
-extern char *	optarg;
-extern int	optind;
-#endif
-
 #if ! HAVE_SYMLINK
 static ssize_t
 readlink(char const *restrict file, char *restrict buf, size_t size)

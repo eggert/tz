@@ -262,6 +262,11 @@ strnlen (char const *s, size_t maxlen)
 
 #if HAVE_UNISTD_H
 # include <unistd.h>
+#else
+/* Assume getopt.o or equivalent is linked via Makefile configuration.  */
+int getopt(int, char *const[], char const *);
+extern char *optarg;
+extern int optind;
 #endif /* HAVE_UNISTD_H */
 
 /* SUPPORT_POSIX2008 means the tzcode library should support

@@ -48,12 +48,7 @@ enum { FORMAT_LEN_GROWTH_BOUND = 5 };
 #ifdef HAVE_DIRECT_H
 # include <direct.h>
 # include <io.h>
-# ifndef mode_t
-#  define mode_t int
-# endif
-# ifndef mkdir
-#  define mkdir(name, mode) _mkdir(name)
-# endif
+# define mkdir(name, mode) _mkdir(name)
 #endif
 
 #ifndef HAVE_GETRANDOM

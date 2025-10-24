@@ -1917,9 +1917,11 @@ zoneinit(struct state *sp, char const *name, char tzloadflags)
 /* Like tzset(), but in a critical section.
    If THREADED && THREAD_RWLOCK the caller has a read lock,
    and this function might upgrade it to a write lock.
+   If WALL, act as if TZ is unset; although always false in this file,
+   a wrapper .c file's obsolete and ineffective tzsetwall function can use it.
    If tz_change_interval is positive the time is NOW; otherwise ignore NOW.  */
 static void
-tzset_unlocked(bool threaded, monotime_t now)
+tzset_unlocked(bool threaded, bool wall, monotime_t now)
 {
   char const *name;
   struct state *sp;
@@ -1928,7 +1930,7 @@ tzset_unlocked(bool threaded, monotime_t now)
   bool writing = false;
 
   for (;;) {
-    name = getenv("TZ");
+    name = wall ? NULL : getenv("TZ");
     sp = lclptr;
     tzloadflags = TZLOAD_FROMENV | TZLOAD_TZSTRING;
     namelen = sizeof lcl_TZname + 1; /* placeholder for no name */
@@ -2016,7 +2018,7 @@ tzset(void)
     errno = err;
     return;
   }
-  tzset_unlocked(!err, now);
+  tzset_unlocked(!err, false, now);
   unlock(!err);
 }
 #endif
@@ -2207,7 +2209,7 @@ localtime_tzset(time_t const *timep, struct tm *tmp, bool setname)
     return NULL;
   }
   if (0 <= tz_change_interval || setname || !lcl_is_set)
-    tzset_unlocked(!err, now);
+    tzset_unlocked(!err, false, now);
   tmp = localsub(lclptr, timep, setname, tmp);
   unlock(!err);
   return tmp;
@@ -2874,7 +2876,7 @@ mktime(struct tm *tmp)
     errno = err;
     return -1;
   }
-  tzset_unlocked(!err, now);
+  tzset_unlocked(!err, false, now);
   t = mktime_tzname(lclptr, tmp, true);
   unlock(!err);
   return t;
@@ -2992,7 +2994,7 @@ time2posix(time_t t)
     return -1;
   }
   if (0 <= tz_change_interval || !lcl_is_set)
-    tzset_unlocked(!err, now);
+    tzset_unlocked(!err, false, now);
   if (lclptr)
     t = time2posix_z(lclptr, t);
   unlock(!err);
@@ -3038,7 +3040,7 @@ posix2time(time_t t)
     return -1;
   }
   if (0 <= tz_change_interval || !lcl_is_set)
-    tzset_unlocked(!err, now);
+    tzset_unlocked(!err, false, now);
   if (lclptr)
     t = posix2time_z(lclptr, t);
   unlock(!err);

@@ -105,7 +105,9 @@ Unreleased, experimental changes
     exceedingly long TZ strings no longer fail merely because they
     exceed an arbitrary file name length limit imposed by tzcode.
 
-    zic has new options -D, -m, and -u, inspired by FreeBSD.
+    zic has new options inspired by FreeBSD.  '-D' skips creation of
+    output ancestor directories, '-m MODE' sets output files' mode,
+    and '-u OWNER[:GROUP]' sets output files' owner and group.
 
     zic now uses the fdopen function, which was standardized by
     POSIX.1-1988 and is now safe to use in portable code.

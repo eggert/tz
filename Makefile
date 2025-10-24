@@ -269,7 +269,7 @@ LDLIBS=
 #	variables like 'tzname' required by POSIX
 #  -DHAVE_PWD_H=0 if your system lacks pwd.h, grp.h and corresponding functions
 #	The following additional options may be needed:
-#	-Dgid_t=T, -Duid_t=T to define gid_t, uid_t to be type T (default int)
+#	-Dgid_t=T, -Duid_t=T to define gid_t, uid_t to be type T
 #  -DHAVE_SETENV=0 if your system lacks the setenv function
 #  -DHAVE_SETMODE=[01] if your system lacks or has the setmode and getmode
 #	functions (default is guessed)
@@ -286,7 +286,7 @@ LDLIBS=
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
 #  -DHAVE_SYS_STAT_H=0 if <sys/stat.h> does not work*
 #	The following additional option may be needed:
-#	-Dmode_t=T to define mode_t to be type T (default int)
+#	-Dmode_t=T to define mode_t to be type T
 #  -DHAVE_TZSET=0 if your system lacks a tzset function
 #  -DHAVE_UNISTD_H=0 if <unistd.h> does not work*
 #  -DHAVE_UTMPX_H=0 if <utmpx.h> does not work*

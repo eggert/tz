@@ -49,6 +49,7 @@ enum { FORMAT_LEN_GROWTH_BOUND = 5 };
 # include <direct.h>
 # include <io.h>
 # define mkdir(name, mode) _mkdir(name)
+typedef unsigned short gid_t, mode_t, uid_t;
 #endif
 
 #ifndef HAVE_GETRANDOM
@@ -67,10 +68,6 @@ enum { FORMAT_LEN_GROWTH_BOUND = 5 };
 
 #if HAVE_SYS_STAT_H
 # include <sys/stat.h>
-#else
-# ifndef mode_t
-#  define mode_t int
-# endif
 #endif
 
 #ifndef S_IRWXU
@@ -119,12 +116,6 @@ static mode_t creat_perms = CREAT_PERMS;
 # include <grp.h>
 # include <pwd.h>
 #else
-# ifndef gid_t
-#  define gid_t int
-# endif
-# ifndef uid_t
-#  define uid_t int
-# endif
 struct group { gid_t gr_gid; };
 struct passwd { uid_t pw_uid; };
 # define getgrnam(arg) NULL

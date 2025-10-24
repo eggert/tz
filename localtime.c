@@ -268,7 +268,7 @@ struct timespec { time_t tv_sec; long tv_nsec; };
 #  define TZ_CHANGE_INTERVAL 61
 # else
 #  define TZ_CHANGE_INTERVAL (-1)
-#endif
+# endif
 #endif
 static_assert(TZ_CHANGE_INTERVAL < 0 || HAVE_SYS_STAT_H);
 

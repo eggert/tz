@@ -246,7 +246,6 @@ LDLIBS=
 #  -DHAVE_DIRECT_H if mkdir needs <direct.h> (MS-Windows)
 #  -DHAVE_FCHMOD=0 if your system lacks the fchmod function
 #  -DHAVE__GENERIC=0 if _Generic does not work*
-#  -DHAVE_GETAUXVAL=1 if getauxval works, 0 otherwise (default is guessed)
 #  -DHAVE_GETEUID=0 if gete?[ug]id do not work
 #  -DHAVE_GETRANDOM if getrandom works (e.g., GNU/Linux),
 #	-DHAVE_GETRANDOM=0 to avoid using getrandom
@@ -258,7 +257,9 @@ LDLIBS=
 #	ctime_r and asctime_r incompatibly with POSIX.1-2017 and earlier
 #	(Solaris when _POSIX_PTHREAD_SEMANTICS is not defined).
 #  -DHAVE_INTTYPES_H=0 if <inttypes.h> does not work*+
-#  -DHAVE_ISSETUID=1 if issetugid works, 0 otherwise (default is guessed)
+#  -DHAVE_ISSETUGID=1 if issetugid works, 0 otherwise (default is guessed)
+#	If 0, you may also use -DHAVE_SYS_AUXV_H=1 if <sys/auxv.h> works,
+#	0 otherwise (default is guessed).
 #  -DHAVE_LINK=0 if your system lacks a link function
 #  -DHAVE_LOCALTIME_R=0 if your system lacks a localtime_r function
 #  -DHAVE_LOCALTIME_RZ=0 if you do not want zdump to use localtime_rz
@@ -268,8 +269,8 @@ LDLIBS=
 #  -DHAVE_POSIX_DECLS=0 if your system's include files do not declare
 #	variables like 'tzname' required by POSIX
 #  -DHAVE_PWD_H=0 if your system lacks pwd.h, grp.h and corresponding functions
-#	The following additional options may be needed:
-#	-Dgid_t=T, -Duid_t=T to define gid_t, uid_t to be type T
+#	If 0, you may also need -Dgid_t=G -Duid_t=U
+#	to define gid_t and uid_t to be types G and U.
 #  -DHAVE_SETENV=0 if your system lacks the setenv function
 #  -DHAVE_SETMODE=[01] if your system lacks or has the setmode and getmode
 #	functions (default is guessed)
@@ -285,8 +286,7 @@ LDLIBS=
 #  -DHAVE_STRUCT_TIMESPEC=0 if your system lacks struct timespec+
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
 #  -DHAVE_SYS_STAT_H=0 if <sys/stat.h> does not work*
-#	The following additional option may be needed:
-#	-Dmode_t=T to define mode_t to be type T
+#	If 0, you may also need -Dmode_t=M to define mode_t to be type M.
 #  -DHAVE_TZSET=0 if your system lacks a tzset function
 #  -DHAVE_UNISTD_H=0 if <unistd.h> does not work*
 #  -DHAVE_UTMPX_H=0 if <utmpx.h> does not work*

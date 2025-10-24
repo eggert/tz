@@ -19,10 +19,6 @@
 #include "tzfile.h"
 #include <fcntl.h>
 
-#if HAVE_GETAUXVAL && !HAVE_ISSETUGID
-# include <sys/auxv.h>
-#endif
-
 #if HAVE_SYS_STAT_H
 # include <sys/stat.h>
 # ifndef S_ISREG
@@ -366,12 +362,29 @@ static int openat(int dd, char const *path, int oflag) { unreachable (); }
 # define O_SEARCH 0
 #endif
 
-/* Return 1 if the process is privileged, 0 otherwise.  */
 #if !HAVE_ISSETUGID
+
+# if !defined HAVE_SYS_AUXV_H && defined __has_include
+#  if __has_include(<sys/auxv.h>)
+#   define HAVE_SYS_AUXV_H 1
+#  endif
+# endif
+# ifndef HAVE_SYS_AUXV_H
+#  if defined __GLIBC__ && 2 < __GLIBC__ + (19 <= __GLIBC_MINOR__)
+#   define HAVE_SYS_AUXV_H 1
+#  else
+#   define HAVE_SYS_AUXV_H 0
+#  endif
+# endif
+# if HAVE_SYS_AUXV_H
+#  include <sys/auxv.h>
+# endif
+
+/* Return 1 if the process is privileged, 0 otherwise.  */
 static int
 issetugid(void)
 {
-# if HAVE_GETAUXVAL && defined AT_SECURE
+# if HAVE_SYS_AUXV_H && defined AT_SECURE
   unsigned long val;
   errno = 0;
   val = getauxval(AT_SECURE);

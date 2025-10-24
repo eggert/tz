@@ -44,12 +44,13 @@ Unreleased, experimental changes
     no less caution than TZ strings taken from the environment, as
     the old undocumented behavior would have been hard to explain.
     tzset etc. no longer use the 'access' system call to check access;
-    instead they now use the system calls issetuid, getauxval,
+    instead they now use the system calls issetugid, getauxval,
     getresuid/getresgid, and geteuid/getegid/getuid/getgid (whichever
     first works) to test whether a program is privileged.
-    Compile with -DHAVE_ISSETUID=[01], -DHAVE_GETAUXVAL=[01],
-    -DHAVE_GETRESUID=[01], and -DHAVE_GETEUID=[01] to enable or
-    disable these system calls' use.
+    Compile with -DHAVE_SYS_AUXV_H=[01] to enable or disable
+    <sys/auxv.h> which (if it defines AT_SECURE) enables getauxval,
+    and compile with -DHAVE_ISSETUGID=[01], -DHAVE_GETRESUID=[01], and
+    -DHAVE_GETEUID=[01] to enable or disable the other calls' use.
 
     The new CFLAGS option -DTZ_CHANGE_INTERVAL=N makes tzset etc.
     check for TZif file changes if the in-memory data are N seconds

@@ -941,13 +941,13 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 
 	if (relname[0] != '/') {
 	  if (!OPENAT_TZDIR || !O_RESOLVE_BENEATH) {
-	    /* Fail if a relative name contains a ".." component,
-	       as such a name could read a file outside TZDIR
+	    /* Fail if a relative name contains a non-terminal ".." component,
+	       as such a name could read a non-directory outside TZDIR
 	       when AT_FDCWD and O_RESOLVE_BENEATH are not available.  */
 	    char const *component;
 	    for (component = relname; component[0]; component++)
 	      if (component[0] == '.' && component[1] == '.'
-		  && ((component[2] == '/') | !component[2])
+		  && component[2] == '/'
 		  && (component == relname || component[-1] == '/'))
 		return ENOTCAPABLE;
 	  }

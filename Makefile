@@ -380,7 +380,7 @@ LDLIBS=
 # Select instrumentation via "make GCC_INSTRUMENT='whatever'".
 GCC_INSTRUMENT = \
   -fsanitize=undefined -fsanitize-address-use-after-scope \
-  -fsanitize-undefined-trap-on-error -fstack-protector
+  -fsanitize-trap=all -fstack-protector
 # Omit -fanalyzer from GCC_DEBUG_FLAGS, as it makes GCC too slow.
 GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 \
   $(GCC_INSTRUMENT) \

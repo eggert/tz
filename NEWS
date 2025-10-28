@@ -40,6 +40,9 @@ Unreleased, experimental changes
     and reject relative names containing ".." directory components;
     formerly, only privileged programs did those two things.
     These changes were inspired by similar behavior in FreeBSD.
+    On NetBSD, unprivileged programs now use O_REGULAR to check
+    whether a TZ setting starting with '/' names a regular file,
+    avoiding a minor security race still present elsewhere.
     TZ strings taken from tzalloc arguments are now treated with
     no less caution than TZ strings taken from the environment, as
     the old undocumented behavior would have been hard to explain.

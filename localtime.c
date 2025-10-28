@@ -355,6 +355,9 @@ static int openat(int dd, char const *path, int oflag) { unreachable (); }
 #ifndef O_PATH
 # define O_PATH 0
 #endif
+#ifndef O_REGULAR
+# define O_REGULAR 0
+#endif
 #ifndef O_RESOLVE_BENEATH
 # define O_RESOLVE_BENEATH 0
 #endif
@@ -900,7 +903,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	register int tzheadsize = sizeof(struct tzhead);
 	int dd = AT_FDCWD;
 	int oflags = (O_RDONLY | O_BINARY | O_CLOEXEC | O_CLOFORK
-		      | O_IGNORE_CTTY | O_NOCTTY);
+		      | O_IGNORE_CTTY | O_NOCTTY | O_REGULAR);
 	int err;
 	struct stat st;
 	st.st_ctime = 0;
@@ -927,7 +930,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	      continue;
 	  else if (issetugid())
 	    return ENOTCAPABLE;
-	  else {
+	  else if (!O_REGULAR) {
 	    /* Check for devices, as their mere opening could have
 	       unwanted side effects.  Though racy, there is no
 	       portable way to fix the races.  This check is needed

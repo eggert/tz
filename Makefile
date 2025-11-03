@@ -239,6 +239,8 @@ LDLIBS=
 #  -DEPOCH_OFFSET=N if the 'time' function returns a value N greater
 #	than what POSIX specifies, assuming local time is UT.
 #	For example, N is 252460800 on AmigaOS.
+#  -DFREE_PRESERVES_ERRNO=[01] if the 'free' function munges or preserves errno
+#	(default is guessed)
 #  -DHAVE_DECL_ASCTIME_R=0 if <time.h> does not declare asctime_r
 #	on POSIX platforms predating POSIX.1-2024
 #  -DHAVE_DECL_ENVIRON if <unistd.h> declares 'environ'

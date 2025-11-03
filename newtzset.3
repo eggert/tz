@@ -379,6 +379,10 @@ If successful, the
 function returns a nonnull pointer to the newly allocated object.
 Otherwise, it returns a null pointer and sets
 .IR errno .
+The
+.B tzfree
+function does not modify
+.IR errno .
 .SH ERRORS
 .TP
 .B EOVERFLOW

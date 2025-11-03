@@ -93,6 +93,8 @@ Unreleased, experimental changes
     option is incompatible with POSIX.1-2024 and earlier.  It also
     costs CPU time and memory.
 
+    tzfree now preserves errno, consistently with POSIX.1-2024 'free'.
+
     tzcode now uses mempcpy if available, guessing its availability.
     Compile with -DHAVE_MEMPCPY=1 or 0 to override the guess.
 

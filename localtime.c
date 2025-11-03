@@ -2061,10 +2061,25 @@ tzalloc(char const *name)
   return sp;
 }
 
+#ifndef FREE_PRESERVES_ERRNO
+# if ((defined _POSIX_VERSION && 202405 <= _POSIX_VERSION) \
+      || (defined __GLIBC__ && 2 < __GLIBC__ + (33 <= __GLIBC_MINOR__)) \
+      || defined __OpenBSD__ || defined __sun)
+#  define FREE_PRESERVES_ERRNO 1
+# else
+#  define FREE_PRESERVES_ERRNO 0
+# endif
+#endif
+
 void
 tzfree(timezone_t sp)
 {
+  int err;
+  if (!FREE_PRESERVES_ERRNO)
+    err = errno;
   free(sp);
+  if (!FREE_PRESERVES_ERRNO)
+    errno = err;
 }
 
 /*

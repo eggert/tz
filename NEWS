@@ -2,6 +2,9 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    Several code changes for compatibility with FreeBSD.
+
   Changes to past timestamps
 
     Baja California agreed with California’s DST rules in 1953 and in

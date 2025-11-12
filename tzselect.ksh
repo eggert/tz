@@ -145,9 +145,11 @@ do
   t*) # Undocumented option, used for developer testing.
     zonetabtype=$OPTARG;;
   -help)
-    exec echo "$usage";;
+    say "$usage"
+    exit;;
   -version)
-    exec echo "tzselect $PKGVERSION$TZVERSION";;
+    say "tzselect $PKGVERSION$TZVERSION"
+    exit;;
   -*)
     say >&2 "$0: -$opt$OPTARG: unknown option; try '$0 --help'"; exit 1;;
   *)
@@ -516,8 +518,7 @@ while
 	' ="$distance_table"
       )
       echo >&2 'Please select one of the following timezones,'
-      echo >&2 'listed roughly in increasing order' \
-	"of distance from $coord".
+      say >&2 "listed roughly in increasing order of distance from $coord."
       doselect $regions
       region=$select_result
       tz=$(

@@ -51,6 +51,6 @@ elif (type nroff && type perl) >/dev/null 2>&1; then
 	}
   '
 else
-  echo >&2 "$0: please install groff, or mandoc and col"
+  printf >&2 '%s\n' "$0: please install groff, or mandoc and col"
   exit 1
 fi

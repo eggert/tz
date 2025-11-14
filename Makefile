@@ -1026,8 +1026,10 @@ now.ck: checknow.awk date tzdata.zi zdump zic zone1970.tab zonenow.tab
 		  ./zdump -i -t 0,$$future \
 		     $$(find "$$PWD/$@d" -name Etc -prune \
 			  -o -type f ! -name '*.tab' -print) \
-		     >$@d/zdump-1970.tab
+		     >$@d/zdump-1970.tab && \
 		$(AWK) \
+		  -v now=$$now \
+		  -v now_out=$@.out \
 		  -v zdump_table=$@d/zdump-now.tab \
 		  -f checknow.awk zonenow.tab
 		$(AWK) \
@@ -1037,7 +1039,8 @@ now.ck: checknow.awk date tzdata.zi zdump zic zone1970.tab zonenow.tab
 		   -v zdump_table=$@d/zdump-1970.tab \
 		   -f checknow.awk
 		rm -fr $@d
-		touch $@
+		touch $@.out
+		mv $@.out $@
 
 tables.ck: checktab.awk $(YDATA) backward zone.tab zone1970.tab
 		for tab in $(ZONETABLES); do \

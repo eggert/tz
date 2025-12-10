@@ -25,7 +25,7 @@
 #  define S_ISREG(mode) (((mode) & S_IFMT) == S_IFREG) /* Ancient UNIX.  */
 # endif
 #else
-struct stat { char st_ctime, st_dev, st_ino; }
+struct stat { char st_ctime, st_dev, st_ino; };
 # define dev_t char
 # define ino_t char
 # define fstat(fd, st) (memset(st, 0, sizeof *(st)), 0)

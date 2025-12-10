@@ -4,9 +4,9 @@
 # 2009-05-17 by Arthur David Olson.
 
 # This file is by no means authoritative; if you think you know better,
-# go ahead and edit the file (and please send any changes to
-# tz@iana.org for general use in the future).  For more, please see
-# the file CONTRIBUTING in the tz distribution.
+# go ahead and edit the file, and please send any changes to
+# the public mailing list tz@iana.org for general use in the future.
+# For more, please see the file CONTRIBUTING in the tz distribution.
 
 # From Paul Eggert (2017-02-10):
 #
@@ -42,7 +42,7 @@
 #	<https://www.jstor.org/stable/1774359>.  He writes:
 #	"It is requested that corrections and additions to these tables
 #	may be sent to Mr. John Milne, Royal Geographical Society,
-#	Savile Row, London."  Nowadays please email them to tz@iana.org.
+#	Savile Row, London."  Nowadays please see the file CONTRIBUTING.
 #
 #	Byalokoz EL. New Counting of Time in Russia since July 1, 1919.
 #	This Russian-language source was consulted by Vladimir Karpinsky; see

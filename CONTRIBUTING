@@ -10,7 +10,8 @@ warning, the data entries do not cover all of civil time before
 1970, and undoubtedly errors remain in the code and data.  Feel
 free to fill gaps or fix mistakes, and please email improvements
 to <tz@iana.org> for use in the future.  In your email, please give
-reliable sources that reviewers can check.
+reliable sources that reviewers can check.  The mailing list and its
+archives are public, so please do not send confidential information.
 
 ## Contributing technical changes
 
@@ -83,6 +84,9 @@ If you use Git the following workflow may be helpful:
   * Create patch files 0001-..., 0002-..., ...
 
         git format-patch main
+
+  * Check that the patch files and your email setup contain only
+    information that you want to make public.
 
   * After reviewing the patch files, send the patches to <tz@iana.org>
     for others to review.

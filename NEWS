@@ -91,7 +91,7 @@ Release 2025c - 2025-12-10 14:42:37 -0800
 
     The new CFLAGS option -TTHREAD_TM_MULTI causes localtime to return
     a pointer to thread-specific memory, as FreeBSD does, instead of
-    to the same memory in all threads.  This supports unportable
+    to the same memory in all threads.  This supports nonportable
     programs that incorrectly use localtime instead of localtime_r.
     This option affects gmtime and offtime similarly to localtime.
     Because the corresponding storage is freed on thread exit, this

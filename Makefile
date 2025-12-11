@@ -323,13 +323,13 @@ LDLIBS=
 #		variable, 0 otherwise (default is guessed)
 #	      -DHAVE_SYS_SINGLE_THREADED_H=0 if <sys/single_threaded.h> works,
 #		0 otherwise (default is guessed)
-#	  -DTHREAD_RWLOCK to use read-write locks intead of mutexes.
-#	    This can improve paralellism and thus save real time
+#	  -DTHREAD_RWLOCK to use read-write locks instead of mutexes.
+#	    This can improve parallelism and thus save real time
 #	    if many threads call tzcode functions simultaneously.
 #	    It also costs CPU time and thus energy.
 #	  -DTHREAD_TM_MULTI to have gmtime, localtime, and offtime
 #	    return different struct tm * addresses in different threads.
-#	    This supports unportable programs that call
+#	    This supports nonportable programs that call
 #	    gmtime/localtime/offtime when they should call
 #	    gmtime_r/localtime_r/offtime_r to avoid races.
 #	    Because the corresponding storage is freed on thread exit,

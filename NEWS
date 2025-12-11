@@ -69,6 +69,8 @@ Release 2025c - 2025-12-10 14:42:37 -0800
     The new CFLAGS options -DHAVE_STRUCT_STAT_ST_CTIM=0 and
     -DHAVE_STRUCT_TIMESPEC=0 port to non-POSIX.1-2008 platforms
     that lack st_ctim and struct timespec, respectively.
+    On these platforms, the code falls back on st_ctime to
+    implement -DTZ_CHANGE_INTERVAL=N.
 
     tzset etc. now treat ' ' like '_' in time zone abbreviations,
     just as they treat other invalid bytes.  This continues the

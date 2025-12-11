@@ -284,8 +284,10 @@ LDLIBS=
 #  -DHAVE_STRDUP=0 if your system lacks the strdup function
 #  -DHAVE_STRNLEN=0 if your system lacks the strnlen function+
 #  -DHAVE_STRTOLL=0 if your system lacks the strtoll function+
-#  -DHAVE_STRUCT_STAT_ST_CTIM=0 if struct stat lacks a member st_ctim
-#	and code should use st_ctime instead+
+#  -DHAVE_STRUCT_STAT_ST_CTIM=0 if struct stat lacks a status-change member
+#	of type struct timespec, so code should use st_ctime instead;
+#	but if the status-change member is called M rather than st_ctim,
+#	use -Dst_ctim=M instead	(default is guessed)+
 #  -DHAVE_STRUCT_TIMESPEC=0 if your system lacks struct timespec+
 #  -DHAVE_SYMLINK=0 if your system lacks the symlink function
 #  -DHAVE_SYS_STAT_H=0 if <sys/stat.h> does not work*

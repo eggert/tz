@@ -2674,15 +2674,19 @@ writezone(const char *const name, const char *const string, char version,
 		toi = 0;
 		fromi = 0;
 		for ( ; fromi < timecnt; ++fromi) {
-			if (toi != 0
-			    && ((attypes[fromi].at
+			if (toi != 0) {
+			    unsigned char type_2 =
+			      toi == 1 ? 0 : attypes[toi - 2].type;
+			    if ((attypes[fromi].at
 				 + utoffs[attypes[toi - 1].type])
-				<= (attypes[toi - 1].at
-				    + utoffs[toi == 1 ? 0
-					     : attypes[toi - 2].type]))) {
+				<= attypes[toi - 1].at + utoffs[type_2]) {
+				    if (attypes[fromi].type == type_2)
+					toi--;
+				    else
 					attypes[toi - 1].type =
 						attypes[fromi].type;
-					continue;
+				    continue;
+			    }
 			}
 			if (toi == 0
 			    || attypes[fromi].dontmerge

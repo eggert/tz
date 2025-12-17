@@ -1,5 +1,15 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to code
+
+    zic no longer generates a no-op transition when
+    simultaneous Rule and Zone changes cancel each other out.
+    This occurs in tzdata only in Asia/Tbilisi on 1997-03-30.
+    (Thanks to Renchunhui for a test case showing the bug.)
+
+
 Release 2025c - 2025-12-10 14:42:37 -0800
 
   Briefly:

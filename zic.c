@@ -814,8 +814,8 @@ close_file(FILE *stream, char const *dir, char const *name,
 	   char const *tempname)
 {
   char const *e = (ferror(stream) ? _("I/O error")
-		   : (fflush(stream) < 0
-		      || (tempname && chmetadata(stream) < 0)
+		   : ((tempname
+		       && (fflush(stream) < 0 || chmetadata(stream) < 0))
 		      || fclose(stream) < 0)
 		   ? strerror(errno) : NULL);
   if (e) {

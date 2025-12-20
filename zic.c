@@ -555,7 +555,8 @@ size_overflow(void)
   memory_exhausted(_("size overflow"));
 }
 
-ATTRIBUTE_PURE_114833 static ptrdiff_t
+ATTRIBUTE_PURE_114833_HACK
+static ptrdiff_t
 size_sum(size_t a, size_t b)
 {
 #ifdef ckd_add
@@ -569,7 +570,8 @@ size_sum(size_t a, size_t b)
   size_overflow();
 }
 
-ATTRIBUTE_PURE_114833 static ptrdiff_t
+ATTRIBUTE_PURE_114833_HACK
+static ptrdiff_t
 size_product(ptrdiff_t nitems, ptrdiff_t itemsize)
 {
 #ifdef ckd_mul
@@ -584,7 +586,8 @@ size_product(ptrdiff_t nitems, ptrdiff_t itemsize)
   size_overflow();
 }
 
-ATTRIBUTE_PURE_114833 static ptrdiff_t
+ATTRIBUTE_PURE_114833_HACK
+static ptrdiff_t
 align_to(ptrdiff_t size, ptrdiff_t alignment)
 {
   ptrdiff_t lo_bits = alignment - 1, sum = size_sum(size, lo_bits);
@@ -1691,7 +1694,8 @@ relname(char const *target, char const *linkname)
 /* Return true if A and B must have the same parent dir if A and B exist.
    Return false if this is not necessarily true (though it might be true).
    Keep it simple, and do not inspect the file system.  */
-ATTRIBUTE_PURE_114833 static bool
+ATTRIBUTE_PURE_114833
+static bool
 same_parent_dirs(char const *a, char const *b)
 {
   for (; *a == *b; a++, b++)
@@ -3897,7 +3901,8 @@ lowerit(char a)
 }
 
 /* case-insensitive equality */
-ATTRIBUTE_PURE_114833 static bool
+ATTRIBUTE_PURE_114833
+static bool
 ciequal(register const char *ap, register const char *bp)
 {
 	while (lowerit(*ap) == lowerit(*bp++))
@@ -3906,7 +3911,8 @@ ciequal(register const char *ap, register const char *bp)
 	return false;
 }
 
-ATTRIBUTE_PURE_114833 static bool
+ATTRIBUTE_PURE_114833
+static bool
 itsabbr(register const char *abbr, register const char *word)
 {
 	if (lowerit(*abbr) != lowerit(*word))
@@ -3922,7 +3928,8 @@ itsabbr(register const char *abbr, register const char *word)
 
 /* Return true if ABBR is an initial prefix of WORD, ignoring ASCII case.  */
 
-ATTRIBUTE_PURE_114833 static bool
+ATTRIBUTE_PURE_114833
+static bool
 ciprefix(char const *abbr, char const *word)
 {
   do
@@ -4032,7 +4039,8 @@ time_overflow(void)
   exit(EXIT_FAILURE);
 }
 
-ATTRIBUTE_PURE_114833 static zic_t
+ATTRIBUTE_PURE_114833_HACK
+static zic_t
 oadd(zic_t t1, zic_t t2)
 {
 #ifdef ckd_add
@@ -4046,7 +4054,8 @@ oadd(zic_t t1, zic_t t2)
   time_overflow();
 }
 
-ATTRIBUTE_PURE_114833 static zic_t
+ATTRIBUTE_PURE_114833_HACK
+static zic_t
 tadd(zic_t t1, zic_t t2)
 {
 #ifdef ckd_add

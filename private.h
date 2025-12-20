@@ -642,6 +642,12 @@ typedef unsigned long uintmax_t;
 #else
 # define ATTRIBUTE_PURE_114833 /* empty */
 #endif
+/* GCC_LINT hack to pacify GCC bug 114833 even though the attribute is
+   not strictly correct, as the function might not return whereas pure
+   functions are supposed to return exactly once.  This hack is not
+   known to generate wrong code for tzcode on any platform.
+   Remove this macro and its uses when the bug is fixed in a GCC release.  */
+#define ATTRIBUTE_PURE_114833_HACK ATTRIBUTE_PURE_114833
 
 #if (__STDC_VERSION__ < 199901 && !defined restrict \
      && (PORT_TO_C89 || defined _MSC_VER))

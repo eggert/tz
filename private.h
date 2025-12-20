@@ -619,11 +619,11 @@ typedef unsigned long uintmax_t;
 # define ATTRIBUTE_UNSEQUENCED /* empty */
 #endif
 
-/* GCC attributes that are useful in tzcode.
-   __attribute__((const)) is stricter than [[unsequenced]],
-   so the latter is an adequate substitute in non-GCC C23 platforms.
-   __attribute__((pure)) is stricter than [[reproducible]],
-   so the latter is an adequate substitute in non-GCC C23 platforms.  */
+/* GNU C attributes that are useful in tzcode.
+   Although neither __attribute__((const)) nor __attribute__((pure)) are
+   stricter than their C23 counterparts [[unsequenced]] and [[reproducible]],
+   the C23 attributes happen to work in each tzcode use of ATTRIBUTE_CONST
+   and ATTRIBUTE_PURE.  (This might not work outside of tzcode!)  */
 #if __GNUC__ < 3
 # define ATTRIBUTE_CONST ATTRIBUTE_UNSEQUENCED
 # define ATTRIBUTE_FORMAT(spec) /* empty */

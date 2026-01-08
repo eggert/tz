@@ -2,6 +2,20 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    The "right" TZif files are no longer installed by default.
+
+  Changes to build procedure
+
+    The Makefile no longer by default installs an alternate set
+    of TZif files for system clocks that count leap seconds.
+    Install with 'make REDO=posix_right' to get the old default,
+    which is rarely used in major downstream distributions.
+    If your system clock counts leap seconds (contrary to POSIX),
+    it is better to install with 'make REDO=right_only'.
+    This change does not affect the leapseconds file, which is still
+    installed as before.
+
   Changes to code
 
     zic no longer generates a no-op transition when

@@ -170,7 +170,7 @@ TIME_T_ALTERNATIVES_TAIL = int_least32_t.ck uint_least32_t.ck \
 # applications that are not leap second aware, and is closer to unsmeared
 # "right" time than unsmeared POSIX time is (e.g., 0.5 vs 1.0 s max error).
 
-REDO=		posix_right
+REDO=		posix_only
 
 # Whether to put an "Expires" line in the leapseconds file.
 # Use EXPIRES_LINE=1 to put the line in, 0 to omit it.

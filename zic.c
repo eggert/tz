@@ -3760,7 +3760,8 @@ addtype(zic_t utoff, char const *abbr, bool isdst, bool ttisstd, bool ttisut)
 {
 	register int	i, j;
 
-	if (! (-1 - 2147483647 <= utoff && utoff <= 2147483647)) {
+	/* RFC 9636 section 3.2 specifies this range for utoff.  */
+	if (! (-2147483647 <= utoff && utoff <= 2147483647)) {
 		error(_("UT offset out of range"));
 		exit(EXIT_FAILURE);
 	}

@@ -26,6 +26,8 @@ Unreleased, experimental changes
     zic no longer assumes you can fflush a read-only stream.
     (Problem reported by Christos Zoulas.)
 
+    zic no longer generates UT offsets equal to -2**31, as RFC 9636
+    prohibits them.
 
 Release 2025c - 2025-12-10 14:42:37 -0800
 

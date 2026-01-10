@@ -1,26 +1,38 @@
 # Files intentionally not tracked by Git.
 # This file is in the public domain.
+#
+# Ignore all subdirectories.
+*/
+#
+# Ignore non-directories that are the output of builds,
+# or are backups or nonces unlikely to be added to the repository.
 *.a
 *.asc
+*.bak
 *.ck
-*.ckd/
+*.core
 *.diff
-*.dir/
 *.i
 *.o
 *.orig
+*.out
 *.patch
 *.pdf
 *.ps
 *.rej
 *.s
+*.t
 *.tar
 *.tar.*
 *.txt
 *.tzs
 *.zi
 *~
+.*
+!.gitignore
 ChangeLog
+core
+core.*
 date
 leapseconds
 tzdir.h

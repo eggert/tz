@@ -1109,9 +1109,19 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		for (i = 0; i < sp->typecnt; ++i) {
 			register struct ttinfo *	ttisp;
 			unsigned char isdst, desigidx;
+			int_fast32_t utoff;
 
 			ttisp = &sp->ttis[i];
-			ttisp->tt_utoff = detzcode(p);
+			/* Validate tt_utoff from untrusted TZif input.
+			   RFC 9636 notes tt_utoff is never INT32_MIN (0x80000000),
+			   and in practice it must fit the POSIX-required range.  */
+			if ((unsigned char) p[0] == 0x80
+			    && p[1] == 0 && p[2] == 0 && p[3] == 0)
+			  return EINVAL;
+			utoff = detzcode(p);
+			if (! (TZIF_UTOFF_MIN <= utoff && utoff <= TZIF_UTOFF_MAX))
+			  return EINVAL;
+			ttisp->tt_utoff = utoff;
 			p += 4;
 			isdst = *p++;
 			if (! (isdst < 2))

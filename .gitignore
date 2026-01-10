@@ -29,3 +29,5 @@ version
 version.h
 zdump
 zic
+theory.ck.out
+tz-link.ck.out

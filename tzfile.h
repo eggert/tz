@@ -46,6 +46,11 @@ struct tzhead {
 	char	tzh_charcnt[4];		/* coded number of abbr. chars */
 };
 
+/* Valid range for tt_utoff (seconds to add to UT) in well-formed TZif files.
+   This matches the POSIX-required range [-24:59:59, 25:59:59].  */
+#define TZIF_UTOFF_MIN (-((24 * 60 + 59) * 60 + 59))
+#define TZIF_UTOFF_MAX (((25 * 60 + 59) * 60 + 59))
+
 /*
 ** . . .followed by. . .
 **

@@ -2191,7 +2191,7 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 	** To get (wrong) behavior that's compatible with System V Release 2.0
 	** you'd replace the statement below with
 	**	t += ttisp->tt_utoff;
-	**	timesub(&t, 0L, sp, tmp);
+	**	timesub(&t, 0, sp, tmp);
 	*/
 	result = timesub(&t, ttisp->tt_utoff, sp, tmp);
 	if (result) {

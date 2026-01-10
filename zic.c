@@ -3760,7 +3760,7 @@ addtype(zic_t utoff, char const *abbr, bool isdst, bool ttisstd, bool ttisut)
 {
 	register int	i, j;
 
-	if (! (-1L - 2147483647L <= utoff && utoff <= 2147483647L)) {
+	if (! (-1 - 2147483647 <= utoff && utoff <= 2147483647)) {
 		error(_("UT offset out of range"));
 		exit(EXIT_FAILURE);
 	}

@@ -31,8 +31,8 @@ typedef int_fast64_t	zic_t;
 static zic_t const
   ZIC_MIN = INT_FAST64_MIN,
   ZIC_MAX = INT_FAST64_MAX,
-  ZIC32_MIN = -1 - (zic_t) 0x7fffffff,
-  ZIC32_MAX = 0x7fffffff;
+  ZIC32_MIN = -1 - (zic_t) TWO_31_MINUS_1,
+  ZIC32_MAX = TWO_31_MINUS_1;
 #define SCNdZIC SCNdFAST64
 
 #ifndef ZIC_MAX_ABBR_LEN_WO_WARN
@@ -3761,7 +3761,7 @@ addtype(zic_t utoff, char const *abbr, bool isdst, bool ttisstd, bool ttisut)
 	register int	i, j;
 
 	/* RFC 9636 section 3.2 specifies this range for utoff.  */
-	if (! (-2147483647 <= utoff && utoff <= 2147483647)) {
+	if (! (-TWO_31_MINUS_1 <= utoff && utoff <= TWO_31_MINUS_1)) {
 		error(_("UT offset out of range"));
 		exit(EXIT_FAILURE);
 	}

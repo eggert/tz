@@ -1083,7 +1083,10 @@ char *asctime_r(struct tm const *restrict, char *restrict);
 char *ctime_r(time_t const *, char *);
 #endif /* HAVE_INCOMPATIBLE_CTIME_R */
 
-/* Handy macros that are independent of tzfile implementation.  */
+/* Handy constants that are independent of tzfile implementation.  */
+
+/* 2**31 - 1 as a signed integer, and usable in #if.  */
+#define TWO_31_MINUS_1 2147483647
 
 enum {
   SECSPERMIN = 60,

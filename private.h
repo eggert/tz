@@ -943,7 +943,7 @@ ATTRIBUTE_PURE time_t time2posix_z(timezone_t, time_t);
 
 #define TYPE_BIT(type) (CHAR_BIT * (ptrdiff_t) sizeof(type))
 #define TYPE_SIGNED(type) (((type) -1) < 0)
-#define TWOS_COMPLEMENT(t) ((t) ~ (t) 0 < 0)
+#define TWOS_COMPLEMENT(type) (TYPE_SIGNED (type) && (! ~ (type) -1))
 
 /* Minimum and maximum of two values.  Use lower case to avoid
    naming clashes with standard include files.  */

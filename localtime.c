@@ -496,6 +496,16 @@ typedef ptrdiff_t desigidx_type;
 # error "TZNAME_MAXIMUM too large"
 #endif
 
+/* A type that can represent any 32-bit two's complement integer,
+   i.e., any integer in the range -2**31 .. 2**31 - 1.
+   Ordinarily this is int_fast32_t, but on non-C23 hosts
+   that are not two's complement it is int_fast64_t.  */
+#if INT_FAST32_MIN < -TWO_31_MINUS_1
+typedef int_fast32_t int_fast32_2s;
+#else
+typedef int_fast64_t int_fast32_2s;
+#endif
+
 struct ttinfo {				/* time type information */
 	int_least32_t	tt_utoff;	/* UT offset in seconds */
 	desigidx_type	tt_desigidx;	/* abbreviation list index */
@@ -638,15 +648,14 @@ ttunspecified(struct state const *sp, int i)
   return memcmp(abbr, UNSPEC, sizeof UNSPEC) == 0;
 }
 
-static int_fast32_t
+static int_fast32_2s
 detzcode(const char *const codep)
 {
-	register int_fast32_t	result;
 	register int		i;
-	int_fast32_t one = 1;
-	int_fast32_t halfmaxval = one << (32 - 2);
-	int_fast32_t maxval = halfmaxval - 1 + halfmaxval;
-	int_fast32_t minval = -1 - maxval;
+	int_fast32_2s
+	  maxval = TWO_31_MINUS_1,
+	  minval = -1 - maxval,
+	  result;
 
 	result = codep[0] & 0x7f;
 	for (i = 1; i < 4; ++i)
@@ -654,8 +663,7 @@ detzcode(const char *const codep)
 
 	if (codep[0] & 0x80) {
 	  /* Do two's-complement negation even on non-two's-complement machines.
-	     If the result would be minval - 1, return minval.  */
-	  result -= !TWOS_COMPLEMENT(int_fast32_t) && result != 0;
+	     This cannot overflow, as int_fast32_2s is wide enough.  */
 	  result += minval;
 	}
 	return result;
@@ -1033,14 +1041,15 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	    char version = up->tzhead.tzh_version[0];
 	    bool skip_datablock = stored == 4 && version;
 	    int_fast32_t datablock_size;
-	    int_fast32_t ttisstdcnt = detzcode(up->tzhead.tzh_ttisstdcnt);
-	    int_fast32_t ttisutcnt = detzcode(up->tzhead.tzh_ttisutcnt);
 	    int_fast64_t prevtr = -1;
 	    int_fast32_t prevcorr;
-	    int_fast32_t leapcnt = detzcode(up->tzhead.tzh_leapcnt);
-	    int_fast32_t timecnt = detzcode(up->tzhead.tzh_timecnt);
-	    int_fast32_t typecnt = detzcode(up->tzhead.tzh_typecnt);
-	    int_fast32_t charcnt = detzcode(up->tzhead.tzh_charcnt);
+	    int_fast32_2s
+	      ttisstdcnt = detzcode(up->tzhead.tzh_ttisstdcnt),
+	      ttisutcnt = detzcode(up->tzhead.tzh_ttisutcnt),
+	      leapcnt = detzcode(up->tzhead.tzh_leapcnt),
+	      timecnt = detzcode(up->tzhead.tzh_timecnt),
+	      typecnt = detzcode(up->tzhead.tzh_typecnt),
+	      charcnt = detzcode(up->tzhead.tzh_charcnt);
 	    char const *p = up->buf + tzheadsize;
 	    /* Although tzfile(5) currently requires typecnt to be nonzero,
 	       support future formats that may allow zero typecnt
@@ -1109,9 +1118,16 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		for (i = 0; i < sp->typecnt; ++i) {
 			register struct ttinfo *	ttisp;
 			unsigned char isdst, desigidx;
+			int_fast32_2s utoff = detzcode(p);
+
+			/* Reject a UT offset equal to -2**31, as it might
+			   cause trouble both in this file and in callers.
+			   Also, it violates RFC 9636 section 3.2.  */
+			if (utoff < -TWO_31_MINUS_1)
+			  return EINVAL;
 
 			ttisp = &sp->ttis[i];
-			ttisp->tt_utoff = detzcode(p);
+			ttisp->tt_utoff = utoff;
 			p += 4;
 			isdst = *p++;
 			if (! (isdst < 2))

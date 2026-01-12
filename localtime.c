@@ -507,7 +507,8 @@ typedef int_fast64_t int_fast32_2s;
 #endif
 
 struct ttinfo {				/* time type information */
-	int_least32_t	tt_utoff;	/* UT offset in seconds */
+	int_least32_t	tt_utoff;	/* UT offset in seconds; in the range
+					   -2**31 + 1 .. 2**31 - 1  */
 	desigidx_type	tt_desigidx;	/* abbreviation list index */
 	bool		tt_isdst;	/* used to set tm_isdst */
 	bool		tt_ttisstd;	/* transition is std time */

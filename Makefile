@@ -66,28 +66,6 @@ DATAFORM=		main
 
 LOCALTIME=	Factory
 
-# The POSIXRULES macro controls interpretation of POSIX-like TZ
-# settings like TZ='EET-2EEST' that lack DST transition rules.
-# If POSIXRULES is '-', no template is installed; this is the default.
-# Any other value for POSIXRULES is obsolete and should not be relied on, as:
-# * It does not work correctly in popular implementations such as GNU/Linux.
-# * It does not work even in tzcode, except for historical timestamps
-#   that precede the last explicit transition in the POSIXRULES file.
-#   Hence it typically does not work for current and future timestamps.
-# If, despite the above, you want a template for handling these settings,
-# you can change the line below (after finding the timezone you want in the
-# one of the $(TDATA) source files, or adding it to a source file).
-# Alternatively, if you discover you've got the wrong timezone, you can just
-# 'zic -p -' to remove it, or 'zic -p rightzone' to change it.
-# Use the command
-#	make zonenames
-# to get a list of the values you can use for POSIXRULES.
-
-POSIXRULES=	-
-
-# Also see TZDEFRULESTRING below, which takes effect only
-# if POSIXRULES is '-' or if the template file cannot be accessed.
-
 
 # Installation locations.
 #
@@ -351,9 +329,8 @@ LDLIBS=
 #  -DTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
 #	the default is system-supplied, typically "/usr/lib/locale"
 #  -DTZDEFRULESTRING=\",date/time,date/time\" to default to the specified
-#	DST transitions for proleptic format TZ strings lacking them,
-#	in the usual case where POSIXRULES is '-'.  If not specified,
-#	TZDEFRULESTRING defaults to US rules for future DST transitions.
+#	DST transitions for proleptic format TZ strings lacking them.
+#	If not specified, it defaults to US rules for future DST transitions.
 #	This mishandles some past timestamps, as US DST rules have changed.
 #	It also mishandles settings like TZ='EET-2EEST' for eastern Europe,
 #	as Europe and US DST rules differ.
@@ -726,7 +703,6 @@ install:	all $(DATA) $(REDO) $(MANS)
 			'$(DESTDIR)$(MANDIR)/man3' '$(DESTDIR)$(MANDIR)/man5' \
 			'$(DESTDIR)$(MANDIR)/man8'
 		$(ZIC_INSTALL) -l $(LOCALTIME) \
-			-p $(POSIXRULES) \
 			-t '$(DESTDIR)$(TZDEFAULT)'
 		cp -f $(TABDATA) '$(DESTDIR)$(TZDIR)/.'
 		cp tzselect '$(DESTDIR)$(BINDIR)/.'

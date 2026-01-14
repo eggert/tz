@@ -16,6 +16,10 @@ Unreleased, experimental changes
     This change does not affect the leapseconds file, which is still
     installed as before.
 
+    The Makefile's POSIXRULES option, which was declared obsolete in
+    release 2019b, has been removed.  The Makefile's build procedure
+    thus no longer optionally installs the obsolete posixrules file.
+
   Changes to code
 
     zic no longer generates a no-op transition when

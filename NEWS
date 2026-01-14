@@ -30,6 +30,9 @@ Unreleased, experimental changes
     no longer accepts them, as they can cause trouble in both
     localtime.c and its callers.  RFC 9636 prohibits such offsets.
 
+    zic -p now warns that the -p option is obsolete and likely
+    ineffective.
+
 
 Release 2025c - 2025-12-10 14:42:37 -0800
 

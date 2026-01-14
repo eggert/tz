@@ -1286,6 +1286,9 @@ main(int argc, char **argv)
 			case 'p':
 				if (psxrules)
 				  duplicate_options("-p");
+				if (strcmp(optarg, "-") != 0)
+				  warning(_("-p is obsolete"
+					    " and likely ineffective"));
 				psxrules = optarg;
 				break;
 			case 't':

@@ -446,7 +446,7 @@ static char const *utc = etc_utc + sizeof "Etc/" - 1;
 #endif
 
 /*
-** The DST rules to use if TZ has no rules and we can't load TZDEFRULES.
+** The DST rules to use if TZ has no rules.
 ** Default to US rules as of 2017-05-07.
 ** POSIX does not specify the default DST rules;
 ** for historical reasons, US rules are a common default.
@@ -1617,7 +1617,6 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 	int_fast32_t			stdoffset;
 	int_fast32_t			dstoffset;
 	register char *			cp;
-	register bool			load_ok;
 	ptrdiff_t stdlen, dstlen, charcnt;
 	time_t atlo = TIME_T_MIN, leaplo = TIME_T_MIN;
 
@@ -1643,18 +1642,20 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 	if (basep) {
 	  if (0 < basep->timecnt)
 	    atlo = basep->ats[basep->timecnt - 1];
-	  load_ok = false;
 	  sp->leapcnt = basep->leapcnt;
-	  memcpy(sp->lsis, basep->lsis, sp->leapcnt * sizeof *sp->lsis);
-	} else {
-	  load_ok = tzload(TZDEFRULES, sp, 0) == 0;
-	  if (!load_ok)
-	    sp->leapcnt = 0;	/* So, we're off a little.  */
-	}
-	if (0 < sp->leapcnt)
-	  leaplo = sp->lsis[sp->leapcnt - 1].ls_trans;
+	  if (0 < sp->leapcnt) {
+	    memcpy(sp->lsis, basep->lsis, sp->leapcnt * sizeof *sp->lsis);
+	    leaplo = sp->lsis[sp->leapcnt - 1].ls_trans;
+	  }
+	} else
+	  sp->leapcnt = 0;	/* So, we're off a little.  */
 	sp->goback = sp->goahead = false;
 	if (*name != '\0') {
+		struct rule start, end;
+		int year, yearbeg, yearlim, timecnt;
+		time_t janfirst;
+		int_fast32_t janoffset = 0;
+
 		if (*name == '<') {
 			dstname = ++name;
 			name = getqzname(name, '>');
@@ -1675,194 +1676,102 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 			if (name == NULL)
 			  return false;
 		} else	dstoffset = stdoffset - SECSPERHOUR;
-		if (*name == '\0' && !load_ok)
+
+		if (*name == '\0')
 			name = TZDEFRULESTRING;
-		if (*name == ',' || *name == ';') {
-			struct rule	start;
-			struct rule	end;
-			register int	year;
-			register int	timecnt;
-			time_t		janfirst;
-			int_fast32_t janoffset = 0;
-			int yearbeg, yearlim;
+		if (! (*name == ',' || *name == ';'))
+		  return false;
 
-			++name;
-			if ((name = getrule(name, &start)) == NULL)
-			  return false;
-			if (*name++ != ',')
-			  return false;
-			if ((name = getrule(name, &end)) == NULL)
-			  return false;
-			if (*name != '\0')
-			  return false;
-			sp->typecnt = 2;	/* standard time and DST */
-			/*
-			** Two transitions per year, from EPOCH_YEAR forward.
-			*/
-			init_ttinfo(&sp->ttis[0], -stdoffset, false, 0);
-			init_ttinfo(&sp->ttis[1], -dstoffset, true, stdlen + 1);
-			timecnt = 0;
-			janfirst = 0;
-			yearbeg = EPOCH_YEAR;
+		name = getrule(name + 1, &start);
+		if (!name)
+		  return false;
+		if (*name++ != ',')
+		  return false;
+		name = getrule(name, &end);
+		if (!name || *name)
+		  return false;
+		sp->typecnt = 2;	/* standard time and DST */
+		/*
+		** Two transitions per year, from EPOCH_YEAR forward.
+		*/
+		init_ttinfo(&sp->ttis[0], -stdoffset, false, 0);
+		init_ttinfo(&sp->ttis[1], -dstoffset, true, stdlen + 1);
+		timecnt = 0;
+		janfirst = 0;
+		yearbeg = EPOCH_YEAR;
 
-			do {
-			  int_fast32_t yearsecs
-			    = year_lengths[isleap(yearbeg - 1)] * SECSPERDAY;
-			  time_t janfirst1 = janfirst;
-			  yearbeg--;
-			  if (increment_overflow_time(&janfirst1, -yearsecs)) {
-			    janoffset = -yearsecs;
-			    break;
-			  }
-			  janfirst = janfirst1;
-			} while (atlo < janfirst
-				 && EPOCH_YEAR - YEARSPERREPEAT / 2 < yearbeg);
+		do {
+		  int_fast32_t yearsecs
+		    = year_lengths[isleap(yearbeg - 1)] * SECSPERDAY;
+		  time_t janfirst1 = janfirst;
+		  yearbeg--;
+		  if (increment_overflow_time(&janfirst1, -yearsecs)) {
+		    janoffset = -yearsecs;
+		    break;
+		  }
+		  janfirst = janfirst1;
+		} while (atlo < janfirst
+			 && EPOCH_YEAR - YEARSPERREPEAT / 2 < yearbeg);
 
-			while (true) {
-			  int_fast32_t yearsecs
-			    = year_lengths[isleap(yearbeg)] * SECSPERDAY;
-			  int yearbeg1 = yearbeg;
-			  time_t janfirst1 = janfirst;
-			  if (increment_overflow_time(&janfirst1, yearsecs)
-			      || increment_overflow(&yearbeg1, 1)
-			      || atlo <= janfirst1)
-			    break;
-			  yearbeg = yearbeg1;
-			  janfirst = janfirst1;
-			}
-
-			yearlim = yearbeg;
-			if (increment_overflow(&yearlim, years_of_observations))
-			  yearlim = INT_MAX;
-			for (year = yearbeg; year < yearlim; year++) {
-				int_fast32_t
-				  starttime = transtime(year, &start, stdoffset),
-				  endtime = transtime(year, &end, dstoffset);
-				int_fast32_t
-				  yearsecs = (year_lengths[isleap(year)]
-					      * SECSPERDAY);
-				bool reversed = endtime < starttime;
-				if (reversed) {
-					int_fast32_t swap = starttime;
-					starttime = endtime;
-					endtime = swap;
-				}
-				if (reversed
-				    || (starttime < endtime
-					&& endtime - starttime < yearsecs)) {
-					if (TZ_MAX_TIMES - 2 < timecnt)
-						break;
-					sp->ats[timecnt] = janfirst;
-					if (! increment_overflow_time
-					    (&sp->ats[timecnt],
-					     janoffset + starttime)
-					    && atlo <= sp->ats[timecnt])
-					  sp->types[timecnt++] = !reversed;
-					sp->ats[timecnt] = janfirst;
-					if (! increment_overflow_time
-					    (&sp->ats[timecnt],
-					     janoffset + endtime)
-					    && atlo <= sp->ats[timecnt]) {
-					  sp->types[timecnt++] = reversed;
-					}
-				}
-				if (endtime < leaplo) {
-				  yearlim = year;
-				  if (increment_overflow(&yearlim,
-							 years_of_observations))
-				    yearlim = INT_MAX;
-				}
-				if (increment_overflow_time
-				    (&janfirst, janoffset + yearsecs))
-					break;
-				janoffset = 0;
-			}
-			sp->timecnt = timecnt;
-			if (! timecnt) {
-				sp->ttis[0] = sp->ttis[1];
-				sp->typecnt = 1;	/* Perpetual DST.  */
-			} else if (years_of_observations <= year - yearbeg)
-				sp->goback = sp->goahead = true;
-		} else {
-			register int_fast32_t	theirstdoffset;
-			register int_fast32_t	theirdstoffset;
-			register int_fast32_t	theiroffset;
-			register bool		isdst;
-			register int		i;
-			register int		j;
-
-			if (*name != '\0')
-			  return false;
-			/*
-			** Initial values of theirstdoffset and theirdstoffset.
-			*/
-			theirstdoffset = 0;
-			for (i = 0; i < sp->timecnt; ++i) {
-				j = sp->types[i];
-				if (!sp->ttis[j].tt_isdst) {
-					theirstdoffset =
-						- sp->ttis[j].tt_utoff;
-					break;
-				}
-			}
-			theirdstoffset = 0;
-			for (i = 0; i < sp->timecnt; ++i) {
-				j = sp->types[i];
-				if (sp->ttis[j].tt_isdst) {
-					theirdstoffset =
-						- sp->ttis[j].tt_utoff;
-					break;
-				}
-			}
-			/*
-			** Initially we're assumed to be in standard time.
-			*/
-			isdst = false;
-			/*
-			** Now juggle transition times and types
-			** tracking offsets as you do.
-			*/
-			for (i = 0; i < sp->timecnt; ++i) {
-				j = sp->types[i];
-				sp->types[i] = sp->ttis[j].tt_isdst;
-				if (sp->ttis[j].tt_ttisut) {
-					/* No adjustment to transition time */
-				} else {
-					/*
-					** If daylight saving time is in
-					** effect, and the transition time was
-					** not specified as standard time, add
-					** the daylight saving time offset to
-					** the transition time; otherwise, add
-					** the standard time offset to the
-					** transition time.
-					*/
-					/*
-					** Transitions from DST to DDST
-					** will effectively disappear since
-					** proleptic TZ strings have only one
-					** DST offset.
-					*/
-					if (isdst && !sp->ttis[j].tt_ttisstd) {
-						sp->ats[i] += dstoffset -
-							theirdstoffset;
-					} else {
-						sp->ats[i] += stdoffset -
-							theirstdoffset;
-					}
-				}
-				theiroffset = -sp->ttis[j].tt_utoff;
-				if (sp->ttis[j].tt_isdst)
-					theirdstoffset = theiroffset;
-				else	theirstdoffset = theiroffset;
-			}
-			/*
-			** Finally, fill in ttis.
-			*/
-			init_ttinfo(&sp->ttis[0], -stdoffset, false, 0);
-			init_ttinfo(&sp->ttis[1], -dstoffset, true, stdlen + 1);
-			sp->typecnt = 2;
+		while (true) {
+		  int_fast32_t yearsecs
+		    = year_lengths[isleap(yearbeg)] * SECSPERDAY;
+		  int yearbeg1 = yearbeg;
+		  time_t janfirst1 = janfirst;
+		  if (increment_overflow_time(&janfirst1, yearsecs)
+		      || increment_overflow(&yearbeg1, 1)
+		      || atlo <= janfirst1)
+		    break;
+		  yearbeg = yearbeg1;
+		  janfirst = janfirst1;
 		}
+
+		yearlim = yearbeg;
+		if (increment_overflow(&yearlim, years_of_observations))
+		  yearlim = INT_MAX;
+		for (year = yearbeg; year < yearlim; year++) {
+		  int_fast32_t
+		    starttime = transtime(year, &start, stdoffset),
+		    endtime = transtime(year, &end, dstoffset),
+		    yearsecs = year_lengths[isleap(year)] * SECSPERDAY;
+		  bool reversed = endtime < starttime;
+		  if (reversed) {
+		    int_fast32_t swap = starttime;
+		    starttime = endtime;
+		    endtime = swap;
+		  }
+		  if (reversed
+		      || (starttime < endtime
+			  && endtime - starttime < yearsecs)) {
+		    if (TZ_MAX_TIMES - 2 < timecnt)
+		      break;
+		    sp->ats[timecnt] = janfirst;
+		    if (! increment_overflow_time(&sp->ats[timecnt],
+						  janoffset + starttime)
+			&& atlo <= sp->ats[timecnt])
+		      sp->types[timecnt++] = !reversed;
+		    sp->ats[timecnt] = janfirst;
+		    if (! increment_overflow_time(&sp->ats[timecnt],
+						  janoffset + endtime)
+			&& atlo <= sp->ats[timecnt]) {
+		      sp->types[timecnt++] = reversed;
+		    }
+		  }
+		  if (endtime < leaplo) {
+		    yearlim = year;
+		    if (increment_overflow(&yearlim, years_of_observations))
+		      yearlim = INT_MAX;
+		  }
+		  if (increment_overflow_time(&janfirst, janoffset + yearsecs))
+		    break;
+		  janoffset = 0;
+		}
+		sp->timecnt = timecnt;
+		if (! timecnt) {
+		  sp->ttis[0] = sp->ttis[1];
+		  sp->typecnt = 1;	/* Perpetual DST.  */
+		} else if (years_of_observations <= year - yearbeg)
+		  sp->goback = sp->goahead = true;
 	} else {
 		dstlen = 0;
 		sp->typecnt = 1;		/* only standard time */

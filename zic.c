@@ -164,6 +164,11 @@ static uid_t output_owner = -1;
 # include <stdalign.h>
 #endif
 
+/* The name used for the file implementing the obsolete -p option.  */
+#ifndef TZDEFRULES
+# define TZDEFRULES "posixrules"
+#endif
+
 /* The maximum length of a text line, including the trailing newline.  */
 #ifndef _POSIX2_LINE_MAX
 # define _POSIX2_LINE_MAX 2048

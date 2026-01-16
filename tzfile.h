@@ -17,16 +17,8 @@
 ** Thank you!
 */
 
-/*
-** Information about time zone files.
-*/
-
-#ifndef TZDEFRULES
-# define TZDEFRULES "posixrules"
-#endif /* !defined TZDEFRULES */
-
-
-/* See Internet RFC 9636 for more details about the following format.  */
+/* Information about time zone files.
+   See Internet RFC 9636 for more details about the following format.  */
 
 /*
 ** Each file begins with. . .

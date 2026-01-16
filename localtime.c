@@ -2417,7 +2417,35 @@ increment_overflow(int *ip, int j)
 }
 
 static bool
+increment_overflow_64(int *ip, int_fast64_t j)
+{
+#ifdef ckd_add
+  return ckd_add(ip, *ip, j);
+#else
+  if (j < 0 ? *ip < INT_MIN - j : INT_MAX - j < *ip)
+    return true;
+  *ip += j;
+  return false;
+#endif
+}
+
+static bool
 increment_overflow_time_iinntt(time_t *tp, iinntt j)
+{
+#ifdef ckd_add
+  return ckd_add(tp, *tp, j);
+#else
+  if (j < 0
+      ? (TYPE_SIGNED(time_t) ? *tp < TIME_T_MIN - j : *tp <= -1 - j)
+      : TIME_T_MAX - j < *tp)
+    return true;
+  *tp += j;
+  return false;
+#endif
+}
+
+static bool
+increment_overflow_time_64(time_t *tp, int_fast64_t j)
 {
 #ifdef ckd_add
   return ckd_add(tp, *tp, j);
@@ -2449,6 +2477,15 @@ increment_overflow_time(time_t *tp, int_fast32_t j)
 	*tp += j;
 	return false;
 #endif
+}
+
+/* Return A - B, where both are in the range -2**31 + 1 .. 2**31 - 1.
+   The result cannot overflow.  */
+static int_fast64_t
+utoff_diff (int_fast32_t a, int_fast32_t b)
+{
+  int_fast64_t aa = a;
+  return aa - b;
 }
 
 static int
@@ -2647,8 +2684,18 @@ time2sub(struct tm *const tmp,
 		     It's OK if YOURTM.TM_GMTOFF contains uninitialized data,
 		     since the guess gets checked.  */
 		  time_t altt = t;
-		  int_fast32_t diff = mytm.TM_GMTOFF - yourtm.TM_GMTOFF;
-		  if (!increment_overflow_time(&altt, diff)) {
+		  int_fast64_t offdiff;
+		  bool v;
+# ifdef ckd_sub
+		  v = ckd_sub(&offdiff, mytm.TM_GMTOFF, yourtm.TM_GMTOFF);
+# else
+		  /* A ckd_sub approximation that is good enough here.  */
+		  v = !(-TWO_31_MINUS_1 <= yourm.TM_GMTOFF
+			&& your.TM_GMTOFF <= TWO_31_MINUS_1);
+		  if (!v)
+		    offdiff = utoff_diff(mytm.TM_GMTOFF, yourtm.TM_GMTOFF);
+# endif
+		  if (!v && !increment_overflow_time_64(&altt, offdiff)) {
 		    struct tm alttm;
 		    if (funcp(sp, &altt, offset, &alttm)
 			&& alttm.tm_isdst == mytm.tm_isdst
@@ -2678,8 +2725,12 @@ time2sub(struct tm *const tmp,
 					continue;
 				if (ttunspecified(sp, j))
 				  continue;
-				newt = (t + sp->ttis[j].tt_utoff
-					- sp->ttis[i].tt_utoff);
+				newt = t;
+				if (increment_overflow_time_64
+				    (&newt,
+				     utoff_diff(sp->ttis[j].tt_utoff,
+						sp->ttis[i].tt_utoff)))
+				  continue;
 				if (! funcp(sp, &newt, offset, &mytm))
 					continue;
 				if (tmcomp(&mytm, &yourtm) != 0)
@@ -2778,17 +2829,20 @@ time1(struct tm *const tmp,
 			continue;
 		for (otherind = 0; otherind < nseen; ++otherind) {
 			otheri = types[otherind];
-			if (sp->ttis[otheri].tt_isdst == tmp->tm_isdst)
-				continue;
-			tmp->tm_sec += (sp->ttis[otheri].tt_utoff
-					- sp->ttis[samei].tt_utoff);
-			tmp->tm_isdst = !tmp->tm_isdst;
-			t = time2(tmp, funcp, sp, offset, &okay);
-			if (okay)
-				return t;
-			tmp->tm_sec -= (sp->ttis[otheri].tt_utoff
-					- sp->ttis[samei].tt_utoff);
-			tmp->tm_isdst = !tmp->tm_isdst;
+			if (sp->ttis[otheri].tt_isdst != tmp->tm_isdst) {
+			  int sec = tmp->tm_sec;
+			  if (!increment_overflow_64
+			      (&tmp->tm_sec,
+			       utoff_diff(sp->ttis[otheri].tt_utoff,
+					  sp->ttis[samei].tt_utoff))) {
+			    tmp->tm_isdst = !tmp->tm_isdst;
+			    t = time2(tmp, funcp, sp, offset, &okay);
+			    if (okay)
+			      return t;
+			    tmp->tm_isdst = !tmp->tm_isdst;
+			  }
+			  tmp->tm_sec = sec;
+			}
 		}
 	}
 	return WRONG;

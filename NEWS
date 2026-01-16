@@ -30,6 +30,10 @@ Unreleased, experimental changes
     obsolete in release 2019b, and fixes some undefined behavior.
     (Undefined behavior reported by GitHub user Naveed8951.)
 
+    Some other undefined behavior, triggered by TZif files containing
+    outlandish but conforming UT offsets, has also been fixed.
+    (Also reported by Naveed8951.)
+
     zic no longer generates a no-op transition when
     simultaneous Rule and Zone changes cancel each other out.
     This occurs in tzdata only in Asia/Tbilisi on 1997-03-30.

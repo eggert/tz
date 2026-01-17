@@ -52,6 +52,10 @@ struct stat { char st_ctime, st_dev, st_ino; };
 # define THREAD_TM_MULTI 0
 #endif
 
+#ifndef USE_TIMEX_T
+# define USE_TIMEX_T false
+#endif
+
 #if THREAD_SAFE
 # include <pthread.h>
 
@@ -88,6 +92,10 @@ extern int __isthreaded;
 #   endif
 #  endif
 # endif
+#endif
+
+#if !defined TM_GMTOFF || !USE_TIMEX_T
+# if THREAD_SAFE
 
 /* True if the current process might be multi-threaded,
    false if it is definitely single-threaded.
@@ -98,24 +106,25 @@ extern int __isthreaded;
 static bool
 is_threaded(void)
 {
-# if THREAD_PREFER_SINGLE && HAVE___ISTHREADED
+#  if THREAD_PREFER_SINGLE && HAVE___ISTHREADED
   return !!__isthreaded;
-# elif THREAD_PREFER_SINGLE && HAVE_SYS_SINGLE_THREADED_H
+#  elif THREAD_PREFER_SINGLE && HAVE_SYS_SINGLE_THREADED_H
   return !__libc_single_threaded;
-# else
+#  else
   return true;
-# endif
+#  endif
 }
 
-# if THREAD_RWLOCK
+#  if THREAD_RWLOCK
 static pthread_rwlock_t locallock = PTHREAD_RWLOCK_INITIALIZER;
 static int dolock(void) { return pthread_rwlock_rdlock(&locallock); }
 static void dounlock(void) { pthread_rwlock_unlock(&locallock); }
-# else
+#  else
 static pthread_mutex_t locallock = PTHREAD_MUTEX_INITIALIZER;
 static int dolock(void) { return pthread_mutex_lock(&locallock); }
 static void dounlock(void) { pthread_mutex_unlock(&locallock); }
-# endif
+#  endif
+
 /* Get a lock.  Return 0 on success, a positive errno value on failure,
    negative if known to be single-threaded so no lock is needed.  */
 static int
@@ -131,24 +140,11 @@ unlock(bool threaded)
   if (threaded)
     dounlock();
 }
-#else
+# else
 static int lock(void) { return -1; }
 static void unlock(ATTRIBUTE_MAYBE_UNUSED bool threaded) { }
+# endif
 #endif
-
-/* If THREADED, upgrade a read lock to a write lock.
-   Return 0 on success, a positive errno value otherwise.  */
-static int
-rd2wrlock(ATTRIBUTE_MAYBE_UNUSED bool threaded)
-{
-#if THREAD_RWLOCK
-  if (threaded) {
-    dounlock();
-    return pthread_rwlock_wrlock(&locallock);
-  }
-#endif
-  return 0;
-}
 
 #if THREAD_SAFE
 typedef pthread_once_t once_t;
@@ -186,36 +182,6 @@ tm_multi_key_init(void)
 }
 
 #endif
-
-/* Return TMP, or a thread-specific struct tm * selected by WHICH.  */
-static struct tm *
-tm_multi(struct tm *tmp, ATTRIBUTE_MAYBE_UNUSED enum tm_multi which)
-{
-#if THREAD_SAFE && THREAD_TM_MULTI
-  /* It is OK to check is_threaded() separately here; even if it
-     returns a different value in other places in the caller,
-     this function's behavior is still valid.  */
-  if (is_threaded()) {
-    /* Try to get a thread-specific struct tm *.
-       Fall back on TMP if this fails.  */
-    static pthread_once_t tm_multi_once = PTHREAD_ONCE_INIT;
-    pthread_once(&tm_multi_once, tm_multi_key_init);
-    if (!tm_multi_key_err) {
-      struct tm *p = pthread_getspecific(tm_multi_key);
-      if (!p) {
-	p = malloc(N_TM_MULTI * sizeof *p);
-	if (p && pthread_setspecific(tm_multi_key, p) != 0) {
-	  free(p);
-	  p = NULL;
-	}
-      }
-      if (p)
-	return &p[which];
-    }
-  }
-#endif
-  return tmp;
-}
 
 /* Unless intptr_t is missing, pacify gcc -Wcast-qual on char const * exprs.
    Use this carefully, as the casts disable type checking.
@@ -293,9 +259,6 @@ typedef time_t monotime_t;
    to a static function that returns the redefined time_t.
    It also tells us to define only data and code needed
    to support the offtime or mktime variant.  */
-#ifndef USE_TIMEX_T
-# define USE_TIMEX_T false
-#endif
 #if USE_TIMEX_T
 # undef TIME_T_MIN
 # undef TIME_T_MAX
@@ -1843,6 +1806,20 @@ zoneinit(struct state *sp, char const *name, char tzloadflags)
   }
 }
 
+/* If THREADED, upgrade a read lock to a write lock.
+   Return 0 on success, a positive errno value otherwise.  */
+static int
+rd2wrlock(ATTRIBUTE_MAYBE_UNUSED bool threaded)
+{
+# if THREAD_RWLOCK
+  if (threaded) {
+    dounlock();
+    return pthread_rwlock_wrlock(&locallock);
+  }
+# endif
+  return 0;
+}
+
 /* Like tzset(), but in a critical section.
    If THREADED && THREAD_RWLOCK the caller has a read lock,
    and this function might upgrade it to a write lock.
@@ -2133,6 +2110,36 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 #endif
 
 #if !USE_TIMEX_T
+
+/* Return TMP, or a thread-specific struct tm * selected by WHICH.  */
+static struct tm *
+tm_multi(struct tm *tmp, ATTRIBUTE_MAYBE_UNUSED enum tm_multi which)
+{
+# if THREAD_SAFE && THREAD_TM_MULTI
+  /* It is OK to check is_threaded() separately here; even if it
+     returns a different value in other places in the caller,
+     this function's behavior is still valid.  */
+  if (is_threaded()) {
+    /* Try to get a thread-specific struct tm *.
+       Fall back on TMP if this fails.  */
+    static pthread_once_t tm_multi_once = PTHREAD_ONCE_INIT;
+    pthread_once(&tm_multi_once, tm_multi_key_init);
+    if (!tm_multi_key_err) {
+      struct tm *p = pthread_getspecific(tm_multi_key);
+      if (!p) {
+	p = malloc(N_TM_MULTI * sizeof *p);
+	if (p && pthread_setspecific(tm_multi_key, p) != 0) {
+	  free(p);
+	  p = NULL;
+	}
+      }
+      if (p)
+	return &p[which];
+    }
+  }
+# endif
+  return tmp;
+}
 
 # if NETBSD_INSPIRED
 struct tm *

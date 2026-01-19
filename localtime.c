@@ -480,7 +480,7 @@ struct ttinfo {				/* time type information */
 
 struct lsinfo {				/* leap second information */
 	time_t		ls_trans;	/* transition time */
-	int_fast32_t	ls_corr;	/* correction to apply */
+	int_fast32_2s	ls_corr;	/* correction to apply */
 };
 
 /* This abbreviation means local time is unspecified.  */
@@ -529,8 +529,8 @@ struct rule {
 static struct tm *gmtsub(struct state const *, time_t const *, int_fast32_t,
 			 struct tm *);
 static bool increment_overflow(int *, int);
-static bool increment_overflow_time(time_t *, int_fast32_t);
-static int_fast32_t leapcorr(struct state const *, time_t);
+static bool increment_overflow_time(time_t *, int_fast32_2s);
+static int_fast32_2s leapcorr(struct state const *, time_t);
 static struct tm *timesub(time_t const *, int_fast32_t, struct state const *,
 			  struct tm *);
 static bool tzparse(char const *, struct state *, struct state const *);
@@ -1006,7 +1006,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	    bool skip_datablock = stored == 4 && version;
 	    int_fast32_t datablock_size;
 	    int_fast64_t prevtr = -1;
-	    int_fast32_t prevcorr;
+	    int_fast32_2s prevcorr;
 	    int_fast32_2s
 	      ttisstdcnt = detzcode(up->tzhead.tzh_ttisstdcnt),
 	      ttisutcnt = detzcode(up->tzhead.tzh_ttisutcnt),
@@ -1112,7 +1112,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		leapcnt = 0;
 		for (i = 0; i < sp->leapcnt; ++i) {
 		  int_fast64_t tr = stored == 4 ? detzcode(p) : detzcode64(p);
-		  int_fast32_t corr = detzcode(p + stored);
+		  int_fast32_2s corr = detzcode(p + stored);
 		  p += stored + 4;
 
 		  /* Leap seconds cannot occur before the Epoch,
@@ -2277,7 +2277,7 @@ timesub(const time_t *timep, int_fast32_t offset,
 	register const struct lsinfo *	lp;
 	register time_t			tdays;
 	register const int *		ip;
-	register int_fast32_t		corr;
+	int_fast32_2s corr;
 	register int			i;
 	int_fast32_t idays, rem, dayoff, dayrem;
 	time_t y;
@@ -2467,7 +2467,7 @@ increment_overflow_time_64(time_t *tp, int_fast64_t j)
 }
 
 static bool
-increment_overflow_time(time_t *tp, int_fast32_t j)
+increment_overflow_time(time_t *tp, int_fast32_2s j)
 {
 #ifdef ckd_add
 	return ckd_add(tp, *tp, j);
@@ -2945,7 +2945,7 @@ timegm(struct tm *tmp)
 }
 #endif
 
-static int_fast32_t
+static int_fast32_2s
 leapcorr(struct state const *sp, time_t t)
 {
 	register struct lsinfo const *	lp;

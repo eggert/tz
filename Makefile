@@ -380,12 +380,13 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 \
   -Wold-style-definition -Woverlength-strings -Wpointer-arith \
   -Wshadow -Wshift-overflow=2 -Wstrict-overflow \
   -Wstrict-prototypes -Wstringop-overflow=4 \
-  -Wstringop-truncation -Wsuggest-attribute=cold \
+  -Wsuggest-attribute=cold \
   -Wsuggest-attribute=const -Wsuggest-attribute=format \
   -Wsuggest-attribute=malloc \
   -Wsuggest-attribute=noreturn -Wsuggest-attribute=pure \
   -Wtrampolines -Wundef -Wunused-macros -Wuse-after-free=3 \
   -Wvariadic-macros -Wvla -Wwrite-strings \
+  -Wzero-as-null-pointer-constant \
   -Wno-format-nonliteral -Wno-sign-compare -Wno-type-limits
 #
 # If your system has a "GMT offset" field in its "struct tm"s

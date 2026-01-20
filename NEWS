@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     The "right" TZif files are no longer installed by default.
+    Several integer overflow bugs have been fixed.
 
   Changes to build procedure
 
@@ -29,6 +30,14 @@ Unreleased, experimental changes
     posixrules file.  This removes library support that was declared
     obsolete in release 2019b, and fixes some undefined behavior.
     (Undefined behavior reported by GitHub user Naveed8951.)
+
+    The posix2time, posix2time_z, time2posix, and time2posix_z
+    functions now set errno=EOVERFLOW and return ((time_t) -1) if the
+    result is not representable.  Formerly they had undefined behavior
+    that could in practice result in crashing, looping indefinitely,
+    or returning an incorrect result.  As before, these functions are
+    defined only when localtime.c is compiled with the -DSTD_INSPIRED
+    option.
 
     Some other undefined behavior, triggered by TZif files containing
     outlandish but conforming UT offsets or leap second corrections,

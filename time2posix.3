@@ -145,8 +145,29 @@ and
 .B posix2time
 degenerate to the identity function.
 .SH "RETURN VALUE"
-These functions return the resulting timestamp without modifying
+If successful, these functions return the resulting timestamp without modifying
 .BR errno .
+Otherwise, they set
+.B errno
+and return
+.BR "((time_t) -1)" .
+.SH ERRORS
+These functions fail if:
+.TP
+[EOVERFLOW]
+The resulting value cannot be represented.
+This can happen for
+.B posix2time
+if its argument is close to the maximum
+.B time_t
+value.
+In environments where the
+.I TZ
+environment variable names a TZif file,
+overflow can happen for either function for an argument sufficiently
+close to an extreme
+.B time_t
+value if the TZif file specifies unrealistic leap second corrections.
 .SH SEE ALSO
 .BR difftime (3),
 .BR localtime (3),

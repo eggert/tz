@@ -43,6 +43,9 @@ Unreleased, experimental changes
     outlandish but conforming UT offsets or leap second corrections,
     has also been fixed.  (Also reported by Naveed8951.)
 
+    localtime.c no longer rejects TZif files that exactly fit in its
+    internal structures, fixing off-by-one typos introduced in 2014g.
+
     zic no longer generates a no-op transition when
     simultaneous Rule and Zone changes cancel each other out.
     This occurs in tzdata only in Asia/Tbilisi on 1997-03-30.

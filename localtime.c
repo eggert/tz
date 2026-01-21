@@ -1018,12 +1018,12 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	    /* Although tzfile(5) currently requires typecnt to be nonzero,
 	       support future formats that may allow zero typecnt
 	       in files that have a TZ string and no transitions.  */
-	    if (! (0 <= leapcnt && leapcnt < TZ_MAX_LEAPS
-		   && 0 <= typecnt && typecnt < TZ_MAX_TYPES
-		   && 0 <= timecnt && timecnt < TZ_MAX_TIMES
-		   && 0 <= charcnt && charcnt < TZ_MAX_CHARS
-		   && 0 <= ttisstdcnt && ttisstdcnt < TZ_MAX_TYPES
-		   && 0 <= ttisutcnt && ttisutcnt < TZ_MAX_TYPES))
+	    if (! (0 <= leapcnt && leapcnt <= TZ_MAX_LEAPS
+		   && 0 <= typecnt && typecnt <= TZ_MAX_TYPES
+		   && 0 <= timecnt && timecnt <= TZ_MAX_TIMES
+		   && 0 <= charcnt && charcnt <= TZ_MAX_CHARS
+		   && 0 <= ttisstdcnt && ttisstdcnt <= TZ_MAX_TYPES
+		   && 0 <= ttisutcnt && ttisutcnt <= TZ_MAX_TYPES))
 	      return EINVAL;
 	    datablock_size
 		    = (timecnt * stored		/* ats */

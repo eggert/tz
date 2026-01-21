@@ -2697,8 +2697,8 @@ time2sub(struct tm *const tmp,
 		  v = ckd_sub(&offdiff, mytm.TM_GMTOFF, yourtm.TM_GMTOFF);
 # else
 		  /* A ckd_sub approximation that is good enough here.  */
-		  v = !(-TWO_31_MINUS_1 <= yourm.TM_GMTOFF
-			&& your.TM_GMTOFF <= TWO_31_MINUS_1);
+		  v = !(-TWO_31_MINUS_1 <= yourtm.TM_GMTOFF
+			&& yourtm.TM_GMTOFF <= TWO_31_MINUS_1);
 		  if (!v)
 		    offdiff = utoff_diff(mytm.TM_GMTOFF, yourtm.TM_GMTOFF);
 # endif

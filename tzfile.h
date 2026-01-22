@@ -89,7 +89,7 @@ struct tzhead {
 */
 
 #ifndef TZ_MAX_TIMES
-/* This must be at least 242 for Europe/London with 'zic -b fat'.  */
+/* This must be at least 310 for Asia/Hebron with 'zic -b fat'.  */
 # define TZ_MAX_TIMES 2000
 #endif /* !defined TZ_MAX_TIMES */
 

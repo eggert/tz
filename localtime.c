@@ -498,7 +498,9 @@ enum { CHARS_EXTRA = max(sizeof UNSPEC, 2) - 1 };
    are put on the stack and stacks are relatively small on some platforms.
    See tzfile.h for more about the sizes.  */
 struct state {
+#if TZ_RUNTIME_LEAPS
 	int		leapcnt;
+#endif
 	int		timecnt;
 	int		typecnt;
 	int		charcnt;
@@ -509,8 +511,47 @@ struct state {
 	struct ttinfo	ttis[TZ_MAX_TYPES];
 	char chars[max(max(TZ_MAX_CHARS + CHARS_EXTRA, sizeof "UTC"),
 		       2 * (TZNAME_MAXIMUM + 1))];
+#if TZ_RUNTIME_LEAPS
 	struct lsinfo	lsis[TZ_MAX_LEAPS];
+#endif
 };
+
+static int
+leapcount(ATTRIBUTE_MAYBE_UNUSED struct state const *sp)
+{
+#if TZ_RUNTIME_LEAPS
+  return sp->leapcnt;
+#else
+  return 0;
+#endif
+}
+static void
+set_leapcount(ATTRIBUTE_MAYBE_UNUSED struct state *sp,
+	    ATTRIBUTE_MAYBE_UNUSED int leapcnt)
+{
+#if TZ_RUNTIME_LEAPS
+  sp->leapcnt = leapcnt;
+#endif
+}
+static struct lsinfo
+lsinfo(ATTRIBUTE_MAYBE_UNUSED struct state const *sp,
+       ATTRIBUTE_MAYBE_UNUSED int i)
+{
+#if TZ_RUNTIME_LEAPS
+  return sp->lsis[i];
+#else
+  unreachable();
+#endif
+}
+static void
+set_lsinfo(ATTRIBUTE_MAYBE_UNUSED struct state *sp,
+	   ATTRIBUTE_MAYBE_UNUSED int i,
+	   ATTRIBUTE_MAYBE_UNUSED struct lsinfo lsinfo)
+{
+#if TZ_RUNTIME_LEAPS
+  sp->lsis[i] = lsinfo;
+#endif
+}
 
 enum r_type {
   JULIAN_DAY,		/* Jn = Julian day */
@@ -1005,8 +1046,6 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	    char version = up->tzhead.tzh_version[0];
 	    bool skip_datablock = stored == 4 && version;
 	    int_fast32_t datablock_size;
-	    int_fast64_t prevtr = -1;
-	    int_fast32_2s prevcorr;
 	    int_fast32_2s
 	      ttisstdcnt = detzcode(up->tzhead.tzh_ttisstdcnt),
 	      ttisutcnt = detzcode(up->tzhead.tzh_ttisutcnt),
@@ -1018,7 +1057,8 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	    /* Although tzfile(5) currently requires typecnt to be nonzero,
 	       support future formats that may allow zero typecnt
 	       in files that have a TZ string and no transitions.  */
-	    if (! (0 <= leapcnt && leapcnt <= TZ_MAX_LEAPS
+	    if (! (0 <= leapcnt
+		   && leapcnt <= (TZ_RUNTIME_LEAPS ? TZ_MAX_LEAPS : 0)
 		   && 0 <= typecnt && typecnt <= TZ_MAX_TYPES
 		   && 0 <= timecnt && timecnt <= TZ_MAX_TIMES
 		   && 0 <= charcnt && charcnt <= TZ_MAX_CHARS
@@ -1037,12 +1077,13 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	      return EINVAL;
 	    if (skip_datablock)
 		p += datablock_size;
+	    else if (! ((ttisstdcnt == typecnt || ttisstdcnt == 0)
+			&& (ttisutcnt == typecnt || ttisutcnt == 0)))
+	      return EINVAL;
 	    else {
-		if (! ((ttisstdcnt == typecnt || ttisstdcnt == 0)
-		       && (ttisutcnt == typecnt || ttisutcnt == 0)))
-		  return EINVAL;
-
-		sp->leapcnt = leapcnt;
+		int_fast64_t prevtr = -1;
+		int_fast32_2s prevcorr;
+		set_leapcount(sp, leapcnt);
 		sp->timecnt = timecnt;
 		sp->typecnt = typecnt;
 		sp->charcnt = charcnt;
@@ -1110,7 +1151,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 
 		/* Read leap seconds, discarding those out of time_t range.  */
 		leapcnt = 0;
-		for (i = 0; i < sp->leapcnt; ++i) {
+		for (i = 0; i < leapcount(sp); i++) {
 		  int_fast64_t tr = stored == 4 ? detzcode(p) : detzcode64(p);
 		  int_fast32_2s corr = detzcode(p + stored);
 		  p += stored + 4;
@@ -1135,12 +1176,14 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		  prevcorr = corr;
 
 		  if (tr <= TIME_T_MAX) {
-		    sp->lsis[leapcnt].ls_trans = tr;
-		    sp->lsis[leapcnt].ls_corr = corr;
+		    struct lsinfo ls;
+		    ls.ls_trans = tr;
+		    ls.ls_corr = corr;
+		    set_lsinfo(sp, leapcnt, ls);
 		    leapcnt++;
 		  }
 		}
-		sp->leapcnt = leapcnt;
+		set_leapcount(sp, leapcnt);
 
 		for (i = 0; i < sp->typecnt; ++i) {
 			register struct ttinfo *	ttisp;
@@ -1605,13 +1648,15 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 	if (basep) {
 	  if (0 < basep->timecnt)
 	    atlo = basep->ats[basep->timecnt - 1];
-	  sp->leapcnt = basep->leapcnt;
-	  if (0 < sp->leapcnt) {
-	    memcpy(sp->lsis, basep->lsis, sp->leapcnt * sizeof *sp->lsis);
-	    leaplo = sp->lsis[sp->leapcnt - 1].ls_trans;
+	  set_leapcount(sp, leapcount(basep));
+	  if (0 < leapcount(sp)) {
+	    int i;
+	    for (i = 0; i < leapcount(sp); i++)
+	      set_lsinfo(sp, i, lsinfo(basep, i));
+	    leaplo = lsinfo(sp, leapcount(sp) - 1).ls_trans;
 	  }
 	} else
-	  sp->leapcnt = 0;	/* So, we're off a little.  */
+	  set_leapcount(sp, 0);	/* So, we're off a little.  */
 	sp->goback = sp->goahead = false;
 	if (*name != '\0') {
 		struct rule start, end;
@@ -1755,7 +1800,7 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 static void
 gmtload(struct state *const sp)
 {
-	if (tzload(etc_utc, sp, TZLOAD_TZSTRING) != 0)
+	if (!TZ_RUNTIME_LEAPS || tzload(etc_utc, sp, TZLOAD_TZSTRING) != 0)
 	  tzparse("UTC0", sp, NULL);
 }
 
@@ -1787,7 +1832,7 @@ zoneinit(struct state *sp, char const *name, char tzloadflags)
     /*
     ** User wants it fast rather than right.
     */
-    sp->leapcnt = 0;		/* so, we're off a little */
+    set_leapcount(sp, 0);		/* so, we're off a little */
     sp->timecnt = 0;
     sp->typecnt = 0;
     sp->charcnt = 0;
@@ -2274,7 +2319,6 @@ static struct tm *
 timesub(const time_t *timep, int_fast32_t offset,
 	const struct state *sp, struct tm *tmp)
 {
-	register const struct lsinfo *	lp;
 	register time_t			tdays;
 	register const int *		ip;
 	int_fast32_2s corr;
@@ -2288,13 +2332,13 @@ timesub(const time_t *timep, int_fast32_t offset,
 	time_t secs_since_posleap = SECSPERMIN;
 
 	corr = 0;
-	i = (sp == NULL) ? 0 : sp->leapcnt;
+	i = sp ? leapcount(sp) : 0;
 	while (--i >= 0) {
-		lp = &sp->lsis[i];
-		if (*timep >= lp->ls_trans) {
-			corr = lp->ls_corr;
-			if ((i == 0 ? 0 : lp[-1].ls_corr) < corr)
-			  secs_since_posleap = *timep - lp->ls_trans;
+		struct lsinfo ls = lsinfo(sp, i);
+		if (ls.ls_trans <= *timep) {
+			corr = ls.ls_corr;
+			if ((i == 0 ? 0 : lsinfo(sp, i - 1).ls_corr) < corr)
+			  secs_since_posleap = *timep - ls.ls_trans;
 			break;
 		}
 	}
@@ -2948,14 +2992,13 @@ timegm(struct tm *tmp)
 static int_fast32_2s
 leapcorr(struct state const *sp, time_t t)
 {
-	register struct lsinfo const *	lp;
 	register int			i;
 
-	i = sp->leapcnt;
+	i = leapcount(sp);
 	while (--i >= 0) {
-		lp = &sp->lsis[i];
-		if (t >= lp->ls_trans)
-			return lp->ls_corr;
+	  struct lsinfo ls = lsinfo(sp, i);
+	  if (ls.ls_trans <= t)
+	    return ls.ls_corr;
 	}
 	return 0;
 }
@@ -3031,13 +3074,12 @@ NETBSD_INSPIRED_EXTERN time_t
 posix2time_z(struct state *sp, time_t t)
 {
   int i;
-  for (i = sp->leapcnt; 0 <= --i; ) {
-    struct lsinfo *lp = &sp->lsis[i];
-    int_fast32_2s corr = lp->ls_corr;
+  for (i = leapcount(sp); 0 <= --i; ) {
+    struct lsinfo ls = lsinfo(sp, i);
     time_t t_corr = t;
 
-    if (increment_overflow_time(&t_corr, corr)) {
-      if (0 <= corr) {
+    if (increment_overflow_time(&t_corr, ls.ls_corr)) {
+      if (0 <= ls.ls_corr) {
 	/* Overflow near maximum time_t value with positive correction.
 	   This can happen with ordinary TZif files with leap seconds.  */
 	errno = EOVERFLOW;
@@ -3046,13 +3088,10 @@ posix2time_z(struct state *sp, time_t t)
 	/* A negative correction overflowed, so keep going.
 	   This can happen with unrealistic-but-valid TZif files.  */
       }
-    } else {
-      time_t trans = lp->ls_trans;
-      if (trans <= t_corr)
-	return (t_corr
-		- (trans == t_corr
-		   && (i == 0 ? 0 : sp->lsis[i - 1].ls_corr) < corr));
-    }
+    } else if (ls.ls_trans <= t_corr)
+      return (t_corr
+	      - (ls.ls_trans == t_corr
+		 && (i == 0 ? 0 : lsinfo(sp, i - 1).ls_corr) < ls.ls_corr));
   }
   return t;
 }

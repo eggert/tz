@@ -328,6 +328,10 @@ LDLIBS=
 #  -DTZ_DOMAIN=\"foo\" to use "foo" for gettext domain name; default is "tz"
 #  -DTZ_DOMAINDIR=\"/path\" to use "/path" for gettext directory;
 #	the default is system-supplied, typically "/usr/lib/locale"
+#  -DTZ_RUNTIME_LEAPS=0 to disable runtime support for leap seconds.
+#	This conforms to POSIX, shrinks tzcode's attack surface,
+#	and is more efficient.  However, it fails to support Internet
+#	RFC 9636's leap seconds.
 #  -DTZDEFRULESTRING=\",date/time,date/time\" to default to the specified
 #	DST transitions for proleptic format TZ strings lacking them.
 #	If not specified, it defaults to US rules for future DST transitions.

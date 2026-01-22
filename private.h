@@ -193,6 +193,10 @@
 # define ctime_r _incompatible_ctime_r
 #endif /* HAVE_INCOMPATIBLE_CTIME_R */
 
+#ifndef TZ_RUNTIME_LEAPS
+# define TZ_RUNTIME_LEAPS 1
+#endif
+
 /*
 ** Nested includes
 */
@@ -922,11 +926,16 @@ time_t mktime_z(timezone_t restrict, struct tm *restrict);
 timezone_t tzalloc(char const *);
 void tzfree(timezone_t);
 # if STD_INSPIRED
+#  if TZ_RUNTIME_LEAPS
+#   define ATTRIBUTE_POSIX2TIME ATTRIBUTE_PURE
+#  else
+#   define ATTRIBUTE_POSIX2TIME ATTRIBUTE_CONST
+#  endif
 #  if TZ_TIME_T || !defined posix2time_z
-ATTRIBUTE_PURE time_t posix2time_z(timezone_t, time_t);
+ATTRIBUTE_POSIX2TIME time_t posix2time_z(timezone_t, time_t);
 #  endif
 #  if TZ_TIME_T || !defined time2posix_z
-ATTRIBUTE_PURE time_t time2posix_z(timezone_t, time_t);
+ATTRIBUTE_POSIX2TIME time_t time2posix_z(timezone_t, time_t);
 #  endif
 # endif
 #endif

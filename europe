@@ -1041,9 +1041,19 @@ Zone Atlantic/Faroe	-0:27:04 -	LMT	1908 Jan 11 # Tórshavn
 
 # Greenland
 #
-# From Paul Eggert (2004-10-31):
+# From Paul Eggert (2026-01-22):
+# During World War II, Greenland was effectively independent of Denmark and
+# observed daylight saving time.  TIME, volume 37, page 23 (1941-04-21)
+# <https://time.com/archive/6770243/war-peace-greenlands-icy-mountains/> says,
+# "Penfield and West made their way to the U.S.'s most northerly consulate.
+# They were astonished to find that Greenlanders, with almost 24 hours of
+# sunlight a day during the summer, have daylight saving time."
+# As the details are unknown they are omitted from the data for now.
+#
 # During World War II, Germany maintained secret manned weather stations in
 # East Greenland and Franz Josef Land, but we don't know their time zones.
+# Also, they're likely out of scope for the database
+# as we lack resources to track every bit of military activity.
 # My source for this is Wilhelm Dege's book mentioned under Svalbard.
 #
 # From Paul Eggert (2017-12-10):

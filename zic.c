@@ -2986,6 +2986,11 @@ writezone(const char *const name, const char *const string, char version,
 		  continue;
 		}
 
+		if (pass == 2 && noise && 50 < thischarcnt)
+		  warning(_("%s: pre-2026 reference clients mishandle"
+			    " more than 50 bytes of abbreviations"),
+			  name);
+
 		/* Output a LO_TIME transition if needed; see limitrange.
 		   But do not go below the minimum representable value
 		   for this pass.  */

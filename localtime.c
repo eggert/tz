@@ -1227,8 +1227,8 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 			if (tzparse(&up->buf[1], ts, sp)) {
 
 			  /* Attempt to reuse existing abbreviations.
-			     Without this, America/Anchorage would be right on
-			     the edge after 2037 when TZ_MAX_CHARS is 50, as
+			     Without this, America/Anchorage would
+			     consume 50 bytes for abbreviations, as
 			     sp->charcnt equals 40 (for LMT AST AWT APT AHST
 			     AHDT YST AKDT AKST) and ts->charcnt equals 10
 			     (for AKST AKDT).  Reusing means sp->charcnt can

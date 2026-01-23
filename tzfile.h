@@ -95,13 +95,13 @@ struct tzhead {
 
 #ifndef TZ_MAX_TYPES
 /* This must be at least 18 for Europe/Vilnius with 'zic -b fat'.  */
-# define TZ_MAX_TYPES 256 /* Limited by what (unsigned char)'s can hold */
+# define TZ_MAX_TYPES 256 /* Limited to 256 by Internet RFC 9636.  */
 #endif /* !defined TZ_MAX_TYPES */
 
 #ifndef TZ_MAX_CHARS
 /* This must be at least 40 for America/Anchorage.  */
-# define TZ_MAX_CHARS 50	/* Maximum number of abbreviation characters */
-				/* (limited by what unsigned chars can hold) */
+# define TZ_MAX_CHARS 256	/* Maximum number of abbreviation characters */
+				/* (limited to 256 by Internet RFC 9636) */
 #endif /* !defined TZ_MAX_CHARS */
 
 #ifndef TZ_MAX_LEAPS

@@ -89,7 +89,8 @@ struct tzhead {
 */
 
 #ifndef TZ_MAX_TIMES
-/* This must be at least 310 for Asia/Hebron with 'zic -b fat'.  */
+/* The following limit applies to localtime.c; zic has no such limit.
+   The limit must be at least 310 for Asia/Hebron with 'zic -b fat'.  */
 # define TZ_MAX_TIMES 2000
 #endif /* !defined TZ_MAX_TIMES */
 
@@ -105,7 +106,8 @@ struct tzhead {
 #endif /* !defined TZ_MAX_CHARS */
 
 #ifndef TZ_MAX_LEAPS
-/* This must be at least 27 for leap seconds from 1972 through mid-2023.
+/* The following limit applies to localtime.c; zic has no such limit.
+   The limit must be at least 27 for leap seconds from 1972 through mid-2023.
    There's a plan to discontinue leap seconds by 2035.  */
 # define TZ_MAX_LEAPS 50	/* Maximum number of leap second corrections */
 #endif /* !defined TZ_MAX_LEAPS */

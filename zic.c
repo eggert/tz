@@ -298,7 +298,8 @@ static int		charcnt;
 static bool		errors;
 static bool		warnings;
 static int		filenum;
-static int		leapcnt;
+static ptrdiff_t	leapcnt;
+static ptrdiff_t	leap_alloc;
 static bool		leapseen;
 static zic_t		leapminyear;
 static zic_t		leapmaxyear;
@@ -539,9 +540,11 @@ static unsigned char	desigidx[TZ_MAX_TYPES];
 static bool		ttisstds[TZ_MAX_TYPES];
 static bool		ttisuts[TZ_MAX_TYPES];
 static char		chars[TZ_MAX_CHARS];
-static zic_t		trans[TZ_MAX_LEAPS];
-static zic_t		corr[TZ_MAX_LEAPS];
-static char		roll[TZ_MAX_LEAPS];
+static struct {
+  zic_t trans;
+  zic_t corr;
+  char roll;
+} *leap;
 
 /*
 ** Memory allocation.
@@ -2606,7 +2609,7 @@ atcomp(const void *avp, const void *bvp)
 struct timerange {
   int defaulttype;
   ptrdiff_t base, count;
-  int leapbase, leapcount;
+  ptrdiff_t leapbase, leapcount;
   bool leapexpiry;
 };
 
@@ -2626,13 +2629,13 @@ limitrange(struct timerange r, zic_t lo, zic_t hi,
      positive leap second if and only if it has a positive correction.
      This supports common TZif readers that assume that the first leap
      second is positive if and only if its correction is positive.  */
-  while (1 < r.leapcount && trans[r.leapbase + 1] <= lo) {
+  while (1 < r.leapcount && leap[r.leapbase + 1].trans <= lo) {
     r.leapcount--;
     r.leapbase++;
   }
   while (0 < r.leapbase
-	 && ((corr[r.leapbase - 1] < corr[r.leapbase])
-	     != (0 < corr[r.leapbase]))) {
+	 && ((leap[r.leapbase - 1].corr < leap[r.leapbase].corr)
+	     != (0 < leap[r.leapbase].corr))) {
     r.leapcount++;
     r.leapbase--;
   }
@@ -2642,7 +2645,7 @@ limitrange(struct timerange r, zic_t lo, zic_t hi,
   if (hi < max_time) {
     while (0 < r.count && hi + 1 < ats[r.base + r.count - 1])
       r.count--;
-    while (0 < r.leapcount && hi + 1 < trans[r.leapbase + r.leapcount - 1])
+    while (0 < r.leapcount && hi + 1 < leap[r.leapbase + r.leapcount - 1].trans)
       r.leapcount--;
   }
 
@@ -2713,14 +2716,19 @@ writezone(const char *const name, const char *const string, char version,
 		timecnt = toi;
 	}
 
-	if (noise && timecnt > 1200) {
-	  if (timecnt > TZ_MAX_TIMES)
+	if (noise) {
+	  if (1200 < timecnt) {
+	    if (TZ_MAX_TIMES < timecnt)
 		warning(_("reference clients mishandle"
 			  " more than %d transition times"),
 			TZ_MAX_TIMES);
-	  else
+	    else
 		warning(_("pre-2014 clients may mishandle"
 			  " more than 1200 transition times"));
+	  }
+	  if (TZ_MAX_LEAPS < leapcnt)
+	    warning(_("reference clients mishandle more than %d leap seconds"),
+		    TZ_MAX_LEAPS);
 	}
 	/*
 	** Transfer.
@@ -2736,8 +2744,8 @@ writezone(const char *const name, const char *const string, char version,
 	for (i = 0; i < timecnt; ++i) {
 		j = leapcnt;
 		while (--j >= 0)
-			if (ats[i] > trans[j] - corr[j]) {
-				ats[i] = tadd(ats[i], corr[j]);
+			if (leap[j].trans - leap[j].corr < ats[i]) {
+				ats[i] = tadd(ats[i], leap[j].corr);
 				break;
 			}
 	}
@@ -2766,7 +2774,7 @@ writezone(const char *const name, const char *const string, char version,
 	    version = '4';
 	  }
 	  if (0 < r->leapcount
-	      && corr[r->leapbase] != 1 && corr[r->leapbase] != -1) {
+	      && leap[r->leapbase].corr != 1 && leap[r->leapbase].corr != -1) {
 	    if (noise)
 	      warning(_("%s: pre-2021b clients may mishandle"
 			" leap second table truncation"),
@@ -2781,7 +2789,7 @@ writezone(const char *const name, const char *const string, char version,
 
 	for (pass = 1; pass <= 2; ++pass) {
 		register ptrdiff_t thistimei, thistimecnt, thistimelim;
-		register int	thisleapi, thisleapcnt, thisleaplim;
+		register ptrdiff_t thisleapi, thisleapcnt, thisleaplim;
 		struct tzhead tzh;
 		int pretranstype = -1, thisdefaulttype;
 		bool locut, hicut, thisleapexpiry;
@@ -3026,8 +3034,8 @@ writezone(const char *const name, const char *const string, char version,
 		for (i = thisleapi; i < thisleaplim; ++i) {
 			register zic_t	todo;
 
-			if (roll[i]) {
-				if (timecnt == 0 || trans[i] < ats[0]) {
+			if (leap[i].roll) {
+				if (timecnt == 0 || leap[i].trans < ats[0]) {
 					j = 0;
 					while (isdsts[j])
 						if (++j >= typecnt) {
@@ -3037,14 +3045,14 @@ writezone(const char *const name, const char *const string, char version,
 				} else {
 					j = 1;
 					while (j < timecnt &&
-						trans[i] >= ats[j])
+						ats[j] <= leap[i].trans)
 							++j;
 					j = types[j - 1];
 				}
-				todo = tadd(trans[i], -utoffs[j]);
-			} else	todo = trans[i];
+				todo = tadd(leap[i].trans, -utoffs[j]);
+			} else	todo = leap[i].trans;
 			puttzcodepass(todo, fp, pass);
-			puttzcode(corr[i], fp);
+			puttzcode(leap[i].corr, fp);
 		}
 		if (thisleapexpiry) {
 		  /* Append a no-op leap correction indicating when the leap
@@ -3053,7 +3061,7 @@ writezone(const char *const name, const char *const string, char version,
 		     the plan is to amend the RFC to allow this in version 4
 		     TZif files.  */
 		  puttzcodepass(leapexpires, fp, pass);
-		  puttzcode(thisleaplim ? corr[thisleaplim - 1] : 0, fp);
+		  puttzcode(thisleaplim ? leap[thisleaplim - 1].corr : 0, fp);
 		}
 		if (stdcnt != 0)
 		  for (i = old0; i < typecnt; i++)
@@ -3813,32 +3821,27 @@ addtype(zic_t utoff, char const *abbr, bool isdst, bool ttisstd, bool ttisut)
 static void
 leapadd(zic_t t, int correction, int rolling)
 {
-	register int i;
+	register ptrdiff_t i;
 
-	if (TZ_MAX_LEAPS <= leapcnt) {
-		error(_("too many leap seconds"));
-		exit(EXIT_FAILURE);
-	}
 	if (rolling && (lo_time != min_time || hi_time != max_time)) {
 	  error(_("Rolling leap seconds not supported with -r"));
 	  exit(EXIT_FAILURE);
 	}
+	leap = growalloc(leap, sizeof *leap, leapcnt, &leap_alloc);
 	for (i = 0; i < leapcnt; ++i)
-		if (t <= trans[i])
+		if (t <= leap[i].trans)
 			break;
-	memmove(&trans[i + 1], &trans[i], (leapcnt - i) * sizeof *trans);
-	memmove(&corr[i + 1], &corr[i], (leapcnt - i) * sizeof *corr);
-	memmove(&roll[i + 1], &roll[i], (leapcnt - i) * sizeof *roll);
-	trans[i] = t;
-	corr[i] = correction;
-	roll[i] = rolling;
+	memmove(&leap[i + 1], &leap[i], (leapcnt - i) * sizeof *leap);
+	leap[i].trans = t;
+	leap[i].corr = correction;
+	leap[i].roll = rolling;
 	++leapcnt;
 }
 
 static void
 adjleap(void)
 {
-	register int	i;
+	register ptrdiff_t i;
 	register zic_t	last = 0;
 	register zic_t	prevtrans = 0;
 
@@ -3846,18 +3849,18 @@ adjleap(void)
 	** propagate leap seconds forward
 	*/
 	for (i = 0; i < leapcnt; ++i) {
-		if (trans[i] - prevtrans < 28 * SECSPERDAY) {
+		if (leap[i].trans - prevtrans < 28 * SECSPERDAY) {
 		  error(_("Leap seconds too close together"));
 		  exit(EXIT_FAILURE);
 		}
-		prevtrans = trans[i];
-		trans[i] = tadd(trans[i], last);
-		last = corr[i] += last;
+		prevtrans = leap[i].trans;
+		leap[i].trans = tadd(prevtrans, last);
+		last = leap[i].corr += last;
 	}
 
 	if (0 <= leapexpires) {
 	  leapexpires = oadd(leapexpires, last);
-	  if (! (leapcnt == 0 || (trans[leapcnt - 1] < leapexpires))) {
+	  if (! (leapcnt == 0 || (leap[leapcnt - 1].trans < leapexpires))) {
 	    error(_("last Leap time does not precede Expires time"));
 	    exit(EXIT_FAILURE);
 	  }

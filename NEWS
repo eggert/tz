@@ -1,5 +1,15 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to future timestamps
+
+    On 2026-03-09 British Columbia will go from daylight to standard
+    time, without a UT offset change.  That is, its 2026-03-08 spring
+    forward will be its last foreseeable clock change, as it will move
+    to permanent -07 thereafter.  (Thanks to Arthur David Olson.)
+
+
 Release 2026a - 2026-03-01 22:59:49 -0800
 
   Briefly:

@@ -2,6 +2,9 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    British Columbia moves to permanent -07 on 2026-03-09.
+
   Changes to future timestamps
 
     British Columbia's 2026-03-08 spring forward will be its last
@@ -11,6 +14,10 @@ Unreleased, experimental changes
     change to occur on 2026-11-01 at 02:00 instead.  This works around
     a limitation in CLDR v48.1 (2026-01-08).  This temporary hack is
     planned to be removed after CLDR is fixed.
+
+  Changes to code
+
+    zic no longer mishandles a last transition to a new time type.
 
 
 Release 2026a - 2026-03-01 22:59:49 -0800

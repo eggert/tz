@@ -3522,7 +3522,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				startttisut);
 			if (usestart) {
 				addtt(starttime, type);
-				if (useuntil && nonTZlimtime < starttime) {
+				if (nonTZlimtime < starttime) {
 				  nonTZlimtime = starttime;
 				  nonTZlimtype = type;
 				}

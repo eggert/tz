@@ -2021,6 +2021,16 @@ Zone America/Fort_Nelson	-8:10:47 -	LMT	1884
 			-8:00	Vanc	P%sT	1987
 			-8:00	Canada	P%sT	2015 Mar  8  2:00
 			-7:00	-	MST
+# From Chris Walton (2026-03-15):
+# The Regional District of East Kootenay is planning to move to year-round
+# Mountain Standard Time (MST) on November 1, 2026....
+# https://www.rdek.bc.ca/news/entry/rdek_board_moves_to_transition_to_year_round_mountain_standard_time
+Zone America/Cranbrook	-7:43:04 -	LMT	1906 Sep
+			-7:00	Edm	M%sT	1920
+			-7:00	Canada	M%sT	1972
+			-7:00	Edm	M%sT	1974
+			-7:00	Canada	M%sT	2026 Nov  1 02:00
+			-7:00	-	MST
 # For Creston see America/Phoenix.
 
 # Northwest Territories, Nunavut, Yukon

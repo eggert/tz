@@ -3421,7 +3421,9 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 
 	/* This cannot overflow; see FORMAT_LEN_GROWTH_BOUND.  */
 	max_abbr_len = 2 + max_format_len + max_abbrvar_len;
-	max_envvar_len = 2 * max_abbr_len + 5 * 9;
+	/* Extra space for: 2 stringoffset outputs (10 chars each), 2 stringrule
+	   outputs (18 chars each), and 2 commas: 2*10 + 2*18 + 2 = 58.  */
+	max_envvar_len = 2 * max_abbr_len + 58;
 
 	startbuf = xmalloc(max_abbr_len + 1);
 	ab = xmalloc(max_abbr_len + 1);

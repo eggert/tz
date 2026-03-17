@@ -253,6 +253,7 @@ symlink(char const *target, char const *linkname)
    (errno = ENOTSUP, -1)
 #endif
 
+static void	check_for_signal(void);
 static void	addtt(zic_t starttime, int type);
 static int	addtype(zic_t, char const *, bool, bool, bool);
 static void	leapadd(zic_t, int, int);
@@ -704,6 +705,7 @@ eat(int fnum, lineno num)
 ATTRIBUTE_FORMAT((printf, 1, 0)) static void
 verror(const char *const string, va_list args)
 {
+	check_for_signal();
 	/*
 	** Match the format of "cc" to allow sh users to
 	**	zic ... 2>&1 | error -t "*" -v
@@ -1074,6 +1076,7 @@ make_links(void)
 	warning(_("link %s targeting link %s"),
 		links[i].l_linkname, links[i].l_target);
     }
+    check_for_signal();
   }
 }
 
@@ -1391,6 +1394,7 @@ main(int argc, char **argv)
 		for (j = i + 1; j < nzones && zones[j].z_name == NULL; ++j)
 			continue;
 		outzone(&zones[i], j - i);
+		check_for_signal();
 	}
 	make_links();
 	if (lcltime != NULL) {
@@ -1486,9 +1490,11 @@ get_rand_u64(void)
   static int nwords;
   if (!nwords) {
     ssize_t s;
-    do
+    for (;; check_for_signal()) {
       s = getrandom(entropy_buffer, sizeof entropy_buffer, 0);
-    while (s < 0 && errno == EINTR);
+      if (! (s < 0 && errno == EINTR))
+	break;
+    }
 
     nwords = s < 0 ? -1 : s / sizeof *entropy_buffer;
   }
@@ -1516,7 +1522,7 @@ get_rand_u64(void)
       rmod = INT_MAX < UINT_FAST64_MAX ? 0 : UINT_FAST64_MAX / nrand + 1,
       r = 0, rmax = 0;
 
-    do {
+    for (;; check_for_signal()) {
       uint_fast64_t rmax1 = rmax;
       if (rmod) {
 	/* Avoid signed integer overflow on theoretical platforms
@@ -1527,7 +1533,9 @@ get_rand_u64(void)
       rmax1 = nrand * rmax1 + rand_max;
       r = nrand * r + rand();
       rmax = rmax < rmax1 ? rmax1 : UINT_FAST64_MAX;
-    } while (rmax < UINT_FAST64_MAX);
+      if (UINT_FAST64_MAX <= rmax)
+	break;
+    }
 
     return r;
   }
@@ -1574,9 +1582,11 @@ random_dirent(char const **name, char **namealloc)
     *name = *namealloc = dst;
   }
 
-  do
+  for (;; check_for_signal()) {
     r = get_rand_u64();
-  while (unfair_min <= r);
+    if (r < unfair_min)
+      break;
+  }
 
   for (i = 0; i < suffixlen; i++) {
     dst[dirlen + prefixlen + i] = alphabet[r % alphabetlen];
@@ -1611,7 +1621,7 @@ open_outfile(char const **outname, char **tempname)
   if (!*tempname)
     random_dirent(outname, tempname);
 
-  while (true) {
+  for (;; check_for_signal()) {
     int oflags = O_WRONLY | O_BINARY | O_CREAT | O_EXCL;
     int fd = open(*outname, oflags, creat_perms);
     int err;
@@ -1725,8 +1735,6 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 	char const *outname = linkname;
 	int targetissym = -2, linknameissym = -2;
 
-	check_for_signal();
-
 	if (strcmp(target, "-") == 0) {
 	  if (remove(linkname) == 0 || errno == ENOENT || errno == ENOTDIR)
 	    return;
@@ -1739,7 +1747,7 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 	  }
 	}
 
-	while (true) {
+	for (;; check_for_signal()) {
 	  if (linkat(AT_FDCWD, target, AT_FDCWD, outname, AT_SYMLINK_FOLLOW)
 	      == 0) {
 	    link_errno = 0;
@@ -1791,7 +1799,7 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 	  int symlink_errno = -1;
 
 	  if (contents) {
-	    while (true) {
+	    for (;; check_for_signal()) {
 	      if (symlink(contents, outname) == 0) {
 		symlink_errno = 0;
 		break;
@@ -1822,7 +1830,7 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 	      exit(EXIT_FAILURE);
 	    }
 	    tp = open_outfile(&outname, &tempname);
-	    while ((c = getc(fp)) != EOF)
+	    for (; (c = getc(fp)) != EOF; check_for_signal())
 	      putc(c, tp);
 	    close_file(tp, directory, linkname, tempname);
 	    close_file(fp, directory, target, NULL);
@@ -1946,7 +1954,7 @@ static bool
 inputline(FILE *fp, char *buf, ptrdiff_t bufsize)
 {
   ptrdiff_t linelen = 0, ch;
-  while ((ch = getc(fp)) != '\n') {
+  for (; (ch = getc(fp)) != '\n'; check_for_signal()) {
     if (ch < 0) {
       if (ferror(fp)) {
 	error(_("input error"));
@@ -2033,6 +2041,7 @@ infile(int fnum, char const *name)
 				default: unreachable();
 			}
 		}
+		check_for_signal();
 	}
 	close_file(fp, NULL, filename(fnum), NULL);
 	if (wantcont)

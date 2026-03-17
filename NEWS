@@ -28,6 +28,8 @@ Unreleased, experimental changes
     which can occur with adversarial input.  (Thanks to GitHub
     user rootvector2.)
 
+    zic now checks for signals more often.
+
 
 Release 2026a - 2026-03-01 22:59:49 -0800
 

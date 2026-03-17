@@ -23,6 +23,11 @@ Unreleased, experimental changes
 
     zic no longer mishandles a last transition to a new time type.
 
+    zic no longer overflows a buffer when generating a TZ string like
+    "PST-167:59:58PDT-167:59:59,M11.5.6/-167:59:59,M12.5.6/-167:59:59",
+    which can occur with adversarial input.  (Thanks to GitHub
+    user rootvector2.)
+
 
 Release 2026a - 2026-03-01 22:59:49 -0800
 

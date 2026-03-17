@@ -3416,12 +3416,16 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 	int nonTZlimtype = -1;
 	zic_t max_year0;
 	int defaulttype = -1;
+	int max_stringoffset_len = sizeof "-167:59:59" - 1;
+	int max_comma_stringrule_len = (sizeof ",M12.5.6/" - 1
+					+ max_stringoffset_len);
 
 	check_for_signal();
 
 	/* This cannot overflow; see FORMAT_LEN_GROWTH_BOUND.  */
 	max_abbr_len = 2 + max_format_len + max_abbrvar_len;
-	max_envvar_len = 2 * max_abbr_len + 5 * 9;
+	max_envvar_len = 2 * (max_abbr_len + max_stringoffset_len
+			      + max_comma_stringrule_len);
 
 	startbuf = xmalloc(max_abbr_len + 1);
 	ab = xmalloc(max_abbr_len + 1);

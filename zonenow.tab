@@ -64,9 +64,6 @@ XX	+4916-12307	America/Vancouver	MST - BC (most areas)
 # -07 - MST
 XX	+332654-1120424	America/Phoenix	Mountain Standard (MST) - Arizona; western Mexico; Yukon
 #
-# -07/-06 - MST/MDT (North America DST) until 2026-11-01 02:00; then MST
-XX	+4931-11546	America/Cranbrook	MST - BC (E Kootenay)
-#
 # -07/-06 - MST/MDT (North America DST)
 XX	+394421-1045903	America/Denver	Mountain (MST/MDT) - US & Canada; Mexico near US border
 #

@@ -15,10 +15,6 @@ Unreleased, experimental changes
     a limitation in CLDR v48.1 (2026-01-08).  This temporary hack is
     planned to be removed after CLDR is fixed.
 
-    The new zone America/Cranbrook is for East Kootenay, BC, which
-    moves from MST/MDT to year-round MST on 2026-11-01 at 02:00.
-    (Thanks to Chris Walton.)
-
   Changes to code
 
     zic no longer mishandles a last transition to a new time type.

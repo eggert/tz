@@ -3,16 +3,16 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
-    British Columbia moves to permanent -07 on 2026-03-09.
+    British Columbia moved to permanent -07 on 2026-03-09.
 
   Changes to future timestamps
 
-    British Columbia's 2026-03-08 spring forward will be its last
-    foreseeable clock change, as it moves to permanent -07 thereafter.
+    British Columbia’s 2026-03-08 spring forward was its last
+    foreseeable clock change, as it moved to permanent -07 thereafter.
     (Thanks to Arthur David Olson.)  Although the change to permanent
-    -07 legally takes place on 2026-03-09, temporarily model the
-    change to occur on 2026-11-01 at 02:00 instead.  This works around
-    a limitation in CLDR v48.1 (2026-01-08).  This temporary hack is
+    -07 legally took place on 2026-03-09, temporarily model the change
+    to occur on 2026-11-01 at 02:00 instead.  This works around a
+    limitation in CLDR v48.1 (2026-01-08).  This temporary hack is
     planned to be removed after CLDR is fixed.
 
   Changes to code
@@ -31,7 +31,7 @@ Release 2026a - 2026-03-01 22:59:49 -0800
 
   Briefly:
     Moldova has used EU transition times since 2022.
-    The "right" TZif files are no longer installed by default.
+    The “right” TZif files are no longer installed by default.
     -DTZ_RUNTIME_LEAPS=0 disables runtime support for leap seconds.
     TZif files are no longer limited to 50 bytes of abbreviations.
     zic is no longer limited to 50 leap seconds.
@@ -52,23 +52,23 @@ Release 2026a - 2026-03-01 22:59:49 -0800
 
     The Makefile no longer by default installs an alternate set
     of TZif files for system clocks that count leap seconds.
-    Install with 'make REDO=posix_right' to get the old default,
+    Install with ‘make REDO=posix_right’ to get the old default,
     which is rarely used in major downstream distributions.
     If your system clock counts leap seconds (contrary to POSIX),
-    it is better to install with 'make REDO=right_only'.
+    it is better to install with ‘make REDO=right_only’.
     This change does not affect the leapseconds file, which is still
     installed as before.
 
-    The Makefile's POSIXRULES option, which was declared obsolete in
-    release 2019b, has been removed.  The Makefile's build procedure
+    The Makefile’s POSIXRULES option, which was declared obsolete in
+    release 2019b, has been removed.  The Makefile’s build procedure
     thus no longer optionally installs the obsolete posixrules file.
 
   Changes to code
 
     Compiling with the new option -DTZ_RUNTIME_LEAPS=0 disables
     runtime support for leap seconds.  Although this conforms to
-    POSIX, shrinks tzcode's attack surface, and is more efficient,
-    it fails to support Internet RFC 9636's leap seconds.
+    POSIX, shrinks tzcode’s attack surface, and is more efficient,
+    it fails to support Internet RFC 9636’s leap seconds.
 
     zic now can generate, and localtime.c can now use, TZif files that
     hold up to 256 bytes of abbreviations, counting trailing NULs.
@@ -78,7 +78,7 @@ Release 2026a - 2026-03-01 22:59:49 -0800
 
     zic -L can now generate TZif files with more than 50 leap seconds.
     This helps test TZif readers not limited to 50 leap seconds, as
-    tzcode's localtime.c is; it has little immediate need for
+    tzcode’s localtime.c is; it has little immediate need for
     practical timekeeping as there have been only 27 leap seconds and
     possibly there will be no more, due to planned changes to UTC.
     zic -v warns if its output exceeds the old 50-second limit.

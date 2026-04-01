@@ -3182,11 +3182,11 @@ stringoffset(char *result, zic_t offset)
 	offset /= SECSPERMIN;
 	minutes = offset % MINSPERHOUR;
 	offset /= MINSPERHOUR;
-	hours = offset;
-	if (hours >= HOURSPERDAY * DAYSPERWEEK) {
+	if (offset >= HOURSPERDAY * DAYSPERWEEK) {
 		result[0] = '\0';
 		return 0;
 	}
+	hours = offset;
 	len += sprintf(result + len, "%d", hours);
 	if (minutes != 0 || seconds != 0) {
 		len += sprintf(result + len, ":%02d", minutes);

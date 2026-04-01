@@ -21,8 +21,11 @@ Unreleased, experimental changes
 
     zic no longer overflows a buffer when generating a TZ string like
     "PST-167:59:58PDT-167:59:59,M11.5.6/-167:59:59,M12.5.6/-167:59:59",
-    which can occur with adversarial input.  (Thanks to GitHub
-    user rootvector2.)
+    which can occur with adversarial input.  (Thanks to Naveed Khan.)
+
+    zic no longer overflows an int when processing input like ‘Zone
+    Ouch 2147483648:00:00 - LMT’.  The int overflow can lead to buffer
+    overflow in adversarial cases.  (Thanks to Naveed Khan.)
 
     zic now checks for signals more often.
 

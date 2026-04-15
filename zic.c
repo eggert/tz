@@ -253,12 +253,13 @@ symlink(char const *target, char const *linkname)
    (errno = ENOTSUP, -1)
 #endif
 
-static void	check_for_signal(void);
+static int	addabbr(char[TZ_MAX_CHARS], int *, char const *);
 static void	addtt(zic_t starttime, int type);
 static int	addtype(zic_t, char const *, bool, bool, bool);
-static void	leapadd(zic_t, int, int);
 static void	adjleap(void);
 static void	associate(void);
+static void	checkabbr(char const *);
+static void	check_for_signal(void);
 static void	dolink(const char *, const char *, bool);
 static int	getfields(char *, char **, int);
 static zic_t	gethms(const char * string, const char * errstring);
@@ -271,11 +272,11 @@ static void	inrule(char ** fields, int nfields);
 static bool	inzcont(char ** fields, int nfields);
 static bool	inzone(char ** fields, int nfields);
 static bool	inzsub(char **, int, bool);
-static int	itssymlink(char const *, int *);
 static bool	is_alpha(char a);
+static int	itssymlink(char const *, int *);
+static void	leapadd(zic_t, int, int);
 static char	lowerit(char);
 static void	mkdirs(char const *, bool);
-static void	newabbr(const char * abbr);
 static zic_t	oadd(zic_t t1, zic_t t2);
 static zic_t	omul(zic_t, zic_t);
 static void	outzone(const struct zone * zp, ptrdiff_t ntzones);
@@ -2936,30 +2937,27 @@ writezone(const char *const name, const char *const string, char version,
 			    : i == thisdefaulttype ? old0 : i]
 		      = thistypecnt++;
 
-		for (i = 0; i < sizeof indmap / sizeof indmap[0]; ++i)
-			indmap[i] = -1;
 		thischarcnt = stdcnt = utcnt = 0;
 		for (i = old0; i < typecnt; i++) {
-			register char *	thisabbr;
-
 			if (omittype[i])
 				continue;
 			if (ttisstds[i])
 			  stdcnt = thistypecnt;
 			if (ttisuts[i])
 			  utcnt = thistypecnt;
-			if (indmap[desigidx[i]] >= 0)
-				continue;
-			thisabbr = &chars[desigidx[i]];
-			for (j = 0; j < thischarcnt; ++j)
-				if (strcmp(&thischars[j], thisabbr) == 0)
-					break;
-			if (j == thischarcnt) {
-				strcpy(&thischars[thischarcnt], thisabbr);
-				thischarcnt += strlen(thisabbr) + 1;
-			}
-			indmap[desigidx[i]] = j;
+			addabbr(thischars, &thischarcnt, &chars[desigidx[i]]);
 		}
+
+		/* Now that all abbrevs have been added to THISCHARS,
+		   it is safe to set INDMAP without worrying about
+		   whether the abbrevs might move later.  */
+		for (i = 0; i < TZ_MAX_CHARS; i++)
+		  indmap[i] = -1;
+		for (i = old0; i < typecnt; i++)
+		  if (!omittype[i] && indmap[desigidx[i]] < 0)
+		    indmap[desigidx[i]] = addabbr(thischars, &thischarcnt,
+						  &chars[desigidx[i]]);
+
 		if (pass == 1 && !want_bloat()) {
 		  hicut = thisleapexpiry = false;
 		  pretranstype = -1;
@@ -3782,6 +3780,7 @@ static int
 addtype(zic_t utoff, char const *abbr, bool isdst, bool ttisstd, bool ttisut)
 {
 	register int	i, j;
+	int charcnt0;
 
 	/* RFC 9636 section 3.2 specifies this range for utoff.  */
 	if (! (-TWO_31_MINUS_1 <= utoff && utoff <= TWO_31_MINUS_1)) {
@@ -3791,12 +3790,18 @@ addtype(zic_t utoff, char const *abbr, bool isdst, bool ttisstd, bool ttisut)
 	if (!want_bloat())
 	  ttisstd = ttisut = false;
 
-	for (j = 0; j < charcnt; ++j)
-		if (strcmp(&chars[j], abbr) == 0)
-			break;
-	if (j == charcnt)
-		newabbr(abbr);
-	else {
+	checkabbr(abbr);
+
+	charcnt0 = charcnt;
+	j = addabbr(chars, &charcnt, abbr);
+	if (charcnt0 < charcnt) {
+	  /* If an abbreviation was inserted, increment indexes no
+	     earlier than the insert by the size of the insertion,
+	     so that they continue to point to the same contents.  */
+	  for (i = 0; i < typecnt; i++)
+	    if (j <= desigidx[i])
+	      desigidx[i] += charcnt - charcnt0;
+	} else {
 	  /* If there's already an entry, return its index.  */
 	  for (i = 0; i < typecnt; i++)
 	    if (utoff == utoffs[i] && isdst == isdsts[i] && j == desigidx[i]
@@ -4181,10 +4186,8 @@ will not work with pre-2004 versions of zic"));
 }
 
 static void
-newabbr(const char *string)
+checkabbr(char const *string)
 {
-	register int	i;
-
 	if (strcmp(string, GRANDPARENTED) != 0) {
 		register const char *	cp;
 		const char *		mp;
@@ -4203,13 +4206,50 @@ mp = _("time zone abbreviation differs from POSIX standard");
 		if (mp != NULL)
 			warning("%s (%s)", mp, string);
 	}
-	i = strnlen(string, TZ_MAX_CHARS - charcnt) + 1;
-	if (charcnt + i > TZ_MAX_CHARS) {
-		error(_("too many, or too long, time zone abbreviations"));
-		exit(EXIT_FAILURE);
-	}
-	strcpy(&chars[charcnt], string);
-	charcnt += i;
+}
+
+/* Put into CHS, which currently contains *PNCHS bytes containing
+   NUL-terminated abbreviations none of which are suffixes of another,
+   the abbreviation ABBR including its trailing NUL.
+   If ABBR does not already appear in CHS,
+   possibly as a suffix of an existing abbreviation,
+   add ABBR to CHS, remove from CHS any abbreviation
+   that is a suffix of ABBR, and increment *PNCHS accordingly.
+   Return the index of ABBR after any modifications to CHS are made.
+
+   If all abbreviations have already been added, this function
+   lets the caller look up the index of an existing abbreviation.  */
+static int
+addabbr(char chs[TZ_MAX_CHARS], int *pnchs, char const *abbr)
+{
+  int nchs = *pnchs;
+  int alen = strlen(abbr), nchs_incr = alen + 1;
+  int i;
+  for (i = 0; i < nchs; ) {
+    int clen = strlen(&chs[i]);
+    if (alen <= clen) {
+      /* If ABBR is a suffix of an abbreviation in CHS,
+	 return the index of ABBR in CHS.  */
+      int isuff = i + (clen - alen);
+      if (memcmp(&chs[isuff], abbr, alen) == 0)
+	return isuff;
+    } else if (memcmp(&chs[i], &abbr[alen - clen], clen) == 0) {
+      /* An abbreviation in CHS is a substring of ABBR.
+	 Replace it with ABBR, instead of the more-common
+	 actions of appending ABBR or doing nothing.  */
+      nchs_incr = alen - clen;
+      break;
+    }
+    i += clen + 1;
+  }
+  if (TZ_MAX_CHARS < nchs + nchs_incr) {
+    error(_("too many, or too long, time zone abbreviations"));
+    exit(EXIT_FAILURE);
+  }
+  memmove(&chs[i + nchs_incr], &chs[i], nchs - i);
+  memcpy(&chs[i], abbr, nchs_incr);
+  *pnchs = nchs + nchs_incr;
+  return i;
 }
 
 /* Ensure that the directories of ARGNAME exist, by making any missing

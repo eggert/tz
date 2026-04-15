@@ -23,6 +23,12 @@ Unreleased, experimental changes
     "PST-167:59:58PDT-167:59:59,M11.5.6/-167:59:59,M12.5.6/-167:59:59",
     which can occur with adversarial input.  (Thanks to Naveed Khan.)
 
+    zic no longer generates a longer TZif file than necessary when
+    an earlier time zone abbreviation is a suffix of a later one.
+    As a nice side effect, zic no longer overflows a buffer when given
+    a long series of abbreviations, each a suffix of the next.
+    (Buffer overflow reported by Arthur Chan.)
+
     zic no longer overflows an int when processing input like ‘Zone
     Ouch 2147483648:00:00 - LMT’.  The int overflow can lead to buffer
     overflow in adversarial cases.  (Thanks to Naveed Khan.)

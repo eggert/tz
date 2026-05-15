@@ -1863,6 +1863,22 @@ Zone America/Winnipeg	-6:28:36 -	LMT	1887 Jul 16
 # long and rather painful to read.
 # http://www.qp.gov.sk.ca/documents/English/Statutes/Statutes/T14.pdf
 
+# From Heitor David Pinto (2026-05-14):
+# In Saskatchewan, a bill was passed to replace the Time Act. It sets UTC-6 all
+# year in the whole province, including Lloydminster, but allows the government
+# to issue regulations specifying a different time in localities that request
+# so:
+# https://docs.legassembly.sk.ca/legdocs/Bills/30L2S/Bill30-58.pdf
+# The bill ... received royal assent today.
+# From Tim Parenti (2026-05-14):
+# In light of Alberta joining Saskatchewan on year-round -06, this simplifies
+# the prior Act's framework for the many local exceptions to year-round -06 in
+# border areas, by extending province-wide the notion of "time option areas"
+# which can be prescribed by regulation "if it is in the provincial interest"
+# for those areas to observe either "UTC-5, UTC-6 or UTC-7 for all or part of
+# the year" on at least 30 days' notice.
+# The new Act comes into force by order of the Lieutenant Governor in Council.
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Regina	1918	only	-	Apr	14	2:00	1:00	D
 Rule	Regina	1918	only	-	Oct	27	2:00	0	S
@@ -2360,6 +2376,14 @@ Zone America/Fort_Nelson	-8:10:47 -	LMT	1884
 # tzdb uses the obsolete YST abbreviation for standard time in Yukon through
 # about 1970, and uses PST for standard time in Yukon since then.  Consistent
 # with that, use MST for -07, the new standard time in Yukon effective Nov. 1.
+
+# From Tim Parenti (2026-04-21):
+# "[Northwest Territories] Premier R.J. Simpson announced Monday that the
+# territory will move to end seasonal time changes and will adopt a year-round
+# time standard instead. ... Simpson has previously said the territory wouldn't
+# end seasonal time changes until Alberta does."
+# https://www.cbc.ca/news/canada/north/nwt-ends-daylight-saving-9.7170964
+# At time of writing, this proposed change has not yet been legislated.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	NT_YK	1918	only	-	Apr	14	2:00	1:00	D

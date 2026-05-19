@@ -1071,12 +1071,16 @@ time_t timeoff(struct tm *, long);
 ** The default is to use gettext if available, and use MSGID otherwise.
 */
 
-#if HAVE_GETTEXT
-# define _(msgid) gettext(msgid)
-#else /* !HAVE_GETTEXT */
-# define _(msgid) (msgid)
-#endif /* !HAVE_GETTEXT */
-#define N_(msgid) (msgid)
+#ifndef _
+# if HAVE_GETTEXT
+#  define _(msgid) gettext(msgid)
+# else
+#  define _(msgid) (msgid)
+# endif
+#endif
+#ifndef N_
+# define N_(msgid) (msgid)
+#endif
 
 #if !defined TZ_DOMAIN && defined HAVE_GETTEXT
 # define TZ_DOMAIN "tz"

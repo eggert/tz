@@ -2380,10 +2380,17 @@ Zone	Europe/Lisbon	-0:36:45 -	LMT	1884
 # https://oal.ul.pt/hora-legal/legislacao/
 # working backward through references of revocation and abrogation to
 # Decreto-Lei 47233 of 1966-10-01, the last time DST was abolished across the
-# mainland and its adjacent islands.  Because of that reference, it is
-# therefore assumed that DST rules in the islands prior to 1966 were like that
-# of the mainland, though most legislation of the time didn't explicitly
-# specify DST practices for the islands.
+# mainland and its adjacent islands.
+#
+# From Tim Parenti (2026-05-26):
+# Observance of DST on the Azores and Madeira were explicitly covered by
+# mainland legislation in:
+# - Portaria 11767 of 1947-03-28 for 1947,
+# - Portaria 12286 of 1948-02-19 for 1948, and
+# - Decreto-Lei 37048 of 1948-09-07 through its revocation in 1966.
+# (See mainland commentary, above.)  However, most legislation prior to 1947
+# didn't explicitly call out these "adjacent islands", so we assume that DST
+# rules on the islands prior to 1947 were also like that of the mainland.
 Zone Atlantic/Azores	-1:42:40 -	LMT	1884        # Ponta Delgada
 			-1:54:32 -	HMT	1912 Jan  1  2:00u # Horta MT
 # Vanguard section, for zic and other parsers that support %z.

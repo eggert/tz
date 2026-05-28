@@ -383,7 +383,7 @@ GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 \
   -Wmissing-variable-declarations -Wnested-externs \
   -Wnull-dereference \
   -Wold-style-definition -Woverlength-strings -Wpointer-arith \
-  -Wshadow -Wshift-overflow=2 -Wstrict-overflow \
+  -Wshadow -Wshift-overflow=2 \
   -Wstrict-prototypes -Wstringop-overflow=4 \
   -Wsuggest-attribute=cold \
   -Wsuggest-attribute=const -Wsuggest-attribute=format \

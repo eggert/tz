@@ -1,5 +1,14 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to build procedure
+
+    The undocumented ‘typecheck’ Makefile check rule has been removed.
+    It stopped working in 2025a and evidently nobody noticed.
+    The rule was superseded by ‘check_time_t_alternatives’ in 2013d.
+
+
 Release 2026b - 2026-04-22 23:06:43 -0700
 
   Briefly:

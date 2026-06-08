@@ -1406,24 +1406,6 @@ $(ALL_ASC):
 		$(SET_TIMESTAMP) $(@:.t=) $(?:.t=)
 		touch $@
 
-TYPECHECK_CFLAGS = $(CFLAGS) -DTYPECHECK -D__time_t_defined -D_TIME_T
-typecheck: long-long.ck unsigned.ck
-long-long.ck unsigned.ck: $(VERSION_DEPS)
-		rm -fr $@d
-		mkdir $@d
-		ln $(VERSION_DEPS) $@d
-		cd $@d && \
-		  case $@ in \
-		    long-long.*) i="long long";; \
-		    unsigned.* ) i="unsigned" ;; \
-		  esac && \
-		  $(MAKE) \
-		    CFLAGS="$(TYPECHECK_CFLAGS) \"-Dtime_t=$$i\"" \
-		    TOPDIR="$$PWD" \
-		    install
-		$@d/zdump -i -c 1970,1971 Europe/Rome
-		touch $@
-
 zonenames:	tzdata.zi
 		@$(AWK) '/^Z/ { print $$2 } /^L/ { print $$3 }' tzdata.zi
 
@@ -1449,6 +1431,5 @@ zic.o:		private.h tzdir.h tzfile.h version.h
 .PHONY: traditional_signatures traditional_signatures_version
 .PHONY: traditional_tarballs traditional_tarballs_version
 .PHONY: tailored_tarballs tailored_tarballs_version
-.PHONY: typecheck
 .PHONY: zonenames zones
 .PHONY: $(ZDS)

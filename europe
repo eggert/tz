@@ -230,7 +230,7 @@
 # https://www.polyomino.org.uk/british-time/bbc-19410418.png
 # https://www.polyomino.org.uk/british-time/ho-19410421.png
 
-# From Sir Alexander Maxwell in the above-mentioned letter (1941-04-21):
+# From Sir Alexander Maxwell (1941-04-21) in the letter mentioned above:
 # [N]o official designation has as far as I know been adopted for the time
 # which is to be introduced in May....
 # I cannot think of anything better than "Double British Summer Time"
@@ -2015,7 +2015,7 @@ Zone	Europe/Malta	0:58:04 -	LMT	1893 Nov  2 # Valletta
 # From Roman Tudos (2015-07-02):
 # http://lex.justice.md/index.php?action=view&view=doc&lang=1&id=355077
 # From Paul Eggert (2015-07-01):
-# The abovementioned official link to IGO1445-868/2014 states that
+# The above-mentioned official link to IGO1445-868/2014 states that
 # 2014-10-26's fallback transition occurred at 03:00 local time.  Also,
 # https://www.trm.md/en/social/la-30-martie-vom-trece-la-ora-de-vara
 # says the 2014-03-30 spring-forward transition was at 02:00 local time.
@@ -2623,7 +2623,7 @@ Zone Europe/Bucharest	1:44:24 -	LMT	1891 Oct
 # http://astro.uni-altai.ru/~orion/blog/2011/11/novyie-granitsyi-chasovyih-poyasov-v-sssr/
 #
 # From Paul Eggert (2018-07-16):
-# Perhaps someone could translate the above-mentioned link and use it
+# Perhaps someone could translate the link mentioned above, and use it
 # to correct our data for the ex-Soviet Union.  It cites the following:
 # «Поясное время и новые границы часовых поясов» / сост. П.Н. Долгов,
 # отв. ред. Г.Д. Бурдун - М: Комитет стандартов, мер и измерительных

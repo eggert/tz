@@ -1718,7 +1718,7 @@ Release 2020a - 2020-04-23 16:03:47 -0700
     zic -L now supports an Expires line in the leapseconds file, and
     truncates the TZif output accordingly.  This propagates leap
     second expiration information into the TZif file, and avoids the
-    abovementioned localtime.c bug as well as similar bugs present in
+    localtime.c bug mentioned above, as well as similar bugs present in
     many client implementations.  If no Expires line is present, zic
     -L instead truncates the TZif output based on the #expires comment
     present in leapseconds files distributed by tzdb 2018f and later;

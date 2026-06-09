@@ -114,7 +114,7 @@ ZDUMPDIR = $(BINDIR)
 # The "zic" command goes in:
 ZICDIR = $(TOPDIR)/$(USRDIR)/sbin
 
-# Manual pages go in subdirectories of. . .
+# Manual pages go in subdirectories of:
 MANDIR = $(TOPDIR)/$(USRSHAREDIR)/man
 
 # Library functions are put in an archive in LIBDIR.
@@ -145,7 +145,7 @@ TIME_T_ALTERNATIVES_TAIL = int_least32_t.ck uint_least32_t.ck \
 # nonnegative TZ_CHANGE_INTERVAL also assumes this, so to be compatible with
 # these, use "posix_only" or "posix_right".  Use POSIX time on systems with
 # leap smearing; this can work better than unsmeared "right" time with
-# applications that are not leap second aware, and is closer to unsmeared
+# applications that are not aware of leap seconds, and is closer to unsmeared
 # "right" time than unsmeared POSIX time is (e.g., 0.5 vs 1.0 s max error).
 
 REDO=		posix_only
@@ -295,10 +295,10 @@ LDLIBS=
 #  -DTHREAD_SAFE to make localtime.c thread-safe, as POSIX requires;
 #	not needed by the main-program tz code, which is single-threaded.
 #	Append other compiler flags as needed, e.g., -pthread on GNU/Linux.
-#	The following options can also be used:
+#	With -DTHREAD_SAFE the following options can also be used:
 #	  -DTHREAD_PREFER_SINGLE to prefer speed in single-threaded apps,
 #	    at some cost in CPU time and energy in multi-threaded apps.
-#	    The following options can also be used:
+#	    With -DTHREAD_PREFER_SINGLE the following options can also be used:
 #	      -DHAVE___ISTHREADED=1 if there is an extern int __isthreaded
 #		variable, 0 otherwise (default is guessed)
 #	      -DHAVE_SYS_SINGLE_THREADED_H=0 if <sys/single_threaded.h> works,
@@ -534,7 +534,7 @@ ZIC_INSTALL=	$(ZIC) -d '$(DESTDIR)$(TZDIR)'
 # mawk 1.3.3 and Solaris 10 /usr/bin/awk do not work.
 # Also, it is better (though not essential) if 'awk' supports UTF-8,
 # and unfortunately mawk and busybox awk do not support UTF-8.
-# Try AWK=gawk or AWK=nawk if your awk has the abovementioned problems.
+# Try AWK=gawk or AWK=nawk if your awk has the problems mentioned above.
 AWK=		awk
 
 # The full path name of a POSIX-compliant shell, preferably one that supports

@@ -2415,7 +2415,13 @@ Zone America/Fort_Nelson	-8:10:47 -	LMT	1884
 # time standard instead. ... Simpson has previously said the territory wouldn't
 # end seasonal time changes until Alberta does."
 # https://www.cbc.ca/news/canada/north/nwt-ends-daylight-saving-9.7170964
-# At time of writing, this proposed change has not yet been legislated.
+#
+# From Tim Parenti (2026-06-11), per James Bellaire (2026-06-02):
+# Much of NWT is currently represented by America/Edmonton, which alias
+# America/Yellowknife links to.  While Bill 13 (assented to 2021-03-31) would
+# enable NWT's proposed change mirroring Alberta's, at time of writing it has
+# not yet been formally enacted; if it doesn't move forward as expected,
+# America/Yellowknife would need to become its own zone.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	NT_YK	1918	only	-	Apr	14	2:00	1:00	D

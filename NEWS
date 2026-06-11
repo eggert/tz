@@ -2,6 +2,18 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    Alberta moves to permanent -06 on 2026-09-01.
+
+  Changes to future timestamps
+
+    Alberta’s 2026-03-08 spring forward was its last foreseeable clock
+    change, as it moved to permanent -06 thereafter.  (Thanks to
+    Roozbeh Pournader and others.)  Although the change to permanent
+    -06 is legally scheduled for 2026-09-01, temporarily model the
+    change to occur on 2026-11-01 at 02:00, for the same reason we
+    have a similarly temporary hack for British Columbia.
+
   Changes to build procedure
 
     The undocumented ‘typecheck’ Makefile check rule has been removed.

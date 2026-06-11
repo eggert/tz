@@ -1929,6 +1929,30 @@ Zone America/Swift_Current -7:11:20 -	LMT	1905 Sep
 # Boyer JP. Forcing Choice: The Risky Reward of Referendums. Dundum. 2017.
 # ISBN 978-1459739123.
 
+# From Roozbeh Pournader (2026-04-20):
+# https://calgaryherald.com/opinion/columnists/bell-alberta-daylight-time-year-round-premier-danielle-smith
+#
+# From Tim Parenti (2026-04-23):
+# Bill 31, the Red Tape Reduction Statutes Amendment Act, 2026
+# https://docs.assembly.ab.ca/LADDAR_files/docs/bills/bill/legislature_31/session_2/20251023_bill-031.pdf
+# would repeal the Daylight Saving Time Act in the Revised Statues of Alberta
+# 2000 Chapter D-5:
+# https://kings-printer.alberta.ca/documents/Acts/D05.pdf
+# ...and substitutes a new chapter with language that closely parallels the
+# original.  The new title is the Official Time Act and would be numbered
+# Chapter O-5.7.  The bill would establish a standard time of UTC−6 without
+# replacing the language previously used to effectuate DST.
+#
+# From Cary Sweet (2026-06-11):
+# O.C. 170/2026 June 4, 2026 ...
+# https://kings-printer.alberta.ca/Documents/Orders/Orders_in_Council/2026/2026_170.html
+# From Paul Eggert (2026-06-11):
+# Although the change takes effect on 2026-09-01, as a temporary hack pretend
+# that it takes effect 2026-11-01 at 02:00.  As with America/Vancouver,
+# this pretense works around a limitation in CLDR v48.2 (2026-03-17).
+# (Below, this temporary hack is marked “Temporary hack; see above.”)
+# We should be able to remove the temporary hack after CLDR is fixed.
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Edm	1918	1919	-	Apr	Sun>=8	2:00	1:00	D
 Rule	Edm	1918	only	-	Oct	27	2:00	0	S
@@ -1946,7 +1970,11 @@ Rule	Edm	1972	2006	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 			-7:00	Edm	M%sT	1987
-			-7:00	Canada	M%sT
+			-7:00	Canada	M%sT	2026 Sep  1
+			# Temporary hack; see above.
+			-7:00	1:00	MDT	2026 Nov  1  2:00
+			# End of temporary hack.
+			-7:00	-	CST
 
 
 # British Columbia
@@ -2033,6 +2061,10 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # saying, “Pardon the pun, but this is not a time-sensitive issue.”
 # For now, merely mention the potential change in these comments.
 # If it happens it would likely affect clocks starting 2027-03-14 at 02:00.
+# From Tim Parenti (2026-05-14):
+# RDEK has historically been aligned with neighboring Alberta.  With the latter
+# now opting to stay on -06 year-round, if RDEK does not follow, it would
+# require a new zone for the Cranbrook area.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Vanc	1918	only	-	Apr	14	2:00	1:00	D
@@ -2049,7 +2081,7 @@ Zone America/Vancouver	-8:12:28 -	LMT	1884
 			-8:00	Vanc	P%sT	1987
 			-8:00	Canada	P%sT	2026 Mar  9
 			# Temporary hack; see above.
-			-8:00	1:00	PDT	2026 Nov  1 02:00
+			-8:00	1:00	PDT	2026 Nov  1  2:00
 			# End of temporary hack.
 			-7:00	-	MST
 Zone America/Dawson_Creek -8:00:56 -	LMT	1884

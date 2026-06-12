@@ -119,7 +119,7 @@ Release 2026a - 2026-03-01 22:59:49 -0800
     than attempting to override this fallback with the contents of the
     posixrules file.  This removes library support that was declared
     obsolete in release 2019b, and fixes some undefined behavior.
-    (Undefined behavior reported by GitHub user Naveed8951.)
+    (Undefined behavior reported by Naveed Khan.)
 
     The posix2time, posix2time_z, time2posix, and time2posix_z
     functions now set errno=EOVERFLOW and return ((time_t) -1) if the
@@ -131,7 +131,7 @@ Release 2026a - 2026-03-01 22:59:49 -0800
 
     Some other undefined behavior, triggered by TZif files containing
     outlandish but conforming UT offsets or leap second corrections,
-    has also been fixed.  (Some of these bugs reported by Naveed8951.)
+    has also been fixed.  (Some of these bugs reported by Naveed Khan.)
 
     localtime.c no longer rejects TZif files that exactly fit in its
     internal structures, fixing off-by-one typos introduced in 2014g.

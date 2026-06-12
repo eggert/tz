@@ -1943,15 +1943,19 @@ Zone America/Swift_Current -7:11:20 -	LMT	1905 Sep
 # Chapter O-5.7.  The bill would establish a standard time of UTC−6 without
 # replacing the language previously used to effectuate DST.
 #
-# From Cary Sweet (2026-06-11):
-# O.C. 170/2026 June 4, 2026 ...
-# https://kings-printer.alberta.ca/Documents/Orders/Orders_in_Council/2026/2026_170.html
-# From Paul Eggert (2026-06-11):
-# Although the change takes effect on 2026-09-01, as a temporary hack pretend
-# that it takes effect 2026-11-01 at 02:00.  As with America/Vancouver,
-# this pretense works around a limitation in CLDR v48.2 (2026-03-17).
-# (Below, this temporary hack is marked “Temporary hack; see above.”)
-# We should be able to remove the temporary hack after CLDR is fixed.
+# From Tim Parenti (2026-05-14):
+# Royal Assent...was announced this morning.  The stated intent of Alberta's
+# government has been to have this in place prior to when the clocks would
+# otherwise fall back on 2026-11-01.  For now, use that date pending the Order
+# in Council.  This also works around potential CLDR limitations in the
+# meantime; see British Columbia, below.
+#
+# From Paul Eggert (2026-06-12):
+# Need a legal citation for the official 2026 change to the law.  The bill
+# specifies UT offset only; abbreviate it as CST for consistency.  It requires
+# an Order in Council signed by the Lieutenant Governor before it becomes
+# legally binding.  As this has not yet happened, the changes are commented
+# out for now in America/Edmonton.  Similarly for America/Inuvik.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Edm	1918	1919	-	Apr	Sun>=8	2:00	1:00	D
@@ -1970,11 +1974,11 @@ Rule	Edm	1972	2006	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 			-7:00	Edm	M%sT	1987
-			-7:00	Canada	M%sT	2026 Sep  1
-			# Temporary hack; see above.
-			-7:00	1:00	MDT	2026 Nov  1  2:00
-			# End of temporary hack.
-			-7:00	-	CST
+			-7:00	Canada	M%sT
+# Assuming the relevant part of Red Tape Reduction Statutes Amendment Act, 2026
+# takes effect on 2026-11-01 at 02:00, replace the above line with:
+#			-7:00	Canada	M%sT	2026 Nov  1  2:00
+#			-6:00	-	CST
 
 
 # British Columbia
@@ -2465,6 +2469,10 @@ Zone America/Inuvik	0	-	-00	1953 # Inuvik founded
 			-8:00	NT_YK	P%sT	1979 Apr lastSun  2:00
 			-7:00	NT_YK	M%sT	1980
 			-7:00	Canada	M%sT
+# Assuming Alberta stops changing clocks in fall 2026 and Northwest Territories
+# follow Alberta, replace the above line with:
+#			-7:00	Canada	M%sT	2026 Nov  1  2:00
+#			-6:00	-	CST
 Zone America/Whitehorse	-9:00:12 -	LMT	1900 Aug 20
 			-9:00	NT_YK	Y%sT	1965
 			-9:00	Yukon	Y%sT	1966 Feb 27  0:00

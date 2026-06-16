@@ -4128,11 +4128,11 @@ rpytime(const struct rule *rp, zic_t wantedy)
 	y = EPOCH_YEAR;
 
 	/* dayoff = floor((wantedy - y) / YEARSPERREPEAT) * DAYSPERREPEAT,
-	   sans overflow.  */
+	   checking for overflow.  */
 	yrem = wantedy % YEARSPERREPEAT - y % YEARSPERREPEAT;
-	dayoff = ((wantedy / YEARSPERREPEAT - y / YEARSPERREPEAT
-		   + yrem / YEARSPERREPEAT - (yrem % YEARSPERREPEAT < 0))
-		  * DAYSPERREPEAT);
+	dayoff = omul ((wantedy / YEARSPERREPEAT - y / YEARSPERREPEAT
+			+ yrem / YEARSPERREPEAT - (yrem % YEARSPERREPEAT < 0)),
+		       DAYSPERREPEAT);
 	/* wantedy = y + ((wantedy - y) mod YEARSPERREPEAT), sans overflow.  */
 	wantedy = y + (yrem + 2 * YEARSPERREPEAT) % YEARSPERREPEAT;
 

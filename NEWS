@@ -2,6 +2,15 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    Another integer overflow bug has been fixed in zic.
+
+  Changes to code
+
+    zic no longer overflows an integer when processing outlandish
+    input like ‘Zone Ouch 0 - LMT 9223372036854775807’.  The integer
+    overflow is undefined behavior in C.  (Thanks to Naveed Khan.)
+
   Changes to commentary
 
     The 2026-03-08 spring forward in Alberta and in Northwest

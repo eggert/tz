@@ -1146,7 +1146,8 @@ SET_TIMESTAMP_N = sh -c '\
 # If DEST depends on A B C ... in this Makefile, callers should use
 # $(SET_TIMESTAMP_DEP) DEST A B C ..., for the benefit of any
 # downstream 'make' that considers equal timestamps to be out of date.
-# POSIX allows this 'make' behavior, and HP-UX 'make' does it.
+# POSIX allows this 'make' behavior, although only HP-UX 'make'
+# (which is no longer supported) did things that way.
 # If all that matters is that the timestamp be reproducible
 # and plausible, use $(SET_TIMESTAMP).
 SET_TIMESTAMP = $(SET_TIMESTAMP_N) 0

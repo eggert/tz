@@ -1933,29 +1933,28 @@ Zone America/Swift_Current -7:11:20 -	LMT	1905 Sep
 # https://calgaryherald.com/opinion/columnists/bell-alberta-daylight-time-year-round-premier-danielle-smith
 #
 # From Tim Parenti (2026-04-23):
-# Bill 31, the Red Tape Reduction Statutes Amendment Act, 2026
+# Section 3 of Bill 31, the Red Tape Reduction Statutes Amendment Act, 2026
 # https://docs.assembly.ab.ca/LADDAR_files/docs/bills/bill/legislature_31/session_2/20251023_bill-031.pdf
 # would repeal the Daylight Saving Time Act in the Revised Statues of Alberta
 # 2000 Chapter D-5:
 # https://kings-printer.alberta.ca/documents/Acts/D05.pdf
 # ...and substitutes a new chapter with language that closely parallels the
-# original.  The new title is the Official Time Act and would be numbered
-# Chapter O-5.7.  The bill would establish a standard time of UTC−6 without
+# original.  The new title is the Official Time Act and will be numbered
+# Chapter O-5.7.  The Act establishes a standard time of UTC−6 without
 # replacing the language previously used to effectuate DST.
 #
-# From Tim Parenti (2026-05-14):
-# Royal Assent...was announced this morning.  The stated intent of Alberta's
-# government has been to have this in place prior to when the clocks would
-# otherwise fall back on 2026-11-01.  For now, use that date pending the Order
-# in Council.  This also works around potential CLDR limitations in the
-# meantime; see British Columbia, below.
+# From Tim Parenti (2026-06-19):
+# After receiving Royal Assent on 2026-05-14, Order in Council 204/2026 was
+# issued on 2026-06-18 proclaiming the relevant section of the bill in force on
+# the same date.  Order in Council 206/2026, issued the same day, uses the
+# regulatory authority within the Act to prescribe the official term "Alberta
+# Time"; we use the traditional abbreviation CST for consistency.
+# https://kings-printer.alberta.ca/Documents/Orders/Orders_in_Council/2026/2026_204.pdf
+# https://kings-printer.alberta.ca/Documents/Orders/Orders_in_Council/2026/2026_206.pdf
 #
-# From Paul Eggert (2026-06-12):
-# Need a legal citation for the official 2026 change to the law.  The bill
-# specifies UT offset only; abbreviate it as CST for consistency.  It requires
-# an Order in Council signed by the Lieutenant Governor before it becomes
-# legally binding.  As this has not yet happened, the changes are commented
-# out for now in America/Edmonton.  Similarly for America/Inuvik.
+# Since wall clock times do not diverge from past practice until 2026-11-01,
+# use that transition date for now to work around potential CLDR limitations in
+# the meantime; see British Columbia, below.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Edm	1918	1919	-	Apr	Sun>=8	2:00	1:00	D
@@ -1974,11 +1973,11 @@ Rule	Edm	1972	2006	-	Oct	lastSun	2:00	0	S
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 			-7:00	Edm	M%sT	1987
-			-7:00	Canada	M%sT
-# Assuming the relevant part of Red Tape Reduction Statutes Amendment Act, 2026
-# takes effect on 2026-11-01 at 02:00, replace the above line with:
-#			-7:00	Canada	M%sT	2026 Nov  1  2:00
-#			-6:00	-	CST
+			-7:00	Canada	M%sT	2026 Jun 18
+			# Temporary hack; see above.
+			-7:00	1:00	MDT	2026 Nov  1  2:00
+			# End of temporary hack.
+			-6:00	-	CST
 
 
 # British Columbia
@@ -2420,12 +2419,15 @@ Zone America/Fort_Nelson	-8:10:47 -	LMT	1884
 # end seasonal time changes until Alberta does."
 # https://www.cbc.ca/news/canada/north/nwt-ends-daylight-saving-9.7170964
 #
-# From Tim Parenti (2026-06-11), per James Bellaire (2026-06-02):
-# Much of NWT is currently represented by America/Edmonton, which alias
+# From Tim Parenti (2026-06-19), per James Bellaire (2026-06-02):
+# Much of NWT has, to date, been represented by America/Edmonton, which alias
 # America/Yellowknife links to.  While Bill 13 (assented to 2021-03-31) would
 # enable NWT's proposed change mirroring Alberta's, at time of writing it has
 # not yet been formally enacted; if it doesn't move forward as expected,
-# America/Yellowknife would need to become its own zone.
+# America/Yellowknife would need to become its own zone as Alberta has stopped
+# changing its clocks.
+# If it does go ahead, draft changes to America/Inuvik, which represents the
+# remainder of NWT, are commented below.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	NT_YK	1918	only	-	Apr	14	2:00	1:00	D
@@ -2469,8 +2471,8 @@ Zone America/Inuvik	0	-	-00	1953 # Inuvik founded
 			-8:00	NT_YK	P%sT	1979 Apr lastSun  2:00
 			-7:00	NT_YK	M%sT	1980
 			-7:00	Canada	M%sT
-# Assuming Alberta stops changing clocks in fall 2026 and Northwest Territories
-# follow Alberta, replace the above line with:
+# Assuming Northwest Territories follow Alberta in abolishing seasonal time
+# changes, replace the above line with something like:
 #			-7:00	Canada	M%sT	2026 Nov  1  2:00
 #			-6:00	-	CST
 Zone America/Whitehorse	-9:00:12 -	LMT	1900 Aug 20

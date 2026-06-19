@@ -3092,26 +3092,21 @@ writezone(const char *const name, const char *const string, char version,
 static char const *
 abbroffset(char *buf, zic_t offset)
 {
-  char sign = '+';
-  int seconds, minutes;
-
-  if (offset < 0) {
-    offset = -offset;
-    sign = '-';
-  }
-
-  seconds = offset % SECSPERMIN;
-  offset /= SECSPERMIN;
-  minutes = offset % MINSPERHOUR;
-  offset /= MINSPERHOUR;
-  if (100 <= offset) {
+  zic_t offset_lim = 100L * SECSPERHOUR;
+  if (! (-offset_lim < offset && offset < offset_lim)) {
     error(_("%%z UT offset magnitude exceeds 99:59:59"));
     return "%z";
   } else {
+    char sign = offset < 0 ? '-' : '+';
+    int_fast32_t abs_offset = offset < 0 ? -offset : offset;
+    int seconds = abs_offset % SECSPERMIN;
+    int abs_minutes_offset = abs_offset / SECSPERMIN;
+    int minutes = abs_minutes_offset % MINSPERHOUR;
+    int hours = abs_minutes_offset / MINSPERHOUR;
     char *p = buf;
     *p++ = sign;
-    *p++ = '0' + offset / 10;
-    *p++ = '0' + offset % 10;
+    *p++ = '0' + hours / 10;
+    *p++ = '0' + hours % 10;
     if (minutes | seconds) {
       *p++ = '0' + minutes / 10;
       *p++ = '0' + minutes % 10;

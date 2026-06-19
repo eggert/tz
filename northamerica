@@ -1955,6 +1955,13 @@ Zone America/Swift_Current -7:11:20 -	LMT	1905 Sep
 # Since wall clock times do not diverge from past practice until 2026-11-01,
 # use that transition date for now to work around potential CLDR limitations in
 # the meantime; see British Columbia, below.
+#
+# From Paul Eggert (2026-06-19):
+# The term “Alberta Time” is legally prescribed from yesterday until
+# 2031-06-30, when OIC 202/2026 expires to ensure that the term is
+# reviewed by then for relevancy and need.  This plan for possible
+# obsolescence affects neither timekeeping nor TZDB’s data, which do
+# not contain the string “Alberta Time”.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Edm	1918	1919	-	Apr	Sun>=8	2:00	1:00	D

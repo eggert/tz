@@ -4,7 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     Alberta moved to permanent -06 on 2026-06-18.
-    Another integer overflow bug has been fixed in zic.
+    More integer overflow bugs have been fixed in zic.
 
   Changes to future timestamps
 
@@ -18,9 +18,11 @@ Unreleased, experimental changes
 
   Changes to code
 
-    zic no longer overflows an integer when processing outlandish
-    input like ‘Zone Ouch 0 - LMT 9223372036854775807’.  The integer
-    overflow is undefined behavior in C.  (Thanks to Naveed Khan.)
+    zic no longer overflows integers when processing outlandish input
+    like ‘Zone Ouch 0 - LMT 9223372036854775807’, ‘Zone Ouch 0
+    2562047788015215 LMT’, ‘Zone Ouch -2562047788015215:30:08 - LMT’,
+    and ‘Zone Ouch -2562047788015215:30:08 - %%z’.  This avoids
+    undefined behavior in C.  (Problems reported by Naveed Khan.)
 
   Changes to commentary
 

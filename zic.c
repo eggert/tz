@@ -2060,7 +2060,7 @@ infile(int fnum, char const *name)
 static zic_t
 gethms(char const *string, char const *errstring)
 {
-	zic_t	hh;
+	zic_t hh, r;
 	int sign, mm = 0, ss = 0;
 	char hhx, mmx, ssx, xr = '0', xs;
 	int tenths = 0;
@@ -2103,8 +2103,19 @@ gethms(char const *string, char const *errstring)
 	if (noise && (hh > HOURSPERDAY ||
 		(hh == HOURSPERDAY && (mm != 0 || ss != 0))))
 warning(_("values over 24 hours not handled by pre-2007 versions of zic"));
-	return oadd(omul(hh, sign * SECSPERHOUR),
-		    sign * (mm * SECSPERMIN + ss));
+	r = oadd(omul(hh, sign * SECSPERHOUR), sign * (mm * SECSPERMIN + ss));
+
+	/* Check that 4 * R fits in zic_t.  This is more than enough
+	   for times of day and for UT offsets in TZif files, and it
+	   avoids later problems during arithmetic on these numbers,
+	   as stringzone can compute up to 3 times one of these values
+	   when computing fake timezones, and stringrule can do a bit more.
+	   Do not limit R strictly to 32 bits here, as it is OK to go
+	   over the TZif limit temporarily so long as the result fits.  */
+	omul(r, 4);
+	/* Discard omul's return value, as it is not needed here.  */
+
+	return r;
 }
 
 static zic_t
@@ -3528,7 +3539,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 			int type;
 			save = zp->z_save;
 			doabbr(startbuf, zp, NULL, zp->z_isdst, save, false);
-			type = addtype(oadd(zp->z_stdoff, save),
+			type = addtype(zp->z_stdoff + save,
 				startbuf, zp->z_isdst, startttisstd,
 				startttisut);
 			if (usestart) {
@@ -3600,7 +3611,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 					     r->r_filenum, r->r_linenum);
 					offset = r->r_todisut ? 0 : stdoff;
 					if (!r->r_todisstd)
-						offset = oadd(offset, save);
+						offset += save;
 					jtime = r->r_temp;
 					jtime = tadd(jtime, -offset);
 					if (k < 0 || jtime < ktime) {
@@ -3624,7 +3635,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				rp->r_todo = false;
 				if (useuntil && ktime >= untiltime) {
 					if (!*startbuf
-					    && (oadd(zp->z_stdoff, rp->r_save)
+					    && (zp->z_stdoff + rp->r_save
 						== startoff))
 					  doabbr(startbuf, zp, rp->r_abbrvar,
 						 rp->r_isdst, rp->r_save,
@@ -3636,8 +3647,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 					usestart = false;
 				if (usestart) {
 					if (ktime < starttime) {
-						startoff = oadd(zp->z_stdoff,
-								save);
+						startoff = zp->z_stdoff + save;
 						doabbr(startbuf, zp,
 							rp->r_abbrvar,
 							rp->r_isdst,
@@ -3646,8 +3656,8 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 						continue;
 					}
 					if (*startbuf == '\0'
-					    && startoff == oadd(zp->z_stdoff,
-								save)) {
+					    && startoff == (zp->z_stdoff
+							    + save)) {
 							doabbr(startbuf,
 								zp,
 								rp->r_abbrvar,
@@ -3660,7 +3670,7 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				     rp->r_filenum, rp->r_linenum);
 				doabbr(ab, zp, rp->r_abbrvar,
 				       rp->r_isdst, rp->r_save, false);
-				offset = oadd(zp->z_stdoff, rp->r_save);
+				offset = zp->z_stdoff + rp->r_save;
 				type = addtype(offset, ab, rp->r_isdst,
 					rp->r_todisstd, rp->r_todisut);
 				if (defaulttype < 0 && !rp->r_isdst)

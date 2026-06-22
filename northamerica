@@ -1958,8 +1958,8 @@ Zone America/Swift_Current -7:11:20 -	LMT	1905 Sep
 #
 # From Paul Eggert (2026-06-19):
 # The term “Alberta Time” is legally prescribed from yesterday until
-# 2031-06-30, when OIC 202/2026 expires to ensure that the term is
-# reviewed by then for relevancy and need.  This plan for possible
+# 2031-06-30, when the regulation in OiC 206/2026 expires to ensure that the
+# term is reviewed by then for relevancy and need.  This plan for possible
 # obsolescence affects neither timekeeping nor TZDB’s data, which do
 # not contain the string “Alberta Time”.
 

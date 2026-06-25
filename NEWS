@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     Alberta moved to permanent -06 on 2026-06-18.
+    Morocco moves to permanent +00 on 2026-09-20.
     More integer overflow bugs have been fixed in zic.
 
   Changes to future timestamps
@@ -15,6 +16,10 @@ Unreleased, experimental changes
     2026-06-18, temporarily model the change to occur on 2026-11-01 at
     02:00 instead, for the same reason we introduced a similarly
     temporary hack for British Columbia in 2026b.
+
+    Morocco plans to move back to permanent UTC, without daylight
+    saving time transitions, on 2026-09-20 at 02:00.  This also
+    affects Western Sahara.
 
   Changes to code
 

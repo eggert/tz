@@ -597,6 +597,24 @@ Zone Indian/Mauritius	3:50:00 -	LMT	1907 # Port Louis
 # Morocco
 # See Africa/Ceuta for Spanish Morocco.
 
+# From Paul Eggert (2026-06-26):
+# In “Morocco’s GMT+1, a century of shifting time and a debate far from over”
+# https://en.yabiladi.com/articles/details/191310/morocco-s-gmt1-century-shifting-time
+# (2026-03-30), Yabiladi’s Latifa Babas reports the following:
+#  * A 1913-10-26 royal dahir established GMT as legal time in Morocco.
+#  * A 1918-05-10 dahir instituted DST on 1918-05-16 at 00:00.
+#  * A September 1939 dahir restarted DST on 1939-09-12.
+#  * A February 1940 dahir restarted DST as early as 1940-02-25.
+#  * Standard time resumed in September 1946.
+#  * A June 1950 decree restarted DST, which ran until as late as October.
+#  * Royal decree 455-67 (1967-06-02) restarted DST on June 3 at noon.
+#  * After 1967 Morocco used DST “during several summers, particularly
+#    throughout the 1970s and 1980s.”
+# Babas consulted official records that disagree with and are surely
+# more correct than our pre-2008 timestamp data, which came from the
+# unreliable Shanks & Pottenger.  Unfortunately, Babas did not provide
+# enough detail to correct our data.
+
 # From Alex Krivenyshev (2008-05-09):
 # Here is an article that Morocco plan to introduce Daylight Saving Time between
 # 1 June, 2008 and 27 September, 2008.

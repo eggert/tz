@@ -184,7 +184,7 @@ DATAFORM != "main" {
 	  dstoff = get_minutes(rules)
 	} else {
 	  # The DST offset is normally an hour, but there are special cases.
-	  if (rules == "Morocco" && NF == 3) {
+	  if (rules == "Morocco" && stdoff == 60) {
 	    dstoff = -60
 	  } else if (rules == "NBorneo") {
 	    dstoff = 20

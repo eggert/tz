@@ -286,7 +286,7 @@ DATAFORM != "main" {
 	}
       }
     }
-    if ($1 ~ /^[+0-9-]/ && NF == 7) {
+    if ($1 ~ /^[+0-9-]/ && stdoff == 60) {
       if (DATAFORM == "rearguard") {
 	sub(/1:00\tMorocco/, "0:00\tMorocco")
 	sub(/\t\+01\/\+00/, "\t+00/+01")

@@ -286,13 +286,13 @@ DATAFORM != "main" {
 	}
       }
     }
-    if ($1 ~ /^[+0-9-]/ && NF == 3) {
+    if ($1 ~ /^[+0-9-]/ && NF == 7) {
       if (DATAFORM == "rearguard") {
 	sub(/1:00\tMorocco/, "0:00\tMorocco")
-	sub(/\t\+01\/\+00$/, "\t+00/+01")
+	sub(/\t\+01\/\+00/, "\t+00/+01")
       } else {
 	sub(/0:00\tMorocco/, "1:00\tMorocco")
-	sub(/\t\+00\/+01$/, "\t+01/+00")
+	sub(/\t\+00\/+01/, "\t+01/+00")
       }
     }
   }

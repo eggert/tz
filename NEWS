@@ -29,6 +29,16 @@ Unreleased, experimental changes
     and ‘Zone Ouch -2562047788015215:30:08 - %%z’.  This avoids
     undefined behavior in C.  (Problems reported by Naveed Khan.)
 
+    On platforms that have EFTYPE, tzalloc now fails with errno set to
+    EFTYPE, not EINVAL, if it detects that the TZif file has an
+    invalid format or is not a regular file.  Formerly it did this
+    only on NetBSD, and only when the file was not a regular file.
+
+    Unprivileged programs no longer require TZif files to be regular
+    files or reject relative names containing ".." components.  This
+    reverts to the more-permissive 2025b behavior, as the stricter
+    behavior did not catch on in FreeBSD.
+
   Changes to commentary
 
     Northwest Territories is expected to move to permanent -06 prior to

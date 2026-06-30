@@ -1025,7 +1025,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	      < 0)
 	    return errno;
 	  if (!S_ISREG(st.st_mode))
-	    return EINVAL;
+	    return EFTYPE;
 	}
 	fid = OPENAT_TZDIR ? openat(dd, relname, oflags) : open(name, oflags);
 	err = errno;
@@ -1049,7 +1049,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	  }
 	  up = &lsp->u.u;
 	  nread = read(fid, up->buf, sizeof up->buf);
-	  err = tzheadsize <= nread ? 0 : nread < 0 ? errno : EINVAL;
+	  err = tzheadsize <= nread ? 0 : nread < 0 ? errno : EFTYPE;
 	}
 	close(fid);
 	if (err)
@@ -1077,7 +1077,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		   && 0 <= charcnt && charcnt <= TZ_MAX_CHARS
 		   && 0 <= ttisstdcnt && ttisstdcnt <= TZ_MAX_TYPES
 		   && 0 <= ttisutcnt && ttisutcnt <= TZ_MAX_TYPES))
-	      return EINVAL;
+	      return EFTYPE;
 	    datablock_size
 		    = (timecnt * stored		/* ats */
 		       + timecnt		/* types */
@@ -1087,12 +1087,12 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		       + ttisstdcnt		/* ttisstds */
 		       + ttisutcnt);		/* ttisuts */
 	    if (nread < tzheadsize + datablock_size)
-	      return EINVAL;
+	      return EFTYPE;
 	    if (skip_datablock)
 		p += datablock_size;
 	    else if (! ((ttisstdcnt == typecnt || ttisstdcnt == 0)
 			&& (ttisutcnt == typecnt || ttisutcnt == 0)))
-	      return EINVAL;
+	      return EFTYPE;
 	    else {
 		int_fast64_t prevtr = -1;
 		int_fast32_2s prevcorr;
@@ -1115,7 +1115,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 			       ? TIME_T_MIN : at);
 			  if (timecnt && attime <= sp->ats[timecnt - 1]) {
 			    if (attime < sp->ats[timecnt - 1])
-			      return EINVAL;
+			      return EFTYPE;
 			    sp->types[i - 1] = 0;
 			    timecnt--;
 			  }
@@ -1128,7 +1128,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		for (i = 0; i < sp->timecnt; ++i) {
 			unsigned char typ = *p++;
 			if (sp->typecnt <= typ)
-			  return EINVAL;
+			  return EFTYPE;
 			if (sp->types[i])
 				sp->types[timecnt++] = typ;
 		}
@@ -1142,18 +1142,18 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 			   cause trouble both in this file and in callers.
 			   Also, it violates RFC 9636 section 3.2.  */
 			if (utoff < -TWO_31_MINUS_1)
-			  return EINVAL;
+			  return EFTYPE;
 
 			ttisp = &sp->ttis[i];
 			ttisp->tt_utoff = utoff;
 			p += 4;
 			isdst = *p++;
 			if (! (isdst < 2))
-			  return EINVAL;
+			  return EFTYPE;
 			ttisp->tt_isdst = isdst;
 			desigidx = *p++;
 			if (! (desigidx < sp->charcnt))
-			  return EINVAL;
+			  return EFTYPE;
 			ttisp->tt_desigidx = desigidx;
 		}
 		for (i = 0; i < sp->charcnt; ++i)
@@ -1172,7 +1172,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		  /* Leap seconds cannot occur before the Epoch,
 		     or out of order.  */
 		  if (tr <= prevtr)
-		    return EINVAL;
+		    return EFTYPE;
 
 		  /* To avoid other botches in this code, each leap second's
 		     correction must differ from the previous one's by 1
@@ -1184,7 +1184,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 			     ? corr == prevcorr + 1
 			     : (corr == prevcorr
 				|| corr == prevcorr - 1))))
-		    return EINVAL;
+		    return EFTYPE;
 		  prevtr = tr;
 		  prevcorr = corr;
 
@@ -1206,7 +1206,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 				ttisp->tt_ttisstd = false;
 			else {
 				if (*p != true && *p != false)
-				  return EINVAL;
+				  return EFTYPE;
 				ttisp->tt_ttisstd = *p++;
 			}
 		}
@@ -1218,7 +1218,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 				ttisp->tt_ttisut = false;
 			else {
 				if (*p != true && *p != false)
-						return EINVAL;
+						return EFTYPE;
 				ttisp->tt_ttisut = *p++;
 			}
 		}
@@ -1303,7 +1303,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 			}
 	}
 	if (sp->typecnt == 0)
-	  return EINVAL;
+	  return EFTYPE;
 
 	return 0;
 }

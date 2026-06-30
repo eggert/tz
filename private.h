@@ -243,6 +243,9 @@ strnlen (char const *s, size_t maxlen)
 # define EINVAL ERANGE
 #endif
 
+#ifndef EFTYPE
+# define EFTYPE EINVAL
+#endif
 #ifndef ELOOP
 # define ELOOP EINVAL
 #endif

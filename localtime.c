@@ -227,7 +227,7 @@ struct timespec { time_t tv_sec; long tv_nsec; };
 
 /* How many seconds to wait before checking the default TZif file again.
    Negative means no checking.  Default to 61 if DETECT_TZ_CHANGES
-   (as circa 2025 FreeBSD builds its localtime.c with -DDETECT_TZ_CHANGES),
+   (as circa 2026 FreeBSD builds its localtime.c with -DDETECT_TZ_CHANGES),
    and to -1 otherwise.  */
 #ifndef TZ_CHANGE_INTERVAL
 # ifdef DETECT_TZ_CHANGES
@@ -288,10 +288,12 @@ typedef intmax_t timex_t;
 # endif
 #endif
 
-/* Placeholders for platforms lacking openat.  */
+/* Placeholders for platforms lacking AT_FCWD, openat, and fstatat.  */
 #ifndef AT_FDCWD
 # define AT_FDCWD (-1) /* any negative value will do */
 static int openat(int dd, char const *path, int oflag) { unreachable (); }
+static int fstatat(int dd, char const *path, struct stat *st, int flags)
+{ unreachable(); }
 #endif
 
 /* Port to platforms that lack some O_* flags.  Unless otherwise
@@ -425,8 +427,7 @@ static char const *utc = etc_utc + sizeof "Etc/" - 1;
    approach of opening "/usr/share/zoneinfo/America/Los_Angeles".
    Although the OPENAT_TZDIR approach is less efficient, suffers from
    spurious EMFILE and ENFILE failures, and is no more secure in practice,
-   it is how bleeding edge FreeBSD did things from August 2025
-   through at least September 2025.  */
+   bleeding edge FreeBSD started doing it this way in August 2025.  */
 #ifndef OPENAT_TZDIR
 # define OPENAT_TZDIR 0
 #endif
@@ -917,6 +918,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	int dd = AT_FDCWD;
 	int oflags = (O_RDONLY | O_BINARY | O_CLOEXEC | O_CLOFORK
 		      | O_IGNORE_CTTY | O_NOCTTY | O_REGULAR);
+	bool might_escape = false;
 	int err;
 	struct stat st;
 	st.st_ctime = 0;
@@ -943,16 +945,8 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	      continue;
 	  else if (issetugid())
 	    return ENOTCAPABLE;
-	  else if (!O_REGULAR) {
-	    /* Check for devices, as their mere opening could have
-	       unwanted side effects.  Though racy, there is no
-	       portable way to fix the races.  This check is needed
-	       only for files not otherwise known to be non-devices.  */
-	    if (stat(name, &st) < 0)
-	      return errno;
-	    if (!S_ISREG(st.st_mode))
-	      return EINVAL;
-	  }
+	  else
+	    might_escape = true;
 	}
 
 	if (relname[0] != '/') {
@@ -964,8 +958,12 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	    for (component = relname; component[0]; component++)
 	      if (component[0] == '.' && component[1] == '.'
 		  && component[2] == '/'
-		  && (component == relname || component[-1] == '/'))
-		return ENOTCAPABLE;
+		  && (component == relname || component[-1] == '/')) {
+		if (issetugid())
+		  return ENOTCAPABLE;
+		might_escape = true;
+		break;
+	      }
 	  }
 
 	  if (OPENAT_TZDIR && !SUPPRESS_TZDIR) {
@@ -978,7 +976,10 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		       | O_BINARY | O_CLOEXEC | O_CLOFORK | O_DIRECTORY));
 	    if (dd < 0)
 	      return errno;
-	    oflags |= O_RESOLVE_BENEATH;
+	    if (O_RESOLVE_BENEATH && issetugid()) {
+	      oflags |= O_RESOLVE_BENEATH;
+	      might_escape = false;
+	    }
 	  }
 	}
 
@@ -1014,6 +1015,18 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 #endif
 	}
 
+	/* For a platform that lacks O_REGULAR and a file that might
+	   be outside TZDIR, check that it is a regular file,
+	   as merely opening a device could have unwanted side effects.
+	   Though racy, there is no portable way to fix the race.  */
+	if (!O_REGULAR && might_escape) {
+	  /* (oflags & O_RESOLVE_BENEATH) must be zero here.  */
+	  if ((OPENAT_TZDIR ? fstatat(dd, relname, &st, 0) : stat(name, &st))
+	      < 0)
+	    return errno;
+	  if (!S_ISREG(st.st_mode))
+	    return EINVAL;
+	}
 	fid = OPENAT_TZDIR ? openat(dd, relname, oflags) : open(name, oflags);
 	err = errno;
 	if (0 <= dd)

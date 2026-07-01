@@ -227,7 +227,7 @@ struct timespec { time_t tv_sec; long tv_nsec; };
 
 /* How many seconds to wait before checking the default TZif file again.
    Negative means no checking.  Default to 61 if DETECT_TZ_CHANGES
-   (as circa 2026 FreeBSD builds its localtime.c with -DDETECT_TZ_CHANGES),
+   (as FreeBSD optionally builds its localtime.c with -DDETECT_TZ_CHANGES),
    and to -1 otherwise.  */
 #ifndef TZ_CHANGE_INTERVAL
 # ifdef DETECT_TZ_CHANGES

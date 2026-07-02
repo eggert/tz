@@ -2027,7 +2027,7 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # on March 8 will be the last time change, ending twice-yearly clock changes.”
 # https://news.gov.bc.ca/releases/2026AG0013-000209
 #
-# From Paul Eggert (2026-03-07):
+# From Paul Eggert (2026-07-02):
 # The law says that 21 hours after the usual 2026-03-08 02:00 switch from
 # PST to PDT, the next day inaugurates the new standard time Pacific Time,
 # i.e., just one clock change but two name changes separated by 21 hours.
@@ -2053,10 +2053,7 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 #   PST - straightforward but even more confusing,
 #	and will likely break much software that assumes PST is -08
 #   -07 - accurate and clear in itself, but makes BC look odd vs neighbors
-#   CPT, CPST - for Canadian Pacific (Standard) Time,
-#	by analogy with AEST in Australia
-#   P-T - conforming approximation to “PT”
-#   PT+ - like P-T but suggesting one-hour advance over PST
+#   PacT - straightforward but novel abbreviation for Pacific Time
 
 # From Chris Walton (2026-03-15):
 # The Regional District of East Kootenay is planning to move to year-round

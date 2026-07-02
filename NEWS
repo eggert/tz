@@ -68,7 +68,7 @@ Release 2026b - 2026-04-22 23:06:43 -0700
     (Thanks to Arthur David Olson.)  Although the change to permanent
     -07 legally took place on 2026-03-09, temporarily model the change
     to occur on 2026-11-01 at 02:00 instead.  This works around a
-    limitation in CLDR v48.2 (2026-03-17).  This temporary hack is
+    limitation in CLDR 48.1 (2026-01-08).  This temporary hack is
     planned to be removed after CLDR is fixed.
 
   Changes to code

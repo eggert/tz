@@ -1956,7 +1956,12 @@ Zone America/Swift_Current -7:11:20 -	LMT	1905 Sep
 # use that transition date for now to work around potential CLDR limitations in
 # the meantime; see British Columbia, below.
 #
-# From Paul Eggert (2026-06-19):
+# From Paul Eggert (2026-07-02):
+# The temporary hack for Alberta is needed for CLDR 48.2 (2026-03-17)
+# and earlier, not the CLDR 48.1-and-earlier which drives BC’s temporary hack.
+# Only a few platforms track minor CLDR releases, though, so the two
+# temporary hacks have roughly the same effect in practice.
+#
 # The term “Alberta Time” is legally prescribed from yesterday until
 # 2031-06-30, when the regulation in OiC 206/2026 expires to ensure that the
 # term is reviewed by then for relevancy and need.  This plan for possible
@@ -2036,13 +2041,14 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # I asked the BC government for advice, with no response. For now, do this:
 #   1.	As a temporary hack, pretend that the BC law takes effect
 #	not on 2026-03-09 at 00:00, but on 2026-11-01 at 02:00.
-#	This pretense works around a limitation in CLDR v48.2 (2026-03-17),
+#	This pretense works around a limitation in CLDR 48.1 (2026-01-08),
 #	which would otherwise say the interval uses “Pacific Standard Time”.
 #	(Below, this temporary hack is marked “Temporary hack; see above.”)
 #	Strictly speaking this hack is incorrect since the interval uses
 #	standard time, but it does have the right UT offset and it
 #	works around the CLDR limitation.  We should be able to remove
-#	the temporary hack after CLDR is fixed.
+#	the temporary hack by November when there would be little point
+#	to keeping it anyway.
 #   2.	After the BC law takes effect, model the time as MST sans DST.
 #	We can change this later if another conforming non-numeric abbreviation
 #	for Pacific Time becomes more popular.  Possibilities include:

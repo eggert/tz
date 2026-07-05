@@ -954,6 +954,11 @@ ATTRIBUTE_POSIX2TIME time_t time2posix_z(timezone_t, time_t);
 #define TYPE_SIGNED(type) (((type) -1) < 0)
 #define TWOS_COMPLEMENT(type) (TYPE_SIGNED (type) && (! ~ (type) -1))
 
+/* Yield the value of the arithmetic expression X after integer promotion.
+   This is safer than a cast, which in general would accept even
+   pointers and which might trap or yield a value not equal to X.  */
+#define INT_PROMOTE(x) (+(x))
+
 /* Minimum and maximum of two values.  Use lower case to avoid
    naming clashes with standard include files.  */
 #define max(a, b) ((a) > (b) ? (a) : (b))

@@ -412,10 +412,10 @@ enum {
 };
 
 /* The maximum number of fields on any of the above lines.
-   (The "+"s pacify gcc -Wenum-compare.)  */
+   (This uses INT_PROMOTE to pacify gcc -Wenum-compare.)  */
 enum {
-  MAX_FIELDS = max(max(+RULE_FIELDS, +LINK_FIELDS),
-		   max(+LEAP_FIELDS, +EXPIRES_FIELDS))
+  MAX_FIELDS = max(max(INT_PROMOTE(RULE_FIELDS), INT_PROMOTE(LINK_FIELDS)),
+		   max(INT_PROMOTE(LEAP_FIELDS), INT_PROMOTE(EXPIRES_FIELDS)))
 };
 
 /*

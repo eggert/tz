@@ -279,6 +279,7 @@ static void	mkdirs(char const *, bool);
 static zic_t	oadd(zic_t t1, zic_t t2);
 static zic_t	omul(zic_t, zic_t);
 static void	outzone(const struct zone * zp, ptrdiff_t ntzones);
+static void	remove_temp(char const *);
 static zic_t	rpytime(const struct rule * rp, zic_t wantedy);
 static bool	rulesub(struct rule * rp,
 			const char * loyearp, const char * hiyearp,
@@ -840,7 +841,7 @@ close_file(FILE *stream, char const *dir, char const *name,
 	    name ? name : "", name ? ": " : "",
 	    e);
     if (tempname)
-      remove(tempname);
+      remove_temp(tempname);
     exit(EXIT_FAILURE);
   }
 }
@@ -1657,14 +1658,23 @@ rename_dest(char *tempname, char const *name)
   if (tempname) {
     if (rename(tempname, name) != 0) {
       int rename_errno = errno;
-      remove(tempname);
       fprintf(stderr, _("%s: rename to %s%s%s: %s\n"),
 	      progname, diagdir(name), diagslash(name), name,
 	      strerror(rename_errno));
+      remove_temp(tempname);
       exit(EXIT_FAILURE);
     }
     free(tempname);
   }
+}
+
+/* Remove the temporary file TEMP, diagnosing any failure.  */
+static void
+remove_temp(char const *temp)
+{
+  if (remove(temp) < 0)
+    fprintf(stderr, _("%s: Can't remove temporary file %s%s%s: %s\n"),
+	    progname, diagdir(temp), diagslash(temp), temp, strerror(errno));
 }
 
 /* Create symlink contents suitable for symlinking TARGET to LINKNAME, as a

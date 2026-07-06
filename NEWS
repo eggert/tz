@@ -39,6 +39,10 @@ Unreleased, experimental changes
     reverts to the more-permissive 2025b behavior, as the stricter
     behavior did not catch on in FreeBSD.
 
+    zic now reports any failure to remove a temporary file when
+    cleaning up after a previous failure.  (Problem reported by Tom
+    Lane.)
+
   Changes to commentary
 
     Northwest Territories is expected to move to permanent -06 prior to

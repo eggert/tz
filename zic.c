@@ -4215,7 +4215,7 @@ checkabbr(char const *string)
 		if (*cp != '\0')
 		  mp = N_("time zone abbreviation differs from POSIX standard");
 		if (mp != NULL)
-		  warning(N_("%s (%s)"), mp, string);
+		  warning(N_("%s (%s)"), _(mp), string);
 	}
 }
 

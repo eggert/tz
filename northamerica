@@ -1744,17 +1744,17 @@ Zone America/Toronto	-5:17:32 -	LMT	1895
 
 # From Paul Eggert (2026-05-08):
 # For 1916 timestamps America/Winnipeg covers only a small region. See:
-# Cassidy C. Winnipeg's 100-year history with daylight time.
+# Cassidy C. Winnipeg’s 110-year history with daylight time.
 # Winnipeg Free Press. 2026-05-06.
 # https://www.winnipegfreepress.com/our-communities/correspondents/2026/05/06/winnipegs-110-year-history-with-daylight-time
-# Of the 1916 experiment, Cassidy writes: "As rural areas and nearby
+# Of the 1916 experiment, Cassidy writes: “As rural areas and nearby
 # urban centres such as Selkirk and Brandon did not adopt DST, the
-# City of Winnipeg essentially had its own time zone." Cassidy also
+# City of Winnipeg essentially had its own time zone.” Cassidy also
 # writes that province-wide DST came into effect on 1963-05-12.
 #
 # Shanks & Pottenger write that Winnipeg did not observe DST in 1964 and 1965.
-# Although dubious in the light of Cassidy's article, we lack a better source.
-# Perhaps S&P's data are for the train stations, not for the city?
+# Although dubious in the light of Cassidy’s article, we lack a better source.
+# Perhaps S&P’s data are for the train stations, not for the city?
 # Also, S&P say Manitoba switched at 02:00 (not 02:00s) starting in 1966.
 # Since 02:00s is clearly correct for 1967 on, assume 02:00s in 1966 too.
 
@@ -1935,7 +1935,7 @@ Zone America/Swift_Current -7:11:20 -	LMT	1905 Sep
 # From Tim Parenti (2026-04-23):
 # Section 3 of Bill 31, the Red Tape Reduction Statutes Amendment Act, 2026
 # https://docs.assembly.ab.ca/LADDAR_files/docs/bills/bill/legislature_31/session_2/20251023_bill-031.pdf
-# would repeal the Daylight Saving Time Act in the Revised Statues of Alberta
+# would repeal the Daylight Saving Time Act in the Revised Statutes of Alberta
 # 2000 Chapter D-5:
 # https://kings-printer.alberta.ca/documents/Acts/D05.pdf
 # ...and substitutes a new chapter with language that closely parallels the
@@ -2481,7 +2481,7 @@ Zone America/Inuvik	0	-	-00	1953 # Inuvik founded
 			-8:00	NT_YK	P%sT	1979 Apr lastSun  2:00
 			-7:00	NT_YK	M%sT	1980
 			-7:00	Canada	M%sT
-# Assuming Northwest Territories follow Alberta in abolishing seasonal time
+# Assuming Northwest Territories follows Alberta in abolishing seasonal time
 # changes, replace the above line with something like:
 #			-7:00	Canada	M%sT	2026 Nov  1  2:00
 #			-6:00	-	CST

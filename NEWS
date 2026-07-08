@@ -1,6 +1,6 @@
 News for the tz database
 
-Unreleased, experimental changes
+Release 2026c - 2026-07-08 10:23:58 -0700
 
   Briefly:
     Alberta moved to permanent -06 on 2026-06-18.
@@ -16,6 +16,10 @@ Unreleased, experimental changes
     2026-06-18, temporarily model the change to occur on 2026-11-01 at
     02:00 instead, for the same reason we introduced a similarly
     temporary hack for British Columbia in 2026b.
+
+      Although another TZDB release will likely be needed soon because
+      Northwest Territories will likely follow Alberta, the legal
+      formalities have not yet taken place.
 
     Morocco plans to move back to permanent UTC, without daylight
     saving time transitions, on 2026-09-20 at 02:00.  This also

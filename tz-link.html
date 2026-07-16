@@ -84,6 +84,7 @@ title="Berkeley Software Distribution">BSD</abbr></a>,
 <a href="https://netbsd.org">Net<abbr>BSD</abbr></a>,
 <a href="https://www.openbsd.org">Open<abbr>BSD</abbr></a>,
 <a href="https://www.chromium.org/chromium-os/">ChromiumOS</a>,
+<a href="https://en.wikipedia.org/wiki/OpenHarmony">OpenHarmony</a>,
 <a href="https://cygwin.com">Cygwin</a>,
 <a href="https://mariadb.org">MariaDB</a>,
 <a href="https://musl.libc.org">musl libc</a>,
@@ -183,7 +184,7 @@ title="Hypertext Transfer Protocol Secure">HTTPS</abbr></a>,
 <a href="https://en.wikipedia.org/wiki/Rsync"><abbr
 title="remote sync">rsync</abbr></a>, and
 <a href="https://en.wikipedia.org/wiki/FTP"><abbr
-title="File Transfer Protocol">FTP</abbr></a>.
+title="File Transfer Protocol">FTP</abbr></a>.</p>
 <p>Alternatively, a development repository of code and data can be
 retrieved from <a href="https://github.com">GitHub</a> via the shell
 command:</p>
@@ -234,7 +235,10 @@ the process by tailoring the generic instructions in
 the <code><abbr>tz</abbr> README</code> file and installing the latest
 data yourself. System-specific instructions for installing the
 latest <code><abbr>tz</abbr></code> data have also been published
-for <a href="https://www.ibm.com/support/pages/aix-time-zone-olson-tzdata-updates"><abbr>AIX</abbr></a>,
+for <a href="https://community.ibm.com/community/user/blogs/ravindra-shinde/2024/12/13/time-zone-update-tool-tz"><abbr>AIX</abbr></a>
+(and
+<a href="https://www.ibm.com/support/pages/aix-time-zone-olson-tzdata-updates">older
+<abbr>AIX</abbr></a>),
 <a
 href="https://source.android.com/docs/core/permissions/timezone-rules">Android</a>,
 <a
@@ -285,7 +289,7 @@ As discussed in
 “<a href="https://www.icann.org/en/blogs/details/how-time-zones-are-coordinated-13-03-2023-en">How
 Time Zones Are Coordinated</a>”, the time zone database relies on
 collaboration among governments, the time zone database volunteer
-community, and data distributors downstream.
+community, and data distributors downstream.</p>
 <p>
 If your government plans to change its time zone boundaries or
 daylight saving rules, please send email as described in
@@ -574,6 +578,10 @@ Ruby Timezone Library</a>
 compiles <code><abbr>tz</abbr></code> source into
 <a href="https://www.ruby-lang.org/en/">Ruby</a>.
 It is freely available under the <abbr>MIT</abbr> license.</li>
+<li><a href="https://crates.io/crates/chrono-tz">Chrono-TZ</a>
+compiles <code><abbr>tz</abbr></code> source into
+<a href="https://rust-lang.org/">Rust</a>.
+It is freely available under the <abbr>MIT</abbr> or Apache licenses.</li>
 <li>The <a href="https://www.squeaksource.com/Chronos/">Chronos Date/Time
 Library</a> is
 a <a href="https://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a> class
@@ -703,7 +711,7 @@ to <code><abbr>tz</abbr></code> names.
 These mappings can be performed programmatically via the
 <a href="https://github.com/mattjohnsonpint/TimeZoneConverter">TimeZoneConverter</a>
 .NET library,
-or the ICU Java and C++ libraries mentioned <a href="#ICU">above</a>.
+or the ICU Java and C++ libraries mentioned <a href="#ICU">above</a>.</li>
 <li><a
 href="https://www.oracle.com/java/">Oracle
 Java</a> contains a copy of a subset of a recent
@@ -1056,7 +1064,7 @@ a client’s time zone and daylight saving settings automatically.</li>
 Scales</a> describes astronomical time scales like
 <abbr title="Terrestrial Dynamic Time">TDT</abbr>,
 <abbr title="Geocentric Coordinate Time">TCG</abbr>, and
-<abbr title="Barycentric Dynamic Time">TDB</abbr>.
+<abbr title="Barycentric Dynamic Time">TDB</abbr>.</li>
 <li>The <a href="https://www.iau.org"><abbr
 title="International Astronomical Union">IAU</abbr></a>’s <a
 href="https://www.iausofa.org"><abbr
@@ -1186,7 +1194,7 @@ contains French translations for “Eastern European Summer Time”,
 <a href="https://unicode.org/cldr/charts/latest/by_type/">by-type
 charts</a> show these values for many locales. Data values are available in
 both <abbr title="Locale Data Markup Language">LDML</abbr>
-(an <abbr>XML</abbr> format) and <abbr>JSON</abbr>.
+(an <abbr>XML</abbr> format) and <abbr>JSON</abbr>.</li>
 <li>
 <a href="https://www.cl.cam.ac.uk/~mgk25/iso-time.html">A summary of
 the international standard date and time notation</a> covers
@@ -1212,7 +1220,7 @@ An extension, <a href="https://www.rfc-editor.org/info/rfc9557/">Date
 and Time on the Internet: Timestamps with Additional Information</a>
 (Internet <abbr>RFC</abbr> 9557) extends this profile
 to let you specify the <code><abbr>tzdb</abbr></code> timezone of a timestamp
-via suffixes like <code>[Asia/Tokyo]</code>.
+via suffixes like <code>[Asia/Tokyo]</code>.</li>
 <li>
 <a href="https://web.archive.org/web/20190130042457/https://www.hackcraft.net/web/datetime/">Date &amp; Time
 Formats on the Web</a> surveys web- and Internet-oriented date and time

@@ -25,6 +25,10 @@ Release 2026c - 2026-07-08 10:23:58 -0700
     saving time transitions, on 2026-09-20 at 02:00.  This also
     affects Western Sahara.
 
+  Changes to past timestamps
+
+    Colombia’s 1992-05-02 spring forward was at 00:00, not 24:00.
+
   Changes to code
 
     zic no longer overflows integers when processing outlandish input

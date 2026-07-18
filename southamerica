@@ -1472,13 +1472,20 @@ Zone Antarctica/Palmer	0	-	-00	1965
 # Milne gives 4:56:16.4 for Bogotá time in 1899.  He writes,
 # "A variation of fifteen minutes in the public clocks of Bogota is not rare."
 
+# From Paul Eggert (2026-07-17):
+
+# The 1992 spring forward was May 2 at 00:00.  See:
+# Jiménez FA. La noche en que Colombia perdió una hora para encarar el apagón,
+# ¿se repetirá la historia en 2026? El Colombiano. 2026-06-21.
+# https://www.elcolombiano.com/negocios/colombia-perdio-una-hora-para-evitar-apagon-horario-gaviria-LF37983109
+
 # From Alois Treindl (2022-11-10):
 # End of time change in Colombia 1993 ... should be 6 February 24h ...
 # DECRETO 267 DE 1993
 # https://www.suin-juriscol.gov.co/viewDocument.asp?ruta=Decretos/1061335
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
-Rule	CO	1992	only	-	May	 3	 0:00	1:00	-
+Rule	CO	1992	only	-	May	 2	 0:00	1:00	-
 Rule	CO	1993	only	-	Feb	 6	24:00	0	-
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 		#STDOFF	-4:56:16.4

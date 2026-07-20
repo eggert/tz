@@ -578,10 +578,6 @@ Ruby Timezone Library</a>
 compiles <code><abbr>tz</abbr></code> source into
 <a href="https://www.ruby-lang.org/en/">Ruby</a>.
 It is freely available under the <abbr>MIT</abbr> license.</li>
-<li><a href="https://crates.io/crates/chrono-tz">Chrono-TZ</a>
-compiles <code><abbr>tz</abbr></code> source into
-<a href="https://rust-lang.org/">Rust</a>.
-It is freely available under the <abbr>MIT</abbr> or Apache licenses.</li>
 <li>The <a href="https://www.squeaksource.com/Chronos/">Chronos Date/Time
 Library</a> is
 a <a href="https://en.wikipedia.org/wiki/Smalltalk">Smalltalk</a> class
@@ -667,6 +663,13 @@ converts <abbr>TZif</abbr> data into
 <abbr>JSON</abbr>-format data suitable for use
 in its JavaScript library for time zone conversion. Dates before 1970
 are not supported.</li>
+<li>The <a href="https://crates.io/crates/jiff">jiff</a> datetime library
+for <a href="https://rust-lang.org/">Rust</a> either compiles
+<code><abbr>tz</abbr></code> source into Rust,
+or consults <abbr>TZif</abbr> data at runtime.
+It is in the public domain.
+It intends to supplant the soft-deprecated
+<a href="https://crates.io/crates/chrono-tz">Chrono-TZ</a>.</li>
 <li>The <a
 href="https://hackage.haskell.org/package/timezone-olson">timezone-olson</a>
 package contains <a href="https://www.haskell.org">Haskell</a> code that

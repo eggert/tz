@@ -96,7 +96,7 @@
 # was the first nationwide legal time standard, and apparently
 # time was just called "Standard Time" or "Daylight Saving Time".
 
-# From Paul Eggert (2019-06-04):
+# From Paul Eggert (2019-06-04) and Tim Parenti (2026-07-21):
 # Here is the legal basis for the US federal rules.
 # * Public Law 65-106 (1918-03-19) implemented standard and daylight saving
 #   time for the first time across the US, springing forward on March's last
@@ -111,10 +111,15 @@
 # * Public Law 89-387 (1966-04-13) reinstituted a national standard for DST,
 #   from April's last Sunday to October's last Sunday, effective 1967.
 #   https://www.govinfo.gov/content/pkg/STATUTE-80/pdf/STATUTE-80-Pg107.pdf
-# * Public Law 93-182 (1973-12-15) moved the 1974 spring-forward to 01-06.
+# * Public Law 93-182 (1973-12-15) applied DST year-round as an emergency
+#   measure.  It took effect on the fourth Sunday after its enactment,
+#   effectively moving the 1974 spring-forward to 01-06.
 #   https://www.govinfo.gov/content/pkg/STATUTE-87/pdf/STATUTE-87-Pg707.pdf
-# * Public Law 93-434 (1974-10-05) moved the 1975 spring-forward to
-#   February's last Sunday.
+#   It was meant to last for 16 months or two winters (through 1975-04-27);
+#   however...
+# * Public Law 93-434 (1974-10-05) created an exemption for much of the second
+#   winter, restoring standard time from the usual date of 1974-10-27 while
+#   moving the 1975 spring-forward up to February's last Sunday.
 #   https://www.govinfo.gov/content/pkg/STATUTE-88/pdf/STATUTE-88-Pg1209.pdf
 # * Public Law 99-359 (1986-07-08) moved the spring-forward to April's first
 #   Sunday.

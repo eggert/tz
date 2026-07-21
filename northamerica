@@ -1937,7 +1937,7 @@ Zone America/Swift_Current -7:11:20 -	LMT	1905 Sep
 # https://docs.assembly.ab.ca/LADDAR_files/docs/bills/bill/legislature_31/session_2/20251023_bill-031.pdf
 # would repeal the Daylight Saving Time Act in the Revised Statutes of Alberta
 # 2000 Chapter D-5:
-# https://kings-printer.alberta.ca/documents/Acts/D05.pdf
+# https://web.archive.org/web/20240128134751/https://kings-printer.alberta.ca/documents/Acts/D05.pdf
 # ...and substitutes a new chapter with language that closely parallels the
 # original.  The new title is the Official Time Act and will be numbered
 # Chapter O-5.7.  The Act establishes a standard time of UTC−6 without
@@ -1967,6 +1967,10 @@ Zone America/Swift_Current -7:11:20 -	LMT	1905 Sep
 # term is reviewed by then for relevancy and need.  This plan for possible
 # obsolescence affects neither timekeeping nor TZDB’s data, which do
 # not contain the string “Alberta Time”.
+#
+# From Tim Parenti (2026-07-21):
+# The new Official Time Act is now in the Revised Statutes as Chapter O-5.7:
+# https://kings-printer.alberta.ca/documents/Acts/O05p7.pdf
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Edm	1918	1919	-	Apr	Sun>=8	2:00	1:00	D

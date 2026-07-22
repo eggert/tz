@@ -6,6 +6,12 @@ Unreleased, experimental changes
 
     Colombia’s 1992-05-02 spring forward was at 00:00, not 24:00.
 
+  Changes to code
+
+    zic now rejects Link targets that are absolute or contain ‘.’ or
+    ‘..’ components.  Previously, crafted input could cause zic to
+    link to a file outside its output directory.
+
 
 Release 2026c - 2026-07-08 10:23:58 -0700
 

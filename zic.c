@@ -2419,6 +2419,8 @@ inlink(char **fields, int nfields)
 		error(N_("blank TARGET field on Link line"));
 		return;
 	}
+	if (! namecheck(fields[LF_TARGET]))
+	  return;
 	if (! namecheck(fields[LF_LINKNAME]))
 	  return;
 	l.l_filenum = filenum;

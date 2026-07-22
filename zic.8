@@ -586,6 +586,7 @@ The name of the timezone.
 This is the name used in creating the time conversion information file for the
 timezone.
 It should not contain a file name component
+that is empty or is
 .q ".\&"
 or
 .q ".." ;
@@ -737,8 +738,16 @@ A link line has the form
 .ta \w'Link\0\0'u +\w'Europe/Istanbul\0\0'u
 Link	TARGET	LINK-NAME
 .sp
+.fi
+where
+.B TARGET
+and
+.B LINK-NAME
+both have the same syntax as a zone line's
+.BR NAME .
 For example:
 .sp
+.nf
 .ti +2
 Link	Europe/Istanbul	Asia/Istanbul
 .sp
@@ -752,10 +761,7 @@ field in some zone line or as the
 field in some link line.
 The
 .B LINK-NAME
-field is used as an alternative name for that zone;
-it has the same syntax as a zone line's
-.B NAME
-field.
+field is an alternative name for that zone.
 Links can chain together, although the behavior is unspecified if a
 chain of one or more links does not terminate in a Zone name.
 A link line can appear before the line that defines the link target.

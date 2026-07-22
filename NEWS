@@ -8,9 +8,8 @@ Unreleased, experimental changes
 
   Changes to code
 
-    zic now rejects Link targets that are absolute or contain ‘.’ or
-    ‘..’ components.  Previously, crafted input could cause zic to
-    link to a file outside its output directory.
+    zic now rejects Link targets that would have invalid names.
+    (Thanks to Darren Carreras.)
 
 
 Release 2026c - 2026-07-08 10:23:58 -0700

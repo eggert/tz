@@ -2438,15 +2438,22 @@ Zone America/Fort_Nelson	-8:10:47 -	LMT	1884
 # end seasonal time changes until Alberta does."
 # https://www.cbc.ca/news/canada/north/nwt-ends-daylight-saving-9.7170964
 #
-# From Tim Parenti (2026-06-19), per James Bellaire (2026-06-02):
-# Much of NWT has, to date, been represented by America/Edmonton, which alias
-# America/Yellowknife links to.  While Bill 13 (assented to 2021-03-31) would
-# enable NWT's proposed change mirroring Alberta's, at time of writing it has
-# not yet been formally enacted; if it doesn't move forward as expected,
-# America/Yellowknife would need to become its own zone as Alberta has stopped
-# changing its clocks.
-# If it does go ahead, draft changes to America/Inuvik, which represents the
-# remainder of NWT, are commented below.
+# From Tim Parenti (2026-07-24):
+# Now that Alberta has adopted year-round -06, NWT plans to follow through with
+# the same.  Bill 13 of the 19th Assembly's 2nd Session, assented to
+# 2021-03-31, provides the NWT Commissioner in Executive Council with authority
+# to fix a year-round standard time:
+# https://www.ntlegislativeassembly.ca/sites/default/files/legacy/bill_13_-_reprint_-_interpretation_a.pdf
+#
+# Recent private correspondence with staffers in the Northwest Territories
+# Department of Justice responsible for implementing the change indicates that,
+# while the legal process is moving forward and the change is intended to come
+# into force no later than 2026-11-01, at time of writing the expected
+# regulation's official registration is not anticipated until September 2026.
+#
+# For most of NWT, this is already covered by the change to America/Edmonton,
+# which alias America/Yellowknife links to.  For now, assume below for
+# America/Inuvik that the NWT change goes forward from 2026-11-01 02:00.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	NT_YK	1918	only	-	Apr	14	2:00	1:00	D
@@ -2489,11 +2496,8 @@ Zone America/Cambridge_Bay 0	-	-00	1920 # trading post est.?
 Zone America/Inuvik	0	-	-00	1953 # Inuvik founded
 			-8:00	NT_YK	P%sT	1979 Apr lastSun  2:00
 			-7:00	NT_YK	M%sT	1980
-			-7:00	Canada	M%sT
-# Assuming Northwest Territories follows Alberta in abolishing seasonal time
-# changes, replace the above line with something like:
-#			-7:00	Canada	M%sT	2026 Nov  1  2:00
-#			-6:00	-	CST
+			-7:00	Canada	M%sT	2026 Nov  1  2:00 # presumed
+			-6:00	-	CST
 Zone America/Whitehorse	-9:00:12 -	LMT	1900 Aug 20
 			-9:00	NT_YK	Y%sT	1965
 			-9:00	Yukon	Y%sT	1966 Feb 27  0:00

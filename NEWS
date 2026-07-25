@@ -3,13 +3,13 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
-    Northwest Territories moves to permanent -06 on 2026-11-01.
+    Canada’s Northwest Territories move to permanent -06 on 2026-11-01.
 
   Changes to future timestamps
 
-    Northwest Territories will not fall back on 2026-11-01 and plans to
-    remain on permanent -06 year-round, matching Alberta’s recent
-    change.  Model this with its traditional abbreviation CST.  Based on
+    Canada’s Northwest Territories will not fall back on 2026-11-01
+    and will stay on -06 year-round, matching Alberta’s recent change.
+    Model this with its traditional abbreviation CST.  Based on
     private correspondence with staffers responsible for implementing
     the change, assume for now that the legal implementation will take
     place on 2026-11-01 at 02:00, as the expected regulation’s official

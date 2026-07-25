@@ -172,9 +172,9 @@ EXPIRES_LINE=	0
 
 TZDATA_TEXT=	leapseconds tzdata.zi
 
-# For backward-compatibility links for old zone names, use
+# For backward-compatibility links and zones for old names, use
 #	BACKWARD=	backward
-# To omit these links, use
+# To omit these links and zones, use
 #	BACKWARD=
 
 BACKWARD=	backward
@@ -1018,7 +1018,12 @@ now.ck: checknow.awk date tzdata.zi zdump zic zone1970.tab zonenow.tab
 		  -v zdump_table=$@d/zdump-now.tab \
 		  -f checknow.awk zonenow.tab
 		$(AWK) \
-		  'BEGIN {print "-\t-\tUTC"} /^Zone/ {print "-\t-\t" $$2}' \
+		  'BEGIN { \
+		     SysVzone["EST5EDT"] = 1; SysVzone["CST6CDT"] = 1; \
+		     SysVzone["MST7MDT"] = 1; SysVzone["PST8PDT"] = 1; \
+		     print "-\t-\tUTC" \
+		   } \
+		   $$1 == "Zone" && !SysVzone[$$2] {print "-\t-\t" $$2}' \
 		  $(PRIMARY_YDATA) backward factory | \
 		 $(AWK) \
 		   -v zdump_table=$@d/zdump-1970.tab \

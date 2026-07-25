@@ -22,6 +22,14 @@ Unreleased, experimental changes
 
     Colombia’s 1992-05-02 spring forward was at 00:00, not 24:00.
 
+    The backward-compatibility names EST5EDT, CST6CDT, MST7MDT, and
+    PST8PDT now conform better to POSIX.  For example, EST5EDT now
+    always uses the abbreviation "EST" for standard time (now always 5
+    hours behind UT) and "EDT" for daylight saving time, whereas it
+    formerly had different UT offsets before standard time was
+    introduced and sometimes used abbreviations like "LMT", "EWT" and
+    "EPT", all contrary to POSIX.
+
   Changes to code
 
     zic now rejects Link targets that would have invalid names.

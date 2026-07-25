@@ -1836,12 +1836,8 @@ Zone	Pacific/Wallis	12:15:20 -	LMT	1901
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	HST		-10:00	-	HST
-Zone	PST8PDT		 -8:00	US	P%sT
 Zone	MST		 -7:00	-	MST
-Zone	MST7MDT		 -7:00	US	M%sT
-Zone	CST6CDT		 -6:00	US	C%sT
 Zone	EST		 -5:00	-	EST
-Zone	EST5EDT		 -5:00	US	E%sT
 Zone	WET		  0:00	EU	WE%sT
 Zone	CET		  1:00	C-Eur	CE%sT
 Zone	MET		  1:00	C-Eur	ME%sT

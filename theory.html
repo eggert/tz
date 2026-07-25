@@ -345,8 +345,7 @@ These legacy names are mostly defined in the file
 "<code>etcetera</code>".
 Also, the file "<code>backward</code>" defines the legacy names
 <code>Etc/GMT0</code>, <code>Etc/GMT-0</code>, <code>Etc/GMT+0</code>,
-<code>GMT0</code>, <code>GMT-0</code> and <code>GMT+0</code>,
-and the file "<code>northamerica</code>" defines the legacy names
+<code>GMT0</code>, <code>GMT-0</code>, <code>GMT+0</code>,
 <code>EST5EDT</code>, <code>CST6CDT</code>,
 <code>MST7MDT</code>, and <code>PST8PDT</code>.
 </li>
@@ -387,11 +386,11 @@ and <code>zone.tab</code>.
 
 <p>
 The database defines each timezone name to be a zone, or a link to a zone.
-The source file <code>backward</code> defines links for backward
-compatibility; it does not define zones.
+The source file <code>backward</code> defines links
+and a few zones for backward compatibility.
 Although <code>backward</code> was originally designed to be optional,
 nowadays distributions typically use it
-and no great weight should be attached to whether a link
+and no great weight should be attached to whether a link or zone
 is defined in <code>backward</code> or in some other file.
 The source file <code>etcetera</code> defines names that may be useful
 on platforms that do not support proleptic <code>TZ</code> strings

@@ -28,7 +28,10 @@ Unreleased, experimental changes
     hours behind UT) and "EDT" for daylight saving time, whereas it
     formerly had different UT offsets before standard time was
     introduced and sometimes used abbreviations like "LMT", "EWT" and
-    "EPT", all contrary to POSIX.
+    "EPT", all contrary to POSIX.  Also, though not required by POSIX
+    these names now use US federal rules rather than rules of places
+    like New York, reverting to 2024a behavior.  This change affects
+    only timestamps before 1966-10-30 at 01:00 standard time.
 
   Changes to code
 

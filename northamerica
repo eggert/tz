@@ -1996,7 +1996,7 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 			-7:00	Edm	M%sT	1987
 			-7:00	Canada	M%sT	2026 Jun 18
 			# Temporary hack; see above.
-			-7:00	1:00	MDT	2026 Nov  1  2:00
+			-7:00	Canada	MDT	2026 Nov  1  2:00
 			# End of temporary hack.
 			-6:00	-	CST
 
@@ -2103,7 +2103,7 @@ Zone America/Vancouver	-8:12:28 -	LMT	1884
 			-8:00	Vanc	P%sT	1987
 			-8:00	Canada	P%sT	2026 Mar  9
 			# Temporary hack; see above.
-			-8:00	1:00	PDT	2026 Nov  1  2:00
+			-8:00	Canada	PDT	2026 Nov  1  2:00
 			# End of temporary hack.
 			-7:00	-	MST
 Zone America/Dawson_Creek -8:00:56 -	LMT	1884

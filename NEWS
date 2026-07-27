@@ -33,6 +33,13 @@ Unreleased, experimental changes
     like New York, reverting to 2024a behavior.  This change affects
     only timestamps before 1966-10-30 at 01:00 standard time.
 
+  Other data changes
+
+    The temporary hacks used for North American timekeeping changes
+    now work around a bug in libstdc++ from GCC 14.1 through 16.1;
+    see GCC bug 124851, which affects std::chrono.  This data change
+    does not affect TZif files or timestamps.
+
   Changes to code
 
     zic now rejects Link targets that would have invalid names.

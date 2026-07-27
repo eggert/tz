@@ -1544,9 +1544,21 @@ Zone Asia/Jayapura	9:22:48 -	LMT	1932 Nov
 # leap year calculation involved.  There has never been any serious
 # plan to change that law....
 #
-# From Paul Eggert (2022-06-30):
-# Go with Pournader for 1935 through spring 1979, and for timestamps
-# after August 1991; go with with Shanks & Pottenger for other timestamps.
+# From N.F. Hase (2026-07-26):
+# Ettela'at (Tehran daily) printed a daily panel headed "taqvim-e
+# Ettela'at / sa'at-ha-ye shar'i", attributed to Dr. Riyazi Kermani.
+# Each panel gives today's maghrib followed by fajr, sunrise, solar noon
+# and maghrib for the next day, together with the Iranian, Hijri and
+# Gregorian dates.... 26 May 1979 (1358-03-05)
+# https://mashruteh.org/wiki/index.php/%D9%BE%D8%B1%D9%88%D9%86%D8%AF%D9%87:Ettelaat13580305.pdf
+# ... That also matches Movahedi's wording, that the government
+# returned to DST on 26 May, and the note in the 2022 thread that the
+# change was announced one day in advance on 25 May.
+#
+# From Paul Eggert (2026-07-26):
+# Go with Pournader for 1935 through spring 1979 (with the last
+# transition clarified by Hase), and for timestamps after August 1991;
+# go with Shanks & Pottenger for other timestamps.
 # Go with Santoni's citation of the UIT for fall 1977, as 20 October 1977
 # is 28 Mehr 1356, consistent with the "Mehr" in Pournader's source.
 # Assume that the UIT's "1930" is UTC, i.e., 24:00 local time.
@@ -1597,7 +1609,7 @@ Rule	Iran	1977	only	-	Mar	21	23:00	1:00	-
 Rule	Iran	1977	only	-	Oct	20	24:00	0	-
 Rule	Iran	1978	only	-	Mar	24	24:00	1:00	-
 Rule	Iran	1978	only	-	Aug	 5	01:00	0	-
-Rule	Iran	1979	only	-	May	26	24:00	1:00	-
+Rule	Iran	1979	only	-	May	25	24:00	1:00	-
 Rule	Iran	1979	only	-	Sep	18	24:00	0	-
 Rule	Iran	1980	only	-	Mar	20	24:00	1:00	-
 Rule	Iran	1980	only	-	Sep	22	24:00	0	-

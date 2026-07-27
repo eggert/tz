@@ -22,7 +22,7 @@ Unreleased, experimental changes
 
     Colombia’s 1992-05-02 spring forward was at 00:00, not 24:00.
 
-    Iran’s 1989-05-26 spring forward was at 00:00, not 24:00.
+    Iran’s 1979-05-26 spring forward was at 00:00, not 24:00.
     (Thanks to N.F. Hase.)
 
     The backward-compatibility names EST5EDT, CST6CDT, MST7MDT, and

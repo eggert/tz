@@ -420,7 +420,7 @@ running the command <code>make rearguard_tarballs</code> and compiling
 from the resulting tarballs instead.</p>
 <ul>
 <li><a href="https://github.com/libical">Libical</a>
-contains <code>vzic</code>, <a
+contains <code>vzic</code>, a <a
 href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a>
 program that compiles
 <code><abbr>tz</abbr></code> source into iCalendar-compatible VTIMEZONE files.
@@ -429,6 +429,23 @@ available under the <a
 href="https://www.gnu.org/copyleft/gpl.html"><abbr>GNU</abbr>
 General Public License (<abbr
 title="General Public License">GPL</abbr>)</a>.</li>
+<li>The <a id="TZDP"
+href="https://howardhinnant.github.io/date/tz.html">Time Zone
+Database Parser</a> contains a
+<a href="https://en.wikipedia.org/wiki/C++">C++</a> runtime parser
+supporting the <a
+href="https://en.cppreference.com/cpp/chrono#Time_zone"><code>std::chrono::time_zone</code> API</a>
+that is standardized in
+<a href="https://en.wikipedia.org/wiki/C%2B%2B20">C++20</a> and later.
+It is freely available under the
+<a href="https://en.wikipedia.org/wiki/MIT_License"><abbr
+title="Massachusetts Institute of Technology">MIT</abbr> license</a>.
+This approach is used by the <code>std::chrono::time_zone</code> implementation
+of <a href="https://gcc.gnu.org/"><abbr
+title="the GNU Compiler Collection">GCC</abbr></a>
+<code>libstdc++</code>, which is available under the GPL combined
+with the <a href="https://www.gnu.org/licenses/gcc-exception.html">GCC
+Runtime Library Exception</a>.</li>
 <li><a
 href="https://metacpan.org/release/DateTime-TimeZone">DateTime::TimeZone</a>
 contains a script <code>parse_olson</code> that compiles
@@ -440,18 +457,6 @@ available under both the <abbr>GPL</abbr> and the Perl Artistic
 License. DateTime::TimeZone also contains a script
 <code>tests_from_zdump</code> that generates test cases for each clock
 transition in the <code><abbr>tz</abbr></code> database.</li>
-<li>The <a href="https://howardhinnant.github.io/date/tz.html">Time Zone
-Database Parser</a> is a
-<a href="https://en.wikipedia.org/wiki/C++">C++</a> parser and
-runtime library with a <a
-href="https://en.cppreference.com/cpp/chrono"><code>std::chrono</code> API</a>
-that is a standard part of C++.
-It is freely available under the
-<abbr title="Massachusetts Institute of Technology">MIT</abbr> license.
-A similar approach is used by the <code>std::chrono</code> implementations
-in <code>libstdc++</code> from <a href="https://gcc.gnu.org/"><abbr
-title="the GNU Compiler Collection">GCC</abbr></a> and
-from <a href="https://www.llvm.org/"><abbr>LLVM</abbr></a>.</li>
 <li><a id="ICU" href="https://icu.unicode.org">International Components for
 Unicode (<abbr>ICU</abbr>)</a> contains C/C++ and <a
 href="https://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>
@@ -612,6 +617,17 @@ a <abbr>TZif</abbr> file reader written in C that
 creates a <code>GTimeZone</code> object representing sets
 of <abbr>UT</abbr> offsets.
 It is freely available under the <abbr>LGPL</abbr>.</li>
+<li>The <a href="https://en.wikipedia.org/wiki/Musl">musl</a> C library
+also has an <abbr>TZif</abbr> reader.
+It is freely available under the <abbr>MIT</abbr> license.</li>
+<li>The Time Zone Database Parser for C++, mentioned <a href="#TZDP">above,</a>
+can be configured to read TZif binary files.
+A similar approach is taken in
+<a href="https://www.llvm.org/"><abbr>LLVM</abbr></a>
+<code>std::chrono::time_zone</code>, which is available
+under the Apache License with
+<a href="https://llvm.org/docs/DeveloperPolicy.html#open-source-licensing-terms">LLVM
+Exceptions</a>.</li>
 <li>The
 <a href="https://github.com/bloomberg/bde/wiki">BDE Standard Library</a>’s
 <code>baltzo::TimeZoneUtil</code> component contains a C++

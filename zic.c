@@ -1781,6 +1781,11 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 	      break;
 	    }
 	    link_errno = errno;
+	    /* When hard links are not supported, some MS-Windows file system
+	       drivers fail with EINVAL, contrary to the intent of
+	       MS-FSA 42.0 (2025) section 2.1.5.15.7.  */
+	    if (link_errno == EINVAL)
+	      link_errno = ENOTSUP;
 	  }
 #endif
 	  if (link_errno == EXDEV || link_errno == ENOTSUP)

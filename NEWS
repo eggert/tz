@@ -39,9 +39,10 @@ Unreleased, experimental changes
   Other data changes
 
     The temporary hacks used for North American timekeeping changes
-    now work around a bug in libstdc++ from GCC 14.1 through 16.1;
-    see GCC bug 124851, which affects std::chrono.  This data change
-    does not affect TZif files or timestamps.
+    now work around a bug in libstdc++ std::chrono from GCC 14.1-14.4,
+    15.1-15.2, and 16.1; see GCC bug 124851.  This data change does
+    not affect TZif files or timestamps.  The change does not work
+    around the related but less serious GCC bugs 116110 and 124513.
 
   Changes to code
 

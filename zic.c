@@ -1788,6 +1788,13 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 	      link_errno = ENOTSUP;
 	  }
 #endif
+	  /* On platforms like AIX, the Linux kernel, macOS, and Solaris,
+	     link/linkat can fail with ENOSYS or EPERM if the file system
+	     does not support hard links, or if other problems occur.
+	     It is too much trouble to suss out the other problems.  */
+	  if (link_errno == ENOSYS || link_errno == EPERM)
+	    link_errno = ENOTSUP;
+
 	  if (link_errno == EXDEV || link_errno == ENOTSUP)
 	    break;
 
@@ -1854,7 +1861,8 @@ dolink(char const *target, char const *linkname, bool staysymlink)
 		      strerror(link_errno));
 	    else if (symlink_errno < 0)
 	      warning(N_("copy used because symbolic link not obvious"));
-	    else if (symlink_errno != ENOTSUP)
+	    else if (symlink_errno != ENOSYS && symlink_errno != ENOTSUP
+		     && symlink_errno != EPERM)
 	      warning(N_("copy used because symbolic link failed: %s"),
 		      strerror(symlink_errno));
 	  }

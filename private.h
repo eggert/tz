@@ -255,6 +255,9 @@ strnlen (char const *s, size_t maxlen)
 #ifndef ENOMEM
 # define ENOMEM EINVAL
 #endif
+#ifndef ENOSYS
+# define ENOSYS EINVAL
+#endif
 #ifndef ENOTCAPABLE
 # define ENOTCAPABLE EINVAL
 #endif
@@ -263,6 +266,9 @@ strnlen (char const *s, size_t maxlen)
 #endif
 #ifndef EOVERFLOW
 # define EOVERFLOW EINVAL
+#endif
+#ifndef EPERM
+# define EPERM EINVAL
 #endif
 
 #if HAVE_GETTEXT

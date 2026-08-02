@@ -2320,18 +2320,13 @@ inzsub(char **fields, int nfields, bool iscont)
 static zic_t
 getleapdatetime(char **fields, bool expire_line)
 {
-	register const char *		cp;
 	register const struct lookup *	lp;
-	register zic_t			i, j;
 	zic_t				year;
-	int				month, day;
-	zic_t				dayoff, tod;
 	zic_t				t;
 	char xs;
+	struct rule r;
 
-	dayoff = 0;
-	cp = fields[LP_YEAR];
-	if (sscanf(cp, "%"SCNdZIC"%c", &year, &xs) != 1) {
+	if (sscanf(fields[LP_YEAR], "%"SCNdZIC"%c", &year, &xs) != 1) {
 		/*
 		** Leapin' Lizards!
 		*/
@@ -2345,38 +2340,20 @@ getleapdatetime(char **fields, bool expire_line)
 		leapminyear = year;
 	    leapseen = true;
 	}
-	j = EPOCH_YEAR;
-	while (j != year) {
-		if (year > j) {
-			i = len_years[isleap(j)];
-			++j;
-		} else {
-			--j;
-			i = -len_years[isleap(j)];
-		}
-		dayoff = oadd(dayoff, i);
-	}
 	if ((lp = byword(fields[LP_MONTH], mon_names)) == NULL) {
 		error(N_("invalid month name"));
 		return -1;
 	}
-	month = lp->l_value;
-	j = TM_JANUARY;
-	while (j != month) {
-		i = len_months[isleap(year)][j];
-		dayoff = oadd(dayoff, i);
-		++j;
-	}
-	cp = fields[LP_DAY];
-	if (sscanf(cp, "%d%c", &day, &xs) != 1 ||
-		day <= 0 || day > len_months[isleap(year)][month]) {
+	r.r_month = lp->l_value;
+	if (! (sscanf(fields[LP_DAY], "%d%c", &r.r_dayofmonth, &xs) == 1
+	       && 0 < r.r_dayofmonth
+	       && r.r_dayofmonth <= len_months[isleap(year)][r.r_month])) {
 			error(N_("invalid day of month"));
 			return -1;
 	}
-	dayoff = oadd(dayoff, day - 1);
-	t = omul(dayoff, SECSPERDAY);
-	tod = gethms(fields[LP_TIME], N_("invalid time of day"));
-	t = tadd(t, tod);
+	r.r_dycode = DC_DOM;
+	r.r_tod = gethms(fields[LP_TIME], N_("invalid time of day"));
+	t = rpytime(&r, year);
 	if (t < 0)
 	  error(N_("leap second precedes Epoch"));
 	return t;

@@ -46,8 +46,9 @@ Unreleased, experimental changes
 
   Changes to code
 
-    zic now rejects Link targets that would have invalid names.
-    (Thanks to Darren Carreras.)
+    zic now rejects Link targets that would have invalid names,
+    and efficiently processes Leap and Expires lines containing years
+    far in the past or future.  (Thanks to Darren Carreras.)
 
     zic now ports to systems that report lack of link support via
     EINVAL, ENOSYS or EPERM errno values. (Thanks to Tom Lane.)

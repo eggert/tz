@@ -3545,7 +3545,9 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				defaulttype = type;
 		} else {
 		  zic_t year;
-		  for (year = min_year; year <= max_year; ++year) {
+		  for (year = min_year; ; ) {
+			bool next_year_found = false;
+			zic_t next_year = 0;
 			if (useuntil && year > zp->z_untilrule.r_hiyear)
 				break;
 			/*
@@ -3559,6 +3561,15 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				struct rule *rp = &zp->z_rules[j];
 				eats(zp->z_filenum, zp->z_linenum,
 				     rp->r_filenum, rp->r_linenum);
+				/* Find the next year in which any rule can apply.  */
+				if (year < rp->r_hiyear) {
+					zic_t next = max(year + 1, rp->r_loyear);
+					if (next <= max_year
+					    && (!next_year_found || next < next_year)) {
+						next_year_found = true;
+						next_year = next;
+					}
+				}
 				rp->r_todo = year >= rp->r_loyear &&
 						year <= rp->r_hiyear;
 				if (rp->r_todo) {
@@ -3674,6 +3685,9 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				  nonTZlimtype = type;
 				}
 			}
+			if (!next_year_found)
+				break;
+			year = next_year;
 		  }
 		}
 		if (usestart) {

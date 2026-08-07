@@ -3544,12 +3544,13 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 			} else
 				defaulttype = type;
 		} else {
-		  zic_t year;
-		  for (year = min_year; ; ) {
-			bool next_year_found = false;
-			zic_t next_year = 0;
+		  zic_t year, next_year;
+		  bool try_next_year = true;
+		  for (year = min_year; try_next_year; year = next_year) {
 			if (useuntil && year > zp->z_untilrule.r_hiyear)
 				break;
+			try_next_year = false;
+			next_year = max_year;
 			/*
 			** Mark which rules to do in the current year.
 			** For those to do, calculate rpytime(rp, year);
@@ -3561,15 +3562,17 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				struct rule *rp = &zp->z_rules[j];
 				eats(zp->z_filenum, zp->z_linenum,
 				     rp->r_filenum, rp->r_linenum);
-				/* Find the next year in which any rule can apply.  */
+
+				/* Keep track of the earliest year after YEAR
+				   in which some rule <= J applies.  */
 				if (year < rp->r_hiyear) {
-					zic_t next = max(year + 1, rp->r_loyear);
-					if (next <= max_year
-					    && (!next_year_found || next < next_year)) {
-						next_year_found = true;
-						next_year = next;
-					}
+				  zic_t next = max(year + 1, rp->r_loyear);
+				  if (next <= next_year) {
+				    next_year = next;
+				    try_next_year = true;
+				  }
 				}
+
 				rp->r_todo = year >= rp->r_loyear &&
 						year <= rp->r_hiyear;
 				if (rp->r_todo) {
@@ -3685,9 +3688,6 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 				  nonTZlimtype = type;
 				}
 			}
-			if (!next_year_found)
-				break;
-			year = next_year;
 		  }
 		}
 		if (usestart) {

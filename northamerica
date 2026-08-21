@@ -2070,23 +2070,32 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 #   -07 - accurate and clear in itself, but makes BC look odd vs neighbors
 #   PacT - straightforward but novel abbreviation for Pacific Time
 
-# From Chris Walton (2026-03-15):
-# The Regional District of East Kootenay is planning to move to year-round
-# Mountain Standard Time (MST) on November 1, 2026....
-# https://www.rdek.bc.ca/news/entry/rdek_board_moves_to_transition_to_year_round_mountain_standard_time
-# (2026-03-17):
-# The final decision East Kootenay made a few days ago may turn out not to
-# be final after all. They are going to reopen the debate next month!
+# From Tim Parenti (2026-08-21):
+# In the southeast of the province, the Regional District of East Kootenay
+# (RDEK), Columbia Shuswap Regional District’s Electoral Area A (Rural Golden),
+# and the Town of Golden have all historically been aligned with neighboring
+# Alberta and use America/Edmonton.
+#
+# Shortly after the BC provincial government announced its adoption of
+# year-round -07, the RDEK Board of Directors on 2026-03-13 initially voted
+# narrowly, 8–7, that it would fall back one last time to rejoin the rest of BC
+# on -07 from November 2026.  However, citing the rushed decision and lack of
+# feedback from residents, Mayor Steve Fairbairn of Elkford used his power to
+# ask the question be called a second time, remarking, “Pardon the pun, but
+# this is not a time-sensitive issue,” and the initial decision was rescinded
+# by the RDEK Board at its 2026-04-10 meeting.
 # https://www.cbc.ca/news/canada/british-columbia/what-time-is-it-in-the-east-kootenay-debate-9.7132624
-# From Paul Eggert (2026-03-17):
-# Mayor Steve Fairbairn of Elkford asked the question be called a second time,
-# saying, “Pardon the pun, but this is not a time-sensitive issue.”
-# For now, merely mention the potential change in these comments.
-# If it happens it would likely affect clocks starting 2027-03-14 at 02:00.
-# From Tim Parenti (2026-05-14):
-# RDEK has historically been aligned with neighboring Alberta.  With the latter
-# now opting to stay on -06 year-round, if RDEK does not follow, it would
-# require a new zone for the Cranbrook area.
+# In the ensuing months, after Alberta announced and implemented its similar
+# shift to “permanent DST” (see above), RDEK coordinated a public survey across
+# all of the relevant BC communities.  The survey found 89% of respondents in
+# favor of ending seasonal time changes, with 66% of that group preferring to
+# remain aligned with Alberta time on year-round -06 instead of the rest of BC.
+# In line with those results, the RDEK Board adopted year-round -06 at its
+# 2026-08-14 meeting.
+# https://www.cbc.ca/news/canada/british-columbia/east-kootenay-stops-changing-clocks-9.7308201
+#
+# At time of writing, Golden and CSRD Area A are yet to formalize their own
+# decisions.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Vanc	1918	only	-	Apr	14	2:00	1:00	D

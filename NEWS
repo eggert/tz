@@ -52,6 +52,11 @@ Unreleased, experimental changes
     zic now ports to systems that report lack of link support via
     EINVAL, ENOSYS or EPERM errno values. (Thanks to Tom Lane.)
 
+  Changes to documentation
+
+    URLs for release tarballs in tz-link.html have been updated to
+    reflect their new canonical URLs on data.iana.org.
+
 
 Release 2026c - 2026-07-08 10:23:58 -0700
 

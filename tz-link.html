@@ -146,15 +146,15 @@ the latest release’s two
 to a <abbr>GNU</abbr>/Linux or similar host.</p>
 <pre><code>mkdir tzdb
 cd tzdb
-<a href="https://www.gnu.org/software/wget/">wget</a> https://www.iana.org/time-zones/repository/tzcode-latest.tar.gz
-wget https://www.iana.org/time-zones/repository/tzdata-latest.tar.gz
+<a href="https://www.gnu.org/software/wget/">wget</a> https://data.iana.org/time-zones/tzcode-latest.tar.gz
+wget https://data.iana.org/time-zones/tzdata-latest.tar.gz
 <a href="https://www.gnu.org/software/gzip/">gzip</a> -dc tzcode-latest.tar.gz | <a href="https://www.gnu.org/software/tar/">tar</a> -xf -
 gzip -dc tzdata-latest.tar.gz | tar -xf -
 </code></pre>
 <p>Alternatively, the following shell commands download the same
 release in a single-tarball format containing extra data
 useful for regression testing:</p>
-<pre><code>wget <a href="https://www.iana.org/time-zones/repository/tzdb-latest.tar.lz">https://www.iana.org/time-zones/repository/tzdb-latest.tar.lz</a>
+<pre><code>wget <a href="https://data.iana.org/time-zones/tzdb-latest.tar.lz">https://data.iana.org/time-zones/tzdb-latest.tar.lz</a>
 <a href="https://www.nongnu.org/lzip/">lzip</a> -dc tzdb-latest.tar.lz | tar -xf -
 </code></pre>
 <p>These commands use convenience links to the latest release

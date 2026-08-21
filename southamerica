@@ -1344,7 +1344,7 @@ Zone America/Rio_Branco	-4:31:12 -	LMT	1914
 # https://www.bcn.cl/leychile/Navegar?idNorma=1211955
 # Model this as a change to standard offset effective 2025-03-20.
 
-# From Paul Eggert (2026-10-11):
+# From Paul Eggert (2026-08-11):
 # Chile’s timekeeping regime is renewed by Decreto 98 of 2026 of the
 # Ministry of the Interior, Undersecretariat of the Interior,
 # promulgated 2026-06-30 and published 2026-07-02:

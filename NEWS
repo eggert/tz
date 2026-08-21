@@ -3,19 +3,18 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
-    Canada’s Northwest Territories move to permanent -06 on 2026-11-01.
+    Canada’s Northwest Territories moved to permanent -06 on 2026-08-21.
 
   Changes to future timestamps
 
     Canada’s Northwest Territories will not fall back on 2026-11-01
     and will stay on -06 year-round, matching Alberta’s recent change.
-    Model this with its traditional abbreviation CST.  Based on
-    private correspondence with staffers responsible for implementing
-    the change, assume for now that the legal implementation will take
-    place on 2026-11-01 at 02:00, as the expected regulation’s official
-    registration is not anticipated until September 2026.  This only
-    affects America/Inuvik as the rest of the territory is covered by
-    America/Edmonton, for which the equivalent change was released in
+    Model this with its traditional abbreviation CST.  Although the
+    change to permanent -06 legally took place on 2026-08-21,
+    temporarily model the change to occur on 2026-11-01 at 02:00
+    instead, for the same reason as other recent temporary hacks.  This
+    only affects America/Inuvik as the rest of the territory is covered
+    by America/Edmonton, for which the equivalent change was released in
     2026c.
 
   Changes to past timestamps

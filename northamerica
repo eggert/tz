@@ -580,8 +580,12 @@ Zone America/Los_Angeles -7:52:58 -	LMT	1883 Nov 18 20:00u
 # Russian time, and it is more accurate to model this than to ignore it.
 # The database format requires an exact transition time; use the Russian
 # salute as a somewhat-arbitrary time for the formal transfer of control for
-# all of Alaska.  Sitka's UTC offset is -9:01:13; adjust its 15:30 to the
-# local times of other Alaskan locations so that they change simultaneously.
+# all of Alaska.
+#
+# From Tim Parenti (2026-08-26):
+# Sitka's UT offset changed from +14:58:47 to -9:01:13, so effectuate this
+# change at 15:30:00 +14:58:47, or 1867-10-19 00:31:13 UT in the Alaskan
+# locations below.
 
 # From Paul Eggert (2014-07-18):
 # One opinion of the early 1980s turmoil in Alaska over time zones and
@@ -661,7 +665,7 @@ Zone America/Los_Angeles -7:52:58 -	LMT	1883 Nov 18 20:00u
 # and are west of 169.5° W.
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
-Zone America/Juneau	 15:02:19 -	LMT	1867 Oct 19 15:33:32
+Zone America/Juneau	 15:02:19 -	LMT	1867 Oct 19  0:31:13u
 			 -8:57:41 -	LMT	1900 Aug 20 12:00
 			 -8:00	-	PST	1942
 			 -8:00	US	P%sT	1946
@@ -671,7 +675,7 @@ Zone America/Juneau	 15:02:19 -	LMT	1867 Oct 19 15:33:32
 			 -8:00	US	P%sT	1983 Oct 30  2:00
 			 -9:00	US	Y%sT	1983 Nov 30
 			 -9:00	US	AK%sT
-Zone America/Sitka	 14:58:47 -	LMT	1867 Oct 19 15:30
+Zone America/Sitka	 14:58:47 -	LMT	1867 Oct 19  0:31:13u
 			 -9:01:13 -	LMT	1900 Aug 20 12:00
 			 -8:00	-	PST	1942
 			 -8:00	US	P%sT	1946
@@ -679,7 +683,7 @@ Zone America/Sitka	 14:58:47 -	LMT	1867 Oct 19 15:30
 			 -8:00	US	P%sT	1983 Oct 30  2:00
 			 -9:00	US	Y%sT	1983 Nov 30
 			 -9:00	US	AK%sT
-Zone America/Metlakatla	 15:13:42 -	LMT	1867 Oct 19 15:44:55
+Zone America/Metlakatla	 15:13:42 -	LMT	1867 Oct 19  0:31:13u
 			 -8:46:18 -	LMT	1900 Aug 20 12:00
 			 -8:00	-	PST	1942
 			 -8:00	US	P%sT	1946
@@ -689,14 +693,14 @@ Zone America/Metlakatla	 15:13:42 -	LMT	1867 Oct 19 15:44:55
 			 -9:00	US	AK%sT	2018 Nov  4  2:00
 			 -8:00	-	PST	2019 Jan 20  2:00
 			 -9:00	US	AK%sT
-Zone America/Yakutat	 14:41:05 -	LMT	1867 Oct 19 15:12:18
+Zone America/Yakutat	 14:41:05 -	LMT	1867 Oct 19  0:31:13u
 			 -9:18:55 -	LMT	1900 Aug 20 12:00
 			 -9:00	-	YST	1942
 			 -9:00	US	Y%sT	1946
 			 -9:00	-	YST	1969
 			 -9:00	US	Y%sT	1983 Nov 30
 			 -9:00	US	AK%sT
-Zone America/Anchorage	 14:00:24 -	LMT	1867 Oct 19 14:31:37
+Zone America/Anchorage	 14:00:24 -	LMT	1867 Oct 19  0:31:13u
 			 -9:59:36 -	LMT	1900 Aug 20 12:00
 			-10:00	-	AST	1942
 			-10:00	US	A%sT	1967 Apr
@@ -704,7 +708,7 @@ Zone America/Anchorage	 14:00:24 -	LMT	1867 Oct 19 14:31:37
 			-10:00	US	AH%sT	1983 Oct 30  2:00
 			 -9:00	US	Y%sT	1983 Nov 30
 			 -9:00	US	AK%sT
-Zone America/Nome	 12:58:22 -	LMT	1867 Oct 19 13:29:35
+Zone America/Nome	 12:58:22 -	LMT	1867 Oct 19  0:31:13u
 			-11:01:38 -	LMT	1900 Aug 20 12:00
 			-11:00	-	NST	1942
 			-11:00	US	N%sT	1946
@@ -713,7 +717,7 @@ Zone America/Nome	 12:58:22 -	LMT	1867 Oct 19 13:29:35
 			-11:00	US	B%sT	1983 Oct 30  2:00
 			 -9:00	US	Y%sT	1983 Nov 30
 			 -9:00	US	AK%sT
-Zone America/Adak	 12:13:22 -	LMT	1867 Oct 19 12:44:35
+Zone America/Adak	 12:13:22 -	LMT	1867 Oct 19  0:31:13u
 			-11:46:38 -	LMT	1900 Aug 20 12:00
 			-11:00	-	NST	1942
 			-11:00	US	N%sT	1946

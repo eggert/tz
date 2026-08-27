@@ -75,6 +75,11 @@ Release 2026c - 2026-07-08 10:23:58 -0700
     02:00 instead, for the same reason we introduced a similarly
     temporary hack for British Columbia in 2026b.
 
+      As the change affects both America/Edmonton and its backward
+      compatibility link, the obsolescent setting TZ="Canada/Mountain"
+      will now use the abbreviation CST for affected timestamps,
+      akin to TZ="Canada/Pacific" behavior introduced in 2026b.
+
       Although another TZDB release will likely be needed soon because
       Northwest Territories will likely follow Alberta, the legal
       formalities have not yet taken place.
@@ -136,6 +141,17 @@ Release 2026b - 2026-04-22 23:06:43 -0700
     to occur on 2026-11-01 at 02:00 instead.  This works around a
     limitation in CLDR 48.1 (2026-01-08).  This temporary hack is
     planned to be removed after CLDR is fixed.
+
+      To match longstanding practice for -07 standard time in North
+      America, such as for America/Dawson, America/Dawson_Creek,
+      America/Fort_Nelson and America/Whitehose, affected BC
+      timestamps use the abbreviation MST.  As the change affects both
+      America/Vancouver and its backward compatibility link, the
+      obsolescent setting TZ="Canada/Pacific" will now use the
+      abbreviation MST.  Future TZDB releases may change the
+      abbreviation if something else becomes popular across areas
+      observing -07, and may change it to "-07" if no alphabetic
+      consensus emerges.
 
   Changes to code
 

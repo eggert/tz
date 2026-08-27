@@ -1232,13 +1232,13 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	      break;
 	}
 	if ((tzloadflags & TZLOAD_TZSTRING) && nread > 2 &&
-		up->buf[0] == '\n' && up->buf[nread - 1] == '\n' &&
-		sp->typecnt + 2 <= TZ_MAX_TYPES) {
+		up->buf[0] == '\n' && up->buf[nread - 1] == '\n') {
 			struct state	*ts = &lsp->u.st;
 
 			up->buf[nread - 1] = '\0';
-			if (tzparse(&up->buf[1], ts, sp)) {
-
+			if (!tzparse(&up->buf[1], ts, sp))
+			  return EFTYPE;
+			else {
 			  /* Attempt to reuse existing abbreviations.
 			     Without this, America/Anchorage would
 			     consume 50 bytes for abbreviations, as
@@ -1270,6 +1270,8 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 			    }
 			  }
 			  if (gotabbr == ts->typecnt) {
+			    if (TZ_MAX_TYPES - sp->typecnt < ts->typecnt)
+			      return EOVERFLOW;
 			    sp->charcnt = charcnt;
 
 			    /* Ignore any trailing, no-op transitions generated
@@ -1288,10 +1290,8 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 				  || (0 < sp->timecnt
 				      && t <= sp->ats[sp->timecnt - 1]))
 				continue;
-			      if (TZ_MAX_TIMES <= sp->timecnt) {
-				sp->goahead = false;
-				break;
-			      }
+			      if (TZ_MAX_TIMES <= sp->timecnt)
+				return EOVERFLOW;
 			      sp->ats[sp->timecnt] = t;
 			      sp->types[sp->timecnt] = (sp->typecnt
 							+ ts->types[i]);
@@ -1764,17 +1764,20 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 		  if (reversed
 		      || (starttime < endtime
 			  && endtime - starttime < yearsecs)) {
-		    if (TZ_MAX_TIMES - 2 < timecnt)
-		      break;
 		    sp->ats[timecnt] = janfirst;
 		    if (! increment_overflow_time(&sp->ats[timecnt],
 						  janoffset + starttime)
-			&& atlo <= sp->ats[timecnt])
+			&& atlo <= sp->ats[timecnt]) {
+		      if (TZ_MAX_TIMES <= timecnt)
+			return false;
 		      sp->types[timecnt++] = !reversed;
+		    }
 		    sp->ats[timecnt] = janfirst;
 		    if (! increment_overflow_time(&sp->ats[timecnt],
 						  janoffset + endtime)
 			&& atlo <= sp->ats[timecnt]) {
+		      if (TZ_MAX_TIMES <= timecnt)
+			return false;
 		      sp->types[timecnt++] = reversed;
 		    }
 		  }

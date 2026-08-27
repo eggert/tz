@@ -1764,20 +1764,20 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 		  if (reversed
 		      || (starttime < endtime
 			  && endtime - starttime < yearsecs)) {
-		    sp->ats[timecnt] = janfirst;
-		    if (! increment_overflow_time(&sp->ats[timecnt],
-						  janoffset + starttime)
-			&& atlo <= sp->ats[timecnt]) {
+		    time_t at = janfirst;
+		    if (! increment_overflow_time(&at, janoffset + starttime)
+			&& atlo <= at) {
 		      if (TZ_MAX_TIMES <= timecnt)
 			return false;
+		      sp->ats[timecnt] = at;
 		      sp->types[timecnt++] = !reversed;
 		    }
-		    sp->ats[timecnt] = janfirst;
-		    if (! increment_overflow_time(&sp->ats[timecnt],
-						  janoffset + endtime)
-			&& atlo <= sp->ats[timecnt]) {
+		    at = janfirst;
+		    if (! increment_overflow_time(&at, janoffset + endtime)
+			&& atlo <= at) {
 		      if (TZ_MAX_TIMES <= timecnt)
 			return false;
+		      sp->ats[timecnt] = at;
 		      sp->types[timecnt++] = reversed;
 		    }
 		  }

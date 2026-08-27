@@ -528,10 +528,6 @@ static const int	len_months[2][MONSPERYEAR] = {
 	{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
 };
 
-static const int	len_years[2] = {
-	DAYSPERNYEAR, DAYSPERLYEAR
-};
-
 static struct attype {
 	zic_t		at;
 	bool		dontmerge;
@@ -4153,7 +4149,7 @@ rpytime(const struct rule *rp, zic_t wantedy)
 	wantedy = y + (yrem + 2 * YEARSPERREPEAT) % YEARSPERREPEAT;
 
 	while (wantedy != y) {
-		i = len_years[isleap(y)];
+		i = year_days(y);
 		dayoff = oadd(dayoff, i);
 		y++;
 	}

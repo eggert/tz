@@ -1334,10 +1334,6 @@ static const int	mon_lengths[2][MONSPERYEAR] = {
 	{ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
 };
 
-static const int	year_lengths[2] = {
-	DAYSPERNYEAR, DAYSPERLYEAR
-};
-
 /* Is C an ASCII digit?  */
 static bool
 is_digit(char c)
@@ -1723,7 +1719,7 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 
 		do {
 		  int_fast32_t yearsecs
-		    = year_lengths[isleap(yearbeg - 1)] * SECSPERDAY;
+		    = year_days(yearbeg - 1) * SECSPERDAY;
 		  time_t janfirst1 = janfirst;
 		  yearbeg--;
 		  if (increment_overflow_time(&janfirst1, -yearsecs)) {
@@ -1736,7 +1732,7 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 
 		while (true) {
 		  int_fast32_t yearsecs
-		    = year_lengths[isleap(yearbeg)] * SECSPERDAY;
+		    = year_days(yearbeg) * SECSPERDAY;
 		  int yearbeg1 = yearbeg;
 		  time_t janfirst1 = janfirst;
 		  if (increment_overflow_time(&janfirst1, yearsecs)
@@ -1754,7 +1750,7 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 		  int_fast32_t
 		    starttime = transtime(year, &start, stdoffset),
 		    endtime = transtime(year, &end, dstoffset),
-		    yearsecs = year_lengths[isleap(year)] * SECSPERDAY;
+		    yearsecs = year_days(year) * SECSPERDAY;
 		  bool reversed = endtime < starttime;
 		  if (reversed) {
 		    int_fast32_t swap = starttime;
@@ -2383,7 +2379,7 @@ timesub(const time_t *timep, int_fast32_t offset,
 	idays += dayoff % DAYSPERREPEAT + 2 * DAYSPERREPEAT;
 	idays %= DAYSPERREPEAT;
 	/* Increase Y and decrease IDAYS until IDAYS is in range for Y.  */
-	while (year_lengths[isleap(y)] <= idays) {
+	while (year_days(y) <= idays) {
 		int tdelta = idays / DAYSPERLYEAR;
 		int_fast32_t ydelta = tdelta + !tdelta;
 		time_t newy = y + ydelta;
@@ -2651,12 +2647,12 @@ time2sub(struct tm *const tmp,
 
 	while (mday <= 0) {
 	  iinntt li = y - (yourtm.tm_mon <= 1);
-	  mday += year_lengths[isleap(li)];
+	  mday += year_days(li);
 	  y--;
 	}
 	while (DAYSPERLYEAR < mday) {
 	  iinntt li = y + (1 < yourtm.tm_mon);
-	  mday -= year_lengths[isleap(li)];
+	  mday -= year_days(li);
 	  y++;
 	}
 	yourtm.tm_mday = mday;

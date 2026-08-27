@@ -1176,6 +1176,7 @@ enum {
 };
 
 #define isleap(y) (((y) % 4) == 0 && (((y) % 100) != 0 || ((y) % 400) == 0))
+#define year_days(y) (DAYSPERNYEAR + isleap(y))
 
 /*
 ** Since everything in isleap is modulo 400 (or a factor of 400), we know that
@@ -1189,6 +1190,6 @@ enum {
 ** We use this to avoid addition overflow problems.
 */
 
-#define isleap_sum(a, b)	isleap((a) % 400 + (b) % 400)
+#define year_sum_days(a, b) (DAYSPERNYEAR + isleap((a) % 400 + (b) % 400))
 
 #endif /* !defined PRIVATE_H */

@@ -927,9 +927,10 @@ Zone America/Tortola	-4:18:28 -	LMT	1911 Jul # Road Town
 			-4:00	-	AST
 
 # Yellowknife, Northwest Territories
-Zone America/Yellowknife 0	-	-00	1935 # Yellowknife founded?
-			-7:00	NT_YK	M%sT	1980
-			-7:00	Canada	M%sT
+# Commented out as too wrong to be useful.
+#Zone America/Yellowknife 0	-	-00	1935 # Yellowknife founded?
+#			-7:00	NT_YK	M%sT	1980
+#			-7:00	Canada	M%sT
 
 # Dumont d'Urville, Île des Pétrels, -6640+14001, since 1956-11
 # <https://en.wikipedia.org/wiki/Dumont_d'Urville_Station> (2005-12-05)

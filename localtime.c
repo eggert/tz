@@ -1536,37 +1536,23 @@ static int_fast32_t
 transtime(const int year, register const struct rule *const rulep,
 	  const int_fast32_t offset)
 {
+	int d;  /* Day of year (zero-origin).  */
 	register bool	leapyear;
-	register int_fast32_t value;
-	register int	i;
-	int		d, m1, yy0, yy1, yy2, dow;
 
 	leapyear = isleap(year);
-	switch (rulep->r_type) {
 
-	case JULIAN_DAY:
+	if (rulep->r_type <= DAY_OF_YEAR) {
 		/*
 		** Jn - Julian day, 1 == January 1, 60 == March 1 even in leap
 		** years.
 		** In non-leap years, or if the day number is 59 or less, just
-		** add SECSPERDAY times the day number-1 to the time of
-		** January 1, midnight, to get the day.
-		*/
-		value = (rulep->r_day - 1) * SECSPERDAY;
-		if (leapyear && rulep->r_day >= 60)
-			value += SECSPERDAY;
-		break;
-
-	case DAY_OF_YEAR:
-		/*
+		** use the day number - 1.
+		**
 		** n - day of year.
-		** Just add SECSPERDAY times the day number to the time of
-		** January 1, midnight, to get the day.
 		*/
-		value = rulep->r_day * SECSPERDAY;
-		break;
-
-	case MONTH_NTH_DAY_OF_WEEK:
+		d = rulep->r_day - ((rulep->r_type < DAY_OF_YEAR)
+				    & (!leapyear | (rulep->r_day <= 59)));
+	} else {
 		/*
 		** Mm.n.d - nth "dth day" of month m.
 		*/
@@ -1575,14 +1561,15 @@ transtime(const int year, register const struct rule *const rulep,
 		** Use Zeller's Congruence to get day-of-week of first day of
 		** month.
 		*/
-		m1 = (rulep->r_mon + 9) % 12 + 1;
-		yy0 = (rulep->r_mon <= 2) ? (year - 1) : year;
-		yy1 = yy0 / 100;
-		yy2 = yy0 % 100;
-		dow = ((26 * m1 - 2) / 10 +
-			1 + yy2 + yy2 / 4 + yy1 / 4 - 2 * yy1) % 7;
-		if (dow < 0)
-			dow += DAYSPERWEEK;
+		int i;
+		bool janfeb = rulep->r_mon <= 2;
+		int month = (rulep->r_mon
+			     + (janfeb ? MONSPERYEAR : 0)); /* 3..14  */
+		int ay_rem = (year - janfeb) % YEARSPERREPEAT;
+		int y = ay_rem + (ay_rem < 0 ? YEARSPERREPEAT : 0);
+		int dow = (((13 * (month + 1)) / 5
+			    + y + y / 4 - y / 100 + y / 400)
+			   % DAYSPERWEEK);
 
 		/*
 		** "dow" is the day-of-week of the first day of the month. Get
@@ -1590,33 +1577,24 @@ transtime(const int year, register const struct rule *const rulep,
 		** month.
 		*/
 		d = rulep->r_day - dow;
-		if (d < 0)
-			d += DAYSPERWEEK;
-		for (i = 1; i < rulep->r_week; ++i) {
-			if (d + DAYSPERWEEK >=
-				mon_lengths[leapyear][rulep->r_mon - 1])
-					break;
-			d += DAYSPERWEEK;
-		}
+		d += (rulep->r_week - (0 <= d)) * DAYSPERWEEK;
+		if (mon_lengths[leapyear][rulep->r_mon - 1] <= d)
+		  d -= DAYSPERWEEK;
 
 		/*
 		** "d" is the day-of-month (zero-origin) of the day we want.
 		*/
-		value = d * SECSPERDAY;
 		for (i = 0; i < rulep->r_mon - 1; ++i)
-			value += mon_lengths[leapyear][i] * SECSPERDAY;
-		break;
-
-	default: unreachable();
+		  d += mon_lengths[leapyear][i];
 	}
 
 	/*
-	** "value" is the year-relative time of 00:00:00 UT on the day in
+	** d is the origin-0 year-relative day in
 	** question. To get the year-relative time of the specified local
 	** time on that day, add the transition time and the current offset
-	** from UT.
+	** from UT to d * SECSPERDAY.
 	*/
-	return value + rulep->r_time + offset;
+	return d * SECSPERDAY + rulep->r_time + offset;
 }
 
 /*

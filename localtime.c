@@ -2064,23 +2064,23 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 	}
 	if ((sp->goback && t < sp->ats[0]) ||
 		(sp->goahead && t > sp->ats[sp->timecnt - 1])) {
-			time_t newt;
-			register time_t		seconds;
-			register time_t		years;
-
-			if (t < sp->ats[0])
-				seconds = sp->ats[0] - t;
-			else	seconds = t - sp->ats[sp->timecnt - 1];
-
-			/* Beware integer overflow, as SECONDS might
-			   be close to the maximum time_t.  */
-			years = seconds / SECSPERREPEAT * YEARSPERREPEAT;
-			seconds = years * AVGSECSPERYEAR;
-			years += YEARSPERREPEAT;
-			if (t < sp->ats[0])
-			  newt = t + seconds + SECSPERREPEAT;
-			else
-			  newt = t - seconds - SECSPERREPEAT;
+			/* Avoid integer overflow when time_t is signed, by
+			   using secs_div_2 twice; the full value would
+			   always be even, so halving does not round.  */
+			bool early = t < sp->ats[0];
+			time_t
+			  tlo = early ? t : sp->ats[sp->timecnt - 1],
+			  thi = early ? sp->ats[0] : t,
+			  diffyears = ((thi / 2 - tlo / 2
+					+ ((thi % 2 - tlo % 2 + 2) / 2 - 1))
+				       / (SECSPERREPEAT / 2)
+				       * YEARSPERREPEAT),
+			  years = diffyears + YEARSPERREPEAT,
+			  secs_div_2 = (diffyears * (AVGSECSPERYEAR / 2)
+					+ SECSPERREPEAT / 2),
+			  newt = (early
+				  ? t + secs_div_2 + secs_div_2
+				  : t - secs_div_2 - secs_div_2);
 
 			if (newt < sp->ats[0] ||
 				newt > sp->ats[sp->timecnt - 1])
@@ -2088,7 +2088,7 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 			result = localsub(sp, &newt, setname, tmp);
 			if (result) {
 # if defined ckd_add && defined ckd_sub
-				if (t < sp->ats[0]
+				if (early
 				    ? ckd_sub(&result->tm_year,
 					      result->tm_year, years)
 				    : ckd_add(&result->tm_year,
@@ -2098,7 +2098,7 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 				register int_fast64_t newy;
 
 				newy = result->tm_year;
-				if (t < sp->ats[0])
+				if (early)
 					newy -= years;
 				else	newy += years;
 				if (! (INT_MIN <= newy && newy <= INT_MAX))

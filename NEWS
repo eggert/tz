@@ -56,6 +56,9 @@ Unreleased, experimental changes
     large for them, they now consistently fail instead of sometimes
     silently ignoring excess parts of the file.
 
+    localtime-related functions no longer mishandle extreme timestamps
+    when given TZif files holding some unlikely timezone histories.
+
   Changes to documentation
 
     URLs for release tarballs in tz-link.html have been updated to

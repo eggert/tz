@@ -1246,7 +1246,6 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 			     AHDT YST AKDT AKST) and ts->charcnt equals 10
 			     (for AKST AKDT).  Reusing means sp->charcnt can
 			     stay 40 in this example.  */
-			  int gotabbr = 0;
 			  int charcnt = sp->charcnt;
 			  for (i = 0; i < ts->typecnt; i++) {
 			    char *tsabbr = ts->chars + ts->ttis[i].tt_desigidx;
@@ -1254,24 +1253,25 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 			    for (j = 0; j < charcnt; j++)
 			      if (strcmp(sp->chars + j, tsabbr) == 0) {
 				ts->ttis[i].tt_desigidx = j;
-				gotabbr++;
 				break;
 			      }
 			    if (! (j < charcnt)) {
 			      int tsabbrlen = strnlen(tsabbr, TZ_MAX_CHARS - j);
-			      if (j + tsabbrlen < TZ_MAX_CHARS) {
+			      if (TZ_MAX_CHARS <= j + tsabbrlen)
+				return EOVERFLOW;
+			      else {
 				char *cp = sp->chars + j;
 				cp = mempcpy(cp, tsabbr, tsabbrlen);
 				*cp = '\0';
 				charcnt = j + tsabbrlen + 1;
 				ts->ttis[i].tt_desigidx = j;
-				gotabbr++;
 			      }
 			    }
 			  }
-			  if (gotabbr == ts->typecnt) {
-			    if (TZ_MAX_TYPES - sp->typecnt < ts->typecnt)
-			      return EOVERFLOW;
+
+			  if (TZ_MAX_TYPES - sp->typecnt < ts->typecnt)
+			    return EOVERFLOW;
+			  else {
 			    sp->charcnt = charcnt;
 
 			    /* Ignore any trailing, no-op transitions generated

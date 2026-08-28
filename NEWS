@@ -52,6 +52,10 @@ Unreleased, experimental changes
     zic now ports to systems that report lack of link support via
     EINVAL, ENOSYS or EPERM errno values. (Thanks to Tom Lane.)
 
+    When tzset and related functions encounter a TZif file that is too
+    large for them, they now consistently fail instead of sometimes
+    silently ignoring excess parts of the file.
+
   Changes to documentation
 
     URLs for release tarballs in tz-link.html have been updated to

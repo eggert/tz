@@ -2071,7 +2071,6 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 			if (t < sp->ats[0])
 				seconds = sp->ats[0] - t;
 			else	seconds = t - sp->ats[sp->timecnt - 1];
-			--seconds;
 
 			/* Beware integer overflow, as SECONDS might
 			   be close to the maximum time_t.  */

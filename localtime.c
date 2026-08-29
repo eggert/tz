@@ -505,7 +505,6 @@ struct state {
 	int		timecnt;
 	int		typecnt;
 	int		charcnt;
-	bool		goback;
 	bool		goahead;
 	time_t		ats[TZ_MAX_TIMES];
 	unsigned char	types[TZ_MAX_TIMES];
@@ -569,12 +568,11 @@ struct rule {
 };
 
 static struct tm *gmtsub(struct state const *, time_t const *, int_fast32_t,
-			 struct tm *);
-static bool increment_overflow(int *, int);
+			 struct tm *, time_t *);
 static bool increment_overflow_time(time_t *, int_fast32_2s);
 static int_fast32_2s leapcorr(struct state const *, time_t);
 static struct tm *timesub(time_t const *, int_fast32_t, struct state const *,
-			  struct tm *);
+			  struct tm *, time_t *);
 static bool tzparse(char const *, struct state *, struct state const *);
 
 #ifndef ALL_STATE
@@ -923,7 +921,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	struct stat st;
 	st.st_ctime = 0;
 
-	sp->goback = sp->goahead = false;
+	sp->goahead = false;
 
 	if (! name) {
 		name = TZDEFAULT;
@@ -1533,7 +1531,7 @@ getrule(const char *strp, register struct rule *const rulep)
 */
 
 static int_fast32_t
-transtime(const int year, register const struct rule *const rulep,
+transtime(time_t year, register const struct rule *const rulep,
 	  const int_fast32_t offset)
 {
 	int d;  /* Day of year (zero-origin).  */
@@ -1565,7 +1563,8 @@ transtime(const int year, register const struct rule *const rulep,
 		bool janfeb = rulep->r_mon <= 2;
 		int month = (rulep->r_mon
 			     + (janfeb ? MONSPERYEAR : 0)); /* 3..14  */
-		int ay_rem = (year - janfeb) % YEARSPERREPEAT;
+		int adjustment = (TYPE_SIGNED(time_t) ? 0 : 400) - janfeb;
+		int ay_rem = (year + adjustment) % YEARSPERREPEAT;
 		int y = ay_rem + (ay_rem < 0 ? YEARSPERREPEAT : 0);
 		int dow = (((13 * (month + 1)) / 5
 			    + y + y / 4 - y / 100 + y / 400)
@@ -1644,11 +1643,11 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 	  }
 	} else
 	  set_leapcount(sp, 0);	/* So, we're off a little.  */
-	sp->goback = sp->goahead = false;
+	sp->goahead = false;
 	if (*name != '\0') {
 		struct rule start, end;
-		int year, yearbeg, yearlim, timecnt;
-		time_t janfirst;
+		int timecnt;
+		time_t janfirst, repeatbeg, year, yearbeg, yearlim;
 		int_fast32_t janoffset = 0;
 
 		if (*name == '<') {
@@ -1686,14 +1685,16 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 		if (!name || *name)
 		  return false;
 		sp->typecnt = 2;	/* standard time and DST */
-		/*
-		** Two transitions per year, from EPOCH_YEAR forward.
-		*/
+
+		/* Two transitions per year, from atlo forward, and going on
+		   for years_of_observations past max(atlo, leaplo).  */
 		init_ttinfo(&sp->ttis[0], -stdoffset, false, 0);
 		init_ttinfo(&sp->ttis[1], -dstoffset, true, stdlen + 1);
 		timecnt = 0;
-		janfirst = 0;
-		yearbeg = EPOCH_YEAR;
+		repeatbeg = (atlo / SECSPERREPEAT
+			     + (atlo < 0 && 0 < atlo % SECSPERREPEAT));
+		yearbeg = repeatbeg * YEARSPERREPEAT + EPOCH_YEAR;
+		janfirst = repeatbeg * SECSPERREPEAT;
 
 		do {
 		  int_fast32_t yearsecs
@@ -1705,25 +1706,20 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 		    break;
 		  }
 		  janfirst = janfirst1;
-		} while (atlo < janfirst
-			 && EPOCH_YEAR - YEARSPERREPEAT / 2 < yearbeg);
+		} while (atlo < janfirst);
 
 		while (true) {
 		  int_fast32_t yearsecs
 		    = year_days(yearbeg) * SECSPERDAY;
-		  int yearbeg1 = yearbeg;
 		  time_t janfirst1 = janfirst;
 		  if (increment_overflow_time(&janfirst1, yearsecs)
-		      || increment_overflow(&yearbeg1, 1)
 		      || atlo <= janfirst1)
 		    break;
-		  yearbeg = yearbeg1;
+		  yearbeg++;
 		  janfirst = janfirst1;
 		}
 
-		yearlim = yearbeg;
-		if (increment_overflow(&yearlim, years_of_observations))
-		  yearlim = INT_MAX;
+		yearlim = yearbeg + years_of_observations;
 		for (year = yearbeg; year < yearlim; year++) {
 		  int_fast32_t
 		    starttime = transtime(year, &start, stdoffset),
@@ -1738,12 +1734,13 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 		  if (reversed
 		      || (starttime < endtime
 			  && endtime - starttime < yearsecs)) {
+		    time_t at_added = TIME_T_MAX;
 		    time_t at = janfirst;
 		    if (! increment_overflow_time(&at, janoffset + starttime)
 			&& atlo <= at) {
 		      if (TZ_MAX_TIMES <= timecnt)
 			return false;
-		      sp->ats[timecnt] = at;
+		      sp->ats[timecnt] = at_added = at;
 		      sp->types[timecnt++] = !reversed;
 		    }
 		    at = janfirst;
@@ -1751,14 +1748,11 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 			&& atlo <= at) {
 		      if (TZ_MAX_TIMES <= timecnt)
 			return false;
-		      sp->ats[timecnt] = at;
+		      sp->ats[timecnt] = at_added = at;
 		      sp->types[timecnt++] = reversed;
 		    }
-		  }
-		  if (endtime < leaplo) {
-		    yearlim = year;
-		    if (increment_overflow(&yearlim, years_of_observations))
-		      yearlim = INT_MAX;
+		    if (at_added < leaplo)
+		      yearlim = year + years_of_observations;
 		  }
 		  if (increment_overflow_time(&janfirst, janoffset + yearsecs))
 		    break;
@@ -1769,7 +1763,7 @@ tzparse(const char *name, struct state *sp, struct state const *basep)
 		  sp->ttis[0] = sp->ttis[1];
 		  sp->typecnt = 1;	/* Perpetual DST.  */
 		} else if (years_of_observations <= year - yearbeg)
-		  sp->goback = sp->goahead = true;
+		  sp->goahead = true;
 	} else {
 		dstlen = 0;
 		sp->typecnt = 1;		/* only standard time */
@@ -1826,7 +1820,7 @@ zoneinit(struct state *sp, char const *name, char tzloadflags)
     sp->timecnt = 0;
     sp->typecnt = 0;
     sp->charcnt = 0;
-    sp->goback = sp->goahead = false;
+    sp->goahead = false;
     init_ttinfo(&sp->ttis[0], 0, false, 0);
     strcpy(sp->chars, utc);
     return 0;
@@ -2046,12 +2040,15 @@ tzfree(timezone_t sp)
 ** since in that case tzset should have already done this step correctly.
 ** SETNAME's type is int_fast32_t for compatibility with gmtsub,
 ** but it is actually a boolean and its value should be 0 or 1.
+**
+** If LTM_YEAR, store the resulting year-1900 into *LTM_YEAR rather
+** than into the default TMP->tm_year; this prevents year overflow.
 */
 
 /*ARGSUSED*/
 static struct tm *
 localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
-	 struct tm *const tmp)
+	 struct tm *tmp, time_t *ltm_year)
 {
 	register const struct ttinfo *	ttisp;
 	register int			i;
@@ -2060,51 +2057,39 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 
 	if (sp == NULL) {
 	  /* Don't bother to set tzname etc.; tzset has already done it.  */
-	  return gmtsub(gmtptr, timep, 0, tmp);
+	  return gmtsub(gmtptr, timep, 0, tmp, ltm_year);
 	}
-	if ((sp->goback && t < sp->ats[0]) ||
-		(sp->goahead && t > sp->ats[sp->timecnt - 1])) {
+	if (sp->goahead && sp->ats[sp->timecnt - 1] < t) {
 			/* Avoid integer overflow when time_t is signed, by
 			   using secs_div_2 twice; the full value would
 			   always be even, so halving does not round.  */
-			bool early = t < sp->ats[0];
 			time_t
-			  tlo = early ? t : sp->ats[sp->timecnt - 1],
-			  thi = early ? sp->ats[0] : t,
-			  diffyears = ((thi / 2 - tlo / 2
-					+ ((thi % 2 - tlo % 2 + 2) / 2 - 1))
+			  tlo = sp->ats[sp->timecnt - 1],
+			  diffyears = ((t / 2 - tlo / 2
+					+ ((t % 2 - tlo % 2 + 2) / 2 - 1))
 				       / (SECSPERREPEAT / 2)
 				       * YEARSPERREPEAT),
 			  years = diffyears + YEARSPERREPEAT,
 			  secs_div_2 = (diffyears * (AVGSECSPERYEAR / 2)
 					+ SECSPERREPEAT / 2),
-			  newt = (early
-				  ? t + secs_div_2 + secs_div_2
-				  : t - secs_div_2 - secs_div_2);
+			  newt = t - secs_div_2 - secs_div_2,
+			  ryear;
 
-			if (newt < sp->ats[0] ||
-				newt > sp->ats[sp->timecnt - 1])
-					return NULL;	/* "cannot happen" */
-			result = localsub(sp, &newt, setname, tmp);
+			result = localsub(sp, &newt, setname, tmp, &ryear);
 			if (result) {
-# if defined ckd_add && defined ckd_sub
-				if (early
-				    ? ckd_sub(&result->tm_year,
-					      result->tm_year, years)
-				    : ckd_add(&result->tm_year,
-					      result->tm_year, years))
+			  if (ltm_year)
+			    *ltm_year = ryear + years;
+			  else {
+# ifdef ckd_add
+				if (ckd_add(&result->tm_year, ryear, years))
 				  return NULL;
 # else
-				register int_fast64_t newy;
-
-				newy = result->tm_year;
-				if (early)
-					newy -= years;
-				else	newy += years;
+				time_t newy = ryear + years;
 				if (! (INT_MIN <= newy && newy <= INT_MAX))
 					return NULL;
 				result->tm_year = newy;
 # endif
+			  }
 			}
 			return result;
 	}
@@ -2128,9 +2113,9 @@ localsub(struct state const *sp, time_t const *timep, int_fast32_t setname,
 	** To get (wrong) behavior that's compatible with System V Release 2.0
 	** you'd replace the statement below with
 	**	t += ttisp->tt_utoff;
-	**	timesub(&t, 0, sp, tmp);
+	**	timesub(&t, 0, sp, tmp, ltm_year);
 	*/
-	result = timesub(&t, ttisp->tt_utoff, sp, tmp);
+	result = timesub(&t, ttisp->tt_utoff, sp, tmp, ltm_year);
 	if (result) {
 	  result->tm_isdst = ttisp->tt_isdst;
 # ifdef TM_ZONE
@@ -2180,7 +2165,7 @@ struct tm *
 localtime_rz(struct state *restrict sp, time_t const *restrict timep,
 	     struct tm *restrict tmp)
 {
-  return localsub(sp, timep, 0, tmp);
+  return localsub(sp, timep, 0, tmp, NULL);
 }
 # endif
 
@@ -2195,7 +2180,7 @@ localtime_tzset(time_t const *timep, struct tm *tmp, bool setname)
   }
   if (0 <= tz_change_interval || setname || !lcl_is_set)
     tzset_unlocked(!err, false, now);
-  tmp = localsub(lclptr, timep, setname, tmp);
+  tmp = localsub(lclptr, timep, setname, tmp, NULL);
   unlock(!err);
   return tmp;
 }
@@ -2222,11 +2207,11 @@ localtime_r(const time_t *restrict timep, struct tm *restrict tmp)
 
 static struct tm *
 gmtsub(ATTRIBUTE_MAYBE_UNUSED struct state const *sp, time_t const *timep,
-       int_fast32_t offset, struct tm *tmp)
+       int_fast32_t offset, struct tm *tmp, time_t *ltm_year)
 {
 	register struct tm *	result;
 
-	result = timesub(timep, offset, gmtptr, tmp);
+	result = timesub(timep, offset, gmtptr, tmp, ltm_year);
 #ifdef TM_ZONE
 	/*
 	** Could get fancy here and deliver something such as
@@ -2249,7 +2234,7 @@ struct tm *
 gmtime_r(time_t const *restrict timep, struct tm *restrict tmp)
 {
   gmtcheck();
-  return gmtsub(gmtptr, timep, 0, tmp);
+  return gmtsub(gmtptr, timep, 0, tmp, NULL);
 }
 
 struct tm *
@@ -2270,7 +2255,7 @@ struct tm *
 offtime_r(time_t const *restrict timep, long offset, struct tm *restrict tmp)
 {
   gmtcheck();
-  return gmtsub(gmtptr, timep, offset, tmp);
+  return gmtsub(gmtptr, timep, offset, tmp, NULL);
 }
 
 struct tm *
@@ -2306,7 +2291,7 @@ leaps_thru_end_of(time_t y)
 
 static struct tm *
 timesub(const time_t *timep, int_fast32_t offset,
-	const struct state *sp, struct tm *tmp)
+	const struct state *sp, struct tm *tmp, time_t *ltm_year)
 {
 	register time_t			tdays;
 	register const int *		ip;
@@ -2368,29 +2353,34 @@ timesub(const time_t *timep, int_fast32_t offset,
 		y = newy;
 	}
 
+	if (ltm_year) {
+	  *ltm_year = y - TM_YEAR_BASE;
+	} else {
 #ifdef ckd_add
-	if (ckd_add(&tmp->tm_year, y, -TM_YEAR_BASE)) {
-	  errno = EOVERFLOW;
-	  return NULL;
-	}
+	  if (ckd_add(&tmp->tm_year, y, -TM_YEAR_BASE)) {
+	    errno = EOVERFLOW;
+	    return NULL;
+	  }
 #else
-	if (!TYPE_SIGNED(time_t) && y < TM_YEAR_BASE) {
-	  int signed_y = y;
-	  tmp->tm_year = signed_y - TM_YEAR_BASE;
-	} else if ((!TYPE_SIGNED(time_t) || INT_MIN + TM_YEAR_BASE <= y)
-		   && y - TM_YEAR_BASE <= INT_MAX)
-	  tmp->tm_year = y - TM_YEAR_BASE;
-	else {
-	  errno = EOVERFLOW;
-	  return NULL;
-	}
+	  if (!TYPE_SIGNED(time_t) && y < TM_YEAR_BASE) {
+	    int signed_y = y;
+	    tmp->tm_year = signed_y - TM_YEAR_BASE;
+	  } else if ((!TYPE_SIGNED(time_t) || INT_MIN + TM_YEAR_BASE <= y)
+		     && y - TM_YEAR_BASE <= INT_MAX)
+	    tmp->tm_year = y - TM_YEAR_BASE;
+	  else {
+	    errno = EOVERFLOW;
+	    return NULL;
+	  }
 #endif
+	}
 	tmp->tm_yday = idays;
 	/*
 	** The "extra" mods below avoid overflow problems.
 	*/
 	tmp->tm_wday = (TM_WDAY_BASE
-			+ ((tmp->tm_year % DAYSPERWEEK)
+			+ ((y % DAYSPERWEEK - TM_YEAR_BASE % DAYSPERWEEK)
+			   % DAYSPERWEEK
 			   * (DAYSPERNYEAR % DAYSPERWEEK))
 			+ leaps_thru_end_of(y - 1)
 			- leaps_thru_end_of(TM_YEAR_BASE - 1)
@@ -2434,27 +2424,6 @@ timesub(const time_t *timep, int_fast32_t offset,
 /*
 ** Normalize logic courtesy Paul Eggert.
 */
-
-static bool
-increment_overflow(int *ip, int j)
-{
-#ifdef ckd_add
-	return ckd_add(ip, *ip, j);
-#else
-	register int const	i = *ip;
-
-	/*
-	** If i >= 0 there can only be overflow if i + j > INT_MAX
-	** or if j > INT_MAX - i; given i >= 0, INT_MAX - i cannot overflow.
-	** If i < 0 there can only be overflow if i + j < INT_MIN
-	** or if j < INT_MIN - i; given i < 0, INT_MIN - i cannot overflow.
-	*/
-	if ((i >= 0) ? (j > INT_MAX - i) : (j < INT_MIN - i))
-		return true;
-	*ip += j;
-	return false;
-#endif
-}
 
 static bool
 increment_overflow_64(int *ip, int_fast64_t j)
@@ -2564,7 +2533,7 @@ mktmcpy(struct tm *dest, struct tm const *src)
 static time_t
 time2sub(struct tm *const tmp,
 	 struct tm *funcp(struct state const *, time_t const *,
-			  int_fast32_t, struct tm *),
+			  int_fast32_t, struct tm *, time_t *),
 	 struct state const *sp,
 	 const int_fast32_t offset,
 	 bool *okayp,
@@ -2681,7 +2650,7 @@ time2sub(struct tm *const tmp,
 			t = lo;
 		else if (t > hi)
 			t = hi;
-		if (! funcp(sp, &t, offset, &mytm)) {
+		if (! funcp(sp, &t, offset, &mytm, NULL)) {
 			/*
 			** Assume that t is too extreme to be represented in
 			** a struct tm; arrange things so that it is less
@@ -2737,7 +2706,7 @@ time2sub(struct tm *const tmp,
 # endif
 		  if (!v && !increment_overflow_time_64(&altt, offdiff)) {
 		    struct tm alttm;
-		    if (funcp(sp, &altt, offset, &alttm)
+		    if (funcp(sp, &altt, offset, &alttm, NULL)
 			&& alttm.tm_isdst == mytm.tm_isdst
 			&& alttm.TM_GMTOFF == yourtm.TM_GMTOFF
 			&& tmcomp(&alttm, &yourtm) == 0) {
@@ -2771,7 +2740,7 @@ time2sub(struct tm *const tmp,
 				     utoff_diff(sp->ttis[j].tt_utoff,
 						sp->ttis[i].tt_utoff)))
 				  continue;
-				if (! funcp(sp, &newt, offset, &mytm))
+				if (! funcp(sp, &newt, offset, &mytm, NULL))
 					continue;
 				if (tmcomp(&mytm, &yourtm) != 0)
 					continue;
@@ -2789,7 +2758,7 @@ time2sub(struct tm *const tmp,
 label:
 	if (increment_overflow_time_iinntt(&t, saved_seconds))
 		return WRONG;
-	if (funcp(sp, &t, offset, tmp))
+	if (funcp(sp, &t, offset, tmp, NULL))
 		*okayp = true;
 	return t;
 }
@@ -2797,7 +2766,7 @@ label:
 static time_t
 time2(struct tm * const	tmp,
       struct tm *funcp(struct state const *, time_t const *,
-		       int_fast32_t, struct tm *),
+		       int_fast32_t, struct tm *, time_t *),
       struct state const *sp,
       const int_fast32_t offset,
       bool *okayp)
@@ -2816,7 +2785,7 @@ time2(struct tm * const	tmp,
 static time_t
 time1(struct tm *const tmp,
       struct tm *funcp(struct state const *, time_t const *,
-		       int_fast32_t, struct tm *),
+		       int_fast32_t, struct tm *, time_t *),
       struct state const *sp,
       const int_fast32_t offset)
 {

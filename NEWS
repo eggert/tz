@@ -58,6 +58,7 @@ Unreleased, experimental changes
 
     localtime-related functions no longer mishandle extreme timestamps
     when given TZif files holding some unlikely timezone histories.
+    (Problem reported by David Sarkisyan.)
 
   Changes to documentation
 

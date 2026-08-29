@@ -60,6 +60,11 @@ Unreleased, experimental changes
     when given TZif files holding some unlikely timezone histories.
     (Problem reported by David Sarkisyan.)
 
+    localtime-related functions no longer check the values of TZif
+    files’ standard/wall and UT/local indicators, which these
+    functions have not used since 2026c’s removal of the old
+    posixrules feature.
+
   Changes to documentation
 
     URLs for release tarballs in tz-link.html have been updated to

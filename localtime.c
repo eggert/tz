@@ -475,8 +475,6 @@ struct ttinfo {				/* time type information */
 					   -2**31 + 1 .. 2**31 - 1  */
 	desigidx_type	tt_desigidx;	/* abbreviation list index */
 	bool		tt_isdst;	/* used to set tm_isdst */
-	bool		tt_ttisstd;	/* transition is std time */
-	bool		tt_ttisut;	/* transition is UT */
 };
 
 struct lsinfo {				/* leap second information */
@@ -639,8 +637,6 @@ init_ttinfo(struct ttinfo *s, int_fast32_t utoff, bool isdst,
   s->tt_utoff = utoff;
   s->tt_isdst = isdst;
   s->tt_desigidx = desigidx;
-  s->tt_ttisstd = false;
-  s->tt_ttisut = false;
 }
 
 /* Return true if SP's time type I does not specify local time.  */
@@ -1196,30 +1192,9 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		}
 		set_leapcount(sp, leapcnt);
 
-		for (i = 0; i < sp->typecnt; ++i) {
-			register struct ttinfo *	ttisp;
-
-			ttisp = &sp->ttis[i];
-			if (ttisstdcnt == 0)
-				ttisp->tt_ttisstd = false;
-			else {
-				if (*p != true && *p != false)
-				  return EFTYPE;
-				ttisp->tt_ttisstd = *p++;
-			}
-		}
-		for (i = 0; i < sp->typecnt; ++i) {
-			register struct ttinfo *	ttisp;
-
-			ttisp = &sp->ttis[i];
-			if (ttisutcnt == 0)
-				ttisp->tt_ttisut = false;
-			else {
-				if (*p != true && *p != false)
-						return EFTYPE;
-				ttisp->tt_ttisut = *p++;
-			}
-		}
+		/* Do not bother to validate standard/wall and UT/local
+		   indicators, as they are no longer used here.  */
+		p += ttisstdcnt + ttisutcnt;
 	    }
 
 	    nread -= p - up->buf;

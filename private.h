@@ -311,6 +311,7 @@ extern int optind;
 
 #ifndef HAVE_ISSETUGID
 # if (defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
+      || defined __DragonFly__ \
       || (defined __linux__ && !defined __GLIBC__) /* Android, musl, etc. */ \
       || (defined __APPLE__ && defined __MACH__) || defined __sun)
 #  define HAVE_ISSETUGID 1
@@ -819,6 +820,7 @@ void tzset(void);
 # if (202311 <= __STDC_VERSION__ \
       || defined __GLIBC__ || defined __tm_zone /* musl */ \
       || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
+      || defined __DragonFly__ \
       || (defined __APPLE__ && defined __MACH__))
 #  define HAVE_DECL_TIMEGM 1
 # else
@@ -847,7 +849,8 @@ extern char **environ;
 
 #ifndef HAVE_MEMPCPY
 # if (defined mempcpy \
-      || defined __FreeBSD__ || defined __NetBSD__ || defined __linux__)
+      || defined __FreeBSD__ || defined __NetBSD__ || defined __DragonFly__ \
+      || defined __linux__)
 #  define HAVE_MEMPCPY 1
 # else
 #  define HAVE_MEMPCPY 0
@@ -912,6 +915,7 @@ time_t posix2time(time_t);
      || defined __GLIBC__ \
      || defined __tm_zone /* musl */ \
      || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
+     || defined __DragonFly__ \
      || (defined __APPLE__ && defined __MACH__))
 # if !defined TM_GMTOFF && !defined NO_TM_GMTOFF
 #  define TM_GMTOFF tm_gmtoff

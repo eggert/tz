@@ -64,7 +64,7 @@ struct stat { char st_ctime, st_dev, st_ino; };
 # endif
 # if THREAD_PREFER_SINGLE
 #  ifndef HAVE___ISTHREADED
-#   if defined __FreeBSD__ || defined __OpenBSD__
+#   if defined __FreeBSD__ || defined __OpenBSD__ || defined __DragonFly__
 #    define HAVE___ISTHREADED 1
 #   else
 #    define HAVE___ISTHREADED 0

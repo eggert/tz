@@ -65,6 +65,9 @@ Unreleased, experimental changes
     functions have not used since 2026c’s removal of the old
     posixrules feature.
 
+    localtime.c now works on AIX 7.3 by default again, working
+    around AIX’s POSIX-conformance glitch with st_ctim.
+
   Changes to documentation
 
     URLs for release tarballs in tz-link.html have been updated to

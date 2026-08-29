@@ -832,10 +832,11 @@ tzfile_changed(int fd, struct stat *st)
        resolution if available, as this can help distinguish files on
        non-POSIX platforms where st_dev and st_ino are unreliable.  */
     struct timespec ctim;
-#if HAVE_STRUCT_STAT_ST_CTIM
-    ctim = st->st_ctim;
-#else
+    /* Copy via members, as AIX 7.3 defaults to an incompatible st_ctim.  */
     ctim.tv_sec = st->st_ctime;
+#if HAVE_STRUCT_STAT_ST_CTIM
+    ctim.tv_nsec = st->st_ctim.tv_nsec;
+#else
     ctim.tv_nsec = 0;
 #endif
 

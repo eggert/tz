@@ -348,6 +348,10 @@ static int fstatat(int dd, char const *path, struct stat *st, int flags)
 #  include <sys/auxv.h>
 # endif
 
+/* Avoid clash if headers declare but libraries do not define issetugid.  */
+# undef issetugid
+# define issetugid localtime_issetugid
+
 /* Return 1 if the process is privileged, 0 otherwise.  */
 static int
 issetugid(void)

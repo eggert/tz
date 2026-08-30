@@ -820,7 +820,7 @@ void tzset(void);
 # if (202311 <= __STDC_VERSION__ \
       || defined __GLIBC__ || defined __tm_zone /* musl */ \
       || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
-      || defined __DragonFly__ \
+      || defined __DragonFly__ || defined __HAIKU__ \
       || (defined __APPLE__ && defined __MACH__))
 #  define HAVE_DECL_TIMEGM 1
 # else
@@ -915,7 +915,7 @@ time_t posix2time(time_t);
      || defined __GLIBC__ \
      || defined __tm_zone /* musl */ \
      || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
-     || defined __DragonFly__ \
+     || defined __DragonFly__ || defined __HAIKU__ \
      || (defined __APPLE__ && defined __MACH__))
 # if !defined TM_GMTOFF && !defined NO_TM_GMTOFF
 #  define TM_GMTOFF tm_gmtoff

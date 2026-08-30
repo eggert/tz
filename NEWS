@@ -65,6 +65,8 @@ Unreleased, experimental changes
     functions have not used since 2026c’s removal of the old
     posixrules feature.
 
+    tzcode has been ported to Haiku.
+
     localtime.c now works again by default on AIX and DragonFly BSD.
 
   Changes to documentation

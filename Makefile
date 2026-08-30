@@ -922,7 +922,7 @@ check_mild: check_web check_zishrink \
 UTF8_LOCALE_MISSING = \
   { test ! '$(UTF8_LOCALE)' \
     || ! printf 'A\304\200B\n' \
-         | LC_ALL='$(UTF8_LOCALE)' grep -q '^A.B$$' >/dev/null 2>&1 \
+         | LC_ALL='$(UTF8_LOCALE)' grep -q '^A[[:alpha:]]B$$' >/dev/null 2>&1 \
     || { export LC_ALL='$(UTF8_LOCALE)'; false; }; }
 
 character-set.ck: $(ENCHILADA)
@@ -1006,11 +1006,11 @@ now.ck: checknow.awk date tzdata.zi zdump zic zone1970.tab zonenow.tab
 		now=$(CHECK_NOW_TIMESTAMP) && \
 		  future=$$(($(CHECK_NOW_FUTURE_SECS) + $$now)) && \
 		  ./zdump -i -t $$now,$$future \
-		     $$(find "$$PWD/$@d"/????*/ -type f) \
+		     $$(find "$$PWD/$@d"/????*/ -type f -o -type l) \
 		     >$@d/zdump-now.tab && \
 		  ./zdump -i -t 0,$$future \
 		     $$(find "$$PWD/$@d" -name Etc -prune \
-			  -o -type f ! -name '*.tab' -print) \
+			  -o \( -type f -o -type l \) ! -name '*.tab' -print) \
 		     >$@d/zdump-1970.tab && \
 		$(AWK) \
 		  -v now=$$now \

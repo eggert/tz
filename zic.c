@@ -779,6 +779,7 @@ arg2num(char const *arg, int base, unsigned long maxval, char const *msgid)
 
 #ifndef HAVE_SETMODE
 # if (defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ \
+      || defined __DragonFly__ \
       || (defined __APPLE__ && defined __MACH__))
 #  define HAVE_SETMODE 1
 # else

@@ -895,9 +895,19 @@ union local_storage {
 };
 
 /* These tzload flags can be ORed together, and fit into 'char'.  */
-enum { TZLOAD_FROMENV = 1 }; /* The TZ string came from the environment.  */
-enum { TZLOAD_TZSTRING = 2 }; /* Read any newline-surrounded TZ string.  */
-enum { TZLOAD_TZDIR_SUB = 4 }; /* TZ should be a file under TZDIR.  */
+
+/* TZLOAD_FROMENV means the TZ string is a process-wide setting either
+   taken from the TZ environment variable or inferred from TZ being unset.
+   When 0 <= tz_change_interval, TZLOAD_FROMENV lets us skip reanalysis
+   of a TZif file that did not change during the interval.  */
+enum { TZLOAD_FROMENV = 1 };
+
+/* Read any newline-surrounded TZ string.  */
+enum { TZLOAD_TZSTRING = 2 };
+
+/* TZ should be a file under TZDIR.  */
+enum { TZLOAD_TZDIR_SUB = 4 };
+
 
 /* Load tz data from the file named NAME into *SP.  Respect TZLOADFLAGS.
    Use **LSPP for temporary storage.  Return 0 on

@@ -62,7 +62,7 @@ Unreleased, experimental changes
 
     localtime-related functions no longer check the values of TZif
     files’ standard/wall and UT/local indicators, which these
-    functions have not used since 2026c’s removal of the old
+    functions have not used since 2026a’s removal of the old
     posixrules feature.
 
     tzcode has been ported to Haiku.

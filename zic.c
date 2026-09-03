@@ -1464,6 +1464,12 @@ namecheck(const char *name)
 	register char const *component = name;
 	for (cp = name; *cp; cp++) {
 		unsigned char c = *cp;
+#if defined _WIN32 || defined __CYGWIN__
+		if (c == ':' || c == '\\') {
+		  error(N_("file name '%s' contains '%c'"), name, c);
+		  return false;
+		}
+#endif
 		if (noise && !strchr(benign, c)) {
 			warning((strchr(printable_and_not_benign, c)
 				 ? N_("file name '%s' contains byte '%c'")

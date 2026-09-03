@@ -4,6 +4,7 @@ Unreleased, experimental changes
 
   Briefly:
     Canada’s Northwest Territories moved to permanent -06 on 2026-08-21.
+    New zone for Golden, BC, moving from -07/-06 to -07 on 2026-11-01.
 
   Changes to future timestamps
 
@@ -16,6 +17,11 @@ Unreleased, experimental changes
     only affects America/Inuvik as the rest of the territory is covered
     by America/Edmonton, for which the equivalent change was released in
     2026c.
+
+    The Town of Golden in southeastern British Columbia will rejoin the
+    bulk of the province on -07 after falling back a final time on
+    2026-11-01 at 02:00, diverging from America/Edmonton and creating a
+    new zone America/Brit_Columbia/Golden.
 
   Changes to past timestamps
 

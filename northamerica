@@ -2074,11 +2074,10 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 #   -07 - accurate and clear in itself, but makes BC look odd vs neighbors
 #   PacT - straightforward but novel abbreviation for Pacific Time
 
-# From Tim Parenti (2026-08-21):
+# From Tim Parenti (2026-09-03):
 # In the southeast of the province, the Regional District of East Kootenay
-# (RDEK), Columbia Shuswap Regional District’s Electoral Area A (Rural Golden),
-# and the Town of Golden have all historically been aligned with neighboring
-# Alberta and use America/Edmonton.
+# (RDEK) has historically been aligned with neighboring Alberta and uses
+# America/Edmonton.
 #
 # Shortly after the BC provincial government announced its adoption of
 # year-round -07, the RDEK Board of Directors on 2026-03-13 initially voted
@@ -2091,15 +2090,21 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # https://www.cbc.ca/news/canada/british-columbia/what-time-is-it-in-the-east-kootenay-debate-9.7132624
 # In the ensuing months, after Alberta announced and implemented its similar
 # shift to “permanent DST” (see above), RDEK coordinated a public survey across
-# all of the relevant BC communities.  The survey found 89% of respondents in
-# favor of ending seasonal time changes, with 66% of that group preferring to
-# remain aligned with Alberta time on year-round -06 instead of the rest of BC.
+# all of the relevant BC communities, including the Town of Golden and
+# Electoral Area A (Rural Golden) in the neighboring Columbia Shuswap Regional
+# District (CSRD).  The survey found 89% of respondents in favor of ending
+# seasonal time changes, with 66% of that group preferring to remain aligned
+# with Alberta time on year-round -06 instead of the rest of BC.
 # In line with those results, the RDEK Board adopted year-round -06 at its
 # 2026-08-14 meeting.
 # https://www.cbc.ca/news/canada/british-columbia/east-kootenay-stops-changing-clocks-9.7308201
 #
-# At time of writing, Golden and CSRD Area A are yet to formalize their own
-# decisions.
+# By contrast, the Town of Golden decided at its meeting on 2026-09-01 to split
+# its timekeeping practice from RDEK and rejoin BC on year-round -07 by a vote
+# of 4–2.
+# https://www.golden.ca/town-hall/news-notices/council-supports-permanent-mountain-standard-time-utc-7-golden
+# At time of writing, the surrounding CSRD Area A is yet to formalize its own
+# decision but is expected to follow.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Vanc	1918	only	-	Apr	14	2:00	1:00	D
@@ -2128,6 +2133,15 @@ Zone America/Fort_Nelson	-8:10:47 -	LMT	1884
 			-8:00	-	PST	1947
 			-8:00	Vanc	P%sT	1987
 			-8:00	Canada	P%sT	2015 Mar  8  2:00
+			-7:00	-	MST
+# There are too many Goldens elsewhere, so we need to disambiguate.
+# 'BC' is too ambiguous and 'British Columbia' is too long, so we'll use
+# 'America/Brit_Columbia/Golden'.
+Zone America/Brit_Columbia/Golden -7:47:52 -	LMT	1906 Sep
+			-7:00	Edm	M%sT	1920
+			-7:00	Canada	M%sT	1972
+			-7:00	Edm	M%sT	1974
+			-7:00	Canada	M%sT	2026 Nov  1  2:00
 			-7:00	-	MST
 # For Creston see America/Phoenix.
 

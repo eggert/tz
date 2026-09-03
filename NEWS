@@ -76,8 +76,7 @@ Unreleased, experimental changes
     localtime.c now works again by default on AIX and DragonFly BSD.
 
     zic now rejects ‘:’ and ‘\’ in Zone and Link names when running on
-    Microsoft Windows.  (Problem reported by RELAUNCH DEPT. (GitHub:
-    ceodaradigu).)
+    Microsoft Windows.  (Problem reported by Kai Diaz.)
 
   Changes to documentation
 

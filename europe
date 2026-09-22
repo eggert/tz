@@ -557,7 +557,7 @@ Zone	Europe/Dublin	-0:25:21 -	LMT	1880 Aug  2
 			-0:25:21 -	DMT	1916 May 21  2:00s
 			-0:25:21 1:00	IST	1916 Oct  1  2:00s
 			 0:00	GB-Eire	%s	1921 Dec  6 # independence
-			 0:00	GB-Eire	GMT/IST	1925 Sep 20  2:00s
+			 0:00	GB-Eire	GMT/IST	1925 Sep Sun>=16 2:00s
 			 0:00	-	GMT	1926
 			 0:00	GB-Eire	GMT/IST	1940 Feb 25  2:00s
 			 0:00	1:00	IST	1946 Oct  6  2:00s

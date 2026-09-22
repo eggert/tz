@@ -25,6 +25,10 @@ Unreleased, experimental changes
       announcement, assume that they will, to avoid creating new zones
       that may not be needed if no divergence occurs.
 
+  Changes to past timestamps
+
+    In 1925 Ireland fell back on 09-20 not 10-04 (thanks to Stan Ulbrych).
+
   Changes to commentary
 
     Discussion on timekeeping practices in northwestern Ontario has been

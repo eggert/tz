@@ -1,5 +1,38 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Briefly:
+    Manitoba moves to permanent -05 on 2026-11-01.
+
+  Changes to future timestamps
+
+    Manitoba’s 2026-03-08 spring forward was its last foreseeable clock
+    change, as it has announced a move to permanent -05 thereafter.
+    Model this with its traditional abbreviation EST.  In the absence of
+    information on the exact implementation date for the regulatory
+    mechanism, model the change to occur on 2026-11-01 at 02:00, when
+    clocks would otherwise fall back.
+
+      As the change affects both America/Winnipeg and its backward
+      compatibility link, the obsolescent setting TZ="Canada/Central"
+      will now use the abbreviation EST for affected timestamps,
+      akin to TZ="Canada/Pacific" behavior introduced in 2026b.
+
+      Another TZDB release may be needed soon if any of the portions of
+      northwestern Ontario historically aligned with America/Winnipeg do
+      not follow.  For now, given the short leadtime with Manitoba’s
+      announcement, assume that they will, to avoid creating new zones
+      that may not be needed if no divergence occurs.
+
+  Changes to commentary
+
+    Discussion on timekeeping practices in northwestern Ontario has been
+    expanded in light of Manitoba’s recent announcement.  It is not yet
+    known whether or to what extent these areas may adapt their own
+    timekeeping practices in response.
+
+
 Release 2026d - 2026-09-11 15:21:07 -0700
 
   Briefly:

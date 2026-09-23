@@ -2109,13 +2109,13 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # on March 8 will be the last time change, ending twice-yearly clock changes.”
 # https://news.gov.bc.ca/releases/2026AG0013-000209
 #
-# From Paul Eggert (2026-07-02):
+# From Paul Eggert (2026-09-23):
 # The law says that 21 hours after the usual 2026-03-08 02:00 switch from
-# PST to PDT, the next day inaugurates the new standard time Pacific Time,
+# PST to PDT, the next day inaugurated the new standard time Pacific Time,
 # i.e., just one clock change but two name changes separated by 21 hours.
 # PT, the obvious abbreviation for Pacific Time, is one letter too short
 # to conform to TZDB’s (and POSIX’s) [-+[:alnum:]]{3,6} requirements.
-# I asked the BC government for advice, with no response. For now, do this:
+# For now, do this:
 #   1.	As a temporary hack, pretend that the BC law takes effect
 #	not on 2026-03-09 at 00:00, but on 2026-11-01 at 02:00.
 #	This pretense works around a limitation in CLDR 48.1 (2026-01-08),
@@ -2133,10 +2133,10 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 #	and already used in parts of BC and in Yukon
 #   PDT - almost as software-friendly, but confusing because it implies
 #	it is DST and is paired with PST, whereas PT is standard time
-#   PST - straightforward but even more confusing,
-#	and will likely break much software that assumes PST is -08
 #   -07 - accurate and clear in itself, but makes BC look odd vs neighbors
-#   PacT - straightforward but novel abbreviation for Pacific Time
+#   PCT - as I understand it, inspired by the phrase “Pacific Coast Time”<
+#	though legally it’s “Pacific Time”; suggested by the BC government
+#	<https://news.gov.bc.ca/releases/2026CITZ0009-001073>
 
 # From Tim Parenti (2026-08-21):
 # In the southeast of the province, the Regional District of East Kootenay

@@ -1810,7 +1810,7 @@ Zone America/Toronto	-5:17:32 -	LMT	1895
 # the 1987 version would apply - the changeover was at 2:00 Central
 # Standard Time (i.e. not until 3:00 Central Daylight Time).
 
-# From Tim Parenti (2026-09-21):
+# From Tim Parenti (2026-09-29):
 # As much of western Canada began announcing year-round DST in early 2026,
 # Manitoba Premier Wab Kinew publicly mused on forming a "Prairie time zone" by
 # joining Saskatchewan and Alberta on year-round -06, while committing to
@@ -1828,15 +1828,21 @@ Zone America/Toronto	-5:17:32 -	LMT	1895
 #
 # While other potential options would have required further legislation, the
 # Official Time Amendment Act (Bill 2 of the 42nd Legislature's 5th Session),
-# assented to 2023-05-30, provides for year-round -05, coming into force "on a
-# day to be fixed by proclamation."  It also allows for the Lieutenant Governor
-# in Council to, on recommendation of the relevant minister, "make regulations
-# varying the reckoning" of official time in Manitoba, provided the minister
-# has "due regard for the applicable time zone in neighbouring jurisdictions."
+# assented to 2023-05-30, provides for year-round -05 upon proclamation.
 # https://web2.gov.mb.ca/laws/statutes/2023/pdf/c00423.pdf
-# From Paul Eggert (2026-09-29), after a heads-up from Ashish Kumar:
-# The law comes into force on 2026-10-31.
+# Order in Council 221/2026, issued 2026-09-23, directed the proclamation
+# bringing the Act into force on 2026-10-31, 26 hours before clocks would
+# otherwise fall back.
+# https://oic.gov.mb.ca/OICDocs/2026/09/Municipal%20and%20Northern%20Relations.260923.%20Official%20Time%20Amendment%20Act.2212026.pdf
 # https://web2.gov.mb.ca/laws/statutes/proclamations/2023c4(2026-10-31).pdf
+#
+# The Act further allows for the Lieutenant Governor in Council to, on
+# recommendation of the relevant minister, "make regulations varying the
+# reckoning" of official time in Manitoba, provided the minister has "due
+# regard for the applicable time zone in neighbouring jurisdictions."
+#
+# Use a temporary hack like Alberta’s to work around potential CLDR
+# limitations.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Winn	1916	only	-	Apr	23	0:00	1:00	D

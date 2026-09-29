@@ -3,16 +3,17 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
-    Manitoba moves to permanent -05 on 2026-11-01.
+    Manitoba moves to permanent -05 on 2026-10-31.
 
   Changes to future timestamps
 
     Manitoba’s 2026-03-08 spring forward was its last foreseeable clock
-    change, as it has announced a move to permanent -05 thereafter.
-    Model this with its traditional abbreviation EST.  In the absence of
-    information on the exact implementation date for the regulatory
-    mechanism, model the change to occur on 2026-11-01 at 02:00, when
-    clocks would otherwise fall back.
+    change, as it moved to permanent -05 thereafter.  Model this with
+    its traditional abbreviation EST.  Although the change to
+    permanent -05 legally takes place on 2026-10-31, temporarily model
+    the change to occur on 2026-11-01 at 02:00 for the same reason as
+    other recent temporary hacks.  (Caution: see “NOTE FOR 2026b
+    TEMPORARY HACK FOR CLDR AND CANADA” below.)
 
       As the change affects both America/Winnipeg and its backward
       compatibility link, the obsolescent setting TZ="Canada/Central"

@@ -1834,9 +1834,9 @@ Zone America/Toronto	-5:17:32 -	LMT	1895
 # varying the reckoning" of official time in Manitoba, provided the minister
 # has "due regard for the applicable time zone in neighbouring jurisdictions."
 # https://web2.gov.mb.ca/laws/statutes/2023/pdf/c00423.pdf
-# At time of writing, the Act has not yet officially been brought into force;
-# for now, model the change to occur on 2026-11-01 at 02:00, when clocks would
-# otherwise fall back.
+# From Paul Eggert (2026-09-29), after a heads-up from Ashish Kumar:
+# The law comes into force on 2026-10-31.
+# https://web2.gov.mb.ca/laws/statutes/proclamations/2023c4(2026-10-31).pdf
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Winn	1916	only	-	Apr	23	0:00	1:00	D
@@ -1866,7 +1866,10 @@ Rule	Winn	1987	2005	-	Apr	Sun>=1	2:00s	1:00	D
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone America/Winnipeg	-6:28:36 -	LMT	1887 Jul 16
 			-6:00	Winn	C%sT	2006
-			-6:00	Canada	C%sT	2026 Nov  1  2:00 # presumed
+			-6:00	Canada	C%sT	2026 Oct 31
+			# Temporary hack; see above.
+			-6:00	Canada	CDT	2026 Nov  1  2:00
+			# End of temporary hack.
 			-5:00	-	EST
 
 

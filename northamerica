@@ -1752,16 +1752,11 @@ Zone America/Toronto	-5:17:32 -	LMT	1895
 # been aligned with neighboring Manitoba and use America/Winnipeg, in
 # accordance with section 2(2) of Ontario's Time Act, RSO 1990 chapter T.9:
 # https://www.ontario.ca/laws/statute/90t09
-# With Manitoba now opting to stay on -05 year-round, if any of these areas do
-# not follow, it would require a new zone; however, given the short leadtime
-# ahead of a potential divergence on 2026-11-01 and in the interest of not
-# creating zones that may not be needed, assume for the time being that they
-# will.
 #
 # In practice, there are several exceptions to the 90°W dividing line set by
 # the province, all of which technically contravene the official Ontario rules:
-#   - An area around Big Trout Lake in Kenora District observes Central Time
-#     (-06/-05) despite extending east of 90°W.
+#   - An area around Big Trout Lake in Kenora District aligns with
+#     America/Winnipeg despite extending east of 90°W.
 #   - An area around Upsala in the southwest of Thunder Bay District observes
 #     Eastern Time (-05/-04) like America/Toronto despite extending west of
 #     90°W.
@@ -1773,9 +1768,27 @@ Zone America/Toronto	-5:17:32 -	LMT	1895
 #     1998, though it is less clear how far back that arrangement goes; assume
 #     the area is covered in the same way as Atikokan.
 # See the 'backzone' file for further commentary.
-# At time of writing, it is not yet known to what extent Manitoba's 2026-09-17
-# announcement may spur further adaptations in northwestern Ontario; see
-# Manitoba, below.
+#
+# From Tim Parenti (2026-10-13):
+# On 2026-09-17, after neighboring Manitoba announced a shift to year-round -05
+# (see Manitoba, below), local leaders throughout northwestern Ontario
+# coordinated regionally alongside their local members of provincial parliament
+# to swiftly conduct several local surveys on the matter ahead of a potential
+# divergence on 2026-11-01.  All of the surveys returned more than 90% support
+# for remaining in alignment with the “Manitoba model”.
+# https://www.nwonewswatch.com/local-journalism-initiative-lji/vast-majority-want-to-end-time-changes-mayor-12838025
+# https://www.kenoraminerandnews.com/news/local-news/kenora-asks-province-to-end-clock-changes/article_5118b819-9f67-42ce-938a-1478b8ab541e.html
+# From Aoun Khan and Chris Walton (2026-10-13):
+# Ontario is set to move parts of the province’s northwest region to permanent
+# daylight time in order to align with Manitoba, Indigenous Affairs Minister
+# Greg Rickford told The Canadian Press.  Rickford says the province intends to
+# make a regulatory change in the Time Act on Nov. 1 to allow regions west of
+# the 90th meridian to align with Manitoba.
+# https://www.cp24.com/news/canada/2026/10/13/ontario-to-move-northwest-regions-to-permanent-daylight-time/
+# The provincial government has issued a written news release:
+# https://news.ontario.ca/en/release/1008130/ontario-moving-to-permanent-daylight-saving-time-in-parts-of-northwestern-ontario
+#
+# At time of writing, the proposed regulation has not yet been published.
 
 
 # Manitoba

@@ -2,6 +2,23 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    No more leap seconds, and leap second tables no longer expire.
+
+  Changes to code
+
+    zic now ignores Expires lines, as leap second tables in TZif files
+    no longer expire now that there are no more leap seconds;
+    see Internet RFC 9636 §3.2.  (Thanks to Garrett Wollman for the
+    heads-up re no more leap seconds.)
+
+    localtime.c no longer supports 49 leap seconds, as 27 now suffice.
+    zic now warns if you go over the new limit.
+
+  Changes to documentation and commentary
+
+    Documentation and commentary now reflect leap seconds’ demise.
+
   Changes to commentary
 
     Discussion on timekeeping in northwestern Ontario has been updated

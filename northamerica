@@ -2184,7 +2184,7 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # 2026-08-14 meeting.
 # https://www.cbc.ca/news/canada/british-columbia/east-kootenay-stops-changing-clocks-9.7308201
 #
-# From Tim Parenti (2026-09-24):
+# From Tim Parenti (2026-10-15):
 # Echoing RDEK’s earlier false step, the Town of Golden initially opted for
 # year-round -07 by a 4–2 Council vote on 2026-09-01.  This was met with
 # significant pushback from residents preferring to maintain the existing
@@ -2198,9 +2198,10 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # school”, the new resolution directs town staff to partner on safety supports
 # and commits to reviewing the decision and its impacts in October 2027.
 # https://www.ctvnews.ca/calgary/article/golden-bc-council-reverses-course-on-time-zone-opts-for-mountain-daylight-time/
-# At time of writing, the surrounding CSRD Area A is yet to formalize its own
-# decision following a 2026-09-10 deferral “to gather and assess further
-# information”, but is expected to follow.
+# Following a 2026-09-10 deferral “to gather and assess further information” in
+# light of the ongoing petition, the surrounding CSRD Area A unanimously
+# formalized its own change on 2026-10-15 in order to maintain the alignment.
+# https://www.csrd.bc.ca/m/newsflash/home/detail/2486
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Vanc	1918	only	-	Apr	14	2:00	1:00	D

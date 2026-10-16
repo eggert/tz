@@ -49,7 +49,7 @@ Release 2026e - 2026-09-29 17:14:38 -0700
 
       Another TZDB release may be needed soon if any of the portions of
       northwestern Ontario historically aligned with America/Winnipeg do
-      not follow.  For now, given the short leadtime with Manitoba’s
+      not follow.  For now, given the short lead time with Manitoba’s
       announcement, assume that they will, to avoid creating new zones
       that may not be needed if no divergence occurs.
 
@@ -5344,9 +5344,9 @@ Release 2012a - 2012-03-01 18:28:10 +0700
 		foreseeable future, though 2012 is all we're fairly certain of.)
 	Armenia has abolished Summer Time.
 	Tokelau jumped the International Date Line back last December
-		(just the same as their near neighbour, Samoa).
+		(just the same as their near neighbor, Samoa).
 	America/Creston is a new zone for a small area of British Columbia
-	There will be a leapsecond 2012-06-30 23:59:60 UTC.
+	There will be a leap second 2012-06-30 23:59:60 UTC.
 
   Other minor changes are:
 	Corrections to 1918 Canadian summer time end dates.

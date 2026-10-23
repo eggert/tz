@@ -1139,10 +1139,11 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		timecnt = 0;
 		for (i = 0; i < sp->timecnt; ++i) {
 			unsigned char typ = *p++;
+			unsigned char kepttype = sp->types[i];
 			if (sp->typecnt <= typ)
 			  return EFTYPE;
-			if (sp->types[i])
-				sp->types[timecnt++] = typ;
+			sp->types[timecnt] = typ;
+			timecnt += kepttype;
 		}
 		sp->timecnt = timecnt;
 		for (i = 0; i < sp->typecnt; ++i) {

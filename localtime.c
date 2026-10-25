@@ -972,21 +972,21 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	}
 
 	if (relname[0] != '/') {
-	  if (!OPENAT_TZDIR || !O_RESOLVE_BENEATH) {
-	    /* Fail if a relative name contains a non-terminal ".." component,
-	       as such a name could read a non-directory outside TZDIR
-	       when AT_FDCWD and O_RESOLVE_BENEATH are not available.  */
-	    char const *component;
-	    for (component = relname; component[0]; component++)
-	      if (component[0] == '.' && component[1] == '.'
-		  && component[2] == '/'
-		  && (component == relname || component[-1] == '/')) {
-		if (issetugid())
-		  return ENOTCAPABLE;
-		might_escape = true;
-		break;
-	      }
-	  }
+	  /* Set might_escape if a relative name contains a non-terminal
+	     ".." component, as such a name could read a non-directory
+	     outside TZDIR.  If privileged, fail unless openat with
+	     O_RESOLVE_BENEATH will confine the lookup to TZDIR.  */
+	  char const *component;
+	  for (component = relname; component[0]; component++)
+	    if (component[0] == '.' && component[1] == '.'
+		&& component[2] == '/'
+		&& (component == relname || component[-1] == '/')) {
+	      if (! (OPENAT_TZDIR && !SUPPRESS_TZDIR && O_RESOLVE_BENEATH)
+		  && issetugid())
+		return ENOTCAPABLE;
+	      might_escape = true;
+	      break;
+	    }
 
 	  if (OPENAT_TZDIR && !SUPPRESS_TZDIR) {
 	    /* Prefer O_SEARCH or O_PATH if available;

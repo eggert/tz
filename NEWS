@@ -30,6 +30,13 @@ Unreleased, experimental changes
     ordering in TZif data as carefully as they do with 64-bit time_t.
     (Problem reported by Ana Bobillo.)
 
+    On platforms like FreeBSD that have O_RESOLVE_BENEATH but lack
+    O_REGULAR, localtime.c compiled with -DOPENAT_TZDIR now checks
+    that a TZ setting with ".." components names a regular file
+    before opening it in an unprivileged program, as it already did
+    for other settings that might name a file outside TZDIR.
+    This fixes a bug introduced in 2026c.
+
   Changes to documentation and commentary
 
     Documentation and commentary now reflect leap seconds’ demise.

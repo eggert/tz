@@ -323,6 +323,8 @@ LDLIBS=
 #	    It also costs CPU time and memory.
 #  -Dtime_tz=\"T\" to use T as the time_t type, rather than the system time_t
 #	This is intended for internal use only; it mangles external names.
+#  -DMIN_TRANSITION_GAP=N to reject TZif files containing transitions
+#	separated by fewer than N seconds.  See localtime.c.
 #  -DTZ_CHANGE_INTERVAL=N if functions depending on TZ should check
 #	no more often than every N seconds for TZif file changes.
 #	If N is negative (the default), no such checking is done.

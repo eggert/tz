@@ -15,6 +15,10 @@ Unreleased, experimental changes
     localtime.c no longer supports 49 leap seconds, as 27 now suffice.
     zic now warns if you go over the new limit.
 
+    With 32-bit time_t, localtime.c functions now check for transition
+    ordering in TZif data as carefully as they do with 64-bit time_t.
+    (Problem reported by Ana Bobillo.)
+
   Changes to documentation and commentary
 
     Documentation and commentary now reflect leap seconds’ demise.

@@ -1108,6 +1108,7 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 	    else {
 		int_fast64_t prevtr = -1;
 		int_fast32_2s prevcorr;
+		int_fast64_t atmin = INT_FAST64_MIN;
 		set_leapcount(sp, leapcnt);
 		sp->timecnt = timecnt;
 		sp->typecnt = typecnt;
@@ -1120,14 +1121,15 @@ tzloadbody(char const *name, struct state *sp, char tzloadflags,
 		for (i = 0; i < sp->timecnt; ++i) {
 			int_fast64_t at
 			  = stored == 4 ? detzcode(p) : detzcode64(p);
+			if (at < atmin)
+			  return EFTYPE;
+			atmin = at;
 			sp->types[i] = at <= TIME_T_MAX;
 			if (sp->types[i]) {
 			  time_t attime
 			    = ((TYPE_SIGNED(time_t) ? at < TIME_T_MIN : at < 0)
 			       ? TIME_T_MIN : at);
-			  if (timecnt && attime <= sp->ats[timecnt - 1]) {
-			    if (attime < sp->ats[timecnt - 1])
-			      return EFTYPE;
+			  if (timecnt && sp->ats[timecnt - 1] == attime) {
 			    sp->types[i - 1] = 0;
 			    timecnt--;
 			  }

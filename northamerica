@@ -3548,6 +3548,17 @@ Zone America/Costa_Rica	-5:36:13 -	LMT	1890        # San José
 # From Paul Eggert (2012-11-03):
 # For now, assume the future rule is first Sunday in November.
 
+# From an anonymous contributor (2026-10-24):
+# On October 24, 2026, the Cuban authorities announced that daylight saving
+# time would remain in effect until November 7, 2027, suspending the usual
+# return to standard time scheduled for November 1, 2026.
+# From Tim Parenti (2026-10-26):
+# The measure delays the start times for schools and workplaces by 30 minutes
+# during the period in which standard time would normally be in effect "to
+# avoid disrupting social activities during the early part of the day".
+# http://www.cuba.cu/otras/2026-10-25/cuba-mantendra-horario-de-verano-hasta-noviembre-de-2027/69459
+# https://en.cibercuba.com/noticias/2026-10-24-u1-e74-s27061-nid343708-cuba-mantendra-horario-verano-noviembre-2027-retrasara
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Cuba	1928	only	-	Jun	10	0:00	1:00	D
 Rule	Cuba	1928	only	-	Oct	10	0:00	0	S
@@ -3586,8 +3597,10 @@ Rule	Cuba	2009	2010	-	Mar	Sun>=8	0:00s	1:00	D
 Rule	Cuba	2011	only	-	Mar	Sun>=15	0:00s	1:00	D
 Rule	Cuba	2011	only	-	Nov	13	0:00s	0	S
 Rule	Cuba	2012	only	-	Apr	1	0:00s	1:00	D
-Rule	Cuba	2012	max	-	Nov	Sun>=1	0:00s	0	S
-Rule	Cuba	2013	max	-	Mar	Sun>=8	0:00s	1:00	D
+Rule	Cuba	2012	2025	-	Nov	Sun>=1	0:00s	0	S
+Rule	Cuba	2013	2026	-	Mar	Sun>=8	0:00s	1:00	D
+Rule	Cuba	2027	max	-	Nov	Sun>=1	0:00s	0	S
+Rule	Cuba	2028	max	-	Mar	Sun>=8	0:00s	1:00	D
 
 # Zone	NAME		STDOFF	RULES	FORMAT	[UNTIL]
 Zone	America/Havana	-5:29:28 -	LMT	1890

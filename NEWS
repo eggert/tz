@@ -3,7 +3,13 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Cuba will not fall back 2026-11-01; stays on -04 through 2027-11-07.
     No more leap seconds, and leap second tables no longer expire.
+
+  Changes to future timestamps
+
+    Cuba will not fall back to -05 on 2026-11-01 and instead plans to
+    maintain -04 through 2027-11-07.
 
   Changes to code
 

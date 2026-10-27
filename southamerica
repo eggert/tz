@@ -806,12 +806,13 @@ Rule	Brazil	1963	only	-	Dec	 9	 0:00	1:00	-
 Rule	Brazil	1964	only	-	Mar	 1	 0:00	0	-
 # Decree 55,639 <http://pcdsh01.on.br/HV55639.htm> (1965-01-27)
 Rule	Brazil	1965	only	-	Jan	31	 0:00	1:00	-
-Rule	Brazil	1965	only	-	Mar	31	 0:00	0	-
+Rule	Brazil	1965	only	-	Mar	31	24:00	0	-
 # Decree 57,303 <http://pcdsh01.on.br/HV57303.htm> (1965-11-22)
 Rule	Brazil	1965	only	-	Dec	 1	 0:00	1:00	-
 # Decree 57,843 <http://pcdsh01.on.br/HV57843.htm> (1966-02-18)
-Rule	Brazil	1966	1968	-	Mar	 1	 0:00	0	-
+Rule	Brazil	1966	only	-	Mar	 1	 1:00	0	-
 Rule	Brazil	1966	1967	-	Nov	 1	 0:00	1:00	-
+Rule	Brazil	1967	1968	-	Mar	 1	 0:00	0	-
 # Decree 63,429 <http://pcdsh01.on.br/HV63429.htm> (1968-10-15)
 # revoked DST.
 # Decree 91,698 <http://pcdsh01.on.br/HV91698.htm> (1985-09-27)
@@ -1040,6 +1041,7 @@ Zone America/Bahia	-2:34:04 -	LMT	1914
 # Goiás (GO), Distrito Federal (DF), Minas Gerais (MG),
 # Espírito Santo (ES), Rio de Janeiro (RJ), São Paulo (SP), Paraná (PR),
 # Santa Catarina (SC), Rio Grande do Sul (RS)
+# The 1963 date is for MG, ES, RJ, SP; others started DST on 1963-12-09.
 Zone America/Sao_Paulo	-3:06:28 -	LMT	1914
 			-3:00	Brazil	%z	1963 Oct 23  0:00
 			-3:00	1:00	%z	1964

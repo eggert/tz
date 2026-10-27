@@ -1966,13 +1966,13 @@ Zone America/Winnipeg	-6:28:36 -	LMT	1887 Jul 16
 # which can be prescribed by regulation "if it is in the provincial interest"
 # for those areas to observe either "UTC-5, UTC-6 or UTC-7 for all or part of
 # the year" on at least 30 days' notice.
-# The new Act comes into force by order of the Lieutenant Governor in Council.
-# From Tim Parenti (2026-09-21):
-# With Manitoba now adopting year-round -05, the area around Creighton will
-# likely wish to follow.  As the area doesn't have a special charter like
-# Lloydminster, the existing de facto arrangement technically violates
-# provincial law already, but once the new Act takes effect it will better
-# allow for continued alignment with Manitoba, per the above.
+# From Tim Parenti (2026-10-27), per Heitor David Pinto (2026-10-27):
+# Order in Council 438/2026 brings the new Act into force from 2026-10-30.
+# https://publications.saskatchewan.ca/#/products/130175
+# This should allow the area around Creighton to more straightforwardly remain
+# aligned with Manitoba on year-round -05, since its previous de facto
+# arrangement technically violated provincial law without a special charter
+# like Lloydminster.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Regina	1918	only	-	Apr	14	2:00	1:00	D

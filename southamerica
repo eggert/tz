@@ -782,7 +782,7 @@ Zone	America/La_Paz	-4:32:36 -	LMT	1890
 # Decree 20,466 <http://pcdsh01.on.br/HV20466.htm> (1931-10-01)
 # Decree 21,896 <http://pcdsh01.on.br/HV21896.htm> (1932-01-10)
 Rule	Brazil	1931	only	-	Oct	 3	11:00	1:00	-
-Rule	Brazil	1932	1933	-	Apr	 1	 0:00	0	-
+Rule	Brazil	1932	1933	-	Mar	31	24:00	0	-
 Rule	Brazil	1932	only	-	Oct	 3	 0:00	1:00	-
 # Decree 23,195 <http://pcdsh01.on.br/HV23195.htm> (1933-10-10)
 # revoked DST.
@@ -790,9 +790,9 @@ Rule	Brazil	1932	only	-	Oct	 3	 0:00	1:00	-
 # Decree 27,998 <http://pcdsh01.on.br/HV27998.htm> (1950-04-13)
 Rule	Brazil	1949	1952	-	Dec	 1	 0:00	1:00	-
 Rule	Brazil	1950	only	-	Apr	16	 1:00	0	-
-Rule	Brazil	1951	1952	-	Apr	 1	 0:00	0	-
+Rule	Brazil	1951	1952	-	Mar	31	24:00	0	-
 # Decree 32,308 <http://pcdsh01.on.br/HV32308.htm> (1953-02-24)
-Rule	Brazil	1953	only	-	Mar	 1	 0:00	0	-
+Rule	Brazil	1953	only	-	Feb	28	24:00	0	-
 # Decree 34,724 <http://pcdsh01.on.br/HV34724.htm> (1953-11-30)
 # revoked DST.
 # Decree 52,700 <http://pcdsh01.on.br/HV52700.htm> (1963-10-18)

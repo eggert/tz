@@ -35,7 +35,7 @@ Unreleased, experimental changes
     that a TZ setting with ".." components names a regular file
     before opening it in an unprivileged program, as it already did
     for other settings that might name a file outside TZDIR.
-    This fixes a bug introduced in 2026c.
+    This fixes a bug introduced in 2026c.  (Thanks to Ana Bobillo.)
 
   Changes to documentation and commentary
 

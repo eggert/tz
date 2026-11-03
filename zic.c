@@ -2630,11 +2630,11 @@ limitrange(struct timerange r, zic_t lo, zic_t hi,
   }
 
 
-  /* Omit ordinary and leap second transitions greater than HI + 1.  */
+  /* Omit ordinary and leap second transitions greater than HI.  */
   if (hi < max_time) {
-    while (0 < r.count && hi + 1 < ats[r.base + r.count - 1])
+    while (0 < r.count && hi < ats[r.base + r.count - 1])
       r.count--;
-    while (0 < r.leapcount && hi + 1 < leap[r.leapbase + r.leapcount - 1].trans)
+    while (0 < r.leapcount && hi < leap[r.leapbase + r.leapcount - 1].trans)
       r.leapcount--;
   }
 
@@ -3733,9 +3733,9 @@ outzone(const struct zone *zpfirst, ptrdiff_t zonecount)
 		for (lastat = attypes, i = 1; i < timecnt; i++)
 			if (attypes[i].at > lastat->at)
 				lastat = &attypes[i];
-		if (!lastat || lastat->at < rpytime(&xr, max_year - 1)) {
+		if (!timecnt || lastat->at < rpytime(&xr, max_year - 1)) {
 			addtt(rpytime(&xr, max_year + 1),
-			      lastat ? lastat->type : defaulttype);
+			      timecnt ? lastat->type : defaulttype);
 			attypes[timecnt - 1].dontmerge = true;
 		}
 	}

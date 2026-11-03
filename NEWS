@@ -1,5 +1,15 @@
 News for the tz database
 
+Unreleased, experimental changes
+
+  Changes to code
+
+    zic -r/@HI no longer outputs duplicate transition timestamps when
+    HI is the UTC start of the 403rd year after the last ordinary
+    transition.  (Problem reported by Dmitry Khalanskiy.)  This fixes
+    a failure to conform to Internet RFC 9636 §3.2.
+
+
 Release 2026f - 2026-10-27 23:16:49 -0700
 
   Briefly:

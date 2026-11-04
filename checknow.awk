@@ -35,7 +35,7 @@ BEGIN {
     zone2 = zonenow[data]
     if (zone2) {
       printf "zones %s and %s identical from now on\n", zone, zone2
-      status = 1
+      identical = status = 1
     } else
       zonenow[data] = zone
   }
@@ -54,6 +54,16 @@ END {
    for (data in zones) {
      printf "%s=%s\n", now, zones[data] >>now_out
    }
+ }
+ if (identical) {
+   print ""
+   print "To suppress \"identical from now on\" failures"
+   print "you can set CHECK_NOW_TIMESTAMP to spoof the clock, e.g.:"
+   print ""
+   print "  release_time=$(awk '/^Release /{print $4 \"T\" $5 $6; exit}' NEWS)"
+   print "  make CHECK_NOW_TIMESTAMP=$(date -d$release_time +%s) check"
+   print ""
+   print "Better yet, you can remove the duplicates from zonenow.tab."
  }
  exit status
 }

@@ -494,6 +494,41 @@ in decreasing order of importance:
       WITA Waktu Indonesia Tengah,
       YST/YDT/YWT/YPT/YDDT Yukon</small>.
     </p>
+
+    <p>
+    Because TZDB focuses on timekeeping rather than localization,
+    its alphabetic abbreviations exist mostly for compatibility
+    for traditions predating POSIX.1-2001, which standardized
+    numeric abbreviations like <code>-05</code> for five hours west of
+    Earth’s <a href="https://en.wikipedia.org/wiki/Prime_meridian">prime
+    meridian</a>.
+    Were it to start over from scratch,
+    TZDB would likely prefer numeric abbreviations,
+    as regional naming is now better handled by a different project:
+    the Unicode Common Locale Data Repository (CLDR)
+    mentioned in <a href="#naming">Timezone identifiers</a>.
+    CLDR is a good place to suggest new time zone names
+    and alphabetic abbreviations in the longstanding tradition of
+    “Eastern Standard Time” and <code>EST</code>.
+    When <a
+    href="https://cldr.unicode.org/#translations-and-other-language-data">submitting
+    these suggestions to CLDR</a>, it’s helpful to
+    suggest in every language of concern to you, not just English.
+    </p>
+
+    <p>
+    When a new alphabetic abbreviation is proposed, it is typically not
+    widely used at first, so TZDB will likely stick with existing widely
+    used alphabetic abbreviations, or to numeric abbreviations if that
+    helps avoid confusion. Generally speaking, time zone names and
+    abbreviations that name a larger time zone – e.g., “Central Standard
+    Time (CST)” – are preferable to those that name a particular location
+    – e.g., “Alberta Time (ABT)” – as the more-general names are easily
+    recognized outside the region and are less prone to confusion
+    such as whether the abbreviation in Lloydminster (a city in both
+    Alberta and Saskatchewan) should be ABT, CST, SKT, or something else.
+    </p>
+
   </li>
   <li>
     <p>
@@ -559,7 +594,7 @@ in decreasing order of importance:
     <code><abbr>tz</abbr></code> database</a>”.
   </li>
   <li>
-    If there is no common English abbreviation, use numeric offsets like
+    If there is no common English abbreviation, use numeric abbreviations like
     <code>-</code>05 and <code>+</code>0530 that are generated
     by <code>zic</code>’s <code>%z</code> notation.
   </li>
@@ -602,8 +637,9 @@ Application writers should note that these abbreviations are ambiguous
 in practice: e.g., CST means one thing in China and something else
 in North America, and IST can refer to time in India, Ireland or
 Israel.
-To avoid ambiguity, use numeric <abbr>UT</abbr> offsets like
-<code>-</code>0600 instead of time zone abbreviations like CST.
+To avoid ambiguity, use numeric abbreviations like
+<code>-</code>06 or <code>-</code>0600 instead of alphabetic
+abbreviations like CST.
 </p>
 
   <h2 id="accuracy">Accuracy of the <code><abbr>tz</abbr></code> database</h2>
@@ -1483,8 +1519,7 @@ equals about 1.02749125 terrestrial seconds.
 </p>
 
 <p>
-The <a href="https://en.wikipedia.org/wiki/Prime_meridian">prime
-meridian</a> of Mars goes through the center of the crater
+The prime meridian of Mars goes through the center of the crater
 <a href="https://en.wikipedia.org/wiki/Airy-0">Airy-0</a>, named in
 honor of the British astronomer who built the Greenwich telescope that
 defines Earth’s prime meridian.

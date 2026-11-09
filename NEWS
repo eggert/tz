@@ -2,6 +2,24 @@ News for the tz database
 
 Unreleased, experimental changes
 
+  Briefly:
+    Western Canada’s summer 2026 transitions better match its laws.
+
+  Changes to past abbreviations and tm_isdst flags
+
+    Summer 2026 transitions for western Canada now use legal dates
+    instead of being delayed as a temporary hack to accommodate CLDR
+    releases before CLDR 49 (2026-10-22).  There seemed little point
+    to keeping the hack, as users need CLDR 49+ anyway for timestamps
+    starting on 11-01, and the hack runs afoul of a bug in zic 2023
+    through 2026a.  This change replaces hacky transitions on 11-01 at
+    02:00 with the legal 00:00 transitions in America/Vancouver on
+    03-09, in America/Edmonton on 06-18, in America/Inuvik on 08-21,
+    and in America/Winnipeg on 10-31.  It does not affect UT offsets,
+    and affects abbreviations and tm_isdst flags only during the
+    period starting at the legal transition and ending on 2026-11-01
+    at 02:00.
+
   Changes to code
 
     zic -r/@HI no longer outputs duplicate transition timestamps when

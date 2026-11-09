@@ -1853,9 +1853,6 @@ Zone America/Toronto	-5:17:32 -	LMT	1895
 # recommendation of the relevant minister, "make regulations varying the
 # reckoning" of official time in Manitoba, provided the minister has "due
 # regard for the applicable time zone in neighbouring jurisdictions."
-#
-# Use a temporary hack like Alberta’s to work around potential CLDR
-# limitations.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Winn	1916	only	-	Apr	23	0:00	1:00	D
@@ -1886,9 +1883,6 @@ Rule	Winn	1987	2005	-	Apr	Sun>=1	2:00s	1:00	D
 Zone America/Winnipeg	-6:28:36 -	LMT	1887 Jul 16
 			-6:00	Winn	C%sT	2006
 			-6:00	Canada	C%sT	2026 Oct 31
-			# Temporary hack; see above.
-			-6:00	Canada	CDT	2026 Nov  1  2:00
-			# End of temporary hack.
 			-5:00	-	EST
 
 
@@ -2047,16 +2041,7 @@ Zone America/Swift_Current -7:11:20 -	LMT	1905 Sep
 # https://kings-printer.alberta.ca/Documents/Orders/Orders_in_Council/2026/2026_204.pdf
 # https://kings-printer.alberta.ca/Documents/Orders/Orders_in_Council/2026/2026_206.pdf
 #
-# Since wall clock times do not diverge from past practice until 2026-11-01,
-# use that transition date for now to work around potential CLDR limitations in
-# the meantime; see British Columbia, below.
-#
 # From Paul Eggert (2026-07-02):
-# The temporary hack for Alberta is needed for CLDR 48.2 (2026-03-17)
-# and earlier, not the CLDR 48.1-and-earlier which drives BC’s temporary hack.
-# Only a few platforms track minor CLDR releases, though, so the two
-# temporary hacks have roughly the same effect in practice.
-#
 # The term “Alberta Time” is legally prescribed from yesterday until
 # 2031-06-30, when the regulation in OiC 206/2026 expires to ensure that the
 # term is reviewed by then for relevancy and need.  This plan for possible
@@ -2085,9 +2070,6 @@ Rule	Edm	1972	2006	-	Oct	lastSun	2:00	0	S
 Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 			-7:00	Edm	M%sT	1987
 			-7:00	Canada	M%sT	2026 Jun 18
-			# Temporary hack; see above.
-			-7:00	Canada	MDT	2026 Nov  1  2:00
-			# End of temporary hack.
 			-6:00	-	CST
 
 
@@ -2131,24 +2113,14 @@ Zone America/Edmonton	-7:33:52 -	LMT	1906 Sep
 # on March 8 will be the last time change, ending twice-yearly clock changes.”
 # https://news.gov.bc.ca/releases/2026AG0013-000209
 #
-# From Paul Eggert (2026-09-23):
+# From Paul Eggert (2026-11-08):
 # The law says that 21 hours after the usual 2026-03-08 02:00 switch from
 # PST to PDT, the next day inaugurated the new standard time Pacific Time,
 # i.e., just one clock change but two name changes separated by 21 hours.
 # PT, the obvious abbreviation for Pacific Time, is one letter too short
 # to conform to TZDB’s (and POSIX’s) [-+[:alnum:]]{3,6} requirements.
 # For now, do this:
-#   1.	As a temporary hack, pretend that the BC law takes effect
-#	not on 2026-03-09 at 00:00, but on 2026-11-01 at 02:00.
-#	This pretense works around a limitation in CLDR 48.1 (2026-01-08),
-#	which would otherwise say the interval uses “Pacific Standard Time”.
-#	(Below, this temporary hack is marked “Temporary hack; see above.”)
-#	Strictly speaking this hack is incorrect since the interval uses
-#	standard time, but it does have the right UT offset and it
-#	works around the CLDR limitation.  We should be able to remove
-#	the temporary hack by November when there would be little point
-#	to keeping it anyway.
-#   2.	After the BC law takes effect, model the time as MST sans DST.
+#	After the BC law took effect, model the time as MST sans DST.
 #	We can change this later if another conforming non-numeric abbreviation
 #	for Pacific Time becomes more popular.  Possibilities include:
 #   MST - the most compatible with existing software and practice,
@@ -2217,9 +2189,6 @@ Rule	Vanc	1962	2006	-	Oct	lastSun	2:00	0	S
 Zone America/Vancouver	-8:12:28 -	LMT	1884
 			-8:00	Vanc	P%sT	1987
 			-8:00	Canada	P%sT	2026 Mar  9
-			# Temporary hack; see above.
-			-8:00	Canada	PDT	2026 Nov  1  2:00
-			# End of temporary hack.
 			-7:00	-	MST
 Zone America/Dawson_Creek -8:00:56 -	LMT	1884
 			-8:00	Canada	P%sT	1947
@@ -2563,7 +2532,6 @@ Zone America/Fort_Nelson	-8:10:47 -	LMT	1884
 # From Paul Eggert (2026-08-21):
 # The regulations were registered 2026-08-18 and came into force today:
 # https://www.justice.gov.nt.ca/en/files/legislation/interpretation/interpretation.r2.pdf
-# Use a temporary hack like Alberta’s.
 
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	NT_YK	1918	only	-	Apr	14	2:00	1:00	D
@@ -2607,9 +2575,6 @@ Zone America/Inuvik	0	-	-00	1953 # Inuvik founded
 			-8:00	NT_YK	P%sT	1979 Apr lastSun  2:00
 			-7:00	NT_YK	M%sT	1980
 			-7:00	Canada	M%sT	2026 Aug 21
-			# Temporary hack; see above.
-			-7:00	Canada	MDT	2026 Nov  1  2:00
-			# End of temporary hack.
 			-6:00	-	CST
 Zone America/Whitehorse	-9:00:12 -	LMT	1900 Aug 20
 			-9:00	NT_YK	Y%sT	1965

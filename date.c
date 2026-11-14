@@ -49,9 +49,7 @@ main(const int argc, char *argv[])
 	intmax_t		secs;
 	char *			endarg;
 
-#ifdef LC_ALL
 	setlocale(LC_ALL, "");
-#endif /* defined(LC_ALL) */
 #if HAVE_GETTEXT
 # ifdef TZ_DOMAINDIR
 	bindtextdomain(TZ_DOMAIN, TZ_DOMAINDIR);

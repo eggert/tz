@@ -372,11 +372,14 @@ LDLIBS=
 #   and POSIX.1-2024 or later (say in the year 2034).
 #
 # Select instrumentation via "make GCC_INSTRUMENT='whatever'".
+# The default GCC_INSTRUMENT omits -fanalyzer, as it is quite slow
+# and has too many false positives, e.g., GCC bugs 128788 and 128831.
 GCC_INSTRUMENT = \
-  -fsanitize=undefined -fsanitize-address-use-after-scope \
-  -fsanitize-trap=all -fstack-protector
-# Omit -fanalyzer from GCC_DEBUG_FLAGS, as it makes GCC too slow.
-GCC_DEBUG_FLAGS = -DGCC_LINT -g3 -O3 \
+  -fsanitize=address -fsanitize=bounds-strict \
+  -fsanitize=undefined -fsanitize-trap=all \
+  -fstack-clash-protection -fstack-protector-strong \
+  -fstrict-flex-arrays=3 -ftrivial-auto-var-init=pattern
+GCC_DEBUG_FLAGS = -D_FORTIFY_SOURCE=3 -DGCC_LINT -g3 -O3 \
   $(GCC_INSTRUMENT) \
   -Wall -Wextra \
   -Walloc-size-larger-than=100000 -Warray-bounds=2 \

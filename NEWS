@@ -35,6 +35,13 @@ Unreleased, experimental changes
     transition.  (Problem reported by Dmitry Khalanskiy.)  This fixes
     a failure to conform to Internet RFC 9636 §3.2.
 
+  Changes to commentary
+
+    Commentary has been added to clarify the time zone boundary in
+    Brazil’s Amazonas state, including how some municipalities which lie
+    east of the federally-defined dividing line observe west Amazonas
+    time.  (Thanks to Robson Niemeyer.)
+
 
 Release 2026f - 2026-10-27 23:16:49 -0700
 

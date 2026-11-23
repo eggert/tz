@@ -774,9 +774,17 @@ Zone	America/La_Paz	-4:32:36 -	LMT	1890
 # Senator Jorge Viana announced that Acre will change time zone on November 10.
 # He did not specify the time of the change, nor if western parts of Amazonas
 # will change as well.
-#
-# From Paul Eggert (2013-10-17):
-# For now, assume western Amazonas will change as well.
+# From Tim Parenti (2026-11-23), per Robson Niemeyer (2026-11-23):
+# In a 2026-09-25 post announcing local voting hours for Brazil's general
+# election held on 2026-10-04, the Regional Electoral Court of Amazonas
+# (TRE-AM) stated that "in the capital [Manaus] and most of the state, voting
+# will take place from 07:00 to 16:00 local time. In 11 municipalities that
+# follow Acre's time zone, it will be from 06:00 to 15:00: Amaturá, Atalaia do
+# Norte, Benjamin Constant, Eirunepé, Envira, Guajará, Ipixuna, Itamarati,
+# Jutaí, São Paulo de Olivença, and Tabatinga."
+# https://www.tre-am.jus.br/comunicacao/noticias/2026/Setembro/eleitorado-do-amazonas-deve-ficar-atento-aos-horarios-de-votacao-nas-eleicoes-2026
+# As the election ran from 08:00 to 17:00 Brasília time (UTC-3) nationwide,
+# this confirms that western Amazonas observes UTC-5 with Acre.
 
 # From Daniel Dias Rodrigues (2026-10-20):
 # Under Brazilian law, a period stated as "until day X" includes day X.
@@ -1082,17 +1090,23 @@ Zone America/Boa_Vista	-4:02:40 -	LMT	1914
 			-4:00	Brazil	%z	2000 Oct 15
 			-4:00	-	%z
 #
-# east Amazonas (AM): Boca do Acre, Jutaí, Manaus, Floriano Peixoto
-# The great circle line from Tabatinga to Porto Acre divides
-# east from west Amazonas.
+# From Tim Parenti (2026-11-23):
+# Federal Law 12,876 (2013-10-30) defines the time zone boundary between east
+# and west Amazonas as the great circle line from Tabatinga to Porto Acre.
+# https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2013/lei/l12876.htm
+# Nevertheless, some municipalities east of the line observe west Amazonas
+# time; namely, Amaturá, Itamarati, Jutaí, and São Paulo de Olivença.
+#
+# east Amazonas (AM): Boca do Acre, Manaus, Floriano Peixoto
 Zone America/Manaus	-4:00:04 -	LMT	1914
 			-4:00	Brazil	%z	1988 Sep 12
 			-4:00	-	%z	1993 Sep 28
 			-4:00	Brazil	%z	1994 Sep 22
 			-4:00	-	%z
 #
-# west Amazonas (AM): Atalaia do Norte, Boca do Maoco, Benjamin Constant,
-#	Eirunepé, Envira, Ipixuna
+# west Amazonas (AM): Amaturá, Atalaia do Norte, Benjamin Constant, Eirunepé,
+#      Envira, Guajará, Ipixuna, Itamarati, Jutaí, São Paulo de Olivença,
+#      Tabatinga
 Zone America/Eirunepe	-4:39:28 -	LMT	1914
 			-5:00	Brazil	%z	1988 Sep 12
 			-5:00	-	%z	1993 Sep 28

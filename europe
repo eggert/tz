@@ -1190,6 +1190,18 @@ Zone Atlantic/Faroe	-0:27:04 -	LMT	1908 Jan 11 # Tórshavn
 # From Paul Eggert (2023-10-29):
 # For now, assume it will be like America/Nuuk.
 
+# From Tim Parenti (2026-11-23):
+# Per Arctic Today, 2026-11-12, “Greenland’s parliament voted...to return most
+# of the country to the UTC-3 time zone, reversing a 2022 decision that moved
+# Nuuk an hour closer to Europe. ... Clocks will go back two hours on October
+# 31, 2027, when daylight saving time ends.”
+# https://www.arctictoday.com/greenland-shifts-its-clocks-closer-to-north-america-and-further-from-denmark/
+# The law allows for Naalakkersuisut, Greenland’s executive cabinet and
+# government, to establish special zones and rules for Danmarkshavn in the east
+# and Pituffik (Thule) in the west.  Assume this change otherwise applies to
+# the remainder of the territory.
+# https://nalunaarutit.gl/groenlandsk-lovgivning/2026/inatsisartutlov-nr-52-af-20_11_2026
+
 # Rule	NAME	FROM	TO	-	IN	ON	AT	SAVE	LETTER/S
 Rule	Thule	1991	1992	-	Mar	lastSun	2:00	1:00	D
 Rule	Thule	1991	1992	-	Sep	lastSun	2:00	0	S
@@ -1210,12 +1222,14 @@ Zone America/Scoresbysund -1:27:52 -	LMT	1916 Jul 28 # Ittoqqortoormiit
 			-2:00	-	%z	1980 Apr  6  2:00
 			-2:00	C-Eur	%z	1981 Mar 29
 			-1:00	EU	%z	2024 Mar 31
-			-2:00	EU	%z
+			-2:00	EU	%z	2027 Oct 31  0:00
+			-3:00	EU	%z
 Zone America/Nuuk	-3:26:56 -	LMT	1916 Jul 28 # Godthåb
 			-3:00	-	%z	1980 Apr  6  2:00
 			-3:00	EU	%z	2023 Mar 26  1:00u
 			-2:00	-	%z	2023 Oct 29  1:00u
-			-2:00	EU	%z
+			-2:00	EU	%z	2027 Oct 31  0:00
+			-3:00	EU	%z
 Zone America/Thule	-4:35:08 -	LMT	1916 Jul 28 # Pituffik
 			-4:00	Thule	A%sT
 

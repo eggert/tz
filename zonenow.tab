@@ -112,7 +112,7 @@ XX	+4703-05620	America/Miquelon	St Pierre & Miquelon
 # -02
 XX	-0351-03225	America/Noronha	Fernando de Noronha; South Georgia
 #
-# -02/-01 (EU DST)
+# -02/-01 (EU DST) until 2027-10-31 00:00; then -03/-02 (EU DST)
 XX	+6411-05144	America/Nuuk	most of Greenland
 #
 # -01

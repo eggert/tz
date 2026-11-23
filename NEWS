@@ -3,7 +3,15 @@ News for the tz database
 Unreleased, experimental changes
 
   Briefly:
+    Greenland will fall back 2 hours on 2027-10-31 to shift to -03/-02.
     Western Canada’s summer 2026 transitions better match its laws.
+
+  Changes to future timestamps
+
+    Most of Greenland will fall back two hours on 2027-10-31 at 00:00,
+    in order to shift from -02/-01 to -03/-02 while maintaining EU DST
+    rules.  This affects both America/Nuuk and America/Scoresbysund
+    (Ittoqqortoormiit).
 
   Changes to past abbreviations and tm_isdst flags
 

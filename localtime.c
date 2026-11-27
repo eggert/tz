@@ -2310,6 +2310,15 @@ leaps_thru_end_of(time_t y)
 	  : leaps_thru_end_of_nonneg(y));
 }
 
+/* The possibly-negative remainder when dividing T by DAYSPERWEEK.
+   T can be a count of years or days that fits in time_t because it is
+   derived from a count of seconds.  Return int to help the compiler.  */
+static int
+weekrem(time_t t)
+{
+  return t % DAYSPERWEEK;
+}
+
 static struct tm *
 timesub(const time_t *timep, int_fast32_t offset,
 	const struct state *sp, struct tm *tmp, time_t *ltm_year)
@@ -2325,6 +2334,9 @@ timesub(const time_t *timep, int_fast32_t offset,
 	   most recent positive leap second; otherwise, do not add 1
 	   to localtime tm_sec because of leap seconds.  */
 	time_t secs_since_posleap = SECSPERMIN;
+
+	/* The number of leap days before TM_YEAR_BASE, as an int.  */
+	int base_leap_days = leaps_thru_end_of(TM_YEAR_BASE - 1);
 
 	corr = 0;
 	i = sp ? leapcount(sp) : 0;
@@ -2399,14 +2411,14 @@ timesub(const time_t *timep, int_fast32_t offset,
 	/*
 	** The "extra" mods below avoid overflow problems.
 	*/
-	tmp->tm_wday = (TM_WDAY_BASE
-			+ ((y % DAYSPERWEEK - TM_YEAR_BASE % DAYSPERWEEK)
-			   % DAYSPERWEEK
-			   * (DAYSPERNYEAR % DAYSPERWEEK))
-			+ leaps_thru_end_of(y - 1)
-			- leaps_thru_end_of(TM_YEAR_BASE - 1)
-			+ idays);
-	tmp->tm_wday %= DAYSPERWEEK;
+	tmp->tm_wday =
+	  weekrem(TM_WDAY_BASE
+		  + ((weekrem(y) - TM_YEAR_BASE % DAYSPERWEEK)
+		     % DAYSPERWEEK
+		     * (DAYSPERNYEAR % DAYSPERWEEK))
+		  + tmp->tm_yday
+		  - base_leap_days
+		  + leaps_thru_end_of(y - 1));
 	if (tmp->tm_wday < 0)
 		tmp->tm_wday += DAYSPERWEEK;
 	tmp->tm_hour = rem / SECSPERHOUR;

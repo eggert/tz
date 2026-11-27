@@ -5,6 +5,7 @@ Unreleased, experimental changes
   Briefly:
     Greenland will fall back 2 hours on 2027-10-31 to shift to -03/-02.
     Western Canada’s summer 2026 transitions better match its laws.
+    Weekday calculations fixed for proleptic POSIX TZ settings.
 
   Changes to future timestamps
 
@@ -29,6 +30,12 @@ Unreleased, experimental changes
     at 02:00.
 
   Changes to code
+
+    localtime no longer generates the wrong weekday for proleptic TZ
+    settings in common platforms where int is narrower than time_t.
+    (Problem reported by Liang Hu.)  The bug, introduced in 2025a, is
+    most noticeable in slim TZif files where the settings can apply
+    before the year 2038.
 
     zic -r/@HI no longer outputs duplicate transition timestamps when
     HI is the UTC start of the 403rd year after the last ordinary

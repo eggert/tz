@@ -2677,14 +2677,13 @@ writezone(const char *const name, const char *const string, char version,
 		for ( ; fromi < timecnt; ++fromi) {
 			if (toi != 0) {
 			    /* Skip the previous transition if it is unwanted
-			       because its local time is not earlier.
-			       The UT offset additions can't overflow because
-			       of how the times were calculated.  */
+			       because its local time is not earlier.  */
 			    unsigned char type_2 =
 			      toi == 1 ? 0 : attypes[toi - 2].type;
-			    if ((attypes[fromi].at
-				 + utoffs[attypes[toi - 1].type])
-				<= attypes[toi - 1].at + utoffs[type_2]) {
+			    if (oadd(attypes[fromi].at,
+				     utoffs[attypes[toi - 1].type])
+				<= oadd(attypes[toi - 1].at,
+					utoffs[type_2])) {
 				    if (attypes[fromi].type == type_2)
 					toi--;
 				    else
@@ -2737,11 +2736,13 @@ writezone(const char *const name, const char *const string, char version,
 	*/
 	for (i = 0; i < timecnt; ++i) {
 		j = leapcnt;
-		while (--j >= 0)
-			if (leap[j].trans - leap[j].corr < ats[i]) {
-				ats[i] = tadd(ats[i], leap[j].corr);
+		while (0 <= --j) {
+			zic_t corrected = tadd(ats[i], leap[j].corr);
+			if (leap[j].trans < corrected) {
+				ats[i] = corrected;
 				break;
 			}
+		}
 	}
 
 	rangeall.defaulttype = defaulttype;

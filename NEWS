@@ -42,6 +42,10 @@ Unreleased, experimental changes
     transition.  (Problem reported by Dmitry Khalanskiy.)  This fixes
     a failure to conform to Internet RFC 9636 §3.2.
 
+    zic now reports overflow instead of having undefined behavior when
+    a transition or leap second is too close to an extreme value.
+    (Problem reported by Aaron Elijah Mars.)
+
   Changes to commentary
 
     Commentary has been added to clarify the time zone boundary in
